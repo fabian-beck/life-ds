@@ -17,6 +17,18 @@
     return typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value.trim());
   }
 
+  function hexToRgb(value) {
+    if (!isHexColor(value)) return null;
+    const hex = value.trim().replace("#", "");
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    if ([r, g, b].some((component) => Number.isNaN(component))) {
+      return null;
+    }
+    return `${r}, ${g}, ${b}`;
+  }
+
   function svgToDataUrl(svg) {
     if (typeof svg !== "string") return null;
     const trimmed = svg.trim();
@@ -38,6 +50,10 @@
     }
     if (isHexColor(raw.background)) {
       result.background = raw.background.trim().toUpperCase();
+      const rgb = hexToRgb(result.background);
+      if (rgb) {
+        result.backgroundRgb = rgb;
+      }
     }
     if (typeof raw.background_pattern_svg === "string") {
       const svg = raw.background_pattern_svg.trim();
@@ -73,6 +89,10 @@
       primary: normalised.primary ?? defaultStyleBase.primary,
       secondary: normalised.secondary ?? defaultStyleBase.secondary,
       background: normalised.background ?? defaultStyleBase.background,
+      backgroundRgb:
+        normalised.backgroundRgb ??
+        hexToRgb(defaultStyleBase.background) ??
+        "15, 23, 42",
       backgroundPatternSvg:
         normalised.backgroundPatternSvg ??
         defaultStyleBase.background_pattern_svg,
@@ -112,6 +132,7 @@
     return {
       ...defaultStyle,
       ...override,
+      backgroundRgb: override.backgroundRgb ?? defaultStyle.backgroundRgb,
       backgroundPatternSvg:
         override.backgroundPatternSvg ?? defaultStyle.backgroundPatternSvg,
       backgroundPatternDataUrl:
