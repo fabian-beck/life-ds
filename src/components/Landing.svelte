@@ -10,6 +10,26 @@
     if (!id) return;
     dispatch("selectPerson", id);
   }
+
+  function summaryFor(entry) {
+    return entry?.summary ?? getSummary(entry);
+  }
+
+  function initialsFromName(name = "") {
+    const parts = name
+      .split(/\s+/)
+      .map((segment) => segment.trim())
+      .filter(Boolean);
+    if (parts.length === 0) {
+      return "";
+    }
+    if (parts.length === 1) {
+      return parts[0].slice(0, 2).toUpperCase();
+    }
+    const first = parts[0].charAt(0).toUpperCase();
+    const last = parts[parts.length - 1].charAt(0).toUpperCase();
+    return `${first}${last}`;
+  }
 </script>
 
 <section class="landing">
@@ -23,21 +43,58 @@
   </div>
   <div class="landing-grid">
     {#if entries.length > 0}
-      {#each entries as entry}
+      {#each entries as entry (entry.id)}
+        {@const summary = summaryFor(entry)}
         <article class="person-card">
-          <h2>{entry.name}</h2>
-          {#if getSummary(entry)}
-            <p>{getSummary(entry)}</p>
-          {:else}
-            <p>A summary is not available yet, but the timeline is ready.</p>
-          {/if}
-          <button
-            type="button"
-            on:click={() => handleSelect(entry.id)}
-            aria-label={`Open life story for ${entry.name}`}
-          >
-            View story
-          </button>
+          <figure class="person-thumb">
+            {#if entry?.portrait?.image}
+              <img
+                src={entry.portrait.image}
+                alt={entry.portrait.alt ?? `Portrait of ${entry.name}`}
+                loading="lazy"
+                decoding="async"
+              />
+            {:else}
+              <div class="thumb-fallback" aria-hidden="true">
+                {initialsFromName(entry.name)}
+              </div>
+            {/if}
+          </figure>
+          <div class="card-body">
+            <div class="card-header">
+              <h2>{entry.name}</h2>
+              {#if entry.lifespan || (entry.primaryRoles?.length ?? 0) > 0}
+                <p class="card-meta">
+                  {#if entry.lifespan}
+                    <span>{entry.lifespan}</span>
+                  {/if}
+                  {#if entry.lifespan && (entry.primaryRoles?.length ?? 0) > 0}
+                    <span class="meta-separator" aria-hidden="true">·</span>
+                  {/if}
+                  {#if (entry.primaryRoles?.length ?? 0) > 0}
+                    <span>{entry.primaryRoles.join(" · ")}</span>
+                  {/if}
+                </p>
+              {/if}
+            </div>
+            {#if summary}
+              <p class="card-summary">{summary}</p>
+            {:else}
+              <p class="card-summary placeholder">
+                A summary is not available yet, but the timeline is ready.
+              </p>
+            {/if}
+            <div class="card-footer">
+              <button
+                type="button"
+                class="card-action"
+                on:click={() => handleSelect(entry.id)}
+                aria-label={`Open life story for ${entry.name}`}
+              >
+                View story
+              </button>
+            </div>
+          </div>
         </article>
       {/each}
     {:else}
@@ -57,8 +114,8 @@
     padding: 3rem 1.5rem 4rem;
     background: linear-gradient(
       180deg,
-      rgba(15, 23, 42, 0.92) 0%,
-      rgba(15, 23, 42, 0.88) 40%,
+      rgba(15, 23, 42, 0.94) 0%,
+      rgba(15, 23, 42, 0.9) 35%,
       rgba(15, 23, 42, 0.82) 100%
     );
   }
@@ -84,8 +141,9 @@
 
   .landing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
+    grid-auto-rows: 1fr;
   }
 
   .landing-empty {
@@ -95,48 +153,170 @@
   }
 
   .person-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 82px 1fr;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.25rem 1.35rem;
+    border-radius: 1rem;
+    background: linear-gradient(
+      180deg,
+      rgba(30, 41, 59, 0.88) 0%,
+      rgba(15, 23, 42, 0.95) 100%
+    );
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.32);
+    transition:
+      transform 0.22s ease,
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+    min-height: 0;
+  }
+
+  .person-card:hover,
+  .person-card:focus-within {
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.42);
+  }
+
+  .person-thumb {
+    margin: 0;
+    width: 82px;
+    height: 82px;
+    border-radius: 0.9rem;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .person-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .thumb-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(56, 189, 248, 0.35),
+        transparent 65%
+      ),
+      rgba(30, 41, 59, 0.8);
+    color: #e0f2fe;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .card-body {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    background: rgba(30, 41, 59, 0.75);
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28);
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
   }
 
   .person-card h2 {
     margin: 0;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     line-height: 1.2;
   }
 
-  .person-card p {
+  .card-meta {
     margin: 0;
-    font-size: 0.95rem;
-    color: #e2e8f0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    color: #94a3b8;
   }
 
-  .person-card button {
+  .card-meta .meta-separator {
+    color: rgba(148, 163, 184, 0.65);
+  }
+
+  .card-summary {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #cbd5f5;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-summary.placeholder {
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  .card-footer {
+    margin-top: auto;
+  }
+
+  .card-action {
     align-self: flex-start;
-    padding: 0.55rem 1.1rem;
+    padding: 0.45rem 1rem;
     border-radius: 999px;
-    border: none;
-    font-size: 0.9rem;
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(56, 189, 248, 0.16);
+    color: #38bdf8;
+    font-size: 0.85rem;
     font-weight: 600;
-    background: #38bdf8;
-    color: #0f172a;
+    letter-spacing: 0.02em;
     cursor: pointer;
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
-  .person-card button:hover,
-  .person-card button:focus {
+  .card-action:hover,
+  .card-action:focus {
+    background: rgba(56, 189, 248, 0.35);
+    border-color: rgba(56, 189, 248, 0.7);
+    color: #0f172a;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.45);
     outline: none;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    color: #38bdf8;
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .person-card {
+      grid-template-columns: 70px 1fr;
+      padding: 1.1rem 1.2rem;
+    }
+
+    .person-thumb {
+      width: 70px;
+      height: 70px;
+    }
   }
 
   @media (min-width: 768px) {
@@ -151,6 +331,21 @@
 
     .landing-grid {
       gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .person-card {
+      padding: 1.5rem 1.75rem;
+      grid-template-columns: 92px 1fr;
+    }
+
+    .person-thumb {
+      width: 92px;
+      height: 92px;
+    }
+
+    .person-card h2 {
+      font-size: 1.3rem;
     }
   }
 </style>

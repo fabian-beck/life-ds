@@ -19,6 +19,46 @@
     {}
   );
 
+  function computeYearsLabel(person = {}) {
+    const toYear = (value) => {
+      if (!value) return null;
+      const parsed = new Date(value);
+      const year = parsed.getFullYear();
+      return Number.isNaN(year) ? null : year;
+    };
+    const birthYear = toYear(person.birth_date);
+    const deathYear = toYear(person.death_date);
+    if (birthYear && deathYear) {
+      return `${birthYear} - ${deathYear}`;
+    }
+    if (birthYear) {
+      return `${birthYear}`;
+    }
+    return "";
+  }
+
+  function derivePrimaryRoles(person = {}) {
+    if (!Array.isArray(person.primary_roles)) {
+      return [];
+    }
+    return person.primary_roles.slice(0, 3);
+  }
+
+  function enrichEntry(baseEntry) {
+    if (!baseEntry?.id) {
+      return baseEntry;
+    }
+    const dataset = datasetMap[baseEntry.id] ?? null;
+    const person = dataset?.person ?? {};
+    return {
+      ...baseEntry,
+      summary: baseEntry.summary ?? person.summary ?? "",
+      portrait: person.portrait ?? null,
+      lifespan: computeYearsLabel(person),
+      primaryRoles: derivePrimaryRoles(person),
+    };
+  }
+
   const registryEntries = (() => {
     const entries = [];
     const seen = new Set();
@@ -26,7 +66,7 @@
       for (const entry of registry.people) {
         if (!entry?.id) continue;
         if (!datasetMap[entry.id]) continue;
-        entries.push(entry);
+        entries.push(enrichEntry(entry));
         seen.add(entry.id);
       }
     }
@@ -34,11 +74,13 @@
       if (seen.has(id)) continue;
       const data = datasetMap[id];
       const fallbackName = data?.person?.name ?? id.replace(/_/g, " ");
-      entries.push({
-        id,
-        name: fallbackName,
-        file: `people/${id}_life_events.json`,
-      });
+      entries.push(
+        enrichEntry({
+          id,
+          name: fallbackName,
+          file: `people/${id}_life_events.json`,
+        })
+      );
     }
     entries.sort((a, b) => a.name.localeCompare(b.name));
     return entries;
