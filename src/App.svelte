@@ -3,8 +3,21 @@
 
   const { person, events = [] } = dataset;
 
-  const slides = [...events].sort((a, b) => toTimestamp(a) - toTimestamp(b));
-  const totalSlides = slides.length;
+  const yearsLabel = person?.birth_date && person?.death_date
+    ? `${new Date(person.birth_date).getFullYear()} - ${new Date(person.death_date).getFullYear()}`
+    : person?.birth_date
+    ? `${new Date(person.birth_date).getFullYear()}`
+    : '';
+
+  const rolesLabel = Array.isArray(person?.primary_roles)
+    ? person.primary_roles.join(' · ')
+    : '';
+
+  const eventSlides = [...events].sort((a, b) => toTimestamp(a) - toTimestamp(b));
+  const slides = [{ type: 'spacer' }, ...eventSlides];
+  const totalSlides = eventSlides.length;
+  const totalPanels = slides.length;
+  let activeIndex = 0;
 
   function toTimestamp(event) {
     if (!event?.date) return Number.POSITIVE_INFINITY;
@@ -55,49 +68,82 @@
       return url;
     }
   }
+
+  function handleScroll(event) {
+    if (totalPanels === 0) {
+      activeIndex = 0;
+      return;
+    }
+    const { scrollLeft, clientWidth } = event.target;
+    if (!clientWidth) return;
+    const index = Math.round(scrollLeft / clientWidth);
+    activeIndex = Math.min(Math.max(index, 0), totalPanels - 1);
+  }
 </script>
 
 <div class="shell">
-  <header class="masthead">
-    <p class="eyebrow">Life Data Stories</p>
-    <h1>{person.name}</h1>
-    <p class="summary">{person.summary}</p>
-    <div class="meta">
-      <span>{new Date(person.birth_date).getFullYear()} – {new Date(person.death_date).getFullYear()}</span>
-      <span>{person.primary_roles.join(' · ')}</span>
+  <header class="masthead" class:compact={activeIndex > 0}>
+    <div class="full-info">
+      <p class="eyebrow">Life Data Stories</p>
+      <h1>{person.name}</h1>
+      <p class="summary">{person.summary}</p>
+      <div class="meta">
+        {#if yearsLabel}
+          <span>{yearsLabel}</span>
+        {/if}
+        {#if rolesLabel}
+          <span>{rolesLabel}</span>
+        {/if}
+      </div>
+    </div>
+    <div class="compact-info" aria-live="polite">
+      <span class="name">{person.name}</span>
+      {#if yearsLabel}
+        <span class="separator">·</span>
+        <span class="lifespan">{yearsLabel}</span>
+      {/if}
     </div>
   </header>
 
-  <main class="slides" aria-live="polite">
-    {#each slides as event, index}
-      <section class="slide" aria-label={`Slide ${index + 1} of ${totalSlides}: ${event.title}`}>
-        <div class="count">{index + 1} / {totalSlides}</div>
-        <div class="content">
-          <p class="date">{formatDate(event)}</p>
-          {#if formatAgeLabel(event.age)}
-            <p class="age">{formatAgeLabel(event.age)}</p>
-          {/if}
-          <h2>{event.title}</h2>
-          <p class="description">{event.description}</p>
-          <ul class="details">
-            {#if event.locations?.length}
-              <li>
-                <span class="label">Location</span>
-                <span>{formatLocations(event.locations)}</span>
-              </li>
+  <main class="slides" aria-live="polite" on:scroll={handleScroll}>
+    {#each slides as slide, index}
+      <section
+        class="slide"
+        class:spacer={slide.type === 'spacer'}
+        aria-hidden={slide.type === 'spacer'}
+        aria-label={slide.type === 'spacer'
+          ? null
+          : `Slide ${index} of ${totalSlides}: ${slide.title}`}
+      >
+        {#if slide.type !== 'spacer'}
+          <div class="count">{index} / {totalSlides}</div>
+          <div class="content">
+            <p class="date">{formatDate(slide)}</p>
+            {#if formatAgeLabel(slide.age)}
+              <p class="age">{formatAgeLabel(slide.age)}</p>
             {/if}
-            {#if event.sources?.length}
-              <li>
-                <span class="label">Sources</span>
-                <span class="sources">
-                  {#each event.sources as source}
-                    <a href={source} target="_blank" rel="noreferrer">{sourceLabel(source)}</a>
-                  {/each}
-                </span>
-              </li>
-            {/if}
-          </ul>
-        </div>
+            <h2>{slide.title}</h2>
+            <p class="description">{slide.description}</p>
+            <ul class="details">
+              {#if slide.locations?.length}
+                <li>
+                  <span class="label">Location</span>
+                  <span>{formatLocations(slide.locations)}</span>
+                </li>
+              {/if}
+              {#if slide.sources?.length}
+                <li>
+                  <span class="label">Sources</span>
+                  <span class="sources">
+                    {#each slide.sources as source}
+                      <a href={source} target="_blank" rel="noreferrer">{sourceLabel(source)}</a>
+                    {/each}
+                  </span>
+                </li>
+              {/if}
+            </ul>
+          </div>
+        {/if}
       </section>
     {/each}
   </main>
@@ -123,13 +169,69 @@
     padding: 1.75rem 1.5rem 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     background: rgba(15, 23, 42, 0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(148, 163, 184, 0.16);
     position: sticky;
     top: 0;
     z-index: 2;
+    transition: padding 0.25s ease;
+  }
+
+  .full-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .compact-info {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .compact-info span {
+    min-width: 0;
+  }
+
+  .compact-info .name {
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .compact-info .separator {
+    color: rgba(148, 163, 184, 0.8);
+    flex: 0 0 auto;
+  }
+
+  .compact-info .lifespan {
+    color: #94a3b8;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .masthead.compact {
+    padding: 0.85rem 1.25rem;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .masthead.compact .full-info {
+    display: none;
+  }
+
+  .masthead.compact .compact-info {
+    display: flex;
+    width: 100%;
   }
 
   .eyebrow {
@@ -150,6 +252,7 @@
     margin: 0;
     font-size: 0.95rem;
     color: #cbd5f5;
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
   .meta {
@@ -158,18 +261,27 @@
     gap: 0.75rem;
     font-size: 0.8rem;
     color: #94a3b8;
+    transition: font-size 0.25s ease;
+  }
+
+  .masthead:not(.compact) .compact-info {
+    display: none;
   }
 
   .slides {
     flex: 1 1 auto;
-    scroll-snap-type: y mandatory;
-    overflow-y: auto;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    overflow-y: hidden;
     height: calc(100vh - var(--header-height));
+    scroll-behavior: smooth;
   }
 
   .slide {
     scroll-snap-align: start;
-    min-height: calc(100vh - var(--header-height));
+    flex: 0 0 100%;
+    height: 100%;
     padding: 2.75rem 1.5rem 3.25rem;
     display: flex;
     flex-direction: column;
@@ -177,7 +289,13 @@
     position: relative;
     gap: 1.25rem;
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.6) 100%);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    border-right: 1px solid rgba(148, 163, 184, 0.12);
+  }
+
+  .slide.spacer {
+    background: transparent;
+    border-right: none;
+    pointer-events: none;
   }
 
   .count {
@@ -278,7 +396,6 @@
     }
 
     .slide {
-      min-height: calc(100vh - var(--header-height));
       padding: 3.5rem 4rem 4rem;
       gap: 1.75rem;
     }
@@ -300,6 +417,14 @@
 
     .details li {
       max-width: 22rem;
+    }
+
+    .masthead.compact {
+      padding: 1rem 2.5rem;
+    }
+
+    .compact-info {
+      font-size: 1.05rem;
     }
   }
 </style>
