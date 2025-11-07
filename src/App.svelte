@@ -42,9 +42,8 @@
     return entries;
   })();
 
-  let selectedPersonId =
-    registryEntries[0]?.id ?? Object.keys(datasetMap)[0] ?? null;
-  let previousPersonId = selectedPersonId;
+  let selectedPersonId = null;
+  let previousPersonId = null;
 
   let dataset = selectedPersonId
     ? (datasetMap[selectedPersonId] ?? null)
@@ -99,6 +98,25 @@
   $: if (selectedPersonId !== previousPersonId) {
     activeIndex = 0;
     previousPersonId = selectedPersonId;
+  }
+
+  function openStory(id) {
+    if (!id) return;
+    if (!datasetMap[id]) return;
+    selectedPersonId = id;
+  }
+
+  function closeStory() {
+    selectedPersonId = null;
+  }
+
+  function entrySummary(entry) {
+    if (!entry?.id) return "";
+    return (
+      entry.summary ??
+      datasetMap[entry.id]?.person?.summary ??
+      ""
+    );
   }
 
   function computeYearsLabel(currentPerson) {
@@ -177,152 +195,188 @@
 </script>
 
 <div class="shell">
-  <header class="masthead" class:compact={activeIndex > 0}>
-    {#if registryEntries.length > 0}
-      <div class="toolbar">
-        <div class="person-selector">
-          <label for="person-select">Select person</label>
-          <select id="person-select" bind:value={selectedPersonId}>
-            {#each registryEntries as entry}
-              <option value={entry.id}>{entry.name}</option>
-            {/each}
-          </select>
+  {#if selectedPersonId}
+    <div class="story-view">
+      <header class="masthead" class:compact={activeIndex > 0}>
+        {#if registryEntries.length > 0}
+          <div class="toolbar">
+            <button
+              type="button"
+              class="close-story"
+              on:click={closeStory}
+              aria-label="Close story and return to the landing page"
+            >
+              Close story
+            </button>
+          </div>
+        {/if}
+        <div class="masthead-content">
+          <div class="full-info">
+            <p class="eyebrow">Life Data Stories</p>
+            <h1>{personName}</h1>
+            {#if hasPersonSummary}
+              <p class="summary">{personSummary}</p>
+            {:else if hasDataset}
+              <p class="summary placeholder">
+                A summary is not available, but key life events are listed below.
+              </p>
+            {/if}
+            <div class="meta">
+              {#if yearsLabel}
+                <span>{yearsLabel}</span>
+              {/if}
+              {#if rolesLabel}
+                <span>{rolesLabel}</span>
+              {/if}
+            </div>
+          </div>
+          {#if portrait?.image}
+            <figure class="portrait">
+              <img
+                src={portrait.image}
+                alt={portrait.alt ?? `Portrait of ${personName}`}
+                loading="lazy"
+                decoding="async"
+              />
+              {#if portrait.caption || portrait.source}
+                <figcaption>
+                  {#if portrait.caption}
+                    <span>{portrait.caption}</span>
+                  {/if}
+                  {#if portrait.source}
+                    <a href={portrait.source} target="_blank" rel="noreferrer"
+                      >{sourceLabel(portrait.source)}</a
+                    >
+                  {/if}
+                </figcaption>
+              {/if}
+            </figure>
+          {/if}
         </div>
-      </div>
-    {/if}
-    <div class="masthead-content">
-      <div class="full-info">
-        <p class="eyebrow">Life Data Stories</p>
-        <h1>{personName}</h1>
-        {#if hasPersonSummary}
-          <p class="summary">{personSummary}</p>
-        {:else if hasDataset}
-          <p class="summary placeholder">
-            A summary is not available, but key life events are listed below.
-          </p>
+        <div class="compact-info" aria-live="polite">
+          <span class="name">{personName}</span>
+          {#if yearsLabel}
+            <span class="separator">·</span>
+            <span class="lifespan">{yearsLabel}</span>
+          {/if}
+          <button
+            type="button"
+            class="close-story compact"
+            on:click={closeStory}
+            aria-label="Close story and return to the landing page"
+          >
+            Close
+          </button>
+        </div>
+      </header>
+
+      <main class="slides" aria-live="polite" on:scroll={handleScroll}>
+        {#if totalPanels > 0}
+          {#each slides as slide, index}
+            <section
+              class="slide"
+              class:spacer={slide.type === "spacer"}
+              aria-hidden={slide.type === "spacer"}
+              aria-label={slide.type === "spacer"
+                ? null
+                : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
+            >
+              {#if slide.type !== "spacer"}
+                <div class="content">
+                  <p class="date">{formatDate(slide)}</p>
+                  {#if formatAgeLabel(slide.age)}
+                    <p class="age">{formatAgeLabel(slide.age)}</p>
+                  {/if}
+                  <h2>{slide.title}</h2>
+                  <p class="description">{slide.description}</p>
+                  <ul class="details">
+                    {#if slide.locations?.length}
+                      <li>
+                        <span class="label">Location</span>
+                        <span>{formatLocations(slide.locations)}</span>
+                      </li>
+                    {/if}
+                    {#if slide.sources?.length}
+                      <li>
+                        <span class="label">Sources</span>
+                        <span class="sources">
+                          {#each slide.sources as source}
+                            <a href={source} target="_blank" rel="noreferrer"
+                              >{sourceLabel(source)}</a
+                            >
+                          {/each}
+                        </span>
+                      </li>
+                    {/if}
+                  </ul>
+                </div>
+              {/if}
+            </section>
+          {/each}
         {:else}
-          <p class="summary placeholder">
-            Select a person to explore their life timeline.
+          <section class="slide empty">
+            <div class="content">
+              <h2>Events unavailable</h2>
+              <p>
+                We could not find notable events for {personName}. Try
+                regenerating the dataset.
+              </p>
+            </div>
+          </section>
+        {/if}
+      </main>
+      {#if hasEvents}
+        <div
+          class="indicator"
+          role="img"
+          aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
+          style={`--active-index: ${activeEventIndex}`}
+        >
+          <div class="indicator-track">
+            <span class="indicator-highlight" />
+            {#each eventSlides as _, idx}
+              <span class="dot" class:active={idx === activeEventIndex} />
+            {/each}
+          </div>
+        </div>
+      {/if}
+    </div>
+  {:else}
+    <section class="landing">
+      <div class="landing-hero">
+        <p class="eyebrow">Life Data Stories</p>
+        <h1>Explore remarkable lives through data stories</h1>
+        <p>
+          Choose a person to reveal their biographical timeline, rich with
+          milestones, roles, and sources.
+        </p>
+      </div>
+      <div class="landing-grid">
+        {#if registryEntries.length > 0}
+          {#each registryEntries as entry}
+            <article class="person-card">
+              <h2>{entry.name}</h2>
+              {#if entrySummary(entry)}
+                <p>{entrySummary(entry)}</p>
+              {:else}
+                <p>A summary is not available yet, but the timeline is ready.</p>
+              {/if}
+              <button
+                type="button"
+                on:click={() => openStory(entry.id)}
+                aria-label={`Open life story for ${entry.name}`}
+              >
+                View story
+              </button>
+            </article>
+          {/each}
+        {:else}
+          <p class="landing-empty">
+            Add a person dataset to begin exploring life stories.
           </p>
         {/if}
-        <div class="meta">
-          {#if yearsLabel}
-            <span>{yearsLabel}</span>
-          {/if}
-          {#if rolesLabel}
-            <span>{rolesLabel}</span>
-          {/if}
-        </div>
       </div>
-      {#if portrait?.image}
-        <figure class="portrait">
-          <img
-            src={portrait.image}
-            alt={portrait.alt ?? `Portrait of ${personName}`}
-            loading="lazy"
-            decoding="async"
-          />
-          {#if portrait.caption || portrait.source}
-            <figcaption>
-              {#if portrait.caption}
-                <span>{portrait.caption}</span>
-              {/if}
-              {#if portrait.source}
-                <a href={portrait.source} target="_blank" rel="noreferrer"
-                  >{sourceLabel(portrait.source)}</a
-                >
-              {/if}
-            </figcaption>
-          {/if}
-        </figure>
-      {/if}
-    </div>
-    <div class="compact-info" aria-live="polite">
-      <span class="name">{personName}</span>
-      {#if yearsLabel}
-        <span class="separator">·</span>
-        <span class="lifespan">{yearsLabel}</span>
-      {/if}
-    </div>
-  </header>
-
-  <main class="slides" aria-live="polite" on:scroll={handleScroll}>
-    {#if totalPanels > 0}
-      {#each slides as slide, index}
-        <section
-          class="slide"
-          class:spacer={slide.type === "spacer"}
-          aria-hidden={slide.type === "spacer"}
-          aria-label={slide.type === "spacer"
-            ? null
-            : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
-        >
-          {#if slide.type !== "spacer"}
-            <div class="content">
-              <p class="date">{formatDate(slide)}</p>
-              {#if formatAgeLabel(slide.age)}
-                <p class="age">{formatAgeLabel(slide.age)}</p>
-              {/if}
-              <h2>{slide.title}</h2>
-              <p class="description">{slide.description}</p>
-              <ul class="details">
-                {#if slide.locations?.length}
-                  <li>
-                    <span class="label">Location</span>
-                    <span>{formatLocations(slide.locations)}</span>
-                  </li>
-                {/if}
-                {#if slide.sources?.length}
-                  <li>
-                    <span class="label">Sources</span>
-                    <span class="sources">
-                      {#each slide.sources as source}
-                        <a href={source} target="_blank" rel="noreferrer"
-                          >{sourceLabel(source)}</a
-                        >
-                      {/each}
-                    </span>
-                  </li>
-                {/if}
-              </ul>
-            </div>
-          {/if}
-        </section>
-      {/each}
-    {:else}
-      <section class="slide empty">
-        <div class="content">
-          {#if hasDataset}
-            <h2>Events unavailable</h2>
-            <p>
-              We could not find notable events for {personName}. Try
-              regenerating the dataset.
-            </p>
-          {:else}
-            <h2>Select a person to begin</h2>
-            <p>
-              Choose a person from the dropdown above to load their life events
-              timeline.
-            </p>
-          {/if}
-        </div>
-      </section>
-    {/if}
-  </main>
-  {#if hasEvents}
-    <div
-      class="indicator"
-      role="img"
-      aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
-      style={`--active-index: ${activeEventIndex}`}
-    >
-      <div class="indicator-track">
-        <span class="indicator-highlight" />
-        {#each eventSlides as _, idx}
-          <span class="dot" class:active={idx === activeEventIndex} />
-        {/each}
-      </div>
-    </div>
+    </section>
   {/if}
 </div>
 
@@ -340,6 +394,12 @@
     display: flex;
     flex-direction: column;
     color: #e2e8f0;
+  }
+
+  .story-view {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .masthead {
@@ -360,40 +420,9 @@
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1.25rem;
+    align-items: center;
   }
 
-  .person-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    min-width: min(260px, 100%);
-  }
-
-  .person-selector label {
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(148, 163, 184, 0.85);
-  }
-
-  .person-selector select {
-    appearance: none;
-    padding: 0.55rem 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    background: rgba(15, 23, 42, 0.6);
-    color: #e2e8f0;
-    font-size: 0.95rem;
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease;
-  }
-
-  .person-selector select:focus {
-    outline: none;
-    border-color: #38bdf8;
-    background: rgba(15, 23, 42, 0.8);
-  }
 
   .full-info {
     display: flex;
@@ -442,6 +471,35 @@
     text-overflow: ellipsis;
   }
 
+  .close-story {
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(71, 85, 105, 0.45);
+    color: #e2e8f0;
+    border-radius: 999px;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .close-story:hover,
+  .close-story:focus {
+    border-color: rgba(148, 163, 184, 0.6);
+    background: rgba(71, 85, 105, 0.65);
+    outline: none;
+  }
+
+  .close-story.compact {
+    flex: 0 0 auto;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
   .masthead.compact {
     padding: 0.85rem 1.25rem;
     flex-direction: row;
@@ -463,6 +521,8 @@
   .masthead.compact .compact-info {
     display: flex;
     width: 100%;
+    justify-content: space-between;
+    gap: 0.75rem;
   }
 
   .eyebrow {
@@ -738,6 +798,96 @@
     text-decoration: underline;
   }
 
+  .landing {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 3rem 1.5rem 4rem;
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.92) 0%,
+      rgba(15, 23, 42, 0.88) 40%,
+      rgba(15, 23, 42, 0.82) 100%
+    );
+  }
+
+  .landing-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 60ch;
+  }
+
+  .landing-hero h1 {
+    font-size: 2.1rem;
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .landing-hero p {
+    margin: 0;
+    font-size: 1rem;
+    color: #cbd5f5;
+  }
+
+  .landing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .landing-empty {
+    margin: 0;
+    font-size: 1rem;
+    color: #94a3b8;
+  }
+
+  .person-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: rgba(30, 41, 59, 0.75);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28);
+  }
+
+  .person-card h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  .person-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #e2e8f0;
+  }
+
+  .person-card button {
+    align-self: flex-start;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: #38bdf8;
+    color: #0f172a;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .person-card button:hover,
+  .person-card button:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.45);
+    outline: none;
+  }
+
   @media (min-width: 768px) {
     :global(:root) {
       --header-height: 9.5rem;
@@ -749,10 +899,6 @@
 
     .toolbar {
       margin-bottom: 1.75rem;
-    }
-
-    .person-selector {
-      min-width: 280px;
     }
 
     .masthead-content {
@@ -803,6 +949,19 @@
 
     .portrait img {
       width: 260px;
+    }
+
+    .landing {
+      padding: 4rem 3rem 5rem;
+      gap: 3rem;
+    }
+
+    .landing-hero h1 {
+      font-size: 2.6rem;
+    }
+
+    .landing-grid {
+      gap: 2rem;
     }
   }
 </style>

@@ -186,7 +186,8 @@ def enforce_metadata(payload: Dict[str, Any], page_data: Dict[str, Any]) -> Dict
     for key in ("birth_date", "death_date"):
         value = person.get(key)
         if value:
-            normalized, normalized_precision = normalize_date_value(value, "day")
+            normalized, normalized_precision = normalize_date_value(
+                value, "day")
             if normalized and normalized_precision == "day":
                 person[key] = normalized
             elif normalized:
