@@ -2,6 +2,7 @@
   import dataset from "../data/alan_turing_life_events.json";
 
   const { person, events = [] } = dataset;
+  const portrait = person?.portrait;
 
   const yearsLabel =
     person?.birth_date && person?.death_date
@@ -90,18 +91,42 @@
 
 <div class="shell">
   <header class="masthead" class:compact={activeIndex > 0}>
-    <div class="full-info">
-      <p class="eyebrow">Life Data Stories</p>
-      <h1>{person.name}</h1>
-      <p class="summary">{person.summary}</p>
-      <div class="meta">
-        {#if yearsLabel}
-          <span>{yearsLabel}</span>
-        {/if}
-        {#if rolesLabel}
-          <span>{rolesLabel}</span>
-        {/if}
+    <div class="masthead-content">
+      <div class="full-info">
+        <p class="eyebrow">Life Data Stories</p>
+        <h1>{person.name}</h1>
+        <p class="summary">{person.summary}</p>
+        <div class="meta">
+          {#if yearsLabel}
+            <span>{yearsLabel}</span>
+          {/if}
+          {#if rolesLabel}
+            <span>{rolesLabel}</span>
+          {/if}
+        </div>
       </div>
+      {#if portrait?.image}
+        <figure class="portrait">
+          <img
+            src={portrait.image}
+            alt={portrait.alt ?? `Portrait of ${person.name}`}
+            loading="lazy"
+            decoding="async"
+          />
+          {#if portrait.caption || portrait.source}
+            <figcaption>
+              {#if portrait.caption}
+                <span>{portrait.caption}</span>
+              {/if}
+              {#if portrait.source}
+                <a href={portrait.source} target="_blank" rel="noreferrer"
+                  >{sourceLabel(portrait.source)}</a
+                >
+              {/if}
+            </figcaption>
+          {/if}
+        </figure>
+      {/if}
     </div>
     <div class="compact-info" aria-live="polite">
       <span class="name">{person.name}</span>
@@ -207,6 +232,12 @@
     gap: 0.5rem;
   }
 
+  .masthead-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
   .compact-info {
     display: none;
     align-items: center;
@@ -249,6 +280,10 @@
   }
 
   .masthead.compact .full-info {
+    display: none;
+  }
+
+  .masthead.compact .masthead-content {
     display: none;
   }
 
@@ -398,6 +433,42 @@
     transform: scale(1.2);
   }
 
+  .portrait {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .portrait img {
+    width: min(220px, 80vw);
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+  }
+
+  .portrait figcaption {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .portrait figcaption a {
+    color: #facc15;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .portrait figcaption a:hover,
+  .portrait figcaption a:focus {
+    text-decoration: underline;
+  }
+
   .content {
     display: flex;
     flex-direction: column;
@@ -478,6 +549,12 @@
       padding: 2rem 3rem 1.5rem;
     }
 
+    .masthead-content {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 2.5rem;
+    }
+
     h1 {
       font-size: 2.4rem;
     }
@@ -516,6 +593,10 @@
 
     .compact-info {
       font-size: 1.05rem;
+    }
+
+    .portrait img {
+      width: 260px;
     }
   }
 </style>
