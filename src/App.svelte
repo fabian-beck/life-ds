@@ -1,31 +1,124 @@
 <script>
-  import dataset from "../data/alan_turing_life_events.json";
+  import registry from "../data/persons.json";
 
-  const { person, events = [] } = dataset;
-  const portrait = person?.portrait;
+  const datasetModules = import.meta.glob("../data/people/*_life_events.json", {
+    eager: true,
+    import: "default",
+  });
 
-  const yearsLabel =
-    person?.birth_date && person?.death_date
-      ? `${new Date(person.birth_date).getFullYear()} - ${new Date(person.death_date).getFullYear()}`
-      : person?.birth_date
-        ? `${new Date(person.birth_date).getFullYear()}`
-        : "";
+  const datasetMap = Object.entries(datasetModules).reduce(
+    (accumulator, [path, data]) => {
+      const segments = path.split("/");
+      const fileName = segments[segments.length - 1] ?? "";
+      const id = fileName.replace("_life_events.json", "");
+      accumulator[id] = data;
+      return accumulator;
+    },
+    {}
+  );
 
-  const rolesLabel = Array.isArray(person?.primary_roles)
+  const registryEntries = (() => {
+    const entries = [];
+    const seen = new Set();
+    if (Array.isArray(registry?.people)) {
+      for (const entry of registry.people) {
+        if (!entry?.id) continue;
+        if (!datasetMap[entry.id]) continue;
+        entries.push(entry);
+        seen.add(entry.id);
+      }
+    }
+    for (const id of Object.keys(datasetMap)) {
+      if (seen.has(id)) continue;
+      const data = datasetMap[id];
+      const fallbackName = data?.person?.name ?? id.replace(/_/g, " ");
+      entries.push({
+        id,
+        name: fallbackName,
+        file: `people/${id}_life_events.json`,
+      });
+    }
+    entries.sort((a, b) => a.name.localeCompare(b.name));
+    return entries;
+  })();
+
+  let selectedPersonId =
+    registryEntries[0]?.id ?? Object.keys(datasetMap)[0] ?? null;
+  let previousPersonId = selectedPersonId;
+
+  let dataset = selectedPersonId
+    ? (datasetMap[selectedPersonId] ?? null)
+    : null;
+  let person = dataset?.person ?? {};
+  let events = Array.isArray(dataset?.events) ? dataset.events : [];
+  let portrait = person?.portrait;
+  let personName = person?.name ?? "Select a person";
+  let personSummary = person?.summary ?? "";
+  let yearsLabel = "";
+  let rolesLabel = "";
+  let eventSlides = [];
+  let totalSlides = 0;
+  let slides = [];
+  let totalPanels = 0;
+  let hasEvents = totalSlides > 0;
+  let hasDataset = Boolean(dataset);
+  let hasPersonSummary = Boolean(personSummary);
+  let activeIndex = 0;
+  let activeEventIndex = -1;
+
+  const formatters = {
+    day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
+    month: new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }),
+    year: new Intl.DateTimeFormat("en", { year: "numeric" }),
+  };
+
+  $: dataset = selectedPersonId ? (datasetMap[selectedPersonId] ?? null) : null;
+  $: person = dataset?.person ?? {};
+  $: events = Array.isArray(dataset?.events) ? dataset.events : [];
+  $: portrait = person?.portrait;
+  $: personName = person?.name ?? "Select a person";
+  $: personSummary = person?.summary ?? "";
+  $: yearsLabel = computeYearsLabel(person);
+  $: rolesLabel = Array.isArray(person?.primary_roles)
     ? person.primary_roles.join(" · ")
     : "";
-
-  const eventSlides = [...events]
+  $: eventSlides = events
+    .slice()
     .sort((a, b) => toTimestamp(a) - toTimestamp(b))
     .map((event, eventIndex) => ({ ...event, eventIndex }));
-  const slides = [{ type: "spacer" }, ...eventSlides];
-  const totalSlides = eventSlides.length;
-  const totalPanels = slides.length;
-  let activeIndex = 0;
+  $: totalSlides = eventSlides.length;
+  $: slides = totalSlides > 0 ? [{ type: "spacer" }, ...eventSlides] : [];
+  $: totalPanels = slides.length;
+  $: hasEvents = totalSlides > 0;
+  $: hasDataset = Boolean(dataset);
+  $: hasPersonSummary = Boolean(personSummary);
   $: activeEventIndex =
     totalSlides > 0
       ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
       : -1;
+  $: if (selectedPersonId !== previousPersonId) {
+    activeIndex = 0;
+    previousPersonId = selectedPersonId;
+  }
+
+  function computeYearsLabel(currentPerson) {
+    if (!currentPerson) return "";
+    const { birth_date: birth, death_date: death } = currentPerson;
+    if (birth && death) {
+      const birthYear = new Date(birth).getFullYear();
+      const deathYear = new Date(death).getFullYear();
+      if (!Number.isNaN(birthYear) && !Number.isNaN(deathYear)) {
+        return `${birthYear} - ${deathYear}`;
+      }
+    }
+    if (birth) {
+      const birthYear = new Date(birth).getFullYear();
+      if (!Number.isNaN(birthYear)) {
+        return `${birthYear}`;
+      }
+    }
+    return "";
+  }
 
   function toTimestamp(event) {
     if (!event?.date) return Number.POSITIVE_INFINITY;
@@ -38,12 +131,6 @@
           : `${event.date}T00:00:00Z`;
     return Date.parse(iso);
   }
-
-  const formatters = {
-    day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
-    month: new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }),
-    year: new Intl.DateTimeFormat("en", { year: "numeric" }),
-  };
 
   function formatDate(event) {
     if (!event?.date) return "Date unavailable";
@@ -91,11 +178,33 @@
 
 <div class="shell">
   <header class="masthead" class:compact={activeIndex > 0}>
+    {#if registryEntries.length > 0}
+      <div class="toolbar">
+        <div class="person-selector">
+          <label for="person-select">Select person</label>
+          <select id="person-select" bind:value={selectedPersonId}>
+            {#each registryEntries as entry}
+              <option value={entry.id}>{entry.name}</option>
+            {/each}
+          </select>
+        </div>
+      </div>
+    {/if}
     <div class="masthead-content">
       <div class="full-info">
         <p class="eyebrow">Life Data Stories</p>
-        <h1>{person.name}</h1>
-        <p class="summary">{person.summary}</p>
+        <h1>{personName}</h1>
+        {#if hasPersonSummary}
+          <p class="summary">{personSummary}</p>
+        {:else if hasDataset}
+          <p class="summary placeholder">
+            A summary is not available, but key life events are listed below.
+          </p>
+        {:else}
+          <p class="summary placeholder">
+            Select a person to explore their life timeline.
+          </p>
+        {/if}
         <div class="meta">
           {#if yearsLabel}
             <span>{yearsLabel}</span>
@@ -109,7 +218,7 @@
         <figure class="portrait">
           <img
             src={portrait.image}
-            alt={portrait.alt ?? `Portrait of ${person.name}`}
+            alt={portrait.alt ?? `Portrait of ${personName}`}
             loading="lazy"
             decoding="async"
           />
@@ -129,7 +238,7 @@
       {/if}
     </div>
     <div class="compact-info" aria-live="polite">
-      <span class="name">{person.name}</span>
+      <span class="name">{personName}</span>
       {#if yearsLabel}
         <span class="separator">·</span>
         <span class="lifespan">{yearsLabel}</span>
@@ -138,49 +247,69 @@
   </header>
 
   <main class="slides" aria-live="polite" on:scroll={handleScroll}>
-    {#each slides as slide, index}
-      <section
-        class="slide"
-        class:spacer={slide.type === "spacer"}
-        aria-hidden={slide.type === "spacer"}
-        aria-label={slide.type === "spacer"
-          ? null
-          : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
-      >
-        {#if slide.type !== "spacer"}
-          <div class="content">
-            <p class="date">{formatDate(slide)}</p>
-            {#if formatAgeLabel(slide.age)}
-              <p class="age">{formatAgeLabel(slide.age)}</p>
-            {/if}
-            <h2>{slide.title}</h2>
-            <p class="description">{slide.description}</p>
-            <ul class="details">
-              {#if slide.locations?.length}
-                <li>
-                  <span class="label">Location</span>
-                  <span>{formatLocations(slide.locations)}</span>
-                </li>
+    {#if totalPanels > 0}
+      {#each slides as slide, index}
+        <section
+          class="slide"
+          class:spacer={slide.type === "spacer"}
+          aria-hidden={slide.type === "spacer"}
+          aria-label={slide.type === "spacer"
+            ? null
+            : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
+        >
+          {#if slide.type !== "spacer"}
+            <div class="content">
+              <p class="date">{formatDate(slide)}</p>
+              {#if formatAgeLabel(slide.age)}
+                <p class="age">{formatAgeLabel(slide.age)}</p>
               {/if}
-              {#if slide.sources?.length}
-                <li>
-                  <span class="label">Sources</span>
-                  <span class="sources">
-                    {#each slide.sources as source}
-                      <a href={source} target="_blank" rel="noreferrer"
-                        >{sourceLabel(source)}</a
-                      >
-                    {/each}
-                  </span>
-                </li>
-              {/if}
-            </ul>
-          </div>
-        {/if}
+              <h2>{slide.title}</h2>
+              <p class="description">{slide.description}</p>
+              <ul class="details">
+                {#if slide.locations?.length}
+                  <li>
+                    <span class="label">Location</span>
+                    <span>{formatLocations(slide.locations)}</span>
+                  </li>
+                {/if}
+                {#if slide.sources?.length}
+                  <li>
+                    <span class="label">Sources</span>
+                    <span class="sources">
+                      {#each slide.sources as source}
+                        <a href={source} target="_blank" rel="noreferrer"
+                          >{sourceLabel(source)}</a
+                        >
+                      {/each}
+                    </span>
+                  </li>
+                {/if}
+              </ul>
+            </div>
+          {/if}
+        </section>
+      {/each}
+    {:else}
+      <section class="slide empty">
+        <div class="content">
+          {#if hasDataset}
+            <h2>Events unavailable</h2>
+            <p>
+              We could not find notable events for {personName}. Try
+              regenerating the dataset.
+            </p>
+          {:else}
+            <h2>Select a person to begin</h2>
+            <p>
+              Choose a person from the dropdown above to load their life events
+              timeline.
+            </p>
+          {/if}
+        </div>
       </section>
-    {/each}
+    {/if}
   </main>
-  {#if totalSlides > 0}
+  {#if hasEvents}
     <div
       class="indicator"
       role="img"
@@ -224,6 +353,46 @@
     top: 0;
     z-index: 2;
     transition: padding 0.25s ease;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .person-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: min(260px, 100%);
+  }
+
+  .person-selector label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(148, 163, 184, 0.85);
+  }
+
+  .person-selector select {
+    appearance: none;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    background: rgba(15, 23, 42, 0.6);
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .person-selector select:focus {
+    outline: none;
+    border-color: #38bdf8;
+    background: rgba(15, 23, 42, 0.8);
   }
 
   .full-info {
@@ -279,6 +448,10 @@
     align-items: center;
   }
 
+  .masthead.compact .toolbar {
+    display: none;
+  }
+
   .masthead.compact .full-info {
     display: none;
   }
@@ -313,6 +486,11 @@
     transition:
       opacity 0.25s ease,
       transform 0.25s ease;
+  }
+
+  .summary.placeholder {
+    color: #94a3b8;
+    font-style: italic;
   }
 
   .meta {
@@ -361,6 +539,26 @@
     background: transparent;
     border-right: none;
     pointer-events: none;
+  }
+
+  .slide.empty {
+    align-items: center;
+    text-align: center;
+  }
+
+  .slide.empty .content {
+    max-width: 48ch;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+
+  .slide.empty h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .slide.empty p {
+    color: #94a3b8;
   }
 
   .indicator {
@@ -547,6 +745,14 @@
 
     .masthead {
       padding: 2rem 3rem 1.5rem;
+    }
+
+    .toolbar {
+      margin-bottom: 1.75rem;
+    }
+
+    .person-selector {
+      min-width: 280px;
     }
 
     .masthead-content {
