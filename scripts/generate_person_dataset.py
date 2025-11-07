@@ -8,7 +8,7 @@ import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List, Set
 from urllib.parse import quote
 
 import requests
@@ -80,7 +80,7 @@ def wikipedia_headers() -> Dict[str, str]:
     return {"User-Agent": user_agent}
 
 
-def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
+def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
     params = {
         "action": "query",
         "format": "json",
@@ -106,6 +106,95 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
     return page
+
+
+def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
+    params = {
+        "action": "query",
+        "format": "json",
+        "list": "search",
+        "srsearch": query,
+        "srlimit": limit,
+        "srnamespace": 0,
+    }
+    response = requests.get(
+        MEDIAWIKI_API,
+        params=params,
+        timeout=30,
+        headers=wikipedia_headers(),
+    )
+    response.raise_for_status()
+    data = response.json()
+    results = data.get("query", {}).get("search", [])
+    titles: List[str] = [
+        item.get("title")
+        for item in results
+        if item.get("title")
+    ]
+    suggestion = (
+        data.get("query", {})
+        .get("searchinfo", {})
+        .get("suggestion")
+    )
+    if suggestion:
+        titles.append(suggestion)
+    # Preserve the reported order while removing duplicates later when enqueuing
+    return titles
+
+
+def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
+    candidates: List[str] = []
+    seen: Set[str] = set()
+    attempted: List[str] = []
+
+    def add_candidate(value: str) -> None:
+        candidate = (value or "").strip()
+        if not candidate:
+            return
+        key = candidate.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append(candidate)
+
+    add_candidate(title)
+    normalized_title = title.replace("_", " ")
+    if normalized_title.casefold() != title.casefold():
+        add_candidate(normalized_title)
+    parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
+    if parenthetical and parenthetical.casefold() not in {title.casefold(), normalized_title.casefold()}:
+        add_candidate(parenthetical)
+
+    index = 0
+    search_enqueued = False
+    errors: List[str] = []
+
+    while True:
+        while index < len(candidates):
+            candidate = candidates[index]
+            index += 1
+            attempted.append(candidate)
+            try:
+                return _fetch_wikipedia_page(candidate)
+            except ValueError as error:
+                errors.append(str(error))
+
+        if search_enqueued:
+            break
+
+        search_enqueued = True
+        for suggestion in wikipedia_search_titles(title):
+            add_candidate(suggestion)
+
+    attempted_titles = ", ".join(attempted) if attempted else title
+    error_details = "; ".join(dict.fromkeys(errors)) if errors else ""
+    message = (
+        "Unable to locate a Wikipedia page for "
+        f"'{title}'. Tried titles: {attempted_titles}."
+    )
+    if error_details:
+        message = f"{message} Details: {error_details}."
+    raise ValueError(message)
 
 
 def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
