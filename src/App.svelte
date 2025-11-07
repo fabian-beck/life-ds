@@ -1,69 +1,76 @@
 <script>
-  import dataset from '../data/alan_turing_life_events.json';
+  import dataset from "../data/alan_turing_life_events.json";
 
   const { person, events = [] } = dataset;
 
-  const yearsLabel = person?.birth_date && person?.death_date
-    ? `${new Date(person.birth_date).getFullYear()} - ${new Date(person.death_date).getFullYear()}`
-    : person?.birth_date
-    ? `${new Date(person.birth_date).getFullYear()}`
-    : '';
+  const yearsLabel =
+    person?.birth_date && person?.death_date
+      ? `${new Date(person.birth_date).getFullYear()} - ${new Date(person.death_date).getFullYear()}`
+      : person?.birth_date
+        ? `${new Date(person.birth_date).getFullYear()}`
+        : "";
 
   const rolesLabel = Array.isArray(person?.primary_roles)
-    ? person.primary_roles.join(' · ')
-    : '';
+    ? person.primary_roles.join(" · ")
+    : "";
 
-  const eventSlides = [...events].sort((a, b) => toTimestamp(a) - toTimestamp(b));
-  const slides = [{ type: 'spacer' }, ...eventSlides];
+  const eventSlides = [...events]
+    .sort((a, b) => toTimestamp(a) - toTimestamp(b))
+    .map((event, eventIndex) => ({ ...event, eventIndex }));
+  const slides = [{ type: "spacer" }, ...eventSlides];
   const totalSlides = eventSlides.length;
   const totalPanels = slides.length;
   let activeIndex = 0;
+  $: activeEventIndex =
+    totalSlides > 0
+      ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
+      : -1;
 
   function toTimestamp(event) {
     if (!event?.date) return Number.POSITIVE_INFINITY;
-    const precision = event.date_precision ?? 'day';
+    const precision = event.date_precision ?? "day";
     const iso =
-      precision === 'year'
+      precision === "year"
         ? `${event.date}-01-01T00:00:00Z`
-        : precision === 'month'
-        ? `${event.date}-01T00:00:00Z`
-        : `${event.date}T00:00:00Z`;
+        : precision === "month"
+          ? `${event.date}-01T00:00:00Z`
+          : `${event.date}T00:00:00Z`;
     return Date.parse(iso);
   }
 
   const formatters = {
-    day: new Intl.DateTimeFormat('en', { dateStyle: 'long' }),
-    month: new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long' }),
-    year: new Intl.DateTimeFormat('en', { year: 'numeric' })
+    day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
+    month: new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }),
+    year: new Intl.DateTimeFormat("en", { year: "numeric" }),
   };
 
   function formatDate(event) {
-    if (!event?.date) return 'Date unavailable';
-    const precision = event.date_precision ?? 'day';
+    if (!event?.date) return "Date unavailable";
+    const precision = event.date_precision ?? "day";
     const formatter = formatters[precision] ?? formatters.day;
     const iso =
-      precision === 'year'
+      precision === "year"
         ? `${event.date}-01-01T00:00:00Z`
-        : precision === 'month'
-        ? `${event.date}-01T00:00:00Z`
-        : `${event.date}T00:00:00Z`;
+        : precision === "month"
+          ? `${event.date}-01T00:00:00Z`
+          : `${event.date}T00:00:00Z`;
     return formatter.format(new Date(iso));
   }
 
   function formatAgeLabel(age) {
     if (age === null || age === undefined) return null;
-    if (age === 0) return 'At birth';
+    if (age === 0) return "At birth";
     return `Age ${age}`;
   }
 
   function formatLocations(locations = []) {
-    return locations.join(' · ');
+    return locations.join(" · ");
   }
 
   function sourceLabel(url) {
     try {
       const { hostname } = new URL(url);
-      return hostname.replace(/^www\./, '');
+      return hostname.replace(/^www\./, "");
     } catch (error) {
       return url;
     }
@@ -109,14 +116,13 @@
     {#each slides as slide, index}
       <section
         class="slide"
-        class:spacer={slide.type === 'spacer'}
-        aria-hidden={slide.type === 'spacer'}
-        aria-label={slide.type === 'spacer'
+        class:spacer={slide.type === "spacer"}
+        aria-hidden={slide.type === "spacer"}
+        aria-label={slide.type === "spacer"
           ? null
-          : `Slide ${index} of ${totalSlides}: ${slide.title}`}
+          : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
       >
-        {#if slide.type !== 'spacer'}
-          <div class="count">{index} / {totalSlides}</div>
+        {#if slide.type !== "spacer"}
           <div class="content">
             <p class="date">{formatDate(slide)}</p>
             {#if formatAgeLabel(slide.age)}
@@ -136,7 +142,9 @@
                   <span class="label">Sources</span>
                   <span class="sources">
                     {#each slide.sources as source}
-                      <a href={source} target="_blank" rel="noreferrer">{sourceLabel(source)}</a>
+                      <a href={source} target="_blank" rel="noreferrer"
+                        >{sourceLabel(source)}</a
+                      >
                     {/each}
                   </span>
                 </li>
@@ -147,6 +155,21 @@
       </section>
     {/each}
   </main>
+  {#if totalSlides > 0}
+    <div
+      class="indicator"
+      role="img"
+      aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
+      style={`--active-index: ${activeEventIndex}`}
+    >
+      <div class="indicator-track">
+        <span class="indicator-highlight" />
+        {#each eventSlides as _, idx}
+          <span class="dot" class:active={idx === activeEventIndex} />
+        {/each}
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -252,7 +275,9 @@
     margin: 0;
     font-size: 0.95rem;
     color: #cbd5f5;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
   }
 
   .meta {
@@ -276,6 +301,7 @@
     overflow-y: hidden;
     height: calc(100vh - var(--header-height));
     scroll-behavior: smooth;
+    position: relative;
   }
 
   .slide {
@@ -288,7 +314,11 @@
     justify-content: center;
     position: relative;
     gap: 1.25rem;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.6) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.82) 0%,
+      rgba(15, 23, 42, 0.6) 100%
+    );
     border-right: 1px solid rgba(148, 163, 184, 0.12);
   }
 
@@ -298,13 +328,74 @@
     pointer-events: none;
   }
 
-  .count {
+  .indicator {
+    --dot-size: 0.55rem;
+    --dot-gap: 0.5rem;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .indicator::after {
+    content: "";
     position: absolute;
-    top: 1.25rem;
-    right: 1.5rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: rgba(148, 163, 184, 0.85);
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    pointer-events: none;
+  }
+
+  .indicator-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--dot-gap);
+  }
+
+  .indicator-highlight {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 9999px;
+    background: rgba(56, 189, 248, 0.4);
+    transform: translateX(
+        calc(var(--active-index) * (var(--dot-size) + var(--dot-gap)))
+      )
+      translateY(-50%);
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.3s ease;
+    z-index: 0;
+  }
+
+  .dot {
+    position: relative;
+    z-index: 1;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 9999px;
+    background: rgba(148, 163, 184, 0.3);
+    transition:
+      background-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .dot.active {
+    background: #38bdf8;
+    transform: scale(1.2);
   }
 
   .content {
