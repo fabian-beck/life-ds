@@ -1,5 +1,12 @@
 <script>
   import { createEventDispatcher, tick } from "svelte";
+  import {
+    mdiChevronLeft,
+    mdiChevronRight,
+    mdiClose,
+    mdiMapMarkerOutline,
+    mdiLinkVariant,
+  } from "@mdi/js";
 
   export let dataset = null;
   export let activeIndex = 0;
@@ -174,7 +181,15 @@
           on:click={handleClose}
           aria-label="Close story and return to the landing page"
         >
-          Close story
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            role="presentation"
+            aria-hidden="true"
+          >
+            <path d={mdiClose} />
+          </svg>
+          <span class="btn-label">Close story</span>
         </button>
       </div>
     {/if}
@@ -233,7 +248,14 @@
         on:click={handleClose}
         aria-label="Close story and return to the landing page"
       >
-        Close
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          role="presentation"
+          aria-hidden="true"
+        >
+          <path d={mdiClose} />
+        </svg>
       </button>
     </div>
   </header>
@@ -266,13 +288,33 @@
                 <ul class="details">
                   {#if slide.locations?.length}
                     <li>
-                      <span class="label">Location</span>
+                      <span class="label">
+                        <svg
+                          class="icon icon-inline"
+                          viewBox="0 0 24 24"
+                          role="presentation"
+                          aria-hidden="true"
+                        >
+                          <path d={mdiMapMarkerOutline} />
+                        </svg>
+                        <span class="label-text">Location</span>
+                      </span>
                       <span>{formatLocations(slide.locations)}</span>
                     </li>
                   {/if}
                   {#if slide.sources?.length}
                     <li>
-                      <span class="label">Sources</span>
+                      <span class="label">
+                        <svg
+                          class="icon icon-inline"
+                          viewBox="0 0 24 24"
+                          role="presentation"
+                          aria-hidden="true"
+                        >
+                          <path d={mdiLinkVariant} />
+                        </svg>
+                        <span class="label-text">Sources</span>
+                      </span>
                       <span class="sources">
                         {#each slide.sources as source}
                           <a href={source} target="_blank" rel="noreferrer"
@@ -318,7 +360,14 @@
             aria-label="Go to previous slide"
             disabled={activeIndex === 0}
           >
-            <span aria-hidden="true">&lt;</span>
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiChevronLeft} />
+            </svg>
           </button>
         {/if}
         <div class="indicator-track">
@@ -335,7 +384,14 @@
             aria-label="Go to next slide"
             disabled={activeIndex >= totalPanels - 1}
           >
-            <span aria-hidden="true">&gt;</span>
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiChevronRight} />
+            </svg>
           </button>
         {/if}
       </div>
@@ -437,6 +493,9 @@
     font-weight: 600;
     cursor: pointer;
     flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     transition:
       border-color 0.2s ease,
       background-color 0.2s ease,
@@ -454,6 +513,28 @@
     flex: 0 0 auto;
     padding: 0.35rem 0.75rem;
     font-size: 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .close-story .btn-label {
+    line-height: 1;
+  }
+
+  .icon {
+    width: 1.1em;
+    height: 1.1em;
+    fill: currentColor;
+    flex: 0 0 auto;
+  }
+
+  .nav-btn .icon {
+    width: 1.2em;
+    height: 1.2em;
+  }
+
+  .icon-inline {
+    width: 1em;
+    height: 1em;
   }
 
   .masthead.compact {
@@ -794,6 +875,13 @@
     letter-spacing: 0.08em;
     font-size: 0.7rem;
     color: rgba(148, 163, 184, 0.8);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .label-text {
+    line-height: 1;
   }
 
   .sources {
