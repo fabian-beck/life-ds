@@ -3,6 +3,11 @@
 
   export let entries = [];
   export let getSummary = () => "";
+  export let getStyle = () => ({});
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
 
   const dispatch = createEventDispatcher();
 
@@ -30,6 +35,24 @@
     const last = parts[parts.length - 1].charAt(0).toUpperCase();
     return `${first}${last}`;
   }
+
+  function cardStyleVars(style) {
+    if (!style || typeof style !== "object") return "";
+    const segments = [];
+    if (style.background) segments.push(`--card-bg: ${style.background}`);
+    if (style.primary) segments.push(`--card-primary: ${style.primary}`);
+    if (style.secondary) segments.push(`--card-secondary: ${style.secondary}`);
+    if (style.backgroundPatternDataUrl) {
+      segments.push(
+        `--card-pattern-image: url(\"${style.backgroundPatternDataUrl}\")`
+      );
+    }
+    if (typeof style.patternOpacity === "number") {
+      const opacity = clamp(style.patternOpacity, 0, 1);
+      segments.push(`--card-pattern-opacity: ${opacity}`);
+    }
+    return segments.join("; ");
+  }
 </script>
 
 <section class="landing">
@@ -45,7 +68,8 @@
     {#if entries.length > 0}
       {#each entries as entry (entry.id)}
         {@const summary = summaryFor(entry)}
-        <article class="person-card">
+        {@const style = entry.style ?? getStyle(entry.id)}
+        <article class="person-card" style={cardStyleVars(style)}>
           <figure class="person-thumb">
             {#if entry?.portrait?.image}
               <img
@@ -160,11 +184,7 @@
     gap: 1rem;
     padding: 1.25rem 1.35rem;
     border-radius: 1rem;
-    background: linear-gradient(
-      180deg,
-      rgba(30, 41, 59, 0.88) 0%,
-      rgba(15, 23, 42, 0.95) 100%
-    );
+    background-color: var(--card-bg, rgba(15, 23, 42, 0.94));
     border: 1px solid rgba(148, 163, 184, 0.18);
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.32);
     transition:
@@ -172,13 +192,47 @@
       border-color 0.22s ease,
       box-shadow 0.22s ease;
     min-height: 0;
+    overflow: hidden;
+    color: #e2e8f0;
+    isolation: isolate;
+  }
+
+  .person-card::before,
+  .person-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .person-card::before {
+    background-image: var(--card-pattern-image, none);
+    background-size: 220px 220px;
+    background-repeat: repeat;
+    opacity: var(--card-pattern-opacity, 0.18);
+    mix-blend-mode: soft-light;
+  }
+
+  .person-card::after {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(0, 0, 0, 0.48) 100%
+    );
   }
 
   .person-card:hover,
   .person-card:focus-within {
     transform: translateY(-4px);
-    border-color: rgba(56, 189, 248, 0.45);
+    border-color: var(--card-secondary, rgba(56, 189, 248, 0.45));
     box-shadow: 0 18px 36px rgba(15, 23, 42, 0.42);
+  }
+
+  .person-card > * {
+    position: relative;
+    z-index: 1;
   }
 
   .person-thumb {
@@ -210,11 +264,11 @@
     justify-content: center;
     background: radial-gradient(
         circle at 30% 30%,
-        rgba(56, 189, 248, 0.35),
-        transparent 65%
+        var(--card-secondary, rgba(56, 189, 248, 0.35)),
+        transparent 70%
       ),
-      rgba(30, 41, 59, 0.8);
-    color: #e0f2fe;
+      rgba(30, 41, 59, 0.82);
+    color: var(--card-secondary, #e0f2fe);
     font-weight: 700;
     font-size: 1.2rem;
     letter-spacing: 0.08em;
@@ -237,6 +291,7 @@
     margin: 0;
     font-size: 1.2rem;
     line-height: 1.2;
+    color: var(--card-primary, #f8fafc);
   }
 
   .card-meta {
@@ -245,7 +300,7 @@
     flex-wrap: wrap;
     gap: 0.45rem;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: rgba(226, 232, 240, 0.72);
   }
 
   .card-meta .meta-separator {
@@ -255,7 +310,7 @@
   .card-summary {
     margin: 0;
     font-size: 0.92rem;
-    color: #cbd5f5;
+    color: rgba(203, 213, 225, 0.92);
     line-height: 1.45;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -276,9 +331,9 @@
     align-self: flex-start;
     padding: 0.45rem 1rem;
     border-radius: 999px;
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    border: 1px solid var(--card-secondary, rgba(56, 189, 248, 0.5));
     background: rgba(56, 189, 248, 0.16);
-    color: #38bdf8;
+    color: var(--card-secondary, #38bdf8);
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -292,8 +347,8 @@
 
   .card-action:hover,
   .card-action:focus {
-    background: rgba(56, 189, 248, 0.35);
-    border-color: rgba(56, 189, 248, 0.7);
+    background: var(--card-secondary, #38bdf8);
+    border-color: var(--card-secondary, #38bdf8);
     color: #0f172a;
     transform: translateY(-1px);
     outline: none;
@@ -303,7 +358,7 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.75rem;
-    color: #38bdf8;
+    color: var(--card-secondary, #38bdf8);
     margin: 0;
   }
 

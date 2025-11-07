@@ -2,11 +2,124 @@
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import registry from "../data/persons.json";
+  import styleRegistry from "../data/person_styles.json";
 
   const datasetModules = import.meta.glob("../data/people/*_life_events.json", {
     eager: true,
     import: "default",
   });
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function isHexColor(value) {
+    return typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value.trim());
+  }
+
+  function svgToDataUrl(svg) {
+    if (typeof svg !== "string") return null;
+    const trimmed = svg.trim();
+    if (!trimmed.startsWith("<svg")) {
+      return null;
+    }
+    const encoded = encodeURIComponent(trimmed).replace(/%0A/g, "");
+    return `data:image/svg+xml,${encoded}`;
+  }
+
+  function normaliseStyle(raw) {
+    if (!raw || typeof raw !== "object") return null;
+    const result = {};
+    if (isHexColor(raw.primary)) {
+      result.primary = raw.primary.trim().toUpperCase();
+    }
+    if (isHexColor(raw.secondary)) {
+      result.secondary = raw.secondary.trim().toUpperCase();
+    }
+    if (isHexColor(raw.background)) {
+      result.background = raw.background.trim().toUpperCase();
+    }
+    if (typeof raw.background_pattern_svg === "string") {
+      const svg = raw.background_pattern_svg.trim();
+      if (svg.includes("<svg")) {
+        result.backgroundPatternSvg = svg;
+        const dataUrl = svgToDataUrl(svg);
+        if (dataUrl) {
+          result.backgroundPatternDataUrl = dataUrl;
+        }
+      }
+    }
+    if (
+      typeof raw.pattern_opacity === "number" &&
+      Number.isFinite(raw.pattern_opacity)
+    ) {
+      result.patternOpacity = clamp(raw.pattern_opacity, 0, 1);
+    }
+    return Object.keys(result).length > 0 ? result : null;
+  }
+
+  const defaultStyleBase = {
+    primary: "#38BDF8",
+    secondary: "#FACC15",
+    background: "#0F172A",
+    background_pattern_svg:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" fill="#000000"/><path fill="#FFFFFF" d="M0 0h20v20H0zM40 40h20v20H40zM80 0h20v20H80zM120 40h20v20h-20zM0 80h20v20H0zM80 80h20v20H80zM40 120h20v20H40zM120 120h20v20h-20z"/></svg>',
+    pattern_opacity: 0.16,
+  };
+
+  const defaultStyle = (() => {
+    const normalised = normaliseStyle(defaultStyleBase) ?? {};
+    return {
+      primary: normalised.primary ?? defaultStyleBase.primary,
+      secondary: normalised.secondary ?? defaultStyleBase.secondary,
+      background: normalised.background ?? defaultStyleBase.background,
+      backgroundPatternSvg:
+        normalised.backgroundPatternSvg ??
+        defaultStyleBase.background_pattern_svg,
+      backgroundPatternDataUrl:
+        normalised.backgroundPatternDataUrl ??
+        svgToDataUrl(defaultStyleBase.background_pattern_svg),
+      patternOpacity:
+        normalised.patternOpacity ?? defaultStyleBase.pattern_opacity,
+    };
+  })();
+
+  const personStyles = (() => {
+    const rawStyles =
+      styleRegistry && typeof styleRegistry === "object"
+        ? styleRegistry.styles
+        : null;
+    if (!rawStyles || typeof rawStyles !== "object") {
+      return {};
+    }
+    return Object.entries(rawStyles).reduce((accumulator, [key, value]) => {
+      const normalised = normaliseStyle(value);
+      if (normalised) {
+        accumulator[key] = normalised;
+      }
+      return accumulator;
+    }, {});
+  })();
+
+  function styleFor(id) {
+    if (!id) {
+      return { ...defaultStyle };
+    }
+    const override = personStyles[id];
+    if (!override) {
+      return { ...defaultStyle };
+    }
+    return {
+      ...defaultStyle,
+      ...override,
+      backgroundPatternSvg:
+        override.backgroundPatternSvg ?? defaultStyle.backgroundPatternSvg,
+      backgroundPatternDataUrl:
+        override.backgroundPatternDataUrl ??
+        defaultStyle.backgroundPatternDataUrl,
+      patternOpacity: override.patternOpacity ?? defaultStyle.patternOpacity,
+    };
+  }
 
   const datasetMap = Object.entries(datasetModules).reduce(
     (accumulator, [path, data]) => {
@@ -56,6 +169,7 @@
       portrait: person.portrait ?? null,
       lifespan: computeYearsLabel(person),
       primaryRoles: derivePrimaryRoles(person),
+      style: styleFor(baseEntry.id),
     };
   }
 
@@ -118,12 +232,14 @@
       bind:activeIndex
       {dataset}
       hasRegistryEntries={registryEntries.length > 0}
+      styleConfig={styleFor(selectedPersonId)}
       on:close={closeStory}
     />
   {:else}
     <Landing
       entries={registryEntries}
       getSummary={entrySummary}
+      getStyle={(id) => styleFor(id)}
       on:selectPerson={(event) => openStory(event.detail)}
     />
   {/if}

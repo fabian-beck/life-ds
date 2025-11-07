@@ -11,6 +11,7 @@
   export let dataset = null;
   export let activeIndex = 0;
   export let hasRegistryEntries = false;
+  export let styleConfig = null;
 
   const dispatch = createEventDispatcher();
 
@@ -19,6 +20,28 @@
     month: new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }),
     year: new Intl.DateTimeFormat("en", { year: "numeric" }),
   };
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function storyStyleVars(style) {
+    if (!style || typeof style !== "object") return "";
+    const segments = [];
+    if (style.background) segments.push(`--story-bg: ${style.background}`);
+    if (style.primary) segments.push(`--story-primary: ${style.primary}`);
+    if (style.secondary) segments.push(`--story-secondary: ${style.secondary}`);
+    if (style.backgroundPatternDataUrl) {
+      segments.push(
+        `--story-pattern-image: url(\"${style.backgroundPatternDataUrl}\")`
+      );
+    }
+    if (typeof style.patternOpacity === "number") {
+      const opacity = clamp(style.patternOpacity, 0, 1);
+      segments.push(`--story-pattern-opacity: ${opacity}`);
+    }
+    return segments.join("; ");
+  }
 
   $: person = dataset?.person ?? {};
   $: events = Array.isArray(dataset?.events) ? dataset.events : [];
@@ -171,7 +194,11 @@
   }
 </script>
 
-<div class="story-view" on:wheel={handleWheel}>
+<div
+  class="story-view"
+  style={storyStyleVars(styleConfig)}
+  on:wheel={handleWheel}
+>
   <header class="masthead" class:compact={activeIndex > 0}>
     {#if hasRegistryEntries}
       <div class="toolbar">
@@ -404,13 +431,40 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+    position: relative;
+    background-color: var(--story-bg, #0f172a);
+    color: #e2e8f0;
+    isolation: isolate;
+  }
+
+  .story-view::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: var(--story-pattern-image, none);
+    background-size: 260px 260px;
+    background-repeat: repeat;
+    opacity: var(--story-pattern-opacity, 0.16);
+    mix-blend-mode: soft-light;
+    z-index: 0;
+  }
+
+  .story-view > * {
+    position: relative;
+    z-index: 1;
   }
 
   .masthead {
     padding: 1.75rem 1.5rem 1.25rem;
     display: flex;
     flex-direction: column;
-    background: rgba(15, 23, 42, 0.92);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(0, 0, 0, 0.55) 100%
+      ),
+      var(--story-bg, rgba(15, 23, 42, 0.92));
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(148, 163, 184, 0.16);
     position: sticky;
@@ -484,9 +538,9 @@
   }
 
   .close-story {
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    background: rgba(71, 85, 105, 0.45);
-    color: #e2e8f0;
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--story-primary, #e2e8f0);
     border-radius: 999px;
     padding: 0.45rem 0.95rem;
     font-size: 0.85rem;
@@ -504,8 +558,8 @@
 
   .close-story:hover,
   .close-story:focus {
-    border-color: rgba(148, 163, 184, 0.6);
-    background: rgba(71, 85, 105, 0.65);
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
+    background: rgba(255, 255, 255, 0.12);
     outline: none;
   }
 
@@ -566,7 +620,7 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.75rem;
-    color: #38bdf8;
+    color: var(--story-secondary, #38bdf8);
     margin: 0;
   }
 
@@ -574,12 +628,13 @@
     margin: 0;
     font-size: 1.9rem;
     line-height: 1.1;
+    color: var(--story-primary, #f8fafc);
   }
 
   .summary {
     margin: 0;
     font-size: 0.95rem;
-    color: #cbd5f5;
+    color: rgba(226, 232, 240, 0.88);
     transition:
       opacity 0.25s ease,
       transform 0.25s ease;
@@ -595,7 +650,7 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: rgba(148, 163, 184, 0.85);
     transition: font-size 0.25s ease;
   }
 
@@ -631,12 +686,28 @@
     justify-content: center;
     position: relative;
     gap: 1.25rem;
+    background-color: var(--story-bg, #0f172a);
+    border-right: 1px solid rgba(148, 163, 184, 0.12);
+    overflow: hidden;
+  }
+
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(15, 23, 42, 0.82) 0%,
-      rgba(15, 23, 42, 0.6) 100%
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(0, 0, 0, 0.55) 100%
     );
-    border-right: 1px solid rgba(148, 163, 184, 0.12);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide > * {
+    position: relative;
+    z-index: 1;
   }
 
   .nav-btn {
@@ -644,9 +715,9 @@
     width: 2.4rem;
     height: 2.4rem;
     border-radius: 999px;
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    background: rgba(15, 23, 42, 0.55);
-    color: #e2e8f0;
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.35));
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--story-primary, #e2e8f0);
     font-size: 1.15rem;
     font-weight: 600;
     display: flex;
@@ -662,8 +733,8 @@
 
   .nav-btn:hover,
   .nav-btn:focus {
-    background: rgba(30, 41, 59, 0.8);
-    border-color: rgba(148, 163, 184, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
     transform: scale(1.05);
     outline: none;
   }
@@ -759,7 +830,8 @@
     width: var(--dot-size);
     height: var(--dot-size);
     border-radius: 9999px;
-    background: rgba(56, 189, 248, 0.4);
+    background: var(--story-secondary, rgba(56, 189, 248, 0.45));
+    opacity: 0.45;
     transform: translateX(
         calc(var(--active-index) * (var(--dot-size) + var(--dot-gap)))
       )
@@ -783,7 +855,7 @@
   }
 
   .dot.active {
-    background: #38bdf8;
+    background: var(--story-secondary, #38bdf8);
     transform: scale(1.2);
   }
 
@@ -813,7 +885,7 @@
   }
 
   .portrait figcaption a {
-    color: #facc15;
+    color: var(--story-secondary, #facc15);
     text-decoration: none;
     font-weight: 500;
   }
@@ -832,20 +904,21 @@
   .date {
     margin: 0;
     font-size: 0.9rem;
-    color: #38bdf8;
+    color: var(--story-secondary, #38bdf8);
     font-weight: 600;
   }
 
   .age {
     margin: 0;
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: rgba(148, 163, 184, 0.85);
   }
 
   h2 {
     margin: 0;
     font-size: 1.35rem;
     line-height: 1.25;
+    color: var(--story-primary, #f8fafc);
   }
 
   .description {
@@ -874,7 +947,7 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.7rem;
-    color: rgba(148, 163, 184, 0.8);
+    color: rgba(148, 163, 184, 0.76);
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -891,7 +964,7 @@
   }
 
   .sources a {
-    color: #facc15;
+    color: var(--story-secondary, #facc15);
     text-decoration: none;
     font-weight: 500;
   }
