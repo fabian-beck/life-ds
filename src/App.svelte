@@ -48,7 +48,7 @@
   let previousPersonId = null;
   let activeIndex = 0;
 
-  $: dataset = selectedPersonId ? datasetMap[selectedPersonId] ?? null : null;
+  $: dataset = selectedPersonId ? (datasetMap[selectedPersonId] ?? null) : null;
   $: if (selectedPersonId !== previousPersonId) {
     activeIndex = 0;
     previousPersonId = selectedPersonId;
@@ -74,7 +74,7 @@
   {#if selectedPersonId}
     <StoryView
       bind:activeIndex
-      dataset={dataset}
+      {dataset}
       hasRegistryEntries={registryEntries.length > 0}
       on:close={closeStory}
     />

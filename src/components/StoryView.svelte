@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, tick } from "svelte";
 
   export let dataset = null;
   export let activeIndex = 0;
@@ -43,6 +43,33 @@
       ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
       : -1;
 
+  let slidesContainer;
+
+  async function scrollToIndex(index) {
+    if (!slidesContainer) return;
+    const clamped = Math.min(Math.max(index, 0), totalPanels - 1);
+    // wait for DOM to settle
+    await tick();
+    const { clientWidth } = slidesContainer;
+    if (!clientWidth) return;
+    slidesContainer.scrollTo({
+      left: clamped * clientWidth,
+      behavior: "smooth",
+    });
+  }
+
+  function prevSlide() {
+    if (totalPanels === 0) return;
+    activeIndex = Math.max(0, activeIndex - 1);
+    scrollToIndex(activeIndex);
+  }
+
+  function nextSlide() {
+    if (totalPanels === 0) return;
+    activeIndex = Math.min(totalPanels - 1, activeIndex + 1);
+    scrollToIndex(activeIndex);
+  }
+
   function handleClose() {
     dispatch("close");
   }
@@ -56,6 +83,21 @@
     if (!clientWidth) return;
     const index = Math.round(scrollLeft / clientWidth);
     activeIndex = Math.min(Math.max(index, 0), totalPanels - 1);
+  }
+
+  function handleWheel(event) {
+    if (event.ctrlKey) return;
+    if (!slidesContainer || totalPanels === 0) return;
+    const dominantDelta =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+    if (!dominantDelta) return;
+    event.preventDefault();
+    slidesContainer.scrollBy({
+      left: dominantDelta,
+      behavior: "smooth",
+    });
   }
 
   function computeYearsLabel(currentPerson) {
@@ -122,7 +164,7 @@
   }
 </script>
 
-<div class="story-view">
+<div class="story-view" on:wheel={handleWheel}>
   <header class="masthead" class:compact={activeIndex > 0}>
     {#if hasRegistryEntries}
       <div class="toolbar">
@@ -196,61 +238,68 @@
     </div>
   </header>
 
-  <main class="slides" aria-live="polite" on:scroll={handleScroll}>
-    {#if totalPanels > 0}
-  {#each slides as slide}
-        <section
-          class="slide"
-          class:spacer={slide.type === "spacer"}
-          aria-hidden={slide.type === "spacer"}
-          aria-label={slide.type === "spacer"
-            ? null
-            : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
-        >
-          {#if slide.type !== "spacer"}
-            <div class="content">
-              <p class="date">{formatDate(slide)}</p>
-              {#if formatAgeLabel(slide.age)}
-                <p class="age">{formatAgeLabel(slide.age)}</p>
-              {/if}
-              <h2>{slide.title}</h2>
-              <p class="description">{slide.description}</p>
-              <ul class="details">
-                {#if slide.locations?.length}
-                  <li>
-                    <span class="label">Location</span>
-                    <span>{formatLocations(slide.locations)}</span>
-                  </li>
+  <div class="slides-wrapper">
+    <main
+      class="slides"
+      aria-live="polite"
+      bind:this={slidesContainer}
+      on:scroll={handleScroll}
+    >
+      {#if totalPanels > 0}
+        {#each slides as slide}
+          <section
+            class="slide"
+            class:spacer={slide.type === "spacer"}
+            aria-hidden={slide.type === "spacer"}
+            aria-label={slide.type === "spacer"
+              ? null
+              : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
+          >
+            {#if slide.type !== "spacer"}
+              <div class="content">
+                <p class="date">{formatDate(slide)}</p>
+                {#if formatAgeLabel(slide.age)}
+                  <p class="age">{formatAgeLabel(slide.age)}</p>
                 {/if}
-                {#if slide.sources?.length}
-                  <li>
-                    <span class="label">Sources</span>
-                    <span class="sources">
-                      {#each slide.sources as source}
-                        <a href={source} target="_blank" rel="noreferrer"
-                          >{sourceLabel(source)}</a
-                        >
-                      {/each}
-                    </span>
-                  </li>
-                {/if}
-              </ul>
-            </div>
-          {/if}
+                <h2>{slide.title}</h2>
+                <p class="description">{slide.description}</p>
+                <ul class="details">
+                  {#if slide.locations?.length}
+                    <li>
+                      <span class="label">Location</span>
+                      <span>{formatLocations(slide.locations)}</span>
+                    </li>
+                  {/if}
+                  {#if slide.sources?.length}
+                    <li>
+                      <span class="label">Sources</span>
+                      <span class="sources">
+                        {#each slide.sources as source}
+                          <a href={source} target="_blank" rel="noreferrer"
+                            >{sourceLabel(source)}</a
+                          >
+                        {/each}
+                      </span>
+                    </li>
+                  {/if}
+                </ul>
+              </div>
+            {/if}
+          </section>
+        {/each}
+      {:else}
+        <section class="slide empty">
+          <div class="content">
+            <h2>Events unavailable</h2>
+            <p>
+              We could not find notable events for {personName}. Try
+              regenerating the dataset.
+            </p>
+          </div>
         </section>
-      {/each}
-    {:else}
-      <section class="slide empty">
-        <div class="content">
-          <h2>Events unavailable</h2>
-          <p>
-            We could not find notable events for {personName}. Try regenerating
-            the dataset.
-          </p>
-        </div>
-      </section>
-    {/if}
-  </main>
+      {/if}
+    </main>
+  </div>
   {#if hasEvents}
     <div
       class="indicator"
@@ -258,11 +307,37 @@
       aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
       style={`--active-index: ${activeEventIndex}`}
     >
-      <div class="indicator-track">
-        <span class="indicator-highlight" />
-        {#each eventSlides as _, idx}
-          <span class="dot" class:active={idx === activeEventIndex} />
-        {/each}
+      <div class="indicator-content">
+        {#if totalPanels > 1}
+          <!-- Prev/Next controls live inside the fixed indicator so the rest of
+               the interface stays scrollable. -->
+          <button
+            type="button"
+            class="nav-btn prev"
+            on:click={prevSlide}
+            aria-label="Go to previous slide"
+            disabled={activeIndex === 0}
+          >
+            <span aria-hidden="true">&lt;</span>
+          </button>
+        {/if}
+        <div class="indicator-track">
+          <span class="indicator-highlight" />
+          {#each eventSlides as _, idx}
+            <span class="dot" class:active={idx === activeEventIndex} />
+          {/each}
+        </div>
+        {#if totalPanels > 1}
+          <button
+            type="button"
+            class="nav-btn next"
+            on:click={nextSlide}
+            aria-label="Go to next slide"
+            disabled={activeIndex >= totalPanels - 1}
+          >
+            <span aria-hidden="true">&gt;</span>
+          </button>
+        {/if}
       </div>
     </div>
   {/if}
@@ -327,8 +402,17 @@
   .compact-info .name {
     font-weight: 700;
     letter-spacing: 0.01em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: clip;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    padding-bottom: 0.1rem;
+  }
+
+  .compact-info .name::-webkit-scrollbar {
+    display: none;
   }
 
   .compact-info .separator {
@@ -438,13 +522,19 @@
     display: none;
   }
 
+  .slides-wrapper {
+    flex: 1 1 auto;
+    position: relative;
+    min-height: calc(100vh - var(--header-height, 0px));
+  }
+
   .slides {
     flex: 1 1 auto;
     display: flex;
     scroll-snap-type: x mandatory;
     overflow-x: auto;
     overflow-y: hidden;
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height, 0px));
     scroll-behavior: smooth;
     position: relative;
   }
@@ -453,6 +543,7 @@
     scroll-snap-align: start;
     flex: 0 0 100%;
     height: 100%;
+    min-height: 100%;
     padding: 2.75rem 1.5rem 3.25rem;
     display: flex;
     flex-direction: column;
@@ -465,6 +556,41 @@
       rgba(15, 23, 42, 0.6) 100%
     );
     border-right: 1px solid rgba(148, 163, 184, 0.12);
+  }
+
+  .nav-btn {
+    pointer-events: auto;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(15, 23, 42, 0.55);
+    color: #e2e8f0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .nav-btn:hover,
+  .nav-btn:focus {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(148, 163, 184, 0.6);
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+    transform: none;
   }
 
   .slide.spacer {
@@ -503,7 +629,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.4rem 0.75rem;
+    padding: 0.5rem 1.1rem;
     border-radius: 9999px;
     background: rgba(15, 23, 42, 0.65);
     backdrop-filter: blur(6px);
@@ -521,7 +647,24 @@
     pointer-events: none;
   }
 
+  /* Keep the indicator visually present but allow underlying slides to receive
+     pointer events (so dragging/panning works anywhere). Only the nav buttons
+     inside the indicator should accept pointer events. */
+  .indicator-content {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .indicator .nav-btn {
+    pointer-events: auto;
+  }
+
+  /* Let the track and dots remain transparent to pointer input so users can
+     drag the slides even when starting the gesture over the indicator area. */
   .indicator-track {
+    pointer-events: none;
     position: relative;
     display: flex;
     align-items: center;
@@ -690,7 +833,7 @@
     }
 
     .slides {
-      height: calc(100vh - var(--header-height));
+      height: calc(100vh - var(--header-height, 0px));
     }
 
     .slide {
