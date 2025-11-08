@@ -6,6 +6,18 @@
     mdiClose,
     mdiMapMarkerOutline,
     mdiLinkVariant,
+    mdiBabyFaceOutline,
+    mdiSkullOutline,
+    mdiSchoolOutline,
+    mdiRing,
+    mdiCrownOutline,
+    mdiStarCircleOutline,
+    mdiSwordCross,
+    mdiBookOpenVariant,
+    mdiBriefcaseOutline,
+    mdiNavigationVariant,
+    mdiCircleSmall,
+    mdiHome,
   } from "@mdi/js";
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
@@ -40,6 +52,81 @@
   let basemapStyleCache = null;
 
   const UNKNOWN_LOCATION_LABEL = "Location unknown";
+
+  const EVENT_ICON_RULES = [
+    {
+      icon: mdiBabyFaceOutline,
+      matches: (event, text) =>
+        event?.age === 0 || text.includes("birth") || text.includes("born"),
+    },
+    {
+      icon: mdiSkullOutline,
+      matches: (_event, text) =>
+        text.includes("death") ||
+        text.includes("died") ||
+        text.includes("passed away"),
+    },
+    {
+      icon: mdiSchoolOutline,
+      matches: (_event, text) =>
+        text.includes("graduat") ||
+        text.includes("degree") ||
+        text.includes("diploma"),
+    },
+    {
+      icon: mdiRing,
+      matches: (_event, text) =>
+        text.includes("marriage") ||
+        text.includes("married") ||
+        text.includes("wedding"),
+    },
+    {
+      icon: mdiCrownOutline,
+      matches: (_event, text) =>
+        text.includes("crowned") ||
+        text.includes("coronation") ||
+        text.includes("enthroned"),
+    },
+    {
+      icon: mdiStarCircleOutline,
+      matches: (_event, text) =>
+        text.includes("award") ||
+        text.includes("prize") ||
+        text.includes("honor") ||
+        text.includes("medal"),
+    },
+    {
+      icon: mdiSwordCross,
+      matches: (_event, text) =>
+        text.includes("battle") ||
+        text.includes("war") ||
+        text.includes("campaign"),
+    },
+    {
+      icon: mdiBookOpenVariant,
+      matches: (_event, text) =>
+        text.includes("publish") ||
+        text.includes("publication") ||
+        text.includes("book") ||
+        text.includes("paper"),
+    },
+    {
+      icon: mdiBriefcaseOutline,
+      matches: (_event, text) =>
+        text.includes("appointed") ||
+        text.includes("elected") ||
+        text.includes("named") ||
+        text.includes("assumes"),
+    },
+    {
+      icon: mdiNavigationVariant,
+      matches: (_event, text) =>
+        text.includes("voyage") ||
+        text.includes("expedition") ||
+        text.includes("travels") ||
+        text.includes("journey"),
+    },
+  ];
 
   const formatters = {
     day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
@@ -100,6 +187,7 @@
   $: totalPanels = slides.length;
   $: hasEvents = totalSlides > 0;
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
+  $: hasMultipleEvents = totalSlides > 1;
   $: if (totalPanels === 0 && activeIndex !== 0) {
     activeIndex = 0;
   } else if (totalPanels > 0 && activeIndex >= totalPanels) {
@@ -107,7 +195,7 @@
   }
 
   $: activeEventIndex =
-    totalSlides > 0
+    totalSlides > 0 && activeIndex > 0
       ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
       : -1;
 
@@ -123,10 +211,15 @@
           .map((event) => event.coordinates)
           .filter(isCoordinate)
       : [];
+  $: indicatorProgress =
+    hasMultipleEvents && activeEventIndex >= 0
+      ? activeEventIndex / (totalSlides - 1)
+      : 0;
+  $: indicatorIcons = eventSlides.map((event) => resolveEventIcon(event));
 
   $: primaryMarkerColor =
-    styleConfig?.primary && parseHexColor(styleConfig.primary)
-      ? styleConfig.primary
+    styleConfig?.secondary && parseHexColor(styleConfig.secondary)
+      ? styleConfig.secondary
       : "#38BDF8";
   $: fadedMarkerColor =
     rgbaFromHex(primaryMarkerColor, 0.35) ?? "rgba(56, 189, 248, 0.35)";
@@ -162,6 +255,15 @@
     if (totalPanels === 0) return;
     activeIndex = Math.min(totalPanels - 1, activeIndex + 1);
     scrollToIndex(activeIndex);
+  }
+
+  function goToEvent(eventIndex) {
+    if (!Number.isInteger(eventIndex)) return;
+    const clamped = clamp(eventIndex, 0, Math.max(eventSlides.length - 1, 0));
+    const targetIndex = clamped + 1;
+    if (totalPanels === 0) return;
+    activeIndex = targetIndex;
+    scrollToIndex(targetIndex);
   }
 
   function handleClose() {
@@ -359,6 +461,23 @@
     if (!parsed) return null;
     const nextAlpha = Math.min(Math.max(alpha, 0), 1);
     return `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${nextAlpha})`;
+  }
+
+  function resolveEventIcon(event) {
+    const text = `${event?.title ?? ""} ${event?.description ?? ""}`
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+    for (const rule of EVENT_ICON_RULES) {
+      try {
+        if (rule.matches(event, text)) {
+          return rule.icon;
+        }
+      } catch (error) {
+        // ignore rule errors to avoid breaking icon rendering
+      }
+    }
+    return mdiCircleSmall;
   }
 
   function createBaseStyle() {
@@ -752,55 +871,90 @@
   {#if hasEvents}
     <div
       class="indicator"
-      role="img"
+      role="group"
       aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
-      style={`--active-index: ${activeEventIndex}`}
+      style={`--indicator-progress: ${indicatorProgress}`}
     >
       <div class="indicator-content">
         {#if totalPanels > 1}
-          <!-- Prev/Next controls live inside the fixed indicator so the rest of
-               the interface stays scrollable. -->
-          <button
-            type="button"
-            class="nav-btn prev"
-            on:click={prevSlide}
-            aria-label="Go to previous slide"
-            disabled={activeIndex === 0}
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
+          <div class="indicator-nav">
+            <button
+              type="button"
+              class="nav-btn prev"
+              on:click={prevSlide}
+              aria-label="Go to previous slide"
+              disabled={activeIndex === 0}
             >
-              <path d={mdiChevronLeft} />
-            </svg>
-          </button>
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiChevronLeft} />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="nav-btn next"
+              on:click={nextSlide}
+              aria-label="Go to next slide"
+              disabled={activeIndex >= totalPanels - 1}
+            >
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiChevronRight} />
+              </svg>
+            </button>
+          </div>
         {/if}
-        <div class="indicator-track">
-          <span class="indicator-highlight" />
-          {#each eventSlides as _, idx}
-            <span class="dot" class:active={idx === activeEventIndex} />
-          {/each}
+        <div class="indicator-track" class:single={!hasMultipleEvents}>
+          <div class="dots-container">
+            {#if activeIndex > 0}
+              <span class="indicator-highlight" class:single={!hasMultipleEvents} />
+            {/if}
+            <button
+              type="button"
+              class="dot square"
+              class:active={activeIndex === 0}
+              on:click={() => scrollToIndex(0)}
+              aria-label="Show overview"
+              aria-current={activeIndex === 0 ? "true" : undefined}
+            >
+              <svg
+                class="dot-icon"
+                viewBox="0 0 24 24"
+                role="img"
+                aria-hidden="true"
+              >
+                <path d={mdiHome} />
+              </svg>
+            </button>
+            {#each eventSlides as _, idx}
+              <button
+                type="button"
+                class="dot"
+                class:active={idx === activeEventIndex}
+                on:click={() => goToEvent(idx)}
+                aria-label={`Show event ${idx + 1} of ${totalSlides}`}
+                aria-current={idx === activeEventIndex ? "true" : undefined}
+              >
+                <svg
+                  class="dot-icon"
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-hidden="true"
+                >
+                  <path d={indicatorIcons[idx] ?? mdiCircleSmall} />
+                </svg>
+              </button>
+            {/each}
+          </div>
         </div>
-        {#if totalPanels > 1}
-          <button
-            type="button"
-            class="nav-btn next"
-            on:click={nextSlide}
-            aria-label="Go to next slide"
-            disabled={activeIndex >= totalPanels - 1}
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiChevronRight} />
-            </svg>
-          </button>
-        {/if}
       </div>
     </div>
   {/if}
@@ -1267,31 +1421,19 @@
   }
 
   .indicator {
-    --dot-size: 0.55rem;
-    --dot-gap: 0.5rem;
+    --dot-size: clamp(1.25rem, 3vw, 1.6rem);
+    --dot-gap: 0rem;
     position: fixed;
     bottom: 1.25rem;
     left: 50%;
     transform: translateX(-50%);
+    width: min(96vw, 1020px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1.1rem;
-    border-radius: 9999px;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+    padding: 0;
     pointer-events: none;
     z-index: 5;
-  }
-
-  .indicator::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    pointer-events: none;
   }
 
   /* Keep the indicator visually present but allow underlying slides to receive
@@ -1300,22 +1442,86 @@
   .indicator-content {
     pointer-events: auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.9rem;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
   }
 
-  .indicator .nav-btn {
+  .indicator-nav {
     pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.25rem;
   }
 
-  /* Let the track and dots remain transparent to pointer input so users can
-     drag the slides even when starting the gesture over the indicator area. */
   .indicator-track {
-    pointer-events: none;
+    pointer-events: auto;
     position: relative;
     display: flex;
     align-items: center;
-    gap: var(--dot-gap);
+    justify-content: center;
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .indicator-track.single {
+    justify-content: center;
+    width: auto;
+    min-width: auto;
+  }
+
+  .dots-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: min(90vw, 860px);
+  }
+
+  .nav-btn {
+    pointer-events: auto;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.35));
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--story-primary, #e2e8f0);
+    font-size: 1.15rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .nav-btn:hover,
+  .nav-btn:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+    transform: none;
   }
 
   .indicator-highlight {
@@ -1328,16 +1534,29 @@
     background: var(--story-secondary, rgba(56, 189, 248, 0.45));
     opacity: 0.45;
     transform: translateX(
-        calc(var(--active-index) * (var(--dot-size) + var(--dot-gap)))
+        calc(var(--indicator-progress) * (100% - var(--dot-size)))
       )
       translateY(-50%);
     transition:
       transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
       background-color 0.3s ease;
     z-index: 0;
+    pointer-events: none;
+  }
+
+  .indicator-highlight.single {
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .dot {
+    appearance: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     z-index: 1;
     width: var(--dot-size);
@@ -1347,11 +1566,35 @@
     transition:
       background-color 0.25s ease,
       transform 0.25s ease;
+    flex: 0 0 auto;
+  }
+
+  .dot.square {
+    border-radius: 20%;
   }
 
   .dot.active {
     background: var(--story-secondary, #38bdf8);
     transform: scale(1.2);
+  }
+
+  .dot-icon {
+    width: calc(var(--dot-size) * 0.72);
+    height: calc(var(--dot-size) * 0.72);
+    fill: rgba(226, 232, 240, 0.95);
+    transition:
+      fill 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .dot.active .dot-icon {
+    fill: #0f172a;
+    transform: scale(1.05);
+  }
+
+  .dot:focus-visible {
+    outline: 2px solid var(--story-secondary, #38bdf8);
+    outline-offset: 2px;
   }
 
   .portrait {
