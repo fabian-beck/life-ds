@@ -1071,7 +1071,7 @@
     align-items: stretch;
     position: relative;
     gap: 1.25rem;
-    background-color: rgba(var(--story-bg-rgb, 15, 23, 42), 0.55);
+    background-color: rgb(var(--story-bg-rgb, 15, 23, 42));
     border-right: 1px solid rgba(148, 163, 184, 0.12);
     overflow: hidden;
   }
@@ -1094,9 +1094,36 @@
     z-index: 0;
   }
 
+  .slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--story-pattern-image, none);
+    background-size: 260px 260px;
+    background-repeat: repeat;
+    opacity: var(--story-pattern-opacity, 0.16);
+    mix-blend-mode: soft-light;
+    mask-image: linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.65) 40%,
+      rgba(0, 0, 0, 0.3) 60%,
+      rgba(0, 0, 0, 0) 80%
+    );
+    -webkit-mask-image: linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.65) 40%,
+      rgba(0, 0, 0, 0.3) 60%,
+      rgba(0, 0, 0, 0) 80%
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
   .slide > * {
     position: relative;
-    z-index: 1;
+    z-index: 3;
   }
 
   .slide > .content {
@@ -1108,22 +1135,26 @@
   .map-overlay {
     position: absolute;
     inset: auto 0 0;
-    height: clamp(240px, 36vh, 340px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    height: clamp(240px, 45vh, 340px);
     pointer-events: none;
     z-index: 2;
   }
 
   .map-gradient {
-    height: 120px;
+    position: absolute;
+    top: -70px;
+    left: 0;
+    right: 0;
+    height: 160px;
     background: linear-gradient(
-      180deg,
-      rgba(var(--story-bg-rgb, 15, 23, 42), 0) 0%,
-      rgba(var(--story-bg-rgb, 15, 23, 42), 0.9) 60%,
-      rgba(var(--story-bg-rgb, 15, 23, 42), 1) 100%
+      177deg,
+      rgba(var(--story-bg-rgb, 15, 23, 42)) 67%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0.2) 85%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0) 90%,
+      transparent 100%
     );
+    z-index: 2;
+    pointer-events: none;
   }
 
   .map-frame {
@@ -1131,6 +1162,22 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  .map-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0.55) 0%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0.25) 45%,
+      transparent 80%
+    );
+    pointer-events: none;
+    z-index: 1;
   }
 
   .map-container {
@@ -1143,7 +1190,8 @@
     box-shadow: none;
     pointer-events: none;
     position: relative;
-    background: rgba(15, 23, 42, 0.85);
+    background: transparent;
+    z-index: 0;
   }
 
   :global(.story-map-marker) {
