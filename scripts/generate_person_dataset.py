@@ -6,9 +6,10 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Optional, Tuple, Set
 from urllib.parse import quote
 
 import requests
@@ -23,6 +24,15 @@ WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
 # Adjust the default model if your account has access to newer releases.
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")
 DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+GEOCODER_ENDPOINT = os.getenv(
+    "LIFE_DS_GEOCODER_ENDPOINT",
+    "https://nominatim.openstreetmap.org/search",
+)
+GEOCODER_DELAY_SECONDS = float(os.getenv("LIFE_DS_GEOCODER_DELAY", "1.0"))
+GEOCODER_MAX_RESULTS = 1
+
+_geocode_cache: Dict[str, Optional[Dict[str, Any]]] = {}
+_last_geocode_at: float = 0.0
 
 
 def normalize_date_value(value: str, precision: str) -> tuple[Any, str]:
@@ -78,6 +88,13 @@ def slugify(value: str) -> str:
 def wikipedia_headers() -> Dict[str, str]:
     user_agent = os.getenv("WIKIPEDIA_USER_AGENT", DEFAULT_USER_AGENT)
     return {"User-Agent": user_agent}
+
+
+def geocoder_headers() -> Dict[str, str]:
+    headers = wikipedia_headers()
+    headers.setdefault("Accept-Language", "en")
+    headers.setdefault("Accept", "application/json")
+    return headers
 
 
 def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
@@ -267,6 +284,113 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     return json.loads(content)
 
 
+def _throttle_geocoder() -> None:
+    global _last_geocode_at
+    if GEOCODER_DELAY_SECONDS <= 0:
+        return
+    now = time.monotonic()
+    elapsed = now - _last_geocode_at
+    if elapsed < GEOCODER_DELAY_SECONDS:
+        time.sleep(GEOCODER_DELAY_SECONDS - elapsed)
+    _last_geocode_at = time.monotonic()
+
+
+def geocode_location(query: str) -> Optional[Dict[str, Any]]:
+    normalized = (query or "").strip()
+    if not normalized:
+        return None
+    cached = _geocode_cache.get(normalized)
+    if cached is not None:
+        return cached
+    try:
+        _throttle_geocoder()
+        response = requests.get(
+            GEOCODER_ENDPOINT,
+            params={
+                "q": normalized,
+                "format": "jsonv2",
+                "limit": GEOCODER_MAX_RESULTS,
+            },
+            timeout=30,
+            headers=geocoder_headers(),
+        )
+        response.raise_for_status()
+        results: List[Dict[str, Any]] = response.json()
+    except Exception as error:  # noqa: BLE001
+        print(f"Warning: geocoding lookup failed for '{normalized}': {error}")
+        _geocode_cache[normalized] = None
+        return None
+    if not results:
+        _geocode_cache[normalized] = None
+        return None
+    primary = results[0]
+    try:
+        lon = float(primary.get("lon"))
+        lat = float(primary.get("lat"))
+    except (TypeError, ValueError):
+        _geocode_cache[normalized] = None
+        return None
+    bbox_values: Optional[List[float]] = None
+    raw_bbox = primary.get("boundingbox")
+    if isinstance(raw_bbox, list) and len(raw_bbox) == 4:
+        try:
+            south, north, west, east = [float(value) for value in raw_bbox]
+            bbox_values = [west, south, east, north]
+        except (TypeError, ValueError):
+            bbox_values = None
+    result = {
+        "name": normalized,
+        "display_name": primary.get("display_name"),
+        "lon": lon,
+        "lat": lat,
+        "bbox": bbox_values,
+    }
+    _geocode_cache[normalized] = result
+    return result
+
+
+def enrich_event_coordinates(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
+    events = payload.get("events") or []
+    if not isinstance(events, list) or not events:
+        return payload, 0
+    enriched: List[Dict[str, Any]] = []
+    resolved_count = 0
+    for event in events:
+        if not isinstance(event, dict):
+            enriched.append(event)
+            continue
+        locations = event.get("locations") or []
+        if not isinstance(locations, list) or not locations:
+            enriched.append(event)
+            continue
+        coordinate_entries = []
+        for index, location in enumerate(locations):
+            if not isinstance(location, str):
+                continue
+            geocoded = geocode_location(location)
+            if not geocoded:
+                continue
+            entry: Dict[str, Any] = {
+                "label": geocoded.get("display_name") or location,
+                "name": location,
+                "primary": index == 0,
+                "centroid": [geocoded["lon"], geocoded["lat"]],
+                "source": "nominatim",
+            }
+            if geocoded.get("bbox"):
+                entry["bbox"] = geocoded["bbox"]
+            coordinate_entries.append(entry)
+        updated = {**event}
+        if coordinate_entries:
+            updated["location_coordinates"] = coordinate_entries
+            resolved_count += 1
+        else:
+            updated.pop("location_coordinates", None)
+        enriched.append(updated)
+    payload["events"] = enriched
+    return payload, resolved_count
+
+
 def enforce_metadata(payload: Dict[str, Any], page_data: Dict[str, Any]) -> Dict[str, Any]:
     payload.setdefault("dataset", DATASET_NAME)
     payload["created_on"] = date.today().isoformat()
@@ -341,33 +465,40 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
 
 
 def generate_dataset(subject: str, *, update_registry: bool = True, model: str = DEFAULT_MODEL) -> Path:
-    print(f"[1/6] Fetching Wikipedia article for '{subject}'...")
+    print(f"[1/7] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject)
     article_title = page_data.get("title", subject)
-    print(f"[1/6] Found article '{article_title}'.")
+    print(f"[1/7] Found article '{article_title}'.")
 
-    print(f"[2/6] Retrieving summary details...")
+    print(f"[2/7] Retrieving summary details...")
     summary_data = fetch_wikipedia_summary(article_title)
     if summary_data:
-        print("[2/6] Summary retrieved successfully.")
+        print("[2/7] Summary retrieved successfully.")
     else:
         print(
-            "[2/6] No summary endpoint data available; continuing with page extract only.")
+            "[2/7] No summary endpoint data available; continuing with page extract only.")
 
-    print("[3/6] Building prompt for OpenAI response...")
+    print("[3/7] Building prompt for OpenAI response...")
     prompt = build_prompt(page_data, summary_data, subject)
 
-    print(f"[4/6] Requesting structured dataset from model '{model}'...")
+    print(f"[4/7] Requesting structured dataset from model '{model}'...")
     payload = call_openai(prompt, model)
-    print(f"[4/6] Response received from OpenAI.")
+    print(f"[4/7] Response received from OpenAI.")
 
-    print("[5/6] Normalizing dataset metadata...")
+    print("[5/7] Normalizing dataset metadata...")
     payload = enforce_metadata(payload, page_data)
     event_count = len(payload.get("events", []))
-    print(f"[5/6] Dataset includes {event_count} events.")
+    print(f"[5/7] Dataset includes {event_count} events.")
+
+    print("[6/7] Resolving event location coordinates...")
+    payload, geocoded_events = enrich_event_coordinates(payload)
+    if geocoded_events:
+        print(f"[6/7] Coordinates resolved for {geocoded_events} events.")
+    else:
+        print("[6/7] No event coordinates were resolved.")
 
     person_id = slugify(payload.get("person", {}).get("name", subject))
-    print(f"[6/6] Writing dataset for '{person_id}'...")
+    print(f"[7/7] Writing dataset for '{person_id}'...")
     file_path = write_dataset(payload, person_id)
     if update_registry:
         print("Updating persons register...")

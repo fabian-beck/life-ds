@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, tick } from "svelte";
+  import { createEventDispatcher, tick, onMount, onDestroy } from "svelte";
   import {
     mdiChevronLeft,
     mdiChevronRight,
@@ -7,6 +7,10 @@
     mdiMapMarkerOutline,
     mdiLinkVariant,
   } from "@mdi/js";
+  import "maplibre-gl/dist/maplibre-gl.css";
+  import maplibregl from "maplibre-gl";
+  import { Protocol } from "pmtiles";
+  import { layers, namedFlavor } from "@protomaps/basemaps";
 
   export let dataset = null;
   export let activeIndex = 0;
@@ -14,6 +18,25 @@
   export let styleConfig = null;
 
   const dispatch = createEventDispatcher();
+
+  const DEFAULT_COORDINATES = null;
+  const DEFAULT_PM_TILES_URL = "https://build.protomaps.com/20251105.pmtiles?download=1";
+  const PMTILES_BUILD_URL =
+    import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
+  let mapContainer;
+  let mapInstance = null;
+  let mapReady = false;
+  let currentMarker = null;
+  let trailMarkers = [];
+  let lastViewportKey = "";
+  let lastDatasetName = null;
+  let datasetName = null;
+
+  let primaryMarkerColor = "#38BDF8";
+  let fadedMarkerColor = "rgba(56, 189, 248, 0.35)";
+
+  let pmtilesProtocol = null;
+  let basemapStyleCache = null;
 
   const formatters = {
     day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
@@ -59,11 +82,16 @@
   $: eventSlides = events
     .slice()
     .sort((a, b) => toTimestamp(a) - toTimestamp(b))
-    .map((event, eventIndex) => ({ ...event, eventIndex }));
+    .map((event, eventIndex) => ({ ...event, eventIndex }))
+    .map((event) => ({
+      ...event,
+      coordinates: normalizePrimaryLocation(event),
+    }));
   $: totalSlides = eventSlides.length;
   $: slides = totalSlides > 0 ? [{ type: "spacer" }, ...eventSlides] : [];
   $: totalPanels = slides.length;
   $: hasEvents = totalSlides > 0;
+  $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: if (totalPanels === 0 && activeIndex !== 0) {
     activeIndex = 0;
   } else if (totalPanels > 0 && activeIndex >= totalPanels) {
@@ -74,6 +102,32 @@
     totalSlides > 0
       ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
       : -1;
+
+  $: activeCoordinates =
+    activeEventIndex >= 0
+      ? (eventSlides[activeEventIndex]?.coordinates ?? DEFAULT_COORDINATES)
+      : DEFAULT_COORDINATES;
+
+  $: markerTrail =
+    hasMapData && activeEventIndex > 0
+      ? eventSlides
+          .slice(0, activeEventIndex)
+          .map((event) => event.coordinates)
+          .filter(isCoordinate)
+      : [];
+
+  $: primaryMarkerColor =
+    styleConfig?.primary && parseHexColor(styleConfig.primary)
+      ? styleConfig.primary
+      : "#38BDF8";
+  $: fadedMarkerColor =
+    rgbaFromHex(primaryMarkerColor, 0.35) ?? "rgba(56, 189, 248, 0.35)";
+
+  $: datasetName = dataset?.person?.name ?? null;
+  $: if (datasetName !== lastDatasetName) {
+    lastDatasetName = datasetName;
+    lastViewportKey = "";
+  }
 
   let slidesContainer;
 
@@ -194,6 +248,259 @@
       return url;
     }
   }
+
+  function normalizePrimaryLocation(event) {
+    if (!event?.location_coordinates) return DEFAULT_COORDINATES;
+    const primary = event.location_coordinates.find((item) => {
+      if (!item) return false;
+      if (item.primary === true) return true;
+      return false;
+    });
+    if (!primary) return DEFAULT_COORDINATES;
+    if (!Array.isArray(primary.centroid) || primary.centroid.length !== 2) {
+      return DEFAULT_COORDINATES;
+    }
+    const [lng, lat] = primary.centroid;
+    const lonValue = Number(lng);
+    const latValue = Number(lat);
+    if (!Number.isFinite(lonValue) || !Number.isFinite(latValue)) {
+      return DEFAULT_COORDINATES;
+    }
+    return { lon: lonValue, lat: latValue };
+  }
+
+  function isCoordinate(value) {
+    return (
+      !!value &&
+      typeof value === "object" &&
+      Number.isFinite(value.lon) &&
+      Number.isFinite(value.lat)
+    );
+  }
+
+  function parseHexColor(value) {
+    if (typeof value !== "string") return null;
+    const trimmed = value.trim();
+    if (!/^#[0-9a-fA-F]{6}$/.test(trimmed)) return null;
+    const r = parseInt(trimmed.slice(1, 3), 16);
+    const g = parseInt(trimmed.slice(3, 5), 16);
+    const b = parseInt(trimmed.slice(5, 7), 16);
+    if ([r, g, b].some((component) => Number.isNaN(component))) {
+      return null;
+    }
+    return { r, g, b };
+  }
+
+  function rgbaFromHex(hex, alpha) {
+    const parsed = parseHexColor(hex);
+    if (!parsed) return null;
+    const nextAlpha = Math.min(Math.max(alpha, 0), 1);
+    return `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${nextAlpha})`;
+  }
+
+  function createBaseStyle() {
+    if (!basemapStyleCache) {
+      basemapStyleCache = {
+        version: 8,
+        glyphs:
+          "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
+        sprite: "https://protomaps.github.io/basemaps-assets/sprites/v4/dark",
+        sources: {
+          protomaps: {
+            type: "vector",
+            url: `pmtiles://${PMTILES_BUILD_URL}`,
+            attribution:
+              '<a href="https://protomaps.com">Protomaps</a> · <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
+          },
+        },
+        layers: layers("protomaps", namedFlavor("dark"), {
+          lang: "en",
+          labelsOnly: false,
+          landOnly: false,
+        }).filter((layer) => {
+          const id = layer?.id ?? "";
+          if (typeof id !== "string") return true;
+          const lower = id.toLowerCase();
+          if (lower.includes("label")) return false;
+          if (lower.includes("boundary") || lower.includes("border")) {
+            return false;
+          }
+          return true;
+        }),
+      };
+    }
+    return JSON.parse(JSON.stringify(basemapStyleCache));
+  }
+
+  function createMarkerElement(color, { opacity = 1, size = 14 } = {}) {
+    const element = document.createElement("span");
+    element.className = "story-map-marker";
+    element.style.backgroundColor = color;
+    element.style.opacity = `${Math.min(Math.max(opacity, 0), 1)}`;
+    const clampedSize = Math.max(size, 6);
+    element.style.width = `${clampedSize}px`;
+    element.style.height = `${clampedSize}px`;
+    return element;
+  }
+
+  function clearMarkers() {
+    if (currentMarker) {
+      currentMarker.remove();
+      currentMarker = null;
+    }
+    for (const marker of trailMarkers) {
+      marker.remove();
+    }
+    trailMarkers = [];
+  }
+
+  function teardownMapInstance() {
+    clearMarkers();
+    if (mapInstance) {
+      mapInstance.remove();
+      mapInstance = null;
+    }
+    mapReady = false;
+    lastViewportKey = "";
+  }
+
+  function updateMapState(activeCoord, historyCoords) {
+    if (!mapInstance || !mapReady) return;
+
+    const active = isCoordinate(activeCoord) ? activeCoord : null;
+    const history = Array.isArray(historyCoords)
+      ? historyCoords.filter(isCoordinate)
+      : [];
+
+    clearMarkers();
+
+    if (history.length > 0) {
+      for (const coords of history) {
+        const markerElement = createMarkerElement(fadedMarkerColor, {
+          opacity: 0.6,
+          size: 11,
+        });
+        const marker = new maplibregl.Marker({
+          element: markerElement,
+          anchor: "bottom",
+        })
+          .setLngLat([coords.lon, coords.lat])
+          .addTo(mapInstance);
+        trailMarkers.push(marker);
+      }
+    }
+
+    if (active) {
+      const markerElement = createMarkerElement(primaryMarkerColor, {
+        opacity: 1,
+        size: 16,
+      });
+      currentMarker = new maplibregl.Marker({
+        element: markerElement,
+        anchor: "bottom",
+      })
+        .setLngLat([active.lon, active.lat])
+        .addTo(mapInstance);
+    }
+
+    const positions = active ? [active, ...history] : history;
+    if (positions.length === 0) {
+      if (lastViewportKey !== "baseline") {
+        mapInstance.easeTo({ center: [0, 0], zoom: 1.5, duration: 700 });
+        lastViewportKey = "baseline";
+      }
+      return;
+    }
+
+    const viewportKey = positions
+      .map((coord) => `${coord.lon.toFixed(4)},${coord.lat.toFixed(4)}`)
+      .join("|");
+    if (viewportKey === lastViewportKey) {
+      return;
+    }
+    lastViewportKey = viewportKey;
+
+    if (positions.length === 1) {
+      mapInstance.easeTo({
+        center: [positions[0].lon, positions[0].lat],
+        zoom: 6.5,
+        duration: 900,
+      });
+      return;
+    }
+
+    const bounds = positions
+      .slice(1)
+      .reduce(
+        (accumulator, coord) => accumulator.extend([coord.lon, coord.lat]),
+        new maplibregl.LngLatBounds(
+          [positions[0].lon, positions[0].lat],
+          [positions[0].lon, positions[0].lat]
+        )
+      );
+    mapInstance.fitBounds(bounds, {
+      padding: { top: 60, bottom: 100, left: 80, right: 80 },
+      duration: 900,
+      maxZoom: 7.5,
+    });
+  }
+
+  async function initialiseMap() {
+    if (mapInstance || !hasMapData) return;
+    await tick();
+    if (mapInstance || !mapContainer) return;
+    if (!pmtilesProtocol) {
+      pmtilesProtocol = new Protocol();
+      maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+    }
+    mapInstance = new maplibregl.Map({
+      container: mapContainer,
+      style: createBaseStyle(),
+      center: [0, 0],
+      zoom: 1.5,
+      attributionControl: false,
+      interactive: false,
+    });
+    mapInstance.dragPan.disable();
+    mapInstance.scrollZoom.disable();
+    mapInstance.boxZoom.disable();
+    mapInstance.dragRotate.disable();
+    mapInstance.touchZoomRotate.disableRotation();
+    mapInstance.doubleClickZoom.disable();
+    mapInstance.keyboard.disable();
+    mapInstance.on("load", () => {
+      mapReady = true;
+      updateMapState(activeCoordinates, markerTrail);
+    });
+  }
+
+  onMount(() => {
+    initialiseMap();
+  });
+
+  onDestroy(() => {
+    teardownMapInstance();
+    if (pmtilesProtocol && typeof maplibregl.removeProtocol === "function") {
+      try {
+        maplibregl.removeProtocol("pmtiles");
+      } catch (error) {
+        // ignore removal issues to avoid disrupting teardown
+      }
+    }
+    pmtilesProtocol = null;
+  });
+
+  $: if (hasMapData) {
+    initialiseMap();
+  }
+
+  $: if (mapReady && hasMapData) {
+    updateMapState(activeCoordinates, markerTrail);
+  }
+
+  $: if (!hasMapData && mapInstance) {
+    teardownMapInstance();
+  }
 </script>
 
 <div
@@ -289,7 +596,7 @@
     </div>
   </header>
 
-  <div class="slides-wrapper">
+  <div class="slides-wrapper" class:map-enabled={hasMapData}>
     <main
       class="slides"
       aria-live="polite"
@@ -370,6 +677,14 @@
         </section>
       {/if}
     </main>
+    {#if hasMapData}
+      <div class="map-overlay" aria-hidden="true">
+        <div class="map-gradient" />
+        <div class="map-frame">
+          <div class="map-container" bind:this={mapContainer} />
+        </div>
+      </div>
+    {/if}
   </div>
   {#if hasEvents}
     <div
@@ -698,6 +1013,10 @@
     overflow: hidden;
   }
 
+  .slides-wrapper.map-enabled .slide {
+    padding-bottom: 16rem;
+  }
+
   .slide::before {
     content: "";
     position: absolute;
@@ -721,6 +1040,54 @@
     align-self: center;
     width: min(48rem, 100%);
     margin: 0 auto;
+  }
+
+  .map-overlay {
+    position: absolute;
+    inset: auto 0 0;
+    height: clamp(240px, 36vh, 340px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .map-gradient {
+    height: 120px;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0) 0%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0.9) 60%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 1) 100%
+    );
+  }
+
+  .map-frame {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 100%;
+    min-height: clamp(180px, 28vh, 260px);
+    border-radius: 0;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+    pointer-events: none;
+    position: relative;
+    background: rgba(15, 23, 42, 0.85);
+  }
+
+  :global(.story-map-marker) {
+    display: block;
+    border-radius: 50%;
+    border: 2px solid rgba(2, 6, 23, 0.65);
+    box-shadow: 0 8px 18px rgba(2, 6, 23, 0.5);
   }
 
   .nav-btn {
@@ -792,7 +1159,7 @@
     --dot-size: 0.55rem;
     --dot-gap: 0.5rem;
     position: fixed;
-    bottom: 2rem;
+    bottom: 1.25rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -1017,6 +1384,10 @@
     .slide {
       padding: 3.5rem 4rem 4rem;
       gap: 1.75rem;
+    }
+
+    .slides-wrapper.map-enabled .slide {
+      padding-bottom: 18rem;
     }
 
     h2 {
