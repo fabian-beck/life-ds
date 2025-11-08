@@ -8,8 +8,10 @@ import json
 import os
 import re
 import sys
+from collections.abc import Iterable
 from pathlib import Path
 from typing import Any, Dict
+from xml.etree import ElementTree as ET
 
 from openai import APIStatusError, OpenAI
 
@@ -65,6 +67,142 @@ def compact_svg(svg: str) -> str:
         buffer.append(char)
     compact = "".join(buffer).strip()
     return re.sub(r"\s+", " ", compact)
+
+
+def strip_namespace(tag: str) -> str:
+    return tag.split("}", 1)[1] if "}" in tag else tag
+
+
+def normalise_bw_color(value: str | None, *, allow_none: bool = False) -> str | None:
+    if value is None:
+        return None
+    lowered = value.strip().lower()
+    if not lowered:
+        return None
+    if allow_none and lowered in {"none", "transparent"}:
+        return "none"
+    if lowered in {"#fff", "#ffffff", "white"}:
+        return "#FFFFFF"
+    if lowered in {"#000", "#000000", "black"}:
+        return "#000000"
+    rgb_match = re.fullmatch(
+        r"rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*(0|0?\.\d+|1))?\s*\)", lowered)
+    if rgb_match:
+        r, g, b = (int(channel) for channel in rgb_match.groups()[:3])
+        avg = (r + g + b) / 3
+        return "#FFFFFF" if avg >= 128 else "#000000"
+    return None
+
+
+def clamp_opacity(value: str | None, default: float = 1.0) -> str:
+    if value is None:
+        return f"{default:.3f}".rstrip("0").rstrip(".")
+    try:
+        parsed = float(value)
+    except ValueError:
+        return f"{default:.3f}".rstrip("0").rstrip(".")
+    return f"{clamp(parsed, 0.0, 1.0):.3f}".rstrip("0").rstrip(".")
+
+
+def parse_style_attribute(value: str) -> Dict[str, str]:
+    result: Dict[str, str] = {}
+    for part in value.split(";"):
+        if not part.strip():
+            continue
+        if ":" not in part:
+            continue
+        prop, val = part.split(":", 1)
+        result[prop.strip()] = val.strip()
+    return result
+
+
+def sanitise_pattern_svg(svg: str) -> str:
+    try:
+        root = ET.fromstring(svg)
+    except ET.ParseError as exc:
+        raise ValueError(
+            f"background_pattern_svg must be valid SVG: {exc}") from exc
+
+    if strip_namespace(root.tag) != "svg":
+        raise ValueError(
+            "background_pattern_svg must have an <svg> root element.")
+
+    root.set("xmlns", root.attrib.get("xmlns", "http://www.w3.org/2000/svg"))
+    root.set("width", "160")
+    root.set("height", "160")
+    root.set("viewBox", "0 0 160 160")
+
+    background_present = False
+    white_element_present = False
+
+    for element in root.iter():
+        tag = strip_namespace(element.tag)
+        # Promote inline style declarations to attributes for easier validation.
+        style_value = element.attrib.get("style")
+        if style_value:
+            for key, val in parse_style_attribute(style_value).items():
+                element.set(key, val)
+            element.attrib.pop("style", None)
+
+        if tag == "rect":
+            width = element.attrib.get("width", "160")
+            height = element.attrib.get("height", "160")
+            x = element.attrib.get("x", "0")
+            y = element.attrib.get("y", "0")
+            fill = normalise_bw_color(
+                element.attrib.get("fill"), allow_none=True)
+            if (
+                fill == "#000000"
+                and x in {"0", "0.0"}
+                and y in {"0", "0.0"}
+                and width in {"160", "160.0"}
+                and height in {"160", "160.0"}
+            ):
+                background_present = True
+            if fill is not None:
+                element.set("fill", fill)
+
+        for attr in list(element.attrib.keys()):
+            lowered = attr.lower()
+            value_text = element.attrib[attr]
+            if lowered in {"fill", "stroke"}:
+                allow_none = lowered == "fill"
+                colour = normalise_bw_color(value_text, allow_none=allow_none)
+                if colour is None:
+                    raise ValueError(
+                        f"SVG {attr} must use only black (#000000), white (#FFFFFF), or none. Got: {value_text}"
+                    )
+                element.set(attr, colour)
+                if colour == "#FFFFFF":
+                    white_element_present = True
+            elif lowered in {"fill-opacity", "stroke-opacity", "opacity"}:
+                element.set(attr, clamp_opacity(value_text))
+            # Allow other SVG presentation attributes (geometry, linecap, linejoin, etc.)
+            # These don't affect color validation
+
+        if element.attrib.get("stroke", "").upper() == "#FFFFFF":
+            white_element_present = True
+        if element.attrib.get("fill", "").upper() == "#FFFFFF":
+            white_element_present = True
+
+    if not background_present:
+        background_rect = ET.Element("rect", {
+            "width": "160",
+            "height": "160",
+            "fill": "#000000",
+        })
+        root.insert(0, background_rect)
+
+    if not white_element_present:
+        raise ValueError(
+            "Pattern must include at least one white stroke or fill element for contrast."
+        )
+
+    sanitised = ET.tostring(root, encoding="unicode")
+    # Remove namespace prefixes for cleaner output
+    sanitised = re.sub(r'\bns\d+:', '', sanitised)
+    sanitised = re.sub(r'\s+xmlns:ns\d+="[^"]*"', '', sanitised)
+    return compact_svg(sanitised)
 
 
 def load_dataset_context(person_id: str) -> Dict[str, Any]:
@@ -133,8 +271,10 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         "- primary and secondary should contrast well against the background and with each other.",
         "- background_pattern_svg must be a 160x160 tileable SVG string that uses only black (#000000) and white (#FFFFFF) with optional opacity attributes.",
         "- Keep the SVG minimal, geometric, and suitable as a subtle texture when blended softly over the background.",
+        "- The pattern should reflect the person's profession, activities, and key achievements with symbolic geometric motifs.",
+        "- For example, a mathematician might inspire interlocking rings or tessellations; a physicist might suggest orbital arcs; a composer might use rhythmic staff lines.",
         "- Avoid gradients or colors beyond black and white in the SVG.",
-        "- pattern_opacity should be a float between 0.08 and 0.35 representing how strong the pattern should appear when overlaid.",
+        "- pattern_opacity should be a float between 0.12 and 0.35 representing how strong the pattern should appear when overlaid.",
         "- Do not surround the SVG string with backticks or additional JSON structures.",
     ]
     details.append(
@@ -199,9 +339,9 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     opacity = 0.18
     if isinstance(pattern_opacity, (int, float)):
         opacity = float(pattern_opacity)
-    opacity = round(clamp(opacity, 0.08, 0.35), 3)
+    opacity = round(clamp(opacity, 0.12, 0.35), 3)
 
-    compact = compact_svg(pattern_svg)
+    compact = sanitise_pattern_svg(pattern_svg)
     return {
         "primary": primary.upper(),
         "secondary": secondary.upper(),
