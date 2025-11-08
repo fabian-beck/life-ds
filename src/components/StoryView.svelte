@@ -915,7 +915,10 @@
         <div class="indicator-track" class:single={!hasMultipleEvents}>
           <div class="dots-container">
             {#if activeIndex > 0}
-              <span class="indicator-highlight" class:single={!hasMultipleEvents} />
+              <span
+                class="indicator-highlight"
+                class:single={!hasMultipleEvents}
+              />
             {/if}
             <button
               type="button"
