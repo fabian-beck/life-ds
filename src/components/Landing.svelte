@@ -11,6 +11,11 @@
 
   const dispatch = createEventDispatcher();
 
+  function displayName(name = "") {
+    if (typeof name !== "string") return "";
+    return name.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  }
+
   function handleSelect(id) {
     if (!id) return;
     dispatch("selectPerson", id);
@@ -21,7 +26,8 @@
   }
 
   function initialsFromName(name = "") {
-    const parts = name
+    const cleaned = displayName(name);
+    const parts = cleaned
       .split(/\s+/)
       .map((segment) => segment.trim())
       .filter(Boolean);
@@ -74,7 +80,8 @@
             {#if entry?.portrait?.image}
               <img
                 src={entry.portrait.image}
-                alt={entry.portrait.alt ?? `Portrait of ${entry.name}`}
+                alt={entry.portrait.alt ??
+                  `Portrait of ${displayName(entry.name)}`}
                 loading="lazy"
                 decoding="async"
               />
@@ -86,7 +93,7 @@
           </figure>
           <div class="card-body">
             <div class="card-header">
-              <h2>{entry.name}</h2>
+              <h2>{displayName(entry.name)}</h2>
               {#if entry.lifespan || (entry.primaryRoles?.length ?? 0) > 0}
                 <p class="card-meta">
                   {#if entry.lifespan}
@@ -113,7 +120,7 @@
                 type="button"
                 class="card-action"
                 on:click={() => handleSelect(entry.id)}
-                aria-label={`Open life story for ${entry.name}`}
+                aria-label={`Open life story for ${displayName(entry.name)}`}
               >
                 View story
               </button>

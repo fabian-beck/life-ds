@@ -20,7 +20,8 @@
   const dispatch = createEventDispatcher();
 
   const DEFAULT_COORDINATES = null;
-  const DEFAULT_PM_TILES_URL = "https://build.protomaps.com/20251105.pmtiles?download=1";
+  const DEFAULT_PM_TILES_URL =
+    "https://build.protomaps.com/20251105.pmtiles?download=1";
   const PMTILES_BUILD_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   let mapContainer;
@@ -38,6 +39,8 @@
   let pmtilesProtocol = null;
   let basemapStyleCache = null;
 
+  const UNKNOWN_LOCATION_LABEL = "Location unknown";
+
   const formatters = {
     day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
     month: new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }),
@@ -46,6 +49,11 @@
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
+  }
+
+  function displayName(value = "") {
+    if (typeof value !== "string") return "";
+    return value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
   }
 
   function storyStyleVars(style) {
@@ -71,7 +79,7 @@
   $: person = dataset?.person ?? {};
   $: events = Array.isArray(dataset?.events) ? dataset.events : [];
   $: portrait = person?.portrait;
-  $: personName = person?.name ?? "Select a person";
+  $: personName = displayName(person?.name ?? "Select a person");
   $: personSummary = person?.summary ?? "";
   $: hasDataset = Boolean(dataset);
   $: hasPersonSummary = Boolean(personSummary);
@@ -217,17 +225,71 @@
     return Date.parse(iso);
   }
 
-  function formatDate(event) {
-    if (!event?.date) return "Date unavailable";
-    const precision = event.date_precision ?? "day";
-    const formatter = formatters[precision] ?? formatters.day;
+  function formatSingleDate(value, precision) {
+    if (!value) return null;
+    const normalizedPrecision = precision ?? "day";
+    const formatter = formatters[normalizedPrecision] ?? formatters.day;
     const iso =
-      precision === "year"
-        ? `${event.date}-01-01T00:00:00Z`
-        : precision === "month"
-          ? `${event.date}-01T00:00:00Z`
-          : `${event.date}T00:00:00Z`;
-    return formatter.format(new Date(iso));
+      normalizedPrecision === "year"
+        ? `${value}-01-01T00:00:00Z`
+        : normalizedPrecision === "month"
+          ? `${value}-01T00:00:00Z`
+          : `${value}T00:00:00Z`;
+    const timestamp = Date.parse(iso);
+    if (Number.isNaN(timestamp)) return null;
+    return formatter.format(new Date(timestamp));
+  }
+
+  function formatDate(event) {
+    if (!event) return "Date unavailable";
+    const labelOverride =
+      typeof event.date_label === "string" && event.date_label.trim()
+        ? event.date_label.trim()
+        : null;
+    const supplementalNote =
+      typeof event.date_note === "string" && event.date_note.trim()
+        ? event.date_note.trim()
+        : null;
+    if (labelOverride) {
+      if (supplementalNote) {
+        const noteParts = supplementalNote
+          .split(";")
+          .map((part) => part.trim())
+          .filter(Boolean)
+          .filter(
+            (part) =>
+              part.localeCompare(labelOverride, undefined, {
+                sensitivity: "accent",
+              }) !== 0
+          );
+        if (noteParts.length > 0) {
+          return `${labelOverride} (${noteParts.join("; ")})`;
+        }
+      }
+      return labelOverride;
+    }
+    const startLabel = formatSingleDate(event.date, event.date_precision);
+    const endLabel = formatSingleDate(
+      event.date_end,
+      event.date_end_precision ?? event.date_precision
+    );
+    let label = startLabel;
+    if (
+      startLabel &&
+      endLabel &&
+      event.date_end &&
+      event.date_end !== event.date
+    ) {
+      label = `${startLabel} – ${endLabel}`;
+    }
+    if (!label) return supplementalNote ?? "Date unavailable";
+    if (!supplementalNote) return label;
+    const supplementalParts = supplementalNote
+      .split(";")
+      .map((part) => part.trim())
+      .filter(Boolean);
+    if (supplementalParts.length === 0) return label;
+    return `${label} (${supplementalParts.join("; ")})`;
   }
 
   function formatAgeLabel(age) {
@@ -237,6 +299,7 @@
   }
 
   function formatLocations(locations = []) {
+    if (!locations.length) return UNKNOWN_LOCATION_LABEL;
     return locations.join(" · ");
   }
 

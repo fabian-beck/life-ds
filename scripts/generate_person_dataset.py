@@ -7,6 +7,7 @@ import os
 import re
 import sys
 import time
+from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Set
@@ -30,9 +31,223 @@ GEOCODER_ENDPOINT = os.getenv(
 )
 GEOCODER_DELAY_SECONDS = float(os.getenv("LIFE_DS_GEOCODER_DELAY", "1.0"))
 GEOCODER_MAX_RESULTS = 1
+UNKNOWN_LOCATION_LABEL = "Location unknown"
 
 _geocode_cache: Dict[str, Optional[Dict[str, Any]]] = {}
 _last_geocode_at: float = 0.0
+
+
+def _strip_wrapping_quotes(value: str) -> str:
+    trimmed = value.strip()
+    quotes = "\"'“”‘’"
+    while len(trimmed) >= 2 and trimmed[0] in quotes and trimmed[-1] in quotes:
+        trimmed = trimmed[1:-1].strip()
+    return trimmed
+
+
+def _clean_date_note_text(note: str) -> str:
+    cleaned = note.strip()
+    prefix_patterns = [
+        r"^Described in the source as\s+",
+        r"^Described as\s+",
+        r"^Documented as\s+",
+        r"^Recorded as\s+",
+        r"^Listed as\s+",
+        r"^Reported as\s+",
+        r"^Referenced as\s+",
+        r"^(?:The\s+)?source\s+(?:notes|indicates|describes|lists|states)\s+(?:that\s+|it\s+as\s+)?",
+        r"^(?:According to|Per)\s+the\s+source,\s*",
+    ]
+    for pattern in prefix_patterns:
+        cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE)
+    cleaned = _strip_wrapping_quotes(cleaned)
+    cleaned = cleaned.rstrip(" .:;")
+    return cleaned.strip()
+
+
+def _split_date_annotation(value: str) -> Tuple[str, Optional[str], bool]:
+    text = value.strip()
+    prefer_note = False
+    note = None
+    match = re.match(r"^(.*?)\(([^()]*)\)\s*$", text)
+    if match:
+        base = match.group(1).strip(",; ")
+        note_candidate = _clean_date_note_text(match.group(2))
+        if note_candidate:
+            note = note_candidate
+            prefer_note = True
+        text = base or text
+    return text.strip(), note, prefer_note
+
+
+def _normalize_location_text(value: str) -> str:
+    return re.sub(r"\s+", " ", value).strip(",; ")
+
+
+def _strip_html_tags(value: str) -> str:
+    return re.sub(r"<[^>]+>", "", value)
+
+
+def _clean_candidate_name(value: Optional[str]) -> Optional[str]:
+    if not value or not isinstance(value, str):
+        return None
+    cleaned = _strip_html_tags(value)
+    cleaned = cleaned.replace("\xa0", " ")
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(" ,;:\u00b7")
+    return cleaned or None
+
+
+def _collect_person_name_candidates(
+    person: Dict[str, Any],
+    page_data: Dict[str, Any],
+    summary_data: Optional[Dict[str, Any]] = None,
+) -> List[str]:
+    candidates: List[str] = []
+    seen: Set[str] = set()
+
+    def push(raw: Optional[str]) -> None:
+        cleaned = _clean_candidate_name(raw)
+        if not cleaned:
+            return
+        key = cleaned.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append(cleaned)
+
+        if "," in cleaned:
+            primary = cleaned.split(",", 1)[0].strip()
+            primary_clean = _clean_candidate_name(primary)
+            if primary_clean:
+                primary_key = primary_clean.casefold()
+                if primary_key not in seen:
+                    seen.add(primary_key)
+                    candidates.append(primary_clean)
+
+        simplified_parentheses = re.sub(r"\s*\([^)]*\)", "", cleaned).strip()
+        simplified_parentheses = _clean_candidate_name(simplified_parentheses)
+        if simplified_parentheses:
+            simple_key = simplified_parentheses.casefold()
+            if simple_key not in seen:
+                seen.add(simple_key)
+                candidates.append(simplified_parentheses)
+
+    push(person.get("name"))
+    push(person.get("preferred_name"))
+
+    push(page_data.get("title"))
+    push(page_data.get("displaytitle"))
+
+    if summary_data:
+        push(summary_data.get("title"))
+        push(summary_data.get("displaytitle"))
+        titles = summary_data.get("titles")
+        if isinstance(titles, dict):
+            for value in titles.values():
+                push(value)
+
+    return candidates
+
+
+def _name_score(value: str) -> Tuple[int, int, int]:
+    punctuation_penalty = 0
+    for symbol, weight in ((",", 3), ("(", 2), (")", 2), (";", 1), (":", 1)):
+        punctuation_penalty += value.count(symbol) * weight
+    word_count = len(value.split())
+    length_penalty = len(value)
+    return punctuation_penalty, word_count, length_penalty
+
+
+def _generate_location_candidates(query: str) -> List[str]:
+    candidates: List[str] = []
+    seen: Set[str] = set()
+
+    def add(value: str) -> None:
+        if not value:
+            return
+        key = value.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append(value)
+
+    normalized = _normalize_location_text(query)
+    add(normalized)
+
+    without_parentheses = re.sub(r"\s*\([^)]*\)", "", normalized)
+    without_parentheses = _normalize_location_text(without_parentheses)
+    if without_parentheses and without_parentheses != normalized:
+        add(without_parentheses)
+
+    base_for_segments = without_parentheses or normalized
+    segments = [
+        segment.strip()
+        for segment in re.split(r"\s*,\s*", base_for_segments)
+        if segment.strip()
+    ]
+    if len(segments) > 1:
+        for length in range(len(segments) - 1, 0, -1):
+            add(", ".join(segments[:length]))
+    if segments:
+        add(segments[0])
+
+    dashed = re.sub(r"\s*[-–—]\s*.*$", "", normalized)
+    dashed = _normalize_location_text(dashed)
+    if dashed and dashed != normalized:
+        add(dashed)
+
+    return candidates
+
+
+def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
+    cached = _geocode_cache.get(query)
+    if cached is not None:
+        return cached
+    try:
+        _throttle_geocoder()
+        response = requests.get(
+            GEOCODER_ENDPOINT,
+            params={
+                "q": query,
+                "format": "jsonv2",
+                "limit": GEOCODER_MAX_RESULTS,
+            },
+            timeout=30,
+            headers=geocoder_headers(),
+        )
+        response.raise_for_status()
+        results: List[Dict[str, Any]] = response.json()
+    except Exception as error:  # noqa: BLE001
+        print(f"Warning: geocoding lookup failed for '{query}': {error}")
+        _geocode_cache[query] = None
+        return None
+    if not results:
+        _geocode_cache[query] = None
+        return None
+    primary = results[0]
+    try:
+        lon = float(primary.get("lon"))
+        lat = float(primary.get("lat"))
+    except (TypeError, ValueError):
+        _geocode_cache[query] = None
+        return None
+    bbox_values: Optional[List[float]] = None
+    raw_bbox = primary.get("boundingbox")
+    if isinstance(raw_bbox, list) and len(raw_bbox) == 4:
+        try:
+            south, north, west, east = [float(value) for value in raw_bbox]
+            bbox_values = [west, south, east, north]
+        except (TypeError, ValueError):
+            bbox_values = None
+    result = {
+        "name": query,
+        "display_name": primary.get("display_name"),
+        "lon": lon,
+        "lat": lat,
+        "bbox": bbox_values,
+    }
+    _geocode_cache[query] = result
+    return result
 
 
 def normalize_date_value(value: str, precision: str) -> tuple[Any, str]:
@@ -247,9 +462,14 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     )
     instructions = (
         "Produce 12-16 significant life events covering the subject's early life, "
-        "education, major accomplishments, later years, and posthumous recognition if relevant. "
-        "Each event needs: date, date_precision, age (null if not applicable), title, description, "
-        "locations (array), sources (array of URLs pulled from Wikipedia). "
+        "education, major accomplishments, and later years. "
+        "Do not include events that occur after the subject's death or that focus on their legacy. "
+        "Each event must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
+        "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
+        "title, description, locations (array with at least one human-readable entry, use 'Location unknown' if uncertain), "
+        "and sources (array of URLs pulled from Wikipedia). "
+        "Keep date and date_end values as machine-readable ISO-8601 strings (YYYY-MM-DD, YYYY-MM, or YYYY). "
+        "If a source uses descriptive phrasing like 'early 1900', place that text in date_note while selecting the closest structured date. "
         "Include person metadata with name, birth_date, death_date when known, primary_roles, summary, "
         "wikipedia URL, and portrait info if available."
     )
@@ -296,57 +516,23 @@ def _throttle_geocoder() -> None:
 
 
 def geocode_location(query: str) -> Optional[Dict[str, Any]]:
-    normalized = (query or "").strip()
+    normalized = _normalize_location_text(query or "")
     if not normalized:
+        return None
+    if normalized.casefold() == UNKNOWN_LOCATION_LABEL.casefold():
         return None
     cached = _geocode_cache.get(normalized)
     if cached is not None:
         return cached
-    try:
-        _throttle_geocoder()
-        response = requests.get(
-            GEOCODER_ENDPOINT,
-            params={
-                "q": normalized,
-                "format": "jsonv2",
-                "limit": GEOCODER_MAX_RESULTS,
-            },
-            timeout=30,
-            headers=geocoder_headers(),
-        )
-        response.raise_for_status()
-        results: List[Dict[str, Any]] = response.json()
-    except Exception as error:  # noqa: BLE001
-        print(f"Warning: geocoding lookup failed for '{normalized}': {error}")
-        _geocode_cache[normalized] = None
-        return None
-    if not results:
-        _geocode_cache[normalized] = None
-        return None
-    primary = results[0]
-    try:
-        lon = float(primary.get("lon"))
-        lat = float(primary.get("lat"))
-    except (TypeError, ValueError):
-        _geocode_cache[normalized] = None
-        return None
-    bbox_values: Optional[List[float]] = None
-    raw_bbox = primary.get("boundingbox")
-    if isinstance(raw_bbox, list) and len(raw_bbox) == 4:
-        try:
-            south, north, west, east = [float(value) for value in raw_bbox]
-            bbox_values = [west, south, east, north]
-        except (TypeError, ValueError):
-            bbox_values = None
-    result = {
-        "name": normalized,
-        "display_name": primary.get("display_name"),
-        "lon": lon,
-        "lat": lat,
-        "bbox": bbox_values,
-    }
-    _geocode_cache[normalized] = result
-    return result
+
+    for candidate in _generate_location_candidates(normalized):
+        result = _geocode_candidate(candidate)
+        if result:
+            _geocode_cache[normalized] = result
+            return result
+
+    _geocode_cache[normalized] = None
+    return None
 
 
 def enrich_event_coordinates(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
@@ -391,11 +577,41 @@ def enrich_event_coordinates(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], i
     return payload, resolved_count
 
 
-def enforce_metadata(payload: Dict[str, Any], page_data: Dict[str, Any]) -> Dict[str, Any]:
+def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
+    """Convert varying precision date strings into a comparable upper bound."""
+    if not value:
+        return None
+    normalized_precision = (precision or "day").lower()
+    try:
+        if normalized_precision == "day":
+            return datetime.strptime(value, "%Y-%m-%d").date()
+        if normalized_precision == "month":
+            year, month = [int(part) for part in value.split("-")[:2]]
+            last_day = monthrange(year, month)[1]
+            return date(year, month, last_day)
+        if normalized_precision == "year":
+            year = int(value[:4])
+            return date(year, 12, 31)
+    except (ValueError, TypeError):
+        return None
+    return None
+
+
+def enforce_metadata(
+    payload: Dict[str, Any],
+    page_data: Dict[str, Any],
+    summary_data: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
     payload.setdefault("dataset", DATASET_NAME)
     payload["created_on"] = date.today().isoformat()
     person = payload.setdefault("person", {})
-    person.setdefault("name", page_data.get("title"))
+    name_candidates = _collect_person_name_candidates(
+        person, page_data, summary_data)
+    if name_candidates:
+        preferred_name = min(name_candidates, key=_name_score)
+        person["name"] = preferred_name
+    else:
+        person.setdefault("name", page_data.get("title"))
     for key in ("birth_date", "death_date"):
         value = person.get(key)
         if value:
@@ -417,14 +633,122 @@ def enforce_metadata(payload: Dict[str, Any], page_data: Dict[str, Any]) -> Dict
     elif original:
         person["portrait"] = {"image": original.get(
             "source"), "source": page_data.get("fullurl")}
+    death_cutoff: Optional[date] = None
+    death_value = person.get("death_date")
+    if isinstance(death_value, str):
+        try:
+            death_cutoff = datetime.strptime(death_value, "%Y-%m-%d").date()
+        except ValueError:
+            death_cutoff = None
+
     events = []
     for event in payload.get("events", []) or []:
-        normalized_date, normalized_precision = normalize_date_value(
-            event.get("date"), event.get("date_precision", "day")
-        )
+        if not isinstance(event, dict):
+            continue
         event = {**event}
+
+        note_values: List[str] = []
+
+        def add_note(candidate: Optional[str]) -> None:
+            if not candidate:
+                return
+            if candidate in note_values:
+                return
+            note_values.append(candidate)
+
+        raw_start_date = event.get("date")
+        start_input = raw_start_date
+        prefer_note_label = False
+        if isinstance(raw_start_date, str):
+            start_input, start_note, prefer_note_label = _split_date_annotation(
+                raw_start_date)
+            add_note(start_note)
+
+        precision_value = event.get("date_precision") or "day"
+        normalized_date, normalized_precision = normalize_date_value(
+            start_input, precision_value
+        )
+        if not normalized_date:
+            # Drop events without a usable date so the timeline remains ordered.
+            continue
         event["date"] = normalized_date
         event["date_precision"] = normalized_precision
+
+        raw_date_end = event.get("date_end") or event.get("end_date")
+        end_input = raw_date_end
+        if isinstance(raw_date_end, str):
+            end_input, end_note, _ = _split_date_annotation(raw_date_end)
+            add_note(end_note)
+
+        raw_date_end_precision = (
+            event.get("date_end_precision")
+            or event.get("end_date_precision")
+            or precision_value
+        )
+        normalized_end_date = None
+        normalized_end_precision = raw_date_end_precision
+        if end_input:
+            normalized_end_date, normalized_end_precision = normalize_date_value(
+                end_input, raw_date_end_precision or normalized_precision
+            )
+        if normalized_end_date:
+            event["date_end"] = normalized_end_date
+            event["date_end_precision"] = normalized_end_precision
+        else:
+            event.pop("date_end", None)
+            event.pop("date_end_precision", None)
+        event.pop("end_date", None)
+        event.pop("end_date_precision", None)
+
+        if death_cutoff is not None:
+            comparison_date = normalized_end_date or normalized_date
+            comparison_precision = (
+                normalized_end_precision or normalized_precision
+            )
+            upper_bound = _upper_bound_date(
+                comparison_date, comparison_precision
+            )
+            if upper_bound and upper_bound > death_cutoff:
+                # Skip events that extend beyond the subject's lifetime.
+                continue
+
+        existing_note_raw = event.get("date_note")
+        cleaned_existing_note = None
+        if isinstance(existing_note_raw, str):
+            cleaned_existing_note = _clean_date_note_text(
+                existing_note_raw) or existing_note_raw.strip()
+        add_note(cleaned_existing_note)
+
+        if note_values:
+            note_output = "; ".join(note_values) if len(
+                note_values) > 1 else note_values[0]
+            event["date_note"] = note_output
+            if prefer_note_label:
+                event["date_label"] = note_values[0]
+            else:
+                event.pop("date_label", None)
+        else:
+            event.pop("date_note", None)
+            event.pop("date_label", None)
+
+        raw_locations = event.get("locations") or []
+        sanitized_locations = []
+        seen_locations: Set[str] = set()
+        for location in raw_locations:
+            if not isinstance(location, str):
+                continue
+            trimmed = location.strip()
+            if not trimmed:
+                continue
+            key = trimmed.casefold()
+            if key in seen_locations:
+                continue
+            seen_locations.add(key)
+            sanitized_locations.append(trimmed)
+        if not sanitized_locations:
+            sanitized_locations = [UNKNOWN_LOCATION_LABEL]
+        event["locations"] = sanitized_locations
+
         events.append(event)
     events.sort(key=event_sort_key)
     payload["events"] = events
@@ -486,7 +810,7 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
     print(f"[4/7] Response received from OpenAI.")
 
     print("[5/7] Normalizing dataset metadata...")
-    payload = enforce_metadata(payload, page_data)
+    payload = enforce_metadata(payload, page_data, summary_data)
     event_count = len(payload.get("events", []))
     print(f"[5/7] Dataset includes {event_count} events.")
 
