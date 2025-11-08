@@ -1,0 +1,481 @@
+{
+  "dataset": "wikipedia-biography-events-v1",
+  "created_on": "2025-11-08",
+  "person": {
+    "name": "Emmy Noether",
+    "birth_date": "1882-03-23",
+    "death_date": "1935-04-14",
+    "primary_roles": [
+      "Mathematician",
+      "Professor"
+    ],
+    "summary": "Amalie Emmy Noether was a German mathematician who transformed abstract algebra and proved Noether's theorems linking symmetries to conservation laws in physics. Celebrated by leading contemporaries, she developed foundational theories of rings, fields, and algebras, and profoundly influenced modern mathematics.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Emmy_Noether",
+    "portrait": {
+      "image_page": "https://en.wikipedia.org/wiki/Emmy_Noether#/media/File:Emmy_Noether.jpg",
+      "caption": "Emmy Noether, circa 1930s",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg"
+    },
+    "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether"
+  },
+  "events": [
+    {
+      "date": "1882-03-23",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth in Erlangen, Bavaria",
+      "description": "Amalie Emmy Noether was born to Max Noether and Ida Amalia Kaufmann in Erlangen, Bavaria, into a Jewish family with strong academic roots.",
+      "locations": [
+        "Erlangen, Bavaria, German Empire"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ]
+    },
+    {
+      "date": "1903-07-14",
+      "date_precision": "day",
+      "age": 21,
+      "title": "Passes graduation exam in Nuremberg",
+      "description": "After auditing classes due to restrictions on women, Noether passed the graduation exam at a Realgymnasium in Nuremberg, enabling further university study.",
+      "locations": [
+        "Nuremberg, Bavaria, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Nuremberg, Bavaria, Germany",
+          "name": "Nuremberg, Bavaria, Germany",
+          "primary": true,
+          "centroid": [
+            11.077298,
+            49.453872
+          ],
+          "source": "nominatim",
+          "bbox": [
+            10.9887326,
+            49.3314339,
+            11.2825957,
+            49.5407534
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1904-10",
+      "date_precision": "month",
+      "age": 22,
+      "title": "Formally enrolls in mathematics at Erlangen",
+      "description": "Following the lifting of restrictions on women in Bavarian universities, Noether officially reentered the University of Erlangen\u2013Nuremberg to study mathematics.",
+      "locations": [
+        "University of Erlangen\u2013Nuremberg, Erlangen, Bavaria, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg"
+      ]
+    },
+    {
+      "date": "1907",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Doctorate under Paul Gordan",
+      "description": "Noether completed her PhD summa cum laude at Erlangen with a dissertation on invariants of ternary biquadratic forms under the supervision of Paul Gordan.",
+      "locations": [
+        "Erlangen, Bavaria, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Erlangen, Bavaria, Germany",
+          "name": "Erlangen, Bavaria, Germany",
+          "primary": true,
+          "centroid": [
+            10.9812072,
+            49.5891571
+          ],
+          "source": "nominatim",
+          "bbox": [
+            10.9153629,
+            49.5327088,
+            11.0536043,
+            49.6455844
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1908",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Begins unpaid teaching and joins mathematical societies",
+      "description": "Noether started teaching and conducting research without pay at Erlangen's Mathematical Institute and joined the Circolo Matematico di Palermo.",
+      "locations": [
+        "Erlangen, Bavaria, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Circolo_Matematico_di_Palermo"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Erlangen, Bavaria, Germany",
+          "name": "Erlangen, Bavaria, Germany",
+          "primary": true,
+          "centroid": [
+            10.9812072,
+            49.5891571
+          ],
+          "source": "nominatim",
+          "bbox": [
+            10.9153629,
+            49.5327088,
+            11.0536043,
+            49.6455844
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1915-04",
+      "date_precision": "month",
+      "age": 33,
+      "title": "Moves to G\u00f6ttingen at Hilbert and Klein\u2019s invitation",
+      "description": "Invited by David Hilbert and Felix Klein, Noether relocated to the University of G\u00f6ttingen. Faculty opposition delayed her formal status, and she initially lectured under Hilbert\u2019s name.",
+      "locations": [
+        "G\u00f6ttingen, Lower Saxony, Germany",
+        "University of G\u00f6ttingen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/University_of_G%C3%B6ttingen",
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "location_coordinates": [
+        {
+          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
+          "name": "G\u00f6ttingen, Lower Saxony, Germany",
+          "primary": true,
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "source": "nominatim",
+          "bbox": [
+            9.8001329,
+            51.4830052,
+            10.0536032,
+            51.5908201
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1918-07-26",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Noether\u2019s theorem presented in G\u00f6ttingen",
+      "description": "Felix Klein presented Noether\u2019s paper 'Invariante Variationsprobleme' to the Royal Society of Sciences at G\u00f6ttingen, establishing the deep link between symmetries and conservation laws.",
+      "locations": [
+        "G\u00f6ttingen, Lower Saxony, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Noether%27s_theorem"
+      ],
+      "location_coordinates": [
+        {
+          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
+          "name": "G\u00f6ttingen, Lower Saxony, Germany",
+          "primary": true,
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "source": "nominatim",
+          "bbox": [
+            9.8001329,
+            51.4830052,
+            10.0536032,
+            51.5908201
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1919-06",
+      "date_precision": "month",
+      "age": 37,
+      "title": "Habilitation approved; becomes Privatdozent",
+      "description": "After the 1918\u20131919 German Revolution loosened restrictions, Noether completed her habilitation and was appointed Privatdozent at G\u00f6ttingen, with lectures listed under her own name.",
+      "locations": [
+        "University of G\u00f6ttingen, G\u00f6ttingen, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Habilitation"
+      ]
+    },
+    {
+      "date": "1921",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Publishes Idealtheorie in Ringbereichen",
+      "description": "In her seminal paper on the theory of ideals in commutative rings, Noether introduced methods (including the ascending chain condition) that helped found modern abstract algebra; structures satisfying it were later called Noetherian.",
+      "locations": [
+        "G\u00f6ttingen, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Noetherian_ring"
+      ],
+      "location_coordinates": [
+        {
+          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
+          "name": "G\u00f6ttingen, Germany",
+          "primary": true,
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "source": "nominatim",
+          "bbox": [
+            9.8001329,
+            51.4830052,
+            10.0536032,
+            51.5908201
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1924",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Influences B. L. van der Waerden",
+      "description": "Dutch mathematician B. L. van der Waerden joined Noether\u2019s circle at G\u00f6ttingen and became the principal expositor of her ideas, culminating in his textbook Moderne Algebra.",
+      "locations": [
+        "G\u00f6ttingen, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden",
+        "https://en.wikipedia.org/wiki/Moderne_Algebra"
+      ],
+      "location_coordinates": [
+        {
+          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
+          "name": "G\u00f6ttingen, Germany",
+          "primary": true,
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "source": "nominatim",
+          "bbox": [
+            9.8001329,
+            51.4830052,
+            10.0536032,
+            51.5908201
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1932",
+      "date_precision": "year",
+      "age": 50,
+      "title": "Plenary address at the International Congress of Mathematicians",
+      "description": "Noether delivered a plenary lecture at the 1932 ICM in Z\u00fcrich, reflecting her international recognition as a leading algebraist.",
+      "locations": [
+        "Z\u00fcrich, Switzerland"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/International_Congress_of_Mathematicians"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Zurich, District Zurich, Zurich, Switzerland",
+          "name": "Z\u00fcrich, Switzerland",
+          "primary": true,
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "source": "nominatim",
+          "bbox": [
+            8.4480061,
+            47.3202187,
+            8.6254413,
+            47.4346662
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Dismissed from G\u00f6ttingen under Nazi racial laws",
+      "description": "Following the Nazi Law for the Restoration of the Professional Civil Service, Noether, as a Jew, was dismissed from her university position in Germany.",
+      "locations": [
+        "G\u00f6ttingen, Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Law_for_the_Restoration_of_the_Professional_Civil_Service"
+      ],
+      "location_coordinates": [
+        {
+          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
+          "name": "G\u00f6ttingen, Germany",
+          "primary": true,
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "source": "nominatim",
+          "bbox": [
+            9.8001329,
+            51.4830052,
+            10.0536032,
+            51.5908201
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Emigrates to the U.S.; appointed at Bryn Mawr and lectures at IAS",
+      "description": "Noether moved to the United States, joined Bryn Mawr College to teach graduate and postdoctoral women, and concurrently lectured and conducted research at the Institute for Advanced Study in Princeton.",
+      "locations": [
+        "Bryn Mawr, Pennsylvania, United States",
+        "Princeton, New Jersey, United States"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Bryn_Mawr_College",
+        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Bryn Mawr, Lower Merion Township, Montgomery County, Pennsylvania, United States",
+          "name": "Bryn Mawr, Pennsylvania, United States",
+          "primary": true,
+          "centroid": [
+            -75.3173407,
+            40.0238245
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -75.326314,
+            40.016158,
+            -75.303047,
+            40.031616
+          ]
+        },
+        {
+          "label": "Princeton, Mercer County, New Jersey, United States",
+          "name": "Princeton, New Jersey, United States",
+          "primary": false,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -74.7221219,
+            40.3048856,
+            -74.617508,
+            40.3917309
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1935-04-14",
+      "date_precision": "day",
+      "age": 53,
+      "title": "Death in Bryn Mawr, Pennsylvania",
+      "description": "Emmy Noether died in the United States, leaving a legacy that reshaped algebra and influenced modern theoretical physics.",
+      "locations": [
+        "Bryn Mawr, Pennsylvania, United States"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Bryn Mawr, Lower Merion Township, Montgomery County, Pennsylvania, United States",
+          "name": "Bryn Mawr, Pennsylvania, United States",
+          "primary": true,
+          "centroid": [
+            -75.3173407,
+            40.0238245
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -75.326314,
+            40.016158,
+            -75.303047,
+            40.031616
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1970",
+      "date_precision": "year",
+      "age": null,
+      "title": "Lunar crater 'Noether' named in her honor",
+      "description": "The International Astronomical Union named a lunar impact crater on the Moon\u2019s far side 'Noether' to honor her scientific contributions.",
+      "locations": [
+        "Far side of the Moon"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Noether_(crater)",
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ]
+    },
+    {
+      "date": "1998",
+      "date_precision": "year",
+      "age": null,
+      "title": "DFG establishes the Emmy Noether Programme",
+      "description": "Germany\u2019s Deutsche Forschungsgemeinschaft launched the Emmy Noether Programme to support outstanding early-career researchers, commemorating her impact on science.",
+      "locations": [
+        "Germany"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether_Programme",
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Germany",
+          "name": "Germany",
+          "primary": true,
+          "centroid": [
+            10.4478313,
+            51.1638175
+          ],
+          "source": "nominatim",
+          "bbox": [
+            5.8663153,
+            47.2701114,
+            15.0419309,
+            55.099161
+          ]
+        }
+      ]
+    }
+  ]
+}
