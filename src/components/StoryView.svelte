@@ -222,7 +222,7 @@
       ? styleConfig.secondary
       : "#38BDF8";
   $: fadedMarkerColor =
-    rgbaFromHex(primaryMarkerColor, 0.35) ?? "rgba(56, 189, 248, 0.35)";
+    rgbaFromHex(primaryMarkerColor, 0.7) ?? "rgba(56, 189, 248, 0.7)";
 
   $: datasetName = dataset?.person?.name ?? null;
   $: if (datasetName !== lastDatasetName) {
@@ -559,7 +559,7 @@
     if (history.length > 0) {
       for (const coords of history) {
         const markerElement = createMarkerElement(fadedMarkerColor, {
-          opacity: 0.6,
+          opacity: 0.8,
           size: 11,
         });
         const marker = new maplibregl.Marker({
@@ -588,7 +588,7 @@
     const positions = active ? [active, ...history] : history;
     if (positions.length === 0) {
       if (lastViewportKey !== "baseline") {
-        mapInstance.easeTo({ center: [0, 0], zoom: 1.5, duration: 700 });
+        mapInstance.easeTo({ center: [0, 0], zoom: 1.0, duration: 700 });
         lastViewportKey = "baseline";
       }
       return;
@@ -605,7 +605,7 @@
     if (positions.length === 1) {
       mapInstance.easeTo({
         center: [positions[0].lon, positions[0].lat],
-        zoom: 6.5,
+        zoom: 5.5,
         duration: 900,
       });
       return;
@@ -621,9 +621,9 @@
         )
       );
     mapInstance.fitBounds(bounds, {
-      padding: { top: 60, bottom: 100, left: 80, right: 80 },
+      padding: { top: 100, bottom: 100, left: 60, right: 60 },
       duration: 900,
-      maxZoom: 7.5,
+      maxZoom: 6.5,
     });
   }
 
@@ -639,7 +639,7 @@
       container: mapContainer,
       style: createBaseStyle(),
       center: [0, 0],
-      zoom: 1.5,
+      zoom: 1.0,
       attributionControl: false,
       interactive: false,
     });
@@ -1263,15 +1263,15 @@
     mask-image: linear-gradient(
       160deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.65) 40%,
-      rgba(0, 0, 0, 0.3) 60%,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.7) 50%,
       rgba(0, 0, 0, 0) 80%
     );
     -webkit-mask-image: linear-gradient(
       160deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.65) 40%,
-      rgba(0, 0, 0, 0.3) 60%,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.7) 50%,
       rgba(0, 0, 0, 0) 80%
     );
     pointer-events: none;
