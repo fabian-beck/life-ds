@@ -16,10 +16,27 @@ npm run dev -- --open
 
 Both dataset and styling generators rely on the OpenAI API. Set `OPENAI_API_KEY` before running the scripts.
 
+### Python Dependencies
+
+Install the required Python packages:
+
+```powershell
+pip install -r requirements.txt
+```
+
+The scripts require:
+- `openai` - OpenAI API client with structured outputs support
+- `requests` - HTTP library for Wikipedia API
+- `pydantic` - Data validation for structured outputs
+
+### Running the Generators
+
 ```powershell
 python scripts/generate_person_dataset.py "Ada Lovelace"
 python scripts/generate_person_style.py "Ada Lovelace"
 ```
+
+**Note:** The dataset generator uses OpenAI's modern **Responses API** with structured outputs, which requires compatible models like `gpt-4o-mini` or `gpt-4o-2024-08-06`. The default model is `gpt-4o-mini`. You can override this with the `OPENAI_MODEL` environment variable or the `--model` flag. The Responses API provides guaranteed schema adherence and better error handling compared to the legacy Chat Completions API.
 
 By default the scripts write to `data/people/` and `data/person_styles.json`, updating the shared registry files as needed.
 

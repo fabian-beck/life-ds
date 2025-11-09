@@ -15,6 +15,7 @@ from urllib.parse import quote
 
 import requests
 from openai import APIStatusError, OpenAI
+from pydantic import BaseModel, Field
 
 DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -22,8 +23,8 @@ REGISTER_PATH = DATA_DIR / "persons.json"
 DATASETS_DIR = DATA_DIR / "people"
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
-# Adjust the default model if your account has access to newer releases.
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")
+# Structured outputs require gpt-4o-mini, gpt-4o-2024-08-06, or later models
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
 GEOCODER_ENDPOINT = os.getenv(
     "LIFE_DS_GEOCODER_ENDPOINT",
@@ -35,6 +36,71 @@ UNKNOWN_LOCATION_LABEL = "Location unknown"
 
 _geocode_cache: Dict[str, Optional[Dict[str, Any]]] = {}
 _last_geocode_at: float = 0.0
+
+
+# Pydantic models for structured outputs
+class ImageMetadata(BaseModel):
+    """Metadata for an image associated with an event."""
+    url: str = Field(description="The full URL of the image")
+    caption: str = Field(
+        description="A concise, factual description of what the image shows")
+    source: str = Field(
+        description="The source URL, typically a Wikimedia Commons page")
+
+
+class LifeEvent(BaseModel):
+    """A significant life event."""
+    date: str = Field(
+        description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
+    date_precision: str = Field(
+        description="Precision level: 'day', 'month', or 'year'")
+    date_end: Optional[str] = Field(
+        None, description="Optional end date for events spanning a range")
+    date_end_precision: Optional[str] = Field(
+        None, description="Precision for the end date")
+    date_note: Optional[str] = Field(
+        None, description="Note about date uncertainty or alternative representations")
+    age: Optional[int] = Field(
+        None, description="Subject's age at the time of the event, null if not applicable")
+    title: str = Field(description="Brief title of the event")
+    description: str = Field(description="Detailed description of the event")
+    locations: List[str] = Field(
+        description="Human-readable location names, use 'Location unknown' if uncertain")
+    sources: List[str] = Field(
+        description="Array of Wikipedia URLs or references")
+    images: Optional[List[ImageMetadata]] = Field(
+        None, description="Optional array of relevant images")
+
+
+class Portrait(BaseModel):
+    """Portrait information for the person."""
+    image: Optional[str] = Field(None, description="URL of the portrait image")
+    source: Optional[str] = Field(
+        None, description="Source URL for the portrait")
+
+
+class Person(BaseModel):
+    """Metadata about the person."""
+    name: str = Field(description="Full name of the person")
+    birth_date: Optional[str] = Field(
+        None, description="Birth date in ISO-8601 format")
+    death_date: Optional[str] = Field(
+        None, description="Death date in ISO-8601 format")
+    primary_roles: List[str] = Field(
+        description="Primary roles or professions")
+    summary: str = Field(description="Brief biographical summary")
+    wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
+    portrait: Optional[Portrait] = Field(
+        None, description="Portrait information")
+
+
+class LifeDataset(BaseModel):
+    """Complete structured dataset for a person's life events."""
+    dataset: str = Field(description="Name of the dataset")
+    created_on: str = Field(description="Creation date in ISO-8601 format")
+    person: Person = Field(description="Person metadata")
+    events: List[LifeEvent] = Field(
+        description="List of significant life events")
 
 
 def _strip_wrapping_quotes(value: str) -> str:
@@ -601,7 +667,6 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     client = OpenAI(api_key=api_key)
     system = (
         "You are a meticulous historian who converts raw Wikipedia content into structured JSON. "
-        "Return a JSON object with keys: dataset, created_on, person, events. "
         "Use ISO-8601 dates, include date_precision as 'day', 'month', or 'year'. "
         "Align event ages with the subject's birth date."
     )
@@ -633,21 +698,19 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Include person metadata with name, birth_date, death_date when known, primary_roles, summary, "
         "wikipedia URL, and portrait info if available."
     )
-    request_kwargs: Dict[str, Any] = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": instructions},
-            {"role": "user", "content": prompt},
-        ],
-        "response_format": {"type": "json_object"},
-    }
-    if not model.lower().startswith("gpt-5"):
-        request_kwargs["temperature"] = 0.2
-    else:
-        print("Using model default temperature (unsupported override).")
+    
     try:
-        response = client.chat.completions.create(**request_kwargs)
+        # Use modern Responses API with structured outputs
+        response = client.responses.parse(
+            model=model,
+            input=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": instructions},
+                {"role": "user", "content": prompt},
+            ],
+            text_format=LifeDataset,
+            temperature=0.2,
+        )
     except APIStatusError as error:
         message = ""
         try:
@@ -660,8 +723,22 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
             # type: ignore[attr-defined]
             f" Details: {error.status_code} {message}"
         ) from error
-    content = response.choices[0].message.content
-    return json.loads(content)
+    
+    # Handle different response statuses
+    if response.status == "failed":
+        error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
+        raise RuntimeError(error_msg)
+    elif response.status != "completed":
+        raise RuntimeError(f"Response has unexpected status: {response.status}")
+    
+    # Parse the structured output from the Responses API
+    # The output_parsed property contains the Pydantic model
+    parsed = response.output_parsed
+    if parsed is None:
+        raise RuntimeError("Failed to parse structured output from model")
+    
+    # Convert Pydantic model to dict
+    return parsed.model_dump()
 
 
 def _throttle_geocoder() -> None:
@@ -1028,8 +1105,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--model",
         default=DEFAULT_MODEL,
         help=(
-            "OpenAI model to use (default from OPENAI_MODEL env or 'gpt-5'). "
-            "Run `openai models list` or see https://platform.openai.com/docs/models for options."
+            "OpenAI model to use (default from OPENAI_MODEL env or 'gpt-4o-mini'). "
+            "Must support structured outputs: gpt-4o-mini, gpt-4o-2024-08-06, or later. "
+            "See https://platform.openai.com/docs/guides/structured-outputs for supported models."
         ),
     )
     return parser.parse_args(argv)
