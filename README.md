@@ -25,6 +25,7 @@ pip install -r requirements.txt
 ```
 
 The scripts require:
+
 - `openai` - OpenAI API client with structured outputs support
 - `requests` - HTTP library for Wikipedia API
 - `pydantic` - Data validation for structured outputs
@@ -36,7 +37,11 @@ python scripts/generate_person_dataset.py "Ada Lovelace"
 python scripts/generate_person_style.py "Ada Lovelace"
 ```
 
-**Note:** The dataset generator uses OpenAI's modern **Responses API** with structured outputs, which requires compatible models like `gpt-4o-mini` or `gpt-4o-2024-08-06`. The default model is `gpt-4o-mini`. You can override this with the `OPENAI_MODEL` environment variable or the `--model` flag. The Responses API provides guaranteed schema adherence and better error handling compared to the legacy Chat Completions API.
+The dataset generator uses `gpt-4o-mini` by default. To use a different model:
+
+```powershell
+python scripts/generate_person_dataset.py "Ada Lovelace" --model gpt-4o-2024-08-06
+```
 
 By default the scripts write to `data/people/` and `data/person_styles.json`, updating the shared registry files as needed.
 

@@ -698,7 +698,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Include person metadata with name, birth_date, death_date when known, primary_roles, summary, "
         "wikipedia URL, and portrait info if available."
     )
-    
+
     try:
         # Use modern Responses API with structured outputs
         response = client.responses.parse(
@@ -709,7 +709,6 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
                 {"role": "user", "content": prompt},
             ],
             text_format=LifeDataset,
-            temperature=0.2,
         )
     except APIStatusError as error:
         message = ""
@@ -723,20 +722,21 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
             # type: ignore[attr-defined]
             f" Details: {error.status_code} {message}"
         ) from error
-    
+
     # Handle different response statuses
     if response.status == "failed":
         error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
         raise RuntimeError(error_msg)
     elif response.status != "completed":
-        raise RuntimeError(f"Response has unexpected status: {response.status}")
-    
+        raise RuntimeError(
+            f"Response has unexpected status: {response.status}")
+
     # Parse the structured output from the Responses API
     # The output_parsed property contains the Pydantic model
     parsed = response.output_parsed
     if parsed is None:
         raise RuntimeError("Failed to parse structured output from model")
-    
+
     # Convert Pydantic model to dict
     return parsed.model_dump()
 
