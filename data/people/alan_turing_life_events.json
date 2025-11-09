@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-structured-biography",
-  "created_on": "2025-11-08",
+  "dataset": "wikipedia-life-events",
+  "created_on": "2025-11-09",
   "person": {
     "name": "Alan_Turing",
     "birth_date": "1912-06-23",
@@ -10,30 +10,35 @@
       "computer scientist",
       "logician",
       "cryptanalyst",
-      "philosopher",
-      "theoretical biologist"
+      "theoretical biologist",
+      "philosopher"
     ],
-    "summary": "Alan Turing was an English mathematician and pioneering computer scientist whose 1936 formulation of the Turing machine shaped theoretical computer science. During World War II he led key cryptanalytic work at Bletchley Park, and later designed early stored-program computer architectures and published influential papers on artificial intelligence and morphogenesis.",
-    "wikipedia_url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "summary": "English mathematician and computer science pioneer whose 1936 paper formalised computation via the Turing machine; key World War II cryptanalyst at Bletchley Park; postwar designer of the ACE computer; contributor to the philosophy of AI (Turing test) and mathematical biology (morphogenesis).",
+    "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing",
     "portrait": {
-      "title": "Alan Turing Aged 16",
-      "source_url": "https://en.wikipedia.org/wiki/File:Alan_Turing_Aged_16.jpg",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Alan_turing_header.jpg"
-    },
-    "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Alan_turing_header.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Alan_turing_header.jpg"
+    }
   },
   "events": [
     {
       "date": "1912-06-23",
       "date_precision": "day",
       "age": 0,
-      "title": "Birth in London",
+      "title": "Birth in Maida Vale, London",
       "description": "Alan Mathison Turing was born in Maida Vale, London, to Julius Mathison Turing and Ethel Sara Turing.",
       "locations": [
         "Maida Vale, London, England"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Alan_Turing_%285025990183%29.jpg",
+          "caption": "Blue plaque marking Alan Turing's 1912 birthplace at the Colonnade Hotel, London.",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(5025990183).jpg"
+        }
       ],
       "location_coordinates": [
         {
@@ -57,48 +62,32 @@
     {
       "date": "1926-05-03",
       "date_precision": "day",
-      "date_note": "First day of term at Sherborne coincided with the 1926 General Strike; Turing bicycled roughly 60 miles to school",
+      "date_note": "The first day of term at Sherborne coincided with the 1926 General Strike; date approximated to the strike's start",
       "age": 13,
-      "title": "Determined journey to Sherborne School",
-      "description": "On the first day of term during the General Strike, Turing cycled unaccompanied about 60 miles from Southampton to begin at Sherborne School.",
+      "title": "Starts at Sherborne School",
+      "description": "Turing entered Sherborne School, an independent boarding school in Dorset. Determined to attend despite the General Strike, he bicycled about 60 miles to school.",
       "locations": [
-        "Sherborne School, Sherborne, Dorset, England",
-        "Southampton, England"
+        "Sherborne, Dorset, England"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Sherborne_School"
       ],
       "location_coordinates": [
         {
-          "label": "Sherborne School, Abbey Road, Nether Coombe, Sherborne, Dorset, England, DT9 3LF, United Kingdom",
-          "name": "Sherborne School, Sherborne, Dorset, England",
+          "label": "Sherborne, Dorset, England, United Kingdom",
+          "name": "Sherborne, Dorset, England",
           "primary": true,
           "centroid": [
-            -2.518794,
-            50.9477555
+            -2.5179235,
+            50.950265
           ],
           "source": "nominatim",
           "bbox": [
-            -2.5208535,
-            50.9465236,
-            -2.5155826,
-            50.9489703
-          ]
-        },
-        {
-          "label": "Southampton, England, United Kingdom",
-          "name": "Southampton, England",
-          "primary": false,
-          "centroid": [
-            -1.404189,
-            50.9025349
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -1.479005,
-            50.8715095,
-            -1.3219862,
-            50.9561307
+            -2.549097,
+            50.9326113,
+            -2.4990979,
+            50.9658008
           ]
         }
       ]
@@ -108,7 +97,7 @@
       "date_precision": "day",
       "age": 17,
       "title": "Death of Christopher Morcom",
-      "description": "Turing\u2019s close friend and fellow student Christopher Morcom died, an event that profoundly influenced Turing and deepened his commitment to scientific study.",
+      "description": "Turing's close friend and fellow pupil Christopher Morcom died from complications of bovine tuberculosis. The loss deeply affected Turing and intensified his focus on science and mathematics.",
       "locations": [
         "Location unknown"
       ],
@@ -117,17 +106,25 @@
       ]
     },
     {
-      "date": "1931-02",
-      "date_precision": "month",
-      "date_note": "Undergraduate studies at King's College ran from February 1931 to November 1934",
-      "age": 18,
-      "title": "Begins undergraduate studies at King's College, Cambridge",
-      "description": "Turing started the mathematics course at King's College, later earning first-class honours.",
+      "date": "1935",
+      "date_precision": "year",
+      "date_note": "Elected a Fellow of King's College later in 1935 after his dissertation work was accepted in March",
+      "age": null,
+      "title": "Elected Fellow of King's College, Cambridge",
+      "description": "On the strength of his original dissertation on the Gaussian error function and related work, Turing was elected a Fellow of King's College, Cambridge.",
       "locations": [
         "King's College, Cambridge, England"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/King%27s_College,_Cambridge"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/20130808_Kings_College_Front_Court_Fountain_Crop_03.jpg",
+          "caption": "Statue of King Henry VI on the fountain in King's College Front Court, with King's College Chapel and Great St Mary's Church in the background.",
+          "source": "https://commons.wikimedia.org/wiki/File:20130808_Kings_College_Front_Court_Fountain_Crop_03.jpg"
+        }
       ],
       "location_coordinates": [
         {
@@ -149,83 +146,232 @@
       ]
     },
     {
-      "date": "1935-03-16",
+      "date": "1936-05-28",
       "date_precision": "day",
-      "date_note": "His dissertation on the Gaussian error function was accepted on this date; he was elected a Fellow of King's later in 1935",
-      "age": 22,
-      "title": "Dissertation accepted; elected Fellow of King's College",
-      "description": "Turing\u2019s undergraduate dissertation was accepted, and later in the year he was elected a Fellow of King's College for his original contributions.",
+      "date_note": "Completed and delivered the manuscript in May 1936; it was published later that year in two parts",
+      "age": 23,
+      "title": "Completes 'On Computable Numbers'",
+      "description": "Turing finished and submitted his seminal paper 'On Computable Numbers, with an Application to the Entscheidungsproblem', introducing the abstract 'Turing machine' and establishing key limits of computation.",
       "locations": [
-        "King's College, Cambridge, England"
+        "Cambridge, England"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/On_Computable_Numbers,_with_an_Application_to_the_Entscheidungsproblem"
       ],
       "location_coordinates": [
         {
-          "label": "King's College (University of Cambridge), King's Parade, Newnham, Cambridge, Cambridgeshire, Cambridgeshire and Peterborough, England, CB2 1ST, United Kingdom",
-          "name": "King's College, Cambridge, England",
+          "label": "Cambridge, Cambridgeshire, Cambridgeshire and Peterborough, England, United Kingdom",
+          "name": "Cambridge, England",
           "primary": true,
           "centroid": [
-            0.1148198,
-            52.2040035
+            0.1186637,
+            52.2055314
           ],
           "source": "nominatim",
           "bbox": [
-            0.1121058,
-            52.203159,
-            0.1176743,
-            52.2051394
+            0.0686389,
+            52.1579417,
+            0.184552,
+            52.2372296
           ]
         }
       ]
     },
     {
-      "date": "1936-09",
+      "date": "1938",
+      "date_precision": "year",
+      "date_note": "Doctorate awarded in 1938; specific month/day not stated on the main source page",
+      "age": null,
+      "title": "Doctorate from Princeton University",
+      "description": "Turing earned his PhD at Princeton University under Alonzo Church with the thesis 'Systems of Logic Based on Ordinals'.",
+      "locations": [
+        "Princeton, New Jersey, United States"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Princeton_University"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Princeton, Mercer County, New Jersey, United States",
+          "name": "Princeton, New Jersey, United States",
+          "primary": true,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -74.7221219,
+            40.3048856,
+            -74.617508,
+            40.3917309
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1939-09-04",
+      "date_precision": "day",
+      "date_note": "Reported to Bletchley Park the day after Britain declared war on Germany",
+      "age": 27,
+      "title": "Reports to Bletchley Park for codebreaking",
+      "description": "Turing joined the Government Code and Cypher School at Bletchley Park, where he would play a central role in Allied cryptanalysis during World War II.",
+      "locations": [
+        "Bletchley Park, Buckinghamshire, England"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Bletchley_Park"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Bletchley Park, Ultra Avenue, Old Bletchley, West Bletchley, Bletchley, Milton Keynes, City of Milton Keynes, England, MK3 6GY, United Kingdom",
+          "name": "Bletchley Park, Buckinghamshire, England",
+          "primary": true,
+          "centroid": [
+            -0.7410593,
+            51.9974937
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.7446293,
+            51.9953339,
+            -0.7385173,
+            51.9997175
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1940-03",
       "date_precision": "month",
-      "date_end": "1938-06",
-      "date_end_precision": "month",
-      "date_note": "He studied at Princeton under Alonzo Church and earned his PhD in 1938",
-      "age": 24,
-      "title": "Doctoral studies at Princeton University",
-      "description": "Turing began doctoral work under Alonzo Church at Princeton, culminating in a PhD for his thesis 'Systems of Logic Based on Ordinals.'",
+      "date_note": "Early British bombes became operational in March 1940",
+      "age": 27,
+      "title": "British bombe cryptanalytic machines become operational",
+      "description": "Building on Polish pre-war methods, Turing designed key improvements leading to operational British bombes that helped find daily Enigma settings.",
       "locations": [
-        "Princeton University, Princeton, New Jersey, United States"
+        "Bletchley Park, Buckinghamshire, England"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Bombe",
+        "https://en.wikipedia.org/wiki/Bletchley_Park"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bombe-rebuild.jpg",
+          "caption": "Rebuilt example of a British bombe cryptanalytic machine used against Enigma ciphers.",
+          "source": "https://commons.wikimedia.org/wiki/File:Bombe-rebuild.jpg"
+        }
       ],
       "location_coordinates": [
         {
-          "label": "Princeton University, Springdale Road, Institute Area, Princeton, Mercer County, New Jersey, 08540, United States",
-          "name": "Princeton University, Princeton, New Jersey, United States",
+          "label": "Bletchley Park, Ultra Avenue, Old Bletchley, West Bletchley, Bletchley, Milton Keynes, City of Milton Keynes, England, MK3 6GY, United Kingdom",
+          "name": "Bletchley Park, Buckinghamshire, England",
           "primary": true,
           "centroid": [
-            -74.6583655,
-            40.3386752
+            -0.7410593,
+            51.9974937
           ],
           "source": "nominatim",
           "bbox": [
-            -74.6705979,
-            40.3202913,
-            -74.6324728,
-            40.3556278
+            -0.7446293,
+            51.9953339,
+            -0.7385173,
+            51.9997175
           ]
         }
       ]
     },
     {
-      "date": "1936-11-30",
-      "date_precision": "day",
-      "date_note": "First part published on 30 November 1936; second part on 23 December 1936",
-      "age": 24,
-      "title": "Publishes 'On Computable Numbers'",
-      "description": "The first part of Turing\u2019s landmark paper 'On Computable Numbers, with an Application to the Entscheidungsproblem' appeared in the Proceedings of the London Mathematical Society, defining the Turing machine model.",
+      "date": "1941",
+      "date_precision": "year",
+      "date_note": "By 1941 Turing was leading Hut 8 on German naval Enigma",
+      "age": null,
+      "title": "Leads Hut 8 on German naval Enigma",
+      "description": "Turing headed Hut 8, developing methods such as Banburismus that significantly aided the decryption of German naval Enigma, crucial to the Battle of the Atlantic.",
+      "locations": [
+        "Bletchley Park, Buckinghamshire, England"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Hut_8"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Bletchley Park, Ultra Avenue, Old Bletchley, West Bletchley, Bletchley, Milton Keynes, City of Milton Keynes, England, MK3 6GY, United Kingdom",
+          "name": "Bletchley Park, Buckinghamshire, England",
+          "primary": true,
+          "centroid": [
+            -0.7410593,
+            51.9974937
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.7446293,
+            51.9953339,
+            -0.7385173,
+            51.9997175
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1945",
+      "date_precision": "year",
+      "date_note": "After WWII, Turing joined NPL and began the ACE design work",
+      "age": null,
+      "title": "Joins National Physical Laboratory; designs ACE",
+      "description": "Turing joined the National Physical Laboratory and produced a pioneering design for a stored-program computer, the Automatic Computing Engine (ACE).",
+      "locations": [
+        "National Physical Laboratory, Teddington, England"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Automatic_Computing_Engine",
+        "https://en.wikipedia.org/wiki/National_Physical_Laboratory_(United_Kingdom)"
+      ],
+      "location_coordinates": [
+        {
+          "label": "National Physical Laboratory, Hampton Hill, London Borough of Richmond upon Thames, London, Greater London, England, United Kingdom",
+          "name": "National Physical Laboratory, Teddington, England",
+          "primary": true,
+          "centroid": [
+            -0.3425114,
+            51.4236576
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.3461522,
+            51.4200401,
+            -0.3377657,
+            51.4272103
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1946-01",
+      "date_precision": "month",
+      "date_note": "Announced in the 1946 New Year Honours",
+      "age": 33,
+      "title": "Appointed Officer of the Order of the British Empire (OBE)",
+      "description": "In recognition of his secret wartime service in cryptanalysis, Turing was appointed an Officer of the Order of the British Empire.",
       "locations": [
         "London, England"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Order_of_the_British_Empire"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Alan_Turing_OBE.jpg",
+          "caption": "Alan Turing's Order of the British Empire (OBE) medal, held in the Sherborne School archives.",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_OBE.jpg"
+        }
       ],
       "location_coordinates": [
         {
@@ -247,163 +393,30 @@
       ]
     },
     {
-      "date": "1939-09-04",
-      "date_precision": "day",
-      "age": 27,
-      "title": "Joins Bletchley Park codebreaking effort",
-      "description": "Turing reported to the Government Code and Cypher School at Bletchley Park, later leading Hut 8 and devising methods (including improvements to the Polish bomba and Banburismus) to break German naval Enigma.",
-      "locations": [
-        "Bletchley Park, Buckinghamshire, England"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "location_coordinates": [
-        {
-          "label": "Bletchley Park, Fitzwilliam Street, Old Bletchley, West Bletchley, Bletchley, Milton Keynes, City of Milton Keynes, England, MK3 6DF, United Kingdom",
-          "name": "Bletchley Park, Buckinghamshire, England",
-          "primary": true,
-          "centroid": [
-            -0.7410593,
-            51.9974937
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -0.7446293,
-            51.9953339,
-            -0.7385173,
-            51.9997175
-          ]
-        }
-      ]
-    },
-    {
-      "date": "1942-11",
-      "date_precision": "month",
-      "date_note": "In late 1942 Turing travelled to the U.S. to liaise with American cryptanalysts",
-      "age": 30,
-      "title": "U.S. visit to coordinate wartime cryptanalysis",
-      "description": "Turing travelled to the United States to collaborate with American counterparts on cryptanalytic techniques and machine design.",
-      "locations": [
-        "Washington, D.C., United States",
-        "New York, United States"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "location_coordinates": [
-        {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C., United States",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
-        },
-        {
-          "label": "New York, United States",
-          "name": "New York, United States",
-          "primary": false,
-          "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.258843,
-            40.476578,
-            -73.700233,
-            40.91763
-          ]
-        }
-      ]
-    },
-    {
-      "date": "1945",
-      "date_precision": "year",
-      "date_note": "Joined the National Physical Laboratory in 1945; exact month not specified",
-      "age": 33,
-      "title": "Joins NPL to design the Automatic Computing Engine (ACE)",
-      "description": "After the war, Turing moved to the National Physical Laboratory, where he initiated one of the earliest detailed designs for a stored-program computer, the ACE.",
-      "locations": [
-        "National Physical Laboratory, Teddington, Middlesex, England"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "location_coordinates": [
-        {
-          "label": "National Physical Laboratory, Hampton Hill, London Borough of Richmond upon Thames, London, Greater London, England, United Kingdom",
-          "name": "National Physical Laboratory, Teddington, Middlesex, England",
-          "primary": true,
-          "centroid": [
-            -0.3425114,
-            51.4236576
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -0.3461522,
-            51.4200401,
-            -0.3377657,
-            51.4272103
-          ]
-        }
-      ]
-    },
-    {
-      "date": "1946-01-01",
-      "date_precision": "day",
-      "age": 33,
-      "title": "Appointed Officer of the Order of the British Empire (OBE)",
-      "description": "Turing was appointed OBE by King George VI for his wartime services in cryptanalysis.",
-      "locations": [
-        "United Kingdom"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "location_coordinates": [
-        {
-          "label": "United Kingdom",
-          "name": "United Kingdom",
-          "primary": true,
-          "centroid": [
-            -3.2765753,
-            54.7023545
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -14.015517,
-            49.674,
-            2.0919117,
-            61.061
-          ]
-        }
-      ]
-    },
-    {
       "date": "1948",
       "date_precision": "year",
-      "age": 35,
-      "title": "Joins the University of Manchester Computing Machine Laboratory",
-      "description": "Turing joined Max Newman\u2019s laboratory, contributing to the development of early Manchester computers and pursuing research in computing and mathematical biology.",
+      "date_note": "Appointed Reader in Mathematics and Deputy Director of the Computing Machine Laboratory",
+      "age": null,
+      "title": "Joins the University of Manchester",
+      "description": "Turing moved to the University of Manchester, contributing to the early Manchester computers and beginning research that connected computing with mathematical biology.",
       "locations": [
         "University of Manchester, Manchester, England"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/University_of_Manchester",
+        "https://en.wikipedia.org/wiki/Manchester_computers"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Alan_Turing_Blue_Plaque%2C_University_of_Manchester.jpg",
+          "caption": "University of Manchester blue plaque commemorating Alan Turing's role as Reader in Mathematics (1948\u20131954).",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_Blue_Plaque,_University_of_Manchester.jpg"
+        }
       ],
       "location_coordinates": [
         {
-          "label": "University of Manchester, Oxford Road, Brunswick, Chorlton-on-Medlock, Manchester, Greater Manchester, England, M13 9PL, United Kingdom",
+          "label": "University of Manchester, Oxford Road, Chorlton-on-Medlock, Manchester, Greater Manchester, England, M13 9PL, United Kingdom",
           "name": "University of Manchester, Manchester, England",
           "primary": true,
           "centroid": [
@@ -423,30 +436,32 @@
     {
       "date": "1950-10",
       "date_precision": "month",
+      "date_note": "Published in the journal Mind in October 1950",
       "age": 38,
       "title": "Publishes 'Computing Machinery and Intelligence'",
-      "description": "Turing\u2019s Mind paper posed the question 'Can machines think?' and introduced the imitation game (now known as the Turing test) as a criterion for machine intelligence.",
+      "description": "Turing's influential paper introduced the imitation game (later known as the Turing test) as a criterion for machine intelligence.",
       "locations": [
-        "United Kingdom"
+        "Manchester, England"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence",
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
       "location_coordinates": [
         {
-          "label": "United Kingdom",
-          "name": "United Kingdom",
+          "label": "Manchester, Greater Manchester, England, United Kingdom",
+          "name": "Manchester, England",
           "primary": true,
           "centroid": [
-            -3.2765753,
-            54.7023545
+            -2.2451148,
+            53.4794892
           ],
           "source": "nominatim",
           "bbox": [
-            -14.015517,
-            49.674,
-            2.0919117,
-            61.061
+            -2.3199185,
+            53.3401044,
+            -2.1468288,
+            53.5445923
           ]
         }
       ]
@@ -454,9 +469,10 @@
     {
       "date": "1952-03-31",
       "date_precision": "day",
+      "date_note": "Date of conviction for gross indecency",
       "age": 39,
-      "title": "Convicted for homosexual acts; accepts hormone treatment",
-      "description": "Turing was convicted of 'gross indecency' in Manchester and accepted hormone treatment (chemical castration) as an alternative to imprisonment.",
+      "title": "Convicted and accepts hormone treatment",
+      "description": "Turing was prosecuted for homosexual acts and, following conviction, accepted hormone treatment (chemical castration) as an alternative to imprisonment.",
       "locations": [
         "Manchester, England"
       ],
@@ -483,33 +499,34 @@
       ]
     },
     {
-      "date": "1952",
-      "date_precision": "year",
-      "date_note": "Published in Philosophical Transactions of the Royal Society B in 1952",
-      "age": 39,
+      "date": "1952-08",
+      "date_precision": "month",
+      "date_note": "Published in Philosophical Transactions of the Royal Society in 1952",
+      "age": 40,
       "title": "Publishes 'The Chemical Basis of Morphogenesis'",
-      "description": "Turing published a foundational paper in mathematical biology explaining pattern formation via reaction\u2013diffusion systems, anticipating oscillating chemical reactions later observed experimentally.",
+      "description": "Turing's paper on reaction\u2013diffusion systems founded a new approach in mathematical biology and predicted phenomena such as oscillating chemical reactions.",
       "locations": [
-        "Royal Society, London, England"
+        "Manchester, England"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/The_Chemical_Basis_of_Morphogenesis",
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
       "location_coordinates": [
         {
-          "label": "The Royal Society, 6-9, Carlton House Terrace, St. James's, Victoria, London, Greater London, England, SW1Y 5AG, United Kingdom",
-          "name": "Royal Society, London, England",
+          "label": "Manchester, Greater Manchester, England, United Kingdom",
+          "name": "Manchester, England",
           "primary": true,
           "centroid": [
-            -0.1323299,
-            51.5059345
+            -2.2451148,
+            53.4794892
           ],
           "source": "nominatim",
           "bbox": [
-            -0.1323799,
-            51.5058845,
-            -0.1322799,
-            51.5059845
+            -2.3199185,
+            53.3401044,
+            -2.1468288,
+            53.5445923
           ]
         }
       ]
@@ -517,9 +534,10 @@
     {
       "date": "1954-06-07",
       "date_precision": "day",
+      "date_note": "An inquest determined suicide; some analyses suggest accidental poisoning is also consistent with the evidence",
       "age": 41,
-      "title": "Death in Wilmslow",
-      "description": "Turing died from cyanide poisoning at his home in Wilmslow. An inquest ruled the death a suicide, though some evidence is consistent with accidental poisoning.",
+      "title": "Death from cyanide poisoning",
+      "description": "Turing died at his home in Wilmslow from cyanide poisoning. He was 41.",
       "locations": [
         "Wilmslow, Cheshire, England"
       ],

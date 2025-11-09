@@ -1,0 +1,238 @@
+{
+  "dataset": "Ada Lovelace Life Events",
+  "created_on": "2025-11-09",
+  "person": {
+    "name": "Ada_Lovelace",
+    "birth_date": "1815-12-10",
+    "death_date": "1852-11-27",
+    "primary_roles": [
+      "Mathematician",
+      "Writer"
+    ],
+    "summary": "Ada Lovelace was an English mathematician and writer known for her work on Charles Babbage's Analytical Engine, and is often considered the first computer programmer.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+    "portrait": {
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
+      "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png"
+    }
+  },
+  "events": [
+    {
+      "date": "1815-12-10",
+      "date_precision": "day",
+      "age": null,
+      "title": "Birth of Ada Lovelace",
+      "description": "Augusta Ada Byron is born in London, England, to poet Lord Byron and Anne Isabella Milbanke.",
+      "locations": [
+        "London, England"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "location_coordinates": [
+        {
+          "label": "London, Greater London, England, United Kingdom",
+          "name": "London, England",
+          "primary": true,
+          "centroid": [
+            -0.1440551,
+            51.4893335
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1824-04-19",
+      "date_precision": "day",
+      "age": 8,
+      "title": "Death of Lord Byron",
+      "description": "Ada's father, Lord Byron, dies in Greece, leaving her without a relationship with him.",
+      "locations": [
+        "Greece"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Greece",
+          "name": "Greece",
+          "primary": true,
+          "centroid": [
+            21.9877132,
+            38.9953683
+          ],
+          "source": "nominatim",
+          "bbox": [
+            19.1127535,
+            34.7188863,
+            29.68381,
+            41.7488889
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1828-02-01",
+      "date_precision": "day",
+      "age": 12,
+      "title": "Ada's Interest in Flight",
+      "description": "Ada begins her project to construct wings, inspired by her desire to fly, and documents her findings in a book titled 'Flyology'.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1832",
+      "date_precision": "year",
+      "age": 17,
+      "title": "Portrait at Seventeen",
+      "description": "A portrait of Ada Byron at the age of seventeen, showcasing her early beauty and intellect.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1833-06-05",
+      "date_precision": "day",
+      "age": 17,
+      "title": "Meeting Charles Babbage",
+      "description": "Ada meets Charles Babbage at one of his soir\u00e9es, marking the beginning of a significant intellectual partnership.",
+      "locations": [
+        "London, England"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "location_coordinates": [
+        {
+          "label": "London, Greater London, England, United Kingdom",
+          "name": "London, England",
+          "primary": true,
+          "centroid": [
+            -0.1440551,
+            51.4893335
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1835-07-08",
+      "date_precision": "day",
+      "age": 19,
+      "title": "Marriage to William King",
+      "description": "Ada marries William King, 8th Baron King, and becomes Lady King.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1838",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Becomes Countess of Lovelace",
+      "description": "William King is created Earl of Lovelace, making Ada the Countess of Lovelace.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1842",
+      "date_precision": "year",
+      "date_end": "1843",
+      "date_end_precision": "year",
+      "age": 27,
+      "title": "Translation of Menabrea's Article",
+      "description": "Ada translates an article by Luigi Federico Federico Menabrea on the Analytical Engine, adding her own notes, which are considered the first computer program.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1843",
+      "date_precision": "year",
+      "age": 27,
+      "title": "First Published Computer Program",
+      "description": "Ada's notes on the Analytical Engine describe a method for calculating Bernoulli numbers, recognized as the first computer program.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1845",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Teaching Children",
+      "description": "Ada's mother assigns William Benjamin Carpenter to teach her children and act as a moral instructor, leading to a complicated relationship.",
+      "locations": [
+        "Location unknown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ]
+    },
+    {
+      "date": "1852-11-27",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Death of Ada Lovelace",
+      "description": "Ada Lovelace passes away in London, England, leaving behind a legacy as a pioneer in computing.",
+      "locations": [
+        "London, England"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "location_coordinates": [
+        {
+          "label": "London, Greater London, England, United Kingdom",
+          "name": "London, England",
+          "primary": true,
+          "centroid": [
+            -0.1440551,
+            51.4893335
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    }
+  ]
+}
