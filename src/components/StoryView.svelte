@@ -19,6 +19,7 @@
     mdiCircleSmall,
     mdiHome,
     mdiMagnifyPlusOutline,
+    mdiInformationOutline,
   } from "@mdi/js";
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
@@ -34,6 +35,7 @@
 
   let enlargedImage = null;
   let enlargedImageContext = null; // Store event context for caption
+  let visibleDateNote = null; // Track which event's date note is visible
 
   const DEFAULT_COORDINATES = null;
   const DEFAULT_PM_TILES_URL =
@@ -234,6 +236,11 @@
     lastViewportKey = "";
   }
 
+  // Close date note when slide changes
+  $: if (activeIndex !== undefined) {
+    visibleDateNote = null;
+  }
+
   let slidesContainer;
 
   async function scrollToIndex(index) {
@@ -362,26 +369,7 @@
       typeof event.date_label === "string" && event.date_label.trim()
         ? event.date_label.trim()
         : null;
-    const supplementalNote =
-      typeof event.date_note === "string" && event.date_note.trim()
-        ? event.date_note.trim()
-        : null;
     if (labelOverride) {
-      if (supplementalNote) {
-        const noteParts = supplementalNote
-          .split(";")
-          .map((part) => part.trim())
-          .filter(Boolean)
-          .filter(
-            (part) =>
-              part.localeCompare(labelOverride, undefined, {
-                sensitivity: "accent",
-              }) !== 0
-          );
-        if (noteParts.length > 0) {
-          return `${labelOverride} (${noteParts.join("; ")})`;
-        }
-      }
       return labelOverride;
     }
     const startLabel = formatSingleDate(event.date, event.date_precision);
@@ -398,14 +386,33 @@
     ) {
       label = `${startLabel} – ${endLabel}`;
     }
-    if (!label) return supplementalNote ?? "Date unavailable";
-    if (!supplementalNote) return label;
-    const supplementalParts = supplementalNote
-      .split(";")
-      .map((part) => part.trim())
-      .filter(Boolean);
-    if (supplementalParts.length === 0) return label;
-    return `${label} (${supplementalParts.join("; ")})`;
+    if (!label) return "Date unavailable";
+    return label;
+  }
+
+  function getDateNote(event) {
+    if (!event) return null;
+    const supplementalNote =
+      typeof event.date_note === "string" && event.date_note.trim()
+        ? event.date_note.trim()
+        : null;
+    return supplementalNote;
+  }
+
+  function toggleDateNote(eventIndex) {
+    if (visibleDateNote === eventIndex) {
+      visibleDateNote = null;
+    } else {
+      visibleDateNote = eventIndex;
+    }
+  }
+
+  function handleClickOutside(event) {
+    // Check if click is outside the date-wrapper
+    const dateWrapper = event.target.closest(".date-wrapper");
+    if (!dateWrapper && visibleDateNote !== null) {
+      visibleDateNote = null;
+    }
   }
 
   function formatAgeLabel(age) {
@@ -703,6 +710,7 @@
   class="story-view"
   style={storyStyleVars(styleConfig)}
   on:wheel={handleWheel}
+  on:click={handleClickOutside}
 >
   <header class="masthead" class:compact={activeIndex > 0}>
     {#if hasRegistryEntries}
@@ -846,7 +854,33 @@
                 </div>
               {/if}
               <div class="content">
-                <p class="date">{formatDate(slide)}</p>
+                <div class="date-wrapper">
+                  <p class="date">{formatDate(slide)}</p>
+                  {#if getDateNote(slide)}
+                    <button
+                      type="button"
+                      class="date-info-btn"
+                      on:click|stopPropagation={() =>
+                        toggleDateNote(slide.eventIndex)}
+                      aria-label="Show date explanation"
+                      aria-expanded={visibleDateNote === slide.eventIndex}
+                    >
+                      <svg
+                        class="icon icon-inline"
+                        viewBox="0 0 24 24"
+                        role="presentation"
+                        aria-hidden="true"
+                      >
+                        <path d={mdiInformationOutline} />
+                      </svg>
+                    </button>
+                    {#if visibleDateNote === slide.eventIndex}
+                      <div class="date-note-tooltip">
+                        {getDateNote(slide)}
+                      </div>
+                    {/if}
+                  {/if}
+                </div>
                 {#if formatAgeLabel(slide.age)}
                   <p class="age">{formatAgeLabel(slide.age)}</p>
                 {/if}
@@ -1941,6 +1975,75 @@
     font-size: 0.9rem;
     color: var(--story-secondary, #38bdf8);
     font-weight: 600;
+  }
+
+  .date-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .date-info-btn {
+    appearance: none;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--story-secondary, #38bdf8);
+    padding: 0.25rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .date-info-btn:hover,
+  .date-info-btn:focus {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--story-primary, #f8fafc);
+    transform: scale(1.1);
+    outline: none;
+  }
+
+  .date-info-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--story-primary, #f8fafc);
+  }
+
+  .date-note-tooltip {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: #e2e8f0;
+    line-height: 1.5;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    animation: fadeInTooltip 0.2s ease;
+  }
+
+  @keyframes fadeInTooltip {
+    from {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .age {

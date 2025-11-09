@@ -997,17 +997,17 @@ def enforce_metadata(
                     image_url = image_data.get("url", "").strip()
                     caption = image_data.get("caption", "").strip()
                     source = image_data.get("source", "").strip()
-                    
+
                     # Validate URL
                     if not image_url or not (image_url.startswith("http://") or image_url.startswith("https://")):
                         continue
-                    
+
                     # Check for duplicates
                     key = image_url.casefold()
                     if key in seen_images:
                         continue
                     seen_images.add(key)
-                    
+
                     # Store as object with metadata
                     sanitized_images.append({
                         "url": image_url,
