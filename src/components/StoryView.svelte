@@ -189,7 +189,7 @@
       coordinates: normalizePrimaryLocation(event),
     }));
   $: totalSlides = eventSlides.length;
-  $: slides = totalSlides > 0 ? [{ type: "spacer" }, ...eventSlides] : [];
+  $: slides = totalSlides > 0 ? [{ type: "overview" }, ...eventSlides] : [{ type: "overview" }];
   $: totalPanels = slides.length;
   $: hasEvents = totalSlides > 0;
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
@@ -504,10 +504,10 @@
   function handleImageLoad(event) {
     const img = event.target;
     if (!img || !img.naturalWidth || !img.naturalHeight) return;
-    
+
     const aspectRatio = img.naturalWidth / img.naturalHeight;
     let horizontalRadius, verticalRadius;
-    
+
     if (aspectRatio > 1) {
       // Landscape: wider than tall
       horizontalRadius = Math.min(92, 80 + (aspectRatio - 1) * 8);
@@ -517,7 +517,7 @@
       horizontalRadius = 85;
       verticalRadius = Math.min(95, 88 + (1 / aspectRatio - 1) * 5);
     }
-    
+
     // Use a linear gradient from all four sides to create rounded rect effect
     const maskImage = `
       linear-gradient(to right, transparent 0%, black ${100 - horizontalRadius}%, black ${horizontalRadius}%, transparent 100%),
@@ -527,14 +527,15 @@
       radial-gradient(at bottom left, transparent 0%, transparent 8%, black 12%),
       radial-gradient(at bottom right, transparent 0%, transparent 8%, black 12%)
     `;
-    
-    const maskComposite = 'intersect';
-    
+
+    const maskComposite = "intersect";
+
     img.style.maskImage = maskImage;
     img.style.webkitMaskImage = maskImage;
     img.style.maskComposite = maskComposite;
     img.style.webkitMaskComposite = maskComposite;
-  }  function handleThumbnailLoad(event) {
+  }
+  function handleThumbnailLoad(event) {
     const img = event.target;
     if (!img || !img.naturalWidth || !img.naturalHeight) return;
 
@@ -776,7 +777,7 @@
   on:wheel={handleWheel}
   on:click={handleClickOutside}
 >
-  <header class="masthead" class:compact={activeIndex > 0}>
+  <header class="masthead" class:compact={true}>
     {#if hasRegistryEntries}
       <div class="toolbar">
         <button
@@ -889,13 +890,68 @@
         {#each slides as slide}
           <section
             class="slide"
-            class:spacer={slide.type === "spacer"}
-            aria-hidden={slide.type === "spacer"}
-            aria-label={slide.type === "spacer"
-              ? null
+            class:overview={slide.type === "overview"}
+            aria-label={slide.type === "overview"
+              ? `Overview: ${personName}`
               : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
           >
-            {#if slide.type !== "spacer"}
+            {#if slide.type === "overview"}
+              <div class="content overview-content">
+                {#if portrait?.image}
+                  <figure class="overview-portrait">
+                    <button
+                      type="button"
+                      class="portrait-button"
+                      on:click={() =>
+                        enlargeImage(
+                          {
+                            url: portrait.image,
+                            caption: portrait.caption || null,
+                            source: portrait.source || null,
+                          },
+                          { title: personName }
+                        )}
+                      aria-label="Enlarge portrait"
+                    >
+                      <img
+                        src={portrait.image}
+                        alt={portrait.alt ?? `Portrait of ${personName}`}
+                        loading="lazy"
+                        decoding="async"
+                        on:load={handleImageLoad}
+                      />
+                      <span class="enlarge-icon portrait-enlarge">
+                        <svg
+                          class="icon"
+                          viewBox="0 0 24 24"
+                          role="presentation"
+                          aria-hidden="true"
+                        >
+                          <path d={mdiMagnifyPlusOutline} />
+                        </svg>
+                      </span>
+                    </button>
+                  </figure>
+                {/if}
+                <div class="overview-text">
+                  <p class="eyebrow">Life Data Stories</p>
+                  <h2>{personName}</h2>
+                  {#if yearsLabel}
+                    <p class="overview-years">{yearsLabel}</p>
+                  {/if}
+                  {#if rolesLabel}
+                    <p class="overview-roles">{rolesLabel}</p>
+                  {/if}
+                  {#if hasPersonSummary}
+                    <p class="description">{personSummary}</p>
+                  {:else if hasDataset}
+                    <p class="description placeholder">
+                      A summary is not available, but key life events are listed below.
+                    </p>
+                  {/if}
+                </div>
+              </div>
+            {:else if slide.type !== "spacer"}
               {#if slide.images?.length}
                 <div class="event-images">
                   {#each slide.images as imageData}
@@ -1009,20 +1065,10 @@
             {/if}
           </section>
         {/each}
-      {:else}
-        <section class="slide empty">
-          <div class="content">
-            <h2>Events unavailable</h2>
-            <p>
-              We could not find notable events for {personName}. Try
-              regenerating the dataset.
-            </p>
-          </div>
-        </section>
       {/if}
     </main>
     {#if hasMapData}
-      <div class="map-overlay" aria-hidden="true">
+      <div class="map-overlay" class:hidden={activeIndex === 0} aria-hidden="true">
         <div class="map-gradient" />
         <div class="map-frame">
           <div class="map-container" bind:this={mapContainer} />
@@ -1454,7 +1500,7 @@
     overflow: hidden;
   }
 
-  .slides-wrapper.map-enabled .slide {
+  .slides-wrapper.map-enabled .slide:not(.overview) {
     padding-bottom: 16rem;
   }
 
@@ -1510,12 +1556,114 @@
     margin: 0 auto;
   }
 
+  .slide.overview {
+    justify-content: center;
+    padding-bottom: 6rem;
+  }
+
+  .overview-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+    max-width: 56rem;
+  }
+
+  .overview-portrait {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .overview-portrait img {
+    width: min(220px, 75vw);
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: none;
+    border: none;
+    filter: saturate(0.55) contrast(0.8) brightness(0.92);
+    mask-image: radial-gradient(
+      ellipse 60% 70% at center,
+      rgba(0, 0, 0, 1) 35%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.7) 65%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0) 90%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 60% 70% at center,
+      rgba(0, 0, 0, 1) 35%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.7) 65%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0) 90%
+    );
+  }
+
+  .overview-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .overview-text h2 {
+    font-size: 1.5rem;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .overview-years {
+    font-size: 0.9rem;
+    color: rgba(148, 163, 184, 0.95);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .overview-roles {
+    font-size: 0.85rem;
+    color: var(--story-secondary, #38bdf8);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .overview-text .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    color: var(--story-secondary, #38bdf8);
+    margin: 0;
+  }
+
+  .overview-text .description {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 52ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .overview-text .description.placeholder {
+    color: #94a3b8;
+    font-style: italic;
+  }
+
   .map-overlay {
     position: absolute;
     inset: auto 0 0;
     height: clamp(240px, 45vh, 340px);
     pointer-events: none;
     z-index: 2;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .map-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .map-gradient {
@@ -1612,36 +1760,6 @@
     opacity: 0.35;
     cursor: default;
     transform: none;
-  }
-
-  .slide.spacer {
-    background: transparent;
-    border-right: none;
-    pointer-events: none;
-    display: block;
-    height: 100%;
-    min-height: 100%;
-    padding: 0;
-  }
-
-  .slide.empty {
-    text-align: center;
-  }
-
-  .slide.empty .content {
-    max-width: 48ch;
-    margin: 0 auto;
-    gap: 1rem;
-    align-self: center;
-  }
-
-  .slide.empty h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .slide.empty p {
-    color: #94a3b8;
   }
 
   .indicator {
@@ -2288,7 +2406,7 @@
       gap: 1.75rem;
     }
 
-    .slides-wrapper.map-enabled .slide {
+    .slides-wrapper.map-enabled .slide:not(.overview) {
       padding-bottom: 18rem;
     }
 
@@ -2397,6 +2515,26 @@
     .enlarge-icon .icon {
       width: 1.15rem;
       height: 1.15rem;
+    }
+
+    .overview-portrait img {
+      width: 340px;
+    }
+
+    .overview-text h2 {
+      font-size: 2.5rem;
+    }
+
+    .overview-years {
+      font-size: 1.1rem;
+    }
+
+    .overview-roles {
+      font-size: 1rem;
+    }
+
+    .overview-text .description {
+      font-size: 1.1rem;
     }
   }
 </style>
