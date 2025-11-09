@@ -1,4 +1,5 @@
 <script>
+  import { push, pop, replace, location } from "svelte-spa-router";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import registry from "../data/persons.json";
@@ -221,47 +222,66 @@
     return entries;
   })();
 
-  let selectedPersonId = null;
-  let previousPersonId = null;
-  let activeIndex = 0;
-
-  $: dataset = selectedPersonId ? (datasetMap[selectedPersonId] ?? null) : null;
-  $: if (selectedPersonId !== previousPersonId) {
-    activeIndex = 0;
-    previousPersonId = selectedPersonId;
-  }
-
-  function openStory(id) {
-    if (!id) return;
-    if (!datasetMap[id]) return;
-    selectedPersonId = id;
-  }
-
-  function closeStory() {
-    selectedPersonId = null;
-  }
-
   function entrySummary(entry) {
     if (!entry?.id) return "";
     return entry.summary ?? datasetMap[entry.id]?.person?.summary ?? "";
   }
+
+  // Extract person ID and slide number from current route
+  $: currentPath = $location;
+  $: storyMatch = currentPath.match(/^\/story\/([^/]+)(?:\/(\d+))?/);
+  $: personId = storyMatch ? decodeURIComponent(storyMatch[1]) : null;
+  $: slideParam = storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
+  $: dataset = personId ? (datasetMap[personId] ?? null) : null;
+
+  // Redirect to home if trying to view non-existent story
+  $: if (storyMatch && !dataset && personId) {
+    push("/");
+  }
+
+  function handleSelectPerson(event) {
+    const id = event.detail;
+    if (id) {
+      push(`/story/${encodeURIComponent(id)}`);
+    }
+  }
+
+  function handleCloseStory() {
+    push("/");
+  }
+
+  function handleSlideChange(event) {
+    const slideIndex = event.detail;
+    if (personId && slideIndex !== null && slideIndex !== undefined) {
+      // Update URL with current slide, but use replace to avoid cluttering history
+      const newPath = slideIndex === 0 
+        ? `/story/${encodeURIComponent(personId)}`
+        : `/story/${encodeURIComponent(personId)}/${slideIndex}`;
+      
+      // Use replace instead of push to avoid filling up history
+      if (currentPath !== newPath) {
+        replace(newPath);
+      }
+    }
+  }
 </script>
 
 <div class="shell">
-  {#if selectedPersonId}
+  {#if currentPath.startsWith("/story/") && dataset}
     <StoryView
-      bind:activeIndex
       {dataset}
+      activeIndex={slideParam ?? 0}
       hasRegistryEntries={registryEntries.length > 0}
-      styleConfig={styleFor(selectedPersonId)}
-      on:close={closeStory}
+      styleConfig={styleFor(personId)}
+      onClose={handleCloseStory}
+      onSlideChange={handleSlideChange}
     />
   {:else}
     <Landing
       entries={registryEntries}
       getSummary={entrySummary}
-      getStyle={(id) => styleFor(id)}
-      on:selectPerson={(event) => openStory(event.detail)}
+      getStyle={styleFor}
+      onSelectPerson={handleSelectPerson}
     />
   {/if}
 </div>

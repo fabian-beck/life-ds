@@ -1,6 +1,6 @@
 # Life Data Stories Viewer
 
-A mobile-first Svelte + Vite experience that presents Alan Turing's life events as full-height, scroll-snapped slides sourced from `data/alan_turing_life_events.json`.
+A mobile-first Svelte + Vite experience that presents biographical life events as full-height, scroll-snapped slides with URL-based routing support.
 
 ## Getting Started
 
@@ -11,6 +11,18 @@ npm run dev -- --open
 
 - `npm run build` generates a production bundle in `dist/`.
 - `npm run preview` serves the production build locally.
+
+## Routing
+
+The application supports URL-based routing, allowing you to:
+
+- **Navigate with browser back/forward buttons**: The browser history is maintained, so you can use the back and forward buttons to navigate between views.
+- **Share specific stories via URL**: Each person's story has a unique URL that can be shared directly:
+  - Landing page: `http://localhost:5173/`
+  - Person story (overview): `http://localhost:5173/story/ada_lovelace`
+  - Specific event slide: `http://localhost:5173/story/ada_lovelace/3` (shows slide 3)
+
+The routing is implemented using `svelte-spa-router` and works seamlessly with the application's existing navigation. Slide numbers are updated in the URL as you navigate through events, but use `history.replaceState` to avoid cluttering browser history, so the back button returns to the previous person/landing page rather than the previous slide.
 
 ## Generating Data Assets
 

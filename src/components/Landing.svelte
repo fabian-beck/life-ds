@@ -1,15 +1,12 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-
   export let entries = [];
   export let getSummary = () => "";
   export let getStyle = () => ({});
+  export let onSelectPerson = () => {};
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
   }
-
-  const dispatch = createEventDispatcher();
 
   function displayName(name = "") {
     if (typeof name !== "string") return "";
@@ -18,7 +15,7 @@
 
   function handleSelect(id) {
     if (!id) return;
-    dispatch("selectPerson", id);
+    onSelectPerson({ detail: id });
   }
 
   function summaryFor(entry) {

@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, tick, onMount, onDestroy } from "svelte";
+  import { tick, onMount, onDestroy } from "svelte";
   import {
     mdiChevronLeft,
     mdiChevronRight,
@@ -31,8 +31,8 @@
   export let activeIndex = 0;
   export let hasRegistryEntries = false;
   export let styleConfig = null;
-
-  const dispatch = createEventDispatcher();
+  export let onClose = () => {};
+  export let onSlideChange = () => {};
 
   let enlargedImage = null;
   let enlargedImageContext = null; // Store event context for caption
@@ -204,6 +204,11 @@
     activeIndex = totalPanels - 1;
   }
 
+  // Notify parent when slide changes
+  $: if (activeIndex !== undefined) {
+    onSlideChange({ detail: activeIndex });
+  }
+
   $: activeEventIndex =
     totalSlides > 0 && activeIndex > 0
       ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
@@ -282,7 +287,7 @@
   }
 
   function handleClose() {
-    dispatch("close");
+    onClose();
   }
 
   function enlargeImage(imageData, eventContext) {
@@ -2365,7 +2370,9 @@
     font-size: 1.35rem;
     line-height: 1.25;
     color: var(--story-primary, #f8fafc);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .description {
