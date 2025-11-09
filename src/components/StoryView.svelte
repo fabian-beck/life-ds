@@ -2365,6 +2365,7 @@
     font-size: 1.35rem;
     line-height: 1.25;
     color: var(--story-primary, #f8fafc);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .description {
