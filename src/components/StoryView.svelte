@@ -20,6 +20,7 @@
     mdiHome,
     mdiMagnifyPlusOutline,
     mdiInformationOutline,
+    mdiWikipedia,
   } from "@mdi/js";
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
@@ -189,7 +190,10 @@
       coordinates: normalizePrimaryLocation(event),
     }));
   $: totalSlides = eventSlides.length;
-  $: slides = totalSlides > 0 ? [{ type: "overview" }, ...eventSlides] : [{ type: "overview" }];
+  $: slides =
+    totalSlides > 0
+      ? [{ type: "overview" }, ...eventSlides]
+      : [{ type: "overview" }];
   $: totalPanels = slides.length;
   $: hasEvents = totalSlides > 0;
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
@@ -428,10 +432,25 @@
 
   function sourceLabel(url) {
     try {
-      const { hostname } = new URL(url);
-      return hostname.replace(/^www\./, "");
+      const urlObj = new URL(url);
+      const { hostname, pathname } = urlObj;
+
+      // Handle Wikipedia URLs specially to extract article title
+      if (hostname.includes("wikipedia.org")) {
+        const match = pathname.match(/\/wiki\/(.+)/);
+        if (match) {
+          // Decode and format the article title
+          const title = decodeURIComponent(match[1])
+            .replace(/_/g, " ")
+            .replace(/#.*$/, ""); // Remove anchor links
+          return { label: title, isWikipedia: true };
+        }
+      }
+
+      // For other URLs, show hostname
+      return { label: hostname.replace(/^www\./, ""), isWikipedia: false };
     } catch (error) {
-      return url;
+      return { label: url, isWikipedia: false };
     }
   }
 
@@ -946,7 +965,8 @@
                     <p class="description">{personSummary}</p>
                   {:else if hasDataset}
                     <p class="description placeholder">
-                      A summary is not available, but key life events are listed below.
+                      A summary is not available, but key life events are listed
+                      below.
                     </p>
                   {/if}
                 </div>
@@ -1052,10 +1072,28 @@
                         <span class="label-text">Sources</span>
                       </span>
                       <span class="sources">
-                        {#each slide.sources as source}
-                          <a href={source} target="_blank" rel="noreferrer"
-                            >{sourceLabel(source)}</a
+                        {#each slide.sources as source, idx}
+                          {@const sourceInfo = sourceLabel(source)}
+                          {#if idx > 0}<span class="source-separator">·</span
+                            >{/if}
+                          <a
+                            href={source}
+                            target="_blank"
+                            rel="noreferrer"
+                            class="source-link"
                           >
+                            {#if sourceInfo.isWikipedia}
+                              <svg
+                                class="icon icon-inline wiki-icon"
+                                viewBox="0 0 24 24"
+                                role="presentation"
+                                aria-hidden="true"
+                              >
+                                <path d={mdiWikipedia} />
+                              </svg>
+                            {/if}
+                            {sourceInfo.label}
+                          </a>
                         {/each}
                       </span>
                     </li>
@@ -1068,7 +1106,11 @@
       {/if}
     </main>
     {#if hasMapData}
-      <div class="map-overlay" class:hidden={activeIndex === 0} aria-hidden="true">
+      <div
+        class="map-overlay"
+        class:hidden={activeIndex === 0}
+        aria-hidden="true"
+      >
         <div class="map-gradient" />
         <div class="map-frame">
           <div class="map-container" bind:this={mapContainer} />
@@ -2365,17 +2407,38 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    align-items: center;
+  }
+
+  .source-separator {
+    color: rgba(148, 163, 184, 0.4);
+    font-weight: 300;
+    user-select: none;
+  }
+
+  .source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   .sources a {
-    color: var(--story-secondary, #facc15);
+    color: rgba(148, 163, 184, 0.75);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 0.8rem;
+    transition: color 0.2s ease;
   }
 
   .sources a:hover,
   .sources a:focus {
+    color: var(--story-secondary, #94a3b8);
     text-decoration: underline;
+  }
+
+  .wiki-icon {
+    opacity: 0.7;
+    flex-shrink: 0;
   }
 
   @media (min-width: 768px) {
