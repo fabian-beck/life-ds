@@ -231,7 +231,8 @@
   $: currentPath = $location;
   $: storyMatch = currentPath.match(/^\/story\/([^/]+)(?:\/(\d+))?/);
   $: personId = storyMatch ? decodeURIComponent(storyMatch[1]) : null;
-  $: slideParam = storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
+  $: slideParam =
+    storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
   $: dataset = personId ? (datasetMap[personId] ?? null) : null;
 
   // Redirect to home if trying to view non-existent story
@@ -254,10 +255,11 @@
     const slideIndex = event.detail;
     if (personId && slideIndex !== null && slideIndex !== undefined) {
       // Update URL with current slide, but use replace to avoid cluttering history
-      const newPath = slideIndex === 0 
-        ? `/story/${encodeURIComponent(personId)}`
-        : `/story/${encodeURIComponent(personId)}/${slideIndex}`;
-      
+      const newPath =
+        slideIndex === 0
+          ? `/story/${encodeURIComponent(personId)}`
+          : `/story/${encodeURIComponent(personId)}/${slideIndex}`;
+
       // Use replace instead of push to avoid filling up history
       if (currentPath !== newPath) {
         replace(newPath);

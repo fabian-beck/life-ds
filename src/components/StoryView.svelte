@@ -26,6 +26,7 @@
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
+  import ImageViewer from "./ImageViewer.svelte";
 
   export let dataset = null;
   export let activeIndex = 0;
@@ -1218,64 +1219,7 @@
   {/if}
 </div>
 
-{#if enlargedImage}
-  <div
-    class="image-modal"
-    on:click={closeEnlargedImage}
-    on:keydown={(e) => e.key === "Escape" && closeEnlargedImage()}
-    role="button"
-    tabindex="0"
-    aria-label="Close enlarged image"
-  >
-    <button
-      type="button"
-      class="modal-close"
-      on:click={closeEnlargedImage}
-      aria-label="Close enlarged image"
-    >
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        role="presentation"
-        aria-hidden="true"
-      >
-        <path d={mdiClose} />
-      </svg>
-    </button>
-    <div
-      class="modal-content"
-      on:click|stopPropagation
-      on:keydown={(e) => e.key === "Escape" && closeEnlargedImage()}
-      role="presentation"
-    >
-      <img
-        src={enlargedImage.url}
-        alt={enlargedImage.caption || "Enlarged view"}
-        loading="eager"
-      />
-      {#if enlargedImage.caption || enlargedImage.source}
-        <div class="modal-caption">
-          {#if enlargedImage.caption}
-            <p class="caption-title">{enlargedImage.caption}</p>
-          {/if}
-          {#if enlargedImage.source}
-            <p class="caption-source">
-              Source:
-              <a
-                href={enlargedImage.source}
-                target="_blank"
-                rel="noreferrer"
-                on:click|stopPropagation
-              >
-                Wikimedia Commons
-              </a>
-            </p>
-          {/if}
-        </div>
-      {/if}
-    </div>
-  </div>
-{/if}
+<ImageViewer image={enlargedImage} onClose={closeEnlargedImage} />
 
 <style>
   .story-view {
@@ -2168,119 +2112,6 @@
     width: 1rem;
     height: 1rem;
     fill: var(--story-secondary, #38bdf8);
-  }
-
-  .image-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 1rem;
-    cursor: pointer;
-    animation: fadeIn 0.2s ease;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease;
-    z-index: 1001;
-  }
-
-  .modal-close:hover,
-  .modal-close:focus {
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: scale(1.05);
-    outline: none;
-  }
-
-  .modal-close .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    fill: currentColor;
-  }
-
-  .modal-content {
-    max-width: 90vw;
-    max-height: 90vh;
-    cursor: default;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .modal-content img {
-    max-width: 100%;
-    max-height: 75vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: 0.5rem;
-    box-shadow: none;
-  }
-
-  .modal-caption {
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(8px);
-    padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    max-width: 90vw;
-    text-align: center;
-  }
-
-  .caption-title {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--story-primary, #f8fafc);
-  }
-
-  .caption-source {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #94a3b8;
-  }
-
-  .caption-source a {
-    color: var(--story-secondary, #38bdf8);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .caption-source a:hover,
-  .caption-source a:focus {
-    text-decoration: underline;
   }
 
   .date {
