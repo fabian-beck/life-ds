@@ -85,7 +85,16 @@ def _normalize_location_text(value: str) -> str:
 
 
 def _strip_html_tags(value: str) -> str:
-    return re.sub(r"<[^>]+>", "", value)
+    # Remove HTML tags
+    clean = re.sub(r"<[^>]+>", "", value)
+    # Decode HTML entities
+    clean = clean.replace("&lt;", "<").replace(
+        "&gt;", ">").replace("&amp;", "&")
+    clean = clean.replace("&quot;", '"').replace(
+        "&#39;", "'").replace("&nbsp;", " ")
+    # Remove excessive whitespace
+    clean = " ".join(clean.split())
+    return clean.strip()
 
 
 def _clean_candidate_name(value: Optional[str]) -> Optional[str]:
@@ -316,12 +325,13 @@ def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
     params = {
         "action": "query",
         "format": "json",
-        "prop": "extracts|pageimages|info",
+        "prop": "extracts|pageimages|info|images",
         "explaintext": 1,
         "redirects": 1,
         "inprop": "url",
         "piprop": "original",
         "titles": title,
+        "imlimit": 50,  # Fetch up to 50 images from the page
     }
     response = requests.get(
         MEDIAWIKI_API,
@@ -437,15 +447,150 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
     return response.json()
 
 
+def fetch_image_urls(image_titles: List[str]) -> List[str]:
+    """Fetch actual URLs for Wikipedia image titles."""
+    if not image_titles:
+        return []
+
+    # Filter out common non-content images
+    excluded_patterns = [
+        "commons-logo",
+        "wikidata-logo",
+        "wikimedia-logo",
+        "edit-clear.svg",
+        "question_book",
+        "ambox",
+        "symbol",
+        "blue_pencil.svg",
+        "increase",
+        "decrease",
+        "steady",
+    ]
+
+    filtered_titles = []
+    # Limit to first 30 to avoid excessive API calls
+    for title in image_titles[:30]:
+        # Skip if title is not a string
+        if not isinstance(title, str):
+            continue
+        title_lower = title.lower()
+        if any(pattern in title_lower for pattern in excluded_patterns):
+            continue
+        # Accept any title - Wikipedia API returns image titles as-is
+        filtered_titles.append(title)
+
+    if not filtered_titles:
+        return []
+
+    # Batch fetch image info
+    params = {
+        "action": "query",
+        "format": "json",
+        "prop": "imageinfo",
+        "iiprop": "url|size|mime|extmetadata",
+        "titles": "|".join(filtered_titles[:20]),  # API limit
+    }
+
+    try:
+        response = requests.get(
+            MEDIAWIKI_API,
+            params=params,
+            timeout=30,
+            headers=wikipedia_headers(),
+        )
+        response.raise_for_status()
+        data = response.json()
+    except Exception as error:
+        print(f"Warning: Failed to fetch image URLs: {error}")
+        return []
+
+    image_data = []
+    pages = data.get("query", {}).get("pages", {})
+    for page in pages.values():
+        imageinfo = page.get("imageinfo", [])
+        if imageinfo and len(imageinfo) > 0:
+            info = imageinfo[0]
+            url = info.get("url")
+            mime = info.get("mime", "")
+            width = info.get("width", 0)
+            height = info.get("height", 0)
+
+            # Only include proper images (not tiny images)
+            if url and mime.startswith("image/"):
+                # Lower minimum size to include more images
+                if width >= 100 and height >= 100:
+                    # Extract metadata
+                    extmetadata = info.get("extmetadata", {})
+                    description = None
+                    artist = None
+                    description_url = None
+
+                    # Try to get description
+                    if "ImageDescription" in extmetadata:
+                        desc_data = extmetadata["ImageDescription"]
+                        if isinstance(desc_data, dict) and "value" in desc_data:
+                            # Strip HTML tags from description
+                            description = _strip_html_tags(desc_data["value"])
+
+                    # Try to get artist/credit
+                    if "Artist" in extmetadata:
+                        artist_data = extmetadata["Artist"]
+                        if isinstance(artist_data, dict) and "value" in artist_data:
+                            artist = _strip_html_tags(artist_data["value"])
+
+                    # Get description URL (Wikimedia Commons page)
+                    if "DescriptionURL" in extmetadata:
+                        desc_url_data = extmetadata["DescriptionURL"]
+                        if isinstance(desc_url_data, dict) and "value" in desc_url_data:
+                            description_url = desc_url_data["value"]
+                    elif "descriptionurl" in info:
+                        description_url = info["descriptionurl"]
+
+                    # Create image object with metadata
+                    image_obj = {
+                        "url": url,
+                        "caption": description or f"Image from Wikimedia Commons",
+                        "source": description_url,
+                    }
+                    image_data.append(image_obj)
+
+    return image_data
+
+
 def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subject: str) -> str:
     summary_text = summary_data.get("extract", "").strip()
     extract_text = page_data.get("extract", "").strip()
+
+    # Get image URLs - images come as list of dicts with 'title' keys
+    images_data = page_data.get("images", [])
+    image_titles = []
+    for img in images_data:
+        if isinstance(img, dict) and "title" in img:
+            image_titles.append(img["title"])
+        elif isinstance(img, str):
+            image_titles.append(img)
+
+    image_urls = fetch_image_urls(image_titles) if image_titles else []
+
     combined = f"Page title: {page_data.get('title', subject)}\nPage URL: {page_data.get('fullurl', '')}\n\n"
     if summary_text:
         combined += f"Summary snippet:\n{summary_text}\n\n"
     if extract_text:
         truncated = extract_text[:12000]
         combined += f"Full extract (truncated to 12k characters if needed):\n{truncated}\n"
+
+    if image_urls:
+        combined += f"\n\n{'='*60}\nAVAILABLE IMAGES - Use these in relevant events:\n{'='*60}\n"
+        # Limit to 15 in prompt
+        for idx, img_data in enumerate(image_urls[:15], 1):
+            combined += f"\n{idx}. {img_data.get('caption', 'Image')}\n"
+            combined += f"   URL: {img_data['url']}\n"
+            if img_data.get('source'):
+                combined += f"   Source: {img_data['source']}\n"
+        combined += f"\nIMPORTANT: Include relevant images in events using this exact JSON format:\n"
+        combined += '"images": [{"url": "...full URL...", "caption": "...description of what the image shows...", "source": "...Wikimedia Commons URL..."}]\n'
+        combined += "Use the captions provided above or write your own factual description of what the image shows.\n"
+
     return combined
 
 
@@ -467,8 +612,23 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Each event must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
         "title, description, locations (array with at least one human-readable entry, use 'Location unknown' if uncertain), "
-        "and sources (array of URLs pulled from Wikipedia). "
-        "Keep date and date_end values as machine-readable ISO-8601 strings (YYYY-MM-DD, YYYY-MM, or YYYY). "
+        "sources (array of URLs pulled from Wikipedia), and optional images (array of image objects with 'url', 'caption', and 'source' fields). "
+        "\n\nIMPORTANT - Image Guidelines:\n"
+        "- When images are provided, actively look for opportunities to include them in relevant events\n"
+        "- Each image object must have: 'url' (the image URL), 'caption' (describing what the image shows), and 'source' (Wikimedia Commons URL)\n"
+        "- Use the description from the provided image data to write a concise, factual caption\n"
+        "- Include images of: buildings/places mentioned, artworks/creations, documents/publications, monuments, flags, designs, inventions\n"
+        "- For architects: include images of their buildings in construction/completion events\n"
+        "- For artists: include images of their artworks in creation events\n"
+        "- For inventors: include images of their inventions or patents\n"
+        "- For authors: include images of book covers or manuscripts\n"
+        "- For historical figures: include images of monuments, locations, or artifacts related to specific events\n"
+        "- You can include multiple images per event if they're all relevant\n"
+        "- DO NOT include generic portraits or the person's photo in regular events (those go in the person metadata)\n"
+        "- DO include images that show the result, location, or subject matter of the event\n"
+        "\nEXAMPLE: For an event about publishing a translated article on the Analytical Engine, you might include:\n"
+        '"images": [{"url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg", "caption": "Diagram of an algorithm for the Analytical Engine for computing Bernoulli numbers", "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg"}]\n'
+        "\nKeep date and date_end values as machine-readable ISO-8601 strings (YYYY-MM-DD, YYYY-MM, or YYYY). "
         "If a source uses descriptive phrasing like 'early 1900', place that text in date_note while selecting the closest structured date. "
         "Include person metadata with name, birth_date, death_date when known, primary_roles, summary, "
         "wikipedia URL, and portrait info if available."
@@ -748,6 +908,30 @@ def enforce_metadata(
         if not sanitized_locations:
             sanitized_locations = [UNKNOWN_LOCATION_LABEL]
         event["locations"] = sanitized_locations
+
+        # Handle optional images field
+        raw_images = event.get("images") or []
+        sanitized_images = []
+        seen_images: Set[str] = set()
+        if isinstance(raw_images, list):
+            for image_url in raw_images:
+                if not isinstance(image_url, str):
+                    continue
+                trimmed = image_url.strip()
+                if not trimmed:
+                    continue
+                # Basic URL validation
+                if not (trimmed.startswith("http://") or trimmed.startswith("https://")):
+                    continue
+                key = trimmed.casefold()
+                if key in seen_images:
+                    continue
+                seen_images.add(key)
+                sanitized_images.append(trimmed)
+        if sanitized_images:
+            event["images"] = sanitized_images
+        else:
+            event.pop("images", None)
 
         events.append(event)
     events.sort(key=event_sort_key)
