@@ -986,25 +986,48 @@ def enforce_metadata(
             sanitized_locations = [UNKNOWN_LOCATION_LABEL]
         event["locations"] = sanitized_locations
 
-        # Handle optional images field
+        # Handle optional images field - expects array of objects with url, caption, source
         raw_images = event.get("images") or []
         sanitized_images = []
         seen_images: Set[str] = set()
         if isinstance(raw_images, list):
-            for image_url in raw_images:
-                if not isinstance(image_url, str):
-                    continue
-                trimmed = image_url.strip()
-                if not trimmed:
-                    continue
-                # Basic URL validation
-                if not (trimmed.startswith("http://") or trimmed.startswith("https://")):
-                    continue
-                key = trimmed.casefold()
-                if key in seen_images:
-                    continue
-                seen_images.add(key)
-                sanitized_images.append(trimmed)
+            for image_data in raw_images:
+                # Support both object format (with metadata) and legacy string format
+                if isinstance(image_data, dict):
+                    image_url = image_data.get("url", "").strip()
+                    caption = image_data.get("caption", "").strip()
+                    source = image_data.get("source", "").strip()
+                    
+                    # Validate URL
+                    if not image_url or not (image_url.startswith("http://") or image_url.startswith("https://")):
+                        continue
+                    
+                    # Check for duplicates
+                    key = image_url.casefold()
+                    if key in seen_images:
+                        continue
+                    seen_images.add(key)
+                    
+                    # Store as object with metadata
+                    sanitized_images.append({
+                        "url": image_url,
+                        "caption": caption or "Image from Wikimedia Commons",
+                        "source": source or None
+                    })
+                elif isinstance(image_data, str):
+                    # Legacy string format - convert to object
+                    trimmed = image_data.strip()
+                    if not trimmed or not (trimmed.startswith("http://") or trimmed.startswith("https://")):
+                        continue
+                    key = trimmed.casefold()
+                    if key in seen_images:
+                        continue
+                    seen_images.add(key)
+                    sanitized_images.append({
+                        "url": trimmed,
+                        "caption": "Image from Wikimedia Commons",
+                        "source": None
+                    })
         if sanitized_images:
             event["images"] = sanitized_images
         else:
