@@ -501,6 +501,70 @@
     return mdiCircleSmall;
   }
 
+  function handleImageLoad(event) {
+    const img = event.target;
+    if (!img || !img.naturalWidth || !img.naturalHeight) return;
+    
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    let horizontalRadius, verticalRadius;
+    
+    if (aspectRatio > 1) {
+      // Landscape: wider than tall
+      horizontalRadius = Math.min(92, 80 + (aspectRatio - 1) * 8);
+      verticalRadius = 85;
+    } else {
+      // Portrait: taller than wide
+      horizontalRadius = 85;
+      verticalRadius = Math.min(95, 88 + (1 / aspectRatio - 1) * 5);
+    }
+    
+    // Use a linear gradient from all four sides to create rounded rect effect
+    const maskImage = `
+      linear-gradient(to right, transparent 0%, black ${100 - horizontalRadius}%, black ${horizontalRadius}%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black ${100 - verticalRadius}%, black ${verticalRadius}%, transparent 100%),
+      radial-gradient(at top left, transparent 0%, transparent 8%, black 12%),
+      radial-gradient(at top right, transparent 0%, transparent 8%, black 12%),
+      radial-gradient(at bottom left, transparent 0%, transparent 8%, black 12%),
+      radial-gradient(at bottom right, transparent 0%, transparent 8%, black 12%)
+    `;
+    
+    const maskComposite = 'intersect';
+    
+    img.style.maskImage = maskImage;
+    img.style.webkitMaskImage = maskImage;
+    img.style.maskComposite = maskComposite;
+    img.style.webkitMaskComposite = maskComposite;
+  }  function handleThumbnailLoad(event) {
+    const img = event.target;
+    if (!img || !img.naturalWidth || !img.naturalHeight) return;
+
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    let horizontalRadius, verticalRadius;
+
+    // For thumbnails positioned at top-right
+    if (aspectRatio > 1) {
+      // Landscape
+      horizontalRadius = Math.min(95, 80 + (aspectRatio - 1) * 10);
+      verticalRadius = 80;
+    } else {
+      // Portrait
+      horizontalRadius = 80;
+      verticalRadius = Math.min(98, 85 + (1 / aspectRatio - 1) * 10);
+    }
+
+    const maskImage = `radial-gradient(
+      ellipse ${horizontalRadius}% ${verticalRadius}% at 85% 15%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.98) 65%,
+      rgba(0, 0, 0, 0.85) 78%,
+      rgba(0, 0, 0, 0.5) 88%,
+      rgba(0, 0, 0, 0) 97%
+    )`;
+
+    img.style.maskImage = maskImage;
+    img.style.webkitMaskImage = maskImage;
+  }
+
   function createBaseStyle() {
     if (!basemapStyleCache) {
       basemapStyleCache = {
@@ -755,24 +819,38 @@
       </div>
       {#if portrait?.image}
         <figure class="portrait">
-          <img
-            src={portrait.image}
-            alt={portrait.alt ?? `Portrait of ${personName}`}
-            loading="lazy"
-            decoding="async"
-          />
-          {#if portrait.caption || portrait.source}
-            <figcaption>
-              {#if portrait.caption}
-                <span>{portrait.caption}</span>
-              {/if}
-              {#if portrait.source}
-                <a href={portrait.source} target="_blank" rel="noreferrer"
-                  >{sourceLabel(portrait.source)}</a
-                >
-              {/if}
-            </figcaption>
-          {/if}
+          <button
+            type="button"
+            class="portrait-button"
+            on:click={() =>
+              enlargeImage(
+                {
+                  url: portrait.image,
+                  caption: portrait.caption || null,
+                  source: portrait.source || null,
+                },
+                { title: personName }
+              )}
+            aria-label="Enlarge portrait"
+          >
+            <img
+              src={portrait.image}
+              alt={portrait.alt ?? `Portrait of ${personName}`}
+              loading="lazy"
+              decoding="async"
+              on:load={handleImageLoad}
+            />
+            <span class="enlarge-icon portrait-enlarge">
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiMagnifyPlusOutline} />
+              </svg>
+            </span>
+          </button>
         </figure>
       {/if}
     </div>
@@ -838,6 +916,7 @@
                         alt={imgObj.caption || `Related to ${slide.title}`}
                         loading="lazy"
                         decoding="async"
+                        on:load={handleThumbnailLoad}
                       />
                       <span class="enlarge-icon">
                         <svg
@@ -1417,7 +1496,7 @@
       rgba(0, 0, 0, 0) 80%
     );
     pointer-events: none;
-    z-index: 2;
+    z-index: 0;
   }
 
   .slide > * {
@@ -1751,31 +1830,75 @@
     text-align: center;
   }
 
+  .portrait-button {
+    appearance: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    background: transparent;
+    transition: transform 0.2s ease;
+  }
+
+  .portrait-button:hover,
+  .portrait-button:focus {
+    transform: scale(1.02);
+    outline: none;
+  }
+
+  .portrait-enlarge {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(15, 23, 42, 0.85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .portrait-button:hover .portrait-enlarge,
+  .portrait-button:focus .portrait-enlarge {
+    opacity: 1;
+  }
+
+  .portrait-enlarge .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: var(--story-secondary, #38bdf8);
+  }
+
   .portrait img {
     width: min(220px, 80vw);
     height: auto;
     border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.45);
-    border: 1px solid rgba(148, 163, 184, 0.3);
-  }
-
-  .portrait figcaption {
-    font-size: 0.75rem;
-    color: #94a3b8;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .portrait figcaption a {
-    color: var(--story-secondary, #facc15);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .portrait figcaption a:hover,
-  .portrait figcaption a:focus {
-    text-decoration: underline;
+    box-shadow: none;
+    border: none;
+    filter: saturate(0.55) contrast(0.8) brightness(0.92);
+    /* Default mask to prevent pop-out before JS loads */
+    mask-image: radial-gradient(
+      ellipse 60% 70% at center,
+      rgba(0, 0, 0, 1) 35%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.7) 65%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0) 90%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 60% 70% at center,
+      rgba(0, 0, 0, 1) 35%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.7) 65%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0) 90%
+    );
   }
 
   .content {
@@ -1786,12 +1909,12 @@
 
   .event-images {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    z-index: 10;
+    z-index: 1;
   }
 
   .image-thumbnail {
@@ -1802,24 +1925,22 @@
     cursor: pointer;
     display: block;
     position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 0.5rem;
+    width: 240px;
+    height: 240px;
+    border-radius: 0;
     overflow: hidden;
-    background: rgba(15, 23, 42, 0.5);
-    border: 2px solid rgba(148, 163, 184, 0.3);
+    background: transparent;
     transition:
       transform 0.2s ease,
-      border-color 0.2s ease,
       box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
   }
 
   .image-thumbnail:hover,
   .image-thumbnail:focus {
     transform: scale(1.05);
-    border-color: var(--story-secondary, #38bdf8);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    border-color: transparent;
+    box-shadow: none;
     outline: none;
   }
 
@@ -1828,6 +1949,33 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    filter: saturate(0.35) contrast(0.6) brightness(0.82);
+    transition:
+      filter 0.2s ease,
+      mask-image 0.2s ease,
+      -webkit-mask-image 0.2s ease;
+    /* Default mask to prevent pop-out before JS loads */
+    mask-image: radial-gradient(
+      ellipse 85% 85% at 85% 15%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.98) 65%,
+      rgba(0, 0, 0, 0.85) 78%,
+      rgba(0, 0, 0, 0.5) 88%,
+      rgba(0, 0, 0, 0) 97%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 85% 85% at 85% 15%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.98) 65%,
+      rgba(0, 0, 0, 0.85) 78%,
+      rgba(0, 0, 0, 0.5) 88%,
+      rgba(0, 0, 0, 0) 97%
+    );
+  }
+
+  .image-thumbnail:hover img,
+  .image-thumbnail:focus img {
+    filter: saturate(0.6) contrast(0.75) brightness(0.92);
   }
 
   .enlarge-icon {
@@ -1933,7 +2081,7 @@
     height: auto;
     object-fit: contain;
     border-radius: 0.5rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    box-shadow: none;
   }
 
   .modal-caption {
@@ -2171,18 +2319,74 @@
       font-size: 1.05rem;
     }
 
+    .portrait-enlarge {
+      width: 2.5rem;
+      height: 2.5rem;
+      bottom: 0.75rem;
+      right: 0.75rem;
+    }
+
+    .portrait-enlarge .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
     .portrait img {
       width: 260px;
+      filter: saturate(0.55) contrast(0.8) brightness(0.92);
+      /* Default mask */
+      mask-image: radial-gradient(
+        ellipse 60% 70% at center,
+        rgba(0, 0, 0, 1) 35%,
+        rgba(0, 0, 0, 0.95) 50%,
+        rgba(0, 0, 0, 0.7) 65%,
+        rgba(0, 0, 0, 0.35) 78%,
+        rgba(0, 0, 0, 0) 90%
+      );
+      -webkit-mask-image: radial-gradient(
+        ellipse 60% 70% at center,
+        rgba(0, 0, 0, 1) 35%,
+        rgba(0, 0, 0, 0.95) 50%,
+        rgba(0, 0, 0, 0.7) 65%,
+        rgba(0, 0, 0, 0.35) 78%,
+        rgba(0, 0, 0, 0) 90%
+      );
     }
 
     .event-images {
-      top: 1.5rem;
-      right: 1.5rem;
+      top: 0;
+      right: 0;
     }
 
     .image-thumbnail {
-      width: 100px;
-      height: 100px;
+      width: 280px;
+      height: 280px;
+    }
+
+    .image-thumbnail img {
+      filter: saturate(0.35) contrast(0.6) brightness(0.82);
+      /* Default mask */
+      mask-image: radial-gradient(
+        ellipse 75% 75% at 85% 15%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0.98) 65%,
+        rgba(0, 0, 0, 0.85) 78%,
+        rgba(0, 0, 0, 0.5) 88%,
+        rgba(0, 0, 0, 0) 97%
+      );
+      -webkit-mask-image: radial-gradient(
+        ellipse 75% 75% at 85% 15%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0.98) 65%,
+        rgba(0, 0, 0, 0.85) 78%,
+        rgba(0, 0, 0, 0.5) 88%,
+        rgba(0, 0, 0, 0) 97%
+      );
+    }
+
+    .image-thumbnail:hover img,
+    .image-thumbnail:focus img {
+      filter: saturate(0.6) contrast(0.75) brightness(0.92);
     }
 
     .enlarge-icon {
