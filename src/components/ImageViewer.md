@@ -7,7 +7,7 @@ A reusable full-screen image viewer component with pan and zoom capabilities.
 - **Full-screen viewing**: Images are displayed as large as the screen allows
 - **Mouse wheel zoom**: Scroll to zoom in/out, with zoom centered on cursor position
 - **Pan support**: Click and drag to pan around zoomed images
-- **Touch gestures**: 
+- **Touch gestures**:
   - Pinch to zoom on touch devices
   - Drag to pan with single touch
 - **Double-click/tap to zoom**: Quick zoom in/out toggle
@@ -30,9 +30,9 @@ A reusable full-screen image viewer component with pan and zoom capabilities.
     caption: "Optional caption",
     source: "Optional source URL"
   };
-  
+
   let showViewer = false;
-  
+
   function closeViewer() {
     showViewer = false;
   }

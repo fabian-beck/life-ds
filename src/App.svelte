@@ -5,10 +5,18 @@
   import registry from "../data/persons.json";
   import styleRegistry from "../data/person_styles.json";
 
-  const datasetModules = import.meta.glob("../data/people/*_life_events.json", {
+  const datasetModules = import.meta.glob("../data/people/*/life_events.json", {
     eager: true,
     import: "default",
   });
+
+  const egoNetworkModules = import.meta.glob(
+    "../data/people/*/ego_network.json",
+    {
+      eager: true,
+      import: "default",
+    }
+  );
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -146,8 +154,19 @@
   const datasetMap = Object.entries(datasetModules).reduce(
     (accumulator, [path, data]) => {
       const segments = path.split("/");
-      const fileName = segments[segments.length - 1] ?? "";
-      const id = fileName.replace("_life_events.json", "");
+      // Path format: ../data/people/<person_id>/life_events.json
+      // Get the person_id from second-to-last segment
+      const id = segments[segments.length - 2] ?? "";
+      accumulator[id] = data;
+      return accumulator;
+    },
+    {}
+  );
+
+  const egoNetworkMap = Object.entries(egoNetworkModules).reduce(
+    (accumulator, [path, data]) => {
+      const segments = path.split("/");
+      const id = segments[segments.length - 2] ?? "";
       accumulator[id] = data;
       return accumulator;
     },
@@ -214,7 +233,7 @@
         enrichEntry({
           id,
           name: fallbackName,
-          file: `people/${id}_life_events.json`,
+          file: `people/${id}/life_events.json`,
         })
       );
     }
@@ -234,6 +253,7 @@
   $: slideParam =
     storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
   $: dataset = personId ? (datasetMap[personId] ?? null) : null;
+  $: egoNetwork = personId ? (egoNetworkMap[personId] ?? null) : null;
 
   // Redirect to home if trying to view non-existent story
   $: if (storyMatch && !dataset && personId) {
@@ -272,6 +292,7 @@
   {#if currentPath.startsWith("/story/") && dataset}
     <StoryView
       {dataset}
+      {egoNetwork}
       activeIndex={slideParam ?? 0}
       hasRegistryEntries={registryEntries.length > 0}
       styleConfig={styleFor(personId)}

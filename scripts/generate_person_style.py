@@ -207,7 +207,9 @@ def sanitise_pattern_svg(svg: str) -> str:
 
 def load_dataset_context(person_id: str) -> Dict[str, Any]:
     context: Dict[str, Any] = {}
-    dataset_path = PEOPLE_DIR / f"{person_id}_life_events.json"
+    # Updated to use subdirectory structure
+    person_dir = PEOPLE_DIR / person_id
+    dataset_path = person_dir / "life_events.json"
     if dataset_path.exists():
         try:
             dataset = json.loads(dataset_path.read_text(encoding="utf-8"))

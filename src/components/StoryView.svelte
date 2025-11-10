@@ -21,6 +21,7 @@
     mdiMagnifyPlusOutline,
     mdiInformationOutline,
     mdiWikipedia,
+    mdiAccountOutline,
   } from "@mdi/js";
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
@@ -29,6 +30,7 @@
   import ImageViewer from "./ImageViewer.svelte";
 
   export let dataset = null;
+  export let egoNetwork = null;
   export let activeIndex = 0;
   export let hasRegistryEntries = false;
   export let styleConfig = null;
@@ -38,6 +40,7 @@
   let enlargedImage = null;
   let enlargedImageContext = null; // Store event context for caption
   let visibleDateNote = null; // Track which event's date note is visible
+  let visiblePersonInfo = null; // Track which person's info is visible
 
   const DEFAULT_COORDINATES = null;
   const DEFAULT_PM_TILES_URL =
@@ -249,6 +252,7 @@
   // Close date note when slide changes
   $: if (activeIndex !== undefined) {
     visibleDateNote = null;
+    visiblePersonInfo = null;
   }
 
   let slidesContainer;
@@ -418,11 +422,57 @@
   }
 
   function handleClickOutside(event) {
-    // Check if click is outside the date-wrapper
+    // Check if click is outside the date-wrapper or person-info-wrapper
     const dateWrapper = event.target.closest(".date-wrapper");
+    const personWrapper = event.target.closest(".person-info-wrapper");
     if (!dateWrapper && visibleDateNote !== null) {
       visibleDateNote = null;
     }
+    if (!personWrapper && visiblePersonInfo !== null) {
+      visiblePersonInfo = null;
+    }
+  }
+
+  function togglePersonInfo(personKey) {
+    if (visiblePersonInfo === personKey) {
+      visiblePersonInfo = null;
+    } else {
+      visiblePersonInfo = personKey;
+    }
+  }
+
+  function getRelevantPeople(event) {
+    if (!egoNetwork?.connections || !Array.isArray(egoNetwork.connections)) {
+      return [];
+    }
+
+    const eventText = `${event?.title ?? ""} ${event?.description ?? ""}`
+      .toLowerCase();
+    const eventYear = event?.date ? parseInt(event.date.substring(0, 4)) : null;
+
+    return egoNetwork.connections
+      .filter((connection) => {
+        // Check if person's name appears in event text
+        const personName = connection.person_name.toLowerCase();
+        if (!eventText.includes(personName)) {
+          return false;
+        }
+
+        // Check if event year falls within relationship timeframe
+        if (eventYear) {
+          const startYear = connection.start_year;
+          const endYear = connection.end_year;
+          if (startYear && eventYear < startYear) {
+            return false;
+          }
+          if (endYear && eventYear > endYear) {
+            return false;
+          }
+        }
+
+        return true;
+      })
+      .slice(0, 5); // Limit to 5 people per event
   }
 
   function formatAgeLabel(age) {
@@ -796,6 +846,8 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="story-view"
   style={storyStyleVars(styleConfig)}
@@ -1105,6 +1157,73 @@
                     </li>
                   {/if}
                 </ul>
+                {#each [getRelevantPeople(slide)] as relevantPeople}
+                  {#if relevantPeople.length > 0}
+                    <ul class="details">
+                      <li>
+                        <span class="label">
+                          <svg
+                            class="icon icon-inline"
+                            viewBox="0 0 24 24"
+                            role="presentation"
+                            aria-hidden="true"
+                          >
+                            <path d={mdiAccountOutline} />
+                          </svg>
+                          <span class="label-text">People</span>
+                        </span>
+                        <div class="people-list">
+                          {#each relevantPeople as person, idx}
+                            {@const personKey = `${slide.eventIndex}-${idx}`}
+                            <div class="person-info-wrapper">
+                              <button
+                                type="button"
+                                class="person-chip"
+                                on:click|stopPropagation={() =>
+                                  togglePersonInfo(personKey)}
+                                aria-label={`Show information about ${person.person_name}`}
+                                aria-expanded={visiblePersonInfo === personKey}
+                              >
+                                <span class="person-name"
+                                  >{person.person_name}</span
+                                >
+                                <span class="person-role"
+                                  >{person.relationship_type}</span
+                                >
+                              </button>
+                              {#if visiblePersonInfo === personKey}
+                                <div class="person-info-tooltip">
+                                  <p class="tooltip-title">
+                                    {person.person_name}
+                                  </p>
+                                  <p class="tooltip-relationship">
+                                    {person.relationship_description}
+                                  </p>
+                                  {#if person.start_year || person.end_year}
+                                    <p class="tooltip-years">
+                                      {#if person.start_year && person.end_year}
+                                        {person.start_year}–{person.end_year}
+                                      {:else if person.start_year}
+                                        From {person.start_year}
+                                      {:else if person.end_year}
+                                        Until {person.end_year}
+                                      {/if}
+                                    </p>
+                                  {/if}
+                                  {#if person.shared_activities?.length}
+                                    <p class="tooltip-activities">
+                                      {person.shared_activities.join(", ")}
+                                    </p>
+                                  {/if}
+                                </div>
+                              {/if}
+                            </div>
+                          {/each}
+                        </div>
+                      </li>
+                    </ul>
+                  {/if}
+                {/each}
               </div>
             {/if}
           </section>
@@ -2278,6 +2397,105 @@
   .wiki-icon {
     opacity: 0.7;
     flex-shrink: 0;
+  }
+
+  .people-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .person-info-wrapper {
+    position: relative;
+  }
+
+  .person-chip {
+    appearance: none;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .person-chip:hover,
+  .person-chip:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--story-secondary, rgba(148, 163, 184, 0.5));
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .person-chip[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--story-secondary, rgba(148, 163, 184, 0.6));
+  }
+
+  .person-name {
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .person-role {
+    font-weight: 400;
+    color: var(--story-secondary, #94a3b8);
+    font-size: 0.75rem;
+    text-transform: capitalize;
+  }
+
+  .person-info-tooltip {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: auto;
+    min-width: 280px;
+    max-width: 340px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    animation: fadeInTooltip 0.2s ease;
+  }
+
+  .tooltip-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--story-primary, #f8fafc);
+  }
+
+  .tooltip-relationship {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.85rem;
+    color: #e2e8f0;
+    line-height: 1.5;
+  }
+
+  .tooltip-years {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.75rem;
+    color: var(--story-secondary, #94a3b8);
+    font-weight: 500;
+  }
+
+  .tooltip-activities {
+    margin: 0;
+    font-size: 0.75rem;
+    color: rgba(148, 163, 184, 0.85);
+    font-style: italic;
+    line-height: 1.4;
   }
 
   @media (min-width: 768px) {

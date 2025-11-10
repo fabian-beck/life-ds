@@ -22,7 +22,7 @@
   let initialScale = 1;
 
   $: transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-  
+
   // Reset view when image changes
   $: if (image) {
     resetView();
@@ -74,7 +74,7 @@
   function handleDoubleClick(event) {
     if (!container) return;
     event.preventDefault();
-    
+
     if (scale > 1) {
       // Reset to fit
       resetView();
@@ -201,7 +201,7 @@
   <div
     class="image-viewer"
     on:click={handleBackdropClick}
-    on:keydown={(e) => e.key === 'Enter' && handleBackdropClick(e)}
+    on:keydown={(e) => e.key === "Enter" && handleBackdropClick(e)}
     on:wheel={handleWheel}
     role="button"
     tabindex="0"
@@ -215,7 +215,12 @@
         aria-label="Reset view"
         title="Reset view (R)"
       >
-        <svg class="icon" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          role="presentation"
+          aria-hidden="true"
+        >
           <path d={mdiRefresh} />
         </svg>
       </button>
@@ -226,7 +231,12 @@
         aria-label="Close image viewer"
         title="Close (Esc)"
       >
-        <svg class="icon" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          role="presentation"
+          aria-hidden="true"
+        >
           <path d={mdiClose} />
         </svg>
       </button>
@@ -245,7 +255,11 @@
       <div
         class="image-wrapper"
         bind:this={imageWrapper}
-        style="transform: {transform}; cursor: {isDragging ? 'grabbing' : scale > 1 ? 'grab' : 'zoom-in'};"
+        style="transform: {transform}; cursor: {isDragging
+          ? 'grabbing'
+          : scale > 1
+            ? 'grab'
+            : 'zoom-in'};"
         role="presentation"
       >
         <img
@@ -279,7 +293,9 @@
     {/if}
 
     <div class="viewer-hints">
-      <p>Scroll to zoom • Drag to pan • Double-click to zoom • Press R to reset</p>
+      <p>
+        Scroll to zoom • Drag to pan • Double-click to zoom • Press R to reset
+      </p>
     </div>
   </div>
 {/if}

@@ -20,7 +20,7 @@ from pydantic import BaseModel, Field
 DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
-DATASETS_DIR = DATA_DIR / "people"
+PEOPLE_DIR = DATA_DIR / "people"
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
 # Structured outputs require gpt-4o-mini, gpt-4o-2024-08-06, or later models
@@ -1040,19 +1040,21 @@ def enforce_metadata(
 
 
 def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
-    DATASETS_DIR.mkdir(parents=True, exist_ok=True)
-    output_path = DATASETS_DIR / f"{person_id}_life_events.json"
+    person_dir = PEOPLE_DIR / person_id
+    person_dir.mkdir(parents=True, exist_ok=True)
+    output_path = person_dir / "life_events.json"
     output_path.write_text(json.dumps(
         payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     return output_path
 
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
-    relative_file = file_path.relative_to(DATA_DIR)
+    # Use consistent path format: people/<person_id>/life_events.json
+    relative_file = f"people/{person_id}/life_events.json"
     entry = {
         "id": person_id,
         "name": payload.get("person", {}).get("name", person_id.replace("_", " ").title()),
-        "file": relative_file.as_posix(),
+        "file": relative_file,
         "wikipedia": payload.get("person", {}).get("wikipedia"),
         "summary": payload.get("person", {}).get("summary"),
     }
