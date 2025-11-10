@@ -1,0 +1,195 @@
+{
+  "dataset": "Alan Turing Ego Network",
+  "created_on": "2025-11-09",
+  "ego": {
+    "name": "Alan Turing",
+    "birth_year": 1912,
+    "death_year": 1954,
+    "primary_roles": [
+      "mathematician",
+      "computer scientist",
+      "logician",
+      "cryptanalyst",
+      "theoretical biologist",
+      "philosopher"
+    ],
+    "summary": "English mathematician and computer science pioneer whose 1936 paper formalised computation via the Turing machine; key World War II cryptanalyst at Bletchley Park; postwar designer of the ACE computer; contributor to the philosophy of AI (Turing test) and mathematical biology (morphogenesis).",
+    "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing"
+  },
+  "connections": [
+    {
+      "person_name": "Julius Mathison Turing",
+      "relationship_type": "family",
+      "relationship_description": "Father, who was a civil servant in India.",
+      "start_year": 1912,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family upbringing",
+        "educational support"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Ethel Sara Turing",
+      "relationship_type": "family",
+      "relationship_description": "Mother, who played a significant role in Turing's early life.",
+      "start_year": 1912,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family upbringing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "John Ferrier Turing",
+      "relationship_type": "family",
+      "relationship_description": "Elder brother, who shared Turing's family background.",
+      "start_year": 1912,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "growing up together"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Christopher Morcom",
+      "relationship_type": "friend",
+      "relationship_description": "Close friend and fellow pupil, whose death deeply affected Turing.",
+      "start_year": 1926,
+      "end_year": 1930,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "school studies",
+        "shared interests in science"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Morcom's death led Turing to deepen his focus on science."
+    },
+    {
+      "person_name": "Alonzo Church",
+      "relationship_type": "mentor",
+      "relationship_description": "PhD advisor at Princeton who guided Turing in his doctoral studies.",
+      "start_year": 1936,
+      "end_year": 1938,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "PhD supervision",
+        "academic discussions"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Ludwig Wittgenstein",
+      "relationship_type": "rival",
+      "relationship_description": "Philosopher who had notable disagreements with Turing on the foundations of mathematics.",
+      "start_year": 1939,
+      "end_year": 1940,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "attending lectures at Cambridge"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Asa Briggs",
+      "relationship_type": "colleague",
+      "relationship_description": "Historian and wartime codebreaker who acknowledged Turing's genius.",
+      "start_year": 1940,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "contributing to cryptanalysis at Bletchley Park"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Max Newman",
+      "relationship_type": "colleague",
+      "relationship_description": "Collaborator at the University of Manchester, worked with Turing on computing machines.",
+      "start_year": 1948,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "developing early computers"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Gordon Brown",
+      "relationship_type": "patron",
+      "relationship_description": "British Prime Minister who issued an official apology for Turing's treatment.",
+      "start_year": 2009,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "public apology"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Recognized Turing's contributions years after his death."
+    },
+    {
+      "person_name": "Dermot Turing",
+      "relationship_type": "family",
+      "relationship_description": "Nephew and heir to Turing's original title.",
+      "start_year": null,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family events"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Represents Turing in familial discussions."
+    }
+  ],
+  "network_summary": "Alan Turing's ego network includes strong family connections from his early life that nurtured his genius, alongside key friendships and professional relationships that shaped his groundbreaking contributions in mathematics and computer science. His links with notable figures, mentors, and rivals highlight the collaborative and often contentious nature of early 20th-century academic inquiry."
+}

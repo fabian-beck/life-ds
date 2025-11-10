@@ -1,0 +1,461 @@
+{
+  "dataset": "Wikipedia-EgoNetwork",
+  "created_on": "2025-11-10",
+  "ego": {
+    "name": "Ada Lovelace",
+    "birth_year": 1815,
+    "death_year": 1852,
+    "primary_roles": [
+      "Mathematician",
+      "Writer"
+    ],
+    "summary": "Ada Lovelace was an English mathematician and writer known for her work on Charles Babbage's Analytical Engine, and is often considered the first computer programmer.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace"
+  },
+  "connections": [
+    {
+      "person_name": "Anne Isabella Milbanke (Lady Byron)",
+      "relationship_type": "family",
+      "relationship_description": "Mother; oversaw Ada\u2019s upbringing, promoted her study of mathematics and logic, arranged tutors, and tightly managed Ada\u2019s contacts during her final illness.",
+      "start_year": 1815,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "upbringing and education",
+        "correspondence about Ada\u2019s welfare",
+        "managed visitors during Ada\u2019s final illness"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Anne_Isabella_Byron,_Baroness_Byron"
+      ],
+      "notes": "Despite a distant emotional relationship, Lady Byron exerted sustained influence on Ada\u2019s education and social life."
+    },
+    {
+      "person_name": "Lord Byron",
+      "relationship_type": "family",
+      "relationship_description": "Father; separated from Ada\u2019s mother soon after Ada\u2019s birth and left England; died when Ada was eight.",
+      "start_year": 1815,
+      "end_year": 1824,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family connection",
+        "posthumous symbolic influence (Ada named sons after him; burial beside him)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lord_Byron"
+      ],
+      "notes": "Ada never had a relationship with her father but remained interested in him."
+    },
+    {
+      "person_name": "Judith, Hon. Lady Milbanke",
+      "relationship_type": "family",
+      "relationship_description": "Maternal grandmother; frequently cared for Ada in childhood and \u2018doted on her\u2019.",
+      "start_year": 1816,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "caregiving in childhood",
+        "family correspondence about Ada\u2019s welfare"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Mary Somerville",
+      "relationship_type": "mentor",
+      "relationship_description": "Tutor and close friend; introduced Ada to Charles Babbage and corresponded for many years.",
+      "start_year": 1832,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "private tutoring in mathematics and science",
+        "introductions within scientific circles",
+        "long-term correspondence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Mary_Somerville"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "William Frend",
+      "relationship_type": "mentor",
+      "relationship_description": "One of Ada\u2019s private tutors in mathematics and science.",
+      "start_year": 1832,
+      "end_year": 1834,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "private mathematical and scientific instruction"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_Frend"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Charles Babbage",
+      "relationship_type": "collaborator",
+      "relationship_description": "Friend and long-term collaborator; Ada studied and wrote extensive notes on his Analytical Engine.",
+      "start_year": 1833,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "discussions of the Analytical Engine",
+        "development and publication of Ada\u2019s Notes (1842\u20131843)",
+        "scientific salons and correspondence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "notes": "Mary Somerville introduced Ada to Babbage at one of his soir\u00e9es on 5 June 1833."
+    },
+    {
+      "person_name": "John Cam Hobhouse",
+      "relationship_type": "friend",
+      "relationship_description": "Initially an awkward encounter in 1834; later became friends despite Ada\u2019s early dislike influenced by her mother\u2019s views of Byron\u2019s friends.",
+      "start_year": 1834,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "social meetings at Court and society events"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/John_Hobhouse,_1st_Baron_Broughton"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Charles Wheatstone",
+      "relationship_type": "colleague",
+      "relationship_description": "Scientific acquaintance within Ada\u2019s circle during her adult years.",
+      "start_year": 1834,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "scientific social circles and salons"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Wheatstone"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Michael Faraday",
+      "relationship_type": "colleague",
+      "relationship_description": "Prominent scientist listed among Ada\u2019s acquaintances.",
+      "start_year": 1834,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "scientific social gatherings"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Michael_Faraday"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Sir David Brewster",
+      "relationship_type": "colleague",
+      "relationship_description": "Scientist included among Ada\u2019s acquaintances.",
+      "start_year": 1834,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "scientific social gatherings"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/David_Brewster"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Andrew Crosse",
+      "relationship_type": "colleague",
+      "relationship_description": "Scientist counted among Ada\u2019s acquaintances.",
+      "start_year": 1834,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "scientific acquaintance within shared social circle"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Andrew_Crosse"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "William King-Noel, 1st Earl of Lovelace",
+      "relationship_type": "family",
+      "relationship_description": "Husband; married Ada in 1835. He became Earl of Lovelace in 1838, making Ada Countess of Lovelace.",
+      "start_year": 1835,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and family life",
+        "managed multiple households (Ockham Park, Scottish estate, London)",
+        "residence at Horsley Towers"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Byron King-Noel, Viscount Ockham",
+      "relationship_type": "family",
+      "relationship_description": "Eldest son, born 1836.",
+      "start_year": 1836,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life and upbringing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Byron_King-Noel,_Viscount_Ockham"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Anne Blunt, 15th Baroness Wentworth (born Anne Isabella \u2018Annabella\u2019 King-Noel)",
+      "relationship_type": "family",
+      "relationship_description": "Daughter, born 1837.",
+      "start_year": 1837,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life and upbringing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Anne_Blunt,_15th_Baroness_Wentworth"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Ralph King-Milbanke, 2nd Earl of Lovelace",
+      "relationship_type": "family",
+      "relationship_description": "Youngest son, born 1839.",
+      "start_year": 1839,
+      "end_year": 1852,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life and upbringing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Ralph_King-Milbanke,_2nd_Earl_of_Lovelace"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Augustus De Morgan",
+      "relationship_type": "mentor",
+      "relationship_description": "Mathematician who gave Ada substantial help in the 1840s, including advanced calculus (e.g., Bernoulli numbers).",
+      "start_year": 1840,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "advanced mathematical instruction",
+        "letters discussing Ada\u2019s potential as an investigator"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Augustus_De_Morgan"
+      ],
+      "notes": "De Morgan told Lady Byron Ada might become an original mathematical investigator."
+    },
+    {
+      "person_name": "Charles Dickens",
+      "relationship_type": "friend",
+      "relationship_description": "Noted author among Ada\u2019s acquaintances in her social and intellectual circle.",
+      "start_year": 1840,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "social and intellectual gatherings"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Dickens"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Elizabeth Medora Leigh",
+      "relationship_type": "family",
+      "relationship_description": "Cousin (and possibly half-sister); in 1841 both were told by Lady Byron that Lord Byron was also Medora\u2019s father; they corresponded on the matter.",
+      "start_year": 1841,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family correspondence about paternity and scandal"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Augusta Leigh",
+      "relationship_type": "family",
+      "relationship_description": "Ada\u2019s paternal aunt (Lord Byron\u2019s half-sister); central to family scandal discussed by Ada in 1841 letters.",
+      "start_year": 1841,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family context and letters regarding alleged incest"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Augusta_Leigh"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Luigi Federico Menabrea",
+      "relationship_type": "collaborator",
+      "relationship_description": "Author of the 1842 paper on the Analytical Engine that Ada translated and extensively annotated (1842\u20131843).",
+      "start_year": 1842,
+      "end_year": 1843,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "translation of his paper",
+        "publication of Ada\u2019s Notes including the Bernoulli numbers algorithm"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea"
+      ],
+      "notes": "Collaboration was through translation and commentary rather than direct joint research."
+    },
+    {
+      "person_name": "William Benjamin Carpenter",
+      "relationship_type": "other",
+      "relationship_description": "Hired to teach Ada\u2019s children and act as a moral instructor; attempted to initiate an affair, which Ada cut off.",
+      "start_year": 1843,
+      "end_year": 1844,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "instruction of Ada\u2019s children",
+        "personal correspondence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_Benjamin_Carpenter"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "John Crosse",
+      "relationship_type": "friend",
+      "relationship_description": "Maintained a shadowy relationship with Ada from 1844; correspondence largely destroyed; she bequeathed him heirlooms from her father.",
+      "start_year": 1844,
+      "end_year": 1852,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "private correspondence",
+        "visits during her illness",
+        "bequests"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "notes": "Ada panicked at the idea of him being kept from visiting during her final illness."
+    },
+    {
+      "person_name": "Woronzow Greig",
+      "relationship_type": "friend",
+      "relationship_description": "Friend to whom Ada expressed her 1844 ambition to model the nervous system mathematically.",
+      "start_year": 1844,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "intellectual correspondence about science and mathematics"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Charles Barry",
+      "relationship_type": "other",
+      "relationship_description": "Architect of Horsley Towers, the Lovelace family\u2019s main house from 1845; later enlarged to Ada\u2019s own designs.",
+      "start_year": 1845,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "architectural design of family residence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Barry"
+      ],
+      "notes": null
+    }
+  ],
+  "network_summary": "Ada Lovelace\u2019s ego network combines strong family ties and a dense set of scientific-intellectual connections typical of early Victorian high society. Core, high-strength ties include her mother (who shaped her education and social access), husband, children, key mentors (Mary Somerville and Augustus De Morgan), and her most consequential collaborator, Charles Babbage. Surrounding these are moderate-to-weak ties with prominent scientists and authors (Wheatstone, Faraday, Brewster, Dickens) and acquaintances from her father\u2019s circle (John Cam Hobhouse). The network also reflects family complexities and scandals (Lord Byron, Augusta Leigh, Medora Leigh) and late-life personal entanglements (William Benjamin Carpenter, John Crosse). Overall, the network shows Ada as a broker between aristocratic society and the scientific community, with mentorship and collaboration channels feeding into her landmark Analytical Engine work."
+}

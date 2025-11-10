@@ -73,14 +73,16 @@ class EgoNetworkMetadata(BaseModel):
         description="Primary roles or professions of the ego"
     )
     summary: str = Field(description="Brief biographical summary of the ego")
-    wikipedia: Optional[str] = Field(None, description="Wikipedia URL for the ego")
+    wikipedia: Optional[str] = Field(
+        None, description="Wikipedia URL for the ego")
 
 
 class EgoNetwork(BaseModel):
     """Complete ego network dataset for a person."""
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
-    ego: EgoNetworkMetadata = Field(description="Metadata about the central person")
+    ego: EgoNetworkMetadata = Field(
+        description="Metadata about the central person")
     connections: List[Connection] = Field(
         description="List of connections/relationships in the ego network"
     )
@@ -236,7 +238,7 @@ def build_prompt(page_data: Dict[str, Any], existing_dataset: Optional[Dict[str,
     extract_text = page_data.get("extract", "").strip()
 
     combined = f"Page title: {page_data.get('title', subject)}\nPage URL: {page_data.get('fullurl', '')}\n\n"
-    
+
     if existing_dataset:
         person_info = existing_dataset.get("person", {})
         combined += "Known information about the person:\n"
@@ -259,13 +261,13 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
     client = OpenAI(api_key=api_key)
-    
+
     system = (
         "You are a meticulous social network analyst who converts raw Wikipedia content into structured JSON ego networks. "
         "Focus on identifying significant relationships in a person's life, including family members, colleagues, mentors, "
         "students, collaborators, friends, rivals, and other important connections."
     )
-    
+
     instructions = (
         "Analyze the provided Wikipedia content and extract an ego network for the subject. "
         "Include 10-25 significant connections/relationships. For each connection provide:\n"
@@ -312,7 +314,8 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
         raise RuntimeError(error_msg)
     elif response.status != "completed":
-        raise RuntimeError(f"Response has unexpected status: {response.status}")
+        raise RuntimeError(
+            f"Response has unexpected status: {response.status}")
 
     # Parse the structured output from the Responses API
     parsed = response.output_parsed
@@ -331,31 +334,31 @@ def enforce_metadata(
     """Ensure consistent metadata in the payload."""
     payload.setdefault("dataset", DATASET_NAME)
     payload["created_on"] = date.today().isoformat()
-    
+
     ego = payload.setdefault("ego", {})
     ego.setdefault("name", page_data.get("title"))
-    
+
     if page_data.get("fullurl"):
         ego.setdefault("wikipedia", page_data["fullurl"])
-    
+
     # Sort connections by start_year (nulls last), then by relationship strength
     connections = payload.get("connections", [])
-    
+
     def connection_sort_key(conn: Dict[str, Any]) -> tuple:
         start_year = conn.get("start_year")
         # Put connections with start_year first, sorted by year
         # Then those without, sorted by strength
         strength_order = {"strong": 0, "moderate": 1, "weak": 2}
         strength = strength_order.get(conn.get("strength", "").lower(), 3)
-        
+
         if start_year is not None:
             return (0, start_year, strength)
         else:
             return (1, 9999, strength)
-    
+
     connections.sort(key=connection_sort_key)
     payload["connections"] = connections
-    
+
     return payload
 
 
@@ -375,13 +378,13 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     """Update the persons register with ego network information."""
     # Use consistent path format: people/<person_id>/ego_network.json
     relative_file = f"people/{person_id}/ego_network.json"
-    
+
     register = {"people": []}
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-    
+
     people = register.setdefault("people", [])
-    
+
     # Find existing entry and add ego network reference
     for idx, existing in enumerate(people):
         if existing.get("id") == person_id:
@@ -397,7 +400,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
             "ego_network_size": len(payload.get("connections", [])),
             "wikipedia": payload.get("ego", {}).get("wikipedia"),
         })
-    
+
     people.sort(key=lambda item: item.get("name", ""))
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
     REGISTER_PATH.write_text(
@@ -419,7 +422,7 @@ def generate_ego_network(
     print(f"[1/6] Found article '{article_title}'.")
 
     person_id = slugify(article_title)
-    
+
     print(f"[2/6] Checking for existing life events dataset...")
     existing_dataset = load_existing_dataset(person_id)
     if existing_dataset:
@@ -441,14 +444,14 @@ def generate_ego_network(
 
     print(f"[6/6] Writing ego network for '{person_id}'...")
     file_path = write_ego_network(payload, person_id)
-    
+
     if update_registry:
         print("Updating persons register...")
         update_register(person_id, payload, file_path)
         print("Register update complete.")
     else:
         print("Register update skipped.")
-    
+
     return file_path
 
 
