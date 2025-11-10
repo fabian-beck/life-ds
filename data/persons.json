@@ -3,42 +3,44 @@
     {
       "id": "ada_lovelace",
       "name": "Ada_Lovelace",
-      "file": "people/ada_lovelace_life_events.json",
+      "file": "people/ada_lovelace/life_events.json",
       "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace",
       "summary": "Ada Lovelace was an English mathematician and writer known for her work on Charles Babbage's Analytical Engine, and is often considered the first computer programmer."
     },
     {
       "id": "alan_turing",
       "name": "Alan_Turing",
-      "file": "people/alan_turing_life_events.json",
+      "file": "people/alan_turing/life_events.json",
       "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing",
-      "summary": "English mathematician and computer science pioneer whose 1936 paper formalised computation via the Turing machine; key World War II cryptanalyst at Bletchley Park; postwar designer of the ACE computer; contributor to the philosophy of AI (Turing test) and mathematical biology (morphogenesis)."
+      "summary": "English mathematician and computer science pioneer whose 1936 paper formalised computation via the Turing machine; key World War II cryptanalyst at Bletchley Park; postwar designer of the ACE computer; contributor to the philosophy of AI (Turing test) and mathematical biology (morphogenesis).",
+      "ego_network_file": "people/alan_turing/ego_network.json",
+      "ego_network_size": 10
     },
     {
       "id": "emmy_noether",
       "name": "Emmy Noether",
-      "file": "people/emmy_noether_life_events.json",
+      "file": "people/emmy_noether/life_events.json",
       "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether",
       "summary": "Amalie Emmy Noether was a German mathematician who fundamentally transformed abstract algebra and proved Noether's theorems linking symmetries to conservation laws in physics. A leading figure at G\u00f6ttingen, she developed deep theories of rings, fields, and algebras, and later taught in the United States at Bryn Mawr College while conducting research at the Institute for Advanced Study."
     },
     {
       "id": "falco",
       "name": "Falco",
-      "file": "people/falco_life_events.json",
+      "file": "people/falco/life_events.json",
       "wikipedia": "https://en.wikipedia.org/wiki/Falco_(musician)",
       "summary": "Falco (born Johann \"Hans\" H\u00f6lzel; 19 February 1957 \u2013 6 February 1998) was an Austrian singer and songwriter. He first achieved European success with Der Kommissar (1981/82) and gained worldwide fame when Rock Me Amadeus topped the U.S. Billboard Hot 100 in 1986, the first and only German-language song to do so. His work blended pop, rock, and rap elements and produced further hits such as Vienna Calling, Jeanny, and Titanic."
     },
     {
       "id": "friedensreich_hundertwasser",
       "name": "Friedensreich_Hundertwasser",
-      "file": "people/friedensreich_hundertwasser_life_events.json",
+      "file": "people/friedensreich_hundertwasser/life_events.json",
       "wikipedia": "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
       "summary": "Friedrich Stowasser, better known as Friedensreich Regentag Dunkelbunt Hundertwasser, was an Austrian visual artist and architect noted for vivid colors, biomorphic forms, and ecological advocacy. He opposed straight lines and standardization, and later settled in the Far North of New Zealand, where he lived and worked for much of his life."
     },
     {
       "id": "henry_ii",
       "name": "Henry_II",
-      "file": "people/henry_ii_life_events.json",
+      "file": "people/henry_ii/life_events.json",
       "wikipedia": "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
       "summary": "Henry II (6 May 973 \u2013 13 July 1024), also known as Saint Henry, was Duke of Bavaria (from 995, as Henry IV), elected King of the Romans in 1002, anointed King of Italy in 1004, and crowned Holy Roman Emperor by Pope Benedict VIII in 1014. The last ruler of the Ottonian line, he strengthened imperial authority through close cooperation with the Church, founded the Diocese of Bamberg, campaigned against Boles\u0142aw I of Poland, intervened in Bohemia, and led multiple expeditions into Italy before dying childless in 1024."
     }
