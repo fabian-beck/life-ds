@@ -247,6 +247,7 @@
   $: if (datasetName !== lastDatasetName) {
     lastDatasetName = datasetName;
     lastViewportKey = "";
+    initialScrollDone = false; // Reset scroll flag when dataset changes
   }
 
   // Close date note when slide changes
@@ -256,8 +257,9 @@
   }
 
   let slidesContainer;
+  let initialScrollDone = false;
 
-  async function scrollToIndex(index) {
+  async function scrollToIndex(index, immediate = false) {
     if (!slidesContainer) return;
     const clamped = Math.min(Math.max(index, 0), totalPanels - 1);
     // wait for DOM to settle
@@ -266,7 +268,7 @@
     if (!clientWidth) return;
     slidesContainer.scrollTo({
       left: clamped * clientWidth,
-      behavior: "smooth",
+      behavior: immediate ? "auto" : "smooth",
     });
   }
 
@@ -852,6 +854,19 @@
     mapInstance.on("load", () => {
       mapReady = true;
       updateMapState(activeCoordinates, markerTrail);
+    });
+  }
+
+  // Handle initial scroll when component loads with a specific slide index
+  $: if (
+    !initialScrollDone &&
+    slidesContainer &&
+    totalPanels > 0 &&
+    activeIndex > 0
+  ) {
+    tick().then(() => {
+      scrollToIndex(activeIndex, true);
+      initialScrollDone = true;
     });
   }
 
