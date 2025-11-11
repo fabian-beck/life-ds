@@ -74,12 +74,6 @@
         }
       }
     }
-    if (
-      typeof raw.pattern_opacity === "number" &&
-      Number.isFinite(raw.pattern_opacity)
-    ) {
-      result.patternOpacity = clamp(raw.pattern_opacity, 0, 1);
-    }
     return Object.keys(result).length > 0 ? result : null;
   }
 
@@ -89,7 +83,6 @@
     background: "#0F172A",
     background_pattern_svg:
       '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" fill="#000000"/><path fill="#FFFFFF" d="M0 0h20v20H0zM40 40h20v20H40zM80 0h20v20H80zM120 40h20v20h-20zM0 80h20v20H0zM80 80h20v20H80zM40 120h20v20H40zM120 120h20v20h-20z"/></svg>',
-    pattern_opacity: 0.16,
   };
 
   const defaultStyle = (() => {
@@ -108,8 +101,6 @@
       backgroundPatternDataUrl:
         normalised.backgroundPatternDataUrl ??
         svgToDataUrl(defaultStyleBase.background_pattern_svg),
-      patternOpacity:
-        normalised.patternOpacity ?? defaultStyleBase.pattern_opacity,
     };
   })();
 

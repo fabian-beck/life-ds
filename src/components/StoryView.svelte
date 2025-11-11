@@ -164,7 +164,7 @@
     if (style.secondary) segments.push(`--story-secondary: ${style.secondary}`);
     if (style.backgroundPatternDataUrl) {
       segments.push(
-        `--story-pattern-image: url(\"${style.backgroundPatternDataUrl}\")`
+        `--story-pattern-image: url(${style.backgroundPatternDataUrl})`
       );
     }
     if (typeof style.patternOpacity === "number") {
@@ -1411,10 +1411,10 @@
     inset: 0;
     pointer-events: none;
     background-image: var(--story-pattern-image, none);
-    background-size: 260px 260px;
+    background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: var(--story-pattern-opacity, 0.16);
-    mix-blend-mode: soft-light;
+    opacity: var(--story-pattern-opacity, 0.35);
+    mix-blend-mode: overlay;
     z-index: 0;
   }
 
@@ -1686,22 +1686,22 @@
     position: absolute;
     inset: 0;
     background-image: var(--story-pattern-image, none);
-    background-size: 260px 260px;
+    background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: var(--story-pattern-opacity, 0.16);
-    mix-blend-mode: soft-light;
+    opacity: calc(var(--story-pattern-opacity, 0.35) * 0.8);
+    mix-blend-mode: overlay;
     mask-image: linear-gradient(
       160deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 25%,
-      rgba(0, 0, 0, 0.7) 50%,
+      rgba(0, 0, 0, 0.9) 25%,
+      rgba(0, 0, 0, 0.6) 50%,
       rgba(0, 0, 0, 0) 80%
     );
     -webkit-mask-image: linear-gradient(
       160deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 25%,
-      rgba(0, 0, 0, 0.7) 50%,
+      rgba(0, 0, 0, 0.9) 25%,
+      rgba(0, 0, 0, 0.6) 50%,
       rgba(0, 0, 0, 0) 80%
     );
     pointer-events: none;

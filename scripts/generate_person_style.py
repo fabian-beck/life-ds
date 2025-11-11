@@ -176,7 +176,8 @@ def sanitise_pattern_svg(svg: str) -> str:
                 if colour == "#FFFFFF":
                     white_element_present = True
             elif lowered in {"fill-opacity", "stroke-opacity", "opacity"}:
-                element.set(attr, clamp_opacity(value_text))
+                # Remove opacity attributes - opacity will be controlled globally
+                element.attrib.pop(attr, None)
             # Allow other SVG presentation attributes (geometry, linecap, linejoin, etc.)
             # These don't affect color validation
 
@@ -266,17 +267,17 @@ def load_dataset_context(person_id: str) -> Dict[str, Any]:
 def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
     details: list[str] = [
         "Design a cohesive dark-mode visual identity for the following person.",
-        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, pattern_opacity.",
+        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg.",
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
         "- background must remain dark (perceived luminance under 0.18).",
         "- primary and secondary should contrast well against the background and with each other.",
-        "- background_pattern_svg must be a 160x160 tileable SVG string that uses only black (#000000) and white (#FFFFFF) with optional opacity attributes.",
+        "- background_pattern_svg must be a 160x160 tileable SVG string that uses only black (#000000) and white (#FFFFFF).",
+        "- Do NOT use opacity, fill-opacity, or stroke-opacity attributes in the SVG. Use stroke-width variations instead for visual hierarchy.",
         "- Keep the SVG minimal, geometric, and suitable as a subtle texture when blended softly over the background.",
         "- The pattern should reflect the person's profession, activities, and key achievements with symbolic geometric motifs.",
         "- For example, a mathematician might inspire interlocking rings or tessellations; a physicist might suggest orbital arcs; a composer might use rhythmic staff lines.",
         "- Avoid gradients or colors beyond black and white in the SVG.",
-        "- pattern_opacity should be a float between 0.12 and 0.35 representing how strong the pattern should appear when overlaid.",
         "- Do not surround the SVG string with backticks or additional JSON structures.",
     ]
     details.append(
@@ -326,7 +327,6 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     secondary = payload.get("secondary")
     background = payload.get("background")
     pattern_svg = payload.get("background_pattern_svg")
-    pattern_opacity = payload.get("pattern_opacity")
 
     if not is_hex_color(primary):
         raise ValueError("primary must be a #RRGGBB hex color.")
@@ -338,18 +338,12 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError(
             "background_pattern_svg must be an SVG string containing '<svg'.")
 
-    opacity = 0.18
-    if isinstance(pattern_opacity, (int, float)):
-        opacity = float(pattern_opacity)
-    opacity = round(clamp(opacity, 0.12, 0.35), 3)
-
     compact = sanitise_pattern_svg(pattern_svg)
     return {
         "primary": primary.upper(),
         "secondary": secondary.upper(),
         "background": background.upper(),
         "background_pattern_svg": compact,
-        "pattern_opacity": opacity,
     }
 
 
