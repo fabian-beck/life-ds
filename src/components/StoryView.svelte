@@ -433,11 +433,49 @@
     }
   }
 
-  function togglePersonInfo(personKey) {
+  function togglePersonInfo(personKey, event) {
     if (visiblePersonInfo === personKey) {
       visiblePersonInfo = null;
     } else {
       visiblePersonInfo = personKey;
+      // Wait for DOM update to position tooltip
+      tick().then(() => {
+        const button = event?.target?.closest(".person-chip");
+        if (!button) return;
+
+        const tooltip = button.nextElementSibling;
+        if (!tooltip || !tooltip.classList.contains("person-info-tooltip"))
+          return;
+
+        const buttonRect = button.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const padding = 16; // Minimum padding from edge
+
+        // Check if tooltip would overflow on the right
+        const wouldOverflowRight =
+          buttonRect.left + tooltipRect.width > viewportWidth - padding;
+
+        // Check if tooltip would overflow on the left
+        const wouldOverflowLeft = buttonRect.left < padding;
+
+        if (wouldOverflowRight && !wouldOverflowLeft) {
+          // Align to right edge of button
+          tooltip.style.left = "auto";
+          tooltip.style.right = "0";
+          tooltip.style.transform = "none";
+        } else if (wouldOverflowLeft) {
+          // Align to left edge of button
+          tooltip.style.left = "0";
+          tooltip.style.right = "auto";
+          tooltip.style.transform = "none";
+        } else {
+          // Default position (left-aligned)
+          tooltip.style.left = "0";
+          tooltip.style.right = "auto";
+          tooltip.style.transform = "none";
+        }
+      });
     }
   }
 
@@ -446,8 +484,8 @@
       return [];
     }
 
-    const eventText = `${event?.title ?? ""} ${event?.description ?? ""}`
-      .toLowerCase();
+    const eventText =
+      `${event?.title ?? ""} ${event?.description ?? ""}`.toLowerCase();
     const eventYear = event?.date ? parseInt(event.date.substring(0, 4)) : null;
 
     return egoNetwork.connections
@@ -1179,8 +1217,8 @@
                               <button
                                 type="button"
                                 class="person-chip"
-                                on:click|stopPropagation={() =>
-                                  togglePersonInfo(personKey)}
+                                on:click|stopPropagation={(e) =>
+                                  togglePersonInfo(personKey, e)}
                                 aria-label={`Show information about ${person.person_name}`}
                                 aria-expanded={visiblePersonInfo === personKey}
                               >
@@ -2456,9 +2494,8 @@
     position: absolute;
     top: calc(100% + 0.5rem);
     left: 0;
-    right: auto;
     min-width: 280px;
-    max-width: 340px;
+    max-width: min(340px, 90vw);
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(148, 163, 184, 0.3);
@@ -2467,6 +2504,10 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     z-index: 10;
     animation: fadeInTooltip 0.2s ease;
+    transition:
+      left 0.2s ease,
+      right 0.2s ease,
+      transform 0.2s ease;
   }
 
   .tooltip-title {
