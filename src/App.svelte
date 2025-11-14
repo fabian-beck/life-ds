@@ -77,6 +77,9 @@
     if (typeof raw.heading_font === "string" && raw.heading_font.trim()) {
       result.headingFont = raw.heading_font.trim();
     }
+    if (typeof raw.body_font === "string" && raw.body_font.trim()) {
+      result.bodyFont = raw.body_font.trim();
+    }
     return Object.keys(result).length > 0 ? result : null;
   }
 
@@ -105,6 +108,7 @@
         normalised.backgroundPatternDataUrl ??
         svgToDataUrl(defaultStyleBase.background_pattern_svg),
       headingFont: normalised.headingFont ?? "Inter",
+      bodyFont: normalised.bodyFont ?? "Inter",
     };
   })();
 
@@ -144,6 +148,7 @@
         defaultStyle.backgroundPatternDataUrl,
       patternOpacity: override.patternOpacity ?? defaultStyle.patternOpacity,
       headingFont: override.headingFont ?? defaultStyle.headingFont,
+      bodyFont: override.bodyFont ?? defaultStyle.bodyFont,
     };
   }
 

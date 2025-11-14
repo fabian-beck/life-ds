@@ -29,6 +29,15 @@ HEADING_FONT_CHOICES = [
     "Archivo Black",
 ]
 
+BODY_FONT_CHOICES = [
+    "Lora",
+    "Source Serif 4",
+    "Inter",
+    "IBM Plex Sans",
+    "DM Sans",
+    "Manrope",
+]
+
 
 def slugify(value: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
@@ -275,7 +284,7 @@ def load_dataset_context(person_id: str) -> Dict[str, Any]:
 def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
     details: list[str] = [
         "Design a cohesive dark-mode visual identity for the following person.",
-        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, heading_font.",
+        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, heading_font, body_font.",
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
         "- background must remain dark (perceived luminance under 0.18).",
@@ -291,6 +300,11 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
             "- heading_font must be exactly one of: "
             + ", ".join(HEADING_FONT_CHOICES)
             + ". Choose whichever best reflects the person's tone (e.g., elegant serif for historical figures, geometric sans for scientists)."
+        ),
+        (
+            "- body_font must be exactly one of: "
+            + ", ".join(BODY_FONT_CHOICES)
+            + ". Choose a readable font that pairs well with the heading_font and suits the content tone."
         ),
     ]
     details.append(
@@ -341,6 +355,7 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     background = payload.get("background")
     pattern_svg = payload.get("background_pattern_svg")
     heading_font = payload.get("heading_font")
+    body_font = payload.get("body_font")
 
     if not is_hex_color(primary):
         raise ValueError("primary must be a #RRGGBB hex color.")
@@ -355,6 +370,10 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError(
             "heading_font must be one of: " + ", ".join(HEADING_FONT_CHOICES)
         )
+    if not isinstance(body_font, str) or body_font.strip() not in BODY_FONT_CHOICES:
+        raise ValueError(
+            "body_font must be one of: " + ", ".join(BODY_FONT_CHOICES)
+        )
 
     compact = sanitise_pattern_svg(pattern_svg)
     return {
@@ -363,6 +382,7 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         "background": background.upper(),
         "background_pattern_svg": compact,
         "heading_font": heading_font.strip(),
+        "body_font": body_font.strip(),
     }
 
 

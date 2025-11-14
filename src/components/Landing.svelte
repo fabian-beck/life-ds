@@ -57,6 +57,9 @@
     if (style.headingFont) {
       segments.push(`--card-heading-font: "${style.headingFont}", Inter, sans-serif`);
     }
+    if (style.bodyFont) {
+      segments.push(`--card-body-font: "${style.bodyFont}", Inter, sans-serif`);
+    }
     return segments.join("; ");
   }
 </script>
@@ -310,6 +313,7 @@
     gap: 0.45rem;
     font-size: 0.8rem;
     color: rgba(226, 232, 240, 0.72);
+    font-family: var(--card-body-font, Inter, sans-serif);
   }
 
   .card-meta .meta-separator {
@@ -325,6 +329,7 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    font-family: var(--card-body-font, Inter, sans-serif);
   }
 
   .card-summary.placeholder {
