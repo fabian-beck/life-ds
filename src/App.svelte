@@ -246,6 +246,20 @@
   $: dataset = personId ? (datasetMap[personId] ?? null) : null;
   $: egoNetwork = personId ? (egoNetworkMap[personId] ?? null) : null;
 
+  // Normalise a display name (underscore to space, collapse whitespace)
+  function displayName(value = "") {
+    if (typeof value !== "string") return "";
+    return value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  // Reactive page title: use current person's name if available, else generic.
+  $: currentTitlePerson = dataset?.person?.name
+    ? displayName(dataset.person.name)
+    : null;
+  $: document.title = currentTitlePerson
+    ? `Life Data Stories · ${currentTitlePerson}`
+    : "Life Data Stories";
+
   // Redirect to home if trying to view non-existent story
   $: if (storyMatch && !dataset && personId) {
     push("/");
