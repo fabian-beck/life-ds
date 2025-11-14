@@ -180,10 +180,14 @@
       segments.push(`--story-pattern-opacity: ${opacity}`);
     }
     if (style.headingFont) {
-      segments.push(`--story-heading-font: "${style.headingFont}", Inter, sans-serif`);
+      segments.push(
+        `--story-heading-font: "${style.headingFont}", Inter, sans-serif`
+      );
     }
     if (style.bodyFont) {
-      segments.push(`--story-body-font: "${style.bodyFont}", Inter, sans-serif`);
+      segments.push(
+        `--story-body-font: "${style.bodyFont}", Inter, sans-serif`
+      );
     }
     return segments.join("; ");
   }
@@ -1463,7 +1467,7 @@
     background-image: var(--story-pattern-image, none);
     background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: var(--story-pattern-opacity, 0.35);
+    opacity: calc(var(--story-pattern-opacity, 0.35) * 2.5);
     mix-blend-mode: overlay;
     z-index: 0;
   }
@@ -1736,28 +1740,38 @@
   .slide::after {
     content: "";
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     background-image: var(--story-pattern-image, none);
     background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: calc(var(--story-pattern-opacity, 0.35) * 0.8);
+    background-position: 0 0;
+    opacity: calc(var(--story-pattern-opacity, 0.35) * 2);
     mix-blend-mode: overlay;
     mask-image: linear-gradient(
-      160deg,
+      180deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.9) 25%,
-      rgba(0, 0, 0, 0.6) 50%,
-      rgba(0, 0, 0, 0) 80%
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.6) 45%,
+      rgba(0, 0, 0, 0.25) 60%,
+      rgba(0, 0, 0, 0.08) 72%,
+      rgba(0, 0, 0, 0) 85%
     );
     -webkit-mask-image: linear-gradient(
-      160deg,
+      180deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.9) 25%,
-      rgba(0, 0, 0, 0.6) 50%,
-      rgba(0, 0, 0, 0) 80%
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.6) 45%,
+      rgba(0, 0, 0, 0.25) 60%,
+      rgba(0, 0, 0, 0.08) 72%,
+      rgba(0, 0, 0, 0) 85%
     );
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
   }
 
   .slide > * {
@@ -1873,7 +1887,7 @@
     inset: auto 0 0;
     height: clamp(240px, 45vh, 340px);
     pointer-events: none;
-    z-index: 2;
+    z-index: 1;
     opacity: 1;
     transition: opacity 0.3s ease;
   }
@@ -2249,7 +2263,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    z-index: 1;
+    z-index: 4;
   }
 
   .image-thumbnail {

@@ -55,7 +55,9 @@
       segments.push(`--card-pattern-opacity: ${opacity}`);
     }
     if (style.headingFont) {
-      segments.push(`--card-heading-font: "${style.headingFont}", Inter, sans-serif`);
+      segments.push(
+        `--card-heading-font: "${style.headingFont}", Inter, sans-serif`
+      );
     }
     if (style.bodyFont) {
       segments.push(`--card-body-font: "${style.bodyFont}", Inter, sans-serif`);
