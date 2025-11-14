@@ -20,6 +20,14 @@ PEOPLE_DIR = DATA_DIR / "people"
 STYLES_PATH = DATA_DIR / "person_styles.json"
 REGISTER_PATH = DATA_DIR / "persons.json"
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")
+HEADING_FONT_CHOICES = [
+    "Playfair Display",
+    "DM Serif Display",
+    "Space Grotesk",
+    "IBM Plex Sans",
+    "Unbounded",
+    "Archivo Black",
+]
 
 
 def slugify(value: str) -> str:
@@ -267,7 +275,7 @@ def load_dataset_context(person_id: str) -> Dict[str, Any]:
 def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
     details: list[str] = [
         "Design a cohesive dark-mode visual identity for the following person.",
-        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg.",
+        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, heading_font.",
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
         "- background must remain dark (perceived luminance under 0.18).",
@@ -279,6 +287,11 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         "- For example, a mathematician might inspire interlocking rings or tessellations; a physicist might suggest orbital arcs; a composer might use rhythmic staff lines.",
         "- Avoid gradients or colors beyond black and white in the SVG.",
         "- Do not surround the SVG string with backticks or additional JSON structures.",
+        (
+            "- heading_font must be exactly one of: "
+            + ", ".join(HEADING_FONT_CHOICES)
+            + ". Choose whichever best reflects the person's tone (e.g., elegant serif for historical figures, geometric sans for scientists)."
+        ),
     ]
     details.append(
         f"Subject identifier: {person_id}\nRequested subject: {subject}")
@@ -327,6 +340,7 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     secondary = payload.get("secondary")
     background = payload.get("background")
     pattern_svg = payload.get("background_pattern_svg")
+    heading_font = payload.get("heading_font")
 
     if not is_hex_color(primary):
         raise ValueError("primary must be a #RRGGBB hex color.")
@@ -337,6 +351,10 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     if not isinstance(pattern_svg, str) or "<svg" not in pattern_svg:
         raise ValueError(
             "background_pattern_svg must be an SVG string containing '<svg'.")
+    if not isinstance(heading_font, str) or heading_font.strip() not in HEADING_FONT_CHOICES:
+        raise ValueError(
+            "heading_font must be one of: " + ", ".join(HEADING_FONT_CHOICES)
+        )
 
     compact = sanitise_pattern_svg(pattern_svg)
     return {
@@ -344,6 +362,7 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         "secondary": secondary.upper(),
         "background": background.upper(),
         "background_pattern_svg": compact,
+        "heading_font": heading_font.strip(),
     }
 
 

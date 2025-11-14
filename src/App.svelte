@@ -74,6 +74,9 @@
         }
       }
     }
+    if (typeof raw.heading_font === "string" && raw.heading_font.trim()) {
+      result.headingFont = raw.heading_font.trim();
+    }
     return Object.keys(result).length > 0 ? result : null;
   }
 
@@ -101,6 +104,7 @@
       backgroundPatternDataUrl:
         normalised.backgroundPatternDataUrl ??
         svgToDataUrl(defaultStyleBase.background_pattern_svg),
+      headingFont: normalised.headingFont ?? "Inter",
     };
   })();
 
@@ -139,6 +143,7 @@
         override.backgroundPatternDataUrl ??
         defaultStyle.backgroundPatternDataUrl,
       patternOpacity: override.patternOpacity ?? defaultStyle.patternOpacity,
+      headingFont: override.headingFont ?? defaultStyle.headingFont,
     };
   }
 

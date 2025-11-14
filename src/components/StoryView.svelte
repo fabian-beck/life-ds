@@ -179,6 +179,9 @@
       const opacity = clamp(style.patternOpacity, 0, 1);
       segments.push(`--story-pattern-opacity: ${opacity}`);
     }
+    if (style.headingFont) {
+      segments.push(`--story-heading-font: "${style.headingFont}", Inter, sans-serif`);
+    }
     return segments.join("; ");
   }
 
@@ -1641,6 +1644,7 @@
     font-size: 1.9rem;
     line-height: 1.1;
     color: var(--story-primary, #f8fafc);
+    font-family: var(--story-heading-font, Inter, sans-serif);
   }
 
   .summary {
@@ -1820,6 +1824,7 @@
     font-size: 1.5rem;
     line-height: 1.1;
     margin: 0;
+    font-family: var(--story-heading-font, Inter, sans-serif);
   }
 
   .overview-years {
@@ -2417,6 +2422,7 @@
     font-size: 1.35rem;
     line-height: 1.25;
     color: var(--story-primary, #f8fafc);
+    font-family: var(--story-heading-font, Inter, sans-serif);
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
