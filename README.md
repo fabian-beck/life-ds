@@ -76,3 +76,55 @@ The dataset generator now automatically includes relevant images for events when
 ```
 
 The UI displays these images as small thumbnails in the top-right corner of each event slide. Click on any thumbnail to view the enlarged image with its caption and a direct link to the Wikimedia Commons source page.
+
+## Basemap (Protomaps PMTiles)
+
+The story view uses a Protomaps vector basemap served directly from a PMTiles archive. By default it points at the public demo bucket for the v4 basemap:
+
+```
+https://demo-bucket.protomaps.com/v4.pmtiles
+```
+
+If that source ever fails or you prefer a different build, you can override both the primary and fallback URLs via Vite environment variables. The built-in fallback (used when the primary 404s) remains the archived public dataset:
+
+```
+https://protomaps.github.io/tiles/v3/20240820.pmtiles
+```
+
+Environment variables:
+
+| Variable                               | Purpose                                                     |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `VITE_PROTOMAPS_PM_TILES_URL`          | Primary PMTiles archive (daily build or custom hosted file) |
+| `VITE_PROTOMAPS_PM_TILES_FALLBACK_URL` | Optional explicit fallback if the primary 404s              |
+
+Create a `.env` file in the project root (or `.env.local`) to force a specific daily build and set a custom fallback:
+
+```env
+VITE_PROTOMAPS_PM_TILES_URL=https://build.protomaps.com/20251114.pmtiles?download=1
+VITE_PROTOMAPS_PM_TILES_FALLBACK_URL=https://protomaps.github.io/tiles/v3/20240820.pmtiles
+```
+
+If neither resolves (network error or 404), the map quietly disables itself and shows a small message. This prevents runtime errors from the PMTiles protocol while attempting to read headers.
+
+### Notes on Hosting Your Own
+
+If you host a custom PMTiles file:
+
+1. Serve it with HTTP range request support (`Accept-Ranges: bytes`).
+2. Add `Access-Control-Allow-Origin: *` (or specific origin) so browsers can fetch segments cross-origin.
+3. Prefer CDN or static object storage (S3, Cloudflare R2, etc.) for latency & caching.
+4. Keep filenames stable; if you rotate archives, update the env var.
+
+### Forcing a Specific Daily Build (Optional)
+
+Daily builds live at `https://build.protomaps.com/<YYYYMMDD>.pmtiles?download=1`.
+
+1. Visit the build site and copy the desired dated URL.
+2. Set `VITE_PROTOMAPS_PM_TILES_URL` in `.env`.
+3. (Optional) Point `VITE_PROTOMAPS_PM_TILES_FALLBACK_URL` at a second source (or leave the default archived dataset).
+4. Restart the dev server (`npm run dev`). The component issues a `HEAD`; if reachable it uses your custom archive.
+
+### Attribution
+
+Attribution for Protomaps and OpenStreetMap is included in the vector source definition and displayed according to the license terms.

@@ -43,10 +43,18 @@
   let visiblePersonInfo = null; // Track which person's info is visible
 
   const DEFAULT_COORDINATES = null;
-  const DEFAULT_PM_TILES_URL =
-    "https://build.protomaps.com/20251105.pmtiles?download=1";
-  const PMTILES_BUILD_URL =
+  // Stable default basemap provided by Protomaps demo bucket (v4). Users can
+  // override via VITE_PROTOMAPS_PM_TILES_URL if they prefer a daily build or
+  // self-hosted archive.
+  const DEFAULT_PM_TILES_URL = "https://demo-bucket.protomaps.com/v4.pmtiles";
+  const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
+  const FALLBACK_PM_TILES_URL =
+    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
+    "https://protomaps.github.io/tiles/v3/20240820.pmtiles";
+  let pmtilesUrl = PRIMARY_PM_TILES_URL;
+  let basemapError = null; // non-null if we failed to resolve any tiles source
+  let basemapResolved = false;
   let mapContainer;
   let mapInstance = null;
   let mapReady = false;
@@ -681,8 +689,36 @@
     img.style.webkitMaskImage = maskImage;
   }
 
+  async function resolvePmtilesUrl() {
+    if (basemapResolved) return pmtilesUrl;
+    const candidates = [PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(
+      (url, idx, arr) => Boolean(url) && arr.indexOf(url) === idx
+    );
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url, { method: "HEAD" });
+        if (res.ok) {
+          pmtilesUrl = url;
+          basemapError = null;
+          basemapResolved = true;
+          basemapStyleCache = null; // force rebuild style with final URL
+          return pmtilesUrl;
+        }
+      } catch (_err) {
+        // ignore and continue
+      }
+    }
+    basemapError = "Basemap unavailable (PMTiles 404). Map disabled.";
+    basemapResolved = true;
+    return null;
+  }
+
   function createBaseStyle() {
-    if (!basemapStyleCache) {
+    if (basemapError) return null;
+    if (
+      !basemapStyleCache ||
+      !basemapStyleCache.sources?.protomaps?.url?.includes(pmtilesUrl)
+    ) {
       basemapStyleCache = {
         version: 8,
         glyphs:
@@ -691,7 +727,7 @@
         sources: {
           protomaps: {
             type: "vector",
-            url: `pmtiles://${PMTILES_BUILD_URL}`,
+            url: `pmtiles://${pmtilesUrl}`,
             attribution:
               '<a href="https://protomaps.com">Protomaps</a> · <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
           },
@@ -705,9 +741,8 @@
           if (typeof id !== "string") return true;
           const lower = id.toLowerCase();
           if (lower.includes("label")) return false;
-          if (lower.includes("boundary") || lower.includes("border")) {
+          if (lower.includes("boundary") || lower.includes("border"))
             return false;
-          }
           return true;
         }),
       };
@@ -832,13 +867,19 @@
     if (mapInstance || !hasMapData) return;
     await tick();
     if (mapInstance || !mapContainer) return;
+    await resolvePmtilesUrl();
+    const style = createBaseStyle();
+    if (!style) {
+      // abort map creation if basemap not available
+      return;
+    }
     if (!pmtilesProtocol) {
       pmtilesProtocol = new Protocol();
       maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
     }
     mapInstance = new maplibregl.Map({
       container: mapContainer,
-      style: createBaseStyle(),
+      style,
       center: [0, 0],
       zoom: 1.0,
       attributionControl: false,
@@ -1292,6 +1333,9 @@
         <div class="map-gradient" />
         <div class="map-frame">
           <div class="map-container" bind:this={mapContainer} />
+          {#if basemapError}
+            <div class="map-error" role="note">{basemapError}</div>
+          {/if}
         </div>
       </div>
     {/if}
