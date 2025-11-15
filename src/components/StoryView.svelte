@@ -1351,6 +1351,7 @@
     {hasMultipleEvents}
     {indicatorProgress}
     {indicatorIcons}
+    {eventSlides}
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}

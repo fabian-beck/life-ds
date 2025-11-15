@@ -1,5 +1,11 @@
 <script>
-  import { mdiChevronLeft, mdiChevronRight, mdiHome } from "@mdi/js";
+  import {
+    mdiChevronLeft,
+    mdiChevronRight,
+    mdiHome,
+    mdiChevronUp,
+    mdiChevronDown,
+  } from "@mdi/js";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -7,24 +13,48 @@
   export let hasMultipleEvents = false;
   export let indicatorProgress = 0;
   export let indicatorIcons = [];
+  export let eventSlides = []; // Array of event objects with titles
   export let onPrevSlide = () => {};
   export let onNextSlide = () => {};
   export let onGoToEvent = () => {};
   export let onScrollToIndex = () => {};
 
+  let isExpanded = false;
+
   $: totalPanels = totalSlides > 0 ? totalSlides + 1 : 1; // +1 for overview slide
   $: hasEvents = totalSlides > 0;
+
+  function toggleExpanded() {
+    isExpanded = !isExpanded;
+  }
 </script>
 
 {#if hasEvents}
   <div
     class="indicator"
+    class:expanded={isExpanded}
     role="group"
     aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
     style={`--indicator-progress: ${indicatorProgress}`}
   >
+    <button
+      type="button"
+      class="expand-toggle"
+      on:click={toggleExpanded}
+      aria-label={isExpanded ? "Collapse timeline" : "Expand timeline"}
+      aria-expanded={isExpanded}
+    >
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        role="presentation"
+        aria-hidden="true"
+      >
+        <path d={isExpanded ? mdiChevronDown : mdiChevronUp} />
+      </svg>
+    </button>
     <div class="indicator-content">
-      {#if totalPanels > 1}
+      {#if totalPanels > 1 && !isExpanded}
         <div class="indicator-nav">
           <button
             type="button"
@@ -60,39 +90,30 @@
           </button>
         </div>
       {/if}
-      <div class="indicator-track" class:single={!hasMultipleEvents}>
-        <div class="dots-container">
-          {#if activeIndex > 0}
+      <div
+        class="indicator-track"
+        class:single={!hasMultipleEvents}
+        class:expanded={isExpanded}
+      >
+        <div class="dots-container" class:expanded={isExpanded}>
+          {#if activeIndex > 0 && !isExpanded}
             <span
               class="indicator-highlight"
               class:single={!hasMultipleEvents}
             />
           {/if}
-          <button
-            type="button"
-            class="dot square"
-            class:active={activeIndex === 0}
-            on:click={() => onScrollToIndex(0)}
-            aria-label="Show overview"
-            aria-current={activeIndex === 0 ? "true" : undefined}
+          <div
+            class="dot-wrapper home-dot"
+            class:expanded={isExpanded}
+            style={`--dot-x-pos: 0%`}
           >
-            <svg
-              class="dot-icon"
-              viewBox="0 0 24 24"
-              role="img"
-              aria-hidden="true"
-            >
-              <path d={mdiHome} />
-            </svg>
-          </button>
-          {#each Array(totalSlides) as _, idx}
             <button
               type="button"
-              class="dot"
-              class:active={idx === activeEventIndex}
-              on:click={() => onGoToEvent(idx)}
-              aria-label={`Show event ${idx + 1} of ${totalSlides}`}
-              aria-current={idx === activeEventIndex ? "true" : undefined}
+              class="dot square"
+              class:active={activeIndex === 0}
+              on:click={() => onScrollToIndex(0)}
+              aria-label="Show overview"
+              aria-current={activeIndex === 0 ? "true" : undefined}
             >
               <svg
                 class="dot-icon"
@@ -100,9 +121,53 @@
                 role="img"
                 aria-hidden="true"
               >
-                <path d={indicatorIcons[idx]} />
+                <path d={mdiHome} />
               </svg>
             </button>
+          </div>
+          {#each Array(totalSlides) as _, idx}
+            {@const eventTitle = eventSlides[idx]?.title || `Event ${idx + 1}`}
+            {@const eventYear = eventSlides[idx]?.date
+              ? eventSlides[idx].date.split("-")[0]
+              : ""}
+            {@const isFirstHalf = idx < totalSlides / 2}
+            {@const totalItems = totalSlides + 1}
+            {@const xPos = ((idx + 1) / (totalItems - 1)) * 100}
+            <div
+              class="dot-wrapper"
+              class:expanded={isExpanded}
+              style={`--dot-index: ${idx}; --total-dots: ${totalSlides}; --dot-x-pos: ${xPos}%`}
+            >
+              {#if isExpanded && eventYear}
+                <span class="event-year">{eventYear}</span>
+              {/if}
+              <button
+                type="button"
+                class="dot"
+                class:active={idx === activeEventIndex}
+                on:click={() => onGoToEvent(idx)}
+                aria-label={`Show event ${idx + 1} of ${totalSlides}`}
+                aria-current={idx === activeEventIndex ? "true" : undefined}
+              >
+                <svg
+                  class="dot-icon"
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-hidden="true"
+                >
+                  <path d={indicatorIcons[idx]} />
+                </svg>
+              </button>
+              {#if isExpanded}
+                <span
+                  class="event-label"
+                  class:left={!isFirstHalf}
+                  class:right={isFirstHalf}
+                >
+                  {eventTitle}
+                </span>
+              {/if}
+            </div>
           {/each}
         </div>
       </div>
@@ -115,11 +180,14 @@
     --dot-size: clamp(1.25rem, 3vw, 1.6rem);
     --dot-gap: 0rem;
     position: fixed;
+    top: auto;
     bottom: 1.25rem;
     left: 50%;
     transform: translateX(-50%);
     width: min(96vw, 1020px);
+    height: auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 0;
@@ -127,9 +195,52 @@
     z-index: 5;
   }
 
-  /* Keep the indicator visually present but allow underlying slides to receive
-     pointer events (so dragging/panning works anywhere). Only the nav buttons
-     inside the indicator should accept pointer events. */
+  .indicator.expanded {
+    top: 1.25rem;
+    bottom: 1.25rem;
+    height: auto;
+    transition:
+      top 1s cubic-bezier(0.22, 1, 0.36, 1),
+      bottom 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .expand-toggle {
+    pointer-events: auto;
+    position: absolute;
+    top: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.35));
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(6px);
+    color: var(--story-primary, #e2e8f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      top 1s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+  }
+
+  .indicator.expanded .expand-toggle {
+    top: 0.5rem;
+  }
+
+  .expand-toggle:hover,
+  .expand-toggle:focus {
+    background: rgba(15, 23, 42, 0.95);
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
+    transform: translateX(-50%) scale(1.05);
+    outline: none;
+  }
+
   .indicator-content {
     pointer-events: auto;
     display: flex;
@@ -138,6 +249,15 @@
     justify-content: center;
     gap: 0.75rem;
     width: 100%;
+    height: 100%;
+    transition:
+      gap 1s cubic-bezier(0.22, 1, 0.36, 1),
+      padding-top 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .indicator.expanded .indicator-content {
+    justify-content: flex-start;
+    padding-top: 4rem;
   }
 
   .indicator-nav {
@@ -147,6 +267,12 @@
     justify-content: space-between;
     width: 100%;
     gap: 1.25rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .indicator.expanded .indicator-nav {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .indicator-track {
@@ -157,11 +283,55 @@
     justify-content: center;
     width: 100%;
     padding: 0.65rem 0.75rem;
-    border-radius: 9999px;
+    border-radius: 1.5rem;
     background: rgba(15, 23, 42, 0.65);
     backdrop-filter: blur(6px);
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
     border: 1px solid rgba(148, 163, 184, 0.2);
+    transition:
+      padding 1s cubic-bezier(0.22, 1, 0.36, 1),
+      background 1s cubic-bezier(0.22, 1, 0.36, 1),
+      height 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .indicator-track.expanded {
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.85);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .indicator-track.expanded::before,
+  .indicator-track.expanded::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1rem;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .indicator-track.expanded::before {
+    left: 0;
+    background: linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.85) 0%,
+      rgba(15, 23, 42, 0.6) 40%,
+      transparent 100%
+    );
+  }
+
+  .indicator-track.expanded::after {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      rgba(15, 23, 42, 0.85) 0%,
+      rgba(15, 23, 42, 0.6) 40%,
+      transparent 100%
+    );
   }
 
   .indicator-track.single {
@@ -177,6 +347,48 @@
     justify-content: space-between;
     width: 100%;
     max-width: min(90vw, 860px);
+    transition:
+      flex-direction 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      gap 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      justify-content 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dots-container.expanded {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .dot-wrapper {
+    display: contents;
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dot-wrapper.home-dot.expanded {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: var(--dot-x-pos, 0);
+    top: 0;
+    transform: translateX(calc(var(--dot-size) / -2));
+  }
+
+  .dot-wrapper.expanded {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: auto;
+    position: absolute;
+    left: var(--dot-x-pos, 0);
+    top: calc((100% / (var(--total-dots) + 1)) * (var(--dot-index) + 1));
+    transform: translate(calc(var(--dot-size) / -2), -50%);
+    transition:
+      top 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      left 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.8s ease;
   }
 
   .nav-btn {
@@ -230,9 +442,14 @@
       translateY(-50%);
     transition:
       transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 0.3s ease;
+      background-color 0.3s ease,
+      opacity 0.3s ease;
     z-index: 0;
     pointer-events: none;
+  }
+
+  .indicator.expanded .indicator-highlight {
+    opacity: 0;
   }
 
   .indicator-highlight.single {
@@ -286,6 +503,53 @@
   .dot:focus-visible {
     outline: 2px solid var(--story-secondary, #38bdf8);
     outline-offset: 2px;
+  }
+
+  .event-label {
+    font-size: 0.8rem;
+    color: rgba(226, 232, 240, 0.95);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.9s;
+    pointer-events: none;
+    font-weight: 500;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+  }
+
+  .dot-wrapper.expanded .event-label {
+    opacity: 1;
+  }
+
+  .event-label.right {
+    left: calc(100% + 0.75rem);
+    transform-origin: left center;
+  }
+
+  .event-label.left {
+    right: calc(100% + 0.75rem);
+    transform-origin: right center;
+    text-align: right;
+  }
+
+  .event-year {
+    position: absolute;
+    top: calc(var(--dot-size) * -0.75);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: rgba(148, 163, 184, 0.85);
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.9s;
+    pointer-events: none;
+  }
+
+  .dot-wrapper.expanded .event-year {
+    opacity: 1;
   }
 
   .icon {
