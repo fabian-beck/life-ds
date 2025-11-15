@@ -175,10 +175,6 @@
         `--story-pattern-image: url(${style.backgroundPatternDataUrl})`
       );
     }
-    if (typeof style.patternOpacity === "number") {
-      const opacity = clamp(style.patternOpacity, 0, 1);
-      segments.push(`--story-pattern-opacity: ${opacity}`);
-    }
     if (style.headingFont) {
       segments.push(
         `--story-heading-font: "${style.headingFont}", Inter, sans-serif`
@@ -1467,7 +1463,7 @@
     background-image: var(--story-pattern-image, none);
     background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: calc(var(--story-pattern-opacity, 0.35) * 2.5);
+    opacity: 0.35;
     mix-blend-mode: overlay;
     z-index: 0;
   }
@@ -1750,25 +1746,18 @@
     background-size: 200px 200px;
     background-repeat: repeat;
     background-position: 0 0;
-    opacity: calc(var(--story-pattern-opacity, 0.35) * 2);
     mix-blend-mode: overlay;
     mask-image: linear-gradient(
       180deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 25%,
-      rgba(0, 0, 0, 0.6) 45%,
-      rgba(0, 0, 0, 0.25) 60%,
-      rgba(0, 0, 0, 0.08) 72%,
-      rgba(0, 0, 0, 0) 85%
+      rgba(0, 0, 0, 1) 40%,
+      rgba(0, 0, 0, 0) 70%
     );
     -webkit-mask-image: linear-gradient(
       180deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 25%,
-      rgba(0, 0, 0, 0.6) 45%,
-      rgba(0, 0, 0, 0.25) 60%,
-      rgba(0, 0, 0, 0.08) 72%,
-      rgba(0, 0, 0, 0) 85%
+      rgba(0, 0, 0, 1) 40%,
+      rgba(0, 0, 0, 0) 70%
     );
     pointer-events: none;
     z-index: 2;
@@ -1902,12 +1891,12 @@
     top: -70px;
     left: 0;
     right: 0;
-    height: 160px;
+    height: 200px;
     background: linear-gradient(
-      177deg,
-      rgba(var(--story-bg-rgb, 15, 23, 42)) 67%,
-      rgba(var(--story-bg-rgb, 15, 23, 42), 0.2) 85%,
-      rgba(var(--story-bg-rgb, 15, 23, 42), 0) 90%,
+      178deg,
+      rgba(var(--story-bg-rgb, 15, 23, 42)) 60%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0.2) 70%,
+      rgba(var(--story-bg-rgb, 15, 23, 42), 0) 80%,
       transparent 100%
     );
     z-index: 2;
