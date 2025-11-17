@@ -1592,7 +1592,7 @@
     gap: 1.25rem;
     background-color: rgb(var(--story-bg-rgb, 15, 23, 42));
     border-right: 1px solid rgba(148, 163, 184, 0.12);
-    overflow: hidden;
+    overflow: visible;
   }
 
   .slides-wrapper.map-enabled .slide:not(.overview) {

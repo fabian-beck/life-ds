@@ -28,45 +28,30 @@
     const buttonRect = buttonElement.getBoundingClientRect();
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const padding = 16;
+    const offset = 8;
 
-    let boundaryRect;
-    if (containerSelector) {
-      const container = document.querySelector(containerSelector);
-      boundaryRect = container?.getBoundingClientRect();
-    }
+    // Always position above the button to avoid timeline overlay at bottom
+    tooltipElement.style.top = `${buttonRect.top - tooltipRect.height - offset}px`;
 
-    if (!boundaryRect) {
-      // Use viewport as boundary
-      boundaryRect = {
-        left: 0,
-        right: window.innerWidth,
-        width: window.innerWidth,
-      };
-    }
+    // Position horizontally
+    let leftPos = buttonRect.left;
 
     // Check if tooltip would overflow on the right
     const wouldOverflowRight =
-      buttonRect.left + tooltipRect.width > boundaryRect.right - padding;
+      leftPos + tooltipRect.width > window.innerWidth - padding;
 
     // Check if tooltip would overflow on the left
-    const wouldOverflowLeft = buttonRect.left - boundaryRect.left < padding;
+    const wouldOverflowLeft = leftPos < padding;
 
     if (wouldOverflowRight && !wouldOverflowLeft) {
       // Align to right edge of button
-      tooltipElement.style.left = "auto";
-      tooltipElement.style.right = "0";
-      tooltipElement.style.transform = "none";
+      leftPos = buttonRect.right - tooltipRect.width;
     } else if (wouldOverflowLeft) {
-      // Align to left edge of button
-      tooltipElement.style.left = "0";
-      tooltipElement.style.right = "auto";
-      tooltipElement.style.transform = "none";
-    } else {
-      // Default position (left-aligned)
-      tooltipElement.style.left = "0";
-      tooltipElement.style.right = "auto";
-      tooltipElement.style.transform = "none";
+      // Align to left boundary
+      leftPos = padding;
     }
+
+    tooltipElement.style.left = `${leftPos}px`;
   }
 
   $: isExpanded = visiblePersonInfo === personKey;
@@ -187,9 +172,7 @@
   }
 
   .person-info-tooltip {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 0;
+    position: fixed;
     min-width: 280px;
     max-width: min(340px, 90vw);
     background: rgba(15, 23, 42, 0.95);
@@ -198,12 +181,8 @@
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    z-index: 10;
+    z-index: 10000;
     animation: fadeInTooltip 0.2s ease;
-    transition:
-      left 0.2s ease,
-      right 0.2s ease,
-      transform 0.2s ease;
   }
 
   @keyframes fadeInTooltip {
