@@ -1911,6 +1911,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    position: relative;
+    z-index: 4;
   }
 
   .event-images {
@@ -1920,7 +1922,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    z-index: 4;
+    z-index: 3;
   }
 
   .image-thumbnail {
@@ -2016,6 +2018,9 @@
     font-size: 0.9rem;
     color: var(--story-secondary, #38bdf8);
     font-weight: 600;
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .date-wrapper {
@@ -2091,6 +2096,9 @@
     margin: 0;
     font-size: 0.85rem;
     color: rgba(148, 163, 184, 0.85);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   h2 {
@@ -2109,6 +2117,9 @@
     font-size: 1rem;
     color: #e2e8f0;
     font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .details {
@@ -2120,6 +2131,9 @@
     gap: 0.75rem;
     font-size: 0.85rem;
     font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .details li {
