@@ -102,13 +102,13 @@
               {#if entry.lifespan || (entry.primaryRoles?.length ?? 0) > 0}
                 <p class="card-meta">
                   {#if entry.lifespan}
-                    <span>{entry.lifespan}</span>
+                    <span class="meta-years">{entry.lifespan}</span>
                   {/if}
                   {#if entry.lifespan && (entry.primaryRoles?.length ?? 0) > 0}
                     <span class="meta-separator" aria-hidden="true">·</span>
                   {/if}
                   {#if (entry.primaryRoles?.length ?? 0) > 0}
-                    <span>{entry.primaryRoles.join(" · ")}</span>
+                    <span class="meta-roles">{entry.primaryRoles.join(" · ")}</span>
                   {/if}
                 </p>
               {/if}
@@ -223,8 +223,8 @@
     background-image: var(--card-pattern-image, none);
     background-size: 220px 220px;
     background-repeat: repeat;
-    opacity: var(--card-pattern-opacity, 0.18);
-    mix-blend-mode: soft-light;
+    opacity: var(--card-pattern-opacity, 0.35);
+    mix-blend-mode: overlay;
   }
 
   .person-card::after {
@@ -314,12 +314,22 @@
     flex-wrap: wrap;
     gap: 0.45rem;
     font-size: 0.8rem;
-    color: rgba(226, 232, 240, 0.72);
+    color: rgba(148, 163, 184, 0.85);
     font-family: var(--card-body-font, Inter, sans-serif);
   }
 
   .card-meta .meta-separator {
     color: rgba(148, 163, 184, 0.65);
+  }
+
+  .card-meta .meta-years {
+    color: var(--card-secondary, rgba(148, 163, 184, 0.85));
+    font-weight: 500;
+  }
+
+  .card-meta .meta-roles {
+    color: var(--card-secondary, rgba(148, 163, 184, 0.85));
+    text-transform: capitalize;
   }
 
   .card-summary {
@@ -347,9 +357,9 @@
     align-self: flex-start;
     padding: 0.45rem 1rem;
     border-radius: 999px;
-    border: 1px solid var(--card-secondary, rgba(56, 189, 248, 0.5));
-    background: rgba(56, 189, 248, 0.16);
-    color: var(--card-secondary, #38bdf8);
+    border: 1px solid var(--card-primary, rgba(148, 163, 184, 0.3));
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--card-primary, #e2e8f0);
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -363,9 +373,9 @@
 
   .card-action:hover,
   .card-action:focus {
-    background: var(--card-secondary, #38bdf8);
-    border-color: var(--card-secondary, #38bdf8);
-    color: #0f172a;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--card-primary, rgba(148, 163, 184, 0.6));
+    color: var(--card-primary, #f8fafc);
     transform: translateY(-1px);
     outline: none;
   }
@@ -374,7 +384,7 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.75rem;
-    color: var(--card-secondary, #38bdf8);
+    color: var(--card-secondary, rgba(56, 189, 248, 0.9));
     margin: 0;
   }
 
