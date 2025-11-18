@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(curl:*)",
+      "Bash(pmtiles --version)",
+      "Bash(./pmtiles.exe --version)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

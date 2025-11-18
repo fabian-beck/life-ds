@@ -45,15 +45,13 @@
   let showNetworkModal = false; // Track if network modal is open
 
   const DEFAULT_COORDINATES = null;
-  // Stable default basemap provided by Protomaps demo bucket (v4). Users can
-  // override via VITE_PROTOMAPS_PM_TILES_URL if they prefer a daily build or
-  // self-hosted archive.
-  const DEFAULT_PM_TILES_URL = "https://demo-bucket.protomaps.com/v4.pmtiles";
+  // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
+  // Users can override via VITE_PROTOMAPS_PM_TILES_URL environment variable.
+  const DEFAULT_PM_TILES_URL = "/basemap.pmtiles";
   const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
-    "https://protomaps.github.io/tiles/v3/20240820.pmtiles";
+    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ?? DEFAULT_PM_TILES_URL;
   let pmtilesUrl = PRIMARY_PM_TILES_URL;
   let basemapError = null; // non-null if we failed to resolve any tiles source
   let basemapResolved = false;
