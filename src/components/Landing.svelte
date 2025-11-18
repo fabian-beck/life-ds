@@ -80,7 +80,15 @@
       {#each entries as entry (entry.id)}
         {@const summary = summaryFor(entry)}
         {@const style = entry.style ?? getStyle(entry.id)}
-        <article class="person-card" style={cardStyleVars(style)}>
+        <article
+          class="person-card"
+          style={cardStyleVars(style)}
+          on:click={() => handleSelect(entry.id)}
+          on:keydown={(e) => (e.key === "Enter" || e.key === " ") && handleSelect(entry.id)}
+          role="button"
+          tabindex="0"
+          aria-label={`Open life story for ${displayName(entry.name)}`}
+        >
           <figure class="person-thumb">
             {#if entry?.portrait?.image}
               <img
@@ -99,17 +107,14 @@
           <div class="card-body">
             <div class="card-header">
               <h2>{displayName(entry.name)}</h2>
-              {#if entry.lifespan || (entry.primaryRoles?.length ?? 0) > 0}
+              {#if entry.lifespan}
                 <p class="card-meta">
-                  {#if entry.lifespan}
-                    <span class="meta-years">{entry.lifespan}</span>
-                  {/if}
-                  {#if entry.lifespan && (entry.primaryRoles?.length ?? 0) > 0}
-                    <span class="meta-separator" aria-hidden="true">·</span>
-                  {/if}
-                  {#if (entry.primaryRoles?.length ?? 0) > 0}
-                    <span class="meta-roles">{entry.primaryRoles.join(" · ")}</span>
-                  {/if}
+                  <span class="meta-years">{entry.lifespan}</span>
+                </p>
+              {/if}
+              {#if (entry.primaryRoles?.length ?? 0) > 0}
+                <p class="card-meta">
+                  <span class="meta-roles">{entry.primaryRoles.join(" · ")}</span>
                 </p>
               {/if}
             </div>
@@ -120,16 +125,6 @@
                 A summary is not available yet, but the timeline is ready.
               </p>
             {/if}
-            <div class="card-footer">
-              <button
-                type="button"
-                class="card-action"
-                on:click={() => handleSelect(entry.id)}
-                aria-label={`Open life story for ${displayName(entry.name)}`}
-              >
-                View story
-              </button>
-            </div>
           </div>
         </article>
       {/each}
@@ -207,6 +202,7 @@
     overflow: hidden;
     color: #e2e8f0;
     isolation: isolate;
+    cursor: pointer;
   }
 
   .person-card::before,
@@ -347,37 +343,6 @@
   .card-summary.placeholder {
     color: #94a3b8;
     font-style: italic;
-  }
-
-  .card-footer {
-    margin-top: auto;
-  }
-
-  .card-action {
-    align-self: flex-start;
-    padding: 0.45rem 1rem;
-    border-radius: 999px;
-    border: 1px solid var(--card-primary, rgba(148, 163, 184, 0.3));
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--card-primary, #e2e8f0);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .card-action:hover,
-  .card-action:focus {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--card-primary, rgba(148, 163, 184, 0.6));
-    color: var(--card-primary, #f8fafc);
-    transform: translateY(-1px);
-    outline: none;
   }
 
   .eyebrow {
