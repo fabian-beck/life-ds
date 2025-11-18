@@ -1562,7 +1562,7 @@
     position: relative;
     min-height: 0;
     height: calc(100vh - var(--header-height, 0px));
-    height: calc(100dvh - var(--header-height, 0px));
+    height: calc(100dvh - var(--header-height, 0px) - env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
   }

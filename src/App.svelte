@@ -327,6 +327,7 @@
 <style>
   :global(body) {
     overscroll-behavior: contain;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   :global(:root) {
