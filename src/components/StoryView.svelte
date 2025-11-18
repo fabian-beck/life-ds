@@ -1336,6 +1336,7 @@
     color: #e2e8f0;
     isolation: isolate;
     min-height: 100vh;
+    min-height: 100dvh;
   }
 
   .story-view::before {
@@ -1561,6 +1562,7 @@
     position: relative;
     min-height: 0;
     height: calc(100vh - var(--header-height, 0px));
+    height: calc(100dvh - var(--header-height, 0px));
     display: flex;
     flex-direction: column;
   }

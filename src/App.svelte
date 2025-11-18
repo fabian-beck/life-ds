@@ -335,6 +335,7 @@
 
   .shell {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     color: #e2e8f0;
