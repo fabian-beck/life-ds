@@ -932,84 +932,7 @@
   on:wheel={handleWheel}
   on:click={handleClickOutside}
 >
-  <header class="masthead" class:compact={true}>
-    {#if hasRegistryEntries}
-      <div class="toolbar">
-        <button
-          type="button"
-          class="close-story"
-          on:click={handleClose}
-          aria-label="Close story and return to the landing page"
-        >
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-            role="presentation"
-            aria-hidden="true"
-          >
-            <path d={mdiClose} />
-          </svg>
-          <span class="btn-label">Close story</span>
-        </button>
-      </div>
-    {/if}
-    <div class="masthead-content">
-      <div class="full-info">
-        <p class="eyebrow">Life Data Stories</p>
-        <h1>{personName}</h1>
-        {#if hasPersonSummary}
-          <p class="summary">{personSummary}</p>
-        {:else if hasDataset}
-          <p class="summary placeholder">
-            A summary is not available, but key life events are listed below.
-          </p>
-        {/if}
-        <div class="meta">
-          {#if yearsLabel}
-            <span>{yearsLabel}</span>
-          {/if}
-          {#if rolesLabel}
-            <span>{rolesLabel}</span>
-          {/if}
-        </div>
-      </div>
-      {#if portrait?.image}
-        <figure class="portrait">
-          <button
-            type="button"
-            class="portrait-button"
-            on:click={() =>
-              enlargeImage(
-                {
-                  url: portrait.image,
-                  caption: portrait.caption || null,
-                  source: portrait.source || null,
-                },
-                { title: personName }
-              )}
-            aria-label="Enlarge portrait"
-          >
-            <img
-              src={portrait.image}
-              alt={portrait.alt ?? `Portrait of ${personName}`}
-              loading="lazy"
-              decoding="async"
-              on:load={handleImageLoad}
-            />
-            <span class="enlarge-icon portrait-enlarge">
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                role="presentation"
-                aria-hidden="true"
-              >
-                <path d={mdiMagnifyPlusOutline} />
-              </svg>
-            </span>
-          </button>
-        </figure>
-      {/if}
-    </div>
+  <header class="masthead">
     <div class="compact-info" aria-live="polite">
       <span class="name">{personName}</span>
       {#if yearsLabel}
@@ -1356,9 +1279,10 @@
   }
 
   .masthead {
-    padding: 1.75rem 1.5rem 1.25rem;
+    padding: 0.85rem 1.25rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     background: linear-gradient(
         180deg,
         rgba(255, 255, 255, 0.03) 0%,
@@ -1370,33 +1294,14 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    transition: padding 0.25s ease;
-  }
-
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    align-items: center;
-  }
-
-  .full-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .masthead-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
   }
 
   .compact-info {
-    display: none;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.75rem;
     font-size: 0.95rem;
     font-weight: 600;
     color: #e2e8f0;
@@ -1486,74 +1391,7 @@
     height: 1em;
   }
 
-  .masthead.compact {
-    padding: 0.85rem 1.25rem;
-    flex-direction: row;
-    align-items: center;
-  }
 
-  .masthead.compact .toolbar {
-    display: none;
-  }
-
-  .masthead.compact .full-info {
-    display: none;
-  }
-
-  .masthead.compact .masthead-content {
-    display: none;
-  }
-
-  .masthead.compact .compact-info {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.75rem;
-    color: var(--story-secondary, #38bdf8);
-    margin: 0;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 1.9rem;
-    line-height: 1.1;
-    color: var(--story-primary, #f8fafc);
-    font-family: var(--story-heading-font, Inter, sans-serif);
-  }
-
-  .summary {
-    margin: 0;
-    font-size: 0.95rem;
-    color: rgba(226, 232, 240, 0.88);
-    font-family: var(--story-body-font, Inter, sans-serif);
-    transition:
-      opacity 0.25s ease,
-      transform 0.25s ease;
-  }
-
-  .summary.placeholder {
-    color: #94a3b8;
-    font-style: italic;
-  }
-
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    font-size: 0.8rem;
-    color: rgba(148, 163, 184, 0.85);
-    transition: font-size 0.25s ease;
-  }
-
-  .masthead:not(.compact) .compact-info {
-    display: none;
-  }
 
   .slides-wrapper {
     flex: 1 1 auto;
@@ -1826,15 +1664,6 @@
     box-shadow: 0 8px 18px rgba(2, 6, 23, 0.5);
   }
 
-  .portrait {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    text-align: center;
-  }
-
   .portrait-button {
     appearance: none;
     border: none;
@@ -1848,54 +1677,6 @@
 
   .portrait-button:focus {
     outline: none;
-  }
-
-  .portrait-enlarge {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0;
-    width: 2rem;
-    height: 2rem;
-    background: rgba(15, 23, 42, 0.85);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.2s ease;
-  }
-
-  .portrait-enlarge .icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    fill: var(--story-primary, #f8fafc);
-  }
-
-  .portrait img {
-    width: auto;
-    height: min(25dvh, 220px);
-    border-radius: 1rem;
-    box-shadow: none;
-    border: none;
-    filter: saturate(0.55) contrast(0.8) brightness(0.92);
-    /* Default mask to prevent pop-out before JS loads */
-    mask-image: radial-gradient(
-      ellipse 60% 70% at center,
-      rgba(0, 0, 0, 1) 35%,
-      rgba(0, 0, 0, 0.95) 50%,
-      rgba(0, 0, 0, 0.7) 65%,
-      rgba(0, 0, 0, 0.35) 78%,
-      rgba(0, 0, 0, 0) 90%
-    );
-    -webkit-mask-image: radial-gradient(
-      ellipse 60% 70% at center,
-      rgba(0, 0, 0, 1) 35%,
-      rgba(0, 0, 0, 0.95) 50%,
-      rgba(0, 0, 0, 0.7) 65%,
-      rgba(0, 0, 0, 0.35) 78%,
-      rgba(0, 0, 0, 0) 90%
-    );
   }
 
   .content {
@@ -2219,21 +2000,7 @@
 
   @media (min-width: 768px) {
     .masthead {
-      padding: 2rem 3rem 1.5rem;
-    }
-
-    .toolbar {
-      margin-bottom: 1.75rem;
-    }
-
-    .masthead-content {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 2.5rem;
-    }
-
-    h1 {
-      font-size: 2.4rem;
+      padding: 1rem 2.5rem;
     }
 
     .slides {
