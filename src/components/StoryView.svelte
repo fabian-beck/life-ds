@@ -1945,6 +1945,8 @@
   }
 
   .description.has-fade {
+    padding-bottom: 1.5em;
+    padding-right: 0.5em;
     -webkit-mask-image: linear-gradient(
       to bottom,
       black calc(100% - 2em),
