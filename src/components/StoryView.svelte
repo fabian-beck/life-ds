@@ -1543,17 +1543,21 @@
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
+    width: fit-content;
   }
 
   .overview-portrait img {
+    max-width: 100%;
+    max-height: min(30dvh, 220px);
     width: auto;
-    height: min(30dvh, 220px);
+    height: auto;
+    object-fit: contain;
     border-radius: 1rem;
     box-shadow: none;
     border: none;
     filter: saturate(0.55) contrast(0.8) brightness(0.92);
     mask-image: radial-gradient(
-      ellipse 60% 70% at center,
+      ellipse 45% 55% at center,
       rgba(0, 0, 0, 1) 35%,
       rgba(0, 0, 0, 0.95) 50%,
       rgba(0, 0, 0, 0.7) 65%,
@@ -1561,7 +1565,7 @@
       rgba(0, 0, 0, 0) 90%
     );
     -webkit-mask-image: radial-gradient(
-      ellipse 60% 70% at center,
+      ellipse 45% 55% at center,
       rgba(0, 0, 0, 1) 35%,
       rgba(0, 0, 0, 0.95) 50%,
       rgba(0, 0, 0, 0.7) 65%,
@@ -1609,7 +1613,6 @@
     margin-top: 0.5rem;
     font-size: 0.9rem;
     line-height: 1.6;
-    max-width: 52ch;
     margin-left: auto;
     margin-right: auto;
     font-family: var(--story-body-font, Inter, sans-serif);
@@ -1933,6 +1936,12 @@
     align-items: baseline;
   }
 
+  .details li > span:not(.label),
+  .details li > div {
+    flex: 1;
+    min-width: 0;
+  }
+
   .label {
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -1941,6 +1950,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    flex-shrink: 0;
   }
 
   .label-text {
@@ -2057,17 +2067,13 @@
 
     .description {
       font-size: 1.05rem;
-      max-width: 48ch;
     }
 
     .details {
       font-size: 0.9rem;
-      flex-direction: row;
-      gap: 2rem;
-    }
-
-    .details li {
-      max-width: 22rem;
+      flex-direction: column;
+      max-width: none;
+      width: 100%;
     }
 
     .masthead.compact {
@@ -2154,7 +2160,7 @@
     }
 
     .overview-portrait img {
-      width: 340px;
+      max-width: 340px;
     }
 
     .overview-text h2 {
