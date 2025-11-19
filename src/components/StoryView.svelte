@@ -51,7 +51,8 @@
   const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ?? DEFAULT_PM_TILES_URL;
+    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
+    DEFAULT_PM_TILES_URL;
   let pmtilesUrl = PRIMARY_PM_TILES_URL;
   let basemapError = null; // non-null if we failed to resolve any tiles source
   let basemapResolved = false;
@@ -305,7 +306,7 @@
       destroy() {
         descriptionOverflows.delete(slideId);
         descriptionOverflows = descriptionOverflows;
-      }
+      },
     };
   }
 
@@ -1299,7 +1300,12 @@
 <ImageViewer image={enlargedImage} onClose={closeEnlargedImage} />
 
 {#if showNetworkModal}
-  <NetworkModal {egoNetwork} {personName} {styleConfig} onClose={closeNetworkModal} />
+  <NetworkModal
+    {egoNetwork}
+    {personName}
+    {styleConfig}
+    onClose={closeNetworkModal}
+  />
 {/if}
 
 <style>
@@ -1447,8 +1453,6 @@
     height: 1em;
   }
 
-
-
   .slides-wrapper {
     flex: 1 1 auto;
     position: relative;
@@ -1467,6 +1471,12 @@
     scroll-behavior: smooth;
     position: relative;
     height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .slides::-webkit-scrollbar {
+    display: none;
   }
 
   .slide {
@@ -1639,6 +1649,7 @@
     margin-left: auto;
     margin-right: auto;
     font-family: var(--story-body-font, Inter, sans-serif);
+    max-height: 30vh;
   }
 
   .overview-text .description.placeholder {
@@ -1934,8 +1945,16 @@
   }
 
   .description.has-fade {
-    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 2em), transparent 100%);
-    mask-image: linear-gradient(to bottom, black calc(100% - 2em), transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black calc(100% - 2em),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      black calc(100% - 2em),
+      transparent 100%
+    );
   }
 
   .details {
