@@ -1147,6 +1147,10 @@
               <div class="content">
                 <div class="date-wrapper">
                   <p class="date">{formatDate(slide)}</p>
+                  {#if formatAgeLabel(slide.age)}
+                    <span class="separator">·</span>
+                    <p class="age">{formatAgeLabel(slide.age)}</p>
+                  {/if}
                   {#if getDateNote(slide)}
                     <button
                       type="button"
@@ -1172,9 +1176,6 @@
                     {/if}
                   {/if}
                 </div>
-                {#if formatAgeLabel(slide.age)}
-                  <p class="age">{formatAgeLabel(slide.age)}</p>
-                {/if}
                 <h2>{slide.title}</h2>
                 <p class="description">{slide.description}</p>
                 <ul class="details">
@@ -1239,18 +1240,27 @@
                   {#if relevantPeople.length > 0}
                     <ul class="details">
                       <li>
-                        <div class="people-header">
-                          <span class="label">
-                            <svg
-                              class="icon icon-inline"
-                              viewBox="0 0 24 24"
-                              role="presentation"
-                              aria-hidden="true"
-                            >
-                              <path d={mdiAccountOutline} />
-                            </svg>
-                            <span class="label-text">People</span>
-                          </span>
+                        <span class="label">
+                          <svg
+                            class="icon icon-inline"
+                            viewBox="0 0 24 24"
+                            role="presentation"
+                            aria-hidden="true"
+                          >
+                            <path d={mdiAccountOutline} />
+                          </svg>
+                          <span class="label-text">People</span>
+                        </span>
+                        <div class="people-list">
+                          {#each relevantPeople as person, idx}
+                            {@const personKey = `${slide.eventIndex}-${idx}`}
+                            <PersonChip
+                              {person}
+                              {personKey}
+                              {visiblePersonInfo}
+                              onToggle={togglePersonInfo}
+                            />
+                          {/each}
                           <button
                             type="button"
                             class="show-all-btn"
@@ -1265,19 +1275,7 @@
                             >
                               <path d={mdiAccountMultipleOutline} />
                             </svg>
-                            View network
                           </button>
-                        </div>
-                        <div class="people-list">
-                          {#each relevantPeople as person, idx}
-                            {@const personKey = `${slide.eventIndex}-${idx}`}
-                            <PersonChip
-                              {person}
-                              {personKey}
-                              {visiblePersonInfo}
-                              onToggle={togglePersonInfo}
-                            />
-                          {/each}
                         </div>
                       </li>
                     </ul>
@@ -1655,8 +1653,9 @@
   }
 
   .slide.overview {
-    justify-content: center;
-    padding-bottom: 6rem;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    padding-bottom: 8rem;
   }
 
   .overview-content {
@@ -1677,8 +1676,8 @@
   }
 
   .overview-portrait img {
-    width: min(220px, 75vw);
-    height: auto;
+    width: auto;
+    height: min(30dvh, 220px);
     border-radius: 1rem;
     box-shadow: none;
     border: none;
@@ -1845,19 +1844,16 @@
     display: block;
     position: relative;
     background: transparent;
-    transition: transform 0.2s ease;
   }
 
-  .portrait-button:hover,
   .portrait-button:focus {
-    transform: scale(1.02);
     outline: none;
   }
 
   .portrait-enlarge {
     position: absolute;
     bottom: 0.5rem;
-    right: 0.5rem;
+    right: 0;
     width: 2rem;
     height: 2rem;
     background: rgba(15, 23, 42, 0.85);
@@ -1866,24 +1862,19 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .portrait-button:hover .portrait-enlarge,
-  .portrait-button:focus .portrait-enlarge {
     opacity: 1;
+    transition: opacity 0.2s ease;
   }
 
   .portrait-enlarge .icon {
     width: 1.25rem;
     height: 1.25rem;
-    fill: var(--story-secondary, #38bdf8);
+    fill: var(--story-primary, #f8fafc);
   }
 
   .portrait img {
-    width: min(220px, 80vw);
-    height: auto;
+    width: auto;
+    height: min(25dvh, 220px);
     border-radius: 1rem;
     box-shadow: none;
     border: none;
@@ -1938,17 +1929,10 @@
     border-radius: 0;
     overflow: hidden;
     background: transparent;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
     box-shadow: none;
   }
 
-  .image-thumbnail:hover,
   .image-thumbnail:focus {
-    transform: scale(1.05);
-    border-color: transparent;
-    box-shadow: none;
     outline: none;
   }
 
@@ -1958,10 +1942,6 @@
     object-fit: cover;
     display: block;
     filter: saturate(0.35) contrast(0.6) brightness(0.82);
-    transition:
-      filter 0.2s ease,
-      mask-image 0.2s ease,
-      -webkit-mask-image 0.2s ease;
     /* Default mask to prevent pop-out before JS loads */
     mask-image: radial-gradient(
       ellipse 85% 85% at 85% 15%,
@@ -1981,15 +1961,10 @@
     );
   }
 
-  .image-thumbnail:hover img,
-  .image-thumbnail:focus img {
-    filter: saturate(0.6) contrast(0.75) brightness(0.92);
-  }
-
   .enlarge-icon {
     position: absolute;
     bottom: 0.25rem;
-    right: 0.25rem;
+    right: 0;
     width: 1.5rem;
     height: 1.5rem;
     background: rgba(15, 23, 42, 0.8);
@@ -1998,19 +1973,14 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .image-thumbnail:hover .enlarge-icon,
-  .image-thumbnail:focus .enlarge-icon {
     opacity: 1;
+    transition: opacity 0.2s ease;
   }
 
   .enlarge-icon .icon {
     width: 1rem;
     height: 1rem;
-    fill: var(--story-secondary, #38bdf8);
+    fill: var(--story-primary, #f8fafc);
   }
 
   .date {
@@ -2120,6 +2090,10 @@
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
+    max-height: 170px;
+    overflow-y: auto;
+    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 2em), transparent 100%);
+    mask-image: linear-gradient(to bottom, black calc(100% - 2em), transparent 100%);
   }
 
   .details {
@@ -2138,8 +2112,9 @@
 
   .details li {
     display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: baseline;
   }
 
   .label {
@@ -2173,6 +2148,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
+    max-width: 200px;
+    min-width: 0;
   }
 
   .sources a {
@@ -2181,6 +2158,11 @@
     font-weight: 400;
     font-size: 0.8rem;
     transition: color 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    min-width: 0;
   }
 
   .sources a:hover,
@@ -2298,7 +2280,7 @@
       width: 2.5rem;
       height: 2.5rem;
       bottom: 0.75rem;
-      right: 0.75rem;
+      right: 0;
     }
 
     .portrait-enlarge .icon {
@@ -2357,11 +2339,6 @@
         rgba(0, 0, 0, 0.5) 88%,
         rgba(0, 0, 0, 0) 97%
       );
-    }
-
-    .image-thumbnail:hover img,
-    .image-thumbnail:focus img {
-      filter: saturate(0.6) contrast(0.75) brightness(0.92);
     }
 
     .enlarge-icon {
