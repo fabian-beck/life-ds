@@ -273,6 +273,32 @@
 
   let slidesContainer;
   let initialScrollDone = false;
+  let descriptionOverflows = new Set(); // Track which descriptions overflow
+
+  function checkOverflow(element, slideId) {
+    if (!element) return;
+
+    const check = () => {
+      const isOverflowing = element.scrollHeight > element.clientHeight;
+      if (isOverflowing) {
+        descriptionOverflows.add(slideId);
+      } else {
+        descriptionOverflows.delete(slideId);
+      }
+      descriptionOverflows = descriptionOverflows; // Trigger reactivity
+    };
+
+    // Check immediately and after content loads
+    check();
+    setTimeout(check, 0);
+
+    return {
+      destroy() {
+        descriptionOverflows.delete(slideId);
+        descriptionOverflows = descriptionOverflows;
+      }
+    };
+  }
 
   async function scrollToIndex(index, immediate = false) {
     if (!slidesContainer) return;
@@ -1100,7 +1126,13 @@
                   {/if}
                 </div>
                 <h2>{slide.title}</h2>
-                <p class="description">{slide.description}</p>
+                <p
+                  class="description"
+                  class:has-fade={descriptionOverflows.has(slide.eventIndex)}
+                  use:checkOverflow={slide.eventIndex}
+                >
+                  {slide.description}
+                </p>
                 <ul class="details">
                   {#if slide.locations?.length}
                     <li>
@@ -1873,6 +1905,9 @@
       0 1px 4px rgba(0, 0, 0, 0.9);
     max-height: 170px;
     overflow-y: auto;
+  }
+
+  .description.has-fade {
     -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 2em), transparent 100%);
     mask-image: linear-gradient(to bottom, black calc(100% - 2em), transparent 100%);
   }
