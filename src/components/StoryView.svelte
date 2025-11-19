@@ -63,6 +63,8 @@
   let lastViewportKey = "";
   let lastDatasetName = null;
   let datasetName = null;
+  let mastheadElement = null;
+  let mastheadHeight = 0;
 
   let primaryMarkerColor = "#38BDF8";
   let fadedMarkerColor = "rgba(56, 189, 248, 0.35)";
@@ -274,6 +276,13 @@
   let slidesContainer;
   let initialScrollDone = false;
   let descriptionOverflows = new Set(); // Track which descriptions overflow
+
+  // Measure masthead height and update CSS variable
+  function updateMastheadHeight() {
+    if (mastheadElement) {
+      mastheadHeight = mastheadElement.offsetHeight;
+    }
+  }
 
   function checkOverflow(element, slideId) {
     if (!element) return;
@@ -923,6 +932,20 @@
 
   onMount(() => {
     initialiseMap();
+    updateMastheadHeight();
+
+    // Update height on window resize for Android viewport changes
+    const resizeObserver = new ResizeObserver(() => {
+      updateMastheadHeight();
+    });
+
+    if (mastheadElement) {
+      resizeObserver.observe(mastheadElement);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
   });
 
   onDestroy(() => {
@@ -954,11 +977,11 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="story-view"
-  style={storyStyleVars(styleConfig)}
+  style="{storyStyleVars(styleConfig)}; --header-height: {mastheadHeight}px"
   on:wheel={handleWheel}
   on:click={handleClickOutside}
 >
-  <header class="masthead">
+  <header class="masthead" bind:this={mastheadElement}>
     <div class="compact-info" aria-live="polite">
       <span class="name">{personName}</span>
       {#if yearsLabel}
@@ -1281,15 +1304,16 @@
 
 <style>
   .story-view {
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
+    inset: 0;
     background-color: rgba(var(--story-bg-rgb, 15, 23, 42), 0.55);
     color: #e2e8f0;
     isolation: isolate;
-    min-height: 100vh;
-    min-height: 100dvh;
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
   }
 
   .story-view::before {
@@ -1429,10 +1453,9 @@
     flex: 1 1 auto;
     position: relative;
     min-height: 0;
-    height: calc(100vh - var(--header-height, 0px));
-    height: calc(100dvh - var(--header-height, 0px) - env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .slides {
