@@ -1,0 +1,472 @@
+{
+  "dataset": "wikipedia_ego_networks",
+  "created_on": "2025-11-19",
+  "ego": {
+    "name": "E. T. A. Hoffmann",
+    "birth_year": 1776,
+    "death_year": 1822,
+    "primary_roles": [
+      "author",
+      "jurist",
+      "composer",
+      "music critic",
+      "artist"
+    ],
+    "summary": "Ernst Theodor Amadeus Hoffmann (1776\u20131822) was a German Romantic writer, jurist, composer, music critic, and illustrator whose fantastic and gothic tales became central to German Romanticism and later inspired major musical and theatrical works.",
+    "wikipedia": "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+  },
+  "connections": [
+    {
+      "person_name": "Christoph Ludwig Hoffmann",
+      "relationship_type": "family",
+      "relationship_description": "Father; K\u00f6nigsberg barrister, poet and amateur musician who separated from Hoffmann\u2019s mother when Hoffmann was a child and left with the elder son.",
+      "start_year": 1776,
+      "end_year": 1797,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in K\u00f6nigsberg",
+        "exposure to poetry and amateur music"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Their estrangement after the parental separation is explicitly mentioned, yet Hoffmann regretted the distance, implying emotional significance despite limited later contact."
+    },
+    {
+      "person_name": "Lovisa Albertina Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Mother; remained in K\u00f6nigsberg when the parents separated, after which Hoffmann was raised in her extended family\u2019s pietistic household.",
+      "start_year": 1776,
+      "end_year": 1796,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in K\u00f6nigsberg",
+        "pietistic domestic environment"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Dies in 1796; household religion and emotional climate shaped his early life, though the article emphasizes the aunts and uncle more than her direct role."
+    },
+    {
+      "person_name": "Johanna Sophie Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Maternal aunt; one of the three unmarried Doerffer siblings who raised Hoffmann in K\u00f6nigsberg after his parents separated.",
+      "start_year": 1778,
+      "end_year": 1803,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "shared household in K\u00f6nigsberg",
+        "child-rearing and education",
+        "pietistic religious practice"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Referred to as Aunt Sophie; her death is mentioned as part of the \"sad period\" during his P\u0142ock years, indicating enduring emotional importance."
+    },
+    {
+      "person_name": "Charlotte Wilhelmine Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Younger maternal aunt; especially beloved by Hoffmann, whom he nicknamed \u201cTante F\u00fc\u00dfchen\u201d and later commemorated in his fiction.",
+      "start_year": 1778,
+      "end_year": 1779,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "shared household in K\u00f6nigsberg",
+        "early childhood care"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Though she died when he was about three, he treasured her memory and invented stories about her; a character in Lebensansichten des Katers Murr is named for her, suggesting deep imaginative influence."
+    },
+    {
+      "person_name": "Otto Wilhelm Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Maternal uncle; head of the pietistic household in which Hoffmann was raised, dominating his childhood environment.",
+      "start_year": 1778,
+      "end_year": 1811,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "shared household in K\u00f6nigsberg",
+        "religious upbringing",
+        "guardianship and discipline"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Nicknamed \"O Weh\" (\u201cOh dear!\u201d) by Hoffmann in a pun on his initials; his strictness made the household \u201cuncongenial,\u201d shaping Hoffmann\u2019s later reactions against pietism and authority."
+    },
+    {
+      "person_name": "Theodor Gottlieb von Hippel the Younger",
+      "relationship_type": "friend",
+      "relationship_description": "Close lifelong friend from school and university; fellow law student who later travelled and worked with Hoffmann and helped steer him back to a legal career after his theatrical period.",
+      "start_year": 1787,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "school friendship in K\u00f6nigsberg",
+        "attending Kant\u2019s lectures at the University of K\u00f6nigsberg",
+        "joint travel to Posen (c. 1800) with a stop in Dresden",
+        "socializing and mutual support in Dresden and Leipzig during the Napoleonic wars",
+        "encouraging Hoffmann\u2019s return to the judiciary"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Friendship \u201coften tested by an increasing social difference\u201d but described as lifelong. They had long gaps in direct contact (nine years before unexpectedly meeting in Dresden), yet Hippel later guided him \u201cback into his old career as a jurist.\u201d"
+    },
+    {
+      "person_name": "Immanuel Kant",
+      "relationship_type": "mentor",
+      "relationship_description": "Philosopher whose lectures Hoffmann attended in 1792 alongside Hippel, contributing to his intellectual formation.",
+      "start_year": 1792,
+      "end_year": 1792,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "attendance at lectures at the University of K\u00f6nigsberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "No evidence of direct personal relationship beyond lecture attendance is given, but his exposure to Kantian philosophy is noted in the user-provided event summary as shaping his critical and speculative tendencies."
+    },
+    {
+      "person_name": "Dora Hatt",
+      "relationship_type": "other",
+      "relationship_description": "Married woman and music pupil with whom Hoffmann became romantically infatuated in K\u00f6nigsberg; the scandal led to his removal to a post in Glogau.",
+      "start_year": 1794,
+      "end_year": 1796,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "private music lessons in K\u00f6nigsberg",
+        "social interactions through her family"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "The relationship prompted family protests and effectively exiled him from K\u00f6nigsberg, shaping his early professional path; her later death is mentioned as part of a difficult period, and he encountered one of her daughters on his last visit home."
+    },
+    {
+      "person_name": "Johann Ludwig Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Uncle and guardian; employed Hoffmann as a clerk, moved with him to Berlin, and was central to his early legal career and household life.",
+      "start_year": 1796,
+      "end_year": 1802,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "legal employment in Glogau",
+        "shared household in Glogau and Berlin with his daughter Minna",
+        "relocation to Berlin in 1798",
+        "oversight of Hoffmann\u2019s provincial legal training"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Described as his uncle and (in the chronology section) also as guardian. His promotion to a Berlin court occasioned Hoffmann\u2019s first move to a major city. His later death in Berlin is noted among the bereavements of Hoffmann\u2019s P\u0142ock years."
+    },
+    {
+      "person_name": "Mischa (Maria/Marianna Thekla Michalina Rorer, n\u00e9e Trzci\u0144ska)",
+      "relationship_type": "family",
+      "relationship_description": "Wife; Polish woman whom Hoffmann married in Posen and who accompanied him through his provincial, Warsaw, and later postings, including Bamberg and Dresden/Leipzig.",
+      "start_year": 1802,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and shared household from Posen onward",
+        "moves to P\u0142ock, Warsaw, Berlin, Bamberg, Dresden, Leipzig",
+        "raising their daughter C\u00e4cilia",
+        "enduring wartime hardships and financial strain",
+        "assisting his work by taking dictation during his final illness"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "In January 1807 she and their two\u2011year\u2011old daughter returned to Posen during political upheaval; later the daughter\u2019s death deepened Hoffmann\u2019s misery. In his last years, when paralysis set in, his works were dictated to his wife or a secretary."
+    },
+    {
+      "person_name": "Julius Eduard Itzig (Julius Eduard Hitzig)",
+      "relationship_type": "friend",
+      "relationship_description": "Neighbour, fellow jurist, and later biographer whom Hoffmann met in Warsaw; introduced him to key Romantic writers and was part of his literary circle.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "neighbourly social life in Warsaw",
+        "discussion of literature and Romantic theory",
+        "participation in German\u2011Polish literary circles",
+        "Itzig/Hitzig\u2019s later biographical writing about Hoffmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "A former member of the Berlin \u2018Nordstern\u2019 literary group, he provided Hoffmann with works by Novalis, Tieck, Arnim, Brentano and others, decisively shaping Hoffmann\u2019s orientation toward High Romanticism."
+    },
+    {
+      "person_name": "Zacharias Werner",
+      "relationship_type": "friend",
+      "relationship_description": "Poet and dramatist friend whose acquaintance Hoffmann renewed in Warsaw, participating together in its German\u2011Polish cultural milieu.",
+      "start_year": 1804,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "social and literary life in Warsaw",
+        "participation in Romantic-oriented circles",
+        "discussion of drama and poetry"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Described as a renewed friendship in Warsaw; Werner was part of the environment Hoffmann later remembered as the happiest period of his life."
+    },
+    {
+      "person_name": "Novalis",
+      "relationship_type": "other",
+      "relationship_description": "Early German Romantic poet whose works, given to Hoffmann by Itzig/Hitzig in Warsaw, significantly marked his later writing.",
+      "start_year": 1804,
+      "end_year": 1806,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "literary influence through reading of Novalis\u2019s works",
+        "participation in shared Romantic aesthetic milieu"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Part of the corpus of Romantic writers (with Tieck, Arnim, Brentano, etc.) whom Hoffmann encountered relatively late, yet who \u201cmarked his work profoundly,\u201d indicating strong but indirect influence."
+    },
+    {
+      "person_name": "Ludwig Tieck",
+      "relationship_type": "other",
+      "relationship_description": "Leading Romantic writer whose works Hoffmann read in Warsaw and whose narrative and fantastical techniques influenced his own stories.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "literary influence",
+        "overlapping participation in German Romantic movement"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Tieck is named among the authors whose works Itzig supplied to Hoffmann and which \u201cmarked his work profoundly\u201d; no direct social interaction is documented in the article."
+    },
+    {
+      "person_name": "Achim von Arnim",
+      "relationship_type": "other",
+      "relationship_description": "Romantic writer whose works Hoffmann encountered via his Warsaw circle, contributing to his turn toward High Romanticism.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "literary influence through reading",
+        "shared Romantic cultural context"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Listed together with Novalis, Tieck, Brentano and others as authors whose works profoundly affected Hoffmann after being introduced by Itzig/Hitzig."
+    },
+    {
+      "person_name": "Clemens Brentano",
+      "relationship_type": "other",
+      "relationship_description": "Romantic poet and writer whose works Hoffmann read through his Warsaw connections, shaping his literary style and themes.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "indirect literary exchange via published works",
+        "shared Romantic poetics"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Named in the same list of influential Romantic writers transmitted by Itzig; no direct personal contact is stated."
+    },
+    {
+      "person_name": "Julia Marc",
+      "relationship_type": "other",
+      "relationship_description": "Young singing student in Bamberg with whom Hoffmann became strongly enamored, provoking visible emotional attachment and family intervention.",
+      "start_year": 1809,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "voice and music lessons in Bamberg",
+        "rehearsals and theatrical work at the Bamberg theatre"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "His feelings were obvious whenever they were together; Julia\u2019s mother quickly arranged a \u201cmore suitable match\u201d for her. The emotional entanglement contributed to tensions in Bamberg and may have inspired aspects of his later depictions of obsessive love."
+    },
+    {
+      "person_name": "Jean Paul",
+      "relationship_type": "other",
+      "relationship_description": "Contemporary writer whose work powerfully influenced Hoffmann; became one of his earliest admirers after Hoffmann\u2019s story \"Ritter Gluck\" and conceptually shaped his use of Doppelg\u00e4nger motifs.",
+      "start_year": 1809,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "literary influence through Jean Paul\u2019s earlier works",
+        "intertextual dialogue around the Doppelg\u00e4nger theme",
+        "Jean Paul\u2019s appreciative reception of Hoffmann\u2019s writings"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "The article notes that Jean Paul had invented the term Doppelg\u00e4nger the previous decade and \u201ccontinued to exact a powerful influence\u201d over Hoffmann, while also being \u201cone of his earliest admirers,\u201d implying a mutual literary relationship rather than direct collaboration."
+    },
+    {
+      "person_name": "Ludwig van Beethoven",
+      "relationship_type": "colleague",
+      "relationship_description": "Composer whose music Hoffmann championed in a series of influential reviews for the Allgemeine musikalische Zeitung, which Beethoven himself highly valued.",
+      "start_year": 1809,
+      "end_year": 1814,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Hoffmann\u2019s critical essays on Beethoven\u2019s music",
+        "mediated communication via publication and reception",
+        "development of Romantic music aesthetics"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Hoffmann\u2019s articles on Beethoven are described as \u201cespecially well received, and highly regarded by the composer himself.\u201d There is no indication they met, but their relationship is significant in the history of music criticism."
+    },
+    {
+      "person_name": "Wolfgang Amadeus Mozart",
+      "relationship_type": "other",
+      "relationship_description": "Composer to whom Hoffmann paid explicit homage by adopting \u201cAmadeus\u201d as his middle name in his published pseudonym.",
+      "start_year": 1809,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "artistic influence through Mozart\u2019s compositions",
+        "symbolic homage via Hoffmann\u2019s pen name"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "With the 1809 publication of \"Ritter Gluck\" Hoffmann began to sign as E. T. A. Hoffmann, stating that the A stood for Amadeus in honour of Mozart, underscoring Mozart\u2019s iconic status for his musical imagination."
+    },
+    {
+      "person_name": "Joseph Seconda",
+      "relationship_type": "colleague",
+      "relationship_description": "Director of an opera company for which Hoffmann worked as musical director in Dresden and Leipzig during the Napoleonic wars.",
+      "start_year": 1813,
+      "end_year": 1814,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "management and direction of Seconda\u2019s opera company",
+        "rehearsals and performances in Dresden and Leipzig",
+        "touring and travel under wartime conditions",
+        "organizational disputes regarding employment and notice"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Seconda offered Hoffmann the position in 1813; Hoffmann praised the quality of the orchestra but later quarrelled with Seconda and received notice, refusing to accompany the company back to Dresden."
+    },
+    {
+      "person_name": "Karl Albert von Kamptz",
+      "relationship_type": "rival",
+      "relationship_description": "Prussian commissioner whose illiberal interference with political trials clashed with Hoffmann\u2019s legal conscience; caricatured by Hoffmann in \"Meister Floh,\" leading to legal action against him.",
+      "start_year": 1819,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "participation in state political trials, including that of \"Turnvater\" Jahn",
+        "conflicts over due process within the Ministerial Commission",
+        "subject of Hoffmann\u2019s satirical portrayal in Meister Floh",
+        "legal proceedings initiated by Kamptz against Hoffmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Described as greatly influencing the Ministerial Commission; Hoffmann \u201cfound himself annoying Kamptz, and became a political target.\u201d Proceedings were halted only when Hoffmann\u2019s illness was deemed life\u2011threatening."
+    },
+    {
+      "person_name": "King Frederick William III of Prussia",
+      "relationship_type": "other",
+      "relationship_description": "Monarch under whom Hoffmann served as a high court jurist; his appointment of commissions to investigate political dissent placed Hoffmann in ethically fraught legal cases.",
+      "start_year": 1819,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Hoffmann\u2019s judicial service at the Kammergericht under royal authority",
+        "implementation and critique of anti-liberal investigative commissions",
+        "royal decision to limit sanctions against Hoffmann after the Meister Floh affair"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "The King established an Immediate Commission and later a Ministerial Commission for political investigations. After Kamptz initiated proceedings over Hoffmann\u2019s caricature in Meister Floh, the King requested only a reprimand, which was never carried out."
+    },
+    {
+      "person_name": "Friedrich Ludwig Jahn (\"Turnvater\" Jahn)",
+      "relationship_type": "other",
+      "relationship_description": "Nationalist gymnastics movement founder whose treason trial Hoffmann helped adjudicate, bringing him into conflict with Kamptz and the anti-liberal apparatus.",
+      "start_year": 1819,
+      "end_year": 1822,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "legal proceedings in political-dissidence trials",
+        "judicial evaluation of charges against Jahn"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Hoffmann\u2019s conduct in Jahn\u2019s case\u2014insisting on legal standards\u2014contributed to Kamptz viewing him as politically unreliable, which in turn provoked Kamptz\u2019s vendetta over Meister Floh."
+    }
+  ],
+  "network_summary": "Hoffmann\u2019s ego network is anchored in an intense early family sphere dominated by pietistic maternal relatives and complicated by estrangement from his father. From adolescence onward, a single enduring friendship with Theodor Gottlieb von Hippel the Younger spans his life, resurfacing at key transitions. His marriage to Mischa provides constant companionship through geographic displacements and war. Professionally, his ties are more episodic: provincial legal superiors and theatrical colleagues (notably Joseph Seconda) mark phases of experimentation and instability, while fellow jurist and neighbour Julius Eduard Itzig/Hitzig ushers him decisively into High Romantic literary circles. Many of his most influential relationships are asymmetrical and text\u2011mediated\u2014philosophers and writers such as Kant, Jean Paul, Novalis, Tieck, Arnim, Brentano, and composers like Mozart and Beethoven\u2014shaping his artistic identity without frequent direct contact. In his final Berlin period, his network becomes entangled with state power: King Frederick William III and especially Commissioner Kamptz exemplify structurally strong but adversarial ties formed through political trials, with the Jahn case and the Meister Floh prosecution crystallizing the clash between Hoffmann\u2019s legal conscience and Prussian authoritarianism."
+}
