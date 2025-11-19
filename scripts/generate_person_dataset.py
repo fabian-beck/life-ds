@@ -23,6 +23,7 @@ REGISTER_PATH = DATA_DIR / "persons.json"
 PEOPLE_DIR = DATA_DIR / "people"
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
+COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 # Structured outputs require gpt-4o-mini, gpt-4o-2024-08-06, or later models
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
@@ -397,7 +398,7 @@ def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
         "inprop": "url",
         "piprop": "original",
         "titles": title,
-        "imlimit": 50,  # Fetch up to 50 images from the page
+        "imlimit": 100,  # Fetch up to 100 images from the page
     }
     response = requests.get(
         MEDIAWIKI_API,
@@ -513,6 +514,105 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
     return response.json()
 
 
+def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, Any]]:
+    """Search Wikimedia Commons for images related to a person."""
+    try:
+        # Search Commons for images related to the person
+        params = {
+            "action": "query",
+            "format": "json",
+            "list": "search",
+            "srsearch": f"{person_name}",
+            "srnamespace": "6",  # File namespace
+            "srlimit": limit,
+            "srprop": "snippet",
+        }
+        response = requests.get(
+            COMMONS_API,
+            params=params,
+            timeout=30,
+            headers=wikipedia_headers(),
+        )
+        response.raise_for_status()
+        data = response.json()
+
+        search_results = data.get("query", {}).get("search", [])
+        if not search_results:
+            return []
+
+        # Extract file titles
+        file_titles = [result.get("title") for result in search_results if result.get("title")]
+
+        # Fetch detailed info for these files
+        if not file_titles:
+            return []
+
+        image_data = []
+        # Process in chunks of 50
+        for i in range(0, len(file_titles), 50):
+            chunk = file_titles[i:i+50]
+            params = {
+                "action": "query",
+                "format": "json",
+                "prop": "imageinfo",
+                "iiprop": "url|size|mime|extmetadata",
+                "titles": "|".join(chunk),
+            }
+
+            try:
+                response = requests.get(
+                    COMMONS_API,
+                    params=params,
+                    timeout=30,
+                    headers=wikipedia_headers(),
+                )
+                response.raise_for_status()
+                data = response.json()
+            except Exception as error:
+                print(f"Warning: Failed to fetch Commons image details: {error}")
+                continue
+
+            pages = data.get("query", {}).get("pages", {})
+            for page in pages.values():
+                imageinfo = page.get("imageinfo", [])
+                if imageinfo and len(imageinfo) > 0:
+                    info = imageinfo[0]
+                    url = info.get("url")
+                    mime = info.get("mime", "")
+                    width = info.get("width", 0)
+                    height = info.get("height", 0)
+
+                    # Only include proper images
+                    if url and mime.startswith("image/") and width >= 100 and height >= 100:
+                        extmetadata = info.get("extmetadata", {})
+                        description = None
+                        description_url = None
+
+                        if "ImageDescription" in extmetadata:
+                            desc_data = extmetadata["ImageDescription"]
+                            if isinstance(desc_data, dict) and "value" in desc_data:
+                                description = _strip_html_tags(desc_data["value"])
+
+                        if "DescriptionURL" in extmetadata:
+                            desc_url_data = extmetadata["DescriptionURL"]
+                            if isinstance(desc_url_data, dict) and "value" in desc_url_data:
+                                description_url = desc_url_data["value"]
+                        elif "descriptionurl" in info:
+                            description_url = info["descriptionurl"]
+
+                        image_obj = {
+                            "url": url,
+                            "caption": description or f"Image from Wikimedia Commons",
+                            "source": description_url,
+                        }
+                        image_data.append(image_obj)
+
+        return image_data
+    except Exception as error:
+        print(f"Warning: Commons search failed for '{person_name}': {error}")
+        return []
+
+
 def fetch_image_urls(image_titles: List[str]) -> List[str]:
     """Fetch actual URLs for Wikipedia image titles."""
     if not image_titles:
@@ -534,8 +634,8 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
     ]
 
     filtered_titles = []
-    # Limit to first 30 to avoid excessive API calls
-    for title in image_titles[:30]:
+    # Limit to first 60 to get more images
+    for title in image_titles[:60]:
         # Skip if title is not a string
         if not isinstance(title, str):
             continue
@@ -548,77 +648,79 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
     if not filtered_titles:
         return []
 
-    # Batch fetch image info
-    params = {
-        "action": "query",
-        "format": "json",
-        "prop": "imageinfo",
-        "iiprop": "url|size|mime|extmetadata",
-        "titles": "|".join(filtered_titles[:20]),  # API limit
-    }
-
-    try:
-        response = requests.get(
-            MEDIAWIKI_API,
-            params=params,
-            timeout=30,
-            headers=wikipedia_headers(),
-        )
-        response.raise_for_status()
-        data = response.json()
-    except Exception as error:
-        print(f"Warning: Failed to fetch image URLs: {error}")
-        return []
-
+    # Batch fetch image info in chunks of 50 (API limit)
     image_data = []
-    pages = data.get("query", {}).get("pages", {})
-    for page in pages.values():
-        imageinfo = page.get("imageinfo", [])
-        if imageinfo and len(imageinfo) > 0:
-            info = imageinfo[0]
-            url = info.get("url")
-            mime = info.get("mime", "")
-            width = info.get("width", 0)
-            height = info.get("height", 0)
+    for i in range(0, len(filtered_titles), 50):
+        chunk = filtered_titles[i:i+50]
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "imageinfo",
+            "iiprop": "url|size|mime|extmetadata",
+            "titles": "|".join(chunk),
+        }
 
-            # Only include proper images (not tiny images)
-            if url and mime.startswith("image/"):
-                # Lower minimum size to include more images
-                if width >= 100 and height >= 100:
-                    # Extract metadata
-                    extmetadata = info.get("extmetadata", {})
-                    description = None
-                    artist = None
-                    description_url = None
+        try:
+            response = requests.get(
+                MEDIAWIKI_API,
+                params=params,
+                timeout=30,
+                headers=wikipedia_headers(),
+            )
+            response.raise_for_status()
+            data = response.json()
+        except Exception as error:
+            print(f"Warning: Failed to fetch image URLs for chunk {i//50 + 1}: {error}")
+            continue
 
-                    # Try to get description
-                    if "ImageDescription" in extmetadata:
-                        desc_data = extmetadata["ImageDescription"]
-                        if isinstance(desc_data, dict) and "value" in desc_data:
-                            # Strip HTML tags from description
-                            description = _strip_html_tags(desc_data["value"])
+        pages = data.get("query", {}).get("pages", {})
+        for page in pages.values():
+            imageinfo = page.get("imageinfo", [])
+            if imageinfo and len(imageinfo) > 0:
+                info = imageinfo[0]
+                url = info.get("url")
+                mime = info.get("mime", "")
+                width = info.get("width", 0)
+                height = info.get("height", 0)
 
-                    # Try to get artist/credit
-                    if "Artist" in extmetadata:
-                        artist_data = extmetadata["Artist"]
-                        if isinstance(artist_data, dict) and "value" in artist_data:
-                            artist = _strip_html_tags(artist_data["value"])
+                # Only include proper images (not tiny images)
+                if url and mime.startswith("image/"):
+                    # Lower minimum size to include more images
+                    if width >= 100 and height >= 100:
+                        # Extract metadata
+                        extmetadata = info.get("extmetadata", {})
+                        description = None
+                        artist = None
+                        description_url = None
 
-                    # Get description URL (Wikimedia Commons page)
-                    if "DescriptionURL" in extmetadata:
-                        desc_url_data = extmetadata["DescriptionURL"]
-                        if isinstance(desc_url_data, dict) and "value" in desc_url_data:
-                            description_url = desc_url_data["value"]
-                    elif "descriptionurl" in info:
-                        description_url = info["descriptionurl"]
+                        # Try to get description
+                        if "ImageDescription" in extmetadata:
+                            desc_data = extmetadata["ImageDescription"]
+                            if isinstance(desc_data, dict) and "value" in desc_data:
+                                # Strip HTML tags from description
+                                description = _strip_html_tags(desc_data["value"])
 
-                    # Create image object with metadata
-                    image_obj = {
-                        "url": url,
-                        "caption": description or f"Image from Wikimedia Commons",
-                        "source": description_url,
-                    }
-                    image_data.append(image_obj)
+                        # Try to get artist/credit
+                        if "Artist" in extmetadata:
+                            artist_data = extmetadata["Artist"]
+                            if isinstance(artist_data, dict) and "value" in artist_data:
+                                artist = _strip_html_tags(artist_data["value"])
+
+                        # Get description URL (Wikimedia Commons page)
+                        if "DescriptionURL" in extmetadata:
+                            desc_url_data = extmetadata["DescriptionURL"]
+                            if isinstance(desc_url_data, dict) and "value" in desc_url_data:
+                                description_url = desc_url_data["value"]
+                        elif "descriptionurl" in info:
+                            description_url = info["descriptionurl"]
+
+                        # Create image object with metadata
+                        image_obj = {
+                            "url": url,
+                            "caption": description or f"Image from Wikimedia Commons",
+                            "source": description_url,
+                        }
+                        image_data.append(image_obj)
 
     return image_data
 
@@ -638,6 +740,21 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
 
     image_urls = fetch_image_urls(image_titles) if image_titles else []
 
+    # Also search Wikimedia Commons for additional images
+    person_name = page_data.get("title", subject)
+    commons_images = search_commons_images(person_name, limit=30)
+
+    # Combine and deduplicate images
+    seen_urls = set()
+    all_images = []
+    for img in image_urls + commons_images:
+        url = img.get("url")
+        if url and url not in seen_urls:
+            seen_urls.add(url)
+            all_images.append(img)
+
+    image_urls = all_images
+
     combined = f"Page title: {page_data.get('title', subject)}\nPage URL: {page_data.get('fullurl', '')}\n\n"
     if summary_text:
         combined += f"Summary snippet:\n{summary_text}\n\n"
@@ -647,8 +764,8 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
 
     if image_urls:
         combined += f"\n\n{'='*60}\nAVAILABLE IMAGES - Use these in relevant events:\n{'='*60}\n"
-        # Limit to 15 in prompt
-        for idx, img_data in enumerate(image_urls[:15], 1):
+        # Increased limit to 30 to provide more image options
+        for idx, img_data in enumerate(image_urls[:30], 1):
             combined += f"\n{idx}. {img_data.get('caption', 'Image')}\n"
             combined += f"   URL: {img_data['url']}\n"
             if img_data.get('source'):
@@ -656,6 +773,7 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
         combined += f"\nIMPORTANT: Include relevant images in events using this exact JSON format:\n"
         combined += '"images": [{"url": "...full URL...", "caption": "...description of what the image shows...", "source": "...Wikimedia Commons URL..."}]\n'
         combined += "Use the captions provided above or write your own factual description of what the image shows.\n"
+        combined += f"\nNote: {len(image_urls)} images available in total (showing first 30). Use images that are directly relevant to specific events.\n"
 
     return combined
 
@@ -682,13 +800,13 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- When images are provided, actively look for opportunities to include them in relevant events\n"
         "- Each image object must have: 'url' (the image URL), 'caption' (describing what the image shows), and 'source' (Wikimedia Commons URL)\n"
         "- Use the description from the provided image data to write a concise, factual caption\n"
+        "- IMPORTANT: Each event should have at most ONE image - choose the most relevant one\n"
         "- Include images of: buildings/places mentioned, artworks/creations, documents/publications, monuments, flags, designs, inventions\n"
         "- For architects: include images of their buildings in construction/completion events\n"
         "- For artists: include images of their artworks in creation events\n"
         "- For inventors: include images of their inventions or patents\n"
         "- For authors: include images of book covers or manuscripts\n"
         "- For historical figures: include images of monuments, locations, or artifacts related to specific events\n"
-        "- You can include multiple images per event if they're all relevant\n"
         "- DO NOT include generic portraits or the person's photo in regular events (those go in the person metadata)\n"
         "- DO include images that show the result, location, or subject matter of the event\n"
         "\nEXAMPLE: For an event about publishing a translated article on the Analytical Engine, you might include:\n"
@@ -1028,8 +1146,9 @@ def enforce_metadata(
                         "caption": "Image from Wikimedia Commons",
                         "source": None
                     })
+        # Enforce maximum of one image per event
         if sanitized_images:
-            event["images"] = sanitized_images
+            event["images"] = sanitized_images[:1]
         else:
             event.pop("images", None)
 
@@ -1088,7 +1207,7 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
         print(
             "[2/7] No summary endpoint data available; continuing with page extract only.")
 
-    print("[3/7] Building prompt for OpenAI response...")
+    print("[3/7] Building prompt for OpenAI response (including Commons search)...")
     prompt = build_prompt(page_data, summary_data, subject)
 
     print(f"[4/7] Requesting structured dataset from model '{model}'...")
