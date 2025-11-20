@@ -6,6 +6,7 @@
 
   let showExplanation = false;
   let activeTags = new Set();
+  let searchQuery = "";
 
   function toggleExplanation() {
     showExplanation = !showExplanation;
@@ -55,15 +56,42 @@
       .map(([normalizedTag, data]) => ({ normalized: normalizedTag, display: data.display }));
   })();
 
-  // Filter entries based on active tags (case-insensitive)
+  // Filter entries based on active tags and search query
   $: filteredEntries = (() => {
-    if (activeTags.size === 0) {
-      return entries;
+    let result = entries;
+
+    // Apply tag filters
+    if (activeTags.size > 0) {
+      result = result.filter(entry => {
+        if (!Array.isArray(entry.primaryRoles)) return false;
+        return entry.primaryRoles.some(role => activeTags.has(normalizeTag(role)));
+      });
     }
-    return entries.filter(entry => {
-      if (!Array.isArray(entry.primaryRoles)) return false;
-      return entry.primaryRoles.some(role => activeTags.has(normalizeTag(role)));
-    });
+
+    // Apply search query filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.trim().toLowerCase();
+      result = result.filter(entry => {
+        // Search in name
+        const name = displayName(entry.name || "").toLowerCase();
+        if (name.includes(query)) return true;
+
+        // Search in roles
+        if (Array.isArray(entry.primaryRoles)) {
+          if (entry.primaryRoles.some(role => role.toLowerCase().includes(query))) {
+            return true;
+          }
+        }
+
+        // Search in summary
+        const summary = (entry.summary || getSummary(entry) || "").toLowerCase();
+        if (summary.includes(query)) return true;
+
+        return false;
+      });
+    }
+
+    return result;
   })();
 
   function clamp(value, min, max) {
@@ -169,8 +197,29 @@
       </div>
     {/if}
   </div>
-  {#if topTags.length > 0}
-    <div class="tag-filters">
+  <div class="filters-section">
+    <div class="search-box">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search by name, role, or keywords..."
+        bind:value={searchQuery}
+      />
+      {#if searchQuery}
+        <button class="clear-search" on:click={() => { searchQuery = ""; }} aria-label="Clear search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      {/if}
+    </div>
+    {#if topTags.length > 0}
+      <div class="tag-filters">
       <div class="tag-filters-header">
         <span class="filter-label">Filter by role:</span>
         {#if activeTags.size > 0}
@@ -192,8 +241,9 @@
           </button>
         {/each}
       </div>
-    </div>
-  {/if}
+      </div>
+    {/if}
+  </div>
   <div class="landing-grid">
     {#if filteredEntries.length > 0}
       {#each filteredEntries as entry (entry.id)}
@@ -544,6 +594,70 @@
 
   .explanation li:last-child {
     margin-bottom: 0;
+  }
+
+  .filters-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    color: #94a3b8;
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border-radius: 0.5rem;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .search-input::placeholder {
+    color: #64748b;
+  }
+
+  .search-input:focus {
+    outline: none;
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+  }
+
+  .clear-search {
+    position: absolute;
+    right: 0.75rem;
+    padding: 0.35rem;
+    border-radius: 0.25rem;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .clear-search:hover {
+    background: rgba(148, 163, 184, 0.15);
+    color: #cbd5e1;
   }
 
   .tag-filters {
