@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate ego network datasets for notable people using Wikipedia content and the OpenAI API."""
+"""Generate person network datasets for notable people using Wikipedia content and the OpenAI API."""
 
 import argparse
 import json
@@ -409,13 +409,13 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     )
 
 
-def generate_ego_network(
+def generate_person_network(
     subject: str,
     *,
     update_registry: bool = True,
     model: str = DEFAULT_MODEL
 ) -> Path:
-    """Generate an ego network dataset for a person."""
+    """Generate a person network dataset for a person."""
     print(f"[1/6] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject)
     article_title = page_data.get("title", subject)
@@ -458,7 +458,7 @@ def generate_ego_network(
 def parse_args(argv: Any) -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Generate ego network datasets using Wikipedia and the OpenAI API."
+        description="Generate person network datasets using Wikipedia and the OpenAI API."
     )
     parser.add_argument(
         "subject",
@@ -485,7 +485,7 @@ def main(argv: Any = None) -> int:
     """Main entry point."""
     args = parse_args(argv)
     try:
-        file_path = generate_ego_network(
+        file_path = generate_person_network(
             args.subject,
             update_registry=not args.no_register,
             model=args.model,
