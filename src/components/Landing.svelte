@@ -440,7 +440,7 @@
     background-image: var(--card-pattern-image, none);
     background-size: 220px 220px;
     background-repeat: repeat;
-    opacity: var(--card-pattern-opacity, 0.35);
+    opacity: var(--card-pattern-opacity, 0.85);
     mix-blend-mode: overlay;
   }
 
