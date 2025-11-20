@@ -177,6 +177,7 @@
       segments.push(
         `--story-pattern-image: url(${style.backgroundPatternDataUrl})`
       );
+      segments.push(`--story-pattern-size: 500px`);
     }
     if (style.headingFont) {
       segments.push(
@@ -1334,7 +1335,7 @@
     inset: 0;
     pointer-events: none;
     background-image: var(--story-pattern-image, none);
-    background-size: 200px 200px;
+    background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
     opacity: 0.35;
     mix-blend-mode: overlay;
@@ -1530,7 +1531,7 @@
     width: 100%;
     height: 100%;
     background-image: var(--story-pattern-image, none);
-    background-size: 200px 200px;
+    background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
     background-position: 0 0;
     mix-blend-mode: overlay;

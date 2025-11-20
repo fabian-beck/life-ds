@@ -143,6 +143,7 @@
       segments.push(
         `--card-pattern-image: url("${style.backgroundPatternDataUrl}")`
       );
+      segments.push(`--card-pattern-size: 500px`);
     }
     if (typeof style.patternOpacity === "number") {
       const opacity = clamp(style.patternOpacity, 0, 1);
@@ -438,7 +439,7 @@
 
   .person-card::before {
     background-image: var(--card-pattern-image, none);
-    background-size: 220px 220px;
+    background-size: var(--card-pattern-size, 400px);
     background-repeat: repeat;
     opacity: var(--card-pattern-opacity, 0.85);
     mix-blend-mode: overlay;
