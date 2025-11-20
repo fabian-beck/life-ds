@@ -5,10 +5,66 @@
   export let onSelectPerson = () => {};
 
   let showExplanation = false;
+  let activeTags = new Set();
 
   function toggleExplanation() {
     showExplanation = !showExplanation;
   }
+
+  // Normalize tag for comparison (lowercase, trim)
+  function normalizeTag(tag) {
+    return tag.trim().toLowerCase();
+  }
+
+  function toggleTag(normalizedTag) {
+    if (activeTags.has(normalizedTag)) {
+      activeTags.delete(normalizedTag);
+    } else {
+      activeTags.add(normalizedTag);
+    }
+    activeTags = activeTags; // Trigger reactivity
+  }
+
+  // Compute tag frequencies from entries (with case-insensitive grouping)
+  $: tagFrequencies = (() => {
+    const frequencies = new Map(); // normalized tag -> {display: string, count: number}
+    entries.forEach(entry => {
+      if (Array.isArray(entry.primaryRoles)) {
+        entry.primaryRoles.forEach(role => {
+          if (role && typeof role === "string") {
+            const normalized = normalizeTag(role);
+            const existing = frequencies.get(normalized);
+            if (existing) {
+              existing.count += 1;
+            } else {
+              frequencies.set(normalized, { display: role, count: 1 });
+            }
+          }
+        });
+      }
+    });
+    // Filter to only tags that cover at least 2 persons
+    return new Map([...frequencies].filter(([_, data]) => data.count >= 2));
+  })();
+
+  // Get top 10 most frequent tags
+  $: topTags = (() => {
+    return [...tagFrequencies.entries()]
+      .sort((a, b) => b[1].count - a[1].count)
+      .slice(0, 10)
+      .map(([normalizedTag, data]) => ({ normalized: normalizedTag, display: data.display }));
+  })();
+
+  // Filter entries based on active tags (case-insensitive)
+  $: filteredEntries = (() => {
+    if (activeTags.size === 0) {
+      return entries;
+    }
+    return entries.filter(entry => {
+      if (!Array.isArray(entry.primaryRoles)) return false;
+      return entry.primaryRoles.some(role => activeTags.has(normalizeTag(role)));
+    });
+  })();
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -113,9 +169,34 @@
       </div>
     {/if}
   </div>
+  {#if topTags.length > 0}
+    <div class="tag-filters">
+      <div class="tag-filters-header">
+        <span class="filter-label">Filter by role:</span>
+        {#if activeTags.size > 0}
+          <button class="clear-filters" on:click={() => { activeTags = new Set(); }}>
+            Clear all
+          </button>
+        {/if}
+      </div>
+      <div class="tag-chips">
+        {#each topTags as tag (tag.normalized)}
+          <button
+            class="tag-chip"
+            class:active={activeTags.has(tag.normalized)}
+            on:click={() => toggleTag(tag.normalized)}
+            aria-pressed={activeTags.has(tag.normalized)}
+          >
+            {tag.display}
+            <span class="tag-count">{tagFrequencies.get(tag.normalized).count}</span>
+          </button>
+        {/each}
+      </div>
+    </div>
+  {/if}
   <div class="landing-grid">
-    {#if entries.length > 0}
-      {#each entries as entry (entry.id)}
+    {#if filteredEntries.length > 0}
+      {#each filteredEntries as entry (entry.id)}
         {@const summary = summaryFor(entry)}
         {@const style = entry.style ?? getStyle(entry.id)}
         <article
@@ -166,9 +247,13 @@
           </div>
         </article>
       {/each}
-    {:else}
+    {:else if entries.length === 0}
       <p class="landing-empty">
         Add a person dataset to begin exploring life stories.
+      </p>
+    {:else}
+      <p class="landing-empty">
+        No persons match the selected filters.
       </p>
     {/if}
   </div>
@@ -459,6 +544,101 @@
 
   .explanation li:last-child {
     margin-bottom: 0;
+  }
+
+  .tag-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tag-filters-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 2rem;
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    flex-shrink: 0;
+  }
+
+  .clear-filters {
+    padding: 0.35rem 0.75rem;
+    border-radius: 0.375rem;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #94a3b8;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .clear-filters:hover {
+    background: rgba(148, 163, 184, 0.18);
+    border-color: rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+  }
+
+  .tag-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.5rem;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tag-chip:hover {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(148, 163, 184, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .tag-chip.active {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.5);
+    color: #38bdf8;
+  }
+
+  .tag-chip.active:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: rgba(56, 189, 248, 0.65);
+  }
+
+  .tag-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    padding: 0 0.35rem;
+    border-radius: 0.35rem;
+    background: rgba(148, 163, 184, 0.2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+
+  .tag-chip.active .tag-count {
+    background: rgba(56, 189, 248, 0.3);
+    color: #e0f2fe;
   }
 
   @media (max-width: 480px) {
