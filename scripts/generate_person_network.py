@@ -375,38 +375,31 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
 
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
-    """Update the persons register with ego network information."""
-    # Use consistent path format: people/<person_id>/ego_network.json
-    relative_file = f"people/{person_id}/ego_network.json"
-
+    """Update the persons register - ensure person exists but don't add network info."""
     register = {"people": []}
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
 
     people = register.setdefault("people", [])
 
-    # Find existing entry and add ego network reference
-    for idx, existing in enumerate(people):
-        if existing.get("id") == person_id:
-            existing["ego_network_file"] = relative_file
-            existing["ego_network_size"] = len(payload.get("connections", []))
-            break
-    else:
-        # Person not in register yet, add basic entry
+    # Check if person already exists in register
+    person_exists = any(existing.get("id") == person_id for existing in people)
+
+    if not person_exists:
+        # Person not in register yet, add minimal entry
+        # The life_events generation script should have run first and added full details
         people.append({
             "id": person_id,
             "name": payload.get("ego", {}).get("name", person_id.replace("_", " ").title()),
-            "ego_network_file": relative_file,
-            "ego_network_size": len(payload.get("connections", [])),
-            "wikipedia": payload.get("ego", {}).get("wikipedia"),
+            "summary": payload.get("ego", {}).get("summary", ""),
         })
 
-    people.sort(key=lambda item: item.get("name", ""))
-    REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REGISTER_PATH.write_text(
-        json.dumps(register, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8"
-    )
+        people.sort(key=lambda item: item.get("name", ""))
+        REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
+        REGISTER_PATH.write_text(
+            json.dumps(register, indent=2, ensure_ascii=True) + "\n",
+            encoding="utf-8"
+        )
 
 
 def generate_person_network(

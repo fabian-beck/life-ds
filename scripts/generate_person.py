@@ -15,7 +15,7 @@ from generate_person_network import generate_person_network, DEFAULT_MODEL as NE
 def parse_args(argv: Any) -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Generate complete person dataset (life events, writing style, and ego network)."
+        description="Generate complete person dataset (life events, interface style, and ego network)."
     )
     parser.add_argument(
         "subject",
@@ -36,17 +36,17 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser.add_argument(
         "--dataset-only",
         action="store_true",
-        help="Generate only life events dataset (skip style and network)."
+        help="Generate only life events dataset (skip interface style and network)."
     )
     parser.add_argument(
         "--style-only",
         action="store_true",
-        help="Generate only writing style (skip dataset and network)."
+        help="Generate only interface style (skip dataset and network)."
     )
     parser.add_argument(
         "--network-only",
         action="store_true",
-        help="Generate only ego network (skip dataset and style)."
+        help="Generate only ego network (skip dataset and interface style)."
     )
     return parser.parse_args(argv)
 
@@ -81,18 +81,18 @@ def main(argv: Any = None) -> int:
         else:
             print("\n⊘ Skipping life events dataset generation")
 
-        # Step 2: Generate writing style
+        # Step 2: Generate interface style
         if run_style:
             print("\n" + "="*60)
-            print("STEP 2/3: Generating writing style")
+            print("STEP 2/3: Generating interface style")
             print("="*60 + "\n")
             style_result = generate_style(
                 args.subject,
                 model=style_model,
             )
-            print(f"\n✓ Writing style generated for '{style_result.get('id')}'")
+            print(f"\n✓ Interface style generated for '{style_result.get('id')}'")
         else:
-            print("\n⊘ Skipping writing style generation")
+            print("\n⊘ Skipping interface style generation")
 
         # Step 3: Generate ego network
         if run_network:

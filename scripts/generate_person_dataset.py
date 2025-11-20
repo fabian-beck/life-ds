@@ -1179,15 +1179,39 @@ def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
 
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
-    # Use consistent path format: people/<person_id>/life_events.json
-    relative_file = f"people/{person_id}/life_events.json"
+    person = payload.get("person", {})
+
+    # Extract portrait
+    portrait = person.get("portrait")
+
+    # Calculate lifespan from birth and death dates
+    lifespan = None
+    birth_date = person.get("birth_date")
+    death_date = person.get("death_date")
+    if birth_date or death_date:
+        birth_year = birth_date[:4] if birth_date else "?"
+        death_year = death_date[:4] if death_date else "?"
+        lifespan = f"{birth_year}–{death_year}"
+
+    # Extract primary roles (limit to first 3)
+    primary_roles = person.get("primary_roles", [])
+    if isinstance(primary_roles, list):
+        primary_roles = primary_roles[:3]
+
     entry = {
         "id": person_id,
-        "name": payload.get("person", {}).get("name", person_id.replace("_", " ").title()),
-        "file": relative_file,
-        "wikipedia": payload.get("person", {}).get("wikipedia"),
-        "summary": payload.get("person", {}).get("summary"),
+        "name": person.get("name", person_id.replace("_", " ").title()),
+        "summary": person.get("summary"),
     }
+
+    # Add optional fields only if they have values
+    if portrait:
+        entry["portrait"] = portrait
+    if lifespan:
+        entry["lifespan"] = lifespan
+    if primary_roles:
+        entry["primaryRoles"] = primary_roles
+
     register = {"people": []}
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
