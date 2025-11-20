@@ -1071,7 +1071,13 @@
                     <p class="overview-roles">{rolesLabel}</p>
                   {/if}
                   {#if hasPersonSummary}
-                    <p class="description">{personSummary}</p>
+                    <p
+                      class="description"
+                      class:has-fade={descriptionOverflows.has('overview')}
+                      use:checkOverflow={'overview'}
+                    >
+                      {personSummary}
+                    </p>
                   {:else if hasDataset}
                     <p class="description placeholder">
                       A summary is not available, but key life events are listed
@@ -1650,6 +1656,22 @@
     margin-right: auto;
     font-family: var(--story-body-font, Inter, sans-serif);
     max-height: 30vh;
+    overflow-y: auto;
+  }
+
+  .overview-text .description.has-fade {
+    padding-bottom: 1.5em;
+    padding-right: 0.5em;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black calc(100% - 2em),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      black calc(100% - 2em),
+      transparent 100%
+    );
   }
 
   .overview-text .description.placeholder {
