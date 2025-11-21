@@ -127,6 +127,19 @@
     return name.replace(/_/g, " ").replace(/\s+/g, " ").trim();
   }
 
+  function formatLifespan(entry) {
+    // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
+    if (entry.lifespan) {
+      return entry.lifespan;
+    }
+    const birthYear = entry.birthDate ? entry.birthDate.substring(0, 4) : "?";
+    const deathYear = entry.deathDate ? entry.deathDate.substring(0, 4) : "?";
+    if (birthYear === "?" && deathYear === "?") {
+      return null;
+    }
+    return `${birthYear}–${deathYear}`;
+  }
+
   function handleSelect(id) {
     if (!id) return;
     onSelectPerson({ detail: id });
@@ -253,6 +266,7 @@
       {#each filteredEntries as entry (entry.id)}
         {@const summary = summaryFor(entry)}
         {@const style = entry.style ?? getStyle(entry.id)}
+        {@const lifespan = formatLifespan(entry)}
         <article
           class="person-card"
           style={cardStyleVars(style)}
@@ -283,9 +297,9 @@
           <div class="card-body">
             <div class="card-header">
               <h2>{displayName(entry.name)}</h2>
-              {#if entry.lifespan}
+              {#if lifespan}
                 <p class="card-meta">
-                  <span class="meta-years">{entry.lifespan}</span>
+                  <span class="meta-years">{lifespan}</span>
                 </p>
               {/if}
               {#if (entry.primaryRoles?.length ?? 0) > 0}

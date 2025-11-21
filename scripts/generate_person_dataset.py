@@ -1184,14 +1184,9 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     # Extract portrait
     portrait = person.get("portrait")
 
-    # Calculate lifespan from birth and death dates
-    lifespan = None
+    # Extract birth and death dates
     birth_date = person.get("birth_date")
     death_date = person.get("death_date")
-    if birth_date or death_date:
-        birth_year = birth_date[:4] if birth_date else "?"
-        death_year = death_date[:4] if death_date else "?"
-        lifespan = f"{birth_year}–{death_year}"
 
     # Extract primary roles (limit to first 3)
     primary_roles = person.get("primary_roles", [])
@@ -1210,8 +1205,10 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     # Add optional fields only if they have values
     if portrait:
         entry["portrait"] = portrait
-    if lifespan:
-        entry["lifespan"] = lifespan
+    if birth_date:
+        entry["birthDate"] = birth_date
+    if death_date:
+        entry["deathDate"] = death_date
     if primary_roles:
         entry["primaryRoles"] = primary_roles
 
