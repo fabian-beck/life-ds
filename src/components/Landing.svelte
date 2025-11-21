@@ -60,7 +60,20 @@
       .map(([normalizedTag, data]) => ({ normalized: normalizedTag, display: data.display }));
   })();
 
-  // Filter entries based on active tags and search query
+  // Check if entry was created in the last 7 days
+  function isNewEntry(entry) {
+    if (!entry.created) return false;
+    try {
+      const createdDate = new Date(entry.created);
+      const now = new Date();
+      const daysDiff = (now - createdDate) / (1000 * 60 * 60 * 24);
+      return daysDiff <= 7;
+    } catch {
+      return false;
+    }
+  }
+
+  // Filter and sort entries based on active tags, search query, and last updated date
   $: filteredEntries = (() => {
     let result = entries;
 
@@ -94,6 +107,13 @@
         return false;
       });
     }
+
+    // Sort by lastUpdated (most recent first)
+    result = [...result].sort((a, b) => {
+      const dateA = a.lastUpdated ? new Date(a.lastUpdated).getTime() : 0;
+      const dateB = b.lastUpdated ? new Date(b.lastUpdated).getTime() : 0;
+      return dateB - dateA;
+    });
 
     return result;
   })();
@@ -242,6 +262,9 @@
           tabindex="0"
           aria-label={`Open life story for ${displayName(entry.name)}`}
         >
+          {#if isNewEntry(entry)}
+            <span class="new-badge">NEW</span>
+          {/if}
           <figure class="person-thumb">
             {#if entry?.portrait?.image}
               <img
@@ -524,6 +547,34 @@
     line-height: 1.2;
     color: var(--card-primary, #f8fafc);
     font-family: var(--card-heading-font, Inter, sans-serif);
+  }
+
+  .new-badge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem 0.25rem 0.55rem;
+    border-radius: 0.4rem;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 2px 8px rgba(34, 197, 94, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    z-index: 10;
+    transform: rotate(3deg);
+    transition: transform 0.2s ease;
+  }
+
+  .person-card:hover .new-badge {
+    transform: rotate(0deg) scale(1.05);
   }
 
   .card-meta {

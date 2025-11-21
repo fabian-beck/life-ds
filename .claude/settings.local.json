@@ -4,7 +4,21 @@
       "Bash(mkdir:*)",
       "Bash(curl:*)",
       "Bash(pmtiles --version)",
-      "Bash(./pmtiles.exe --version)"
+      "Bash(./pmtiles.exe --version)",
+      "Bash(git log:*)",
+      "Bash(for id in \"ada_lovelace\" \"alan_turing\" \"e_t_a_hoffmann\" \"emmy_noether\" \"erich_k_stner\" \"franz_kafka\" \"friedensreich_hundertwasser\" \"grace_hopper\" \"henry_ii\")",
+      "Bash(do echo \"=== $id ===\")",
+      "Bash(while read hash date)",
+      "Bash(do git show $hash:data/persons.json)",
+      "Bash(grep:*)",
+      "Bash(echo \"First: $date\")",
+      "Bash(break)",
+      "Bash(done)",
+      "Bash(do if git show $hash -- data/persons.json)",
+      "Bash(then last=$date)",
+      "Bash(fi)",
+      "Bash(echo \"Last: $last\")",
+      "Bash(python -c \"import sys, json; data = json.load(sys.stdin); print(''''\\n''''.join([p[''''id''''] for p in data[''''people'''']]))\")"
     ],
     "deny": [],
     "ask": []

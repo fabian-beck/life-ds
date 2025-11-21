@@ -1198,6 +1198,9 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if isinstance(primary_roles, list):
         primary_roles = primary_roles[:3]
 
+    # Get current ISO timestamp
+    current_timestamp = datetime.now().astimezone().isoformat()
+
     entry = {
         "id": person_id,
         "name": person.get("name", person_id.replace("_", " ").title()),
@@ -1216,11 +1219,18 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
     people = register.setdefault("people", [])
+    is_new = True
     for idx, existing in enumerate(people):
         if existing.get("id") == person_id:
-            people[idx] = {**existing, **entry}
+            # Preserve the original 'created' timestamp if it exists
+            created_timestamp = existing.get("created", current_timestamp)
+            people[idx] = {**existing, **entry, "created": created_timestamp, "lastUpdated": current_timestamp}
+            is_new = False
             break
     else:
+        # New entry - set both created and lastUpdated to current timestamp
+        entry["created"] = current_timestamp
+        entry["lastUpdated"] = current_timestamp
         people.append(entry)
     people.sort(key=lambda item: item.get("name", ""))
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
