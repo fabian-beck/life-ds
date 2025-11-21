@@ -1,4 +1,6 @@
 <script>
+  import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
+
   export let entries = [];
   export let getSummary = () => "";
   export let getStyle = () => ({});
@@ -73,6 +75,48 @@
     }
   }
 
+  // Check if entry has an anniversary (birth or death) within the next 3 days
+  function getAnniversary(entry) {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const today = new Date(currentYear, now.getMonth(), now.getDate());
+
+    const checkDate = (dateStr, type) => {
+      if (!dateStr) return null;
+      try {
+        const date = new Date(dateStr);
+        const month = date.getMonth();
+        const day = date.getDate();
+        const originalYear = date.getFullYear();
+
+        // Create anniversary date for this year
+        const anniversaryThisYear = new Date(currentYear, month, day);
+
+        // Calculate days until anniversary
+        const diffTime = anniversaryThisYear - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        // Check if within next 3 days (0-3 days inclusive)
+        if (diffDays >= 0 && diffDays <= 3) {
+          const years = currentYear - originalYear;
+          return { type, date: anniversaryThisYear, years, daysUntil: diffDays };
+        }
+      } catch {
+        return null;
+      }
+      return null;
+    };
+
+    const birthAnniversary = checkDate(entry.birthDate, 'birth');
+    const deathAnniversary = checkDate(entry.deathDate, 'death');
+
+    // Return the closest anniversary
+    if (birthAnniversary && deathAnniversary) {
+      return birthAnniversary.daysUntil <= deathAnniversary.daysUntil ? birthAnniversary : deathAnniversary;
+    }
+    return birthAnniversary || deathAnniversary;
+  }
+
   // Filter and sort entries based on active tags, search query, and last updated date
   $: filteredEntries = (() => {
     let result = entries;
@@ -108,8 +152,21 @@
       });
     }
 
-    // Sort by lastUpdated (most recent first)
+    // Sort by anniversary first, then by lastUpdated
     result = [...result].sort((a, b) => {
+      const anniversaryA = getAnniversary(a);
+      const anniversaryB = getAnniversary(b);
+
+      // Prioritize entries with anniversaries
+      if (anniversaryA && !anniversaryB) return -1;
+      if (!anniversaryA && anniversaryB) return 1;
+
+      // If both have anniversaries, sort by days until anniversary
+      if (anniversaryA && anniversaryB) {
+        return anniversaryA.daysUntil - anniversaryB.daysUntil;
+      }
+
+      // Otherwise, sort by lastUpdated (most recent first)
       const dateA = a.lastUpdated ? new Date(a.lastUpdated).getTime() : 0;
       const dateB = b.lastUpdated ? new Date(b.lastUpdated).getTime() : 0;
       return dateB - dateA;
@@ -267,6 +324,7 @@
         {@const summary = summaryFor(entry)}
         {@const style = entry.style ?? getStyle(entry.id)}
         {@const lifespan = formatLifespan(entry)}
+        {@const anniversary = getAnniversary(entry)}
         <article
           class="person-card"
           style={cardStyleVars(style)}
@@ -276,7 +334,21 @@
           tabindex="0"
           aria-label={`Open life story for ${displayName(entry.name)}`}
         >
-          {#if isNewEntry(entry)}
+          {#if anniversary}
+            <span class="anniversary-badge" title={`${anniversary.years} years since ${anniversary.type}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
+                <path fill="currentColor" d={anniversary.type === 'birth' ? mdiBabyFaceOutline : mdiSkullOutline} />
+              </svg>
+              {#if anniversary.daysUntil === 0}
+                Today
+              {:else if anniversary.daysUntil === 1}
+                Tomorrow
+              {:else}
+                In {anniversary.daysUntil} days
+              {/if}
+              · {anniversary.years} yrs
+            </span>
+          {:else if isNewEntry(entry)}
             <span class="new-badge">NEW</span>
           {/if}
           <figure class="person-thumb">
@@ -588,6 +660,38 @@
   }
 
   .person-card:hover .new-badge {
+    transform: rotate(0deg) scale(1.05);
+  }
+
+  .anniversary-badge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem 0.25rem 0.55rem;
+    border-radius: 0.4rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 2px 8px rgba(245, 158, 11, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    z-index: 10;
+    transform: rotate(-2deg);
+    transition: transform 0.2s ease;
+  }
+
+  .anniversary-badge svg {
+    flex-shrink: 0;
+  }
+
+  .person-card:hover .anniversary-badge {
     transform: rotate(0deg) scale(1.05);
   }
 
