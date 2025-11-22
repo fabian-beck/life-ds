@@ -19,7 +19,12 @@
       "Bash(fi)",
       "Bash(echo \"Last: $last\")",
       "Bash(python -c \"import sys, json; data = json.load(sys.stdin); print(''''\\n''''.join([p[''''id''''] for p in data[''''people'''']]))\")",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(python:*)",
+      "Bash(xargs ls:*)",
+      "Bash(for dir in data/people/*/)",
+      "Bash(ls:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

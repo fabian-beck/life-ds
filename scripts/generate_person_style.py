@@ -15,11 +15,12 @@ from xml.etree import ElementTree as ET
 
 from openai import APIStatusError, OpenAI
 
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
 STYLES_PATH = DATA_DIR / "person_styles.json"
 REGISTER_PATH = DATA_DIR / "persons.json"
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")
 HEADING_FONT_CHOICES = [
     "Playfair Display",
     "DM Serif Display",
@@ -322,18 +323,20 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     client = OpenAI(api_key=api_key)
     system = (
         "You are a senior brand designer specialising in data storytelling interfaces. "
-        "You respond with strict JSON that adheres to the provided schema."
+        "You respond with strict JSON that adheres to the provided schema. "
+        "IMPORTANT: All output text must be in English only, regardless of the source language."
     )
-    request: Dict[str, Any] = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": prompt},
-        ],
-        "response_format": {"type": "json_object"},
-    }
     try:
-        response = client.chat.completions.create(**request)
+        # Use Responses API for GPT-5.1 with reasoning support
+        response = client.responses.create(
+            model=model,
+            reasoning={"effort": DEFAULT_REASONING_EFFORT},
+            input=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+            ],
+            text={"format": {"type": "json_object"}},
+        )
     except APIStatusError as error:
         message = getattr(getattr(error, "response", {}),
                           "text", str(error))  # type: ignore[attr-defined]
@@ -341,7 +344,16 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
             "OpenAI API request failed. Check your API key, model access, and billing status. "
             f"Details: {getattr(error, 'status_code', 'unknown')} {message}"
         ) from error
-    content = response.choices[0].message.content
+
+    # Handle different response statuses
+    if response.status == "failed":
+        error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
+        raise RuntimeError(error_msg)
+    elif response.status != "completed":
+        raise RuntimeError(f"Response has unexpected status: {response.status}")
+
+    # Extract content from the response
+    content = response.output_text
     if not content:
         raise RuntimeError("OpenAI API returned an empty response.")
     return json.loads(content)

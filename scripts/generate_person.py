@@ -67,12 +67,15 @@ def main(argv: Any = None) -> int:
     run_network = not (args.dataset_only or args.style_only)
 
     try:
+        # Determine person_id from dataset generation or by loading existing data
+        person_id = None
+
         # Step 1: Generate life events dataset
         if run_dataset:
             print("\n" + "="*60)
             print("STEP 1/3: Generating life events dataset")
             print("="*60 + "\n")
-            dataset_path = generate_dataset(
+            dataset_path, person_id = generate_dataset(
                 args.subject,
                 update_registry=update_registry,
                 model=dataset_model,
@@ -88,6 +91,7 @@ def main(argv: Any = None) -> int:
             print("="*60 + "\n")
             style_result = generate_style(
                 args.subject,
+                person_id=person_id,
                 model=style_model,
             )
             print(f"\n✓ Interface style generated for '{style_result.get('id')}'")
@@ -101,6 +105,7 @@ def main(argv: Any = None) -> int:
             print("="*60 + "\n")
             network_path = generate_person_network(
                 args.subject,
+                person_id=person_id,
                 update_registry=update_registry,
                 model=network_model,
             )

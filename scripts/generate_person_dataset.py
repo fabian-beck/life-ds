@@ -11,11 +11,27 @@ from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Set
-from urllib.parse import quote
+from urllib.parse import quote, unquote, urlparse
 
 import requests
 from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
+
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from wikipedia_cache import (
+    get_cached_wikipedia_page,
+    get_cached_wikipedia_summary,
+    get_cached_commons_images,
+    get_cache_dir,
+    ensure_cache,
+    slugify as cache_slugify,
+)
+
+# Import from cache_wikipedia_materials for related articles functionality
+try:
+    from cache_wikipedia_materials import fetch_related_articles
+except ImportError:
+    fetch_related_articles = None
 
 DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -24,8 +40,9 @@ PEOPLE_DIR = DATA_DIR / "people"
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
-# Structured outputs require gpt-4o-mini, gpt-4o-2024-08-06, or later models
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
+# Global variable to store the Wikipedia language code when a URL is provided
+_wikipedia_lang: Optional[str] = None
 DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
 GEOCODER_ENDPOINT = os.getenv(
     "LIFE_DS_GEOCODER_ENDPOINT",
@@ -388,7 +405,11 @@ def geocoder_headers() -> Dict[str, str]:
     return headers
 
 
-def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
+def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, Any]:
+    # Use the specified language or fall back to global or default to English
+    language = lang or _wikipedia_lang or 'en'
+    api_url = f"https://{language}.wikipedia.org/w/api.php"
+
     params = {
         "action": "query",
         "format": "json",
@@ -401,7 +422,7 @@ def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
         "imlimit": 100,  # Fetch up to 100 images from the page
     }
     response = requests.get(
-        MEDIAWIKI_API,
+        api_url,
         params=params,
         timeout=30,
         headers=wikipedia_headers(),
@@ -415,6 +436,58 @@ def _fetch_wikipedia_page(title: str) -> Dict[str, Any]:
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
     return page
+
+
+def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
+    """
+    Extract Wikipedia article title and language code from a URL, or return None if not a URL.
+
+    Supports URLs like:
+    - https://en.wikipedia.org/wiki/Ada_Lovelace
+    - https://de.wikipedia.org/wiki/Hanna_Nagel
+    - http://en.wikipedia.org/wiki/Ada_Lovelace
+
+    Args:
+        url_or_subject: Either a Wikipedia URL or a regular subject string
+
+    Returns:
+        Tuple of (article_title, language_code) if input is a Wikipedia URL, None otherwise
+    """
+    url_or_subject = url_or_subject.strip()
+
+    # Check if this looks like a URL
+    if not (url_or_subject.startswith('http://') or url_or_subject.startswith('https://')):
+        return None
+
+    try:
+        parsed = urlparse(url_or_subject)
+
+        # Check if this is a Wikipedia domain
+        if not parsed.netloc or 'wikipedia.org' not in parsed.netloc:
+            return None
+
+        # Extract language code from domain (e.g., 'de' from 'de.wikipedia.org')
+        domain_parts = parsed.netloc.split('.')
+        if len(domain_parts) >= 2 and domain_parts[-2] == 'wikipedia' and domain_parts[-1] == 'org':
+            lang_code = domain_parts[0]
+        else:
+            lang_code = 'en'  # Default to English
+
+        # Extract the article title from the path
+        # Path should be like /wiki/Article_Title
+        path_parts = parsed.path.split('/')
+        if len(path_parts) >= 3 and path_parts[1] == 'wiki':
+            # Get the article title (everything after /wiki/)
+            title = '/'.join(path_parts[2:])
+            # URL decode the title
+            title = unquote(title)
+            # Replace underscores with spaces (Wikipedia convention)
+            title = title.replace('_', ' ')
+            return (title, lang_code)
+
+        return None
+    except Exception:
+        return None
 
 
 def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
@@ -452,6 +525,14 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
 
 
 def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
+    # Check if the input is a Wikipedia URL
+    url_info = extract_wikipedia_title(title)
+    if url_info:
+        # Use the extracted title and language code directly without searching
+        article_title, lang_code = url_info
+        print(f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})")
+        return _fetch_wikipedia_page(article_title, lang=lang_code)
+
     candidates: List[str] = []
     seen: Set[str] = set()
     attempted: List[str] = []
@@ -725,7 +806,9 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
     return image_data
 
 
-def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subject: str) -> str:
+def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subject: str,
+                  commons_images: Optional[List[Dict[str, Any]]] = None,
+                  related_articles: Optional[List[Dict[str, Any]]] = None) -> str:
     summary_text = summary_data.get("extract", "").strip()
     extract_text = page_data.get("extract", "").strip()
 
@@ -740,9 +823,10 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
 
     image_urls = fetch_image_urls(image_titles) if image_titles else []
 
-    # Also search Wikimedia Commons for additional images
-    person_name = page_data.get("title", subject)
-    commons_images = search_commons_images(person_name, limit=30)
+    # Use provided commons_images if available (from cache), otherwise search
+    if commons_images is None:
+        person_name = page_data.get("title", subject)
+        commons_images = search_commons_images(person_name, limit=30)
 
     # Combine and deduplicate images
     seen_urls = set()
@@ -775,6 +859,29 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
         combined += "Use the captions provided above or write your own factual description of what the image shows.\n"
         combined += f"\nNote: {len(image_urls)} images available in total (showing first 30). Use images that are directly relevant to specific events.\n"
 
+    if related_articles and len(related_articles) > 0:
+        combined += f"\n\n{'='*60}\nRELATED WIKIPEDIA ARTICLES - Additional context:\n{'='*60}\n"
+        combined += "The following related articles may provide additional context about relevant topics, places, and events:\n\n"
+        for idx, article in enumerate(related_articles, 1):
+            combined += f"\n{'='*60}\n"
+            combined += f"ARTICLE {idx}: {article.get('title', 'Unknown')}\n"
+            combined += f"URL: {article.get('url', '')}\n"
+            combined += f"{'='*60}\n\n"
+
+            full_text = article.get('fullText', '')
+            if full_text:
+                combined += f"{full_text}\n"
+            else:
+                # Fallback to summary if fullText not available
+                summary = article.get('summary', '')
+                if summary:
+                    combined += f"{summary}\n"
+
+        combined += f"\n{'='*60}\n"
+        combined += f"END OF RELATED ARTICLES ({len(related_articles)} total)\n"
+        combined += f"{'='*60}\n"
+        combined += "Use the information from these related articles to enrich event descriptions with relevant context.\n"
+
     return combined
 
 
@@ -786,7 +893,9 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     system = (
         "You are a meticulous historian who converts raw Wikipedia content into structured JSON. "
         "Use ISO-8601 dates, include date_precision as 'day', 'month', or 'year'. "
-        "Align event ages with the subject's birth date."
+        "Align event ages with the subject's birth date. "
+        "Keep primary_roles concise (1-2 words each, max 3 roles). "
+        "IMPORTANT: All output text must be in English only, regardless of the source language."
     )
     instructions = (
         "Produce 12-16 significant life events covering the subject's early life, "
@@ -832,6 +941,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         # Use modern Responses API with structured outputs
         response = client.responses.parse(
             model=model,
+            reasoning={"effort": DEFAULT_REASONING_EFFORT},
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": instructions},
@@ -1235,22 +1345,69 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
         register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
 
-def generate_dataset(subject: str, *, update_registry: bool = True, model: str = DEFAULT_MODEL) -> Path:
+def generate_dataset(subject: str, *, update_registry: bool = True, model: str = DEFAULT_MODEL,
+                      use_cache: bool = True) -> Tuple[Path, str]:
     print(f"[1/7] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject)
     article_title = page_data.get("title", subject)
     print(f"[1/7] Found article '{article_title}'.")
 
-    print(f"[2/7] Retrieving summary details...")
-    summary_data = fetch_wikipedia_summary(article_title)
-    if summary_data:
-        print("[2/7] Summary retrieved successfully.")
-    else:
-        print(
-            "[2/7] No summary endpoint data available; continuing with page extract only.")
+    # Determine person_id for cache lookup
+    person_id = slugify(article_title)
 
-    print("[3/7] Building prompt for OpenAI response (including Commons search)...")
-    prompt = build_prompt(page_data, summary_data, subject)
+    # Try to use cache if enabled
+    commons_images = None
+    related_articles = None
+    if use_cache:
+        print(f"[2/7] Checking cache for '{person_id}'...")
+        # Ensure cache exists (will fetch if not available)
+        try:
+            ensure_cache(person_id, article_title, person_name=article_title)
+            # Load from cache
+            cached_page = get_cached_wikipedia_page(person_id, article_title, use_cache=True)
+            cached_summary = get_cached_wikipedia_summary(person_id, article_title, use_cache=True)
+            commons_images = get_cached_commons_images(person_id, article_title, limit=30, use_cache=True)
+
+            # Load related articles if available
+            cache_dir = get_cache_dir(person_id)
+            related_path = cache_dir / "related_articles.json"
+            if related_path.exists():
+                try:
+                    related_articles = json.loads(related_path.read_text(encoding="utf-8"))
+                    print(f"[2/7] Using cached materials ({len(commons_images)} Commons images, {len(related_articles)} related articles)")
+                except json.JSONDecodeError:
+                    print(f"[2/7] Using cached materials ({len(commons_images)} Commons images)")
+            else:
+                print(f"[2/7] Using cached materials ({len(commons_images)} Commons images)")
+
+            # Use cached data
+            page_data = cached_page
+            summary_data = cached_summary
+        except Exception as e:
+            print(f"[2/7] Cache unavailable ({e}), fetching directly...")
+            summary_data = fetch_wikipedia_summary(article_title)
+    else:
+        print(f"[2/7] Retrieving summary details...")
+        summary_data = fetch_wikipedia_summary(article_title)
+        if summary_data:
+            print("[2/7] Summary retrieved successfully.")
+        else:
+            print(
+                "[2/7] No summary endpoint data available; continuing with page extract only.")
+
+    # Fetch related articles if not already loaded from cache
+    if related_articles is None and fetch_related_articles is not None:
+        print("[3/7] Fetching related articles...")
+        try:
+            related_articles = fetch_related_articles(article_title, max_related=15, model=model,
+                                                     use_cache=use_cache, person_id=person_id)
+            print(f"[3/7] Found {len(related_articles)} related articles.")
+        except Exception as e:
+            print(f"[3/7] Warning: Failed to fetch related articles ({e})")
+            related_articles = None
+
+    print("[3/7] Building prompt for OpenAI response (including Commons search and related articles)...")
+    prompt = build_prompt(page_data, summary_data, subject, commons_images=commons_images, related_articles=related_articles)
 
     print(f"[4/7] Requesting structured dataset from model '{model}'...")
     payload = call_openai(prompt, model)
@@ -1277,7 +1434,7 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
         print("Register update complete.")
     else:
         print("Register update skipped.")
-    return file_path
+    return file_path, person_id
 
 
 def parse_args(argv: Any) -> argparse.Namespace:
@@ -1287,6 +1444,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "subject", help="Person to research, e.g. 'Ada Lovelace'.")
     parser.add_argument("--no-register", action="store_true",
                         help="Skip updating the persons register.")
+    parser.add_argument("--no-cache", action="store_true",
+                        help="Skip using cached Wikipedia materials and fetch directly from APIs.")
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
@@ -1302,10 +1461,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
 def main(argv: Any = None) -> int:
     args = parse_args(argv)
     try:
-        file_path = generate_dataset(
+        file_path, person_id = generate_dataset(
             args.subject,
             update_registry=not args.no_register,
             model=args.model,
+            use_cache=not args.no_cache,
         )
         print(f"Dataset written to {file_path}")
         if args.no_register:
