@@ -392,6 +392,38 @@
     });
   }
 
+  let touchStartX = null;
+  let touchStartY = null;
+  let touchStartScrollLeft = null;
+
+  function handleTouchStart(event) {
+    if (!slidesContainer) return;
+    const touch = event.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchStartScrollLeft = slidesContainer.scrollLeft;
+  }
+
+  function handleTouchMove(event) {
+    if (touchStartX === null || !slidesContainer) return;
+    const touch = event.touches[0];
+    const deltaX = touchStartX - touch.clientX;
+    const deltaY = touchStartY - touch.clientY;
+
+    // Only handle horizontal swipes
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      event.preventDefault();
+      // Apply damping factor of 0.6 to slow down the swipe
+      slidesContainer.scrollLeft = touchStartScrollLeft + deltaX * 0.6;
+    }
+  }
+
+  function handleTouchEnd(event) {
+    touchStartX = null;
+    touchStartY = null;
+    touchStartScrollLeft = null;
+  }
+
   function computeYearsLabel(currentPerson) {
     if (!currentPerson) return "";
     const { birth_date: birth, death_date: death } = currentPerson;
@@ -1032,6 +1064,9 @@
       aria-live="polite"
       bind:this={slidesContainer}
       on:scroll={handleScroll}
+      on:touchstart={handleTouchStart}
+      on:touchmove={handleTouchMove}
+      on:touchend={handleTouchEnd}
     >
       {#if isLoading}
         <section class="slide overview loading-slide" aria-label="Loading...">
