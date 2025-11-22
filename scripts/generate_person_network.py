@@ -16,7 +16,7 @@ from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
-from wikipedia_cache import (
+from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cache_dir,
     ensure_cache,

@@ -17,7 +17,7 @@ WIKIPEDIA_SUMMARY_API_DE = "https://de.wikipedia.org/api/rest_v1/page/summary/"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
 
 

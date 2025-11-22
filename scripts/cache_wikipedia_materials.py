@@ -12,7 +12,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
-from wikipedia_cache import (
+from utils.wikipedia_cache import (
     cache_exists,
     ensure_cache,
     get_cache_dir,

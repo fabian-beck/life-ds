@@ -18,7 +18,7 @@ from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
-from wikipedia_cache import (
+from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
     get_cached_commons_images,
@@ -1402,6 +1402,17 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
             related_articles = fetch_related_articles(article_title, max_related=15, model=model,
                                                      use_cache=use_cache, person_id=person_id)
             print(f"[3/7] Found {len(related_articles)} related articles.")
+
+            # Cache the related articles if we fetched them
+            if related_articles and use_cache:
+                cache_dir = get_cache_dir(person_id)
+                related_path = cache_dir / "related_articles.json"
+                cache_dir.mkdir(parents=True, exist_ok=True)
+                related_path.write_text(
+                    json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
+                    encoding="utf-8"
+                )
+                print(f"[3/7] Cached {len(related_articles)} related articles.")
         except Exception as e:
             print(f"[3/7] Warning: Failed to fetch related articles ({e})")
             related_articles = None
