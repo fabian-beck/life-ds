@@ -31,8 +31,22 @@
     const padding = 16;
     const offset = 8;
 
-    // Always position above the button to avoid timeline overlay at bottom
-    tooltipElement.style.top = `${buttonRect.top - tooltipRect.height - offset}px`;
+    // Check if there's enough space above
+    const spaceAbove = buttonRect.top;
+    const spaceBelow = window.innerHeight - buttonRect.bottom;
+    const tooltipHeight = tooltipRect.height;
+
+    // Position vertically - prefer top if there's enough space
+    if (spaceAbove >= tooltipHeight + offset + padding) {
+      // Position above
+      tooltipElement.style.top = `${buttonRect.top - tooltipHeight - offset}px`;
+    } else if (spaceBelow >= tooltipHeight + offset + padding) {
+      // Position below
+      tooltipElement.style.top = `${buttonRect.bottom + offset}px`;
+    } else {
+      // Not enough space either way, prefer top
+      tooltipElement.style.top = `${buttonRect.top - tooltipHeight - offset}px`;
+    }
 
     // Position horizontally
     let leftPos = buttonRect.left;
@@ -167,6 +181,10 @@
   .person-name {
     font-weight: 600;
     color: #e2e8f0;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .person-role {
