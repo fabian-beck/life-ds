@@ -6,6 +6,7 @@
   export let visiblePersonInfo = null;
   export let onToggle = () => {};
   export let containerSelector = null; // Optional: restrict positioning to container (e.g., ".modal-content")
+  export let subcategory = null; // Optional: subcategory to display instead of full relationship_type
 
   let buttonElement;
   let tooltipElement;
@@ -67,7 +68,11 @@
     aria-expanded={isExpanded}
   >
     <span class="person-name">{person.person_name}</span>
-    <span class="person-role">{person.relationship_type}</span>
+    {#if subcategory}
+      <span class="person-role">{subcategory.replace(/_/g, " ")}</span>
+    {:else}
+      <span class="person-role">{person.relationship_type?.replace(/_/g, " ") || ""}</span>
+    {/if}
   </button>
   {#if isExpanded}
     <div class="person-info-tooltip" bind:this={tooltipElement}>

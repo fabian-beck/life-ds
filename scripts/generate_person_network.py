@@ -42,7 +42,11 @@ class Connection(BaseModel):
     """A connection/relationship in the ego network."""
     person_name: str = Field(description="Full name of the connected person")
     relationship_type: str = Field(
-        description="Type of relationship: 'family', 'colleague', 'mentor', 'student', 'collaborator', 'friend', 'rival', 'patron', 'employee', or 'other'"
+        description="Type of relationship with optional subcategory using format 'category/subcategory'. "
+        "Main categories: 'family', 'professional', 'social', 'artistic', 'academic', or 'other'. "
+        "Examples: 'family/father', 'family/sibling', 'family/spouse', 'family/child', "
+        "'professional/colleague', 'professional/mentor', 'professional/patron', 'professional/employee', "
+        "'social/friend', 'social/rival', 'artistic/collaborator', 'academic/student', 'academic/advisor'"
     )
     relationship_description: str = Field(
         description="Brief description of the nature of the relationship"
@@ -90,6 +94,16 @@ class EgoNetworkMetadata(BaseModel):
         None, description="Wikipedia URL for the ego")
 
 
+class CategorySummary(BaseModel):
+    """Summary for a specific relationship category."""
+    relationship_type: str = Field(
+        description="The main relationship category being summarized (without subcategory): 'family', 'professional', 'social', 'artistic', 'academic', or 'other'"
+    )
+    summary: str = Field(
+        description="Brief 1-3 sentence summary of the person's relationships in this category"
+    )
+
+
 class EgoNetwork(BaseModel):
     """Complete ego network dataset for a person."""
     dataset: str = Field(description="Name of the dataset")
@@ -99,8 +113,8 @@ class EgoNetwork(BaseModel):
     connections: List[Connection] = Field(
         description="List of connections/relationships in the ego network"
     )
-    network_summary: str = Field(
-        description="Brief summary of the ego's social network characteristics"
+    category_summaries: List[CategorySummary] = Field(
+        description="Brief summaries for each relationship category present in the network, starting with family"
     )
 
 
@@ -365,14 +379,18 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "You are a meticulous social network analyst who converts raw Wikipedia content into structured JSON ego networks. "
         "Focus on identifying significant relationships in a person's life, including family members, colleagues, mentors, "
         "students, collaborators, friends, rivals, and other important connections. "
-        "IMPORTANT: All output text must be in English only, regardless of the source language."
+        "IMPORTANT: All output text must be in English only, regardless of the source language. "
+        "IMPORTANT: Use only 3-5 main relationship categories maximum to keep the network organized and focused."
     )
 
     instructions = (
         "Analyze the provided Wikipedia content and extract an ego network for the subject. "
         "Include 10-25 significant connections/relationships. For each connection provide:\n"
         "- person_name: Full name of the connected person\n"
-        "- relationship_type: One of 'family', 'colleague', 'mentor', 'student', 'collaborator', 'friend', 'rival', 'patron', 'employee', or 'other'\n"
+        "- relationship_type: Use format 'category/subcategory' where you select from 3-5 main categories that best represent the person's network. "
+        "Common categories include 'family', 'professional', 'social', 'artistic', 'academic', but choose only the most relevant 3-5 categories for this person. "
+        "Add specific subcategories like 'family/father', 'family/sibling', 'family/spouse', 'professional/colleague', 'professional/mentor', "
+        "'social/friend', 'artistic/collaborator', 'academic/student', etc.\n"
         "- relationship_description: Brief description of the relationship\n"
         "- start_year: When the relationship began (approximate)\n"
         "- end_year: When it ended (null if ongoing or unknown)\n"
@@ -383,8 +401,13 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- sources: Wikipedia URLs supporting this connection\n"
         "- notes: Additional context (optional)\n\n"
         "Focus on well-documented relationships with clear evidence in the Wikipedia text. "
-        "Prioritize quality over quantity - include only connections with sufficient information. "
-        "Also provide ego metadata and a network summary describing the overall characteristics of the person's social network."
+        "Prioritize quality over quantity - include only connections with sufficient information.\n\n"
+        "Also provide:\n"
+        "- Ego metadata (name, birth/death years, roles, summary)\n"
+        "- Category summaries: For each of the 3-5 MAIN categories you used in the network, "
+        "provide a brief 1-3 sentence summary describing the person's relationships in that category. "
+        "Start with family if present, then list other categories in order of importance or prevalence. "
+        "Remember: use exactly 3-5 categories total, no more."
     )
 
     try:
@@ -476,31 +499,44 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
 
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
-    """Update the persons register - ensure person exists but don't add network info."""
+    """Update the persons register - ensure person exists and update lastUpdated timestamp."""
     register = {"people": []}
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
 
     people = register.setdefault("people", [])
 
-    # Check if person already exists in register
-    person_exists = any(existing.get("id") == person_id for existing in people)
+    # Get current ISO timestamp
+    from datetime import datetime
+    current_timestamp = datetime.now().astimezone().isoformat()
 
-    if not person_exists:
+    # Check if person already exists in register
+    person_found = False
+    for idx, existing in enumerate(people):
+        if existing.get("id") == person_id:
+            # Update lastUpdated timestamp for existing person
+            people[idx]["lastUpdated"] = current_timestamp
+            person_found = True
+            break
+
+    if not person_found:
         # Person not in register yet, add minimal entry
         # The life_events generation script should have run first and added full details
         people.append({
             "id": person_id,
             "name": payload.get("ego", {}).get("name", person_id.replace("_", " ").title()),
             "summary": payload.get("ego", {}).get("summary", ""),
+            "created": current_timestamp,
+            "lastUpdated": current_timestamp,
         })
 
         people.sort(key=lambda item: item.get("name", ""))
-        REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-        REGISTER_PATH.write_text(
-            json.dumps(register, indent=2, ensure_ascii=True) + "\n",
-            encoding="utf-8"
-        )
+
+    REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
+    REGISTER_PATH.write_text(
+        json.dumps(register, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8"
+    )
 
 
 def generate_person_network(

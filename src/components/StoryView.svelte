@@ -502,6 +502,13 @@
     }
   }
 
+  function getSubcategory(relationshipType) {
+    if (!relationshipType || !relationshipType.includes('/')) {
+      return null;
+    }
+    return relationshipType.split('/')[1];
+  }
+
   function getRelevantPeople(event) {
     if (!egoNetwork?.connections || !Array.isArray(egoNetwork.connections)) {
       return [];
@@ -1240,10 +1247,12 @@
                         <div class="people-list">
                           {#each relevantPeople as person, idx}
                             {@const personKey = `${slide.eventIndex}-${idx}`}
+                            {@const subcategory = getSubcategory(person.relationship_type)}
                             <PersonChip
                               {person}
                               {personKey}
                               {visiblePersonInfo}
+                              {subcategory}
                               onToggle={togglePersonInfo}
                             />
                           {/each}

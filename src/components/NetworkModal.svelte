@@ -38,13 +38,23 @@
   function groupPeopleByType(connections) {
     const groups = {};
     connections.forEach((connection) => {
-      const type = connection.relationship_type || "other";
-      if (!groups[type]) {
-        groups[type] = [];
+      const fullType = connection.relationship_type || "other";
+      // Extract the main category (before the slash)
+      const mainCategory = fullType.includes('/') ? fullType.split('/')[0] : fullType;
+
+      if (!groups[mainCategory]) {
+        groups[mainCategory] = [];
       }
-      groups[type].push(connection);
+      groups[mainCategory].push(connection);
     });
     return groups;
+  }
+
+  function getSubcategory(relationshipType) {
+    if (!relationshipType || !relationshipType.includes('/')) {
+      return null;
+    }
+    return relationshipType.split('/')[1];
   }
 
   function togglePersonInfo(personKey) {
@@ -64,6 +74,13 @@
 
   $: connections = egoNetwork?.connections || [];
   $: groupedPeople = groupPeopleByType(connections);
+  $: categorySummaries = egoNetwork?.category_summaries || [];
+
+  // Create a map for quick lookup of summaries by type
+  $: summaryMap = categorySummaries.reduce((map, item) => {
+    map[item.relationship_type] = item.summary;
+    return map;
+  }, {});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -103,11 +120,6 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="modal-content" on:click={handleClickOutside}>
-      {#if egoNetwork?.network_summary}
-        <div class="network-summary">
-          <p class="summary-text">{egoNetwork.network_summary}</p>
-        </div>
-      {/if}
       {#each Object.entries(groupedPeople).sort( ([a], [b]) => {
         if (a === 'family') return -1;
         if (b === 'family') return 1;
@@ -118,13 +130,18 @@
             {type}
             <span class="group-count">({people.length})</span>
           </h4>
+          {#if summaryMap[type]}
+            <p class="category-summary">{summaryMap[type]}</p>
+          {/if}
           <div class="group-people">
             {#each people as person, idx}
               {@const personKey = `${type}-${idx}`}
+              {@const subcategory = getSubcategory(person.relationship_type)}
               <PersonChip
                 {person}
                 {personKey}
                 {visiblePersonInfo}
+                {subcategory}
                 onToggle={togglePersonInfo}
                 containerSelector=".modal-content"
               />
@@ -276,22 +293,21 @@
     gap: 1.5rem;
   }
 
-  .network-summary {
-    padding: 0;
-  }
-
-  .summary-text {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #e2e8f0;
-    font-family: var(--story-body-font, Inter, sans-serif);
-  }
-
   .person-group {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  .category-summary {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .group-title {
@@ -320,6 +336,13 @@
   }
 
   @media (min-width: 768px) {
+    .network-modal {
+      max-width: 900px;
+      max-height: 90vh;
+      max-height: 90dvh;
+      border-radius: 1rem;
+    }
+
     .modal-content {
       padding: 2rem;
     }
