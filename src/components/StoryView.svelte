@@ -181,6 +181,11 @@
       );
       segments.push(`--story-pattern-size: 500px`);
     }
+    if (style.separatorGlyphDataUrl) {
+      segments.push(
+        `--story-separator-glyph: url(${style.separatorGlyphDataUrl})`
+      );
+    }
     if (style.headingFont) {
       segments.push(
         `--story-heading-font: "${style.headingFont}", Inter, sans-serif`
@@ -996,7 +1001,11 @@
     <div class="compact-info" aria-live="polite">
       <span class="name">{personName}</span>
       {#if yearsLabel}
-        <span class="separator">·</span>
+        {#if styleConfig?.separatorGlyphDataUrl}
+          <span class="separator glyph-separator" aria-hidden="true"></span>
+        {:else}
+          <span class="separator">·</span>
+        {/if}
         <span class="lifespan">{yearsLabel}</span>
       {/if}
       <button
@@ -1166,7 +1175,11 @@
                 <div class="date-wrapper">
                   <p class="date">{formatDate(slide)}</p>
                   {#if formatAgeLabel(slide.age)}
-                    <span class="separator">·</span>
+                    {#if styleConfig?.separatorGlyphDataUrl}
+                      <span class="separator glyph-separator" aria-hidden="true"></span>
+                    {:else}
+                      <span class="separator">·</span>
+                    {/if}
                     <p class="age">{formatAgeLabel(slide.age)}</p>
                   {/if}
                   {#if getDateNote(slide)}
@@ -1573,6 +1586,19 @@
   .compact-info .separator {
     color: rgba(148, 163, 184, 0.8);
     flex: 0 0 auto;
+  }
+
+  .compact-info .separator.glyph-separator {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background-image: var(--story-separator-glyph);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    vertical-align: middle;
+    margin: 0 0.15rem;
   }
 
   .compact-info .lifespan {
@@ -2057,6 +2083,19 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  .date-wrapper .separator.glyph-separator {
+    width: 0.9em;
+    height: 0.9em;
+    display: inline-block;
+    background-image: var(--story-separator-glyph);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6;
+    vertical-align: middle;
+    flex-shrink: 0;
   }
 
   .date-info-btn {

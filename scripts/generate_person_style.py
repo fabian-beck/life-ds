@@ -224,6 +224,51 @@ def sanitise_pattern_svg(svg: str) -> str:
     return compact_svg(sanitised)
 
 
+def sanitise_separator_glyph_svg(svg: str, primary_color: str) -> str:
+    """Sanitise and normalize separator glyph SVG, replacing color placeholders with the actual primary color."""
+    try:
+        root = ET.fromstring(svg)
+    except ET.ParseError as exc:
+        raise ValueError(
+            f"separator_glyph_svg must be valid SVG: {exc}") from exc
+
+    if strip_namespace(root.tag) != "svg":
+        raise ValueError(
+            "separator_glyph_svg must have an <svg> root element.")
+
+    root.set("xmlns", root.attrib.get("xmlns", "http://www.w3.org/2000/svg"))
+
+    # Normalize viewBox if not present
+    if "viewBox" not in root.attrib:
+        root.set("viewBox", "0 0 32 32")
+
+    for element in root.iter():
+        # Promote inline style declarations to attributes
+        style_value = element.attrib.get("style")
+        if style_value:
+            for key, val in parse_style_attribute(style_value).items():
+                element.set(key, val)
+            element.attrib.pop("style", None)
+
+        # Replace any color with the primary color
+        for attr in list(element.attrib.keys()):
+            lowered = attr.lower()
+            value_text = element.attrib[attr]
+            if lowered in {"fill", "stroke"}:
+                # Accept any color and replace with primary
+                if value_text.lower() not in {"none", "transparent"}:
+                    element.set(attr, primary_color)
+            elif lowered in {"fill-opacity", "stroke-opacity", "opacity"}:
+                # Remove opacity attributes - will be controlled by CSS
+                element.attrib.pop(attr, None)
+
+    sanitised = ET.tostring(root, encoding="unicode")
+    # Remove namespace prefixes for cleaner output
+    sanitised = re.sub(r'\bns\d+:', '', sanitised)
+    sanitised = re.sub(r'\s+xmlns:ns\d+="[^"]*"', '', sanitised)
+    return compact_svg(sanitised)
+
+
 def load_dataset_context(person_id: str) -> Dict[str, Any]:
     context: Dict[str, Any] = {}
     # Updated to use subdirectory structure
@@ -285,18 +330,25 @@ def load_dataset_context(person_id: str) -> Dict[str, Any]:
 def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
     details: list[str] = [
         "Design a cohesive dark-mode visual identity for the following person.",
-        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, heading_font, body_font.",
+        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, heading_font, body_font.",
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
         "- background must remain dark (perceived luminance under 0.18).",
         "- primary and secondary should contrast well against the background and with each other.",
         "- background_pattern_svg must be a 160x160 tileable SVG string that uses only black (#000000) and white (#FFFFFF).",
         "- Do NOT use opacity, fill-opacity, or stroke-opacity attributes in the SVG. Use stroke-width variations instead for visual hierarchy.",
-        "- Keep the SVG minimal, geometric, and suitable as a subtle texture when blended softly over the background.",
-        "- The pattern should reflect the person's profession, activities, and key achievements with symbolic geometric motifs.",
-        "- For example, a mathematician might inspire interlocking rings or tessellations; a physicist might suggest orbital arcs; a composer might use rhythmic staff lines.",
+        "- The pattern should be highly stylized and work as a tiled background, smoothly repeating.",
+        "- Strong strokes are favored over thin lines for better visual impact.",
+        "- The pattern should be characteristic for the person, without making too direct references to real world objects—keep it abstract.",
+        "- The pattern should reflect the person's profession, activities, and key achievements through abstract geometric motifs.",
         "- Avoid gradients or colors beyond black and white in the SVG.",
-        "- Do not surround the SVG string with backticks or additional JSON structures.",
+        "- separator_glyph_svg must be a simple, distinctive glyph designed to work at small sizes (32x32 recommended viewBox).",
+        "- The separator glyph should use the primary color as fill/stroke and be characteristic of the person's aesthetic.",
+        "- IMPORTANT: Use maximum 2-3 simple geometric shapes (circles, rectangles, lines, triangles) for the separator glyph.",
+        "- As a separator glyph, it should be non-directional (no arrows or pointing shapes) and symmetrical when possible.",
+        "- Keep the separator glyph simple—it should be recognizable and readable even at 16-24px display size.",
+        "- The separator glyph should complement the background pattern and overall visual identity.",
+        "- Do not surround the SVG strings with backticks or additional JSON structures.",
         (
             "- heading_font must be exactly one of: "
             + ", ".join(HEADING_FONT_CHOICES)
@@ -366,6 +418,7 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     secondary = payload.get("secondary")
     background = payload.get("background")
     pattern_svg = payload.get("background_pattern_svg")
+    separator_svg = payload.get("separator_glyph_svg")
     heading_font = payload.get("heading_font")
     body_font = payload.get("body_font")
 
@@ -378,6 +431,9 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     if not isinstance(pattern_svg, str) or "<svg" not in pattern_svg:
         raise ValueError(
             "background_pattern_svg must be an SVG string containing '<svg'.")
+    if not isinstance(separator_svg, str) or "<svg" not in separator_svg:
+        raise ValueError(
+            "separator_glyph_svg must be an SVG string containing '<svg'.")
     if not isinstance(heading_font, str) or heading_font.strip() not in HEADING_FONT_CHOICES:
         raise ValueError(
             "heading_font must be one of: " + ", ".join(HEADING_FONT_CHOICES)
@@ -387,12 +443,15 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
             "body_font must be one of: " + ", ".join(BODY_FONT_CHOICES)
         )
 
-    compact = sanitise_pattern_svg(pattern_svg)
+    compact_pattern = sanitise_pattern_svg(pattern_svg)
+    compact_separator = sanitise_separator_glyph_svg(separator_svg, primary.upper())
+
     return {
         "primary": primary.upper(),
         "secondary": secondary.upper(),
         "background": background.upper(),
-        "background_pattern_svg": compact,
+        "background_pattern_svg": compact_pattern,
+        "separator_glyph_svg": compact_separator,
         "heading_font": heading_font.strip(),
         "body_font": body_font.strip(),
     }

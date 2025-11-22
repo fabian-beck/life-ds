@@ -73,6 +73,16 @@
         }
       }
     }
+    if (typeof raw.separator_glyph_svg === "string") {
+      const svg = raw.separator_glyph_svg.trim();
+      if (svg.includes("<svg")) {
+        result.separatorGlyphSvg = svg;
+        const dataUrl = svgToDataUrl(svg);
+        if (dataUrl) {
+          result.separatorGlyphDataUrl = dataUrl;
+        }
+      }
+    }
     if (typeof raw.heading_font === "string" && raw.heading_font.trim()) {
       result.headingFont = raw.heading_font.trim();
     }
