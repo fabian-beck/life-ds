@@ -569,6 +569,14 @@
     box-shadow: 0 18px 36px rgba(15, 23, 42, 0.42);
   }
 
+  .person-card:active {
+    transform: translateY(-2px) scale(0.98);
+    transition:
+      transform 0.1s ease,
+      border-color 0.1s ease,
+      box-shadow 0.1s ease;
+  }
+
   .person-card > * {
     position: relative;
     z-index: 1;

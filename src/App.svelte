@@ -203,25 +203,40 @@
   let dataset = null;
   let egoNetwork = null;
   let dataLoading = false;
+  let loadingStage = null; // Track which part is loading: 'initial', 'dataset', 'network', null
 
   $: if (personId) {
     dataLoading = true;
-    Promise.all([loadDataset(personId), loadEgoNetwork(personId)])
-      .then(([datasetResult, networkResult]) => {
+    loadingStage = 'initial';
+    dataset = null;
+    egoNetwork = null;
+
+    // Load dataset first (includes portrait and events)
+    loadingStage = 'dataset';
+    loadDataset(personId)
+      .then((datasetResult) => {
         dataset = datasetResult;
+        loadingStage = 'network';
+        // Load network data after dataset
+        return loadEgoNetwork(personId);
+      })
+      .then((networkResult) => {
         egoNetwork = networkResult;
         dataLoading = false;
+        loadingStage = null;
       })
       .catch((error) => {
         console.error("Failed to load data:", error);
         dataset = null;
         egoNetwork = null;
         dataLoading = false;
+        loadingStage = null;
       });
   } else {
     dataset = null;
     egoNetwork = null;
     dataLoading = false;
+    loadingStage = null;
   }
 
   // Normalise a display name (underscore to space, collapse whitespace)
@@ -272,10 +287,12 @@
 </script>
 
 <div class="shell">
-  {#if currentPath.startsWith("/story/") && dataset}
+  {#if currentPath.startsWith("/story/")}
     <StoryView
       {dataset}
       {egoNetwork}
+      isLoading={dataLoading}
+      {loadingStage}
       activeIndex={slideParam ?? 0}
       hasRegistryEntries={registryEntries.length > 0}
       styleConfig={styleFor(personId)}
