@@ -181,7 +181,7 @@
     --dot-gap: 0rem;
     position: fixed;
     top: auto;
-    bottom: 1.25rem;
+    bottom: 0.75rem;
     left: 50%;
     transform: translateX(-50%);
     width: min(96vw, 1020px);
@@ -207,14 +207,15 @@
   .expand-toggle {
     pointer-events: auto;
     position: absolute;
-    top: 1.25rem;
+    top: 1.4rem;
     left: 50%;
     transform: translateX(-50%);
     width: 2.8rem;
     height: 2.8rem;
-    border-radius: 999px;
-    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.35));
-    background: rgba(15, 23, 42, 0.75);
+    border-radius: 1.5rem 1.5rem 0.5rem 0.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-bottom: none;
+    background: rgba(15, 23, 42, 0.65);
     backdrop-filter: blur(6px);
     color: var(--story-primary, #e2e8f0);
     display: flex;
@@ -231,14 +232,25 @@
 
   .indicator.expanded .expand-toggle {
     top: 0.5rem;
+    border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
+    border-top: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   }
 
   .expand-toggle:hover,
   .expand-toggle:focus {
-    background: rgba(15, 23, 42, 0.95);
-    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(148, 163, 184, 0.3);
     transform: translateX(-50%) scale(1.05);
     outline: none;
+  }
+
+  .expand-toggle .icon {
+    transform: translateY(-0.15rem);
+  }
+
+  .indicator.expanded .expand-toggle .icon {
+    transform: translateY(0);
   }
 
   .indicator-content {
