@@ -20,12 +20,72 @@
   export let onScrollToIndex = () => {};
 
   let isExpanded = false;
+  let isDragging = false;
+  let trackElement = null;
+  let dragStartX = null;
 
   $: totalPanels = totalSlides > 0 ? totalSlides + 1 : 1; // +1 for overview slide
   $: hasEvents = totalSlides > 0;
 
   function toggleExpanded() {
     isExpanded = !isExpanded;
+  }
+
+  function handleTrackPointerDown(event) {
+    console.log('[TIMELINE] pointerdown', {
+      pointerType: event.pointerType,
+      pointerId: event.pointerId,
+      clientX: event.clientX,
+      target: event.target.className,
+      isExpanded,
+      hasTrackElement: !!trackElement
+    });
+
+    if (isExpanded || !trackElement) return;
+
+    // Accept all pointer types (mouse, pen, touch)
+    isDragging = true;
+    dragStartX = event.clientX;
+    trackElement.setPointerCapture(event.pointerId);
+    updateSlideFromPosition(event.clientX);
+
+    // Prevent event from bubbling to slides container
+    event.stopPropagation();
+    console.log('[TIMELINE] captured and stopped propagation');
+  }
+
+  function handleTrackPointerMove(event) {
+    if (!isDragging) {
+      console.log('[TIMELINE] pointermove - not dragging');
+      return;
+    }
+    console.log('[TIMELINE] pointermove - updating position', {
+      clientX: event.clientX
+    });
+    updateSlideFromPosition(event.clientX);
+  }
+
+  function handleTrackPointerUp(event) {
+    console.log('[TIMELINE] pointerup', {
+      isDragging,
+      activeIndex
+    });
+    if (!isDragging) return;
+    isDragging = false;
+    if (trackElement) {
+      trackElement.releasePointerCapture(event.pointerId);
+    }
+    // Snap to the current active slide
+    onScrollToIndex(activeIndex);
+  }
+
+  function updateSlideFromPosition(clientX) {
+    if (!trackElement) return;
+    const rect = trackElement.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const progress = Math.max(0, Math.min(1, x / rect.width));
+    const targetIndex = Math.round(progress * (totalPanels - 1));
+    onScrollToIndex(targetIndex, true); // immediate scroll during drag
   }
 </script>
 
@@ -94,6 +154,18 @@
         class="indicator-track"
         class:single={!hasMultipleEvents}
         class:expanded={isExpanded}
+        class:dragging={isDragging}
+        bind:this={trackElement}
+        on:pointerdown={handleTrackPointerDown}
+        on:pointermove={handleTrackPointerMove}
+        on:pointerup={handleTrackPointerUp}
+        on:pointercancel={handleTrackPointerUp}
+        role="slider"
+        aria-valuemin="0"
+        aria-valuemax={totalPanels - 1}
+        aria-valuenow={activeIndex}
+        aria-label="Timeline scrubber"
+        tabindex={isExpanded ? -1 : 0}
       >
         <div class="dots-container" class:expanded={isExpanded}>
           {#if activeIndex > 0 && !isExpanded}
@@ -191,7 +263,7 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    pointer-events: none;
+    pointer-events: none; /* Container lets events pass through */
     z-index: 5;
   }
 
@@ -288,7 +360,7 @@
   }
 
   .indicator-track {
-    pointer-events: auto;
+    pointer-events: auto; /* Track captures events, container above lets them pass through */
     position: relative;
     display: flex;
     align-items: center;
@@ -300,10 +372,22 @@
     backdrop-filter: blur(6px);
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
     border: 1px solid rgba(148, 163, 184, 0.2);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation; /* Allows default touch, disables double-tap zoom */
     transition:
       padding 1s cubic-bezier(0.22, 1, 0.36, 1),
       background 1s cubic-bezier(0.22, 1, 0.36, 1),
       height 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .indicator-track.dragging {
+    cursor: grabbing;
+    background: rgba(15, 23, 42, 0.75);
+  }
+
+  .indicator-track:not(.expanded):hover {
+    background: rgba(15, 23, 42, 0.7);
   }
 
   .indicator-track.expanded {
@@ -487,6 +571,11 @@
       background-color 0.25s ease,
       transform 0.25s ease;
     flex: 0 0 auto;
+    pointer-events: all;
+  }
+
+  .indicator-track.dragging .dot {
+    pointer-events: none;
   }
 
   .dot.square {

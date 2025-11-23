@@ -1,5 +1,7 @@
 # Claude Code Context: Life Data Stories
 
+> **Important**: Update this file whenever there are major changes to project structure, features, data schemas, or development workflow. This ensures AI assistants have accurate context.
+
 ## Project Overview
 
 A biographical visualization application that presents famous figures' life stories as full-screen, scroll-snapped slides with interactive timelines, maps, and social networks. Built with Svelte + Vite, designed mobile-first.
@@ -253,6 +255,8 @@ npm run build        # Production build to dist/
 npm run preview      # Preview production build
 ```
 
+**Note**: The dev server is always running in this environment. No need to start it manually.
+
 ### Adding a New Person
 
 1. Run `python scripts/generate_person.py "Person Name"`
@@ -317,11 +321,12 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 
 `Timeline.svelte` features:
 
-- Horizontal scrollable timeline
-- Auto-scroll to current event
-- Click to jump to specific event
-- Visual indicators for event categories
-- Year markers (not all events have exact dates)
+- Drag scrubber: Click and drag anywhere on timeline track to navigate through slides in real-time
+- Snap-to-slide: Releases snap to nearest slide for precise navigation
+- Click dots to jump to specific events
+- Visual indicators for event categories (icons determined by event text)
+- Year markers when expanded (not all events have exact dates)
+- Expandable mode: Toggle to see full vertical timeline with labels
 
 ### Network Visualization
 

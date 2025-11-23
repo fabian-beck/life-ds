@@ -395,33 +395,121 @@
   let touchStartX = null;
   let touchStartY = null;
   let touchStartScrollLeft = null;
+  let touchStartTime = null;
+  let lastTouchX = null;
+  let lastTouchTime = null;
 
   function handleTouchStart(event) {
+    console.log('[SLIDE] touchstart', {
+      target: event.target.className,
+      touches: event.touches.length,
+      clientX: event.touches[0]?.clientX,
+      clientY: event.touches[0]?.clientY,
+      hasContainer: !!slidesContainer
+    });
     if (!slidesContainer) return;
     const touch = event.touches[0];
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
     touchStartScrollLeft = slidesContainer.scrollLeft;
+    touchStartTime = Date.now();
+    lastTouchX = touch.clientX;
+    lastTouchTime = touchStartTime;
+
+    // Disable scroll-snap during touch to allow free scrolling
+    slidesContainer.style.scrollSnapType = 'none';
+    console.log('[SLIDE] disabled scroll-snap');
   }
 
   function handleTouchMove(event) {
-    if (touchStartX === null || !slidesContainer) return;
+    if (touchStartX === null || !slidesContainer) {
+      console.log('[SLIDE] touchmove - skipped (no start)', {
+        touchStartX,
+        hasContainer: !!slidesContainer
+      });
+      return;
+    }
     const touch = event.touches[0];
     const deltaX = touchStartX - touch.clientX;
     const deltaY = touchStartY - touch.clientY;
 
+    // Track last position for velocity calculation
+    lastTouchX = touch.clientX;
+    lastTouchTime = Date.now();
+
+    console.log('[SLIDE] touchmove', {
+      deltaX,
+      deltaY,
+      absDeltaX: Math.abs(deltaX),
+      absDeltaY: Math.abs(deltaY),
+      isHorizontal: Math.abs(deltaX) > Math.abs(deltaY)
+    });
+
     // Only handle horizontal swipes
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      console.log('[SLIDE] preventing default, applying scroll');
       event.preventDefault();
-      // Apply damping factor of 0.6 to slow down the swipe
-      slidesContainer.scrollLeft = touchStartScrollLeft + deltaX * 0.6;
+      // Direct 1:1 mapping - no damping
+      slidesContainer.scrollLeft = touchStartScrollLeft + deltaX;
     }
   }
 
   function handleTouchEnd(event) {
+    console.log('[SLIDE] touchend', {
+      hadStart: touchStartX !== null
+    });
+
+    if (slidesContainer && touchStartX !== null) {
+      // Calculate swipe velocity
+      const deltaX = touchStartX - lastTouchX;
+      const deltaTime = lastTouchTime - touchStartTime;
+      const velocity = deltaTime > 0 ? deltaX / deltaTime : 0; // pixels per ms
+
+      console.log('[SLIDE] swipe stats', {
+        deltaX,
+        deltaTime,
+        velocity,
+        velocityThreshold: 0.3
+      });
+
+      // Re-enable scroll-snap
+      slidesContainer.style.scrollSnapType = 'x mandatory';
+      console.log('[SLIDE] re-enabled scroll-snap');
+
+      // Decide whether to move to next/prev slide based on velocity or distance
+      const swipeThreshold = slidesContainer.clientWidth * 0.3; // 30% of screen width
+      const velocityThreshold = 0.3; // pixels per ms
+
+      let shouldChangeSlide = false;
+      let direction = 0;
+
+      if (Math.abs(velocity) > velocityThreshold) {
+        // Fast swipe - use velocity
+        shouldChangeSlide = true;
+        direction = velocity > 0 ? 1 : -1; // positive deltaX = swipe left = next slide
+      } else if (Math.abs(deltaX) > swipeThreshold) {
+        // Slow but long swipe - use distance
+        shouldChangeSlide = true;
+        direction = deltaX > 0 ? 1 : -1;
+      }
+
+      if (shouldChangeSlide) {
+        const targetIndex = clamp(activeIndex + direction, 0, totalPanels - 1);
+        console.log('[SLIDE] changing slide', { from: activeIndex, to: targetIndex, direction });
+        scrollToIndex(targetIndex);
+      } else {
+        // Snap back to current slide
+        console.log('[SLIDE] snapping back to current slide');
+        scrollToIndex(activeIndex);
+      }
+    }
+
     touchStartX = null;
     touchStartY = null;
     touchStartScrollLeft = null;
+    touchStartTime = null;
+    lastTouchX = null;
+    lastTouchTime = null;
   }
 
   function computeYearsLabel(currentPerson) {
