@@ -32,15 +32,6 @@
   }
 
   function handleTrackPointerDown(event) {
-    console.log('[TIMELINE] pointerdown', {
-      pointerType: event.pointerType,
-      pointerId: event.pointerId,
-      clientX: event.clientX,
-      target: event.target.className,
-      isExpanded,
-      hasTrackElement: !!trackElement
-    });
-
     if (isExpanded || !trackElement) return;
 
     // Accept all pointer types (mouse, pen, touch)
@@ -51,25 +42,14 @@
 
     // Prevent event from bubbling to slides container
     event.stopPropagation();
-    console.log('[TIMELINE] captured and stopped propagation');
   }
 
   function handleTrackPointerMove(event) {
-    if (!isDragging) {
-      console.log('[TIMELINE] pointermove - not dragging');
-      return;
-    }
-    console.log('[TIMELINE] pointermove - updating position', {
-      clientX: event.clientX
-    });
+    if (!isDragging) return;
     updateSlideFromPosition(event.clientX);
   }
 
   function handleTrackPointerUp(event) {
-    console.log('[TIMELINE] pointerup', {
-      isDragging,
-      activeIndex
-    });
     if (!isDragging) return;
     isDragging = false;
     if (trackElement) {
