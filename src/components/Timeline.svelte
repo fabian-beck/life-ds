@@ -509,7 +509,7 @@
     left: 0;
     width: var(--dot-size);
     height: var(--dot-size);
-    border-radius: 9999px;
+    border-radius: 4px;
     background: var(--story-secondary, rgba(56, 189, 248, 0.45));
     opacity: 0.45;
     transform: translateX(
@@ -559,7 +559,7 @@
   }
 
   .dot.square {
-    border-radius: 20%;
+    border-radius: 4px;
   }
 
   .dot.active {
