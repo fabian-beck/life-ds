@@ -8,6 +8,9 @@
   $: person = dataset?.person ?? null;
   $: roles = person?.primary_roles ?? [];
 
+  // Number of columns = number of events
+  $: totalColumns = events.length;
+
   // Generate floating role tags with varied positions, sizes, and animation delays
   $: floatingRoles = roles.flatMap((role, roleIndex) => {
     // Create 3-5 instances of each role
@@ -109,14 +112,22 @@
       </div>
     </header>
 
-    <!-- Events displayed horizontally -->
-    <div class="events-container">
-      {#each events as event, index}
-        <div class="event-card">
-          <div class="event-year">{formatYear(event.date)}</div>
-          <div class="event-title">{event.title}</div>
+    <!-- Events grid with featured box -->
+    <div class="events-container" style="--total-columns: {totalColumns};">
+      <div>
+        <!-- Featured box spanning first two columns -->
+        <div class="featured-box">
+          <!-- Content TBD -->
         </div>
-      {/each}
+
+        <!-- Event cards -->
+        {#each events as event}
+          <div class="event-card">
+            <div class="event-year">{formatYear(event.date)}</div>
+            <div class="event-title">{event.title}</div>
+          </div>
+        {/each}
+      </div>
     </div>
   {/if}
 </div>
@@ -230,18 +241,34 @@
 
   .events-container {
     flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     padding: 2rem;
-    overflow: hidden;
+    overflow: auto;
     position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(var(--total-columns), 1fr);
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .events-container > div:first-child {
+    display: contents;
+  }
+
+  .featured-box {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    background: rgba(var(--background-rgb), 0.7);
+    border-radius: 0.5rem;
+    border: 2px solid var(--primary-color);
+    padding: 1.5rem;
+    min-height: 200px;
+    align-self: center;
+    min-width: 0;
   }
 
   .event-card {
-    flex: 1;
-    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -251,8 +278,21 @@
     background: rgba(var(--background-rgb), 0.6);
     border-radius: 0.5rem;
     border: 1px solid rgba(226, 232, 240, 0.1);
-    height: 100%;
-    max-height: 300px;
+    height: 120px;
+    align-self: center;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  /* First two events go in row 2 below the featured box */
+  .event-card:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .event-card:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
   }
 
   .event-year {
