@@ -311,6 +311,7 @@
   {#if currentPath.startsWith("/exhibition/")}
     <ExhibitionView
       {dataset}
+      {egoNetwork}
       isLoading={dataLoading}
       styleConfig={styleFor(personId)}
     />

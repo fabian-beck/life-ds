@@ -1,5 +1,8 @@
 <script>
+  import PersonChip from "./PersonChip.svelte";
+
   export let dataset = null;
+  export let egoNetwork = null;
   export let isLoading = false;
   export let styleConfig = null;
 
@@ -49,6 +52,74 @@
     if (!dateStr) return "";
     const match = dateStr.match(/^(-?\d+)/);
     return match ? match[1] : "";
+  }
+
+  // Extract family connections from ego network
+  $: connections = egoNetwork?.connections || [];
+  $: familyConnections = connections.filter((connection) => {
+    const fullType = connection.relationship_type || "";
+    const mainCategory = fullType.includes("/")
+      ? fullType.split("/")[0]
+      : fullType;
+    return mainCategory === "family";
+  });
+
+  // Get category summary for family
+  $: categorySummaries = egoNetwork?.category_summaries || [];
+  $: familySummary =
+    categorySummaries.find((item) => item.relationship_type === "family")
+      ?.summary || "";
+
+  // Separate family members into ancestors vs siblings/descendants
+  $: ancestors = familyConnections.filter((connection) => {
+    const subcategory = getSubcategory(connection.relationship_type) || "";
+    return (
+      subcategory.includes("mother") ||
+      subcategory.includes("father") ||
+      subcategory.includes("parent") ||
+      subcategory.includes("grandmother") ||
+      subcategory.includes("grandfather") ||
+      subcategory.includes("grandparent")
+    );
+  });
+
+  $: siblingsAndDescendants = familyConnections.filter((connection) => {
+    const subcategory = getSubcategory(connection.relationship_type) || "";
+    return (
+      subcategory.includes("brother") ||
+      subcategory.includes("sister") ||
+      subcategory.includes("sibling") ||
+      subcategory.includes("son") ||
+      subcategory.includes("daughter") ||
+      subcategory.includes("child") ||
+      subcategory.includes("grandson") ||
+      subcategory.includes("granddaughter") ||
+      subcategory.includes("grandchild")
+    );
+  });
+
+  function getSubcategory(relationshipType) {
+    if (!relationshipType || !relationshipType.includes("/")) {
+      return null;
+    }
+    return relationshipType.split("/")[1];
+  }
+
+  let visiblePersonInfo = null;
+
+  function togglePersonInfo(personKey) {
+    if (visiblePersonInfo === personKey) {
+      visiblePersonInfo = null;
+    } else {
+      visiblePersonInfo = personKey;
+    }
+  }
+
+  function handleClickOutside(event) {
+    const personWrapper = event.target.closest(".person-info-wrapper");
+    if (!personWrapper && visiblePersonInfo !== null) {
+      visiblePersonInfo = null;
+    }
   }
 </script>
 
@@ -113,11 +184,57 @@
     </header>
 
     <!-- Events grid with featured box -->
-    <div class="events-container" style="--total-columns: {totalColumns};">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div class="events-container" style="--total-columns: {totalColumns};" on:click={handleClickOutside}>
       <div>
         <!-- Featured box spanning first two columns -->
         <div class="featured-box">
-          <!-- Content TBD -->
+          <div class="featured-text-column">
+            <h4 class="featured-title">
+              Family
+              <span class="featured-count">({familyConnections.length})</span>
+            </h4>
+            {#if familySummary}
+              <p class="featured-summary">{familySummary}</p>
+            {/if}
+          </div>
+
+          <div class="featured-people-column">
+            <h5 class="column-subtitle">Ancestors</h5>
+            <div class="featured-people">
+              {#each ancestors as person, idx}
+                {@const personKey = `ancestors-${idx}`}
+                {@const subcategory = getSubcategory(person.relationship_type)}
+                <PersonChip
+                  {person}
+                  {personKey}
+                  {visiblePersonInfo}
+                  {subcategory}
+                  onToggle={togglePersonInfo}
+                  containerSelector=".events-container"
+                />
+              {/each}
+            </div>
+          </div>
+
+          <div class="featured-people-column">
+            <h5 class="column-subtitle">Siblings & Descendants</h5>
+            <div class="featured-people">
+              {#each siblingsAndDescendants as person, idx}
+                {@const personKey = `siblings-descendants-${idx}`}
+                {@const subcategory = getSubcategory(person.relationship_type)}
+                <PersonChip
+                  {person}
+                  {personKey}
+                  {visiblePersonInfo}
+                  {subcategory}
+                  onToggle={togglePersonInfo}
+                  containerSelector=".events-container"
+                />
+              {/each}
+            </div>
+          </div>
         </div>
 
         <!-- Event cards -->
@@ -266,6 +383,63 @@
     min-height: 200px;
     align-self: center;
     min-width: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .featured-text-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .featured-people-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .featured-title {
+    margin: 0;
+    font-size: 1rem;
+    text-transform: capitalize;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-family: var(--heading-font), "Inter", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .featured-count {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+
+  .featured-summary {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+    font-family: var(--body-font), "Inter", sans-serif;
+  }
+
+  .column-subtitle {
+    margin: 0;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-family: var(--heading-font), "Inter", sans-serif;
+  }
+
+  .featured-people {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .event-card {
