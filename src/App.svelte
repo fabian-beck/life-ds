@@ -2,6 +2,7 @@
   import { push, pop, replace, location } from "svelte-spa-router";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
+  import ExhibitionView from "./components/ExhibitionView.svelte";
   import registry from "../data/persons.json";
   import styleRegistry from "../data/person_styles.json";
 
@@ -205,7 +206,12 @@
   // Extract person ID and slide number from current route
   $: currentPath = $location;
   $: storyMatch = currentPath.match(/^\/story\/([^/]+)(?:\/(\d+))?/);
-  $: personId = storyMatch ? decodeURIComponent(storyMatch[1]) : null;
+  $: exhibitionMatch = currentPath.match(/^\/exhibition\/([^/]+)/);
+  $: personId = storyMatch
+    ? decodeURIComponent(storyMatch[1])
+    : exhibitionMatch
+      ? decodeURIComponent(exhibitionMatch[1])
+      : null;
   $: slideParam =
     storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
 
@@ -217,16 +223,16 @@
 
   $: if (personId) {
     dataLoading = true;
-    loadingStage = 'initial';
+    loadingStage = "initial";
     dataset = null;
     egoNetwork = null;
 
     // Load dataset first (includes portrait and events)
-    loadingStage = 'dataset';
+    loadingStage = "dataset";
     loadDataset(personId)
       .then((datasetResult) => {
         dataset = datasetResult;
-        loadingStage = 'network';
+        loadingStage = "network";
         // Load network data after dataset
         return loadEgoNetwork(personId);
       })
@@ -263,8 +269,13 @@
     ? `Life Data Stories · ${currentTitlePerson}`
     : "Life Data Stories";
 
-  // Redirect to home if trying to view non-existent story (after loading completes)
-  $: if (storyMatch && !dataset && personId && !dataLoading) {
+  // Redirect to home if trying to view non-existent story or exhibition (after loading completes)
+  $: if (
+    (storyMatch || exhibitionMatch) &&
+    !dataset &&
+    personId &&
+    !dataLoading
+  ) {
     push("/");
   }
 
@@ -297,7 +308,13 @@
 </script>
 
 <div class="shell">
-  {#if currentPath.startsWith("/story/")}
+  {#if currentPath.startsWith("/exhibition/")}
+    <ExhibitionView
+      {dataset}
+      isLoading={dataLoading}
+      styleConfig={styleFor(personId)}
+    />
+  {:else if currentPath.startsWith("/story/")}
     <StoryView
       {dataset}
       {egoNetwork}
