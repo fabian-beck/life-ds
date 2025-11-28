@@ -931,6 +931,7 @@
         opacity: 1,
         size: 16,
       });
+      markerElement.classList.add("current");
       currentMarker = new maplibregl.Marker({
         element: markerElement,
         anchor: "bottom",
@@ -1302,7 +1303,7 @@
                   {slide.description}
                 </p>
                 <ul class="details">
-                  {#if slide.locations?.length}
+                  {#if slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL}
                     <li>
                       <span class="label">
                         <svg
@@ -2052,6 +2053,25 @@
     border-radius: 50%;
     border: 2px solid rgba(2, 6, 23, 0.65);
     box-shadow: 0 8px 18px rgba(2, 6, 23, 0.5);
+  }
+
+  :global(.story-map-marker.current) {
+    border-width: 2.5px;
+    border-color: rgba(255, 255, 255, 0.9);
+    animation: markerPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes markerPulse {
+    0%, 100% {
+      box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.4),
+        0 8px 18px rgba(2, 6, 23, 0.5);
+    }
+    50% {
+      box-shadow:
+        0 0 16px rgba(255, 255, 255, 0.6),
+        0 8px 18px rgba(2, 6, 23, 0.5);
+    }
   }
 
   .portrait-button {
