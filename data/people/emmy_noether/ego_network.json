@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia_ego_network_v1",
-  "created_on": "2025-11-10",
+  "dataset": "wikipedia-ego-network",
+  "created_on": "2025-11-22",
   "ego": {
     "name": "Emmy Noether",
     "birth_year": 1882,
@@ -8,445 +8,491 @@
     "primary_roles": [
       "Mathematician"
     ],
-    "summary": "Amalie Emmy Noether was a German mathematician who fundamentally transformed abstract algebra and proved Noether's theorems linking symmetries to conservation laws in physics. A leading figure at G\u00f6ttingen, she developed deep theories of rings, fields, and algebras, and later taught in the United States at Bryn Mawr College while conducting research at the Institute for Advanced Study.",
+    "summary": "Amalie Emmy Noether (1882\u20131935) was a German mathematician who transformed abstract algebra and formulated Noether\u2019s theorems linking symmetries and conservation laws in physics. Working first in Erlangen and then at G\u00f6ttingen, she developed foundational theories of rings, fields and algebras, mentored a generation of algebraists, and in exile from Nazi Germany taught at Bryn Mawr College while researching at the Institute for Advanced Study.",
     "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether"
   },
   "connections": [
     {
       "person_name": "Max Noether",
-      "relationship_type": "family",
-      "relationship_description": "Father; mathematician at Erlangen whose lectures she occasionally substituted and under whom her early academic environment formed.",
+      "relationship_type": "family/father",
+      "relationship_description": "Father; an algebraic geometer who taught at Erlangen and strongly shaped Emmy Noether\u2019s mathematical environment and early career.",
       "start_year": 1882,
-      "end_year": null,
+      "end_year": 1921,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Family life",
+        "Mathematical discussions at home",
+        "Teaching at University of Erlangen\u2013Nuremberg",
+        "Supervising Emmy\u2019s early teaching and research",
+        "Joint involvement with Emmy\u2019s first doctoral students"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Max_Noether"
+      ],
+      "notes": "Emmy substituted for him in lectures when he was ill and her first doctoral students were officially listed under his supervision despite her major role."
+    },
+    {
+      "person_name": "Ida Amalia Kaufmann (Ida Amalia Noether)",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother; from a wealthy Jewish merchant family, provided Emmy\u2019s family background and support until her death in 1915.",
+      "start_year": 1882,
+      "end_year": 1915,
       "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "family life",
-        "University of Erlangen environment",
-        "she substituted for his lectures when he was ill"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Max_Noether"
-      ],
-      "notes": "He retired around 1915; his academic presence shaped her early path."
-    },
-    {
-      "person_name": "Ida Amalia Kaufmann",
-      "relationship_type": "family",
-      "relationship_description": "Mother; died shortly after Emmy moved to G\u00f6ttingen in 1915.",
-      "start_year": 1882,
-      "end_year": 1915,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life",
-        "personal support"
+        "Family life in Erlangen"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "notes": "Her sudden death in May 1915 caused a difficult personal interruption during Noether\u2019s G\u00f6ttingen transition."
+      "notes": "Her sudden death in May 1915, shortly after Emmy\u2019s move to G\u00f6ttingen, was a major personal blow."
     },
     {
-      "person_name": "Karl Schwarzschild",
-      "relationship_type": "mentor",
-      "relationship_description": "Lecturer at G\u00f6ttingen whose astronomy course Noether attended during 1903\u20131904.",
-      "start_year": 1903,
-      "end_year": 1904,
+      "person_name": "Alfred Noether",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Younger brother; chemist who earned a doctorate at Erlangen and died relatively young.",
+      "start_year": 1883,
+      "end_year": 1912,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Family life in Erlangen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Little direct professional interaction is recorded; his early death and different field limited long-term contact."
+    },
+    {
+      "person_name": "Fritz Noether",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Younger brother; applied mathematician whose career and persecution by the Nazis paralleled aspects of Emmy\u2019s own trajectory.",
+      "start_year": 1884,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Family life",
+        "Shared mathematical interests"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Fritz_Noether"
+      ],
+      "notes": "He studied mathematics and later emigrated to the USSR, where he was executed in 1941; both siblings were prominent Jewish mathematicians displaced by fascism."
+    },
+    {
+      "person_name": "Gustav Robert Noether",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Youngest brother; chronically ill and lived a short, little-documented life.",
+      "start_year": 1889,
+      "end_year": 1928,
       "strength": "weak",
       "interaction_frequency": "occasional",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "attendance in lectures at University of G\u00f6ttingen"
+        "Family life in Erlangen"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Karl_Schwarzschild"
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "notes": null
-    },
-    {
-      "person_name": "Hermann Minkowski",
-      "relationship_type": "mentor",
-      "relationship_description": "G\u00f6ttingen mathematician whose lectures Noether attended in 1903\u20131904.",
-      "start_year": 1903,
-      "end_year": 1904,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "attendance in lectures at University of G\u00f6ttingen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Hermann_Minkowski"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Otto Blumenthal",
-      "relationship_type": "mentor",
-      "relationship_description": "G\u00f6ttingen mathematician whose lectures Noether attended in 1903\u20131904.",
-      "start_year": 1903,
-      "end_year": 1904,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "attendance in lectures at University of G\u00f6ttingen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Otto_Blumenthal"
-      ],
-      "notes": null
+      "notes": "Emmy\u2019s biography notes his chronic illness and early death but gives few details of interaction."
     },
     {
       "person_name": "Paul Gordan",
-      "relationship_type": "mentor",
-      "relationship_description": "Doctoral supervisor at Erlangen; oversaw her 1907 dissertation on invariants.",
+      "relationship_type": "academic/advisor",
+      "relationship_description": "Doctoral advisor at Erlangen who supervised her 1907 thesis on invariants and introduced her to classical invariant theory.",
       "start_year": 1904,
-      "end_year": 1907,
+      "end_year": 1910,
       "strength": "strong",
       "interaction_frequency": "weekly",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Ph.D. supervision",
-        "invariant theory research"
+        "Doctoral supervision",
+        "Research in invariant theory",
+        "Seminars at University of Erlangen\u2013Nuremberg"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Paul_Gordan"
+        "https://de.wikipedia.org/wiki/Paul_Gordan"
       ],
-      "notes": "Representative of the computational school of invariants; Noether later moved away from this style."
+      "notes": "A leading figure of the computational invariant school; Emmy later dismissed her own thesis as \u201ccrap\u201d after moving to more abstract methods influenced by Hilbert."
     },
     {
-      "person_name": "Hans Falckenberg",
-      "relationship_type": "student",
-      "relationship_description": "Doctoral student at Erlangen whom Noether effectively advised (officially under her father); defended in 1911.",
-      "start_year": 1910,
-      "end_year": 1911,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "doctoral advising",
-        "Erlangen Mathematical Institute seminars"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ],
-      "notes": "After his doctorate he became a professor at the University of Giessen."
-    },
-    {
-      "person_name": "Erhard Schmidt",
-      "relationship_type": "colleague",
-      "relationship_description": "Successor to Gordan at Erlangen under whom Noether taught in 1910\u20131911 before Ernst Fischer took over.",
-      "start_year": 1910,
-      "end_year": 1911,
-      "strength": "weak",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "teaching at Erlangen\u2019s Mathematical Institute"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Erhard_Schmidt"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Ernst Sigismund Fischer",
-      "relationship_type": "mentor",
-      "relationship_description": "Colleague at Erlangen who became an important intellectual influence and introduced her to Hilbert\u2019s work.",
+      "person_name": "Ernst Fischer",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Erlangen professor whose teaching and discussions strongly influenced Noether\u2019s turn toward Hilbert\u2019s abstract methods.",
       "start_year": 1911,
-      "end_year": null,
+      "end_year": 1915,
       "strength": "strong",
       "interaction_frequency": "weekly",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Erlangen Mathematical Institute",
-        "extended discussions after lectures",
-        "introduction to Hilbert\u2019s methods"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Ernst_Sigismund_Fischer"
-      ],
-      "notes": "She reportedly continued mathematical discussions with him by postcard."
-    },
-    {
-      "person_name": "Fritz Seidelmann",
-      "relationship_type": "student",
-      "relationship_description": "Doctoral student at Erlangen whom Noether effectively advised (officially under her father); defended in 1916.",
-      "start_year": 1913,
-      "end_year": 1916,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "doctoral advising",
-        "Erlangen Mathematical Institute work"
+        "Teaching at Erlangen",
+        "Mathematical discussions after lectures",
+        "Correspondence via postcards about ongoing ideas"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "notes": "Later became a professor in Munich."
+      "notes": "Described by contemporaries as an important influence; they shared a lively enthusiasm for mathematics and discussed lectures long after they ended."
     },
     {
       "person_name": "David Hilbert",
-      "relationship_type": "mentor",
-      "relationship_description": "Senior G\u00f6ttingen mathematician who invited and advocated for Noether, listing her lectures under his name and supporting her habilitation.",
+      "relationship_type": "academic/patron",
+      "relationship_description": "Leading G\u00f6ttingen mathematician who invited Noether to G\u00f6ttingen, shielded her from discrimination, and collaborated conceptually on her shift to abstract algebra and Noether\u2019s theorem.",
       "start_year": 1915,
-      "end_year": null,
+      "end_year": 1935,
       "strength": "strong",
       "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
+      "influence_direction": "bidirectional",
       "shared_activities": [
-        "recruitment to University of G\u00f6ttingen",
-        "lecture sponsorship under his name",
-        "departmental advocacy for habilitation",
-        "G\u00f6ttingen seminars"
+        "Recruiting Noether to G\u00f6ttingen",
+        "Joint seminars and research environment",
+        "Political advocacy for her habilitation",
+        "Co-development of abstract algebraic viewpoints"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/David_Hilbert"
+        "https://de.wikipedia.org/wiki/David_Hilbert"
       ],
-      "notes": "A key patron-advocate during 1915\u20131919 when institutional barriers blocked her paid appointment."
+      "notes": "Hilbert famously defended her appointment with the remark that a faculty was \u201cnot a bathhouse\u201d; her work built on and extended his methods in invariants and ring theory."
     },
     {
       "person_name": "Felix Klein",
-      "relationship_type": "mentor",
-      "relationship_description": "Co-invited Noether to G\u00f6ttingen and presented her 1918 paper on invariant variational problems to the G\u00f6ttingen Academy.",
+      "relationship_type": "academic/patron",
+      "relationship_description": "Senior G\u00f6ttingen geometer who co\u2011invited Noether to G\u00f6ttingen and formally presented her 1918 paper containing Noether\u2019s theorem.",
       "start_year": 1915,
-      "end_year": null,
+      "end_year": 1925,
       "strength": "strong",
       "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
+      "influence_direction": "bidirectional",
       "shared_activities": [
-        "recruitment to University of G\u00f6ttingen",
-        "presentation of 'Invariante Variationsprobleme' (1918)",
-        "G\u00f6ttingen departmental support"
+        "Recruitment to G\u00f6ttingen",
+        "Seminars in G\u00f6ttingen",
+        "Presentation of 'Invariante Variationsprobleme' to the Royal Society of Sciences",
+        "Advocacy for her habilitation"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/Felix_Klein"
       ],
-      "notes": "Presented her theorem to the Royal Society of Sciences at G\u00f6ttingen (G\u00f6ttingen Academy)."
+      "notes": "Because Emmy was not a member of the society, Klein read her seminal paper on Noether\u2019s theorem on her behalf in 1918."
     },
     {
       "person_name": "Hermann Weyl",
-      "relationship_type": "colleague",
-      "relationship_description": "G\u00f6ttingen colleague who publicly recognized Noether\u2019s significance and interacted in the department\u2019s mathematical life.",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Prominent mathematician at G\u00f6tttingen who appreciated Noether\u2019s work and helped contextualize her influence in algebra and physics.",
       "start_year": 1915,
-      "end_year": null,
+      "end_year": 1933,
       "strength": "moderate",
       "interaction_frequency": "weekly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "G\u00f6ttingen department",
-        "seminars and professional recognition"
+        "Faculty interactions at G\u00f6ttingen",
+        "Supportive commentary on her research and teaching",
+        "Shared students and seminars"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Hermann_Weyl"
+        "https://de.wikipedia.org/wiki/Hermann_Weyl"
       ],
-      "notes": "Among prominent contemporaries who praised her contributions."
+      "notes": "In his recollections he emphasized her importance and described her as the most significant woman in the history of mathematics."
+    },
+    {
+      "person_name": "Albert Einstein",
+      "relationship_type": "academic/advocate",
+      "relationship_description": "Theoretical physicist who, though not a close collaborator, publicly praised Noether\u2019s genius and defended her after her dismissal from G\u00f6ttingen.",
+      "start_year": 1918,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Conceptual linkage between Noether\u2019s theorem and physics",
+        "Public advocacy for her legacy"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "He called her 'the most significant creative mathematical genius thus far produced since the higher education of women began'; her theorem became central to modern theoretical physics."
     },
     {
       "person_name": "Werner Schmeidler",
-      "relationship_type": "collaborator",
-      "relationship_description": "Prot\u00e9g\u00e9 and coauthor with whom she published a 1920 paper defining left and right ideals in a ring.",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Prot\u00e9g\u00e9 with whom Noether coauthored an early 1920 paper on ideals, helping launch her program in abstract algebra.",
       "start_year": 1920,
-      "end_year": null,
+      "end_year": 1921,
       "strength": "moderate",
       "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
+      "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "co-authored paper on ring ideals (1920)",
-        "G\u00f6ttingen algebra seminars"
+        "Coauthoring a paper on theory of ideals",
+        "Participation in G\u00f6ttingen algebra seminars"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "notes": "Described as her prot\u00e9g\u00e9; collaboration helped launch her epoch-defining algebra work."
-    },
-    {
-      "person_name": "Otto Boelitz",
-      "relationship_type": "patron",
-      "relationship_description": "Prussian Minister who conferred on Noether the title of nicht beamteter ausserordentlicher Professor.",
-      "start_year": 1922,
-      "end_year": 1923,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "official conferral of academic title"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Otto_Boelitz"
-      ],
-      "notes": "Recognition without salary; she became Lecturer for Algebra a year later."
+      "notes": "Their joint work introduced left and right ideals in a ring; she played the leading conceptual role while mentoring him."
     },
     {
       "person_name": "Pavel Alexandrov",
-      "relationship_type": "friend",
-      "relationship_description": "Russian topologist who became a close friend; lectured regularly at G\u00f6ttingen and was part of her circle.",
+      "relationship_type": "social/friend",
+      "relationship_description": "Russian topologist who became a close friend of Noether during repeated visits to G\u00f6ttingen, engaging in mathematical and personal exchange.",
       "start_year": 1923,
-      "end_year": null,
+      "end_year": 1935,
       "strength": "strong",
-      "interaction_frequency": "weekly",
+      "interaction_frequency": "yearly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "G\u00f6ttingen lectures (1926\u20131930)",
-        "mathematical discussions",
-        "mutual professional support"
+        "Lectures at G\u00f6ttingen",
+        "Social gatherings and discussions",
+        "Mutual professional support"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/Pavel_Alexandrov"
       ],
-      "notes": "He nicknamed her 'der Noether' and later recounted faculty opposition to her habilitation."
+      "notes": "He dubbed her 'der Noether' as a term of respect and reported that opposition to her appointment involved both sexism and objections to her politics and Jewish heritage."
     },
     {
       "person_name": "Pavel Urysohn",
-      "relationship_type": "colleague",
-      "relationship_description": "Russian mathematician who, with Alexandrov, visited G\u00f6ttingen and interacted with Noether\u2019s circle.",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Russian topologist who, with Alexandrov, visited G\u00f6ttingen in the early 1920s and interacted with Noether in its vibrant mathematical community.",
       "start_year": 1923,
       "end_year": 1924,
       "strength": "weak",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "visits to G\u00f6ttingen",
-        "seminar and departmental interactions"
+        "Participation in G\u00f6ttingen research circles",
+        "Informal mathematical discussions"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/Pavel_Urysohn"
       ],
-      "notes": "Part of the wave of international visitors to G\u00f6ttingen."
+      "notes": "Mentioned as among the first wave of Russian visitors to G\u00f6ttingen; direct collaboration with Noether is not documented, but they shared the same milieu."
     },
     {
       "person_name": "Bartel Leendert van der Waerden",
-      "relationship_type": "student",
-      "relationship_description": "Young Dutch mathematician in Noether\u2019s circle; became the leading expositor of her ideas and drew heavily on them in Moderne Algebra.",
+      "relationship_type": "academic/student",
+      "relationship_description": "Dutch mathematician who joined Noether\u2019s G\u00f6ttingen circle, absorbed her methods, and systematized them in his influential textbook 'Moderne Algebra'.",
       "start_year": 1924,
-      "end_year": null,
+      "end_year": 1935,
       "strength": "strong",
       "interaction_frequency": "weekly",
       "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "G\u00f6ttingen seminars and discussions",
-        "development and exposition of abstract algebra",
-        "influence on Moderne Algebra (1931, vol. 2)"
+        "G\u00f6ttingen seminars in algebra",
+        "Development of abstract algebra",
+        "Use of Noether\u2019s ideas in 'Moderne Algebra'"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden"
+        "https://de.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden"
       ],
-      "notes": "He credited Noether\u2019s methods in later editions of his textbook."
+      "notes": "He described her originality as \u201cabsolute beyond comparison\u201d; the second volume of his textbook is largely based on her lectures and results, acknowledging her in later editions."
     },
     {
       "person_name": "Emil Artin",
-      "relationship_type": "collaborator",
-      "relationship_description": "Worked closely with Noether beginning in 1927 on noncommutative algebras and related areas.",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Leading algebraist who worked closely with Noether from 1927 on noncommutative algebras and shared algebra seminars.",
       "start_year": 1927,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "research on noncommutative algebras",
-        "interactions among German algebraists"
+        "Joint G\u00f6ttingen\u2013Hamburg algebra circles",
+        "Research on noncommutative algebras",
+        "Influence on van der Waerden\u2019s textbook"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Emil_Artin"
+        "https://en.wikipedia.org/wiki/Emil_Artin",
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "notes": "Part of a core group (with Brauer and Hasse) advancing modern algebra."
-    },
-    {
-      "person_name": "Richard Brauer",
-      "relationship_type": "collaborator",
-      "relationship_description": "Member of the group that worked closely with Noether from 1927 on noncommutative algebra.",
-      "start_year": 1927,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "work on noncommutative algebras",
-        "G\u00f6ttingen/Hamburg algebra community"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Richard_Brauer"
-      ],
-      "notes": null
+      "notes": "Their interactions helped unify representation theory of groups with modules and ideals; van der Waerden cited both Artin and Noether as foundational for his book."
     },
     {
       "person_name": "Helmut Hasse",
-      "relationship_type": "collaborator",
-      "relationship_description": "Collaborated in the late 1920s in advancing noncommutative algebra and related structures.",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Number theorist and algebraist who collaborated with Noether on noncommutative algebras and class field\u2013related structures.",
       "start_year": 1927,
-      "end_year": null,
+      "end_year": 1935,
       "strength": "moderate",
       "interaction_frequency": "monthly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "noncommutative algebra research",
-        "German algebraist network"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Helmut_Hasse"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Marie Johanna Weiss",
-      "relationship_type": "student",
-      "relationship_description": "Graduate/post-doctoral student taught by Noether at Bryn Mawr College in the U.S.",
-      "start_year": 1933,
-      "end_year": 1935,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "graduate instruction at Bryn Mawr",
-        "research mentoring"
+        "Research discussions on noncommutative algebras",
+        "Shared students and seminars",
+        "Development of algebraic number theory methods"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "notes": null
+      "notes": "Often mentioned alongside Artin and Brauer as part of the network with whom Noether unified representation theory and ideal theory."
     },
     {
-      "person_name": "Olga Taussky-Todd",
-      "relationship_type": "student",
-      "relationship_description": "Mathematician who studied with Noether at Bryn Mawr and interacted with her research circle.",
+      "person_name": "Richard Brauer",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Algebraist who, with Noether and others, advanced the theory of noncommutative algebras and representation theory in the late 1920s.",
+      "start_year": 1927,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Joint seminars on algebras and representation theory",
+        "Exchange of ideas on group representations and algebras"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Part of the close research circle (Artin\u2013Brauer\u2013Hasse\u2013Noether) that linked ideal theory and group representations."
+    },
+    {
+      "person_name": "Marion Edwards Park",
+      "relationship_type": "professional/patron",
+      "relationship_description": "President of Bryn Mawr College who helped bring Noether to Bryn Mawr after her dismissal from G\u00f6ttingen and supported her position there.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Negotiating Noether\u2019s Bryn Mawr appointment",
+        "Supporting refugee scholars",
+        "Institutional backing for her teaching"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Marion_Edwards_Park"
+      ],
+      "notes": "Park coordinated with other colleges to employ refugee scholars; her support allowed Noether to continue research and mentoring in the U.S."
+    },
+    {
+      "person_name": "Marie Johanna Weiss",
+      "relationship_type": "academic/student",
+      "relationship_description": "American mathematician who studied with Noether at Bryn Mawr as a graduate/postdoctoral student in the early 1930s.",
       "start_year": 1933,
       "end_year": 1935,
       "strength": "moderate",
       "interaction_frequency": "weekly",
       "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "Bryn Mawr seminars",
-        "research discussions",
-        "connections with Institute for Advanced Study visitors"
+        "Graduate seminars at Bryn Mawr College",
+        "Supervision and mentoring of algebra research"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Olga_Taussky-Todd"
+        "https://en.wikipedia.org/wiki/Marie_Johanna_Weiss"
       ],
-      "notes": null
+      "notes": "Weiss was one of the advanced women mathematicians taught by Noether in exile; she later became known for work in group theory and as an author of an algebra textbook."
+    },
+    {
+      "person_name": "Olga Taussky-Todd",
+      "relationship_type": "academic/student",
+      "relationship_description": "Austrian-American algebraist who attended Noether\u2019s lectures at Bryn Mawr and was influenced by her approach to algebra.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Advanced algebra seminars at Bryn Mawr",
+        "Discussions on ideals and matrices"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Olga_Taussky-Todd"
+      ],
+      "notes": "Taussky-Todd, already trained in algebraic number theory, credits Noether among the key influences on her later pioneering work on matrix theory."
+    },
+    {
+      "person_name": "Oswald Veblen",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Princeton mathematician who facilitated Noether\u2019s access to the Institute for Advanced Study during her time in the United States.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Research visits to Institute for Advanced Study",
+        "Seminars linking Bryn Mawr and IAS communities"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Oswald_Veblen"
+      ],
+      "notes": "While she taught at Bryn Mawr, she simultaneously lectured and did research at the IAS in Princeton, where Veblen was a leading figure."
+    },
+    {
+      "person_name": "Pavel S. Alexandrov (as biographer)",
+      "relationship_type": "academic/biographer",
+      "relationship_description": "Beyond friendship, Alexandrov helped shape Noether\u2019s posthumous reputation through memoirs and recollections of her work and struggles at G\u00f6ttingen.",
+      "start_year": 1935,
+      "end_year": 1982,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Biographical writings about Noether",
+        "Public remembrance of her role at G\u00f6ttingen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Pavel_Alexandrov"
+      ],
+      "notes": "He emphasized both her mathematical depth and the sexism and antisemitism she faced, helping secure her place in historical narratives."
+    },
+    {
+      "person_name": "Norbert Wiener",
+      "relationship_type": "academic/commentator",
+      "relationship_description": "American mathematician who, along with others like Weyl and Einstein, publicly lauded Noether as the most important woman in the history of mathematics.",
+      "start_year": 1935,
+      "end_year": 1935,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Posthumous assessments of Noether\u2019s contributions"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Norbert_Wiener"
+      ],
+      "notes": "Although they did not collaborate directly, Wiener\u2019s praise contributed to the recognition of her status within the mathematical community."
     }
   ],
-  "network_summary": "Emmy Noether\u2019s ego network centers on the G\u00f6ttingen algebra community, anchored by powerful patrons-mentors David Hilbert and Felix Klein who recruited and advocated for her against institutional resistance. Early formation occurred at Erlangen under Paul Gordan and especially Ernst S. Fischer. In the 1920s, her ties radiated through collaborators Emil Artin, Richard Brauer, and Helmut Hasse and through prot\u00e9g\u00e9s such as Werner Schmeidler and the highly influential expositor B. L. van der Waerden. Her circle was internationally connected, welcoming visiting Russian topologists (notably close friend Pavel Alexandrov) and many others to G\u00f6ttingen. She also effectively advised doctoral students at Erlangen and later trained women at Bryn Mawr (e.g., Marie Johanna Weiss and Olga Taussky-Todd) while participating in research at the Institute for Advanced Study. Family ties to her mathematician father, Max Noether, provided an early academic milieu. Overall, the network shows a strong mentor-to-student influence outward from Noether, balanced by formative mentorship and institutional sponsorship that enabled her groundbreaking work."
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family ties\u2014especially with her father, algebraic geometer Max Noether\u2014shaped Emmy Noether\u2019s early education and first academic opportunities at Erlangen. Her brothers pursued scientific careers to varying extents, but chronic illness, early deaths, and political persecution limited sustained professional interaction."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Noether\u2019s academic network was dense and transformative: she was mentored by figures like Paul Gordan, Ernst Fischer, Hilbert, and Klein, while in turn mentoring and influencing a generation of algebraists and topologists including van der Waerden, Artin, Hasse, Brauer, and many others across Erlangen, G\u00f6ttingen, and Bryn Mawr."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Institutional patrons such as Marion Edwards Park at Bryn Mawr and Oswald Veblen at the Institute for Advanced Study enabled Noether to continue research and teaching after her dismissal by the Nazis. These relationships highlight the role of administrative and structural support in sustaining her career in exile."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Close friendships, notably with Pavel Alexandrov and a circle of G\u00f6ttingen colleagues, provided Noether with personal support and an informal arena for intense mathematical discussion. Such social links intertwined with her research life and later informed biographical accounts that cemented her legacy."
+    },
+    {
+      "relationship_type": "other",
+      "summary": "Beyond direct collaborators, prominent scientists like Albert Einstein, Hermann Weyl, and Norbert Wiener publicly celebrated Noether\u2019s achievements, particularly her theorems in physics and innovations in abstract algebra. Their advocacy and commentary significantly amplified recognition of her work during and after her lifetime."
+    }
+  ]
 }
