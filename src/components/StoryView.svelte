@@ -285,6 +285,7 @@
   let slidesContainer;
   let initialScrollDone = false;
   let descriptionOverflows = new Set(); // Track which descriptions overflow
+  let isScrolling = false; // Track programmatic scrolling
 
   // Measure masthead height and update CSS variable
   function updateMastheadHeight() {
@@ -325,10 +326,17 @@
     await tick();
     const { clientWidth } = slidesContainer;
     if (!clientWidth) return;
+
+    isScrolling = true;
     slidesContainer.scrollTo({
       left: clamped * clientWidth,
       behavior: immediate ? "auto" : "smooth",
     });
+
+    // Clear flag after scroll completes
+    setTimeout(() => {
+      isScrolling = false;
+    }, immediate ? 50 : 600);
   }
 
   function prevSlide() {
@@ -367,6 +375,7 @@
   }
 
   function handleScroll(event) {
+    if (isScrolling) return; // Ignore scroll events during programmatic scrolling
     if (totalPanels === 0) {
       activeIndex = 0;
       return;
