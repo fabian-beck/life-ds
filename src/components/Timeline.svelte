@@ -34,6 +34,9 @@
   function handleTrackPointerDown(event) {
     if (isExpanded || !trackElement) return;
 
+    // Don't start dragging if clicking on the expand toggle button
+    if (event.target.closest(".expand-toggle")) return;
+
     // Accept all pointer types (mouse, pen, touch)
     isDragging = true;
     dragStartX = event.clientX;
@@ -77,22 +80,6 @@
     aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
     style={`--indicator-progress: ${indicatorProgress}`}
   >
-    <button
-      type="button"
-      class="expand-toggle"
-      on:click={toggleExpanded}
-      aria-label={isExpanded ? "Collapse timeline" : "Expand timeline"}
-      aria-expanded={isExpanded}
-    >
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        role="presentation"
-        aria-hidden="true"
-      >
-        <path d={isExpanded ? mdiChevronDown : mdiChevronUp} />
-      </svg>
-    </button>
     <div class="indicator-content">
       {#if totalPanels > 1 && !isExpanded}
         <div class="indicator-nav">
@@ -147,6 +134,22 @@
         aria-label="Timeline scrubber"
         tabindex={isExpanded ? -1 : 0}
       >
+        <button
+          type="button"
+          class="expand-toggle"
+          on:click={toggleExpanded}
+          aria-label={isExpanded ? "Collapse timeline" : "Expand timeline"}
+          aria-expanded={isExpanded}
+        >
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            role="presentation"
+            aria-hidden="true"
+          >
+            <path d={isExpanded ? mdiChevronDown : mdiChevronUp} />
+          </svg>
+        </button>
         <div class="dots-container" class:expanded={isExpanded}>
           {#if activeIndex > 0 && !isExpanded}
             <span
@@ -248,18 +251,19 @@
   }
 
   .indicator.expanded {
-    top: 1.25rem;
-    bottom: 1.25rem;
-    height: auto;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    height: calc(100vh - 1.5rem);
     transition:
       top 1s cubic-bezier(0.22, 1, 0.36, 1),
-      bottom 1s cubic-bezier(0.22, 1, 0.36, 1);
+      bottom 1s cubic-bezier(0.22, 1, 0.36, 1),
+      height 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .expand-toggle {
     pointer-events: auto;
     position: absolute;
-    top: 1.4rem;
+    top: -2.3rem;
     left: 50%;
     transform: translateX(-50%);
     width: 2.8rem;
@@ -282,11 +286,11 @@
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
   }
 
-  .indicator.expanded .expand-toggle {
-    top: 0.5rem;
-    border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
-    border-top: none;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  .indicator-track.expanded .expand-toggle {
+    top: 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    z-index: 100;
   }
 
   .expand-toggle:hover,
@@ -295,14 +299,6 @@
     border-color: rgba(148, 163, 184, 0.3);
     transform: translateX(-50%) scale(1.05);
     outline: none;
-  }
-
-  .expand-toggle .icon {
-    transform: translateY(-0.15rem);
-  }
-
-  .indicator.expanded .expand-toggle .icon {
-    transform: translateY(0);
   }
 
   .indicator-content {
@@ -321,7 +317,6 @@
 
   .indicator.expanded .indicator-content {
     justify-content: flex-start;
-    padding-top: 4rem;
   }
 
   .indicator-nav {
@@ -423,6 +418,7 @@
     justify-content: space-between;
     width: 100%;
     max-width: min(90vw, 860px);
+    z-index: 2;
     transition:
       flex-direction 0.8s cubic-bezier(0.22, 1, 0.36, 1),
       gap 0.8s cubic-bezier(0.22, 1, 0.36, 1),
