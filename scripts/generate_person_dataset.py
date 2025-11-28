@@ -88,6 +88,30 @@ class LifeEvent(BaseModel):
         description="Array of Wikipedia URLs or references")
     images: Optional[List[ImageMetadata]] = Field(
         None, description="Optional array of relevant images")
+    chapter: Optional[str] = Field(
+        None, description="Chapter ID this event belongs to")
+
+
+class LifeChapter(BaseModel):
+    """A chapter grouping a sequence of life events."""
+    id: str = Field(
+        description="Unique identifier for the chapter (lowercase, snake_case)")
+    headline: str = Field(
+        description="Short, evocative chapter headline (3-6 words)")
+    description: str = Field(
+        description="Brief description of this life period (1-2 sentences)")
+    date_start: str = Field(
+        description="ISO-8601 date when this chapter begins (YYYY-MM-DD, YYYY-MM, or YYYY)")
+    date_start_precision: str = Field(
+        description="Precision level for start date: 'day', 'month', or 'year'")
+    date_end: str = Field(
+        description="ISO-8601 date when this chapter ends (YYYY-MM-DD, YYYY-MM, or YYYY)")
+    date_end_precision: str = Field(
+        description="Precision level for end date: 'day', 'month', or 'year'")
+    age_start: Optional[int] = Field(
+        None, description="Subject's age at chapter start, null if not applicable")
+    age_end: Optional[int] = Field(
+        None, description="Subject's age at chapter end, null if not applicable")
 
 
 class Portrait(BaseModel):
@@ -117,6 +141,8 @@ class LifeDataset(BaseModel):
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
+    chapters: Optional[List[LifeChapter]] = Field(
+        None, description="Optional list of life chapters grouping events")
     events: List[LifeEvent] = Field(
         description="List of significant life events")
 
@@ -901,10 +927,19 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Produce 12-16 significant life events covering the subject's early life, "
         "education, major accomplishments, and later years. "
         "Do not include events that occur after the subject's death or that focus on their legacy. "
-        "Each event must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
+        "\n\nIMPORTANT - Chapter Organization:\n"
+        "- Group the events into 3-5 meaningful life chapters (periods/phases)\n"
+        "- Each chapter should represent a distinct phase of the person's life (e.g., 'Early Years and Education', 'Wartime Service', 'Academic Career', 'Later Life')\n"
+        "- Create chapter objects with: id (snake_case), headline (3-6 words), description (1-2 sentences about this life period), "
+        "date_start, date_start_precision, date_end, date_end_precision, age_start, age_end\n"
+        "- Assign each event to a chapter by setting its 'chapter' field to the chapter's 'id'\n"
+        "- Chapters should be chronological and non-overlapping\n"
+        "- The first chapter should start with or before the first event, and the last chapter should end with or after the last event\n"
+        "\nEach event must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
         "title, description, locations (array with at least one human-readable entry, use 'Location unknown' if uncertain), "
-        "sources (array of URLs pulled from Wikipedia), and optional images (array of image objects with 'url', 'caption', and 'source' fields). "
+        "sources (array of URLs pulled from Wikipedia), optional images (array of image objects with 'url', 'caption', and 'source' fields), "
+        "and chapter (the chapter id this event belongs to). "
         "\n\nIMPORTANT - Event Title Guidelines:\n"
         "- Keep event titles crisp and concise (2-6 words)\n"
         "- Use active, specific language that captures the essence of the event\n"
@@ -1276,6 +1311,53 @@ def enforce_metadata(
         events.append(event)
     events.sort(key=event_sort_key)
     payload["events"] = events
+
+    # Process chapters if present
+    raw_chapters = payload.get("chapters")
+    if raw_chapters and isinstance(raw_chapters, list):
+        chapters = []
+        for chapter in raw_chapters:
+            if not isinstance(chapter, dict):
+                continue
+            chapter = {**chapter}
+
+            # Normalize chapter start date
+            start_date = chapter.get("date_start")
+            start_precision = chapter.get("date_start_precision") or "year"
+            normalized_start, normalized_start_precision = normalize_date_value(
+                start_date, start_precision
+            )
+            if normalized_start:
+                chapter["date_start"] = normalized_start
+                chapter["date_start_precision"] = normalized_start_precision
+            else:
+                # Skip chapters without valid start dates
+                continue
+
+            # Normalize chapter end date
+            end_date = chapter.get("date_end")
+            end_precision = chapter.get("date_end_precision") or "year"
+            normalized_end, normalized_end_precision = normalize_date_value(
+                end_date, end_precision
+            )
+            if normalized_end:
+                chapter["date_end"] = normalized_end
+                chapter["date_end_precision"] = normalized_end_precision
+            else:
+                # Skip chapters without valid end dates
+                continue
+
+            chapters.append(chapter)
+
+        if chapters:
+            # Sort chapters chronologically
+            chapters.sort(key=lambda c: c.get("date_start", "9999"))
+            payload["chapters"] = chapters
+        else:
+            payload.pop("chapters", None)
+    else:
+        payload.pop("chapters", None)
+
     return payload
 
 

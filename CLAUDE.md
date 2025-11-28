@@ -46,22 +46,36 @@ Each person has a unique `id` (snake_case, e.g., `alan_turing`) and exists in th
    ```
 
 3. **`data/people/{person_id}/`** - Person-specific data folder:
-   - `life_events.json` - Chronological life events with locations, images, categories
+   - `life_events.json` - Chronological life events with locations, images, categories, and optional chapter groupings
    - `ego_network.json` - Social network connections with relationship metadata
    - `_cache/` - Wikipedia cache (articles, images, related content)
 
 ### Life Events Schema
 
-Events are the core narrative units displayed as slides:
+Events are the core narrative units displayed as slides. Events can optionally be grouped into chapters representing distinct life phases:
 
 ```json
 {
   "person_id": "alan_turing",
+  "chapters": [
+    {
+      "id": "early_years",
+      "headline": "Early Years and Education",
+      "description": "Turing's formative years and academic development.",
+      "date_start": "1912",
+      "date_start_precision": "year",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 26
+    }
+  ],
   "events": [
     {
       "date": "1936",
       "title": "Publishes 'On Computable Numbers'",
       "description": "Long-form markdown description...",
+      "chapter": "early_years",
       "location": {
         "name": "Cambridge, England",
         "latitude": 52.2053,
@@ -80,7 +94,11 @@ Events are the core narrative units displayed as slides:
 }
 ```
 
-**Important**: Events may not have locations (non-geographic events) or images.
+**Important**:
+- Events may not have locations (non-geographic events) or images
+- Chapters are optional but recommended for organizing life narratives
+- Each event can reference a chapter via the `chapter` field (using the chapter's `id`)
+- Chapters should be chronological and non-overlapping
 
 ### Ego Network Schema
 
