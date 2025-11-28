@@ -201,6 +201,7 @@
 
   $: person = dataset?.person ?? {};
   $: events = Array.isArray(dataset?.events) ? dataset.events : [];
+  $: chapters = Array.isArray(dataset?.chapters) ? dataset.chapters : [];
   $: portrait = person?.portrait;
   $: personName = displayName(person?.name ?? "Select a person");
   $: personSummary = person?.summary ?? "";
@@ -1446,6 +1447,7 @@
     {indicatorProgress}
     {indicatorIcons}
     {eventSlides}
+    {chapters}
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
