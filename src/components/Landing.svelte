@@ -1,5 +1,7 @@
 <script>
+  import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
+  import { _ } from "../stores/language";
 
   export let entries = [];
   export let getSummary = () => "";
@@ -35,9 +37,9 @@
   // Compute tag frequencies from entries (with case-insensitive grouping)
   $: tagFrequencies = (() => {
     const frequencies = new Map(); // normalized tag -> {display: string, count: number}
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (Array.isArray(entry.primaryRoles)) {
-        entry.primaryRoles.forEach(role => {
+        entry.primaryRoles.forEach((role) => {
           if (role && typeof role === "string") {
             const normalized = normalizeTag(role);
             const existing = frequencies.get(normalized);
@@ -59,7 +61,10 @@
     return [...tagFrequencies.entries()]
       .sort((a, b) => b[1].count - a[1].count)
       .slice(0, 10)
-      .map(([normalizedTag, data]) => ({ normalized: normalizedTag, display: data.display }));
+      .map(([normalizedTag, data]) => ({
+        normalized: normalizedTag,
+        display: data.display,
+      }));
   })();
 
   // Check if entry was created in the last 7 days
@@ -99,7 +104,12 @@
         // Check if within next 3 days (0-3 days inclusive)
         if (diffDays >= 0 && diffDays <= 3) {
           const years = currentYear - originalYear;
-          return { type, date: anniversaryThisYear, years, daysUntil: diffDays };
+          return {
+            type,
+            date: anniversaryThisYear,
+            years,
+            daysUntil: diffDays,
+          };
         }
       } catch {
         return null;
@@ -107,12 +117,14 @@
       return null;
     };
 
-    const birthAnniversary = checkDate(entry.birthDate, 'birth');
-    const deathAnniversary = checkDate(entry.deathDate, 'death');
+    const birthAnniversary = checkDate(entry.birthDate, "birth");
+    const deathAnniversary = checkDate(entry.deathDate, "death");
 
     // Return the closest anniversary
     if (birthAnniversary && deathAnniversary) {
-      return birthAnniversary.daysUntil <= deathAnniversary.daysUntil ? birthAnniversary : deathAnniversary;
+      return birthAnniversary.daysUntil <= deathAnniversary.daysUntil
+        ? birthAnniversary
+        : deathAnniversary;
     }
     return birthAnniversary || deathAnniversary;
   }
@@ -123,29 +135,39 @@
 
     // Apply tag filters
     if (activeTags.size > 0) {
-      result = result.filter(entry => {
+      result = result.filter((entry) => {
         if (!Array.isArray(entry.primaryRoles)) return false;
-        return entry.primaryRoles.some(role => activeTags.has(normalizeTag(role)));
+        return entry.primaryRoles.some((role) =>
+          activeTags.has(normalizeTag(role))
+        );
       });
     }
 
     // Apply search query filter
     if (searchQuery.trim()) {
       const query = searchQuery.trim().toLowerCase();
-      result = result.filter(entry => {
+      result = result.filter((entry) => {
         // Search in name
         const name = displayName(entry.name || "").toLowerCase();
         if (name.includes(query)) return true;
 
         // Search in roles
         if (Array.isArray(entry.primaryRoles)) {
-          if (entry.primaryRoles.some(role => role.toLowerCase().includes(query))) {
+          if (
+            entry.primaryRoles.some((role) =>
+              role.toLowerCase().includes(query)
+            )
+          ) {
             return true;
           }
         }
 
         // Search in summary
-        const summary = (entry.summary || getSummary(entry) || "").toLowerCase();
+        const summary = (
+          entry.summary ||
+          getSummary(entry) ||
+          ""
+        ).toLowerCase();
         if (summary.includes(query)) return true;
 
         return false;
@@ -252,70 +274,124 @@
 </script>
 
 <section class="landing">
-  <button
-    class="ai-disclaimer-button"
-    on:click={toggleExplanation}
-    aria-label="Learn about AI-generated content"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="12" y1="16" x2="12" y2="12"></line>
-      <line x1="12" y1="8" x2="12.01" y2="8"></line>
-    </svg>
-    <span>AI-generated</span>
-  </button>
+  <div class="top-controls">
+      <select
+        bind:value={$currentLanguage}
+        aria-label={$_("app.select_language")}
+        class="language-selector"
+      >
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+      <button
+        class="ai-disclaimer-button"
+        on:click={toggleExplanation}
+        aria-label={$_("landing.learn_about_ai")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>{$_("landing.ai_generated_label")}</span>
+      </button>
+    </div>
 
   <div class="header-container">
     <div class="landing-hero">
-      <p class="eyebrow">Life Data Stories</p>
-      <h1>Explore remarkable lives through data stories</h1>
+      <p class="eyebrow">{$_("app.title")}</p>
+      <h1>{$_("app.tagline")}</h1>
     </div>
     <div class="filters-section">
-    <div class="search-box">
-      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.35-4.35"></path>
-      </svg>
-      <input
-        type="text"
-        class="search-input"
-        placeholder="Search by name, role, or keywords..."
-        bind:value={searchQuery}
-      />
-      {#if searchQuery}
-        <button class="clear-search" on:click={() => { searchQuery = ""; }} aria-label="Clear search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      {/if}
-    </div>
-    {#if topTags.length > 0}
-      <div class="tag-filters">
-      <div class="tag-filters-header">
-        <span class="filter-label">Filter by role:</span>
-        {#if activeTags.size > 0}
-          <button class="clear-filters" on:click={() => { activeTags = new Set(); }}>
-            Clear all
+      <div class="search-box">
+        <svg
+          class="search-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          placeholder={$_("landing.search_placeholder")}
+          bind:value={searchQuery}
+        />
+        {#if searchQuery}
+          <button
+            class="clear-search"
+            on:click={() => {
+              searchQuery = "";
+            }}
+            aria-label={$_("landing.clear_search")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         {/if}
       </div>
-      <div class="tag-chips">
-        {#each topTags as tag (tag.normalized)}
-          <button
-            class="tag-chip"
-            class:active={activeTags.has(tag.normalized)}
-            on:click={() => toggleTag(tag.normalized)}
-            aria-pressed={activeTags.has(tag.normalized)}
-          >
-            {tag.display}
-            <span class="tag-count">{tagFrequencies.get(tag.normalized).count}</span>
-          </button>
-        {/each}
-      </div>
-      </div>
-    {/if}
+      {#if topTags.length > 0}
+        <div class="tag-filters">
+          <div class="tag-filters-header">
+            <span class="filter-label">{$_("landing.filter_by_role")}</span>
+            {#if activeTags.size > 0}
+              <button
+                class="clear-filters"
+                on:click={() => {
+                  activeTags = new Set();
+                }}
+              >
+                {$_("landing.clear_all")}
+              </button>
+            {/if}
+          </div>
+          <div class="tag-chips">
+            {#each topTags as tag (tag.normalized)}
+              <button
+                class="tag-chip"
+                class:active={activeTags.has(tag.normalized)}
+                on:click={() => toggleTag(tag.normalized)}
+                aria-pressed={activeTags.has(tag.normalized)}
+              >
+                {tag.display}
+                <span class="tag-count"
+                  >{tagFrequencies.get(tag.normalized).count}</span
+                >
+              </button>
+            {/each}
+          </div>
+        </div>
+      {/if}
     </div>
   </div>
   <div class="landing-grid">
@@ -329,27 +405,43 @@
           class="person-card"
           style={cardStyleVars(style)}
           on:click={() => handleSelect(entry.id)}
-          on:keydown={(e) => (e.key === "Enter" || e.key === " ") && handleSelect(entry.id)}
+          on:keydown={(e) =>
+            (e.key === "Enter" || e.key === " ") && handleSelect(entry.id)}
           role="button"
           tabindex="0"
           aria-label={`Open life story for ${displayName(entry.name)}`}
         >
           {#if anniversary}
-            <span class="anniversary-badge" title={`${anniversary.years} years since ${anniversary.type}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
-                <path fill="currentColor" d={anniversary.type === 'birth' ? mdiBabyFaceOutline : mdiSkullOutline} />
+            <span
+              class="anniversary-badge"
+              title={`${anniversary.years} years since ${anniversary.type}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d={anniversary.type === "birth"
+                    ? mdiBabyFaceOutline
+                    : mdiSkullOutline}
+                />
               </svg>
               {#if anniversary.daysUntil === 0}
-                Today
+                {$_("landing.updated_today")}
               {:else if anniversary.daysUntil === 1}
-                Tomorrow
+                {$_("landing.updated_yesterday")}
               {:else}
-                In {anniversary.daysUntil} days
+                {$_("landing.updated_days_ago", {
+                  days: anniversary.daysUntil,
+                })}
               {/if}
               · {anniversary.years} yrs
             </span>
           {:else if isNewEntry(entry)}
-            <span class="new-badge">NEW</span>
+            <span class="new-badge">{$_("landing.new_label")}</span>
           {/if}
           <figure class="person-thumb">
             {#if entry?.portrait?.image}
@@ -376,7 +468,9 @@
               {/if}
               {#if (entry.primaryRoles?.length ?? 0) > 0}
                 <p class="card-meta">
-                  <span class="meta-roles">{entry.primaryRoles.join(" · ")}</span>
+                  <span class="meta-roles"
+                    >{entry.primaryRoles.join(" · ")}</span
+                  >
                 </p>
               {/if}
             </div>
@@ -392,12 +486,10 @@
       {/each}
     {:else if entries.length === 0}
       <p class="landing-empty">
-        Add a person dataset to begin exploring life stories.
+        {$_("landing.empty_message")}
       </p>
     {:else}
-      <p class="landing-empty">
-        No persons match the selected filters.
-      </p>
+      <p class="landing-empty">No persons match the selected filters.</p>
     {/if}
   </div>
 </section>
@@ -405,26 +497,46 @@
 {#if showExplanation}
   <div class="modal-backdrop" on:click={closeExplanation}>
     <div class="modal-content" on:click|stopPropagation>
-      <button class="modal-close" on:click={closeExplanation} aria-label="Close">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button
+        class="modal-close"
+        on:click={closeExplanation}
+        aria-label={$_("landing.ai_modal_close")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <h2>AI-Generated Content</h2>
+      <h2>{$_("landing.ai_modal_title")}</h2>
       <div class="modal-body">
         <p>
-          <strong>How it works:</strong> This application uses AI to automatically generate biographical timelines from Wikipedia content. The process includes:
+          <strong>{$_("landing.ai_how_it_works")}</strong>
+          {$_("landing.ai_description")}
         </p>
         <ul>
-          <li>Fetching biographical data from Wikipedia and Wikidata</li>
-          <li>Using AI-powered structured outputs to extract life events, dates, locations, and relationships</li>
-          <li>Geocoding locations via OpenStreetMap's Nominatim service</li>
-          <li>Retrieving relevant images from Wikimedia Commons</li>
-          <li>Generating visual styles and color schemes tailored to each person</li>
+          <li>{$_("landing.ai_step_1")}</li>
+          <li>{$_("landing.ai_step_2")}</li>
+          <li>{$_("landing.ai_step_3")}</li>
+          <li>{$_("landing.ai_step_4")}</li>
+          <li>{$_("landing.ai_step_5")}</li>
         </ul>
         <p>
-          All source content comes from open data (Wikipedia, Wikidata, OpenStreetMap). While AI helps structure this information into engaging timelines, <strong>accuracy is not guaranteed</strong>—please verify important details with the linked sources.
+          <strong>{$_("landing.ai_accuracy")}</strong>
+          {$_("landing.ai_accuracy_text")}
+        </p>
+        <p>
+          <strong>{$_("landing.ai_privacy")}</strong>
+          {$_("landing.ai_privacy_text")}
         </p>
       </div>
     </div>
@@ -436,8 +548,8 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
-    padding: 3rem 1.5rem 4rem;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem 4rem;
     background: linear-gradient(
       180deg,
       rgba(15, 23, 42, 0.94) 0%,
@@ -447,10 +559,43 @@
     position: relative;
   }
 
+  .top-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0;
+    justify-content: flex-end;
+  }
+
+  .language-selector {
+    padding: 0.5rem 0.75rem;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.2);
+    border-radius: 0.375rem;
+    color: #e2e8f0;
+    font-size: 0.875rem;
+    font-family: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  }
+
+  .language-selector:hover {
+    background: rgba(15, 23, 42, 1);
+    border-color: rgba(226, 232, 240, 0.4);
+  }
+
+  .language-selector:focus {
+    outline: 2px solid #38bdf8;
+    outline-offset: 2px;
+  }
+
+  .language-selector option {
+    background: #0f172a;
+    color: #e2e8f0;
+  }
+
   .ai-disclaimer-button {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -463,7 +608,6 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
-    z-index: 10;
   }
 
   .ai-disclaimer-button:hover {
@@ -943,32 +1087,33 @@
   .tag-chip {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.5rem;
     padding: 0.5rem 0.85rem;
     border-radius: 0.5rem;
-    background: rgba(30, 41, 59, 0.6);
+    background: rgba(15, 23, 42, 0.8);
     border: 1px solid rgba(148, 163, 184, 0.25);
-    color: #e2e8f0;
+    color: #cbd5e1;
     font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
   }
 
   .tag-chip:hover {
-    background: rgba(30, 41, 59, 0.8);
+    background: rgba(15, 23, 42, 0.95);
     border-color: rgba(148, 163, 184, 0.4);
-    transform: translateY(-1px);
+    color: #e2e8f0;
   }
 
   .tag-chip.active {
-    background: rgba(56, 189, 248, 0.18);
+    background: rgba(56, 189, 248, 0.15);
     border-color: rgba(56, 189, 248, 0.5);
     color: #38bdf8;
   }
 
   .tag-chip.active:hover {
-    background: rgba(56, 189, 248, 0.25);
+    background: rgba(56, 189, 248, 0.2);
     border-color: rgba(56, 189, 248, 0.65);
   }
 

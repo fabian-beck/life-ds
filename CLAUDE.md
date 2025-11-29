@@ -168,6 +168,8 @@ life-ds/
 │   ├── generate_person_dataset.py   # Life events only
 │   ├── generate_person_style.py     # Visual style only
 │   ├── generate_person_network.py   # Ego network only
+│   ├── translate_person.py          # Translate single person
+│   ├── translate_all_persons.py     # Batch translate all persons
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
 │   ├── remove_person.py             # Delete person
 │   └── config.py                    # Shared config
@@ -245,6 +247,229 @@ The scripts automatically cache Wikipedia materials in `data/people/{person_id}/
 - Image metadata
 
 This reduces API calls and provides offline access for analysis.
+
+## Translation System
+
+### Overview
+
+Person data can be translated to different languages using AI-powered translation scripts. English ("en") is always the base language, and translations are stored in language-specific subdirectories.
+
+### Directory Structure for Translations
+
+**Before Translation**:
+```
+data/people/{person_id}/
+├── life_events.json        # English (base)
+├── ego_network.json        # English (base)
+└── _cache/
+```
+
+**After Translation (e.g., German)**:
+```
+data/people/{person_id}/
+├── life_events.json        # English (base)
+├── ego_network.json        # English (base)
+├── de/                     # German translations
+│   ├── life_events.json
+│   └── ego_network.json
+└── _cache/
+```
+
+**Language-Specific Registries**:
+- `data/persons.json` - English (base)
+- `data/persons_de.json` - German translations
+- `data/persons_fr.json` - French translations
+- etc.
+
+### Translation Scripts (require `OPENAI_API_KEY`)
+
+**Translate a single person**:
+
+```bash
+python scripts/translate_person.py "Alan Turing" --target-lang de
+python scripts/translate_person.py "ada_lovelace" --target-lang de
+```
+
+**Translate all persons**:
+
+```bash
+python scripts/translate_all_persons.py --target-lang de
+python scripts/translate_all_persons.py --target-lang de --force  # Re-translate existing
+```
+
+**CLI Options**:
+
+`translate_person.py`:
+- `person_name_or_id` (positional): Person name or ID
+- `--target-lang` (required): ISO language code (e.g., 'de', 'fr', 'es')
+- `--force`: Overwrite existing translation
+- `--model`: Override default OpenAI model
+- `--verbose`: Enable detailed logging
+
+`translate_all_persons.py`:
+- `--target-lang` (required): ISO language code
+- `--force`: Re-translate even if exists
+- `--model`: Override default OpenAI model
+- `--persons`: Comma-separated list to translate only specific persons
+- `--skip-registry`: Skip updating persons_{lang}.json
+- `--verbose`: Enable verbose output
+
+### Translation Rules
+
+**What gets translated**:
+- Person summaries and roles
+- Event titles and descriptions
+- Chapter headlines and descriptions
+- Image captions
+- Relationship descriptions
+- Social network notes and summaries
+
+**What is preserved**:
+- All dates (dates, timestamps)
+- All coordinates (location_coordinates, centroid, bbox)
+- All URLs (sources, wikipedia, images)
+- All IDs (person_id, chapter IDs)
+- Relationship types (e.g., `professional/mentor`)
+- Strength values (`weak`, `moderate`, `strong`)
+- Technical classifications
+
+**Proper name handling**:
+- Names are kept in original form by default
+- Only translate if very well-known with standard localized version
+- Examples: Henry II → Heinrich II (German emperor), Queen Elizabeth → Königin Elisabeth (in German)
+- Keep modern English names as-is (e.g., Alan Turing, Ada Lovelace, Max Newman)
+- **Consistency**: The same person's name is translated the same way throughout all documents
+
+**Place name handling**:
+- Use native/localized versions when they exist (e.g., "London" → "Londres" in French, "Munich" → "München" in German)
+- Translate geographic descriptors (e.g., "England" → "Inglaterra" in Spanish)
+- Keep specific street names mostly intact but translate generic terms (e.g., "Street" → "Straße")
+
+### Supported Languages
+
+Common language codes:
+- `de` - German
+- `fr` - French
+- `es` - Spanish
+- `it` - Italian
+- `pt` - Portuguese
+- `nl` - Dutch
+- `pl` - Polish
+- `ru` - Russian
+- `ja` - Japanese
+- `zh` - Chinese
+- `ko` - Korean
+
+### Translation Workflow
+
+1. Scripts use OpenAI API with structured outputs (Pydantic models)
+2. Each file type (life_events.json, ego_network.json, registry entry) uses specialized translation prompts
+3. Translated files maintain exact JSON structure
+4. Non-text fields are preserved exactly
+5. Language-specific registry (`persons_{lang}.json`) is created/updated automatically
+
+### Language Switching in the Application
+
+**Status**: ✅ Implemented
+
+The application now supports runtime language switching with a two-layer translation system:
+
+**Layer 1: UI Labels** (Static translations in `src/locales/`)
+- Button labels, aria-labels, messages, placeholders
+- Stored in JSON files: `en.json`, `de.json`, etc.
+- Managed via Svelte stores in `src/stores/language.js`
+
+**Layer 2: Person Data** (Dynamic translations from data files)
+- Life events, ego networks, person summaries
+- Stored in language-specific subdirectories (e.g., `data/people/{person_id}/de/`)
+- Loaded dynamically based on selected language
+
+#### Language Store
+
+Location: `src/stores/language.js`
+
+Key exports:
+- `currentLanguage` (writable): Current language code ('en', 'de', etc.)
+- `translations` (writable): Currently loaded translation strings
+- `_` (derived): Reactive translation function with interpolation
+- `loadTranslations(lang)`: Load translation JSON file for a language
+
+Features:
+- Auto-detects browser language on first visit
+- Persists preference in `localStorage`
+- Updates `<html lang="...">` attribute automatically
+- Supports parameter interpolation (e.g., `$_('key', { count: 5 })`)
+
+#### Implementation Details
+
+**App.svelte** has been updated with:
+
+1. **Language switcher UI**: Fixed-position dropdown in top-right corner
+2. **Dynamic glob patterns** for language subdirectories:
+   ```javascript
+   const datasetModules = import.meta.glob([
+     "../data/people/*/life_events.json",
+     "../data/people/*/de/life_events.json",
+     "../data/people/*/fr/life_events.json",
+   ], { import: "default" });
+   ```
+
+3. **Language-aware data loading**:
+   ```javascript
+   async function loadDataset(personId, language = 'en') {
+     let path = language === 'en'
+       ? `../data/people/${personId}/life_events.json`
+       : `../data/people/${personId}/${language}/life_events.json`;
+     let loader = datasetModules[path];
+     // Fallback to English if translation doesn't exist
+     if (!loader && language !== 'en') {
+       path = `../data/people/${personId}/life_events.json`;
+       loader = datasetModules[path];
+     }
+     return await loader();
+   }
+   ```
+
+4. **Dynamic registry loading**: Loads `data/persons_{lang}.json` based on selected language
+
+**All Components** have been updated with translation calls:
+- [Landing.svelte](src/components/Landing.svelte): Search, filters, AI disclaimer modal
+- [StoryView.svelte](src/components/StoryView.svelte): Loading states, slide content, error messages
+- [Timeline.svelte](src/components/Timeline.svelte): Navigation, scrubber, expand/collapse
+- [NetworkModal.svelte](src/components/NetworkModal.svelte): Title, close button, group counts
+- [PersonChip.svelte](src/components/PersonChip.svelte): Tooltips, year ranges, relationship metadata
+- [ImageViewer.svelte](src/components/ImageViewer.svelte): Controls, help text, captions
+
+#### Adding a New Language
+
+1. **Create UI translation file**:
+   - Add `src/locales/{lang}.json` with all translation keys
+   - Use `src/locales/en.json` as template
+
+2. **Update language selector**:
+   - Add option to dropdown in [App.svelte:381-384](src/App.svelte#L381-L384)
+
+3. **Update glob patterns** (if needed):
+   - Add `../data/people/*/{lang}/life_events.json` to glob in [App.svelte:50-56](src/App.svelte#L50-L56)
+
+4. **Translate person data**:
+   - Run `python scripts/translate_all_persons.py --target-lang {lang}`
+
+#### Translation File Format
+
+Example from `src/locales/de.json`:
+```json
+{
+  "app.title": "Life Data Stories",
+  "app.tagline": "Erkunde bemerkenswerte Leben durch Datengeschichten",
+  "story.loading_life": "Lade Lebensgeschichte...",
+  "story.age": "Alter {age}",
+  "story.source_one": "{count} Quelle",
+  "story.source_other": "{count} Quellen"
+}
+```
+
+**Important for German**: Use "Du" form (informal) instead of "Sie" form (formal) for all user-facing text
 
 ## Map Integration
 

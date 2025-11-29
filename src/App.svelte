@@ -1,18 +1,72 @@
 <script>
+  import { onMount } from "svelte";
   import { push, pop, replace, location } from "svelte-spa-router";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import ExhibitionView from "./components/ExhibitionView.svelte";
-  import registry from "../data/persons.json";
+  import { currentLanguage, loadTranslations, _ } from "./stores/language";
   import styleRegistry from "../data/person_styles.json";
 
-  // Lazy loading - functions return promises
-  const datasetModules = import.meta.glob("../data/people/*/life_events.json", {
-    import: "default",
+  // Load translations on mount
+  onMount(async () => {
+    await loadTranslations($currentLanguage);
   });
 
+  // Reload translations when language changes
+  $: if ($currentLanguage) {
+    loadTranslations($currentLanguage);
+  }
+
+  // Initial registry (will be replaced with language-specific version)
+  let registry = { people: [] };
+
+  // Load language-specific registry
+  async function loadRegistry(language) {
+    try {
+      if (language === "en") {
+        const module = await import("../data/persons.json");
+        registry = module.default;
+      } else {
+        const module = await import(`../data/persons_${language}.json`);
+        registry = module.default;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to load registry for ${language}, falling back to English:`,
+        error
+      );
+      const fallback = await import("../data/persons.json");
+      registry = fallback.default;
+    }
+  }
+
+  // Load registry on mount and when language changes
+  onMount(async () => {
+    await loadRegistry($currentLanguage);
+  });
+
+  $: if ($currentLanguage) {
+    loadRegistry($currentLanguage);
+  }
+
+  // Lazy loading - include both base and language-specific paths
+  const datasetModules = import.meta.glob(
+    [
+      "../data/people/*/life_events.json",
+      "../data/people/*/de/life_events.json",
+      "../data/people/*/fr/life_events.json",
+    ],
+    {
+      import: "default",
+    }
+  );
+
   const egoNetworkModules = import.meta.glob(
-    "../data/people/*/ego_network.json",
+    [
+      "../data/people/*/ego_network.json",
+      "../data/people/*/de/ego_network.json",
+      "../data/people/*/fr/ego_network.json",
+    ],
     {
       import: "default",
     }
@@ -163,10 +217,26 @@
   }
 
   // Helper to load data on-demand
-  async function loadDataset(personId) {
-    const path = `../data/people/${personId}/life_events.json`;
-    const loader = datasetModules[path];
+  async function loadDataset(personId, language = "en") {
+    // Try language-specific path first
+    let path =
+      language === "en"
+        ? `../data/people/${personId}/life_events.json`
+        : `../data/people/${personId}/${language}/life_events.json`;
+
+    let loader = datasetModules[path];
+
+    // Fallback to English if translation doesn't exist
+    if (!loader && language !== "en") {
+      console.warn(
+        `Translation not found for ${personId} in ${language}, falling back to English`
+      );
+      path = `../data/people/${personId}/life_events.json`;
+      loader = datasetModules[path];
+    }
+
     if (!loader) return null;
+
     try {
       return await loader();
     } catch (error) {
@@ -175,10 +245,25 @@
     }
   }
 
-  async function loadEgoNetwork(personId) {
-    const path = `../data/people/${personId}/ego_network.json`;
-    const loader = egoNetworkModules[path];
+  async function loadEgoNetwork(personId, language = "en") {
+    let path =
+      language === "en"
+        ? `../data/people/${personId}/ego_network.json`
+        : `../data/people/${personId}/${language}/ego_network.json`;
+
+    let loader = egoNetworkModules[path];
+
+    // Fallback to English
+    if (!loader && language !== "en") {
+      console.warn(
+        `Network translation not found for ${personId} in ${language}, falling back to English`
+      );
+      path = `../data/people/${personId}/ego_network.json`;
+      loader = egoNetworkModules[path];
+    }
+
     if (!loader) return null;
+
     try {
       return await loader();
     } catch (error) {
@@ -188,7 +273,7 @@
   }
 
   // Build registry entries directly from registry data (no dataset loading needed)
-  const registryEntries = (() => {
+  $: registryEntries = (() => {
     if (!Array.isArray(registry?.people)) {
       return [];
     }
@@ -215,13 +300,13 @@
   $: slideParam =
     storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
 
-  // Reactive data loading - load when personId changes
+  // Reactive data loading - load when personId OR language changes
   let dataset = null;
   let egoNetwork = null;
   let dataLoading = false;
   let loadingStage = null; // Track which part is loading: 'initial', 'dataset', 'network', null
 
-  $: if (personId) {
+  $: if (personId && $currentLanguage) {
     dataLoading = true;
     loadingStage = "initial";
     dataset = null;
@@ -229,12 +314,12 @@
 
     // Load dataset first (includes portrait and events)
     loadingStage = "dataset";
-    loadDataset(personId)
+    loadDataset(personId, $currentLanguage)
       .then((datasetResult) => {
         dataset = datasetResult;
         loadingStage = "network";
         // Load network data after dataset
-        return loadEgoNetwork(personId);
+        return loadEgoNetwork(personId, $currentLanguage);
       })
       .then((networkResult) => {
         egoNetwork = networkResult;
@@ -248,7 +333,7 @@
         dataLoading = false;
         loadingStage = null;
       });
-  } else {
+  } else if (!personId) {
     dataset = null;
     egoNetwork = null;
     dataLoading = false;

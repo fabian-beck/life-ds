@@ -29,6 +29,7 @@
   import NetworkModal from "./NetworkModal.svelte";
   import PersonChip from "./PersonChip.svelte";
   import Timeline from "./Timeline.svelte";
+  import { _ } from "../stores/language";
 
   export let dataset = null;
   export let egoNetwork = null;
@@ -76,7 +77,7 @@
   let pmtilesProtocol = null;
   let basemapStyleCache = null;
 
-  const UNKNOWN_LOCATION_LABEL = "Location unknown";
+  $: UNKNOWN_LOCATION_LABEL = $_('story.location_unknown');
 
   const EVENT_ICON_RULES = [
     {
@@ -667,8 +668,8 @@
 
   function formatAgeLabel(age) {
     if (age === null || age === undefined) return null;
-    if (age === 0) return "At birth";
-    return `Age ${age}`;
+    if (age === 0) return $_('story.at_birth');
+    return $_('story.age', { age });
   }
 
   function formatLocations(locations = []) {
@@ -873,7 +874,7 @@
         // ignore and continue
       }
     }
-    basemapError = "Basemap unavailable (PMTiles 404). Map disabled.";
+    basemapError = $_('story.basemap_error');
     basemapResolved = true;
     return null;
   }
@@ -1143,7 +1144,7 @@
         type="button"
         class="close-story compact"
         on:click={handleClose}
-        aria-label="Close story and return to the landing page"
+        aria-label={$_('story.close_story')}
       >
         <svg
           class="icon"
@@ -1168,7 +1169,7 @@
       on:touchend={handleTouchEnd}
     >
       {#if isLoading}
-        <section class="slide overview loading-slide" aria-label="Loading...">
+        <section class="slide overview loading-slide" aria-label={$_('story.loading_life')}>
           <div class="content overview-content">
             <div class="skeleton-portrait"></div>
             <div class="overview-text">
@@ -1187,11 +1188,11 @@
             <div class="spinner"></div>
             <p class="loading-text">
               {#if loadingStage === 'initial' || loadingStage === 'dataset'}
-                Loading life story...
+                {$_('story.loading_life')}
               {:else if loadingStage === 'network'}
-                Loading connections...
+                {$_('story.loading_network')}
               {:else}
-                Loading...
+                {$_('story.loading_life')}
               {/if}
             </p>
           </div>
@@ -1221,7 +1222,7 @@
                           },
                           { title: personName }
                         )}
-                      aria-label="Enlarge portrait"
+                      aria-label={$_('story.enlarge_portrait')}
                     >
                       <img
                         src={portrait.image}
@@ -1262,8 +1263,7 @@
                     </p>
                   {:else if hasDataset}
                     <p class="description placeholder">
-                      A summary is not available, but key life events are listed
-                      below.
+                      {$_('story.no_summary')}
                     </p>
                   {/if}
                 </div>
@@ -1283,7 +1283,7 @@
                       type="button"
                       class="image-thumbnail"
                       on:click={() => enlargeImage(imgObj, slide)}
-                      aria-label="Enlarge image"
+                      aria-label={$_('story.enlarge_image')}
                     >
                       <img
                         src={imgUrl}
@@ -1323,7 +1323,7 @@
                       class="date-info-btn"
                       on:click|stopPropagation={() =>
                         toggleDateNote(slide.eventIndex)}
-                      aria-label="Show date explanation"
+                      aria-label={$_('story.show_date_explanation')}
                       aria-expanded={visibleDateNote === slide.eventIndex}
                     >
                       <svg
@@ -1383,10 +1383,10 @@
                             class="sources-toggle-btn"
                             on:click|stopPropagation={() =>
                               toggleSources(slide.eventIndex)}
-                            aria-label="Show sources"
+                            aria-label={$_('story.show_sources')}
                             aria-expanded={visibleSources === slide.eventIndex}
                           >
-                            {slide.sources.length} {slide.sources.length === 1 ? 'source' : 'sources'}
+                            {slide.sources.length === 1 ? $_('story.source_one', { count: 1 }) : $_('story.source_other', { count: slide.sources.length })}
                             <svg
                               class="icon icon-inline"
                               viewBox="0 0 24 24"
@@ -1460,7 +1460,7 @@
                             type="button"
                             class="show-all-btn"
                             on:click={openNetworkModal}
-                            aria-label="Show full network"
+                            aria-label={$_('story.show_network')}
                           >
                             <svg
                               class="icon icon-inline"

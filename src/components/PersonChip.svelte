@@ -1,5 +1,6 @@
 <script>
   import { tick } from "svelte";
+  import { _ } from "../stores/language";
 
   export let person = {};
   export let personKey = "";
@@ -78,7 +79,7 @@
     class="person-chip"
     bind:this={buttonElement}
     on:click|stopPropagation={handleClick}
-    aria-label={`Show information about ${person.person_name}`}
+    aria-label={$_('person.show_info', { name: person.person_name })}
     aria-expanded={isExpanded}
   >
     <span class="person-name">{person.person_name}</span>
@@ -99,11 +100,11 @@
       {#if person.start_year || person.end_year}
         <p class="tooltip-years">
           {#if person.start_year && person.end_year}
-            {person.start_year}–{person.end_year}
+            {$_('person.years_range', { start: person.start_year, end: person.end_year })}
           {:else if person.start_year}
-            From {person.start_year}
+            {$_('person.from_year', { year: person.start_year })}
           {:else if person.end_year}
-            Until {person.end_year}
+            {$_('person.until_year', { year: person.end_year })}
           {/if}
         </p>
       {/if}
@@ -116,7 +117,7 @@
         <div class="tooltip-meta">
           {#if person.strength}
             <span class="meta-item">
-              <span class="meta-label">Strength:</span>
+              <span class="meta-label">{$_('person.strength')}</span>
               <span class="meta-value strength-{person.strength}"
                 >{person.strength}</span
               >
@@ -124,13 +125,13 @@
           {/if}
           {#if person.interaction_frequency}
             <span class="meta-item">
-              <span class="meta-label">Frequency:</span>
+              <span class="meta-label">{$_('person.frequency')}</span>
               <span class="meta-value">{person.interaction_frequency}</span>
             </span>
           {/if}
           {#if person.influence_direction}
             <span class="meta-item">
-              <span class="meta-label">Influence:</span>
+              <span class="meta-label">{$_('person.influence')}</span>
               <span class="meta-value"
                 >{person.influence_direction.replace(/_/g, " ")}</span
               >

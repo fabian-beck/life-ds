@@ -1,6 +1,7 @@
 <script>
   import { mdiClose, mdiRefresh } from "@mdi/js";
   import { onMount, onDestroy } from "svelte";
+  import { _ } from "../stores/language";
 
   export let image = null; // { url, caption, source }
   export let onClose = () => {};
@@ -205,15 +206,15 @@
     on:wheel={handleWheel}
     role="button"
     tabindex="0"
-    aria-label="Image viewer - Press Escape to close"
+    aria-label={$_('image.viewer_title')}
   >
     <div class="viewer-controls">
       <button
         type="button"
         class="control-btn reset-btn"
         on:click={resetView}
-        aria-label="Reset view"
-        title="Reset view (R)"
+        aria-label={$_('image.reset_view_short')}
+        title={$_('image.reset_view')}
       >
         <svg
           class="icon"
@@ -228,8 +229,8 @@
         type="button"
         class="control-btn close-btn"
         on:click={closeViewer}
-        aria-label="Close image viewer"
-        title="Close (Esc)"
+        aria-label={$_('image.close')}
+        title={$_('image.close_short')}
       >
         <svg
           class="icon"
@@ -265,7 +266,7 @@
         <img
           bind:this={imageElement}
           src={image.url}
-          alt={image.caption || "Enlarged view"}
+          alt={image.caption || $_('image.enlarged_view')}
           draggable="false"
         />
       </div>
@@ -278,14 +279,14 @@
         {/if}
         {#if image.source}
           <p class="caption-source">
-            Source:
+            {$_('image.source')}
             <a
               href={image.source}
               target="_blank"
               rel="noreferrer"
               on:click|stopPropagation
             >
-              Wikimedia Commons
+              {$_('image.wikimedia_commons')}
             </a>
           </p>
         {/if}
@@ -294,7 +295,7 @@
 
     <div class="viewer-hints">
       <p>
-        Scroll to zoom • Drag to pan • Double-click to zoom • Press R to reset
+        {$_('image.help_text')}
       </p>
     </div>
   </div>

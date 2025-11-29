@@ -1,6 +1,7 @@
 <script>
   import { mdiClose, mdiAccountMultipleOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
+  import { _ } from "../stores/language";
 
   export let egoNetwork = null;
   export let personName = "";
@@ -99,13 +100,13 @@
         >
           <path d={mdiAccountMultipleOutline} />
         </svg>
-        {personName}'s Network
+        {$_('network.title', { name: personName })}
       </h3>
       <button
         type="button"
         class="modal-close"
         on:click={onClose}
-        aria-label="Close modal"
+        aria-label={$_('network.close')}
       >
         <svg
           class="icon"
@@ -128,7 +129,7 @@
         <div class="person-group">
           <h4 class="group-title">
             {type}
-            <span class="group-count">({people.length})</span>
+            <span class="group-count">{$_('network.group_count', { count: people.length })}</span>
           </h4>
           {#if summaryMap[type]}
             <p class="category-summary">{summaryMap[type]}</p>

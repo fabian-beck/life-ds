@@ -6,6 +6,7 @@
     mdiChevronUp,
     mdiChevronDown,
   } from "@mdi/js";
+  import { _ } from "../stores/language";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -139,7 +140,7 @@
     class="indicator"
     class:expanded={isExpanded}
     role="group"
-    aria-label={`Event ${activeEventIndex + 1} of ${totalSlides}`}
+    aria-label={$_('timeline.show_event', { index: activeEventIndex + 1, total: totalSlides })}
     style={`--indicator-progress: ${indicatorProgress}`}
   >
     <div class="indicator-content">
@@ -149,7 +150,7 @@
             type="button"
             class="nav-btn prev"
             on:click={onPrevSlide}
-            aria-label="Go to previous slide"
+            aria-label={$_('timeline.previous_slide')}
             disabled={activeIndex === 0}
           >
             <svg
@@ -165,7 +166,7 @@
             type="button"
             class="nav-btn next"
             on:click={onNextSlide}
-            aria-label="Go to next slide"
+            aria-label={$_('timeline.next_slide')}
             disabled={activeIndex >= totalPanels - 1}
           >
             <svg
@@ -193,14 +194,14 @@
         aria-valuemin="0"
         aria-valuemax={totalPanels - 1}
         aria-valuenow={activeIndex}
-        aria-label="Timeline scrubber"
+        aria-label={$_('timeline.scrubber')}
         tabindex={isExpanded ? -1 : 0}
       >
         <button
           type="button"
           class="expand-toggle"
           on:click={toggleExpanded}
-          aria-label={isExpanded ? "Collapse timeline" : "Expand timeline"}
+          aria-label={isExpanded ? $_('timeline.collapse') : $_('timeline.expand')}
           aria-expanded={isExpanded}
         >
           <svg
@@ -226,7 +227,7 @@
                 class="dot square"
                 class:active={activeIndex === 0}
                 on:click={() => onScrollToIndex(0)}
-                aria-label="Show overview"
+                aria-label={$_('timeline.show_overview')}
                 aria-current={activeIndex === 0 ? "true" : undefined}
               >
                 <svg
@@ -268,7 +269,7 @@
                   class="dot square"
                   class:active={activeIndex === 0}
                   on:click={() => onScrollToIndex(0)}
-                  aria-label="Show overview"
+                  aria-label={$_('timeline.show_overview')}
                   aria-current={activeIndex === 0 ? "true" : undefined}
                 >
                   <svg
