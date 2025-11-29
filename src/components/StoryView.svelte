@@ -1864,17 +1864,15 @@
   }
 
   .slide-loaded {
-    animation: slideIn 0.4s ease-out;
+    animation: fadeIn 0.3s ease-out;
   }
 
-  @keyframes slideIn {
+  @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(20px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
@@ -1908,7 +1906,7 @@
     background-image: var(--story-pattern-image, none);
     background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
-    background-position: 0 0;
+    background-position: 0 calc(-1 * var(--header-height, 0px));
     mix-blend-mode: overlay;
     mask-image: linear-gradient(
       180deg,
