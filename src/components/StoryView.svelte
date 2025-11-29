@@ -768,6 +768,24 @@
     return mdiCircleSmall;
   }
 
+  function getThumbnailUrl(imageUrl, width = 400) {
+    if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
+
+    // Optimize Wikimedia Commons images
+    if (imageUrl.includes("upload.wikimedia.org/wikipedia/commons/")) {
+      // Convert full URL to thumbnail URL
+      const parts = imageUrl.split("/wikipedia/commons/");
+      if (parts.length === 2) {
+        const [base, path] = parts;
+        const filename = path.split("/").pop();
+        return `${base}/wikipedia/commons/thumb/${path}/${width}px-${filename}`;
+      }
+    }
+
+    // Return original URL for non-Wikimedia images
+    return imageUrl;
+  }
+
   function getValidImages(images) {
     if (!Array.isArray(images) || images.length === 0) return [];
 
@@ -1226,7 +1244,8 @@
                       aria-label={$_('story.enlarge_portrait')}
                     >
                       <img
-                        src={portrait.image}
+                        src={getThumbnailUrl(portrait.image, 400)}
+                        srcset={`${getThumbnailUrl(portrait.image, 400)} 1x, ${getThumbnailUrl(portrait.image, 800)} 2x`}
                         alt={portrait.alt ?? `Portrait of ${personName}`}
                         loading="lazy"
                         decoding="async"
@@ -1287,7 +1306,8 @@
                       aria-label={$_('story.enlarge_image')}
                     >
                       <img
-                        src={imgUrl}
+                        src={getThumbnailUrl(imgUrl, 400)}
+                        srcset={`${getThumbnailUrl(imgUrl, 400)} 1x, ${getThumbnailUrl(imgUrl, 800)} 2x`}
                         alt=""
                         loading="lazy"
                         decoding="async"

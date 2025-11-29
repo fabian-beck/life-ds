@@ -11,6 +11,12 @@
   let showExplanation = false;
   let activeTags = new Set();
   let searchQuery = "";
+  let loadedImages = new Set();
+
+  function handleImageLoad(entryId) {
+    loadedImages.add(entryId);
+    loadedImages = loadedImages; // Trigger reactivity
+  }
 
   function toggleExplanation() {
     showExplanation = !showExplanation;
@@ -245,6 +251,26 @@
     return `${first}${last}`;
   }
 
+  function getThumbnailUrl(imageUrl, width = 200) {
+    if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
+
+    // Optimize Wikimedia Commons images
+    if (imageUrl.includes("upload.wikimedia.org/wikipedia/commons/")) {
+      // Convert full URL to thumbnail URL
+      // Example: https://upload.wikimedia.org/wikipedia/commons/a/b/File.jpg
+      // becomes: https://upload.wikimedia.org/wikipedia/commons/thumb/a/b/File.jpg/200px-File.jpg
+      const parts = imageUrl.split("/wikipedia/commons/");
+      if (parts.length === 2) {
+        const [base, path] = parts;
+        const filename = path.split("/").pop();
+        return `${base}/wikipedia/commons/thumb/${path}/${width}px-${filename}`;
+      }
+    }
+
+    // Return original URL for non-Wikimedia images
+    return imageUrl;
+  }
+
   function cardStyleVars(style) {
     if (!style || typeof style !== "object") return "";
     const segments = [];
@@ -446,11 +472,14 @@
           <figure class="person-thumb">
             {#if entry?.portrait?.image}
               <img
-                src={entry.portrait.image}
-                alt={entry.portrait.alt ??
-                  `Portrait of ${displayName(entry.name)}`}
+                src={getThumbnailUrl(entry.portrait.image, 200)}
+                srcset={`${getThumbnailUrl(entry.portrait.image, 200)} 1x, ${getThumbnailUrl(entry.portrait.image, 400)} 2x`}
+                alt={loadedImages.has(entry.id)
+                  ? entry.portrait.alt ?? `Portrait of ${displayName(entry.name)}`
+                  : ""}
                 loading="lazy"
                 decoding="async"
+                on:load={() => handleImageLoad(entry.id)}
               />
             {:else}
               <div class="thumb-fallback" aria-hidden="true">
@@ -746,6 +775,10 @@
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  .person-thumb img[alt=""] {
+    visibility: hidden;
   }
 
   .thumb-fallback {
