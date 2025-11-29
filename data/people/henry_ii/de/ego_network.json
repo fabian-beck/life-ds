@@ -1,0 +1,423 @@
+{
+  "dataset": "wikipedia_ego_networks",
+  "created_on": "2025-11-18",
+  "ego": {
+    "name": "Heinrich II., Heiliger Römischer Kaiser",
+    "birth_year": 973,
+    "death_year": 1024,
+    "primary_roles": [
+      "Herzog von Bayern",
+      "König von Deutschland (Römischer König)",
+      "König von Italien",
+      "Römisch-deutscher Kaiser",
+      "Heiliger"
+    ],
+    "summary": "Heinrich II. (6. Mai 973 – 13. Juli 1024), auch bekannt als der heilige Heinrich, war Herzog von Bayern, römischer König, König von Italien und römisch-deutscher Kaiser sowie der letzte Herrscher der ottonischen Dynastie. Er festigte die königliche Macht nördlich der Alpen, stützte sich stark auf die Kirche und die bischöfliche Verwaltung, förderte die Klosterreform, gründete das Bistum Bamberg und führte größere Kriege gegen Bolesław I. von Polen und Rivalen in Italien. Tief religiös und kinderlos, wurde er 1146 heiliggesprochen.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
+  },
+  "connections": [
+    {
+      "person_name": "Henry I, Duke of Bavaria (Henry the Wrangler)",
+      "relationship_type": "family",
+      "relationship_description": "Vater von Heinrich II. und ehemaliger Herzog von Bayern; früherer Gegner Ottos II., dessen Konflikt Heinrichs Erziehung und die bayerische Machtbasis prägte.",
+      "start_year": 973,
+      "end_year": 995,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "herzoglicher Hof in Bayern",
+        "dynastische Politik im ottonischen Reich"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Henry_I,_Duke_of_Bavaria"
+      ],
+      "notes": "Heinrich II. erbte eine starke bayerische Herzogsmacht, die durch die frühere Rebellion seines Vaters und dessen Aussöhnung mit den ottonischen Kaisern geformt war."
+    },
+    {
+      "person_name": "Gisela of Burgundy",
+      "relationship_type": "family",
+      "relationship_description": "Mutter Heinrichs II., eine Prinzessin aus dem burgundischen Königshaus, die Heinrich mit westlichen Dynastienetzwerken verband.",
+      "start_year": 973,
+      "end_year": 1000,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben am bayerischen Herzogshof",
+        "dynastische Allianzen zwischen Deutschland und Burgund"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Gisela_of_Burgundy"
+      ],
+      "notes": "Ihre Herkunft verband Heinrich II. mit dem burgundischen Königreich, was in der Reichsdiplomatie von Bedeutung war."
+    },
+    {
+      "person_name": "Otto III, Holy Roman Emperor",
+      "relationship_type": "other",
+      "relationship_description": "Vorgänger und Verwandter; sein Tod ohne Erben im Jahr 1002 löste Heinrichs umkämpfte Thronfolge als deutscher König aus.",
+      "start_year": 973,
+      "end_year": 1002,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Mitgliedschaft in der ottonischen Herrscherfamilie",
+        "Politik am Kaiserhof",
+        "Nachfolge auf den deutschen Thron nach Ottos Tod"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Otto_III,_Holy_Roman_Emperor"
+      ],
+      "notes": "Heinrichs Thronbesteigung beruhte darauf, seine dynastische Verbindung zu Otto III. auszuspielen und zugleich führende Adlige und Bischöfe von seiner Wahl zu überzeugen."
+    },
+    {
+      "person_name": "Cunigunde of Luxembourg",
+      "relationship_type": "family",
+      "relationship_description": "Ehefrau und Königin; 1002 zur Königin von Deutschland gekrönt, enge politische und religiöse Partnerin, kinderlose Ehe, später wie Heinrich heiliggesprochen.",
+      "start_year": 999,
+      "end_year": 1024,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "königliche Ehe",
+        "gemeinsame Herrschaft über Deutschland und Italien",
+        "religiöse Stiftungen",
+        "Gründung und Ausstattung von Klöstern",
+        "Anwesenheit bei wichtigen Zeremonien (z. B. Bamberger Gründung, Domweihen)",
+        "gemeinsame Grablege im Bamberger Dom"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg"
+      ],
+      "notes": "Ihre Krönung in Paderborn im August 1002 bestätigte ihren Status als Mitregentin Heinrichs; beide wurden später als Heilige verehrt."
+    },
+    {
+      "person_name": "Aribo, Archbishop of Mainz",
+      "relationship_type": "collaborator",
+      "relationship_description": "Hoher Erzbischof und führender Kirchenmann unter Heinrich II., beteiligt an der kaiserlichen Kirchenverwaltung und an Synoden wie Frankfurt (1007).",
+      "start_year": 999,
+      "end_year": 1021,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Reichssynoden (z. B. Frankfurt)",
+        "Umsetzung der Kirchenpolitik im Reich",
+        "Unterstützung von Heinrichs Einsatz von Bischöfen in der Verwaltung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Aribo_of_Mainz"
+      ],
+      "notes": "Als Erzbischof von Mainz und Erzkanzler spielte Aribo eine zentrale Rolle in Heinrichs kirchenbasierter Herrschaft."
+    },
+    {
+      "person_name": "Bruno of Augsburg",
+      "relationship_type": "family",
+      "relationship_description": "Bruder (oder naher Verwandter) Heinrichs II., der als Bischof von Augsburg amtierte und so die königliche Familie direkt mit einem wichtigen Bischofssitz verband.",
+      "start_year": 1000,
+      "end_year": 1029,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "familiäre Bindungen mit bischöflichem Amt",
+        "kirchliche Reichsverwaltung",
+        "Unterstützung von Heinrichs Politik in Schwaben und Bayern"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Bruno,_Bishop_of_Augsburg"
+      ],
+      "notes": "Seine Doppelfunktion als Verwandter und Bischof veranschaulicht Heinrichs Einsatz von Familienmitgliedern innerhalb der kirchlichen Hierarchie."
+    },
+    {
+      "person_name": "Gero, Bishop of Halberstadt",
+      "relationship_type": "collaborator",
+      "relationship_description": "Reichsbischof, der in Heinrichs II. Ostpolitik und Kirchenverwaltung eingebunden war und von königlicher Förderung profitierte.",
+      "start_year": 1000,
+      "end_year": 1023,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "kirchliche Reichsverwaltung",
+        "Unterstützung von Feldzügen und Diplomatie an der Ostgrenze",
+        "Teilnahme an Reichssynoden"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Bishopric_of_Halberstadt"
+      ],
+      "notes": "Er steht für Heinrichs Muster, Bischöfe in Grenzregionen als loyale königliche Beauftragte zu stärken."
+    },
+    {
+      "person_name": "Stephen I of Hungary",
+      "relationship_type": "collaborator",
+      "relationship_description": "Christlicher König von Ungarn, der mit Heinrich II. diplomatisch und militärisch über Grenzfragen, Bekehrung und Einfluss in Mitteleuropa interagierte.",
+      "start_year": 1000,
+      "end_year": 1024,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Grenzdiplomatie",
+        "zeitweilige Konflikte und Waffenstillstände",
+        "Abstimmung über Christianisierung und Kirchenorganisation in Ungarn"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Stephen_I_of_Hungary"
+      ],
+      "notes": "Ihre Beziehung balancierte Rivalität um Einfluss im Karpatenbecken mit gemeinsamen christlichen Interessen aus."
+    },
+    {
+      "person_name": "Willigis, Archbishop of Mainz",
+      "relationship_type": "collaborator",
+      "relationship_description": "Führender Erzbischof und Königsmacher, der Heinrich 1002 in Mainz zum König von Deutschland salbte und krönte und Cunigunde zur Königin krönte; wichtiger kirchlicher Unterstützer.",
+      "start_year": 1002,
+      "end_year": 1011,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Königswahl und Krönung in Mainz",
+        "Krönung Cunigundes in Paderborn",
+        "kirchliche Reichsverwaltung",
+        "Hoftage und Synoden"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Willigis"
+      ],
+      "notes": "Als Erzkanzler und ranghoher Reichsprälat war Willigis’ Unterstützung entscheidend für die Legitimierung von Heinrichs Königtum."
+    },
+    {
+      "person_name": "Monastic communities (e.g., Fulda, Hersfeld, Gandersheim)",
+      "relationship_type": "collaborator",
+      "relationship_description": "Reformklöster, die von Heinrichs II. Patronage durch Urkunden, Immunitäten und Schenkungen profitierten und damit sein religiöses und politisches Programm stützten.",
+      "start_year": 1002,
+      "end_year": 1024,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Verleihung königlicher Urkunden und Immunitäten",
+        "Schenkungen von Land und Schätzen",
+        "liturgisches Gedenken des Herrschers",
+        "Unterstützung der Klosterreform"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Ottonian_dynasty"
+      ],
+      "notes": "Diese Gemeinschaften bildeten ein spirituelles und administratives Rückgrat von Heinrichs Herrschaft und förderten später seinen Kult als Heiliger."
+    },
+    {
+      "person_name": "Herman II, Duke of Swabia",
+      "relationship_type": "rival",
+      "relationship_description": "Mächtiger Herzog und Hauptkonkurrent um den deutschen Thron im Jahr 1002; bekämpfte Heinrichs Wahl und focht gegen ihn, bis er sich nach einer Niederlage bei Straßburg unterwarf.",
+      "start_year": 1002,
+      "end_year": 1003,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "umkämpfte Königswahl",
+        "bewaffneter Konflikt in Schwaben",
+        "Unterwerfung Hermanns II. am 1. Oktober 1002"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Herman_II,_Duke_of_Swabia"
+      ],
+      "notes": "Obwohl er seinen Herzogstitel behielt, markierten Hermanns Niederlage und Unterwerfung Heinrichs Durchsetzung seiner Autorität über Schwaben."
+    },
+    {
+      "person_name": "Arduin of Ivrea",
+      "relationship_type": "rival",
+      "relationship_description": "Selbsternannter König von Italien, der Teile Norditaliens vor Heinrichs Italienzug kontrollierte; Heinrichs Feldzug von 1004 und seine Krönung in Pavia schwächten Arduins Position.",
+      "start_year": 1002,
+      "end_year": 1014,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kampf um das italienische Königtum",
+        "Heinrichs Italienzug von 1004",
+        "konkurrierende Ansprüche auf die Herrschaft im Königreich Italien"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Arduin_of_Ivrea"
+      ],
+      "notes": "Italienische, Arduin feindlich gesinnte Bischöfe luden Heinrich zum Eingreifen ein, was Heinrichs Abhängigkeit von kirchlichen Verbündeten in Italien verdeutlicht."
+    },
+    {
+      "person_name": "Meinwerk, Bishop of Paderborn",
+      "relationship_type": "collaborator",
+      "relationship_description": "Bischof, dessen Bistum Cunigundes Krönung in Paderborn ausrichtete; wichtiger regionaler kirchlicher Unterstützer von Heinrichs Herrschaft.",
+      "start_year": 1002,
+      "end_year": 1036,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ausrichtung der Krönung Cunigundes zur Königin",
+        "regionale Kirchenleitung in Sachsen",
+        "Teilnahme an Hoftagen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Meinwerk,_Bishop_of_Paderborn"
+      ],
+      "notes": "Seine Zusammenarbeit verdeutlicht Heinrichs Rückgriff auf Bischöfe, um königliche Autorität in Sachsen zu projizieren."
+    },
+    {
+      "person_name": "Eckard I, Margrave of Meissen",
+      "relationship_type": "other",
+      "relationship_description": "Mächtiger Adeliger und anfänglicher Favorit für die Nachfolge Ottos III.; seine Ermordung schuf Raum für Heinrichs Kandidatur und prägte die umkämpfte Thronfolge.",
+      "start_year": 1002,
+      "end_year": 1002,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Königswahlkrise von 1002",
+        "politische Manöver der deutschen Fürsten"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Eckard_I,_Margrave_of_Meissen"
+      ],
+      "notes": "Obwohl sie wahrscheinlich nur begrenzt direkt interagierten, beeinflussten Eckards Bedeutung und sein Tod den politischen Kontext von Heinrichs Wahl."
+    },
+    {
+      "person_name": "Bolesław I the Brave",
+      "relationship_type": "rival",
+      "relationship_description": "Herzog (später König) von Polen und wichtigster östlicher Gegner Heinrichs; verwickelt in langwierige Kriege und Verhandlungen um Meißen, die Lausitz und Grenzgebiete, die im Frieden von Bautzen (1018) endeten.",
+      "start_year": 1004,
+      "end_year": 1018,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Grenzkriege zwischen Reich und Polen",
+        "Belagerungen und Feldzüge in Meißen und der Lausitz",
+        "diplomatische Verhandlungen",
+        "Frieden von Bautzen 1018"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave"
+      ],
+      "notes": "Der polnische Konflikt dominierte weite Teile von Heinrichs Außenpolitik und zeigte seine Kombination aus militärischer Gewalt und Diplomatie."
+    },
+    {
+      "person_name": "Bishopric of Bamberg (first bishops: Eberhard I, etc.)",
+      "relationship_type": "collaborator",
+      "relationship_description": "Bischöfliche Führung, die Heinrich II. im neu gegründeten Bistum Bamberg einsetzte und die als zentrale Stützen seiner kirchlich geprägten Verwaltung diente.",
+      "start_year": 1007,
+      "end_year": 1024,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Gründung des Bistums Bamberg",
+        "Ausstattung mit Land und Privilegien",
+        "Missionsarbeit im östlichen Franken",
+        "Domneubau und Weihe"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Prince-Bishopric_of_Bamberg"
+      ],
+      "notes": "Obwohl mehrere Bischöfe beteiligt waren, ist Heinrichs Verhältnis zur Bamberger Bischofsleitung als Gruppe zentral für seine Regierungszeit und sein Nachwirken."
+    },
+    {
+      "person_name": "Aistulf (Abbot of Michelsberg/Bamberg context)",
+      "relationship_type": "collaborator",
+      "relationship_description": "Stellvertretender Abt, der in Heinrichs II. Programm der Klosterreform und Patronage, besonders in Bamberg und den umliegenden Regionen, mitwirkte.",
+      "start_year": 1007,
+      "end_year": 1024,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Klosterreform",
+        "Schenkungen und Privilegien für Klöster",
+        "liturgisches Gedenken Heinrichs II."
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Prince-Bishopric_of_Bamberg"
+      ],
+      "notes": "Auch wenn die einzelnen Äbte je nach Kloster wechselten, ist Heinrichs enge Zusammenarbeit mit reformorientierten Äbten ein Kernmerkmal seiner Herrschaft."
+    },
+    {
+      "person_name": "Wiprecht of Groitzsch (representing eastern nobility)",
+      "relationship_type": "other",
+      "relationship_description": "Mitglied des östlichen sächsischen Adels, dessen Familienaufstieg eng mit Heinrichs II. Ostkriegen und Lehnsvergaben in Meißen und der Lausitz verknüpft war.",
+      "start_year": 1010,
+      "end_year": 1024,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "königliche Vergabe von Land in den östlichen Marken",
+        "Kriegsdienst gegen polnische und slawische Gegner"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Wiprecht_of_Groitzsch"
+      ],
+      "notes": "Veranschaulicht Heinrichs Einsatz loyaler Adliger zur Festigung der Kontrolle in den Grenzmarken, auch wenn direkte persönliche Kontakte weniger gut belegt sind."
+    },
+    {
+      "person_name": "Benedict VIII",
+      "relationship_type": "collaborator",
+      "relationship_description": "Papst, der Heinrich II. am 14. Februar 1014 in Rom zum römisch-deutschen Kaiser krönte; Verbündeter in der italienischen Politik und Kirchenpolitik.",
+      "start_year": 1012,
+      "end_year": 1024,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kaiserkrönung in Rom",
+        "Koordination zwischen Papsttum und Reich",
+        "Unterstützung in italienischen Angelegenheiten und Kirchenreform"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Benedict_VIII"
+      ],
+      "notes": "Ihre Zusammenarbeit symbolisierte das Bündnis zwischen der deutschen Monarchie und dem Papsttum im frühen 11. Jahrhundert."
+    },
+    {
+      "person_name": "Conrad II, Holy Roman Emperor",
+      "relationship_type": "other",
+      "relationship_description": "Nachfolger aus der salischen Dynastie, der nach Heinrichs II. Tod gewählt wurde; seine Wahl markierte das Ende der ottonischen Dynastie und den Übergang zu einem neuen Herrscherhaus.",
+      "start_year": 1024,
+      "end_year": 1024,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "kaiserliche Nachfolgeprozesse",
+        "Kontinuität des Heiligen Römischen Reiches"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Conrad_II,_Holy_Roman_Emperor"
+      ],
+      "notes": "Heinrich hinterließ keine Erben; die Fürsten wählten Konrad, was den wahlmonarchischen Charakter des deutschen Königtums unterstreicht."
+    }
+  ],
+  "category_summaries": null
+}

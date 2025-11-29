@@ -1,0 +1,472 @@
+{
+  "dataset": "wikipedia_ego_networks",
+  "created_on": "2025-11-19",
+  "ego": {
+    "name": "E. T. A. Hoffmann",
+    "birth_year": 1776,
+    "death_year": 1822,
+    "primary_roles": [
+      "Schriftsteller",
+      "Jurist",
+      "Komponist",
+      "Musikkritiker",
+      "Künstler"
+    ],
+    "summary": "Ernst Theodor Amadeus Hoffmann (1776–1822) war ein deutscher Schriftsteller der Romantik, Jurist, Komponist, Musikkritiker und Illustrator, dessen fantastische und gotische Erzählungen zu zentralen Werken der deutschen Romantik wurden und später bedeutende musikalische und theatrale Werke inspirierten.",
+    "wikipedia": "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+  },
+  "connections": [
+    {
+      "person_name": "Christoph Ludwig Hoffmann",
+      "relationship_type": "family",
+      "relationship_description": "Vater; Königsberger Rechtsanwalt, Dichter und Amateurmusiker, der sich von Hoffmanns Mutter trennte, als Hoffmann ein Kind war, und mit dem älteren Sohn wegging.",
+      "start_year": 1776,
+      "end_year": 1797,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Königsberg",
+        "Kontakt mit Dichtkunst und Amateurmusik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Ihre Entfremdung nach der Trennung der Eltern wird ausdrücklich erwähnt, dennoch bedauerte Hoffmann die Distanz, was auf eine emotionale Bedeutung trotz des begrenzten späteren Kontakts hinweist."
+    },
+    {
+      "person_name": "Lovisa Albertina Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Mutter; blieb in Königsberg, als die Eltern sich trennten; danach wurde Hoffmann im pietistischen Haushalt ihrer erweiterten Familie aufgezogen.",
+      "start_year": 1776,
+      "end_year": 1796,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Königsberg",
+        "pietistisches häusliches Umfeld"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Starb 1796; die religiöse Prägung des Haushalts und das emotionale Klima formten sein frühes Leben, auch wenn der Artikel den Tanten und dem Onkel mehr Gewicht einräumt als ihrer direkten Rolle."
+    },
+    {
+      "person_name": "Johanna Sophie Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Mütterliche Tante; eine der drei unverheirateten Geschwister Doerffer, die Hoffmann nach der Trennung seiner Eltern in Königsberg großzogen.",
+      "start_year": 1778,
+      "end_year": 1803,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "gemeinsamer Haushalt in Königsberg",
+        "Kindererziehung und Bildung",
+        "pietistische Religionsausübung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Als Tante Sophie bezeichnet; ihr Tod wird als Teil der „traurigen Zeit“ während seiner Jahre in Płock erwähnt, was auf anhaltende emotionale Bedeutung schließen lässt."
+    },
+    {
+      "person_name": "Charlotte Wilhelmine Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Jüngere mütterliche Tante; von Hoffmann besonders geliebt, den er „Tante Füßchen“ nannte und später in seiner Fiktion verewigte.",
+      "start_year": 1778,
+      "end_year": 1779,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "gemeinsamer Haushalt in Königsberg",
+        "Betreuung in der frühen Kindheit"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Obwohl sie starb, als er etwa drei Jahre alt war, bewahrte er ihre Erinnerung wie einen Schatz und erfand Geschichten über sie; eine Figur in den „Lebensansichten des Katers Murr“ trägt ihren Namen, was auf einen tiefgreifenden Einfluss auf seine Vorstellungskraft hindeutet."
+    },
+    {
+      "person_name": "Otto Wilhelm Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Mütterlicher Onkel; Leiter des pietistischen Haushalts, in dem Hoffmann aufwuchs, und beherrschende Figur seiner Kindheitsumgebung.",
+      "start_year": 1778,
+      "end_year": 1811,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "gemeinsamer Haushalt in Königsberg",
+        "religiöse Erziehung",
+        "Vormundschaft und Disziplinierung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Von Hoffmann in einem Wortspiel auf seine Initialen „O Weh“ genannt; seine Strenge machte den Haushalt „unliebenswürdig“ und prägte Hoffmanns späteren Widerstand gegen Pietismus und Autorität."
+    },
+    {
+      "person_name": "Theodor Gottlieb von Hippel the Younger",
+      "relationship_type": "friend",
+      "relationship_description": "Enge lebenslange Freundschaft aus Schul- und Universitätszeiten; Mitstudent der Rechtswissenschaften, der später mit Hoffmann reiste und arbeitete und ihn nach seiner Theaterzeit wieder in eine juristische Laufbahn zurückführte.",
+      "start_year": 1787,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Schulfreundschaft in Königsberg",
+        "Besuch von Kants Vorlesungen an der Universität Königsberg",
+        "gemeinsame Reise nach Posen (um 1800) mit Zwischenstopp in Dresden",
+        "Geselligkeit und gegenseitige Unterstützung in Dresden und Leipzig während der Napoleonischen Kriege",
+        "Ermutigung zu Hoffmanns Rückkehr in den Justizdienst"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Die Freundschaft wurde „oft durch eine zunehmende soziale Verschiedenheit auf die Probe gestellt“, aber als lebenslang beschrieben. Es gab lange Pausen im direkten Kontakt (neun Jahre, bevor sie sich unerwartet in Dresden wiedertrafen); später führte Hippel ihn „wieder in seinen alten Beruf als Jurist“ zurück."
+    },
+    {
+      "person_name": "Immanuel Kant",
+      "relationship_type": "mentor",
+      "relationship_description": "Philosoph, dessen Vorlesungen Hoffmann 1792 zusammen mit Hippel besuchte und die zu seiner intellektuellen Ausbildung beitrugen.",
+      "start_year": 1792,
+      "end_year": 1792,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Besuch von Vorlesungen an der Universität Königsberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Es gibt keinen Beleg für eine direkte persönliche Beziehung über den Vorlesungsbesuch hinaus, doch seine Begegnung mit der kantischen Philosophie wird in der benutzerseitig bereitgestellten Ereigniszusammenfassung als prägend für seine kritische und spekulative Neigung hervorgehoben."
+    },
+    {
+      "person_name": "Dora Hatt",
+      "relationship_type": "other",
+      "relationship_description": "Verheiratete Frau und Musikschülerin, in die Hoffmann sich in Königsberg romantisch verliebte; der Skandal führte zu seiner Versetzung auf eine Stelle in Glogau.",
+      "start_year": 1794,
+      "end_year": 1796,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "privater Musikunterricht in Königsberg",
+        "gesellschaftliche Kontakte über ihre Familie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Die Beziehung rief Proteste ihrer Familie hervor und verbannte ihn faktisch aus Königsberg, was seinen frühen beruflichen Weg prägte; ihr späterer Tod wird als Teil einer schwierigen Phase erwähnt, und bei seinem letzten Heimatbesuch traf er eine ihrer Töchter."
+    },
+    {
+      "person_name": "Johann Ludwig Doerffer",
+      "relationship_type": "family",
+      "relationship_description": "Onkel und Vormund; beschäftigte Hoffmann als Schreiber, zog mit ihm nach Berlin und war zentral für seine frühe juristische Karriere und sein häusliches Leben.",
+      "start_year": 1796,
+      "end_year": 1802,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "juristische Anstellung in Glogau",
+        "gemeinsamer Haushalt in Glogau und Berlin mit seiner Tochter Minna",
+        "Übersiedlung nach Berlin im Jahr 1798",
+        "Überwachung von Hoffmanns Ausbildung im provinziellen Justizdienst"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Er wird als Onkel und (im Chronologie-Abschnitt) auch als Vormund bezeichnet. Seine Beförderung an ein Berliner Gericht ermöglichte Hoffmanns ersten Umzug in eine Großstadt. Sein späterer Tod in Berlin wird unter den Verlusten in Hoffmanns Płocker Jahren genannt."
+    },
+    {
+      "person_name": "Mischa (Maria/Marianna Thekla Michalina Rorer, née Trzcińska)",
+      "relationship_type": "family",
+      "relationship_description": "Ehefrau; Polin, die Hoffmann in Posen heiratete und die ihn durch seine Provinz-, Warschauer und späteren Dienstorte, darunter Bamberg und Dresden/Leipzig, begleitete.",
+      "start_year": 1802,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und gemeinsamer Haushalt von Posen an",
+        "Umzüge nach Płock, Warschau, Berlin, Bamberg, Dresden, Leipzig",
+        "Erziehung ihrer Tochter Cäcilia",
+        "Ertragen von Kriegsnot und finanziellen Belastungen",
+        "Unterstützung seiner Arbeit durch Mitschrift während seiner letzten Krankheit"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Im Januar 1807 kehrten sie und ihre zweijährige Tochter während politischer Unruhen nach Posen zurück; der spätere Tod der Tochter verstärkte Hoffmanns Elend. In seinen letzten Jahren, als eine Lähmung einsetzte, diktierte er seine Werke seiner Frau oder einem Sekretär."
+    },
+    {
+      "person_name": "Julius Eduard Itzig (Julius Eduard Hitzig)",
+      "relationship_type": "friend",
+      "relationship_description": "Nachbar, Mitjurist und späterer Biograph, den Hoffmann in Warschau kennenlernte; führte ihn zu wichtigen Schriftstellern der Romantik und gehörte zu seinem literarischen Kreis.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "nachbarschaftliches Gesellschaftsleben in Warschau",
+        "Diskussion über Literatur und romantische Theorie",
+        "Teilnahme an deutsch-polnischen Literatenzirkeln",
+        "Itzigs/Hitzigs spätere biographische Schriften über Hoffmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Als ehemaliges Mitglied der Berliner literarischen Gruppe „Nordstern“ versorgte er Hoffmann mit Werken von Novalis, Tieck, Arnim, Brentano und anderen und prägte damit entscheidend Hoffmanns Hinwendung zur Hochromantik."
+    },
+    {
+      "person_name": "Zacharias Werner",
+      "relationship_type": "friend",
+      "relationship_description": "Dichter- und Dramatikerfreund, dessen Bekanntschaft Hoffmann in Warschau erneuerte; gemeinsam nahmen sie am deutsch-polnischen Kulturleben teil.",
+      "start_year": 1804,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gesellschaftliches und literarisches Leben in Warschau",
+        "Teilnahme an romantisch orientierten Kreisen",
+        "Diskussion über Drama und Dichtung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Als erneuerte Freundschaft in Warschau beschrieben; Werner war Teil jenes Umfelds, das Hoffmann später als die glücklichste Zeit seines Lebens erinnerte."
+    },
+    {
+      "person_name": "Novalis",
+      "relationship_type": "other",
+      "relationship_description": "Frühromantischer deutscher Dichter, dessen Werke, die Hoffmann in Warschau von Itzig/Hitzig erhielt, sein späteres Schreiben maßgeblich prägten.",
+      "start_year": 1804,
+      "end_year": 1806,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "literarischer Einfluss durch die Lektüre der Werke von Novalis",
+        "Teilnahme an einem gemeinsamen romantischen ästhetischen Milieu"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Teil des Korpus romantischer Schriftsteller (mit Tieck, Arnim, Brentano u. a.), denen Hoffmann vergleichsweise spät begegnete, die aber „sein Werk tiefgreifend zeichneten“, was auf einen starken, wenngleich indirekten Einfluss hinweist."
+    },
+    {
+      "person_name": "Ludwig Tieck",
+      "relationship_type": "other",
+      "relationship_description": "Bedeutender Schriftsteller der Romantik, dessen Werke Hoffmann in Warschau las und dessen Erzähl- und Fantastiktechnik seine eigenen Geschichten beeinflusste.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "literarischer Einfluss",
+        "überlappende Teilnahme an der deutschen Romantik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Tieck wird unter den Autoren genannt, deren Werke Itzig Hoffmann zugänglich machte und die „sein Werk tiefgreifend prägten“; im Artikel ist keine direkte soziale Interaktion belegt."
+    },
+    {
+      "person_name": "Achim von Arnim",
+      "relationship_type": "other",
+      "relationship_description": "Romantischer Schriftsteller, dessen Werke Hoffmann über seinen Warschauer Kreis kennenlernte und die zu seiner Hinwendung zur Hochromantik beitrugen.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "literarischer Einfluss durch Lektüre",
+        "gemeinsamer romantischer Kulturkontext"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Zusammen mit Novalis, Tieck, Brentano und anderen als Autor aufgeführt, dessen Werke Hoffmann nach der Vermittlung durch Itzig/Hitzig tiefgehend beeinflussten."
+    },
+    {
+      "person_name": "Clemens Brentano",
+      "relationship_type": "other",
+      "relationship_description": "Romantischer Dichter und Schriftsteller, dessen Werke Hoffmann über seine Warschauer Kontakte las und die seinen literarischen Stil und seine Themen mitprägten.",
+      "start_year": 1804,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "indirekter literarischer Austausch über veröffentlichte Werke",
+        "gemeinsame romantische Poetik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "In derselben Liste einflussreicher romantischer Autoren genannt, deren Werke Itzig Hoffmann vermittelte; direkte persönliche Kontakte werden nicht erwähnt."
+    },
+    {
+      "person_name": "Julia Marc",
+      "relationship_type": "other",
+      "relationship_description": "Junge Gesangsschülerin in Bamberg, in die Hoffmann sich stark verliebte, was zu einer sichtbar emotionalen Bindung und zum Eingreifen ihrer Familie führte.",
+      "start_year": 1809,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Stimm- und Musikunterricht in Bamberg",
+        "Proben und Theaterarbeit am Bamberger Theater"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Seine Gefühle waren immer offensichtlich, wenn sie zusammen waren; Julias Mutter arrangierte rasch eine „passendere Verbindung“ für sie. Die emotionale Verstrickung trug zu Spannungen in Bamberg bei und könnte Aspekte seiner späteren Darstellungen obsessiver Liebe inspiriert haben."
+    },
+    {
+      "person_name": "Jean Paul",
+      "relationship_type": "other",
+      "relationship_description": "Zeitgenössischer Schriftsteller, dessen Werk Hoffmann stark beeinflusste; wurde nach Hoffmanns Erzählung „Ritter Gluck“ zu einem seiner frühesten Bewunderer und prägte konzeptionell seine Verwendung des Doppelgänger-Motivs.",
+      "start_year": 1809,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "literarischer Einfluss durch Jean Pauls frühere Werke",
+        "intertextueller Dialog um das Doppelgänger-Thema",
+        "Jean Pauls wertschätzende Aufnahme von Hoffmanns Schriften"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Der Artikel bemerkt, dass Jean Paul den Begriff Doppelgänger im vorangegangenen Jahrzehnt geprägt hatte und weiterhin „einen mächtigen Einfluss“ auf Hoffmann ausübte, zugleich aber „einer seiner frühesten Bewunderer“ war, was auf eine wechselseitige literarische Beziehung ohne direkte Zusammenarbeit schließen lässt."
+    },
+    {
+      "person_name": "Ludwig van Beethoven",
+      "relationship_type": "colleague",
+      "relationship_description": "Komponist, dessen Musik Hoffmann in einer Reihe einflussreicher Rezensionen für die Allgemeine musikalische Zeitung verteidigte, die Beethoven selbst hochschätzte.",
+      "start_year": 1809,
+      "end_year": 1814,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Hoffmanns kritische Essays über Beethovens Musik",
+        "vermittelte Kommunikation durch Veröffentlichung und Rezeption",
+        "Entwicklung einer romantischen Musikästhetik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Hoffmanns Aufsätze über Beethoven werden als „besonders gut aufgenommen und vom Komponisten selbst hoch geschätzt“ beschrieben. Es gibt keinen Hinweis darauf, dass sie sich trafen, doch ihre Beziehung ist für die Geschichte der Musikkritik bedeutsam."
+    },
+    {
+      "person_name": "Wolfgang Amadeus Mozart",
+      "relationship_type": "other",
+      "relationship_description": "Komponist, dem Hoffmann ausdrücklich huldigte, indem er „Amadeus“ als zweiten Vornamen in seinem Veröffentlichungs-Pseudonym annahm.",
+      "start_year": 1809,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "künstlerischer Einfluss durch Mozarts Kompositionen",
+        "symbolische Huldigung durch Hoffmanns Künstlernamen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Mit der Veröffentlichung von „Ritter Gluck“ im Jahr 1809 begann Hoffmann als E. T. A. Hoffmann zu signieren und erklärte, dass das A für Amadeus zu Ehren Mozarts stehe, was Mozarts ikonische Bedeutung für seine musikalische Imagination unterstreicht."
+    },
+    {
+      "person_name": "Joseph Seconda",
+      "relationship_type": "colleague",
+      "relationship_description": "Direktor einer Operntruppe, für die Hoffmann während der Napoleonischen Kriege in Dresden und Leipzig als Musikdirektor arbeitete.",
+      "start_year": 1813,
+      "end_year": 1814,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Leitung und Organisation von Secondas Operntruppe",
+        "Proben und Aufführungen in Dresden und Leipzig",
+        "Tourneen und Reisen unter Kriegsbedingungen",
+        "organisatorische Auseinandersetzungen über Anstellung und Kündigung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Seconda bot Hoffmann 1813 die Stelle an; Hoffmann lobte die Qualität des Orchesters, geriet später jedoch mit Seconda in Streit und wurde gekündigt, woraufhin er sich weigerte, die Truppe zurück nach Dresden zu begleiten."
+    },
+    {
+      "person_name": "Karl Albert von Kamptz",
+      "relationship_type": "rival",
+      "relationship_description": "Preußischer Kommissar, dessen illiberale Eingriffe in politische Prozesse mit Hoffmanns Rechtsgewissen kollidierten; von Hoffmann in „Meister Floh“ karikiert, was rechtliche Schritte gegen ihn nach sich zog.",
+      "start_year": 1819,
+      "end_year": 1822,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Beteiligung an staatlichen politischen Prozessen, darunter dem Verfahren gegen „Turnvater“ Jahn",
+        "Konflikte über rechtsstaatliche Verfahren innerhalb der Ministerialkommission",
+        "Vorlage für Hoffmanns satirische Darstellung in Meister Floh",
+        "von Kamptz eingeleitete juristische Schritte gegen Hoffmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Als maßgeblicher Einfluss auf die Ministerialkommission beschrieben; Hoffmann „brachte Kamptz gegen sich auf und wurde zu einem politischen Ziel“. Die Verfahren wurden erst eingestellt, als Hoffmanns Krankheit als lebensbedrohlich galt."
+    },
+    {
+      "person_name": "King Frederick William III of Prussia",
+      "relationship_type": "other",
+      "relationship_description": "Monarch, unter dessen Herrschaft Hoffmann als hoher Richter diente; seine Einsetzung von Kommissionen zur Untersuchung politischer Umtriebe brachte Hoffmann in ethisch heikle Prozesse.",
+      "start_year": 1819,
+      "end_year": 1822,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Hoffmanns Tätigkeit am Kammergericht unter königlicher Autorität",
+        "Umsetzung und Kritik antiliberaler Untersuchungskommissionen",
+        "königliche Entscheidung, die Sanktionen gegen Hoffmann nach der Meister-Floh-Affäre zu begrenzen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Der König richtete eine Immediatkommission und später eine Ministerialkommission für politische Untersuchungen ein. Nachdem Kamptz wegen Hoffmanns Karikatur in Meister Floh ein Verfahren einleitete, verlangte der König lediglich eine Rüge, die jedoch nie vollzogen wurde."
+    },
+    {
+      "person_name": "Friedrich Ludwig Jahn (\"Turnvater\" Jahn)",
+      "relationship_type": "other",
+      "relationship_description": "Begründer der nationalistischen Turnbewegung, dessen Hochverratsprozess, an dem Hoffmann mitwirkte, ihn in Konflikt mit Kamptz und dem antiliberalen Apparat brachte.",
+      "start_year": 1819,
+      "end_year": 1822,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "gerichtliche Verfahren in Prozessen wegen politischer Umtriebe",
+        "richterliche Bewertung der Anklagen gegen Jahn"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "notes": "Hoffmanns Verhalten im Fall Jahn – sein Beharren auf rechtsstaatlichen Standards – trug dazu bei, dass Kamptz ihn als politisch unzuverlässig ansah, was wiederum Kamptz’ Rachefeldzug wegen Meister Floh provozierte."
+    }
+  ],
+  "category_summaries": null
+}

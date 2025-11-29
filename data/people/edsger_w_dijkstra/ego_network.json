@@ -1,0 +1,473 @@
+{
+  "dataset": "wikipedia-ego-network",
+  "created_on": "2025-11-29",
+  "ego": {
+    "name": "Edsger W. Dijkstra",
+    "birth_year": 1930,
+    "death_year": 2002,
+    "primary_roles": [
+      "computer scientist",
+      "programmer",
+      "mathematician",
+      "science essayist"
+    ],
+    "summary": "Edsger W. Dijkstra (1930\u20132002) was a Dutch computer scientist and a foundational figure in structured programming, algorithms, operating systems, and programming methodology. He worked at the Mathematisch Centrum in Amsterdam, was a professor at Eindhoven University of Technology and later held the Schlumberger Centennial Chair in Computer Science at the University of Texas at Austin, producing influential work such as Dijkstra\u2019s shortest-path algorithm, the THE operating system, and hundreds of widely circulated \u201cEWD\u201d manuscripts.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+  },
+  "connections": [
+    {
+      "person_name": "Douwe Wybe Dijkstra",
+      "relationship_type": "family/father",
+      "relationship_description": "Father; a chemist and school superintendent in Rotterdam who valued rigorous scientific thinking, influencing Dijkstra\u2019s intellectual upbringing.",
+      "start_year": 1930,
+      "end_year": 1970,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life",
+        "education guidance",
+        "discussion of science and scholarship"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Described as president of the Rotterdamsche Chemische Kring and an influential figure in Dijkstra\u2019s early life."
+    },
+    {
+      "person_name": "Brechtje Cornelia Kluijver",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother; a mathematically trained parent who, together with her husband, encouraged Dijkstra to study mathematics and physics instead of law.",
+      "start_year": 1930,
+      "end_year": 1994,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life",
+        "educational decisions"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Although she never held a formal job, her background in mathematics helped shape Dijkstra\u2019s respect for mathematical rigor."
+    },
+    {
+      "person_name": "Johannes Haantjes",
+      "relationship_type": "academic/advisor",
+      "relationship_description": "Leiden supervisor in physics who introduced Dijkstra to Adriaan van Wijngaarden, enabling his first professional programming position.",
+      "start_year": 1948,
+      "end_year": 1952,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "university studies in mathematics and physics",
+        "research supervision",
+        "introduction to computing community"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Through Haantjes, Dijkstra met van Wijngaarden and the Mathematical Centre, a pivotal career turn."
+    },
+    {
+      "person_name": "Adriaan van Wijngaarden",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Doctoral supervisor, boss, and mentor at the Mathematisch Centrum; encouraged Dijkstra to make programming his intellectual vocation and supervised his PhD.",
+      "start_year": 1952,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "work at Mathematisch Centrum",
+        "software for early Dutch computers",
+        "ALGOL language and compiler work",
+        "PhD supervision",
+        "career guidance discussions"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
+      ],
+      "notes": "Dijkstra described a long conversation with van Wijngaarden as a \u2018turning point\u2019 in his life; van Wijngaarden also supervised his 1959 thesis."
+    },
+    {
+      "person_name": "Bram Jan Loopstra",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Hardware colleague at the Mathematisch Centrum; co-designed early Dutch computers while coordinating closely with Dijkstra on hardware\u2013software interfaces.",
+      "start_year": 1952,
+      "end_year": 1962,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design of early Dutch computers (e.g., ARMAC context)",
+        "defining hardware\u2013software interfaces via programming manuals",
+        "collaborative development process at Mathematisch Centrum"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Their disciplined collaboration, with clear interface contracts, shaped Dijkstra\u2019s views on documentation and design-before-debugging."
+    },
+    {
+      "person_name": "Carel S. Scholten",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Hardware designer at the Mathematisch Centrum; worked with Dijkstra and Loopstra on building early computers.",
+      "start_year": 1952,
+      "end_year": 1962,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design and construction of early Dutch computers",
+        "hardware\u2013software interface specification",
+        "work at Mathematisch Centrum"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Part of the small core team whose collaboration informed Dijkstra\u2019s ideas about clear interfaces and correctness by design."
+    },
+    {
+      "person_name": "Maria \"Ria\" C. Debets",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Wife; Dijkstra married Ria Debets in 1957, and they lived together in the Netherlands and later in Austin, before returning to Nuenen for his final years.",
+      "start_year": 1957,
+      "end_year": 2002,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life",
+        "international moves between Netherlands and USA",
+        "hosting students for oral exams at home"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "During their marriage ceremony, Dijkstra insisted on listing his profession as \u2018programmer,\u2019 challenging contemporary views of computing as a profession."
+    },
+    {
+      "person_name": "International Federation for Information Processing Working Group 2.1 members",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "International colleagues in IFIP WG 2.1 on Algorithmic Languages and Calculi, who collaborated on ALGOL standards and language design related to Dijkstra\u2019s early work.",
+      "start_year": 1958,
+      "end_year": 1970,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design and maintenance of ALGOL 60 and ALGOL 68",
+        "international standardization meetings"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden",
+        "https://en.wikipedia.org/wiki/Tony_Hoare",
+        "https://en.wikipedia.org/wiki/Lambert_Meertens"
+      ],
+      "notes": "Van Wijngaarden, Hoare, Meertens and others in WG 2.1 were part of the same language design community in which Dijkstra\u2019s ALGOL and compiler work played a major role."
+    },
+    {
+      "person_name": "Jaap A. Zonneveld",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Colleague at the Mathematisch Centrum; co-developed the world\u2019s first working ALGOL 60 compiler with Dijkstra.",
+      "start_year": 1960,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "development of the first ALGOL 60 compiler for Electrologica X1",
+        "intense joint coding and design effort",
+        "work at Mathematisch Centrum"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Jaap_A._Zonneveld"
+      ],
+      "notes": "They worked \u2018day and night\u2019 on the compiler, even keeping duplicate notes in separate places and growing beards until completion\u2014an emblematic collaboration in early language implementation."
+    },
+    {
+      "person_name": "Marcus Dijkstra",
+      "relationship_type": "family/child",
+      "relationship_description": "Son; one of Dijkstra\u2019s three children.",
+      "start_year": 1960,
+      "end_year": 2002,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "family life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Mentioned as a surviving child at Dijkstra\u2019s death; detailed biographical interaction is not documented in the article."
+    },
+    {
+      "person_name": "Femke Dijkstra",
+      "relationship_type": "family/child",
+      "relationship_description": "Daughter; one of Dijkstra\u2019s three children.",
+      "start_year": 1960,
+      "end_year": 2002,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "family life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Listed among his surviving children; further details not given."
+    },
+    {
+      "person_name": "Rutger M. Dijkstra",
+      "relationship_type": "family/child",
+      "relationship_description": "Son and computer scientist; one of Dijkstra\u2019s children who followed him into computing.",
+      "start_year": 1960,
+      "end_year": 2002,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life",
+        "shared professional interests in computer science"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Explicitly noted in the article as a computer scientist, suggesting a professional as well as familial connection."
+    },
+    {
+      "person_name": "Technische Hogeschool Eindhoven (Eindhoven University of Technology) colleagues",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Mathematics Department colleagues with whom Dijkstra attempted to build a group of collaborating computer scientists during his professorship in Eindhoven.",
+      "start_year": 1962,
+      "end_year": 1973,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "teaching mathematics and computing",
+        "forming a small group of computer scientists",
+        "development of the THE operating system"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+      ],
+      "notes": "The article does not name individuals, but emphasizes his effort to create a collaborative computing group within a math-dominated culture."
+    },
+    {
+      "person_name": "Nico Habermann",
+      "relationship_type": "academic/student",
+      "relationship_description": "PhD student of Dijkstra at Eindhoven who later became a prominent systems researcher and department head at Carnegie Mellon University.",
+      "start_year": 1967,
+      "end_year": 1973,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "doctoral supervision at Eindhoven University of Technology",
+        "research on operating systems and synchronization (including THE multiprogramming system)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Nico_Habermann",
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Habermann\u2019s PhD at Eindhoven under Dijkstra and later work on THE system are explicitly referenced; he became an influential academic in software engineering."
+    },
+    {
+      "person_name": "Donald E. Knuth",
+      "relationship_type": "professional/peer",
+      "relationship_description": "Contemporary pioneer in algorithm analysis and programming methodology; both received Turing Awards and influenced views on rigor in programming.",
+      "start_year": 1968,
+      "end_year": 2002,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "participation in international computer science community",
+        "indirect dialogue through publications on programming methodology and algorithms"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Donald_Knuth",
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "They shared interests in structured programming and program correctness; their work is often discussed together in histories of computer science, though the article does not document close personal collaboration."
+    },
+    {
+      "person_name": "Tony Hoare",
+      "relationship_type": "professional/peer",
+      "relationship_description": "Fellow Turing Award\u2013winning programming language theorist and co-founder of structured programming, known for related work on program correctness and concurrency.",
+      "start_year": 1968,
+      "end_year": 2002,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "international conferences and IFIP working groups on programming languages and calculi",
+        "shared advocacy of formal reasoning about programs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Tony_Hoare",
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Hoare co-authored the classic book \u2018Structured Programming\u2019 and co-formulated the dining philosophers problem with Dijkstra; their ideas deeply influenced each other and the field."
+    },
+    {
+      "person_name": "K. Mani Chandy",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Colleague in concurrent programming and distributed computing whose work (e.g., with Misra) intersected with themes central to Dijkstra\u2019s research on concurrency and self-stabilization.",
+      "start_year": 1970,
+      "end_year": 2002,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "broader research community in concurrency and distributed algorithms"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jayadev_Misra"
+      ],
+      "notes": "Not directly mentioned on Dijkstra\u2019s page, but strongly connected via the concurrency community and related awards like the Dijkstra Prize."
+    },
+    {
+      "person_name": "Tuesday Afternoon Club colleagues",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "A select seminar group of colleagues who met weekly with Dijkstra to dissect scientific articles and discuss notation, organization, and content.",
+      "start_year": 1973,
+      "end_year": 1999,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Tuesday Afternoon Club seminars in Nuenen and Austin",
+        "critical discussion of research papers",
+        "development of Dijkstra\u2019s essay style (EWD series)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Initially based in Nuenen and later reconstituted in Austin; members formed Dijkstra\u2019s closest ongoing research discussion circle."
+    },
+    {
+      "person_name": "Burroughs Corporation research staff",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Industrial colleagues in Burroughs research centers who interacted with Dijkstra during his tenure as the company\u2019s sole research fellow.",
+      "start_year": 1973,
+      "end_year": 1984,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "research visits to Burroughs centers",
+        "discussions on systems design and programming methodology",
+        "circulation and discussion of EWD reports"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Burroughs_Corporation"
+      ],
+      "notes": "Although he worked primarily from his home in Nuenen, he travelled to Burroughs branches in the US and influenced company thinking on software design."
+    },
+    {
+      "person_name": "Jan L. A. van de Snepscheut",
+      "relationship_type": "academic/student",
+      "relationship_description": "Former student of Dijkstra (and Martin Rem) in the Dutch school of formal methods; later a professor at Caltech and author of \u2018What Computing Is All About.\u2019",
+      "start_year": 1977,
+      "end_year": 1988,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "doctoral-level training in formal program derivation",
+        "participation in the Eindhoven computing science style"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jan_L._A._van_de_Snepscheut",
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "The related article notes he was a student of Dijkstra; his work and teaching carried forward Dijkstra\u2019s emphasis on program correctness."
+    },
+    {
+      "person_name": "Students at the University of Texas at Austin",
+      "relationship_type": "academic/student",
+      "relationship_description": "Undergraduate and graduate students whom Dijkstra taught, often in proof-focused courses with oral exams and intensive feedback.",
+      "start_year": 1984,
+      "end_year": 1999,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "courses on mathematical proofs and reasoning",
+        "oral examinations held in his office or home",
+        "interactive blackboard lectures and challenging homework"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "He photographed students at semester start to memorize names, eschewed textbooks, and treated teaching as a serious research endeavor."
+    },
+    {
+      "person_name": "University of Texas at Austin Computer Science faculty",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Colleagues in the UT Austin Computer Science Department during Dijkstra\u2019s tenure as Schlumberger Centennial Chair, collaborating in teaching and departmental activities.",
+      "start_year": 1984,
+      "end_year": 1999,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "teaching advanced courses in proof and reasoning",
+        "departmental governance",
+        "organization of 2000 symposium honoring Dijkstra"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/University_of_Texas_at_Austin"
+      ],
+      "notes": "The article stresses his distinctive teaching style and the symposium organized by the department at his 70th birthday; individual colleagues are not named in the main text."
+    },
+    {
+      "person_name": "Vladimir Lifschitz",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Logician who interviewed at UT Austin; Dijkstra assessed him by giving a puzzle, which Lifschitz solved, leading to his long-term position in Austin.",
+      "start_year": 1990,
+      "end_year": 2002,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "faculty recruitment interaction",
+        "subsequent collegial interaction at UT Austin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Used by the article as an example of Dijkstra\u2019s unconventional methods of evaluating people\u2019s problem-solving capacity."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Dijkstra\u2019s family network centers on his scientifically inclined parents, who steered him toward mathematics and physics, his wife Ria Debets, who shared his moves between the Netherlands and the US, and their three children, including computer scientist Rutger M. Dijkstra. These relationships provided personal stability while reinforcing his intellectual orientation toward rigorous thinking."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "His academic relationships were pivotal: physics supervisor Johannes Haantjes connected him to computing, while Adriaan van Wijngaarden became his key mentor and PhD advisor, encouraging him to found programming as a discipline. Dijkstra in turn supervised students like Nico Habermann and Jan van de Snepscheut and deeply influenced generations of UT Austin students through intensive, proof-oriented teaching."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Professionally, Dijkstra\u2019s core network includes colleagues at the Mathematisch Centrum (Loopstra, Scholten, Zonneveld), collaborators and interlocutors at Eindhoven and Burroughs, and the members of his Tuesday Afternoon Club and UT Austin department. These connections shaped his work on ALGOL, compilers, the THE operating system, and the influential EWD report series."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Socially, Dijkstra\u2019s most distinctive circle overlapped with his professional life, especially the Tuesday Afternoon Club, a small seminar group that met weekly to dissect papers and refine ideas. Beyond this, his social interactions\u2014often centered on music, puzzles, and intense conversation\u2014blurred the line between personal and intellectual companionship in the computing community."
+    }
+  ]
+}

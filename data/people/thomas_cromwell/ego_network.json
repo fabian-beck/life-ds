@@ -1,0 +1,483 @@
+{
+  "dataset": "wikipedia-ego-network",
+  "created_on": "2025-11-29",
+  "ego": {
+    "name": "Thomas Cromwell",
+    "birth_year": 1485,
+    "death_year": 1540,
+    "primary_roles": [
+      "statesman",
+      "lawyer",
+      "reformer"
+    ],
+    "summary": "Thomas Cromwell (c.1485\u201328 July 1540) was an English statesman and lawyer who rose from humble origins to become chief minister to King Henry VIII. A principal architect of the English Reformation, he managed the break with Rome, the royal supremacy over the Church of England, parliamentary management, and major administrative and financial reforms including the dissolution of the monasteries, before falling from favour and being executed for treason and heresy.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+  },
+  "connections": [
+    {
+      "person_name": "Katherine Cromwell (sister)",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Thomas\u2019s elder sister Katherine maintained a close lifelong relationship with him; her marriage into the Williams/Cromwell line produced Richard Williams (alias Cromwell), whom Thomas promoted.",
+      "start_year": 1485,
+      "end_year": 1540,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family support networks",
+        "placement of her son Richard in Thomas\u2019s service",
+        "sharing of Putney social connections"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Her son Richard later took the Cromwell surname and was ancestor of the Lord Protector Oliver Cromwell, extending Thomas\u2019s familial legacy."
+    },
+    {
+      "person_name": "Walter Cromwell",
+      "relationship_type": "family/father",
+      "relationship_description": "Walter Cromwell was Thomas Cromwell\u2019s father, an ambitious but often litigious yeoman tradesman in Putney involved in sheep\u2011farming, wool processing, brewing, tavern\u2011keeping and local office\u2011holding.",
+      "start_year": 1485,
+      "end_year": 1514,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Putney",
+        "exposure to mixed fortunes in small trade",
+        "local legal disputes and manorial court cases"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Walter\u2019s frequent brushes with the law and eventual loss of his lands in 1514 shaped Thomas\u2019s awareness of property, litigation, and the precariousness of status, factors often cited as influencing his later drive and legal acumen."
+    },
+    {
+      "person_name": "Katherine (or Elizabeth) Meverell",
+      "relationship_type": "family/mother",
+      "relationship_description": "Thomas Cromwell\u2019s mother, generally referred to as Katherine Meverell, came from a recognised gentry family of Staffordshire, giving him gentle blood on his maternal side.",
+      "start_year": 1485,
+      "end_year": 1500,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family upbringing in Putney",
+        "links to Meverell gentry kin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Little is known about her beyond her gentry origins; her status is often invoked to explain Cromwell\u2019s ease in moving between commoner and aristocratic worlds."
+    },
+    {
+      "person_name": "Elizabeth Cromwell (n\u00e9e Wyckes)",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Elizabeth Wyckes, widowed daughter of Putney shearman Henry Wyckes and former wife of Yeoman of the Guard Thomas Williams, became Thomas Cromwell\u2019s wife c.1515 and presided over his Austin Friars household in London.",
+      "start_year": 1515,
+      "end_year": 1529,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and household management at Austin Friars",
+        "hosting a wide social circle of merchants, lawyers and gentry",
+        "raising their children Gregory, Anne and Grace"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Elizabeth_Wyckes"
+      ],
+      "notes": "Her capable running of a sociable household helped Cromwell build networks in London\u2019s mercantile and professional milieu; she and two daughters likely died of sweating sickness in 1529."
+    },
+    {
+      "person_name": "Henry Wyckes",
+      "relationship_type": "family/in-law",
+      "relationship_description": "Henry Wyckes, a Putney shearman who later became Gentleman Usher to Henry VII, was Cromwell\u2019s father\u2011in\u2011law via his marriage to Elizabeth Wyckes, connecting Cromwell to minor court circles.",
+      "start_year": 1515,
+      "end_year": 1514,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family gatherings in Putney",
+        "indirect access to courtly networks through Wyckes\u2019s position"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Elizabeth_Wyckes",
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Wyckes\u2019s combination of artisanal background and royal household service parallels Cromwell\u2019s own trajectory from tradesman\u2019s son to court insider."
+    },
+    {
+      "person_name": "Gregory Cromwell, 1st Baron Cromwell",
+      "relationship_type": "family/child",
+      "relationship_description": "Gregory was Cromwell\u2019s only legitimate surviving son, whom he carefully educated and advanced; Gregory later married Elizabeth Seymour, sister of Queen Jane Seymour, and was raised to the peerage.",
+      "start_year": 1520,
+      "end_year": 1540,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "family life",
+        "Gregory\u2019s education under humanist tutors",
+        "arranged marriage into the Seymour family",
+        "joint presence at court events such as the May Day 1540 jousts"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Gregory_Cromwell,_1st_Baron_Cromwell"
+      ],
+      "notes": "Letters suggest a close, affectionate relationship; Cromwell invested heavily in Gregory\u2019s schooling and career, and Gregory\u2019s advantageous marriage bound Cromwell to the king\u2019s in\u2011laws."
+    },
+    {
+      "person_name": "Cardinal Thomas Wolsey",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Wolsey, Henry VIII\u2019s powerful Lord Chancellor, became Cromwell\u2019s patron when Cromwell entered his household in 1524, employing him as legal and administrative \u2018man of all work\u2019 and involving him in monastic suppressions.",
+      "start_year": 1524,
+      "end_year": 1530,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "service in Wolsey\u2019s household",
+        "legal work in chancery and Star Chamber",
+        "suppression of small monasteries to fund Wolsey\u2019s colleges at Ipswich and Oxford"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Cardinal_Thomas_Wolsey"
+      ],
+      "notes": "Cromwell\u2019s loyal defence of Wolsey during his downfall impressed Henry VIII; experience gained in dissolving houses for Wolsey was later scaled up nationwide under the royal supremacy."
+    },
+    {
+      "person_name": "Pope Clement VII",
+      "relationship_type": "professional/religious_authority",
+      "relationship_description": "Pope Clement VII, head of the Catholic Church, refused Henry VIII\u2019s request to annul his marriage to Catherine of Aragon, a refusal that indirectly propelled Cromwell\u2019s strategy of asserting royal supremacy over the English Church.",
+      "start_year": 1527,
+      "end_year": 1534,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "protracted but unsuccessful efforts (before Cromwell\u2019s ascendancy) to secure an annulment",
+        "legislative response in England ending appeals to Rome and acknowledging the king as Supreme Head"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Pope_Clement_VII",
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Clement\u2019s political constraints\u2014especially dependence on Charles V\u2014made papal compliance impossible, which Cromwell used to argue for England\u2019s ecclesiastical independence."
+    },
+    {
+      "person_name": "Henry VIII",
+      "relationship_type": "professional/monarch",
+      "relationship_description": "Henry VIII was Cromwell\u2019s royal master; from the early 1530s Cromwell rose to become his chief minister, orchestrating the break with Rome, the royal supremacy, and extensive administrative and financial reforms on Henry\u2019s behalf.",
+      "start_year": 1529,
+      "end_year": 1540,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Reformation Parliament management",
+        "engineering the annulment from Catherine of Aragon",
+        "legislation for royal supremacy and dissolution of monasteries",
+        "fiscal and bureaucratic reorganisation of crown government",
+        "arranging the marriage to Anne of Cleves"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Henry_VIII"
+      ],
+      "notes": "Their relationship combined intense trust and dependence with volatility; Henry relied on Cromwell\u2019s energy and intellect yet ultimately sacrificed him via attainder after the Cleves marriage fiasco and court factional pressure."
+    },
+    {
+      "person_name": "Richard Williams (alias Cromwell)",
+      "relationship_type": "family/extended",
+      "relationship_description": "Richard Williams, son of Cromwell\u2019s sister Katherine, entered his uncle\u2019s service, adopted the surname Cromwell, and benefited from grants of former monastic lands and offices through Thomas\u2019s patronage.",
+      "start_year": 1529,
+      "end_year": 1540,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "service in Cromwell\u2019s household and in royal administration",
+        "joint grants of constableships and properties (e.g., Hertford and Berkeley Castles)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Gregory_Cromwell,_1st_Baron_Cromwell"
+      ],
+      "notes": "Richard\u2019s advancement exemplified Cromwell\u2019s use of the Reformation\u2019s redistributions to establish a loyal Cromwellian landed interest that would outlast his own political career."
+    },
+    {
+      "person_name": "Thomas More",
+      "relationship_type": "professional/rival",
+      "relationship_description": "Thomas More, humanist scholar and Lord Chancellor, was a devout Catholic opponent of Henry\u2019s annulment and of the royal supremacy that Cromwell championed; Cromwell\u2019s rise coincided with and facilitated More\u2019s fall and execution.",
+      "start_year": 1529,
+      "end_year": 1535,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "service together in the early Reformation Parliament",
+        "subsequent interrogations of More over the Oath of Succession and Supremacy"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Thomas_More"
+      ],
+      "notes": "Though Cromwell initially sought to preserve More, hoping for his compliance, he ultimately oversaw proceedings that led to More\u2019s conviction for treason on the basis of his refusal to acknowledge the king\u2019s ecclesiastical title."
+    },
+    {
+      "person_name": "Eustace Chapuys",
+      "relationship_type": "professional/diplomat",
+      "relationship_description": "Eustace Chapuys, the long\u2011serving Imperial ambassador of Charles V, closely observed and reported on Cromwell\u2019s actions, often criticising him as chief architect of Henry\u2019s schism from Rome and the treatment of Catherine and Mary.",
+      "start_year": 1529,
+      "end_year": 1540,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "diplomatic negotiations over Henry\u2019s foreign policy",
+        "informal exchanges at court and in London",
+        "Chapuys\u2019s dispatches analysing Cromwell\u2019s manoeuvres"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Eustace_Chapuys"
+      ],
+      "notes": "Chapuys\u2019 detailed letters are a major primary source for Cromwell\u2019s career; though hostile, they acknowledge his industry and political weight, noting for example that \u2018everything is done by Cromwell\u2019."
+    },
+    {
+      "person_name": "Thomas Audley, 1st Baron Audley of Walden",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Thomas Audley, Cromwell\u2019s legal colleague and eventual Lord Chancellor, worked closely with him in drafting and steering Reformation legislation through Parliament.",
+      "start_year": 1529,
+      "end_year": 1540,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Reformation Parliament management",
+        "drafting statutes on royal supremacy, treason, and dissolution of monasteries"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_VIII",
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Audley survived Cromwell\u2019s fall and continued as Lord Chancellor, indicating his more cautious positioning within court factions."
+    },
+    {
+      "person_name": "Catherine of Aragon",
+      "relationship_type": "professional/monarch",
+      "relationship_description": "Catherine of Aragon, Henry VIII\u2019s first wife, was the queen whose failed marriage Henry sought to annul; Cromwell\u2019s parliamentary strategy and anti\u2011papal legislation helped Henry achieve the annulment without papal consent.",
+      "start_year": 1529,
+      "end_year": 1533,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Reformation Parliament proceedings that undermined papal jurisdiction over her marriage case"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Catherine_of_Aragon"
+      ],
+      "notes": "Cromwell, unlike earlier counsellors, abandoned attempts to secure papal approval and instead framed the \u2018King\u2019s Great Matter\u2019 as a question of national sovereignty and ecclesiastical obedience."
+    },
+    {
+      "person_name": "Charles V, Holy Roman Emperor",
+      "relationship_type": "professional/foreign_ruler",
+      "relationship_description": "Charles V, as Holy Roman Emperor and nephew of Catherine of Aragon, was a central foreign antagonist to Henry VIII\u2019s annulment strategy designed by Cromwell; Cromwell\u2019s policies frequently aimed to counter or placate Imperial pressure.",
+      "start_year": 1529,
+      "end_year": 1540,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "indirect negotiation via ambassadors such as Chapuys",
+        "geopolitical manoeuvring during the Pilgrimage of Grace and Franco\u2011Imperial alliances"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_VIII",
+        "https://en.wikipedia.org/wiki/Pope_Clement_VII",
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Imperial opposition made papal annulment impossible, pushing Cromwell towards the parliamentary and statutory route to royal supremacy."
+    },
+    {
+      "person_name": "Thomas Howard, 3rd Duke of Norfolk",
+      "relationship_type": "professional/rival",
+      "relationship_description": "Norfolk, a leading conservative noble and uncle to Anne Boleyn and later Catherine Howard, was Cromwell\u2019s chief aristocratic rival, opposing his evangelical and bureaucratic agenda and helping engineer his downfall in 1540.",
+      "start_year": 1530,
+      "end_year": 1540,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Privy Council deliberations",
+        "factional struggles over Anne Boleyn\u2019s fate",
+        "opposition to Cromwell\u2019s Cleves policy and religious reforms"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Thomas_Howard,_3rd_Duke_of_Norfolk"
+      ],
+      "notes": "Norfolk used his niece Catherine Howard\u2019s ascendancy in 1540 to turn the king decisively against Cromwell, and presided at Cromwell\u2019s degradation in the House of Lords."
+    },
+    {
+      "person_name": "Jane Cromwell (illegitimate daughter)",
+      "relationship_type": "family/child",
+      "relationship_description": "Jane was Cromwell\u2019s illegitimate daughter, born c.1530; although her early life is obscure, records show that Cromwell supported and arranged her upbringing within his extended household and networks.",
+      "start_year": 1530,
+      "end_year": 1540,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "provision of education and maintenance",
+        "placement in households of associates (e.g., with Margaret Vernon, then with Gregory and Elizabeth at Leeds Castle)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Cromwell, generally noted for chastity at court, seems to have tried to keep this liaison discreet; later historians have proposed a household servant, Elizabeth Gregory, as Jane\u2019s mother based on Cromwell\u2019s will."
+    },
+    {
+      "person_name": "Anne Boleyn",
+      "relationship_type": "professional/monarch",
+      "relationship_description": "Anne Boleyn, Henry VIII\u2019s second wife, initially shared reformist sympathies with Cromwell but later became his political adversary; he played a leading role in orchestrating her downfall in 1536.",
+      "start_year": 1532,
+      "end_year": 1536,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "legislative programme securing Anne\u2019s marriage and Elizabeth\u2019s succession (Acts of Succession and Supremacy)",
+        "subsequent investigations and proceedings leading to Anne\u2019s arrest and trial"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Anne_Boleyn"
+      ],
+      "notes": "Disputes over foreign policy and the disposition of monastic revenues, and their rival court factions, contributed to Cromwell\u2019s decision to move against her, aligning with conservative nobles who opposed the Boleyns."
+    },
+    {
+      "person_name": "Thomas Cranmer",
+      "relationship_type": "professional/ally",
+      "relationship_description": "Thomas Cranmer, Archbishop of Canterbury, was Cromwell\u2019s close ally in advancing evangelical reform and implementing the legal and doctrinal changes underpinning the English Reformation.",
+      "start_year": 1532,
+      "end_year": 1540,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "annulment of Henry\u2019s marriage to Catherine of Aragon",
+        "validation then annulment of the marriage to Anne Boleyn",
+        "support for royal supremacy and reformist preaching",
+        "suppression of traditional religious houses and shrines"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Thomas_Cranmer"
+      ],
+      "notes": "Cromwell held the unique office of Vicegerent in Spirituals above Cranmer in the ecclesiastical hierarchy, but they cooperated closely; Cranmer tried unsuccessfully to intercede after Cromwell\u2019s arrest."
+    },
+    {
+      "person_name": "Francis I of France",
+      "relationship_type": "professional/foreign_ruler",
+      "relationship_description": "Francis I, King of France, was alternately a rival and potential ally whose shifting relations with Henry VIII shaped Cromwell\u2019s diplomacy, particularly in balancing France and the Empire and in the later attempt at a Cleves\u2011backed Protestant bloc.",
+      "start_year": 1532,
+      "end_year": 1540,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Anglo\u2011French diplomatic contacts and treaties",
+        "coordination and rivalry during shifting alliances in the Italian Wars"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Francis_I_of_France",
+        "https://en.wikipedia.org/wiki/Henry_VIII"
+      ],
+      "notes": "While Cromwell did not manage Francis directly, the king\u2019s policies required Cromwell to adjust English foreign alignments in response to the ever\u2011changing Franco\u2011Imperial balance."
+    },
+    {
+      "person_name": "Jane Seymour",
+      "relationship_type": "professional/monarch",
+      "relationship_description": "Jane Seymour, Henry VIII\u2019s third wife, was promoted by nobles allied with Cromwell as a replacement for Anne Boleyn and became queen after Anne\u2019s execution; Cromwell supported the match that briefly stabilised the succession with the birth of Edward VI.",
+      "start_year": 1536,
+      "end_year": 1537,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "arrangements for Anne Boleyn\u2019s removal and Jane\u2019s marriage",
+        "policy emphasis on reconciling Princess Mary with Henry and securing the line through Edward VI"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Jane_Seymour"
+      ],
+      "notes": "Jane\u2019s family, the Seymours, became important allies through Cromwell\u2019s arrangement of his son Gregory\u2019s marriage to Jane\u2019s sister Elizabeth Seymour."
+    },
+    {
+      "person_name": "Robert Aske",
+      "relationship_type": "professional/opponent",
+      "relationship_description": "Robert Aske was the lawyer\u2011gentleman who led the Pilgrimage of Grace, the large northern rising against Cromwell\u2019s religious and economic policies including monastic dissolution and royal supremacy.",
+      "start_year": 1536,
+      "end_year": 1537,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "negotiations during the Pilgrimage of Grace",
+        "temporary capitulations and subsequent repressions"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_VIII",
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell"
+      ],
+      "notes": "Although Henry personally overruled Cromwell\u2019s initial recommendations for harshness, the revolt highlighted widespread resentment of Cromwell\u2019s reforms and provided ammunition to his enemies at court."
+    },
+    {
+      "person_name": "Anne of Cleves",
+      "relationship_type": "professional/monarch",
+      "relationship_description": "Anne of Cleves, Henry\u2019s fourth wife, was selected largely on Cromwell\u2019s recommendation to cement a Protestant\u2011leaning alliance with the German duchy of J\u00fclich\u2011Cleves\u2011Berg; the king\u2019s distaste for her contributed directly to Cromwell\u2019s fall.",
+      "start_year": 1539,
+      "end_year": 1540,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "marriage negotiations and treaty with the Cleves court",
+        "commissioning of Holbein\u2019s portrait",
+        "receiving Anne in England and managing the January 1540 wedding"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Cromwell",
+        "https://en.wikipedia.org/wiki/Anna_von_Kleve"
+      ],
+      "notes": "Henry blamed Cromwell for the mismatch and lack of consummation, allowing conservative enemies to tie the failed marriage to wider charges of treason and heresy."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family relationships anchored Cromwell\u2019s social rise from Putney tradesman\u2019s son to kin of the royal in\u2011laws. He maintained close ties with his sisters\u2019 families, invested heavily in the education and advancement of his son Gregory, and discreetly supported his illegitimate daughter Jane; marriages he arranged, notably Gregory\u2019s to Elizabeth Seymour, linked the Cromwells to the Seymours and thus to Henry VIII\u2019s heir."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Cromwell\u2019s professional network spanned patrons like Wolsey and Henry VIII, reformist allies such as Cranmer and Audley, aristocratic rivals like Norfolk, and key royal women whose marriages he facilitated or unmade. As chief minister he managed Parliament, foreign diplomacy, and the king\u2019s marital politics, but that same web of responsibilities and enmities ultimately enabled factional opponents to destroy him."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Though not an academic in the formal sense, Cromwell\u2019s life was deeply shaped by legal and humanist learning gained through tutors, foreign sojourns, and his careful provision of similar educations for his son and nephews. His circle intersected with scholars, diplomats and clergy who were steeped in Renaissance and evangelical ideas, informing his legislative and ecclesiastical innovations."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Cromwell\u2019s sociable Austin Friars household\u2014managed by his wife Elizabeth\u2014drew merchants, lawyers, gentry and minor courtiers into informal networks that underpinned his later political power. Extended kin such as Richard Williams (alias Cromwell) and clients from Putney and London moved through this milieu into royal service, forming a social base for his reforms."
+    }
+  ]
+}
