@@ -24,7 +24,9 @@
       "Bash(xargs ls:*)",
       "Bash(for dir in data/people/*/)",
       "Bash(ls:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(do if grep -q \"\"chapters\"\" $dir/life_events.json)",
+      "Bash(then echo '$(basename $dir)')"
     ],
     "deny": [],
     "ask": []

@@ -287,13 +287,9 @@
               </div>
               {#each groupedEvents as group, groupIndex}
                 {#if group.chapter}
-                  <div class="chapter-header">
+                  {@const chapterAge = group.chapter.age_start ?? 0}
+                  <div class="chapter-header" style="--event-age: {chapterAge};">
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
-                    {#if group.chapter.date_start && group.chapter.date_end}
-                      {@const startYear = group.chapter.date_start.split('-')[0]}
-                      {@const endYear = group.chapter.date_end.split('-')[0]}
-                      <span class="chapter-years">{startYear}–{endYear}</span>
-                    {/if}
                   </div>
                 {:else if groupIndex > 0}
                   <div class="chapter-header">
@@ -306,7 +302,8 @@
                   {@const eventYear = event.date
                     ? event.date.split("-")[0]
                     : ""}
-                  <div class="timeline-item" data-event-index={idx}>
+                  {@const eventAge = event.age ?? 0}
+                  <div class="timeline-item" data-event-index={idx} style="--event-age: {eventAge};">
                     <button
                       type="button"
                       class="dot"
@@ -478,42 +475,11 @@
 
   .indicator-track.expanded {
     border-radius: 1.5rem;
-    padding: 1rem 1rem;
+    padding: 0;
     height: 100%;
     background: rgba(15, 23, 42, 0.85);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
-  }
-
-  .indicator-track.expanded::before,
-  .indicator-track.expanded::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1rem;
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .indicator-track.expanded::before {
-    left: 0;
-    background: linear-gradient(
-      to right,
-      rgba(15, 23, 42, 0.85) 0%,
-      rgba(15, 23, 42, 0.6) 40%,
-      transparent 100%
-    );
-  }
-
-  .indicator-track.expanded::after {
-    right: 0;
-    background: linear-gradient(
-      to left,
-      rgba(15, 23, 42, 0.85) 0%,
-      rgba(15, 23, 42, 0.6) 40%,
-      transparent 100%
-    );
   }
 
   .indicator-track.single {
@@ -540,6 +506,7 @@
     max-width: 100%;
     height: 100%;
     width: 100%;
+    padding: 1rem;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
@@ -548,6 +515,7 @@
     scroll-behavior: smooth;
     align-items: flex-start;
     justify-content: flex-start;
+    border-radius: 1.5rem;
   }
 
   .dots-container.expanded::-webkit-scrollbar {
@@ -575,19 +543,22 @@
   .expanded-timeline-container {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
     width: 100%;
-    padding: 0.5rem 0.25rem 1rem 0.25rem;
+    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
     min-height: min-content;
+    container-type: inline-size;
   }
 
   .timeline-item {
+    --event-age: 0;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     width: 100%;
     opacity: 0;
     animation: fadeIn 0.4s ease forwards;
+    padding-left: calc(var(--event-age) * (100cqw - 200px) / 100);
   }
 
   @keyframes fadeIn {
@@ -626,17 +597,31 @@
     line-height: 1.3;
   }
 
+  @container (max-width: 600px) {
+    .event-title {
+      font-size: 0.8rem;
+    }
+  }
+
+  @container (max-width: 400px) {
+    .event-title {
+      font-size: 0.75rem;
+    }
+  }
+
   .timeline-item.home-item .event-title {
     font-weight: 600;
   }
 
   .chapter-header {
+    --event-age: 0;
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
-    padding: 0.4rem 0 0.4rem 0.65rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.35rem;
+    margin-left: calc(var(--event-age) * (100cqw - 200px) / 100);
+    padding: 0.3rem 0 0.3rem 0.5rem;
     border-left: 2px solid var(--story-primary, rgba(148, 163, 184, 0.5));
     background: linear-gradient(
       to right,
@@ -646,7 +631,7 @@
   }
 
   .chapter-header:first-of-type {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
   }
 
   .chapter-headline {
@@ -658,11 +643,35 @@
     letter-spacing: 0.01em;
   }
 
+  @container (max-width: 600px) {
+    .chapter-headline {
+      font-size: 0.85rem;
+    }
+  }
+
+  @container (max-width: 400px) {
+    .chapter-headline {
+      font-size: 0.8rem;
+    }
+  }
+
   .chapter-years {
     font-size: 0.7rem;
     color: rgba(148, 163, 184, 0.7);
     font-weight: 500;
     line-height: 1.2;
+  }
+
+  @container (max-width: 600px) {
+    .chapter-years {
+      font-size: 0.65rem;
+    }
+  }
+
+  @container (max-width: 400px) {
+    .chapter-years {
+      font-size: 0.6rem;
+    }
   }
 
   .nav-btn {
@@ -790,6 +799,18 @@
     font-weight: 500;
     white-space: nowrap;
     line-height: 1.2;
+  }
+
+  @container (max-width: 600px) {
+    .event-year {
+      font-size: 0.65rem;
+    }
+  }
+
+  @container (max-width: 400px) {
+    .event-year {
+      font-size: 0.6rem;
+    }
   }
 
   .icon {
