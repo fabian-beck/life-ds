@@ -438,7 +438,7 @@
                   days: anniversary.daysUntil,
                 })}
               {/if}
-              · {anniversary.years} yrs
+              · {$_("landing.anniversary_years", { years: anniversary.years })}
             </span>
           {:else if isNewEntry(entry)}
             <span class="new-badge">{$_("landing.new_label")}</span>

@@ -29,7 +29,7 @@
   import NetworkModal from "./NetworkModal.svelte";
   import PersonChip from "./PersonChip.svelte";
   import Timeline from "./Timeline.svelte";
-  import { _ } from "../stores/language";
+  import { _, currentLanguage } from "../stores/language";
 
   export let dataset = null;
   export let egoNetwork = null;
@@ -154,10 +154,11 @@
     },
   ];
 
-  const formatters = {
-    day: new Intl.DateTimeFormat("en", { dateStyle: "long" }),
-    month: new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }),
-    year: new Intl.DateTimeFormat("en", { year: "numeric" }),
+  // Make formatters reactive based on current language
+  $: formatters = {
+    day: new Intl.DateTimeFormat($currentLanguage, { dateStyle: "long" }),
+    month: new Intl.DateTimeFormat($currentLanguage, { year: "numeric", month: "long" }),
+    year: new Intl.DateTimeFormat($currentLanguage, { year: "numeric" }),
   };
 
   function clamp(value, min, max) {

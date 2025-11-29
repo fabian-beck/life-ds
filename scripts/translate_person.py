@@ -324,16 +324,21 @@ TRANSLATION RULES:
    - Keep modern English names as-is (e.g., Max Newman, Joan Clarke, Alan Turing)
    - Apply THE SAME rule to ALL occurrences of the same person throughout the document
    - BE CONSISTENT: if you translate a name once, translate it everywhere; if you keep it once, keep it everywhere
-3. Preserve ALL non-text fields EXACTLY:
+3. RELATIONSHIP TYPES - Translate the MAIN CATEGORY only:
+   - Relationship types have the format "category/subcategory" (e.g., "professional/mentor", "family/father")
+   - Translate the CATEGORY (part before the slash) to {lang_name}
+   - Keep the SUBCATEGORY (part after the slash) in English
+   - Examples for German: "professional/mentor" → "beruflich/mentor", "family/father" → "familie/father"
+   - For category_summaries, also translate the relationship_type field using the same rule
+4. Preserve ALL non-text fields EXACTLY:
    - ALL dates (birth_year, death_year, start_year, end_year, created_on)
    - ALL URLs (wikipedia, sources)
-   - Relationship types (professional/mentor, family/father, etc.) - keep in English
    - Strength values (weak, moderate, strong) - keep in English
    - Interaction frequencies (rare, occasional, regular, frequent) - keep in English
    - Influence directions (alter_to_ego, ego_to_alter, bidirectional) - keep in English
    - Dataset name - keep in English
-4. Maintain the exact JSON structure
-5. Use natural, fluent {lang_name}
+5. Maintain the exact JSON structure
+6. Use natural, fluent {lang_name}
 
 Here is the JSON document to translate:
 
