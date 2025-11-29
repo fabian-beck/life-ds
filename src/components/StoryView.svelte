@@ -77,7 +77,7 @@
   let pmtilesProtocol = null;
   let basemapStyleCache = null;
 
-  $: UNKNOWN_LOCATION_LABEL = $_('story.location_unknown');
+  $: UNKNOWN_LOCATION_LABEL = $_("story.location_unknown");
 
   const EVENT_ICON_RULES = [
     {
@@ -157,7 +157,10 @@
   // Make formatters reactive based on current language
   $: formatters = {
     day: new Intl.DateTimeFormat($currentLanguage, { dateStyle: "long" }),
-    month: new Intl.DateTimeFormat($currentLanguage, { year: "numeric", month: "long" }),
+    month: new Intl.DateTimeFormat($currentLanguage, {
+      year: "numeric",
+      month: "long",
+    }),
     year: new Intl.DateTimeFormat($currentLanguage, { year: "numeric" }),
   };
 
@@ -339,9 +342,12 @@
     });
 
     // Clear flag after scroll completes
-    setTimeout(() => {
-      isScrolling = false;
-    }, immediate ? 50 : 600);
+    setTimeout(
+      () => {
+        isScrolling = false;
+      },
+      immediate ? 50 : 600
+    );
   }
 
   function prevSlide() {
@@ -424,7 +430,7 @@
     lastTouchTime = touchStartTime;
 
     // Disable scroll-snap during touch to allow free scrolling
-    slidesContainer.style.scrollSnapType = 'none';
+    slidesContainer.style.scrollSnapType = "none";
   }
 
   function handleTouchMove(event) {
@@ -453,7 +459,7 @@
       const velocity = deltaTime > 0 ? deltaX / deltaTime : 0; // pixels per ms
 
       // Re-enable scroll-snap
-      slidesContainer.style.scrollSnapType = 'x mandatory';
+      slidesContainer.style.scrollSnapType = "x mandatory";
 
       // Decide whether to move to next/prev slide based on velocity or distance
       const swipeThreshold = slidesContainer.clientWidth * 0.3; // 30% of screen width
@@ -619,10 +625,10 @@
   }
 
   function getSubcategory(relationshipType) {
-    if (!relationshipType || !relationshipType.includes('/')) {
+    if (!relationshipType || !relationshipType.includes("/")) {
       return null;
     }
-    return relationshipType.split('/')[1];
+    return relationshipType.split("/")[1];
   }
 
   function getRelevantPeople(event) {
@@ -669,8 +675,8 @@
 
   function formatAgeLabel(age) {
     if (age === null || age === undefined) return null;
-    if (age === 0) return $_('story.at_birth');
-    return $_('story.age', { age });
+    if (age === 0) return $_("story.at_birth");
+    return $_("story.age", { age });
   }
 
   function formatLocations(locations = []) {
@@ -796,7 +802,12 @@
 
       // Filter out TIFF images (not supported by browsers)
       const lowerUrl = url.toLowerCase();
-      if (lowerUrl.endsWith('.tif') || lowerUrl.endsWith('.tiff') || lowerUrl.includes('.tif?') || lowerUrl.includes('.tiff?')) {
+      if (
+        lowerUrl.endsWith(".tif") ||
+        lowerUrl.endsWith(".tiff") ||
+        lowerUrl.includes(".tif?") ||
+        lowerUrl.includes(".tiff?")
+      ) {
         return false;
       }
 
@@ -893,7 +904,7 @@
         // ignore and continue
       }
     }
-    basemapError = $_('story.basemap_error');
+    basemapError = $_("story.basemap_error");
     basemapResolved = true;
     return null;
   }
@@ -1163,7 +1174,7 @@
         type="button"
         class="close-story compact"
         on:click={handleClose}
-        aria-label={$_('story.close_story')}
+        aria-label={$_("story.close_story")}
       >
         <svg
           class="icon"
@@ -1188,7 +1199,10 @@
       on:touchend={handleTouchEnd}
     >
       {#if isLoading}
-        <section class="slide overview loading-slide" aria-label={$_('story.loading_life')}>
+        <section
+          class="slide overview loading-slide"
+          aria-label={$_("story.loading_life")}
+        >
           <div class="content overview-content">
             <div class="skeleton-portrait"></div>
             <div class="overview-text">
@@ -1199,19 +1213,22 @@
               <div class="skeleton-paragraph">
                 <div class="skeleton-text skeleton-line"></div>
                 <div class="skeleton-text skeleton-line"></div>
-                <div class="skeleton-text skeleton-line" style="width: 80%;"></div>
+                <div
+                  class="skeleton-text skeleton-line"
+                  style="width: 80%;"
+                ></div>
               </div>
             </div>
           </div>
           <div class="loading-indicator">
             <div class="spinner"></div>
             <p class="loading-text">
-              {#if loadingStage === 'initial' || loadingStage === 'dataset'}
-                {$_('story.loading_life')}
-              {:else if loadingStage === 'network'}
-                {$_('story.loading_network')}
+              {#if loadingStage === "initial" || loadingStage === "dataset"}
+                {$_("story.loading_life")}
+              {:else if loadingStage === "network"}
+                {$_("story.loading_network")}
               {:else}
-                {$_('story.loading_life')}
+                {$_("story.loading_life")}
               {/if}
             </p>
           </div>
@@ -1241,7 +1258,7 @@
                           },
                           { title: personName }
                         )}
-                      aria-label={$_('story.enlarge_portrait')}
+                      aria-label={$_("story.enlarge_portrait")}
                     >
                       <img
                         src={getThumbnailUrl(portrait.image, 400)}
@@ -1265,7 +1282,6 @@
                   </figure>
                 {/if}
                 <div class="overview-text">
-                  <p class="eyebrow">Life Data Stories</p>
                   <h2>{personName}</h2>
                   {#if yearsLabel}
                     <p class="overview-years">{yearsLabel}</p>
@@ -1276,14 +1292,14 @@
                   {#if hasPersonSummary}
                     <p
                       class="description"
-                      class:has-fade={descriptionOverflows.has('overview')}
-                      use:checkOverflow={'overview'}
+                      class:has-fade={descriptionOverflows.has("overview")}
+                      use:checkOverflow={"overview"}
                     >
                       {personSummary}
                     </p>
                   {:else if hasDataset}
                     <p class="description placeholder">
-                      {$_('story.no_summary')}
+                      {$_("story.no_summary")}
                     </p>
                   {/if}
                 </div>
@@ -1303,7 +1319,7 @@
                       type="button"
                       class="image-thumbnail"
                       on:click={() => enlargeImage(imgObj, slide)}
-                      aria-label={$_('story.enlarge_image')}
+                      aria-label={$_("story.enlarge_image")}
                     >
                       <img
                         src={getThumbnailUrl(imgUrl, 400)}
@@ -1327,176 +1343,196 @@
                   {/each}
                 </div>
               {/if}
-              <div class="content">
-                <div class="date-wrapper">
-                  <p class="date">{formatDate(slide)}</p>
-                  {#if formatAgeLabel(slide.age)}
-                    {#if styleConfig?.separatorGlyphDataUrl}
-                      <span class="separator glyph-separator" aria-hidden="true"></span>
-                    {:else}
-                      <span class="separator">·</span>
-                    {/if}
-                    <p class="age">{formatAgeLabel(slide.age)}</p>
-                  {/if}
-                  {#if getDateNote(slide)}
-                    <button
-                      type="button"
-                      class="date-info-btn"
-                      on:click|stopPropagation={() =>
-                        toggleDateNote(slide.eventIndex)}
-                      aria-label={$_('story.show_date_explanation')}
-                      aria-expanded={visibleDateNote === slide.eventIndex}
-                    >
-                      <svg
-                        class="icon icon-inline"
-                        viewBox="0 0 24 24"
-                        role="presentation"
-                        aria-hidden="true"
-                      >
-                        <path d={mdiInformationOutline} />
-                      </svg>
-                    </button>
-                    {#if visibleDateNote === slide.eventIndex}
-                      <div class="date-note-tooltip">
-                        {getDateNote(slide)}
-                      </div>
-                    {/if}
-                  {/if}
-                </div>
-                <h2>{slide.title}</h2>
-                <p
-                  class="description"
-                  class:has-fade={descriptionOverflows.has(slide.eventIndex)}
-                  use:checkOverflow={slide.eventIndex}
-                >
-                  {slide.description}
-                </p>
-                {#if (slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL) || slide.sources?.length}
-                  <ul class="details details-compact">
-                    <li>
-                      {#if slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL}
-                        <span class="label" aria-label="Location">
-                          <svg
-                            class="icon icon-inline"
-                            viewBox="0 0 24 24"
-                            role="presentation"
-                            aria-hidden="true"
-                          >
-                            <path d={mdiMapMarkerOutline} />
-                          </svg>
-                        </span>
-                        <span>{formatLocations(slide.locations)}</span>
+              <div class="content event-content">
+                <div class="event-header">
+                  <div class="date-wrapper">
+                    <p class="date">{formatDate(slide)}</p>
+                    {#if formatAgeLabel(slide.age)}
+                      {#if styleConfig?.separatorGlyphDataUrl}
+                        <span
+                          class="separator glyph-separator"
+                          aria-hidden="true"
+                        ></span>
+                      {:else}
+                        <span class="separator">·</span>
                       {/if}
-                      {#if slide.sources?.length}
-                        <div class="sources-wrapper">
-                          <span class="label" aria-label="Sources">
-                            <svg
-                              class="icon icon-inline"
-                              viewBox="0 0 24 24"
-                              role="presentation"
-                              aria-hidden="true"
-                            >
-                              <path d={mdiLinkVariant} />
-                            </svg>
-                          </span>
-                          <button
-                            type="button"
-                            class="sources-toggle-btn"
-                            on:click|stopPropagation={() =>
-                              toggleSources(slide.eventIndex)}
-                            aria-label={$_('story.show_sources')}
-                            aria-expanded={visibleSources === slide.eventIndex}
-                          >
-                            {slide.sources.length === 1 ? $_('story.source_one', { count: 1 }) : $_('story.source_other', { count: slide.sources.length })}
-                            <svg
-                              class="icon icon-inline"
-                              viewBox="0 0 24 24"
-                              role="presentation"
-                              aria-hidden="true"
-                            >
-                              <path d={mdiInformationOutline} />
-                            </svg>
-                          </button>
-                          {#if visibleSources === slide.eventIndex}
-                            <div class="sources-popup">
-                              <ul class="sources-list">
-                                {#each slide.sources as source, idx}
-                                  {@const sourceInfo = sourceLabel(source)}
-                                  <li>
-                                    <a
-                                      href={source}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      class="source-link"
-                                    >
-                                      {#if sourceInfo.isWikipedia}
-                                        <svg
-                                          class="icon icon-inline wiki-icon"
-                                          viewBox="0 0 24 24"
-                                          role="presentation"
-                                          aria-hidden="true"
+                      <p class="age">{formatAgeLabel(slide.age)}</p>
+                    {/if}
+                    {#if getDateNote(slide)}
+                      <button
+                        type="button"
+                        class="date-info-btn"
+                        on:click|stopPropagation={() =>
+                          toggleDateNote(slide.eventIndex)}
+                        aria-label={$_("story.show_date_explanation")}
+                        aria-expanded={visibleDateNote === slide.eventIndex}
+                      >
+                        <svg
+                          class="icon icon-inline"
+                          viewBox="0 0 24 24"
+                          role="presentation"
+                          aria-hidden="true"
+                        >
+                          <path d={mdiInformationOutline} />
+                        </svg>
+                      </button>
+                      {#if visibleDateNote === slide.eventIndex}
+                        <div class="date-note-tooltip">
+                          {getDateNote(slide)}
+                        </div>
+                      {/if}
+                    {/if}
+                  </div>
+                  <h2>{slide.title}</h2>
+                </div>
+                <div class="event-body">
+                  <div class="event-description">
+                    <p
+                      class="description"
+                      class:has-fade={descriptionOverflows.has(
+                        slide.eventIndex
+                      )}
+                      use:checkOverflow={slide.eventIndex}
+                    >
+                      {slide.description}
+                    </p>
+                  </div>
+                  <div class="event-details">
+                    {#each [getRelevantPeople(slide)] as relevantPeople}
+                      {#if relevantPeople.length > 0}
+                        <ul class="details">
+                          <li>
+                            <span class="label" aria-label="People">
+                              <svg
+                                class="icon icon-inline"
+                                viewBox="0 0 24 24"
+                                role="presentation"
+                                aria-hidden="true"
+                              >
+                                <path d={mdiAccountOutline} />
+                              </svg>
+                            </span>
+                            <div class="people-list">
+                              {#each relevantPeople as person, idx}
+                                {@const personKey = `${slide.eventIndex}-${idx}`}
+                                {@const subcategory = getSubcategory(
+                                  person.relationship_type
+                                )}
+                                <PersonChip
+                                  {person}
+                                  {personKey}
+                                  {visiblePersonInfo}
+                                  {subcategory}
+                                  onToggle={togglePersonInfo}
+                                />
+                              {/each}
+                              <button
+                                type="button"
+                                class="show-all-btn"
+                                on:click={openNetworkModal}
+                                aria-label={$_("story.show_network")}
+                              >
+                                <svg
+                                  class="icon icon-inline"
+                                  viewBox="0 0 24 24"
+                                  role="presentation"
+                                  aria-hidden="true"
+                                >
+                                  <path d={mdiAccountMultipleOutline} />
+                                </svg>
+                              </button>
+                            </div>
+                          </li>
+                        </ul>
+                      {/if}
+                    {/each}
+                    {#if (slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL) || slide.sources?.length}
+                      <ul class="details details-compact">
+                        <li>
+                          {#if slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL}
+                            <span class="label" aria-label="Location">
+                              <svg
+                                class="icon icon-inline"
+                                viewBox="0 0 24 24"
+                                role="presentation"
+                                aria-hidden="true"
+                              >
+                                <path d={mdiMapMarkerOutline} />
+                              </svg>
+                            </span>
+                            <span>{formatLocations(slide.locations)}</span>
+                          {/if}
+                          {#if slide.sources?.length}
+                            <div class="sources-wrapper">
+                              <span class="label" aria-label="Sources">
+                                <svg
+                                  class="icon icon-inline"
+                                  viewBox="0 0 24 24"
+                                  role="presentation"
+                                  aria-hidden="true"
+                                >
+                                  <path d={mdiLinkVariant} />
+                                </svg>
+                              </span>
+                              <button
+                                type="button"
+                                class="sources-toggle-btn"
+                                on:click|stopPropagation={() =>
+                                  toggleSources(slide.eventIndex)}
+                                aria-label={$_("story.show_sources")}
+                                aria-expanded={visibleSources ===
+                                  slide.eventIndex}
+                              >
+                                {slide.sources.length === 1
+                                  ? $_("story.source_one", { count: 1 })
+                                  : $_("story.source_other", {
+                                      count: slide.sources.length,
+                                    })}
+                                <svg
+                                  class="icon icon-inline"
+                                  viewBox="0 0 24 24"
+                                  role="presentation"
+                                  aria-hidden="true"
+                                >
+                                  <path d={mdiInformationOutline} />
+                                </svg>
+                              </button>
+                              {#if visibleSources === slide.eventIndex}
+                                <div class="sources-popup">
+                                  <ul class="sources-list">
+                                    {#each slide.sources as source, idx}
+                                      {@const sourceInfo = sourceLabel(source)}
+                                      <li>
+                                        <a
+                                          href={source}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          class="source-link"
                                         >
-                                          <path d={mdiWikipedia} />
-                                        </svg>
-                                      {/if}
-                                      {sourceInfo.label}
-                                    </a>
-                                  </li>
-                                {/each}
-                              </ul>
+                                          {#if sourceInfo.isWikipedia}
+                                            <svg
+                                              class="icon icon-inline wiki-icon"
+                                              viewBox="0 0 24 24"
+                                              role="presentation"
+                                              aria-hidden="true"
+                                            >
+                                              <path d={mdiWikipedia} />
+                                            </svg>
+                                          {/if}
+                                          {sourceInfo.label}
+                                        </a>
+                                      </li>
+                                    {/each}
+                                  </ul>
+                                </div>
+                              {/if}
                             </div>
                           {/if}
-                        </div>
-                      {/if}
-                    </li>
-                  </ul>
-                {/if}
-                {#each [getRelevantPeople(slide)] as relevantPeople}
-                  {#if relevantPeople.length > 0}
-                    <ul class="details">
-                      <li>
-                        <span class="label" aria-label="People">
-                          <svg
-                            class="icon icon-inline"
-                            viewBox="0 0 24 24"
-                            role="presentation"
-                            aria-hidden="true"
-                          >
-                            <path d={mdiAccountOutline} />
-                          </svg>
-                        </span>
-                        <div class="people-list">
-                          {#each relevantPeople as person, idx}
-                            {@const personKey = `${slide.eventIndex}-${idx}`}
-                            {@const subcategory = getSubcategory(person.relationship_type)}
-                            <PersonChip
-                              {person}
-                              {personKey}
-                              {visiblePersonInfo}
-                              {subcategory}
-                              onToggle={togglePersonInfo}
-                            />
-                          {/each}
-                          <button
-                            type="button"
-                            class="show-all-btn"
-                            on:click={openNetworkModal}
-                            aria-label={$_('story.show_network')}
-                          >
-                            <svg
-                              class="icon icon-inline"
-                              viewBox="0 0 24 24"
-                              role="presentation"
-                              aria-hidden="true"
-                            >
-                              <path d={mdiAccountMultipleOutline} />
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  {/if}
-                {/each}
+                        </li>
+                      </ul>
+                    {/if}
+                  </div>
+                </div>
               </div>
             {/if}
           </section>
@@ -1710,7 +1746,7 @@
   }
 
   .masthead {
-    padding: 0.85rem 1.25rem;
+    padding: 0.5rem 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1727,18 +1763,52 @@
     z-index: 2;
   }
 
+  /* Increase masthead padding based on viewport height */
+  @media (min-height: 600px) {
+    .masthead {
+      padding: 0.65rem 1.15rem;
+    }
+  }
+
+  @media (min-height: 700px) {
+    .masthead {
+      padding: 0.75rem 1.2rem;
+    }
+  }
+
+  @media (min-height: 800px) {
+    .masthead {
+      padding: 0.85rem 1.25rem;
+    }
+  }
+
   .compact-info {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.95rem;
+    gap: 0.5rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #e2e8f0;
     white-space: nowrap;
     max-width: 100%;
     overflow: hidden;
+  }
+
+  /* Increase font size based on viewport height */
+  @media (min-height: 600px) {
+    .compact-info {
+      gap: 0.65rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (min-height: 800px) {
+    .compact-info {
+      gap: 0.75rem;
+      font-size: 0.95rem;
+    }
   }
 
   .compact-info span {
@@ -1791,18 +1861,35 @@
     background: rgba(255, 255, 255, 0.05);
     color: var(--story-primary, #e2e8f0);
     border-radius: 999px;
-    padding: 0.45rem 0.95rem;
-    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.35rem;
     transition:
       border-color 0.2s ease,
       background-color 0.2s ease,
       color 0.2s ease;
+  }
+
+  /* Increase close button size based on viewport height */
+  @media (min-height: 600px) {
+    .close-story {
+      padding: 0.35rem 0.8rem;
+      font-size: 0.8rem;
+      gap: 0.4rem;
+    }
+  }
+
+  @media (min-height: 800px) {
+    .close-story {
+      padding: 0.45rem 0.95rem;
+      font-size: 0.85rem;
+      gap: 0.45rem;
+    }
   }
 
   .close-story:hover,
@@ -1814,9 +1901,6 @@
 
   .close-story.compact {
     flex: 0 0 auto;
-    padding: 0.35rem 0.75rem;
-    font-size: 0.8rem;
-    gap: 0.4rem;
   }
 
   .close-story .btn-label {
@@ -1951,8 +2035,110 @@
 
   .slide > .content {
     align-self: center;
-    width: min(48rem, 100%);
+    width: min(54rem, 100%);
     margin: 0 auto;
+  }
+
+  /* Two-column layout for event content on wide screens */
+  .event-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .event-header {
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .event-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .event-description {
+    width: 100%;
+  }
+
+  .event-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Adjust spacing based on viewport height */
+  @media (min-height: 500px) {
+    .event-body {
+      margin-top: 0.75rem;
+    }
+  }
+
+  @media (min-height: 600px) {
+    .event-body {
+      margin-top: 1rem;
+    }
+  }
+
+  @media (min-height: 700px) {
+    .event-body {
+      margin-top: 1.5rem;
+    }
+  }
+
+  @media (min-height: 800px) {
+    .event-body {
+      margin-top: 2rem;
+    }
+  }
+
+  @media (min-height: 900px) {
+    .event-body {
+      margin-top: 2.5rem;
+    }
+  }
+
+  @media (min-height: 1000px) {
+    .event-body {
+      margin-top: 3rem;
+    }
+  }
+
+  /* Landscape mobile (rotated phones) and wider screens */
+  @media (min-width: 640px) and (orientation: landscape) {
+    .event-body {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .event-description {
+      grid-column: 1;
+    }
+
+    .event-details {
+      grid-column: 2;
+    }
+  }
+
+  /* Tablet landscape and desktop */
+  @media (min-width: 900px) {
+    .event-body {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .event-description {
+      grid-column: 1;
+    }
+
+    .event-details {
+      grid-column: 2;
+    }
   }
 
   .slide.overview {
@@ -2156,7 +2342,8 @@
   }
 
   @keyframes markerPulse {
-    0%, 100% {
+    0%,
+    100% {
       box-shadow:
         0 0 8px rgba(255, 255, 255, 0.4),
         0 8px 18px rgba(2, 6, 23, 0.5);
