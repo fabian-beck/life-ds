@@ -689,8 +689,8 @@ def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, A
                     width = info.get("width", 0)
                     height = info.get("height", 0)
 
-                    # Only include proper images
-                    if url and mime.startswith("image/") and width >= 100 and height >= 100:
+                    # Only include proper images (exclude TIFF/TIF as not browser-supported)
+                    if url and mime.startswith("image/") and mime != "image/tiff" and width >= 100 and height >= 100 and not url.lower().endswith(('.tif', '.tiff')):
                         extmetadata = info.get("extmetadata", {})
                         description = None
                         description_url = None
@@ -790,10 +790,10 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
                 width = info.get("width", 0)
                 height = info.get("height", 0)
 
-                # Only include proper images (not tiny images)
-                if url and mime.startswith("image/"):
-                    # Lower minimum size to include more images
-                    if width >= 100 and height >= 100:
+                # Only include proper images (not tiny images, exclude TIFF/TIF as not browser-supported)
+                if url and mime.startswith("image/") and mime != "image/tiff":
+                    # Lower minimum size to include more images, exclude TIFF files
+                    if width >= 100 and height >= 100 and not url.lower().endswith(('.tif', '.tiff')):
                         # Extract metadata
                         extmetadata = info.get("extmetadata", {})
                         description = None
@@ -956,6 +956,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- Each image object must have: 'url' (the image URL), 'caption' (describing what the image shows), and 'source' (Wikimedia Commons URL)\n"
         "- Use the description from the provided image data to write a concise, factual caption\n"
         "- IMPORTANT: Each event should have at most ONE image - choose the most relevant one\n"
+        "- IMPORTANT: Do NOT include TIFF/TIF images (.tif, .tiff extensions) as they are not supported by web browsers\n"
         "- Include images of: buildings/places mentioned, artworks/creations, documents/publications, monuments, flags, designs, inventions\n"
         "- For architects: include images of their buildings in construction/completion events\n"
         "- For artists: include images of their artworks in creation events\n"

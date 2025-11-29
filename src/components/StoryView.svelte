@@ -44,6 +44,7 @@
   let enlargedImageContext = null; // Store event context for caption
   let visibleDateNote = null; // Track which event's date note is visible
   let visiblePersonInfo = null; // Track which person's info is visible
+  let visibleSources = null; // Track which event's sources popup is visible
   let showNetworkModal = false; // Track if network modal is open
 
   const DEFAULT_COORDINATES = null;
@@ -280,6 +281,7 @@
   $: if (activeIndex !== undefined) {
     visibleDateNote = null;
     visiblePersonInfo = null;
+    visibleSources = null;
     showNetworkModal = false;
   }
 
@@ -576,15 +578,19 @@
   }
 
   function handleClickOutside(event) {
-    // Check if click is outside the date-wrapper or person-info-wrapper
+    // Check if click is outside the date-wrapper, person-info-wrapper, or sources-wrapper
     const dateWrapper = event.target.closest(".date-wrapper");
     const personWrapper = event.target.closest(".person-info-wrapper");
+    const sourcesWrapper = event.target.closest(".sources-wrapper");
     const modal = event.target.closest(".network-modal");
     if (!dateWrapper && visibleDateNote !== null) {
       visibleDateNote = null;
     }
     if (!personWrapper && visiblePersonInfo !== null) {
       visiblePersonInfo = null;
+    }
+    if (!sourcesWrapper && visibleSources !== null) {
+      visibleSources = null;
     }
     if (!modal && showNetworkModal) {
       const modalOverlay = event.target.closest(".modal-overlay");
@@ -599,6 +605,14 @@
       visiblePersonInfo = null;
     } else {
       visiblePersonInfo = personKey;
+    }
+  }
+
+  function toggleSources(eventIndex) {
+    if (visibleSources === eventIndex) {
+      visibleSources = null;
+    } else {
+      visibleSources = eventIndex;
     }
   }
 
@@ -750,6 +764,29 @@
       }
     }
     return mdiCircleSmall;
+  }
+
+  function getValidImages(images) {
+    if (!Array.isArray(images) || images.length === 0) return [];
+
+    return images.filter((imageData) => {
+      const url = typeof imageData === "string" ? imageData : imageData?.url;
+      // Basic URL validation - check if it's a valid string and looks like a URL
+      if (!url || typeof url !== "string") return false;
+
+      // Filter out TIFF images (not supported by browsers)
+      const lowerUrl = url.toLowerCase();
+      if (lowerUrl.endsWith('.tif') || lowerUrl.endsWith('.tiff') || lowerUrl.includes('.tif?') || lowerUrl.includes('.tiff?')) {
+        return false;
+      }
+
+      try {
+        new URL(url);
+        return true;
+      } catch {
+        return false;
+      }
+    });
   }
 
   function handleImageLoad(event) {
@@ -1232,9 +1269,10 @@
                 </div>
               </div>
             {:else if slide.type !== "spacer"}
-              {#if slide.images?.length}
+              {@const validImages = getValidImages(slide.images)}
+              {#if validImages.length > 0}
                 <div class="event-images">
-                  {#each slide.images as imageData}
+                  {#each validImages as imageData}
                     {@const imgUrl =
                       typeof imageData === "string" ? imageData : imageData.url}
                     {@const imgObj =
@@ -1249,7 +1287,7 @@
                     >
                       <img
                         src={imgUrl}
-                        alt={imgObj.caption || `Related to ${slide.title}`}
+                        alt=""
                         loading="lazy"
                         decoding="async"
                         on:load={handleThumbnailLoad}
@@ -1312,69 +1350,91 @@
                 >
                   {slide.description}
                 </p>
-                <ul class="details">
-                  {#if slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL}
+                {#if (slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL) || slide.sources?.length}
+                  <ul class="details details-compact">
                     <li>
-                      <span class="label">
-                        <svg
-                          class="icon icon-inline"
-                          viewBox="0 0 24 24"
-                          role="presentation"
-                          aria-hidden="true"
-                        >
-                          <path d={mdiMapMarkerOutline} />
-                        </svg>
-                        <span class="label-text">Location</span>
-                      </span>
-                      <span>{formatLocations(slide.locations)}</span>
-                    </li>
-                  {/if}
-                  {#if slide.sources?.length}
-                    <li>
-                      <span class="label">
-                        <svg
-                          class="icon icon-inline"
-                          viewBox="0 0 24 24"
-                          role="presentation"
-                          aria-hidden="true"
-                        >
-                          <path d={mdiLinkVariant} />
-                        </svg>
-                        <span class="label-text">Sources</span>
-                      </span>
-                      <span class="sources">
-                        {#each slide.sources as source, idx}
-                          {@const sourceInfo = sourceLabel(source)}
-                          {#if idx > 0}<span class="source-separator">·</span
-                            >{/if}
-                          <a
-                            href={source}
-                            target="_blank"
-                            rel="noreferrer"
-                            class="source-link"
+                      {#if slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL}
+                        <span class="label" aria-label="Location">
+                          <svg
+                            class="icon icon-inline"
+                            viewBox="0 0 24 24"
+                            role="presentation"
+                            aria-hidden="true"
                           >
-                            {#if sourceInfo.isWikipedia}
-                              <svg
-                                class="icon icon-inline wiki-icon"
-                                viewBox="0 0 24 24"
-                                role="presentation"
-                                aria-hidden="true"
-                              >
-                                <path d={mdiWikipedia} />
-                              </svg>
-                            {/if}
-                            {sourceInfo.label}
-                          </a>
-                        {/each}
-                      </span>
+                            <path d={mdiMapMarkerOutline} />
+                          </svg>
+                        </span>
+                        <span>{formatLocations(slide.locations)}</span>
+                      {/if}
+                      {#if slide.sources?.length}
+                        <div class="sources-wrapper">
+                          <span class="label" aria-label="Sources">
+                            <svg
+                              class="icon icon-inline"
+                              viewBox="0 0 24 24"
+                              role="presentation"
+                              aria-hidden="true"
+                            >
+                              <path d={mdiLinkVariant} />
+                            </svg>
+                          </span>
+                          <button
+                            type="button"
+                            class="sources-toggle-btn"
+                            on:click|stopPropagation={() =>
+                              toggleSources(slide.eventIndex)}
+                            aria-label="Show sources"
+                            aria-expanded={visibleSources === slide.eventIndex}
+                          >
+                            {slide.sources.length} {slide.sources.length === 1 ? 'source' : 'sources'}
+                            <svg
+                              class="icon icon-inline"
+                              viewBox="0 0 24 24"
+                              role="presentation"
+                              aria-hidden="true"
+                            >
+                              <path d={mdiInformationOutline} />
+                            </svg>
+                          </button>
+                          {#if visibleSources === slide.eventIndex}
+                            <div class="sources-popup">
+                              <ul class="sources-list">
+                                {#each slide.sources as source, idx}
+                                  {@const sourceInfo = sourceLabel(source)}
+                                  <li>
+                                    <a
+                                      href={source}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      class="source-link"
+                                    >
+                                      {#if sourceInfo.isWikipedia}
+                                        <svg
+                                          class="icon icon-inline wiki-icon"
+                                          viewBox="0 0 24 24"
+                                          role="presentation"
+                                          aria-hidden="true"
+                                        >
+                                          <path d={mdiWikipedia} />
+                                        </svg>
+                                      {/if}
+                                      {sourceInfo.label}
+                                    </a>
+                                  </li>
+                                {/each}
+                              </ul>
+                            </div>
+                          {/if}
+                        </div>
+                      {/if}
                     </li>
-                  {/if}
-                </ul>
+                  </ul>
+                {/if}
                 {#each [getRelevantPeople(slide)] as relevantPeople}
                   {#if relevantPeople.length > 0}
                     <ul class="details">
                       <li>
-                        <span class="label">
+                        <span class="label" aria-label="People">
                           <svg
                             class="icon icon-inline"
                             viewBox="0 0 24 24"
@@ -1383,7 +1443,6 @@
                           >
                             <path d={mdiAccountOutline} />
                           </svg>
-                          <span class="label-text">People</span>
                         </span>
                         <div class="people-list">
                           {#each relevantPeople as person, idx}
@@ -1753,6 +1812,11 @@
   .icon-inline {
     width: 1em;
     height: 1em;
+  }
+
+  .label .icon-inline {
+    width: 1.15em;
+    height: 1.15em;
   }
 
   .slides-wrapper {
@@ -2299,13 +2363,13 @@
 
   .description {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #e2e8f0;
     font-family: var(--story-body-font, Inter, sans-serif);
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
-    max-height: 170px;
+    max-height: 25vh;
     overflow-y: auto;
   }
 
@@ -2345,10 +2409,22 @@
     align-items: baseline;
   }
 
+  .details.details-compact li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
   .details li > span:not(.label),
   .details li > div {
     flex: 1;
     min-width: 0;
+  }
+
+  .details.details-compact li > span:not(.label) {
+    flex: 0 1 auto;
   }
 
   .label {
@@ -2366,42 +2442,93 @@
     line-height: 1;
   }
 
-  .sources {
+  .sources-wrapper {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
     align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
   }
 
-  .source-separator {
-    color: rgba(148, 163, 184, 0.4);
-    font-weight: 300;
-    user-select: none;
+  .sources-toggle-btn {
+    appearance: none;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--story-secondary, #38bdf8);
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .sources-toggle-btn:hover,
+  .sources-toggle-btn:focus {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--story-primary, #f8fafc);
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  .sources-toggle-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--story-primary, #f8fafc);
+  }
+
+  .sources-popup {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    animation: fadeInTooltip 0.2s ease;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .sources-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sources-list li {
+    display: block;
   }
 
   .source-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    max-width: 200px;
-    min-width: 0;
-  }
-
-  .sources a {
-    color: rgba(148, 163, 184, 0.75);
+    gap: 0.35rem;
+    color: rgba(148, 163, 184, 0.85);
     text-decoration: none;
     font-weight: 400;
     font-size: 0.8rem;
     transition: color 0.2s ease;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
-    min-width: 0;
+    word-break: break-word;
   }
 
-  .sources a:hover,
-  .sources a:focus {
+  .source-link:hover,
+  .source-link:focus {
     color: var(--story-secondary, #94a3b8);
     text-decoration: underline;
   }
@@ -2533,8 +2660,8 @@
     }
 
     .image-thumbnail {
-      width: 280px;
-      height: 280px;
+      width: min(380px, 35vw);
+      height: min(380px, 35vh);
     }
 
     .image-thumbnail img {
