@@ -2108,19 +2108,19 @@
   /* Adjust spacing based on viewport height */
   @media (min-height: 600px) {
     .event-body {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
   }
 
   @media (min-height: 800px) {
     .event-body {
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
   }
 
   @media (min-height: 1000px) {
     .event-body {
-      margin-top: 2.5rem;
+      margin-top: 1.25rem;
     }
   }
 
