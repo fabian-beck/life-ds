@@ -1763,7 +1763,9 @@
     z-index: 2;
   }
 
-  /* Increase masthead padding based on viewport height */
+  /* Responsive scaling: Height-based breakpoints (600px, 700px, 800px)
+     - Mobile portrait and short landscape: use defaults
+     - Taller viewports: progressively increase spacing and font sizes */
   @media (min-height: 600px) {
     .masthead {
       padding: 0.65rem 1.15rem;
@@ -1801,6 +1803,13 @@
     .compact-info {
       gap: 0.65rem;
       font-size: 0.9rem;
+    }
+  }
+
+  @media (min-height: 700px) {
+    .compact-info {
+      gap: 0.7rem;
+      font-size: 0.925rem;
     }
   }
 
@@ -1884,11 +1893,39 @@
     }
   }
 
+  @media (min-height: 700px) {
+    .close-story {
+      padding: 0.4rem 0.875rem;
+      font-size: 0.825rem;
+      gap: 0.425rem;
+    }
+  }
+
   @media (min-height: 800px) {
     .close-story {
       padding: 0.45rem 0.95rem;
       font-size: 0.85rem;
       gap: 0.45rem;
+    }
+  }
+
+  /* Compact masthead for landscape mobile (short viewports)
+     - Applies to rotated phones with limited vertical space
+     - Makes header more compact to preserve screen real estate */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .masthead {
+      padding: 0.35rem 0.9rem;
+    }
+
+    .compact-info {
+      font-size: 0.75rem;
+      gap: 0.4rem;
+    }
+
+    .close-story {
+      padding: 0.25rem 0.6rem;
+      font-size: 0.7rem;
+      gap: 0.3rem;
     }
   }
 
@@ -2069,21 +2106,9 @@
   }
 
   /* Adjust spacing based on viewport height */
-  @media (min-height: 500px) {
-    .event-body {
-      margin-top: 0.75rem;
-    }
-  }
-
   @media (min-height: 600px) {
     .event-body {
       margin-top: 1rem;
-    }
-  }
-
-  @media (min-height: 700px) {
-    .event-body {
-      margin-top: 1.5rem;
     }
   }
 
@@ -2093,38 +2118,14 @@
     }
   }
 
-  @media (min-height: 900px) {
+  @media (min-height: 1000px) {
     .event-body {
       margin-top: 2.5rem;
     }
   }
 
-  @media (min-height: 1000px) {
-    .event-body {
-      margin-top: 3rem;
-    }
-  }
-
-  /* Landscape mobile (rotated phones) and wider screens */
-  @media (min-width: 640px) and (orientation: landscape) {
-    .event-body {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .event-description {
-      grid-column: 1;
-    }
-
-    .event-details {
-      grid-column: 2;
-    }
-  }
-
-  /* Tablet landscape and desktop */
-  @media (min-width: 900px) {
+  /* Two-column layout for landscape mobile and wider screens */
+  @media (min-width: 640px) and (orientation: landscape), (min-width: 900px) {
     .event-body {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -2785,7 +2786,10 @@
     outline: none;
   }
 
-  @media (min-width: 768px) {
+  /* Tablet and desktop styles
+     - Requires both width (768px+) AND height (600px+) to prevent
+       applying desktop styles to landscape phones with short viewports */
+  @media (min-width: 768px) and (min-height: 600px) {
     .masthead {
       padding: 1rem 2.5rem;
     }
