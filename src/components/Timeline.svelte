@@ -7,6 +7,7 @@
     mdiChevronDown,
   } from "@mdi/js";
   import { _ } from "../stores/language";
+  import { fade } from "svelte/transition";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -73,6 +74,22 @@
     return result;
   })();
 
+  // Compute current chapter for active event
+  $: currentChapter = (() => {
+    if (activeEventIndex < 0 || activeEventIndex >= eventSlides.length) {
+      return null; // Overview slide or invalid index
+    }
+
+    const currentEvent = eventSlides[activeEventIndex];
+    if (!currentEvent?.chapter || !hasChapters) {
+      return null; // Event has no chapter or no chapters exist
+    }
+
+    // Find the chapter object by ID
+    const chapter = chapters.find(ch => ch.id === currentEvent.chapter);
+    return chapter || null;
+  })();
+
   // Scroll active event into view when first expanding (but allow manual scroll after)
   let hasScrolledToActive = false;
   $: if (isExpanded) {
@@ -97,8 +114,8 @@
   function handleTrackPointerDown(event) {
     if (isExpanded || !trackElement) return;
 
-    // Don't start dragging if clicking on the expand toggle button
-    if (event.target.closest(".expand-toggle")) return;
+    // Don't start dragging if clicking on the chapter indicator button
+    if (event.target.closest(".chapter-indicator-box")) return;
 
     // Accept all pointer types (mouse, pen, touch)
     isDragging = true;
@@ -197,22 +214,24 @@
         aria-label={$_('timeline.scrubber')}
         tabindex={isExpanded ? -1 : 0}
       >
-        <button
-          type="button"
-          class="expand-toggle"
-          on:click={toggleExpanded}
-          aria-label={isExpanded ? $_('timeline.collapse') : $_('timeline.expand')}
-          aria-expanded={isExpanded}
-        >
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-            role="presentation"
-            aria-hidden="true"
+        {#if isExpanded}
+          <button
+            type="button"
+            class="collapse-button"
+            on:click={toggleExpanded}
+            aria-label={$_('timeline.collapse')}
+            aria-expanded={isExpanded}
           >
-            <path d={isExpanded ? mdiChevronDown : mdiChevronUp} />
-          </svg>
-        </button>
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiChevronDown} />
+            </svg>
+          </button>
+        {/if}
         <div class="dots-container" class:expanded={isExpanded} bind:this={expandedContainerElement}>
           {#if activeIndex > 0 && !isExpanded}
             <span
@@ -261,6 +280,32 @@
                 </button>
               </div>
             {/each}
+            <button
+              type="button"
+              class="chapter-indicator-box"
+              class:has-chapter={currentChapter}
+              on:click={toggleExpanded}
+              aria-label={currentChapter
+                ? ($_('timeline.expand_to_chapter', { chapter: currentChapter.headline }) || `Expand timeline to ${currentChapter.headline}`)
+                : (isExpanded ? $_('timeline.collapse') : $_('timeline.expand'))}
+              aria-expanded={isExpanded}
+            >
+              <div class="chapter-indicator-content">
+                {#if currentChapter}
+                  <span class="chapter-indicator-label" transition:fade={{ duration: 300 }} key={currentChapter.id}>
+                    {currentChapter.headline}
+                  </span>
+                {/if}
+                <svg
+                  class="chapter-chevron"
+                  viewBox="0 0 24 24"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <path d={mdiChevronUp} />
+                </svg>
+              </div>
+            </button>
           {:else}
             <div class="expanded-timeline-container">
               <div class="timeline-item home-item">
@@ -368,45 +413,58 @@
       height 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .expand-toggle {
+  .collapse-button {
+    appearance: none;
+    border: none;
+    padding: 0.45rem;
     pointer-events: auto;
     position: absolute;
-    top: -2.3rem;
+    top: 1rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 2.8rem;
-    height: 2.8rem;
-    border-radius: 1.5rem 1.5rem 0.5rem 0.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    border-bottom: none;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(6px);
-    color: var(--story-primary, #e2e8f0);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease,
-      top 1s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
-  }
-
-  .indicator-track.expanded .expand-toggle {
-    top: 1rem;
-    border-radius: 1.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.2);
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
     z-index: 100;
   }
 
-  .expand-toggle:hover,
-  .expand-toggle:focus {
-    background: rgba(15, 23, 42, 0.85);
-    border-color: rgba(148, 163, 184, 0.3);
-    transform: translateX(-50%) scale(1.05);
+  .collapse-button .icon {
+    width: 1.3rem;
+    height: 1.3rem;
+    fill: var(--story-primary, rgba(226, 232, 240, 0.7));
+    transition: fill 0.2s ease, transform 0.2s ease;
+  }
+
+  .collapse-button:hover,
+  .collapse-button:focus {
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.5));
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.4);
+    transform: translateX(-50%) translateY(-2px);
     outline: none;
+  }
+
+  .collapse-button:hover .icon,
+  .collapse-button:focus .icon {
+    fill: var(--story-primary, rgba(226, 232, 240, 0.95));
+    transform: translateY(1px);
+  }
+
+  .collapse-button:focus-visible {
+    outline: 2px solid var(--story-primary, rgba(148, 163, 184, 0.6));
+    outline-offset: 2px;
   }
 
   .indicator-content {
@@ -823,5 +881,149 @@
   .nav-btn .icon {
     width: 1.2em;
     height: 1.2em;
+  }
+
+  /* Chapter indicator for collapsed timeline */
+  .chapter-indicator-box {
+    appearance: none;
+    border: none;
+    padding: 0;
+    position: absolute;
+    bottom: calc(100% + 0.25rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: min(90vw, 600px);
+    pointer-events: auto;
+    z-index: 10;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  /* When no chapter, make it a compact icon-only button */
+  .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+    padding: 0.45rem;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .chapter-indicator-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
+  }
+
+  .chapter-indicator-box:hover .chapter-indicator-content,
+  .chapter-indicator-box:focus .chapter-indicator-content {
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.5));
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .chapter-indicator-box:focus {
+    outline: none;
+  }
+
+  .chapter-indicator-box:focus-visible .chapter-indicator-content {
+    outline: 2px solid var(--story-primary, rgba(148, 163, 184, 0.6));
+    outline-offset: 2px;
+  }
+
+  .chapter-indicator-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--story-primary, rgba(226, 232, 240, 0.95));
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .chapter-chevron {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: var(--story-primary, rgba(226, 232, 240, 0.7));
+    flex-shrink: 0;
+    transition: transform 0.2s ease, fill 0.2s ease;
+  }
+
+  .chapter-indicator-box:hover .chapter-chevron,
+  .chapter-indicator-box:focus .chapter-chevron {
+    fill: var(--story-primary, rgba(226, 232, 240, 0.95));
+    transform: translateY(-1px);
+  }
+
+  /* Responsive sizing */
+  @media (max-width: 768px) {
+    .chapter-indicator-label {
+      font-size: 0.75rem;
+    }
+
+    .chapter-indicator-content {
+      padding: 0.4rem 0.85rem;
+    }
+
+    .chapter-chevron {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0.4rem;
+    }
+
+    .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .chapter-indicator-label {
+      font-size: 0.7rem;
+    }
+
+    .chapter-indicator-content {
+      padding: 0.35rem 0.75rem;
+      gap: 0.4rem;
+    }
+
+    .chapter-chevron {
+      width: 0.9rem;
+      height: 0.9rem;
+    }
+
+    .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+      width: 2rem;
+      height: 2rem;
+      padding: 0.35rem;
+    }
+
+    .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
   }
 </style>
