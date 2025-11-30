@@ -158,8 +158,8 @@
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,13 +177,6 @@
   }
 
   .network-modal {
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.03) 0%,
-        rgba(0, 0, 0, 0.28) 100%
-      ),
-      rgba(var(--story-bg-rgb, 15, 23, 42), 0.95);
-    backdrop-filter: blur(12px);
     width: 100%;
     height: 100%;
     max-width: 100vw;
@@ -192,43 +185,22 @@
     max-height: 100dvh;
     display: flex;
     flex-direction: column;
-    animation: slideUp 0.3s ease;
+    animation: fadeIn 0.2s ease;
     position: relative;
     overflow: hidden;
-    isolation: isolate;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
   }
 
-  .network-modal::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: var(--story-pattern-image, none);
-    background-size: 200px 200px;
-    background-repeat: repeat;
-    opacity: 0.35;
-    mix-blend-mode: overlay;
-    z-index: 0;
-  }
-
-  .network-modal > * {
+  .modal-header,
+  .modal-content {
     position: relative;
-    z-index: 1;
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(2rem);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 
   .modal-header {
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid rgba(148, 163, 184, 0.2);
     display: flex;
     align-items: center;
@@ -238,12 +210,12 @@
 
   .modal-title {
     margin: 0;
-    font-size: 1.35rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--story-primary, #f8fafc);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     font-family: var(--story-heading-font, Inter, sans-serif);
   }
 
@@ -252,16 +224,16 @@
   }
 
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
     fill: currentColor;
     flex: 0 0 auto;
   }
 
   .modal-close {
     appearance: none;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(0, 0, 0, 0.6);
@@ -306,9 +278,7 @@
     line-height: 1.6;
     color: #e2e8f0;
     font-family: var(--story-body-font, Inter, sans-serif);
-    text-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.8),
-      0 1px 4px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 
   .group-title {
@@ -345,11 +315,11 @@
     }
 
     .modal-content {
-      padding: 2rem;
+      padding: 1.75rem;
     }
 
     .modal-header {
-      padding: 2rem;
+      padding: 1.25rem 1.75rem;
     }
   }
 </style>
