@@ -70,6 +70,7 @@
   let datasetName = null;
   let mastheadElement = null;
   let mastheadHeight = 0;
+  let storyViewElement = null;
 
   let primaryMarkerColor = "#38BDF8";
   let fadedMarkerColor = "rgba(56, 189, 248, 0.35)";
@@ -280,6 +281,18 @@
     lastDatasetName = datasetName;
     lastViewportKey = "";
     initialScrollDone = false; // Reset scroll flag when dataset changes
+    initialScrollPending = false;
+    scrollState = SCROLL_STATE.IDLE;
+
+    // Clear any pending timeouts
+    if (scrollStateTimeout) {
+      clearTimeout(scrollStateTimeout);
+      scrollStateTimeout = null;
+    }
+    if (scrollHandlerTimeout) {
+      clearTimeout(scrollHandlerTimeout);
+      scrollHandlerTimeout = null;
+    }
   }
 
   // Close date note when slide changes
@@ -292,8 +305,64 @@
 
   let slidesContainer;
   let initialScrollDone = false;
+  let initialScrollPending = false;
   let descriptionOverflows = new Set(); // Track which descriptions overflow
-  let isScrolling = false; // Track programmatic scrolling
+
+  // Scroll state machine (replaces boolean isScrolling flag)
+  const SCROLL_STATE = {
+    IDLE: 'idle',
+    USER_SCROLLING: 'user_scrolling',
+    PROGRAMMATIC: 'programmatic',
+    SETTLING: 'settling'
+  };
+  let scrollState = SCROLL_STATE.IDLE;
+  let scrollStateTimeout = null;
+  let scrollHandlerTimeout = null;
+  let scrollendSupported = null;
+
+  // Detect scrollend event support (lazy check)
+  function detectScrollendSupport() {
+    if (scrollendSupported !== null) return scrollendSupported;
+    scrollendSupported = 'onscrollend' in window;
+    return scrollendSupported;
+  }
+
+  // Setup scroll event listeners including scrollend
+  function setupScrollListeners() {
+    if (slidesContainer && detectScrollendSupport()) {
+      slidesContainer.addEventListener('scrollend', handleScrollEnd);
+    }
+  }
+
+  // Handle scrollend event (fired when scroll completes)
+  function handleScrollEnd() {
+    if (scrollState === SCROLL_STATE.PROGRAMMATIC) {
+      scrollState = SCROLL_STATE.SETTLING;
+      // Allow snap to finish
+      setTimeout(() => {
+        scrollState = SCROLL_STATE.IDLE;
+        syncActiveIndexFromScroll();
+      }, 100);
+    } else if (scrollState === SCROLL_STATE.USER_SCROLLING) {
+      scrollState = SCROLL_STATE.IDLE;
+      syncActiveIndexFromScroll();
+    }
+  }
+
+  // Sync activeIndex from current scroll position
+  function syncActiveIndexFromScroll() {
+    if (!slidesContainer || totalPanels === 0) return;
+
+    const { scrollLeft, clientWidth } = slidesContainer;
+    if (!clientWidth) return;
+
+    const index = Math.round(scrollLeft / clientWidth);
+    const clampedIndex = Math.min(Math.max(index, 0), totalPanels - 1);
+
+    if (activeIndex !== clampedIndex) {
+      activeIndex = clampedIndex;
+    }
+  }
 
   // Measure masthead height and update CSS variable
   function updateMastheadHeight() {
@@ -327,39 +396,73 @@
     };
   }
 
-  async function scrollToIndex(index, immediate = false) {
-    if (!slidesContainer) return;
-    const clamped = Math.min(Math.max(index, 0), totalPanels - 1);
-    // wait for DOM to settle
-    await tick();
-    const { clientWidth } = slidesContainer;
-    if (!clientWidth) return;
+  async function requestScrollTo(targetIndex, options = {}) {
+    const {
+      immediate = false,
+      source = 'unknown',
+      updateStateImmediately = false
+    } = options;
 
-    isScrolling = true;
+    if (!slidesContainer) return;
+
+    // Validate and clamp
+    const clampedIndex = Math.min(Math.max(targetIndex, 0), totalPanels - 1);
+
+    // Cancel any pending scroll operations
+    if (scrollStateTimeout) {
+      clearTimeout(scrollStateTimeout);
+      scrollStateTimeout = null;
+    }
+
+    // Update state machine
+    scrollState = SCROLL_STATE.PROGRAMMATIC;
+
+    // Optionally update activeIndex immediately (optimistic update)
+    if (updateStateImmediately) {
+      activeIndex = clampedIndex;
+    }
+
+    // Wait for DOM to settle
+    await tick();
+
+    const { clientWidth } = slidesContainer;
+    if (!clientWidth) {
+      scrollState = SCROLL_STATE.IDLE;
+      return;
+    }
+
+    // Perform scroll
     slidesContainer.scrollTo({
-      left: clamped * clientWidth,
+      left: clampedIndex * clientWidth,
       behavior: immediate ? "auto" : "smooth",
     });
 
-    // Clear flag after scroll completes
-    setTimeout(
-      () => {
-        isScrolling = false;
-      },
-      immediate ? 50 : 600
-    );
+    // Fallback timeout if scrollend not supported
+    if (!detectScrollendSupport()) {
+      const duration = immediate ? 50 : 600;
+      scrollStateTimeout = setTimeout(() => {
+        scrollState = SCROLL_STATE.IDLE;
+        syncActiveIndexFromScroll();
+      }, duration);
+    }
   }
 
   function prevSlide() {
     if (totalPanels === 0) return;
-    activeIndex = Math.max(0, activeIndex - 1);
-    scrollToIndex(activeIndex);
+    const targetIndex = Math.max(0, activeIndex - 1);
+    requestScrollTo(targetIndex, {
+      source: 'button',
+      updateStateImmediately: true
+    });
   }
 
   function nextSlide() {
     if (totalPanels === 0) return;
-    activeIndex = Math.min(totalPanels - 1, activeIndex + 1);
-    scrollToIndex(activeIndex);
+    const targetIndex = Math.min(totalPanels - 1, activeIndex + 1);
+    requestScrollTo(targetIndex, {
+      source: 'button',
+      updateStateImmediately: true
+    });
   }
 
   function goToEvent(eventIndex) {
@@ -367,8 +470,19 @@
     const clamped = clamp(eventIndex, 0, Math.max(eventSlides.length - 1, 0));
     const targetIndex = clamped + 1;
     if (totalPanels === 0) return;
-    activeIndex = targetIndex;
-    scrollToIndex(targetIndex);
+    requestScrollTo(targetIndex, {
+      source: 'timeline_event',
+      updateStateImmediately: true
+    });
+  }
+
+  // Wrapper for Timeline component callbacks
+  function scrollToIndexExternal(index, immediate = false) {
+    requestScrollTo(index, {
+      source: 'timeline_scrubber',
+      immediate,
+      updateStateImmediately: !immediate  // Smooth = optimistic update
+    });
   }
 
   function handleClose() {
@@ -386,15 +500,43 @@
   }
 
   function handleScroll(event) {
-    if (isScrolling) return; // Ignore scroll events during programmatic scrolling
+    // Ignore during programmatic scrolls
+    if (scrollState === SCROLL_STATE.PROGRAMMATIC ||
+        scrollState === SCROLL_STATE.SETTLING) {
+      return;
+    }
+
     if (totalPanels === 0) {
       activeIndex = 0;
       return;
     }
-    const { scrollLeft, clientWidth } = event.target;
-    if (!clientWidth) return;
-    const index = Math.round(scrollLeft / clientWidth);
-    activeIndex = Math.min(Math.max(index, 0), totalPanels - 1);
+
+    // Promote to user scrolling if idle
+    if (scrollState === SCROLL_STATE.IDLE) {
+      scrollState = SCROLL_STATE.USER_SCROLLING;
+    }
+
+    // Debounce activeIndex updates to avoid excessive reactivity
+    if (scrollHandlerTimeout) {
+      clearTimeout(scrollHandlerTimeout);
+    }
+
+    scrollHandlerTimeout = setTimeout(() => {
+      syncActiveIndexFromScroll();
+    }, 50);
+
+    // Fallback: detect scroll end via timeout if scrollend unavailable
+    if (!detectScrollendSupport()) {
+      if (scrollStateTimeout) {
+        clearTimeout(scrollStateTimeout);
+      }
+      scrollStateTimeout = setTimeout(() => {
+        if (scrollState === SCROLL_STATE.USER_SCROLLING) {
+          scrollState = SCROLL_STATE.IDLE;
+          syncActiveIndexFromScroll();
+        }
+      }, 150);
+    }
   }
 
   function handleWheel(event) {
@@ -406,10 +548,33 @@
         : event.deltaY;
     if (!dominantDelta) return;
     event.preventDefault();
+
+    // Update state (was missing before!)
+    scrollState = SCROLL_STATE.USER_SCROLLING;
+
     slidesContainer.scrollBy({
       left: dominantDelta,
       behavior: "smooth",
     });
+  }
+
+  function handleKeydown(event) {
+    // Ignore if user is typing in an input field
+    if (event.target.tagName === 'INPUT' ||
+        event.target.tagName === 'TEXTAREA' ||
+        event.target.isContentEditable) {
+      return;
+    }
+
+    if (totalPanels === 0) return;
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      prevSlide();
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      nextSlide();
+    }
   }
 
   let touchStartX = null;
@@ -429,8 +594,8 @@
     lastTouchX = touch.clientX;
     lastTouchTime = touchStartTime;
 
-    // Disable scroll-snap during touch to allow free scrolling
-    slidesContainer.style.scrollSnapType = "none";
+    // Set state WITHOUT toggling scroll-snap
+    scrollState = SCROLL_STATE.USER_SCROLLING;
   }
 
   function handleTouchMove(event) {
@@ -452,47 +617,57 @@
   }
 
   function handleTouchEnd(event) {
-    if (slidesContainer && touchStartX !== null) {
-      // Calculate swipe velocity
-      const deltaX = touchStartX - lastTouchX;
-      const deltaTime = lastTouchTime - touchStartTime;
-      const velocity = deltaTime > 0 ? deltaX / deltaTime : 0; // pixels per ms
-
-      // Re-enable scroll-snap
-      slidesContainer.style.scrollSnapType = "x mandatory";
-
-      // Decide whether to move to next/prev slide based on velocity or distance
-      const swipeThreshold = slidesContainer.clientWidth * 0.3; // 30% of screen width
-      const velocityThreshold = 0.3; // pixels per ms
-
-      let shouldChangeSlide = false;
-      let direction = 0;
-
-      if (Math.abs(velocity) > velocityThreshold) {
-        // Fast swipe - use velocity
-        shouldChangeSlide = true;
-        direction = velocity > 0 ? 1 : -1; // positive deltaX = swipe left = next slide
-      } else if (Math.abs(deltaX) > swipeThreshold) {
-        // Slow but long swipe - use distance
-        shouldChangeSlide = true;
-        direction = deltaX > 0 ? 1 : -1;
-      }
-
-      if (shouldChangeSlide) {
-        const targetIndex = clamp(activeIndex + direction, 0, totalPanels - 1);
-        scrollToIndex(targetIndex);
-      } else {
-        // Snap back to current slide
-        scrollToIndex(activeIndex);
-      }
+    if (!slidesContainer || touchStartX === null) {
+      scrollState = SCROLL_STATE.IDLE;
+      touchStartX = null;
+      touchStartY = null;
+      touchStartScrollLeft = null;
+      touchStartTime = null;
+      lastTouchX = null;
+      lastTouchTime = null;
+      return;
     }
 
+    // Calculate swipe velocity
+    const deltaX = touchStartX - lastTouchX;
+    const deltaTime = lastTouchTime - touchStartTime;
+    const velocity = deltaTime > 0 ? deltaX / deltaTime : 0; // pixels per ms
+
+    // Decide whether to move to next/prev slide based on velocity or distance
+    const swipeThreshold = slidesContainer.clientWidth * 0.3; // 30% of screen width
+    const velocityThreshold = 0.3; // pixels per ms
+
+    let direction = 0;
+
+    if (Math.abs(velocity) > velocityThreshold) {
+      // Fast swipe - use velocity
+      direction = velocity > 0 ? 1 : -1; // positive deltaX = swipe left = next slide
+    } else if (Math.abs(deltaX) > swipeThreshold) {
+      // Slow but long swipe - use distance
+      direction = deltaX > 0 ? 1 : -1;
+    }
+
+    // Reset touch state
     touchStartX = null;
     touchStartY = null;
     touchStartScrollLeft = null;
     touchStartTime = null;
     lastTouchX = null;
     lastTouchTime = null;
+
+    if (direction !== 0) {
+      const targetIndex = clamp(activeIndex + direction, 0, totalPanels - 1);
+      requestScrollTo(targetIndex, {
+        source: 'touch',
+        updateStateImmediately: true
+      });
+    } else {
+      // Snap back to current slide
+      requestScrollTo(activeIndex, {
+        source: 'touch',
+        updateStateImmediately: false
+      });
+    }
   }
 
   function computeYearsLabel(currentPerson) {
@@ -1100,17 +1275,33 @@
     !initialScrollDone &&
     slidesContainer &&
     totalPanels > 0 &&
-    activeIndex > 0
+    activeIndex > 0 &&
+    !initialScrollPending
   ) {
+    initialScrollPending = true;
     tick().then(() => {
-      scrollToIndex(activeIndex, true);
+      requestScrollTo(activeIndex, {
+        source: 'initial',
+        immediate: true
+      });
       initialScrollDone = true;
+      initialScrollPending = false;
     });
   }
 
   onMount(() => {
     initialiseMap();
     updateMastheadHeight();
+
+    // Setup scroll event listeners
+    if (slidesContainer) {
+      setupScrollListeners();
+    }
+
+    // Focus story view to enable keyboard navigation
+    if (storyViewElement) {
+      storyViewElement.focus();
+    }
 
     // Update height on window resize for Android viewport changes
     const resizeObserver = new ResizeObserver(() => {
@@ -1123,6 +1314,21 @@
 
     return () => {
       resizeObserver.disconnect();
+
+      // Cleanup scroll listeners
+      if (slidesContainer && detectScrollendSupport()) {
+        slidesContainer.removeEventListener('scrollend', handleScrollEnd);
+      }
+
+      // Clear pending timeouts
+      if (scrollStateTimeout) {
+        clearTimeout(scrollStateTimeout);
+        scrollStateTimeout = null;
+      }
+      if (scrollHandlerTimeout) {
+        clearTimeout(scrollHandlerTimeout);
+        scrollHandlerTimeout = null;
+      }
     };
   });
 
@@ -1136,6 +1342,16 @@
       }
     }
     pmtilesProtocol = null;
+
+    // Final cleanup
+    if (scrollStateTimeout) {
+      clearTimeout(scrollStateTimeout);
+      scrollStateTimeout = null;
+    }
+    if (scrollHandlerTimeout) {
+      clearTimeout(scrollHandlerTimeout);
+      scrollHandlerTimeout = null;
+    }
   });
 
   $: if (hasMapData) {
@@ -1151,13 +1367,16 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
+  bind:this={storyViewElement}
   class="story-view"
   style="{storyStyleVars(styleConfig)}; --header-height: {mastheadHeight}px"
   on:wheel={handleWheel}
   on:click={handleClickOutside}
+  on:keydown={handleKeydown}
+  tabindex="-1"
+  role="region"
+  aria-label="Story viewer"
 >
   <header class="masthead" bind:this={mastheadElement}>
     <div class="compact-info" aria-live="polite">
@@ -1567,7 +1786,7 @@
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
-    onScrollToIndex={scrollToIndex}
+    onScrollToIndex={scrollToIndexExternal}
   />
 </div>
 
@@ -1594,6 +1813,10 @@
     overflow: hidden;
     height: 100vh;
     height: 100dvh;
+  }
+
+  .story-view:focus {
+    outline: none;
   }
 
   /* Loading skeleton styles */

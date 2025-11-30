@@ -138,15 +138,34 @@
     if (trackElement) {
       trackElement.releasePointerCapture(event.pointerId);
     }
-    // Snap to the current active slide
-    onScrollToIndex(activeIndex);
+    // Calculate final position from pointer release and snap with smooth scroll
+    if (trackElement) {
+      const rect = trackElement.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+
+      // Account for dot size to align with actual dot positions
+      const dotSize = parseFloat(getComputedStyle(trackElement).getPropertyValue('--dot-size')) || 24;
+      const effectiveWidth = rect.width - dotSize;
+      const adjustedX = x - (dotSize / 2);
+
+      const progress = Math.max(0, Math.min(1, adjustedX / effectiveWidth));
+      const targetIndex = Math.round(progress * (totalPanels - 1));
+      onScrollToIndex(targetIndex, false);
+    }
   }
 
   function updateSlideFromPosition(clientX) {
     if (!trackElement) return;
     const rect = trackElement.getBoundingClientRect();
     const x = clientX - rect.left;
-    const progress = Math.max(0, Math.min(1, x / rect.width));
+
+    // Account for dot size to align with actual dot positions
+    // Dots use space-between, so we need to map the click position correctly
+    const dotSize = parseFloat(getComputedStyle(trackElement).getPropertyValue('--dot-size')) || 24;
+    const effectiveWidth = rect.width - dotSize;
+    const adjustedX = x - (dotSize / 2);
+
+    const progress = Math.max(0, Math.min(1, adjustedX / effectiveWidth));
     const targetIndex = Math.round(progress * (totalPanels - 1));
     onScrollToIndex(targetIndex, true); // immediate scroll during drag
   }
