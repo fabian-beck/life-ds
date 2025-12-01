@@ -672,6 +672,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.3;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   @container (max-width: 600px) {
@@ -718,6 +719,7 @@
     margin: 0;
     line-height: 1.3;
     letter-spacing: 0.01em;
+    font-family: var(--story-heading-font, Inter, sans-serif);
   }
 
   @container (max-width: 600px) {
@@ -737,6 +739,7 @@
     color: rgba(148, 163, 184, 0.7);
     font-weight: 500;
     line-height: 1.2;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   @container (max-width: 600px) {
@@ -976,6 +979,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    font-family: var(--story-heading-font, Inter, sans-serif);
   }
 
   .chapter-chevron {

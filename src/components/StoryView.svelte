@@ -2775,6 +2775,7 @@
     margin: 0;
     font-size: 0.85rem;
     color: rgba(148, 163, 184, 0.85);
+    font-family: var(--story-body-font, Inter, sans-serif);
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
@@ -2862,6 +2863,7 @@
     letter-spacing: 0.08em;
     font-size: 0.7rem;
     color: rgba(148, 163, 184, 0.76);
+    font-family: var(--story-body-font, Inter, sans-serif);
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;

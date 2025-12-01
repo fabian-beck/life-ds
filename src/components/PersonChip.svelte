@@ -186,6 +186,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .person-role {
@@ -193,6 +194,7 @@
     color: var(--story-secondary, #94a3b8);
     font-size: 0.75rem;
     text-transform: capitalize;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .person-info-tooltip {
@@ -225,6 +227,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--story-primary, #f8fafc);
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-relationship {
@@ -232,6 +235,7 @@
     font-size: 0.85rem;
     color: #e2e8f0;
     line-height: 1.5;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-years {
@@ -239,6 +243,7 @@
     font-size: 0.75rem;
     color: var(--story-secondary, #94a3b8);
     font-weight: 500;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-activities {
@@ -247,6 +252,7 @@
     color: rgba(148, 163, 184, 0.85);
     font-style: italic;
     line-height: 1.4;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-meta {
@@ -268,12 +274,14 @@
   .meta-label {
     color: rgba(148, 163, 184, 0.8);
     font-weight: 500;
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .meta-value {
     font-weight: 600;
     text-transform: capitalize;
     color: rgba(226, 232, 240, 0.9);
+    font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .meta-value.strength-strong {
