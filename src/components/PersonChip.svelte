@@ -1,5 +1,5 @@
 <script>
-  import { tick } from "svelte";
+  import { tick, onDestroy } from "svelte";
   import { _ } from "../stores/language";
 
   export let person = {};
@@ -12,6 +12,27 @@
 
   let buttonElement;
   let tooltipElement;
+  let tooltipContent;
+  let scrollContainer;
+
+  onDestroy(() => {
+    // Clean up tooltip from body when component is destroyed
+    if (tooltipElement && tooltipElement.parentNode) {
+      tooltipElement.parentNode.removeChild(tooltipElement);
+      tooltipElement = null;
+    }
+    // Remove scroll listener
+    if (scrollContainer) {
+      scrollContainer.removeEventListener('scroll', handleScroll);
+    }
+  });
+
+  function handleScroll() {
+    // Close tooltip when scrolling
+    if (isExpanded && tooltipElement) {
+      onToggle(personKey);
+    }
+  }
 
   function joinWithSeparator(items, styleConfig) {
     if (!items || items.length === 0) return "";
@@ -31,10 +52,53 @@
     onToggle(personKey, event);
 
     if (!wasExpanded) {
-      // Tooltip is being opened, position it
+      // Tooltip is being opened, move to body and position it
       tick().then(() => {
-        positionTooltip();
+        if (tooltipContent) {
+          // Move tooltip to body to escape backdrop-filter containment
+          tooltipElement = tooltipContent;
+          // Remove from current parent if it has one
+          if (tooltipElement.parentNode) {
+            tooltipElement.parentNode.removeChild(tooltipElement);
+          }
+          document.body.appendChild(tooltipElement);
+
+          // Apply style config CSS variables to tooltip
+          if (styleConfig) {
+            if (styleConfig.primary) {
+              tooltipElement.style.setProperty('--story-primary', styleConfig.primary);
+            }
+            if (styleConfig.secondary) {
+              tooltipElement.style.setProperty('--story-secondary', styleConfig.secondary);
+            }
+            if (styleConfig.bodyFont) {
+              tooltipElement.style.setProperty('--story-body-font', `"${styleConfig.bodyFont}", Inter, sans-serif`);
+            }
+          }
+
+          positionTooltip();
+
+          // Attach scroll listener to container
+          if (containerSelector && !scrollContainer) {
+            scrollContainer = document.querySelector(containerSelector);
+            if (scrollContainer) {
+              scrollContainer.addEventListener('scroll', handleScroll);
+            }
+          }
+        }
       });
+    } else if (tooltipElement) {
+      // Tooltip is being closed, remove from body
+      if (tooltipElement.parentNode) {
+        tooltipElement.parentNode.removeChild(tooltipElement);
+      }
+      tooltipElement = null;
+
+      // Remove scroll listener
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+        scrollContainer = null;
+      }
     }
   }
 
@@ -46,40 +110,48 @@
     const padding = 16;
     const offset = 8;
 
+    // Get container bounds if containerSelector is provided
+    let containerRect = null;
+    if (containerSelector) {
+      const container = document.querySelector(containerSelector);
+      if (container) {
+        containerRect = container.getBoundingClientRect();
+      }
+    }
+
+    // Use container bounds if available, otherwise use viewport
+    const boundaryTop = containerRect ? containerRect.top : 0;
+    const boundaryBottom = containerRect ? containerRect.bottom : window.innerHeight;
+    const boundaryLeft = containerRect ? containerRect.left : 0;
+    const boundaryRight = containerRect ? containerRect.right : window.innerWidth;
+
     // Check if there's enough space above
-    const spaceAbove = buttonRect.top;
-    const spaceBelow = window.innerHeight - buttonRect.bottom;
+    const spaceAbove = buttonRect.top - boundaryTop;
+    const spaceBelow = boundaryBottom - buttonRect.bottom;
     const tooltipHeight = tooltipRect.height;
 
     // Position vertically - prefer top if there's enough space
+    let topPos;
     if (spaceAbove >= tooltipHeight + offset + padding) {
       // Position above
-      tooltipElement.style.top = `${buttonRect.top - tooltipHeight - offset}px`;
+      topPos = buttonRect.top - tooltipHeight - offset;
     } else if (spaceBelow >= tooltipHeight + offset + padding) {
       // Position below
-      tooltipElement.style.top = `${buttonRect.bottom + offset}px`;
+      topPos = buttonRect.bottom + offset;
     } else {
-      // Not enough space either way, prefer top
-      tooltipElement.style.top = `${buttonRect.top - tooltipHeight - offset}px`;
+      // Not enough space either way, prefer top but clamp to container
+      topPos = Math.max(boundaryTop + padding, buttonRect.top - tooltipHeight - offset);
     }
 
-    // Position horizontally
-    let leftPos = buttonRect.left;
+    tooltipElement.style.top = `${topPos}px`;
 
-    // Check if tooltip would overflow on the right
-    const wouldOverflowRight =
-      leftPos + tooltipRect.width > window.innerWidth - padding;
+    // Position horizontally - center on button by default
+    let leftPos = buttonRect.left + (buttonRect.width / 2) - (tooltipRect.width / 2);
 
-    // Check if tooltip would overflow on the left
-    const wouldOverflowLeft = leftPos < padding;
-
-    if (wouldOverflowRight && !wouldOverflowLeft) {
-      // Align to right edge of button
-      leftPos = buttonRect.right - tooltipRect.width;
-    } else if (wouldOverflowLeft) {
-      // Align to left boundary
-      leftPos = padding;
-    }
+    // Clamp horizontal position to container boundaries
+    const minLeft = boundaryLeft + padding;
+    const maxLeft = boundaryRight - tooltipRect.width - padding;
+    leftPos = Math.max(minLeft, Math.min(leftPos, maxLeft));
 
     tooltipElement.style.left = `${leftPos}px`;
   }
@@ -103,59 +175,60 @@
       <span class="person-role">{person.relationship_type?.replace(/_/g, " ") || ""}</span>
     {/if}
   </button>
-  {#if isExpanded}
-    <div class="person-info-tooltip" bind:this={tooltipElement}>
-      <p class="tooltip-title">
-        {person.person_name}
-      </p>
-      <p class="tooltip-relationship">
-        {person.relationship_description}
-      </p>
-      {#if person.start_year || person.end_year}
-        <p class="tooltip-years">
-          {#if person.start_year && person.end_year}
-            {$_('person.years_range', { start: person.start_year, end: person.end_year })}
-          {:else if person.start_year}
-            {$_('person.from_year', { year: person.start_year })}
-          {:else if person.end_year}
-            {$_('person.until_year', { year: person.end_year })}
-          {/if}
-        </p>
-      {/if}
-      {#if person.shared_activities?.length}
-        <p class="tooltip-activities">
-          {@html joinWithSeparator(person.shared_activities, styleConfig)}
-        </p>
-      {/if}
-      {#if person.strength || person.interaction_frequency || person.influence_direction}
-        <div class="tooltip-meta">
-          {#if person.strength}
-            <span class="meta-item">
-              <span class="meta-label">{$_('person.strength')}</span>
-              <span class="meta-value strength-{person.strength}"
-                >{person.strength}</span
-              >
-            </span>
-          {/if}
-          {#if person.interaction_frequency}
-            <span class="meta-item">
-              <span class="meta-label">{$_('person.frequency')}</span>
-              <span class="meta-value">{person.interaction_frequency}</span>
-            </span>
-          {/if}
-          {#if person.influence_direction}
-            <span class="meta-item">
-              <span class="meta-label">{$_('person.influence')}</span>
-              <span class="meta-value"
-                >{person.influence_direction.replace(/_/g, " ")}</span
-              >
-            </span>
-          {/if}
-        </div>
-      {/if}
-    </div>
-  {/if}
 </div>
+
+{#if isExpanded}
+  <div class="person-info-tooltip" bind:this={tooltipContent}>
+    <p class="tooltip-title">
+      {person.person_name}
+    </p>
+    <p class="tooltip-relationship">
+      {person.relationship_description}
+    </p>
+    {#if person.start_year || person.end_year}
+      <p class="tooltip-years">
+        {#if person.start_year && person.end_year}
+          {$_('person.years_range', { start: person.start_year, end: person.end_year })}
+        {:else if person.start_year}
+          {$_('person.from_year', { year: person.start_year })}
+        {:else if person.end_year}
+          {$_('person.until_year', { year: person.end_year })}
+        {/if}
+      </p>
+    {/if}
+    {#if person.shared_activities?.length}
+      <p class="tooltip-activities">
+        {@html joinWithSeparator(person.shared_activities, styleConfig)}
+      </p>
+    {/if}
+    {#if person.strength || person.interaction_frequency || person.influence_direction}
+      <div class="tooltip-meta">
+        {#if person.strength}
+          <span class="meta-item">
+            <span class="meta-label">{$_('person.strength')}</span>
+            <span class="meta-value strength-{person.strength}"
+              >{person.strength}</span
+            >
+          </span>
+        {/if}
+        {#if person.interaction_frequency}
+          <span class="meta-item">
+            <span class="meta-label">{$_('person.frequency')}</span>
+            <span class="meta-value">{person.interaction_frequency}</span>
+          </span>
+        {/if}
+        {#if person.influence_direction}
+          <span class="meta-item">
+            <span class="meta-label">{$_('person.influence')}</span>
+            <span class="meta-value"
+              >{person.influence_direction.replace(/_/g, " ")}</span
+            >
+          </span>
+        {/if}
+      </div>
+    {/if}
+  </div>
+{/if}
 
 <style>
   .person-info-wrapper {
