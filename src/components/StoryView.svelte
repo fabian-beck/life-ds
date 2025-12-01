@@ -1521,6 +1521,25 @@
                   {#if rolesLabel}
                     <p class="overview-roles">{@html rolesLabel}</p>
                   {/if}
+                  {#if egoNetwork?.connections && egoNetwork.connections.length > 0}
+                    <button
+                      type="button"
+                      class="overview-network-btn"
+                      on:click={openNetworkModal}
+                      aria-label={$_("story.show_network")}
+                    >
+                      <svg
+                        class="icon icon-inline"
+                        viewBox="0 0 24 24"
+                        role="presentation"
+                        aria-hidden="true"
+                      >
+                        <path d={mdiAccountMultipleOutline} />
+                      </svg>
+                      {egoNetwork.connections.length}
+                      {egoNetwork.connections.length === 1 ? 'connection' : 'connections'}
+                    </button>
+                  {/if}
                   {#if hasPersonSummary}
                     <p
                       class="description"
@@ -2494,6 +2513,40 @@
   .overview-text .description.placeholder {
     color: #94a3b8;
     font-style: italic;
+  }
+
+  .overview-network-btn {
+    appearance: none;
+    margin-top: 0.75rem;
+    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--story-primary, #e2e8f0);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: fit-content;
+    align-self: center;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .overview-network-btn:hover,
+  .overview-network-btn:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .overview-network-btn:active {
+    transform: translateY(0);
   }
 
   .map-overlay {
