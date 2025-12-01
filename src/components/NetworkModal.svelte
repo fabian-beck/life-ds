@@ -51,6 +51,41 @@
     return groups;
   }
 
+  function subdivideFamilyMembers(familyConnections) {
+    const parents = [];
+    const children = [];
+    const otherRelatives = [];
+
+    const parentTypes = ['mother', 'father', 'parent'];
+    const childTypes = ['son', 'daughter', 'child'];
+
+    familyConnections.forEach((connection) => {
+      const subcategory = getSubcategory(connection.relationship_type);
+      if (subcategory && parentTypes.includes(subcategory)) {
+        parents.push(connection);
+      } else if (subcategory && childTypes.includes(subcategory)) {
+        children.push(connection);
+      } else {
+        otherRelatives.push(connection);
+      }
+    });
+
+    return {
+      parents: sortByStrength(parents),
+      children: sortByStrength(children),
+      otherRelatives: sortByStrength(otherRelatives)
+    };
+  }
+
+  function sortByStrength(connections) {
+    const strengthOrder = { 'strong': 0, 'moderate': 1, 'weak': 2 };
+    return connections.sort((a, b) => {
+      const aStrength = strengthOrder[a.strength] ?? 3;
+      const bStrength = strengthOrder[b.strength] ?? 3;
+      return aStrength - bStrength;
+    });
+  }
+
   function getSubcategory(relationshipType) {
     if (!relationshipType || !relationshipType.includes('/')) {
       return null;
@@ -126,30 +161,100 @@
         if (b === 'family') return 1;
         return a.localeCompare(b);
       } ) as [type, people]}
-        <div class="person-group">
-          <h4 class="group-title">
-            {type}
-            <span class="group-count">{$_('network.group_count', { count: people.length })}</span>
-          </h4>
-          {#if summaryMap[type]}
-            <p class="category-summary">{summaryMap[type]}</p>
-          {/if}
-          <div class="group-people">
-            {#each people as person, idx}
-              {@const personKey = `${type}-${idx}`}
-              {@const subcategory = getSubcategory(person.relationship_type)}
-              <PersonChip
-                {person}
-                {personKey}
-                {visiblePersonInfo}
-                {subcategory}
-                {styleConfig}
-                onToggle={togglePersonInfo}
-                containerSelector=".modal-content"
-              />
-            {/each}
+        {#if type === 'family'}
+          {@const familySubgroups = subdivideFamilyMembers(people)}
+          <div class="person-group">
+            <h4 class="group-title">
+              {type}
+              <span class="group-count">{$_('network.group_count', { count: people.length })}</span>
+            </h4>
+            {#if summaryMap[type]}
+              <p class="category-summary">{summaryMap[type]}</p>
+            {/if}
+
+            {#if familySubgroups.parents.length > 0}
+              <h5 class="subgroup-title">Parents</h5>
+              <div class="group-people">
+                {#each familySubgroups.parents as person, idx}
+                  {@const personKey = `family-parents-${idx}`}
+                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  <PersonChip
+                    {person}
+                    {personKey}
+                    {visiblePersonInfo}
+                    {subcategory}
+                    {styleConfig}
+                    onToggle={togglePersonInfo}
+                    containerSelector=".modal-content"
+                  />
+                {/each}
+              </div>
+            {/if}
+
+            {#if familySubgroups.children.length > 0}
+              <h5 class="subgroup-title">Children</h5>
+              <div class="group-people">
+                {#each familySubgroups.children as person, idx}
+                  {@const personKey = `family-children-${idx}`}
+                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  <PersonChip
+                    {person}
+                    {personKey}
+                    {visiblePersonInfo}
+                    {subcategory}
+                    {styleConfig}
+                    onToggle={togglePersonInfo}
+                    containerSelector=".modal-content"
+                  />
+                {/each}
+              </div>
+            {/if}
+
+            {#if familySubgroups.otherRelatives.length > 0}
+              <h5 class="subgroup-title">Other Relatives</h5>
+              <div class="group-people">
+                {#each familySubgroups.otherRelatives as person, idx}
+                  {@const personKey = `family-other-${idx}`}
+                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  <PersonChip
+                    {person}
+                    {personKey}
+                    {visiblePersonInfo}
+                    {subcategory}
+                    {styleConfig}
+                    onToggle={togglePersonInfo}
+                    containerSelector=".modal-content"
+                  />
+                {/each}
+              </div>
+            {/if}
           </div>
-        </div>
+        {:else}
+          <div class="person-group">
+            <h4 class="group-title">
+              {type}
+              <span class="group-count">{$_('network.group_count', { count: people.length })}</span>
+            </h4>
+            {#if summaryMap[type]}
+              <p class="category-summary">{summaryMap[type]}</p>
+            {/if}
+            <div class="group-people">
+              {#each sortByStrength(people) as person, idx}
+                {@const personKey = `${type}-${idx}`}
+                {@const subcategory = getSubcategory(person.relationship_type)}
+                <PersonChip
+                  {person}
+                  {personKey}
+                  {visiblePersonInfo}
+                  {subcategory}
+                  {styleConfig}
+                  onToggle={togglePersonInfo}
+                  containerSelector=".modal-content"
+                />
+              {/each}
+            </div>
+          </div>
+        {/if}
       {/each}
     </div>
   </div>
@@ -259,24 +364,24 @@
   }
 
   .modal-content {
-    padding: 1.5rem;
+    padding: 1.25rem;
     overflow-y: auto;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .person-group {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .category-summary {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: #e2e8f0;
     font-family: var(--story-body-font, Inter, sans-serif);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -301,10 +406,21 @@
     font-weight: 600;
   }
 
+  .subgroup-title {
+    margin: 0.5rem 0 0.35rem 0;
+    font-size: 0.75rem;
+    text-transform: capitalize;
+    color: rgba(226, 232, 240, 0.85);
+    font-weight: 500;
+    font-family: var(--story-body-font, Inter, sans-serif);
+    letter-spacing: 0.01em;
+  }
+
   .group-people {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    justify-content: center;
   }
 
   @media (min-width: 768px) {
@@ -316,11 +432,11 @@
     }
 
     .modal-content {
-      padding: 1.75rem;
+      padding: 1.5rem;
     }
 
     .modal-header {
-      padding: 1.25rem 1.75rem;
+      padding: 1.25rem 1.5rem;
     }
   }
 </style>

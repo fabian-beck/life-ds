@@ -90,7 +90,7 @@
 <div class="person-info-wrapper">
   <button
     type="button"
-    class="person-chip"
+    class="person-chip {person.strength ? `strength-${person.strength}` : ''}"
     bind:this={buttonElement}
     on:click|stopPropagation={handleClick}
     aria-label={$_('person.show_info', { name: person.person_name })}
@@ -177,7 +177,30 @@
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
+      border-width 0.2s ease,
       transform 0.2s ease;
+  }
+
+  /* Relationship strength border variations */
+  .person-chip.strength-weak {
+    border-width: 1px;
+    border-style: dotted;
+    border-color: rgba(148, 163, 184, 0.3);
+    padding: 0.4rem 0.75rem;
+  }
+
+  .person-chip.strength-moderate {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(148, 163, 184, 0.3);
+    padding: 0.4rem 0.75rem;
+  }
+
+  .person-chip.strength-strong {
+    border-width: 2.5px;
+    border-style: solid;
+    border-color: rgba(148, 163, 184, 0.6);
+    padding: calc(0.4rem - 1.5px) calc(0.75rem - 1.5px);
   }
 
   .person-chip:hover,
@@ -188,9 +211,36 @@
     outline: none;
   }
 
+  .person-chip.strength-weak:hover,
+  .person-chip.strength-weak:focus {
+    border-color: rgba(148, 163, 184, 0.45);
+  }
+
+  .person-chip.strength-moderate:hover,
+  .person-chip.strength-moderate:focus {
+    border-color: rgba(148, 163, 184, 0.5);
+  }
+
+  .person-chip.strength-strong:hover,
+  .person-chip.strength-strong:focus {
+    border-color: rgba(148, 163, 184, 0.8);
+  }
+
   .person-chip[aria-expanded="true"] {
     background: rgba(255, 255, 255, 0.15);
     border-color: var(--story-secondary, rgba(148, 163, 184, 0.6));
+  }
+
+  .person-chip.strength-weak[aria-expanded="true"] {
+    border-color: rgba(148, 163, 184, 0.5);
+  }
+
+  .person-chip.strength-moderate[aria-expanded="true"] {
+    border-color: rgba(148, 163, 184, 0.6);
+  }
+
+  .person-chip.strength-strong[aria-expanded="true"] {
+    border-color: rgba(148, 163, 184, 0.9);
   }
 
   .person-name {
@@ -299,14 +349,20 @@
   }
 
   .meta-value.strength-strong {
-    color: #10b981;
+    font-weight: 800;
+    color: rgba(226, 232, 240, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
   }
 
   .meta-value.strength-moderate {
-    color: #f59e0b;
+    font-weight: 600;
+    color: rgba(226, 232, 240, 0.9);
   }
 
   .meta-value.strength-weak {
-    color: #94a3b8;
+    font-weight: 400;
+    color: rgba(226, 232, 240, 0.7);
+    font-style: italic;
   }
 </style>
