@@ -1536,8 +1536,10 @@
                       >
                         <path d={mdiAccountMultipleOutline} />
                       </svg>
-                      {egoNetwork.connections.length}
-                      {egoNetwork.connections.length === 1 ? 'connection' : 'connections'}
+                      <span class="network-btn-text">
+                        {egoNetwork.connections.length}
+                        {egoNetwork.connections.length === 1 ? 'connection' : 'connections'}
+                      </span>
                     </button>
                   {/if}
                   {#if hasPersonSummary}
@@ -2001,7 +2003,7 @@
   }
 
   .masthead {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2vw;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -2023,19 +2025,19 @@
      - Taller viewports: progressively increase spacing and font sizes */
   @media (min-height: 600px) {
     .masthead {
-      padding: 0.65rem 1.15rem;
+      padding: 0.65rem 2vw;
     }
   }
 
   @media (min-height: 700px) {
     .masthead {
-      padding: 0.75rem 1.2rem;
+      padding: 0.75rem 2vw;
     }
   }
 
   @media (min-height: 800px) {
     .masthead {
-      padding: 0.85rem 1.25rem;
+      padding: 0.85rem 2vw;
     }
   }
 
@@ -2399,15 +2401,16 @@
 
   .slide.overview {
     justify-content: flex-start;
-    padding-top: 2rem;
+    padding-top: 1rem;
     padding-bottom: 8rem;
+    position: relative;
   }
 
   .overview-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     text-align: center;
     max-width: 56rem;
   }
@@ -2423,7 +2426,7 @@
 
   .overview-portrait img {
     max-width: 100%;
-    max-height: min(30dvh, 220px);
+    max-height: min(25dvh, 180px);
     width: auto;
     height: auto;
     object-fit: contain;
@@ -2452,7 +2455,7 @@
   .overview-text {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.5rem;
   }
 
   .overview-text h2 {
@@ -2485,9 +2488,9 @@
   }
 
   .overview-text .description {
-    margin-top: 0.5rem;
+    margin-top: 0.35rem;
     font-size: 0.9rem;
-    line-height: 1.6;
+    line-height: 1.5;
     margin-left: auto;
     margin-right: auto;
     font-family: var(--story-body-font, Inter, sans-serif);
@@ -2517,36 +2520,50 @@
 
   .overview-network-btn {
     appearance: none;
-    margin-top: 0.75rem;
+    position: absolute;
+    top: 1rem;
+    right: 2vw;
+    margin: 0;
     border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
     background: rgba(255, 255, 255, 0.05);
     color: var(--story-primary, #e2e8f0);
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
+    padding: 0.5rem;
+    border-radius: 50%;
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.4rem;
-    width: fit-content;
-    align-self: center;
+    width: 2.5rem;
+    height: 2.5rem;
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
       transform 0.2s ease;
+    z-index: 10;
+  }
+
+  .overview-network-btn .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .network-btn-text {
+    display: none;
   }
 
   .overview-network-btn:hover,
   .overview-network-btn:focus {
     background: rgba(255, 255, 255, 0.12);
     border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
-    transform: translateY(-1px);
+    transform: scale(1.05);
     outline: none;
   }
 
   .overview-network-btn:active {
-    transform: translateY(0);
+    transform: scale(0.98);
   }
 
   .map-overlay {
@@ -3082,7 +3099,7 @@
        applying desktop styles to landscape phones with short viewports */
   @media (min-width: 768px) and (min-height: 600px) {
     .masthead {
-      padding: 1rem 2.5rem;
+      padding: 1rem 2vw;
     }
 
     .slides {
@@ -3200,6 +3217,34 @@
       max-width: 340px;
     }
 
+    .slide.overview {
+      padding-top: 2.5rem;
+    }
+
+    .overview-content {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      text-align: left;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    .overview-portrait {
+      align-items: center;
+    }
+
+    .overview-portrait img {
+      max-width: 420px;
+      max-height: min(40dvh, 320px);
+    }
+
+    .overview-text {
+      flex: 1;
+      min-width: 300px;
+      align-items: flex-start;
+    }
+
     .overview-text h2 {
       font-size: 2.5rem;
     }
@@ -3212,8 +3257,32 @@
       font-size: 1rem;
     }
 
+    .overview-network-btn {
+      position: static;
+      margin-top: 0.75rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      width: fit-content;
+      height: auto;
+      align-self: flex-start;
+    }
+
+    .overview-network-btn .icon {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .network-btn-text {
+      display: inline;
+    }
+
     .overview-text .description {
       font-size: 1.1rem;
+      width: 100%;
+      flex-basis: 100%;
+      text-align: left;
+      margin-top: 1rem;
+      max-height: 45vh;
     }
   }
 </style>
