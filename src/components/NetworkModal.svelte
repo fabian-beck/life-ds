@@ -143,6 +143,7 @@
                 {personKey}
                 {visiblePersonInfo}
                 {subcategory}
+                {styleConfig}
                 onToggle={togglePersonInfo}
                 containerSelector=".modal-content"
               />

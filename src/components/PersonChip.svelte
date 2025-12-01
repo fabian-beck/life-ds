@@ -8,9 +8,23 @@
   export let onToggle = () => {};
   export let containerSelector = null; // Optional: restrict positioning to container (e.g., ".modal-content")
   export let subcategory = null; // Optional: subcategory to display instead of full relationship_type
+  export let styleConfig = null; // Optional: style configuration for separator
 
   let buttonElement;
   let tooltipElement;
+
+  function joinWithSeparator(items, styleConfig) {
+    if (!items || items.length === 0) return "";
+    if (items.length === 1) return items[0];
+
+    // Use separator_glyph_svg if available
+    if (styleConfig?.separatorGlyphSvg) {
+      return items.join(`<span class="separator-glyph" style="display: inline-block; margin: 0 0.35rem; width: 0.85em; height: 0.85em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`);
+    }
+
+    // Fallback to comma
+    return items.join(", ");
+  }
 
   function handleClick(event) {
     const wasExpanded = isExpanded;
@@ -110,7 +124,7 @@
       {/if}
       {#if person.shared_activities?.length}
         <p class="tooltip-activities">
-          {person.shared_activities.join(", ")}
+          {@html joinWithSeparator(person.shared_activities, styleConfig)}
         </p>
       {/if}
       {#if person.strength || person.interaction_frequency || person.influence_direction}

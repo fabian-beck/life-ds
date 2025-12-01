@@ -297,6 +297,19 @@
     }
     return segments.join("; ");
   }
+
+  function joinWithSeparator(items, styleConfig) {
+    if (!items || items.length === 0) return "";
+    if (items.length === 1) return items[0];
+
+    // Use separator_glyph_svg if available
+    if (styleConfig?.separatorGlyphSvg) {
+      return items.join(`<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`);
+    }
+
+    // Fallback to middle dot
+    return items.join(" · ");
+  }
 </script>
 
 <section class="landing">
@@ -498,7 +511,7 @@
               {#if (entry.primaryRoles?.length ?? 0) > 0}
                 <p class="card-meta">
                   <span class="meta-roles"
-                    >{entry.primaryRoles.join(" · ")}</span
+                    >{@html joinWithSeparator(entry.primaryRoles, style)}</span
                   >
                 </p>
               {/if}

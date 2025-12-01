@@ -206,6 +206,19 @@
     return segments.join("; ");
   }
 
+  function joinWithSeparator(items, styleConfig) {
+    if (!items || items.length === 0) return "";
+    if (items.length === 1) return items[0];
+
+    // Use separator_glyph_svg if available
+    if (styleConfig?.separatorGlyphSvg) {
+      return items.join(`<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`);
+    }
+
+    // Fallback to middle dot
+    return items.join(" · ");
+  }
+
   $: person = dataset?.person ?? {};
   $: events = Array.isArray(dataset?.events) ? dataset.events : [];
   $: chapters = Array.isArray(dataset?.chapters) ? dataset.chapters : [];
@@ -216,7 +229,7 @@
   $: hasPersonSummary = Boolean(personSummary);
   $: yearsLabel = computeYearsLabel(person);
   $: rolesLabel = Array.isArray(person?.primary_roles)
-    ? person.primary_roles.join(" · ")
+    ? joinWithSeparator(person.primary_roles, styleConfig)
     : "";
   $: eventSlides = events
     .slice()
@@ -856,7 +869,7 @@
 
   function formatLocations(locations = []) {
     if (!locations.length) return UNKNOWN_LOCATION_LABEL;
-    return locations.join(" · ");
+    return joinWithSeparator(locations, styleConfig);
   }
 
   function sourceLabel(url) {
@@ -1506,7 +1519,7 @@
                     <p class="overview-years">{yearsLabel}</p>
                   {/if}
                   {#if rolesLabel}
-                    <p class="overview-roles">{rolesLabel}</p>
+                    <p class="overview-roles">{@html rolesLabel}</p>
                   {/if}
                   {#if hasPersonSummary}
                     <p
@@ -1679,7 +1692,7 @@
                                 <path d={mdiMapMarkerOutline} />
                               </svg>
                             </span>
-                            <span>{formatLocations(slide.locations)}</span>
+                            <span>{@html formatLocations(slide.locations)}</span>
                           {/if}
                           {#if slide.sources?.length}
                             <div class="sources-wrapper">
