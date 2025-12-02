@@ -914,7 +914,8 @@
 
   .card-meta .meta-roles {
     color: var(--card-secondary, rgba(148, 163, 184, 0.85));
-    text-transform: capitalize;
+    text-transform: uppercase;
+    font-size: 0.7rem;
   }
 
   .card-summary {
@@ -1139,11 +1140,12 @@
     background: rgba(15, 23, 42, 0.8);
     border: 1px solid rgba(148, 163, 184, 0.25);
     color: #cbd5e1;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
+    text-transform: uppercase;
   }
 
   .tag-chip:hover {

@@ -2473,10 +2473,11 @@
   }
 
   .overview-roles {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--story-secondary, #38bdf8);
     font-weight: 500;
     margin: 0;
+    text-transform: uppercase;
   }
 
   .overview-text .eyebrow {

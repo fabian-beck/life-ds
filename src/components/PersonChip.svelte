@@ -329,8 +329,8 @@
   .person-role {
     font-weight: 400;
     color: var(--story-secondary, #94a3b8);
-    font-size: 0.75rem;
-    text-transform: capitalize;
+    font-size: 0.7rem;
+    text-transform: uppercase;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
