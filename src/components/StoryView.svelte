@@ -2499,16 +2499,16 @@
   }
 
   .overview-text .description.has-fade {
-    padding-bottom: 1.5em;
+    padding-bottom: 5em;
     padding-right: 0.5em;
     -webkit-mask-image: linear-gradient(
       to bottom,
-      black calc(100% - 2em),
+      black calc(100% - 5em),
       transparent 100%
     );
     mask-image: linear-gradient(
       to bottom,
-      black calc(100% - 2em),
+      black calc(100% - 5em),
       transparent 100%
     );
   }
