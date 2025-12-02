@@ -1,42 +1,110 @@
 {
-  "dataset": "Ada Lovelace Life Events",
-  "created_on": "2025-11-09",
+  "dataset": "ada_lovelace_life",
+  "created_on": "2025-12-02",
   "person": {
     "name": "Ada_Lovelace",
     "birth_date": "1815-12-10",
     "death_date": "1852-11-27",
     "primary_roles": [
-      "Mathematician",
-      "Writer"
+      "mathematician",
+      "writer",
+      "noblewoman"
     ],
-    "summary": "Ada Lovelace was an English mathematician and writer known for her work on Charles Babbage's Analytical Engine, and is often considered the first computer programmer.",
+    "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) was an English mathematician and writer, and the only legitimate child of the poet Lord Byron and Anne Isabella Milbanke. Educated intensively in mathematics and science, she became a close collaborator of Charles Babbage on his Analytical Engine. In 1843 she published an influential translation of Luigi Menabrea\u2019s paper on the machine, supplemented with extensive notes that included a table for computing Bernoulli numbers, often described as the first published computer program, and reflections on how such engines might manipulate symbols beyond arithmetic.",
     "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace",
     "portrait": {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
-      "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_portrait.jpg"
     }
   },
+  "chapters": [
+    {
+      "id": "early_life_and_education",
+      "headline": "Illness, Tutors, and Flyology",
+      "description": "From her birth as Lord Byron\u2019s only legitimate child through a fraught childhood of illness, strict scientific education, and imaginative projects like her plan to fly, Ada Byron was shaped into a mathematically minded prodigy under her mother\u2019s watchful eye.",
+      "date_start": "1815-12-10",
+      "date_start_precision": "day",
+      "date_end": "1832",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 16
+    },
+    {
+      "id": "courtship_and_mathematical_circle",
+      "headline": "Society Debut and New Science",
+      "description": "As a young woman Ada entered London society, formed lifelong ties with Mary Somerville, met Charles Babbage, and began to move in a circle of leading scientists and authors while nurturing her own mathematical ambitions.",
+      "date_start": "1833",
+      "date_start_precision": "year",
+      "date_end": "1838",
+      "date_end_precision": "year",
+      "age_start": 17,
+      "age_end": 22
+    },
+    {
+      "id": "marriage_and_family_life",
+      "headline": "Countess, Wife, and Mother",
+      "description": "Marriage to William King brought Ada titles, several homes, and three children. Between household responsibilities and bouts of ill health, she continued mathematical study and followed Babbage\u2019s evolving work on calculating engines.",
+      "date_start": "1835-07-08",
+      "date_start_precision": "day",
+      "date_end": "1841",
+      "date_end_precision": "year",
+      "age_start": 19,
+      "age_end": 25
+    },
+    {
+      "id": "analytical_engine_and_notes",
+      "headline": "Programming the Analytical Engine",
+      "description": "In her late twenties Ada undertook her most important scientific work: translating Luigi Menabrea\u2019s article on Babbage\u2019s Analytical Engine and expanding it with extensive notes that articulated the engine\u2019s potential and described a procedure to compute Bernoulli numbers.",
+      "date_start": "1842",
+      "date_start_precision": "year",
+      "date_end": "1843",
+      "date_end_precision": "year",
+      "age_start": 26,
+      "age_end": 27
+    },
+    {
+      "id": "later_years_and_final_illness",
+      "headline": "Gambling Schemes and Decline",
+      "description": "Ada\u2019s final decade mixed advanced mathematical study, risky gambling schemes based on calculation, and complex personal entanglements. Increasing ill health and a painful uterine cancer led to her early death at thirty-six, after which she was buried beside her father, Lord Byron.",
+      "date_start": "1844",
+      "date_start_precision": "year",
+      "date_end": "1852-11-27",
+      "date_end_precision": "day",
+      "age_start": 28,
+      "age_end": 36
+    }
+  ],
   "events": [
     {
       "date": "1815-12-10",
       "date_precision": "day",
-      "age": null,
-      "title": "Birth of Ada Lovelace",
-      "description": "Augusta Ada Byron is born in London, England, to poet Lord Byron and Anne Isabella Milbanke.",
+      "age": 0,
+      "title": "Birth in London",
+      "description": "Augusta Ada Byron was born in London as the only legitimate child of the poet Lord Byron and his wife Anne Isabella Milbanke. Her arrival disappointed her father, who had expected a son, and the tensions in her parents\u2019 marriage would soon leave her without any contact with him.",
       "locations": [
-        "London, England"
+        "London"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lord_Byron",
+        "https://en.wikipedia.org/wiki/Lady_Byron"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Miniature_of_Ada_Byron.jpg",
+          "caption": "Miniature portrait of Ada Byron at about four years old, painted in a locket sent to Lord Byron.",
+          "source": "https://commons.wikimedia.org/wiki/File:Miniature_of_Ada_Byron.jpg"
+        }
+      ],
+      "chapter": "early_life_and_education",
       "location_coordinates": [
         {
-          "label": "London, Greater London, England, United Kingdom",
-          "name": "London, England",
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
           "primary": true,
           "centroid": [
-            -0.1440551,
-            51.4893335
+            -0.1277653,
+            51.5074456
           ],
           "source": "nominatim",
           "bbox": [
@@ -49,82 +117,240 @@
       ]
     },
     {
-      "date": "1824-04-19",
+      "date": "1816-01-16",
       "date_precision": "day",
-      "age": 8,
-      "title": "Death of Lord Byron",
-      "description": "Ada's father, Lord Byron, dies in Greece, leaving her without a relationship with him.",
+      "age": 0,
+      "title": "Separation from Lord Byron",
+      "description": "When Ada was five weeks old, Lady Byron left London for her parents\u2019 home at Kirkby Mallory, taking her infant daughter with her. In April 1816 Lord Byron signed a deed of separation and departed England for good, leaving Ada to be raised entirely under her mother\u2019s control and without a relationship with her father.",
       "locations": [
-        "Greece"
+        "Kirkby Mallory"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lord_Byron",
+        "https://en.wikipedia.org/wiki/Lady_Byron"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Ada_Lovelace_blue_plaque%2C_Mallory_Park_01.jpg",
+          "caption": "Blue plaque at Kirkby Hall, Mallory Park, marking it as the childhood home of Ada Lovelace.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_blue_plaque,_Mallory_Park_01.jpg"
+        }
+      ],
+      "chapter": "early_life_and_education",
       "location_coordinates": [
         {
-          "label": "Greece",
-          "name": "Greece",
+          "label": "Kirkby Mallory, Hinckley and Bosworth, Leicestershire, England, LE9 7QB, United Kingdom",
+          "name": "Kirkby Mallory",
           "primary": true,
           "centroid": [
-            21.9877132,
-            38.9953683
+            -1.3296824,
+            52.6024421
           ],
           "source": "nominatim",
           "bbox": [
-            19.1127535,
-            34.7188863,
-            29.68381,
-            41.7488889
+            -1.3496824,
+            52.5824421,
+            -1.3096824,
+            52.6224421
           ]
         }
       ]
     },
     {
-      "date": "1828-02-01",
-      "date_precision": "day",
+      "date": "1828-02",
+      "date_precision": "month",
       "age": 12,
-      "title": "Ada's Interest in Flight",
-      "description": "Ada begins her project to construct wings, inspired by her desire to fly, and documents her findings in a book titled 'Flyology'.",
+      "title": "Begins \"Flyology\" Experiments",
+      "description": "At around twelve, Ada Byron embarked on a serious project to design a flying machine, which she called \"Flyology\". She studied bird anatomy for wing proportions, evaluated materials such as paper, oil-silk, wires, and feathers, and sketched equipment including a compass for cross\u2011country flight, even envisioning how to integrate steam power with the art of flying.",
       "locations": [
-        "Location unknown"
+        "London"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Nuvola_apps_edu_mathematics_blue-p.svg",
+          "caption": "Symbolic illustration of mathematics, reflecting Ada Lovelace\u2019s early analytical approach to her Flyology project.",
+          "source": "https://commons.wikimedia.org/wiki/File:Nuvola_apps_edu_mathematics_blue-p.svg"
+        }
+      ],
+      "chapter": "early_life_and_education",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
       ]
     },
     {
-      "date": "1832",
-      "date_precision": "year",
-      "age": 17,
-      "title": "Portrait at Seventeen",
-      "description": "A portrait of Ada Byron at the age of seventeen, showcasing her early beauty and intellect.",
+      "date": "1829-06",
+      "date_precision": "month",
+      "date_end": "1831",
+      "date_end_precision": "year",
+      "age": 13,
+      "title": "Severe Illness and Convalescence",
+      "description": "In June 1829 Ada suffered a serious bout of measles that left her temporarily paralysed and confined to bed for nearly a year, followed by a long period when she could walk only with crutches. Despite chronic ill health and headaches that sometimes obscured her vision, she continued to pursue mathematics and scientific studies during her prolonged convalescence.",
       "locations": [
-        "Location unknown"
+        "London"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Ada_Lovelace_child_portrait_Somerville_College.jpg",
+          "caption": "Childhood portrait of Ada Byron, later Countess of Lovelace, showing her in the period marked by frequent illness and intensive study.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_child_portrait_Somerville_College.jpg"
+        }
+      ],
+      "chapter": "early_life_and_education",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1830",
+      "date_precision": "year",
+      "date_note": "Court presentation is often dated to 1832 when she was 17; by 1834 she was a regular at Court",
+      "age": 14,
+      "title": "Intensive Mathematical Tutoring",
+      "description": "In her mid\u2011teens Ada\u2019s mother, determined to keep her from what she saw as her father\u2019s dangerous temperament, organised a rigorous programme of instruction in mathematics and science. Tutors included Mary Somerville, the respected Scottish mathematician and science writer, who became a close friend and intellectual role model for Ada.",
+      "locations": [
+        "London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Mary_Somerville"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/16/Ada_Lovelace_sonnet_The_Rainbow_Somerville_College.JPG",
+          "caption": "Manuscript of Ada Lovelace\u2019s sonnet \"The Rainbow\", preserved at Somerville College, reflecting her cultivated literary and scientific education.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_sonnet_The_Rainbow_Somerville_College.JPG"
+        }
+      ],
+      "chapter": "early_life_and_education",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
       ]
     },
     {
       "date": "1833-06-05",
       "date_precision": "day",
       "age": 17,
-      "title": "Meeting Charles Babbage",
-      "description": "Ada meets Charles Babbage at one of his soir\u00e9es, marking the beginning of a significant intellectual partnership.",
+      "title": "Meets Charles Babbage",
+      "description": "On 5 June 1833 Ada Byron and her mother attended one of Charles Babbage\u2019s Saturday evening scientific soir\u00e9es in Dorset Street. Introduced by Mary Somerville, Ada was shown Babbage\u2019s Difference Engine. Her evident mathematical ability deeply impressed Babbage and began a long friendship focused on his more ambitious Analytical Engine.",
       "locations": [
-        "London, England"
+        "London"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Ada_Byron_aged_seventeen_%281832%29.jpg",
+          "caption": "Portrait of Ada Byron at about seventeen, around the time she first met Charles Babbage at his scientific soir\u00e9es.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Byron_aged_seventeen_(1832).jpg"
+        }
+      ],
+      "chapter": "courtship_and_mathematical_circle",
       "location_coordinates": [
         {
-          "label": "London, Greater London, England, United Kingdom",
-          "name": "London, England",
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
           "primary": true,
           "centroid": [
-            -0.1440551,
-            51.4893335
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1834-02-24",
+      "date_precision": "day",
+      "age": 18,
+      "title": "Regular at Court and Scientific Circles",
+      "description": "By 1834 Ada was a regular presence at Court and London society events, where her sharp intellect made her a noted \"belle of the season\". That winter she met John Cam Hobhouse, a friend of Lord Byron, and continued to develop connections with leading scientists such as Andrew Crosse, David Brewster, Charles Wheatstone, and Michael Faraday through salons and lectures.",
+      "locations": [
+        "London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Andrew_Crosse",
+        "https://en.wikipedia.org/wiki/David_Brewster",
+        "https://en.wikipedia.org/wiki/Charles_Wheatstone",
+        "https://en.wikipedia.org/wiki/Michael_Faraday"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/AdaLovelaceplaque.JPG",
+          "caption": "Blue plaque in St James\u2019s Square, London, commemorating Ada Lovelace\u2019s residence and work in the city\u2019s social and scientific circles.",
+          "source": "https://commons.wikimedia.org/wiki/File:AdaLovelaceplaque.JPG"
+        }
+      ],
+      "chapter": "courtship_and_mathematical_circle",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
           ],
           "source": "nominatim",
           "bbox": [
@@ -141,12 +367,82 @@
       "date_precision": "day",
       "age": 19,
       "title": "Marriage to William King",
-      "description": "Ada marries William King, 8th Baron King, and becomes Lady King.",
+      "description": "On 8 July 1835 Ada Byron married William King, 8th Baron King, at the age of nineteen, becoming Lady King. The couple later maintained three principal homes in Surrey, on Loch Torridon in Scotland, and in London, providing Ada with both social standing and the resources to continue her scientific interests.",
       "locations": [
-        "Location unknown"
+        "Ealing"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/ec/Ada_Countess_of_Lovelace_computer_pioneer_1815-1852_green_plaque_-_5_Station_Parade_Uxbridge_Road_Ealing_W5_3LD.jpg",
+          "caption": "Green plaque in Ealing marking the place where Ada, Countess of Lovelace, lived and was married in 1835.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Countess_of_Lovelace_computer_pioneer_1815-1852_green_plaque_-_5_Station_Parade_Uxbridge_Road_Ealing_W5_3LD.jpg"
+        }
+      ],
+      "chapter": "marriage_and_family_life",
+      "location_coordinates": [
+        {
+          "label": "Ealing, Greater London, England, W5 5AW, United Kingdom",
+          "name": "Ealing",
+          "primary": true,
+          "centroid": [
+            -0.3051952,
+            51.5126553
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.3451952,
+            51.4726553,
+            -0.2651952,
+            51.5526553
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1836",
+      "date_precision": "year",
+      "date_end": "1839",
+      "date_end_precision": "year",
+      "age": 20,
+      "title": "Birth of Three Children",
+      "description": "Between 1836 and 1839 Ada and William King had three children: Byron, Anne Isabella (\"Annabella\"), and Ralph Gordon. The pregnancies and Ada\u2019s difficult illnesses after childbirth strained her health, but she remained closely involved in her children\u2019s education and later engaged a scientific tutor for them, William Benjamin Carpenter.",
+      "locations": [
+        "Ockham"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Byron_King-Noel,_Viscount_Ockham",
+        "https://en.wikipedia.org/wiki/Ralph_King-Milbanke,_2nd_Earl_of_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Ada_Lovelace%27s_husband_William_King_in_uniform.webp",
+          "caption": "Portrait of William King, later 1st Earl of Lovelace, in uniform, Ada\u2019s husband and father of her three children.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace%27s_husband_William_King_in_uniform.webp"
+        }
+      ],
+      "chapter": "marriage_and_family_life",
+      "location_coordinates": [
+        {
+          "label": "Ockham, Guildford, Surrey, England, United Kingdom",
+          "name": "Ockham",
+          "primary": true,
+          "centroid": [
+            -0.4485512,
+            51.3035094
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.4924809,
+            51.2814965,
+            -0.411817,
+            51.3254503
+          ]
+        }
       ]
     },
     {
@@ -154,12 +450,121 @@
       "date_precision": "year",
       "age": 22,
       "title": "Becomes Countess of Lovelace",
-      "description": "William King is created Earl of Lovelace, making Ada the Countess of Lovelace.",
+      "description": "In 1838 William King was created Viscount Ockham and 1st Earl of Lovelace, in part recognising Ada\u2019s descent from the extinct Barons Lovelace. With his elevation to the peerage, Ada assumed the title Countess of Lovelace, the name by which she is now widely known in scientific history.",
       "locations": [
-        "Location unknown"
+        "London"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Ada_Lovelace.jpg",
+          "caption": "Portrait of Ada Lovelace, showing her in the period when she held the title Countess of Lovelace.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace.jpg"
+        }
+      ],
+      "chapter": "marriage_and_family_life",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1840",
+      "date_precision": "year",
+      "age": 24,
+      "title": "Renews Work with Babbage",
+      "description": "Around 1840 Ada renewed her active collaboration with Charles Babbage, who had just lectured in Turin on his unbuilt Analytical Engine. Through correspondence and visits, she studied his evolving plans for a general\u2011purpose calculating machine programmable by punched cards, deepening her understanding of its potential beyond numerical tables.",
+      "locations": [
+        "London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
+          "caption": "Diagram of an algorithm for the Analytical Engine to compute Bernoulli numbers, later published in Ada Lovelace\u2019s Notes.",
+          "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg"
+        }
+      ],
+      "chapter": "analytical_engine_and_notes",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1841-02-27",
+      "date_precision": "day",
+      "age": 25,
+      "title": "Confronts Byron Family Secrets",
+      "description": "In February 1841 Ada\u2019s mother told her that her cousin Medora Leigh was likely also Lord Byron\u2019s daughter, revealing long\u2011suspected incest between Byron and his half\u2011sister Augusta Leigh. In a letter to her mother, Ada wrote that she was \"not in the least astonished\" and placed more blame on Augusta than on her father. The revelation sharpened her complex feelings about inheritance, morality, and her paternal legacy.",
+      "locations": [
+        "London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lord_Byron",
+        "https://en.wikipedia.org/wiki/Allegra_Byron"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/George_Gordon_Byron%2C_6th_Baron_Byron_by_Richard_Westall_%282%29.jpg",
+          "caption": "Portrait of Lord Byron, Ada Lovelace\u2019s father, whose life and relationships were the subject of painful revelations to her in 1841.",
+          "source": "https://commons.wikimedia.org/wiki/File:George_Gordon_Byron,_6th_Baron_Byron_by_Richard_Westall_(2).jpg"
+        }
+      ],
+      "chapter": "marriage_and_family_life",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
       ]
     },
     {
@@ -167,62 +572,156 @@
       "date_precision": "year",
       "date_end": "1843",
       "date_end_precision": "year",
-      "age": 27,
-      "title": "Translation of Menabrea's Article",
-      "description": "Ada translates an article by Luigi Federico Federico Menabrea on the Analytical Engine, adding her own notes, which are considered the first computer program.",
+      "age": 26,
+      "title": "Translates Menabrea on Analytical Engine",
+      "description": "In 1842 Charles Wheatstone asked Ada to translate from French Luigi Federico Menabrea\u2019s paper describing Babbage\u2019s Analytical Engine, based on his Turin lectures. At Babbage\u2019s urging she vastly expanded the translation, adding seven extensive Notes that analysed the engine\u2019s operation and possibilities in far greater depth than the original article.",
       "locations": [
-        "Location unknown"
+        "London"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea",
+        "https://en.wikipedia.org/wiki/Charles_Wheatstone"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Nuvola_apps_kaboodle.svg",
+          "caption": "Icon representing a machine controller, alluding to the punched\u2011card control of Babbage\u2019s Analytical Engine discussed in Ada Lovelace\u2019s translation.",
+          "source": "https://commons.wikimedia.org/wiki/File:Nuvola_apps_kaboodle.svg"
+        }
+      ],
+      "chapter": "analytical_engine_and_notes",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
       ]
     },
     {
       "date": "1843",
       "date_precision": "year",
       "age": 27,
-      "title": "First Published Computer Program",
-      "description": "Ada's notes on the Analytical Engine describe a method for calculating Bernoulli numbers, recognized as the first computer program.",
+      "title": "Publishes Notes on the Analytical Engine",
+      "description": "Ada Lovelace\u2019s English translation of Menabrea\u2019s paper, with her own extensive Notes A\u2013G, was published in 1843 in Taylor\u2019s Scientific Memoirs. Note G included a stepwise tabular method for using the Analytical Engine to compute Bernoulli numbers, often cited as the first published computer program, and her commentary articulated how such an engine might manipulate symbols to compose music or process general data, not merely calculate numbers.",
       "locations": [
-        "Location unknown"
+        "London"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
-      ]
-    },
-    {
-      "date": "1845",
-      "date_precision": "year",
-      "age": 29,
-      "title": "Teaching Children",
-      "description": "Ada's mother assigns William Benjamin Carpenter to teach her children and act as a moral instructor, leading to a complicated relationship.",
-      "locations": [
-        "Location unknown"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Analytical_Engine",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
-      ]
-    },
-    {
-      "date": "1852-11-27",
-      "date_precision": "day",
-      "age": 36,
-      "title": "Death of Ada Lovelace",
-      "description": "Ada Lovelace passes away in London, England, leaving behind a legacy as a pioneer in computing.",
-      "locations": [
-        "London, England"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
+          "caption": "Published diagram from Lovelace\u2019s Note G showing an algorithm for computing Bernoulli numbers on the Analytical Engine.",
+          "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg"
+        }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
-      ],
+      "chapter": "analytical_engine_and_notes",
       "location_coordinates": [
         {
-          "label": "London, Greater London, England, United Kingdom",
-          "name": "London, England",
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
           "primary": true,
           "centroid": [
-            -0.1440551,
-            51.4893335
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1844",
+      "date_precision": "year",
+      "date_end": "1851",
+      "date_end_precision": "year",
+      "age": 28,
+      "title": "Gambling Schemes and Mathematical Modelling",
+      "description": "In the mid\u20111840s Ada became heavily involved in betting on horse races and attempted to form a gambling syndicate. She worked with male friends to devise a mathematical model for placing large wagers, hoping to exploit regularities in the odds. The ambitious plan failed disastrously, leaving her thousands of pounds in debt to her partners and exposing the limits of applying her \"poetical science\" to complex, noisy human systems.",
+      "locations": [
+        "London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Octicons-terminal.svg",
+          "caption": "Symbolic terminal icon evoking calculation and prediction, themes in Ada Lovelace\u2019s ill\u2011fated attempt to model horse\u2011race betting mathematically.",
+          "source": "https://commons.wikimedia.org/wiki/File:Octicons-terminal.svg"
+        }
+      ],
+      "chapter": "later_years_and_final_illness",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "source": "nominatim",
+          "bbox": [
+            -0.5103751,
+            51.2867601,
+            0.3340155,
+            51.6918741
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1852-11",
+      "date_precision": "month",
+      "date_end": "1852-11-27",
+      "date_end_precision": "day",
+      "age": 36,
+      "title": "Final Illness and Death in London",
+      "description": "In her final years Ada suffered from increasingly severe illness, including uterine cancer. Despite great pain she posed at the piano in 1852 for a commemorative portrait by Henry Phillips. She died in London on 27 November 1852, aged thirty\u2011six, after being attended by her mother and abandoning several close relationships under maternal pressure.",
+      "locations": [
+        "London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/ba/Ada_Lovelace_in_1852.jpg",
+          "caption": "Painting of Ada Lovelace at a piano in 1852 by Henry Phillips, created shortly before her death during a period of great pain.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_in_1852.jpg"
+        }
+      ],
+      "chapter": "later_years_and_final_illness",
+      "location_coordinates": [
+        {
+          "label": "Greater London, England, United Kingdom",
+          "name": "London",
+          "primary": true,
+          "centroid": [
+            -0.1277653,
+            51.5074456
           ],
           "source": "nominatim",
           "bbox": [
