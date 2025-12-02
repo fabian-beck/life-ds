@@ -53,16 +53,20 @@
 
   function subdivideFamilyMembers(familyConnections) {
     const parents = [];
+    const spouses = [];
     const children = [];
     const otherRelatives = [];
 
     const parentTypes = ['mother', 'father', 'parent'];
+    const spouseTypes = ['spouse', 'partner', 'husband', 'wife'];
     const childTypes = ['son', 'daughter', 'child'];
 
     familyConnections.forEach((connection) => {
       const subcategory = getSubcategory(connection.relationship_type);
       if (subcategory && parentTypes.includes(subcategory)) {
         parents.push(connection);
+      } else if (subcategory && spouseTypes.includes(subcategory)) {
+        spouses.push(connection);
       } else if (subcategory && childTypes.includes(subcategory)) {
         children.push(connection);
       } else {
@@ -72,6 +76,7 @@
 
     return {
       parents: sortByStrength(parents),
+      spouses: sortByStrength(spouses),
       children: sortByStrength(children),
       otherRelatives: sortByStrength(otherRelatives)
     };
@@ -177,6 +182,25 @@
               <div class="group-people">
                 {#each familySubgroups.parents as person, idx}
                   {@const personKey = `family-parents-${idx}`}
+                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  <PersonChip
+                    {person}
+                    {personKey}
+                    {visiblePersonInfo}
+                    {subcategory}
+                    {styleConfig}
+                    onToggle={togglePersonInfo}
+                    containerSelector=".modal-content"
+                  />
+                {/each}
+              </div>
+            {/if}
+
+            {#if familySubgroups.spouses.length > 0}
+              <h5 class="subgroup-title">Spouse/Partner</h5>
+              <div class="group-people">
+                {#each familySubgroups.spouses as person, idx}
+                  {@const personKey = `family-spouses-${idx}`}
                   {@const subcategory = getSubcategory(person.relationship_type)}
                   <PersonChip
                     {person}
@@ -407,13 +431,14 @@
   }
 
   .subgroup-title {
-    margin: 0.5rem 0 0.35rem 0;
+    margin: 0.35rem 0 0.25rem 0;
     font-size: 0.75rem;
     text-transform: capitalize;
     color: rgba(226, 232, 240, 0.85);
     font-weight: 500;
     font-family: var(--story-body-font, Inter, sans-serif);
     letter-spacing: 0.01em;
+    text-align: center;
   }
 
   .group-people {
