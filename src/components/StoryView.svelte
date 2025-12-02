@@ -212,7 +212,9 @@
 
     // Use separator_glyph_svg if available
     if (styleConfig?.separatorGlyphSvg) {
-      return items.join(`<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`);
+      return items.join(
+        `<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
+      );
     }
 
     // Fallback to middle dot
@@ -323,10 +325,10 @@
 
   // Scroll state machine (replaces boolean isScrolling flag)
   const SCROLL_STATE = {
-    IDLE: 'idle',
-    USER_SCROLLING: 'user_scrolling',
-    PROGRAMMATIC: 'programmatic',
-    SETTLING: 'settling'
+    IDLE: "idle",
+    USER_SCROLLING: "user_scrolling",
+    PROGRAMMATIC: "programmatic",
+    SETTLING: "settling",
   };
   let scrollState = SCROLL_STATE.IDLE;
   let scrollStateTimeout = null;
@@ -336,14 +338,14 @@
   // Detect scrollend event support (lazy check)
   function detectScrollendSupport() {
     if (scrollendSupported !== null) return scrollendSupported;
-    scrollendSupported = 'onscrollend' in window;
+    scrollendSupported = "onscrollend" in window;
     return scrollendSupported;
   }
 
   // Setup scroll event listeners including scrollend
   function setupScrollListeners() {
     if (slidesContainer && detectScrollendSupport()) {
-      slidesContainer.addEventListener('scrollend', handleScrollEnd);
+      slidesContainer.addEventListener("scrollend", handleScrollEnd);
     }
   }
 
@@ -412,8 +414,8 @@
   async function requestScrollTo(targetIndex, options = {}) {
     const {
       immediate = false,
-      source = 'unknown',
-      updateStateImmediately = false
+      source = "unknown",
+      updateStateImmediately = false,
     } = options;
 
     if (!slidesContainer) return;
@@ -464,8 +466,8 @@
     if (totalPanels === 0) return;
     const targetIndex = Math.max(0, activeIndex - 1);
     requestScrollTo(targetIndex, {
-      source: 'button',
-      updateStateImmediately: true
+      source: "button",
+      updateStateImmediately: true,
     });
   }
 
@@ -473,8 +475,8 @@
     if (totalPanels === 0) return;
     const targetIndex = Math.min(totalPanels - 1, activeIndex + 1);
     requestScrollTo(targetIndex, {
-      source: 'button',
-      updateStateImmediately: true
+      source: "button",
+      updateStateImmediately: true,
     });
   }
 
@@ -484,17 +486,17 @@
     const targetIndex = clamped + 1;
     if (totalPanels === 0) return;
     requestScrollTo(targetIndex, {
-      source: 'timeline_event',
-      updateStateImmediately: true
+      source: "timeline_event",
+      updateStateImmediately: true,
     });
   }
 
   // Wrapper for Timeline component callbacks
   function scrollToIndexExternal(index, immediate = false) {
     requestScrollTo(index, {
-      source: 'timeline_scrubber',
+      source: "timeline_scrubber",
       immediate,
-      updateStateImmediately: !immediate  // Smooth = optimistic update
+      updateStateImmediately: !immediate, // Smooth = optimistic update
     });
   }
 
@@ -514,8 +516,10 @@
 
   function handleScroll(event) {
     // Ignore during programmatic scrolls
-    if (scrollState === SCROLL_STATE.PROGRAMMATIC ||
-        scrollState === SCROLL_STATE.SETTLING) {
+    if (
+      scrollState === SCROLL_STATE.PROGRAMMATIC ||
+      scrollState === SCROLL_STATE.SETTLING
+    ) {
       return;
     }
 
@@ -573,18 +577,20 @@
 
   function handleKeydown(event) {
     // Ignore if user is typing in an input field
-    if (event.target.tagName === 'INPUT' ||
-        event.target.tagName === 'TEXTAREA' ||
-        event.target.isContentEditable) {
+    if (
+      event.target.tagName === "INPUT" ||
+      event.target.tagName === "TEXTAREA" ||
+      event.target.isContentEditable
+    ) {
       return;
     }
 
     if (totalPanels === 0) return;
 
-    if (event.key === 'ArrowLeft') {
+    if (event.key === "ArrowLeft") {
       event.preventDefault();
       prevSlide();
-    } else if (event.key === 'ArrowRight') {
+    } else if (event.key === "ArrowRight") {
       event.preventDefault();
       nextSlide();
     }
@@ -671,14 +677,14 @@
     if (direction !== 0) {
       const targetIndex = clamp(activeIndex + direction, 0, totalPanels - 1);
       requestScrollTo(targetIndex, {
-        source: 'touch',
-        updateStateImmediately: true
+        source: "touch",
+        updateStateImmediately: true,
       });
     } else {
       // Snap back to current slide
       requestScrollTo(activeIndex, {
-        source: 'touch',
-        updateStateImmediately: false
+        source: "touch",
+        updateStateImmediately: false,
       });
     }
   }
@@ -1294,8 +1300,8 @@
     initialScrollPending = true;
     tick().then(() => {
       requestScrollTo(activeIndex, {
-        source: 'initial',
-        immediate: true
+        source: "initial",
+        immediate: true,
       });
       initialScrollDone = true;
       initialScrollPending = false;
@@ -1330,7 +1336,7 @@
 
       // Cleanup scroll listeners
       if (slidesContainer && detectScrollendSupport()) {
-        slidesContainer.removeEventListener('scrollend', handleScrollEnd);
+        slidesContainer.removeEventListener("scrollend", handleScrollEnd);
       }
 
       // Clear pending timeouts
@@ -1538,7 +1544,9 @@
                       </svg>
                       <span class="network-btn-text">
                         {egoNetwork.connections.length}
-                        {egoNetwork.connections.length === 1 ? 'connection' : 'connections'}
+                        {egoNetwork.connections.length === 1
+                          ? "connection"
+                          : "connections"}
                       </span>
                     </button>
                   {/if}
@@ -1713,7 +1721,8 @@
                                 <path d={mdiMapMarkerOutline} />
                               </svg>
                             </span>
-                            <span>{@html formatLocations(slide.locations)}</span>
+                            <span>{@html formatLocations(slide.locations)}</span
+                            >
                           {/if}
                           {#if slide.sources?.length}
                             <div class="sources-wrapper">
@@ -2020,61 +2029,18 @@
     z-index: 2;
   }
 
-  /* Responsive scaling: Height-based breakpoints (600px, 700px, 800px)
-     - Mobile portrait and short landscape: use defaults
-     - Taller viewports: progressively increase spacing and font sizes */
-  @media (min-height: 600px) {
-    .masthead {
-      padding: 0.65rem 2vw;
-    }
-  }
-
-  @media (min-height: 700px) {
-    .masthead {
-      padding: 0.75rem 2vw;
-    }
-  }
-
-  @media (min-height: 800px) {
-    .masthead {
-      padding: 0.85rem 2vw;
-    }
-  }
-
   .compact-info {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
+    gap: clamp(0.5rem, 0.9vh, 0.75rem);
+    font-size: clamp(0.85rem, 1.1vh, 0.95rem);
     font-weight: 600;
     color: #e2e8f0;
     white-space: nowrap;
     max-width: 100%;
     overflow: hidden;
-  }
-
-  /* Increase font size based on viewport height */
-  @media (min-height: 600px) {
-    .compact-info {
-      gap: 0.65rem;
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (min-height: 700px) {
-    .compact-info {
-      gap: 0.7rem;
-      font-size: 0.925rem;
-    }
-  }
-
-  @media (min-height: 800px) {
-    .compact-info {
-      gap: 0.75rem;
-      font-size: 0.95rem;
-    }
   }
 
   .compact-info span {
@@ -2127,61 +2093,36 @@
     background: rgba(255, 255, 255, 0.05);
     color: var(--story-primary, #e2e8f0);
     border-radius: 999px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.75rem;
+    padding: clamp(0.3rem, 0.9vh, 0.45rem) clamp(0.7rem, 2.2vw, 0.95rem);
+    font-size: clamp(0.75rem, 1.2vh, 0.85rem);
     font-weight: 600;
     cursor: pointer;
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: clamp(0.35rem, 0.9vh, 0.45rem);
     transition:
       border-color 0.2s ease,
       background-color 0.2s ease,
       color 0.2s ease;
   }
 
-  /* Increase close button size based on viewport height */
-  @media (min-height: 600px) {
-    .close-story {
-      padding: 0.35rem 0.8rem;
-      font-size: 0.8rem;
-      gap: 0.4rem;
-    }
-  }
-
-  @media (min-height: 700px) {
-    .close-story {
-      padding: 0.4rem 0.875rem;
-      font-size: 0.825rem;
-      gap: 0.425rem;
-    }
-  }
-
-  @media (min-height: 800px) {
-    .close-story {
-      padding: 0.45rem 0.95rem;
-      font-size: 0.85rem;
-      gap: 0.45rem;
-    }
-  }
-
   /* Compact masthead for landscape mobile (short viewports)
      - Applies to rotated phones with limited vertical space
      - Makes header more compact to preserve screen real estate */
-  @media (max-height: 500px) and (orientation: landscape) {
+  @media (max-height: 500px) {
     .masthead {
-      padding: 0.35rem 0.9rem;
+      padding: 0.15rem 0.5rem;
     }
 
     .compact-info {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       gap: 0.4rem;
     }
 
     .close-story {
-      padding: 0.25rem 0.6rem;
-      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.65rem;
       gap: 0.3rem;
     }
   }
@@ -2362,27 +2303,8 @@
     gap: 0.75rem;
   }
 
-  /* Adjust spacing based on viewport height */
-  @media (min-height: 600px) {
-    .event-body {
-      margin-top: 0.5rem;
-    }
-  }
-
-  @media (min-height: 800px) {
-    .event-body {
-      margin-top: 1rem;
-    }
-  }
-
-  @media (min-height: 1000px) {
-    .event-body {
-      margin-top: 1.25rem;
-    }
-  }
-
   /* Two-column layout for landscape mobile and wider screens */
-  @media (min-width: 640px) and (orientation: landscape), (min-width: 900px) {
+  @media (orientation: landscape) {
     .event-body {
       display: grid;
       grid-template-columns: 2fr 1fr;
