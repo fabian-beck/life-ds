@@ -431,7 +431,7 @@
   }
 
   .subgroup-title {
-    margin: 0.35rem 0 0.25rem 0;
+    margin: 0.25rem 0 0.15rem 0;
     font-size: 0.75rem;
     text-transform: capitalize;
     color: rgba(226, 232, 240, 0.85);
@@ -439,6 +439,40 @@
     font-family: var(--story-body-font, Inter, sans-serif);
     letter-spacing: 0.01em;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .subgroup-title::before,
+  .subgroup-title::after {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(226, 232, 240, 0.3),
+      transparent
+    );
+  }
+
+  .subgroup-title::before {
+    background: linear-gradient(
+      to left,
+      rgba(226, 232, 240, 0.3),
+      transparent
+    );
+  }
+
+  .subgroup-title::after {
+    background: linear-gradient(
+      to right,
+      rgba(226, 232, 240, 0.3),
+      transparent
+    );
   }
 
   .group-people {

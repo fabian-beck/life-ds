@@ -47,6 +47,21 @@
     return items.join(", ");
   }
 
+  function truncateName(name) {
+    if (!name) return "";
+
+    // Remove text in brackets (parentheses or square brackets)
+    let truncated = name.replace(/\s*[\(\[].*?[\)\]]/g, '');
+
+    // Remove text after comma
+    const commaIndex = truncated.indexOf(',');
+    if (commaIndex !== -1) {
+      truncated = truncated.substring(0, commaIndex);
+    }
+
+    return truncated.trim();
+  }
+
   function handleClick(event) {
     const wasExpanded = isExpanded;
     onToggle(personKey, event);
@@ -157,6 +172,8 @@
   }
 
   $: isExpanded = visiblePersonInfo === personKey;
+  $: truncatedName = truncateName(person.person_name);
+  $: isLongName = truncatedName.length > 15;
 </script>
 
 <div class="person-info-wrapper">
@@ -168,7 +185,7 @@
     aria-label={$_('person.show_info', { name: person.person_name })}
     aria-expanded={isExpanded}
   >
-    <span class="person-name">{person.person_name}</span>
+    <span class="person-name" class:long-name={isLongName}>{truncatedName}</span>
     {#if subcategory}
       <span class="person-role">{subcategory.replace(/_/g, " ")}</span>
     {:else}
@@ -326,10 +343,14 @@
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
+  .person-name.long-name {
+    font-size: 0.72rem;
+  }
+
   .person-role {
     font-weight: 400;
     color: var(--story-secondary, #94a3b8);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
