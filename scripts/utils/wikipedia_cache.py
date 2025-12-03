@@ -15,7 +15,9 @@ MEDIAWIKI_API_DE = "https://de.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
 WIKIPEDIA_SUMMARY_API_DE = "https://de.wikipedia.org/api/rest_v1/page/summary/"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
-DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+DEFAULT_USER_AGENT = (
+    "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+)
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
@@ -137,6 +139,7 @@ def _fetch_wikipedia_page_direct(title: str) -> Dict[str, Any]:
 def _fetch_wikipedia_summary_from_api(title: str, api_url: str) -> Dict[str, Any]:
     """Fetch Wikipedia summary from a specific API endpoint."""
     from urllib.parse import quote
+
     url = api_url + quote(title.replace(" ", "_"))
     response = requests.get(url, timeout=30, headers=wikipedia_headers())
     if response.status_code != 200:
@@ -175,7 +178,9 @@ def _fetch_wikipedia_summary_direct(title: str) -> Dict[str, Any]:
     return {}
 
 
-def _fetch_commons_images_direct(person_name: str, limit: int = 30) -> List[Dict[str, Any]]:
+def _fetch_commons_images_direct(
+    person_name: str, limit: int = 30
+) -> List[Dict[str, Any]]:
     """Fetch Commons images directly from API."""
     try:
         # Search Commons for images related to the person
@@ -202,7 +207,9 @@ def _fetch_commons_images_direct(person_name: str, limit: int = 30) -> List[Dict
             return []
 
         # Extract file titles
-        file_titles = [result.get("title") for result in search_results if result.get("title")]
+        file_titles = [
+            result.get("title") for result in search_results if result.get("title")
+        ]
 
         # Fetch detailed info for these files
         if not file_titles:
@@ -211,7 +218,7 @@ def _fetch_commons_images_direct(person_name: str, limit: int = 30) -> List[Dict
         image_data = []
         # Process in chunks of 50
         for i in range(0, len(file_titles), 50):
-            chunk = file_titles[i:i+50]
+            chunk = file_titles[i : i + 50]
             params = {
                 "action": "query",
                 "format": "json",
@@ -244,7 +251,12 @@ def _fetch_commons_images_direct(person_name: str, limit: int = 30) -> List[Dict
                     height = info.get("height", 0)
 
                     # Only include proper images
-                    if url and mime.startswith("image/") and width >= 100 and height >= 100:
+                    if (
+                        url
+                        and mime.startswith("image/")
+                        and width >= 100
+                        and height >= 100
+                    ):
                         extmetadata = info.get("extmetadata", {})
                         description = None
                         description_url = None
@@ -256,14 +268,17 @@ def _fetch_commons_images_direct(person_name: str, limit: int = 30) -> List[Dict
 
                         if "DescriptionURL" in extmetadata:
                             desc_url_data = extmetadata["DescriptionURL"]
-                            if isinstance(desc_url_data, dict) and "value" in desc_url_data:
+                            if (
+                                isinstance(desc_url_data, dict)
+                                and "value" in desc_url_data
+                            ):
                                 description_url = desc_url_data["value"]
                         elif "descriptionurl" in info:
                             description_url = info["descriptionurl"]
 
                         image_obj = {
                             "url": url,
-                            "caption": description or f"Image from Wikimedia Commons",
+                            "caption": description or "Image from Wikimedia Commons",
                             "source": description_url,
                         }
                         image_data.append(image_obj)
@@ -274,34 +289,37 @@ def _fetch_commons_images_direct(person_name: str, limit: int = 30) -> List[Dict
         return []
 
 
-def save_cache(person_id: str, page_data: Dict[str, Any],
-               summary_data: Dict[str, Any], commons_images: List[Dict[str, Any]]) -> None:
+def save_cache(
+    person_id: str,
+    page_data: Dict[str, Any],
+    summary_data: Dict[str, Any],
+    commons_images: List[Dict[str, Any]],
+) -> None:
     """Save Wikipedia materials to cache."""
     cache_dir = get_cache_dir(person_id)
     cache_dir.mkdir(parents=True, exist_ok=True)
 
     # Save page data
     (cache_dir / "wikipedia_page.json").write_text(
-        json.dumps(page_data, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8"
+        json.dumps(page_data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
     )
 
     # Save summary data
     (cache_dir / "wikipedia_summary.json").write_text(
-        json.dumps(summary_data, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8"
+        json.dumps(summary_data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
     )
 
     # Save Commons images
     (cache_dir / "commons_images.json").write_text(
-        json.dumps(commons_images, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8"
+        json.dumps(commons_images, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
     )
 
 
-def load_from_cache(person_id: str) -> tuple[Optional[Dict[str, Any]],
-                                               Optional[Dict[str, Any]],
-                                               Optional[List[Dict[str, Any]]]]:
+def load_from_cache(
+    person_id: str,
+) -> tuple[
+    Optional[Dict[str, Any]], Optional[Dict[str, Any]], Optional[List[Dict[str, Any]]]
+]:
     """Load Wikipedia materials from cache if available."""
     cache_dir = get_cache_dir(person_id)
 
@@ -311,26 +329,34 @@ def load_from_cache(person_id: str) -> tuple[Optional[Dict[str, Any]],
 
     try:
         if (cache_dir / "wikipedia_page.json").exists():
-            page_data = json.loads((cache_dir / "wikipedia_page.json").read_text(encoding="utf-8"))
+            page_data = json.loads(
+                (cache_dir / "wikipedia_page.json").read_text(encoding="utf-8")
+            )
     except json.JSONDecodeError:
         pass
 
     try:
         if (cache_dir / "wikipedia_summary.json").exists():
-            summary_data = json.loads((cache_dir / "wikipedia_summary.json").read_text(encoding="utf-8"))
+            summary_data = json.loads(
+                (cache_dir / "wikipedia_summary.json").read_text(encoding="utf-8")
+            )
     except json.JSONDecodeError:
         pass
 
     try:
         if (cache_dir / "commons_images.json").exists():
-            commons_images = json.loads((cache_dir / "commons_images.json").read_text(encoding="utf-8"))
+            commons_images = json.loads(
+                (cache_dir / "commons_images.json").read_text(encoding="utf-8")
+            )
     except json.JSONDecodeError:
         pass
 
     return page_data, summary_data, commons_images
 
 
-def get_cached_wikipedia_page(person_id: str, title: str, use_cache: bool = True) -> Dict[str, Any]:
+def get_cached_wikipedia_page(
+    person_id: str, title: str, use_cache: bool = True
+) -> Dict[str, Any]:
     """Get Wikipedia page data, using cache if available."""
     if use_cache:
         page_data, _, _ = load_from_cache(person_id)
@@ -342,7 +368,9 @@ def get_cached_wikipedia_page(person_id: str, title: str, use_cache: bool = True
     return page_data
 
 
-def get_cached_wikipedia_summary(person_id: str, title: str, use_cache: bool = True) -> Dict[str, Any]:
+def get_cached_wikipedia_summary(
+    person_id: str, title: str, use_cache: bool = True
+) -> Dict[str, Any]:
     """Get Wikipedia summary, using cache if available."""
     if use_cache:
         _, summary_data, _ = load_from_cache(person_id)
@@ -354,8 +382,9 @@ def get_cached_wikipedia_summary(person_id: str, title: str, use_cache: bool = T
     return summary_data
 
 
-def get_cached_commons_images(person_id: str, person_name: str,
-                                limit: int = 30, use_cache: bool = True) -> List[Dict[str, Any]]:
+def get_cached_commons_images(
+    person_id: str, person_name: str, limit: int = 30, use_cache: bool = True
+) -> List[Dict[str, Any]]:
     """Get Commons images, using cache if available."""
     if use_cache:
         _, _, commons_images = load_from_cache(person_id)
@@ -379,9 +408,11 @@ def ensure_cache(person_id: str, title: str, person_name: Optional[str] = None) 
     print(f"  - Fetching Wikipedia page for '{title}' (checking EN and DE)...")
     page_data = _fetch_wikipedia_page_direct(title)
     source_lang = page_data.get("_source_language", "en")
-    print(f"    Using {source_lang.upper()} version ({len(page_data.get('extract', ''))} characters)")
+    print(
+        f"    Using {source_lang.upper()} version ({len(page_data.get('extract', ''))} characters)"
+    )
 
-    print(f"  - Fetching Wikipedia summary (checking EN and DE)...")
+    print("  - Fetching Wikipedia summary (checking EN and DE)...")
     summary_data = _fetch_wikipedia_summary_direct(title)
     summary_lang = summary_data.get("_source_language", "en")
     if summary_data:
@@ -393,6 +424,6 @@ def ensure_cache(person_id: str, title: str, person_name: Optional[str] = None) 
     commons_images = _fetch_commons_images_direct(search_name, limit=30)
 
     # Save to cache
-    print(f"  - Saving to cache...")
+    print("  - Saving to cache...")
     save_cache(person_id, page_data, summary_data, commons_images)
     print(f"Cache created for '{person_id}' with {len(commons_images)} Commons images")

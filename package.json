@@ -6,11 +6,30 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:py",
+    "lint:js": "eslint . --ext .js,.svelte",
+    "lint:css": "stylelint \"**/*.css\"",
+    "lint:py": "flake8 scripts/",
+    "lint:fix": "npm run lint:js -- --fix && npm run lint:css -- --fix",
+    "format": "prettier --write \"**/*.{js,svelte,json,css,md}\" --ignore-path .prettierignore && black scripts/",
+    "format:check": "prettier --check \"**/*.{js,svelte,json,css,md}\" --ignore-path .prettierignore && black --check scripts/",
+    "type-check:py": "mypy scripts/",
+    "validate": "npm run format:check && npm run lint",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-svelte": "^2.46.1",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.7.4",
+    "prettier-plugin-svelte": "^3.4.0",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^36.0.1",
     "svelte": "^4.2.7",
+    "svelte-eslint-parser": "^0.33.1",
     "vite": "^5.0.0"
   },
   "dependencies": {
@@ -19,5 +38,21 @@
     "maplibre-gl": "^3.6.0",
     "pmtiles": "^3.0.5",
     "svelte-spa-router": "^4.0.1"
+  },
+  "lint-staged": {
+    "*.{js,svelte}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.css": [
+      "stylelint --fix"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "scripts/*.py": [
+      "black",
+      "flake8"
+    ]
   }
 }

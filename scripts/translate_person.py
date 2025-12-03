@@ -5,15 +5,14 @@ import argparse
 import json
 import os
 import sys
-import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from openai import OpenAI, APIStatusError
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -38,8 +37,10 @@ LANGUAGE_NAMES = {
 
 # Pydantic models for translation (matching existing data schemas)
 
+
 class ImageMetadata(BaseModel):
     """Metadata for an image associated with an event."""
+
     url: str
     caption: str
     source: str
@@ -47,6 +48,7 @@ class ImageMetadata(BaseModel):
 
 class LocationCoordinate(BaseModel):
     """Geographic coordinates for a location."""
+
     label: str
     name: str
     primary: bool
@@ -57,6 +59,7 @@ class LocationCoordinate(BaseModel):
 
 class LifeEvent(BaseModel):
     """A significant life event."""
+
     date: str
     date_precision: str
     date_end: Optional[str] = None
@@ -75,6 +78,7 @@ class LifeEvent(BaseModel):
 
 class LifeChapter(BaseModel):
     """A chapter grouping a sequence of life events."""
+
     id: str
     headline: str
     description: str
@@ -88,12 +92,14 @@ class LifeChapter(BaseModel):
 
 class Portrait(BaseModel):
     """Portrait information for the person."""
+
     image: Optional[str] = None
     source: Optional[str] = None
 
 
 class Person(BaseModel):
     """Metadata about the person."""
+
     name: str
     birth_date: Optional[str] = None
     death_date: Optional[str] = None
@@ -105,6 +111,7 @@ class Person(BaseModel):
 
 class LifeDataset(BaseModel):
     """Complete structured dataset for a person's life events."""
+
     dataset: str
     created_on: str
     person: Person
@@ -114,6 +121,7 @@ class LifeDataset(BaseModel):
 
 class EgoConnection(BaseModel):
     """A connection in the ego network."""
+
     person_name: str
     relationship_type: str
     relationship_description: str
@@ -129,6 +137,7 @@ class EgoConnection(BaseModel):
 
 class EgoPerson(BaseModel):
     """Central person in ego network."""
+
     name: str
     birth_year: Optional[int] = None
     death_year: Optional[int] = None
@@ -139,12 +148,14 @@ class EgoPerson(BaseModel):
 
 class CategorySummary(BaseModel):
     """Summary for a relationship category."""
+
     relationship_type: str
     summary: str
 
 
 class EgoNetwork(BaseModel):
     """Complete ego network dataset."""
+
     dataset: str
     created_on: str
     ego: EgoPerson
@@ -154,6 +165,7 @@ class EgoNetwork(BaseModel):
 
 class PersonRegistryEntry(BaseModel):
     """Person entry in the registry."""
+
     id: str
     name: str
     summary: str
@@ -238,12 +250,12 @@ def translate_life_events(
     target_lang: str,
     client: OpenAI,
     model: str,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
     """Translate life events dataset to target language."""
     lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
 
-    prompt = f"""Translate this biographical life events document to {lang_name}.
+    prompt = """Translate this biographical life events document to {lang_name}.
 
 TRANSLATION RULES:
 1. Translate all text content: titles, descriptions, chapter headlines, image captions, summary, roles
@@ -278,9 +290,9 @@ Return ONLY the complete translated JSON document with the same structure."""
             messages=[
                 {
                     "role": "system",
-                    "content": f"You are a professional translator specializing in biographical content. Translate accurately to {lang_name} while preserving all technical data and structure."
+                    "content": f"You are a professional translator specializing in biographical content. Translate accurately to {lang_name} while preserving all technical data and structure.",
                 },
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": prompt},
             ],
             response_format=LifeDataset,
         )
@@ -308,12 +320,12 @@ def translate_ego_network(
     target_lang: str,
     client: OpenAI,
     model: str,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
     """Translate ego network dataset to target language."""
     lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
 
-    prompt = f"""Translate this social network document to {lang_name}.
+    prompt = """Translate this social network document to {lang_name}.
 
 TRANSLATION RULES:
 1. Translate: relationship_description, shared_activities, notes, category summaries, ego.summary, ego.primary_roles
@@ -355,9 +367,9 @@ Return ONLY the complete translated JSON document with the same structure."""
             messages=[
                 {
                     "role": "system",
-                    "content": f"You are a professional translator specializing in social network and relationship data. Translate accurately to {lang_name} while preserving all technical classifications."
+                    "content": f"You are a professional translator specializing in social network and relationship data. Translate accurately to {lang_name} while preserving all technical classifications.",
                 },
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": prompt},
             ],
             response_format=EgoNetwork,
         )
@@ -385,12 +397,12 @@ def translate_registry_entry(
     target_lang: str,
     client: OpenAI,
     model: str,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
     """Translate person registry entry to target language."""
     lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
 
-    prompt = f"""Translate this person registry entry to {lang_name}.
+    prompt = """Translate this person registry entry to {lang_name}.
 
 TRANSLATION RULES:
 1. Translate: summary, primaryRoles
@@ -420,9 +432,9 @@ Return ONLY the complete translated JSON entry with the same structure."""
             messages=[
                 {
                     "role": "system",
-                    "content": f"You are a professional translator specializing in biographical data. Translate accurately to {lang_name} while preserving all identifiers and URLs."
+                    "content": f"You are a professional translator specializing in biographical data. Translate accurately to {lang_name} while preserving all identifiers and URLs.",
                 },
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": prompt},
             ],
             response_format=PersonRegistryEntry,
         )
@@ -449,9 +461,7 @@ Return ONLY the complete translated JSON entry with the same structure."""
 
 
 def update_language_registry(
-    person_entry: Dict[str, Any],
-    target_lang: str,
-    verbose: bool = False
+    person_entry: Dict[str, Any], target_lang: str, verbose: bool = False
 ) -> bool:
     """Update or create the language-specific registry file."""
     registry_path = DATA_DIR / f"persons_{target_lang}.json"
@@ -489,7 +499,7 @@ def translate_person_data(
     client: OpenAI,
     model: str = DEFAULT_MODEL,
     force: bool = False,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> Dict[str, bool]:
     """
     Translate a person's data to target language.
@@ -498,11 +508,7 @@ def translate_person_data(
         Dict with keys: 'life_events', 'ego_network', 'registry'
         Values are True if successful, False otherwise
     """
-    results = {
-        "life_events": False,
-        "ego_network": False,
-        "registry": False
-    }
+    results = {"life_events": False, "ego_network": False, "registry": False}
 
     person_dir = PEOPLE_DIR / person_id
     if not person_dir.exists():
@@ -519,7 +525,9 @@ def translate_person_data(
     # Check if translation already exists
     if not force and target_dir.exists() and life_events_target.exists():
         if verbose:
-            print(f"  Translation already exists for {person_id} (use --force to overwrite)")
+            print(
+                f"  Translation already exists for {person_id} (use --force to overwrite)"
+            )
         return results
 
     # Create target directory
@@ -529,7 +537,9 @@ def translate_person_data(
     if life_events_source.exists():
         source_data = load_json_file(life_events_source)
         if source_data:
-            translated = translate_life_events(source_data, target_lang, client, model, verbose)
+            translated = translate_life_events(
+                source_data, target_lang, client, model, verbose
+            )
             if translated:
                 if save_json_file(translated, life_events_target):
                     results["life_events"] = True
@@ -543,7 +553,9 @@ def translate_person_data(
     if ego_network_source.exists():
         source_data = load_json_file(ego_network_source)
         if source_data:
-            translated = translate_ego_network(source_data, target_lang, client, model, verbose)
+            translated = translate_ego_network(
+                source_data, target_lang, client, model, verbose
+            )
             if translated:
                 if save_json_file(translated, ego_network_target):
                     results["ego_network"] = True
@@ -556,15 +568,17 @@ def translate_person_data(
     # Translate registry entry
     person_entry = find_person_by_name_or_id(person_id)
     if person_entry:
-        translated = translate_registry_entry(person_entry, target_lang, client, model, verbose)
+        translated = translate_registry_entry(
+            person_entry, target_lang, client, model, verbose
+        )
         if translated:
             if update_language_registry(translated, target_lang, verbose):
                 results["registry"] = True
                 if verbose:
-                    print(f"  ✓ Registry entry updated")
+                    print("  ✓ Registry entry updated")
     else:
         if verbose:
-            print(f"  ⚠ Person not found in registry")
+            print("  ⚠ Person not found in registry")
 
     return results
 
@@ -575,28 +589,22 @@ def main():
     )
     parser.add_argument(
         "person_name_or_id",
-        help="Person name or ID (e.g., 'Alan Turing' or 'alan_turing')"
+        help="Person name or ID (e.g., 'Alan Turing' or 'alan_turing')",
     )
     parser.add_argument(
         "--target-lang",
         required=True,
-        help="Target language code (e.g., 'de', 'fr', 'es')"
+        help="Target language code (e.g., 'de', 'fr', 'es')",
     )
     parser.add_argument(
-        "--force",
-        action="store_true",
-        help="Overwrite existing translation"
+        "--force", action="store_true", help="Overwrite existing translation"
     )
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})"
+        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
     )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose output"
-    )
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
 
     args = parser.parse_args()
 
@@ -629,7 +637,7 @@ def main():
         client=client,
         model=args.model,
         force=args.force,
-        verbose=args.verbose
+        verbose=args.verbose,
     )
 
     # Report results

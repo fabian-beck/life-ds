@@ -46,7 +46,10 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
             break
 
     if person_entry is None:
-        print(f"Error: Person with ID '{person_id}' not found in register", file=sys.stderr)
+        print(
+            f"Error: Person with ID '{person_id}' not found in register",
+            file=sys.stderr,
+        )
         return False
 
     print(f"Found person: {person_entry.get('name', person_id)}")
@@ -83,8 +86,7 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
 
     try:
         REGISTER_PATH.write_text(
-            json.dumps(register, indent=2, ensure_ascii=True) + "\n",
-            encoding="utf-8"
+            json.dumps(register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
         )
         print(f"✓ Updated register at {REGISTER_PATH}")
     except Exception as error:
@@ -136,17 +138,15 @@ def parse_args(argv=None) -> argparse.Namespace:
     parser.add_argument(
         "person_id",
         nargs="?",
-        help="ID of the person to remove (e.g., 'ada_lovelace'). Use --list to see all IDs."
+        help="ID of the person to remove (e.g., 'ada_lovelace'). Use --list to see all IDs.",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Show what would be deleted without making changes"
+        help="Show what would be deleted without making changes",
     )
     parser.add_argument(
-        "--list",
-        action="store_true",
-        help="List all people in the register"
+        "--list", action="store_true", help="List all people in the register"
     )
     return parser.parse_args(argv)
 
@@ -159,7 +159,10 @@ def main(argv=None) -> int:
         return 0
 
     if not args.person_id:
-        print("Error: person_id is required. Use --list to see available IDs.", file=sys.stderr)
+        print(
+            "Error: person_id is required. Use --list to see available IDs.",
+            file=sys.stderr,
+        )
         return 1
 
     success = remove_person(args.person_id, dry_run=args.dry_run)

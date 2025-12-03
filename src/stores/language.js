@@ -1,13 +1,13 @@
-import { writable, derived, get } from 'svelte/store';
+import { writable, derived, get } from "svelte/store";
 
 // Detect initial language from localStorage or browser
-const browserLang = typeof navigator !== 'undefined'
-  ? navigator.language.split('-')[0]
-  : 'en';
-const storedLang = typeof localStorage !== 'undefined'
-  ? localStorage.getItem('preferredLanguage')
-  : null;
-const initialLang = storedLang || (browserLang === 'de' ? 'de' : 'en');
+const browserLang =
+  typeof navigator !== "undefined" ? navigator.language.split("-")[0] : "en";
+const storedLang =
+  typeof localStorage !== "undefined"
+    ? localStorage.getItem("preferredLanguage")
+    : null;
+const initialLang = storedLang || (browserLang === "de" ? "de" : "en");
 
 // Current language code
 export const currentLanguage = writable(initialLang);
@@ -16,11 +16,11 @@ export const currentLanguage = writable(initialLang);
 export const translations = writable({});
 
 // Persist language preference and update HTML lang attribute
-currentLanguage.subscribe(lang => {
-  if (typeof localStorage !== 'undefined') {
-    localStorage.setItem('preferredLanguage', lang);
+currentLanguage.subscribe((lang) => {
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("preferredLanguage", lang);
   }
-  if (typeof document !== 'undefined') {
+  if (typeof document !== "undefined") {
     document.documentElement.lang = lang;
   }
 });
@@ -32,25 +32,22 @@ export function t(key, params = {}) {
 
   // Interpolate parameters
   Object.entries(params).forEach(([k, v]) => {
-    str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+    str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
   });
 
   return str;
 }
 
 // Derived store for reactive translation
-export const _ = derived(
-  [currentLanguage, translations],
-  ([$lang, $trans]) => {
-    return (key, params = {}) => {
-      let str = $trans[key] || key;
-      Object.entries(params).forEach(([k, v]) => {
-        str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
-      });
-      return str;
-    };
-  }
-);
+export const _ = derived([currentLanguage, translations], ([, $trans]) => {
+  return (key, params = {}) => {
+    let str = $trans[key] || key;
+    Object.entries(params).forEach(([k, v]) => {
+      str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
+    });
+    return str;
+  };
+});
 
 // Load translation file dynamically
 export async function loadTranslations(lang) {
@@ -60,12 +57,12 @@ export async function loadTranslations(lang) {
   } catch (error) {
     console.error(`Failed to load translations for ${lang}:`, error);
     // Fallback to English
-    if (lang !== 'en') {
+    if (lang !== "en") {
       try {
-        const fallback = await import('../locales/en.json');
+        const fallback = await import("../locales/en.json");
         translations.set(fallback.default);
       } catch (fallbackError) {
-        console.error('Failed to load English fallback:', fallbackError);
+        console.error("Failed to load English fallback:", fallbackError);
         translations.set({});
       }
     }
@@ -75,11 +72,12 @@ export async function loadTranslations(lang) {
 // Date formatter
 export const dateFormatter = derived(
   currentLanguage,
-  ($lang) => new Intl.DateTimeFormat($lang, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
+  ($lang) =>
+    new Intl.DateTimeFormat($lang, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
 );
 
 // Number formatter

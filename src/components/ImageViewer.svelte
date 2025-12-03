@@ -15,8 +15,6 @@
   let isDragging = false;
   let startX = 0;
   let startY = 0;
-  let lastX = 0;
-  let lastY = 0;
 
   // Touch handling
   let initialDistance = 0;
@@ -55,8 +53,6 @@
     isDragging = true;
     startX = event.clientX - translateX;
     startY = event.clientY - translateY;
-    lastX = event.clientX;
-    lastY = event.clientY;
   }
 
   function handleMouseMove(event) {
@@ -64,8 +60,6 @@
     event.preventDefault();
     translateX = event.clientX - startX;
     translateY = event.clientY - startY;
-    lastX = event.clientX;
-    lastY = event.clientY;
   }
 
   function handleMouseUp() {
@@ -206,15 +200,15 @@
     on:wheel={handleWheel}
     role="button"
     tabindex="0"
-    aria-label={$_('image.viewer_title')}
+    aria-label={$_("image.viewer_title")}
   >
     <div class="viewer-controls">
       <button
         type="button"
         class="control-btn reset-btn"
         on:click={resetView}
-        aria-label={$_('image.reset_view_short')}
-        title={$_('image.reset_view')}
+        aria-label={$_("image.reset_view_short")}
+        title={$_("image.reset_view")}
       >
         <svg
           class="icon"
@@ -229,8 +223,8 @@
         type="button"
         class="control-btn close-btn"
         on:click={closeViewer}
-        aria-label={$_('image.close')}
-        title={$_('image.close_short')}
+        aria-label={$_("image.close")}
+        title={$_("image.close_short")}
       >
         <svg
           class="icon"
@@ -266,7 +260,7 @@
         <img
           bind:this={imageElement}
           src={image.url}
-          alt={image.caption || $_('image.enlarged_view')}
+          alt={image.caption || $_("image.enlarged_view")}
           draggable="false"
         />
       </div>
@@ -279,14 +273,14 @@
         {/if}
         {#if image.source}
           <p class="caption-source">
-            {$_('image.source')}
+            {$_("image.source")}
             <a
               href={image.source}
               target="_blank"
               rel="noreferrer"
               on:click|stopPropagation
             >
-              {$_('image.wikimedia_commons')}
+              {$_("image.wikimedia_commons")}
             </a>
           </p>
         {/if}
@@ -295,7 +289,7 @@
 
     <div class="viewer-hints">
       <p>
-        {$_('image.help_text')}
+        {$_("image.help_text")}
       </p>
     </div>
   </div>

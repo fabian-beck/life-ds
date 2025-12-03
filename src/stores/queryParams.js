@@ -1,5 +1,5 @@
-import { derived } from 'svelte/store';
-import { querystring } from 'svelte-spa-router';
+import { derived } from "svelte/store";
+import { querystring } from "svelte-spa-router";
 
 /**
  * Derived store that parses query parameters from the current URL
@@ -7,13 +7,13 @@ import { querystring } from 'svelte-spa-router';
  * and the slide index (null if not present or slide 0)
  */
 export const queryParams = derived(querystring, ($querystring) => {
-  const params = new URLSearchParams($querystring || '');
-  const slideStr = params.get('slide');
+  const params = new URLSearchParams($querystring || "");
+  const slideStr = params.get("slide");
   const slideIndex = slideStr ? parseInt(slideStr, 10) : null;
 
   return {
-    timeline: params.get('timeline') === '1',
-    network: params.get('network') === '1',
+    timeline: params.get("timeline") === "1",
+    network: params.get("network") === "1",
     slide: slideIndex,
   };
 });
@@ -27,16 +27,20 @@ export const queryParams = derived(querystring, ($querystring) => {
 export function buildUrlWithParams(basePath, params) {
   const search = new URLSearchParams();
 
-  if (params.slide !== null && params.slide !== undefined && params.slide !== 0) {
-    search.set('slide', params.slide.toString());
+  if (
+    params.slide !== null &&
+    params.slide !== undefined &&
+    params.slide !== 0
+  ) {
+    search.set("slide", params.slide.toString());
   }
 
   if (params.timeline) {
-    search.set('timeline', '1');
+    search.set("timeline", "1");
   }
 
   if (params.network) {
-    search.set('network', '1');
+    search.set("network", "1");
   }
 
   const searchStr = search.toString();

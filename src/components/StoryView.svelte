@@ -25,7 +25,7 @@
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
-  import { push, replace, location } from "svelte-spa-router";
+  import { replace, location } from "svelte-spa-router";
   import { queryParams, buildUrlWithParams } from "../stores/queryParams";
   import ImageViewer from "./ImageViewer.svelte";
   import NetworkModal from "./NetworkModal.svelte";
@@ -38,13 +38,13 @@
   export let isLoading = false;
   export let loadingStage = null;
   export let activeIndex = 0;
+  // eslint-disable-next-line no-unused-vars
   export let hasRegistryEntries = false;
   export let styleConfig = null;
   export let onClose = () => {};
   export let onSlideChange = () => {};
 
   let enlargedImage = null;
-  let enlargedImageContext = null; // Store event context for caption
   let visibleDateNote = null; // Track which event's date note is visible
   let visiblePersonInfo = null; // Track which person's info is visible
   let visibleSources = null; // Track which event's sources popup is visible
@@ -251,7 +251,6 @@
       ? [{ type: "overview" }, ...eventSlides]
       : [{ type: "overview" }];
   $: totalPanels = slides.length;
-  $: hasEvents = totalSlides > 0;
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
 
@@ -262,7 +261,11 @@
   let lastNotifiedIndex = activeIndex;
 
   // When activeIndex prop changes externally (browser back/forward), scroll to it
-  $: if (activeIndex !== lastPropActiveIndex && slidesContainer && totalPanels > 0) {
+  $: if (
+    activeIndex !== lastPropActiveIndex &&
+    slidesContainer &&
+    totalPanels > 0
+  ) {
     lastPropActiveIndex = activeIndex;
     // Only scroll if not currently in a programmatic scroll and initial scroll is done
     if (scrollState === SCROLL_STATE.IDLE && initialScrollDone) {
@@ -279,7 +282,10 @@
     lastNotifiedIndex = activeIndex;
     onSlideChange({
       detail: activeIndex,
-      source: scrollState === SCROLL_STATE.USER_SCROLLING ? 'user-scroll' : currentNavigationSource
+      source:
+        scrollState === SCROLL_STATE.USER_SCROLLING
+          ? "user-scroll"
+          : currentNavigationSource,
     });
   }
 
@@ -350,11 +356,11 @@
     visibleSources = null;
     // Close network modal when slide changes by updating URL
     if ($queryParams.network) {
-      const basePath = $location.split('?')[0];
+      const basePath = $location.split("?")[0];
       const newUrl = buildUrlWithParams(basePath, {
         slide: activeIndex,
         timeline: $queryParams.timeline,
-        network: false
+        network: false,
       });
       replace(newUrl);
     }
@@ -375,7 +381,7 @@
   };
   let scrollState = SCROLL_STATE.IDLE;
   let scrollStateTimeout = null;
-  let currentNavigationSource = 'programmatic'; // Track source of current navigation
+  let currentNavigationSource = "programmatic"; // Track source of current navigation
   let scrollHandlerTimeout = null;
   let scrollendSupported = null;
 
@@ -447,7 +453,7 @@
       } else {
         descriptionOverflows.delete(slideId);
       }
-      descriptionOverflows = descriptionOverflows; // Trigger reactivity
+      descriptionOverflows = new Set(descriptionOverflows); // Trigger reactivity
     };
 
     // Check immediately and after content loads
@@ -457,7 +463,7 @@
     return {
       destroy() {
         descriptionOverflows.delete(slideId);
-        descriptionOverflows = descriptionOverflows;
+        descriptionOverflows = new Set(descriptionOverflows);
       },
     };
   }
@@ -557,17 +563,15 @@
     onClose();
   }
 
-  function enlargeImage(imageData, eventContext) {
+  function enlargeImage(imageData) {
     enlargedImage = imageData; // Now stores full image object with url, caption, source
-    enlargedImageContext = eventContext;
   }
 
   function closeEnlargedImage() {
     enlargedImage = null;
-    enlargedImageContext = null;
   }
 
-  function handleScroll(event) {
+  function handleScroll() {
     // Ignore during programmatic scrolls
     if (
       scrollState === SCROLL_STATE.PROGRAMMATIC ||
@@ -584,7 +588,7 @@
     // Promote to user scrolling if idle
     if (scrollState === SCROLL_STATE.IDLE) {
       scrollState = SCROLL_STATE.USER_SCROLLING;
-      currentNavigationSource = 'user-scroll'; // User is manually scrolling
+      currentNavigationSource = "user-scroll"; // User is manually scrolling
     }
 
     // Debounce activeIndex updates to avoid excessive reactivity
@@ -689,7 +693,7 @@
     }
   }
 
-  function handleTouchEnd(event) {
+  function handleTouchEnd() {
     if (!slidesContainer || touchStartX === null) {
       scrollState = SCROLL_STATE.IDLE;
       touchStartX = null;
@@ -915,11 +919,11 @@
 
   function openNetworkModal() {
     // Build URL with network=1 query param
-    const basePath = $location.split('?')[0]; // Current path without query
+    const basePath = $location.split("?")[0]; // Current path without query
     const newUrl = buildUrlWithParams(basePath, {
       slide: activeIndex,
       timeline: $queryParams.timeline,
-      network: true
+      network: true,
     });
 
     replace(newUrl); // Update URL without creating history entry
@@ -927,11 +931,11 @@
 
   function closeNetworkModal() {
     // Build URL without network param
-    const basePath = $location.split('?')[0];
+    const basePath = $location.split("?")[0];
     const newUrl = buildUrlWithParams(basePath, {
       slide: activeIndex,
       timeline: $queryParams.timeline,
-      network: false
+      network: false,
     });
 
     replace(newUrl); // Update URL without creating history entry
@@ -941,11 +945,11 @@
     const expanded = event.detail.expanded;
 
     // Build URL with or without timeline param
-    const basePath = $location.split('?')[0];
+    const basePath = $location.split("?")[0];
     const newUrl = buildUrlWithParams(basePath, {
       slide: activeIndex,
       timeline: expanded,
-      network: $queryParams.network
+      network: $queryParams.network,
     });
 
     // Always use replace() - modal state should not create history entries
@@ -1384,18 +1388,27 @@
       !initialScrollPending
     ) {
       initialScrollPending = true;
-      tick().then(() => {
-        // Add a small delay to ensure DOM is fully rendered
-        return new Promise(resolve => setTimeout(resolve, 50));
-      }).then(() => {
-        requestScrollTo(activeIndex, {
-          source: "initial",
-          immediate: true,
+      tick()
+        .then(() => {
+          // Add a small delay to ensure DOM is fully rendered
+          return new Promise((resolve) => {
+            setTimeout(resolve, 50);
+          });
+        })
+        .then(() => {
+          requestScrollTo(activeIndex, {
+            source: "initial",
+            immediate: true,
+          });
+          initialScrollDone = true;
+          initialScrollPending = false;
         });
-        initialScrollDone = true;
-        initialScrollPending = false;
-      });
-    } else if (!initialScrollDone && slidesContainer && totalPanels > 0 && activeIndex === 0) {
+    } else if (
+      !initialScrollDone &&
+      slidesContainer &&
+      totalPanels > 0 &&
+      activeIndex === 0
+    ) {
       // No initial scroll needed (starting at index 0)
       initialScrollDone = true;
     }
@@ -1856,7 +1869,7 @@
                               {#if visibleSources === slide.eventIndex}
                                 <div class="sources-popup">
                                   <ul class="sources-list">
-                                    {#each slide.sources as source, idx}
+                                    {#each slide.sources as source}
                                       {@const sourceInfo = sourceLabel(source)}
                                       <li>
                                         <a
@@ -2117,7 +2130,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: linear-gradient(
+    background:
+      linear-gradient(
         180deg,
         rgba(255, 255, 255, 0.03) 0%,
         rgba(0, 0, 0, 0.28) 100%

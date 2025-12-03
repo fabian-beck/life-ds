@@ -16,7 +16,7 @@
 
   function handleImageLoad(entryId) {
     loadedImages.add(entryId);
-    loadedImages = loadedImages; // Trigger reactivity
+    loadedImages = new Set(loadedImages); // Trigger reactivity
   }
 
   function toggleExplanation() {
@@ -30,12 +30,12 @@
   function handleLanguageChange(event) {
     const newLang = event.target.value;
     // Strip query params from current path - history should only contain base paths
-    const currentPath = $location.split('?')[0];
+    const currentPath = $location.split("?")[0];
 
     // Build new URL with updated language
     let newPath;
     // Check if we're on landing page
-    if (currentPath === '/' || currentPath === '') {
+    if (currentPath === "/" || currentPath === "") {
       newPath = `/${newLang}`;
     } else if (currentPath.match(/^\/[a-z]{2}\//)) {
       // Replace existing language in URL
@@ -60,7 +60,7 @@
     } else {
       activeTags.add(normalizedTag);
     }
-    activeTags = activeTags; // Trigger reactivity
+    activeTags = new Set(activeTags); // Trigger reactivity
   }
 
   // Compute tag frequencies from entries (with case-insensitive grouping)
@@ -327,7 +327,9 @@
 
     // Use separator_glyph_svg if available
     if (styleConfig?.separatorGlyphSvg) {
-      return items.join(`<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`);
+      return items.join(
+        `<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
+      );
     }
 
     // Fallback to middle dot
@@ -337,38 +339,38 @@
 
 <section class="landing">
   <div class="top-controls">
-      <select
-        value={$currentLanguage}
-        on:change={handleLanguageChange}
-        aria-label={$_("app.select_language")}
-        class="language-selector"
+    <select
+      value={$currentLanguage}
+      on:change={handleLanguageChange}
+      aria-label={$_("app.select_language")}
+      class="language-selector"
+    >
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+    </select>
+    <button
+      class="ai-disclaimer-button"
+      on:click={toggleExplanation}
+      aria-label={$_("landing.learn_about_ai")}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       >
-        <option value="en">English</option>
-        <option value="de">Deutsch</option>
-      </select>
-      <button
-        class="ai-disclaimer-button"
-        on:click={toggleExplanation}
-        aria-label={$_("landing.learn_about_ai")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-        <span>{$_("landing.ai_generated_label")}</span>
-      </button>
-    </div>
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>{$_("landing.ai_generated_label")}</span>
+    </button>
+  </div>
 
   <div class="header-container">
     <div class="landing-hero">
@@ -512,7 +514,8 @@
                 src={getThumbnailUrl(entry.portrait.image, 200)}
                 srcset={`${getThumbnailUrl(entry.portrait.image, 200)} 1x, ${getThumbnailUrl(entry.portrait.image, 400)} 2x`}
                 alt={loadedImages.has(entry.id)
-                  ? entry.portrait.alt ?? `Portrait of ${displayName(entry.name)}`
+                  ? (entry.portrait.alt ??
+                    `Portrait of ${displayName(entry.name)}`)
                   : ""}
                 loading="lazy"
                 decoding="async"
@@ -824,7 +827,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(
+    background:
+      radial-gradient(
         circle at 30% 30%,
         var(--card-secondary, rgba(56, 189, 248, 0.35)),
         transparent 70%

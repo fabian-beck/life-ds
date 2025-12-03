@@ -32,7 +32,6 @@
   $: isExpanded = initialExpanded;
   let isDragging = false;
   let trackElement = null;
-  let dragStartX = null;
   let expandedContainerElement = null;
 
   $: totalPanels = totalSlides > 0 ? totalSlides + 1 : 1; // +1 for overview slide
@@ -42,11 +41,19 @@
   // Group events by chapter for display
   $: groupedEvents = (() => {
     if (!hasChapters) {
-      return [{ chapter: null, events: eventSlides.map((event, idx) => ({ ...event, originalIndex: idx })) }];
+      return [
+        {
+          chapter: null,
+          events: eventSlides.map((event, idx) => ({
+            ...event,
+            originalIndex: idx,
+          })),
+        },
+      ];
     }
 
     // Create a map of chapter IDs to chapter objects
-    const chapterMap = new Map(chapters.map(ch => [ch.id, ch]));
+    const chapterMap = new Map(chapters.map((ch) => [ch.id, ch]));
 
     // Group events by their chapter
     const groups = new Map();
@@ -59,7 +66,7 @@
         if (!groups.has(chapterId)) {
           groups.set(chapterId, {
             chapter: chapterMap.get(chapterId),
-            events: []
+            events: [],
           });
         }
         groups.get(chapterId).events.push(eventWithIndex);
@@ -70,8 +77,8 @@
 
     // Convert to array in chapter order
     const result = chapters
-      .filter(ch => groups.has(ch.id))
-      .map(ch => groups.get(ch.id));
+      .filter((ch) => groups.has(ch.id))
+      .map((ch) => groups.get(ch.id));
 
     // Add uncategorized events at the end if any
     if (uncategorized.length > 0) {
@@ -93,19 +100,25 @@
     }
 
     // Find the chapter object by ID
-    const chapter = chapters.find(ch => ch.id === currentEvent.chapter);
+    const chapter = chapters.find((ch) => ch.id === currentEvent.chapter);
     return chapter || null;
   })();
 
   // Scroll active event into view when first expanding (but allow manual scroll after)
   let hasScrolledToActive = false;
   $: if (isExpanded) {
-    if (!hasScrolledToActive && expandedContainerElement && activeEventIndex >= 0) {
+    if (
+      !hasScrolledToActive &&
+      expandedContainerElement &&
+      activeEventIndex >= 0
+    ) {
       // Use setTimeout to ensure DOM is ready after expansion animation
       setTimeout(() => {
-        const activeElement = expandedContainerElement?.querySelector(`[data-event-index="${activeEventIndex}"]`);
+        const activeElement = expandedContainerElement?.querySelector(
+          `[data-event-index="${activeEventIndex}"]`
+        );
         if (activeElement) {
-          activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
           hasScrolledToActive = true;
         }
       }, 100);
@@ -117,7 +130,7 @@
   function toggleExpanded() {
     isExpanded = !isExpanded;
     // Dispatch event to parent so it can update the URL
-    dispatch('expandchange', { expanded: isExpanded });
+    dispatch("expandchange", { expanded: isExpanded });
   }
 
   function handleTrackPointerDown(event) {
@@ -128,7 +141,6 @@
 
     // Accept all pointer types (mouse, pen, touch)
     isDragging = true;
-    dragStartX = event.clientX;
     trackElement.setPointerCapture(event.pointerId);
     updateSlideFromPosition(event.clientX);
 
@@ -153,9 +165,12 @@
       const x = event.clientX - rect.left;
 
       // Account for dot size to align with actual dot positions
-      const dotSize = parseFloat(getComputedStyle(trackElement).getPropertyValue('--dot-size')) || 24;
+      const dotSize =
+        parseFloat(
+          getComputedStyle(trackElement).getPropertyValue("--dot-size")
+        ) || 24;
       const effectiveWidth = rect.width - dotSize;
-      const adjustedX = x - (dotSize / 2);
+      const adjustedX = x - dotSize / 2;
 
       const progress = Math.max(0, Math.min(1, adjustedX / effectiveWidth));
       const targetIndex = Math.round(progress * (totalPanels - 1));
@@ -170,9 +185,12 @@
 
     // Account for dot size to align with actual dot positions
     // Dots use space-between, so we need to map the click position correctly
-    const dotSize = parseFloat(getComputedStyle(trackElement).getPropertyValue('--dot-size')) || 24;
+    const dotSize =
+      parseFloat(
+        getComputedStyle(trackElement).getPropertyValue("--dot-size")
+      ) || 24;
     const effectiveWidth = rect.width - dotSize;
-    const adjustedX = x - (dotSize / 2);
+    const adjustedX = x - dotSize / 2;
 
     const progress = Math.max(0, Math.min(1, adjustedX / effectiveWidth));
     const targetIndex = Math.round(progress * (totalPanels - 1));
@@ -185,7 +203,10 @@
     class="indicator"
     class:expanded={isExpanded}
     role="group"
-    aria-label={$_('timeline.show_event', { index: activeEventIndex + 1, total: totalSlides })}
+    aria-label={$_("timeline.show_event", {
+      index: activeEventIndex + 1,
+      total: totalSlides,
+    })}
     style={`--indicator-progress: ${indicatorProgress}`}
   >
     <div class="indicator-content">
@@ -195,7 +216,7 @@
             type="button"
             class="nav-btn prev"
             on:click={onPrevSlide}
-            aria-label={$_('timeline.previous_slide')}
+            aria-label={$_("timeline.previous_slide")}
             disabled={activeIndex === 0}
           >
             <svg
@@ -211,7 +232,7 @@
             type="button"
             class="nav-btn next"
             on:click={onNextSlide}
-            aria-label={$_('timeline.next_slide')}
+            aria-label={$_("timeline.next_slide")}
             disabled={activeIndex >= totalPanels - 1}
           >
             <svg
@@ -239,7 +260,7 @@
         aria-valuemin="0"
         aria-valuemax={totalPanels - 1}
         aria-valuenow={activeIndex}
-        aria-label={$_('timeline.scrubber')}
+        aria-label={$_("timeline.scrubber")}
         tabindex={isExpanded ? -1 : 0}
       >
         {#if isExpanded}
@@ -247,7 +268,7 @@
             type="button"
             class="collapse-button"
             on:click={toggleExpanded}
-            aria-label={$_('timeline.collapse')}
+            aria-label={$_("timeline.collapse")}
             aria-expanded={isExpanded}
           >
             <svg
@@ -260,7 +281,11 @@
             </svg>
           </button>
         {/if}
-        <div class="dots-container" class:expanded={isExpanded} bind:this={expandedContainerElement}>
+        <div
+          class="dots-container"
+          class:expanded={isExpanded}
+          bind:this={expandedContainerElement}
+        >
           {#if activeIndex > 0 && !isExpanded}
             <span
               class="indicator-highlight"
@@ -274,7 +299,7 @@
                 class="dot square"
                 class:active={activeIndex === 0}
                 on:click={() => onScrollToIndex(0)}
-                aria-label={$_('timeline.show_overview')}
+                aria-label={$_("timeline.show_overview")}
                 aria-current={activeIndex === 0 ? "true" : undefined}
               >
                 <svg
@@ -314,13 +339,21 @@
               class:has-chapter={currentChapter}
               on:click={toggleExpanded}
               aria-label={currentChapter
-                ? ($_('timeline.expand_to_chapter', { chapter: currentChapter.headline }) || `Expand timeline to ${currentChapter.headline}`)
-                : (isExpanded ? $_('timeline.collapse') : $_('timeline.expand'))}
+                ? $_("timeline.expand_to_chapter", {
+                    chapter: currentChapter.headline,
+                  }) || `Expand timeline to ${currentChapter.headline}`
+                : isExpanded
+                  ? $_("timeline.collapse")
+                  : $_("timeline.expand")}
               aria-expanded={isExpanded}
             >
               <div class="chapter-indicator-content">
                 {#if currentChapter}
-                  <span class="chapter-indicator-label" transition:fade={{ duration: 300 }} key={currentChapter.id}>
+                  <span
+                    class="chapter-indicator-label"
+                    transition:fade={{ duration: 300 }}
+                    key={currentChapter.id}
+                  >
                     {currentChapter.headline}
                   </span>
                 {/if}
@@ -342,7 +375,7 @@
                   class="dot square"
                   class:active={activeIndex === 0}
                   on:click={() => onScrollToIndex(0)}
-                  aria-label={$_('timeline.show_overview')}
+                  aria-label={$_("timeline.show_overview")}
                   aria-current={activeIndex === 0 ? "true" : undefined}
                 >
                   <svg
@@ -361,7 +394,10 @@
               {#each groupedEvents as group, groupIndex}
                 {#if group.chapter}
                   {@const chapterAge = group.chapter.age_start ?? 0}
-                  <div class="chapter-header" style="--event-age: {chapterAge};">
+                  <div
+                    class="chapter-header"
+                    style="--event-age: {chapterAge};"
+                  >
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
                   </div>
                 {:else if groupIndex > 0}
@@ -376,14 +412,20 @@
                     ? event.date.split("-")[0]
                     : ""}
                   {@const eventAge = event.age ?? 0}
-                  <div class="timeline-item" data-event-index={idx} style="--event-age: {eventAge};">
+                  <div
+                    class="timeline-item"
+                    data-event-index={idx}
+                    style="--event-age: {eventAge};"
+                  >
                     <button
                       type="button"
                       class="dot"
                       class:active={idx === activeEventIndex}
                       on:click={() => onGoToEvent(idx)}
                       aria-label={`Show event ${idx + 1} of ${totalSlides}`}
-                      aria-current={idx === activeEventIndex ? "true" : undefined}
+                      aria-current={idx === activeEventIndex
+                        ? "true"
+                        : undefined}
                     >
                       <svg
                         class="dot-icon"
@@ -473,7 +515,9 @@
     width: 1.3rem;
     height: 1.3rem;
     fill: var(--story-primary, rgba(226, 232, 240, 0.7));
-    transition: fill 0.2s ease, transform 0.2s ease;
+    transition:
+      fill 0.2s ease,
+      transform 0.2s ease;
   }
 
   .collapse-button:hover,
@@ -658,12 +702,24 @@
     }
   }
 
-  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
-  .timeline-item:nth-child(2) { animation-delay: 0.15s; }
-  .timeline-item:nth-child(3) { animation-delay: 0.2s; }
-  .timeline-item:nth-child(4) { animation-delay: 0.25s; }
-  .timeline-item:nth-child(5) { animation-delay: 0.3s; }
-  .timeline-item:nth-child(n+6) { animation-delay: 0.35s; }
+  .timeline-item:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .timeline-item:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .timeline-item:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  .timeline-item:nth-child(4) {
+    animation-delay: 0.25s;
+  }
+  .timeline-item:nth-child(5) {
+    animation-delay: 0.3s;
+  }
+  .timeline-item:nth-child(n + 6) {
+    animation-delay: 0.35s;
+  }
 
   .timeline-content {
     display: flex;
@@ -996,7 +1052,9 @@
     height: 1.1rem;
     fill: var(--story-primary, rgba(226, 232, 240, 0.7));
     flex-shrink: 0;
-    transition: transform 0.2s ease, fill 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      fill 0.2s ease;
   }
 
   .chapter-indicator-box:hover .chapter-chevron,

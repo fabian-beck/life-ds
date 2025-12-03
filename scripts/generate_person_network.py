@@ -20,7 +20,6 @@ from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cache_dir,
     ensure_cache,
-    slugify as cache_slugify,
 )
 
 # Import from cache_wikipedia_materials for related articles functionality
@@ -34,12 +33,15 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
 PEOPLE_DIR = DATA_DIR / "people"
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
-DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+DEFAULT_USER_AGENT = (
+    "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+)
 
 
 # Pydantic models for structured outputs
 class Connection(BaseModel):
     """A connection/relationship in the ego network."""
+
     person_name: str = Field(description="Full name of the connected person")
     relationship_type: str = Field(
         description="Type of relationship with optional subcategory using format 'category/subcategory'. "
@@ -55,7 +57,8 @@ class Connection(BaseModel):
         None, description="Approximate year when the relationship began"
     )
     end_year: Optional[int] = Field(
-        None, description="Approximate year when the relationship ended (null if ongoing or unknown)"
+        None,
+        description="Approximate year when the relationship ended (null if ongoing or unknown)",
     )
     strength: str = Field(
         description="Strength of the relationship: 'strong', 'moderate', or 'weak'"
@@ -79,10 +82,9 @@ class Connection(BaseModel):
 
 class EgoNetworkMetadata(BaseModel):
     """Metadata about the ego (central person) in the network."""
+
     name: str = Field(description="Full name of the ego (central person)")
-    birth_year: Optional[int] = Field(
-        None, description="Birth year of the ego"
-    )
+    birth_year: Optional[int] = Field(None, description="Birth year of the ego")
     death_year: Optional[int] = Field(
         None, description="Death year of the ego (null if still alive)"
     )
@@ -90,12 +92,12 @@ class EgoNetworkMetadata(BaseModel):
         description="Primary roles or professions of the ego"
     )
     summary: str = Field(description="Brief biographical summary of the ego")
-    wikipedia: Optional[str] = Field(
-        None, description="Wikipedia URL for the ego")
+    wikipedia: Optional[str] = Field(None, description="Wikipedia URL for the ego")
 
 
 class CategorySummary(BaseModel):
     """Summary for a specific relationship category."""
+
     relationship_type: str = Field(
         description="The main relationship category being summarized (without subcategory): 'family', 'professional', 'social', 'artistic', 'academic', or 'other'"
     )
@@ -106,10 +108,10 @@ class CategorySummary(BaseModel):
 
 class EgoNetwork(BaseModel):
     """Complete ego network dataset for a person."""
+
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
-    ego: EgoNetworkMetadata = Field(
-        description="Metadata about the central person")
+    ego: EgoNetworkMetadata = Field(description="Metadata about the central person")
     connections: List[Connection] = Field(
         description="List of connections/relationships in the ego network"
     )
@@ -148,33 +150,39 @@ def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
     url_or_subject = url_or_subject.strip()
 
     # Check if this looks like a URL
-    if not (url_or_subject.startswith('http://') or url_or_subject.startswith('https://')):
+    if not (
+        url_or_subject.startswith("http://") or url_or_subject.startswith("https://")
+    ):
         return None
 
     try:
         parsed = urlparse(url_or_subject)
 
         # Check if this is a Wikipedia domain
-        if not parsed.netloc or 'wikipedia.org' not in parsed.netloc:
+        if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
             return None
 
         # Extract language code from domain (e.g., 'de' from 'de.wikipedia.org')
-        domain_parts = parsed.netloc.split('.')
-        if len(domain_parts) >= 2 and domain_parts[-2] == 'wikipedia' and domain_parts[-1] == 'org':
+        domain_parts = parsed.netloc.split(".")
+        if (
+            len(domain_parts) >= 2
+            and domain_parts[-2] == "wikipedia"
+            and domain_parts[-1] == "org"
+        ):
             lang_code = domain_parts[0]
         else:
-            lang_code = 'en'  # Default to English
+            lang_code = "en"  # Default to English
 
         # Extract the article title from the path
         # Path should be like /wiki/Article_Title
-        path_parts = parsed.path.split('/')
-        if len(path_parts) >= 3 and path_parts[1] == 'wiki':
+        path_parts = parsed.path.split("/")
+        if len(path_parts) >= 3 and path_parts[1] == "wiki":
             # Get the article title (everything after /wiki/)
-            title = '/'.join(path_parts[2:])
+            title = "/".join(path_parts[2:])
             # URL decode the title
             title = unquote(title)
             # Replace underscores with spaces (Wikipedia convention)
-            title = title.replace('_', ' ')
+            title = title.replace("_", " ")
             return (title, lang_code)
 
         return None
@@ -185,7 +193,7 @@ def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
 def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, Any]:
     """Fetch Wikipedia page data."""
     # Use English by default
-    language = lang or 'en'
+    language = lang or "en"
     api_url = f"https://{language}.wikipedia.org/w/api.php"
 
     params = {
@@ -233,16 +241,8 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
     response.raise_for_status()
     data = response.json()
     results = data.get("query", {}).get("search", [])
-    titles: List[str] = [
-        item.get("title")
-        for item in results
-        if item.get("title")
-    ]
-    suggestion = (
-        data.get("query", {})
-        .get("searchinfo", {})
-        .get("suggestion")
-    )
+    titles: List[str] = [item.get("title") for item in results if item.get("title")]
+    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
     if suggestion:
         titles.append(suggestion)
     return titles
@@ -255,7 +255,9 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
     if url_info:
         # Use the extracted title and language code directly without searching
         article_title, lang_code = url_info
-        print(f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})")
+        print(
+            f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})"
+        )
         return _fetch_wikipedia_page(article_title, lang=lang_code)
 
     candidates: List[str] = []
@@ -277,7 +279,10 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
     if normalized_title.casefold() != title.casefold():
         add_candidate(normalized_title)
     parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
-    if parenthetical and parenthetical.casefold() not in {title.casefold(), normalized_title.casefold()}:
+    if parenthetical and parenthetical.casefold() not in {
+        title.casefold(),
+        normalized_title.casefold(),
+    }:
         add_candidate(parenthetical)
 
     index = 0
@@ -324,8 +329,12 @@ def load_existing_dataset(person_id: str) -> Optional[Dict[str, Any]]:
     return None
 
 
-def build_prompt(page_data: Dict[str, Any], existing_dataset: Optional[Dict[str, Any]], subject: str,
-                 related_articles: Optional[List[Dict[str, Any]]] = None) -> str:
+def build_prompt(
+    page_data: Dict[str, Any],
+    existing_dataset: Optional[Dict[str, Any]],
+    subject: str,
+    related_articles: Optional[List[Dict[str, Any]]] = None,
+) -> str:
     """Build the prompt for OpenAI API."""
     extract_text = page_data.get("extract", "").strip()
 
@@ -353,11 +362,11 @@ def build_prompt(page_data: Dict[str, Any], existing_dataset: Optional[Dict[str,
             combined += f"URL: {article.get('url', '')}\n"
             combined += f"{'='*60}\n\n"
 
-            full_text = article.get('fullText', '')
+            full_text = article.get("fullText", "")
             if full_text:
                 combined += f"{full_text}\n"
             else:
-                summary = article.get('summary', '')
+                summary = article.get("summary", "")
                 if summary:
                     combined += f"{summary}\n"
 
@@ -445,11 +454,14 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
 
     # Handle different response statuses
     if response.status == "failed":
-        error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
+        error_msg = (
+            f"Response generation failed: {response.error}"
+            if response.error
+            else "Unknown error"
+        )
         raise RuntimeError(error_msg)
     elif response.status != "completed":
-        raise RuntimeError(
-            f"Response has unexpected status: {response.status}")
+        raise RuntimeError(f"Response has unexpected status: {response.status}")
 
     # Parse the structured output from the Responses API
     parsed = response.output_parsed
@@ -502,8 +514,7 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "ego_network.json"
     output_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8"
+        json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
     )
     return output_path
 
@@ -518,6 +529,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
 
     # Get current ISO timestamp
     from datetime import datetime
+
     current_timestamp = datetime.now().astimezone().isoformat()
 
     # Check if person already exists in register
@@ -532,20 +544,23 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if not person_found:
         # Person not in register yet, add minimal entry
         # The life_events generation script should have run first and added full details
-        people.append({
-            "id": person_id,
-            "name": payload.get("ego", {}).get("name", person_id.replace("_", " ").title()),
-            "summary": payload.get("ego", {}).get("summary", ""),
-            "created": current_timestamp,
-            "lastUpdated": current_timestamp,
-        })
+        people.append(
+            {
+                "id": person_id,
+                "name": payload.get("ego", {}).get(
+                    "name", person_id.replace("_", " ").title()
+                ),
+                "summary": payload.get("ego", {}).get("summary", ""),
+                "created": current_timestamp,
+                "lastUpdated": current_timestamp,
+            }
+        )
 
         people.sort(key=lambda item: item.get("name", ""))
 
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
     REGISTER_PATH.write_text(
-        json.dumps(register, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8"
+        json.dumps(register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
     )
 
 
@@ -555,7 +570,7 @@ def generate_person_network(
     person_id: Optional[str] = None,
     update_registry: bool = True,
     model: str = DEFAULT_MODEL,
-    use_cache: bool = True
+    use_cache: bool = True,
 ) -> Path:
     """Generate a person network dataset for a person."""
     print(f"[1/6] Fetching Wikipedia article for '{subject}'...")
@@ -573,19 +588,25 @@ def generate_person_network(
         try:
             ensure_cache(person_id, article_title, person_name=article_title)
             # Load from cache
-            page_data = get_cached_wikipedia_page(person_id, article_title, use_cache=True)
+            page_data = get_cached_wikipedia_page(
+                person_id, article_title, use_cache=True
+            )
 
             # Load related articles if available
             cache_dir = get_cache_dir(person_id)
             related_path = cache_dir / "related_articles.json"
             if related_path.exists():
                 try:
-                    related_articles = json.loads(related_path.read_text(encoding="utf-8"))
-                    print(f"[2/6] Using cached Wikipedia data with {len(related_articles)} related articles")
+                    related_articles = json.loads(
+                        related_path.read_text(encoding="utf-8")
+                    )
+                    print(
+                        f"[2/6] Using cached Wikipedia data with {len(related_articles)} related articles"
+                    )
                 except json.JSONDecodeError:
-                    print(f"[2/6] Using cached Wikipedia data")
+                    print("[2/6] Using cached Wikipedia data")
             else:
-                print(f"[2/6] Using cached Wikipedia data")
+                print("[2/6] Using cached Wikipedia data")
         except Exception as e:
             print(f"[2/6] Cache unavailable ({e}), using fetched data...")
 
@@ -593,26 +614,33 @@ def generate_person_network(
     if related_articles is None and fetch_related_articles is not None:
         print("[2/6] Fetching related articles...")
         try:
-            related_articles = fetch_related_articles(article_title, max_related=15, model=model,
-                                                     use_cache=use_cache, person_id=person_id)
+            related_articles = fetch_related_articles(
+                article_title,
+                max_related=15,
+                model=model,
+                use_cache=use_cache,
+                person_id=person_id,
+            )
             print(f"[2/6] Found {len(related_articles)} related articles.")
         except Exception as e:
             print(f"[2/6] Warning: Failed to fetch related articles ({e})")
             related_articles = None
 
-    print(f"[2/6] Checking for existing life events dataset...")
+    print("[2/6] Checking for existing life events dataset...")
     existing_dataset = load_existing_dataset(person_id)
     if existing_dataset:
         print(f"[2/6] Found existing dataset for '{person_id}'.")
     else:
-        print(f"[2/6] No existing dataset found (will use only Wikipedia content).")
+        print("[2/6] No existing dataset found (will use only Wikipedia content).")
 
     print("[3/6] Building prompt for OpenAI response...")
-    prompt = build_prompt(page_data, existing_dataset, subject, related_articles=related_articles)
+    prompt = build_prompt(
+        page_data, existing_dataset, subject, related_articles=related_articles
+    )
 
     print(f"[4/6] Requesting structured ego network from model '{model}'...")
     payload = call_openai(prompt, model)
-    print(f"[4/6] Response received from OpenAI.")
+    print("[4/6] Response received from OpenAI.")
 
     print("[5/6] Normalizing ego network metadata...")
     payload = enforce_metadata(payload, page_data, person_id)
@@ -637,19 +665,14 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate person network datasets using Wikipedia and the OpenAI API."
     )
+    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
     parser.add_argument(
-        "subject",
-        help="Person to research, e.g. 'Ada Lovelace'."
-    )
-    parser.add_argument(
-        "--no-register",
-        action="store_true",
-        help="Skip updating the persons register."
+        "--no-register", action="store_true", help="Skip updating the persons register."
     )
     parser.add_argument(
         "--no-cache",
         action="store_true",
-        help="Skip using cached Wikipedia materials and fetch directly from APIs."
+        help="Skip using cached Wikipedia materials and fetch directly from APIs.",
     )
     parser.add_argument(
         "--model",

@@ -148,7 +148,7 @@
   {:else}
     <!-- Floating role tags in background -->
     <div class="floating-roles">
-      {#each floatingRoles as role, i}
+      {#each floatingRoles as role}
         <span
           class="floating-role"
           style="
@@ -168,7 +168,7 @@
     <!-- Header with repeating person name -->
     <header class="exhibition-header">
       <div class="name-marquee">
-        {#each Array(10) as _, i}
+        {#each Array(10) as _}
           <span class="name-item">
             {displayName(person?.name)}
             {#if person?.birth_date || person?.death_date}
@@ -186,7 +186,11 @@
     <!-- Events grid with featured box -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="events-container" style="--total-columns: {totalColumns};" on:click={handleClickOutside}>
+    <div
+      class="events-container"
+      style="--total-columns: {totalColumns};"
+      on:click={handleClickOutside}
+    >
       <div>
         <!-- Featured box spanning first two columns -->
         <div class="featured-box">

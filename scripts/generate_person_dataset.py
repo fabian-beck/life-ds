@@ -22,9 +22,8 @@ from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
     get_cached_commons_images,
-    get_cache_dir,
     ensure_cache,
-    slugify as cache_slugify,
+    get_cache_dir,
 )
 
 # Import from cache_wikipedia_materials for related articles functionality
@@ -43,7 +42,9 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 
 # Global variable to store the Wikipedia language code when a URL is provided
 _wikipedia_lang: Optional[str] = None
-DEFAULT_USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+DEFAULT_USER_AGENT = (
+    "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+)
 GEOCODER_ENDPOINT = os.getenv(
     "LIFE_DS_GEOCODER_ENDPOINT",
     "https://nominatim.openstreetmap.org/search",
@@ -59,92 +60,107 @@ _last_geocode_at: float = 0.0
 # Pydantic models for structured outputs
 class ImageMetadata(BaseModel):
     """Metadata for an image associated with an event."""
+
     url: str = Field(description="The full URL of the image")
     caption: str = Field(
-        description="A concise, factual description of what the image shows")
+        description="A concise, factual description of what the image shows"
+    )
     source: str = Field(
-        description="The source URL, typically a Wikimedia Commons page")
+        description="The source URL, typically a Wikimedia Commons page"
+    )
 
 
 class LifeEvent(BaseModel):
     """A significant life event."""
-    date: str = Field(
-        description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
+
+    date: str = Field(description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
     date_precision: str = Field(
-        description="Precision level: 'day', 'month', or 'year'")
+        description="Precision level: 'day', 'month', or 'year'"
+    )
     date_end: Optional[str] = Field(
-        None, description="Optional end date for events spanning a range")
+        None, description="Optional end date for events spanning a range"
+    )
     date_end_precision: Optional[str] = Field(
-        None, description="Precision for the end date")
+        None, description="Precision for the end date"
+    )
     date_note: Optional[str] = Field(
-        None, description="Note about date uncertainty or alternative representations")
+        None, description="Note about date uncertainty or alternative representations"
+    )
     age: Optional[int] = Field(
-        None, description="Subject's age at the time of the event, null if not applicable")
+        None,
+        description="Subject's age at the time of the event, null if not applicable",
+    )
     title: str = Field(description="Brief title of the event")
     description: str = Field(description="Detailed description of the event")
     locations: List[str] = Field(
-        description="Human-readable location names, use 'Location unknown' if uncertain")
-    sources: List[str] = Field(
-        description="Array of Wikipedia URLs or references")
+        description="Human-readable location names, use 'Location unknown' if uncertain"
+    )
+    sources: List[str] = Field(description="Array of Wikipedia URLs or references")
     images: Optional[List[ImageMetadata]] = Field(
-        None, description="Optional array of relevant images")
-    chapter: Optional[str] = Field(
-        None, description="Chapter ID this event belongs to")
+        None, description="Optional array of relevant images"
+    )
+    chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
 
 
 class LifeChapter(BaseModel):
     """A chapter grouping a sequence of life events."""
+
     id: str = Field(
-        description="Unique identifier for the chapter (lowercase, snake_case)")
-    headline: str = Field(
-        description="Short, evocative chapter headline (3-6 words)")
+        description="Unique identifier for the chapter (lowercase, snake_case)"
+    )
+    headline: str = Field(description="Short, evocative chapter headline (3-6 words)")
     description: str = Field(
-        description="Brief description of this life period (1-2 sentences)")
+        description="Brief description of this life period (1-2 sentences)"
+    )
     date_start: str = Field(
-        description="ISO-8601 date when this chapter begins (YYYY-MM-DD, YYYY-MM, or YYYY)")
+        description="ISO-8601 date when this chapter begins (YYYY-MM-DD, YYYY-MM, or YYYY)"
+    )
     date_start_precision: str = Field(
-        description="Precision level for start date: 'day', 'month', or 'year'")
+        description="Precision level for start date: 'day', 'month', or 'year'"
+    )
     date_end: str = Field(
-        description="ISO-8601 date when this chapter ends (YYYY-MM-DD, YYYY-MM, or YYYY)")
+        description="ISO-8601 date when this chapter ends (YYYY-MM-DD, YYYY-MM, or YYYY)"
+    )
     date_end_precision: str = Field(
-        description="Precision level for end date: 'day', 'month', or 'year'")
+        description="Precision level for end date: 'day', 'month', or 'year'"
+    )
     age_start: Optional[int] = Field(
-        None, description="Subject's age at chapter start, null if not applicable")
+        None, description="Subject's age at chapter start, null if not applicable"
+    )
     age_end: Optional[int] = Field(
-        None, description="Subject's age at chapter end, null if not applicable")
+        None, description="Subject's age at chapter end, null if not applicable"
+    )
 
 
 class Portrait(BaseModel):
     """Portrait information for the person."""
+
     image: Optional[str] = Field(None, description="URL of the portrait image")
-    source: Optional[str] = Field(
-        None, description="Source URL for the portrait")
+    source: Optional[str] = Field(None, description="Source URL for the portrait")
 
 
 class Person(BaseModel):
     """Metadata about the person."""
+
     name: str = Field(description="Full name of the person")
-    birth_date: Optional[str] = Field(
-        None, description="Birth date in ISO-8601 format")
-    death_date: Optional[str] = Field(
-        None, description="Death date in ISO-8601 format")
-    primary_roles: List[str] = Field(
-        description="Primary roles or professions")
+    birth_date: Optional[str] = Field(None, description="Birth date in ISO-8601 format")
+    death_date: Optional[str] = Field(None, description="Death date in ISO-8601 format")
+    primary_roles: List[str] = Field(description="Primary roles or professions")
     summary: str = Field(description="Brief biographical summary")
     wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
-    portrait: Optional[Portrait] = Field(
-        None, description="Portrait information")
+    portrait: Optional[Portrait] = Field(None, description="Portrait information")
 
 
 class LifeDataset(BaseModel):
     """Complete structured dataset for a person's life events."""
+
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
     chapters: Optional[List[LifeChapter]] = Field(
-        None, description="Optional list of life chapters grouping events")
-    events: List[LifeEvent] = Field(
-        description="List of significant life events")
+        None, description="Optional list of life chapters grouping events"
+    )
+    events: List[LifeEvent] = Field(description="List of significant life events")
 
 
 def _strip_wrapping_quotes(value: str) -> str:
@@ -198,10 +214,8 @@ def _strip_html_tags(value: str) -> str:
     # Remove HTML tags
     clean = re.sub(r"<[^>]+>", "", value)
     # Decode HTML entities
-    clean = clean.replace("&lt;", "<").replace(
-        "&gt;", ">").replace("&amp;", "&")
-    clean = clean.replace("&quot;", '"').replace(
-        "&#39;", "'").replace("&nbsp;", " ")
+    clean = clean.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
+    clean = clean.replace("&quot;", '"').replace("&#39;", "'").replace("&nbsp;", " ")
     # Remove excessive whitespace
     clean = " ".join(clean.split())
     return clean.strip()
@@ -433,7 +447,7 @@ def geocoder_headers() -> Dict[str, str]:
 
 def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, Any]:
     # Use the specified language or fall back to global or default to English
-    language = lang or _wikipedia_lang or 'en'
+    language = lang or _wikipedia_lang or "en"
     api_url = f"https://{language}.wikipedia.org/w/api.php"
 
     params = {
@@ -482,33 +496,39 @@ def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
     url_or_subject = url_or_subject.strip()
 
     # Check if this looks like a URL
-    if not (url_or_subject.startswith('http://') or url_or_subject.startswith('https://')):
+    if not (
+        url_or_subject.startswith("http://") or url_or_subject.startswith("https://")
+    ):
         return None
 
     try:
         parsed = urlparse(url_or_subject)
 
         # Check if this is a Wikipedia domain
-        if not parsed.netloc or 'wikipedia.org' not in parsed.netloc:
+        if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
             return None
 
         # Extract language code from domain (e.g., 'de' from 'de.wikipedia.org')
-        domain_parts = parsed.netloc.split('.')
-        if len(domain_parts) >= 2 and domain_parts[-2] == 'wikipedia' and domain_parts[-1] == 'org':
+        domain_parts = parsed.netloc.split(".")
+        if (
+            len(domain_parts) >= 2
+            and domain_parts[-2] == "wikipedia"
+            and domain_parts[-1] == "org"
+        ):
             lang_code = domain_parts[0]
         else:
-            lang_code = 'en'  # Default to English
+            lang_code = "en"  # Default to English
 
         # Extract the article title from the path
         # Path should be like /wiki/Article_Title
-        path_parts = parsed.path.split('/')
-        if len(path_parts) >= 3 and path_parts[1] == 'wiki':
+        path_parts = parsed.path.split("/")
+        if len(path_parts) >= 3 and path_parts[1] == "wiki":
             # Get the article title (everything after /wiki/)
-            title = '/'.join(path_parts[2:])
+            title = "/".join(path_parts[2:])
             # URL decode the title
             title = unquote(title)
             # Replace underscores with spaces (Wikipedia convention)
-            title = title.replace('_', ' ')
+            title = title.replace("_", " ")
             return (title, lang_code)
 
         return None
@@ -534,16 +554,8 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
     response.raise_for_status()
     data = response.json()
     results = data.get("query", {}).get("search", [])
-    titles: List[str] = [
-        item.get("title")
-        for item in results
-        if item.get("title")
-    ]
-    suggestion = (
-        data.get("query", {})
-        .get("searchinfo", {})
-        .get("suggestion")
-    )
+    titles: List[str] = [item.get("title") for item in results if item.get("title")]
+    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
     if suggestion:
         titles.append(suggestion)
     # Preserve the reported order while removing duplicates later when enqueuing
@@ -556,7 +568,9 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
     if url_info:
         # Use the extracted title and language code directly without searching
         article_title, lang_code = url_info
-        print(f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})")
+        print(
+            f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})"
+        )
         return _fetch_wikipedia_page(article_title, lang=lang_code)
 
     candidates: List[str] = []
@@ -578,7 +592,10 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
     if normalized_title.casefold() != title.casefold():
         add_candidate(normalized_title)
     parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
-    if parenthetical and parenthetical.casefold() not in {title.casefold(), normalized_title.casefold()}:
+    if parenthetical and parenthetical.casefold() not in {
+        title.casefold(),
+        normalized_title.casefold(),
+    }:
         add_candidate(parenthetical)
 
     index = 0
@@ -648,7 +665,9 @@ def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, A
             return []
 
         # Extract file titles
-        file_titles = [result.get("title") for result in search_results if result.get("title")]
+        file_titles = [
+            result.get("title") for result in search_results if result.get("title")
+        ]
 
         # Fetch detailed info for these files
         if not file_titles:
@@ -657,7 +676,7 @@ def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, A
         image_data = []
         # Process in chunks of 50
         for i in range(0, len(file_titles), 50):
-            chunk = file_titles[i:i+50]
+            chunk = file_titles[i : i + 50]
             params = {
                 "action": "query",
                 "format": "json",
@@ -690,7 +709,14 @@ def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, A
                     height = info.get("height", 0)
 
                     # Only include proper images (exclude TIFF/TIF as not browser-supported)
-                    if url and mime.startswith("image/") and mime != "image/tiff" and width >= 100 and height >= 100 and not url.lower().endswith(('.tif', '.tiff')):
+                    if (
+                        url
+                        and mime.startswith("image/")
+                        and mime != "image/tif"
+                        and width >= 100
+                        and height >= 100
+                        and not url.lower().endswith((".ti", ".tif"))
+                    ):
                         extmetadata = info.get("extmetadata", {})
                         description = None
                         description_url = None
@@ -702,14 +728,17 @@ def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, A
 
                         if "DescriptionURL" in extmetadata:
                             desc_url_data = extmetadata["DescriptionURL"]
-                            if isinstance(desc_url_data, dict) and "value" in desc_url_data:
+                            if (
+                                isinstance(desc_url_data, dict)
+                                and "value" in desc_url_data
+                            ):
                                 description_url = desc_url_data["value"]
                         elif "descriptionurl" in info:
                             description_url = info["descriptionurl"]
 
                         image_obj = {
                             "url": url,
-                            "caption": description or f"Image from Wikimedia Commons",
+                            "caption": description or "Image from Wikimedia Commons",
                             "source": description_url,
                         }
                         image_data.append(image_obj)
@@ -758,7 +787,7 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
     # Batch fetch image info in chunks of 50 (API limit)
     image_data = []
     for i in range(0, len(filtered_titles), 50):
-        chunk = filtered_titles[i:i+50]
+        chunk = filtered_titles[i : i + 50]
         params = {
             "action": "query",
             "format": "json",
@@ -791,13 +820,16 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
                 height = info.get("height", 0)
 
                 # Only include proper images (not tiny images, exclude TIFF/TIF as not browser-supported)
-                if url and mime.startswith("image/") and mime != "image/tiff":
+                if url and mime.startswith("image/") and mime != "image/tif":
                     # Lower minimum size to include more images, exclude TIFF files
-                    if width >= 100 and height >= 100 and not url.lower().endswith(('.tif', '.tiff')):
+                    if (
+                        width >= 100
+                        and height >= 100
+                        and not url.lower().endswith((".ti", ".tif"))
+                    ):
                         # Extract metadata
                         extmetadata = info.get("extmetadata", {})
                         description = None
-                        artist = None
                         description_url = None
 
                         # Try to get description
@@ -807,16 +839,13 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
                                 # Strip HTML tags from description
                                 description = _strip_html_tags(desc_data["value"])
 
-                        # Try to get artist/credit
-                        if "Artist" in extmetadata:
-                            artist_data = extmetadata["Artist"]
-                            if isinstance(artist_data, dict) and "value" in artist_data:
-                                artist = _strip_html_tags(artist_data["value"])
-
                         # Get description URL (Wikimedia Commons page)
                         if "DescriptionURL" in extmetadata:
                             desc_url_data = extmetadata["DescriptionURL"]
-                            if isinstance(desc_url_data, dict) and "value" in desc_url_data:
+                            if (
+                                isinstance(desc_url_data, dict)
+                                and "value" in desc_url_data
+                            ):
                                 description_url = desc_url_data["value"]
                         elif "descriptionurl" in info:
                             description_url = info["descriptionurl"]
@@ -824,7 +853,7 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
                         # Create image object with metadata
                         image_obj = {
                             "url": url,
-                            "caption": description or f"Image from Wikimedia Commons",
+                            "caption": description or "Image from Wikimedia Commons",
                             "source": description_url,
                         }
                         image_data.append(image_obj)
@@ -832,9 +861,13 @@ def fetch_image_urls(image_titles: List[str]) -> List[str]:
     return image_data
 
 
-def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subject: str,
-                  commons_images: Optional[List[Dict[str, Any]]] = None,
-                  related_articles: Optional[List[Dict[str, Any]]] = None) -> str:
+def build_prompt(
+    page_data: Dict[str, Any],
+    summary_data: Dict[str, Any],
+    subject: str,
+    commons_images: Optional[List[Dict[str, Any]]] = None,
+    related_articles: Optional[List[Dict[str, Any]]] = None,
+) -> str:
     summary_text = summary_data.get("extract", "").strip()
     extract_text = page_data.get("extract", "").strip()
 
@@ -870,7 +903,9 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
         combined += f"Summary snippet:\n{summary_text}\n\n"
     if extract_text:
         truncated = extract_text[:12000]
-        combined += f"Full extract (truncated to 12k characters if needed):\n{truncated}\n"
+        combined += (
+            f"Full extract (truncated to 12k characters if needed):\n{truncated}\n"
+        )
 
     if image_urls:
         combined += f"\n\n{'='*60}\nAVAILABLE IMAGES - Use these in relevant events:\n{'='*60}\n"
@@ -878,9 +913,9 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
         for idx, img_data in enumerate(image_urls[:30], 1):
             combined += f"\n{idx}. {img_data.get('caption', 'Image')}\n"
             combined += f"   URL: {img_data['url']}\n"
-            if img_data.get('source'):
+            if img_data.get("source"):
                 combined += f"   Source: {img_data['source']}\n"
-        combined += f"\nIMPORTANT: Include relevant images in events using this exact JSON format:\n"
+        combined += "\nIMPORTANT: Include relevant images in events using this exact JSON format:\n"
         combined += '"images": [{"url": "...full URL...", "caption": "...description of what the image shows...", "source": "...Wikimedia Commons URL..."}]\n'
         combined += "Use the captions provided above or write your own factual description of what the image shows.\n"
         combined += f"\nNote: {len(image_urls)} images available in total (showing first 30). Use images that are directly relevant to specific events.\n"
@@ -894,12 +929,12 @@ def build_prompt(page_data: Dict[str, Any], summary_data: Dict[str, Any], subjec
             combined += f"URL: {article.get('url', '')}\n"
             combined += f"{'='*60}\n\n"
 
-            full_text = article.get('fullText', '')
+            full_text = article.get("fullText", "")
             if full_text:
                 combined += f"{full_text}\n"
             else:
                 # Fallback to summary if fullText not available
-                summary = article.get('summary', '')
+                summary = article.get("summary", "")
                 if summary:
                     combined += f"{summary}\n"
 
@@ -989,7 +1024,8 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         message = ""
         try:
             message = error.response.get("error", {}).get(
-                "message", "")  # type: ignore[attr-defined]
+                "message", ""
+            )  # type: ignore[attr-defined]
         except AttributeError:
             message = str(error)
         raise RuntimeError(
@@ -1000,11 +1036,14 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
 
     # Handle different response statuses
     if response.status == "failed":
-        error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
+        error_msg = (
+            f"Response generation failed: {response.error}"
+            if response.error
+            else "Unknown error"
+        )
         raise RuntimeError(error_msg)
     elif response.status != "completed":
-        raise RuntimeError(
-            f"Response has unexpected status: {response.status}")
+        raise RuntimeError(f"Response has unexpected status: {response.status}")
 
     # Parse the structured output from the Responses API
     # The output_parsed property contains the Pydantic model
@@ -1117,8 +1156,7 @@ def enforce_metadata(
     payload.setdefault("dataset", DATASET_NAME)
     payload["created_on"] = date.today().isoformat()
     person = payload.setdefault("person", {})
-    name_candidates = _collect_person_name_candidates(
-        person, page_data, summary_data)
+    name_candidates = _collect_person_name_candidates(person, page_data, summary_data)
     if name_candidates:
         preferred_name = min(name_candidates, key=_name_score)
         person["name"] = preferred_name
@@ -1127,8 +1165,7 @@ def enforce_metadata(
     for key in ("birth_date", "death_date"):
         value = person.get(key)
         if value:
-            normalized, normalized_precision = normalize_date_value(
-                value, "day")
+            normalized, normalized_precision = normalize_date_value(value, "day")
             if normalized and normalized_precision == "day":
                 person[key] = normalized
             elif normalized:
@@ -1143,8 +1180,10 @@ def enforce_metadata(
     if original and isinstance(person.get("portrait"), dict):
         person["portrait"].setdefault("image", original.get("source"))
     elif original:
-        person["portrait"] = {"image": original.get(
-            "source"), "source": page_data.get("fullurl")}
+        person["portrait"] = {
+            "image": original.get("source"),
+            "source": page_data.get("fullurl"),
+        }
     death_cutoff: Optional[date] = None
     death_value = person.get("death_date")
     if isinstance(death_value, str):
@@ -1173,7 +1212,8 @@ def enforce_metadata(
         prefer_note_label = False
         if isinstance(raw_start_date, str):
             start_input, start_note, prefer_note_label = _split_date_annotation(
-                raw_start_date)
+                raw_start_date
+            )
             add_note(start_note)
 
         precision_value = event.get("date_precision") or "day"
@@ -1214,12 +1254,8 @@ def enforce_metadata(
 
         if death_cutoff is not None:
             comparison_date = normalized_end_date or normalized_date
-            comparison_precision = (
-                normalized_end_precision or normalized_precision
-            )
-            upper_bound = _upper_bound_date(
-                comparison_date, comparison_precision
-            )
+            comparison_precision = normalized_end_precision or normalized_precision
+            upper_bound = _upper_bound_date(comparison_date, comparison_precision)
             if upper_bound and upper_bound > death_cutoff:
                 # Skip events that extend beyond the subject's lifetime.
                 continue
@@ -1227,13 +1263,15 @@ def enforce_metadata(
         existing_note_raw = event.get("date_note")
         cleaned_existing_note = None
         if isinstance(existing_note_raw, str):
-            cleaned_existing_note = _clean_date_note_text(
-                existing_note_raw) or existing_note_raw.strip()
+            cleaned_existing_note = (
+                _clean_date_note_text(existing_note_raw) or existing_note_raw.strip()
+            )
         add_note(cleaned_existing_note)
 
         if note_values:
-            note_output = "; ".join(note_values) if len(
-                note_values) > 1 else note_values[0]
+            note_output = (
+                "; ".join(note_values) if len(note_values) > 1 else note_values[0]
+            )
             event["date_note"] = note_output
             if prefer_note_label:
                 event["date_label"] = note_values[0]
@@ -1274,7 +1312,10 @@ def enforce_metadata(
                     source = image_data.get("source", "").strip()
 
                     # Validate URL
-                    if not image_url or not (image_url.startswith("http://") or image_url.startswith("https://")):
+                    if not image_url or not (
+                        image_url.startswith("http://")
+                        or image_url.startswith("https://")
+                    ):
                         continue
 
                     # Check for duplicates
@@ -1284,25 +1325,31 @@ def enforce_metadata(
                     seen_images.add(key)
 
                     # Store as object with metadata
-                    sanitized_images.append({
-                        "url": image_url,
-                        "caption": caption or "Image from Wikimedia Commons",
-                        "source": source or None
-                    })
+                    sanitized_images.append(
+                        {
+                            "url": image_url,
+                            "caption": caption or "Image from Wikimedia Commons",
+                            "source": source or None,
+                        }
+                    )
                 elif isinstance(image_data, str):
                     # Legacy string format - convert to object
                     trimmed = image_data.strip()
-                    if not trimmed or not (trimmed.startswith("http://") or trimmed.startswith("https://")):
+                    if not trimmed or not (
+                        trimmed.startswith("http://") or trimmed.startswith("https://")
+                    ):
                         continue
                     key = trimmed.casefold()
                     if key in seen_images:
                         continue
                     seen_images.add(key)
-                    sanitized_images.append({
-                        "url": trimmed,
-                        "caption": "Image from Wikimedia Commons",
-                        "source": None
-                    })
+                    sanitized_images.append(
+                        {
+                            "url": trimmed,
+                            "caption": "Image from Wikimedia Commons",
+                            "source": None,
+                        }
+                    )
         # Enforce maximum of one image per event
         if sanitized_images:
             event["images"] = sanitized_images[:1]
@@ -1366,8 +1413,9 @@ def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
     person_dir = PEOPLE_DIR / person_id
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "life_events.json"
-    output_path.write_text(json.dumps(
-        payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    output_path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+    )
     return output_path
 
 
@@ -1409,13 +1457,16 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
     people = register.setdefault("people", [])
-    is_new = True
     for idx, existing in enumerate(people):
         if existing.get("id") == person_id:
             # Preserve the original 'created' timestamp if it exists
             created_timestamp = existing.get("created", current_timestamp)
-            people[idx] = {**existing, **entry, "created": created_timestamp, "lastUpdated": current_timestamp}
-            is_new = False
+            people[idx] = {
+                **existing,
+                **entry,
+                "created": created_timestamp,
+                "lastUpdated": current_timestamp,
+            }
             break
     else:
         # New entry - set both created and lastUpdated to current timestamp
@@ -1424,12 +1475,18 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
         people.append(entry)
     people.sort(key=lambda item: item.get("name", ""))
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REGISTER_PATH.write_text(json.dumps(
-        register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    REGISTER_PATH.write_text(
+        json.dumps(register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+    )
 
 
-def generate_dataset(subject: str, *, update_registry: bool = True, model: str = DEFAULT_MODEL,
-                      use_cache: bool = True) -> Tuple[Path, str]:
+def generate_dataset(
+    subject: str,
+    *,
+    update_registry: bool = True,
+    model: str = DEFAULT_MODEL,
+    use_cache: bool = True,
+) -> Tuple[Path, str]:
     print(f"[1/7] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject)
     article_title = page_data.get("title", subject)
@@ -1447,21 +1504,35 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
         try:
             ensure_cache(person_id, article_title, person_name=article_title)
             # Load from cache
-            cached_page = get_cached_wikipedia_page(person_id, article_title, use_cache=True)
-            cached_summary = get_cached_wikipedia_summary(person_id, article_title, use_cache=True)
-            commons_images = get_cached_commons_images(person_id, article_title, limit=30, use_cache=True)
+            cached_page = get_cached_wikipedia_page(
+                person_id, article_title, use_cache=True
+            )
+            cached_summary = get_cached_wikipedia_summary(
+                person_id, article_title, use_cache=True
+            )
+            commons_images = get_cached_commons_images(
+                person_id, article_title, limit=30, use_cache=True
+            )
 
             # Load related articles if available
             cache_dir = get_cache_dir(person_id)
             related_path = cache_dir / "related_articles.json"
             if related_path.exists():
                 try:
-                    related_articles = json.loads(related_path.read_text(encoding="utf-8"))
-                    print(f"[2/7] Using cached materials ({len(commons_images)} Commons images, {len(related_articles)} related articles)")
+                    related_articles = json.loads(
+                        related_path.read_text(encoding="utf-8")
+                    )
+                    print(
+                        f"[2/7] Using cached materials ({len(commons_images)} Commons images, {len(related_articles)} related articles)"
+                    )
                 except json.JSONDecodeError:
-                    print(f"[2/7] Using cached materials ({len(commons_images)} Commons images)")
+                    print(
+                        f"[2/7] Using cached materials ({len(commons_images)} Commons images)"
+                    )
             else:
-                print(f"[2/7] Using cached materials ({len(commons_images)} Commons images)")
+                print(
+                    f"[2/7] Using cached materials ({len(commons_images)} Commons images)"
+                )
 
             # Use cached data
             page_data = cached_page
@@ -1470,20 +1541,26 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
             print(f"[2/7] Cache unavailable ({e}), fetching directly...")
             summary_data = fetch_wikipedia_summary(article_title)
     else:
-        print(f"[2/7] Retrieving summary details...")
+        print("[2/7] Retrieving summary details...")
         summary_data = fetch_wikipedia_summary(article_title)
         if summary_data:
             print("[2/7] Summary retrieved successfully.")
         else:
             print(
-                "[2/7] No summary endpoint data available; continuing with page extract only.")
+                "[2/7] No summary endpoint data available; continuing with page extract only."
+            )
 
     # Fetch related articles if not already loaded from cache
     if related_articles is None and fetch_related_articles is not None:
         print("[3/7] Fetching related articles...")
         try:
-            related_articles = fetch_related_articles(article_title, max_related=15, model=model,
-                                                     use_cache=use_cache, person_id=person_id)
+            related_articles = fetch_related_articles(
+                article_title,
+                max_related=15,
+                model=model,
+                use_cache=use_cache,
+                person_id=person_id,
+            )
             print(f"[3/7] Found {len(related_articles)} related articles.")
 
             # Cache the related articles if we fetched them
@@ -1493,19 +1570,27 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
                 cache_dir.mkdir(parents=True, exist_ok=True)
                 related_path.write_text(
                     json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
-                    encoding="utf-8"
+                    encoding="utf-8",
                 )
                 print(f"[3/7] Cached {len(related_articles)} related articles.")
         except Exception as e:
             print(f"[3/7] Warning: Failed to fetch related articles ({e})")
             related_articles = None
 
-    print("[3/7] Building prompt for OpenAI response (including Commons search and related articles)...")
-    prompt = build_prompt(page_data, summary_data, subject, commons_images=commons_images, related_articles=related_articles)
+    print(
+        "[3/7] Building prompt for OpenAI response (including Commons search and related articles)..."
+    )
+    prompt = build_prompt(
+        page_data,
+        summary_data,
+        subject,
+        commons_images=commons_images,
+        related_articles=related_articles,
+    )
 
     print(f"[4/7] Requesting structured dataset from model '{model}'...")
     payload = call_openai(prompt, model)
-    print(f"[4/7] Response received from OpenAI.")
+    print("[4/7] Response received from OpenAI.")
 
     print("[5/7] Normalizing dataset metadata...")
     payload = enforce_metadata(payload, page_data, summary_data)
@@ -1533,13 +1618,17 @@ def generate_dataset(subject: str, *, update_registry: bool = True, model: str =
 
 def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate life event datasets using Wikipedia and the OpenAI API.")
+        description="Generate life event datasets using Wikipedia and the OpenAI API."
+    )
+    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
     parser.add_argument(
-        "subject", help="Person to research, e.g. 'Ada Lovelace'.")
-    parser.add_argument("--no-register", action="store_true",
-                        help="Skip updating the persons register.")
-    parser.add_argument("--no-cache", action="store_true",
-                        help="Skip using cached Wikipedia materials and fetch directly from APIs.")
+        "--no-register", action="store_true", help="Skip updating the persons register."
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Skip using cached Wikipedia materials and fetch directly from APIs.",
+    )
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,

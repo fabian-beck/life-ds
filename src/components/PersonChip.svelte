@@ -23,7 +23,7 @@
     }
     // Remove scroll listener
     if (scrollContainer) {
-      scrollContainer.removeEventListener('scroll', handleScroll);
+      scrollContainer.removeEventListener("scroll", handleScroll);
     }
   });
 
@@ -40,7 +40,9 @@
 
     // Use separator_glyph_svg if available
     if (styleConfig?.separatorGlyphSvg) {
-      return items.join(`<span class="separator-glyph" style="display: inline-block; margin: 0 0.35rem; width: 0.85em; height: 0.85em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`);
+      return items.join(
+        `<span class="separator-glyph" style="display: inline-block; margin: 0 0.35rem; width: 0.85em; height: 0.85em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
+      );
     }
 
     // Fallback to comma
@@ -51,10 +53,10 @@
     if (!name) return "";
 
     // Remove text in brackets (parentheses or square brackets)
-    let truncated = name.replace(/\s*[\(\[].*?[\)\]]/g, '');
+    let truncated = name.replace(/\s*[([].*?[)\]]/g, "");
 
     // Remove text after comma
-    const commaIndex = truncated.indexOf(',');
+    const commaIndex = truncated.indexOf(",");
     if (commaIndex !== -1) {
       truncated = truncated.substring(0, commaIndex);
     }
@@ -81,13 +83,22 @@
           // Apply style config CSS variables to tooltip
           if (styleConfig) {
             if (styleConfig.primary) {
-              tooltipElement.style.setProperty('--story-primary', styleConfig.primary);
+              tooltipElement.style.setProperty(
+                "--story-primary",
+                styleConfig.primary
+              );
             }
             if (styleConfig.secondary) {
-              tooltipElement.style.setProperty('--story-secondary', styleConfig.secondary);
+              tooltipElement.style.setProperty(
+                "--story-secondary",
+                styleConfig.secondary
+              );
             }
             if (styleConfig.bodyFont) {
-              tooltipElement.style.setProperty('--story-body-font', `"${styleConfig.bodyFont}", Inter, sans-serif`);
+              tooltipElement.style.setProperty(
+                "--story-body-font",
+                `"${styleConfig.bodyFont}", Inter, sans-serif`
+              );
             }
           }
 
@@ -97,7 +108,7 @@
           if (containerSelector && !scrollContainer) {
             scrollContainer = document.querySelector(containerSelector);
             if (scrollContainer) {
-              scrollContainer.addEventListener('scroll', handleScroll);
+              scrollContainer.addEventListener("scroll", handleScroll);
             }
           }
         }
@@ -111,7 +122,7 @@
 
       // Remove scroll listener
       if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', handleScroll);
+        scrollContainer.removeEventListener("scroll", handleScroll);
         scrollContainer = null;
       }
     }
@@ -136,9 +147,13 @@
 
     // Use container bounds if available, otherwise use viewport
     const boundaryTop = containerRect ? containerRect.top : 0;
-    const boundaryBottom = containerRect ? containerRect.bottom : window.innerHeight;
+    const boundaryBottom = containerRect
+      ? containerRect.bottom
+      : window.innerHeight;
     const boundaryLeft = containerRect ? containerRect.left : 0;
-    const boundaryRight = containerRect ? containerRect.right : window.innerWidth;
+    const boundaryRight = containerRect
+      ? containerRect.right
+      : window.innerWidth;
 
     // Check if there's enough space above
     const spaceAbove = buttonRect.top - boundaryTop;
@@ -155,13 +170,17 @@
       topPos = buttonRect.bottom + offset;
     } else {
       // Not enough space either way, prefer top but clamp to container
-      topPos = Math.max(boundaryTop + padding, buttonRect.top - tooltipHeight - offset);
+      topPos = Math.max(
+        boundaryTop + padding,
+        buttonRect.top - tooltipHeight - offset
+      );
     }
 
     tooltipElement.style.top = `${topPos}px`;
 
     // Position horizontally - center on button by default
-    let leftPos = buttonRect.left + (buttonRect.width / 2) - (tooltipRect.width / 2);
+    let leftPos =
+      buttonRect.left + buttonRect.width / 2 - tooltipRect.width / 2;
 
     // Clamp horizontal position to container boundaries
     const minLeft = boundaryLeft + padding;
@@ -182,14 +201,17 @@
     class="person-chip {person.strength ? `strength-${person.strength}` : ''}"
     bind:this={buttonElement}
     on:click|stopPropagation={handleClick}
-    aria-label={$_('person.show_info', { name: person.person_name })}
+    aria-label={$_("person.show_info", { name: person.person_name })}
     aria-expanded={isExpanded}
   >
-    <span class="person-name" class:long-name={isLongName}>{truncatedName}</span>
+    <span class="person-name" class:long-name={isLongName}>{truncatedName}</span
+    >
     {#if subcategory}
       <span class="person-role">{subcategory.replace(/_/g, " ")}</span>
     {:else}
-      <span class="person-role">{person.relationship_type?.replace(/_/g, " ") || ""}</span>
+      <span class="person-role"
+        >{person.relationship_type?.replace(/_/g, " ") || ""}</span
+      >
     {/if}
   </button>
 </div>
@@ -205,11 +227,14 @@
     {#if person.start_year || person.end_year}
       <p class="tooltip-years">
         {#if person.start_year && person.end_year}
-          {$_('person.years_range', { start: person.start_year, end: person.end_year })}
+          {$_("person.years_range", {
+            start: person.start_year,
+            end: person.end_year,
+          })}
         {:else if person.start_year}
-          {$_('person.from_year', { year: person.start_year })}
+          {$_("person.from_year", { year: person.start_year })}
         {:else if person.end_year}
-          {$_('person.until_year', { year: person.end_year })}
+          {$_("person.until_year", { year: person.end_year })}
         {/if}
       </p>
     {/if}
@@ -222,7 +247,7 @@
       <div class="tooltip-meta">
         {#if person.strength}
           <span class="meta-item">
-            <span class="meta-label">{$_('person.strength')}</span>
+            <span class="meta-label">{$_("person.strength")}</span>
             <span class="meta-value strength-{person.strength}"
               >{person.strength}</span
             >
@@ -230,13 +255,13 @@
         {/if}
         {#if person.interaction_frequency}
           <span class="meta-item">
-            <span class="meta-label">{$_('person.frequency')}</span>
+            <span class="meta-label">{$_("person.frequency")}</span>
             <span class="meta-value">{person.interaction_frequency}</span>
           </span>
         {/if}
         {#if person.influence_direction}
           <span class="meta-item">
-            <span class="meta-label">{$_('person.influence')}</span>
+            <span class="meta-label">{$_("person.influence")}</span>
             <span class="meta-value"
               >{person.influence_direction.replace(/_/g, " ")}</span
             >

@@ -5,17 +5,11 @@ import argparse
 import json
 import os
 import sys
-from pathlib import Path
-from typing import List
 
 from openai import OpenAI
 
 from config import DEFAULT_MODEL
-from translate_person import (
-    translate_person_data,
-    REGISTER_PATH,
-    LANGUAGE_NAMES
-)
+from translate_person import translate_person_data, REGISTER_PATH, LANGUAGE_NAMES
 
 
 def main():
@@ -25,32 +19,28 @@ def main():
     parser.add_argument(
         "--target-lang",
         required=True,
-        help="Target language code (e.g., 'de', 'fr', 'es')"
+        help="Target language code (e.g., 'de', 'fr', 'es')",
     )
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Re-translate even if translation already exists"
+        help="Re-translate even if translation already exists",
     )
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})"
+        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
     )
     parser.add_argument(
         "--persons",
-        help="Comma-separated list of person IDs to translate (default: all)"
+        help="Comma-separated list of person IDs to translate (default: all)",
     )
     parser.add_argument(
         "--skip-registry",
         action="store_true",
-        help="Skip updating the language-specific registry file"
+        help="Skip updating the language-specific registry file",
     )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose output"
-    )
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
 
     args = parser.parse_args()
 
@@ -118,7 +108,7 @@ def main():
                 client=client,
                 model=args.model,
                 force=args.force,
-                verbose=args.verbose
+                verbose=args.verbose,
             )
 
             # Check if anything was translated
@@ -129,13 +119,20 @@ def main():
             else:
                 # Could be skipped or failed
                 from pathlib import Path
-                target_dir = Path(__file__).resolve().parents[1] / "data" / "people" / person_id / args.target_lang
+
+                target_dir = (
+                    Path(__file__).resolve().parents[1]
+                    / "data"
+                    / "people"
+                    / person_id
+                    / args.target_lang
+                )
                 if not args.force and target_dir.exists():
                     skipped.append(person_id)
-                    print(f"  → Skipped (already exists)")
+                    print("  → Skipped (already exists)")
                 else:
                     failed.append(person_id)
-                    print(f"  ✗ Failed")
+                    print("  ✗ Failed")
 
         except KeyboardInterrupt:
             print("\n\nTranslation interrupted by user")

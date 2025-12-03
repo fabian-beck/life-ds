@@ -5,7 +5,6 @@ import argparse
 import json
 import os
 import sys
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 
 from openai import OpenAI
@@ -46,16 +45,8 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
     response.raise_for_status()
     data = response.json()
     results = data.get("query", {}).get("search", [])
-    titles: List[str] = [
-        item.get("title")
-        for item in results
-        if item.get("title")
-    ]
-    suggestion = (
-        data.get("query", {})
-        .get("searchinfo", {})
-        .get("suggestion")
-    )
+    titles: List[str] = [item.get("title") for item in results if item.get("title")]
+    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
     if suggestion:
         titles.append(suggestion)
     return titles
@@ -84,7 +75,10 @@ def find_wikipedia_page(title: str) -> str:
     if normalized_title.casefold() != title.casefold():
         add_candidate(normalized_title)
     parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
-    if parenthetical and parenthetical.casefold() not in {title.casefold(), normalized_title.casefold()}:
+    if parenthetical and parenthetical.casefold() not in {
+        title.casefold(),
+        normalized_title.casefold(),
+    }:
         add_candidate(parenthetical)
 
     index = 0
@@ -156,9 +150,19 @@ def should_exclude_link(link_title: str, main_title: str) -> bool:
 
     # Exclude navigation/meta pages
     exclude_patterns = [
-        "list of", "index of", "category:", "portal:", "wikipedia:",
-        "help:", "template:", "file:", "user:", "talk:",
-        "disambiguation", "outline of", "timeline of"
+        "list o",
+        "index o",
+        "category:",
+        "portal:",
+        "wikipedia:",
+        "help:",
+        "template:",
+        "file:",
+        "user:",
+        "talk:",
+        "disambiguation",
+        "outline o",
+        "timeline o",
     ]
 
     for pattern in exclude_patterns:
@@ -174,13 +178,19 @@ def should_exclude_link(link_title: str, main_title: str) -> bool:
 
 class SelectedArticles(BaseModel):
     """Top selected articles for biographical context."""
+
     selected_titles: List[str] = Field(
         description="List of selected article titles, ordered by relevance (most relevant first)"
     )
 
 
-def select_articles_with_ai(person_name: str, person_summary: str, candidate_titles: List[str],
-                            max_to_select: int, model: str = DEFAULT_MODEL) -> List[str]:
+def select_articles_with_ai(
+    person_name: str,
+    person_summary: str,
+    candidate_titles: List[str],
+    max_to_select: int,
+    model: str = DEFAULT_MODEL,
+) -> List[str]:
     """Use AI to select the most relevant articles from candidates."""
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -190,7 +200,7 @@ def select_articles_with_ai(person_name: str, person_summary: str, candidate_tit
     client = OpenAI(api_key=api_key)
 
     # Build prompt
-    prompt = f"""You are analyzing Wikipedia articles to find the most relevant related content for a biographical article.
+    prompt = """You are analyzing Wikipedia articles to find the most relevant related content for a biographical article.
 
 Subject: {person_name}
 Summary: {person_summary}
@@ -266,8 +276,13 @@ Return exactly {max_to_select} article titles about PEOPLE and LIFE EVENTS, orde
         return candidate_titles[:max_to_select]
 
 
-def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAULT_MODEL,
-                           use_cache: bool = True, person_id: Optional[str] = None) -> List[Dict[str, Any]]:
+def fetch_related_articles(
+    title: str,
+    max_related: int = 15,
+    model: str = DEFAULT_MODEL,
+    use_cache: bool = True,
+    person_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """Fetch related Wikipedia articles using AI to select the most relevant ones.
 
     Fetches up to 1000 linked articles from both EN and DE, filters out navigation pages,
@@ -287,11 +302,13 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
     identifier = person_id or slugify(title)
 
     # First, get basic info about the person for AI selection
-    print(f"    Fetching main article data (checking EN and DE)...")
+    print("    Fetching main article data (checking EN and DE)...")
     try:
         if use_cache:
             # Try to use cached version first
-            main_page_data = get_cached_wikipedia_page(identifier, title, use_cache=True)
+            main_page_data = get_cached_wikipedia_page(
+                identifier, title, use_cache=True
+            )
         else:
             main_page_data = _fetch_wikipedia_page_direct(title)
 
@@ -305,7 +322,7 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
         person_summary = ""
 
     # Get up to 1000 links from both English and German pages
-    print(f"    Fetching linked articles from EN and DE...")
+    print("    Fetching linked articles from EN and DE...")
     all_links_en = []
     all_links_de = []
 
@@ -349,10 +366,12 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
             seen_links.add(link_lower)
             all_links.append(link)
 
-    print(f"      Found {len(all_links_en)} EN links, {len(all_links_de)} DE links, {len(all_links)} total unique")
+    print(
+        f"      Found {len(all_links_en)} EN links, {len(all_links_de)} DE links, {len(all_links)} total unique"
+    )
 
     if not all_links:
-        print(f"    No links found on the page")
+        print("    No links found on the page")
         return []
 
     # Filter out excluded links
@@ -368,17 +387,21 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
         return []
 
     # Use AI to select top articles from all candidates
-    print(f"    Using AI to select top {max_related} from {len(candidate_links)} candidates...")
+    print(
+        f"    Using AI to select top {max_related} from {len(candidate_links)} candidates..."
+    )
     selected_titles = select_articles_with_ai(
         person_name=title,
         person_summary=person_summary,
         candidate_titles=candidate_links,
         max_to_select=max_related,
-        model=model
+        model=model,
     )
 
     # Fetch full article data for selected titles (using EN/DE preference logic)
-    print(f"    Fetching full text for {len(selected_titles)} selected articles (checking EN and DE)...")
+    print(
+        f"    Fetching full text for {len(selected_titles)} selected articles (checking EN and DE)..."
+    )
     related_articles = []
     for link_title in selected_titles:
         try:
@@ -392,12 +415,16 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
                     # Check if cache already exists
                     if cache_exists(related_person_id):
                         # Load from existing cache
-                        page_data = get_cached_wikipedia_page(related_person_id, link_title, use_cache=True)
+                        page_data = get_cached_wikipedia_page(
+                            related_person_id, link_title, use_cache=True
+                        )
                     else:
                         # No cache exists - fetch directly without creating cache
                         page_data = _fetch_wikipedia_page_direct(link_title)
                 except Exception as cache_error:
-                    print(f"      Warning: Cache read failed for '{link_title}', fetching directly: {cache_error}")
+                    print(
+                        f"      Warning: Cache read failed for '{link_title}', fetching directly: {cache_error}"
+                    )
                     page_data = _fetch_wikipedia_page_direct(link_title)
             else:
                 page_data = _fetch_wikipedia_page_direct(link_title)
@@ -410,17 +437,25 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
 
             # Determine URL based on source language
             if source_lang == "de":
-                url = page_data.get("fullurl", f"https://de.wikipedia.org/wiki/{link_title.replace(' ', '_')}")
+                url = page_data.get(
+                    "fullurl",
+                    f"https://de.wikipedia.org/wiki/{link_title.replace(' ', '_')}",
+                )
             else:
-                url = page_data.get("fullurl", f"https://en.wikipedia.org/wiki/{link_title.replace(' ', '_')}")
+                url = page_data.get(
+                    "fullurl",
+                    f"https://en.wikipedia.org/wiki/{link_title.replace(' ', '_')}",
+                )
 
-            related_articles.append({
-                "title": page_data.get("title", link_title),
-                "summary": summary,
-                "fullText": extract,
-                "url": url,
-                "language": source_lang
-            })
+            related_articles.append(
+                {
+                    "title": page_data.get("title", link_title),
+                    "summary": summary,
+                    "fullText": extract,
+                    "url": url,
+                    "language": source_lang,
+                }
+            )
 
         except Exception as error:
             print(f"    Warning: Failed to fetch '{link_title}': {error}")
@@ -435,8 +470,14 @@ def fetch_related_articles(title: str, max_related: int = 15, model: str = DEFAU
     return related_articles
 
 
-def cache_person(subject: str, *, person_id: Optional[str] = None, force: bool = False,
-                 max_related: int = 15, model: str = DEFAULT_MODEL) -> str:
+def cache_person(
+    subject: str,
+    *,
+    person_id: Optional[str] = None,
+    force: bool = False,
+    max_related: int = 15,
+    model: str = DEFAULT_MODEL,
+) -> str:
     """Cache Wikipedia materials for a person."""
     # Find the Wikipedia page
     print(f"Looking up Wikipedia page for '{subject}'...")
@@ -457,14 +498,19 @@ def cache_person(subject: str, *, person_id: Optional[str] = None, force: bool =
     # Fetch and cache related articles by default
     if max_related > 0:
         try:
-            related_articles = fetch_related_articles(canonical_title, max_related=max_related, model=model,
-                                                     use_cache=True, person_id=identifier)
+            related_articles = fetch_related_articles(
+                canonical_title,
+                max_related=max_related,
+                model=model,
+                use_cache=True,
+                person_id=identifier,
+            )
             if related_articles:
                 cache_dir = get_cache_dir(identifier)
                 related_path = cache_dir / "related_articles.json"
                 related_path.write_text(
                     json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
-                    encoding="utf-8"
+                    encoding="utf-8",
                 )
                 print(f"  - Cached {len(related_articles)} related articles")
         except Exception as error:
@@ -479,24 +525,23 @@ def parse_args(argv: Any) -> argparse.Namespace:
         description="Pre-fetch and cache Wikipedia materials for a person."
     )
     parser.add_argument(
-        "subject",
-        help="Person to cache materials for, e.g. 'Ada Lovelace'."
+        "subject", help="Person to cache materials for, e.g. 'Ada Lovelace'."
     )
     parser.add_argument(
         "--id",
         dest="person_id",
-        help="Optional person ID to use instead of auto-generating from title."
+        help="Optional person ID to use instead of auto-generating from title.",
     )
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Force refresh cache even if it already exists."
+        help="Force refresh cache even if it already exists.",
     )
     parser.add_argument(
         "--max-related",
         type=int,
         default=15,
-        help="Maximum number of related articles to cache (default: 15, use 0 to disable)."
+        help="Maximum number of related articles to cache (default: 15, use 0 to disable).",
     )
     parser.add_argument(
         "--model",

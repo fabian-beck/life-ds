@@ -3,13 +3,15 @@
 
 import argparse
 import sys
-from pathlib import Path
 from typing import Any
 
 # Import the individual generation functions
 from generate_person_dataset import generate_dataset, DEFAULT_MODEL as DATASET_MODEL
 from generate_person_style import generate_style, DEFAULT_MODEL as STYLE_MODEL
-from generate_person_network import generate_person_network, DEFAULT_MODEL as NETWORK_MODEL
+from generate_person_network import (
+    generate_person_network,
+    DEFAULT_MODEL as NETWORK_MODEL,
+)
 
 
 def parse_args(argv: Any) -> argparse.Namespace:
@@ -17,14 +19,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate complete person dataset (life events, interface style, and ego network)."
     )
+    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
     parser.add_argument(
-        "subject",
-        help="Person to research, e.g. 'Ada Lovelace'."
-    )
-    parser.add_argument(
-        "--no-register",
-        action="store_true",
-        help="Skip updating the persons register."
+        "--no-register", action="store_true", help="Skip updating the persons register."
     )
     parser.add_argument(
         "--model",
@@ -36,17 +33,17 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser.add_argument(
         "--dataset-only",
         action="store_true",
-        help="Generate only life events dataset (skip interface style and network)."
+        help="Generate only life events dataset (skip interface style and network).",
     )
     parser.add_argument(
         "--style-only",
         action="store_true",
-        help="Generate only interface style (skip dataset and network)."
+        help="Generate only interface style (skip dataset and network).",
     )
     parser.add_argument(
         "--network-only",
         action="store_true",
-        help="Generate only ego network (skip dataset and interface style)."
+        help="Generate only ego network (skip dataset and interface style).",
     )
     return parser.parse_args(argv)
 
@@ -72,9 +69,9 @@ def main(argv: Any = None) -> int:
 
         # Step 1: Generate life events dataset
         if run_dataset:
-            print("\n" + "="*60)
+            print("\n" + "=" * 60)
             print("STEP 1/3: Generating life events dataset")
-            print("="*60 + "\n")
+            print("=" * 60 + "\n")
             dataset_path, person_id = generate_dataset(
                 args.subject,
                 update_registry=update_registry,
@@ -86,9 +83,9 @@ def main(argv: Any = None) -> int:
 
         # Step 2: Generate interface style
         if run_style:
-            print("\n" + "="*60)
+            print("\n" + "=" * 60)
             print("STEP 2/3: Generating interface style")
-            print("="*60 + "\n")
+            print("=" * 60 + "\n")
             style_result = generate_style(
                 args.subject,
                 person_id=person_id,
@@ -100,9 +97,9 @@ def main(argv: Any = None) -> int:
 
         # Step 3: Generate ego network
         if run_network:
-            print("\n" + "="*60)
+            print("\n" + "=" * 60)
             print("STEP 3/3: Generating ego network")
-            print("="*60 + "\n")
+            print("=" * 60 + "\n")
             network_path = generate_person_network(
                 args.subject,
                 person_id=person_id,
@@ -114,11 +111,13 @@ def main(argv: Any = None) -> int:
             print("\n⊘ Skipping ego network generation")
 
         # Final summary
-        print("\n" + "="*60)
+        print("\n" + "=" * 60)
         print("GENERATION COMPLETE")
-        print("="*60)
+        print("=" * 60)
         steps_run = sum([run_dataset, run_style, run_network])
-        print(f"✓ Successfully generated {steps_run} of 3 datasets for '{args.subject}'")
+        print(
+            f"✓ Successfully generated {steps_run} of 3 datasets for '{args.subject}'"
+        )
         if not update_registry:
             print("⊘ Register update skipped by request")
 

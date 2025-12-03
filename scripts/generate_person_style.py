@@ -8,7 +8,6 @@ import json
 import os
 import re
 import sys
-from collections.abc import Iterable
 from pathlib import Path
 from typing import Any, Dict
 from xml.etree import ElementTree as ET
@@ -60,7 +59,6 @@ def compact_svg(svg: str) -> str:
     if not svg:
         return ""
     # Normalize whitespace outside of quoted attributes.
-    parts: list[str] = []
     buffer: list[str] = []
     in_quote = False
     quote_char = ""
@@ -99,12 +97,14 @@ def normalise_bw_color(value: str | None, *, allow_none: bool = False) -> str | 
         return None
     if allow_none and lowered in {"none", "transparent"}:
         return "none"
-    if lowered in {"#fff", "#ffffff", "white"}:
+    if lowered in {"#ff", "#fffff", "white"}:
         return "#FFFFFF"
     if lowered in {"#000", "#000000", "black"}:
         return "#000000"
     rgb_match = re.fullmatch(
-        r"rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*(0|0?\.\d+|1))?\s*\)", lowered)
+        r"rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*(0|0?\.\d+|1))?\s*\)",
+        lowered,
+    )
     if rgb_match:
         r, g, b = (int(channel) for channel in rgb_match.groups()[:3])
         avg = (r + g + b) / 3
@@ -138,12 +138,10 @@ def sanitise_pattern_svg(svg: str) -> str:
     try:
         root = ET.fromstring(svg)
     except ET.ParseError as exc:
-        raise ValueError(
-            f"background_pattern_svg must be valid SVG: {exc}") from exc
+        raise ValueError(f"background_pattern_svg must be valid SVG: {exc}") from exc
 
     if strip_namespace(root.tag) != "svg":
-        raise ValueError(
-            "background_pattern_svg must have an <svg> root element.")
+        raise ValueError("background_pattern_svg must have an <svg> root element.")
 
     root.set("xmlns", root.attrib.get("xmlns", "http://www.w3.org/2000/svg"))
     root.set("width", "160")
@@ -167,8 +165,7 @@ def sanitise_pattern_svg(svg: str) -> str:
             height = element.attrib.get("height", "160")
             x = element.attrib.get("x", "0")
             y = element.attrib.get("y", "0")
-            fill = normalise_bw_color(
-                element.attrib.get("fill"), allow_none=True)
+            fill = normalise_bw_color(element.attrib.get("fill"), allow_none=True)
             if (
                 fill == "#000000"
                 and x in {"0", "0.0"}
@@ -205,11 +202,14 @@ def sanitise_pattern_svg(svg: str) -> str:
             white_element_present = True
 
     if not background_present:
-        background_rect = ET.Element("rect", {
-            "width": "160",
-            "height": "160",
-            "fill": "#000000",
-        })
+        background_rect = ET.Element(
+            "rect",
+            {
+                "width": "160",
+                "height": "160",
+                "fill": "#000000",
+            },
+        )
         root.insert(0, background_rect)
 
     if not white_element_present:
@@ -219,8 +219,8 @@ def sanitise_pattern_svg(svg: str) -> str:
 
     sanitised = ET.tostring(root, encoding="unicode")
     # Remove namespace prefixes for cleaner output
-    sanitised = re.sub(r'\bns\d+:', '', sanitised)
-    sanitised = re.sub(r'\s+xmlns:ns\d+="[^"]*"', '', sanitised)
+    sanitised = re.sub(r"\bns\d+:", "", sanitised)
+    sanitised = re.sub(r'\s+xmlns:ns\d+="[^"]*"', "", sanitised)
     return compact_svg(sanitised)
 
 
@@ -229,12 +229,10 @@ def sanitise_separator_glyph_svg(svg: str, primary_color: str) -> str:
     try:
         root = ET.fromstring(svg)
     except ET.ParseError as exc:
-        raise ValueError(
-            f"separator_glyph_svg must be valid SVG: {exc}") from exc
+        raise ValueError(f"separator_glyph_svg must be valid SVG: {exc}") from exc
 
     if strip_namespace(root.tag) != "svg":
-        raise ValueError(
-            "separator_glyph_svg must have an <svg> root element.")
+        raise ValueError("separator_glyph_svg must have an <svg> root element.")
 
     root.set("xmlns", root.attrib.get("xmlns", "http://www.w3.org/2000/svg"))
 
@@ -264,8 +262,8 @@ def sanitise_separator_glyph_svg(svg: str, primary_color: str) -> str:
 
     sanitised = ET.tostring(root, encoding="unicode")
     # Remove namespace prefixes for cleaner output
-    sanitised = re.sub(r'\bns\d+:', '', sanitised)
-    sanitised = re.sub(r'\s+xmlns:ns\d+="[^"]*"', '', sanitised)
+    sanitised = re.sub(r"\bns\d+:", "", sanitised)
+    sanitised = re.sub(r'\s+xmlns:ns\d+="[^"]*"', "", sanitised)
     return compact_svg(sanitised)
 
 
@@ -360,8 +358,7 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
             + ". Choose a readable font that pairs well with the heading_font and suits the content tone."
         ),
     ]
-    details.append(
-        f"Subject identifier: {person_id}\nRequested subject: {subject}")
+    details.append(f"Subject identifier: {person_id}\nRequested subject: {subject}")
     if context:
         details.append("Context data:")
         details.append(json.dumps(context, ensure_ascii=True, indent=2))
@@ -390,8 +387,9 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
             text={"format": {"type": "json_object"}},
         )
     except APIStatusError as error:
-        message = getattr(getattr(error, "response", {}),
-                          "text", str(error))  # type: ignore[attr-defined]
+        message = getattr(
+            getattr(error, "response", {}), "text", str(error)
+        )  # type: ignore[attr-defined]
         raise RuntimeError(
             "OpenAI API request failed. Check your API key, model access, and billing status. "
             f"Details: {getattr(error, 'status_code', 'unknown')} {message}"
@@ -399,7 +397,11 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
 
     # Handle different response statuses
     if response.status == "failed":
-        error_msg = f"Response generation failed: {response.error}" if response.error else "Unknown error"
+        error_msg = (
+            f"Response generation failed: {response.error}"
+            if response.error
+            else "Unknown error"
+        )
         raise RuntimeError(error_msg)
     elif response.status != "completed":
         raise RuntimeError(f"Response has unexpected status: {response.status}")
@@ -430,18 +432,19 @@ def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError("background must be a #RRGGBB hex color.")
     if not isinstance(pattern_svg, str) or "<svg" not in pattern_svg:
         raise ValueError(
-            "background_pattern_svg must be an SVG string containing '<svg'.")
+            "background_pattern_svg must be an SVG string containing '<svg'."
+        )
     if not isinstance(separator_svg, str) or "<svg" not in separator_svg:
-        raise ValueError(
-            "separator_glyph_svg must be an SVG string containing '<svg'.")
-    if not isinstance(heading_font, str) or heading_font.strip() not in HEADING_FONT_CHOICES:
+        raise ValueError("separator_glyph_svg must be an SVG string containing '<svg'.")
+    if (
+        not isinstance(heading_font, str)
+        or heading_font.strip() not in HEADING_FONT_CHOICES
+    ):
         raise ValueError(
             "heading_font must be one of: " + ", ".join(HEADING_FONT_CHOICES)
         )
     if not isinstance(body_font, str) or body_font.strip() not in BODY_FONT_CHOICES:
-        raise ValueError(
-            "body_font must be one of: " + ", ".join(BODY_FONT_CHOICES)
-        )
+        raise ValueError("body_font must be one of: " + ", ".join(BODY_FONT_CHOICES))
 
     compact_pattern = sanitise_pattern_svg(pattern_svg)
     compact_separator = sanitise_separator_glyph_svg(separator_svg, primary.upper())
@@ -476,11 +479,18 @@ def load_styles() -> Dict[str, Any]:
 
 def write_styles(data: Dict[str, Any]) -> None:
     STYLES_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STYLES_PATH.write_text(json.dumps(
-        data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    STYLES_PATH.write_text(
+        json.dumps(data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+    )
 
 
-def generate_style(subject: str, *, person_id: str | None = None, model: str = DEFAULT_MODEL, dry_run: bool = False) -> Dict[str, Any]:
+def generate_style(
+    subject: str,
+    *,
+    person_id: str | None = None,
+    model: str = DEFAULT_MODEL,
+    dry_run: bool = False,
+) -> Dict[str, Any]:
     identifier = person_id or slugify(subject)
     context = load_dataset_context(identifier)
     prompt = build_prompt(subject, identifier, context)
@@ -498,11 +508,16 @@ def generate_style(subject: str, *, person_id: str | None = None, model: str = D
 
 def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate a personalised dark-mode styling configuration using the OpenAI API.")
+        description="Generate a personalised dark-mode styling configuration using the OpenAI API."
+    )
     parser.add_argument(
-        "subject", help="Name or description of the person, e.g. 'Ada Lovelace'.")
-    parser.add_argument("--id", dest="person_id",
-                        help="Optional slug or identifier to use instead of auto-slugifying the subject.")
+        "subject", help="Name or description of the person, e.g. 'Ada Lovelace'."
+    )
+    parser.add_argument(
+        "--id",
+        dest="person_id",
+        help="Optional slug or identifier to use instead of auto-slugifying the subject.",
+    )
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
@@ -535,8 +550,7 @@ def main(argv: Any = None) -> int:
     if args.dry_run:
         print(json.dumps(result, indent=2, ensure_ascii=True))
     else:
-        print(
-            f"Styling generated for '{result['id']}' and written to {STYLES_PATH}")
+        print(f"Styling generated for '{result['id']}' and written to {STYLES_PATH}")
     return 0
 
 

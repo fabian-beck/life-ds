@@ -41,7 +41,9 @@
     connections.forEach((connection) => {
       const fullType = connection.relationship_type || "other";
       // Extract the main category (before the slash)
-      const mainCategory = fullType.includes('/') ? fullType.split('/')[0] : fullType;
+      const mainCategory = fullType.includes("/")
+        ? fullType.split("/")[0]
+        : fullType;
 
       if (!groups[mainCategory]) {
         groups[mainCategory] = [];
@@ -57,9 +59,9 @@
     const children = [];
     const otherRelatives = [];
 
-    const parentTypes = ['mother', 'father', 'parent'];
-    const spouseTypes = ['spouse', 'partner', 'husband', 'wife'];
-    const childTypes = ['son', 'daughter', 'child'];
+    const parentTypes = ["mother", "father", "parent"];
+    const spouseTypes = ["spouse", "partner", "husband", "wife"];
+    const childTypes = ["son", "daughter", "child"];
 
     familyConnections.forEach((connection) => {
       const subcategory = getSubcategory(connection.relationship_type);
@@ -78,12 +80,12 @@
       parents: sortByStrength(parents),
       spouses: sortByStrength(spouses),
       children: sortByStrength(children),
-      otherRelatives: sortByStrength(otherRelatives)
+      otherRelatives: sortByStrength(otherRelatives),
     };
   }
 
   function sortByStrength(connections) {
-    const strengthOrder = { 'strong': 0, 'moderate': 1, 'weak': 2 };
+    const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
     return connections.sort((a, b) => {
       const aStrength = strengthOrder[a.strength] ?? 3;
       const bStrength = strengthOrder[b.strength] ?? 3;
@@ -92,10 +94,10 @@
   }
 
   function getSubcategory(relationshipType) {
-    if (!relationshipType || !relationshipType.includes('/')) {
+    if (!relationshipType || !relationshipType.includes("/")) {
       return null;
     }
-    return relationshipType.split('/')[1];
+    return relationshipType.split("/")[1];
   }
 
   function togglePersonInfo(personKey) {
@@ -129,7 +131,11 @@
 <div class="modal-overlay" on:click={onClose}>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="network-modal" style={storyStyleVars(styleConfig)} on:click|stopPropagation>
+  <div
+    class="network-modal"
+    style={storyStyleVars(styleConfig)}
+    on:click|stopPropagation
+  >
     <div class="modal-header">
       <h3 class="modal-title">
         <svg
@@ -140,13 +146,13 @@
         >
           <path d={mdiAccountMultipleOutline} />
         </svg>
-        {$_('network.title', { name: personName })}
+        {$_("network.title", { name: personName })}
       </h3>
       <button
         type="button"
         class="modal-close"
         on:click={onClose}
-        aria-label={$_('network.close')}
+        aria-label={$_("network.close")}
       >
         <svg
           class="icon"
@@ -161,17 +167,19 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="modal-content" on:click={handleClickOutside}>
-      {#each Object.entries(groupedPeople).sort( ([a], [b]) => {
-        if (a === 'family') return -1;
-        if (b === 'family') return 1;
+      {#each Object.entries(groupedPeople).sort(([a], [b]) => {
+        if (a === "family") return -1;
+        if (b === "family") return 1;
         return a.localeCompare(b);
-      } ) as [type, people]}
-        {#if type === 'family'}
+      }) as [type, people]}
+        {#if type === "family"}
           {@const familySubgroups = subdivideFamilyMembers(people)}
           <div class="person-group">
             <h4 class="group-title">
               {type}
-              <span class="group-count">{$_('network.group_count', { count: people.length })}</span>
+              <span class="group-count"
+                >{$_("network.group_count", { count: people.length })}</span
+              >
             </h4>
             {#if summaryMap[type]}
               <p class="category-summary">{summaryMap[type]}</p>
@@ -182,7 +190,9 @@
               <div class="group-people">
                 {#each familySubgroups.parents as person, idx}
                   {@const personKey = `family-parents-${idx}`}
-                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  {@const subcategory = getSubcategory(
+                    person.relationship_type
+                  )}
                   <PersonChip
                     {person}
                     {personKey}
@@ -201,7 +211,9 @@
               <div class="group-people">
                 {#each familySubgroups.spouses as person, idx}
                   {@const personKey = `family-spouses-${idx}`}
-                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  {@const subcategory = getSubcategory(
+                    person.relationship_type
+                  )}
                   <PersonChip
                     {person}
                     {personKey}
@@ -220,7 +232,9 @@
               <div class="group-people">
                 {#each familySubgroups.children as person, idx}
                   {@const personKey = `family-children-${idx}`}
-                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  {@const subcategory = getSubcategory(
+                    person.relationship_type
+                  )}
                   <PersonChip
                     {person}
                     {personKey}
@@ -239,7 +253,9 @@
               <div class="group-people">
                 {#each familySubgroups.otherRelatives as person, idx}
                   {@const personKey = `family-other-${idx}`}
-                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  {@const subcategory = getSubcategory(
+                    person.relationship_type
+                  )}
                   <PersonChip
                     {person}
                     {personKey}
@@ -257,7 +273,9 @@
           <div class="person-group">
             <h4 class="group-title">
               {type}
-              <span class="group-count">{$_('network.group_count', { count: people.length })}</span>
+              <span class="group-count"
+                >{$_("network.group_count", { count: people.length })}</span
+              >
             </h4>
             {#if summaryMap[type]}
               <p class="category-summary">{summaryMap[type]}</p>
@@ -447,7 +465,7 @@
 
   .subgroup-title::before,
   .subgroup-title::after {
-    content: '';
+    content: "";
     display: block;
     width: 2rem;
     height: 1px;
@@ -460,11 +478,7 @@
   }
 
   .subgroup-title::before {
-    background: linear-gradient(
-      to left,
-      rgba(226, 232, 240, 0.3),
-      transparent
-    );
+    background: linear-gradient(to left, rgba(226, 232, 240, 0.3), transparent);
   }
 
   .subgroup-title::after {

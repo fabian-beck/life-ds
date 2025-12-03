@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { push, pop, replace, location } from "svelte-spa-router";
+  import { push, replace, location } from "svelte-spa-router";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import ExhibitionView from "./components/ExhibitionView.svelte";
@@ -72,10 +72,6 @@
       import: "default",
     }
   );
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
 
   function isHexColor(value) {
     return typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value.trim());
@@ -293,7 +289,9 @@
   // Updated regex patterns to support optional language prefix: /en/story/... or /story/...
   $: currentPath = $location;
   $: storyMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?story\/([^/]+)/);
-  $: exhibitionMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?exhibition\/([^/]+)/);
+  $: exhibitionMatch = currentPath.match(
+    /^\/(?:([a-z]{2})\/)?exhibition\/([^/]+)/
+  );
   $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || null;
   $: personId = storyMatch
     ? decodeURIComponent(storyMatch[2])
