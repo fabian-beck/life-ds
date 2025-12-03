@@ -799,26 +799,6 @@
     }
   }
 
-  .chapter-years {
-    font-size: 0.7rem;
-    color: rgba(148, 163, 184, 0.7);
-    font-weight: 500;
-    line-height: 1.2;
-    font-family: var(--story-body-font, Inter, sans-serif);
-  }
-
-  @container (max-width: 600px) {
-    .chapter-years {
-      font-size: 0.65rem;
-    }
-  }
-
-  @container (max-width: 400px) {
-    .chapter-years {
-      font-size: 0.6rem;
-    }
-  }
-
   .nav-btn {
     pointer-events: auto;
     width: 2.6rem;

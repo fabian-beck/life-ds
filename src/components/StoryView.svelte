@@ -32,14 +32,18 @@
   import PersonChip from "./PersonChip.svelte";
   import Timeline from "./Timeline.svelte";
   import { _, currentLanguage } from "../stores/language";
+import {
+    clamp,
+    displayName,
+    storyStyleVars,
+    joinWithSeparator,
+  } from "../utils/helpers.js";
 
   export let dataset = null;
   export let egoNetwork = null;
   export let isLoading = false;
   export let loadingStage = null;
   export let activeIndex = 0;
-  // eslint-disable-next-line no-unused-vars
-  export let hasRegistryEntries = false;
   export let styleConfig = null;
   export let onClose = () => {};
   export let onSlideChange = () => {};
@@ -168,62 +172,6 @@
     }),
     year: new Intl.DateTimeFormat($currentLanguage, { year: "numeric" }),
   };
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
-
-  function displayName(value = "") {
-    if (typeof value !== "string") return "";
-    return value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
-  }
-
-  function storyStyleVars(style) {
-    if (!style || typeof style !== "object") return "";
-    const segments = [];
-    if (style.background) segments.push(`--story-bg: ${style.background}`);
-    if (style.backgroundRgb)
-      segments.push(`--story-bg-rgb: ${style.backgroundRgb}`);
-    if (style.primary) segments.push(`--story-primary: ${style.primary}`);
-    if (style.secondary) segments.push(`--story-secondary: ${style.secondary}`);
-    if (style.backgroundPatternDataUrl) {
-      segments.push(
-        `--story-pattern-image: url(${style.backgroundPatternDataUrl})`
-      );
-      segments.push(`--story-pattern-size: 500px`);
-    }
-    if (style.separatorGlyphDataUrl) {
-      segments.push(
-        `--story-separator-glyph: url(${style.separatorGlyphDataUrl})`
-      );
-    }
-    if (style.headingFont) {
-      segments.push(
-        `--story-heading-font: "${style.headingFont}", Inter, sans-serif`
-      );
-    }
-    if (style.bodyFont) {
-      segments.push(
-        `--story-body-font: "${style.bodyFont}", Inter, sans-serif`
-      );
-    }
-    return segments.join("; ");
-  }
-
-  function joinWithSeparator(items, styleConfig) {
-    if (!items || items.length === 0) return "";
-    if (items.length === 1) return items[0];
-
-    // Use separator_glyph_svg if available
-    if (styleConfig?.separatorGlyphSvg) {
-      return items.join(
-        `<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
-      );
-    }
-
-    // Fallback to middle dot
-    return items.join(" · ");
-  }
 
   $: person = dataset?.person ?? {};
   $: events = Array.isArray(dataset?.events) ? dataset.events : [];
@@ -2253,10 +2201,6 @@
     flex: 0 0 auto;
   }
 
-  .close-story .btn-label {
-    line-height: 1;
-  }
-
   .icon {
     width: 1.1em;
     height: 1.1em;
@@ -2515,14 +2459,6 @@
     font-weight: 500;
     margin: 0;
     text-transform: uppercase;
-  }
-
-  .overview-text .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.7rem;
-    color: var(--story-secondary, #38bdf8);
-    margin: 0;
   }
 
   .overview-text .description {
@@ -2991,10 +2927,6 @@
     flex-shrink: 0;
   }
 
-  .label-text {
-    line-height: 1;
-  }
-
   .sources-wrapper {
     position: relative;
     display: flex;
@@ -3097,14 +3029,6 @@
     gap: 0.5rem;
   }
 
-  .people-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
   .show-all-btn {
     appearance: none;
     border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
@@ -3168,10 +3092,6 @@
       width: 100%;
     }
 
-    .masthead.compact {
-      padding: 1rem 2.5rem;
-    }
-
     .compact-info {
       font-size: 1.05rem;
     }
@@ -3186,28 +3106,6 @@
     .portrait-enlarge .icon {
       width: 1.5rem;
       height: 1.5rem;
-    }
-
-    .portrait img {
-      width: 260px;
-      filter: saturate(0.55) contrast(0.8) brightness(0.92);
-      /* Default mask */
-      mask-image: radial-gradient(
-        ellipse 60% 70% at center,
-        rgba(0, 0, 0, 1) 35%,
-        rgba(0, 0, 0, 0.95) 50%,
-        rgba(0, 0, 0, 0.7) 65%,
-        rgba(0, 0, 0, 0.35) 78%,
-        rgba(0, 0, 0, 0) 90%
-      );
-      -webkit-mask-image: radial-gradient(
-        ellipse 60% 70% at center,
-        rgba(0, 0, 0, 1) 35%,
-        rgba(0, 0, 0, 0.95) 50%,
-        rgba(0, 0, 0, 0.7) 65%,
-        rgba(0, 0, 0, 0.35) 78%,
-        rgba(0, 0, 0, 0) 90%
-      );
     }
 
     .event-images {

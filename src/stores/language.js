@@ -1,4 +1,4 @@
-import { writable, derived, get } from "svelte/store";
+import { writable, derived } from "svelte/store";
 
 // Detect initial language from localStorage or browser
 const browserLang =
@@ -24,19 +24,6 @@ currentLanguage.subscribe((lang) => {
     document.documentElement.lang = lang;
   }
 });
-
-// Translation helper function with interpolation
-export function t(key, params = {}) {
-  const trans = get(translations);
-  let str = trans[key] || key;
-
-  // Interpolate parameters
-  Object.entries(params).forEach(([k, v]) => {
-    str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
-  });
-
-  return str;
-}
 
 // Derived store for reactive translation
 export const _ = derived([currentLanguage, translations], ([, $trans]) => {
@@ -68,20 +55,3 @@ export async function loadTranslations(lang) {
     }
   }
 }
-
-// Date formatter
-export const dateFormatter = derived(
-  currentLanguage,
-  ($lang) =>
-    new Intl.DateTimeFormat($lang, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-);
-
-// Number formatter
-export const numberFormatter = derived(
-  currentLanguage,
-  ($lang) => new Intl.NumberFormat($lang)
-);

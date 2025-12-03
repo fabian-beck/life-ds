@@ -1,5 +1,6 @@
 <script>
   import PersonChip from "./PersonChip.svelte";
+  import { displayName } from "../utils/helpers.js";
 
   export let dataset = null;
   export let egoNetwork = null;
@@ -40,12 +41,6 @@
   $: backgroundPatternDataUrl = styleConfig?.backgroundPatternDataUrl ?? null;
   $: headingFont = styleConfig?.headingFont ?? "Inter";
   $: bodyFont = styleConfig?.bodyFont ?? "Inter";
-
-  // Format display name (underscore to space)
-  function displayName(value = "") {
-    if (typeof value !== "string") return "";
-    return value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
-  }
 
   // Format year from date string
   function formatYear(dateStr) {

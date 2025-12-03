@@ -3,6 +3,7 @@
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { push, location } from "svelte-spa-router";
+  import { clamp, displayName } from "../utils/helpers.js";
 
   export let entries = [];
   export let getSummary = () => "";
@@ -225,15 +226,6 @@
 
     return result;
   })();
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
-
-  function displayName(name = "") {
-    if (typeof name !== "string") return "";
-    return name.replace(/_/g, " ").replace(/\s+/g, " ").trim();
-  }
 
   function formatLifespan(entry) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
@@ -929,10 +921,6 @@
     font-size: 0.8rem;
     color: rgba(148, 163, 184, 0.85);
     font-family: var(--card-body-font, Inter, sans-serif);
-  }
-
-  .card-meta .meta-separator {
-    color: rgba(148, 163, 184, 0.65);
   }
 
   .card-meta .meta-years {

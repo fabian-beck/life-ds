@@ -2,37 +2,12 @@
   import { mdiClose, mdiAccountMultipleOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import { _ } from "../stores/language";
+  import { storyStyleVars } from "../utils/helpers.js";
 
   export let egoNetwork = null;
   export let personName = "";
   export let styleConfig = null;
   export let onClose = () => {};
-
-  function storyStyleVars(style) {
-    if (!style || typeof style !== "object") return "";
-    const segments = [];
-    if (style.background) segments.push(`--story-bg: ${style.background}`);
-    if (style.backgroundRgb)
-      segments.push(`--story-bg-rgb: ${style.backgroundRgb}`);
-    if (style.primary) segments.push(`--story-primary: ${style.primary}`);
-    if (style.secondary) segments.push(`--story-secondary: ${style.secondary}`);
-    if (style.backgroundPatternDataUrl) {
-      segments.push(
-        `--story-pattern-image: url(${style.backgroundPatternDataUrl})`
-      );
-    }
-    if (style.headingFont) {
-      segments.push(
-        `--story-heading-font: "${style.headingFont}", Inter, sans-serif`
-      );
-    }
-    if (style.bodyFont) {
-      segments.push(
-        `--story-body-font: "${style.bodyFont}", Inter, sans-serif`
-      );
-    }
-    return segments.join("; ");
-  }
 
   let visiblePersonInfo = null;
 

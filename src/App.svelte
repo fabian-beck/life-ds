@@ -7,6 +7,7 @@
   import { currentLanguage, loadTranslations, _ } from "./stores/language";
   import { queryParams, buildUrlWithParams } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
+import { displayName } from "./utils/helpers.js";
 
   // Load translations on mount
   onMount(async () => {
@@ -351,12 +352,6 @@
     loadingStage = null;
   }
 
-  // Normalise a display name (underscore to space, collapse whitespace)
-  function displayName(value = "") {
-    if (typeof value !== "string") return "";
-    return value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
-  }
-
   // Reactive page title: use current person's name if available, else generic.
   $: currentTitlePerson = dataset?.person?.name
     ? displayName(dataset.person.name)
@@ -423,7 +418,6 @@
       isLoading={dataLoading}
       {loadingStage}
       activeIndex={slideParam ?? 0}
-      hasRegistryEntries={registryEntries.length > 0}
       styleConfig={styleFor(personId)}
       onClose={handleCloseStory}
       onSlideChange={handleSlideChange}
