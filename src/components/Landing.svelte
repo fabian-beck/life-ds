@@ -2,6 +2,7 @@
   import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
+  import { push, location } from "svelte-spa-router";
 
   export let entries = [];
   export let getSummary = () => "";
@@ -24,6 +25,28 @@
 
   function closeExplanation() {
     showExplanation = false;
+  }
+
+  function handleLanguageChange(event) {
+    const newLang = event.target.value;
+    // Strip query params from current path - history should only contain base paths
+    const currentPath = $location.split('?')[0];
+
+    // Build new URL with updated language
+    let newPath;
+    // Check if we're on landing page
+    if (currentPath === '/' || currentPath === '') {
+      newPath = `/${newLang}`;
+    } else if (currentPath.match(/^\/[a-z]{2}\//)) {
+      // Replace existing language in URL
+      newPath = currentPath.replace(/^\/[a-z]{2}\//, `/${newLang}/`);
+    } else {
+      // Add language prefix to current path
+      newPath = `/${newLang}${currentPath}`;
+    }
+
+    // Use push to create history entry (allows back button to undo language change)
+    push(newPath);
   }
 
   // Normalize tag for comparison (lowercase, trim)
@@ -315,7 +338,8 @@
 <section class="landing">
   <div class="top-controls">
       <select
-        bind:value={$currentLanguage}
+        value={$currentLanguage}
+        on:change={handleLanguageChange}
         aria-label={$_("app.select_language")}
         class="language-selector"
       >

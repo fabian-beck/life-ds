@@ -25,6 +25,8 @@
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
+  import { push, replace, location } from "svelte-spa-router";
+  import { queryParams, buildUrlWithParams } from "../stores/queryParams";
   import ImageViewer from "./ImageViewer.svelte";
   import NetworkModal from "./NetworkModal.svelte";
   import PersonChip from "./PersonChip.svelte";
@@ -46,7 +48,9 @@
   let visibleDateNote = null; // Track which event's date note is visible
   let visiblePersonInfo = null; // Track which person's info is visible
   let visibleSources = null; // Track which event's sources popup is visible
-  let showNetworkModal = false; // Track if network modal is open
+
+  // Network modal state - reactive to URL query parameter
+  $: showNetworkModal = $queryParams.network;
 
   const DEFAULT_COORDINATES = null;
   // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
@@ -250,15 +254,33 @@
   $: hasEvents = totalSlides > 0;
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
-  $: if (totalPanels === 0 && activeIndex !== 0) {
-    activeIndex = 0;
-  } else if (totalPanels > 0 && activeIndex >= totalPanels) {
-    activeIndex = totalPanels - 1;
+
+  // Track the last activeIndex value to detect external changes (e.g., from browser history)
+  let lastPropActiveIndex = activeIndex;
+
+  // Track the last notified index to avoid duplicate notifications
+  let lastNotifiedIndex = activeIndex;
+
+  // When activeIndex prop changes externally (browser back/forward), scroll to it
+  $: if (activeIndex !== lastPropActiveIndex && slidesContainer && totalPanels > 0) {
+    lastPropActiveIndex = activeIndex;
+    // Only scroll if not currently in a programmatic scroll and initial scroll is done
+    if (scrollState === SCROLL_STATE.IDLE && initialScrollDone) {
+      requestScrollTo(activeIndex, {
+        source: "prop-change",
+        immediate: false,
+      });
+    }
   }
 
-  // Notify parent when slide changes
-  $: if (activeIndex !== undefined) {
-    onSlideChange({ detail: activeIndex });
+  // Notify parent when slide changes (only when actually different from last notification)
+  // Include source information to help parent decide whether to push or replace history
+  $: if (activeIndex !== undefined && activeIndex !== lastNotifiedIndex) {
+    lastNotifiedIndex = activeIndex;
+    onSlideChange({
+      detail: activeIndex,
+      source: scrollState === SCROLL_STATE.USER_SCROLLING ? 'user-scroll' : currentNavigationSource
+    });
   }
 
   $: activeEventIndex =
@@ -293,10 +315,18 @@
 
   $: datasetName = dataset?.person?.name ?? null;
   $: if (datasetName !== lastDatasetName) {
+    // Only reset scroll state when changing to a different person (not on initial load)
+    const isPersonChange = lastDatasetName !== null && lastDatasetName !== "";
+
     lastDatasetName = datasetName;
     lastViewportKey = "";
-    initialScrollDone = false; // Reset scroll flag when dataset changes
-    initialScrollPending = false;
+
+    if (isPersonChange) {
+      // Reset scroll flags only when switching between persons
+      initialScrollDone = false;
+      initialScrollPending = false;
+    }
+
     scrollState = SCROLL_STATE.IDLE;
 
     // Clear any pending timeouts
@@ -310,12 +340,25 @@
     }
   }
 
-  // Close date note when slide changes
-  $: if (activeIndex !== undefined) {
+  // Track previous activeIndex to detect actual changes
+  let previousActiveIndex = activeIndex;
+
+  // Close date note and network modal when slide actually changes
+  $: if (activeIndex !== undefined && activeIndex !== previousActiveIndex) {
     visibleDateNote = null;
     visiblePersonInfo = null;
     visibleSources = null;
-    showNetworkModal = false;
+    // Close network modal when slide changes by updating URL
+    if ($queryParams.network) {
+      const basePath = $location.split('?')[0];
+      const newUrl = buildUrlWithParams(basePath, {
+        slide: activeIndex,
+        timeline: $queryParams.timeline,
+        network: false
+      });
+      replace(newUrl);
+    }
+    previousActiveIndex = activeIndex;
   }
 
   let slidesContainer;
@@ -332,6 +375,7 @@
   };
   let scrollState = SCROLL_STATE.IDLE;
   let scrollStateTimeout = null;
+  let currentNavigationSource = 'programmatic'; // Track source of current navigation
   let scrollHandlerTimeout = null;
   let scrollendSupported = null;
 
@@ -366,7 +410,14 @@
 
   // Sync activeIndex from current scroll position
   function syncActiveIndexFromScroll() {
-    if (!slidesContainer || totalPanels === 0) return;
+    if (!slidesContainer || totalPanels === 0) {
+      return;
+    }
+
+    // Don't sync during initial scroll to prevent overriding URL-based navigation
+    if (!initialScrollDone) {
+      return;
+    }
 
     const { scrollLeft, clientWidth } = slidesContainer;
     if (!clientWidth) return;
@@ -431,6 +482,7 @@
 
     // Update state machine
     scrollState = SCROLL_STATE.PROGRAMMATIC;
+    currentNavigationSource = source; // Track the source of this navigation
 
     // Optionally update activeIndex immediately (optimistic update)
     if (updateStateImmediately) {
@@ -447,8 +499,9 @@
     }
 
     // Perform scroll
+    const scrollLeft = clampedIndex * clientWidth;
     slidesContainer.scrollTo({
-      left: clampedIndex * clientWidth,
+      left: scrollLeft,
       behavior: immediate ? "auto" : "smooth",
     });
 
@@ -531,6 +584,7 @@
     // Promote to user scrolling if idle
     if (scrollState === SCROLL_STATE.IDLE) {
       scrollState = SCROLL_STATE.USER_SCROLLING;
+      currentNavigationSource = 'user-scroll'; // User is manually scrolling
     }
 
     // Debounce activeIndex updates to avoid excessive reactivity
@@ -797,7 +851,7 @@
     if (!modal && showNetworkModal) {
       const modalOverlay = event.target.closest(".modal-overlay");
       if (modalOverlay && event.target === modalOverlay) {
-        showNetworkModal = false;
+        closeNetworkModal(); // Use the function to update URL properly
       }
     }
   }
@@ -860,11 +914,42 @@
   }
 
   function openNetworkModal() {
-    showNetworkModal = true;
+    // Build URL with network=1 query param
+    const basePath = $location.split('?')[0]; // Current path without query
+    const newUrl = buildUrlWithParams(basePath, {
+      slide: activeIndex,
+      timeline: $queryParams.timeline,
+      network: true
+    });
+
+    replace(newUrl); // Update URL without creating history entry
   }
 
   function closeNetworkModal() {
-    showNetworkModal = false;
+    // Build URL without network param
+    const basePath = $location.split('?')[0];
+    const newUrl = buildUrlWithParams(basePath, {
+      slide: activeIndex,
+      timeline: $queryParams.timeline,
+      network: false
+    });
+
+    replace(newUrl); // Update URL without creating history entry
+  }
+
+  function handleTimelineExpandChange(event) {
+    const expanded = event.detail.expanded;
+
+    // Build URL with or without timeline param
+    const basePath = $location.split('?')[0];
+    const newUrl = buildUrlWithParams(basePath, {
+      slide: activeIndex,
+      timeline: expanded,
+      network: $queryParams.network
+    });
+
+    // Always use replace() - modal state should not create history entries
+    replace(newUrl);
   }
 
   function formatAgeLabel(age) {
@@ -1290,22 +1375,30 @@
   }
 
   // Handle initial scroll when component loads with a specific slide index
-  $: if (
-    !initialScrollDone &&
-    slidesContainer &&
-    totalPanels > 0 &&
-    activeIndex > 0 &&
-    !initialScrollPending
-  ) {
-    initialScrollPending = true;
-    tick().then(() => {
-      requestScrollTo(activeIndex, {
-        source: "initial",
-        immediate: true,
+  $: {
+    if (
+      !initialScrollDone &&
+      slidesContainer &&
+      totalPanels > activeIndex &&
+      activeIndex > 0 &&
+      !initialScrollPending
+    ) {
+      initialScrollPending = true;
+      tick().then(() => {
+        // Add a small delay to ensure DOM is fully rendered
+        return new Promise(resolve => setTimeout(resolve, 50));
+      }).then(() => {
+        requestScrollTo(activeIndex, {
+          source: "initial",
+          immediate: true,
+        });
+        initialScrollDone = true;
+        initialScrollPending = false;
       });
+    } else if (!initialScrollDone && slidesContainer && totalPanels > 0 && activeIndex === 0) {
+      // No initial scroll needed (starting at index 0)
       initialScrollDone = true;
-      initialScrollPending = false;
-    });
+    }
   }
 
   onMount(() => {
@@ -1429,6 +1522,7 @@
   <div class="slides-wrapper" class:map-enabled={hasMapData}>
     <main
       class="slides"
+      class:initial-loading={!initialScrollDone && activeIndex > 0}
       aria-live="polite"
       bind:this={slidesContainer}
       on:scroll={handleScroll}
@@ -1826,10 +1920,12 @@
     {indicatorIcons}
     {eventSlides}
     {chapters}
+    initialExpanded={$queryParams.timeline}
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
     onScrollToIndex={scrollToIndexExternal}
+    on:expandchange={handleTimelineExpandChange}
   />
 </div>
 
@@ -1865,6 +1961,11 @@
   /* Loading skeleton styles */
   .loading-slide {
     animation: fadeIn 0.3s ease;
+  }
+
+  /* Hide slides container during initial scroll to prevent flash */
+  .slides.initial-loading {
+    opacity: 0;
   }
 
   @keyframes fadeIn {

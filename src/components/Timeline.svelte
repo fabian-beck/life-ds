@@ -8,6 +8,7 @@
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { fade } from "svelte/transition";
+  import { createEventDispatcher } from "svelte";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -21,8 +22,14 @@
   export let onNextSlide = () => {};
   export let onGoToEvent = () => {};
   export let onScrollToIndex = () => {};
+  export let initialExpanded = false; // NEW: Initial expanded state from URL
 
-  let isExpanded = false;
+  const dispatch = createEventDispatcher();
+
+  let isExpanded = initialExpanded;
+
+  // Make isExpanded reactive to initialExpanded prop changes
+  $: isExpanded = initialExpanded;
   let isDragging = false;
   let trackElement = null;
   let dragStartX = null;
@@ -109,6 +116,8 @@
 
   function toggleExpanded() {
     isExpanded = !isExpanded;
+    // Dispatch event to parent so it can update the URL
+    dispatch('expandchange', { expanded: isExpanded });
   }
 
   function handleTrackPointerDown(event) {

@@ -5,6 +5,7 @@
   import StoryView from "./components/StoryView.svelte";
   import ExhibitionView from "./components/ExhibitionView.svelte";
   import { currentLanguage, loadTranslations, _ } from "./stores/language";
+  import { queryParams, buildUrlWithParams } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
 
   // Load translations on mount
@@ -288,17 +289,29 @@
     return entry.summary ?? "";
   }
 
-  // Extract person ID and slide number from current route
+  // Extract person ID and language from current route (slide is now a query param)
+  // Updated regex patterns to support optional language prefix: /en/story/... or /story/...
   $: currentPath = $location;
-  $: storyMatch = currentPath.match(/^\/story\/([^/]+)(?:\/(\d+))?/);
-  $: exhibitionMatch = currentPath.match(/^\/exhibition\/([^/]+)/);
+  $: storyMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?story\/([^/]+)/);
+  $: exhibitionMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?exhibition\/([^/]+)/);
+  $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || null;
   $: personId = storyMatch
-    ? decodeURIComponent(storyMatch[1])
+    ? decodeURIComponent(storyMatch[2])
     : exhibitionMatch
-      ? decodeURIComponent(exhibitionMatch[1])
+      ? decodeURIComponent(exhibitionMatch[2])
       : null;
-  $: slideParam =
-    storyMatch && storyMatch[2] ? parseInt(storyMatch[2], 10) : null;
+  $: slideParam = $queryParams.slide;
+
+  // Sync language from URL to store (URL takes precedence for shareable intent)
+  $: if (langFromUrl && langFromUrl !== $currentLanguage) {
+    currentLanguage.set(langFromUrl);
+  }
+
+  // Redirect to language-prefixed URL if accessing story/exhibition without language
+  $: if (personId && !langFromUrl) {
+    const newPath = `/${$currentLanguage}${currentPath}`;
+    replace(newPath);
+  }
 
   // Reactive data loading - load when personId OR language changes
   let dataset = null;
@@ -367,40 +380,45 @@
   function handleSelectPerson(event) {
     const id = event.detail;
     if (id) {
-      push(`/story/${encodeURIComponent(id)}`);
+      push(`/${$currentLanguage}/story/${encodeURIComponent(id)}`);
     }
   }
 
   function handleCloseStory() {
-    push("/");
+    push(`/${$currentLanguage}`);
   }
 
   function handleSlideChange(event) {
     const slideIndex = event.detail;
-    if (personId && slideIndex !== null && slideIndex !== undefined) {
-      // Update URL with current slide, but use replace to avoid cluttering history
-      const newPath =
-        slideIndex === 0
-          ? `/story/${encodeURIComponent(personId)}`
-          : `/story/${encodeURIComponent(personId)}/${slideIndex}`;
 
-      // Use replace instead of push to avoid filling up history
-      if (currentPath !== newPath) {
-        replace(newPath);
-      }
+    if (personId && slideIndex !== null && slideIndex !== undefined) {
+      // Base path without slide (slide is now a query param)
+      const basePath = `/${$currentLanguage}/story/${encodeURIComponent(personId)}`;
+
+      // Build URL with all query params (slide, timeline, network)
+      const newPath = buildUrlWithParams(basePath, {
+        slide: slideIndex,
+        timeline: $queryParams.timeline,
+        network: $queryParams.network,
+      });
+
+      // Always use replace() - slide changes are presentation state,
+      // not navigation history. This prevents the back button from
+      // stepping through every slide change.
+      replace(newPath);
     }
   }
 </script>
 
 <div class="shell">
-  {#if currentPath.startsWith("/exhibition/")}
+  {#if exhibitionMatch}
     <ExhibitionView
       {dataset}
       {egoNetwork}
       isLoading={dataLoading}
       styleConfig={styleFor(personId)}
     />
-  {:else if currentPath.startsWith("/story/")}
+  {:else if storyMatch}
     <StoryView
       {dataset}
       {egoNetwork}
