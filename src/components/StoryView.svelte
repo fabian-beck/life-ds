@@ -364,21 +364,12 @@ import {
 
   // Sync activeIndex from current scroll position
   function syncActiveIndexFromScroll() {
-    if (!slidesContainer || totalPanels === 0) {
-      return;
-    }
-
-    // Don't sync during initial scroll to prevent overriding URL-based navigation
-    if (!initialScrollDone) {
-      return;
-    }
+    if (!slidesContainer || totalPanels === 0 || !initialScrollDone) return;
 
     const { scrollLeft, clientWidth } = slidesContainer;
     if (!clientWidth) return;
 
-    const index = Math.round(scrollLeft / clientWidth);
-    const clampedIndex = Math.min(Math.max(index, 0), totalPanels - 1);
-
+    const clampedIndex = clamp(Math.round(scrollLeft / clientWidth), 0, totalPanels - 1);
     if (activeIndex !== clampedIndex) {
       activeIndex = clampedIndex;
     }
@@ -396,11 +387,9 @@ import {
 
     const check = () => {
       const isOverflowing = element.scrollHeight > element.clientHeight;
-      if (isOverflowing) {
-        descriptionOverflows.add(slideId);
-      } else {
-        descriptionOverflows.delete(slideId);
-      }
+      isOverflowing
+        ? descriptionOverflows.add(slideId)
+        : descriptionOverflows.delete(slideId);
       descriptionOverflows = new Set(descriptionOverflows); // Trigger reactivity
     };
 
@@ -698,20 +687,12 @@ import {
   function computeYearsLabel(currentPerson) {
     if (!currentPerson) return "";
     const { birth_date: birth, death_date: death } = currentPerson;
-    if (birth && death) {
-      const birthYear = new Date(birth).getFullYear();
-      const deathYear = new Date(death).getFullYear();
-      if (!Number.isNaN(birthYear) && !Number.isNaN(deathYear)) {
-        return `${birthYear} - ${deathYear}`;
-      }
+    const birthYear = birth ? new Date(birth).getFullYear() : NaN;
+    const deathYear = death ? new Date(death).getFullYear() : NaN;
+    if (!Number.isNaN(birthYear) && !Number.isNaN(deathYear)) {
+      return `${birthYear} - ${deathYear}`;
     }
-    if (birth) {
-      const birthYear = new Date(birth).getFullYear();
-      if (!Number.isNaN(birthYear)) {
-        return `${birthYear}`;
-      }
-    }
-    return "";
+    return Number.isNaN(birthYear) ? "" : `${birthYear}`;
   }
 
   function toTimestamp(event) {
@@ -769,20 +750,12 @@ import {
   }
 
   function getDateNote(event) {
-    if (!event) return null;
-    const supplementalNote =
-      typeof event.date_note === "string" && event.date_note.trim()
-        ? event.date_note.trim()
-        : null;
-    return supplementalNote;
+    const note = event?.date_note;
+    return typeof note === "string" && note.trim() ? note.trim() : null;
   }
 
   function toggleDateNote(eventIndex) {
-    if (visibleDateNote === eventIndex) {
-      visibleDateNote = null;
-    } else {
-      visibleDateNote = eventIndex;
-    }
+    visibleDateNote = visibleDateNote === eventIndex ? null : eventIndex;
   }
 
   function handleClickOutside(event) {
@@ -809,26 +782,15 @@ import {
   }
 
   function togglePersonInfo(personKey) {
-    if (visiblePersonInfo === personKey) {
-      visiblePersonInfo = null;
-    } else {
-      visiblePersonInfo = personKey;
-    }
+    visiblePersonInfo = visiblePersonInfo === personKey ? null : personKey;
   }
 
   function toggleSources(eventIndex) {
-    if (visibleSources === eventIndex) {
-      visibleSources = null;
-    } else {
-      visibleSources = eventIndex;
-    }
+    visibleSources = visibleSources === eventIndex ? null : eventIndex;
   }
 
   function getSubcategory(relationshipType) {
-    if (!relationshipType || !relationshipType.includes("/")) {
-      return null;
-    }
-    return relationshipType.split("/")[1];
+    return relationshipType?.includes("/") ? relationshipType.split("/")[1] : null;
   }
 
   function getRelevantPeople(event) {
@@ -866,27 +828,21 @@ import {
   }
 
   function openNetworkModal() {
-    // Build URL with network=1 query param
-    const basePath = $location.split("?")[0]; // Current path without query
-    const newUrl = buildUrlWithParams(basePath, {
-      slide: activeIndex,
-      timeline: $queryParams.timeline,
-      network: true,
-    });
-
-    replace(newUrl); // Update URL without creating history entry
+    setNetworkModal(true);
   }
 
   function closeNetworkModal() {
-    // Build URL without network param
+    setNetworkModal(false);
+  }
+
+  function setNetworkModal(show) {
     const basePath = $location.split("?")[0];
     const newUrl = buildUrlWithParams(basePath, {
       slide: activeIndex,
       timeline: $queryParams.timeline,
-      network: false,
+      network: show,
     });
-
-    replace(newUrl); // Update URL without creating history entry
+    replace(newUrl);
   }
 
   function handleTimelineExpandChange(event) {
@@ -905,9 +861,8 @@ import {
   }
 
   function formatAgeLabel(age) {
-    if (age === null || age === undefined) return null;
-    if (age === 0) return $_("story.at_birth");
-    return $_("story.age", { age });
+    if (age == null) return null;
+    return age === 0 ? $_("story.at_birth") : $_("story.age", { age });
   }
 
   function formatLocations(locations = []) {
@@ -940,23 +895,14 @@ import {
   }
 
   function normalizePrimaryLocation(event) {
-    if (!event?.location_coordinates) return DEFAULT_COORDINATES;
-    const primary = event.location_coordinates.find((item) => {
-      if (!item) return false;
-      if (item.primary === true) return true;
-      return false;
-    });
-    if (!primary) return DEFAULT_COORDINATES;
-    if (!Array.isArray(primary.centroid) || primary.centroid.length !== 2) {
+    const primary = event?.location_coordinates?.find((item) => item?.primary === true);
+    if (!Array.isArray(primary?.centroid) || primary.centroid.length !== 2) {
       return DEFAULT_COORDINATES;
     }
-    const [lng, lat] = primary.centroid;
-    const lonValue = Number(lng);
-    const latValue = Number(lat);
-    if (!Number.isFinite(lonValue) || !Number.isFinite(latValue)) {
-      return DEFAULT_COORDINATES;
-    }
-    return { lon: lonValue, lat: latValue };
+    const [lng, lat] = primary.centroid.map(Number);
+    return Number.isFinite(lng) && Number.isFinite(lat)
+      ? { lon: lng, lat: lat }
+      : DEFAULT_COORDINATES;
   }
 
   function isCoordinate(value) {
@@ -1028,19 +974,10 @@ import {
 
     return images.filter((imageData) => {
       const url = typeof imageData === "string" ? imageData : imageData?.url;
-      // Basic URL validation - check if it's a valid string and looks like a URL
       if (!url || typeof url !== "string") return false;
 
       // Filter out TIFF images (not supported by browsers)
-      const lowerUrl = url.toLowerCase();
-      if (
-        lowerUrl.endsWith(".tif") ||
-        lowerUrl.endsWith(".tiff") ||
-        lowerUrl.includes(".tif?") ||
-        lowerUrl.includes(".tiff?")
-      ) {
-        return false;
-      }
+      if (/\.tiff?(\?|$)/i.test(url)) return false;
 
       try {
         new URL(url);
@@ -1118,9 +1055,7 @@ import {
 
   async function resolvePmtilesUrl() {
     if (basemapResolved) return pmtilesUrl;
-    const candidates = [PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(
-      (url, idx, arr) => Boolean(url) && arr.indexOf(url) === idx
-    );
+    const candidates = [...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean))];
     for (const url of candidates) {
       try {
         const res = await fetch(url, { method: "HEAD" });
