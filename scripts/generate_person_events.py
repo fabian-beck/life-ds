@@ -165,16 +165,30 @@ class LifePlan(BaseModel):
 
 # Phase 2 Models
 
+class LocationInfo(BaseModel):
+    """Location information with historic and modern names."""
+    name_historic: str = Field(
+        description="Location name at time of event (e.g., 'Königsberg', 'Ceylon')"
+    )
+    name_modern: Optional[str] = Field(
+        None,
+        description="Modern geographic name for geocoding (e.g., 'Kaliningrad, Russia')"
+    )
+    centroid: Optional[List[float]] = Field(
+        None,
+        description="[longitude, latitude] coordinates, or null if not geocoded"
+    )
+    primary: bool = Field(
+        default=True,
+        description="True if this is the primary/main location"
+    )
+
+
 class EventDetails(BaseModel):
     """Phase 2: Research details for a specific event."""
-    location: Optional[str] = Field(
+    locations: Optional[List[LocationInfo]] = Field(
         None,
-        description="Historic location name at time of event (e.g., 'Königsberg')"
-    )
-    location_modern: Optional[str] = Field(
-        None,
-        description="Modern geographic name for geocoding (e.g., 'Kaliningrad, Russia'). "
-        "Always provide even if same as historic location."
+        description="Array of location objects. Can be empty or contain multiple locations."
     )
     involved_people: Optional[List[str]] = Field(
         None,
@@ -206,12 +220,9 @@ class LifeEvent(BaseModel):
     age: Optional[int] = None
     title: str = Field(description="Brief title of the event")
     description: str = Field(description="Detailed description")
-    locations: List[str] = Field(
-        description="Human-readable location names"
-    )
-    location_modern: Optional[str] = Field(
-        None,
-        description="Modern location name for geocoding"
+    locations: List[Dict[str, Any]] = Field(
+        default_factory=list,
+        description="Unified location array with name_historic/name_modern/centroid/primary"
     )
     involved_people: Optional[List[str]] = Field(
         None,
@@ -956,34 +967,36 @@ def build_phase2_prompt(
     prompt += "TASK: Provide the following details for THIS specific event:\n"
     prompt += "="*60 + "\n\n"
 
-    prompt += "1. LOCATION (historic name at time of event):\n"
-    prompt += "   - Provide the location name as it was known at the time\n"
-    prompt += "   - Be as specific as possible (e.g., 'Königsberg' not just 'Prussia')\n"
-    prompt += "   - If truly unknown, leave null\n\n"
+    prompt += "1. LOCATIONS (can be multiple):\n"
+    prompt += "   - Identify ALL significant locations for THIS specific event\n"
+    prompt += "   - For EACH location, provide:\n"
+    prompt += "     * name_historic: Location name at time (e.g., 'Königsberg', 'Ceylon')\n"
+    prompt += "     * name_modern: Modern name for geocoding (e.g., 'Kaliningrad, Russia')\n"
+    prompt += "     * primary: true for main location, false for secondary\n"
+    prompt += "   - Multi-location examples:\n"
+    prompt += "     * Voyages: departure port + arrival port\n"
+    prompt += "     * Conferences: venue + host city (if distinct)\n"
+    prompt += "     * Battles/campaigns: multiple battle sites\n"
+    prompt += "   - If truly unknown or non-geographic, return empty array\n"
+    prompt += "   - For single-location events, provide one location with primary=true\n\n"
 
-    prompt += "2. LOCATION_MODERN (for geocoding):\n"
-    prompt += "   - ALWAYS provide the modern geographic name\n"
-    prompt += "   - Even if same as historic (e.g., 'London' → 'London')\n"
-    prompt += "   - Examples: 'Königsberg' → 'Kaliningrad, Russia'\n"
-    prompt += "   - Include country for disambiguation\n\n"
-
-    prompt += "3. INVOLVED_PEOPLE:\n"
+    prompt += "2. INVOLVED_PEOPLE:\n"
     prompt += "   - List people DIRECTLY involved in THIS specific event\n"
     prompt += f"   - EXCLUDE the main subject ({person_name})\n"
     prompt += "   - Examples: collaborators, opponents, witnesses, family members present\n"
     prompt += "   - Leave null if no other people directly involved\n\n"
 
-    prompt += "4. IMAGES:\n"
+    prompt += "3. IMAGES:\n"
     prompt += "   - Select AT MOST ONE relevant image from the list below\n"
     prompt += "   - Prefer images of buildings, documents, artifacts, or locations\n"
     prompt += "   - DO NOT use generic portraits\n"
     prompt += "   - Leave null if no suitable image\n\n"
 
-    prompt += "5. SOURCES:\n"
+    prompt += "4. SOURCES:\n"
     prompt += "   - Provide 1-3 Wikipedia URLs from the related articles below\n"
     prompt += "   - Only include articles that specifically support THIS event\n\n"
 
-    prompt += "6. EVENT_TYPE_ICON:\n"
+    prompt += "5. EVENT_TYPE_ICON:\n"
     prompt += "   - Select the most appropriate MDI icon from the categories below\n"
     prompt += "   - Based on the semantic type of this event\n\n"
 
@@ -1137,12 +1150,16 @@ def merge_event_skeleton_and_details(
 ) -> LifeEvent:
     """Merge Phase 1 skeleton with Phase 2 details."""
 
-    # Build locations array
+    # Build locations array from EventDetails.locations
     locations = []
-    if details.location:
-        locations.append(details.location)
-    else:
-        locations.append(UNKNOWN_LOCATION_LABEL)
+    if details.locations and len(details.locations) > 0:
+        for loc in details.locations:
+            locations.append({
+                "name_historic": loc.name_historic,
+                "name_modern": loc.name_modern,
+                "centroid": loc.centroid,
+                "primary": loc.primary
+            })
 
     # Create merged event
     return LifeEvent(
@@ -1155,7 +1172,6 @@ def merge_event_skeleton_and_details(
         title=skeleton.title,
         description=skeleton.description,
         locations=locations,
-        location_modern=details.location_modern,
         involved_people=details.involved_people,
         sources=details.sources if details.sources else [],
         images=details.images,
@@ -1182,69 +1198,59 @@ def merge_all_events(
 # ENHANCED GEOCODING
 # ============================================================================
 
-def geocode_event_location_v2(event: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """
-    Geocode event location with location_modern priority.
-
-    Priority:
-    1. Try location_modern (better for changed names)
-    2. Fall back to locations[0] (historic name)
-    3. Return None if unsuccessful
-    """
-    # Try modern location first
-    if event.get("location_modern"):
-        result = geocode_location(event["location_modern"])
-        if result:
-            return result
-
-    # Fall back to historic location
-    locations = event.get("locations") or []
-    if locations and len(locations) > 0:
-        result = geocode_location(locations[0])
-        if result:
-            return result
-
-    return None
-
-
 def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
-    """Enhanced geocoding with location_modern support."""
+    """Enhanced geocoding for unified location structure."""
     events = payload.get("events") or []
     enriched = []
-    resolved_count = 0
+    geocoded_count = 0
 
     for event in events:
         if not isinstance(event, dict):
             enriched.append(event)
             continue
 
-        # Geocode using enhanced logic
-        geocoded = geocode_event_location_v2(event)
-
         updated = {**event}
-        if geocoded:
-            # Display historic name, use modern coords
-            display_name = event.get("locations", [UNKNOWN_LOCATION_LABEL])[0]
+        locations = updated.get("locations", [])
 
-            entry = {
-                "label": geocoded.get("display_name") or display_name,
-                "name": display_name,  # Keep historic name
-                "primary": True,
-                "centroid": [geocoded["lon"], geocoded["lat"]],
-                "source": "nominatim",
-            }
-            if geocoded.get("bbox"):
-                entry["bbox"] = geocoded["bbox"]
+        if not locations:
+            enriched.append(updated)
+            continue
 
-            updated["location_coordinates"] = [entry]
-            resolved_count += 1
-        else:
-            updated.pop("location_coordinates", None)
+        # Geocode each location missing coordinates
+        geocoded_locations = []
+        for loc in locations:
+            if not isinstance(loc, dict):
+                continue
 
+            # If already has centroid, preserve it
+            if loc.get("centroid"):
+                geocoded_locations.append(loc)
+                geocoded_count += 1
+                continue
+
+            # Try geocoding (prefer modern name, fallback to historic)
+            name_to_geocode = loc.get("name_modern") or loc.get("name_historic")
+
+            if not name_to_geocode:
+                geocoded_locations.append(loc)
+                continue
+
+            geocoded = geocode_location(name_to_geocode)
+
+            if geocoded:
+                geocoded_locations.append({
+                    **loc,
+                    "centroid": [geocoded["lon"], geocoded["lat"]]
+                })
+                geocoded_count += 1
+            else:
+                geocoded_locations.append(loc)
+
+        updated["locations"] = geocoded_locations
         enriched.append(updated)
 
     payload["events"] = enriched
-    return payload, resolved_count
+    return payload, geocoded_count
 
 
 # ============================================================================
@@ -1395,22 +1401,37 @@ def enforce_metadata(
             event.pop("date_note", None)
             event.pop("date_label", None)
 
+        # Validate locations array
         raw_locations = event.get("locations") or []
         sanitized_locations = []
-        seen_locations: Set[str] = set()
-        for location in raw_locations:
-            if not isinstance(location, str):
+
+        for loc in raw_locations:
+            if not isinstance(loc, dict):
                 continue
-            trimmed = location.strip()
-            if not trimmed:
-                continue
-            key = trimmed.casefold()
-            if key in seen_locations:
-                continue
-            seen_locations.add(key)
-            sanitized_locations.append(trimmed)
-        if not sanitized_locations:
-            sanitized_locations = [UNKNOWN_LOCATION_LABEL]
+
+            name_historic = loc.get("name_historic", "").strip() if loc.get("name_historic") else None
+            name_modern = loc.get("name_modern", "").strip() if loc.get("name_modern") else None
+            centroid = loc.get("centroid")
+
+            # Validate centroid if present
+            valid_centroid = None
+            if isinstance(centroid, list) and len(centroid) == 2:
+                try:
+                    lon, lat = float(centroid[0]), float(centroid[1])
+                    if -180 <= lon <= 180 and -90 <= lat <= 90:
+                        valid_centroid = [lon, lat]
+                except (TypeError, ValueError):
+                    pass
+
+            # Include if has historic name
+            if name_historic:
+                sanitized_locations.append({
+                    "name_historic": name_historic,
+                    "name_modern": name_modern,
+                    "centroid": valid_centroid,
+                    "primary": bool(loc.get("primary", False))
+                })
+
         event["locations"] = sanitized_locations
 
         # Handle images

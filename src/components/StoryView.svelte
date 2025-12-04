@@ -19,6 +19,7 @@
   import {
     toTimestamp,
     normalizePrimaryLocation,
+    normalizeAllLocations,
     isCoordinate,
     parseHexColor,
     rgbaFromHex,
@@ -73,6 +74,7 @@
     .map((event) => ({
       ...event,
       coordinates: normalizePrimaryLocation(event),
+      allCoordinates: normalizeAllLocations(event),
     }));
   $: totalSlides = eventSlides.length;
   $: slides =

@@ -195,18 +195,46 @@ export function computeYearsLabel(person) {
 
 /**
  * Normalize the primary location coordinates from an event.
- * @param {Object} event - Event with location_coordinates array
+ * @param {Object} event - Event with locations array
  * @returns {Object|null} {lon, lat} or null
  */
 export function normalizePrimaryLocation(event) {
-  const primary = event?.location_coordinates?.find((item) => item?.primary === true);
+  if (!event?.locations || !Array.isArray(event.locations)) {
+    return null;
+  }
+
+  // Find primary location, or use first with coordinates
+  const primary = event.locations.find(loc => loc?.primary === true) || event.locations[0];
+
   if (!Array.isArray(primary?.centroid) || primary.centroid.length !== 2) {
     return null;
   }
+
   const [lng, lat] = primary.centroid.map(Number);
   return Number.isFinite(lng) && Number.isFinite(lat)
     ? { lon: lng, lat: lat }
     : null;
+}
+
+/**
+ * Get all location coordinates from an event.
+ * @param {Object} event - Event with locations array
+ * @returns {Array} Array of {lon, lat, name} objects
+ */
+export function normalizeAllLocations(event) {
+  if (!event?.locations || !Array.isArray(event.locations)) {
+    return [];
+  }
+
+  return event.locations
+    .filter(loc => Array.isArray(loc?.centroid) && loc.centroid.length === 2)
+    .map(loc => {
+      const [lng, lat] = loc.centroid.map(Number);
+      return Number.isFinite(lng) && Number.isFinite(lat)
+        ? { lon: lng, lat: lat, name: loc.name_historic }
+        : null;
+    })
+    .filter(coord => coord !== null);
 }
 
 /**

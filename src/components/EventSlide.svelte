@@ -49,7 +49,15 @@
 
   function formatLocations(locations = []) {
     if (!locations.length) return UNKNOWN_LOCATION_LABEL;
-    return joinWithSeparator(locations, styleConfig);
+
+    // Extract historic names from location objects
+    const names = locations
+      .filter(loc => loc && loc.name_historic)
+      .map(loc => loc.name_historic);
+
+    if (names.length === 0) return UNKNOWN_LOCATION_LABEL;
+
+    return joinWithSeparator(names, styleConfig);
   }
 
   function handleThumbnailLoad(event) {
@@ -210,10 +218,10 @@
           </li>
         </ul>
       {/if}
-      {#if (slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL) || slide.sources?.length}
+      {#if (slide.locations?.length && slide.locations.some(loc => loc.name_historic)) || slide.sources?.length}
         <ul class="details details-compact">
           <li>
-            {#if slide.locations?.length && formatLocations(slide.locations) !== UNKNOWN_LOCATION_LABEL}
+            {#if slide.locations?.length && slide.locations.some(loc => loc.name_historic)}
               <span class="label" aria-label="Location">
                 <svg
                   class="icon icon-inline"
