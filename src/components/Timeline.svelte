@@ -9,14 +9,15 @@
   import { _ } from "../stores/language";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
+  import * as mdiIcons from "@mdi/js";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
   export let activeEventIndex = -1;
   export let hasMultipleEvents = false;
   export let indicatorProgress = 0;
-  export let indicatorIcons = [];
-  export let eventSlides = []; // Array of event objects with titles
+  export let indicatorIcons = []; // Fallback icons (deprecated, prefer event_type_icon in eventSlides)
+  export let eventSlides = []; // Array of event objects with titles and event_type_icon
   export let chapters = []; // Array of chapter objects with headlines
   export let onPrevSlide = () => {};
   export let onNextSlide = () => {};
@@ -30,6 +31,33 @@
 
   // Make isExpanded reactive to initialExpanded prop changes
   $: isExpanded = initialExpanded;
+
+  // Helper function to resolve MDI icon path from icon name (e.g., "mdi-home" -> mdiHome)
+  function resolveIconPath(iconName) {
+    if (!iconName || typeof iconName !== 'string') return null;
+
+    // Convert mdi-icon-name to mdiIconName format
+    const camelCase = iconName
+      .replace(/^mdi-/, '') // Remove 'mdi-' prefix
+      .split('-')
+      .map((word, index) =>
+        index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join('');
+
+    const iconKey = 'mdi' + camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+    return mdiIcons[iconKey] || null;
+  }
+
+  // Build icon array from event_type_icon in eventSlides, with fallback to indicatorIcons
+  $: eventIcons = eventSlides.map((event, idx) => {
+    if (event.event_type_icon) {
+      const iconPath = resolveIconPath(event.event_type_icon);
+      if (iconPath) return iconPath;
+    }
+    // Fallback to indicatorIcons if event_type_icon not available or invalid
+    return indicatorIcons[idx] || null;
+  });
   let isDragging = false;
   let trackElement = null;
   let expandedContainerElement = null;
@@ -322,14 +350,16 @@
                   aria-label={`Show event ${idx + 1} of ${totalSlides}`}
                   aria-current={idx === activeEventIndex ? "true" : undefined}
                 >
-                  <svg
-                    class="dot-icon"
-                    viewBox="0 0 24 24"
-                    role="img"
-                    aria-hidden="true"
-                  >
-                    <path d={indicatorIcons[idx]} />
-                  </svg>
+                  {#if eventIcons[idx]}
+                    <svg
+                      class="dot-icon"
+                      viewBox="0 0 24 24"
+                      role="img"
+                      aria-hidden="true"
+                    >
+                      <path d={eventIcons[idx]} />
+                    </svg>
+                  {/if}
                 </button>
               </div>
             {/each}
@@ -427,14 +457,16 @@
                         ? "true"
                         : undefined}
                     >
-                      <svg
-                        class="dot-icon"
-                        viewBox="0 0 24 24"
-                        role="img"
-                        aria-hidden="true"
-                      >
-                        <path d={indicatorIcons[idx]} />
-                      </svg>
+                      {#if eventIcons[idx]}
+                        <svg
+                          class="dot-icon"
+                          viewBox="0 0 24 24"
+                          role="img"
+                          aria-hidden="true"
+                        >
+                          <path d={eventIcons[idx]} />
+                        </svg>
+                      {/if}
                     </button>
                     <div class="timeline-content">
                       {#if eventYear}
