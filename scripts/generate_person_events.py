@@ -987,10 +987,11 @@ def build_phase2_prompt(
     prompt += "   - Leave null if no other people directly involved\n\n"
 
     prompt += "3. IMAGES:\n"
-    prompt += "   - Select AT MOST ONE relevant image from the list below\n"
+    prompt += "   - Select AT MOST ONE relevant image from the available list below\n"
+    prompt += "   - Images shown are unique to this event (already used images filtered out)\n"
     prompt += "   - Prefer images of buildings, documents, artifacts, or locations\n"
     prompt += "   - DO NOT use generic portraits\n"
-    prompt += "   - Leave null if no suitable image\n\n"
+    prompt += "   - Leave null if no suitable image available\n\n"
 
     prompt += "4. SOURCES:\n"
     prompt += "   - Provide 1-3 Wikipedia URLs from the related articles below\n"
@@ -1030,7 +1031,7 @@ def build_phase2_prompt(
     # Add Commons images
     if commons_images and len(commons_images) > 0:
         prompt += "\n" + "="*60 + "\n"
-        prompt += "AVAILABLE IMAGES:\n"
+        prompt += "AVAILABLE IMAGES (unique to this event - unused by other events):\n"
         prompt += "="*60 + "\n\n"
         # Limit to 20 images
         for idx, img_data in enumerate(commons_images[:20], 1):
@@ -1039,6 +1040,10 @@ def build_phase2_prompt(
             if img_data.get("source"):
                 prompt += f"   Source: {img_data['source']}\n"
             prompt += "\n"
+    else:
+        prompt += "\n" + "="*60 + "\n"
+        prompt += "AVAILABLE IMAGES: None remaining (all images already used by previous events)\n"
+        prompt += "="*60 + "\n\n"
 
     return prompt
 
@@ -1129,14 +1134,31 @@ def research_all_event_details(
     commons_images: List[Dict[str, Any]],
     model: str,
 ) -> List[EventDetails]:
-    """Research details for all events sequentially."""
+    """Research details for all events sequentially, tracking used images."""
     details = []
+    used_image_urls: Set[str] = set()
+
     for idx, skeleton in enumerate(event_skeletons, 1):
         print(f"  [{idx}/{len(event_skeletons)}] Researching: {skeleton.title}")
+
+        # Filter out already-used images
+        available_images = [
+            img for img in commons_images
+            if img.get("url") and img["url"] not in used_image_urls
+        ]
+
         detail = research_event_details(
-            skeleton, person_name, all_related_articles, commons_images, model
+            skeleton, person_name, all_related_articles, available_images, model
         )
+
+        # Track used images
+        if detail.images:
+            for img in detail.images:
+                if img.url:
+                    used_image_urls.add(img.url)
+
         details.append(detail)
+
     return details
 
 
