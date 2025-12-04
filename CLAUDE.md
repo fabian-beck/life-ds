@@ -76,17 +76,25 @@ Events are the core narrative units displayed as slides. Events can optionally b
       "title": "Publishes 'On Computable Numbers'",
       "description": "Long-form markdown description...",
       "chapter": "early_years",
-      "location": {
-        "name": "Cambridge, England",
-        "latitude": 52.2053,
-        "longitude": 0.1218
-      },
-      "categories": ["Academic Achievement"],
+      "locations": ["Cambridge, England"],
+      "location_modern": "Cambridge, United Kingdom",
+      "involved_people": ["Max Newman", "Alonzo Church"],
+      "sources": ["https://en.wikipedia.org/wiki/..."],
+      "event_type_icon": "mdi-file-document",
       "images": [
         {
           "url": "https://...",
           "caption": "...",
           "source": "https://commons.wikimedia.org/..."
+        }
+      ],
+      "location_coordinates": [
+        {
+          "label": "Cambridge, England, United Kingdom",
+          "name": "Cambridge, England",
+          "primary": true,
+          "centroid": [0.1218, 52.2053],
+          "source": "nominatim"
         }
       ]
     }
@@ -94,11 +102,17 @@ Events are the core narrative units displayed as slides. Events can optionally b
 }
 ```
 
+**New Fields (Two-Phase System)**:
+- `location_modern`: Modern geographic name for geocoding (e.g., "Kaliningrad, Russia" for historic "Königsberg")
+- `involved_people`: List of people directly involved in this event (excludes the main subject)
+- `event_type_icon`: MDI icon identifier for visual categorization (e.g., "mdi-crown", "mdi-book", "mdi-school")
+
 **Important**:
 - Events may not have locations (non-geographic events) or images
 - Chapters are optional but recommended for organizing life narratives
 - Each event can reference a chapter via the `chapter` field (using the chapter's `id`)
 - Chapters should be chronological and non-overlapping
+- The new fields are optional and backward-compatible with existing data
 
 ### Ego Network Schema
 
@@ -165,9 +179,10 @@ life-ds/
 │           └── _cache/       # Wikipedia materials
 ├── scripts/                 # Python data generators
 │   ├── generate_person.py           # Full person workflow
-│   ├── generate_person_dataset.py   # Life events only
+│   ├── generate_person_events.py    # Life events (two-phase AI)
 │   ├── generate_person_style.py     # Visual style only
 │   ├── generate_person_network.py   # Ego network only
+│   ├── icon_categories.py           # MDI icon mappings
 │   ├── translate_person.py          # Translate single person
 │   ├── translate_all_persons.py     # Batch translate all persons
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
@@ -220,14 +235,14 @@ python scripts/generate_person.py "Albert Einstein"
 
 This runs all three generators:
 
-1. `generate_person_dataset.py` - Life events via GPT-4o-mini
-2. `generate_person_style.py` - Visual design via GPT-4o
-3. `generate_person_network.py` - Ego network via GPT-4o-mini
+1. `generate_person_events.py` - Life events via two-phase AI
+2. `generate_person_style.py` - Visual design
+3. `generate_person_network.py` - Ego network
 
 **Individual generators**:
 
 ```bash
-python scripts/generate_person_dataset.py "Ada Lovelace"
+python scripts/generate_person_events.py "Ada Lovelace"
 python scripts/generate_person_style.py "Ada Lovelace"
 python scripts/generate_person_network.py "Ada Lovelace"
 ```
@@ -238,13 +253,41 @@ python scripts/generate_person_network.py "Ada Lovelace"
 python scripts/remove_person.py "Ada Lovelace"
 ```
 
+### Two-Phase Event Generation
+
+The life events generation uses a **two-phase AI approach** for improved accuracy and richer metadata:
+
+**Phase 1: Event Skeleton Generation** (1 AI call)
+- Identifies 12-16 significant life events (strictly enforced)
+- Organizes events into 3-5 coherent chapters
+- Creates crisp titles (2-6 words) and rich descriptions
+- Uses ALL related articles for broad context
+
+**Phase 2: Event Detail Research** (12-16 AI calls, one per event)
+- Researches specific details for each event individually
+- Filters 3-5 most relevant related articles per event
+- Provides:
+  - Historic location name (e.g., "Königsberg")
+  - Modern location name (e.g., "Kaliningrad, Russia") for accurate geocoding
+  - People directly involved in this event (excludes main subject)
+  - Event-specific images and sources
+  - Semantic icon from 100+ MDI categories (e.g., "mdi-crown", "mdi-book")
+
+**Benefits**:
+- Better accuracy through event-specific context
+- Richer metadata (modern locations, involved people, icons)
+- More reliable geocoding for historic places with changed names
+- Resilient error handling (individual event failures don't abort entire generation)
+
+**Performance**: ~60 seconds per person, ~$0.02 cost (cost may vary by model)
+
 ### Wikipedia Caching
 
 The scripts automatically cache Wikipedia materials in `data/people/{person_id}/_cache/`:
 
 - Main Wikipedia article (HTML, markdown)
-- Related articles
-- Image metadata
+- Related articles (up to 15 most relevant)
+- Image metadata (Commons images)
 
 This reduces API calls and provides offline access for analysis.
 
@@ -598,7 +641,7 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 ### Python Scripts
 
 - All scripts use OpenAI structured outputs (Pydantic models)
-- Model: `gpt-4o-mini` (datasets, networks), `gpt-4o` (styles)
+- Model is configurable via `OPENAI_MODEL` environment variable (see `config.py`)
 - Wikipedia API via `requests` library
 - Shared utilities in `config.py`
 

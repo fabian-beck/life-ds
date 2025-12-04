@@ -45,14 +45,14 @@ The scripts require:
 ### Running the Generators
 
 ```powershell
-python scripts/generate_person_dataset.py "Ada Lovelace"
+python scripts/generate_person_events.py "Ada Lovelace"
 python scripts/generate_person_style.py "Ada Lovelace"
 ```
 
-The dataset generator uses `gpt-4o-mini` by default. To use a different model:
+The event generator uses a **two-phase AI approach** for improved accuracy and richer metadata. The model is configurable via the `OPENAI_MODEL` environment variable or the `--model` flag:
 
 ```powershell
-python scripts/generate_person_dataset.py "Ada Lovelace" --model gpt-4o-2024-08-06
+python scripts/generate_person_events.py "Ada Lovelace" --model <model_name>
 ```
 
 By default the scripts write to `data/people/` and `data/person_styles.json`, updating the shared registry files as needed.

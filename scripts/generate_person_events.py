@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Generate life event datasets for notable people using Wikipedia content and the OpenAI API."""
+"""
+Generate life event datasets using a two-phase approach:
+1. Phase 1: Generate event skeletons (title, date, description) + chapters
+2. Phase 2: Research details for each event (location, people, images, sources, icon)
+
+This script replaces generate_person_dataset.py with improved accuracy and richer metadata.
+"""
 
 import argparse
 import json
@@ -11,13 +17,14 @@ from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Set
-from urllib.parse import quote, unquote, urlparse
+from urllib.parse import quote
 
 import requests
 from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from icon_categories import ICON_CATEGORIES, format_icon_categories_for_prompt
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
@@ -32,16 +39,13 @@ try:
 except ImportError:
     fetch_related_articles = None
 
+# Constants
 DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
 PEOPLE_DIR = DATA_DIR / "people"
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
-COMMONS_API = "https://commons.wikimedia.org/w/api.php"
-
-# Global variable to store the Wikipedia language code when a URL is provided
-_wikipedia_lang: Optional[str] = None
 DEFAULT_USER_AGENT = (
     "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
 )
@@ -53,14 +57,18 @@ GEOCODER_DELAY_SECONDS = float(os.getenv("LIFE_DS_GEOCODER_DELAY", "1.0"))
 GEOCODER_MAX_RESULTS = 1
 UNKNOWN_LOCATION_LABEL = "Location unknown"
 
+# Global caches
 _geocode_cache: Dict[str, Optional[Dict[str, Any]]] = {}
 _last_geocode_at: float = 0.0
+_wikipedia_lang: Optional[str] = None
 
 
-# Pydantic models for structured outputs
+# ============================================================================
+# PYDANTIC MODELS
+# ============================================================================
+
 class ImageMetadata(BaseModel):
     """Metadata for an image associated with an event."""
-
     url: str = Field(description="The full URL of the image")
     caption: str = Field(
         description="A concise, factual description of what the image shows"
@@ -70,41 +78,25 @@ class ImageMetadata(BaseModel):
     )
 
 
-class LifeEvent(BaseModel):
-    """A significant life event."""
+class Portrait(BaseModel):
+    """Portrait information for the person."""
+    image: Optional[str] = Field(None, description="URL of the portrait image")
+    source: Optional[str] = Field(None, description="Source URL for the portrait")
 
-    date: str = Field(description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
-    date_precision: str = Field(
-        description="Precision level: 'day', 'month', or 'year'"
-    )
-    date_end: Optional[str] = Field(
-        None, description="Optional end date for events spanning a range"
-    )
-    date_end_precision: Optional[str] = Field(
-        None, description="Precision for the end date"
-    )
-    date_note: Optional[str] = Field(
-        None, description="Note about date uncertainty or alternative representations"
-    )
-    age: Optional[int] = Field(
-        None,
-        description="Subject's age at the time of the event, null if not applicable",
-    )
-    title: str = Field(description="Brief title of the event")
-    description: str = Field(description="Detailed description of the event")
-    locations: List[str] = Field(
-        description="Human-readable location names, use 'Location unknown' if uncertain"
-    )
-    sources: List[str] = Field(description="Array of Wikipedia URLs or references")
-    images: Optional[List[ImageMetadata]] = Field(
-        None, description="Optional array of relevant images"
-    )
-    chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
+
+class Person(BaseModel):
+    """Metadata about the person."""
+    name: str = Field(description="Full name of the person")
+    birth_date: Optional[str] = Field(None, description="Birth date in ISO-8601 format")
+    death_date: Optional[str] = Field(None, description="Death date in ISO-8601 format")
+    primary_roles: List[str] = Field(description="Primary roles or professions")
+    summary: str = Field(description="Brief biographical summary")
+    wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
+    portrait: Optional[Portrait] = Field(None, description="Portrait information")
 
 
 class LifeChapter(BaseModel):
     """A chapter grouping a sequence of life events."""
-
     id: str = Field(
         description="Unique identifier for the chapter (lowercase, snake_case)"
     )
@@ -132,40 +124,115 @@ class LifeChapter(BaseModel):
     )
 
 
-class Portrait(BaseModel):
-    """Portrait information for the person."""
+# Phase 1 Models
 
-    image: Optional[str] = Field(None, description="URL of the portrait image")
-    source: Optional[str] = Field(None, description="Source URL for the portrait")
+class EventSkeleton(BaseModel):
+    """Phase 1: Minimal event structure for planning the narrative."""
+    date: str = Field(description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
+    date_precision: str = Field(
+        description="Precision level: 'day', 'month', or 'year'"
+    )
+    date_end: Optional[str] = Field(
+        None, description="Optional end date for events spanning a range"
+    )
+    date_end_precision: Optional[str] = Field(
+        None, description="Precision for the end date"
+    )
+    date_note: Optional[str] = Field(
+        None, description="Note about date uncertainty or alternative representations"
+    )
+    age: Optional[int] = Field(
+        None,
+        description="Subject's age at the time of the event, null if not applicable",
+    )
+    title: str = Field(description="Brief title of the event (2-6 words)")
+    description: str = Field(description="Detailed description of the event (2-4 sentences)")
+    chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
 
 
-class Person(BaseModel):
-    """Metadata about the person."""
-
-    name: str = Field(description="Full name of the person")
-    birth_date: Optional[str] = Field(None, description="Birth date in ISO-8601 format")
-    death_date: Optional[str] = Field(None, description="Death date in ISO-8601 format")
-    primary_roles: List[str] = Field(description="Primary roles or professions")
-    summary: str = Field(description="Brief biographical summary")
-    wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
-    portrait: Optional[Portrait] = Field(None, description="Portrait information")
-
-
-class LifeDataset(BaseModel):
-    """Complete structured dataset for a person's life events."""
-
+class LifePlan(BaseModel):
+    """Phase 1 output: Person metadata, chapters, and event skeletons."""
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
     chapters: Optional[List[LifeChapter]] = Field(
         None, description="Optional list of life chapters grouping events"
     )
-    events: List[LifeEvent] = Field(description="List of significant life events")
+    event_skeletons: List[EventSkeleton] = Field(
+        description="List of event skeletons (minimal event data)"
+    )
 
+
+# Phase 2 Models
+
+class EventDetails(BaseModel):
+    """Phase 2: Research details for a specific event."""
+    location: Optional[str] = Field(
+        None,
+        description="Historic location name at time of event (e.g., 'Königsberg')"
+    )
+    location_modern: Optional[str] = Field(
+        None,
+        description="Modern geographic name for geocoding (e.g., 'Kaliningrad, Russia'). "
+        "Always provide even if same as historic location."
+    )
+    involved_people: Optional[List[str]] = Field(
+        None,
+        description="Names of people directly involved in this event (exclude the main subject)"
+    )
+    images: Optional[List[ImageMetadata]] = Field(
+        None,
+        description="At most ONE relevant image for this event"
+    )
+    sources: List[str] = Field(
+        default_factory=list,
+        description="Array of Wikipedia URLs or references supporting this event"
+    )
+    event_type_icon: Optional[str] = Field(
+        None,
+        description="MDI icon identifier (e.g., 'mdi-crown', 'mdi-book')"
+    )
+
+
+# Final Model
+
+class LifeEvent(BaseModel):
+    """Final merged event (skeleton + details)."""
+    date: str = Field(description="ISO-8601 date string")
+    date_precision: str = Field(description="Precision level")
+    date_end: Optional[str] = None
+    date_end_precision: Optional[str] = None
+    date_note: Optional[str] = None
+    age: Optional[int] = None
+    title: str = Field(description="Brief title of the event")
+    description: str = Field(description="Detailed description")
+    locations: List[str] = Field(
+        description="Human-readable location names"
+    )
+    location_modern: Optional[str] = Field(
+        None,
+        description="Modern location name for geocoding"
+    )
+    involved_people: Optional[List[str]] = Field(
+        None,
+        description="People directly involved in this event"
+    )
+    sources: List[str] = Field(description="Array of Wikipedia URLs or references")
+    images: Optional[List[ImageMetadata]] = None
+    event_type_icon: Optional[str] = Field(
+        None,
+        description="MDI icon identifier"
+    )
+    chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
+
+
+# ============================================================================
+# UTILITY FUNCTIONS (copied from generate_person_dataset.py)
+# ============================================================================
 
 def _strip_wrapping_quotes(value: str) -> str:
     trimmed = value.strip()
-    quotes = "\"'“”‘’"
+    quotes = "\"'""''"
     while len(trimmed) >= 2 and trimmed[0] in quotes and trimmed[-1] in quotes:
         trimmed = trimmed[1:-1].strip()
     return trimmed
@@ -211,12 +278,9 @@ def _normalize_location_text(value: str) -> str:
 
 
 def _strip_html_tags(value: str) -> str:
-    # Remove HTML tags
     clean = re.sub(r"<[^>]+>", "", value)
-    # Decode HTML entities
     clean = clean.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
     clean = clean.replace("&quot;", '"').replace("&#39;", "'").replace("&nbsp;", " ")
-    # Remove excessive whitespace
     clean = " ".join(clean.split())
     return clean.strip()
 
@@ -267,7 +331,6 @@ def _collect_person_name_candidates(
 
     push(person.get("name"))
     push(person.get("preferred_name"))
-
     push(page_data.get("title"))
     push(page_data.get("displaytitle"))
 
@@ -289,98 +352,6 @@ def _name_score(value: str) -> Tuple[int, int, int]:
     word_count = len(value.split())
     length_penalty = len(value)
     return punctuation_penalty, word_count, length_penalty
-
-
-def _generate_location_candidates(query: str) -> List[str]:
-    candidates: List[str] = []
-    seen: Set[str] = set()
-
-    def add(value: str) -> None:
-        if not value:
-            return
-        key = value.casefold()
-        if key in seen:
-            return
-        seen.add(key)
-        candidates.append(value)
-
-    normalized = _normalize_location_text(query)
-    add(normalized)
-
-    without_parentheses = re.sub(r"\s*\([^)]*\)", "", normalized)
-    without_parentheses = _normalize_location_text(without_parentheses)
-    if without_parentheses and without_parentheses != normalized:
-        add(without_parentheses)
-
-    base_for_segments = without_parentheses or normalized
-    segments = [
-        segment.strip()
-        for segment in re.split(r"\s*,\s*", base_for_segments)
-        if segment.strip()
-    ]
-    if len(segments) > 1:
-        for length in range(len(segments) - 1, 0, -1):
-            add(", ".join(segments[:length]))
-    if segments:
-        add(segments[0])
-
-    dashed = re.sub(r"\s*[-–—]\s*.*$", "", normalized)
-    dashed = _normalize_location_text(dashed)
-    if dashed and dashed != normalized:
-        add(dashed)
-
-    return candidates
-
-
-def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
-    cached = _geocode_cache.get(query)
-    if cached is not None:
-        return cached
-    try:
-        _throttle_geocoder()
-        response = requests.get(
-            GEOCODER_ENDPOINT,
-            params={
-                "q": query,
-                "format": "jsonv2",
-                "limit": GEOCODER_MAX_RESULTS,
-            },
-            timeout=30,
-            headers=geocoder_headers(),
-        )
-        response.raise_for_status()
-        results: List[Dict[str, Any]] = response.json()
-    except Exception as error:  # noqa: BLE001
-        print(f"Warning: geocoding lookup failed for '{query}': {error}")
-        _geocode_cache[query] = None
-        return None
-    if not results:
-        _geocode_cache[query] = None
-        return None
-    primary = results[0]
-    try:
-        lon = float(primary.get("lon"))
-        lat = float(primary.get("lat"))
-    except (TypeError, ValueError):
-        _geocode_cache[query] = None
-        return None
-    bbox_values: Optional[List[float]] = None
-    raw_bbox = primary.get("boundingbox")
-    if isinstance(raw_bbox, list) and len(raw_bbox) == 4:
-        try:
-            south, north, west, east = [float(value) for value in raw_bbox]
-            bbox_values = [west, south, east, north]
-        except (TypeError, ValueError):
-            bbox_values = None
-    result = {
-        "name": query,
-        "display_name": primary.get("display_name"),
-        "lon": lon,
-        "lat": lat,
-        "bbox": bbox_values,
-    }
-    _geocode_cache[query] = result
-    return result
 
 
 def normalize_date_value(value: str, precision: str) -> tuple[Any, str]:
@@ -445,8 +416,193 @@ def geocoder_headers() -> Dict[str, str]:
     return headers
 
 
+def _throttle_geocoder() -> None:
+    global _last_geocode_at
+    if GEOCODER_DELAY_SECONDS <= 0:
+        return
+    now = time.monotonic()
+    elapsed = now - _last_geocode_at
+    if elapsed < GEOCODER_DELAY_SECONDS:
+        time.sleep(GEOCODER_DELAY_SECONDS - elapsed)
+    _last_geocode_at = time.monotonic()
+
+
+def _generate_location_candidates(query: str) -> List[str]:
+    candidates: List[str] = []
+    seen: Set[str] = set()
+
+    def add(value: str) -> None:
+        if not value:
+            return
+        key = value.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append(value)
+
+    normalized = _normalize_location_text(query)
+    add(normalized)
+
+    without_parentheses = re.sub(r"\s*\([^)]*\)", "", normalized)
+    without_parentheses = _normalize_location_text(without_parentheses)
+    if without_parentheses and without_parentheses != normalized:
+        add(without_parentheses)
+
+    base_for_segments = without_parentheses or normalized
+    segments = [
+        segment.strip()
+        for segment in re.split(r"\s*,\s*", base_for_segments)
+        if segment.strip()
+    ]
+    if len(segments) > 1:
+        for length in range(len(segments) - 1, 0, -1):
+            add(", ".join(segments[:length]))
+    if segments:
+        add(segments[0])
+
+    dashed = re.sub(r"\s*[-–—]\s*.*$", "", normalized)
+    dashed = _normalize_location_text(dashed)
+    if dashed and dashed != normalized:
+        add(dashed)
+
+    return candidates
+
+
+def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
+    cached = _geocode_cache.get(query)
+    if cached is not None:
+        return cached
+    try:
+        _throttle_geocoder()
+        response = requests.get(
+            GEOCODER_ENDPOINT,
+            params={
+                "q": query,
+                "format": "jsonv2",
+                "limit": GEOCODER_MAX_RESULTS,
+            },
+            timeout=30,
+            headers=geocoder_headers(),
+        )
+        response.raise_for_status()
+        results: List[Dict[str, Any]] = response.json()
+    except Exception as error:
+        print(f"Warning: geocoding lookup failed for '{query}': {error}")
+        _geocode_cache[query] = None
+        return None
+    if not results:
+        _geocode_cache[query] = None
+        return None
+    primary = results[0]
+    try:
+        lon = float(primary.get("lon"))
+        lat = float(primary.get("lat"))
+    except (TypeError, ValueError):
+        _geocode_cache[query] = None
+        return None
+    bbox_values: Optional[List[float]] = None
+    raw_bbox = primary.get("boundingbox")
+    if isinstance(raw_bbox, list) and len(raw_bbox) == 4:
+        try:
+            south, north, west, east = [float(value) for value in raw_bbox]
+            bbox_values = [west, south, east, north]
+        except (TypeError, ValueError):
+            bbox_values = None
+    result = {
+        "name": query,
+        "display_name": primary.get("display_name"),
+        "lon": lon,
+        "lat": lat,
+        "bbox": bbox_values,
+    }
+    _geocode_cache[query] = result
+    return result
+
+
+def geocode_location(query: str) -> Optional[Dict[str, Any]]:
+    normalized = _normalize_location_text(query or "")
+    if not normalized:
+        return None
+    if normalized.casefold() == UNKNOWN_LOCATION_LABEL.casefold():
+        return None
+    cached = _geocode_cache.get(normalized)
+    if cached is not None:
+        return cached
+
+    for candidate in _generate_location_candidates(normalized):
+        result = _geocode_candidate(candidate)
+        if result:
+            _geocode_cache[normalized] = result
+            return result
+
+    _geocode_cache[normalized] = None
+    return None
+
+
+def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
+    """Convert varying precision date strings into a comparable upper bound."""
+    if not value:
+        return None
+    normalized_precision = (precision or "day").lower()
+    try:
+        if normalized_precision == "day":
+            return datetime.strptime(value, "%Y-%m-%d").date()
+        if normalized_precision == "month":
+            year, month = [int(part) for part in value.split("-")[:2]]
+            last_day = monthrange(year, month)[1]
+            return date(year, month, last_day)
+        if normalized_precision == "year":
+            year = int(value[:4])
+            return date(year, 12, 31)
+    except (ValueError, TypeError):
+        return None
+    return None
+
+
+# ============================================================================
+# WIKIPEDIA DATA FETCHING (copied from generate_person_dataset.py)
+# ============================================================================
+
+def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
+    """Extract Wikipedia article title and language code from a URL."""
+    from urllib.parse import urlparse, unquote
+
+    url_or_subject = url_or_subject.strip()
+
+    if not (
+        url_or_subject.startswith("http://") or url_or_subject.startswith("https://")
+    ):
+        return None
+
+    try:
+        parsed = urlparse(url_or_subject)
+
+        if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
+            return None
+
+        domain_parts = parsed.netloc.split(".")
+        if (
+            len(domain_parts) >= 2
+            and domain_parts[-2] == "wikipedia"
+            and domain_parts[-1] == "org"
+        ):
+            lang_code = domain_parts[0]
+        else:
+            lang_code = "en"
+
+        path_parts = parsed.path.split("/")
+        if len(path_parts) >= 3 and path_parts[1] == "wiki":
+            title = "/".join(path_parts[2:])
+            title = unquote(title)
+            title = title.replace("_", " ")
+            return (title, lang_code)
+
+        return None
+    except Exception:
+        return None
+
+
 def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, Any]:
-    # Use the specified language or fall back to global or default to English
     language = lang or _wikipedia_lang or "en"
     api_url = f"https://{language}.wikipedia.org/w/api.php"
 
@@ -459,7 +615,7 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
         "inprop": "url",
         "piprop": "original",
         "titles": title,
-        "imlimit": 100,  # Fetch up to 100 images from the page
+        "imlimit": 100,
     }
     response = requests.get(
         api_url,
@@ -476,64 +632,6 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
     return page
-
-
-def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
-    """
-    Extract Wikipedia article title and language code from a URL, or return None if not a URL.
-
-    Supports URLs like:
-    - https://en.wikipedia.org/wiki/Ada_Lovelace
-    - https://de.wikipedia.org/wiki/Hanna_Nagel
-    - http://en.wikipedia.org/wiki/Ada_Lovelace
-
-    Args:
-        url_or_subject: Either a Wikipedia URL or a regular subject string
-
-    Returns:
-        Tuple of (article_title, language_code) if input is a Wikipedia URL, None otherwise
-    """
-    url_or_subject = url_or_subject.strip()
-
-    # Check if this looks like a URL
-    if not (
-        url_or_subject.startswith("http://") or url_or_subject.startswith("https://")
-    ):
-        return None
-
-    try:
-        parsed = urlparse(url_or_subject)
-
-        # Check if this is a Wikipedia domain
-        if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
-            return None
-
-        # Extract language code from domain (e.g., 'de' from 'de.wikipedia.org')
-        domain_parts = parsed.netloc.split(".")
-        if (
-            len(domain_parts) >= 2
-            and domain_parts[-2] == "wikipedia"
-            and domain_parts[-1] == "org"
-        ):
-            lang_code = domain_parts[0]
-        else:
-            lang_code = "en"  # Default to English
-
-        # Extract the article title from the path
-        # Path should be like /wiki/Article_Title
-        path_parts = parsed.path.split("/")
-        if len(path_parts) >= 3 and path_parts[1] == "wiki":
-            # Get the article title (everything after /wiki/)
-            title = "/".join(path_parts[2:])
-            # URL decode the title
-            title = unquote(title)
-            # Replace underscores with spaces (Wikipedia convention)
-            title = title.replace("_", " ")
-            return (title, lang_code)
-
-        return None
-    except Exception:
-        return None
 
 
 def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
@@ -558,15 +656,13 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
     suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
     if suggestion:
         titles.append(suggestion)
-    # Preserve the reported order while removing duplicates later when enqueuing
     return titles
 
 
 def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
-    # Check if the input is a Wikipedia URL
+    """Fetch Wikipedia article with fallback search."""
     url_info = extract_wikipedia_title(title)
     if url_info:
-        # Use the extracted title and language code directly without searching
         article_title, lang_code = url_info
         print(
             f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})"
@@ -631,6 +727,7 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
 
 
 def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
+    """Fetch Wikipedia summary from REST API."""
     url = WIKIPEDIA_SUMMARY_API + quote(title.replace(" ", "_"))
     response = requests.get(url, timeout=30, headers=wikipedia_headers())
     if response.status_code != 200:
@@ -638,291 +735,48 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
     return response.json()
 
 
-def search_commons_images(person_name: str, limit: int = 20) -> List[Dict[str, Any]]:
-    """Search Wikimedia Commons for images related to a person."""
-    try:
-        # Search Commons for images related to the person
-        params = {
-            "action": "query",
-            "format": "json",
-            "list": "search",
-            "srsearch": f"{person_name}",
-            "srnamespace": "6",  # File namespace
-            "srlimit": limit,
-            "srprop": "snippet",
-        }
-        response = requests.get(
-            COMMONS_API,
-            params=params,
-            timeout=30,
-            headers=wikipedia_headers(),
-        )
-        response.raise_for_status()
-        data = response.json()
+# ============================================================================
+# PHASE 1: EVENT SKELETON GENERATION
+# ============================================================================
 
-        search_results = data.get("query", {}).get("search", [])
-        if not search_results:
-            return []
-
-        # Extract file titles
-        file_titles = [
-            result.get("title") for result in search_results if result.get("title")
-        ]
-
-        # Fetch detailed info for these files
-        if not file_titles:
-            return []
-
-        image_data = []
-        # Process in chunks of 50
-        for i in range(0, len(file_titles), 50):
-            chunk = file_titles[i : i + 50]
-            params = {
-                "action": "query",
-                "format": "json",
-                "prop": "imageinfo",
-                "iiprop": "url|size|mime|extmetadata",
-                "titles": "|".join(chunk),
-            }
-
-            try:
-                response = requests.get(
-                    COMMONS_API,
-                    params=params,
-                    timeout=30,
-                    headers=wikipedia_headers(),
-                )
-                response.raise_for_status()
-                data = response.json()
-            except Exception as error:
-                print(f"Warning: Failed to fetch Commons image details: {error}")
-                continue
-
-            pages = data.get("query", {}).get("pages", {})
-            for page in pages.values():
-                imageinfo = page.get("imageinfo", [])
-                if imageinfo and len(imageinfo) > 0:
-                    info = imageinfo[0]
-                    url = info.get("url")
-                    mime = info.get("mime", "")
-                    width = info.get("width", 0)
-                    height = info.get("height", 0)
-
-                    # Only include proper images (exclude TIFF/TIF as not browser-supported)
-                    if (
-                        url
-                        and mime.startswith("image/")
-                        and mime != "image/tif"
-                        and width >= 100
-                        and height >= 100
-                        and not url.lower().endswith((".ti", ".tif"))
-                    ):
-                        extmetadata = info.get("extmetadata", {})
-                        description = None
-                        description_url = None
-
-                        if "ImageDescription" in extmetadata:
-                            desc_data = extmetadata["ImageDescription"]
-                            if isinstance(desc_data, dict) and "value" in desc_data:
-                                description = _strip_html_tags(desc_data["value"])
-
-                        if "DescriptionURL" in extmetadata:
-                            desc_url_data = extmetadata["DescriptionURL"]
-                            if (
-                                isinstance(desc_url_data, dict)
-                                and "value" in desc_url_data
-                            ):
-                                description_url = desc_url_data["value"]
-                        elif "descriptionurl" in info:
-                            description_url = info["descriptionurl"]
-
-                        image_obj = {
-                            "url": url,
-                            "caption": description or "Image from Wikimedia Commons",
-                            "source": description_url,
-                        }
-                        image_data.append(image_obj)
-
-        return image_data
-    except Exception as error:
-        print(f"Warning: Commons search failed for '{person_name}': {error}")
-        return []
-
-
-def fetch_image_urls(image_titles: List[str]) -> List[str]:
-    """Fetch actual URLs for Wikipedia image titles."""
-    if not image_titles:
-        return []
-
-    # Filter out common non-content images
-    excluded_patterns = [
-        "commons-logo",
-        "wikidata-logo",
-        "wikimedia-logo",
-        "edit-clear.svg",
-        "question_book",
-        "ambox",
-        "symbol",
-        "blue_pencil.svg",
-        "increase",
-        "decrease",
-        "steady",
-    ]
-
-    filtered_titles = []
-    # Limit to first 60 to get more images
-    for title in image_titles[:60]:
-        # Skip if title is not a string
-        if not isinstance(title, str):
-            continue
-        title_lower = title.lower()
-        if any(pattern in title_lower for pattern in excluded_patterns):
-            continue
-        # Accept any title - Wikipedia API returns image titles as-is
-        filtered_titles.append(title)
-
-    if not filtered_titles:
-        return []
-
-    # Batch fetch image info in chunks of 50 (API limit)
-    image_data = []
-    for i in range(0, len(filtered_titles), 50):
-        chunk = filtered_titles[i : i + 50]
-        params = {
-            "action": "query",
-            "format": "json",
-            "prop": "imageinfo",
-            "iiprop": "url|size|mime|extmetadata",
-            "titles": "|".join(chunk),
-        }
-
-        try:
-            response = requests.get(
-                MEDIAWIKI_API,
-                params=params,
-                timeout=30,
-                headers=wikipedia_headers(),
-            )
-            response.raise_for_status()
-            data = response.json()
-        except Exception as error:
-            print(f"Warning: Failed to fetch image URLs for chunk {i//50 + 1}: {error}")
-            continue
-
-        pages = data.get("query", {}).get("pages", {})
-        for page in pages.values():
-            imageinfo = page.get("imageinfo", [])
-            if imageinfo and len(imageinfo) > 0:
-                info = imageinfo[0]
-                url = info.get("url")
-                mime = info.get("mime", "")
-                width = info.get("width", 0)
-                height = info.get("height", 0)
-
-                # Only include proper images (not tiny images, exclude TIFF/TIF as not browser-supported)
-                if url and mime.startswith("image/") and mime != "image/tif":
-                    # Lower minimum size to include more images, exclude TIFF files
-                    if (
-                        width >= 100
-                        and height >= 100
-                        and not url.lower().endswith((".ti", ".tif"))
-                    ):
-                        # Extract metadata
-                        extmetadata = info.get("extmetadata", {})
-                        description = None
-                        description_url = None
-
-                        # Try to get description
-                        if "ImageDescription" in extmetadata:
-                            desc_data = extmetadata["ImageDescription"]
-                            if isinstance(desc_data, dict) and "value" in desc_data:
-                                # Strip HTML tags from description
-                                description = _strip_html_tags(desc_data["value"])
-
-                        # Get description URL (Wikimedia Commons page)
-                        if "DescriptionURL" in extmetadata:
-                            desc_url_data = extmetadata["DescriptionURL"]
-                            if (
-                                isinstance(desc_url_data, dict)
-                                and "value" in desc_url_data
-                            ):
-                                description_url = desc_url_data["value"]
-                        elif "descriptionurl" in info:
-                            description_url = info["descriptionurl"]
-
-                        # Create image object with metadata
-                        image_obj = {
-                            "url": url,
-                            "caption": description or "Image from Wikimedia Commons",
-                            "source": description_url,
-                        }
-                        image_data.append(image_obj)
-
-    return image_data
-
-
-def build_prompt(
+def build_phase1_prompt(
     page_data: Dict[str, Any],
     summary_data: Dict[str, Any],
     subject: str,
-    commons_images: Optional[List[Dict[str, Any]]] = None,
     related_articles: Optional[List[Dict[str, Any]]] = None,
 ) -> str:
+    """
+    Build Phase 1 prompt for generating event skeletons and chapters.
+
+    Focus on identifying significant life events and organizing them into chapters.
+    NO location/image/source details (Phase 2 will research these).
+    """
     summary_text = summary_data.get("extract", "").strip()
     extract_text = page_data.get("extract", "").strip()
 
-    # Get image URLs - images come as list of dicts with 'title' keys
-    images_data = page_data.get("images", [])
-    image_titles = []
-    for img in images_data:
-        if isinstance(img, dict) and "title" in img:
-            image_titles.append(img["title"])
-        elif isinstance(img, str):
-            image_titles.append(img)
+    main_article_title = page_data.get('title', subject)
 
-    image_urls = fetch_image_urls(image_titles) if image_titles else []
+    combined = f"TARGET SUBJECT: {main_article_title}\n"
+    combined += f"="*60 + "\n"
+    combined += f"You are creating a biographical timeline for {main_article_title}.\n"
+    combined += f"Focus ONLY on events from {main_article_title}'s life.\n"
+    combined += f"="*60 + "\n\n"
+    combined += f"MAIN ARTICLE\nPage title: {main_article_title}\nPage URL: {page_data.get('fullurl', '')}\n\n"
 
-    # Use provided commons_images if available (from cache), otherwise search
-    if commons_images is None:
-        person_name = page_data.get("title", subject)
-        commons_images = search_commons_images(person_name, limit=30)
-
-    # Combine and deduplicate images
-    seen_urls = set()
-    all_images = []
-    for img in image_urls + commons_images:
-        url = img.get("url")
-        if url and url not in seen_urls:
-            seen_urls.add(url)
-            all_images.append(img)
-
-    image_urls = all_images
-
-    combined = f"Page title: {page_data.get('title', subject)}\nPage URL: {page_data.get('fullurl', '')}\n\n"
     if summary_text:
         combined += f"Summary snippet:\n{summary_text}\n\n"
+
     if extract_text:
         truncated = extract_text[:12000]
         combined += (
             f"Full extract (truncated to 12k characters if needed):\n{truncated}\n"
         )
 
-    if image_urls:
-        combined += f"\n\n{'='*60}\nAVAILABLE IMAGES - Use these in relevant events:\n{'='*60}\n"
-        # Increased limit to 30 to provide more image options
-        for idx, img_data in enumerate(image_urls[:30], 1):
-            combined += f"\n{idx}. {img_data.get('caption', 'Image')}\n"
-            combined += f"   URL: {img_data['url']}\n"
-            if img_data.get("source"):
-                combined += f"   Source: {img_data['source']}\n"
-        combined += "\nIMPORTANT: Include relevant images in events using this exact JSON format:\n"
-        combined += '"images": [{"url": "...full URL...", "caption": "...description of what the image shows...", "source": "...Wikimedia Commons URL..."}]\n'
-        combined += "Use the captions provided above or write your own factual description of what the image shows.\n"
-        combined += f"\nNote: {len(image_urls)} images available in total (showing first 30). Use images that are directly relevant to specific events.\n"
-
+    # Include related articles for broad context
     if related_articles and len(related_articles) > 0:
         combined += f"\n\n{'='*60}\nRELATED WIKIPEDIA ARTICLES - Additional context:\n{'='*60}\n"
-        combined += "The following related articles may provide additional context about relevant topics, places, and events:\n\n"
+        combined += f"IMPORTANT: These articles are for CONTEXT ONLY. They provide background information about topics, places, and people connected to {main_article_title}.\n"
+        combined += f"DO NOT generate events about the people mentioned in these related articles. Generate events ONLY for {main_article_title}.\n\n"
         for idx, article in enumerate(related_articles, 1):
             combined += f"\n{'='*60}\n"
             combined += f"ARTICLE {idx}: {article.get('title', 'Unknown')}\n"
@@ -933,7 +787,6 @@ def build_prompt(
             if full_text:
                 combined += f"{full_text}\n"
             else:
-                # Fallback to summary if fullText not available
                 summary = article.get("summary", "")
                 if summary:
                     combined += f"{summary}\n"
@@ -941,27 +794,39 @@ def build_prompt(
         combined += f"\n{'='*60}\n"
         combined += f"END OF RELATED ARTICLES ({len(related_articles)} total)\n"
         combined += f"{'='*60}\n"
-        combined += "Use the information from these related articles to enrich event descriptions with relevant context.\n"
 
     return combined
 
 
-def call_openai(prompt: str, model: str) -> Dict[str, Any]:
+def call_openai_phase1(prompt: str, model: str) -> LifePlan:
+    """
+    Call OpenAI for Phase 1 using structured outputs.
+
+    Returns:
+        LifePlan with person metadata, chapters, and event skeletons
+    """
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+
     client = OpenAI(api_key=api_key)
+
     system = (
-        "You are a meticulous historian who converts raw Wikipedia content into structured JSON. "
-        "Use ISO-8601 dates, include date_precision as 'day', 'month', or 'year'. "
-        "Align event ages with the subject's birth date. "
-        "Keep primary_roles concise (1-2 words each, max 3 roles). "
-        "IMPORTANT: All output text must be in English only, regardless of the source language."
+        "You are a meticulous historian creating biographical timeline outlines. "
+        "Focus on identifying the most significant events and organizing them into "
+        "coherent life chapters. Use ISO-8601 dates, include date_precision as 'day', "
+        "'month', or 'year'. All output must be in English only, regardless of source language."
     )
+
     instructions = (
-        "Produce 12-16 significant life events covering the subject's early life, "
-        "education, major accomplishments, and later years. "
-        "Do not include events that occur after the subject's death or that focus on their legacy. "
+        "You will receive a main Wikipedia article about a specific person (the TARGET SUBJECT), plus several related articles for context. "
+        "Your task is to create a biographical timeline for the TARGET SUBJECT ONLY - not any of the people mentioned in related articles. "
+        "\n\nCRITICAL REQUIREMENT: Produce EXACTLY 12-16 significant life events for the TARGET SUBJECT. NO MORE, NO LESS. "
+        "Quality over quantity - select only the most historically significant moments from the TARGET SUBJECT's life. "
+        "\n\nCover the TARGET SUBJECT's early life, education, major accomplishments, and later years. "
+        "Do not include events that occur after the TARGET SUBJECT's death or that focus on their legacy. "
+        "\n\nREMINDER: You must output between 12 and 16 events total. If you find yourself creating more than 16 events, "
+        "consolidate related events or remove less significant ones. "
         "\n\nIMPORTANT - Chapter Organization:\n"
         "- Group the events into 3-5 meaningful life chapters (periods/phases)\n"
         "- Each chapter should represent a distinct phase of the person's life (e.g., 'Early Years and Education', 'Wartime Service', 'Academic Career', 'Later Life')\n"
@@ -970,46 +835,22 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- Assign each event to a chapter by setting its 'chapter' field to the chapter's 'id'\n"
         "- Chapters should be chronological and non-overlapping\n"
         "- The first chapter should start with or before the first event, and the last chapter should end with or after the last event\n"
-        "\nEach event must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
-        "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
-        "title, description, locations (array with at least one human-readable entry, use 'Location unknown' if uncertain), "
-        "sources (array of URLs pulled from Wikipedia), optional images (array of image objects with 'url', 'caption', and 'source' fields), "
-        "and chapter (the chapter id this event belongs to). "
-        "\n\nIMPORTANT - Event Title Guidelines:\n"
+        "\n\nIMPORTANT - Event Skeleton Guidelines:\n"
         "- Keep event titles crisp and concise (2-6 words)\n"
         "- Use active, specific language that captures the essence of the event\n"
         "- Avoid generic titles like 'Major Achievement' or 'Important Work'\n"
         "- Examples: 'Birth in London', 'Graduated from Oxford', 'Published First Novel', 'Appointed Prime Minister'\n"
-        "\n\nIMPORTANT - Location Guidelines:\n"
-        "- Each event should have exactly ONE specific location in the locations array\n"
-        "- Be as specific as possible (e.g., 'London' rather than 'England' or 'United Kingdom')\n"
-        "- For historical locations with different modern names, use format: 'Historical Name (Modern Name)'\n"
-        "- Examples: 'Königsberg (Kaliningrad)', 'Constantinople (Istanbul)', 'Bombay (Mumbai)'\n"
-        "- Only use 'Location unknown' if the location truly cannot be determined from the sources\n"
-        "\n\nIMPORTANT - Image Guidelines:\n"
-        "- When images are provided, actively look for opportunities to include them in relevant events\n"
-        "- Each image object must have: 'url' (the image URL), 'caption' (describing what the image shows), and 'source' (Wikimedia Commons URL)\n"
-        "- Use the description from the provided image data to write a concise, factual caption\n"
-        "- IMPORTANT: Each event should have at most ONE image - choose the most relevant one\n"
-        "- IMPORTANT: Do NOT include TIFF/TIF images (.tif, .tiff extensions) as they are not supported by web browsers\n"
-        "- Include images of: buildings/places mentioned, artworks/creations, documents/publications, monuments, flags, designs, inventions\n"
-        "- For architects: include images of their buildings in construction/completion events\n"
-        "- For artists: include images of their artworks in creation events\n"
-        "- For inventors: include images of their inventions or patents\n"
-        "- For authors: include images of book covers or manuscripts\n"
-        "- For historical figures: include images of monuments, locations, or artifacts related to specific events\n"
-        "- DO NOT include generic portraits or the person's photo in regular events (those go in the person metadata)\n"
-        "- DO include images that show the result, location, or subject matter of the event\n"
-        "\nEXAMPLE: For an event about publishing a translated article on the Analytical Engine, you might include:\n"
-        '"images": [{"url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg", "caption": "Diagram of an algorithm for the Analytical Engine for computing Bernoulli numbers", "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg"}]\n'
-        "\nKeep date and date_end values as machine-readable ISO-8601 strings (YYYY-MM-DD, YYYY-MM, or YYYY). "
-        "If a source uses descriptive phrasing like 'early 1900', place that text in date_note while selecting the closest structured date. "
-        "Include person metadata with name, birth_date, death_date when known, primary_roles, summary, "
+        "- Write rich descriptions (2-4 sentences) that mention context, people involved, and places\n"
+        "- DO NOT specify exact locations, images, or detailed sources (Phase 2 will research these)\n"
+        "- DO mention places, people, and context in the description naturally\n"
+        "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
+        "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
+        "title, description, and chapter (the chapter id this event belongs to). "
+        "\nInclude person metadata with name, birth_date, death_date when known, primary_roles, summary, "
         "wikipedia URL, and portrait info if available."
     )
 
     try:
-        # Use modern Responses API with structured outputs
         response = client.responses.parse(
             model=model,
             reasoning={"effort": DEFAULT_REASONING_EFFORT},
@@ -1018,143 +859,407 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
                 {"role": "user", "content": instructions},
                 {"role": "user", "content": prompt},
             ],
-            text_format=LifeDataset,
+            text_format=LifePlan,
         )
     except APIStatusError as error:
         message = ""
         try:
-            message = error.response.get("error", {}).get(
-                "message", ""
-            )  # type: ignore[attr-defined]
+            message = error.response.get("error", {}).get("message", "")
         except AttributeError:
             message = str(error)
         raise RuntimeError(
-            "OpenAI API request failed. Verify the model name, account access, and billing status."
-            # type: ignore[attr-defined]
-            f" Details: {error.status_code} {message}"
+            "OpenAI API request failed (Phase 1). Verify model name, account access, and billing status. "
+            f"Details: {error.status_code} {message}"
         ) from error
 
-    # Handle different response statuses
     if response.status == "failed":
         error_msg = (
             f"Response generation failed: {response.error}"
             if response.error
             else "Unknown error"
         )
-        raise RuntimeError(error_msg)
+        raise RuntimeError(f"Phase 1 AI call failed: {error_msg}")
     elif response.status != "completed":
-        raise RuntimeError(f"Response has unexpected status: {response.status}")
+        raise RuntimeError(f"Phase 1: Response has unexpected status: {response.status}")
 
-    # Parse the structured output from the Responses API
-    # The output_parsed property contains the Pydantic model
     parsed = response.output_parsed
     if parsed is None:
-        raise RuntimeError("Failed to parse structured output from model")
+        raise RuntimeError("Failed to parse structured output from model (Phase 1)")
 
-    # Convert Pydantic model to dict
-    return parsed.model_dump()
-
-
-def _throttle_geocoder() -> None:
-    global _last_geocode_at
-    if GEOCODER_DELAY_SECONDS <= 0:
-        return
-    now = time.monotonic()
-    elapsed = now - _last_geocode_at
-    if elapsed < GEOCODER_DELAY_SECONDS:
-        time.sleep(GEOCODER_DELAY_SECONDS - elapsed)
-    _last_geocode_at = time.monotonic()
+    return parsed
 
 
-def geocode_location(query: str) -> Optional[Dict[str, Any]]:
-    normalized = _normalize_location_text(query or "")
-    if not normalized:
-        return None
-    if normalized.casefold() == UNKNOWN_LOCATION_LABEL.casefold():
-        return None
-    cached = _geocode_cache.get(normalized)
-    if cached is not None:
-        return cached
+# ============================================================================
+# PHASE 2: EVENT DETAIL RESEARCH
+# ============================================================================
 
-    for candidate in _generate_location_candidates(normalized):
-        result = _geocode_candidate(candidate)
+def filter_related_articles_for_event(
+    event_skeleton: EventSkeleton,
+    all_related_articles: List[Dict[str, Any]],
+    max_articles: int = 5
+) -> List[Dict[str, Any]]:
+    """
+    Score and filter related articles for a specific event.
+
+    Scoring:
+    - Title keyword match: weight 3
+    - Summary keyword match: weight 1
+    - Title mentioned in event description: +100 boost
+
+    Returns top N articles by score.
+    """
+    event_text = f"{event_skeleton.title} {event_skeleton.description}".lower()
+    event_words = set(re.findall(r'\b\w{4,}\b', event_text))  # Words 4+ chars
+
+    scored_articles = []
+    for article in all_related_articles:
+        title = article.get("title", "").lower()
+        summary = article.get("summary", "").lower()
+
+        title_words = set(re.findall(r'\b\w{4,}\b', title))
+        summary_words = set(re.findall(r'\b\w{4,}\b', summary))
+
+        title_overlap = len(event_words & title_words)
+        summary_overlap = len(event_words & summary_words)
+
+        score = (title_overlap * 3) + summary_overlap
+
+        # Boost if article title mentioned in event description
+        if title in event_skeleton.description.lower():
+            score += 100
+
+        scored_articles.append((score, article))
+
+    # Sort by score descending, take top N
+    scored_articles.sort(reverse=True, key=lambda x: x[0])
+    return [article for score, article in scored_articles[:max_articles]]
+
+
+def build_phase2_prompt(
+    event_skeleton: EventSkeleton,
+    person_name: str,
+    filtered_related_articles: List[Dict[str, Any]],
+    commons_images: List[Dict[str, Any]],
+) -> str:
+    """
+    Build Phase 2 prompt for single event detail research.
+
+    Focus on specific details for THIS event only.
+    """
+    prompt = f"Research details for this specific event:\n\n"
+    prompt += f"Title: {event_skeleton.title}\n"
+    prompt += f"Date: {event_skeleton.date}\n"
+    prompt += f"Description: {event_skeleton.description}\n"
+    prompt += f"Subject: {person_name}\n\n"
+
+    prompt += "="*60 + "\n"
+    prompt += "TASK: Provide the following details for THIS specific event:\n"
+    prompt += "="*60 + "\n\n"
+
+    prompt += "1. LOCATION (historic name at time of event):\n"
+    prompt += "   - Provide the location name as it was known at the time\n"
+    prompt += "   - Be as specific as possible (e.g., 'Königsberg' not just 'Prussia')\n"
+    prompt += "   - If truly unknown, leave null\n\n"
+
+    prompt += "2. LOCATION_MODERN (for geocoding):\n"
+    prompt += "   - ALWAYS provide the modern geographic name\n"
+    prompt += "   - Even if same as historic (e.g., 'London' → 'London')\n"
+    prompt += "   - Examples: 'Königsberg' → 'Kaliningrad, Russia'\n"
+    prompt += "   - Include country for disambiguation\n\n"
+
+    prompt += "3. INVOLVED_PEOPLE:\n"
+    prompt += "   - List people DIRECTLY involved in THIS specific event\n"
+    prompt += f"   - EXCLUDE the main subject ({person_name})\n"
+    prompt += "   - Examples: collaborators, opponents, witnesses, family members present\n"
+    prompt += "   - Leave null if no other people directly involved\n\n"
+
+    prompt += "4. IMAGES:\n"
+    prompt += "   - Select AT MOST ONE relevant image from the list below\n"
+    prompt += "   - Prefer images of buildings, documents, artifacts, or locations\n"
+    prompt += "   - DO NOT use generic portraits\n"
+    prompt += "   - Leave null if no suitable image\n\n"
+
+    prompt += "5. SOURCES:\n"
+    prompt += "   - Provide 1-3 Wikipedia URLs from the related articles below\n"
+    prompt += "   - Only include articles that specifically support THIS event\n\n"
+
+    prompt += "6. EVENT_TYPE_ICON:\n"
+    prompt += "   - Select the most appropriate MDI icon from the categories below\n"
+    prompt += "   - Based on the semantic type of this event\n\n"
+
+    # Add icon categories
+    prompt += "\n" + "="*60 + "\n"
+    prompt += "AVAILABLE ICONS:\n"
+    prompt += "="*60 + "\n"
+    prompt += format_icon_categories_for_prompt()
+    prompt += "\n"
+
+    # Add filtered related articles
+    if filtered_related_articles and len(filtered_related_articles) > 0:
+        prompt += "\n" + "="*60 + "\n"
+        prompt += f"RELATED ARTICLES (filtered for this event, top {len(filtered_related_articles)}):\n"
+        prompt += "="*60 + "\n\n"
+        for idx, article in enumerate(filtered_related_articles, 1):
+            prompt += f"\nARTICLE {idx}: {article.get('title', 'Unknown')}\n"
+            prompt += f"URL: {article.get('url', '')}\n"
+            prompt += "-"*60 + "\n"
+
+            full_text = article.get("fullText", "")
+            if full_text:
+                # Truncate to 1000 chars for prompt size
+                truncated = full_text[:1000]
+                prompt += f"{truncated}...\n\n"
+            else:
+                summary = article.get("summary", "")
+                if summary:
+                    prompt += f"{summary}\n\n"
+
+    # Add Commons images
+    if commons_images and len(commons_images) > 0:
+        prompt += "\n" + "="*60 + "\n"
+        prompt += "AVAILABLE IMAGES:\n"
+        prompt += "="*60 + "\n\n"
+        # Limit to 20 images
+        for idx, img_data in enumerate(commons_images[:20], 1):
+            prompt += f"{idx}. {img_data.get('caption', 'Image')}\n"
+            prompt += f"   URL: {img_data['url']}\n"
+            if img_data.get("source"):
+                prompt += f"   Source: {img_data['source']}\n"
+            prompt += "\n"
+
+    return prompt
+
+
+def research_event_details(
+    event_skeleton: EventSkeleton,
+    person_name: str,
+    all_related_articles: List[Dict[str, Any]],
+    commons_images: List[Dict[str, Any]],
+    model: str,
+    retry_count: int = 2
+) -> EventDetails:
+    """
+    Research details for a single event with retry logic.
+
+    Returns:
+        EventDetails with location, location_modern, involved_people, images, sources, icon
+    """
+    # Filter articles
+    filtered_articles = filter_related_articles_for_event(
+        event_skeleton, all_related_articles, max_articles=5
+    )
+
+    # Build prompt
+    prompt = build_phase2_prompt(
+        event_skeleton, person_name, filtered_articles, commons_images
+    )
+
+    # Call AI with retries
+    for attempt in range(retry_count + 1):
+        try:
+            api_key = os.getenv("OPENAI_API_KEY")
+            if not api_key:
+                raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+
+            client = OpenAI(api_key=api_key)
+
+            system = (
+                "You are a research assistant specializing in biographical event details. "
+                "Provide specific, factual information for the given event. "
+                "All output must be in English only. Be precise with locations and people."
+            )
+
+            response = client.responses.parse(
+                model=model,
+                reasoning={"effort": DEFAULT_REASONING_EFFORT},
+                input=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": prompt},
+                ],
+                text_format=EventDetails,
+            )
+
+            if response.status == "completed" and response.output_parsed:
+                return response.output_parsed
+
+        except Exception as error:
+            if attempt < retry_count:
+                print(f"    Retry {attempt + 1}/{retry_count}")
+                time.sleep(2)
+            else:
+                print(f"    Warning: Failed after {retry_count + 1} attempts, using fallback minimal details")
+                # Fallback: minimal details
+                return EventDetails(
+                    location=None,
+                    location_modern=None,
+                    involved_people=None,
+                    images=None,
+                    sources=[],
+                    event_type_icon="mdi-calendar"
+                )
+
+    # Should never reach here, but fallback just in case
+    return EventDetails(
+        location=None,
+        location_modern=None,
+        involved_people=None,
+        images=None,
+        sources=[],
+        event_type_icon="mdi-calendar"
+    )
+
+
+def research_all_event_details(
+    event_skeletons: List[EventSkeleton],
+    person_name: str,
+    all_related_articles: List[Dict[str, Any]],
+    commons_images: List[Dict[str, Any]],
+    model: str,
+) -> List[EventDetails]:
+    """Research details for all events sequentially."""
+    details = []
+    for idx, skeleton in enumerate(event_skeletons, 1):
+        print(f"  [{idx}/{len(event_skeletons)}] Researching: {skeleton.title}")
+        detail = research_event_details(
+            skeleton, person_name, all_related_articles, commons_images, model
+        )
+        details.append(detail)
+    return details
+
+
+# ============================================================================
+# EVENT MERGING
+# ============================================================================
+
+def merge_event_skeleton_and_details(
+    skeleton: EventSkeleton,
+    details: EventDetails
+) -> LifeEvent:
+    """Merge Phase 1 skeleton with Phase 2 details."""
+
+    # Build locations array
+    locations = []
+    if details.location:
+        locations.append(details.location)
+    else:
+        locations.append(UNKNOWN_LOCATION_LABEL)
+
+    # Create merged event
+    return LifeEvent(
+        date=skeleton.date,
+        date_precision=skeleton.date_precision,
+        date_end=skeleton.date_end,
+        date_end_precision=skeleton.date_end_precision,
+        date_note=skeleton.date_note,
+        age=skeleton.age,
+        title=skeleton.title,
+        description=skeleton.description,
+        locations=locations,
+        location_modern=details.location_modern,
+        involved_people=details.involved_people,
+        sources=details.sources if details.sources else [],
+        images=details.images,
+        event_type_icon=details.event_type_icon or "mdi-calendar",
+        chapter=skeleton.chapter,
+    )
+
+
+def merge_all_events(
+    skeletons: List[EventSkeleton],
+    details_list: List[EventDetails]
+) -> List[LifeEvent]:
+    """Merge all skeletons with their details."""
+    if len(skeletons) != len(details_list):
+        raise ValueError("Skeleton and details lists must have same length")
+
+    return [
+        merge_event_skeleton_and_details(skeleton, details)
+        for skeleton, details in zip(skeletons, details_list)
+    ]
+
+
+# ============================================================================
+# ENHANCED GEOCODING
+# ============================================================================
+
+def geocode_event_location_v2(event: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    Geocode event location with location_modern priority.
+
+    Priority:
+    1. Try location_modern (better for changed names)
+    2. Fall back to locations[0] (historic name)
+    3. Return None if unsuccessful
+    """
+    # Try modern location first
+    if event.get("location_modern"):
+        result = geocode_location(event["location_modern"])
         if result:
-            _geocode_cache[normalized] = result
             return result
 
-    _geocode_cache[normalized] = None
+    # Fall back to historic location
+    locations = event.get("locations") or []
+    if locations and len(locations) > 0:
+        result = geocode_location(locations[0])
+        if result:
+            return result
+
     return None
 
 
-def enrich_event_coordinates(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
+def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
+    """Enhanced geocoding with location_modern support."""
     events = payload.get("events") or []
-    if not isinstance(events, list) or not events:
-        return payload, 0
-    enriched: List[Dict[str, Any]] = []
+    enriched = []
     resolved_count = 0
+
     for event in events:
         if not isinstance(event, dict):
             enriched.append(event)
             continue
-        locations = event.get("locations") or []
-        if not isinstance(locations, list) or not locations:
-            enriched.append(event)
-            continue
-        coordinate_entries = []
-        for index, location in enumerate(locations):
-            if not isinstance(location, str):
-                continue
-            geocoded = geocode_location(location)
-            if not geocoded:
-                continue
-            entry: Dict[str, Any] = {
-                "label": geocoded.get("display_name") or location,
-                "name": location,
-                "primary": index == 0,
+
+        # Geocode using enhanced logic
+        geocoded = geocode_event_location_v2(event)
+
+        updated = {**event}
+        if geocoded:
+            # Display historic name, use modern coords
+            display_name = event.get("locations", [UNKNOWN_LOCATION_LABEL])[0]
+
+            entry = {
+                "label": geocoded.get("display_name") or display_name,
+                "name": display_name,  # Keep historic name
+                "primary": True,
                 "centroid": [geocoded["lon"], geocoded["lat"]],
                 "source": "nominatim",
             }
             if geocoded.get("bbox"):
                 entry["bbox"] = geocoded["bbox"]
-            coordinate_entries.append(entry)
-        updated = {**event}
-        if coordinate_entries:
-            updated["location_coordinates"] = coordinate_entries
+
+            updated["location_coordinates"] = [entry]
             resolved_count += 1
         else:
             updated.pop("location_coordinates", None)
+
         enriched.append(updated)
+
     payload["events"] = enriched
     return payload, resolved_count
 
 
-def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
-    """Convert varying precision date strings into a comparable upper bound."""
-    if not value:
-        return None
-    normalized_precision = (precision or "day").lower()
-    try:
-        if normalized_precision == "day":
-            return datetime.strptime(value, "%Y-%m-%d").date()
-        if normalized_precision == "month":
-            year, month = [int(part) for part in value.split("-")[:2]]
-            last_day = monthrange(year, month)[1]
-            return date(year, month, last_day)
-        if normalized_precision == "year":
-            year = int(value[:4])
-            return date(year, 12, 31)
-    except (ValueError, TypeError):
-        return None
-    return None
-
+# ============================================================================
+# METADATA ENFORCEMENT (adapted from generate_person_dataset.py)
+# ============================================================================
 
 def enforce_metadata(
     payload: Dict[str, Any],
     page_data: Dict[str, Any],
     summary_data: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
+    """Normalize and enforce metadata standards."""
     payload.setdefault("dataset", DATASET_NAME)
     payload["created_on"] = date.today().isoformat()
+
     person = payload.setdefault("person", {})
     name_candidates = _collect_person_name_candidates(person, page_data, summary_data)
     if name_candidates:
@@ -1162,6 +1267,7 @@ def enforce_metadata(
         person["name"] = preferred_name
     else:
         person.setdefault("name", page_data.get("title"))
+
     for key in ("birth_date", "death_date"):
         value = person.get(key)
         if value:
@@ -1169,21 +1275,31 @@ def enforce_metadata(
             if normalized and normalized_precision == "day":
                 person[key] = normalized
             elif normalized:
-                # fallback to first day of the period for upstream consumers requiring ISO day
                 suffix = "-01-01" if normalized_precision == "year" else "-01"
                 person[key] = f"{normalized}{suffix}"
             else:
                 person[key] = None
+
     if page_data.get("fullurl"):
         person.setdefault("wikipedia", page_data["fullurl"])
+
     original = page_data.get("original", {})
-    if original and isinstance(person.get("portrait"), dict):
-        person["portrait"].setdefault("image", original.get("source"))
-    elif original:
-        person["portrait"] = {
-            "image": original.get("source"),
-            "source": page_data.get("fullurl"),
-        }
+    if original:
+        # Extract image URL from Wikipedia's pageimages API response
+        image_url = original.get("source")
+        if image_url:
+            # Always set/overwrite portrait if we have a valid image URL from Wikipedia
+            person["portrait"] = {
+                "image": image_url,
+                "source": page_data.get("fullurl"),
+            }
+    # If no portrait from Wikipedia API, ensure portrait is None or has proper structure
+    if not person.get("portrait") or (
+        isinstance(person.get("portrait"), dict)
+        and person["portrait"].get("image") is None
+    ):
+        person["portrait"] = None
+
     death_cutoff: Optional[date] = None
     death_value = person.get("death_date")
     if isinstance(death_value, str):
@@ -1221,7 +1337,6 @@ def enforce_metadata(
             start_input, precision_value
         )
         if not normalized_date:
-            # Drop events without a usable date so the timeline remains ordered.
             continue
         event["date"] = normalized_date
         event["date_precision"] = normalized_precision
@@ -1257,7 +1372,6 @@ def enforce_metadata(
             comparison_precision = normalized_end_precision or normalized_precision
             upper_bound = _upper_bound_date(comparison_date, comparison_precision)
             if upper_bound and upper_bound > death_cutoff:
-                # Skip events that extend beyond the subject's lifetime.
                 continue
 
         existing_note_raw = event.get("date_note")
@@ -1299,55 +1413,33 @@ def enforce_metadata(
             sanitized_locations = [UNKNOWN_LOCATION_LABEL]
         event["locations"] = sanitized_locations
 
-        # Handle optional images field - expects array of objects with url, caption, source
+        # Handle images
         raw_images = event.get("images") or []
         sanitized_images = []
         seen_images: Set[str] = set()
         if isinstance(raw_images, list):
             for image_data in raw_images:
-                # Support both object format (with metadata) and legacy string format
                 if isinstance(image_data, dict):
                     image_url = image_data.get("url", "").strip()
                     caption = image_data.get("caption", "").strip()
                     source = image_data.get("source", "").strip()
 
-                    # Validate URL
                     if not image_url or not (
                         image_url.startswith("http://")
                         or image_url.startswith("https://")
                     ):
                         continue
 
-                    # Check for duplicates
                     key = image_url.casefold()
                     if key in seen_images:
                         continue
                     seen_images.add(key)
 
-                    # Store as object with metadata
                     sanitized_images.append(
                         {
                             "url": image_url,
                             "caption": caption or "Image from Wikimedia Commons",
                             "source": source or None,
-                        }
-                    )
-                elif isinstance(image_data, str):
-                    # Legacy string format - convert to object
-                    trimmed = image_data.strip()
-                    if not trimmed or not (
-                        trimmed.startswith("http://") or trimmed.startswith("https://")
-                    ):
-                        continue
-                    key = trimmed.casefold()
-                    if key in seen_images:
-                        continue
-                    seen_images.add(key)
-                    sanitized_images.append(
-                        {
-                            "url": trimmed,
-                            "caption": "Image from Wikimedia Commons",
-                            "source": None,
                         }
                     )
         # Enforce maximum of one image per event
@@ -1357,6 +1449,7 @@ def enforce_metadata(
             event.pop("images", None)
 
         events.append(event)
+
     events.sort(key=event_sort_key)
     payload["events"] = events
 
@@ -1379,7 +1472,6 @@ def enforce_metadata(
                 chapter["date_start"] = normalized_start
                 chapter["date_start_precision"] = normalized_start_precision
             else:
-                # Skip chapters without valid start dates
                 continue
 
             # Normalize chapter end date
@@ -1392,13 +1484,11 @@ def enforce_metadata(
                 chapter["date_end"] = normalized_end
                 chapter["date_end_precision"] = normalized_end_precision
             else:
-                # Skip chapters without valid end dates
                 continue
 
             chapters.append(chapter)
 
         if chapters:
-            # Sort chapters chronologically
             chapters.sort(key=lambda c: c.get("date_start", "9999"))
             payload["chapters"] = chapters
         else:
@@ -1409,7 +1499,12 @@ def enforce_metadata(
     return payload
 
 
+# ============================================================================
+# FILE I/O
+# ============================================================================
+
 def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
+    """Write dataset to file."""
     person_dir = PEOPLE_DIR / person_id
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "life_events.json"
@@ -1420,21 +1515,17 @@ def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
 
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
+    """Update persons register."""
     person = payload.get("person", {})
 
-    # Extract portrait
     portrait = person.get("portrait")
-
-    # Extract birth and death dates
     birth_date = person.get("birth_date")
     death_date = person.get("death_date")
 
-    # Extract primary roles (limit to first 3)
     primary_roles = person.get("primary_roles", [])
     if isinstance(primary_roles, list):
         primary_roles = primary_roles[:3]
 
-    # Get current ISO timestamp
     current_timestamp = datetime.now().astimezone().isoformat()
 
     entry = {
@@ -1443,7 +1534,6 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
         "summary": person.get("summary"),
     }
 
-    # Add optional fields only if they have values
     if portrait:
         entry["portrait"] = portrait
     if birth_date:
@@ -1457,9 +1547,9 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
     people = register.setdefault("people", [])
+
     for idx, existing in enumerate(people):
         if existing.get("id") == person_id:
-            # Preserve the original 'created' timestamp if it exists
             created_timestamp = existing.get("created", current_timestamp)
             people[idx] = {
                 **existing,
@@ -1469,10 +1559,10 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
             }
             break
     else:
-        # New entry - set both created and lastUpdated to current timestamp
         entry["created"] = current_timestamp
         entry["lastUpdated"] = current_timestamp
         people.append(entry)
+
     people.sort(key=lambda item: item.get("name", ""))
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
     REGISTER_PATH.write_text(
@@ -1480,30 +1570,40 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     )
 
 
-def generate_dataset(
+# ============================================================================
+# MAIN ORCHESTRATION
+# ============================================================================
+
+def generate_person_events(
     subject: str,
     *,
     update_registry: bool = True,
     model: str = DEFAULT_MODEL,
     use_cache: bool = True,
 ) -> Tuple[Path, str]:
-    print(f"[1/7] Fetching Wikipedia article for '{subject}'...")
+    """
+    Generate person life events dataset using two-phase approach.
+
+    Returns:
+        Tuple of (file_path, person_id)
+    """
+
+    print(f"[Step 1/9] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject)
     article_title = page_data.get("title", subject)
-    print(f"[1/7] Found article '{article_title}'.")
+    print(f"[Step 1/9] Found article '{article_title}'")
 
-    # Determine person_id for cache lookup
     person_id = slugify(article_title)
 
-    # Try to use cache if enabled
+    # Load cache
+    print(f"[Step 2/9] Loading cached materials for '{person_id}'...")
     commons_images = None
     related_articles = None
+    summary_data = {}
+
     if use_cache:
-        print(f"[2/7] Checking cache for '{person_id}'...")
-        # Ensure cache exists (will fetch if not available)
         try:
             ensure_cache(person_id, article_title, person_name=article_title)
-            # Load from cache
             cached_page = get_cached_wikipedia_page(
                 person_id, article_title, use_cache=True
             )
@@ -1523,36 +1623,29 @@ def generate_dataset(
                         related_path.read_text(encoding="utf-8")
                     )
                     print(
-                        f"[2/7] Using cached materials ({len(commons_images)} Commons images, {len(related_articles)} related articles)"
+                        f"[Step 2/9] Using cached materials ({len(commons_images)} Commons images, {len(related_articles)} related articles)"
                     )
                 except json.JSONDecodeError:
                     print(
-                        f"[2/7] Using cached materials ({len(commons_images)} Commons images)"
+                        f"[Step 2/9] Using cached materials ({len(commons_images)} Commons images)"
                     )
             else:
                 print(
-                    f"[2/7] Using cached materials ({len(commons_images)} Commons images)"
+                    f"[Step 2/9] Using cached materials ({len(commons_images)} Commons images)"
                 )
 
-            # Use cached data
             page_data = cached_page
             summary_data = cached_summary
         except Exception as e:
-            print(f"[2/7] Cache unavailable ({e}), fetching directly...")
+            print(f"[Step 2/9] Cache unavailable ({e}), fetching directly...")
             summary_data = fetch_wikipedia_summary(article_title)
     else:
-        print("[2/7] Retrieving summary details...")
+        print("[Step 2/9] Retrieving summary details...")
         summary_data = fetch_wikipedia_summary(article_title)
-        if summary_data:
-            print("[2/7] Summary retrieved successfully.")
-        else:
-            print(
-                "[2/7] No summary endpoint data available; continuing with page extract only."
-            )
 
     # Fetch related articles if not already loaded from cache
     if related_articles is None and fetch_related_articles is not None:
-        print("[3/7] Fetching related articles...")
+        print("[Step 3/9] Fetching related articles...")
         try:
             related_articles = fetch_related_articles(
                 article_title,
@@ -1561,9 +1654,8 @@ def generate_dataset(
                 use_cache=use_cache,
                 person_id=person_id,
             )
-            print(f"[3/7] Found {len(related_articles)} related articles.")
+            print(f"[Step 3/9] Found {len(related_articles)} related articles")
 
-            # Cache the related articles if we fetched them
             if related_articles and use_cache:
                 cache_dir = get_cache_dir(person_id)
                 related_path = cache_dir / "related_articles.json"
@@ -1572,53 +1664,74 @@ def generate_dataset(
                     json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
                     encoding="utf-8",
                 )
-                print(f"[3/7] Cached {len(related_articles)} related articles.")
+                print(f"[Step 3/9] Cached {len(related_articles)} related articles")
         except Exception as e:
-            print(f"[3/7] Warning: Failed to fetch related articles ({e})")
-            related_articles = None
-
-    print(
-        "[3/7] Building prompt for OpenAI response (including Commons search and related articles)..."
-    )
-    prompt = build_prompt(
-        page_data,
-        summary_data,
-        subject,
-        commons_images=commons_images,
-        related_articles=related_articles,
-    )
-
-    print(f"[4/7] Requesting structured dataset from model '{model}'...")
-    payload = call_openai(prompt, model)
-    print("[4/7] Response received from OpenAI.")
-
-    print("[5/7] Normalizing dataset metadata...")
-    payload = enforce_metadata(payload, page_data, summary_data)
-    event_count = len(payload.get("events", []))
-    print(f"[5/7] Dataset includes {event_count} events.")
-
-    print("[6/7] Resolving event location coordinates...")
-    payload, geocoded_events = enrich_event_coordinates(payload)
-    if geocoded_events:
-        print(f"[6/7] Coordinates resolved for {geocoded_events} events.")
+            print(f"[Step 3/9] Warning: Failed to fetch related articles ({e})")
+            related_articles = []
     else:
-        print("[6/7] No event coordinates were resolved.")
+        print(f"[Step 3/9] Using {len(related_articles) if related_articles else 0} related articles from cache")
 
-    person_id = slugify(payload.get("person", {}).get("name", subject))
-    print(f"[7/7] Writing dataset for '{person_id}'...")
+    # PHASE 1: Generate event skeletons
+    print("[Step 4/9] PHASE 1: Generating event skeletons and chapters...")
+    phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles)
+    life_plan = call_openai_phase1(phase1_prompt, model)
+    print(f"[Step 4/9] Generated {len(life_plan.event_skeletons)} event skeletons")
+
+    # PHASE 2: Research event details
+    print("[Step 5/9] PHASE 2: Researching event details...")
+    event_details_list = research_all_event_details(
+        event_skeletons=life_plan.event_skeletons,
+        person_name=life_plan.person.name,
+        all_related_articles=related_articles or [],
+        commons_images=commons_images or [],
+        model=model,
+    )
+    print(f"[Step 5/9] Researched details for {len(event_details_list)} events")
+
+    # MERGE: Combine skeletons + details
+    print("[Step 6/9] Merging event skeletons with details...")
+    merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
+
+    # Build final payload
+    payload = {
+        "dataset": life_plan.dataset,
+        "created_on": life_plan.created_on,
+        "person": life_plan.person.model_dump(),
+        "chapters": [ch.model_dump() for ch in life_plan.chapters] if life_plan.chapters else None,
+        "events": [ev.model_dump() for ev in merged_events],
+    }
+
+    # Normalize metadata
+    print("[Step 7/9] Normalizing dataset metadata...")
+    payload = enforce_metadata(payload, page_data, summary_data)
+    print(f"[Step 7/9] Dataset includes {len(payload['events'])} events")
+
+    # Geocode with enhanced logic
+    print("[Step 8/9] Resolving event location coordinates...")
+    payload, geocoded_events = enrich_event_coordinates_v2(payload)
+    print(f"[Step 8/9] Coordinates resolved for {geocoded_events} events")
+
+    # Write to file
+    print(f"[Step 9/9] Writing dataset for '{person_id}'...")
     file_path = write_dataset(payload, person_id)
+
     if update_registry:
         print("Updating persons register...")
         update_register(person_id, payload, file_path)
-        print("Register update complete.")
+        print("Register update complete")
     else:
-        print("Register update skipped.")
+        print("Register update skipped")
+
     return file_path, person_id
 
 
+# ============================================================================
+# CLI
+# ============================================================================
+
 def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate life event datasets using Wikipedia and the OpenAI API."
+        description="Generate life event datasets using two-phase AI approach."
     )
     parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
     parser.add_argument(
@@ -1644,13 +1757,13 @@ def parse_args(argv: Any) -> argparse.Namespace:
 def main(argv: Any = None) -> int:
     args = parse_args(argv)
     try:
-        file_path, person_id = generate_dataset(
+        file_path, person_id = generate_person_events(
             args.subject,
             update_registry=not args.no_register,
             model=args.model,
             use_cache=not args.no_cache,
         )
-        print(f"Dataset written to {file_path}")
+        print(f"\nDataset written to {file_path}")
         if args.no_register:
             print("Register update skipped by request.")
         else:

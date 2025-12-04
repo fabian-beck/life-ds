@@ -6,7 +6,7 @@ import sys
 from typing import Any
 
 # Import the individual generation functions
-from generate_person_dataset import generate_dataset, DEFAULT_MODEL as DATASET_MODEL
+from generate_person_events import generate_person_events as generate_dataset, DEFAULT_MODEL as DATASET_MODEL
 from generate_person_style import generate_style, DEFAULT_MODEL as STYLE_MODEL
 from generate_person_network import (
     generate_person_network,
