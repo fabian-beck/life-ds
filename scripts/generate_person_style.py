@@ -97,7 +97,7 @@ def normalise_bw_color(value: str | None, *, allow_none: bool = False) -> str | 
         return None
     if allow_none and lowered in {"none", "transparent"}:
         return "none"
-    if lowered in {"#ff", "#fffff", "white"}:
+    if lowered in {"#fff", "#ffffff", "white"}:
         return "#FFFFFF"
     if lowered in {"#000", "#000000", "black"}:
         return "#000000"
