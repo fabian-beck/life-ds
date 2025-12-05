@@ -611,12 +611,6 @@
     flex-direction: column;
     gap: 1.5rem;
     padding: 1rem 1.5rem 4rem;
-    background: linear-gradient(
-      180deg,
-      rgba(15, 23, 42, 0.94) 0%,
-      rgba(15, 23, 42, 0.9) 35%,
-      rgba(15, 23, 42, 0.82) 100%
-    );
     position: relative;
   }
 
