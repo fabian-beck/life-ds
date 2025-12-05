@@ -200,7 +200,7 @@ def select_articles_with_ai(
     client = OpenAI(api_key=api_key)
 
     # Build prompt
-    prompt = """You are analyzing Wikipedia articles to find the most relevant related content for a biographical article.
+    prompt = f"""You are analyzing Wikipedia articles to find the most relevant related content for a biographical article.
 
 Subject: {person_name}
 Summary: {person_summary}
