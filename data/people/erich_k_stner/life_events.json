@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-life-events",
-  "created_on": "2025-11-20",
+  "dataset": "wikipedia_people",
+  "created_on": "2025-12-05",
   "person": {
     "name": "Erich_K\u00e4stner",
     "birth_date": "1899-02-23",
@@ -10,66 +10,150 @@
       "poet",
       "screenwriter",
       "satirist",
-      "children's author"
+      "children's author",
+      "journalist"
     ],
-    "summary": "Emil Erich K\u00e4stner was a German writer, poet, screenwriter, and satirist, best known for his witty, socially observant poems and for children\u2019s classics such as Emil and the Detectives, Lisa and Lottie, and The Flying Classroom. A key figure of Weimar-era Neue Sachlichkeit, he remained in Germany under National Socialism, where his books were banned and burned while he continued to publish some works abroad and write screenplays under a pseudonym. After 1945 he settled in Munich, working as editor, cabaret writer, radio author, and children\u2019s author, and received the Hans Christian Andersen Award in 1960 for his autobiography When I Was a Little Boy.",
-    "wikipedia": "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+    "summary": "Erich K\u00e4stner was a German writer, poet, screenwriter, journalist, and satirist, best known for his socially critical verse and for modern, urban children\u2019s books such as \"Emil and the Detectives\", \"P\u00fcnktchen und Anton\", \"Das fliegende Klassenzimmer\" and \"Das doppelte Lottchen\". Rising to prominence in Weimar Berlin, he chose to remain in Nazi Germany despite censorship and book burnings, wrote under pseudonyms, and survived wartime repression to become an influential post\u2011war public intellectual and children\u2019s author based in Munich. In 1960 he received the international Hans Christian Andersen Award for his autobiography \"Als ich ein kleiner Junge war\".",
+    "wikipedia": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner",
     "portrait": {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Erich_K%C3%A4stner_1961_%28cropped%29.jpg",
-      "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_1961_(cropped).jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/52/Erich_K%C3%A4stner_1961.jpg",
+      "source": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner"
     }
   },
+  "chapters": [
+    {
+      "id": "early_years_and_war",
+      "headline": "Dresden Childhood and War",
+      "description": "Child of a lower\u2011middle\u2011class Dresden family, K\u00e4stner grew up as an only child, discovered books and writing early, and saw his schooling and youth shaped and scarred by the First World War.",
+      "date_start": "1899-02-23",
+      "date_start_precision": "day",
+      "date_end": "1919",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 20
+    },
+    {
+      "id": "student_and_journalist",
+      "headline": "Studies and Leipzig Journalism",
+      "description": "After the war K\u00e4stner completed his education, studied in Leipzig and other universities, and financed himself as a sharp\u2011tongued journalist and theatre critic, laying the foundations of his literary career.",
+      "date_start": "1919",
+      "date_start_precision": "year",
+      "date_end": "1927",
+      "date_end_precision": "year",
+      "age_start": 20,
+      "age_end": 28
+    },
+    {
+      "id": "weimar_berlin_success",
+      "headline": "Weimar Berlin and Breakthrough",
+      "description": "In late\u2011Weimar Berlin K\u00e4stner became a prolific publicist and poet, created his most famous children\u2019s books and the novel \"Fabian\", and rose to fame as a leading voice of Neue Sachlichkeit.",
+      "date_start": "1927",
+      "date_start_precision": "year",
+      "date_end": "1933",
+      "date_end_precision": "year",
+      "age_start": 28,
+      "age_end": 34
+    },
+    {
+      "id": "nazism_war_and_survival",
+      "headline": "Under Nazism and War",
+      "description": "Refusing to emigrate after 1933, K\u00e4stner endured bans and surveillance in Berlin, continued to write under pseudonyms including for film, and witnessed the destruction of his home during the Second World War.",
+      "date_start": "1933",
+      "date_start_precision": "year",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "age_start": 34,
+      "age_end": 46
+    },
+    {
+      "id": "postwar_munich_and_later_life",
+      "headline": "Post\u2011war Munich and Later Years",
+      "description": "After 1945 K\u00e4stner resettled in Munich, re\u2011established himself as a writer of children\u2019s books, essays and memoir, became a prominent moral commentator in the Federal Republic, and was honored internationally until his death.",
+      "date_start": "1945",
+      "date_start_precision": "year",
+      "date_end": "1974-07-29",
+      "date_end_precision": "day",
+      "age_start": 46,
+      "age_end": 75
+    }
+  ],
   "events": [
     {
       "date": "1899-02-23",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Dresden",
-      "description": "Emil Erich K\u00e4stner was born in Dresden, Saxony, the only child of master saddlemaker Emil Richard K\u00e4stner and his wife Ida Amalia (n\u00e9e Augustin). He grew up on K\u00f6nigsbr\u00fccker Stra\u00dfe in the \u00c4u\u00dfere Neustadt district, an urban environment that later featured prominently and nostalgically in his autobiographical writing.",
+      "description": "Erich K\u00e4stner is born in Dresden as the only child of saddler Emil Richard K\u00e4stner and his wife Ida, n\u00e9e Augustin. The family belongs to the lower middle class and lives in the [[\u00c4u\u00dfere Neustadt|\u00c4u\u00dfere Neustadt district]], a milieu that later provides detailed settings and social types for many of his books.",
       "locations": [
         {
           "name_historic": "Dresden",
-          "name_modern": null,
+          "name_modern": "Dresden, Saxony, Germany",
           "centroid": [
-            13.7381437,
-            51.0493286
+            13.7373,
+            51.0504
           ],
           "primary": true
         }
+      ],
+      "involved_people": [
+        "Emil Richard K\u00e4stner",
+        "Ida K\u00e4stner (n\u00e9e Augustin)"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Geburtshaus_von_Erich_K%C3%A4stner_in_Dresden_-_Bild_003.jpg",
-          "caption": "Birth house of Erich K\u00e4stner in Dresden\u2019s \u00c4u\u00dfere Neustadt district.",
-          "source": "https://commons.wikimedia.org/wiki/File:Geburtshaus_von_Erich_K%C3%A4stner_in_Dresden_-_Bild_003.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden.jpg",
+          "caption": "Erich K\u00e4stner memorial at Albertplatz in Dresden, the city where he was born in 1899.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "early_years_and_war",
+      "annotations": {
+        "\u00c4u\u00dfere Neustadt": {
+          "explanation": "\u00c4u\u00dfere Neustadt is a densely built late-19th-century district of Dresden, historically a lower-middle-class and artisan neighborhood that shaped Erich K\u00e4stner\u2019s social observations and later literary settings.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Neustadt_(Dresden)"
+        }
+      }
     },
     {
       "date": "1913",
       "date_precision": "year",
-      "date_end": "1916",
-      "date_end_precision": "year",
       "age": 14,
-      "title": "Attends teacher training school",
-      "description": "K\u00e4stner entered a teacher training school in Dresden, beginning professional preparation for a career as a state-school teacher. He remained there until 1916, when he dropped out shortly before taking the qualifying exams, an early break with the conventional career path expected for a lower-middle-class son.",
+      "title": "Enters teacher training institute",
+      "description": "Following strong influence from the many schoolteachers who rented rooms in his parents\u2019 flat, K\u00e4stner begins training as a primary\u2011school teacher at the [[Freiherrlich von Fletchersches Lehrerseminar|Freiherrlich von Fletchersches Lehrerseminar]] in Dresden\u2011Neustadt. He lives under strict, quasi\u2011military discipline he later dubs a \"Lehrerkaserne\", and starts publishing formally adept if conventional poems in the school paper, gaining his first experience as a writer.",
       "locations": [
         {
           "name_historic": "Dresden",
-          "name_modern": null,
+          "name_modern": "Dresden, Germany",
           "centroid": [
-            13.7381437,
-            51.0493286
+            13.7373,
+            51.0504
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/Erich-K%C3%A4stner-Gedenkst%C3%A4tte_Albertplatz_Dresden.jpg",
+          "caption": "Erich K\u00e4stner memorial at Albertplatz in Dresden, near the district where he attended the Freiherrlich von Fletchersches Lehrerseminar.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich-K%C3%A4stner-Gedenkst%C3%A4tte_Albertplatz_Dresden.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_years_and_war",
+      "annotations": {
+        "Freiherrlich von Fletchersches Lehrerseminar": {
+          "explanation": "A privately endowed Saxon teacher\u2011training college in Dresden\u2019s Neustadt district that prepared primary\u2011school teachers under a strict, quasi\u2011military regimen in the late 19th and early 20th centuries.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Freiherrlich_von_Fletschersches_Lehrerseminar"
+        }
+      }
     },
     {
       "date": "1917",
@@ -77,316 +161,571 @@
       "date_end": "1918",
       "date_end_precision": "year",
       "age": 18,
-      "title": "Drafted into Saxon Army",
-      "description": "During the First World War K\u00e4stner was drafted into the Royal Saxon Army and trained with a heavy artillery unit in Dresden. Although never sent to the front, he experienced brutal military drilling that contributed to a lifelong heart condition and profoundly shaped the antimilitarism that pervades his later writings.",
+      "title": "Frontline artillery training and injury",
+      "description": "Drafted into military service during the First World War, K\u00e4stner joins a one\u2011year volunteer company of heavy artillery and is later sent to the [[Artillerie\u2011Mess\u2011Schule|Artillerie\u2011Mess\u2011Schule near Cologne\u2011Wahn]]. The brutal drill under an instructor named Sergeant Waurich leaves him with a lasting heart weakness and turns him into a convinced antimilitarist, an experience he processes in his bitter poem \"Sergeant Waurich\" and in lifelong hostility to militarism.",
       "locations": [
         {
           "name_historic": "Dresden",
-          "name_modern": null,
+          "name_modern": "Dresden, Germany",
           "centroid": [
-            13.7381437,
-            51.0493286
+            13.7373,
+            51.0504
           ],
           "primary": true
+        },
+        {
+          "name_historic": "K\u00f6ln",
+          "name_modern": "Cologne, Germany",
+          "centroid": [
+            6.9603,
+            50.9375
+          ],
+          "primary": false
         }
+      ],
+      "involved_people": [
+        "Sergeant Waurich"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg",
-          "caption": "Flag of Germany, representing the country whose army K\u00e4stner was drafted into during World War I.",
-          "source": "https://en.wikipedia.org/wiki/File:Flag_of_Germany.svg"
+      "event_type_icon": "mdi-shield",
+      "chapter": "early_years_and_war",
+      "annotations": {
+        "Artillerie\u2011Mess\u2011Schule": {
+          "explanation": "A specialized German Army artillery surveying and range\u2011finding school near Cologne\u2011Wahn in the First World War, where soldiers were trained in technical fire\u2011control and targeting methods.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Artillerie-Mess-Schule"
         }
-      ]
+      }
     },
     {
-      "date": "1919-09",
-      "date_precision": "month",
-      "date_end": "1927",
-      "date_end_precision": "year",
-      "date_note": "The article states 'In the autumn of 1919' for his enrollment; month approximated as September",
+      "date": "1919",
+      "date_precision": "year",
       "age": 20,
-      "title": "Begins studies in Leipzig",
-      "description": "In the autumn of 1919 K\u00e4stner enrolled at the University of Leipzig to study history, philosophy, German studies, and theater. Over the following years his studies also took him to Rostock and Berlin, laying the academic and intellectual foundations for his later work as a critic, satirist, and author.",
+      "title": "Begins university studies in Leipzig",
+      "description": "After the war K\u00e4stner completes his schooling with distinction, winning the Golden Scholarship of the city of Dresden, which binds him to study in Saxony. He enrolls at the University of Leipzig to study history, philosophy, German literature, newspaper science, and theatre studies, marking his transition from teacher\u2011training to an academic and literary path.",
       "locations": [
         {
-          "name_historic": "Leipzig",
-          "name_modern": null,
+          "name_historic": "Dresden",
+          "name_modern": "Dresden, Germany",
           "centroid": [
-            12.3747329,
-            51.3406321
+            13.7373,
+            51.0504
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3731,
+            51.3397
           ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
+      "involved_people": null,
+      "sources": [],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Erich-K%C3%A4stner-Schule_%28Leipzig%29.jpg",
-          "caption": "Erich K\u00e4stner School in Leipzig-Gohlis, named in honor of the author\u2019s later legacy in the city where he studied.",
+          "caption": "Erich-K\u00e4stner-Schule, an elementary school in Leipzig-Gohlis, reflecting Erich K\u00e4stner's later commemoration in the city where he began his university studies in 1919.",
           "source": "https://commons.wikimedia.org/wiki/File:Erich-K%C3%A4stner-Schule_(Leipzig).jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-enrollment",
+      "chapter": "student_and_journalist"
     },
     {
       "date": "1923",
       "date_precision": "year",
-      "date_end": "1927",
-      "date_end_precision": "year",
       "age": 24,
-      "title": "Works for Neue Leipziger Zeitung",
-      "description": "While completing his university studies, K\u00e4stner supported himself as a journalist and critic for the Neue Leipziger Zeitung. Between 1923 and 1927 he wrote reviews and articles that began to establish his reputation for sharp, socially observant criticism, though his increasingly critical tone and the publication of an erotic poem later led to his dismissal.",
+      "title": "Starts friendship with Erich Ohser",
+      "description": "While studying and freelancing in Leipzig, K\u00e4stner meets the graphic artist Erich Ohser, later famous under the pseudonym \"e. o. plauen\" for his \"Vater und Sohn\" cartoons. Their friendship leads to joint projects combining K\u00e4stner\u2019s texts and Ohser\u2019s drawings, an early example of the close collaboration between text and illustration that will characterize K\u00e4stner\u2019s children\u2019s books.",
       "locations": [
         {
           "name_historic": "Leipzig",
-          "name_modern": null,
+          "name_modern": "Leipzig, Germany",
           "centroid": [
-            12.3747329,
-            51.3406321
+            12.3731,
+            51.3397
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Erich Ohser"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Erich_Ohser",
+        "https://en.wikipedia.org/wiki/Vater_und_Sohn_(comics)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Erich_K%C3%A4stner_-_Zeichnung_von_Erich_Ohser%2C_1929.JPG",
+          "caption": "Portrait drawing of Erich K\u00e4stner by Erich Ohser from 1929, exemplifying their close writer\u2013illustrator collaboration that began in the 1920s.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_-_Zeichnung_von_Erich_Ohser,_1929.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "student_and_journalist"
     },
     {
       "date": "1925",
       "date_precision": "year",
       "age": 26,
-      "title": "Receives doctoral degree",
-      "description": "K\u00e4stner was awarded a doctorate from the University of Leipzig for his thesis on Frederick the Great and German literature. The degree marked the culmination of his formal academic training and reinforced his authority as a literary scholar and critic in the cultural life of the Weimar Republic.",
+      "title": "Earns doctorate in philosophy",
+      "description": "K\u00e4stner submits his doctoral dissertation in German studies under Professor Georg Witkowski at the University of Leipzig and is awarded the degree of Dr. phil. Financing his studies increasingly through journalism and theatre criticism, he consolidates his dual identity as a scholar of literature and a working feuilletonist.",
       "locations": [
         {
           "name_historic": "Leipzig",
-          "name_modern": null,
+          "name_modern": "Leipzig, Germany",
           "centroid": [
-            12.3747329,
-            51.3406321
+            12.373075,
+            51.3396955
           ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+      "involved_people": [
+        "Georg Witkowski"
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "student_and_journalist"
     },
     {
       "date": "1927",
       "date_precision": "year",
       "age": 28,
-      "title": "Moves to Berlin",
-      "description": "After being dismissed from the Neue Leipziger Zeitung in 1927 for his critical reviews and the publication of the erotic poem \"Abendlied des Kammervirtuosen\", K\u00e4stner moved to Berlin. He continued to write for the paper under the pseudonym \"Berthold B\u00fcrger\" and soon became a prolific contributor to major Berlin newspapers and magazines, integrating himself into the vibrant literary culture of the capital.",
+      "title": "Moves to Berlin as freelance writer",
+      "description": "After being dismissed from the Neue Leipziger Zeitung for an allegedly frivolous, mildly indecent poem illustrated by Erich Ohser, K\u00e4stner moves to Berlin, then the cultural capital of the Weimar Republic. Writing under pseudonyms such as \"Berthold B\u00fcrger\", he works as a free\u2011lance cultural correspondent and begins to place poems, glosses, and essays in leading newspapers and magazines, laying the groundwork for his reputation as a sharp social satirist.",
       "locations": [
         {
-          "name_historic": "Berlin",
-          "name_modern": null,
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
           "centroid": [
-            13.3951309,
-            52.5173885
+            12.3731,
+            51.3397
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
           ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
-    },
-    {
-      "date": "1928-10",
-      "date_precision": "month",
-      "date_note": "The article notes 'In the autumn of 1928' for the publication of Emil und die Detektive; month approximated as October",
-      "age": 29,
-      "title": "Releases Emil and the Detectives",
-      "description": "In the autumn of 1928 K\u00e4stner published his best-known children\u2019s book, \"Emil und die Detektive\", illustrated by Walter Trier. Set in contemporary Berlin rather than a fairy-tale world and largely free of overt moralizing, the novel was a sensation, selling around two million copies in Germany and eventually being translated into dozens of languages, shaping the genre of child-detective fiction.",
-      "locations": [
-        {
-          "name_historic": "Berlin",
-          "name_modern": null,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "primary": true
-        }
+      "involved_people": [
+        "Erich Ohser"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Erich_Ohser"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg",
-          "caption": "Title page of a 1931 edition of Erich K\u00e4stner\u2019s children\u2019s novel \"Emil und die Detektive\".",
-          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Erich_K%C3%A4stner-_Gesang_zwischen_den_St%C3%BChlen%2C_1932.png",
+          "caption": "Dust jacket illustrated by Erich Ohser for Erich K\u00e4stner\u2019s poetry volume \"Gesang zwischen den St\u00fchlen\" (1932), reflecting the kind of satirical literary work he was developing after his move to Berlin.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner-_Gesang_zwischen_den_St%C3%BChlen,_1932.png"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-home-move",
+      "chapter": "weimar_berlin_success"
     },
     {
       "date": "1928",
       "date_precision": "year",
       "age": 29,
-      "title": "Publishes first poetry book",
-      "description": "K\u00e4stner\u2019s first book of poems, \"Herz auf Taille\", was published in 1928. Its clear, ironic, and socially observant style exemplified the Neue Sachlichkeit movement and helped establish him as a leading figure in contemporary German poetry, known for \"Gebrauchslyrik\"\u2014lyrics for everyday use.",
+      "title": "Publishes first poetry collection",
+      "description": "K\u00e4stner brings out his first book, \"Herz auf Taille\", a collection of socially observant, witty poems, many written during his Leipzig years. The volume, with its blend of irony, sentiment, and clear language, makes him a recognized voice of the [[Neue Sachlichkeit|Neue Sachlichkeit movement]] and broadens his readership beyond newspaper audiences.",
       "locations": [
         {
           "name_historic": "Berlin",
-          "name_modern": null,
+          "name_modern": "Berlin, Germany",
           "centroid": [
-            13.3951309,
-            52.5173885
+            13.405,
+            52.52
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.373,
+            51.339
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://de.wikipedia.org/wiki/Herz_auf_Taille"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg",
+          "caption": "Title page of Erich K\u00e4stner's early 1930s book \"Emil und die Detektive\", representative of the era in which his first poetry collection \"Herz auf Taille\" was published.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "weimar_berlin_success",
+      "annotations": {
+        "Neue Sachlichkeit": {
+          "explanation": "A German cultural movement of the 1920s that rejected Expressionism in favor of a sober, realistic, and socially critical style in literature, art, and architecture.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/New_Objectivity"
+        }
+      }
+    },
+    {
+      "date": "1929-10",
+      "date_precision": "month",
+      "age": 30,
+      "title": "Breakthrough with \"Emil und die Detektive\"",
+      "description": "At the urging of Berlin children\u2019s publisher Edith Jacobsohn, K\u00e4stner publishes his first children\u2019s novel, \"Emil und die Detektive\", set in contemporary Berlin and illustrated by Walter Trier. The fast\u2011paced urban adventure becomes an unprecedented success, selling over two million copies in Germany alone and being translated into dozens of languages, and it establishes him internationally as an innovator of modern children\u2019s literature.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Edith Jacobsohn",
+        "Walter Trier"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Emil_and_the_Detectives"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Erich_K%C3%A4stner-_Gesang_zwischen_den_St%C3%BChlen%2C_1932.png",
-          "caption": "Dust jacket designed by Erich Ohser for K\u00e4stner\u2019s 1932 poetry volume \"Gesang zwischen den St\u00fchlen\", reflecting his publishing success in poetry.",
-          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner-_Gesang_zwischen_den_St%C3%BChlen,_1932.png"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Erich_K%C3%A4stner_Unterschrift.svg",
+          "caption": "Signature of German writer Erich K\u00e4stner, whose 1929 children\u2019s novel \"Emil und die Detektive\" became a landmark of modern children\u2019s literature.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Unterschrift.svg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "weimar_berlin_success"
     },
     {
       "date": "1931",
       "date_precision": "year",
       "age": 32,
-      "title": "Publishes Fabian novel",
-      "description": "K\u00e4stner\u2019s only major novel for adults, \"Fabian: Die Geschichte eines Moralisten\" (Fabian: The Story of a Moralist), appeared in 1931. The book follows an unemployed literary scholar through the rapid social and moral decline of late Weimar Berlin, using cinematic techniques such as rapid cuts and montage to portray the upheavals of the time.",
+      "title": "Releases novel \"Fabian\"",
+      "description": "K\u00e4stner publishes the novel \"Fabian \u2013 Die Geschichte eines Moralisten\", a montage\u2011like, cinematic portrait of late\u2011Weimar Berlin seen through the eyes of an unemployed Germanist. With its sharp critique of the moral and political decay of the republic and its mix of irony and despair, the book strengthens his position as a major contemporary novelist as well as a children\u2019s author.",
       "locations": [
         {
           "name_historic": "Berlin",
-          "name_modern": null,
+          "name_modern": "Berlin, Germany",
           "centroid": [
-            13.3951309,
-            52.5173885
+            13.405,
+            52.52
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Fabian_(novel)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Erich_K%C3%A4stner_by_Grete_Kolliner%2C_c._1930.png",
+          "caption": "German author Erich K\u00e4stner around 1930, shortly before the publication of his novel \"Fabian \u2013 Die Geschichte eines Moralisten\" in 1931.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_by_Grete_Kolliner,_c._1930.png"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "weimar_berlin_success"
+    },
+    {
+      "date": "1933-01-30",
+      "date_precision": "day",
+      "age": 33,
+      "title": "Decides to remain in Nazi Germany",
+      "description": "After [[Hitler\u2019s appointment as Reich Chancellor|Hitler\u2019s appointment as Reich Chancellor]], many regime\u2011critical writers emigrate, but K\u00e4stner consciously chooses to stay in Germany, initially believing the dictatorship will be short\u2011lived. Although fully aware that his antimilitarist and satirical texts make him a target, he opts to witness events from within, a decision that shapes his life for the next twelve years.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner#Nazi_era"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Portret_van_Erich_K%C3%A4stner%2C_RP-F-00-11067.jpg",
+          "caption": "Portrait photograph of Erich K\u00e4stner taken in Berlin between 1930 and 1945, around the period when he decided to remain in Nazi Germany.",
+          "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Erich_K%C3%A4stner,_RP-F-00-11067.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-calendar",
+      "chapter": "nazism_war_and_survival",
+      "annotations": {
+        "Hitler\u2019s appointment as Reich Chancellor": {
+          "explanation": "On 30 January 1933, President Paul von Hindenburg appointed Adolf Hitler to the office of Reich Chancellor of Germany, marking the beginning of the Nazi dictatorship.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Adolf_Hitler%27s_rise_to_power"
+        }
+      }
     },
     {
       "date": "1933-05-10",
       "date_precision": "day",
       "age": 34,
-      "title": "Books burned in Berlin",
-      "description": "On 10 May 1933, after the Nazi seizure of power, K\u00e4stner\u2019s works were publicly burned in Berlin as \"contrary to the German spirit\" during regime-orchestrated book burnings. K\u00e4stner, who had chosen not to go into exile, witnessed the event in person and was repeatedly interrogated by the Gestapo, later writing about the experience and its impact on his stance as an internal critic of the regime.",
+      "title": "Books burned and banned by Nazis",
+      "description": "On the night of the [[Nazi book burnings|Nazi book burnings]], copies of K\u00e4stner\u2019s works are consigned to the flames on German university squares alongside those of many other \"un\u2011German\" authors. His books are soon placed on blacklists and prohibited throughout the Reich. K\u00e4stner, who witnesses the burning in Berlin, becomes one of the few major authors whose existing oeuvre is totally banned while he himself remains in the country under surveillance.",
       "locations": [
         {
           "name_historic": "Berlin",
-          "name_modern": null,
+          "name_modern": "Berlin, Germany",
           "centroid": [
-            13.3951309,
-            52.5173885
+            13.405,
+            52.52
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Book_burning",
+        "https://en.wikipedia.org/wiki/Book_burnings_in_1933_Nazi_Germany"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden_000002.jpg",
+          "caption": "Erich K\u00e4stner memorial at Albertplatz in Dresden, commemorating the German author whose works were banned and burned by the Nazis in 1933.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden_000002.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-calendar",
+      "chapter": "nazism_war_and_survival",
+      "annotations": {
+        "Nazi book burnings": {
+          "explanation": "A coordinated campaign on 10 May 1933 in which Nazi student groups, with official backing, publicly burned books across Germany that were deemed \"un\u2011German\", targeting works by Jewish, socialist, pacifist, and other politically or culturally suspect authors.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Book_burnings_in_1933_Nazi_Germany"
+        }
+      }
     },
     {
-      "date": "1942",
+      "date": "1943",
       "date_precision": "year",
-      "age": 43,
-      "title": "Writes M\u00fcnchhausen screenplay",
-      "description": "In 1942 K\u00e4stner received a special exemption under the Nazi regime to write the screenplay for the Ufa prestige film \"M\u00fcnchhausen\", celebrating the studio\u2019s twenty-fifth anniversary. Working under the pseudonym \"Berthold B\u00fcrger\", he crafted a fantastical script that allowed him to continue writing for cinema despite being officially excluded from the Reich writers\u2019 organization.",
+      "date_note": "Month and day not specified in source",
+      "age": 44,
+      "title": "Writes film script for \"M\u00fcnchhausen\" under pseudonym",
+      "description": "Despite bans on his name, K\u00e4stner manages to work in the [[UFA|Nazi-era German film industry]] by using pseudonyms, notably contributing to the screenplay of the lavish color film \"M\u00fcnchhausen\" for UFA in 1943. This anonymous screenwriting provides him with income and a covert way to continue literary activity under dictatorship, even as he remains under Gestapo suspicion.",
       "locations": [
         {
-          "name_historic": "Potsdam-Babelsberg",
-          "name_modern": null,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
-            13.0929636,
-            52.3914035
+            13.405,
+            52.52
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Hans Albers",
+        "Josef von B\u00e1ky",
+        "Fritz Thiery",
+        "Ludwig von Wohl",
+        "Eberhard Keindorff"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/M%C3%BCnchhausen_(1943_film)",
+        "https://en.wikipedia.org/wiki/Universum_Film_AG"
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "nazism_war_and_survival",
+      "annotations": {
+        "UFA": {
+          "explanation": "Universum Film AG was the dominant state-controlled film studio in Nazi Germany, producing major propaganda and entertainment films.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Universum_Film_AG"
+        }
+      }
     },
     {
-      "date": "1945-05",
+      "date": "1944-02",
       "date_precision": "month",
-      "date_note": "He was in Mayrhofen when the war ended in 1945; month approximated as May to reflect Germany\u2019s surrender",
-      "age": 46,
-      "title": "Ends war in Mayrhofen",
-      "description": "In the final months of the Second World War, K\u00e4stner and others traveled to Mayrhofen in Tyrol under the pretense of scouting locations for a non-existent film, \"Das falsche Gesicht\", to escape the looming Soviet assault on Berlin and threats from the SS. He was in Mayrhofen when the war ended and later documented this period in his diary, published as \"Notabene 45\" and, in a more complete version, as \"Das Blaue Buch\".",
+      "age": 45,
+      "title": "Berlin apartment destroyed in air raid",
+      "description": "During a heavy Allied air raid on Berlin, K\u00e4stner\u2019s flat in the Roscherstra\u00dfe burns out completely, destroying a large part of his manuscripts, correspondence, and clippings from his extraordinarily prolific journalistic output between 1923 and 1933. The loss contributes to the fragmentary survival of much of his early journalism and personal archive.",
       "locations": [
         {
-          "name_historic": "Mayrhofen",
-          "name_modern": null,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
-            11.8638664,
-            47.1672188
+            13.405,
+            52.52
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
+      "sources": [],
+      "event_type_icon": "mdi-calendar",
+      "chapter": "nazism_war_and_survival"
+    },
+    {
+      "date": "1945",
+      "date_precision": "year",
+      "age": 46,
+      "title": "Relocates to Munich after the war",
+      "description": "With the collapse of the Nazi regime and Germany\u2019s defeat, K\u00e4stner moves from devastated Berlin to Munich, in the American zone of occupation. There he resumes publishing under his own name, writes for newspapers and radio, and begins to reissue and continue his children\u2019s books and essays, quickly becoming an important cultural voice in the early Federal Republic.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.576124,
+            48.137154
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Munich"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Erich_K%C3%A4stner_citation_plaque_near_Irschenhausen%2C_Bayern.JPG",
+          "caption": "Citation plaque for Erich K\u00e4stner near Irschenhausen in Bavaria, commemorating his connection with the Munich region where he settled after the war.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_citation_plaque_near_Irschenhausen,_Bayern.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-home-move",
+      "chapter": "postwar_munich_and_later_life"
+    },
+    {
+      "date": "1949",
+      "date_precision": "year",
+      "age": 50,
+      "title": "Publishes \"Das doppelte Lottchen\"",
+      "description": "K\u00e4stner publishes the children\u2019s novel \"Das doppelte Lottchen\", about separated twin girls who meet at a holiday camp and scheme to reunite their divorced parents. Written in the shadow of war\u2019s dislocations yet maintaining his light, humorous tone, the book becomes one of his most beloved works and is adapted into numerous films, including Disney\u2019s \"The Parent Trap\".",
+      "locations": [
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.58198,
+            48.13513
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Lottie_and_Lisa",
+        "https://en.wikipedia.org/wiki/The_Parent_Trap_(1961_film)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden_9.jpg",
+          "caption": "Villa Augustin in Dresden, now the Erich K\u00e4stner Museum dedicated to the author's life and works, including his children's books such as \"Das doppelte Lottchen\".",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden_9.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "postwar_munich_and_later_life"
     },
     {
       "date": "1960",
       "date_precision": "year",
       "age": 61,
-      "title": "Wins Hans Christian Andersen Award",
-      "description": "In 1960 K\u00e4stner received the international Hans Christian Andersen Award for writing, the highest recognition for a children\u2019s author, honoring his overall contribution to children\u2019s literature and specifically his autobiographical work \"Als ich ein kleiner Junge war\" (When I Was a Little Boy). The award confirmed his standing as one of the leading children\u2019s writers of the twentieth century.",
+      "title": "Receives Hans Christian Andersen Award",
+      "description": "In recognition of his lasting contribution to children\u2019s literature, particularly his autobiographical work \"Als ich ein kleiner Junge war\" and his innovative novels for young readers, K\u00e4stner is awarded the international Hans Christian Andersen Medal. The prize cements his reputation worldwide as one of the 20th century\u2019s most important children\u2019s authors.",
       "locations": [
         {
-          "name_historic": "Copenhagen",
-          "name_modern": null,
+          "name_historic": "Florence",
+          "name_modern": "Florence, Italy",
           "centroid": [
-            12.5700724,
-            55.6867243
+            11.2558,
+            43.7696
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Christian_Andersen_Award",
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ]
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden_5.jpg",
+          "caption": "Memorial dedicated to Erich K\u00e4stner in Dresden, Germany, commemorating his legacy as a major 20th\u2011century children's author.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Gedenkst%C3%A4tte_Albertplatz_Dresden_5.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "postwar_munich_and_later_life"
     },
     {
       "date": "1974-07-29",
       "date_precision": "day",
       "age": 75,
       "title": "Death in Munich",
-      "description": "Erich K\u00e4stner died in Munich on 29 July 1974 at the age of 75, after years of declining health and increasing alcoholism. He was buried in the Bogenhauser Friedhof in Munich, closing a life that spanned Imperial Germany, the Weimar Republic, National Socialism, and the Federal Republic.",
+      "description": "Erich K\u00e4stner dies in Munich at the age of seventy\u2011five after a long illness. By the time of his death he is revered both as the witty chronicler of Weimar and post\u2011war society and as the creator of enduring children\u2019s classics that continue to be read and adapted worldwide.",
       "locations": [
         {
           "name_historic": "Munich",
-          "name_modern": null,
+          "name_modern": "Munich, Bavaria, West Germany",
           "centroid": [
-            11.5753822,
-            48.1371079
+            11.5755,
+            48.1374
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Grab_Luiselotte_Enderle.jpg",
-          "caption": "Grave of Erich K\u00e4stner and his companion Luiselotte Enderle at the Bogenhauser Friedhof in Munich.",
-          "source": "https://commons.wikimedia.org/wiki/File:Grab_Luiselotte_Enderle.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Erich_K%C3%A4stner_1968_%28Graustufen_retuschiert%29.jpg",
+          "caption": "Erich K\u00e4stner in Munich in 1968 during filming for a North German Broadcasting (NDR) television feature, a few years before his death in the city.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_1968_(Graustufen_retuschiert).jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "postwar_munich_and_later_life"
     }
   ]
 }
