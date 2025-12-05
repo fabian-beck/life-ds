@@ -1,346 +1,843 @@
 {
-  "dataset": "wikipedia-biography-events",
-  "created_on": "2025-11-08",
+  "dataset": "wiki-bio-timelines",
+  "created_on": "2025-12-05",
   "person": {
-    "name": "Emmy Noether",
+    "name": "Emmy_Noether",
     "birth_date": "1882-03-23",
     "death_date": "1935-04-14",
     "primary_roles": [
-      "Mathematician"
+      "Mathematician",
+      "Professor of mathematics"
     ],
-    "summary": "Amalie Emmy Noether was a German mathematician who fundamentally transformed abstract algebra and proved Noether's theorems linking symmetries to conservation laws in physics. A leading figure at G\u00f6ttingen, she developed deep theories of rings, fields, and algebras, and later taught in the United States at Bryn Mawr College while conducting research at the Institute for Advanced Study.",
-    "wikipedia_url": "https://en.wikipedia.org/wiki/Emmy_Noether",
+    "summary": "Emmy Noether was a German mathematician whose groundbreaking work founded modern abstract algebra and profoundly influenced mathematical physics through Noether's theorem, which connects symmetries to conservation laws. Working first unpaid in Erlangen and then as a central figure in G\u00f6ttingen\u2019s renowned school of mathematics, she developed the theory of ideals in rings, unified representation theory with modules and ideals, and mentored a generation of algebraists before exile to the United States in 1933.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether",
     "portrait": {
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
       "source": "https://en.wikipedia.org/wiki/Emmy_Noether"
-    },
-    "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether"
+    }
   },
+  "chapters": [
+    {
+      "id": "early_life_and_education",
+      "headline": "Early Years and Mathematical Formation",
+      "description": "From her birth in Erlangen through her advanced studies and doctorate, Noether moved from language teaching ambitions to a deep commitment to mathematics despite institutional barriers facing women.",
+      "date_start": "1882-03-23",
+      "date_start_precision": "day",
+      "date_end": "1907",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 25
+    },
+    {
+      "id": "erlangen_research_years",
+      "headline": "Unpaid Researcher in Erlangen",
+      "description": "As an unsalaried lecturer and researcher at Erlangen, Noether extended invariant theory, absorbed Hilbert\u2019s abstract methods, and began the transition toward the algebra that would define her career.",
+      "date_start": "1908",
+      "date_start_precision": "year",
+      "date_end": "1915-03-31",
+      "date_end_precision": "day",
+      "age_start": 25,
+      "age_end": 33
+    },
+    {
+      "id": "gottingen_and_noethers_theorem",
+      "headline": "G\u00f6ttingen Battles and Noether\u2019s Theorem",
+      "description": "Invited to G\u00f6ttingen during World War I, Noether fought for academic recognition, created her celebrated theorem linking symmetries and conservation laws, and finally secured her habilitation amid postwar reforms.",
+      "date_start": "1915-04-01",
+      "date_start_precision": "day",
+      "date_end": "1919",
+      "date_end_precision": "year",
+      "age_start": 33,
+      "age_end": 37
+    },
+    {
+      "id": "abstract_algebra_and_international_renown",
+      "headline": "Abstract Algebra and International Renown",
+      "description": "As a leading member of the G\u00f6ttingen school, Noether transformed abstract algebra, inspired students later dubbed the 'Noether Boys,' and gained worldwide recognition, culminating in a plenary ICM address before Nazi dismissal ended her German career.",
+      "date_start": "1920",
+      "date_start_precision": "year",
+      "date_end": "1933-04",
+      "date_end_precision": "month",
+      "age_start": 37,
+      "age_end": 51
+    },
+    {
+      "id": "bryn_mawr_and_final_years",
+      "headline": "Exile to America and Final Years",
+      "description": "Forced out by Nazi racial laws, Noether rebuilt her scientific and teaching life at Bryn Mawr and the Institute for Advanced Study, mentoring women mathematicians and pursuing noncommutative algebra until her sudden death after surgery.",
+      "date_start": "1933-05",
+      "date_start_precision": "month",
+      "date_end": "1935-04-14",
+      "date_end_precision": "day",
+      "age_start": 51,
+      "age_end": 53
+    }
+  ],
   "events": [
     {
       "date": "1882-03-23",
       "date_precision": "day",
-      "age": null,
-      "title": "Birth of Emmy Noether",
-      "description": "Amalie Emmy Noether was born to mathematician Max Noether and Ida Amalia Kaufmann in Erlangen, Bavaria, into a Jewish family.",
+      "age": 0,
+      "title": "Birth into Erlangen mathematics family",
+      "description": "Amalie Emmy Noether was born on 23 March 1882 in Erlangen, Bavaria, the first child of mathematician Max Noether and Ida Amalia Kaufmann, both from affluent Jewish merchant families. Growing up in an academic household headed by a prominent algebraic geometer exposed her early to mathematical conversations, even as she was expected, like other middle\u2011class girls, to learn domestic skills and music.",
       "locations": [
         {
-          "name_historic": "Erlangen, Bavaria, German Empire",
-          "name_modern": null,
+          "name_historic": "Erlangen, Bavaria",
+          "name_modern": "Erlangen, Bavaria, Germany",
           "centroid": [
-            10.9812072,
-            49.5891571
+            11.0059,
+            49.5897
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Max Noether",
+        "Ida Amalia Kaufmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Max_Noether"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Erlangen_Bruck_Emmy-Noether-Gymnasium_001.JPG",
+          "caption": "Emmy-Noether-Gymnasium in Erlangen, a later school named in honor of Emmy Noether in her birth city.",
+          "source": "https://commons.wikimedia.org/wiki/File:Erlangen_Bruck_Emmy-Noether-Gymnasium_001.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1900",
+      "date_precision": "year",
+      "date_note": "Exact day not specified; year per examination date in early 1900",
+      "age": 17,
+      "title": "Qualifies as language teacher",
+      "description": "In early 1900 Noether took the [[state examination for teachers|state examination for teachers of French and English]] and received an overall grade of sehr gut, entitling her to teach languages at girls' schools. Instead of pursuing this conventional path for educated women, she chose to remain in Erlangen and attend the university as an auditor, marking her decisive turn toward an academic life in mathematics despite legal and social obstacles.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Bavaria, Germany",
+          "centroid": [
+            11.0044,
+            49.5897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ]
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Emmy-Noether-Gymnasium_Erlangen.jpg",
+          "caption": "Emmy-Noether-Gymnasium in Erlangen, a later school named in honor of Emmy Noether, symbolizing her connection to education in the city where she first turned toward an academic career.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy-Noether-Gymnasium_Erlangen.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_life_and_education",
+      "annotations": {
+        "state examination for teachers": {
+          "explanation": "A formal qualifying exam in the German education system that certified candidates to teach specific subjects in secondary schools, often required for civil-service teaching positions.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Staatsexamen"
+        }
+      }
     },
     {
       "date": "1903-07-14",
       "date_precision": "day",
       "age": 21,
-      "title": "Passes Realgymnasium graduation exam in Nuremberg",
-      "description": "Despite restrictions on women in higher education, Noether passed the graduation exam at a Realgymnasium, enabling her to continue advanced study.",
+      "title": "Passes Realgymnasium graduation exam",
+      "description": "On 14 July 1903 Noether passed the graduation examination at a [[Realgymnasium|Realgymnasium]] in Nuremberg, an unusual achievement for a woman at that time and a prerequisite for full university study. This step, coupled with her earlier auditing of lectures in Erlangen and G\u00f6ttingen, positioned her to re\u2011enter the University of Erlangen as a formally enrolled student when Bavarian rules changed.",
       "locations": [
         {
-          "name_historic": "Nuremberg, Bavaria, Germany",
-          "name_modern": null,
+          "name_historic": "Nuremberg",
+          "name_modern": "Nuremberg, Germany",
           "centroid": [
-            11.077298,
-            49.453872
+            11.0775,
+            49.4478
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Germany",
+          "centroid": [
+            11.0079,
+            49.5897
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
+          "centroid": [
+            9.9323,
+            51.5413
+          ],
+          "primary": false
         }
       ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Realgymnasium"
-      ]
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Emmy-Noether-Gymnasium_Erlangen_M%C3%A4rz_2012_01.JPG",
+          "caption": "Emmy-Noether-Gymnasium in Erlangen, a later school named in honor of Emmy Noether, symbolizing her educational achievements.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy-Noether-Gymnasium_Erlangen_M%C3%A4rz_2012_01.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_life_and_education",
+      "annotations": {
+        "Realgymnasium": {
+          "explanation": "A type of German secondary school of the period with a strong emphasis on modern languages and sciences, whose leaving examination qualified students for university entrance.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Realgymnasium"
+        }
+      }
     },
     {
       "date": "1904-10",
       "date_precision": "month",
+      "date_note": "Month and year given; exact day not specified",
       "age": 22,
-      "title": "Formally enrolls in mathematics at the University of Erlangen",
-      "description": "After auditing courses and facing institutional barriers, Noether officially reentered the University of Erlangen\u2013Nuremberg and committed to studying mathematics.",
+      "title": "Formally enrolls in mathematics at Erlangen",
+      "description": "In October 1904, after Bavarian universities lifted formal restrictions on women\u2019s enrollment, Noether officially reentered the University of Erlangen and declared her intention to specialize in mathematics. One of only a handful of women among hundreds of male students, she immersed herself in advanced courses and began research under invariant theorist Paul Gordan, committing fully to a mathematical career.",
       "locations": [
         {
-          "name_historic": "University of Erlangen\u2013Nuremberg, Erlangen, Bavaria, Germany",
-          "name_modern": null,
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Germany",
           "centroid": [
-            11.0163212,
-            49.5997517
+            11.0125,
+            49.5897
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Paul Gordan"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg"
-      ]
+        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg",
+        "https://de.wikipedia.org/wiki/Paul_Gordan"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Emmy-Noether-Gymnasium_Erlangen_M%C3%A4rz_2012_10.JPG",
+          "caption": "Modern view of the Emmy-Noether-Gymnasium in Erlangen, named in honor of Emmy Noether, in the city where she formally enrolled in mathematics in 1904.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy-Noether-Gymnasium_Erlangen_M%C3%A4rz_2012_10.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1907",
       "date_precision": "year",
-      "date_note": "Month/day not specified in sources.",
-      "age": 25,
-      "title": "Doctorate awarded under Paul Gordan",
-      "description": "Noether earned her Ph.D. summa cum laude with a dissertation on invariants for ternary biquadratic forms under the supervision of Paul Gordan.",
+      "date_note": "Doctorate completed and summa cum laude later in 1907; exact dates not specified",
+      "age": 24,
+      "title": "Earns doctorate under Paul Gordan",
+      "description": "In 1907 Noether completed her doctoral dissertation, \"\u00dcber die Bildung des Formensystems der tern\u00e4ren biquadratischen Form\" (On complete systems of invariants for [[ternary biquadratic forms|ternary biquadratic forms]]), under the supervision of Paul Gordan at Erlangen and graduated summa cum laude. The thesis, firmly in the computational school of [[invariant theory|invariant theory]] with hundreds of explicit invariants, was well received at the time, although she later dismissed it as 'crap' compared with the abstract algebra she would go on to develop.",
       "locations": [
         {
-          "name_historic": "University of Erlangen\u2013Nuremberg, Erlangen, Bavaria, Germany",
-          "name_modern": null,
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Bavaria, Germany",
           "centroid": [
-            11.0163212,
-            49.5997517
+            11.0039,
+            49.5897
           ],
           "primary": true
         }
+      ],
+      "involved_people": [
+        "Paul Gordan"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Paul_Gordan"
-      ]
+        "https://de.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Paul_Gordan"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Emmy_Noether_-_Table_of_invariants_1.jpg",
+          "caption": "A table of invariants from Emmy Noether's 1907 doctoral dissertation on ternary biquadratic forms.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy_Noether_-_Table_of_invariants_1.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-dissertation",
+      "chapter": "early_life_and_education",
+      "annotations": {
+        "ternary biquadratic forms": {
+          "explanation": "Homogeneous polynomials of degree four in three variables, a classical object of study in algebraic invariant theory.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
+        },
+        "invariant theory": {
+          "explanation": "A branch of algebra that studies quantities remaining unchanged under groups of transformations, historically important in the study of algebraic forms and symmetries.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
+        }
+      }
     },
     {
-      "date": "1908-01",
-      "date_precision": "month",
-      "date_end": "1915-04",
-      "date_end_precision": "month",
+      "date": "1908",
+      "date_precision": "year",
+      "date_end": "1915-03-31",
+      "date_end_precision": "day",
       "age": 25,
-      "title": "Unpaid lecturer and researcher at Erlangen",
-      "description": "Noether worked without pay at Erlangen's Mathematical Institute, occasionally substituting for her father and publishing on invariants, while women were largely excluded from academic posts.",
+      "title": "Unpaid lecturer at Erlangen",
+      "description": "From 1908 until early 1915 Noether worked without salary at the Mathematical Institute of the University of Erlangen, occasionally substituting for her ailing father while pursuing her own research. During these years she joined mathematical societies, extended her thesis results to more variables, absorbed the abstract methods of [[David Hilbert|David Hilbert]] through Ernst Fischer, and advised doctoral students whose degrees were officially credited to Max Noether, reflecting the structural discrimination women faced in German academia.",
       "locations": [
         {
-          "name_historic": "Erlangen, Bavaria, Germany",
-          "name_modern": null,
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Germany",
           "centroid": [
-            10.9812072,
-            49.5891571
+            11.0039,
+            49.591
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Max Noether",
+        "Ernst Sigismund Fischer",
+        "David Hilbert"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ]
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Max_Noether"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Emmy-Noether-Gymnasium_Erlangen_M%C3%A4rz_2012_11.JPG",
+          "caption": "Emmy-Noether-Gymnasium in Erlangen, a later school named in honor of Emmy Noether, located in the city where she worked without pay at the university's Mathematical Institute from 1908 to 1915.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy-Noether-Gymnasium_Erlangen_M%C3%A4rz_2012_11.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "erlangen_research_years",
+      "annotations": {
+        "David Hilbert": {
+          "explanation": "A leading German mathematician based in G\u00f6ttingen whose work on formalism, axiomatization, and abstract methods strongly influenced 20th\u2011century mathematics and Emmy Noether\u2019s development.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/David_Hilbert"
+        }
+      }
     },
     {
-      "date": "1915-04",
-      "date_precision": "month",
-      "date_note": "She left for G\u00f6ttingen in late April 1915.",
+      "date": "1913",
+      "date_precision": "year",
+      "date_end": "1916",
+      "date_end_precision": "year",
+      "age": 31,
+      "title": "First forays into abstract algebra",
+      "description": "Between 1913 and 1916 Noether published several papers that applied [[Hilbert\u2019s invariant\u2011theoretic methods|Hilbert\u2019s invariant\u2011theoretic methods]] to fields of rational functions and invariants of finite groups. This work, carried out while she was still officially attached to Erlangen, marked her transition from explicit computational invariant theory toward the abstract algebraic perspective that would dominate her later contributions to rings, fields, and ideals.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Germany",
+          "centroid": [
+            11.0059,
+            49.5981
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Invariant_theory"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Emmy_noether_postcard_1915.jpg",
+          "caption": "Postcard from Emmy Noether to mathematician Ernst Fischer, postmarked 10 April 1915, from the period of her early work on invariants and abstract algebra.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy_noether_postcard_1915.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "erlangen_research_years",
+      "annotations": {
+        "Hilbert\u2019s invariant\u2011theoretic methods": {
+          "explanation": "Techniques developed by David Hilbert in invariant theory that use abstract, often non\u2011constructive arguments\u2014such as the Hilbert basis theorem\u2014to study polynomial invariants under group actions, forming a basis for modern abstract algebra.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
+        }
+      }
+    },
+    {
+      "date": "1915-04-01",
+      "date_precision": "day",
+      "date_note": "She left for G\u00f6ttingen in late April 1915; day approximate",
       "age": 33,
-      "title": "Moves to G\u00f6ttingen at Hilbert and Klein's invitation",
-      "description": "Invited by David Hilbert and Felix Klein, Noether moved to the University of G\u00f6ttingen. Faculty opposition initially prevented her from holding an official, paid position.",
+      "title": "Moves to G\u00f6ttingen at Hilbert\u2019s invitation",
+      "description": "In late April 1915 Noether left Erlangen for the University of G\u00f6ttingen at the invitation of David Hilbert and Felix Klein, who wanted her expertise to strengthen their world\u2011leading mathematics department. Although the philosophical faculty blocked her from formal appointment because she was a woman and a politically suspect Jew, she began lecturing under Hilbert\u2019s name and quickly impressed G\u00f6ttingen colleagues with her originality and power.",
       "locations": [
         {
-          "name_historic": "University of G\u00f6ttingen, G\u00f6ttingen, Prussia, Germany",
-          "name_modern": null,
-          "centroid": null,
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Germany",
+          "centroid": [
+            11.0078,
+            49.5897
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
+          "centroid": [
+            9.9323,
+            51.5413
+          ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "David Hilbert",
+        "Felix Klein"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/University_of_G%C3%B6ttingen",
         "https://en.wikipedia.org/wiki/David_Hilbert",
         "https://en.wikipedia.org/wiki/Felix_Klein"
-      ]
-    },
-    {
-      "date": "1915-05",
-      "date_precision": "month",
-      "date_note": "Approximately two weeks after her move to G\u00f6ttingen.",
-      "age": 33,
-      "title": "Death of her mother, Ida Amalia Noether",
-      "description": "Soon after arriving in G\u00f6ttingen, Noether returned to Erlangen when her mother died suddenly, adding personal hardship to an already difficult professional transition.",
-      "locations": [
-        {
-          "name_historic": "Erlangen, Bavaria, Germany",
-          "name_modern": null,
-          "centroid": [
-            10.9812072,
-            49.5891571
-          ],
-          "primary": true
-        }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ]
+      "event_type_icon": "mdi-home-move",
+      "chapter": "gottingen_and_noethers_theorem"
     },
     {
       "date": "1918-07-26",
       "date_precision": "day",
       "age": 36,
-      "title": "Noether's theorem presented in G\u00f6ttingen",
-      "description": "Felix Klein presented Noether's paper 'Invariante Variationsprobleme' to the Royal Society of Sciences at G\u00f6ttingen, establishing the profound link between continuous symmetries and conservation laws.",
+      "title": "Presents Noether\u2019s theorem on symmetries",
+      "description": "On 26 July 1918 Felix Klein presented to the [[Royal Society of Sciences at G\u00f6ttingen|Royal Society of Sciences at G\u00f6ttingen]] Noether\u2019s paper \"Invariante Variationsprobleme,\" since she herself was not a member and could not formally speak. In this work she proved what is now called [[Noether\u2019s theorem|Noether\u2019s theorem]], establishing the deep correspondence between differentiable symmetries of a variational system and conservation laws, a result later hailed by physicists as one of the most important theorems guiding modern theoretical physics.",
       "locations": [
         {
-          "name_historic": "G\u00f6ttingen, Germany",
-          "name_modern": null,
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
           "centroid": [
-            9.9351811,
-            51.5328328
+            9.9355,
+            51.5413
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Felix Klein"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Noether%27s_theorem"
-      ]
+        "https://en.wikipedia.org/wiki/Noether%27s_theorem",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Noether_theorem_1st_page.png",
+          "caption": "First page of Emmy Noether's 1918 paper \"Invariante Variationsprobleme,\" presented on her behalf to the Royal Society of Sciences at G\u00f6ttingen.",
+          "source": "https://commons.wikimedia.org/wiki/File:Noether_theorem_1st_page.png"
+        }
+      ],
+      "event_type_icon": "mdi-paper",
+      "chapter": "gottingen_and_noethers_theorem",
+      "annotations": {
+        "Royal Society of Sciences at G\u00f6ttingen": {
+          "explanation": "The Royal Society of Sciences at G\u00f6ttingen (K\u00f6nigliche Gesellschaft der Wissenschaften zu G\u00f6ttingen) was an elite learned society associated with the University of G\u00f6ttingen, which controlled who could formally present scientific papers at its meetings.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/G%C3%B6ttingen_Academy_of_Sciences_and_Humanities"
+        },
+        "Noether\u2019s theorem": {
+          "explanation": "Noether\u2019s theorem is a fundamental result in theoretical physics and mathematics stating that every continuous symmetry of the action of a physical system corresponds to a conserved quantity, such as energy or momentum.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Noether%27s_theorem"
+        }
+      }
     },
     {
       "date": "1919-06",
       "date_precision": "month",
+      "date_note": "Oral exam in late May 1919; habilitation lecture in June 1919; month used as event date",
       "age": 37,
-      "title": "Habilitation approved; becomes Privatdozent at G\u00f6ttingen",
-      "description": "Following the German Revolution\u2019s reforms, Noether completed her habilitation and was recognized as a Privatdozent, with her first lectures listed under her own name that autumn.",
+      "title": "Secures habilitation at G\u00f6ttingen",
+      "description": "In the spring and early summer of 1919, after the political upheavals of the [[German Revolution of 1918\u20131919|German Revolution]] relaxed some restrictions on women, Noether finally obtained her habilitation at G\u00f6ttingen. She passed her oral examinations in late May and delivered her habilitation lecture in June, becoming a [[Privatdozent|Privatdozent]] and, that autumn, giving her first officially listed lectures under her own name\u2014though still without a salary.",
       "locations": [
         {
-          "name_historic": "University of G\u00f6ttingen, G\u00f6ttingen, Germany",
-          "name_modern": null,
-          "centroid": null,
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Lower Saxony, Germany",
+          "centroid": [
+            9.934,
+            51.5413
+          ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Habilitation"
-      ]
+        "https://en.wikipedia.org/wiki/University_of_G%C3%B6ttingen"
+      ],
+      "event_type_icon": "mdi-professorship",
+      "chapter": "gottingen_and_noethers_theorem",
+      "annotations": {
+        "German Revolution of 1918\u20131919": {
+          "explanation": "A period of civil conflict and political upheaval in Germany from November 1918 to mid-1919 that ended the German Empire and led to the establishment of the Weimar Republic, bringing reforms including expanded rights for women.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Revolution_of_1918%E2%80%931919"
+        },
+        "Privatdozent": {
+          "explanation": "A German academic title for someone who has completed a habilitation and is authorized to teach and examine at a university, but typically without a salaried professorship.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      }
     },
     {
       "date": "1921",
       "date_precision": "year",
-      "date_note": "Publication year of the paper.",
       "age": 39,
-      "title": "Publishes 'Idealtheorie in Ringbereichen'",
-      "description": "In a landmark paper, Noether developed the abstract theory of ideals in commutative rings, formalizing the ascending chain condition; structures satisfying it are now called Noetherian.",
-      "locations": [],
+      "title": "Publishes classic paper on ideals in rings",
+      "description": "In 1921 Noether published her seminal paper \"[[Idealtheorie in Ringbereichen|Idealtheorie in Ringbereichen]]\" (Theory of ideals in ring domains), which reorganized commutative ideal theory into a powerful, general framework. Using concepts such as the [[ascending chain condition|ascending chain condition]], she introduced structural methods that underlie modern algebra, and rings satisfying this finiteness property came to be called '[[Noetherian|Noetherian]]' in her honor.",
+      "locations": [
+        {
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
+          "centroid": [
+            9.9358,
+            51.5413
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/Noetherian_ring"
-      ]
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/96/Emmy_Noether_-_Table_of_invariants_2.jpg",
+          "caption": "Table of algebraic invariants from Emmy Noether's work, illustrating the kind of formal algebraic structures that underpinned her development of ideal theory in rings.",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy_Noether_-_Table_of_invariants_2.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "abstract_algebra_and_international_renown",
+      "annotations": {
+        "Idealtheorie in Ringbereichen": {
+          "explanation": "Title of Emmy Noether's 1921 paper, usually translated as \"Theory of ideals in ring domains,\" which systematically developed the modern abstract theory of ideals in commutative rings.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Emmy_Noether"
+        },
+        "ascending chain condition": {
+          "explanation": "A finiteness condition on sequences of nested subobjects (such as ideals in a ring) requiring that any increasing chain eventually stabilizes, preventing infinite strict growth.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Chain_condition"
+        },
+        "Noetherian": {
+          "explanation": "A term for rings or modules that satisfy the ascending chain condition on ideals or submodules, ensuring that every ideal is finitely generated; named after Emmy Noether.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Noetherian_ring"
+        }
+      }
     },
     {
       "date": "1924",
       "date_precision": "year",
-      "date_note": "Year given in sources.",
       "age": 42,
-      "title": "B. L. van der Waerden joins Noether's circle",
-      "description": "Dutch mathematician Bartel Leendert van der Waerden collaborated closely with Noether in G\u00f6ttingen; her ideas shaped the second volume of his 1931 textbook 'Moderne Algebra'.",
+      "title": "Influences van der Waerden\u2019s Moderne Algebra",
+      "description": "Around 1924 the young Dutch mathematician Bartel Leendert van der Waerden joined Noether\u2019s G\u00f6ttingen circle and rapidly absorbed her abstract algebraic approach. His later two\u2011volume textbook \"[[Moderne Algebra|Moderne Algebra]]\", especially its second volume published in 1931, drew heavily on her lectures and ideas, becoming the standard exposition that spread Noether\u2019s structural viewpoint to a generation of algebraists worldwide.",
       "locations": [
         {
-          "name_historic": "G\u00f6ttingen, Germany",
-          "name_modern": null,
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
           "centroid": [
-            9.9351811,
-            51.5328328
+            9.933,
+            51.533
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Amsterdam",
+          "name_modern": "Amsterdam, Netherlands",
+          "centroid": [
+            4.9,
+            52.37
+          ],
+          "primary": false
         }
+      ],
+      "involved_people": [
+        "Bartel Leendert van der Waerden"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden"
+      ],
+      "event_type_icon": "mdi-research",
+      "chapter": "abstract_algebra_and_international_renown",
+      "annotations": {
+        "Moderne Algebra": {
+          "explanation": "A two\u2011volume textbook on abstract algebra by Bartel Leendert van der Waerden, first published in 1930\u20131931, which systematically presented the new structural approach to algebra largely inspired by Emmy Noether\u2019s lectures.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Moderne_Algebra"
+        }
+      }
+    },
+    {
+      "date": "1927",
+      "date_precision": "year",
+      "date_end": "1935-04-14",
+      "date_end_precision": "day",
+      "age": 45,
+      "title": "Third epoch: noncommutative algebras and representations",
+      "description": "From 1927 until her death Noether entered what historians describe as the third epoch of her work, focusing on [[noncommutative algebras|noncommutative algebras]], [[hypercomplex systems|hypercomplex systems]], and the unification of group representation theory with [[module and ideal theory|module and ideal theory]]. In addition to her landmark papers, she generously contributed ideas and guidance to colleagues in areas as diverse as algebraic topology, often letting others publish lines of research she had initiated or clarified.",
+      "locations": [
+        {
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
+          "centroid": [
+            9.934,
+            51.5413
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bryan",
+          "name_modern": "Bryan, Texas, USA",
+          "centroid": [
+            -96.3661,
+            30.6744
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, USA",
+          "centroid": [
+            -74.6514,
+            40.3573
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Pavel Alexandrov",
+        "Bartel Leendert van der Waerden",
+        "Helmut Hasse",
+        "Hermann Weyl",
+        "Olga Taussky-Todd",
+        "Hans Fitting"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/B._L._van_der_Waerden",
-        "https://en.wikipedia.org/wiki/Moderne_Algebra"
-      ]
-    },
-    {
-      "date": "1927-04",
-      "date_precision": "month",
-      "date_end": "1935-04-14",
-      "date_end_precision": "day",
-      "date_note": "Her 'third epoch' is generally dated 1927\u20131935.",
-      "age": 45,
-      "title": "Begins third epoch: work on noncommutative algebras",
-      "description": "Noether focused on noncommutative algebras, hypercomplex numbers, and unifying group representation theory with modules and ideals, while influencing many students and colleagues.",
-      "locations": [
-        {
-          "name_historic": "G\u00f6ttingen, Germany",
-          "name_modern": null,
-          "centroid": [
-            9.9351811,
-            51.5328328
-          ],
-          "primary": true
-        }
+        "https://en.wikipedia.org/wiki/History_of_algebra",
+        "https://en.wikipedia.org/wiki/Representation_theory"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ]
+      "event_type_icon": "mdi-microscope",
+      "chapter": "abstract_algebra_and_international_renown",
+      "annotations": {
+        "noncommutative algebras": {
+          "explanation": "Algebraic structures in which the order of multiplication matters, meaning that for elements a and b one can have ab \u2260 ba, generalizing matrix multiplication and many operator algebras in physics and mathematics.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Noncommutative_ring"
+        },
+        "hypercomplex systems": {
+          "explanation": "Generalizations of the complex numbers, such as quaternions and other multi-dimensional number systems, studied as algebraic structures with special multiplication rules.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hypercomplex_number"
+        },
+        "module and ideal theory": {
+          "explanation": "A branch of abstract algebra that studies modules (generalizations of vector spaces over rings) and ideals (special subsets of rings) to analyze the structure of rings and their representations.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Module_(mathematics)"
+        }
+      }
     },
     {
-      "date": "1932-09",
+      "date": "1932-08",
       "date_precision": "month",
-      "date_note": "ICM Z\u00fcrich took place in early September 1932.",
+      "date_note": "She gave a plenary address at the International Congress of Mathematicians in Z\u00fcrich in 1932; month approximate based on congress dates",
       "age": 50,
-      "title": "Plenary address at the 1932 International Congress of Mathematicians",
-      "description": "By the time of her plenary lecture at the ICM in Z\u00fcrich, Noether's stature as a leading algebraist was recognized internationally.",
+      "title": "Plenary address at Z\u00fcrich ICM",
+      "description": "At the 1932 International Congress of Mathematicians in Z\u00fcrich, Noether delivered a plenary address summarizing advances in [[abstract algebra|abstract algebra]] and related fields, a rare honor that confirmed her status as a leading mathematician of her era. By this time her G\u00f6ttingen seminar and her informal group of students and collaborators\u2014sometimes called the 'Noether Boys'\u2014had made the university a global center for algebra.",
       "locations": [
         {
-          "name_historic": "Z\u00fcrich, Switzerland",
-          "name_modern": null,
+          "name_historic": "Z\u00fcrich",
+          "name_modern": "Z\u00fcrich, Switzerland",
           "centroid": [
-            8.5410422,
-            47.3744489
+            8.5417,
+            47.3769
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/International_Congress_of_Mathematicians"
-      ]
+      ],
+      "event_type_icon": "mdi-conference",
+      "chapter": "abstract_algebra_and_international_renown",
+      "annotations": {
+        "abstract algebra": {
+          "explanation": "A branch of mathematics that studies algebraic structures such as groups, rings, and fields in a general, axiomatic way, rather than through specific numerical systems.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Abstract_algebra"
+        }
+      }
+    },
+    {
+      "date": "1933-04",
+      "date_precision": "month",
+      "date_note": "Nazi dismissals of Jewish academics occurred in 1933; month approximate for her removal and subsequent move",
+      "age": 51,
+      "title": "Dismissed by Nazis and forced into exile",
+      "description": "In 1933, after the Nazi government ordered the removal of Jews and political opponents from German university posts, Noether was dismissed from her position at [[G\u00f6ttingen|G\u00f6ttingen]] despite her central role there. Facing growing antisemitic persecution and the destruction of the G\u00f6ttingen mathematical community, she chose to emigrate, severing nearly two decades of institutional ties in Germany.",
+      "locations": [
+        {
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": "G\u00f6ttingen, Germany",
+          "centroid": [
+            9.9323,
+            51.5413
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Braunschweig",
+          "name_modern": "Braunschweig, Germany",
+          "centroid": [
+            10.5268,
+            52.2689
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, USA",
+          "centroid": [
+            -74.6593,
+            40.3573
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Hitler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/G%C3%B6ttingen",
+        "https://en.wikipedia.org/wiki/Law_for_the_Restoration_of_the_Professional_Civil_Service"
+      ],
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "abstract_algebra_and_international_renown",
+      "annotations": {
+        "G\u00f6ttingen": {
+          "explanation": "G\u00f6ttingen was a leading German university town whose mathematics department became a world center for research before being systematically dismantled under Nazi rule beginning in 1933.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/G%C3%B6ttingen"
+        }
+      }
     },
     {
       "date": "1933-09",
       "date_precision": "month",
-      "date_note": "She moved later in 1933 after dismissal under Nazi policies; month approximate.",
+      "date_note": "She moved to the United States in 1933 and took up a position at Bryn Mawr College; month approximate for start of teaching there",
       "age": 51,
-      "title": "Dismissed by Nazi law; relocates to Bryn Mawr and lectures at IAS",
-      "description": "Following the Nazi purge of Jewish academics, Noether left G\u00f6ttingen for a faculty position at Bryn Mawr College and concurrently lectured and conducted research at the Institute for Advanced Study.",
+      "title": "Begins teaching at Bryn Mawr College",
+      "description": "Later in 1933 Noether arrived in the United States and accepted a position at Bryn Mawr College in Pennsylvania, a women\u2019s institution that welcomed her as a senior research figure. There she taught graduate and post\u2011doctoral students, including Marie Johanna Weiss and Olga Taussky\u2011Todd, helping to create one of the few active centers for advanced mathematics open to women at the time.",
       "locations": [
         {
-          "name_historic": "Bryn Mawr, Pennsylvania, United States",
-          "name_modern": null,
+          "name_historic": "Bryn Mawr, Pennsylvania",
+          "name_modern": "Bryn Mawr, Pennsylvania, USA",
           "centroid": [
-            -75.3173407,
-            40.0238245
+            -75.3138,
+            40.0198
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Marie Johanna Weiss",
+        "Olga Taussky-Todd"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/Bryn_Mawr_College",
-        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
-      ]
+        "https://en.wikipedia.org/wiki/Marie_Johanna_Weiss"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "bryn_mawr_and_final_years"
+    },
+    {
+      "date": "1933-10",
+      "date_precision": "month",
+      "date_end": "1935-04-14",
+      "date_end_precision": "day",
+      "age": 51,
+      "title": "Research visits to Institute for Advanced Study",
+      "description": "Concurrently with her Bryn Mawr appointment, Noether spent part of each year in nearby Princeton conducting research and lecturing at the newly founded [[Institute for Advanced Study|Institute for Advanced Study]] at the invitation of colleagues such as Hermann Weyl and Oswald Veblen. Though Princeton University itself did not admit women students, the Institute provided Noether with a high\u2011level research environment in exile where she continued her investigations in algebra until her final illness.",
+      "locations": [
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, USA",
+          "centroid": [
+            -74.6593,
+            40.3573
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bryn Mawr",
+          "name_modern": "Bryn Mawr, Pennsylvania, USA",
+          "centroid": [
+            -75.3096,
+            40.023
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Hermann Weyl",
+        "Oswald Veblen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study",
+        "https://en.wikipedia.org/wiki/Oswald_Veblen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/EmmyNoether_OswaldVeblen_1932_MFO3108.jpg",
+          "caption": "Emmy Noether with Oswald Veblen in Princeton, 1932, shortly before her regular research visits to the Institute for Advanced Study.",
+          "source": "https://commons.wikimedia.org/wiki/File:EmmyNoether_OswaldVeblen_1932_MFO3108.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "bryn_mawr_and_final_years",
+      "annotations": {
+        "Institute for Advanced Study": {
+          "explanation": "An independent research institute founded in Princeton in 1930 that hosts leading scholars in mathematics and theoretical science, separate from Princeton University and focused solely on advanced research.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
+        }
+      }
     },
     {
       "date": "1935-04-14",
       "date_precision": "day",
       "age": 53,
-      "title": "Death in Bryn Mawr, Pennsylvania",
-      "description": "Emmy Noether died in the United States while on the faculty at Bryn Mawr College, closing a career that reshaped modern algebra and influenced physics.",
+      "title": "Death following surgery in Pennsylvania",
+      "description": "On 14 April 1935 Noether died in Pennsylvania from complications following surgery, cutting short her flourishing research and mentoring at Bryn Mawr and the Institute for Advanced Study. Her passing prompted tributes from leading mathematicians and physicists, including Albert Einstein, who emphasized both the depth of her ideas and the exceptional obstacles she had overcome as a Jewish woman in German mathematics.",
       "locations": [
         {
-          "name_historic": "Bryn Mawr, Pennsylvania, United States",
-          "name_modern": null,
+          "name_historic": "Bryn Mawr, Pennsylvania",
+          "name_modern": "Bryn Mawr, Pennsylvania, USA",
           "centroid": [
-            -75.3173407,
-            40.0238245
+            -75.3152,
+            40.0198
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Albert Einstein"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ]
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study",
+        "https://en.wikipedia.org/wiki/Bryn_Mawr_College"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "bryn_mawr_and_final_years"
     }
   ]
 }
