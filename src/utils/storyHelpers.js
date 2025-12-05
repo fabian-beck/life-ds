@@ -387,7 +387,144 @@ export function getSubcategory(relationshipType) {
 }
 
 /**
+ * Escape special regex characters in a string.
+ * @param {string} str - String to escape
+ * @returns {string} Escaped string
+ */
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Check if a word is too common to use for last-name-only matching.
+ * Prevents false positives like "Church", "Grace", "Newton".
+ * @param {string} word - Word to check
+ * @returns {boolean} True if common word
+ */
+function isCommonWord(word) {
+  const commonWords = new Set([
+    'church', 'grace', 'hope', 'faith', 'love', 'king', 'queen',
+    'prince', 'lord', 'duke', 'white', 'black', 'green', 'brown',
+    'young', 'old', 'good', 'new', 'long', 'short', 'stone', 'wood',
+    'hill', 'field', 'well', 'strong', 'bright', 'rich', 'poor'
+  ]);
+  return commonWords.has(word.toLowerCase());
+}
+
+/**
+ * Check if event year falls within relationship timeframe.
+ * @param {number|null} eventYear - Event year
+ * @param {number} startYear - Relationship start year
+ * @param {number} endYear - Relationship end year
+ * @returns {boolean} True if within range
+ */
+function isWithinYearRange(eventYear, startYear, endYear) {
+  if (!eventYear) return true; // No year to check
+  if (startYear && eventYear < startYear) return false;
+  if (endYear && eventYear > endYear) return false;
+  return true;
+}
+
+/**
+ * Normalize a person name for matching.
+ * Handles parentheticals, initials, and special characters.
+ * @param {string} name - Full person name
+ * @returns {Object|null} Normalized name components
+ */
+export function normalizePersonName(name) {
+  if (!name || typeof name !== 'string') return null;
+
+  let normalized = name.trim();
+
+  // Remove parenthetical clarifications: "Ethel Sara Turing (née Stoney)" → "Ethel Sara Turing"
+  normalized = normalized.replace(/\s*\([^)]*\)/g, '');
+
+  // Remove bracketed clarifications: "D. G. [David Gawen] Champernowne" → "D. G. Champernowne"
+  normalized = normalized.replace(/\s*\[[^\]]*\]/g, '');
+
+  // Remove suffixes: "John von Neumann Jr." → "John von Neumann"
+  normalized = normalized.replace(/\s+(Jr|Sr|II|III|IV)\.?$/i, '');
+
+  // Split into tokens
+  const tokens = normalized.split(/\s+/).filter(t => t.length > 0);
+  if (tokens.length === 0) return null;
+
+  // Handle "von", "de", "van" etc. as part of last name
+  const particleIndex = tokens.findIndex(t =>
+    ['von', 'van', 'de', 'del', 'della', 'di'].includes(t.toLowerCase())
+  );
+
+  let lastName, firstNames;
+  if (particleIndex > -1 && particleIndex < tokens.length - 1) {
+    // Include particle in last name
+    lastName = tokens.slice(particleIndex).join(' ');
+    firstNames = tokens.slice(0, particleIndex);
+  } else {
+    lastName = tokens[tokens.length - 1];
+    firstNames = tokens.slice(0, -1);
+  }
+
+  const firstName = firstNames.length > 0 ? firstNames[0] : '';
+
+  return {
+    fullName: normalized,
+    firstName: firstName,
+    lastName: lastName,
+    tokens: tokens.map(t => t.toLowerCase()),
+    originalName: name,
+  };
+}
+
+/**
+ * Generate all plausible variants of a person name for matching.
+ * @param {string} name - Full person name
+ * @returns {Array} Variant objects with priority scores
+ */
+export function generateNameVariants(name) {
+  const normalized = normalizePersonName(name);
+  if (!normalized) return [];
+
+  const variants = [];
+
+  // Variant 1: Full name (highest priority)
+  variants.push({
+    text: normalized.fullName,
+    regex: new RegExp(`\\b${escapeRegex(normalized.fullName)}\\b`, 'gi'),
+    type: 'full',
+    priority: 1,
+  });
+
+  // Variant 2: Last name only (medium priority, requires caution)
+  // Only if last name is distinctive (>4 chars, not a common word)
+  if (normalized.lastName.length > 4 && !isCommonWord(normalized.lastName)) {
+    variants.push({
+      text: normalized.lastName,
+      regex: new RegExp(`\\b${escapeRegex(normalized.lastName)}\\b`, 'gi'),
+      type: 'last',
+      priority: 2,
+    });
+  }
+
+  // Variant 3: First + Last (in case middle names/initials differ)
+  if (normalized.firstName && normalized.tokens.length > 2) {
+    const firstLast = `${normalized.firstName} ${normalized.lastName}`;
+    variants.push({
+      text: firstLast,
+      regex: new RegExp(`\\b${escapeRegex(firstLast)}\\b`, 'gi'),
+      type: 'first_last',
+      priority: 1,
+    });
+  }
+
+  // Sort by priority (lower number = higher priority)
+  return variants.sort((a, b) => a.priority - b.priority);
+}
+
+/**
  * Get people relevant to an event from the ego network.
+ * Two-phase approach:
+ * 1. PRIMARY: Use involved_people field if present
+ * 2. FALLBACK: Smart text matching with name variants
  * @param {Object} event - Event object
  * @param {Object} egoNetwork - Ego network with connections array
  * @returns {Array} Relevant connections (max 5)
@@ -397,33 +534,263 @@ export function getRelevantPeople(event, egoNetwork) {
     return [];
   }
 
-  const eventText =
-    `${event?.title ?? ""} ${event?.description ?? ""}`.toLowerCase();
   const eventYear = event?.date ? parseInt(event.date.substring(0, 4)) : null;
+  const connections = egoNetwork.connections;
 
-  return egoNetwork.connections
-    .filter((connection) => {
-      // Check if person's name appears in event text
-      const personName = connection.person_name.toLowerCase();
-      if (!eventText.includes(personName)) {
+  // PHASE 1: Use involved_people field if present
+  if (event.involved_people && Array.isArray(event.involved_people) && event.involved_people.length > 0) {
+    // Normalize all involved people names
+    const involvedNormalized = event.involved_people
+      .map(name => normalizePersonName(name))
+      .filter(Boolean);
+
+    const matched = connections.filter(conn => {
+      const connNormalized = normalizePersonName(conn.person_name);
+      if (!connNormalized) return false;
+
+      // Try to match against involved_people
+      const isMatch = involvedNormalized.some(involved => {
+        // Exact full name match
+        if (involved.fullName === connNormalized.fullName) return true;
+
+        // Fuzzy match for family members: same first name is sufficient
+        // This handles cases like "Elsa Stowasser" (event) vs "Elsa Hundertwasser" (network)
+        // Common for mothers with different married names, or name variants
+        if (involved.firstName && connNormalized.firstName) {
+          const firstNamesMatch = involved.firstName.toLowerCase() === connNormalized.firstName.toLowerCase();
+          const isFamily = conn.relationship_type?.startsWith('family/');
+
+          if (firstNamesMatch && isFamily) {
+            return true;
+          }
+
+          // For non-family, require last name match too
+          if (firstNamesMatch) {
+            const involvedLower = involved.fullName.toLowerCase();
+            const connLower = connNormalized.fullName.toLowerCase();
+            return involvedLower.includes(connNormalized.lastName.toLowerCase()) ||
+                   connLower.includes(involved.lastName.toLowerCase());
+          }
+        }
+
         return false;
-      }
+      });
 
-      // Check if event year falls within relationship timeframe
-      if (eventYear) {
-        const startYear = connection.start_year;
-        const endYear = connection.end_year;
-        if (startYear && eventYear < startYear) {
-          return false;
+      if (!isMatch) return false;
+
+      // Still apply year-range filtering
+      return isWithinYearRange(eventYear, conn.start_year, conn.end_year);
+    });
+
+    return matched.slice(0, 5);
+  }
+
+  // PHASE 2: Fallback to smart text matching
+  const eventText = `${event?.title ?? ""} ${event?.description ?? ""}`.toLowerCase();
+
+  // Check if multiple people share the same last name (ambiguity detection)
+  const lastNameCounts = new Map();
+  for (const conn of connections) {
+    const normalized = normalizePersonName(conn.person_name);
+    if (normalized) {
+      const count = lastNameCounts.get(normalized.lastName) || 0;
+      lastNameCounts.set(normalized.lastName, count + 1);
+    }
+  }
+
+  const matchedConnections = connections
+    .map(connection => {
+      const normalized = normalizePersonName(connection.person_name);
+      const variants = generateNameVariants(connection.person_name);
+
+      // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
+      const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+
+      // Try to find best match
+      for (const variant of variants) {
+        // Skip last-name-only matches if ambiguous
+        if (hasAmbiguousLastName && variant.type === 'last') {
+          continue;
         }
-        if (endYear && eventYear > endYear) {
-          return false;
+
+        if (variant.regex.test(eventText)) {
+          return {
+            connection,
+            matchType: variant.type,
+            priority: variant.priority,
+          };
         }
       }
-
-      return true;
+      return null;
     })
-    .slice(0, 5);
+    .filter(match => {
+      if (!match) return false;
+
+      // Year range check
+      const conn = match.connection;
+      return isWithinYearRange(eventYear, conn.start_year, conn.end_year);
+    })
+    .sort((a, b) => {
+      // Sort by match quality (full name > last name)
+      if (a.priority !== b.priority) return a.priority - b.priority;
+
+      // Then by relationship strength
+      const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
+      return (strengthOrder[a.connection.strength] || 3) - (strengthOrder[b.connection.strength] || 3);
+    })
+    .slice(0, 5)
+    .map(match => match.connection);
+
+  return matchedConnections;
+}
+
+/**
+ * Parse event description into segments with annotations AND person names.
+ * Annotations take priority over person name matches.
+ * @param {string} description - Event description text
+ * @param {Object} annotations - Annotation dictionary
+ * @param {Array} relevantPeople - Array of connection objects
+ * @returns {Array} Segments: {type: 'text'|'annotation'|'person', ...}
+ */
+export function parseDescriptionSegments(description, annotations = {}, relevantPeople = []) {
+  if (!description) return [];
+
+  // Step 1: Parse annotations first (they take priority)
+  const annotationPattern = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  const annotationRanges = [];
+  let match;
+
+  while ((match = annotationPattern.exec(description)) !== null) {
+    const termKey = match[1];
+    const displayText = match[2] || match[1];
+    const annotation = annotations[termKey];
+
+    if (annotation) {
+      annotationRanges.push({
+        start: match.index,
+        end: annotationPattern.lastIndex,
+        type: 'annotation',
+        termKey,
+        displayText,
+        annotation,
+      });
+    }
+  }
+
+  // Step 2: Find person name matches
+  const personMatches = [];
+
+  // Check if multiple people share the same last name (ambiguity detection)
+  const lastNameCounts = new Map();
+  for (const person of relevantPeople) {
+    const normalized = normalizePersonName(person.person_name);
+    if (normalized) {
+      const count = lastNameCounts.get(normalized.lastName) || 0;
+      lastNameCounts.set(normalized.lastName, count + 1);
+    }
+  }
+
+  for (const person of relevantPeople) {
+    const normalized = normalizePersonName(person.person_name);
+    const variants = generateNameVariants(person.person_name);
+
+    // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
+    const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+
+    for (const variant of variants) {
+      // Skip last-name-only matches if ambiguous
+      if (hasAmbiguousLastName && variant.type === 'last') {
+        continue;
+      }
+
+      let match;
+      variant.regex.lastIndex = 0; // Reset regex
+
+      while ((match = variant.regex.exec(description)) !== null) {
+        const start = match.index;
+        const end = variant.regex.lastIndex;
+
+        // Check if this overlaps with an annotation
+        const overlapsAnnotation = annotationRanges.some(
+          ann => (start >= ann.start && start < ann.end) || (end > ann.start && end <= ann.end)
+        );
+
+        if (!overlapsAnnotation) {
+          personMatches.push({
+            start,
+            end,
+            type: 'person',
+            person,
+            matchedText: match[0],
+            priority: variant.priority,
+          });
+        }
+      }
+    }
+  }
+
+  // Step 3: Merge all ranges and sort by position
+  const allRanges = [...annotationRanges, ...personMatches].sort((a, b) => {
+    if (a.start !== b.start) return a.start - b.start;
+    // If same start, annotations win
+    if (a.type === 'annotation') return -1;
+    if (b.type === 'annotation') return 1;
+    return 0;
+  });
+
+  // Step 4: Remove overlapping person matches
+  const filteredRanges = [];
+  let lastEnd = 0;
+
+  for (const range of allRanges) {
+    if (range.start >= lastEnd) {
+      filteredRanges.push(range);
+      lastEnd = range.end;
+    }
+    // Skip overlapping ranges
+  }
+
+  // Step 5: Build final segment array
+  const segments = [];
+  let currentPos = 0;
+
+  for (const range of filteredRanges) {
+    // Add text before this range
+    if (range.start > currentPos) {
+      segments.push({
+        type: 'text',
+        content: description.slice(currentPos, range.start),
+      });
+    }
+
+    // Add the range itself
+    if (range.type === 'annotation') {
+      segments.push({
+        type: 'annotation',
+        termKey: range.termKey,
+        displayText: range.displayText,
+        annotation: range.annotation,
+      });
+    } else if (range.type === 'person') {
+      segments.push({
+        type: 'person',
+        content: range.matchedText,
+        person: range.person,
+      });
+    }
+
+    currentPos = range.end;
+  }
+
+  // Add remaining text
+  if (currentPos < description.length) {
+    segments.push({
+      type: 'text',
+      content: description.slice(currentPos),
+    });
+  }
+
+  return segments;
 }
 
 /**

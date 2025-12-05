@@ -18,6 +18,7 @@
     sourceLabel,
     getSubcategory,
     getRelevantPeople,
+    parseDescriptionSegments,
   } from "../utils/storyHelpers.js";
   import PersonChip from "./PersonChip.svelte";
 
@@ -43,9 +44,10 @@
   $: relevantPeople = getRelevantPeople(slide, egoNetwork);
   $: dateLabel = formatDate(slide, formatters);
   $: dateNote = getDateNote(slide);
-  $: descriptionSegments = parseAnnotations(
+  $: descriptionSegments = parseDescriptionSegments(
     slide.description,
-    slide.annotations
+    slide.annotations,
+    relevantPeople
   );
 
   function formatAgeLabel(age) {
@@ -64,55 +66,6 @@
     if (names.length === 0) return UNKNOWN_LOCATION_LABEL;
 
     return joinWithSeparator(names, styleConfig);
-  }
-
-  function parseAnnotations(description, annotations = {}) {
-    if (!annotations || Object.keys(annotations).length === 0) {
-      return [{ type: 'text', content: description }];
-    }
-
-    const pattern = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
-    const segments = [];
-    let lastIndex = 0;
-    let match;
-
-    while ((match = pattern.exec(description)) !== null) {
-      // Add text before annotation
-      if (match.index > lastIndex) {
-        segments.push({
-          type: 'text',
-          content: description.slice(lastIndex, match.index)
-        });
-      }
-
-      const termKey = match[1];
-      const displayText = match[2] || match[1];
-      const annotation = annotations[termKey];
-
-      if (annotation) {
-        segments.push({
-          type: 'annotation',
-          termKey,
-          displayText,
-          annotation
-        });
-      } else {
-        // Fallback if annotation missing
-        segments.push({ type: 'text', content: displayText });
-      }
-
-      lastIndex = pattern.lastIndex;
-    }
-
-    // Add remaining text
-    if (lastIndex < description.length) {
-      segments.push({
-        type: 'text',
-        content: description.slice(lastIndex)
-      });
-    }
-
-    return segments;
   }
 
   function handleThumbnailLoad(event) {
@@ -225,7 +178,7 @@
         class:has-fade={descriptionOverflows.has(slide.eventIndex)}
         use:checkOverflow={slide.eventIndex}
       >
-{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<button type="button" class="annotated-term" on:click|stopPropagation={() => onToggleAnnotation(segment.termKey)} aria-expanded={visibleAnnotation === segment.termKey} aria-label={$_('story.show_explanation')}>{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></button>{#if visibleAnnotation === segment.termKey}<span class="annotation-popup">{segment.annotation.explanation}{#if segment.annotation.wikipedia_url}<a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>{/if}</span>{/if}{/if}{/each}
+{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<button type="button" class="annotated-term" on:click|stopPropagation={() => onToggleAnnotation(segment.termKey)} aria-expanded={visibleAnnotation === segment.termKey} aria-label={$_('story.show_explanation')}>{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></button>{#if visibleAnnotation === segment.termKey}<span class="annotation-popup">{segment.annotation.explanation}{#if segment.annotation.wikipedia_url}<a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>{/if}</span>{/if}{:else if segment.type === 'person'}<strong class="person-mention">{segment.content}</strong>{/if}{/each}
       </p>
     </div>
     <div class="event-details">
@@ -964,6 +917,11 @@
   .annotation-link:hover {
     color: var(--story-primary, #f8fafc);
     text-decoration: underline;
+  }
+
+  /* Person name highlighting */
+  .person-mention {
+    font-weight: 700;
   }
 
   /* Responsive positioning */
