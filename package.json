@@ -15,8 +15,7 @@
     "format": "prettier --write \"**/*.{js,svelte,json,css,md}\" --ignore-path .prettierignore && black scripts/",
     "format:check": "prettier --check \"**/*.{js,svelte,json,css,md}\" --ignore-path .prettierignore && black --check scripts/",
     "type-check:py": "mypy scripts/",
-    "validate": "npm run format:check && npm run lint",
-    "prepare": "husky"
+    "validate": "npm run format:check && npm run lint"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
