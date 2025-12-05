@@ -1,0 +1,778 @@
+{
+  "dataset": "wiki-bio-timelines",
+  "created_on": "2025-12-05",
+  "person": {
+    "name": "Steve_Jobs",
+    "birth_date": "1955-02-24",
+    "death_date": "2011-10-05",
+    "primary_roles": [
+      "businessman",
+      "inventor",
+      "investor",
+      "technology entrepreneur",
+      "Apple Inc. co-founder"
+    ],
+    "summary": "Steve Jobs was an American businessman, inventor, and investor best known for co-founding Apple Inc., pioneering the personal computer revolution of the 1970s and 1980s, founding NeXT, and serving as chairman and majority shareholder of Pixar. After being ousted from Apple in 1985, he returned in 1997 to lead a dramatic turnaround and oversee development of products such as the iMac, iPod, iPhone, and iPad. Diagnosed with a pancreatic neuroendocrine tumor in 2003, he continued to lead Apple until shortly before his death in 2011.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Steve_Jobs",
+    "portrait": {
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg",
+      "source": "https://en.wikipedia.org/wiki/Steve_Jobs"
+    }
+  },
+  "chapters": [
+    {
+      "id": "early_life_and_education",
+      "headline": "Adoption, Childhood, and College",
+      "description": "From his birth and adoption in San Francisco through his formative years in California and brief stint at Reed College, Jobs developed a blend of technical curiosity, artistic sensibility, and countercultural outlook that shaped his later work.",
+      "date_start": "1955-02-24",
+      "date_start_precision": "day",
+      "date_end": "1974",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 19
+    },
+    {
+      "id": "founding_apple_and_first_fall",
+      "headline": "Apple\u2019s Rise and Ouster",
+      "description": "Jobs moved from hobbyist entrepreneur to celebrated young executive, co-founding Apple, backing the Apple II and Macintosh, and then losing a bitter power struggle that forced him out of the company he helped create.",
+      "date_start": "1974",
+      "date_start_precision": "year",
+      "date_end": "1985",
+      "date_end_precision": "year",
+      "age_start": 19,
+      "age_end": 30
+    },
+    {
+      "id": "next_pixar_and_personal_reinvention",
+      "headline": "NeXT, Pixar, and Reinvention",
+      "description": "Outside Apple, Jobs poured his energy into NeXT and transformed Pixar into a leading animation studio, while his personal life evolved through fatherhood and marriage, setting the stage for an unexpected return to Apple.",
+      "date_start": "1985",
+      "date_start_precision": "year",
+      "date_end": "1997",
+      "date_end_precision": "year",
+      "age_start": 30,
+      "age_end": 42
+    },
+    {
+      "id": "apple_renaissance_and_final_years",
+      "headline": "Apple Renaissance and Final Years",
+      "description": "On returning to a struggling Apple, Jobs led an extraordinary corporate and cultural turnaround, overseeing a string of influential products even as he battled serious illness in his final years.",
+      "date_start": "1997",
+      "date_start_precision": "year",
+      "date_end": "2011-10-05",
+      "date_end_precision": "day",
+      "age_start": 42,
+      "age_end": 56
+    }
+  ],
+  "events": [
+    {
+      "date": "1955-02-24",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth and closed adoption",
+      "description": "Steve Jobs was born Steven Paul Jobs on February 24, 1955, in San Francisco to university students Joanne Schieble and Abdulfattah Jandali. Placed for a closed adoption, he was taken in by Paul and Clara Jobs, a working\u2011class couple who promised to fund his college education, a commitment that deeply shaped his later views on education and opportunity.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, California, USA",
+          "centroid": [
+            -122.4194,
+            37.7749
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Joanne Carole Schieble",
+        "Abdulfattah Jandali",
+        "Paul Jobs",
+        "Clara Jobs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Mona_Simpson"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1967",
+      "date_precision": "year",
+      "age": 12,
+      "title": "Move to Los Altos home",
+      "description": "Around 1967, the Jobs family stretched their finances to buy a modest house on Crist Drive in Los Altos, within the Cupertino School District. Paul Jobs set up a workbench in the garage for his son, encouraging Steve\u2019s interest in mechanics and electronics; this suburban home would later become famous as the birthplace of Apple Computer.",
+      "locations": [
+        {
+          "name_historic": "Los Altos",
+          "name_modern": "Los Altos, California, USA",
+          "centroid": [
+            -122.11413,
+            37.38522
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.32299
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Paul Jobs",
+        "Clara Jobs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Apple_Computer",
+        "https://en.wikipedia.org/wiki/Apple_Inc.#Founding_and_early_years"
+      ],
+      "event_type_icon": "mdi-home-move",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1971",
+      "date_precision": "year",
+      "date_end": "1972",
+      "date_end_precision": "year",
+      "date_note": "Blue box design and sales spanned several months in 1971\u20131972",
+      "age": 16,
+      "title": "Blue box venture with Wozniak",
+      "description": "While at Homestead High School, Jobs teamed up with Steve Wozniak to sell \"[[blue box|blue boxes]],\" illicit devices based on Wozniak\u2019s low\u2011cost design that allowed users to make free long\u2011distance telephone calls. Jobs handled sales while Wozniak focused on engineering, and the clandestine success of the project convinced both teenagers that small, clever electronics could compete with large companies and form the basis of a real business.",
+      "locations": [
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.323
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Steve Wozniak"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Wozniak"
+      ],
+      "event_type_icon": "mdi-cog",
+      "chapter": "early_life_and_education",
+      "annotations": {
+        "blue box": {
+          "explanation": "An illegal electronic device used in the 1960s\u20131970s to manipulate the analog telephone system\u2019s signaling tones, allowing the user to place free long\u2011distance calls by impersonating internal network controls.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Blue_box"
+        }
+      }
+    },
+    {
+      "date": "1972-09",
+      "date_precision": "month",
+      "date_end": "1972-12",
+      "date_end_precision": "month",
+      "date_note": "Jobs enrolled at Reed in September 1972 and dropped out after one semester",
+      "age": 17,
+      "title": "Enrollment and dropout at Reed",
+      "description": "In September 1972, Jobs enrolled at Reed College in Portland, insisting on attending the expensive liberal\u2011arts school despite his parents\u2019 limited means. After one semester he dropped out, not wanting to spend their savings on classes he found meaningless, but he stayed on campus auditing courses such as calligraphy, an experience he later credited with inspiring the typographic elegance of the Macintosh.",
+      "locations": [
+        {
+          "name_historic": "Portland",
+          "name_modern": "Portland, Oregon, USA",
+          "centroid": [
+            -122.6765,
+            45.5231
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Reed_College"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1974",
+      "date_precision": "year",
+      "date_end": "1974",
+      "date_end_precision": "year",
+      "age": 19,
+      "title": "Spiritual journey to India",
+      "description": "In 1974, Jobs left California to travel through India with his friend Daniel Kottke, seeking spiritual insight and experimenting with psychedelic experiences. Encountering Hindu and Buddhist ideas, he returned to the Bay Area deeply influenced by Eastern spirituality and soon began studying Zen Buddhism, a philosophy that informed his minimalist design sensibilities and intense personal discipline.",
+      "locations": [
+        {
+          "name_historic": "California",
+          "name_modern": "California, USA",
+          "centroid": [
+            -119.4179,
+            36.7783
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "India",
+          "name_modern": "India",
+          "centroid": [
+            78.9629,
+            20.5937
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "San Francisco Bay Area",
+          "name_modern": "San Francisco Bay Area, California, USA",
+          "centroid": [
+            -122.2712,
+            37.8044
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Daniel Kottke"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Daniel_Kottke"
+      ],
+      "event_type_icon": "mdi-journey",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1976-04-01",
+      "date_precision": "day",
+      "age": 21,
+      "title": "Co\u2011founding Apple Computer",
+      "description": "On April 1, 1976, Jobs, Steve Wozniak, and Ronald Wayne formally founded Apple Computer as a partnership to sell Wozniak\u2019s Apple I board to hobbyists. Working out of the Jobs family garage in Los Altos, Jobs drove the business side, persuading local computer store owner Paul Terrell to order fully assembled machines, a deal that turned their homebrew project into a real company.",
+      "locations": [
+        {
+          "name_historic": "Los Altos, California",
+          "name_modern": "Los Altos, California, USA",
+          "centroid": [
+            -122.11413,
+            37.38522
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Mountain View, California",
+          "name_modern": "Mountain View, California, USA",
+          "centroid": [
+            -122.08385,
+            37.38605
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Steve Wozniak",
+        "Ronald Wayne",
+        "Paul Terrell"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Apple_Inc.",
+        "https://en.wikipedia.org/wiki/Steve_Wozniak",
+        "https://en.wikipedia.org/wiki/Ronald_Wayne"
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "founding_apple_and_first_fall"
+    },
+    {
+      "date": "1977",
+      "date_precision": "year",
+      "date_end": "1980",
+      "date_end_precision": "year",
+      "age": 22,
+      "title": "Apple II success and IPO",
+      "description": "Beginning in 1977, Jobs helped introduce and market the Apple II, Wozniak\u2019s color personal computer packaged in a consumer\u2011friendly plastic case. The machine became one of the first mass\u2011market microcomputers, and Apple\u2019s explosive growth culminated in its 1980 initial public offering, instantly making Jobs a multimillionaire and a prominent young figure in Silicon Valley.",
+      "locations": [
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.322998
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.322998
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.322998
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.322998
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Steve Wozniak"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Wozniak"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Steve_Jobs_and_Bill_Gates_%28522695099%29.jpg",
+          "caption": "Steve Jobs and Bill Gates speaking together at the D5: All Things Digital conference in 2007, reflecting on the early Apple II era and the rise of the personal computer industry.",
+          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_and_Bill_Gates_(522695099).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "founding_apple_and_first_fall"
+    },
+    {
+      "date": "1984-01",
+      "date_precision": "month",
+      "date_note": "Macintosh was introduced in January 1984",
+      "age": 28,
+      "title": "Launch of Macintosh computer",
+      "description": "In January 1984, Jobs presided over the dramatic launch of the Macintosh, a relatively affordable personal computer featuring a graphical user interface and mouse inspired by [[Xerox PARC|Xerox PARC\u2019s]] Alto system. Backed by Apple\u2019s famous \"1984\" Super Bowl commercial, the Macintosh introduced desktop publishing when paired with the LaserWriter printer, and it embodied Jobs\u2019s vision of computers as approachable tools for ordinary people.",
+      "locations": [
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.322998
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Tampa",
+          "name_modern": "Tampa, Florida, USA",
+          "centroid": [
+            -82.4572,
+            27.9506
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Steve Wozniak",
+        "John Sculley",
+        "Ridley Scott"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Macintosh",
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/1984_(advertisement)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd-_border_cropped.jpg",
+          "caption": "Steve Jobs presenting the original Macintosh computer in January 1984.",
+          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd-_border_cropped.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cog",
+      "chapter": "founding_apple_and_first_fall",
+      "annotations": {
+        "Xerox PARC": {
+          "explanation": "Xerox Palo Alto Research Center, a pioneering industrial research lab in California where many foundational personal computing technologies\u2014such as the graphical user interface, mouse, and WYSIWYG text editing\u2014were developed in the 1970s.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/PARC_(company)"
+        }
+      }
+    },
+    {
+      "date": "1985",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Power struggle and departure from Apple",
+      "description": "In 1985, after months of internal conflict over strategy and management style, Jobs lost a boardroom power struggle with CEO John Sculley and was stripped of operational responsibilities at Apple. Feeling marginalized at the company he had co\u2011founded, he resigned and sold most of his Apple stock, an emotional break that forced him to start again as an outsider entrepreneur.",
+      "locations": [
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, United States",
+          "centroid": [
+            -122.03218,
+            37.323
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Sculley"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/John_Sculley",
+        "https://en.wikipedia.org/wiki/Apple_Inc."
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd.tif",
+          "caption": "Steve Jobs with an original Macintosh computer in 1984, shortly before the internal power struggle that led to his 1985 departure from Apple.",
+          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd.tif"
+        }
+      ],
+      "event_type_icon": "mdi-resignation",
+      "chapter": "founding_apple_and_first_fall"
+    },
+    {
+      "date": "1985",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Founding NeXT Computer",
+      "description": "Soon after leaving Apple in 1985, Jobs recruited a small team of Apple engineers to create NeXT, a new computer company aimed at higher education and business markets. As CEO, he pushed for elegantly engineered, premium\u2011priced workstations with advanced software tools, laying technical foundations that would later play a crucial role in Apple\u2019s revival.",
+      "locations": [
+        {
+          "name_historic": "Palo Alto",
+          "name_modern": "Palo Alto, California, USA",
+          "centroid": [
+            -122.1430195,
+            37.4418834
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Redwood City",
+          "name_modern": "Redwood City, California, USA",
+          "centroid": [
+            -122.2361114,
+            37.4852152
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Avie Tevanian",
+        "Joanna Hoffman",
+        "Bud Tribble",
+        "Susan Barnes"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/NeXT"
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "next_pixar_and_personal_reinvention"
+    },
+    {
+      "date": "1986",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Acquiring Pixar from Lucasfilm",
+      "description": "In 1986, Jobs purchased the computer graphics division of Lucasfilm, spinning it out as an independent company named Pixar and becoming its chairman and majority shareholder. Initially a struggling hardware company, Pixar under Jobs pivoted toward animated filmmaking and technology licensing, a bet that would pay off spectacularly with the release of its pioneering computer\u2011animated features.",
+      "locations": [
+        {
+          "name_historic": "San Rafael",
+          "name_modern": "San Rafael, California, USA",
+          "centroid": [
+            -122.53109,
+            37.97353
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Lucas",
+        "Edwin Catmull",
+        "Alvy Ray Smith",
+        "John Lasseter"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Pixar",
+        "https://en.wikipedia.org/wiki/George_Lucas"
+      ],
+      "event_type_icon": "mdi-investment",
+      "chapter": "next_pixar_and_personal_reinvention"
+    },
+    {
+      "date": "1991-03-18",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Marriage to Laurene Powell",
+      "description": "On March 18, 1991, Jobs married Laurene Powell in a traditional Buddhist ceremony officiated by Zen monk [[K\u014dbun Chino Otogawa|K\u014dbun Chino Otogawa]] at Yosemite National Park. The couple went on to raise three children together, and Powell became an important confidante and partner as Jobs juggled the demands of NeXT, Pixar, and later his return to Apple.",
+      "locations": [
+        {
+          "name_historic": "Yosemite National Park",
+          "name_modern": "Yosemite National Park, California, USA",
+          "centroid": [
+            -119.5383,
+            37.8651
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Laurene Powell Jobs",
+        "K\u014dbun Chino Otogawa"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
+        "https://en.wikipedia.org/wiki/K%C5%8Dbun_Chino_Otogawa"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Entrepreneurial_Company_of_the_Year_-_Apple_and_Steve_Jobs_%2813505041%29.jpg",
+          "caption": "Steve Jobs representing Apple at an entrepreneurial award event, several years after his 1991 marriage to Laurene Powell.",
+          "source": "https://commons.wikimedia.org/wiki/File:Entrepreneurial_Company_of_the_Year_-_Apple_and_Steve_Jobs_(13505041).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "next_pixar_and_personal_reinvention",
+      "annotations": {
+        "K\u014dbun Chino Otogawa": {
+          "explanation": "K\u014dbun Chino Otogawa (1938\u20132002) was a Japanese S\u014dt\u014d Zen Buddhist priest who became a prominent teacher in the United States and served as a spiritual advisor to Steve Jobs.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/K%C5%8Dbun_Chino_Otogawa"
+        }
+      }
+    },
+    {
+      "date": "1995-11-22",
+      "date_precision": "day",
+      "date_note": "Toy Story U.S. release date used as representative milestone",
+      "age": 40,
+      "title": "Toy Story and Pixar breakthrough",
+      "description": "With the November 1995 release of Toy Story, the first fully computer\u2011animated feature film, Pixar achieved both critical acclaim and box\u2011office success, establishing itself as a premier animation studio. As chairman and majority shareholder, Jobs guided Pixar\u2019s business strategy, negotiated its distribution partnership with Disney, and emerged as a billionaire when Pixar went public the same year.",
+      "locations": [
+        {
+          "name_historic": "Emeryville",
+          "name_modern": "Emeryville, California, USA",
+          "centroid": [
+            -122.293,
+            37.8349
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Los Angeles",
+          "name_modern": "Los Angeles, California, USA",
+          "centroid": [
+            -118.2437,
+            34.0522
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "John Lasseter",
+        "Edwin Catmull",
+        "Ralph Guggenheim",
+        "Lawrence Levy",
+        "Michael Eisner",
+        "Jeffrey Katzenberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Toy_Story",
+        "https://en.wikipedia.org/wiki/Pixar",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Steve_Jobs_building_at_Pixar.gk.jpg",
+          "caption": "The Steve Jobs Building at the Pixar campus in Emeryville, California, home of the studio that produced Toy Story.",
+          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_building_at_Pixar.gk.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "next_pixar_and_personal_reinvention"
+    },
+    {
+      "date": "1997",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Return to Apple and becoming CEO",
+      "description": "In 1997, Apple acquired NeXT to obtain its modern operating system technologies, bringing Jobs back to the company he had co\u2011founded. Initially serving as an advisor, he soon became interim CEO and then permanent CEO, slashing unproductive projects, simplifying the product line, and launching the \"Think different\" campaign to reassert Apple\u2019s identity as an innovative, design\u2011driven company.",
+      "locations": [
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.0321823,
+            37.3229978
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Redwood City",
+          "name_modern": "Redwood City, California, USA",
+          "centroid": [
+            -122.236355,
+            37.4852152
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Gil Amelio",
+        "Avie Tevanian",
+        "Jony Ive",
+        "Tim Cook",
+        "Fred Anderson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Apple_Inc.",
+        "https://en.wikipedia.org/wiki/NeXT"
+      ],
+      "event_type_icon": "mdi-appointment",
+      "chapter": "apple_renaissance_and_final_years"
+    },
+    {
+      "date": "1998",
+      "date_precision": "year",
+      "date_end": "2010",
+      "date_end_precision": "year",
+      "date_note": "Span covers Jobs\u2019s leadership of key products from iMac through iPad",
+      "age": 43,
+      "title": "Designing Apple\u2019s iconic products",
+      "description": "From 1998 onward, Jobs worked closely with British designer Jony Ive and Apple\u2019s teams to create a succession of influential products and services, starting with the colorful iMac and followed by Mac OS X, the Apple Store, iPod and iTunes Store, iPhone and App Store, and iPad. This integrated hardware\u2011software ecosystem transformed Apple from a struggling computer maker into a dominant force in consumer electronics and digital media, reshaping industries from music retail to mobile phones.",
+      "locations": [
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.03218,
+            37.323
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, California, USA",
+          "centroid": [
+            -122.41942,
+            37.77493
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Jony Ive",
+        "Tim Cook"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Jony_Ive",
+        "https://en.wikipedia.org/wiki/IPod"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/85/Mourning_Steve_Jobs.jpg",
+          "caption": "Flowers and tributes outside the San Francisco Apple Store in October 2011, reflecting the public impact of Steve Jobs\u2019s product-led transformation of Apple.",
+          "source": "https://commons.wikimedia.org/wiki/File:Mourning_Steve_Jobs.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cog",
+      "chapter": "apple_renaissance_and_final_years"
+    },
+    {
+      "date": "2003",
+      "date_precision": "year",
+      "age": 48,
+      "title": "Diagnosis with pancreatic neuroendocrine tumor",
+      "description": "In 2003, Jobs was diagnosed with a rare form of [[pancreatic neuroendocrine tumor|pancreatic neuroendocrine tumor]], a serious but potentially more treatable cancer than the common pancreatic adenocarcinoma. He initially delayed conventional surgery while exploring alternative therapies, a controversial choice that friends and colleagues later feared had cost him precious time, even as he continued to lead Apple\u2019s product strategy with characteristic intensity.",
+      "locations": [
+        {
+          "name_historic": "Palo Alto, California",
+          "name_modern": "Palo Alto, California, USA",
+          "centroid": [
+            -122.1430195,
+            37.4418834
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Pancreatic_neuroendocrine_tumor",
+        "https://en.wikipedia.org/wiki/Illness_and_death_of_Steve_Jobs"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Steve_Jobs_2007.jpg",
+          "caption": "Steve Jobs speaking at Apple's Worldwide Developers Conference in 2007, several years after his 2003 diagnosis with a pancreatic neuroendocrine tumor.",
+          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_2007.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "apple_renaissance_and_final_years",
+      "annotations": {
+        "pancreatic neuroendocrine tumor": {
+          "explanation": "A relatively rare, typically slower-growing type of pancreatic cancer that arises from hormone-producing neuroendocrine cells, distinct from the more aggressive pancreatic adenocarcinoma.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pancreatic_neuroendocrine_tumor"
+        }
+      }
+    },
+    {
+      "date": "2011-10-05",
+      "date_precision": "day",
+      "age": 56,
+      "title": "Death and end of Apple era",
+      "description": "Steve Jobs died on October 5, 2011, at his home in [[Palo Alto|California]] from respiratory arrest related to his pancreatic neuroendocrine tumor. His death came one day after Apple announced the iPhone 4S and just weeks after he resigned as CEO, marking the end of an era in which his vision and exacting standards had profoundly influenced personal computing, animation, music, and mobile technology.",
+      "locations": [
+        {
+          "name_historic": "Palo Alto",
+          "name_modern": "Palo Alto, California, USA",
+          "centroid": [
+            -122.1430195,
+            37.4418834
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Cupertino",
+          "name_modern": "Cupertino, California, USA",
+          "centroid": [
+            -122.0321823,
+            37.3229978
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Laurene Powell Jobs",
+        "Tim Cook"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Tim_Cook",
+        "https://en.wikipedia.org/wiki/IPhone_4S"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Steve_Jobs_%281%29.JPG",
+          "caption": "Bronze statue of Steve Jobs unveiled in December 2011 at Graphisoft Park in Budapest, created as a tribute following his death.",
+          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_(1).JPG"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "apple_renaissance_and_final_years",
+      "annotations": {
+        "Palo Alto": {
+          "explanation": "A city in Silicon Valley, California, known for its concentration of technology companies and as the home of many executives, including Steve Jobs.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Palo_Alto,_California"
+        }
+      }
+    }
+  ]
+}

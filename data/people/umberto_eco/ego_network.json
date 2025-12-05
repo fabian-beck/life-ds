@@ -1,0 +1,465 @@
+{
+  "dataset": "Wikipedia-EgoNetwork",
+  "created_on": "2025-12-05",
+  "ego": {
+    "name": "Umberto Eco",
+    "birth_year": 1932,
+    "death_year": 2016,
+    "primary_roles": [
+      "medievalist",
+      "philosopher",
+      "semiotician",
+      "novelist",
+      "cultural critic"
+    ],
+    "summary": "Umberto Eco was an Italian medievalist, philosopher and semiotician who became internationally known for novels like The Name of the Rose and Foucault\u2019s Pendulum and for influential work on semiotics, mass media and fascism. Trained in medieval philosophy, he taught at major Italian universities, wrote widely for newspapers and magazines, and engaged in public debates on culture, politics and religion.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Umberto_Eco"
+  },
+  "connections": [
+    {
+      "person_name": "Giulio Eco",
+      "relationship_type": "family/father",
+      "relationship_description": "Father, an accountant and war veteran who served in three wars; his wartime absences and support for a legal career shaped Eco\u2019s early environment under fascism.",
+      "start_year": 1932,
+      "end_year": 1960,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Alessandria",
+        "wartime displacement during World War II"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Eco recalled his father\u2019s military service and the move of his mother and himself to the Piedmont mountains after Giulio was called to the front; Giulio urged him to study law rather than philosophy."
+    },
+    {
+      "person_name": "Giovanna Bisio",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother who took Eco to a village in the Piedmont mountains during World War II while his father served, giving him formative experiences of war, liberation and popular culture.",
+      "start_year": 1932,
+      "end_year": 1970,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Alessandria",
+        "wartime refuge in Piedmontese village"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Her move with him to the mountains exposed Eco to American comics, Resistance stories and early reports of the Holocaust, later important in his reflections on fascism."
+    },
+    {
+      "person_name": "Luigi Pareyson",
+      "relationship_type": "academic/advisor",
+      "relationship_description": "Philosophy professor at the University of Turin and supervisor of Eco\u2019s Laurea thesis on Thomas Aquinas, launching his scholarly career in medieval aesthetics.",
+      "start_year": 1950,
+      "end_year": 1954,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "thesis supervision on Thomas Aquinas",
+        "philosophy seminars at University of Turin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Luigi_Pareyson"
+      ],
+      "notes": "Under Pareyson\u2019s supervision Eco completed a thesis on Aquinas\u2019s aesthetics in 1954, which became the basis for his first book on medieval aesthetics."
+    },
+    {
+      "person_name": "Thomas Aquinas",
+      "relationship_type": "academic/intellectual_influence",
+      "relationship_description": "13th\u2011century theologian and philosopher who was the subject of Eco\u2019s Laurea thesis and early book on medieval aesthetics, profoundly shaping his approach to medieval thought and symbolism.",
+      "start_year": 1952,
+      "end_year": 1960,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "scholarly study of medieval aesthetics",
+        "theoretical engagement in Eco\u2019s early monographs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Thomas_Aquinas"
+      ],
+      "notes": "Eco\u2019s sustained engagement with Aquinas grounded his reputation as a medievalist and provided concepts he later reworked in semiotics and aesthetics."
+    },
+    {
+      "person_name": "Valentino Bompiani",
+      "relationship_type": "professional/publisher",
+      "relationship_description": "Milanese publisher who hired Eco in 1959 to edit the \u2018Idee nuove\u2019 series at Bompiani after noticing his pamphlet Filosofi in libert\u00e0, making Eco a central mediator of contemporary theory in Italy.",
+      "start_year": 1959,
+      "end_year": 1975,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "editing \u2018Idee nuove\u2019 series",
+        "publishing Eco\u2019s essays and theoretical works",
+        "collaborating on Italian editions of contemporary thinkers"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Eco served as senior non\u2011fiction editor at Bompiani until 1975; the role connected him with many authors and solidified his role as a public intellectual."
+    },
+    {
+      "person_name": "Jorge Luis Borges",
+      "relationship_type": "artistic/influence",
+      "relationship_description": "Argentine writer whose themes of labyrinths, libraries and erudite metafiction deeply influenced Eco\u2019s fiction, especially The Name of the Rose with its character Jorge of Burgos and its maze\u2011like library.",
+      "start_year": 1960,
+      "end_year": 1986,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "intertextual references in The Name of the Rose",
+        "literary homage through character Jorge of Burgos"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/The_Name_of_the_Rose"
+      ],
+      "notes": "Eco explicitly modeled the blind monk Jorge of Burgos and the labyrinthine library on Borges\u2019s life and his story \u2018The Library of Babel\u2019 as a tribute."
+    },
+    {
+      "person_name": "Mike Bongiorno",
+      "relationship_type": "professional/critic_subject",
+      "relationship_description": "Popular Italian quiz\u2011show host whose persona and television presence were critically analyzed by Eco in the 1961 essay \u2018Phenomenology of Mike Bongiorno\u2019, an early landmark of Eco\u2019s media criticism.",
+      "start_year": 1961,
+      "end_year": 1965,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "subject of Eco\u2019s media essays",
+        "indirect interaction via television and print"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Mike_Bongiorno"
+      ],
+      "notes": "Eco did not collaborate with Bongiorno but used him as a case study of mass\u2011media celebrity and identification, helping Eco reach a broader public."
+    },
+    {
+      "person_name": "Nanni Balestrini",
+      "relationship_type": "artistic/movement_colleague",
+      "relationship_description": "Italian writer and leading member of the Neoavanguardia/Gruppo \u201963, in which Eco participated as a theorist and critic of avant\u2011garde literature.",
+      "start_year": 1963,
+      "end_year": 1970,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gruppo \u201963 meetings",
+        "experimentation in postmodern Italian literature and criticism"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Neoavanguardia"
+      ],
+      "notes": "As part of the same avant\u2011garde milieu, Balestrini and Eco promoted experimental forms and critiqued traditional literary language and \u2018neo\u2011capitalist\u2019 discourse."
+    },
+    {
+      "person_name": "Edoardo Sanguineti",
+      "relationship_type": "artistic/movement_colleague",
+      "relationship_description": "Poet and critic associated with Neoavanguardia and Gruppo \u201963 alongside Eco, sharing commitments to radical formal experimentation and theoretical reflection on language.",
+      "start_year": 1963,
+      "end_year": 1975,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gruppo \u201963 conferences",
+        "collaborative debates on avant\u2011garde poetics and semiotics"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Neoavanguardia",
+        "https://en.wikipedia.org/wiki/Edoardo_Sanguineti"
+      ],
+      "notes": "Their interaction anchored Eco within Italy\u2019s literary avant\u2011garde, informing his ideas on the \u2018open work\u2019 and experimental narrative strategies."
+    },
+    {
+      "person_name": "Michel Foucault",
+      "relationship_type": "artistic/intellectual_peer",
+      "relationship_description": "French philosopher and friend whose name is alluded to in the title Foucault\u2019s Pendulum; Eco engaged with similar questions of discourse and power while teasing expectations about a direct reference.",
+      "start_year": 1970,
+      "end_year": 1984,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "intellectual exchanges in European theory circles",
+        "indirect dialogue through texts on power, discourse and knowledge"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Foucault%27s_Pendulum",
+        "https://en.wikipedia.org/wiki/Michel_Foucault"
+      ],
+      "notes": "Though Eco denied intentional reference to Michel Foucault in the novel\u2019s title, critics and readers connected the book to Foucault\u2019s postmodern critiques, reflecting Eco\u2019s playful intertextuality."
+    },
+    {
+      "person_name": "Jean\u2011Jacques Annaud",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "French film director who adapted Eco\u2019s novel The Name of the Rose into the 1986 film, translating Eco\u2019s complex medieval detective story into a widely seen visual narrative.",
+      "start_year": 1984,
+      "end_year": 1986,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "film adaptation of The Name of the Rose",
+        "script discussions and rights negotiations"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/The_Name_of_the_Rose_(film)"
+      ],
+      "notes": "Eco later used his mixed experience with this adaptation as a reason to refuse Stanley Kubrick\u2019s proposal to film Foucault\u2019s Pendulum, regretting the refusal after Kubrick\u2019s death."
+    },
+    {
+      "person_name": "Alain le Pichon",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Scholar whose idea inspired Eco\u2019s \u2018Anthropology of the West\u2019 program at the University of Bologna, focusing on Western culture seen through non\u2011Western perspectives.",
+      "start_year": 1988,
+      "end_year": 2007,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "designing Anthropology of the West program",
+        "organizing transcultural conferences such as \u2018Frontiers of Knowledge\u2019 and \u2018Misunderstandings in the Quest for the Universal\u2019"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Eco credited le Pichon\u2019s West African work for the idea of reversing the usual direction of anthropological gaze, leading to conferences from Guangzhou to Beijing."
+    },
+    {
+      "person_name": "Stanley Kubrick",
+      "relationship_type": "artistic/potential_collaborator",
+      "relationship_description": "American film director who sought rights to adapt Foucault\u2019s Pendulum; Eco declined because of dissatisfaction with the earlier film adaptation of The Name of the Rose and Kubrick\u2019s unwillingness to accept Eco as screenwriter.",
+      "start_year": 1989,
+      "end_year": 1990,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "negotiations over possible film adaptation of Foucault\u2019s Pendulum"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Foucault%27s_Pendulum"
+      ],
+      "notes": "Eco later expressed regret that he had turned down Kubrick\u2019s proposal, indicating the significance he attached to how his novels were represented in cinema."
+    },
+    {
+      "person_name": "Tang Yijie",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Chinese philosopher who contributed to Eco\u2019s Euro\u2011Chinese projects, including the book The Unicorn and the Dragon, examining knowledge creation in China and Europe.",
+      "start_year": 1991,
+      "end_year": 2007,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Frontiers of Knowledge conference (Guangzhou, 1991)",
+        "Euro\u2011Chinese seminar \u2018Misunderstandings in the Quest for the Universal\u2019",
+        "co\u2011contributor to The Unicorn and the Dragon"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Tang\u2019s participation embodied Eco\u2019s commitment to East\u2013West dialogue and comparative philosophy."
+    },
+    {
+      "person_name": "Yue Daiyun",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Chinese scholar who worked with Eco in the Anthropology of the West network and contributed to The Unicorn and the Dragon volume on comparative knowledge systems.",
+      "start_year": 1991,
+      "end_year": 2007,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Euro\u2011Chinese seminars on misunderstandings of universality",
+        "contributions to The Unicorn and the Dragon"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "As a prominent Chinese academic, she helped frame mutual perceptions between Chinese and European intellectual traditions in Eco\u2019s transcultural projects."
+    },
+    {
+      "person_name": "Furio Colombo",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Italian journalist and intellectual who participated in Eco\u2019s Euro\u2011Chinese conferences and co\u2011authored The Unicorn and the Dragon, engaging with media and cultural analysis.",
+      "start_year": 1991,
+      "end_year": 2007,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Euro\u2011Chinese seminars on East\u2013West misunderstandings",
+        "co\u2011contributor to The Unicorn and the Dragon"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Colombo\u2019s background in journalism and politics complemented Eco\u2019s semiotic and philosophical interests in framing intercultural dialogue."
+    },
+    {
+      "person_name": "Jacques Le Goff",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "French medieval historian who collaborated with Eco in the Anthropology of the West network and co\u2011contributed to The Unicorn and the Dragon, intersecting with Eco\u2019s medievalist expertise.",
+      "start_year": 1991,
+      "end_year": 2014,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Euro\u2011Chinese seminars and conferences on knowledge",
+        "co\u2011contributor to The Unicorn and the Dragon"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Jacques_Le_Goff"
+      ],
+      "notes": "Their collaboration linked historical medieval studies with contemporary intercultural theory."
+    },
+    {
+      "person_name": "Antoine Danchin",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "European scientist who took part in Eco\u2019s Beijing conference series on topics like \u2018Order and Disorder\u2019 and contributed to The Unicorn and the Dragon, bridging scientific and humanistic perspectives.",
+      "start_year": 1991,
+      "end_year": 2007,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Beijing conference on Order and Disorder, War and Peace, Human Rights",
+        "contributions to The Unicorn and the Dragon"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Faith_in_Fakes"
+      ],
+      "notes": "His presence at Eco\u2019s conferences exemplified Eco\u2019s effort to include law and science in cultural and philosophical dialogue."
+    },
+    {
+      "person_name": "Harvard University (Charles Eliot Norton Professorship)",
+      "relationship_type": "academic/institutional_affiliation",
+      "relationship_description": "Eco served as Charles Eliot Norton Professor of Poetry at Harvard University (1992\u20131993), delivering the Norton Lectures later published as Six Walks in the Fictional Woods.",
+      "start_year": 1992,
+      "end_year": 1993,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Norton lecture series",
+        "publication of Six Walks in the Fictional Woods"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "While not a person, the Norton appointment brought Eco into sustained contact with Anglo\u2011American literary scholars and students, shaping his reflections on narrative and interpretation."
+    },
+    {
+      "person_name": "Carlo Maria Martini",
+      "relationship_type": "academic/dialogue_partner",
+      "relationship_description": "Catholic cardinal who co\u2011authored the book Belief or Nonbelief? with Eco, engaging in a published dialogue about religion, ethics and secular belief.",
+      "start_year": 1995,
+      "end_year": 1996,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "co\u2011authoring Belief or Nonbelief?",
+        "public intellectual debate on faith and secularism"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Belief_or_Nonbelief%3F"
+      ],
+      "notes": "Their exchange exemplified Eco\u2019s role as a secular intellectual able to converse respectfully yet critically with high\u2011ranking church figures."
+    },
+    {
+      "person_name": "Ra\u00fal Padilla L\u00f3pez",
+      "relationship_type": "professional/cultural_partner",
+      "relationship_description": "President of the Guadalajara International Book Fair, where Eco appeared as a major international author, contributing to its profile as a leading literary event in the Spanish\u2011speaking world.",
+      "start_year": 2000,
+      "end_year": 2015,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "author events at Guadalajara International Book Fair",
+        "public dialogues and presentations"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Guadalajara_International_Book_Fair"
+      ],
+      "notes": "Eco\u2019s participation helped showcase his work to Latin American audiences; the fair later received the Princess of Asturias Award."
+    },
+    {
+      "person_name": "St Anne\u2019s College, Oxford",
+      "relationship_type": "academic/institutional_affiliation",
+      "relationship_description": "Eco was Weidenfeld Visiting Professor in Comparative European Literature at St Anne\u2019s College, Oxford (2001\u20132002), deepening his ties with British academia.",
+      "start_year": 2001,
+      "end_year": 2002,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "teaching comparative European literature",
+        "lectures and seminars"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "This visiting professorship extended Eco\u2019s influence among European literary scholars and students."
+    },
+    {
+      "person_name": "Jean\u2011Claude Carri\u00e8re",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "French screenwriter and writer who co\u2011authored a 2012 book with Eco, reflecting shared interests in books, cinema and the future of reading.",
+      "start_year": 2010,
+      "end_year": 2012,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "co\u2011authoring a book on books and memory (2012)",
+        "public conversations about literature and media"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jean-Claude_Carri%C3%A8re",
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "notes": "Their collaboration brought together two prominent European intellectuals from literature and film to discuss the fate of the book in the digital age."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family relationships documented for Eco center on his parents, Giulio Eco and Giovanna Bisio, whose experiences under fascism and World War II, including displacement to a mountain village, profoundly marked his early life and later reflections on authority and fascism."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Eco\u2019s academic network includes formative mentors like Luigi Pareyson, long\u2011term institutional ties (Harvard, Oxford) and collaborators in global programs such as Anthropology of the West, involving European and Chinese scholars who helped shape his comparative and semiotic projects."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Eco\u2019s artistic relationships involve mutual influences and adaptations with writers and filmmakers: he paid homage to Jorge Luis Borges, engaged intertextually with Michel Foucault, collaborated with Jean\u2011Jacques Annaud and Jean\u2011Claude Carri\u00e8re, and negotiated\u2014then declined\u2014a film project with Stanley Kubrick."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Eco\u2019s professional ties span key cultural intermediaries: publishers like Valentino Bompiani, media figures analyzed in his essays such as Mike Bongiorno, avant\u2011garde colleagues in Neoavanguardia, and cultural organizers like Ra\u00fal Padilla L\u00f3pez at the Guadalajara International Book Fair, all reinforcing his role as a public intellectual bridging academia, media and literature."
+    }
+  ]
+}
