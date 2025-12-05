@@ -8,6 +8,7 @@
   import { isCoordinate, parseHexColor, rgbaFromHex } from "../utils/storyHelpers.js";
 
   export let activeCoordinates = null;
+  export let allActiveCoordinates = [];
   export let markerTrail = [];
   export let hasMapData = false;
   export let activeIndex = 0;
@@ -27,7 +28,7 @@
   let mapContainer;
   let mapInstance = null;
   let mapReady = false;
-  let currentMarker = null;
+  let currentMarkers = [];
   let trailMarkers = [];
   let lastViewportKey = "";
   let pmtilesProtocol = null;
@@ -111,10 +112,10 @@
   }
 
   function clearMarkers() {
-    if (currentMarker) {
-      currentMarker.remove();
-      currentMarker = null;
+    for (const marker of currentMarkers) {
+      marker.remove();
     }
+    currentMarkers = [];
     for (const marker of trailMarkers) {
       marker.remove();
     }
@@ -135,6 +136,10 @@
     if (!mapInstance || !mapReady) return;
 
     const active = isCoordinate(activeCoord) ? activeCoord : null;
+    const allActive = Array.isArray(allActiveCoordinates) && allActiveCoordinates.length > 0
+      ? allActiveCoordinates.filter(isCoordinate)
+      : (active ? [active] : []);
+
     const history = Array.isArray(historyCoords)
       ? historyCoords.filter(isCoordinate)
       : [];
@@ -157,21 +162,46 @@
       }
     }
 
-    if (active) {
-      const markerElement = createMarkerElement(primaryMarkerColor, {
-        opacity: 1,
-        size: 16,
+    if (allActive.length > 0) {
+      const primaryIndex = allActive.findIndex(loc => loc.primary === true);
+      const primaryLoc = primaryIndex >= 0 ? allActive[primaryIndex] : allActive[0];
+
+      const primaryElement = createMarkerElement(primaryMarkerColor, {
+        opacity: 1.0,
+        size: 17,
       });
-      markerElement.classList.add("current");
-      currentMarker = new maplibregl.Marker({
-        element: markerElement,
+      primaryElement.classList.add("current");
+      const primaryMarker = new maplibregl.Marker({
+        element: primaryElement,
         anchor: "bottom",
       })
-        .setLngLat([active.lon, active.lat])
+        .setLngLat([primaryLoc.lon, primaryLoc.lat])
         .addTo(mapInstance);
+      currentMarkers.push(primaryMarker);
+
+      const secondaryLocs = allActive.filter((_loc, idx) =>
+        primaryIndex >= 0 ? idx !== primaryIndex : idx > 0
+      );
+
+      for (const coords of secondaryLocs) {
+        const markerElement = createMarkerElement(primaryMarkerColor, {
+          opacity: 1.0,
+          size: 15,
+        });
+        const marker = new maplibregl.Marker({
+          element: markerElement,
+          anchor: "bottom",
+        })
+          .setLngLat([coords.lon, coords.lat])
+          .addTo(mapInstance);
+        currentMarkers.push(marker);
+      }
     }
 
-    const positions = active ? [active, ...history] : history;
+    const positions = allActive.length > 0
+      ? [...allActive, ...history]
+      : history;
+
     if (positions.length === 0) {
       if (lastViewportKey !== "baseline") {
         mapInstance.easeTo({ center: [0, 0], zoom: 1.0, duration: 700 });
@@ -183,6 +213,7 @@
     const viewportKey = positions
       .map((coord) => `${coord.lon.toFixed(4)},${coord.lat.toFixed(4)}`)
       .join("|");
+
     if (viewportKey === lastViewportKey) {
       return;
     }
@@ -206,6 +237,7 @@
           [positions[0].lon, positions[0].lat]
         )
       );
+
     mapInstance.fitBounds(bounds, {
       padding: { top: 100, bottom: 100, left: 60, right: 60 },
       duration: 900,

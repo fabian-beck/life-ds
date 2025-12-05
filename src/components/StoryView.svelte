@@ -871,6 +871,9 @@
       <StoryMap
         bind:this={storyMapComponent}
         {activeCoordinates}
+        allActiveCoordinates={activeEventIndex >= 0
+          ? (eventSlides[activeEventIndex]?.allCoordinates ?? [])
+          : []}
         {markerTrail}
         {hasMapData}
         {activeIndex}
