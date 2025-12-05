@@ -58,13 +58,54 @@
     // Fallback to indicatorIcons if event_type_icon not available or invalid
     return indicatorIcons[idx] || null;
   });
-  let isDragging = false;
   let trackElement = null;
   let expandedContainerElement = null;
 
   $: totalPanels = totalSlides > 0 ? totalSlides + 1 : 1; // +1 for overview slide
   $: hasEvents = totalSlides > 0;
   $: hasChapters = Array.isArray(chapters) && chapters.length > 0;
+
+  // Lens-based magnification: calculate scale for each dot based on distance from active
+  $: dotScales = (() => {
+    if (isExpanded) return Array(totalSlides).fill(1.0);
+
+    const scales = [];
+    for (let i = 0; i < totalSlides; i++) {
+      const distance = Math.abs(i - activeEventIndex);
+
+      if (distance === 0 && activeEventIndex >= 0) {
+        scales.push(1.6); // Active dot: 60% larger
+      } else if (distance === 1) {
+        scales.push(1.3); // Adjacent dots: 30% larger
+      } else if (distance === 2) {
+        scales.push(1.15); // Next adjacent: 15% larger
+      } else {
+        scales.push(1.0); // Normal size
+      }
+    }
+    return scales;
+  })();
+
+  // Lens "pushing" effect: push adjacent dots outward slightly
+  $: dotTranslations = (() => {
+    if (isExpanded) return Array(totalSlides).fill(0);
+
+    const translations = [];
+    for (let i = 0; i < totalSlides; i++) {
+      const distance = i - activeEventIndex;
+
+      if (distance === 0) {
+        translations.push(0); // Active stays centered
+      } else if (Math.abs(distance) === 1) {
+        translations.push(distance * 0.3); // Push adjacent 0.3rem away
+      } else if (Math.abs(distance) === 2) {
+        translations.push(distance * 0.15); // Push next adjacent 0.15rem away
+      } else {
+        translations.push(0); // Others stay in place
+      }
+    }
+    return translations;
+  })();
 
   // Group events by chapter for display
   $: groupedEvents = (() => {
@@ -116,6 +157,31 @@
     return result;
   })();
 
+  // Build flat list of items with chapter spacers for collapsed timeline
+  $: timelineItems = (() => {
+    if (!hasChapters) {
+      // No chapters: just return all events in order
+      return eventSlides.map((event, idx) => ({ type: 'event', index: idx }));
+    }
+
+    const items = [];
+    let lastChapterId = null;
+
+    eventSlides.forEach((event, idx) => {
+      const currentChapterId = event.chapter || null;
+
+      // Insert spacer when chapter changes (but not at the very start)
+      if (currentChapterId !== lastChapterId && items.length > 0) {
+        items.push({ type: 'spacer', chapterId: currentChapterId });
+      }
+
+      items.push({ type: 'event', index: idx });
+      lastChapterId = currentChapterId;
+    });
+
+    return items;
+  })();
+
   // Compute current chapter for active event
   $: currentChapter = (() => {
     if (activeEventIndex < 0 || activeEventIndex >= eventSlides.length) {
@@ -130,6 +196,22 @@
     // Find the chapter object by ID
     const chapter = chapters.find((ch) => ch.id === currentEvent.chapter);
     return chapter || null;
+  })();
+
+  // Calculate horizontal offset for chapter indicator based on active slide position
+  $: chapterIndicatorOffset = (() => {
+    if (activeEventIndex < 0 || totalSlides === 0) {
+      return 0; // Centered when on overview
+    }
+
+    // Calculate position as percentage (0 = first event, 1 = last event)
+    const progress = activeEventIndex / (totalSlides - 1);
+
+    // Map to offset range: -20% to +20% (leftward for early slides, rightward for later slides)
+    // Subtract 0.5 to center around 0, multiply by 40% for range
+    const offset = (progress - 0.5) * 40;
+
+    return offset;
   })();
 
   // Scroll active event into view when first expanding (but allow manual scroll after)
@@ -159,70 +241,6 @@
     isExpanded = !isExpanded;
     // Dispatch event to parent so it can update the URL
     dispatch("expandchange", { expanded: isExpanded });
-  }
-
-  function handleTrackPointerDown(event) {
-    if (isExpanded || !trackElement) return;
-
-    // Don't start dragging if clicking on the chapter indicator button
-    if (event.target.closest(".chapter-indicator-box")) return;
-
-    // Accept all pointer types (mouse, pen, touch)
-    isDragging = true;
-    trackElement.setPointerCapture(event.pointerId);
-    updateSlideFromPosition(event.clientX);
-
-    // Prevent event from bubbling to slides container
-    event.stopPropagation();
-  }
-
-  function handleTrackPointerMove(event) {
-    if (!isDragging) return;
-    updateSlideFromPosition(event.clientX);
-  }
-
-  function handleTrackPointerUp(event) {
-    if (!isDragging) return;
-    isDragging = false;
-    if (trackElement) {
-      trackElement.releasePointerCapture(event.pointerId);
-    }
-    // Calculate final position from pointer release and snap with smooth scroll
-    if (trackElement) {
-      const rect = trackElement.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-
-      // Account for dot size to align with actual dot positions
-      const dotSize =
-        parseFloat(
-          getComputedStyle(trackElement).getPropertyValue("--dot-size")
-        ) || 24;
-      const effectiveWidth = rect.width - dotSize;
-      const adjustedX = x - dotSize / 2;
-
-      const progress = Math.max(0, Math.min(1, adjustedX / effectiveWidth));
-      const targetIndex = Math.round(progress * (totalPanels - 1));
-      onScrollToIndex(targetIndex, false);
-    }
-  }
-
-  function updateSlideFromPosition(clientX) {
-    if (!trackElement) return;
-    const rect = trackElement.getBoundingClientRect();
-    const x = clientX - rect.left;
-
-    // Account for dot size to align with actual dot positions
-    // Dots use space-between, so we need to map the click position correctly
-    const dotSize =
-      parseFloat(
-        getComputedStyle(trackElement).getPropertyValue("--dot-size")
-      ) || 24;
-    const effectiveWidth = rect.width - dotSize;
-    const adjustedX = x - dotSize / 2;
-
-    const progress = Math.max(0, Math.min(1, adjustedX / effectiveWidth));
-    const targetIndex = Math.round(progress * (totalPanels - 1));
-    onScrollToIndex(targetIndex, true); // immediate scroll during drag
   }
 </script>
 
@@ -278,18 +296,9 @@
         class="indicator-track"
         class:single={!hasMultipleEvents}
         class:expanded={isExpanded}
-        class:dragging={isDragging}
         bind:this={trackElement}
-        on:pointerdown={handleTrackPointerDown}
-        on:pointermove={handleTrackPointerMove}
-        on:pointerup={handleTrackPointerUp}
-        on:pointercancel={handleTrackPointerUp}
-        role="slider"
-        aria-valuemin="0"
-        aria-valuemax={totalPanels - 1}
-        aria-valuenow={activeIndex}
+        role="group"
         aria-label={$_("timeline.scrubber")}
-        tabindex={isExpanded ? -1 : 0}
       >
         {#if isExpanded}
           <button
@@ -314,12 +323,6 @@
           class:expanded={isExpanded}
           bind:this={expandedContainerElement}
         >
-          {#if activeIndex > 0 && !isExpanded}
-            <span
-              class="indicator-highlight"
-              class:single={!hasMultipleEvents}
-            />
-          {/if}
           {#if !isExpanded}
             <div class="dot-wrapper home-dot">
               <button
@@ -340,33 +343,41 @@
                 </svg>
               </button>
             </div>
-            {#each Array(totalSlides) as _, idx}
-              <div class="dot-wrapper">
-                <button
-                  type="button"
-                  class="dot"
-                  class:active={idx === activeEventIndex}
-                  on:click={() => onGoToEvent(idx)}
-                  aria-label={`Show event ${idx + 1} of ${totalSlides}`}
-                  aria-current={idx === activeEventIndex ? "true" : undefined}
-                >
-                  {#if eventIcons[idx]}
-                    <svg
-                      class="dot-icon"
-                      viewBox="0 0 24 24"
-                      role="img"
-                      aria-hidden="true"
-                    >
-                      <path d={eventIcons[idx]} />
-                    </svg>
-                  {/if}
-                </button>
-              </div>
+            <div class="chapter-spacer" aria-hidden="true"></div>
+            {#each timelineItems as item, i}
+              {#if item.type === 'spacer'}
+                <div class="chapter-spacer" aria-hidden="true"></div>
+              {:else if item.type === 'event'}
+                {@const idx = item.index}
+                <div class="dot-wrapper">
+                  <button
+                    type="button"
+                    class="dot"
+                    class:active={idx === activeEventIndex}
+                    style="transform: scale({dotScales[idx]}) translateX({dotTranslations[idx]}rem); z-index: {Math.round(dotScales[idx] * 10)};"
+                    on:click={() => onGoToEvent(idx)}
+                    aria-label={`Show event ${idx + 1} of ${totalSlides}`}
+                    aria-current={idx === activeEventIndex ? "true" : undefined}
+                  >
+                    {#if eventIcons[idx]}
+                      <svg
+                        class="dot-icon"
+                        viewBox="0 0 24 24"
+                        role="img"
+                        aria-hidden="true"
+                      >
+                        <path d={eventIcons[idx]} />
+                      </svg>
+                    {/if}
+                  </button>
+                </div>
+              {/if}
             {/each}
             <button
               type="button"
               class="chapter-indicator-box"
               class:has-chapter={currentChapter}
+              style="--chapter-offset: {chapterIndicatorOffset}%;"
               on:click={toggleExpanded}
               aria-label={currentChapter
                 ? $_("timeline.expand_to_chapter", {
@@ -577,7 +588,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 3rem;
     width: 100%;
     height: 100%;
     transition:
@@ -617,22 +628,12 @@
     backdrop-filter: blur(6px);
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
     border: 1px solid rgba(148, 163, 184, 0.2);
-    cursor: pointer;
+    cursor: default;
     user-select: none;
-    touch-action: manipulation; /* Allows default touch, disables double-tap zoom */
     transition:
       padding 1s cubic-bezier(0.22, 1, 0.36, 1),
       background 1s cubic-bezier(0.22, 1, 0.36, 1),
       height 1s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .indicator-track.dragging {
-    cursor: grabbing;
-    background: rgba(15, 23, 42, 0.75);
-  }
-
-  .indicator-track:not(.expanded):hover {
-    background: rgba(15, 23, 42, 0.7);
   }
 
   .indicator-track.expanded {
@@ -654,7 +655,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
     max-width: min(90vw, 860px);
     z-index: 2;
@@ -662,6 +663,42 @@
       flex-direction 0.8s cubic-bezier(0.22, 1, 0.36, 1),
       gap 0.8s cubic-bezier(0.22, 1, 0.36, 1),
       justify-content 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dots-container:not(.expanded) {
+    /* Distribute items across full width with flex-grow */
+    justify-content: space-between;
+  }
+
+  /* On narrow screens, allow items to overlap by using negative margins */
+  @media (max-width: 768px) {
+    .dots-container:not(.expanded) .dot:not(.square) {
+      margin-left: -0.3rem;
+    }
+    .dots-container:not(.expanded) .chapter-spacer {
+      margin-left: -0.3rem;
+      width: calc(var(--dot-size) * 0.7);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dots-container:not(.expanded) .dot:not(.square) {
+      margin-left: -0.5rem;
+    }
+    .dots-container:not(.expanded) .chapter-spacer {
+      margin-left: -0.5rem;
+      width: calc(var(--dot-size) * 0.5);
+    }
+  }
+
+  @media (max-width: 380px) {
+    .dots-container:not(.expanded) .dot:not(.square) {
+      margin-left: -0.7rem;
+    }
+    .dots-container:not(.expanded) .chapter-spacer {
+      margin-left: -0.7rem;
+      width: calc(var(--dot-size) * 0.3);
+    }
   }
 
   .dots-container.expanded {
@@ -699,7 +736,14 @@
 
   .dot-wrapper {
     display: contents;
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Chapter spacer for visual clustering */
+  .chapter-spacer {
+    width: var(--dot-size);
+    flex: 0 0 auto;
+    pointer-events: none;
+    opacity: 0;
   }
 
   .expanded-timeline-container {
@@ -833,8 +877,8 @@
 
   .nav-btn {
     pointer-events: auto;
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2.8rem;
+    height: 2.8rem;
     border-radius: 999px;
     border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.35));
     background: rgba(255, 255, 255, 0.05);
@@ -867,36 +911,6 @@
     transform: none;
   }
 
-  .indicator-highlight {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: var(--dot-size);
-    height: var(--dot-size);
-    border-radius: 4px;
-    background: var(--story-secondary, rgba(56, 189, 248, 0.45));
-    opacity: 0.45;
-    transform: translateX(
-        calc(var(--indicator-progress) * (100% - var(--dot-size)))
-      )
-      translateY(-50%);
-    transition:
-      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 0.3s ease,
-      opacity 0.3s ease;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .indicator.expanded .indicator-highlight {
-    opacity: 0;
-  }
-
-  .indicator-highlight.single {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
   .dot {
     appearance: none;
     border: none;
@@ -906,20 +920,15 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    z-index: 1;
     width: var(--dot-size);
     height: var(--dot-size);
     border-radius: 9999px;
     background: rgba(148, 163, 184, 0.3);
     transition:
       background-color 0.25s ease,
-      transform 0.25s ease;
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     flex: 0 0 auto;
     pointer-events: all;
-  }
-
-  .indicator-track.dragging .dot {
-    pointer-events: none;
   }
 
   .dot.square {
@@ -928,7 +937,6 @@
 
   .dot.active {
     background: var(--story-secondary, #38bdf8);
-    transform: scale(1.2);
   }
 
   .dot-icon {
@@ -989,7 +997,7 @@
     padding: 0;
     position: absolute;
     bottom: calc(100% + 0.25rem);
-    left: 50%;
+    left: calc(50% + var(--chapter-offset, 0%));
     transform: translateX(-50%);
     width: auto;
     max-width: min(90vw, 600px);
@@ -997,19 +1005,20 @@
     z-index: 10;
     cursor: pointer;
     background: transparent;
+    transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* When no chapter, make it a compact icon-only button */
   .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
-    padding: 0.45rem;
+    padding: 0.6rem;
     border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3.25rem;
+    height: 3.25rem;
   }
 
   .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .chapter-indicator-content {
@@ -1017,8 +1026,8 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.75rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: 1rem;
     background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(8px);
     border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
@@ -1091,14 +1100,14 @@
     }
 
     .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
-      width: 2.25rem;
-      height: 2.25rem;
-      padding: 0.4rem;
+      width: 3rem;
+      height: 3rem;
+      padding: 0.5rem;
     }
 
     .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
-      width: 1.2rem;
-      height: 1.2rem;
+      width: 1.4rem;
+      height: 1.4rem;
     }
   }
 
@@ -1108,19 +1117,19 @@
     }
 
     .chapter-indicator-content {
-      padding: 0.35rem 0.75rem;
+      padding: 0.5rem 0.9rem;
       gap: 0.4rem;
     }
 
     .chapter-chevron {
-      width: 0.9rem;
-      height: 0.9rem;
+      width: 0.95rem;
+      height: 0.95rem;
     }
 
     .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
-      width: 2rem;
-      height: 2rem;
-      padding: 0.35rem;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0.45rem;
     }
 
     .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
