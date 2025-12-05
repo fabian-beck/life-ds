@@ -178,7 +178,7 @@
         class:has-fade={descriptionOverflows.has(slide.eventIndex)}
         use:checkOverflow={slide.eventIndex}
       >
-{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<button type="button" class="annotated-term" on:click|stopPropagation={() => onToggleAnnotation(segment.termKey)} aria-expanded={visibleAnnotation === segment.termKey} aria-label={$_('story.show_explanation')}>{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></button>{#if visibleAnnotation === segment.termKey}<span class="annotation-popup">{segment.annotation.explanation}{#if segment.annotation.wikipedia_url}<a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>{/if}</span>{/if}{:else if segment.type === 'person'}<strong class="person-mention">{segment.content}</strong>{/if}{/each}
+{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<span role="button" tabindex="0" class="annotated-term" on:click|stopPropagation={() => onToggleAnnotation(segment.termKey)} on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onToggleAnnotation(segment.termKey)} aria-expanded={visibleAnnotation === segment.termKey} aria-label={$_('story.show_explanation')}>{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></span>{#if visibleAnnotation === segment.termKey}<span class="annotation-popup">{segment.annotation.explanation}{#if segment.annotation.wikipedia_url}<a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>{/if}</span>{/if}{:else if segment.type === 'person'}<strong class="person-mention">{segment.content}</strong>{/if}{/each}
       </p>
     </div>
     <div class="event-details">
@@ -848,6 +848,7 @@
   .annotated-term {
     all: unset;
     display: inline;
+    white-space: normal;
     color: var(--story-secondary, #38bdf8);
     text-decoration: underline;
     text-decoration-style: dotted;
