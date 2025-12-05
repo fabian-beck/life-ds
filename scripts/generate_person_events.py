@@ -78,6 +78,15 @@ class ImageMetadata(BaseModel):
     )
 
 
+class Annotation(BaseModel):
+    """Explanation for an annotated term in event description."""
+    explanation: str = Field(description="Clear, concise explanation (1-2 sentences)")
+    wikipedia_url: Optional[str] = Field(
+        None,
+        description="Optional Wikipedia URL for further reading"
+    )
+
+
 class Portrait(BaseModel):
     """Portrait information for the person."""
     image: Optional[str] = Field(None, description="URL of the portrait image")
@@ -148,6 +157,10 @@ class EventSkeleton(BaseModel):
     title: str = Field(description="Brief title of the event (2-6 words)")
     description: str = Field(description="Detailed description of the event (2-4 sentences)")
     chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
+    annotations: Optional[Dict[str, Annotation]] = Field(
+        None,
+        description="Dictionary mapping term keys to their explanations"
+    )
 
 
 class LifePlan(BaseModel):
@@ -186,6 +199,10 @@ class LocationInfo(BaseModel):
 
 class EventDetails(BaseModel):
     """Phase 2: Research details for a specific event."""
+    description: Optional[str] = Field(
+        None,
+        description="Event description with [[term|display]] markers for annotations. If no annotations, return the original description unchanged."
+    )
     locations: Optional[List[LocationInfo]] = Field(
         None,
         description="Array of location objects. Can be empty or contain multiple locations."
@@ -205,6 +222,10 @@ class EventDetails(BaseModel):
     event_type_icon: Optional[str] = Field(
         None,
         description="MDI icon identifier (e.g., 'mdi-crown', 'mdi-book')"
+    )
+    annotations: Optional[Dict[str, Annotation]] = Field(
+        None,
+        description="Dictionary mapping term keys to their explanations"
     )
 
 
@@ -235,6 +256,10 @@ class LifeEvent(BaseModel):
         description="MDI icon identifier"
     )
     chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
+    annotations: Optional[Dict[str, Annotation]] = Field(
+        None,
+        description="Dictionary mapping term keys to their explanations"
+    )
 
 
 # ============================================================================
@@ -967,6 +992,12 @@ def build_phase2_prompt(
     prompt += "TASK: Provide the following details for THIS specific event:\n"
     prompt += "="*60 + "\n\n"
 
+    prompt += "0. DESCRIPTION (with annotation markers):\n"
+    prompt += "   - Return the event description with [[term|display]] markers inserted for any annotations\n"
+    prompt += "   - If you create annotations (section 6 below), you MUST insert the markers into this description\n"
+    prompt += "   - If no annotations, return the original description text unchanged\n"
+    prompt += "   - Example: If annotating 'Leopoldstadt', change 'Leopoldstadt district' to '[[Leopoldstadt|Leopoldstadt district]]'\n\n"
+
     prompt += "1. LOCATIONS (can be multiple):\n"
     prompt += "   - Identify ALL significant locations for THIS specific event\n"
     prompt += "   - IMPORTANT: Keep location names SHORT and at CITY LEVEL at maximum\n"
@@ -1006,6 +1037,48 @@ def build_phase2_prompt(
     prompt += "5. EVENT_TYPE_ICON:\n"
     prompt += "   - Select the most appropriate MDI icon from the categories below\n"
     prompt += "   - Based on the semantic type of this event\n\n"
+
+    prompt += "6. ANNOTATIONS (0-3 per event, MOST EVENTS HAVE 0):\n"
+    prompt += "   - CRITICAL: Be extremely conservative - only annotate truly obscure terms that need explanation\n"
+    prompt += "   - STRICT CRITERIA: Term must be BOTH obscure AND provide non-obvious context\n"
+    prompt += "   - Annotate ONLY:\n"
+    prompt += "     * Highly technical/specialized concepts (e.g., 'Entscheidungsproblem', 'transautomatism')\n"
+    prompt += "     * Obscure institutions with significant historical context (e.g., 'Bletchley Park' - secret codebreaking facility)\n"
+    prompt += "     * Specialized movements/events requiring context (e.g., 'Anschluss' - Nazi annexation, 'documenta' - contemporary art exhibition)\n"
+    prompt += "     * Regional terms unknown outside specific areas (e.g., 'Matura' - Austrian graduation exam)\n"
+    prompt += "   - ABSOLUTE PROHIBITIONS (NEVER annotate):\n"
+    prompt += "     * ANY person names - these are ALWAYS handled separately\n"
+    prompt += "     * ANY major cities (Tokyo, Hamburg, Paris, London, Vienna, Berlin, New York, etc.)\n"
+    prompt += "     * ANY countries or continents (Japan, Germany, USA, Europe, Asia, etc.)\n"
+    prompt += "     * ANY common places (university, school, museum, gallery, studio, farmhouse, etc.)\n"
+    prompt += "     * ANY well-known historical periods or events (WWII, Renaissance, Cold War, etc.)\n"
+    prompt += "     * ANY basic artistic/cultural terms (exhibition, retrospective, painting, prize, award, etc.)\n"
+    prompt += "     * ANY geographic features everyone knows (rivers, seas, mountains, islands, etc.)\n"
+    prompt += "   - REDUNDANCY CHECK: Do NOT annotate if the description already explains the term\n"
+    prompt += "     * BAD: Annotating 'Hitler Youth' if description says 'Nazi youth organization'\n"
+    prompt += "     * BAD: Annotating 'Montessori' if description says 'child-centered education'\n"
+    prompt += "     * GOOD: Annotating 'Leopoldstadt' if description only says 'district' without historical context\n"
+    prompt += "   - VALUE TEST: Does this annotation add meaningful information the description lacks?\n"
+    prompt += "   - GEOGRAPHY RULE: Only annotate very specific/obscure places with crucial historical significance\n"
+    prompt += "     * GOOD: 'Leopoldstadt' (specific district with Holocaust context)\n"
+    prompt += "     * BAD: 'Hamburg' (major German city everyone knows)\n"
+    prompt += "     * BAD: 'Japan' (country everyone knows)\n"
+    prompt += "     * BAD: 'Normandy' (well-known French region)\n"
+    prompt += "   - EXAMPLES of GOOD annotations:\n"
+    prompt += "     * 'Entscheidungsproblem' - mathematical concept requiring technical explanation\n"
+    prompt += "     * 'Matura' - Austrian-specific term not used elsewhere\n"
+    prompt += "     * 'documenta' - specific art event most people don't know\n"
+    prompt += "   - EXAMPLES of BAD annotations (NEVER annotate):\n"
+    prompt += "     * 'Hamburg' - major city\n"
+    prompt += "     * 'Japan' - country\n"
+    prompt += "     * 'Paris' - major city\n"
+    prompt += "     * 'exhibition' - common term\n"
+    prompt += "     * 'university' - common term\n"
+    prompt += "     * Any person name\n"
+    prompt += "   - Mark terms using [[term|display_text]] syntax\n"
+    prompt += "   - Explanations must ADD information not in description (no redundancy)\n"
+    prompt += "   - Optional: Include wikipedia_url for further reading\n"
+    prompt += "   - DEFAULT to 0 annotations - when in doubt, DO NOT annotate\n\n"
 
     # Add icon categories
     prompt += "\n" + "="*60 + "\n"
@@ -1145,7 +1218,9 @@ def research_all_event_details(
     used_image_urls: Set[str] = set()
 
     for idx, skeleton in enumerate(event_skeletons, 1):
-        print(f"  [{idx}/{len(event_skeletons)}] Researching: {skeleton.title}")
+        # Use ASCII-safe encoding for console output
+        safe_title = skeleton.title.encode('ascii', 'replace').decode('ascii')
+        print(f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title}")
 
         # Filter out already-used images
         available_images = [
@@ -1189,6 +1264,12 @@ def merge_event_skeleton_and_details(
                 "primary": loc.primary
             })
 
+    # Merge annotations (prefer Phase 2 details, fallback to Phase 1 skeleton)
+    annotations = details.annotations if details.annotations else skeleton.annotations
+
+    # Merge description (prefer Phase 2 if provided with markers, else Phase 1)
+    description = details.description if details.description else skeleton.description
+
     # Create merged event
     return LifeEvent(
         date=skeleton.date,
@@ -1198,13 +1279,14 @@ def merge_event_skeleton_and_details(
         date_note=skeleton.date_note,
         age=skeleton.age,
         title=skeleton.title,
-        description=skeleton.description,
+        description=description,
         locations=locations,
         involved_people=details.involved_people,
         sources=details.sources if details.sources else [],
         images=details.images,
         event_type_icon=details.event_type_icon or "mdi-calendar",
         chapter=skeleton.chapter,
+        annotations=annotations,
     )
 
 
@@ -1496,6 +1578,30 @@ def enforce_metadata(
             event["images"] = sanitized_images[:1]
         else:
             event.pop("images", None)
+
+        # Validate annotations
+        raw_annotations = event.get("annotations")
+        if raw_annotations and isinstance(raw_annotations, dict):
+            sanitized_annotations = {}
+            for term_key, annotation in raw_annotations.items():
+                if isinstance(annotation, dict):
+                    explanation = annotation.get("explanation", "").strip()
+                    wikipedia_url = annotation.get("wikipedia_url", "").strip() if annotation.get("wikipedia_url") else None
+
+                    # Only keep annotations with valid explanations
+                    if explanation:
+                        sanitized_annotations[term_key] = {
+                            "explanation": explanation
+                        }
+                        if wikipedia_url and (wikipedia_url.startswith("http://") or wikipedia_url.startswith("https://")):
+                            sanitized_annotations[term_key]["wikipedia_url"] = wikipedia_url
+
+            if sanitized_annotations:
+                event["annotations"] = sanitized_annotations
+            else:
+                event.pop("annotations", None)
+        else:
+            event.pop("annotations", None)
 
         events.append(event)
 

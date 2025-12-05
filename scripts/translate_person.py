@@ -46,6 +46,13 @@ class ImageMetadata(BaseModel):
     source: str
 
 
+class Annotation(BaseModel):
+    """Explanation for an annotated term in event description."""
+
+    explanation: str
+    wikipedia_url: Optional[str] = None
+
+
 class LocationCoordinate(BaseModel):
     """Geographic coordinates for a location."""
 
@@ -74,6 +81,7 @@ class LifeEvent(BaseModel):
     location_coordinates: Optional[List[LocationCoordinate]] = None
     chapter: Optional[str] = None
     categories: Optional[List[str]] = None
+    annotations: Optional[Dict[str, Annotation]] = None
 
 
 class LifeChapter(BaseModel):
@@ -258,7 +266,7 @@ def translate_life_events(
     prompt = """Translate this biographical life events document to {lang_name}.
 
 TRANSLATION RULES:
-1. Translate all text content: titles, descriptions, chapter headlines, image captions, summary, roles
+1. Translate all text content: titles, descriptions, chapter headlines, image captions, summary, roles, annotation explanations
 2. PERSON NAMES - Keep in original form UNLESS:
    - The translated version is very common in {lang_name} (e.g., Henry II → Heinrich II in German)
    - The English version is not the original (e.g., non-English historical figures whose names were anglicized)
@@ -266,14 +274,21 @@ TRANSLATION RULES:
    - Use native/localized versions when they exist (e.g., "London" → "Londres" in French, "Munich" → "München" in German)
    - Translate geographic descriptors (e.g., "England" → "Inglaterra" in Spanish)
    - Keep specific street names and addresses mostly intact but translate generic terms (e.g., "Street", "Avenue")
-4. Preserve ALL non-text fields EXACTLY as they are:
+4. ANNOTATION MARKERS - CRITICAL:
+   - Descriptions may contain [[term|display]] markers for annotations
+   - KEEP the marker syntax [[term|display]] EXACTLY as-is
+   - Translate ONLY the display text (after the |)
+   - Translate the explanation in the annotations object
+   - Do NOT translate the term keys (before the |)
+   - Example: "worked on [[Entscheidungsproblem|decision problem]]" → "arbeitete am [[Entscheidungsproblem|Entscheidungsproblem]]"
+5. Preserve ALL non-text fields EXACTLY as they are:
    - ALL dates (date, date_precision, date_end, date_end_precision, birth_date, death_date, created_on)
    - ALL coordinates (location_coordinates, centroid, bbox)
-   - ALL URLs (sources, images.url, images.source, wikipedia)
-   - ALL IDs (chapter IDs in events[].chapter, dataset)
+   - ALL URLs (sources, images.url, images.source, wikipedia, annotations.*.wikipedia_url)
+   - ALL IDs (chapter IDs in events[].chapter, dataset, annotation term keys)
    - ALL technical fields (age, date_note if it's technical)
-5. Maintain the exact JSON structure
-6. Use natural, fluent {lang_name}
+6. Maintain the exact JSON structure
+7. Use natural, fluent {lang_name}
 
 Here is the JSON document to translate:
 

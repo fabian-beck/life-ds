@@ -41,6 +41,7 @@
   let visibleDateNote = null;
   let visiblePersonInfo = null;
   let visibleSources = null;
+  let visibleAnnotation = null;
 
   // Network modal state - reactive to URL query parameter
   $: showNetworkModal = $queryParams.network;
@@ -182,6 +183,7 @@
     visibleDateNote = null;
     visiblePersonInfo = null;
     visibleSources = null;
+    visibleAnnotation = null;
     // Close network modal when slide changes by updating URL
     if ($queryParams.network) {
       const basePath = $location.split("?")[0];
@@ -568,11 +570,17 @@
     visibleDateNote = visibleDateNote === eventIndex ? null : eventIndex;
   }
 
+  function toggleAnnotation(termKey) {
+    visibleAnnotation = visibleAnnotation === termKey ? null : termKey;
+  }
+
   function handleClickOutside(event) {
-    // Check if click is outside the date-wrapper, person-info-wrapper, or sources-wrapper
+    // Check if click is outside the date-wrapper, person-info-wrapper, sources-wrapper, or annotated-term
     const dateWrapper = event.target.closest(".date-wrapper");
     const personWrapper = event.target.closest(".person-info-wrapper");
     const sourcesWrapper = event.target.closest(".sources-wrapper");
+    const annotatedTerm = event.target.closest(".annotated-term");
+    const annotationPopup = event.target.closest(".annotation-popup");
     const modal = event.target.closest(".network-modal");
     if (!dateWrapper && visibleDateNote !== null) {
       visibleDateNote = null;
@@ -582,6 +590,9 @@
     }
     if (!sourcesWrapper && visibleSources !== null) {
       visibleSources = null;
+    }
+    if (!annotatedTerm && !annotationPopup && visibleAnnotation !== null) {
+      visibleAnnotation = null;
     }
     if (!modal && showNetworkModal) {
       const modalOverlay = event.target.closest(".modal-overlay");
@@ -841,11 +852,13 @@
                 {visibleDateNote}
                 {visiblePersonInfo}
                 {visibleSources}
+                {visibleAnnotation}
                 {descriptionOverflows}
                 onEnlargeImage={enlargeImage}
                 onToggleDateNote={toggleDateNote}
                 onTogglePersonInfo={togglePersonInfo}
                 onToggleSources={toggleSources}
+                onToggleAnnotation={toggleAnnotation}
                 onOpenNetwork={openNetworkModal}
                 {checkOverflow}
               />
