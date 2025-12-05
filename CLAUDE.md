@@ -186,6 +186,7 @@ life-ds/
 │   ├── translate_person.py          # Translate single person
 │   ├── translate_all_persons.py     # Batch translate all persons
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
+│   ├── clear_caches.py              # Clear old cached data
 │   ├── remove_person.py             # Delete person
 │   └── config.py                    # Shared config
 └── public/                  # Static assets
@@ -290,6 +291,27 @@ The scripts automatically cache Wikipedia materials in `data/people/{person_id}/
 - Image metadata (Commons images)
 
 This reduces API calls and provides offline access for analysis.
+
+**Clear old caches**:
+
+```bash
+# Clear all caches older than 1 hour
+python scripts/clear_caches.py --max-age 1h
+
+# Clear all caches older than 2 days
+python scripts/clear_caches.py --max-age 2d
+
+# Clear specific person caches
+python scripts/clear_caches.py alan_turing ada_lovelace
+
+# Clear all caches (force)
+python scripts/clear_caches.py --force
+
+# Dry run to see what would be deleted
+python scripts/clear_caches.py --max-age 1h --dry-run
+```
+
+Supported duration units: `s` (seconds), `m` (minutes), `h` (hours), `d` (days), `w` (weeks)
 
 ## Translation System
 
