@@ -82,31 +82,21 @@
       "title": "Birth in Deutsch-Wilmersdorf",
       "description": "Konrad Ernst Otto Zuse was born on 22 June 1910 in Deutsch-Wilmersdorf, a then-independent locality near Berlin, to Maria and Emil Zuse. His father worked for the postal service, and the family would soon relocate due to his father\u2019s career.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1912",
@@ -115,7 +105,15 @@
       "title": "Family Moves to Braunsberg",
       "description": "Around 1912, when Konrad Zuse was about two years old, his family moved from the Berlin area to Braunsberg in East Prussia, where his father took a position as a mid-level postal official. Zuse later attended the humanistic Gymnasium Hosianum there, receiving a classical secondary education.",
       "locations": [
-        "Braunsberg (Braniewo)"
+        {
+          "name_historic": "Braunsberg (Braniewo)",
+          "name_modern": null,
+          "centroid": [
+            19.8222225,
+            54.3791309
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
@@ -128,25 +126,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Konrad-Zuse-Lyceum-Hosianum.jpg"
         }
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Braniewo, Braniewo County, Warmian-Masurian Voivodeship, Poland",
-          "name": "Braunsberg (Braniewo)",
-          "primary": true,
-          "centroid": [
-            19.8222225,
-            54.3791309
-          ],
-          "source": "nominatim",
-          "bbox": [
-            19.7914739,
-            54.3548587,
-            19.8502056,
-            54.4040441
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1923",
@@ -155,7 +135,15 @@
       "title": "Transfer to Hoyerswerda Gymnasium",
       "description": "In 1923 the Zuse family moved again, this time to Hoyerswerda in Saxony. Konrad transferred from the Hosianum in Braunsberg to the Reform\u2011Realgymnasium in Hoyerswerda, today\u2019s Lessing\u2011Gymnasium, where he continued his secondary schooling.",
       "locations": [
-        "Hoyerswerda"
+        {
+          "name_historic": "Hoyerswerda",
+          "name_modern": null,
+          "centroid": [
+            14.250083,
+            51.4333103
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
@@ -168,25 +156,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Konrad-Zuse-Stra%C3%9Fe_7_HY_2.JPG"
         }
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Hoyerswerda - Wojerecy, Bautzen - Budy\u0161in, Saxony, 02977, Germany",
-          "name": "Hoyerswerda",
-          "primary": true,
-          "centroid": [
-            14.250083,
-            51.4333103
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.0655603,
-            51.3823547,
-            14.3704233,
-            51.4660263
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1928-10",
@@ -197,31 +167,21 @@
       "title": "Studies at Technische Hochschule Berlin",
       "description": "After completing school, Zuse enrolled at the Technische Hochschule Berlin\u2011Charlottenburg (now Technische Universit\u00e4t Berlin). A self\u2011described \u201cloafer student\u201d, he initially studied mechanical engineering, then switched to architecture, and finally settled on civil engineering. Alongside his studies he worked for almost a year as an advertising illustrator and joined the student fraternity AV Motiv, cultivating both his technical and artistic interests. He graduated as a Diplom\u2011Ingenieur in civil engineering in 1935.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1928",
@@ -230,31 +190,21 @@
       "title": "Abitur and Early Inventions",
       "description": "In 1928 Konrad Zuse passed his Abitur in Hoyerswerda, qualifying for university. By this time he had already shown inventive talent: at 14 he had built a coin\u2011operated \u201cmandarin dispenser\u201d vending fruit and change, and at 18 he constructed a model coal\u2011loading crane from a Stabil metal construction kit, for which the firm awarded him an honorary certificate.",
       "locations": [
-        "Hoyerswerda"
+        {
+          "name_historic": "Hoyerswerda",
+          "name_modern": null,
+          "centroid": [
+            14.250083,
+            51.4333103
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Hoyerswerda - Wojerecy, Bautzen - Budy\u0161in, Saxony, 02977, Germany",
-          "name": "Hoyerswerda",
-          "primary": true,
-          "centroid": [
-            14.250083,
-            51.4333103
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.0655603,
-            51.3823547,
-            14.3704233,
-            51.4660263
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1935",
@@ -265,31 +215,21 @@
       "title": "Leaves Henschel to Found Workshop",
       "description": "After receiving his engineering diploma in 1935, Zuse worked briefly as a structural engineer at the Henschel aircraft works in Sch\u00f6nefeld near Berlin. Frustrated by the tedium of manual structural calculations in civil engineering, he soon resigned and set up an inventor\u2019s workshop in his parents\u2019 Berlin apartment. There he began serious work on a machine to automate these calculations, laying the foundations for his first computing machine.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "inventor_in_berlin",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "inventor_in_berlin"
     },
     {
       "date": "1936",
@@ -300,7 +240,15 @@
       "title": "Builds Mechanical Computer Z1",
       "description": "Between 1936 and 1938 Zuse designed and built the Z1, a motor\u2011driven mechanical calculator assembled in his parents\u2019 Berlin living room. The Z1 was the world\u2019s first freely programmable, binary, floating\u2011point mechanical computer, using punched 35 mm film for program input and possessing separate units for input/output, arithmetic, memory, and control. Financed largely with family and small private support, the machine never ran reliably because of mechanical inaccuracies but encapsulated many concepts of a modern computer.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Z1_(computer)",
@@ -314,25 +262,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Zuse_Patent_907948_vector.svg"
         }
       ],
-      "chapter": "inventor_in_berlin",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "inventor_in_berlin"
     },
     {
       "date": "1939",
@@ -343,32 +273,22 @@
       "title": "Completes Relay Prototype Z2",
       "description": "In 1939 Zuse completed the Z2, an experimental computer that reused the mechanical memory concepts of the Z1 but replaced its unreliable mechanical arithmetic unit with telephone relays. In September 1940 he demonstrated the large relay\u2011based prototype, which filled several rooms of his parents\u2019 Berlin apartment, to experts from the Deutsche Versuchsanstalt f\u00fcr Luftfahrt in Berlin\u2011Adlershof. The successful demonstration convinced the aviation research institute to help finance development of Zuse\u2019s next machine, the Z3.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Z3_(computer)",
         "https://en.wikipedia.org/wiki/Z1_(computer)",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "inventor_in_berlin",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "inventor_in_berlin"
     },
     {
       "date": "1941-01",
@@ -377,31 +297,21 @@
       "title": "Founds Zuse Apparatebau in Berlin",
       "description": "In 1941, in the midst of World War II, Zuse formally founded the firm \"Zuse Ingenieurb\u00fcro und Apparatebau, Berlin\" to develop and build computing machines. Despite wartime controls, his company\u2014employing about 20 staff at its peak\u2014was the only enterprise in Germany permitted to build general\u2011purpose calculators. The firm\u2019s workshop in Berlin\u2019s Methfesselstra\u00dfe became the production site for the Z3 and later machines.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "inventor_in_berlin",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "inventor_in_berlin"
     },
     {
       "date": "1941-05-12",
@@ -410,7 +320,15 @@
       "title": "Demonstrates Z3 Computer in Berlin",
       "description": "On 12 May 1941 Konrad Zuse publicly demonstrated his electromechanical computer Z3 in his Berlin workshop. Built from about 2,600 telephone relays, the Z3 implemented 22\u2011bit binary floating\u2011point arithmetic, automatic program control via punched film, and separate memory and arithmetic units. Although it lacked conditional branching in normal use, it is now regarded as the world\u2019s first fully automatic, programmable, working digital computer and, in principle, Turing\u2011complete.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Z3_(computer)",
@@ -423,25 +341,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Zuse_archive_Z3.jpg"
         }
       ],
-      "chapter": "inventor_in_berlin",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "inventor_in_berlin"
     },
     {
       "date": "1942",
@@ -452,31 +352,21 @@
       "title": "Develops S1, S2 and Process Control",
       "description": "From 1942 Zuse, working with Henschel Flugzeug\u2011Werke, designed the special\u2011purpose computers S1 and S2 to measure and correct wing profiles for the radio\u2011guided glide bomb Hs 293. The associated measuring devices implemented some of the first analog\u2011to\u2011digital converters. In 1944, at a Henschel facility in Warnsdorf in the Sudetenland, Zuse realized what is considered the first process control by computer, using these systems to automate measurement and control tasks.",
       "locations": [
-        "Warnsdorf (Varnsdorf)"
+        {
+          "name_historic": "Warnsdorf (Varnsdorf)",
+          "name_modern": null,
+          "centroid": [
+            14.6382003,
+            50.9031846
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Z3_(computer)"
       ],
-      "chapter": "inventor_in_berlin",
-      "location_coordinates": [
-        {
-          "label": "Varnsdorf, N\u00e1dra\u017en\u00ed, Varnsdorf, okres D\u011b\u010d\u00edn, \u00dast\u00ed nad Labem Region, Northwest, 404 74, Czechia",
-          "name": "Warnsdorf (Varnsdorf)",
-          "primary": true,
-          "centroid": [
-            14.6382003,
-            50.9031846
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.6332003,
-            50.8981846,
-            14.6432003,
-            50.9081846
-          ]
-        }
-      ]
+      "chapter": "inventor_in_berlin"
     },
     {
       "date": "1945-01-06",
@@ -485,32 +375,22 @@
       "title": "Marriage to Gisela Brandes in Berlin",
       "description": "On 6 January 1945 Zuse married Gisela Brandes in Berlin, organizing what he later described as a dignified ceremony with carriage, tailcoat, and wedding veil despite wartime conditions. The couple would eventually have five children together, including their eldest son Horst, born later that year, who became a professor of computer science.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Horst_Zuse"
       ],
-      "chapter": "war_ending_and_z4",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "war_ending_and_z4"
     },
     {
       "date": "1945-03",
@@ -521,31 +401,21 @@
       "title": "Evacuates Z4 from Berlin to G\u00f6ttingen",
       "description": "In early 1945, with Berlin under heavy bombardment, Zuse and his colleagues disassembled the partially completed relay\u2011based computer Z4 and evacuated it under the cover name V4 by Wehrmacht truck from Berlin to G\u00f6ttingen. There, in facilities of the Aerodynamische Versuchsanstalt, they completed much of the remaining work even as the front approached, striving to preserve the machine from destruction or capture.",
       "locations": [
-        "G\u00f6ttingen"
+        {
+          "name_historic": "G\u00f6ttingen",
+          "name_modern": null,
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://en.wikipedia.org/wiki/Z4_(computer)"
       ],
-      "chapter": "war_ending_and_z4",
-      "location_coordinates": [
-        {
-          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
-          "name": "G\u00f6ttingen",
-          "primary": true,
-          "centroid": [
-            9.9351811,
-            51.5328328
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.8001329,
-            51.4830052,
-            10.0536032,
-            51.5908201
-          ]
-        }
-      ]
+      "chapter": "war_ending_and_z4"
     },
     {
       "date": "1945-05",
@@ -556,7 +426,15 @@
       "title": "Resettles in Allg\u00e4u with Z4",
       "description": "After Germany\u2019s surrender, Zuse and his team journeyed south with the disassembled Z4, eventually settling in Hinterstein in the Allg\u00e4u. The machine was stored in a flour warehouse in nearby Hopferau. To support his family in the impoverished postwar years, Zuse painted oil pictures of chamois for sale to American tourists and carried out hand calculations for local farmers\u2019 milk accounts\u2014activities sometimes described as Germany\u2019s first digital calculation service\u2014while preparing to rebuild the Z4.",
       "locations": [
-        "Hinterstein"
+        {
+          "name_historic": "Hinterstein",
+          "name_modern": null,
+          "centroid": [
+            10.4072789,
+            47.4794193
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
@@ -569,25 +447,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:%22Konrad_Zuse-Haus%22_in_Hinterstein.jpg"
         }
       ],
-      "chapter": "war_ending_and_z4",
-      "location_coordinates": [
-        {
-          "label": "Hinterstein, Bad Hindelang, Landkreis Oberallg\u00e4u, Bavaria, 87541, Germany",
-          "name": "Hinterstein",
-          "primary": true,
-          "centroid": [
-            10.4072789,
-            47.4794193
-          ],
-          "source": "nominatim",
-          "bbox": [
-            10.3872789,
-            47.4594193,
-            10.4272789,
-            47.4994193
-          ]
-        }
-      ]
+      "chapter": "war_ending_and_z4"
     },
     {
       "date": "1949-11",
@@ -596,7 +456,15 @@
       "title": "Founds Zuse KG in Neukirchen",
       "description": "In November 1949 Zuse founded the company Zuse KG in Haunetal\u2011Neukirchen, Hesse, formalizing his postwar computer business. With the rental income from the Z4 at ETH Z\u00fcrich and subsequent orders\u2014such as a calculating punch for Remington\u2011Rand\u2014Zuse KG became one of the earliest dedicated computer firms, setting out to build a family of machines labeled Z11, Z22, and beyond.",
       "locations": [
-        "Neukirchen (Haunetal)"
+        {
+          "name_historic": "Neukirchen (Haunetal)",
+          "name_modern": null,
+          "centroid": [
+            9.6951545,
+            50.7697763
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
@@ -610,25 +478,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Zuse-Werkstatt-Neukirchen-Jan-2010.jpg"
         }
       ],
-      "chapter": "zuse_kg_and_industry",
-      "location_coordinates": [
-        {
-          "label": "Neukirchen, Haunetal, Landkreis Hersfeld-Rotenburg, Hesse, Germany",
-          "name": "Neukirchen (Haunetal)",
-          "primary": true,
-          "centroid": [
-            9.6951545,
-            50.7697763
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.6715778,
-            50.7578734,
-            9.7172174,
-            50.783953
-          ]
-        }
-      ]
+      "chapter": "zuse_kg_and_industry"
     },
     {
       "date": "1949",
@@ -637,31 +487,21 @@
       "title": "ETH Z\u00fcrich Agrees to Rent Z4",
       "description": "In 1949 Professor Eduard Stiefel of ETH Z\u00fcrich traveled to the Allg\u00e4u to examine the rebuilt Z4. Impressed by its suitability for scientific computation, he negotiated a rental agreement under which the Z4 would be installed at ETH Z\u00fcrich\u2019s Institute for Applied Mathematics. This arrangement provided crucial financial support and international recognition for Zuse\u2019s work.",
       "locations": [
-        "Z\u00fcrich"
+        {
+          "name_historic": "Z\u00fcrich",
+          "name_modern": null,
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Z4_(computer)",
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "war_ending_and_z4",
-      "location_coordinates": [
-        {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Z\u00fcrich",
-          "primary": true,
-          "centroid": [
-            8.5410422,
-            47.3744489
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        }
-      ]
+      "chapter": "war_ending_and_z4"
     },
     {
       "date": "1950-07",
@@ -672,31 +512,21 @@
       "title": "Z4 Operates at ETH Z\u00fcrich",
       "description": "In July 1950 the Z4 was delivered to ETH Z\u00fcrich, where it became operational as the only working digital computer in continental Europe and, after the BINAC, the second computer in the world to be sold or leased. Used for scientific and engineering calculations\u2014including work on the Grande Dixence Dam\u2014the Z4 ran reliably at ETH until 1955 and inspired the Swiss ERMETH computer project.",
       "locations": [
-        "Z\u00fcrich"
+        {
+          "name_historic": "Z\u00fcrich",
+          "name_modern": null,
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Z4_(computer)",
         "https://de.wikipedia.org/wiki/Der_Computer_%E2%80%93_Mein_Lebenswerk"
       ],
-      "chapter": "war_ending_and_z4",
-      "location_coordinates": [
-        {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Z\u00fcrich",
-          "primary": true,
-          "centroid": [
-            8.5410422,
-            47.3744489
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        }
-      ]
+      "chapter": "war_ending_and_z4"
     },
     {
       "date": "1955",
@@ -705,31 +535,21 @@
       "title": "Introduces Electronic Computer Z22",
       "description": "Around 1955 Zuse KG delivered the Z22, one of Germany\u2019s first commercially successful electronic computers with magnetic\u2011drum memory. The Z22, following earlier relay\u2011based models like the Z11, marked Zuse\u2019s transition into fully electronic designs and was sold to universities and industrial customers, strengthening Zuse KG\u2019s position in the emerging computer market.",
       "locations": [
-        "Bad Hersfeld"
+        {
+          "name_historic": "Bad Hersfeld",
+          "name_modern": null,
+          "centroid": [
+            9.6767709,
+            50.8604177
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Der_Computer_%E2%80%93_Mein_Lebenswerk",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "zuse_kg_and_industry",
-      "location_coordinates": [
-        {
-          "label": "Bad Hersfeld, Landkreis Hersfeld-Rotenburg, Hesse, 36251, Germany",
-          "name": "Bad Hersfeld",
-          "primary": true,
-          "centroid": [
-            9.6767709,
-            50.8604177
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.6125462,
-            50.8135337,
-            9.8291462,
-            50.909453
-          ]
-        }
-      ]
+      "chapter": "zuse_kg_and_industry"
     },
     {
       "date": "1964",
@@ -738,31 +558,21 @@
       "title": "Leaves Zuse KG Management",
       "description": "After years of rapid but financially strained expansion of Zuse KG, Konrad Zuse had to give up his capital shares in 1964 due to over\u2011indebtedness and withdrew from active management of the firm. He continued to work as a consultant in the computer industry and turned more to theoretical writing and other interests while his company passed into larger corporate ownership.",
       "locations": [
-        "Bad Hersfeld"
+        {
+          "name_historic": "Bad Hersfeld",
+          "name_modern": null,
+          "centroid": [
+            9.6767709,
+            50.8604177
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
         "https://de.wikipedia.org/wiki/Der_Computer_%E2%80%93_Mein_Lebenswerk"
       ],
-      "chapter": "zuse_kg_and_industry",
-      "location_coordinates": [
-        {
-          "label": "Bad Hersfeld, Landkreis Hersfeld-Rotenburg, Hesse, 36251, Germany",
-          "name": "Bad Hersfeld",
-          "primary": true,
-          "centroid": [
-            9.6767709,
-            50.8604177
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.6125462,
-            50.8135337,
-            9.8291462,
-            50.909453
-          ]
-        }
-      ]
+      "chapter": "zuse_kg_and_industry"
     },
     {
       "date": "1969",
@@ -771,31 +581,21 @@
       "title": "Publishes Calculating Space",
       "description": "In 1969 Zuse published his book \"Rechnender Raum\" (Calculating Space), proposing that the universe itself could be modeled as a giant cellular automaton or discrete computation. Anticipating later digital physics and simulation\u2011hypothesis ideas, he argued that physical processes might fundamentally be information\u2011processing events, extending his computing vision from machines to cosmology.",
       "locations": [
-        "Braunschweig"
+        {
+          "name_historic": "Braunschweig",
+          "name_modern": null,
+          "centroid": [
+            10.5236066,
+            52.2646577
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Calculating_Space",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "later_years_and_ideas",
-      "location_coordinates": [
-        {
-          "label": "Brunswick, Lower Saxony, Germany",
-          "name": "Braunschweig",
-          "primary": true,
-          "centroid": [
-            10.5236066,
-            52.2646577
-          ],
-          "source": "nominatim",
-          "bbox": [
-            10.4124522,
-            52.1867942,
-            10.6432434,
-            52.3573831
-          ]
-        }
-      ]
+      "chapter": "later_years_and_ideas"
     },
     {
       "date": "1983",
@@ -804,30 +604,20 @@
       "title": "Lectures in Ilmenau, East Germany",
       "description": "In 1983 Zuse, invited privately, gave a public lecture at the Technische Hochschule Ilmenau in the GDR. Although he was not permitted to visit the university\u2019s computing center, the appearance symbolized a rare recognition of his pioneering work in computing across the Cold War divide between West and East Germany.",
       "locations": [
-        "Ilmenau"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Konrad_Zuse"
-      ],
-      "chapter": "later_years_and_ideas",
-      "location_coordinates": [
         {
-          "label": "Ilmenau, Ilm-Kreis, Thuringia, Germany",
-          "name": "Ilmenau",
-          "primary": true,
+          "name_historic": "Ilmenau",
+          "name_modern": null,
           "centroid": [
             10.9142385,
             50.6867695
           ],
-          "source": "nominatim",
-          "bbox": [
-            10.818229,
-            50.5614306,
-            11.0666141,
-            50.7494563
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "chapter": "later_years_and_ideas"
     },
     {
       "date": "1984",
@@ -838,31 +628,21 @@
       "title": "Rebuilds Mechanical Computer Z1",
       "description": "From 1984 to 1989, with support from Siemens and other firms, Zuse led a painstaking project to reconstruct the Z1, which had been destroyed in wartime bombing. Working with assistants, he recreated thousands of mechanical parts and assembled a working replica\u2014now exhibited in Berlin\u2014reviving one of the key milestones of early computer history.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Z1_(computer)",
         "https://en.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "chapter": "later_years_and_ideas",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "later_years_and_ideas"
     },
     {
       "date": "1995-12-18",
@@ -871,7 +651,15 @@
       "title": "Death in H\u00fcnfeld",
       "description": "Konrad Zuse died on 18 December 1995 in H\u00fcnfeld, Hesse, from heart failure at the age of 85. In retirement he had devoted much of his time to his hobby of expressionist painting, signing his works \"Kuno von und zu See\". He was buried in H\u00fcnfeld, where museums and monuments commemorate his contributions to computing.",
       "locations": [
-        "H\u00fcnfeld"
+        {
+          "name_historic": "H\u00fcnfeld",
+          "name_modern": null,
+          "centroid": [
+            9.7764627,
+            50.65546
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
@@ -884,25 +672,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Grab_von_Konrad_Zuse_in_H%C3%BCnfeld.jpg"
         }
       ],
-      "chapter": "later_years_and_ideas",
-      "location_coordinates": [
-        {
-          "label": "H\u00fcnfeld, Landkreis Fulda, Hesse, 36088, Germany",
-          "name": "H\u00fcnfeld",
-          "primary": true,
-          "centroid": [
-            9.7764627,
-            50.65546
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.6201665,
-            50.5966529,
-            9.8538905,
-            50.7424824
-          ]
-        }
-      ]
+      "chapter": "later_years_and_ideas"
     }
   ]
 }

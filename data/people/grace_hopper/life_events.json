@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-life-events",
-  "created_on": "2025-11-20",
+  "dataset": "notable_lives_v1",
+  "created_on": "2025-12-04",
   "person": {
     "name": "Grace_Hopper",
     "birth_date": "1906-12-09",
@@ -8,142 +8,186 @@
     "primary_roles": [
       "computer scientist",
       "mathematician",
-      "United States Navy rear admiral"
+      "United States Navy rear admiral",
+      "programming language pioneer"
     ],
-    "summary": "Grace Brewster Hopper was an American computer scientist, mathematician, and U.S. Navy rear admiral. A pioneer of computer programming, she helped develop the Harvard Mark I, devised the theory of machine\u2011independent programming languages, and led creation of early compilers including FLOW\u2011MATIC, which strongly influenced COBOL. She served for decades in the Navy, shaping standards for programming languages and computer systems.",
+    "summary": "Grace Hopper was an American computer scientist, mathematician, and U.S. Navy rear admiral who became one of the earliest programmers of the Harvard Mark I, a creator of the first working compiler, and a key figure in the development of FLOW-MATIC and COBOL, foundational high-level programming languages. Over a parallel academic, industrial, and naval career spanning more than four decades, she championed machine-independent, English\u2011like programming and helped standardize programming language practices across the U.S. Navy and the computing industry.",
     "wikipedia": "https://en.wikipedia.org/wiki/Grace_Hopper",
     "portrait": {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Commodore_Grace_Hopper%2C_an_early_computer_pioneer.png",
-      "source": "https://commons.wikimedia.org/wiki/File:Commodore_Grace_Hopper,_an_early_computer_pioneer.png"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
+      "source": "https://en.wikipedia.org/wiki/Grace_Hopper"
     }
   },
+  "chapters": [
+    {
+      "id": "early_life_and_academic_training",
+      "headline": "Curious Childhood and Academic Training",
+      "description": "From her inquisitive New York childhood through rigorous study at Vassar and Yale, Hopper developed the mathematical and scientific foundation that would underpin her later work in computing and the Navy.",
+      "date_start": "1906-12-09",
+      "date_start_precision": "day",
+      "date_end": "1943",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 36
+    },
+    {
+      "id": "wartime_navy_service_and_mark_i",
+      "headline": "Wartime Service and Mark I",
+      "description": "During World War II Hopper left her Vassar professorship to join the U.S. Navy Reserve, becoming one of the first programmers of the Harvard Mark I and establishing herself as a computing specialist under naval sponsorship.",
+      "date_start": "1943",
+      "date_start_precision": "year",
+      "date_end": "1949",
+      "date_end_precision": "year",
+      "age_start": 36,
+      "age_end": 42
+    },
+    {
+      "id": "univac_and_compiler_innovations",
+      "headline": "UNIVAC Years and Compiler Innovations",
+      "description": "Working in industry on UNIVAC, Hopper led automatic programming efforts, created one of the first operational compilers, and advocated English-like programming, laying the groundwork for business-oriented languages such as FLOW-MATIC and COBOL.",
+      "date_start": "1949",
+      "date_start_precision": "year",
+      "date_end": "1966",
+      "date_end_precision": "year",
+      "age_start": 42,
+      "age_end": 60
+    },
+    {
+      "id": "cobol_standardization_and_naval_leadership",
+      "headline": "COBOL, Standards, and Naval Leadership",
+      "description": "Recalled to active duty, Hopper directed the Navy Programming Languages Group, guided COBOL validation and standardization, and promoted networks of smaller computers and rigorous testing standards across the Defense Department.",
+      "date_start": "1967",
+      "date_start_precision": "year",
+      "date_end": "1986-08-14",
+      "date_end_precision": "day",
+      "age_start": 60,
+      "age_end": 79
+    },
+    {
+      "id": "final_years_and_late_recognition",
+      "headline": "Final Years and Late Recognition",
+      "description": "After her final Navy retirement, Hopper continued as a public advocate for computing and received major national honors and dozens of honorary degrees before her death in 1992.",
+      "date_start": "1986-08-15",
+      "date_start_precision": "day",
+      "date_end": "1992-01-01",
+      "date_end_precision": "day",
+      "age_start": 79,
+      "age_end": 85
+    }
+  ],
   "events": [
     {
       "date": "1906-12-09",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in New York City",
-      "description": "Grace Brewster Murray (later Grace Hopper) was born in New York City to Walter Fletcher Murray and Mary Campbell Van Horne. She was the eldest of three children in a family of Scottish and Dutch descent, and her great\u2011grandfather Alexander Wilson Russell had been an admiral in the U.S. Navy.",
+      "description": "Grace Brewster Murray was born in New York City as the eldest of three children of Walter Fletcher Murray and Mary Campbell Van Horne, a family of Scottish and Dutch descent active in a local church community. Stories from her childhood, such as dismantling alarm clocks to see how they worked, reflected an early mechanical curiosity that her parents tolerated and gently guided. Her family background included a great\u2011grandfather who had served as a U.S. Navy admiral in the Civil War, foreshadowing her own later naval career.",
       "locations": [
-        "New York City"
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, USA",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Walter Fletcher Murray",
+        "Mary Campbell Van Horne"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "location_coordinates": [
-        {
-          "label": "New York, United States",
-          "name": "New York City",
-          "primary": true,
-          "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.258843,
-            40.476578,
-            -73.700233,
-            40.91763
-          ]
-        }
-      ]
+      "event_type_icon": "mdi-candle",
+      "chapter": "early_life_and_academic_training"
     },
     {
       "date": "1928",
       "date_precision": "year",
-      "date_note": "Year of graduation from Vassar College",
       "age": 21,
-      "title": "Graduates from Vassar",
-      "description": "Grace Murray completed her undergraduate studies at Vassar College, graduating Phi Beta Kappa with a bachelor\u2019s degree in mathematics and physics. Her strong performance in mathematics set the foundation for her later work in mathematical physics and computer science.",
+      "title": "Graduates Vassar in Mathematics",
+      "description": "After preparatory schooling at the Hartridge School and an initial rejection for early admission, Hopper entered Vassar College and graduated Phi Beta Kappa in 1928 with a bachelor\u2019s degree in mathematics and physics. At Vassar she distinguished herself in quantitative subjects at a time when few women pursued advanced scientific study, building both confidence and credentials. The experience also established an institutional connection she would later return to as a faculty member.",
       "locations": [
-        "Poughkeepsie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "location_coordinates": [
         {
-          "label": "City of Poughkeepsie, Dutchess County, New York, 12601, United States",
-          "name": "Poughkeepsie",
-          "primary": true,
+          "name_historic": "Poughkeepsie, New York",
+          "name_modern": "Poughkeepsie, New York, United States",
           "centroid": [
             -73.9283672,
             41.7065539
           ],
-          "source": "nominatim",
-          "bbox": [
-            -73.946377,
-            41.670257,
-            -73.890811,
-            41.716976
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Vassar_College"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_life_and_academic_training"
     },
     {
       "date": "1930",
       "date_precision": "year",
-      "date_note": "Year given for both degree completion and marriage; months not specified in sources",
       "age": 23,
-      "title": "Earns Yale master\u2019s degree",
-      "description": "Grace Murray received a master\u2019s degree in mathematics from Yale University, further specializing in advanced mathematical theory. This achievement marked her transition from undergraduate work at Vassar to graduate\u2011level research at one of the leading American universities.",
+      "title": "Earns Yale Master\u2019s Degree",
+      "description": "Hopper continued her studies at Yale University, earning a master\u2019s degree in mathematics in 1930. Immersed in advanced coursework and research, she developed deeper expertise in mathematical and mathematical physics topics that were then highly abstract. This graduate training at a leading research university positioned her for a dual path in scholarship and teaching.",
       "locations": [
-        "New Haven"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "location_coordinates": [
         {
-          "label": "New Haven, South Central Connecticut Planning Region, Connecticut, United States",
-          "name": "New Haven",
-          "primary": true,
+          "name_historic": "New Haven",
+          "name_modern": "New Haven, Connecticut, United States",
           "centroid": [
             -72.9250518,
             41.3082138
           ],
-          "source": "nominatim",
-          "bbox": [
-            -72.9980695,
-            41.2464253,
-            -72.8608112,
-            41.3505968
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Yale_University"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Grace_Hopper_College%2C_Yale_University.jpg",
+          "caption": "Grace Hopper College (formerly Calhoun College) at Yale University in New Haven, representing the campus where Grace Hopper completed her master\u2019s degree in mathematics in 1930.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_College,_Yale_University.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "early_life_and_academic_training"
     },
     {
       "date": "1930",
       "date_precision": "year",
-      "date_note": "Marriage year only",
+      "date_end": "1945",
+      "date_end_precision": "year",
       "age": 23,
-      "title": "Marries Vincent Foster Hopper",
-      "description": "Grace Murray married Vincent Foster Hopper, a professor at New York University. Although the couple later divorced in 1945, she continued to use the surname Hopper for the rest of her life and under that name became widely known as a pioneer in computing.",
+      "title": "Marriage to Vincent Foster Hopper",
+      "description": "In 1930 Grace Murray married Vincent Foster Hopper, a New York University professor of English. Their marriage coincided with the early phase of her academic career, during which she balanced personal life with graduate study and teaching. Although they divorced in 1945, she kept the surname Hopper for the rest of her life, under which she became internationally known in computing and the Navy.",
       "locations": [
-        "New York City"
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Vincent Foster Hopper"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Vincent_Foster_Hopper"
       ],
-      "location_coordinates": [
-        {
-          "label": "New York, United States",
-          "name": "New York City",
-          "primary": true,
-          "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.258843,
-            40.476578,
-            -73.700233,
-            40.91763
-          ]
-        }
-      ]
+      "event_type_icon": "mdi-ring",
+      "chapter": "early_life_and_academic_training"
     },
     {
       "date": "1931",
@@ -151,318 +195,271 @@
       "date_end": "1941",
       "date_end_precision": "year",
       "age": 24,
-      "title": "Joins Vassar mathematics faculty",
-      "description": "Grace Hopper began teaching mathematics at Vassar College as an instructor. Over the next decade she developed her skills as a teacher and researcher, and in 1941 she was promoted to associate professor of mathematics, balancing academic responsibilities with her continuing graduate work.",
+      "title": "Joins Vassar Mathematics Faculty",
+      "description": "Hopper began teaching mathematics at Vassar College in 1931, returning to her alma mater as an instructor during a period when women faculty were still relatively uncommon. Over the following decade she advanced to associate professor, contributing to the mathematical education of young women and refining her teaching style. Her classroom experience later influenced the clarity and didactic structure of her programming manuals and talks.",
       "locations": [
-        "Poughkeepsie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "location_coordinates": [
         {
-          "label": "City of Poughkeepsie, Dutchess County, New York, 12601, United States",
-          "name": "Poughkeepsie",
-          "primary": true,
+          "name_historic": "Poughkeepsie, New York",
+          "name_modern": "Poughkeepsie, New York, United States",
           "centroid": [
             -73.9283672,
             41.7065539
           ],
-          "source": "nominatim",
-          "bbox": [
-            -73.946377,
-            41.670257,
-            -73.890811,
-            41.716976
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Vassar_College"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Grace_Hopper_College_01.jpg",
+          "caption": "Grace Hopper College at Yale University, renamed in honor of computer pioneer Grace Hopper. Her earlier academic career included teaching mathematics at Vassar College starting in 1931.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_College_01.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "early_life_and_academic_training"
     },
     {
       "date": "1934",
       "date_precision": "year",
       "age": 27,
-      "title": "Completes Yale Ph.D.",
-      "description": "Grace Hopper earned her Ph.D. in mathematics from Yale University under the supervision of \u00d8ystein Ore. Her dissertation, titled \"New Types of Irreducibility Criteria,\" was published in 1934, establishing her as a professional mathematician with expertise in abstract algebra.",
+      "title": "Completes Ph.D. at Yale",
+      "description": "In 1934 Hopper earned her Ph.D. in mathematics from Yale University under the supervision of algebraist \u00d8ystein Ore, publishing her dissertation \"New Types of Irreducibility Criteria\" the same year. The work dealt with abstract mathematical questions, demonstrating her capacity for rigorous theoretical reasoning. Achieving a doctorate in mathematics as a woman in the 1930s placed her among a very small cohort and gave her formal credentials that later helped her gain authority in the emerging field of computing.",
       "locations": [
-        "New Haven"
+        {
+          "name_historic": "New Haven",
+          "name_modern": "New Haven, Connecticut, United States",
+          "centroid": [
+            -72.9279,
+            41.3083
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "\u00d8ystein Ore"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/%C3%98ystein_Ore",
+        "https://en.wikipedia.org/wiki/Yale_University"
       ],
-      "location_coordinates": [
+      "images": [
         {
-          "label": "New Haven, South Central Connecticut Planning Region, Connecticut, United States",
-          "name": "New Haven",
-          "primary": true,
-          "centroid": [
-            -72.9250518,
-            41.3082138
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -72.9980695,
-            41.2464253,
-            -72.8608112,
-            41.3505968
-          ]
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Grace_Hopper_College_02.jpg",
+          "caption": "Grace Hopper College (formerly Calhoun College) at Yale University in New Haven, Connecticut, where Grace Hopper completed her Ph.D. in mathematics in 1934.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_College_02.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-dissertation",
+      "chapter": "early_life_and_academic_training"
     },
     {
       "date": "1943",
       "date_precision": "year",
+      "date_end": "1944",
+      "date_end_precision": "year",
       "age": 36,
-      "title": "Sworn into Navy Reserve",
-      "description": "During World War II, Grace Hopper obtained a leave of absence from Vassar College and was sworn into the United States Navy Reserve as part of the WAVES program. Because she was below the minimum Navy weight requirement, she had to obtain a special exemption to receive her commission.",
+      "title": "Enters Navy Reserve and WAVES",
+      "description": "During World War II, Hopper obtained a leave of absence from Vassar and was sworn into the U.S. Navy Reserve as part of the WAVES, overcoming age, weight, and occupational objections through special exemptions. She reported for training at the Naval Reserve Midshipmen\u2019s School at Smith College, where she graduated first in her class in 1944. This transition from civilian academia to naval service placed her mathematical skills directly into the war effort and set the course for her lifelong association with the Navy.",
       "locations": [
-        "Northampton"
+        {
+          "name_historic": "Poughkeepsie, New York",
+          "name_modern": "Poughkeepsie, New York, USA",
+          "centroid": [
+            -73.9283672,
+            41.7065539
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Northampton, Massachusetts",
+          "name_modern": "Northampton, Massachusetts, USA",
+          "centroid": [
+            -72.6311006,
+            42.3178989
+          ],
+          "primary": true
+        }
       ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/WAVES"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/US_Navy_O2_insignia.svg",
-          "caption": "Insignia representing the rank of lieutenant, junior grade in the United States Navy, Hopper\u2019s first commissioned officer rank.",
-          "source": "https://commons.wikimedia.org/wiki/File:US_Navy_O2_insignia.svg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Grace_Hopper_in_the_1940s.webp",
+          "caption": "Grace Hopper in U.S. Navy Reserve uniform in the 1940s, around the period when she entered the WAVES and attended Naval Reserve Midshipmen\u2019s School.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_in_the_1940s.webp"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Northampton, West Northamptonshire, England, United Kingdom",
-          "name": "Northampton",
-          "primary": true,
-          "centroid": [
-            -0.9028043,
-            52.2343297
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -0.9710267,
-            52.1860899,
-            -0.7913699,
-            52.2826966
-          ]
-        }
-      ]
+      "event_type_icon": "mdi-shield",
+      "chapter": "wartime_navy_service_and_mark_i"
     },
     {
       "date": "1944",
       "date_precision": "year",
       "date_end": "1949",
       "date_end_precision": "year",
-      "date_note": "Assigned after graduating from Naval Reserve Midshipmen\u2019s School in 1944; remained until 1949",
       "age": 37,
-      "title": "Programs Harvard Mark I",
-      "description": "After graduating first in her class at the Naval Reserve Midshipmen\u2019s School, Lieutenant (junior grade) Grace Hopper was assigned to the Bureau of Ships Computation Project at Harvard University. There she served on the programming staff for the Harvard Mark I (Automatic Sequence Controlled Calculator) under Howard H. Aiken, co\u2011authoring several papers and helping to write the machine\u2019s first operational manual.",
+      "title": "Programs the Harvard Mark I",
+      "description": "Upon graduation from midshipmen\u2019s school, Hopper was assigned as a lieutenant, junior grade, to the Bureau of Ships Computation Project at Harvard University, joining Howard H. Aiken\u2019s Mark I programming staff. She became one of the first programmers of the Automatic Sequence Controlled Calculator, helping translate mathematical and naval problems into detailed instruction sequences. During these years she co\u2011authored several papers on the Mark I and chose to remain at Harvard as a Navy\u2011funded research fellow rather than return to a Vassar professorship, deepening her commitment to computing research.",
       "locations": [
-        "Cambridge"
+        {
+          "name_historic": "Cambridge, Massachusetts",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Howard H. Aiken"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
         "https://en.wikipedia.org/wiki/Harvard_Mark_I"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Harvard_Mark_I_sign-up.agr.jpg",
-          "caption": "Duty officer assignment sheet for the U.S. Navy Bureau of Ships Computation Project operating the Harvard Mark I at Harvard University.",
-          "source": "https://commons.wikimedia.org/wiki/File:Harvard_Mark_I_sign-up.agr.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Cambridge, Cambridgeshire, Cambridgeshire and Peterborough, England, United Kingdom",
-          "name": "Cambridge",
-          "primary": true,
-          "centroid": [
-            0.1186637,
-            52.2055314
-          ],
-          "source": "nominatim",
-          "bbox": [
-            0.0686389,
-            52.1579417,
-            0.184552,
-            52.2372296
-          ]
-        }
-      ]
-    },
-    {
-      "date": "1945-09-09",
-      "date_precision": "day",
-      "date_note": "Commonly mis\u2011dated as 1945; Smithsonian and other sources give 1947, but event is associated with Hopper\u2019s Mark II work in the mid\u20111940s",
-      "age": 38,
-      "title": "Documents famous computer bug",
-      "description": "While working with the Harvard Mark II Aiken Relay Calculator, Grace Hopper\u2019s team found a moth trapped in a relay\u2014an incident they humorously logged as the \"first actual case of bug being found.\" The taped moth and log entry became an iconic artifact in computing history and popularized the use of the term \"debugging\" for fixing computer problems.",
-      "locations": [
-        "Cambridge"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Software_bug"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/First_Computer_Bug%2C_1945.jpg",
-          "caption": "Logbook page from the Harvard Mark II showing the moth taped in place and labeled as the first actual computer \"bug.\"",
-          "source": "https://commons.wikimedia.org/wiki/File:First_Computer_Bug,_1945.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Cambridge, Cambridgeshire, Cambridgeshire and Peterborough, England, United Kingdom",
-          "name": "Cambridge",
-          "primary": true,
-          "centroid": [
-            0.1186637,
-            52.2055314
-          ],
-          "source": "nominatim",
-          "bbox": [
-            0.0686389,
-            52.1579417,
-            0.184552,
-            52.2372296
-          ]
-        }
-      ]
+      "event_type_icon": "mdi-microscope",
+      "chapter": "wartime_navy_service_and_mark_i"
     },
     {
       "date": "1949",
       "date_precision": "year",
       "age": 42,
-      "title": "Joins Eckert\u2013Mauchly for UNIVAC",
-      "description": "Grace Hopper left Harvard in 1949 to become a senior mathematician at the Eckert\u2013Mauchly Computer Corporation in Philadelphia, joining the team developing the UNIVAC I. She later became UNIVAC director of Automatic Programming Development for Remington Rand, working on some of the earliest commercial electronic computers.",
+      "title": "Joins Eckert\u2013Mauchly and UNIVAC I",
+      "description": "In 1949 Hopper left Harvard to become a senior mathematician at the Eckert\u2013Mauchly Computer Corporation, later part of Remington Rand, joining the team building the UNIVAC I. She worked on software for what became the first commercially available large\u2011scale electronic computer, tackling the practical needs of business and government users rather than purely scientific calculations. In this environment she also served as director of automatic programming development for UNIVAC, positioning herself to reshape how programs were written.",
       "locations": [
-        "Philadelphia"
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
+          "centroid": [
+            -75.1635262,
+            39.9527237
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Cambridge, Massachusetts",
+          "name_modern": "Cambridge, Massachusetts, USA",
+          "centroid": [
+            -71.1040018,
+            42.3656347
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "J. Presper Eckert",
+        "John Mauchly"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Eckert%E2%80%93Mauchly_Computer_Corporation",
         "https://en.wikipedia.org/wiki/UNIVAC_I"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg",
-          "caption": "Grace Hopper at the UNIVAC keyboard around 1960, working with one of the first commercial electronic computers.",
+          "caption": "Grace Murray Hopper working at a UNIVAC computer console, representative of her software development work on UNIVAC systems that began after she joined the Eckert\u2013Mauchly Computer Corporation in 1949.",
           "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_and_UNIVAC.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Philadelphia, Philadelphia County, Pennsylvania, United States",
-          "name": "Philadelphia",
-          "primary": true,
-          "centroid": [
-            -75.1635262,
-            39.9527237
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -75.280266,
-            39.867005,
-            -74.9558314,
-            40.1379593
-          ]
-        }
-      ]
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "univac_and_compiler_innovations"
     },
     {
       "date": "1952",
       "date_precision": "year",
       "age": 45,
-      "title": "Builds first A-0 compiler",
-      "description": "While working for Remington Rand, Grace Hopper completed an operational link\u2011loader for the A\u20110 System, which she described as a compiler. Her A\u20110 compiler translated symbolic mathematical notation into machine code and demonstrated that computers could be programmed using higher\u2011level representations rather than only numeric codes, laying groundwork for modern programming languages.",
+      "title": "Builds A-0 Compiler Link-Loader",
+      "description": "By 1952 Hopper had produced an operational program she called a compiler for the A\u20110 System, essentially a link\u2011loader that translated symbolic descriptions into machine code for UNIVAC. Many contemporaries doubted that such automatic translation was feasible, insisting that computers could only perform arithmetic, but she persisted and demonstrated working software. This achievement marked one of the earliest functioning compilers and introduced the idea that programmers could work at a higher level of abstraction than raw machine instructions.",
       "locations": [
-        "Philadelphia"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/A-0_System"
-      ],
-      "location_coordinates": [
         {
-          "label": "Philadelphia, Philadelphia County, Pennsylvania, United States",
-          "name": "Philadelphia",
-          "primary": true,
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
             -75.1635262,
             39.9527237
           ],
-          "source": "nominatim",
-          "bbox": [
-            -75.280266,
-            39.867005,
-            -74.9558314,
-            40.1379593
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/A-0_System"
+      ],
+      "event_type_icon": "mdi-invention",
+      "chapter": "univac_and_compiler_innovations"
     },
     {
       "date": "1954",
       "date_precision": "year",
       "age": 47,
-      "title": "Leads automatic programming department",
-      "description": "Grace Hopper was appointed the first director of automatic programming at Remington Rand. Under her leadership, the department released early compiler\u2011based programming languages such as MATH\u2011MATIC and FLOW\u2011MATIC, pioneering the idea that business data processors could write programs using English\u2011like statements instead of low\u2011level symbolic codes.",
+      "title": "Leads Automatic Programming Department",
+      "description": "In 1954 Hopper was appointed the first director of automatic programming at her company, overseeing a group charged with transforming her compiler ideas into practical products. Drawing on influences such as the Laning and Zierler system, her team released some of the earliest compiler\u2011based programming languages for UNIVAC, including MATH\u2011MATIC for scientific work and FLOW\u2011MATIC for business data processing. These languages embodied her conviction that computing should be accessible to non\u2011specialists and expressed in more natural, often English\u2011like, notation.",
       "locations": [
-        "Philadelphia"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "location_coordinates": [
         {
-          "label": "Philadelphia, Philadelphia County, Pennsylvania, United States",
-          "name": "Philadelphia",
-          "primary": true,
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
-            -75.1635262,
-            39.9527237
+            -75.1652,
+            39.9526
           ],
-          "source": "nominatim",
-          "bbox": [
-            -75.280266,
-            39.867005,
-            -74.9558314,
-            40.1379593
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/FLOW-MATIC",
+        "https://en.wikipedia.org/wiki/MATH-MATIC"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "univac_and_compiler_innovations"
     },
     {
       "date": "1959-04",
       "date_precision": "month",
-      "date_note": "The CODASYL conference that initiated COBOL took place in the spring of 1959; exact start day varies by source",
+      "date_note": "Month approximate to represent 'spring 1959'",
       "age": 52,
       "title": "Advises CODASYL on COBOL",
-      "description": "In the spring of 1959, Grace Hopper served as a technical consultant to the Conference on Data Systems Languages (CODASYL), which brought together government and industry experts to design a new business programming language. Drawing heavily on her FLOW\u2011MATIC work, the committee created COBOL, a machine\u2011independent, English\u2011like language that would become the dominant language for business data processing.",
+      "description": "In the spring of 1959 Hopper served as a technical consultant to the Conference on Data Systems Languages (CODASYL), where industry and government experts met to design a common business programming language. Many of her former colleagues were on the working committees that blended ideas from her FLOW\u2011MATIC system with IBM\u2019s COMTRAN to create COBOL. The resulting language captured her long\u2011held view that programs should be machine\u2011independent and written in a syntax close to English, providing a standardized tool that spread rapidly through business and government computing.",
       "locations": [
-        "Washington, D.C."
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Grace Murray Hopper",
+        "Howard Bromberg",
+        "William Selden",
+        "Jean E. Sammet",
+        "Charles A. Phillips",
+        "Robert Bemer",
+        "Howard H. Aiken"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/COBOL"
+        "https://en.wikipedia.org/wiki/COBOL",
+        "https://en.wikipedia.org/wiki/CODASYL"
       ],
-      "location_coordinates": [
-        {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C.",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
-        }
-      ]
+      "event_type_icon": "mdi-conference",
+      "chapter": "univac_and_compiler_innovations"
     },
     {
       "date": "1967",
@@ -470,146 +467,204 @@
       "date_end": "1977",
       "date_end_precision": "year",
       "age": 60,
-      "title": "Heads Navy Programming Languages Group",
-      "description": "Recalled to active duty in 1967, Grace Hopper became director of the Navy Programming Languages Group in the Office of Information Systems Planning. Over the next decade she oversaw development of validation software and led COBOL standardization efforts across the Navy, helping to unify programming practices and ensure compatibility among systems. She was promoted to captain in 1973.",
+      "title": "Directs Navy Programming Languages Group",
+      "description": "After an initial retirement from the Naval Reserve in 1966, Hopper was recalled to active duty in 1967 and appointed director of the Navy Programming Languages Group in the Office of Information Systems Planning. Over the next decade she supervised development of COBOL validation software and a Navy\u2011wide COBOL standardization program, ensuring that compilers across different vendors produced consistent results. Her leadership helped the Navy impose order on a proliferating set of language dialects and solidified COBOL\u2019s central role in military and government data processing.",
       "locations": [
-        "Washington, D.C."
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365,
+            38.8951
+          ],
+          "primary": true
+        }
       ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/COBOL"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/US_Navy_O6_insignia.svg",
-          "caption": "Insignia representing the rank of captain in the United States Navy, which Hopper achieved while directing the Navy Programming Languages Group.",
-          "source": "https://commons.wikimedia.org/wiki/File:US_Navy_O6_insignia.svg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Grace_Murray_Hopper%2C_in_her_office_in_Washington_DC%2C_1978%2C_%C2%A9Lynn_Gilbert.jpg",
+          "caption": "Grace Murray Hopper in her Washington, D.C. office, reflecting her role in overseeing Navy programming standards and COBOL validation work.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Murray_Hopper,_in_her_office_in_Washington_DC,_1978,_%C2%A9Lynn_Gilbert.jpg"
         }
       ],
-      "location_coordinates": [
+      "event_type_icon": "mdi-appointment",
+      "chapter": "cobol_standardization_and_naval_leadership"
+    },
+    {
+      "date": "1970",
+      "date_precision": "year",
+      "date_end": "1980",
+      "date_end_precision": "year",
+      "date_note": "Span summarizes her 1970s work on standards and distributed systems",
+      "age": 63,
+      "title": "Champions Standards and Networks",
+      "description": "Throughout the 1970s Hopper argued within the Defense Department for moving from large centralized computers to distributed networks of smaller machines sharing common databases. She collaborated on the development and implementation of formal standards and conformance tests for languages such as FORTRAN and COBOL, initially administered by the Navy and later by the National Bureau of Standards. These efforts pressured major vendors to converge their language implementations, influencing the broader computing industry well beyond military applications.",
+      "locations": [
         {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C.",
-          "primary": true,
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0365,
+            38.8951
           ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
+          "primary": true
+        },
+        {
+          "name_historic": "Arlington, Virginia",
+          "name_modern": "Arlington, Virginia, United States",
+          "centroid": [
+            -77.1043,
+            38.8816
+          ],
+          "primary": false
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/COBOL",
+        "https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons1/1b/Grace_Murray_Hopper_visualizing_nanoseconds.png",
+          "caption": "Grace Hopper demonstrating pieces of wire representing the distance an electrical signal travels in a nanosecond, illustrating her work on explaining and standardizing computing concepts.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Murray_Hopper_visualizing_nanoseconds.png"
+        }
+      ],
+      "event_type_icon": "mdi-research",
+      "chapter": "cobol_standardization_and_naval_leadership"
     },
     {
       "date": "1983-12-15",
       "date_precision": "day",
-      "age": 77,
-      "title": "Promoted to commodore at White House",
-      "description": "On December 15, 1983, Grace Hopper was promoted on the retired list to the U.S. Navy rank of commodore (later redesignated rear admiral, lower half). The ceremony took place at the White House, where Secretary of the Navy John Lehman officiated and President Ronald Reagan attended, recognizing Hopper\u2019s decades of service and pioneering contributions to computer technology.",
+      "age": 76,
+      "title": "Promoted to Commodore Admiral",
+      "description": "On December 15, 1983, following public attention that included a 60 Minutes television profile and congressional interest, Hopper was promoted to the rank of commodore on the retired list by President Ronald Reagan via the Appointments Clause. When the Navy soon re-designated commodores as rear admirals (lower half), she became one of the very few female admirals in naval history. The promotion recognized both her technical contributions to computing and her decades of naval service that had extended past normal retirement age by special approval of Congress.",
       "locations": [
-        "Washington, D.C."
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Grace_Hopper_being_promoted_to_Commodore.jpg",
-          "caption": "Grace Hopper being promoted to the rank of commodore at the White House, with Secretary of the Navy John Lehman and President Ronald Reagan.",
-          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_being_promoted_to_Commodore.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C.",
-          "primary": true,
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
           "centroid": [
             -77.0365427,
             38.8950368
           ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": [
+        "Ronald Reagan",
+        "John Lehman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Commodore_(United_States)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Grace_Hopper_being_promoted_to_Commodore.jpg",
+          "caption": "Ceremony at the White House in Washington, D.C., where Secretary of the Navy John Lehman promotes Grace Hopper to the rank of commodore while President Ronald Reagan looks on, December 15, 1983.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_being_promoted_to_Commodore.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-promotion",
+      "chapter": "cobol_standardization_and_naval_leadership"
     },
     {
       "date": "1986-08-14",
       "date_precision": "day",
       "age": 79,
-      "title": "Retires from U.S. Navy",
-      "description": "Grace Hopper retired from the United States Navy on August 14, 1986, after more than 42 years of combined active and reserve service. At the time of her retirement as a rear admiral (lower half), she was the oldest serving officer in the Navy and received the Defense Distinguished Service Medal in recognition of her extraordinary contributions to military computing and information systems.",
+      "title": "Final Retirement from U.S. Navy",
+      "description": "After more than forty\u2011two years in uniform and repeated recalls to active duty, Hopper retired from the Navy for the last time on August 14, 1986, then its oldest serving officer. A ceremony aboard the USS Constitution in Boston honored her long career, and she received the Defense Distinguished Service Medal, the highest U.S. non\u2011combat defense decoration. The event symbolized official acknowledgment that software engineering and programming language work were strategic military contributions on par with more traditional forms of service.",
       "locations": [
-        "Boston"
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "William J. Crowe Jr."
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/USS_Constitution"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Defense_Distinguished_Service_Medal_ribbon.svg",
-          "caption": "Ribbon for the Defense Distinguished Service Medal, awarded to Grace Hopper upon her retirement from the Navy.",
-          "source": "https://commons.wikimedia.org/wiki/File:Defense_Distinguished_Service_Medal_ribbon.svg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons5/55/Grace_Hopper.jpg",
+          "caption": "Official U.S. Navy portrait of Commodore Grace M. Hopper, reflecting her long naval career prior to her final retirement in 1986.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper.jpg"
         }
       ],
-      "location_coordinates": [
+      "event_type_icon": "mdi-retirement",
+      "chapter": "cobol_standardization_and_naval_leadership"
+    },
+    {
+      "date": "1991",
+      "date_precision": "year",
+      "age": 84,
+      "title": "Receives National Medal of Technology",
+      "description": "In 1991 Hopper was awarded the National Medal of Technology, one of the United States\u2019 highest honors for technological innovation. The award recognized her pioneering role in creating compilers and in shaping COBOL and other high\u2011level languages that underpinned the modern software industry. By this time she had also accumulated around forty honorary degrees, reflecting global academic acknowledgment of her impact on both computing and engineering education.",
+      "locations": [
         {
-          "label": "Boston, Suffolk County, Massachusetts, United States",
-          "name": "Boston",
-          "primary": true,
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
           "centroid": [
-            -71.060511,
-            42.3554334
+            -77.0365427,
+            38.8950368
           ],
-          "source": "nominatim",
-          "bbox": [
-            -71.1912442,
-            42.2279112,
-            -70.8044881,
-            42.3969775
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/National_Medal_of_Technology_and_Innovation"
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "final_years_and_late_recognition"
     },
     {
       "date": "1992-01-01",
       "date_precision": "day",
       "age": 85,
-      "title": "Death in Arlington, Virginia",
-      "description": "Grace Hopper died on January 1, 1992, in Arlington, Virginia. Her death marked the end of a career that had reshaped both military and commercial computing through her work on early computers, compilers, and programming language standards.",
+      "title": "Death and Close of Career",
+      "description": "Grace Hopper died on January 1, 1992, bringing to an end a life that had spanned the rise of electronic computing from electromechanical calculators to networked systems. She left behind a legacy of practical tools, standardized languages, and an ethos that programming should be understandable and accessible. Her death prompted broad recognition within the Navy, academia, and industry of how deeply her ideas had shaped everyday computing practice.",
       "locations": [
-        "Arlington"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "location_coordinates": [
         {
-          "label": "Arlington, Tarrant County, Texas, United States",
-          "name": "Arlington",
-          "primary": true,
+          "name_historic": "Arlington, Virginia",
+          "name_modern": "Arlington, Virginia, United States",
           "centroid": [
-            -97.1071186,
-            32.7355816
+            -77.1068,
+            38.87997
           ],
-          "source": "nominatim",
-          "bbox": [
-            -97.233818,
-            32.5867753,
-            -97.037008,
-            32.817121
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "https://en.wikipedia.org/wiki/Arlington_National_Cemetery"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Grace_M_Hopper_grave.png",
+          "caption": "Grave of Grace Murray Hopper at Arlington National Cemetery, where she was buried with full military honors after her death in 1992.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_M_Hopper_grave.png"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "final_years_and_late_recognition"
     }
   ]
 }

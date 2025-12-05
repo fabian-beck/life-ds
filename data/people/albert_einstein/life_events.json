@@ -82,30 +82,20 @@
       "title": "Birth in Ulm",
       "description": "Albert Einstein was born on 14 March 1879 in Ulm, in the Kingdom of W\u00fcrttemberg in the German Empire, to Hermann Einstein, a salesman and engineer, and Pauline Koch. The family were secular Ashkenazi Jews. Within a year they moved to Munich, where his father and uncle founded an electrical engineering firm, giving the young Albert early exposure to technical discussions and apparatus.",
       "locations": [
-        "Ulm"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
         {
-          "label": "Ulm, Baden-W\u00fcrttemberg, Germany",
-          "name": "Ulm",
-          "primary": true,
+          "name_historic": "Ulm",
+          "name_modern": null,
           "centroid": [
             9.9912458,
             48.3984968
           ],
-          "source": "nominatim",
-          "bbox": [
-            9.8424917,
-            48.3067287,
-            10.0428303,
-            48.4685153
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1896-09",
@@ -114,7 +104,15 @@
       "title": "Graduation in Aarau",
       "description": "After leaving the rigid Luitpold Gymnasium in Munich, Einstein completed his secondary education at the Argovian cantonal school in Aarau, Switzerland. In September 1896 he passed his Matura examinations with strong grades in history, physics, algebra, and geometry. This Swiss school\u2019s liberal, discussion-based teaching style contrasted sharply with his earlier experience and left a lasting mark on his intellectual outlook.",
       "locations": [
-        "Aarau"
+        {
+          "name_historic": "Aarau",
+          "name_modern": null,
+          "centroid": [
+            8.0444448,
+            47.3927146
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein"
@@ -126,25 +124,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein%27s_exam_of_maturity_grades_(color2).jpg"
         }
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Aarau, Bezirk Aarau, Aargau, 5000, Switzerland",
-          "name": "Aarau",
-          "primary": true,
-          "centroid": [
-            8.0444448,
-            47.3927146
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.0264433,
-            47.3697199,
-            8.1134556,
-            47.4123518
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1897",
@@ -155,7 +135,15 @@
       "title": "Studies at Zurich Polytechnic",
       "description": "In 1897, at age seventeen, Einstein enrolled in the mathematics and physics teaching diploma program at the Swiss Federal Polytechnic School in Zurich (later ETH Z\u00fcrich). Over four years he studied advanced mathematics, theoretical and experimental physics, and mechanics, befriending fellow student Marcel Grossmann and forming an intense scientific and personal partnership with Mileva Mari\u0107. He graduated in 1900, qualified to teach mathematics and physics.",
       "locations": [
-        "Z\u00fcrich"
+        {
+          "name_historic": "Z\u00fcrich",
+          "name_modern": null,
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -168,25 +156,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:ETH-BIB-Einstein,_Albert_und_Kollegen_am_Physik-Labor_ETH-Portrait-Portr_10750.tif"
         }
       ],
-      "chapter": "early_life_and_education",
-      "location_coordinates": [
-        {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Z\u00fcrich",
-          "primary": true,
-          "centroid": [
-            8.5410422,
-            47.3744489
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        }
-      ]
+      "chapter": "early_life_and_education"
     },
     {
       "date": "1902",
@@ -195,7 +165,15 @@
       "title": "Patent Office Appointment in Bern",
       "description": "After several unsuccessful attempts to obtain an academic post following graduation, Einstein secured a permanent position in 1902 as a technical expert, third class, at the Swiss Patent Office in Bern. Evaluating patent applications for electromagnetic devices provided him with a steady income and regular hours, while the relative intellectual isolation encouraged him to pursue independent theoretical work in his spare time, laying the groundwork for his 1905 breakthroughs.",
       "locations": [
-        "Bern"
+        {
+          "name_historic": "Bern",
+          "name_modern": null,
+          "centroid": [
+            7.4521749,
+            46.9484742
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein"
@@ -207,25 +185,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Einstein_patentoffice_full_(cropped).jpg"
         }
       ],
-      "chapter": "from_student_to_patent_clerk",
-      "location_coordinates": [
-        {
-          "label": "Bern, Bern-Mittelland administrative district, Bernese Mittelland administrative region, Bern, Switzerland",
-          "name": "Bern",
-          "primary": true,
-          "centroid": [
-            7.4521749,
-            46.9484742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            7.2943145,
-            46.9190326,
-            7.4955563,
-            46.9901527
-          ]
-        }
-      ]
+      "chapter": "from_student_to_patent_clerk"
     },
     {
       "date": "1903-01",
@@ -234,7 +194,15 @@
       "title": "Marriage to Mileva Mari\u0107",
       "description": "In January 1903, Einstein married Mileva Mari\u0107, a Serbian physicist and mathematician whom he had met as a fellow student at the Zurich Polytechnic. They settled in Bern, where Einstein worked at the patent office and Mileva set aside her own scientific ambitions as they started a family. Their complex personal and intellectual relationship has since been the subject of considerable historical debate.",
       "locations": [
-        "Bern"
+        {
+          "name_historic": "Bern",
+          "name_modern": null,
+          "centroid": [
+            7.4521749,
+            46.9484742
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -247,25 +215,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_and_his_wife_Mileva_Maric.jpg"
         }
       ],
-      "chapter": "from_student_to_patent_clerk",
-      "location_coordinates": [
-        {
-          "label": "Bern, Bern-Mittelland administrative district, Bernese Mittelland administrative region, Bern, Switzerland",
-          "name": "Bern",
-          "primary": true,
-          "centroid": [
-            7.4521749,
-            46.9484742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            7.2943145,
-            46.9190326,
-            7.4955563,
-            46.9901527
-          ]
-        }
-      ]
+      "chapter": "from_student_to_patent_clerk"
     },
     {
       "date": "1905",
@@ -274,7 +224,15 @@
       "title": "Annus Mirabilis Papers",
       "description": "While employed full\u2011time at the Bern patent office, Einstein in 1905 published four epoch\u2011making papers in Annalen der Physik. They provided a light\u2011quantum explanation of the photoelectric effect, a theory of Brownian motion, the special theory of relativity, and the mass\u2013energy equivalence relation E = mc\u00b2. Together, these works transformed the foundations of modern physics and later earned him the Nobel Prize in Physics for his explanation of the photoelectric effect.",
       "locations": [
-        "Bern"
+        {
+          "name_historic": "Bern",
+          "name_modern": null,
+          "centroid": [
+            7.4521749,
+            46.9484742
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -287,25 +245,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Einstein_thesis.png"
         }
       ],
-      "chapter": "from_student_to_patent_clerk",
-      "location_coordinates": [
-        {
-          "label": "Bern, Bern-Mittelland administrative district, Bernese Mittelland administrative region, Bern, Switzerland",
-          "name": "Bern",
-          "primary": true,
-          "centroid": [
-            7.4521749,
-            46.9484742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            7.2943145,
-            46.9190326,
-            7.4955563,
-            46.9901527
-          ]
-        }
-      ]
+      "chapter": "from_student_to_patent_clerk"
     },
     {
       "date": "1909",
@@ -314,30 +254,20 @@
       "title": "First Professorship in Zurich",
       "description": "In 1909, after obtaining his PhD from the University of Zurich in 1905, Einstein left the Bern patent office to accept his first full professorship in theoretical physics at the University of Zurich. This marked his transition from civil servant to professional academic physicist and gave him more time and institutional support to deepen his work on radiation, statistical mechanics, and the emerging quantum theory.",
       "locations": [
-        "Z\u00fcrich"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "chapter": "rise_to_scientific_eminence",
-      "location_coordinates": [
         {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Z\u00fcrich",
-          "primary": true,
+          "name_historic": "Z\u00fcrich",
+          "name_modern": null,
           "centroid": [
             8.5410422,
             47.3744489
           ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "chapter": "rise_to_scientific_eminence"
     },
     {
       "date": "1915",
@@ -346,7 +276,15 @@
       "title": "Completion of General Relativity",
       "description": "Working in Berlin during World War I, Einstein in 1915 presented the final form of his general theory of relativity to the Prussian Academy of Sciences. Extending his 1905 special relativity and drawing on advanced tensor calculus, the new theory described gravitation as the curvature of spacetime produced by mass and energy. General relativity radically revised Newtonian mechanics on cosmic scales and provided a new framework for understanding cosmology and gravitating systems.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein"
@@ -358,25 +296,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_photo_1920.jpg"
         }
       ],
-      "chapter": "rise_to_scientific_eminence",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "rise_to_scientific_eminence"
     },
     {
       "date": "1919-02-14",
@@ -385,31 +305,21 @@
       "title": "Divorce from Mileva Mari\u0107",
       "description": "On 14 February 1919, a court in Zurich granted Einstein and Mileva Mari\u0107 a divorce after five years of separation. Under the settlement, Einstein agreed that if he were to receive a Nobel Prize, the prize money would go to Mari\u0107. Their marriage had increasingly strained under his growing scientific preoccupations, personal differences, and his relationship with his cousin Elsa L\u00f6wenthal, whom he married later that year.",
       "locations": [
-        "Z\u00fcrich"
+        {
+          "name_historic": "Z\u00fcrich",
+          "name_modern": null,
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
         "https://en.wikipedia.org/wiki/Mileva_Mari%C4%87"
       ],
-      "chapter": "rise_to_scientific_eminence",
-      "location_coordinates": [
-        {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Z\u00fcrich",
-          "primary": true,
-          "centroid": [
-            8.5410422,
-            47.3744489
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        }
-      ]
+      "chapter": "rise_to_scientific_eminence"
     },
     {
       "date": "1919-05-29",
@@ -418,7 +328,15 @@
       "title": "Eclipse Confirmation of Relativity",
       "description": "On 29 May 1919, British expeditions led by Arthur Eddington to Sobral, Brazil, and Pr\u00edncipe, off West Africa, photographed a total solar eclipse to test Einstein\u2019s prediction that starlight would be deflected by the Sun\u2019s gravity. Their analysis showed a deflection consistent with general relativity and significantly larger than the Newtonian expectation. When the results were announced later that year, Einstein became an international scientific celebrity, and his theory of gravitation widely accepted.",
       "locations": [
-        "Sobral"
+        {
+          "name_historic": "Sobral",
+          "name_modern": null,
+          "centroid": [
+            -40.3456372,
+            -3.6879135
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -431,25 +349,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:1919_eclipse_positive.jpg"
         }
       ],
-      "chapter": "rise_to_scientific_eminence",
-      "location_coordinates": [
-        {
-          "label": "Sobral, Regi\u00e3o Geogr\u00e1fica Imediata de Sobral, Regi\u00e3o Geogr\u00e1fica Intermedi\u00e1ria de Sobral, Cear\u00e1, Northeast Region, Brazil",
-          "name": "Sobral",
-          "primary": true,
-          "centroid": [
-            -40.3456372,
-            -3.6879135
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -40.7236252,
-            -4.1428044,
-            -39.840626,
-            -3.5702547
-          ]
-        }
-      ]
+      "chapter": "rise_to_scientific_eminence"
     },
     {
       "date": "1921",
@@ -458,7 +358,15 @@
       "title": "Nobel Prize in Physics",
       "description": "In 1921, the Royal Swedish Academy of Sciences awarded Einstein the Nobel Prize in Physics for 1921, citing \u201chis services to theoretical physics, and especially for his discovery of the law of the photoelectric effect.\u201d The prize, formally presented in 1922, recognised his decisive role in establishing the quantum nature of light, rather than his then\u2011controversial relativity theories. In accordance with his divorce agreement, the Nobel money went to his first wife, Mileva Mari\u0107.",
       "locations": [
-        "Stockholm"
+        {
+          "name_historic": "Stockholm",
+          "name_modern": null,
+          "centroid": [
+            18.0710935,
+            59.3251172
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein"
@@ -470,25 +378,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_(Nobel).png"
         }
       ],
-      "chapter": "rise_to_scientific_eminence",
-      "location_coordinates": [
-        {
-          "label": "Stockholm, Stockholm Municipality, Stockholm County, 111 29, Sweden",
-          "name": "Stockholm",
-          "primary": true,
-          "centroid": [
-            18.0710935,
-            59.3251172
-          ],
-          "source": "nominatim",
-          "bbox": [
-            17.9110935,
-            59.1651172,
-            18.2310935,
-            59.4851172
-          ]
-        }
-      ]
+      "chapter": "rise_to_scientific_eminence"
     },
     {
       "date": "1933-05-26",
@@ -497,7 +387,15 @@
       "title": "Escape from Nazi Germany",
       "description": "While Einstein was visiting the United States in early 1933, Adolf Hitler came to power in Germany and began purging Jews from academic and public life. Einstein, horrified by Nazi antisemitism, decided not to return. On 26 May 1933 he travelled from Ostend to Dover, as recorded on his British landing card, and then on to Oxford. Soon afterward he resigned from the Prussian Academy of Sciences and gave up his German citizenship, becoming a prominent symbol of the exodus of Jewish and anti\u2011Nazi intellectuals.",
       "locations": [
-        "Dover"
+        {
+          "name_historic": "Dover",
+          "name_modern": null,
+          "centroid": [
+            1.3134228,
+            51.1251275
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -510,25 +408,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Einstein%27s_landing_card_(5706142737).jpg"
         }
       ],
-      "chapter": "public_intellectual_and_refugee",
-      "location_coordinates": [
-        {
-          "label": "Dover, Kent, England, United Kingdom",
-          "name": "Dover",
-          "primary": true,
-          "centroid": [
-            1.3134228,
-            51.1251275
-          ],
-          "source": "nominatim",
-          "bbox": [
-            1.1427455,
-            51.0971868,
-            1.406207,
-            51.3323814
-          ]
-        }
-      ]
+      "chapter": "public_intellectual_and_refugee"
     },
     {
       "date": "1939-08-02",
@@ -537,7 +417,15 @@
       "title": "Einstein\u2013Szilard Letter to Roosevelt",
       "description": "On 2 August 1939, physicist Leo Szilard drafted a letter, signed by Albert Einstein, to U.S. President Franklin D. Roosevelt warning that recent discoveries in nuclear fission could enable Nazi Germany to build extremely powerful bombs. The letter urged the United States to begin its own research and stockpile uranium. Delivered to Roosevelt in October, it prompted the creation of U.S. uranium committees and helped set in motion what became the Manhattan Project, though Einstein himself did not work on the project.",
       "locations": [
-        "Long Island"
+        {
+          "name_historic": "Long Island",
+          "name_modern": null,
+          "centroid": [
+            -73.0994297,
+            40.8514971
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter",
@@ -551,25 +439,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Einstein-Roosevelt-letter.png"
         }
       ],
-      "chapter": "public_intellectual_and_refugee",
-      "location_coordinates": [
-        {
-          "label": "Long Island, New York, United States",
-          "name": "Long Island",
-          "primary": true,
-          "centroid": [
-            -73.0994297,
-            40.8514971
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.0419691,
-            40.5419011,
-            -71.8562705,
-            41.161155
-          ]
-        }
-      ]
+      "chapter": "public_intellectual_and_refugee"
     },
     {
       "date": "1940-10",
@@ -579,7 +449,15 @@
       "title": "Becomes an American Citizen",
       "description": "In 1940, having settled at the Institute for Advanced Study in Princeton, Einstein was granted United States citizenship while retaining his Swiss nationality. As a German\u2011Jewish refugee from Nazism, he used his new position to speak out on behalf of fellow refugees, civil liberties, and, later, against the unrestrained use of nuclear weapons. He remained in Princeton for the rest of his life.",
       "locations": [
-        "Princeton, New Jersey"
+        {
+          "name_historic": "Princeton, New Jersey",
+          "name_modern": null,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein"
@@ -591,25 +469,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Citizen-Einstein.jpg"
         }
       ],
-      "chapter": "american_years_and_later_life",
-      "location_coordinates": [
-        {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton, New Jersey",
-          "primary": true,
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
-        }
-      ]
+      "chapter": "american_years_and_later_life"
     },
     {
       "date": "1955-04-18",
@@ -618,30 +478,20 @@
       "title": "Death in Princeton",
       "description": "Albert Einstein died on 18 April 1955 at Princeton Hospital in New Jersey after suffering a ruptured abdominal aortic aneurysm. By then he was globally revered not only as the architect of relativity but also as a moral voice who had spoken on pacifism, Zionism, civil rights, and the perils of nuclear war. He left unfinished his decades\u2011long quest for a unified field theory and remains one of the most influential scientists in history.",
       "locations": [
-        "Princeton, New Jersey"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "chapter": "american_years_and_later_life",
-      "location_coordinates": [
         {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton, New Jersey",
-          "primary": true,
+          "name_historic": "Princeton, New Jersey",
+          "name_modern": null,
           "centroid": [
             -74.6597376,
             40.3496953
           ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "chapter": "american_years_and_later_life"
     }
   ]
 }

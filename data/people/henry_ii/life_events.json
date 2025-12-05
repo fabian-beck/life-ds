@@ -26,7 +26,15 @@
       "title": "Contested accession and coronation as King of Germany (King of the Romans)",
       "description": "After the death of Emperor Otto III without heirs in January 1002 and a contested succession, Henry secured sufficient support to be anointed and crowned King of Germany (Rex Romanorum) by Archbishop Willigis at Mainz on 9 July 1002. He was the first German king to adopt the title King of the Romans prior to imperial coronation in Rome and the first since Otto I not to be crowned at Aachen.",
       "locations": [
-        "Mainz, Duchy of Franconia"
+        {
+          "name_historic": "Mainz, Duchy of Franconia",
+          "name_modern": null,
+          "centroid": [
+            8.2736253,
+            49.9995205
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
@@ -37,24 +45,6 @@
           "caption": "Medieval illumination depicting the coronation of Henry II as King of the Romans.",
           "source": "https://commons.wikimedia.org/wiki/File:Kronung_Heinrich_II.jpg"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Mainz, Bodenheim, Rhineland-Palatinate, Germany",
-          "name": "Mainz, Duchy of Franconia",
-          "primary": true,
-          "centroid": [
-            8.2736253,
-            49.9995205
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.1430883,
-            49.8955342,
-            8.3431435,
-            50.0353045
-          ]
-        }
       ]
     },
     {
@@ -64,7 +54,15 @@
       "title": "Cunigunde crowned Queen of Germany",
       "description": "Shortly after his own coronation, Henry arranged for Archbishop Willigis to crown his wife Cunigunde of Luxembourg as Queen of Germany at Paderborn on 10 August 1002. Her coronation formalized her role as Henry's consort and political partner within the kingdom.",
       "locations": [
-        "Paderborn, Duchy of Saxony"
+        {
+          "name_historic": "Paderborn, Duchy of Saxony",
+          "name_modern": null,
+          "centroid": [
+            8.752653,
+            51.7177044
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -76,24 +74,6 @@
           "caption": "Relief showing Emperor Henry II with his wife Cunigunde.",
           "source": "https://commons.wikimedia.org/wiki/File:Heinrich_II_und_Kunigunde.JPG"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Paderborn, Kreis Paderborn, North Rhine-Westphalia, Germany",
-          "name": "Paderborn, Duchy of Saxony",
-          "primary": true,
-          "centroid": [
-            8.752653,
-            51.7177044
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.6362871,
-            51.6542346,
-            8.9005872,
-            51.8008385
-          ]
-        }
       ]
     },
     {
@@ -103,7 +83,12 @@
       "title": "Submission of Herman II of Swabia and consolidation of royal authority",
       "description": "After months of armed conflict and political struggle over the succession, Herman II, Duke of Swabia, was defeated near Strasbourg and on 1 October 1002 submitted to Henry II's authority. Though Herman retained the ducal title until his death, Henry effectively secured the recognition of his kingship across Swabia, strengthening his control over the duchies.",
       "locations": [
-        "Near Strasbourg, Duchy of Swabia"
+        {
+          "name_historic": "Near Strasbourg, Duchy of Swabia",
+          "name_modern": null,
+          "centroid": null,
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
@@ -123,7 +108,15 @@
       "title": "Anointed King of Italy at Pavia after first Italian expedition",
       "description": "Responding to appeals from Italian bishops opposed to the self-proclaimed king Arduin of Ivrea, Henry II led an expedition into northern Italy in 1004. After gaining the allegiance of many clergy and nobles and entering Pavia, he was anointed King of Italy (Rex Italiae) on 15 May 1004, reasserting German royal authority over the Italian kingdom.",
       "locations": [
-        "Pavia, Kingdom of Italy"
+        {
+          "name_historic": "Pavia, Kingdom of Italy",
+          "name_modern": null,
+          "centroid": [
+            9.1378251,
+            45.0368547
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -134,24 +127,6 @@
           "url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Italy_1000_AD_alt1.svg",
           "caption": "Political map of Italy around the year 1000, showing the fragmented territories over which Henry II claimed kingship.",
           "source": "https://commons.wikimedia.org/wiki/File:Italy_1000_AD_alt1.svg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Pavia, Lombardy, Italy",
-          "name": "Pavia, Kingdom of Italy",
-          "primary": true,
-          "centroid": [
-            9.1378251,
-            45.0368547
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4978518,
-            44.6799091,
-            9.5505475,
-            45.393838
-          ]
         }
       ]
     },
@@ -165,10 +140,15 @@
       "title": "Prolonged wars and diplomacy with Boles\u0142aw I of Poland",
       "description": "From the early years of his reign Henry II engaged in a series of wars and negotiations with Boles\u0142aw I the Brave of Poland over control of Meissen, Lusatia, Bohemia, and other border regions. Campaigns, alliances, and truces alternated until the Peace of Bautzen in 1018 confirmed a compromise settlement. The Polish conflict dominated Henry\u2019s foreign policy and highlighted his use of both military and diplomatic means.",
       "locations": [
-        "Eastern Marches of the Holy Roman Empire",
-        "Poland",
-        "Lusatia",
-        "Meissen"
+        {
+          "name_historic": "Eastern Marches of the Holy Roman Empire",
+          "name_modern": null,
+          "centroid": [
+            19.134422,
+            52.215933
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -180,56 +160,6 @@
           "caption": "Later depiction of Boles\u0142aw I the Brave, Henry II\u2019s main Polish adversary.",
           "source": "https://commons.wikimedia.org/wiki/File:Boleslaw_I_Chrobry_(274954).jpg"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Poland",
-          "name": "Poland",
-          "primary": false,
-          "centroid": [
-            19.134422,
-            52.215933
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.0696389,
-            49.0020468,
-            24.145783,
-            55.03605
-          ]
-        },
-        {
-          "label": "Lusatia, Germany",
-          "name": "Lusatia",
-          "primary": false,
-          "centroid": [
-            14.2155206,
-            51.5394608
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.338355,
-            50.8192375,
-            15.4333733,
-            52.2596939
-          ]
-        },
-        {
-          "label": "Meissen, Saxony, Germany",
-          "name": "Meissen",
-          "primary": false,
-          "centroid": [
-            13.4704939,
-            51.1630871
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.4241968,
-            51.1291607,
-            13.5422789,
-            51.1931689
-          ]
-        }
       ]
     },
     {
@@ -239,7 +169,15 @@
       "title": "Foundation of the Diocese of Bamberg",
       "description": "In 1007 Henry II founded the Diocese of Bamberg by elevating the region around Bamberg and endowing it with extensive lands, many taken from his own Bavarian and royal domains. The new bishopric strengthened royal control over eastern Franconia and served Henry's program of using the Church as a pillar of imperial administration and missionary work.",
       "locations": [
-        "Bamberg, Duchy of Franconia"
+        {
+          "name_historic": "Bamberg, Duchy of Franconia",
+          "name_modern": null,
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -251,24 +189,6 @@
           "caption": "Historical painting of the consecration of Bamberg Cathedral in the presence of Henry II and Cunigunde in 1007.",
           "source": "https://commons.wikimedia.org/wiki/File:Consecration_of_the_Bamberg_Cathedral_in_the_presence_of_Emperor_Henry_II_and_his_wife_Cunigunde_in_1007.jpg"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Bamberg, Bavaria, Germany",
-          "name": "Bamberg, Duchy of Franconia",
-          "primary": true,
-          "centroid": [
-            10.8868478,
-            49.8916044
-          ],
-          "source": "nominatim",
-          "bbox": [
-            10.8265043,
-            49.8426463,
-            10.9607049,
-            49.9286327
-          ]
-        }
       ]
     },
     {
@@ -278,8 +198,12 @@
       "title": "Issuance of royal and imperial charters under his signum manus",
       "description": "Throughout his reign Henry II issued numerous royal diplomas and charters granting privileges to churches, monasteries, and nobles. A charter from 1011 bearing his signum manus exemplifies his formal exercise of royal authority and close collaboration with ecclesiastical institutions in governance.",
       "locations": [
-        "Holy Roman Empire",
-        "Location unknown"
+        {
+          "name_historic": "Holy Roman Empire",
+          "name_modern": null,
+          "centroid": null,
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -300,7 +224,15 @@
       "title": "Coronation as Holy Roman Emperor by Pope Benedict VIII",
       "description": "On 14 February 1014, during his second Italian expedition, Henry II was crowned Holy Roman Emperor by Pope Benedict VIII in Rome. The imperial coronation confirmed his position as emperor of the Romans and symbolized the alliance between the German monarchy and the papacy.",
       "locations": [
-        "Rome, Papal States"
+        {
+          "name_historic": "Rome, Papal States",
+          "name_modern": null,
+          "centroid": [
+            12.4829321,
+            41.8933203
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -312,24 +244,6 @@
           "caption": "Illumination showing Henry II being crowned Holy Roman Emperor by the pope.",
           "source": "https://commons.wikimedia.org/wiki/File:Henry_II_crowned_Holy_Roman_Emperor.jpg"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Rome, Roma Capitale, Lazio, Italy",
-          "name": "Rome, Papal States",
-          "primary": true,
-          "centroid": [
-            12.4829321,
-            41.8933203
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.2344669,
-            41.6556417,
-            12.8557603,
-            42.1410285
-          ]
-        }
       ]
     },
     {
@@ -339,8 +253,12 @@
       "title": "Commission and donation of the Gospel Book of Henry II",
       "description": "Around the time of his imperial coronation, Henry II commissioned and donated a richly illuminated Gospel Book to the Church, reflecting his piety and patronage of Ottonian art. The manuscript, now known as the Gospel Book of Henry II, illustrates his desire to associate imperial rulership with liturgical splendour and monastic reform.",
       "locations": [
-        "Holy Roman Empire",
-        "Location unknown"
+        {
+          "name_historic": "Holy Roman Empire",
+          "name_modern": null,
+          "centroid": null,
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -361,7 +279,15 @@
       "title": "Death of Henry II at Grone",
       "description": "Henry II died on 13 July 1024 at Grone near G\u00f6ttingen, having ruled as Holy Roman Emperor for a decade and as king for over twenty years. Childless, he was the last ruler of the Ottonian dynasty; after his death, the German princes elected Conrad II, initiating the Salian line of emperors.",
       "locations": [
-        "Grone (near G\u00f6ttingen), Duchy of Saxony"
+        {
+          "name_historic": "Grone (near G\u00f6ttingen), Duchy of Saxony",
+          "name_modern": null,
+          "centroid": [
+            9.9112023,
+            45.727504
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
@@ -371,24 +297,6 @@
           "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/BambergDom-GrabHeinrichKunigunde.JPG",
           "caption": "Tomb of Henry II and Cunigunde in Bamberg Cathedral.",
           "source": "https://commons.wikimedia.org/wiki/File:BambergDom-GrabHeinrichKunigunde.JPG"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Grone, Bergamo, Lombardy, 24060, Italy",
-          "name": "Grone (near G\u00f6ttingen), Duchy of Saxony",
-          "primary": true,
-          "centroid": [
-            9.9112023,
-            45.727504
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.9019608,
-            45.716658,
-            9.9559891,
-            45.745072
-          ]
         }
       ]
     }

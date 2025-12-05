@@ -82,7 +82,15 @@
       "title": "Birth in Budapest",
       "description": "John von Neumann was born Neumann J\u00e1nos Lajos on 28 December 1903 in Budapest, then part of Austria\u2011Hungary, into a wealthy, non\u2011observant Jewish banking family. Growing up in a spacious 18\u2011room apartment with a large family library, he was immersed early in languages and books, an environment that nurtured his extraordinary intellectual gifts.",
       "locations": [
-        "Budapest"
+        {
+          "name_historic": "Budapest",
+          "name_modern": null,
+          "centroid": [
+            19.1460941,
+            47.4813896
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
@@ -94,25 +102,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Neumann_J%C3%A1nos_eml%C3%A9kt%C3%A1bl%C3%A1ja_sz%C3%BCl%C5%91h%C3%A1za_fal%C3%A1n_(Budapest_V._ker%C3%BClet,_B%C3%A1thory_u_26.).jpg"
         }
       ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
-        {
-          "label": "Budapest, Central Hungary, Hungary",
-          "name": "Budapest",
-          "primary": true,
-          "centroid": [
-            19.1460941,
-            47.4813896
-          ],
-          "source": "nominatim",
-          "bbox": [
-            18.9251057,
-            47.3496899,
-            19.3349258,
-            47.6131468
-          ]
-        }
-      ]
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1913-02-20",
@@ -121,30 +111,20 @@
       "title": "Family Raised to Nobility",
       "description": "On 20 February 1913 Emperor Franz Joseph elevated von Neumann\u2019s father, banker Max Neumann, to the Hungarian nobility with the hereditary appellation \u201cMargittai\u201d. The family adopted the aristocratic style margittai Neumann, and J\u00e1nos later germanized this to Johann von Neumann, a form he retained after emigrating and anglicizing his given name to John.",
       "locations": [
-        "Budapest"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
         {
-          "label": "Budapest, Central Hungary, Hungary",
-          "name": "Budapest",
-          "primary": true,
+          "name_historic": "Budapest",
+          "name_modern": null,
           "centroid": [
             19.1460941,
             47.4813896
           ],
-          "source": "nominatim",
-          "bbox": [
-            18.9251057,
-            47.3496899,
-            19.3349258,
-            47.6131468
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1914",
@@ -153,7 +133,15 @@
       "title": "Enters Fasori Gymnasium",
       "description": "Von Neumann entered the Lutheran Fasori Evang\u00e9likus Gimn\u00e1zium in Budapest in 1914. There he received rigorous classical and scientific training alongside future Nobel laureate Eugene Wigner, and began private advanced study in mathematics that quickly outpaced the school curriculum.",
       "locations": [
-        "Budapest"
+        {
+          "name_historic": "Budapest",
+          "name_modern": null,
+          "centroid": [
+            19.1460941,
+            47.4813896
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
@@ -166,25 +154,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:John_von_Neumann_as_child.jpg"
         }
       ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
-        {
-          "label": "Budapest, Central Hungary, Hungary",
-          "name": "Budapest",
-          "primary": true,
-          "centroid": [
-            19.1460941,
-            47.4813896
-          ],
-          "source": "nominatim",
-          "bbox": [
-            18.9251057,
-            47.3496899,
-            19.3349258,
-            47.6131468
-          ]
-        }
-      ]
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1918",
@@ -193,30 +163,20 @@
       "title": "Advanced Study with G\u00e1bor Szeg\u0151",
       "description": "Around age fifteen, von Neumann began private tutorials in advanced calculus with analyst G\u00e1bor Szeg\u0151. Szeg\u0151 was reportedly moved to tears by the teenager\u2019s speed and originality, recognizing in him an exceptional mathematical talent before he had even left secondary school.",
       "locations": [
-        "Budapest"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
         {
-          "label": "Budapest, Central Hungary, Hungary",
-          "name": "Budapest",
-          "primary": true,
+          "name_historic": "Budapest",
+          "name_modern": null,
           "centroid": [
             19.1460941,
             47.4813896
           ],
-          "source": "nominatim",
-          "bbox": [
-            18.9251057,
-            47.3496899,
-            19.3349258,
-            47.6131468
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1923-09",
@@ -227,47 +187,20 @@
       "title": "Studies at ETH Zurich and Budapest",
       "description": "Intending to pursue chemical engineering, von Neumann took a two\u2011year chemistry course at the University of Berlin and then passed the entrance exam to ETH Zurich in September 1923. At the same time he enrolled as a Ph.D. candidate in mathematics at P\u00e1zm\u00e1ny P\u00e9ter University in Budapest. Commuting between institutions, he completed an axiomatization of Cantor\u2019s set theory for his doctoral thesis while mastering chemical engineering.",
       "locations": [
-        "Zurich",
-        "Budapest"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
         {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Zurich",
-          "primary": true,
+          "name_historic": "Zurich",
+          "name_modern": null,
           "centroid": [
             8.5410422,
             47.3744489
           ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        },
-        {
-          "label": "Budapest, Central Hungary, Hungary",
-          "name": "Budapest",
-          "primary": false,
-          "centroid": [
-            19.1460941,
-            47.4813896
-          ],
-          "source": "nominatim",
-          "bbox": [
-            18.9251057,
-            47.3496899,
-            19.3349258,
-            47.6131468
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1926",
@@ -276,64 +209,20 @@
       "title": "Earns Ph.D. and Engineering Degree",
       "description": "In 1926 von Neumann graduated as a chemical engineer from ETH Zurich and simultaneously passed his final oral examinations summa cum laude for a Ph.D. in mathematics at the University of Budapest, with minors in experimental physics and chemistry. In the same period he received a Rockefeller Foundation grant to study with David Hilbert at G\u00f6ttingen, cementing his transition from engineering to foundational mathematics.",
       "locations": [
-        "Zurich",
-        "Budapest",
-        "G\u00f6ttingen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
         {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Zurich",
-          "primary": true,
+          "name_historic": "Zurich",
+          "name_modern": null,
           "centroid": [
             8.5410422,
             47.3744489
           ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        },
-        {
-          "label": "Budapest, Central Hungary, Hungary",
-          "name": "Budapest",
-          "primary": false,
-          "centroid": [
-            19.1460941,
-            47.4813896
-          ],
-          "source": "nominatim",
-          "bbox": [
-            18.9251057,
-            47.3496899,
-            19.3349258,
-            47.6131468
-          ]
-        },
-        {
-          "label": "G\u00f6ttingen, Landkreis G\u00f6ttingen, Lower Saxony, Germany",
-          "name": "G\u00f6ttingen",
-          "primary": false,
-          "centroid": [
-            9.9351811,
-            51.5328328
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.8001329,
-            51.4830052,
-            10.0536032,
-            51.5908201
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1927-12-13",
@@ -344,7 +233,15 @@
       "title": "Habilitation and Youngest Berlin Privatdozent",
       "description": "Von Neumann completed his habilitation on 13 December 1927 and in 1928 began lecturing as a Privatdozent at the University of Berlin. At just 24 he became the youngest Privatdozent in the university\u2019s history, publishing at a pace of nearly one major paper per month in fields ranging from set theory and operator algebras to quantum mechanics.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
@@ -356,25 +253,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:NeumannVonMargitta.jpg"
         }
       ],
-      "chapter": "early_years_and_education",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "early_years_and_education"
     },
     {
       "date": "1929-10",
@@ -383,30 +262,20 @@
       "title": "Visiting Lecturer at Princeton",
       "description": "In October 1929 von Neumann moved from Hamburg, where he had briefly been a Privatdozent, to Princeton University as a visiting lecturer in mathematical physics. This first extended stay in the United States established strong ties with the American mathematical community and foreshadowed his eventual emigration.",
       "locations": [
-        "Princeton"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "european_academic_ascent",
-      "location_coordinates": [
         {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton",
-          "primary": true,
+          "name_historic": "Princeton",
+          "name_modern": null,
           "centroid": [
             -74.6597376,
             40.3496953
           ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "european_academic_ascent"
     },
     {
       "date": "1930",
@@ -415,31 +284,21 @@
       "title": "Conversion and First Marriage",
       "description": "In 1930 von Neumann was baptized a Roman Catholic and married Marietta K\u00f6vesi, an economics student from Budapest. Their daughter Marina was born in 1935 and would later become a prominent economist. The marriage ended in divorce in 1937, but the period marked the beginning of his settled personal life alongside an already flourishing international career.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": null,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/Marina_von_Neumann_Whitman"
       ],
-      "chapter": "european_academic_ascent",
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ]
+      "chapter": "european_academic_ascent"
     },
     {
       "date": "1933",
@@ -448,31 +307,21 @@
       "title": "Joins Institute for Advanced Study",
       "description": "In 1933 von Neumann accepted a tenured professorship at the newly founded Institute for Advanced Study in Princeton, New Jersey, when its initial plan to appoint Hermann Weyl faltered. This appointment secured him a permanent base in the United States just as the political situation in Nazi Germany deteriorated for Jewish academics.",
       "locations": [
-        "Princeton"
+        {
+          "name_historic": "Princeton",
+          "name_modern": null,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "chapter": "american_professor_and_family",
-      "location_coordinates": [
-        {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton",
-          "primary": true,
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
-        }
-      ]
+      "chapter": "american_professor_and_family"
     },
     {
       "date": "1937",
@@ -481,30 +330,20 @@
       "title": "Naturalized U.S. Citizen",
       "description": "Von Neumann became a naturalized citizen of the United States in 1937. Almost immediately he attempted, unsuccessfully because of his age, to obtain a commission as a lieutenant in the U.S. Army Officers Reserve Corps, reflecting his strong identification with his adopted country on the eve of war.",
       "locations": [
-        "Princeton"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "american_professor_and_family",
-      "location_coordinates": [
         {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton",
-          "primary": true,
+          "name_historic": "Princeton",
+          "name_modern": null,
           "centroid": [
             -74.6597376,
             40.3496953
           ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "american_professor_and_family"
     },
     {
       "date": "1938-11-17",
@@ -513,31 +352,21 @@
       "title": "Marries Kl\u00e1ra D\u00e1n",
       "description": "On 17 November 1938 von Neumann married Kl\u00e1ra D\u00e1n, a Hungarian mathematician who would herself become a pioneer of early computer programming. The couple settled in Princeton, where their large, lively house on Westcott Road became a social hub for the local academic and scientific community.",
       "locations": [
-        "Princeton"
+        {
+          "name_historic": "Princeton",
+          "name_modern": null,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann"
       ],
-      "chapter": "american_professor_and_family",
-      "location_coordinates": [
-        {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton",
-          "primary": true,
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
-        }
-      ]
+      "chapter": "american_professor_and_family"
     },
     {
       "date": "1943",
@@ -548,7 +377,15 @@
       "title": "Consultant to Los Alamos",
       "description": "Beginning in 1943 von Neumann served as a consultant to the Los Alamos Laboratory of the Manhattan Project in New Mexico. Drawing on his expertise in shock waves and high\u2011speed hydrodynamics, he advised on explosive lens design and other mathematical aspects of the implosion\u2011type plutonium bomb.",
       "locations": [
-        "Los Alamos"
+        {
+          "name_historic": "Los Alamos",
+          "name_modern": null,
+          "centroid": [
+            -106.298959,
+            35.88137
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
@@ -561,25 +398,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:John_von_Neumann_Los_Alamos_identity_badge_photo.jpg"
         }
       ],
-      "chapter": "war_research_and_computers",
-      "location_coordinates": [
-        {
-          "label": "Los Alamos, Los Alamos County, New Mexico, 87544, United States",
-          "name": "Los Alamos",
-          "primary": true,
-          "centroid": [
-            -106.298959,
-            35.88137
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -106.334687,
-            35.871444,
-            -106.245534,
-            35.913289
-          ]
-        }
-      ]
+      "chapter": "war_research_and_computers"
     },
     {
       "date": "1944",
@@ -588,7 +407,15 @@
       "title": "Co\u2011authors Theory of Games and Economic Behavior",
       "description": "Working with economist Oskar Morgenstern at Princeton, von Neumann completed the book \"Theory of Games and Economic Behavior\" in 1944. Synthesizing his earlier mathematical work on games with Morgenstern\u2019s economic insights, the book founded modern game theory and introduced the von Neumann\u2013Morgenstern utility theorem, profoundly influencing economics, political science, and military strategy.",
       "locations": [
-        "Princeton"
+        {
+          "name_historic": "Princeton",
+          "name_modern": null,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
@@ -601,25 +428,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Venn_A_intersect_B.svg"
         }
       ],
-      "chapter": "war_research_and_computers",
-      "location_coordinates": [
-        {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton",
-          "primary": true,
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
-        }
-      ]
+      "chapter": "war_research_and_computers"
     },
     {
       "date": "1945-07-16",
@@ -628,7 +437,15 @@
       "title": "Witnesses Trinity Test",
       "description": "Von Neumann was present in New Mexico on 16 July 1945 for the Trinity test, the first detonation of a nuclear device. His pre\u2011test calculations of shock propagation and energy yield helped predict the blast effects. Observing the explosion confirmed both the practicality of implosion design and the destructive power he had helped unleash.",
       "locations": [
-        "Trinity Site"
+        {
+          "name_historic": "Trinity Site",
+          "name_modern": null,
+          "centroid": [
+            -106.4757469,
+            33.6772845
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
@@ -641,25 +458,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Implosion_bomb_animated.gif"
         }
       ],
-      "chapter": "war_research_and_computers",
-      "location_coordinates": [
-        {
-          "label": "Trinity Site, Socorro County, New Mexico, United States",
-          "name": "Trinity Site",
-          "primary": true,
-          "centroid": [
-            -106.4757469,
-            33.6772845
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -106.4806283,
-            33.6732387,
-            -106.4708636,
-            33.6813134
-          ]
-        }
-      ]
+      "chapter": "war_research_and_computers"
     },
     {
       "date": "1945",
@@ -670,7 +469,15 @@
       "title": "Formulates Stored\u2011Program Architecture",
       "description": "In the immediate postwar years, while consulting for the Institute for Advanced Study computer project and interacting with engineers from ENIAC and EDVAC, von Neumann drafted the report that articulated the stored\u2011program concept and the logical design of an electronic computing instrument. This \u201cvon Neumann architecture,\u201d in which program and data share a single memory, became the standard model for modern digital computers.",
       "locations": [
-        "Princeton"
+        {
+          "name_historic": "Princeton",
+          "name_modern": null,
+          "centroid": [
+            -74.6597376,
+            40.3496953
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
@@ -685,25 +492,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Flow_chart_of_Planning_and_coding_of_problems_for_an_electronic_computing_instrument,_1947.jpg"
         }
       ],
-      "chapter": "war_research_and_computers",
-      "location_coordinates": [
-        {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton",
-          "primary": true,
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
-        }
-      ]
+      "chapter": "war_research_and_computers"
     },
     {
       "date": "1953",
@@ -712,7 +501,15 @@
       "title": "Chairs Strategic Missile Committees",
       "description": "At the height of his influence in the early 1950s, von Neumann chaired key U.S. Defense Department bodies including the Strategic Missile Evaluation Committee and the ICBM Scientific Advisory Committee. Drawing on his understanding of nuclear weapons, ballistics, and computing, he championed rapid development of intercontinental ballistic missile systems as central to U.S. deterrence strategy.",
       "locations": [
-        "Washington, D.C."
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": null,
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
@@ -724,25 +521,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:Living_Large_--_Argonne%27s_First_Computer_(8056998342).jpg"
         }
       ],
-      "chapter": "defense_science_and_final_years",
-      "location_coordinates": [
-        {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C.",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
-        }
-      ]
+      "chapter": "defense_science_and_final_years"
     },
     {
       "date": "1955",
@@ -751,30 +530,20 @@
       "title": "Diagnosed with Metastatic Cancer",
       "description": "In 1955 physicians discovered a malignant mass near von Neumann\u2019s collarbone, later recognized as metastatic cancer originating in his skeleton, pancreas, or prostate. Possible links were drawn to his earlier exposure to radiation at Los Alamos. The diagnosis marked the beginning of a painful final illness during which he nonetheless continued advisory work for the Atomic Energy Commission and the Department of Defense.",
       "locations": [
-        "Washington, D.C."
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "chapter": "defense_science_and_final_years",
-      "location_coordinates": [
         {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C.",
-          "primary": true,
+          "name_historic": "Washington, D.C.",
+          "name_modern": null,
           "centroid": [
             -77.0365427,
             38.8950368
           ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
+          "primary": true
         }
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "chapter": "defense_science_and_final_years"
     },
     {
       "date": "1957-02-08",
@@ -783,7 +552,15 @@
       "title": "Death at Walter Reed and Burial",
       "description": "John von Neumann died on 8 February 1957 at Walter Reed Army Medical Center in Washington, D.C., aged 53, having been received into the Roman Catholic Church near the end of his life. He was buried in Princeton Cemetery, close to many of his Princeton colleagues. His early death cut short one of the most influential scientific and strategic careers of the 20th century.",
       "locations": [
-        "Washington, D.C."
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": null,
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
@@ -795,25 +572,7 @@
           "source": "https://commons.wikimedia.org/wiki/File:John_von_neumann_tomb_2004.jpg"
         }
       ],
-      "chapter": "defense_science_and_final_years",
-      "location_coordinates": [
-        {
-          "label": "Washington, District of Columbia, United States",
-          "name": "Washington, D.C.",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -77.1197949,
-            38.7916303,
-            -76.909366,
-            38.995968
-          ]
-        }
-      ]
+      "chapter": "defense_science_and_final_years"
     }
   ]
 }

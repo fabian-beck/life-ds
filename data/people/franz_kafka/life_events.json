@@ -24,7 +24,15 @@
       "title": "Birth in Prague",
       "description": "Franz Kafka was born into a middle-class German- and Yiddish-speaking Jewish family near the Old Town Square in Prague, then part of the Kingdom of Bohemia in the Austro-Hungarian Empire.",
       "locations": [
-        "Prague"
+        {
+          "name_historic": "Prague",
+          "name_modern": null,
+          "centroid": [
+            14.4212535,
+            50.0874654
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -34,24 +42,6 @@
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg",
           "caption": "Plaque commemorating the birthplace of Franz Kafka in Prague.",
           "source": "https://commons.wikimedia.org/wiki/File:Czech-2013-Prague-Plaque_(birthplace_of_Franz_Kafka).jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
-          "centroid": [
-            14.4212535,
-            50.0874654
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
         }
       ]
     },
@@ -64,7 +54,15 @@
       "title": "Attends German elementary school",
       "description": "From 1889 to 1893, Kafka attended the German boys' elementary school at the Masn\u00fd trh/Fleischmarkt (now Masn\u00e1 Street), receiving his first formal education in German in Prague.",
       "locations": [
-        "Prague"
+        {
+          "name_historic": "Prague",
+          "name_modern": null,
+          "centroid": [
+            14.4212535,
+            50.0874654
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -74,24 +72,6 @@
           "url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Franz_Kafka%2C_circa_1899.jpg",
           "caption": "Franz Kafka as a school pupil around 1899.",
           "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka,_circa_1899.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
-          "centroid": [
-            14.4212535,
-            50.0874654
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
         }
       ]
     },
@@ -104,7 +84,15 @@
       "title": "Studies at Altst\u00e4dter Gymnasium",
       "description": "After elementary school, Kafka entered the rigorous, classics-oriented Altst\u00e4dter Deutsches Gymnasium at Old Town Square in the Kinsk\u00fd Palace. Over eight years he studied in German, also taking Czech, and completed his secondary education there.",
       "locations": [
-        "Prague"
+        {
+          "name_historic": "Prague",
+          "name_modern": null,
+          "centroid": [
+            14.4212535,
+            50.0874654
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -114,24 +102,6 @@
           "url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Prague_Palace_Kinsky_PC.jpg",
           "caption": "The Kinsk\u00fd Palace on Prague's Old Town Square, where Kafka attended the Altst\u00e4dter Deutsches Gymnasium.",
           "source": "https://commons.wikimedia.org/wiki/File:Prague_Palace_Kinsky_PC.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
-          "centroid": [
-            14.4212535,
-            50.0874654
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
         }
       ]
     },
@@ -143,28 +113,18 @@
       "title": "Celebrates bar mitzvah",
       "description": "Kafka's Jewish education, which had included preparation for religious observance, effectively ended with his bar mitzvah celebration at the age of 13, after which he rarely attended synagogue except on major holidays.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -174,28 +134,18 @@
       "title": "Passes Matura examinations",
       "description": "Kafka completed his Matura examinations in 1901 at the Altst\u00e4dter Deutsches Gymnasium, qualifying him for university study after eight years of classics-oriented secondary schooling.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -207,7 +157,15 @@
       "title": "Studies law in Prague",
       "description": "In 1901 Kafka enrolled at the Deutsche Karl-Ferdinands-Universit\u00e4t in Prague, initially for philosophy but switching to law after two weeks. Over five years he pursued legal studies, while also taking courses in German studies and art history and involving himself in literary student circles.",
       "locations": [
-        "Prague"
+        {
+          "name_historic": "Prague",
+          "name_modern": null,
+          "centroid": [
+            14.4212535,
+            50.0874654
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -218,24 +176,6 @@
           "caption": "Franz Kafka around 1906, the year he received his Doctor of Law degree.",
           "source": "https://commons.wikimedia.org/wiki/File:Kafka1906.jpg"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
-          "centroid": [
-            14.4212535,
-            50.0874654
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
-        }
       ]
     },
     {
@@ -245,28 +185,18 @@
       "title": "Meets Max Brod",
       "description": "At the end of his first year at university, Kafka met fellow law student Max Brod, who became his closest lifelong friend and later the editor and preserver of his manuscripts. Their friendship formed the core of what Brod called the Close Prague Circle of German-speaking Jewish writers.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -278,28 +208,18 @@
       "title": "Earns Doctor of Law, clerks",
       "description": "Kafka was awarded the degree of Doctor of Law on 18 June 1906. He then completed a mandatory unpaid year as a law clerk in Prague's civil and criminal courts, gaining practical legal experience before entering full-time employment.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -311,28 +231,18 @@
       "title": "Works at Assicurazioni Generali",
       "description": "On 1 November 1907, Kafka began working at the Assicurazioni Generali insurance company in Prague. The long working hours left him little time to write and contributed to his dissatisfaction, leading to his resignation on 15 July 1908.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -345,7 +255,15 @@
       "title": "Joins Workers' Accident Insurance Institute",
       "description": "Two weeks after leaving Assicurazioni Generali, Kafka joined the Workers' Accident Insurance Institute for the Kingdom of Bohemia in Prague. There he investigated industrial accidents, wrote reports and annual summaries, and advanced professionally while structuring his schedule to preserve time for writing.",
       "locations": [
-        "Prague"
+        {
+          "name_historic": "Prague",
+          "name_modern": null,
+          "centroid": [
+            14.4212535,
+            50.0874654
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -355,24 +273,6 @@
           "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Na_Porici_7%2C_Prague.JPG",
           "caption": "Former home of the Workers' Accident Insurance Institute in Prague, where Kafka worked as an insurance official.",
           "source": "https://commons.wikimedia.org/wiki/File:Na_Porici_7,_Prague.JPG"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
-          "centroid": [
-            14.4212535,
-            50.0874654
-          ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
         }
       ]
     },
@@ -385,28 +285,18 @@
       "title": "Immerses in Yiddish theatre",
       "description": "After attending a Yiddish theatre troupe's performance in October 1911, Kafka spent about six months closely following Yiddish theatre in Prague, immersing himself in the Yiddish language and literature and deepening his engagement with Jewish culture.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -416,7 +306,15 @@
       "title": "Publishes Contemplation stories",
       "description": "In 1912 Kafka published the collection Contemplation (Betrachtung), a set of short prose pieces that was among the few works released during his lifetime and marked his emerging voice as a German-language modernist writer.",
       "locations": [
-        "Leipzig"
+        {
+          "name_historic": "Leipzig",
+          "name_modern": null,
+          "centroid": [
+            12.3747329,
+            51.3406321
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -427,24 +325,6 @@
           "caption": "Cover of Franz Kafka's 1912 collection Contemplation (Betrachtung).",
           "source": "https://commons.wikimedia.org/wiki/File:Kafka_Betrachtung_1912.jpg"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Leipzig, Saxony, Germany",
-          "name": "Leipzig",
-          "primary": true,
-          "centroid": [
-            12.3747329,
-            51.3406321
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.2366519,
-            51.2381704,
-            12.5425373,
-            51.4481145
-          ]
-        }
       ]
     },
     {
@@ -454,28 +334,18 @@
       "title": "Releases The Metamorphosis",
       "description": "Kafka's novella The Metamorphosis (Die Verwandlung) was published in 1915, telling the story of Gregor Samsa's sudden transformation into an insect and exemplifying Kafka's fusion of everyday realism with the fantastical and his themes of alienation and incomprehensible authority.",
       "locations": [
-        "Leipzig"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Leipzig, Saxony, Germany",
-          "name": "Leipzig",
-          "primary": true,
+          "name_historic": "Leipzig",
+          "name_modern": null,
           "centroid": [
             12.3747329,
             51.3406321
           ],
-          "source": "nominatim",
-          "bbox": [
-            12.2366519,
-            51.2381704,
-            12.5425373,
-            51.4481145
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -485,28 +355,18 @@
       "title": "Diagnosed with tuberculosis",
       "description": "In 1917 Kafka was diagnosed with tuberculosis, a disease that increasingly interfered with his ability to work at the insurance institute and to write, eventually forcing him into periods of leave and contributing directly to his early death.",
       "locations": [
-        "Prague"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Capital City of Prague, Prague, Czechia",
-          "name": "Prague",
-          "primary": true,
+          "name_historic": "Prague",
+          "name_modern": null,
           "centroid": [
             14.4212535,
             50.0874654
           ],
-          "source": "nominatim",
-          "bbox": [
-            14.2244355,
-            49.9419006,
-            14.7067867,
-            50.1774301
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     },
     {
@@ -516,28 +376,18 @@
       "title": "Dies of tuberculosis",
       "description": "Kafka died on 3 June 1924 from complications of tuberculosis, aged 40, after years of illness that had curtailed both his professional work and his literary production.",
       "locations": [
-        "Kierling"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "location_coordinates": [
         {
-          "label": "Kierling, Klosterneuburg, Bezirk Tulln, Lower Austria, 3412, Austria",
-          "name": "Kierling",
-          "primary": true,
+          "name_historic": "Kierling",
+          "name_modern": null,
           "centroid": [
             16.2767032,
             48.3091824
           ],
-          "source": "nominatim",
-          "bbox": [
-            16.2567032,
-            48.2891824,
-            16.2967032,
-            48.3291824
-          ]
+          "primary": true
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ]
     }
   ]
