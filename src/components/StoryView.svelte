@@ -61,7 +61,7 @@
   $: events = Array.isArray(dataset?.events) ? dataset.events : [];
   $: chapters = Array.isArray(dataset?.chapters) ? dataset.chapters : [];
   $: portrait = person?.portrait;
-  $: personName = displayName(person?.name ?? "Select a person");
+  $: personName = displayName(person?.name);
   $: personSummary = person?.summary ?? "";
   $: hasDataset = Boolean(dataset);
   $: yearsLabel = computeYearsLabel(person);
