@@ -487,11 +487,11 @@
                 />
               </svg>
               {#if anniversary.daysUntil === 0}
-                {$_("landing.updated_today")}
+                {$_("landing.anniversary_today")}
               {:else if anniversary.daysUntil === 1}
-                {$_("landing.updated_yesterday")}
+                {$_("landing.anniversary_tomorrow")}
               {:else}
-                {$_("landing.updated_days_ago", {
+                {$_("landing.anniversary_in_days", {
                   days: anniversary.daysUntil,
                 })}
               {/if}
