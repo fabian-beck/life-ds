@@ -1,0 +1,512 @@
+{
+  "dataset": "frei_otto_ego_network_v1",
+  "created_on": "2025-12-06",
+  "ego": {
+    "name": "Frei Otto",
+    "birth_year": 1925,
+    "death_year": 2015,
+    "primary_roles": [
+      "architect",
+      "engineer",
+      "academic"
+    ],
+    "summary": "Frei Otto was a German architect, structural innovator and professor whose experimental work with cable nets, gridshells and other tensile structures transformed 20th\u2011century architecture. Starting from gliding and prisoner\u2011of\u2011war camp construction, he developed a lifelong quest for building with minimal material, energy and environmental impact, founding the Institute for Lightweight Structures in Stuttgart and shaping icons such as the Munich Olympic roofs and the German pavilion at Expo 67. A leading voice of organic and ecological design, he received the Pritzker Architecture Prize in 2015, shortly before his death.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Frei_Otto"
+  },
+  "connections": [
+    {
+      "person_name": "Ludwig Mies van der Rohe",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Modernist architect whom Frei Otto visited in the United States in 1950; the encounter led to a lasting friendship, and Otto later recalculated the structure of Mies\u2019s Neue Nationalgalerie in Berlin at Mies\u2019s request.",
+      "start_year": 1950,
+      "end_year": 1969,
+      "strength": "strong",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "meetings during Otto\u2019s US study tour",
+        "exchange on structural and architectural ideas",
+        "revision of the structural concept for the Neue Nationalgalerie in West Berlin"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe"
+      ],
+      "notes": "Otto credits his US trip and his friendship with Mies as formative; Mies in turn relied on Otto\u2019s lightweight-structures expertise for the Nationalgalerie."
+    },
+    {
+      "person_name": "Fred Severud",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Norwegian-American structural engineer whose cable-net model of Dorton Arena in his New York office inspired Otto\u2019s doctoral work on hanging roofs and tensioned surface structures.",
+      "start_year": 1950,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "discussion of cable-net structures in Severud\u2019s office",
+        "study of Dorton Arena model",
+        "conceptual exchange on tensioned surface structures"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "Severud\u2019s work on Dorton Arena provided the direct technical impetus for Otto\u2019s dissertation \u2018Das h\u00e4ngende Dach\u2019."
+    },
+    {
+      "person_name": "Erich Mendelsohn",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "German modernist architect whom Frei Otto visited during his 1950 US scholarship tour, studying his work first-hand as part of absorbing leading architectural approaches of the time.",
+      "start_year": 1950,
+      "end_year": 1953,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "meetings during Otto\u2019s study trip in the United States",
+        "site visits to Mendelsohn\u2019s buildings",
+        "discussion of modernist design approaches"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "The contact was brief but part of the concentrated exposure that fed into Otto\u2019s later independent trajectory."
+    },
+    {
+      "person_name": "Richard Neutra",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Austrian-American architect whom Frei Otto met on his 1950 US tour, drawing lessons from Neutra\u2019s climate-sensitive and lightweight modernist houses.",
+      "start_year": 1950,
+      "end_year": 1970,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "conversation and visits during Otto\u2019s US scholarship period",
+        "study of Neutra\u2019s residential work in California"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://en.wikipedia.org/wiki/Richard_Neutra"
+      ],
+      "notes": "While no ongoing collaboration is recorded, Neutra counted among the \u2018leading architects\u2019 whose work Otto deliberately sought out."
+    },
+    {
+      "person_name": "Frank Lloyd Wright",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Iconic American architect whom Frei Otto visited at Taliesin during his 1950 US scholarship, gaining exposure to Wright\u2019s organic architecture and experimental structures.",
+      "start_year": 1950,
+      "end_year": 1959,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "meetings and observation at Taliesin",
+        "study of Wright\u2019s major works during Otto\u2019s US tour"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": "Wright\u2019s integration of landscape and structure resonated with Otto\u2019s later pursuit of form-finding from natural processes."
+    },
+    {
+      "person_name": "Eero Saarinen",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Finnish-American architect whom Frei Otto met in the United States in 1950, as one of several leading figures whose modernist work he visited and analysed.",
+      "start_year": 1950,
+      "end_year": 1961,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "discussion during Otto\u2019s US scholarship tour",
+        "visits to Saarinen\u2019s contemporary projects"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://en.wikipedia.org/wiki/Santiago_Calatrava"
+      ],
+      "notes": "Although primarily a brief encounter, Saarinen\u2019s expressive structural forms contributed to the design landscape Otto was responding to."
+    },
+    {
+      "person_name": "Buckminster Fuller",
+      "relationship_type": "professional/peer",
+      "relationship_description": "American designer and inventor of geodesic domes frequently mentioned alongside Frei Otto as one of the foremost representatives of organic, lightweight architecture in the 20th century.",
+      "start_year": 1950,
+      "end_year": 1983,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "parallel development of lightweight structural concepts",
+        "mutual citation in discussions of organic and ecological design"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://en.wikipedia.org/wiki/Buckminster_Fuller"
+      ],
+      "notes": "The available text groups Otto with Fuller as peers; direct personal collaboration is not documented in the provided sources, so this connection reflects mainly intellectual and reputational association."
+    },
+    {
+      "person_name": "Ingrid Otto (n\u00e9e Smolla)",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Architect and collaborator who married Frei Otto in 1952; she shared his life and practice, raising five children with him and later working with him in the Warmbronn studio near Leonberg.",
+      "start_year": 1952,
+      "end_year": 2015,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and family life",
+        "co-ran studio in Warmbronn",
+        "support for independent architectural office in Berlin-Zehlendorf",
+        "collaborative design work on projects from the 1950s onward"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Peter Stromeyer",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Konstanz-based tent-builder and head of a large-tent company who produced Otto\u2019s experimental membrane roofs, including the acclaimed German Pavilion for Expo 67 in Montreal.",
+      "start_year": 1952,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "development and fabrication of large tent roofs",
+        "realisation of the German Pavilion at Expo 67",
+        "serial production of Otto\u2019s tent and membrane designs"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Rolf_Gutbrod"
+      ],
+      "notes": "Otto met Stromeyer while working on his dissertation; Stromeyer subsequently manufactured all of his major tent structures."
+    },
+    {
+      "person_name": "Johann-Gerhard Helmcke",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Biologist who co-founded the interdisciplinary research group \u2018Biologie und Bauen\u2019 with Frei Otto at the Technische Hochschule Berlin to study natural structures and their application to building.",
+      "start_year": 1961,
+      "end_year": 1964,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "co-founding the Forschungsgruppe Biologie und Bauen",
+        "joint seminars and research on biological construction principles",
+        "publication and exhibition activities around natural form-finding"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Rolf Gutbrod",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "German architect who co-designed the German Pavilion at Expo 67 in Montreal and the conference centre in Mecca with Frei Otto, combining his architectural concepts with Otto\u2019s lightweight roofs.",
+      "start_year": 1964,
+      "end_year": 1974,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "co-design of the German Pavilion at Expo 67",
+        "joint design of the hotel and conference centre in Mecca",
+        "coordination between architectural volumes and experimental roof structures"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Rolf_Gutbrod",
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Mahmoud Bodo Rasch",
+      "relationship_type": "academic/student",
+      "relationship_description": "German architect who became Frei Otto\u2019s student and later close collaborator, with Otto advising Rasch\u2019s firm on large convertible tents and shading structures in the Islamic world.",
+      "start_year": 1967,
+      "end_year": 2015,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "student\u2013teacher relationship at the Institut f\u00fcr Leichte Fl\u00e4chentragwerke and Atelier Warmbronn",
+        "joint development of large retractable umbrellas and tents for Mecca and Medina",
+        "long-term advisory role in SL Rasch projects"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Mahmoud_Bodo_Rasch",
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "Rasch credits Otto\u2019s principles of lightweight, minimal structures as foundational for his own career; Otto remained a consultant to Rasch\u2019s team until his death."
+    },
+    {
+      "person_name": "G\u00fcnter Behnisch",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Architect whose office developed the overall Olympiapark in Munich and who turned to Frei Otto in 1968 to solve unforeseen span and form problems for the 1972 Olympic cable-net roofs.",
+      "start_year": 1968,
+      "end_year": 1972,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "development of Munich Olympic cable-net roofs",
+        "form-finding with hanging-net and soap-film models",
+        "coordination between Behnisch\u2019s office and Otto\u2019s lightweight-structure team"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/G%C3%BCnter_Behnisch"
+      ],
+      "notes": "Behnisch described Otto as the \u2018originator of the idea\u2019 for the Olympiadach; Otto in turn critiqued parts of the built solution as heavier than his ideal."
+    },
+    {
+      "person_name": "Fritz Leonhardt",
+      "relationship_type": "professional/engineer_collaborator",
+      "relationship_description": "Leading German structural engineer who, together with J\u00f6rg Schlaich, adapted Frei Otto\u2019s Munich Olympic roof concept to meet safety codes and structural requirements.",
+      "start_year": 1968,
+      "end_year": 1972,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "engineering of Munich Olympiastadion cable-net roofs",
+        "negotiation between minimal material concepts and code-compliant safety factors"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Fritz_Leonhardt"
+      ],
+      "notes": "Leonhardt and Schlaich insisted on more massive edge cables and masts than Otto would have preferred, illustrating the tension between engineering safety and extreme lightness."
+    },
+    {
+      "person_name": "J\u00f6rg Schlaich",
+      "relationship_type": "professional/engineer_collaborator",
+      "relationship_description": "Engineer in Fritz Leonhardt\u2019s office who helped translate Frei Otto\u2019s form-finding models for the Munich Olympic roofs into buildable, code-compliant structures.",
+      "start_year": 1968,
+      "end_year": 1972,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "structural design and detailing of the Munich Olympic cable-net system",
+        "coordination with Otto\u2019s experimental models and Behnisch\u2019s architecture"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/J%C3%B6rg_Schlaich"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "J\u00f6rg Gribl",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Architect of the large aviary at Munich\u2019s Hellabrunn Zoo whose project realised in built form Frei Otto\u2019s ideal of nearly invisible lightweight enclosure, with Otto as a key conceptual influence.",
+      "start_year": 1975,
+      "end_year": 1980,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design and realisation of Hellabrunn Zoo large aviary",
+        "application of lightweight cable-net principles to zoo architecture"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "Otto praised Gribl\u2019s aviary as closer to his vision of light building than the Olympic roofs, underlining their shared interest in minimal structure."
+    },
+    {
+      "person_name": "Pink Floyd",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "British rock band for whose 1977 tour Frei Otto designed huge inverted umbrella-like structures, demonstrating the ephemeral and atmospheric possibilities of his lightweight membranes in a pop-cultural setting.",
+      "start_year": 1977,
+      "end_year": 1977,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "design of touring stage canopies resembling giant inverted umbrellas",
+        "realisation of temporary membrane structures for concert scenography"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://en.wikipedia.org/wiki/Pink_Floyd"
+      ],
+      "notes": "The project illustrated Otto\u2019s interest in the beauty and planned transience of materials, extending his work beyond conventional building."
+    },
+    {
+      "person_name": "Christine Otto-Kanstinger",
+      "relationship_type": "family/child",
+      "relationship_description": "Daughter of Frei Otto and Ingrid, an architect who worked with her father in his Warmbronn studio until the end of his life.",
+      "start_year": 1980,
+      "end_year": 2015,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life",
+        "architectural collaboration in the Warmbronn studio",
+        "project development and model work"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "Exact year when she began collaborating is not given; start_year is approximate for when she would likely have been professionally active."
+    },
+    {
+      "person_name": "Jochen Hahne",
+      "relationship_type": "professional/client",
+      "relationship_description": "Managing director of furniture company Wilkhahn who commissioned Frei Otto in the mid-1980s to design lightweight timber pavilion roofs for production buildings and later spoke about Otto\u2019s enduring influence at a 2018 symposium.",
+      "start_year": 1985,
+      "end_year": 2018,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design and construction of four lightweight timber-roofed pavilions for Wilkhahn\u2019s production site",
+        "participation in symposium on Otto\u2019s \u2018ideational legacy\u2019 in 2018"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "Hahne emphasised how Otto\u2019s ecological and socially-informed design principles remained relevant for contemporary sustainable projects."
+    },
+    {
+      "person_name": "Werner Sobek",
+      "relationship_type": "academic/successor",
+      "relationship_description": "Architect and engineer who succeeded Frei Otto as professor at the University of Stuttgart in 1994 and later founded the Institute for Lightweight Structures and Conceptual Design (ILEK), continuing and expanding Otto\u2019s Stuttgart lightweight-structures school.",
+      "start_year": 1994,
+      "end_year": 2015,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "transition of leadership at the Institut f\u00fcr Leichte Fl\u00e4chentragwerke",
+        "development of ILEK as the institutional successor to Otto\u2019s IL",
+        "joint public advocacy for lightweight, resource-efficient building"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Werner_Sobek",
+        "https://de.wikipedia.org/wiki/Institut_f%C3%BCr_Leichte_Fl%C3%A4chentragwerke",
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "While Sobek led the institute, Otto remained active from his Warmbronn studio and in Stuttgart circles, influencing ILEK\u2019s direction."
+    },
+    {
+      "person_name": "Christoph Ingenhoven",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "German architect of the Stuttgart 21 rail project who invited Frei Otto as a special consultant for the \u2018light eyes\u2019\u2014drop-shaped skylights and shell structures over the underground platforms.",
+      "start_year": 2000,
+      "end_year": 2010,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "consultancy on the special shell and daylight structures (\u2018Lichtaugen\u2019) of Stuttgart 21",
+        "public debate on the feasibility and safety of the project\u2019s underground structures"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "In August 2010 Otto publicly called for Stuttgart 21 to be stopped because of geotechnical risks, showing both his technical involvement and his independence of judgement."
+    },
+    {
+      "person_name": "Angela Boley",
+      "relationship_type": "family/child",
+      "relationship_description": "One of Frei Otto and Ingrid Otto\u2019s five children, mentioned among his closest family survivors.",
+      "start_year": null,
+      "end_year": 2015,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family gatherings",
+        "support during later life and illness"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": "No professional collaboration is mentioned; interaction_frequency reflects adult family contact rather than co-residence."
+    },
+    {
+      "person_name": "Bettina Otto-Matthes",
+      "relationship_type": "family/child",
+      "relationship_description": "Daughter of Frei Otto and Ingrid Otto, listed among their five children.",
+      "start_year": null,
+      "end_year": 2015,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life and visits",
+        "support around public events and legacy"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Dietmar Otto",
+      "relationship_type": "family/child",
+      "relationship_description": "Only son of Frei Otto and Ingrid Otto, mentioned as one of their five children.",
+      "start_year": null,
+      "end_year": 2015,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life",
+        "contact during his father\u2019s late career and retirement"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Erdmute B\u00f6cker",
+      "relationship_type": "family/child",
+      "relationship_description": "Daughter of Frei Otto and Ingrid Otto, listed among their five children.",
+      "start_year": null,
+      "end_year": 2015,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family gatherings",
+        "informal support for Frei Otto\u2019s work and legacy"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "notes": null
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Frei Otto\u2019s family life was anchored by his marriage to Ingrid Otto (n\u00e9e Smolla), with whom he shared both a household and an architectural practice in Warmbronn. Together they raised five children, including architect Christine Otto-Kanstinger, who later worked alongside him, and a wider circle of daughters and a son who supported him through his long career and declining health."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Professionally, Otto\u2019s network spanned collaborators on landmark projects\u2014such as Peter Stromeyer, G\u00fcnter Behnisch, Fritz Leonhardt and J\u00f6rg Schlaich on Expo 67 and the Munich Olympic roofs\u2014as well as clients like Wilkhahn\u2019s Jochen Hahne and cross-disciplinary partners such as Pink Floyd. He is repeatedly grouped with Buckminster Fuller and other leading modernists as a central figure in organic, lightweight architecture."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "As a teacher and researcher, Frei Otto founded key institutions and worked closely with academic partners like Johann-Gerhard Helmcke in \u2018Biologie und Bauen\u2019, mentored students such as Mahmoud Bodo Rasch, and influenced successors including Werner Sobek at Stuttgart. Earlier, formative encounters with figures like Ludwig Mies van der Rohe, Erich Mendelsohn, Richard Neutra, Frank Lloyd Wright and Eero Saarinen helped shape his own experimental, research-driven approach to design."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Otto\u2019s artistic collaborations were fewer but significant: most notably his stage structures for Pink Floyd\u2019s 1977 tour, where he translated his fascination with ephemeral, tent-like forms into concert scenography. These projects showed how his structural experiments could create atmospheric experiences beyond conventional building types."
+    }
+  ]
+}

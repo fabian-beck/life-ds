@@ -1,0 +1,408 @@
+{
+  "dataset": "wikipedia_ego_network_zaha_hadid",
+  "created_on": "2025-12-06",
+  "ego": {
+    "name": "Zaha Hadid",
+    "birth_year": 1950,
+    "death_year": 2016,
+    "primary_roles": [
+      "architect",
+      "designer",
+      "artist"
+    ],
+    "summary": "Zaha Hadid was an Iraqi-British architect, designer, and artist whose radical, fluid geometries transformed late\u201120th and early\u201121st\u2011century architecture. Trained in mathematics in Beirut and architecture in London, she first gained fame for visionary, often unbuilt projects before emerging as a global practitioner with landmark works such as the Vitra Fire Station, Bergisel Ski Jump, MAXXI, Guangzhou Opera House, the London Aquatics Centre, and the Eli and Edythe Broad Art Museum. She was the first woman to receive the Pritzker Architecture Prize and the RIBA Royal Gold Medal and led Zaha Hadid Architects as a global practice until her death in 2016.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Zaha_Hadid"
+  },
+  "connections": [
+    {
+      "person_name": "Mohammed Hadid",
+      "relationship_type": "family/father",
+      "relationship_description": "Mohammed Hadid was Zaha Hadid\u2019s father, a wealthy industrialist and prominent Iraqi democratic politician whose cosmopolitan, politically engaged household shaped her early outlook.",
+      "start_year": 1950,
+      "end_year": 1999,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Baghdad and Mosul",
+        "family trips to ancient Sumerian cities in southern Iraq",
+        "exposure to political discussions and democratic ideals"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Mohammed_Hadid",
+        "https://en.wikipedia.org/wiki/Foulath_Hadid"
+      ],
+      "notes": "He co\u2011founded the socialist al\u2011Ahali group and the Iraqi National Democratic Party and served as Minister of Finance after the 1958 revolution, giving Zaha an early model of public engagement and modernizing ideals."
+    },
+    {
+      "person_name": "Wajiha al-Sabunji",
+      "relationship_type": "family/mother",
+      "relationship_description": "Wajiha al\u2011Sabunji was Zaha Hadid\u2019s mother, an artist from Mosul whose creative practice and cultural interests contributed to Hadid\u2019s early immersion in art and design.",
+      "start_year": 1950,
+      "end_year": 1942,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Baghdad and Mosul",
+        "early exposure to art and artistic practice at home"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Foulath_Hadid"
+      ],
+      "notes": "Described as an artist, she provided an aesthetic and cultural counterpoint to Zaha\u2019s politically active father, reinforcing the combination of artistic and intellectual influences in Zaha\u2019s upbringing."
+    },
+    {
+      "person_name": "Foulath Hadid",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Foulath Hadid was Zaha Hadid\u2019s older brother, a writer, accountant and expert on Arab affairs who later helped catalyse a major commission for her at St Antony\u2019s College, Oxford.",
+      "start_year": 1950,
+      "end_year": 2012,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "shared childhood in Baghdad and later diaspora family life",
+        "family engagement with Iraqi politics and culture",
+        "St Antony\u2019s College Middle East Centre building project, for which he promoted his sister as architect"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Foulath_Hadid"
+      ],
+      "notes": "At his suggestion, Zaha designed a major building for the Middle East Centre at St Antony\u2019s College, Oxford; Foulath also raised funds and worked with Warden Margaret MacMillan to realize the broader building complex."
+    },
+    {
+      "person_name": "Rem Koolhaas",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Rem Koolhaas was one of Zaha Hadid\u2019s most important teachers at the Architectural Association School of Architecture and later her employer and peer at the Office for Metropolitan Architecture (OMA).",
+      "start_year": 1972,
+      "end_year": 2016,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "architecture teaching and studio work at the AA School in London",
+        "professional collaboration at OMA in Rotterdam after her graduation",
+        "joint presence in the 1988 MoMA 'Deconstructivist Architecture' exhibition as leading avant\u2011garde architects"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Rem_Koolhaas",
+        "https://en.wikipedia.org/wiki/Office_for_Metropolitan_Architecture"
+      ],
+      "notes": "Koolhaas described her at graduation as \"a planet in her own orbit.\" She joined him and Elia Zenghelis at OMA in 1977, and both were later grouped as key figures in deconstructivist architecture."
+    },
+    {
+      "person_name": "Elia Zenghelis",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Elia Zenghelis was a key tutor of Zaha Hadid at the Architectural Association and later her partner at OMA, helping to shape her early avant\u2011garde architectural thinking.",
+      "start_year": 1972,
+      "end_year": 1987,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "design studios and critiques at the AA School",
+        "professional work at OMA in Rotterdam after her graduation",
+        "ongoing dialogue on radical architectural approaches"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Elia_Zenghelis",
+        "https://en.wikipedia.org/wiki/Office_for_Metropolitan_Architecture"
+      ],
+      "notes": "Zenghelis called her \"the most outstanding pupil\" he ever taught and praised her spectacular vision and refusal of right angles, anecdotes that encapsulate his role in nurturing her experimental approach."
+    },
+    {
+      "person_name": "Bernard Tschumi",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Bernard Tschumi taught Zaha Hadid at the Architectural Association during the early 1970s, recognizing and reinforcing her radical design sensibility within the school\u2019s experimental milieu.",
+      "start_year": 1972,
+      "end_year": 1977,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "architectural design studios and critiques at the AA School in London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "notes": "Alongside Rem Koolhaas and Elia Zenghelis, Tschumi was one of the key AA figures under whom Hadid studied, situating her in a circle of leading theorists of deconstructivist and post\u20111968 architectural thought."
+    },
+    {
+      "person_name": "Peter Rice",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Peter Rice, the Irish structural engineer behind projects like the Sydney Opera House and Centre Pompidou, became an important supporter and technical mentor to Zaha Hadid in her early career.",
+      "start_year": 1977,
+      "end_year": 1992,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "discussions of advanced structural possibilities for her radical forms",
+        "early\u2011career encouragement and advocacy introduced via Rem Koolhaas"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Peter_Rice_(structural_engineer)"
+      ],
+      "notes": "Through her association with Koolhaas, she met Rice, who \"supported and encouraged her during the early stages of her career\"\u2014critical for an experimental architect still seen by many as a 'paper architect'."
+    },
+    {
+      "person_name": "Patrik Schumacher",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Patrik Schumacher was Zaha Hadid\u2019s closest long\u2011term collaborator, joining her office in 1988, becoming a partner in 2002, and later principal of Zaha Hadid Architects after her death.",
+      "start_year": 1983,
+      "end_year": 2016,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "practice leadership at Zaha Hadid Architects",
+        "design of major projects including MAXXI, BMW Leipzig central building, Guangzhou Opera House and Dongdaemun Design Plaza",
+        "co\u2011authoring and editing theoretical publications such as 'Total Fluidity \u2013 Studio Zaha Hadid 2000\u20132015'",
+        "joint teaching and lecturing on advanced design and parametricism"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://de.wikipedia.org/wiki/Patrik_Schumacher"
+      ],
+      "notes": "Schumacher first worked with her as an intern in 1983 and is described by Hadid in a BBC portrait as an \"enormous support\" and \"incredible enrichment,\" underpinning both the theory and organisation of her mature practice."
+    },
+    {
+      "person_name": "Philip Johnson",
+      "relationship_type": "professional/curator",
+      "relationship_description": "Philip Johnson was the senior curator who, with Mark Wigley, selected Zaha Hadid for MoMA\u2019s landmark 1988 exhibition 'Deconstructivist Architecture', propelling her onto the global stage.",
+      "start_year": 1988,
+      "end_year": 2005,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "'Deconstructivist Architecture' exhibition at the Museum of Modern Art, New York",
+        "related conferences and critical discourse connecting her to a cohort including Frank Gehry and Rem Koolhaas"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Philip_Johnson",
+        "https://en.wikipedia.org/wiki/Deconstructivism"
+      ],
+      "notes": "The MoMA show was widely credited with establishing her name internationally and associating her work with a distinct architectural tendency, with Johnson\u2019s curatorial authority lending critical legitimacy to her then largely unbuilt oeuvre."
+    },
+    {
+      "person_name": "Mark Wigley",
+      "relationship_type": "professional/curator",
+      "relationship_description": "Mark Wigley, architectural theorist and co\u2011curator with Philip Johnson, helped define and promote Zaha Hadid\u2019s work as part of the 'Deconstructivist Architecture' exhibition at MoMA.",
+      "start_year": 1988,
+      "end_year": 2010,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "selection and presentation of her work at MoMA\u2019s 1988 'Deconstructivist Architecture' exhibition",
+        "participation in related conferences and publications that framed her practice within deconstructivist theory"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Mark_Wigley",
+        "https://en.wikipedia.org/wiki/Deconstructivism"
+      ],
+      "notes": "Wigley\u2019s theoretical framing in the exhibition and catalogue reinforced readings of Hadid\u2019s work as a key expression of late\u201120th\u2011century deconstructivist architecture."
+    },
+    {
+      "person_name": "Philip Johnson and Mark Wigley (curatorial team)",
+      "relationship_type": "artistic/curatorial-team",
+      "relationship_description": "As a curatorial duo, Philip Johnson and Mark Wigley collectively shaped the presentation of Zaha Hadid\u2019s work within the MoMA 'Deconstructivist Architecture' exhibition, situating her among a select group of radical contemporaries.",
+      "start_year": 1988,
+      "end_year": 1988,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "joint curatorship of the 1988 MoMA exhibition",
+        "critical framing of her projects within deconstructivist discourse"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Deconstructivism"
+      ],
+      "notes": "Although each has an individual relationship to Hadid, they operated as a team in this pivotal context, so their combined curatorial role is represented here as a single collaborative connection."
+    },
+    {
+      "person_name": "Rolf Fehlbaum",
+      "relationship_type": "professional/client",
+      "relationship_description": "Rolf Fehlbaum, president of Vitra, was one of Zaha Hadid\u2019s first major clients, commissioning the Vitra Fire Station which became her breakthrough built work.",
+      "start_year": 1989,
+      "end_year": 2010,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "commission and realisation of the Vitra Fire Station in Weil am Rhein (1991\u20131993)",
+        "promotion of her work within the Vitra design campus context alongside buildings by Frank Gehry and others",
+        "later service on the Pritzker Prize jury that honoured her in 2004"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Vitra_Fire_Station"
+      ],
+      "notes": "Fehlbaum invited her to design the small fire station after earlier inviting Frank Gehry to build the Vitra Design Museum; the project\u2019s success demonstrated that her radical language could be built and significantly advanced her career."
+    },
+    {
+      "person_name": "Brian Clarke",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "British architectural artist Brian Clarke collaborated with Zaha Hadid on the Spittelau Viaducts Housing Project in Vienna, proposing integrated stained and mosaic glass artworks for her neo\u2011futurist structures.",
+      "start_year": 1994,
+      "end_year": 2006,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "joint development of an unexecuted proposal for integrated glass artworks in the Spittelau Viaducts Housing Project",
+        "creation of a special mouth\u2011blown glass type, 'Zaha\u2011Glas', for the scheme"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Brian_Clarke"
+      ],
+      "notes": "Although the collaborative art elements were ultimately not realised in the built project, the partnership exemplified Hadid\u2019s interest in fusing architecture with advanced glass art and surface treatments."
+    },
+    {
+      "person_name": "Margaret MacMillan",
+      "relationship_type": "professional/institutional-partner",
+      "relationship_description": "Historian Margaret MacMillan, as Warden of St Antony\u2019s College, Oxford, worked with Foulath and Zaha Hadid on a major new building for the College\u2019s Middle East Centre.",
+      "start_year": 2001,
+      "end_year": 2013,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "planning and fundraising for St Antony\u2019s College building programme",
+        "realisation of a significant new building for the Middle East Centre designed by Zaha Hadid"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Foulath_Hadid"
+      ],
+      "notes": "Foulath Hadid introduced Zaha and advocated for her as architect; MacMillan, as Warden, worked with him to secure funding and deliver the transformative building complex completed in 2013, giving Hadid a high\u2011profile Oxford commission."
+    },
+    {
+      "person_name": "Thomas Pritzker",
+      "relationship_type": "professional/award-jury",
+      "relationship_description": "Thomas Pritzker, head of the Pritzker Architecture Prize jury, announced Zaha Hadid as the 2004 laureate, making her the first woman to receive architecture\u2019s most prestigious global award.",
+      "start_year": 2004,
+      "end_year": 2004,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Pritzker Prize selection process and announcement",
+        "public recognition events associated with the 2004 award"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Thomas_Pritzker"
+      ],
+      "notes": "In the prize citation, Pritzker emphasised that although her built body of work was still relatively small, her acclaim and promise were extraordinary, a statement that significantly boosted her international status."
+    },
+    {
+      "person_name": "Vladislav Doronin",
+      "relationship_type": "professional/client",
+      "relationship_description": "Real\u2011estate developer and art collector Vladislav Doronin commissioned Zaha Hadid to design Capital Hill Residence near Moscow, an ultra\u2011luxury private house notable for its elevated, spacecraft\u2011like main volume.",
+      "start_year": 2006,
+      "end_year": 2016,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design of Capital Hill Residence in Barvikha outside Moscow",
+        "integration of Hadid\u2019s neo\u2011futurist language into a bespoke private residence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Vladislav_Doronin"
+      ],
+      "notes": "Doronin completed the residence in 2018; it became a widely publicised example of Hadid\u2019s late residential work and of her continuing influence on high\u2011end architectural patronage."
+    },
+    {
+      "person_name": "Eli Broad",
+      "relationship_type": "professional/patron",
+      "relationship_description": "American businessman and philanthropist Eli Broad commissioned Zaha Hadid to design the Eli and Edythe Broad Art Museum at Michigan State University, expanding her museum portfolio in the United States.",
+      "start_year": 2007,
+      "end_year": 2012,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design and construction of the Eli and Edythe Broad Art Museum at MSU",
+        "fundraising and advocacy connecting Hadid\u2019s work to Broad\u2019s wider arts philanthropy"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Eli_Broad"
+      ],
+      "notes": "Broad\u2019s $28 million gift to MSU funded the museum, explicitly described as 'designed by Pritzker Architecture Prize\u2011winning architect Zaha Hadid'; the project helped cement her reputation in the US cultural\u2011institution sphere."
+    },
+    {
+      "person_name": "Alan Yentob",
+      "relationship_type": "artistic/documentarian",
+      "relationship_description": "BBC executive and presenter Alan Yentob fronted the 2013 television documentary 'Imagine ... Zaha Hadid: Who Dares Wins', profiling her life and work for a broad audience.",
+      "start_year": 2012,
+      "end_year": 2013,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "extended filmed interviews and site visits for the BBC 'Imagine' documentary",
+        "public discussion of her projects and design philosophy on British television"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Alan_Yentob",
+        "https://de.wikipedia.org/wiki/Patrik_Schumacher"
+      ],
+      "notes": "The film, produced by BBC One for the arts series 'Imagine', contributed to Hadid\u2019s mainstream recognition in the UK and includes her and Patrik Schumacher explaining the office\u2019s architectural approach."
+    },
+    {
+      "person_name": "Elizabeth II",
+      "relationship_type": "professional/honour",
+      "relationship_description": "As Queen of the United Kingdom, Elizabeth II approved Zaha Hadid\u2019s appointment as Dame Commander of the Order of the British Empire in 2012 and later the award of the RIBA Royal Gold Medal, marking her as a national figure in architecture.",
+      "start_year": 2012,
+      "end_year": 2016,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "formal investiture as Dame Commander for services to architecture",
+        "monarch\u2019s approval for the 2016 Royal Gold Medal from the Royal Institute of British Architects"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://de.wikipedia.org/wiki/Elisabeth_II."
+      ],
+      "notes": "Hadid became a Dame in the 2012 Birthday Honours and in 2016 was the first woman to receive the RIBA Royal Gold Medal in her own right, honours formally granted in the name of Elizabeth II."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family ties in Zaha Hadid\u2019s life centre on her politically active father, artist mother, and intellectually engaged siblings, whose mix of democratic ideals, artistic practice and cosmopolitan Iraqi upbringing deeply informed her worldview. Though she remained unmarried and without children, her brother Foulath later played a concrete role in securing an Oxford commission for her."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Hadid\u2019s professional network spans formative mentors and employers at OMA, long\u2011term collaborators within Zaha Hadid Architects, influential clients such as Vitra and major patrons like Eli Broad and Vladislav Doronin, as well as prize jurors and institutional partners who helped consolidate her global reputation. These relationships were crucial in moving her from a 'paper architect' to a widely built, prize\u2011winning practitioner."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Academic relationships were foundational to Hadid\u2019s development, beginning with avant\u2011garde tutors like Rem Koolhaas, Elia Zenghelis and Bernard Tschumi at the Architectural Association, and extending through her own extensive teaching career at leading schools, often in dialogue with former mentors and students."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Beyond conventional practice, Hadid engaged with curators, artists and media figures to frame and extend her work: collaborations with glass artist Brian Clarke, high\u2011profile documentaries with Alan Yentob, and inclusion in key exhibitions curated by Philip Johnson and Mark Wigley all helped situate her architecture within a broader cultural and artistic discourse."
+    }
+  ]
+}
