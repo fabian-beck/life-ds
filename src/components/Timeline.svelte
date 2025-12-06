@@ -5,11 +5,15 @@
     mdiHome,
     mdiChevronUp,
     mdiChevronDown,
+    mdiAccountOutline,
+    mdiMapMarkerOutline,
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import * as mdiIcons from "@mdi/js";
+  import PersonChip from "./PersonChip.svelte";
+  import { getSubcategory } from "../utils/storyHelpers.js";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -19,6 +23,8 @@
   export let indicatorIcons = []; // Fallback icons (deprecated, prefer event_type_icon in eventSlides)
   export let eventSlides = []; // Array of event objects with titles and event_type_icon
   export let chapters = []; // Array of chapter objects with headlines
+  export let egoNetwork = null; // Ego network data for person lookups
+  export let styleConfig = null; // Style configuration for person chips
   export let onPrevSlide = () => {};
   export let onNextSlide = () => {};
   export let onGoToEvent = () => {};
@@ -28,9 +34,91 @@
   const dispatch = createEventDispatcher();
 
   let isExpanded = initialExpanded;
+  let visiblePersonInfo = null; // Track which person chip popup is visible
 
   // Make isExpanded reactive to initialExpanded prop changes
   $: isExpanded = initialExpanded;
+
+  // Toggle person info popup
+  function handleTogglePersonInfo(personKey) {
+    visiblePersonInfo = visiblePersonInfo === personKey ? null : personKey;
+  }
+
+  // Close popup when clicking outside or on scroll
+  function handleContainerClick(event) {
+    // Close popup if clicking outside a person chip
+    if (visiblePersonInfo && !event.target.closest('.person-info-wrapper')) {
+      visiblePersonInfo = null;
+    }
+  }
+
+  // Close popup when scrolling
+  function handleContainerScroll() {
+    if (visiblePersonInfo) {
+      visiblePersonInfo = null;
+    }
+  }
+
+  // Find person data from egoNetwork by name
+  function findPersonInNetwork(personName) {
+    if (!egoNetwork?.connections || !personName) return null;
+
+    const nameLower = personName.toLowerCase().trim();
+
+    // Try exact match first
+    let match = egoNetwork.connections.find(
+      (conn) => conn.person_name?.toLowerCase() === nameLower
+    );
+
+    if (match) return match;
+
+    // Try partial match (first name + last name substring)
+    const nameParts = nameLower.split(/\s+/);
+    if (nameParts.length >= 2) {
+      const firstName = nameParts[0];
+      const lastName = nameParts[nameParts.length - 1];
+
+      match = egoNetwork.connections.find((conn) => {
+        const connName = conn.person_name?.toLowerCase() || "";
+        return connName.includes(firstName) && connName.includes(lastName);
+      });
+    }
+
+    // Try last name only match
+    if (!match && nameParts.length >= 1) {
+      const lastName = nameParts[nameParts.length - 1];
+      match = egoNetwork.connections.find((conn) => {
+        const connName = conn.person_name?.toLowerCase() || "";
+        const connParts = connName.split(/\s+/);
+        const connLastName = connParts[connParts.length - 1];
+        return connLastName === lastName;
+      });
+    }
+
+    return match || null;
+  }
+
+  // Get people data for a chapter's involved_people list (only returns people found in network)
+  function getChapterPeople(chapter) {
+    if (!chapter?.involved_people || !Array.isArray(chapter.involved_people)) {
+      return [];
+    }
+
+    // Only return people that can be matched to the ego network
+    return chapter.involved_people
+      .map((name, idx) => {
+        const networkPerson = findPersonInNetwork(name);
+        if (networkPerson) {
+          return {
+            ...networkPerson,
+            _originalName: name,
+            _index: idx,
+          };
+        }
+        return null;
+      })
+      .filter(Boolean);
+  }
 
   // Helper function to resolve MDI icon path from icon name (e.g., "mdi-home" -> mdiHome)
   function resolveIconPath(iconName) {
@@ -323,6 +411,7 @@
           class:expanded={isExpanded}
           bind:this={expandedContainerElement}
           on:wheel|stopPropagation
+          on:scroll={handleContainerScroll}
         >
           {#if !isExpanded}
             <div class="dot-wrapper home-dot">
@@ -411,7 +500,8 @@
               </div>
             </button>
           {:else}
-            <div class="expanded-timeline-container">
+            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+            <div class="expanded-timeline-container" on:click={handleContainerClick}>
               <div
                 class="timeline-item home-item clickable"
                 class:active={activeIndex === 0}
@@ -446,11 +536,57 @@
               {#each groupedEvents as group, groupIndex}
                 {#if group.chapter}
                   {@const chapterAge = group.chapter.age_start ?? 0}
+                  {@const chapterPeople = getChapterPeople(group.chapter)}
+                  {@const chapterLocation = group.chapter.location}
                   <div
                     class="chapter-header"
                     style="--event-age: {chapterAge};"
                   >
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
+                    {#if chapterPeople.length > 0 || chapterLocation}
+                      <div class="chapter-meta">
+                        {#if chapterPeople.length > 0}
+                          <div class="chapter-meta-item chapter-people">
+                            <svg
+                              class="chapter-meta-icon"
+                              viewBox="0 0 24 24"
+                              role="presentation"
+                              aria-hidden="true"
+                            >
+                              <path d={mdiAccountOutline} />
+                            </svg>
+                            <div class="chapter-people-list">
+                              {#each chapterPeople as person, personIdx}
+                                {@const personKey = `chapter-${group.chapter.id}-${personIdx}`}
+                                {@const subcategory = getSubcategory(person.relationship_type)}
+                                <PersonChip
+                                  {person}
+                                  {personKey}
+                                  {visiblePersonInfo}
+                                  {subcategory}
+                                  {styleConfig}
+                                  onToggle={handleTogglePersonInfo}
+                                  containerSelector=".expanded-timeline-container"
+                                />
+                              {/each}
+                            </div>
+                          </div>
+                        {/if}
+                        {#if chapterLocation}
+                          <div class="chapter-meta-item">
+                            <svg
+                              class="chapter-meta-icon"
+                              viewBox="0 0 24 24"
+                              role="presentation"
+                              aria-hidden="true"
+                            >
+                              <path d={mdiMapMarkerOutline} />
+                            </svg>
+                            <span class="chapter-meta-text">{chapterLocation}</span>
+                          </div>
+                        {/if}
+                      </div>
+                    {/if}
                   </div>
                 {:else if groupIndex > 0}
                   <div class="chapter-header">
@@ -917,6 +1053,69 @@
   @container (max-width: 400px) {
     .chapter-headline {
       font-size: 0.8rem;
+    }
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+  }
+
+  .chapter-meta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--story-primary, rgba(226, 232, 240, 0.7));
+    line-height: 1.4;
+  }
+
+  .chapter-meta-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: var(--story-primary, rgba(226, 232, 240, 0.6));
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .chapter-meta-text {
+    font-family: var(--story-body-font, Inter, sans-serif);
+  }
+
+  .chapter-people {
+    align-items: center;
+  }
+
+  .chapter-people .chapter-meta-icon {
+    margin-top: 0;
+  }
+
+  .chapter-people-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  /* PersonChip styling within chapter headers */
+  .chapter-people-list :global(.person-info-wrapper) {
+    display: inline-flex;
+  }
+
+  @container (max-width: 600px) {
+    .chapter-meta {
+      gap: 0.35rem 0.75rem;
+    }
+
+    .chapter-meta-item {
+      font-size: 0.7rem;
+    }
+
+    .chapter-meta-icon {
+      width: 0.8rem;
+      height: 0.8rem;
     }
   }
 

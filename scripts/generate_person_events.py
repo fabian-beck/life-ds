@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-Generate life event datasets using a two-phase approach:
-1. Phase 1: Generate event skeletons (title, date, description) + chapters
-2. Phase 2: Research details for each event (location, people, images, sources, icon)
+Generate life event datasets using a multi-phase approach:
+1. Phase 1: Generate event skeletons (title, date, description)
+2. Phase 2: Research details for each event (location, people, sources, icon)
+3. Chapter Generation: Create life chapters based on established events (with involved_people, location)
+4. Phase 3: Discover and assign event-specific images
 
 This script replaces generate_person_dataset.py with improved accuracy and richer metadata.
 """
@@ -109,7 +111,8 @@ class LifeChapter(BaseModel):
     id: str = Field(
         description="Unique identifier for the chapter (lowercase, snake_case)"
     )
-    headline: str = Field(description="Short, evocative chapter headline (3-6 words)")
+    headline: str = Field(
+        description="Short, evocative chapter headline (3-6 words). Avoid using 'and' - prefer more specific, focused headlines.")
     description: str = Field(
         description="Brief description of this life period (1-2 sentences)"
     )
@@ -130,6 +133,21 @@ class LifeChapter(BaseModel):
     )
     age_end: Optional[int] = Field(
         None, description="Subject's age at chapter end, null if not applicable"
+    )
+    involved_people: Optional[List[str]] = Field(
+        None,
+        description="Names of key people involved during this life chapter (aggregated from events, exclude the main subject)"
+    )
+    location: Optional[str] = Field(
+        None,
+        description="Summary of the main geographic area for this chapter (e.g., 'England', 'United States', 'Central Europe') - not a list of places"
+    )
+
+
+class ChapterGenerationOutput(BaseModel):
+    """Output model for chapter generation phase."""
+    chapters: List[LifeChapter] = Field(
+        description="List of life chapters grouping the events"
     )
 
 
@@ -156,7 +174,6 @@ class EventSkeleton(BaseModel):
     )
     title: str = Field(description="Brief title of the event (2-6 words)")
     description: str = Field(description="Detailed description of the event (2-4 sentences)")
-    chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
     annotations: Optional[Dict[str, Annotation]] = Field(
         None,
         description="Dictionary mapping term keys to their explanations"
@@ -164,13 +181,10 @@ class EventSkeleton(BaseModel):
 
 
 class LifePlan(BaseModel):
-    """Phase 1 output: Person metadata, chapters, and event skeletons."""
+    """Phase 1 output: Person metadata and event skeletons."""
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
-    chapters: Optional[List[LifeChapter]] = Field(
-        None, description="Optional list of life chapters grouping events"
-    )
     event_skeletons: List[EventSkeleton] = Field(
         description="List of event skeletons (minimal event data)"
     )
@@ -1139,7 +1153,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     Call OpenAI for Phase 1 using structured outputs.
 
     Returns:
-        LifePlan with person metadata, chapters, and event skeletons
+        LifePlan with person metadata and event skeletons
     """
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -1149,8 +1163,8 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
 
     system = (
         "You are a meticulous historian creating biographical timeline outlines. "
-        "Focus on identifying the most significant events and organizing them into "
-        "coherent life chapters. Use ISO-8601 dates, include date_precision as 'day', "
+        "Focus on identifying the most significant events in a person's life. "
+        "Use ISO-8601 dates, include date_precision as 'day', "
         "'month', or 'year'. All output must be in English only, regardless of source language."
     )
 
@@ -1163,14 +1177,6 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "Do not include events that occur after the TARGET SUBJECT's death or that focus on their legacy. "
         "\n\nREMINDER: You must output between 12 and 16 events total. If you find yourself creating more than 16 events, "
         "consolidate related events or remove less significant ones. "
-        "\n\nIMPORTANT - Chapter Organization:\n"
-        "- Group the events into 3-5 meaningful life chapters (periods/phases)\n"
-        "- Each chapter should represent a distinct phase of the person's life (e.g., 'Early Years and Education', 'Wartime Service', 'Academic Career', 'Later Life')\n"
-        "- Create chapter objects with: id (snake_case), headline (3-6 words), description (1-2 sentences about this life period), "
-        "date_start, date_start_precision, date_end, date_end_precision, age_start, age_end\n"
-        "- Assign each event to a chapter by setting its 'chapter' field to the chapter's 'id'\n"
-        "- Chapters should be chronological and non-overlapping\n"
-        "- The first chapter should start with or before the first event, and the last chapter should end with or after the last event\n"
         "\n\nIMPORTANT - Event Skeleton Guidelines:\n"
         "- Keep event titles crisp and concise (2-6 words)\n"
         "- Use active, specific language that captures the essence of the event\n"
@@ -1181,7 +1187,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- DO mention places, people, and context in the description naturally\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
-        "title, description, and chapter (the chapter id this event belongs to). "
+        "title, and description. "
         "\nInclude person metadata with name, birth_date, death_date when known, primary_roles, summary, "
         "wikipedia URL, and portrait info if available."
     )
@@ -1526,7 +1532,7 @@ def merge_event_skeleton_and_details(
     # Merge description (prefer Phase 2 if provided with markers, else Phase 1)
     description = details.description if details.description else skeleton.description
 
-    # Create merged event (NO images yet - assigned in Phase 3)
+    # Create merged event (NO images yet - assigned in Phase 3, NO chapter yet - assigned in Chapter phase)
     return LifeEvent(
         date=skeleton.date,
         date_precision=skeleton.date_precision,
@@ -1541,7 +1547,7 @@ def merge_event_skeleton_and_details(
         sources=details.sources if details.sources else [],
         images=None,  # Images assigned in Phase 3
         event_type_icon=details.event_type_icon or "mdi-calendar",
-        chapter=skeleton.chapter,
+        chapter=None,  # Chapter assigned in Chapter generation phase
         annotations=annotations,
     )
 
@@ -1558,6 +1564,223 @@ def merge_all_events(
         merge_event_skeleton_and_details(skeleton, details)
         for skeleton, details in zip(skeletons, details_list)
     ]
+
+
+# ============================================================================
+# CHAPTER GENERATION PHASE
+# ============================================================================
+
+def build_chapter_generation_prompt(
+    merged_events: List[LifeEvent],
+    person_name: str,
+    birth_date: Optional[str] = None,
+    death_date: Optional[str] = None,
+) -> str:
+    """
+    Build prompt for chapter generation based on established events.
+
+    The prompt includes all event details so the AI can create meaningful chapters
+    with involved_people and location aggregated from the events.
+    """
+    prompt = f"PERSON: {person_name}\n"
+    if birth_date:
+        prompt += f"Born: {birth_date}\n"
+    if death_date:
+        prompt += f"Died: {death_date}\n"
+    prompt += f"\n{'='*60}\n"
+    prompt += "ESTABLISHED LIFE EVENTS (chronologically ordered):\n"
+    prompt += f"{'='*60}\n\n"
+
+    for idx, event in enumerate(merged_events, 1):
+        prompt += f"EVENT {idx}:\n"
+        prompt += f"  Date: {event.date}"
+        if event.date_end:
+            prompt += f" to {event.date_end}"
+        prompt += f" (precision: {event.date_precision})\n"
+        if event.age is not None:
+            prompt += f"  Age: {event.age}\n"
+        prompt += f"  Title: {event.title}\n"
+        prompt += f"  Description: {event.description}\n"
+
+        if event.locations:
+            locations_str = ", ".join([
+                loc.get("name_modern") or loc.get("name_historic", "Unknown")
+                for loc in event.locations
+            ])
+            prompt += f"  Locations: {locations_str}\n"
+
+        if event.involved_people:
+            prompt += f"  Involved people: {', '.join(event.involved_people)}\n"
+
+        prompt += "\n"
+
+    prompt += f"{'='*60}\n"
+    prompt += f"Total: {len(merged_events)} events\n"
+
+    return prompt
+
+
+def call_openai_chapter_generation(
+    prompt: str,
+    model: str,
+    retry_count: int = 2
+) -> ChapterGenerationOutput:
+    """
+    Call OpenAI to generate chapters based on established events.
+
+    Returns:
+        ChapterGenerationOutput with list of chapters including involved_people and location
+    """
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+
+    client = OpenAI(api_key=api_key)
+
+    system = (
+        "You are a meticulous historian organizing biographical events into meaningful life chapters. "
+        "Create coherent narrative groupings that represent distinct phases of the person's life. "
+        "All output must be in English only."
+    )
+
+    instructions = (
+        "Based on the established life events provided, create 3-5 meaningful life chapters that group these events.\n\n"
+        "CHAPTER REQUIREMENTS:\n"
+        "- Each chapter represents a distinct phase of the person's life\n"
+        "- Chapters must be chronological and non-overlapping\n"
+        "- The first chapter should start with or before the first event\n"
+        "- The last chapter should end with or after the last event\n"
+        "- Every event must belong to exactly one chapter based on its date\n\n"
+        "CHAPTER STRUCTURE:\n"
+        "- id: Unique identifier (lowercase, snake_case)\n"
+        "- headline: Short, evocative headline (3-6 words). IMPORTANT: Avoid using 'and' in headlines - "
+        "instead, choose a more focused, specific theme. For example, instead of 'Education and Early Career', "
+        "use 'Academic Foundations' or 'Scholarly Beginnings'. Instead of 'War and Persecution', use 'Wartime Struggles'.\n"
+        "- description: Brief description of this life period (1-2 sentences)\n"
+        "- date_start, date_start_precision: When this chapter begins\n"
+        "- date_end, date_end_precision: When this chapter ends\n"
+        "- age_start, age_end: Subject's age at chapter start/end (null if not applicable)\n"
+        "- involved_people: Aggregate the key people mentioned across all events in this chapter "
+        "(exclude the main subject, include only significant individuals)\n"
+        "- location: A summary of the main geographic area for this chapter - NOT a list of cities, but a regional summary. "
+        "For example: 'England' (not 'London, Cambridge, Manchester'), 'United States' (not 'Princeton, New York, Boston'), "
+        "'Central Europe' (not 'Vienna, Prague, Budapest'). Use the broadest appropriate region.\n\n"
+        "HEADLINE GUIDELINES:\n"
+        "- DO NOT use 'and' to combine two themes - pick the dominant theme\n"
+        "- Good examples: 'Early Years in Vienna', 'Wartime Service', 'Academic Career', 'Literary Fame', 'Final Years'\n"
+        "- Bad examples: 'Education and Career', 'War and Peace', 'Writing and Teaching'\n"
+        "- Each headline should capture the essence of that life period in a focused way\n\n"
+        "Analyze the events and create chapters that tell a coherent life story."
+    )
+
+    for attempt in range(retry_count + 1):
+        try:
+            response = client.responses.parse(
+                model=model,
+                reasoning={"effort": LOW_REASONING_EFFORT},
+                input=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": instructions},
+                    {"role": "user", "content": prompt},
+                ],
+                text_format=ChapterGenerationOutput,
+            )
+
+            if response.status == "completed" and response.output_parsed:
+                return response.output_parsed
+
+        except Exception as error:
+            if attempt < retry_count:
+                print(f"    Retry {attempt + 1}/{retry_count}")
+                time.sleep(2)
+            else:
+                print(f"    Warning: Chapter generation failed after {retry_count + 1} attempts")
+                raise RuntimeError(f"Chapter generation failed: {error}") from error
+
+    raise RuntimeError("Chapter generation failed unexpectedly")
+
+
+def assign_events_to_chapters(
+    events: List[LifeEvent],
+    chapters: List[LifeChapter]
+) -> List[LifeEvent]:
+    """
+    Assign each event to the appropriate chapter based on date.
+
+    Events are assigned to the chapter whose date range contains the event date.
+    """
+    # Sort chapters by start date
+    sorted_chapters = sorted(chapters, key=lambda c: c.date_start)
+
+    updated_events = []
+    for event in events:
+        event_date = event.date
+        assigned_chapter = None
+
+        # Find the chapter that contains this event's date
+        for chapter in sorted_chapters:
+            if chapter.date_start <= event_date:
+                if chapter.date_end >= event_date:
+                    assigned_chapter = chapter.id
+                    break
+                # If event is after this chapter's end, check next chapter
+                # but keep this as fallback if no better match
+                assigned_chapter = chapter.id
+
+        # If no chapter found, assign to last chapter
+        if not assigned_chapter and sorted_chapters:
+            assigned_chapter = sorted_chapters[-1].id
+
+        # Create updated event with chapter assignment
+        updated_event = LifeEvent(
+            date=event.date,
+            date_precision=event.date_precision,
+            date_end=event.date_end,
+            date_end_precision=event.date_end_precision,
+            date_note=event.date_note,
+            age=event.age,
+            title=event.title,
+            description=event.description,
+            locations=event.locations,
+            involved_people=event.involved_people,
+            sources=event.sources,
+            images=event.images,
+            event_type_icon=event.event_type_icon,
+            chapter=assigned_chapter,
+            annotations=event.annotations,
+        )
+        updated_events.append(updated_event)
+
+    return updated_events
+
+
+def generate_chapters_for_events(
+    merged_events: List[LifeEvent],
+    person_name: str,
+    birth_date: Optional[str],
+    death_date: Optional[str],
+    model: str,
+) -> Tuple[List[LifeChapter], List[LifeEvent]]:
+    """
+    Generate chapters for the established events and assign events to chapters.
+
+    Returns:
+        Tuple of (chapters, events_with_chapter_assignments)
+    """
+    # Build prompt with all event information
+    prompt = build_chapter_generation_prompt(
+        merged_events, person_name, birth_date, death_date
+    )
+
+    # Call AI to generate chapters
+    chapter_output = call_openai_chapter_generation(prompt, model)
+
+    # Assign events to chapters
+    events_with_chapters = assign_events_to_chapters(
+        merged_events, chapter_output.chapters
+    )
+
+    return chapter_output.chapters, events_with_chapters
 
 
 # ============================================================================
@@ -2023,7 +2246,8 @@ def enforce_metadata(
             for term_key, annotation in raw_annotations.items():
                 if isinstance(annotation, dict):
                     explanation = annotation.get("explanation", "").strip()
-                    wikipedia_url = annotation.get("wikipedia_url", "").strip() if annotation.get("wikipedia_url") else None
+                    wikipedia_url = annotation.get("wikipedia_url", "").strip(
+                    ) if annotation.get("wikipedia_url") else None
 
                     # Only keep annotations with valid explanations
                     if explanation:
@@ -2260,58 +2484,70 @@ def generate_person_events(
         print(f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache")
 
     # PHASE 1: Generate event skeletons
-    print(f"[Step 4/10] PHASE 1: Generating event skeletons and chapters (model: {model}, reasoning: {DEFAULT_REASONING_EFFORT})...")
+    print(f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {DEFAULT_REASONING_EFFORT})...")
     phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles)
     life_plan = call_openai_phase1(phase1_prompt, model)
-    print(f"[Step 4/10] Generated {len(life_plan.event_skeletons)} event skeletons")
+    print(f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons")
 
     # PHASE 2: Research event details (NO images - Phase 3)
-    print(f"[Step 5/10] PHASE 2: Researching event details (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+    print(f"[Step 5/11] PHASE 2: Researching event details (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
         model=model,
     )
-    print(f"[Step 5/10] Researched details for {len(event_details_list)} events")
+    print(f"[Step 5/11] Researched details for {len(event_details_list)} events")
 
     # MERGE: Combine skeletons + details
-    print("[Step 6/10] Merging event skeletons with details...")
+    print("[Step 6/11] Merging event skeletons with details...")
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
 
-    # PHASE 3: Event-specific image discovery
-    print(f"[Step 7/10] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
-    enriched_events = research_images_for_all_events(
+    # CHAPTER GENERATION: Create chapters based on established events
+    print(f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+    chapters, events_with_chapters = generate_chapters_for_events(
         merged_events=merged_events,
+        person_name=life_plan.person.name,
+        birth_date=life_plan.person.birth_date,
+        death_date=life_plan.person.death_date,
+        model=model,
+    )
+    print(f"[Step 7/11] Generated {len(chapters)} chapters")
+
+    # PHASE 3: Event-specific image discovery
+    print(
+        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+    enriched_events = research_images_for_all_events(
+        merged_events=events_with_chapters,
         event_skeletons=life_plan.event_skeletons,
         event_details_list=event_details_list,
         person_name=life_plan.person.name,
         model=model,
     )
     images_assigned = sum(1 for e in enriched_events if e.images)
-    print(f"[Step 7/10] Assigned images to {images_assigned} / {len(enriched_events)} events")
+    print(f"[Step 8/11] Assigned images to {images_assigned} / {len(enriched_events)} events")
 
     # Build final payload
     payload = {
         "dataset": life_plan.dataset,
         "created_on": life_plan.created_on,
         "person": life_plan.person.model_dump(),
-        "chapters": [ch.model_dump() for ch in life_plan.chapters] if life_plan.chapters else None,
+        "chapters": [ch.model_dump() for ch in chapters] if chapters else None,
         "events": [ev.model_dump() for ev in enriched_events],
     }
 
     # Normalize metadata
-    print("[Step 8/10] Normalizing dataset metadata...")
+    print("[Step 9/11] Normalizing dataset metadata...")
     payload = enforce_metadata(payload, page_data, summary_data)
-    print(f"[Step 8/10] Dataset includes {len(payload['events'])} events")
+    print(f"[Step 9/11] Dataset includes {len(payload['events'])} events")
 
     # Geocode with enhanced logic
-    print("[Step 9/10] Resolving event location coordinates...")
+    print("[Step 10/11] Resolving event location coordinates...")
     payload, geocoded_events = enrich_event_coordinates_v2(payload)
-    print(f"[Step 9/10] Coordinates resolved for {geocoded_events} events")
+    print(f"[Step 10/11] Coordinates resolved for {geocoded_events} events")
 
     # Write to file
-    print(f"[Step 10/10] Writing dataset for '{person_id}'...")
+    print(f"[Step 11/11] Writing dataset for '{person_id}'...")
     file_path = write_dataset(payload, person_id)
 
     if update_registry:

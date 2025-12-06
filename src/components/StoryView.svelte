@@ -891,6 +891,8 @@
     {indicatorIcons}
     {eventSlides}
     {chapters}
+    {egoNetwork}
+    {styleConfig}
     initialExpanded={$queryParams.timeline}
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
