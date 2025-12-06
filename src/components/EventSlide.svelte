@@ -235,6 +235,7 @@
                   {personKey}
                   {visiblePersonInfo}
                   {subcategory}
+                  {styleConfig}
                   onToggle={onTogglePersonInfo}
                 />
               {/each}
