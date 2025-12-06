@@ -100,7 +100,11 @@ class Person(BaseModel):
     name: str = Field(description="Full name of the person")
     birth_date: Optional[str] = Field(None, description="Birth date in ISO-8601 format")
     death_date: Optional[str] = Field(None, description="Death date in ISO-8601 format")
-    primary_roles: List[str] = Field(description="Primary roles or professions")
+    primary_roles: List[str] = Field(
+        description="2-3 primary roles/professions. Use short, generic, lowercase single words or two-word phrases. "
+                    "Examples: 'mathematician', 'physicist', 'writer', 'composer', 'computer scientist', 'monarch', 'inventor'. "
+                    "Avoid specific titles, company names, or idiosyncratic descriptions."
+    )
     tagline: str = Field(description="Catchy, memorable phrase capturing the person's essence (3-7 words)")
     summary: str = Field(description="Brief biographical summary")
     wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
@@ -1191,7 +1195,15 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "title, and description. "
         "\nInclude person metadata with name, birth_date, death_date when known, primary_roles, tagline, summary, "
         "wikipedia URL, and portrait info if available.\n"
-        "The tagline should be a catchy, memorable phrase (3-7 words) that captures the person's essence or most notable contribution. "
+        "\nPRIMARY_ROLES GUIDELINES (CRITICAL):\n"
+        "- Provide exactly 2-3 roles, never more\n"
+        "- Use SHORT, GENERIC, LOWERCASE role names (1-2 words max)\n"
+        "- Roles must be comparable across different people (standard profession/role names)\n"
+        "- GOOD examples: 'mathematician', 'physicist', 'writer', 'composer', 'architect', 'monarch', 'inventor', 'computer scientist', 'philosopher', 'entrepreneur'\n"
+        "- BAD examples: 'Founder of Apple Inc' (too specific), 'King of Germany' (use 'monarch'), 'theoretical biologist' (too niche, use 'biologist'), 'Computer pioneer' (use 'computer scientist')\n"
+        "- For royalty/rulers: use 'monarch', 'emperor', or 'ruler' - not specific titles\n"
+        "- Avoid adjectives and qualifiers: 'scientist' not 'renowned scientist'\n"
+        "\nThe tagline should be a catchy, memorable phrase (3-7 words) that captures the person's essence or most notable contribution. "
         "Examples: 'Father of Computer Science', 'The First Programmer', 'Architect of Relativity', 'Pioneer of Structured Programming'."
     )
 
