@@ -322,6 +322,7 @@
           class="dots-container"
           class:expanded={isExpanded}
           bind:this={expandedContainerElement}
+          on:wheel|stopPropagation
         >
           {#if !isExpanded}
             <div class="dot-wrapper home-dot">
