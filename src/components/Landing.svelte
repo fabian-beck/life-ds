@@ -535,11 +535,13 @@
                 </p>
               {/if}
             </div>
-            {#if summary}
-              <p class="card-summary">{summary}</p>
+            {#if entry.tagline}
+              <p class="card-tagline">{entry.tagline}</p>
+            {:else if summary}
+              <p class="card-tagline">{summary}</p>
             {:else}
-              <p class="card-summary placeholder">
-                A summary is not available yet, but the timeline is ready.
+              <p class="card-tagline placeholder">
+                Explore their life story
               </p>
             {/if}
           </div>
@@ -928,21 +930,19 @@
     font-size: 0.7rem;
   }
 
-  .card-summary {
+  .card-tagline {
     margin: 0;
-    font-size: 0.92rem;
-    color: rgba(203, 213, 225, 0.92);
-    line-height: 1.45;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 1rem;
+    color: rgba(203, 213, 225, 0.95);
+    line-height: 1.4;
+    font-weight: 500;
+    font-style: italic;
     font-family: var(--card-body-font, Inter, sans-serif);
   }
 
-  .card-summary.placeholder {
+  .card-tagline.placeholder {
     color: #94a3b8;
-    font-style: italic;
+    font-weight: 400;
   }
 
   .eyebrow {

@@ -101,6 +101,7 @@ class Person(BaseModel):
     birth_date: Optional[str] = Field(None, description="Birth date in ISO-8601 format")
     death_date: Optional[str] = Field(None, description="Death date in ISO-8601 format")
     primary_roles: List[str] = Field(description="Primary roles or professions")
+    tagline: str = Field(description="Catchy, memorable phrase capturing the person's essence (3-7 words)")
     summary: str = Field(description="Brief biographical summary")
     wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
     portrait: Optional[Portrait] = Field(None, description="Portrait information")
@@ -1188,8 +1189,10 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
         "title, and description. "
-        "\nInclude person metadata with name, birth_date, death_date when known, primary_roles, summary, "
-        "wikipedia URL, and portrait info if available."
+        "\nInclude person metadata with name, birth_date, death_date when known, primary_roles, tagline, summary, "
+        "wikipedia URL, and portrait info if available.\n"
+        "The tagline should be a catchy, memorable phrase (3-7 words) that captures the person's essence or most notable contribution. "
+        "Examples: 'Father of Computer Science', 'The First Programmer', 'Architect of Relativity', 'Pioneer of Structured Programming'."
     )
 
     try:
@@ -2347,6 +2350,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     entry = {
         "id": person_id,
         "name": person.get("name", person_id.replace("_", " ").title()),
+        "tagline": person.get("tagline"),
         "summary": person.get("summary"),
     }
 
