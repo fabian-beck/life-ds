@@ -35,12 +35,12 @@
 
     // Build new URL with updated language
     let newPath;
-    // Check if we're on landing page
+    // Check if we're on landing page (root)
     if (currentPath === "/" || currentPath === "") {
       newPath = `/${newLang}`;
-    } else if (currentPath.match(/^\/[a-z]{2}\//)) {
-      // Replace existing language in URL
-      newPath = currentPath.replace(/^\/[a-z]{2}\//, `/${newLang}/`);
+    } else if (currentPath.match(/^\/[a-z]{2}(?:\/|$)/)) {
+      // Replace existing language in URL (handles both /en and /en/story/...)
+      newPath = currentPath.replace(/^\/[a-z]{2}/, `/${newLang}`);
     } else {
       // Add language prefix to current path
       newPath = `/${newLang}${currentPath}`;

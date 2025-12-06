@@ -9,15 +9,13 @@
   import styleRegistry from "../data/person_styles.json";
 import { displayName } from "./utils/helpers.js";
 
-  // Load translations on mount
-  onMount(async () => {
-    await loadTranslations($currentLanguage);
-  });
-
   // Reload translations when language changes
-  $: if ($currentLanguage) {
-    loadTranslations($currentLanguage);
-  }
+  onMount(() => {
+    const unsubscribe = currentLanguage.subscribe((lang) => {
+      loadTranslations(lang);
+    });
+    return unsubscribe;
+  });
 
   // Initial registry (will be replaced with language-specific version)
   let registry = { people: [] };
@@ -42,14 +40,13 @@ import { displayName } from "./utils/helpers.js";
     }
   }
 
-  // Load registry on mount and when language changes
-  onMount(async () => {
-    await loadRegistry($currentLanguage);
+  // Reload registry when language changes
+  onMount(() => {
+    const unsubscribe = currentLanguage.subscribe((lang) => {
+      loadRegistry(lang);
+    });
+    return unsubscribe;
   });
-
-  $: if ($currentLanguage) {
-    loadRegistry($currentLanguage);
-  }
 
   // Lazy loading - include both base and language-specific paths
   const datasetModules = import.meta.glob(
@@ -293,7 +290,9 @@ import { displayName } from "./utils/helpers.js";
   $: exhibitionMatch = currentPath.match(
     /^\/(?:([a-z]{2})\/)?exhibition\/([^/]+)/
   );
-  $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || null;
+  // Also match landing page with language prefix: /en, /de, etc.
+  $: landingMatch = currentPath.match(/^\/([a-z]{2})(?:\/|$)/);
+  $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || landingMatch?.[1] || null;
   $: personId = storyMatch
     ? decodeURIComponent(storyMatch[2])
     : exhibitionMatch
@@ -306,10 +305,18 @@ import { displayName } from "./utils/helpers.js";
     currentLanguage.set(langFromUrl);
   }
 
-  // Redirect to language-prefixed URL if accessing story/exhibition without language
-  $: if (personId && !langFromUrl) {
-    const newPath = `/${$currentLanguage}${currentPath}`;
-    replace(newPath);
+  // Redirect to language-prefixed URL if accessing any page without language
+  $: if (!langFromUrl && currentPath !== "/") {
+    // Don't redirect if we're already on a language-prefixed path
+    if (!currentPath.startsWith(`/${$currentLanguage}`)) {
+      const newPath = `/${$currentLanguage}${currentPath}`;
+      replace(newPath);
+    }
+  }
+
+  // Redirect root path to language-prefixed landing page
+  $: if (currentPath === "/") {
+    replace(`/${$currentLanguage}`);
   }
 
   // Reactive data loading - load when personId OR language changes
