@@ -778,7 +778,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    width: 100%;
+    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100);
     opacity: 0;
     animation: fadeIn 0.4s ease forwards;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100);
@@ -791,6 +791,7 @@
     margin-bottom: -0.35rem;
     margin-right: -0.5rem;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
+    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100 + 0.5rem);
     border-radius: 0.5rem;
     transition: background-color 0.2s ease;
   }
@@ -882,6 +883,7 @@
     margin-top: 0.75rem;
     margin-bottom: 0.35rem;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100);
+    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100);
     padding: 0.3rem 0 0.3rem 0.5rem;
     border-left: 2px solid var(--story-primary, rgba(148, 163, 184, 0.5));
     background: linear-gradient(
