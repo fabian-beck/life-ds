@@ -39,6 +39,10 @@
   export let onOpenNetwork = () => {};
   export let checkOverflow = () => {};
 
+  function handleAnnotationClick(termKey, segment) {
+    onToggleAnnotation(slide.eventIndex, termKey);
+  }
+
   $: UNKNOWN_LOCATION_LABEL = $_("story.location_unknown");
   $: validImages = getValidImages(slide.images);
   $: relevantPeople = getRelevantPeople(slide, egoNetwork);
@@ -49,6 +53,15 @@
     slide.annotations,
     relevantPeople
   );
+
+  // Create a reactive map of which annotations should be visible
+  $: annotationVisibilityMap = descriptionSegments.reduce((map, segment) => {
+    if (segment.type === 'annotation') {
+      const compositeKey = `${slide.eventIndex}-${segment.termKey}`;
+      map[segment.termKey] = visibleAnnotation === compositeKey;
+    }
+    return map;
+  }, {});
 
   function formatAgeLabel(age) {
     if (age == null) return null;
@@ -177,9 +190,27 @@
         class="description"
         class:has-fade={descriptionOverflows.has(slide.eventIndex)}
         use:checkOverflow={slide.eventIndex}
-      >
-{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<span role="button" tabindex="0" class="annotated-term" on:click|stopPropagation={() => onToggleAnnotation(segment.termKey)} on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onToggleAnnotation(segment.termKey)} aria-expanded={visibleAnnotation === segment.termKey} aria-label={$_('story.show_explanation')}>{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></span>{#if visibleAnnotation === segment.termKey}<span class="annotation-popup">{segment.annotation.explanation}{#if segment.annotation.wikipedia_url}<a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>{/if}</span>{/if}{:else if segment.type === 'person'}<strong class="person-mention">{segment.content}</strong>{/if}{/each}
-      </p>
+      >{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<span
+              role="button"
+              tabindex="0"
+              class="annotated-term"
+              data-term-key={segment.termKey}
+              on:click|stopPropagation={() => handleAnnotationClick(segment.termKey, segment)}
+              on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && handleAnnotationClick(segment.termKey, segment)}
+              aria-expanded={annotationVisibilityMap[segment.termKey]}
+              aria-label={$_('story.show_explanation')}
+            >{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></span>{:else if segment.type === 'person'}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
+      {#each descriptionSegments.filter(s => s.type === 'annotation' && annotationVisibilityMap[s.termKey]) as segment (segment.termKey)}
+        <div class="annotation-popup-container">
+          <div class="annotation-popup">
+            <span class="annotation-term-label">{segment.displayText}:</span>
+            {segment.annotation.explanation}
+            {#if segment.annotation.wikipedia_url}
+              <a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>
+            {/if}
+          </div>
+        </div>
+      {/each}
     </div>
     <div class="event-details">
       {#if relevantPeople.length > 0}
@@ -329,6 +360,7 @@
 
   .event-description {
     width: 100%;
+    position: relative;
   }
 
   .event-details {
@@ -871,13 +903,19 @@
     line-height: 1;
   }
 
-  .annotation-popup {
+  .annotation-popup-container {
     position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 50%;
-    transform: translateX(-50%);
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+
+  .annotation-popup {
+    position: relative;
+    margin-top: 0.5rem;
     min-width: 200px;
-    max-width: 300px;
+    max-width: 100%;
     background: rgba(15, 23, 42, 0.98);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(148, 163, 184, 0.4);
@@ -891,6 +929,13 @@
     animation: fadeInTooltip 0.2s ease;
     text-align: left;
     pointer-events: auto;
+    white-space: normal;
+    text-decoration: none;
+  }
+
+  .annotation-term-label {
+    font-weight: 600;
+    color: var(--story-secondary, #38bdf8);
   }
 
   .annotation-link {
@@ -917,10 +962,7 @@
   /* Responsive positioning */
   @media (max-width: 768px) {
     .annotation-popup {
-      left: 0;
-      right: 0;
-      transform: none;
-      max-width: none;
+      max-width: 100%;
     }
   }
 </style>

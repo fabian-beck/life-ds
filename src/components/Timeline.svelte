@@ -329,6 +329,7 @@
                 type="button"
                 class="dot square"
                 class:active={activeIndex === 0}
+                style="transform: scale({activeIndex === 0 ? 1.6 : (activeEventIndex === 0 ? 1.3 : 1.0)}); z-index: {activeIndex === 0 ? 16 : (activeEventIndex === 0 ? 13 : 10)};"
                 on:click={() => onScrollToIndex(0)}
                 aria-label={$_("timeline.show_overview")}
                 aria-current={activeIndex === 0 ? "true" : undefined}
@@ -410,14 +411,23 @@
             </button>
           {:else}
             <div class="expanded-timeline-container">
-              <div class="timeline-item home-item">
+              <div
+                class="timeline-item home-item clickable"
+                class:active={activeIndex === 0}
+                role="button"
+                tabindex="0"
+                on:click={() => onScrollToIndex(0)}
+                on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onScrollToIndex(0)}
+              >
                 <button
                   type="button"
                   class="dot square"
                   class:active={activeIndex === 0}
-                  on:click={() => onScrollToIndex(0)}
+                  style="transform: scale({activeIndex === 0 ? 1.4 : 1.0}); transition: transform 0.25s ease;"
+                  on:click|stopPropagation={() => onScrollToIndex(0)}
                   aria-label={$_("timeline.show_overview")}
                   aria-current={activeIndex === 0 ? "true" : undefined}
+                  tabindex="-1"
                 >
                   <svg
                     class="dot-icon"
@@ -454,19 +464,26 @@
                     : ""}
                   {@const eventAge = event.age ?? 0}
                   <div
-                    class="timeline-item"
+                    class="timeline-item clickable"
+                    class:active={idx === activeEventIndex}
                     data-event-index={idx}
                     style="--event-age: {eventAge};"
+                    role="button"
+                    tabindex="0"
+                    on:click={() => onGoToEvent(idx)}
+                    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onGoToEvent(idx)}
                   >
                     <button
                       type="button"
                       class="dot"
                       class:active={idx === activeEventIndex}
-                      on:click={() => onGoToEvent(idx)}
+                      style="transform: scale({idx === activeEventIndex ? 1.4 : 1.0}); transition: transform 0.25s ease;"
+                      on:click|stopPropagation={() => onGoToEvent(idx)}
                       aria-label={`Show event ${idx + 1} of ${totalSlides}`}
                       aria-current={idx === activeEventIndex
                         ? "true"
                         : undefined}
+                      tabindex="-1"
                     >
                       {#if eventIcons[idx]}
                         <svg
@@ -764,7 +781,32 @@
     width: 100%;
     opacity: 0;
     animation: fadeIn 0.4s ease forwards;
-    padding-left: calc(var(--event-age) * (100cqw - 200px) / 100);
+    margin-left: calc(var(--event-age) * (100cqw - 200px) / 100);
+  }
+
+  .timeline-item.clickable {
+    cursor: pointer;
+    padding: 0.35rem 0.5rem;
+    margin-top: -0.35rem;
+    margin-bottom: -0.35rem;
+    margin-right: -0.5rem;
+    margin-left: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .timeline-item.clickable:hover {
+    background: rgba(148, 163, 184, 0.08);
+  }
+
+  .timeline-item.clickable:focus {
+    outline: 2px solid var(--story-primary, rgba(148, 163, 184, 0.4));
+    outline-offset: 2px;
+    background: rgba(148, 163, 184, 0.05);
+  }
+
+  .timeline-item.clickable:focus:not(:focus-visible) {
+    outline: none;
   }
 
   @keyframes fadeIn {

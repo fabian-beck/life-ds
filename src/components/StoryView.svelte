@@ -570,8 +570,9 @@
     visibleDateNote = visibleDateNote === eventIndex ? null : eventIndex;
   }
 
-  function toggleAnnotation(termKey) {
-    visibleAnnotation = visibleAnnotation === termKey ? null : termKey;
+  function toggleAnnotation(eventIndex, termKey) {
+    const compositeKey = `${eventIndex}-${termKey}`;
+    visibleAnnotation = visibleAnnotation === compositeKey ? null : compositeKey;
   }
 
   function handleClickOutside(event) {
@@ -821,7 +822,7 @@
           </div>
         </section>
       {:else if totalPanels > 0}
-        {#each slides as slide}
+        {#each slides as slide (slide.eventIndex)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
