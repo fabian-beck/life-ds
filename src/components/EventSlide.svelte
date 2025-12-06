@@ -226,22 +226,9 @@
           </li>
         </ul>
       {/if}
-      {#if (slide.locations?.length && slide.locations.some(loc => loc.name_historic)) || slide.sources?.length}
+      {#if slide.sources?.length}
         <ul class="details details-compact">
           <li>
-            {#if slide.locations?.length && slide.locations.some(loc => loc.name_historic)}
-              <span class="label" aria-label="Location">
-                <svg
-                  class="icon icon-inline"
-                  viewBox="0 0 24 24"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <path d={mdiMapMarkerOutline} />
-                </svg>
-              </span>
-              <span>{@html formatLocations(slide.locations)}</span>
-            {/if}
             {#if slide.sources?.length}
               <div class="sources-wrapper">
                 <span class="label" aria-label="Sources">

@@ -90,9 +90,19 @@
           const id = layer?.id ?? "";
           if (typeof id !== "string") return true;
           const lower = id.toLowerCase();
+
+          // Remove all symbol layers (labels and icons)
+          if (layer.type === "symbol") return false;
+
+          // Remove labels
           if (lower.includes("label")) return false;
-          if (lower.includes("boundary") || lower.includes("border"))
-            return false;
+          if (lower.includes("text")) return false;
+          if (lower.includes("name")) return false;
+
+          // Remove boundaries/borders
+          if (lower.includes("boundary")) return false;
+          if (lower.includes("border")) return false;
+
           return true;
         }),
       };
@@ -100,7 +110,10 @@
     return JSON.parse(JSON.stringify(basemapStyleCache));
   }
 
-  function createMarkerElement(color, { opacity = 1, size = 14 } = {}) {
+  function createMarkerElement(color, { opacity = 1, size = 14, label = null, labelPosition = "top" } = {}) {
+    const container = document.createElement("div");
+    container.className = "story-map-marker-container";
+
     const element = document.createElement("span");
     element.className = "story-map-marker";
     element.style.backgroundColor = color;
@@ -108,7 +121,29 @@
     const clampedSize = Math.max(size, 6);
     element.style.width = `${clampedSize}px`;
     element.style.height = `${clampedSize}px`;
-    return element;
+
+    container.appendChild(element);
+
+    if (label) {
+      const labelElement = document.createElement("span");
+      labelElement.className = `story-map-label story-map-label-${labelPosition}`;
+      labelElement.textContent = label;
+      container.appendChild(labelElement);
+    }
+
+    return container;
+  }
+
+  function calculateLabelPosition(lat) {
+    // Get current map bounds
+    if (!mapInstance) return "top";
+
+    const bounds = mapInstance.getBounds();
+    const center = (bounds.getNorth() + bounds.getSouth()) / 2;
+
+    // If marker is in the top half of the viewport, place label below
+    // If marker is in the bottom half, place label above
+    return lat > center ? "bottom" : "top";
   }
 
   function clearMarkers() {
@@ -166,27 +201,17 @@
       const primaryIndex = allActive.findIndex(loc => loc.primary === true);
       const primaryLoc = primaryIndex >= 0 ? allActive[primaryIndex] : allActive[0];
 
-      const primaryElement = createMarkerElement(primaryMarkerColor, {
-        opacity: 1.0,
-        size: 17,
-      });
-      primaryElement.classList.add("current");
-      const primaryMarker = new maplibregl.Marker({
-        element: primaryElement,
-        anchor: "bottom",
-      })
-        .setLngLat([primaryLoc.lon, primaryLoc.lat])
-        .addTo(mapInstance);
-      currentMarkers.push(primaryMarker);
-
       const secondaryLocs = allActive.filter((_loc, idx) =>
         primaryIndex >= 0 ? idx !== primaryIndex : idx > 0
       );
 
+      // Draw secondary markers first so primary appears on top
       for (const coords of secondaryLocs) {
         const markerElement = createMarkerElement(primaryMarkerColor, {
           opacity: 1.0,
           size: 15,
+          label: coords.name || null,
+          labelPosition: calculateLabelPosition(coords.lat),
         });
         const marker = new maplibregl.Marker({
           element: markerElement,
@@ -196,6 +221,22 @@
           .addTo(mapInstance);
         currentMarkers.push(marker);
       }
+
+      // Draw primary marker last so it's in front
+      const primaryElement = createMarkerElement(primaryMarkerColor, {
+        opacity: 1.0,
+        size: 17,
+        label: primaryLoc.name || null,
+        labelPosition: calculateLabelPosition(primaryLoc.lat),
+      });
+      primaryElement.querySelector(".story-map-marker")?.classList.add("current");
+      const primaryMarker = new maplibregl.Marker({
+        element: primaryElement,
+        anchor: "bottom",
+      })
+        .setLngLat([primaryLoc.lon, primaryLoc.lat])
+        .addTo(mapInstance);
+      currentMarkers.push(primaryMarker);
     }
 
     const positions = allActive.length > 0
@@ -410,6 +451,13 @@
     z-index: 10;
   }
 
+  :global(.story-map-marker-container) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+
   :global(.story-map-marker) {
     display: block;
     border-radius: 50%;
@@ -421,6 +469,33 @@
     border-width: 2.5px;
     border-color: rgba(255, 255, 255, 0.9);
     animation: markerPulse 2s ease-in-out infinite;
+  }
+
+  :global(.story-map-label) {
+    position: absolute;
+    padding: 4px 10px;
+    background: rgba(2, 6, 23, 0.92);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 4px;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.01em;
+  }
+
+  :global(.story-map-label-top) {
+    bottom: 100%;
+    margin-bottom: 8px;
+  }
+
+  :global(.story-map-label-bottom) {
+    top: 100%;
+    margin-top: 8px;
   }
 
   @keyframes markerPulse {
