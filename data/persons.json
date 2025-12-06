@@ -3,6 +3,7 @@
     {
       "id": "ada_lovelace",
       "name": "Ada_Lovelace",
+      "tagline": "The First Computer Programmer",
       "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) was an English mathematician and writer, and the only legitimate child of the poet Lord Byron and Anne Isabella Milbanke. Educated intensively in mathematics and science, she became a close collaborator of Charles Babbage on his Analytical Engine. In 1843 she published an influential translation of Luigi Menabrea\u2019s paper on the machine, supplemented with extensive notes that included a table for computing Bernoulli numbers, often described as the first published computer program, and reflections on how such engines might manipulate symbols beyond arithmetic.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg",
@@ -21,7 +22,8 @@
     {
       "id": "alan_turing",
       "name": "Alan_Turing",
-      "summary": "Alan Mathison Turing was an English mathematician, logician, and cryptanalyst whose work founded theoretical computer science and significantly advanced artificial intelligence and mathematical biology. During the Second World War he led crucial codebreaking efforts against German ciphers at Bletchley Park, and after the war he designed early stored-program computers and developed influential ideas about machine intelligence and morphogenesis, before his life was cut short following prosecution for homosexual acts.",
+      "tagline": "Father of Computer Science",
+      "summary": "Alan Turing was an English mathematician and logician whose work founded theoretical computer science and deeply influenced artificial intelligence, cryptanalysis, and mathematical biology. He formalised the notion of computation with the Turing machine, proved the unsolvability of the Entscheidungsproblem, led key wartime efforts to break German ciphers, designed one of the first stored\u2011program computers, and later proposed what became known as the Turing test for machine intelligence.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Alan_turing_header.jpg",
         "source": "https://en.wikipedia.org/wiki/Alan_Turing"
@@ -32,13 +34,14 @@
         "logician"
       ],
       "created": "2025-11-07T16:52:54+01:00",
-      "lastUpdated": "2025-12-06T07:54:12.681018+01:00",
+      "lastUpdated": "2025-12-06T19:06:32.380547+01:00",
       "birthDate": "1912-06-23",
       "deathDate": "1954-06-07"
     },
     {
       "id": "albert_einstein",
       "name": "Albert_Einstein",
+      "tagline": "Architect of Relativity",
       "summary": "Albert Einstein was a German-born theoretical physicist who developed the theories of special and general relativity and made seminal contributions to quantum theory and statistical physics. His 1905 annus mirabilis papers transformed modern physics, and his mass\u2013energy equivalence relation E = mc\u00b2 became iconic. Awarded the 1921 Nobel Prize in Physics for his explanation of the photoelectric effect, he held academic posts in Zurich, Prague, Berlin, and Princeton. A Jewish refugee from Nazi Germany, he became a prominent public intellectual, speaking on pacifism, Zionism, civil liberties, and the dangers of nuclear weapons.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/5/50/Albert_Einstein_%28Nobel%29.png",
@@ -57,6 +60,7 @@
     {
       "id": "e_t_a_hoffmann",
       "name": "E._T._A._Hoffmann",
+      "tagline": "Master of the Fantastique",
       "summary": "Ernst Theodor Amadeus Hoffmann (born Ernst Theodor Wilhelm Hoffmann; 24 January 1776 \u2013 25 June 1822) was a German Romantic writer of fantasy and gothic horror, as well as a jurist, composer, music critic, and illustrator. His tales, including \"The Nutcracker and the Mouse King,\" \"The Sandman,\" and \"The Golden Pot,\" were central to German Romanticism and later inspired works such as Tchaikovsky's ballet The Nutcracker and Offenbach's opera The Tales of Hoffmann.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Ernst_Theodor_Amadeus_Hoffmann.jpg",
@@ -75,6 +79,7 @@
     {
       "id": "edsger_w_dijkstra",
       "name": "Edsger_W._Dijkstra",
+      "tagline": "Pioneer of Structured Programming",
       "summary": "Edsger W. Dijkstra (1930\u20132002) was a Dutch computer scientist and pioneer of structured programming, operating systems, and algorithmic thinking. The first professional programmer in the Netherlands, he developed Dijkstra\u2019s shortest-path algorithm, contributed to ALGOL 60 and the first ALGOL 60 compiler, designed the THE operating system, and wrote hundreds of influential essays and technical reports that helped shape modern computer science.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
@@ -93,23 +98,25 @@
     {
       "id": "emmy_noether",
       "name": "Emmy_Noether",
-      "summary": "Emmy Noether was a German mathematician whose groundbreaking work founded modern abstract algebra and profoundly influenced mathematical physics through Noether's theorem, which connects symmetries to conservation laws. Working first unpaid in Erlangen and then as a central figure in G\u00f6ttingen\u2019s renowned school of mathematics, she developed the theory of ideals in rings, unified representation theory with modules and ideals, and mentored a generation of algebraists before exile to the United States in 1933.",
+      "tagline": "Mother of Modern Algebra",
+      "summary": "Emmy Noether (1882\u20131935) was a German mathematician whose work transformed abstract algebra and profoundly influenced mathematical physics. At Erlangen and later at G\u00f6ttingen she developed the modern theory of rings, ideals, and modules, introduced the notion of Noetherian structures, and proved Noether\u2019s theorems linking symmetries with conservation laws in physics. Barred for years from paid academic posts because she was a woman and Jewish, she nonetheless led a renowned school of algebraists before being dismissed by the Nazis and continuing her research and teaching at Bryn Mawr College and the Institute for Advanced Study in the United States.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
         "source": "https://en.wikipedia.org/wiki/Emmy_Noether"
       },
       "primaryRoles": [
         "Mathematician",
-        "Professor of mathematics"
+        "Professor of Mathematics"
       ],
       "created": "2025-11-08T06:22:55+01:00",
-      "lastUpdated": "2025-12-05T23:05:48.085782+01:00",
+      "lastUpdated": "2025-12-06T19:18:55.165723+01:00",
       "birthDate": "1882-03-23",
       "deathDate": "1935-04-14"
     },
     {
       "id": "erich_k_stner",
       "name": "Erich_K\u00e4stner",
+      "tagline": "Voice of Childhood and Conscience",
       "summary": "Erich K\u00e4stner was a German writer, poet, screenwriter, journalist, and satirist, best known for his socially critical verse and for modern, urban children\u2019s books such as \"Emil and the Detectives\", \"P\u00fcnktchen und Anton\", \"Das fliegende Klassenzimmer\" and \"Das doppelte Lottchen\". Rising to prominence in Weimar Berlin, he chose to remain in Nazi Germany despite censorship and book burnings, wrote under pseudonyms, and survived wartime repression to become an influential post\u2011war public intellectual and children\u2019s author based in Munich. In 1960 he received the international Hans Christian Andersen Award for his autobiography \"Als ich ein kleiner Junge war\".",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/5/52/Erich_K%C3%A4stner_1961.jpg",
@@ -128,6 +135,7 @@
     {
       "id": "franz_kafka",
       "name": "Franz_Kafka",
+      "tagline": "Prophet of Modern Alienation",
       "summary": "Franz Kafka (3 July 1883 \u2013 3 June 1924) was a German-language Jewish Czech writer whose novels and stories, blending realism and the fantastique, explore themes of alienation, bureaucracy, and existential anxiety. Born in Prague, he trained and worked as a lawyer and insurance official while writing largely unpublished fiction that later became central to 20th\u2011century literature, including The Metamorphosis, The Trial, and The Castle.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Franz_Kafka_1910.jpg",
@@ -145,6 +153,7 @@
     {
       "id": "friedensreich_hundertwasser",
       "name": "Friedensreich_Hundertwasser",
+      "tagline": "Enemy of the Straight Line",
       "summary": "Friedensreich Hundertwasser (born Friedrich Stowasser) was an Austrian artist, architectural designer, and environmentalist known for his colorful, organic paintings and his radical, anti-rectilinear approach to architecture. After early travels and exposure to avant\u2011garde art in postwar Europe, he developed a personal style that rejected straight lines and standardized forms, advocating instead for individuality, nature\u2011integrated buildings, and ecological living. From the 1970s onward he realized numerous building projects in Europe and beyond, promoted green roofs and \"tree tenants,\" and lived a peripatetic life between Austria and New Zealand until his death at sea in 2000.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
@@ -163,6 +172,7 @@
     {
       "id": "grace_hopper",
       "name": "Grace_Hopper",
+      "tagline": "Queen of Code",
       "summary": "Grace Hopper was an American computer scientist, mathematician, and U.S. Navy rear admiral who became one of the earliest programmers of the Harvard Mark I, a creator of the first working compiler, and a key figure in the development of FLOW-MATIC and COBOL, foundational high-level programming languages. Over a parallel academic, industrial, and naval career spanning more than four decades, she championed machine-independent, English\u2011like programming and helped standardize programming language practices across the U.S. Navy and the computing industry.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
@@ -181,6 +191,7 @@
     {
       "id": "hedy_lamarr",
       "name": "Hedy_Lamarr",
+      "tagline": "Hollywood Star, Secret Inventor",
       "summary": "Hedy Lamarr (born Hedwig Eva Maria Kiesler) was an Austrian-born American film actress and inventor. Rising to fame in Europe with the controversial film Ecstasy (1933), she later became a Hollywood star in such films as Algiers (1938), Boom Town (1940), White Cargo (1942), and Samson and Delilah (1949). During the Second World War she co\u2011invented, with composer George Antheil, a frequency\u2011hopping \"Secret Communication System\" for torpedo guidance, an important precursor to modern spread-spectrum technologies used in wireless communication.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/Hedy_Lamarr%2C_1939.jpg",
@@ -196,8 +207,28 @@
       "lastUpdated": "2025-11-21T06:20:11.220457+01:00"
     },
     {
+      "id": "heinz_nixdorf",
+      "name": "Heinz_Nixdorf",
+      "tagline": "Germany's Computer Entrepreneur",
+      "summary": "Heinz Nixdorf (1925\u20131986) was a German computer pioneer and entrepreneur who founded Nixdorf Computer AG and built it from a tiny start\u2011up into a major international electronics and computing company. Coming from a poor railway family and interrupted by wartime service, he fought his way back to complete secondary school, study applied physics, and gain crucial experience in calculator development at Remington Rand. With early backing from the utility RWE, he created Germany\u2019s first tube\u2011based computer, then shifted to transistor and semiconductor technology, becoming a leading figure of the German Wirtschaftswunder and a key promoter of decentralized data processing and workforce training until his sudden death at a trade fair in 1986.",
+      "portrait": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
+        "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      },
+      "birthDate": "1925-04-09",
+      "deathDate": "1986-03-17",
+      "primaryRoles": [
+        "Computer pioneer",
+        "Entrepreneur",
+        "Founder of Nixdorf Computer AG"
+      ],
+      "created": "2025-12-06T19:39:33.252435+01:00",
+      "lastUpdated": "2025-12-06T19:42:11.894243+01:00"
+    },
+    {
       "id": "henry_ii",
       "name": "Henry_II",
+      "tagline": "The Saint Emperor",
       "summary": "Henry II (6 May 973 \u2013 13 July 1024), also known as Saint Henry, was Duke of Bavaria, King of the Romans, King of Italy, and Holy Roman Emperor. The last ruler of the Ottonian dynasty, he consolidated royal power north of the Alps, relied heavily on the Church and episcopal administration, promoted monastic reform, founded the Diocese of Bamberg, and fought major wars against Boles\u0142aw I of Poland and rivals in Italy. Deeply pious and childless, he was canonized in 1146.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/Henry_II%2C_Holy_Roman_Emperor.jpg",
@@ -216,6 +247,7 @@
     {
       "id": "john_von_neumann",
       "name": "John_von_Neumann",
+      "tagline": "Polymath of the Atomic Age",
       "summary": "John von Neumann was a Hungarian\u2011American mathematician, physicist, computer scientist, and engineer whose work reshaped pure mathematics, quantum mechanics, game theory, economics, and the architecture of modern digital computers. A child prodigy from Budapest, he became one of the youngest Privatdozenten in Germany, then a founding professor at the Institute for Advanced Study in Princeton. During World War II and the early Cold War he was central to the Manhattan Project, the development of high\u2011speed computing, and U.S. nuclear and missile strategy. He died in 1957 from metastatic cancer.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/a/a9/John_von_Neumann.jpg",
@@ -234,6 +266,7 @@
     {
       "id": "joseph_weizenbaum",
       "name": "Joseph_Weizenbaum",
+      "tagline": "Creator of ELIZA, Critic of AI",
       "summary": "Joseph Weizenbaum was a German\u2011American computer scientist and a prominent critic of unreflective faith in computers and artificial intelligence. After emigrating from Nazi Germany to the United States in 1936, he studied mathematics, worked as a system engineer at General Electric, and joined MIT in 1963, where he helped develop early list\u2011processing languages and contributed to the ARPANET. His 1960s program ELIZA became a landmark in natural\u2011language processing and led him to question the social and ethical implications of AI, themes he explored in his influential 1976 book \"Computer Power and Human Reason.\" In later life he became a leading public intellectual on technology and responsibility, eventually returning to live in Berlin in 1996, where he remained active until his death in 2008.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
@@ -252,6 +285,7 @@
     {
       "id": "konrad_zuse",
       "name": "Konrad_Zuse",
+      "tagline": "Builder of the First Computer",
       "summary": "Konrad Zuse was a German civil engineer, pioneering computer scientist, inventor, and entrepreneur. Working largely in isolation in Berlin and later in postwar Germany, he designed and built the Z1, Z2, Z3, and Z4\u2014some of the earliest programmable, fully automatic, binary floating\u2011point computers\u2014and created Plankalk\u00fcl, the first high\u2011level programming language. In 1949 he founded Zuse KG, one of the first computer companies, and is regarded by many as a father of the modern computer.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/Konrad_Zuse_%281992%29.jpg",
@@ -270,6 +304,7 @@
     {
       "id": "steve_jobs",
       "name": "Steve_Jobs",
+      "tagline": "Visionary of the Digital Revolution",
       "summary": "Steve Jobs was an American businessman, inventor, and investor best known for co-founding Apple Inc., pioneering the personal computer revolution of the 1970s and 1980s, founding NeXT, and serving as chairman and majority shareholder of Pixar. After being ousted from Apple in 1985, he returned in 1997 to lead a dramatic turnaround and oversee development of products such as the iMac, iPod, iPhone, and iPad. Diagnosed with a pancreatic neuroendocrine tumor in 2003, he continued to lead Apple until shortly before his death in 2011.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg",
@@ -288,6 +323,7 @@
     {
       "id": "umberto_eco",
       "name": "Umberto_Eco",
+      "tagline": "Scholar Who Wrote Bestsellers",
       "summary": "Umberto Eco was an Italian medievalist, philosopher and semiotician who became internationally famous as the author of the novel The Name of the Rose and as a leading theorist of semiotics, mass media, and contemporary culture. Trained in medieval philosophy, he developed influential ideas about the \u201copen work,\u201d interpretative semiotics, and fascism, while teaching at major Italian universities and writing widely read fiction and essays.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Italiaanse_schrijver_Umberto_Eco%2C_portret.jpg",
