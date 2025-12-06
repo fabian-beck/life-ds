@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional, Set
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
 from utils.wikipedia_cache import (
     cache_exists,
     ensure_cache,
@@ -249,7 +249,7 @@ Return exactly {max_to_select} article titles about PEOPLE and LIFE EVENTS, orde
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": DEFAULT_REASONING_EFFORT},
+            reasoning={"effort": LOW_REASONING_EFFORT},
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt},

@@ -23,7 +23,7 @@ import requests
 from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
 from icon_categories import ICON_CATEGORIES, format_icon_categories_for_prompt
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
@@ -198,7 +198,7 @@ class LocationInfo(BaseModel):
 
 
 class EventDetails(BaseModel):
-    """Phase 2: Research details for a specific event."""
+    """Phase 2: Research details for a specific event (NO images - handled in Phase 3)."""
     description: Optional[str] = Field(
         None,
         description="Event description with [[term|display]] markers for annotations. If no annotations, return the original description unchanged."
@@ -210,10 +210,6 @@ class EventDetails(BaseModel):
     involved_people: Optional[List[str]] = Field(
         None,
         description="Names of people directly involved in this event (exclude the main subject)"
-    )
-    images: Optional[List[ImageMetadata]] = Field(
-        None,
-        description="At most ONE relevant image for this event"
     )
     sources: List[str] = Field(
         default_factory=list,
@@ -772,6 +768,310 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
 
 
 # ============================================================================
+# COMMONS IMAGE SEARCH (for Phase 3)
+# ============================================================================
+
+def extract_keywords_from_description(
+    description: str,
+    max_keywords: int = 3
+) -> List[str]:
+    """
+    Extract key terms from event description for image search.
+
+    Focuses on proper nouns, technical terms, and significant concepts.
+    """
+    # Remove common words
+    stopwords = {
+        "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for",
+        "of", "with", "by", "from", "as", "is", "was", "were", "been", "be",
+        "have", "has", "had", "do", "does", "did", "will", "would", "could",
+        "should", "may", "might", "must", "this", "that", "these", "those"
+    }
+
+    # Extract capitalized terms (likely proper nouns)
+    words = description.split()
+    keywords = []
+
+    for word in words:
+        # Clean punctuation
+        clean_word = re.sub(r'[^\w\s-]', '', word)
+
+        # Keep if capitalized (but not sentence-start) or contains hyphen
+        if clean_word and (clean_word[0].isupper() or '-' in clean_word):
+            if clean_word.lower() not in stopwords:
+                keywords.append(clean_word)
+
+    # Deduplicate and limit
+    seen = set()
+    unique_keywords = []
+    for kw in keywords:
+        if kw.lower() not in seen:
+            seen.add(kw.lower())
+            unique_keywords.append(kw)
+
+    return unique_keywords[:max_keywords]
+
+
+def search_wikimedia_commons(
+    query: str,
+    limit: int = 5
+) -> List[Dict[str, Any]]:
+    """
+    Search Wikimedia Commons using MediaWiki API.
+
+    Returns list of image metadata dicts with url, caption, source, categories.
+    """
+    api_url = "https://commons.wikimedia.org/w/api.php"
+
+    params = {
+        "action": "query",
+        "format": "json",
+        "generator": "search",
+        "gsrsearch": f"filetype:bitmap|drawing {query}",
+        "gsrnamespace": 6,  # File namespace
+        "gsrlimit": limit,
+        "prop": "imageinfo|categories",
+        "iiprop": "url|extmetadata",
+        "iiurlwidth": 800,
+        "cllimit": 50,
+    }
+
+    try:
+        response = requests.get(
+            api_url,
+            params=params,
+            timeout=30,
+            headers=wikipedia_headers()
+        )
+        response.raise_for_status()
+        data = response.json()
+    except Exception as e:
+        print(f"    Commons API error: {e}")
+        return []
+
+    pages = data.get("query", {}).get("pages", {})
+    images = []
+
+    for page_id, page_data in pages.items():
+        image_info = page_data.get("imageinfo", [{}])[0]
+        url = image_info.get("url")
+
+        if not url:
+            continue
+
+        # Extract caption from metadata
+        extmetadata = image_info.get("extmetadata", {})
+        caption = (
+            extmetadata.get("ImageDescription", {}).get("value", "")
+            or extmetadata.get("ObjectName", {}).get("value", "")
+            or page_data.get("title", "").replace("File:", "")
+        )
+        caption = _strip_html_tags(caption)
+
+        # Extract categories
+        categories = [
+            cat.get("title", "").replace("Category:", "")
+            for cat in page_data.get("categories", [])
+        ]
+
+        # Build source URL
+        source = f"https://commons.wikimedia.org/wiki/{page_data.get('title', '').replace(' ', '_')}"
+
+        images.append({
+            "url": url,
+            "caption": caption,
+            "source": source,
+            "categories": categories,
+        })
+
+    return images
+
+
+def search_commons_images_for_event(
+    event_skeleton: EventSkeleton,
+    event_details: EventDetails,
+    person_name: str,
+    max_results: int = 10
+) -> List[Dict[str, Any]]:
+    """
+    Search Wikimedia Commons for images specifically relevant to this event.
+
+    Builds targeted search queries from event context and fetches images.
+    """
+    # Build search queries from event context
+    search_queries = []
+
+    # Query 1: Event title + person name
+    search_queries.append(f"{event_skeleton.title} {person_name}")
+
+    # Query 2: Location names (if available)
+    if event_details.locations:
+        for loc in event_details.locations[:2]:  # Top 2 locations
+            if loc.name_historic:
+                search_queries.append(f"{loc.name_historic} {person_name}")
+
+    # Query 3: Extract key terms from description
+    description_keywords = extract_keywords_from_description(
+        event_skeleton.description, max_keywords=3
+    )
+    if description_keywords:
+        search_queries.append(f"{' '.join(description_keywords)} {person_name}")
+
+    # Fetch images for each query
+    all_images = []
+    for query in search_queries[:3]:  # Max 3 queries per event
+        try:
+            images = search_wikimedia_commons(query, limit=5)
+            all_images.extend(images)
+        except Exception as e:
+            print(f"    Warning: Commons search failed for '{query}': {e}")
+
+    # Deduplicate by URL
+    seen_urls = set()
+    unique_images = []
+    for img in all_images:
+        if img['url'] not in seen_urls:
+            seen_urls.add(img['url'])
+            unique_images.append(img)
+
+    return unique_images[:max_results]
+
+
+def is_caption_similar_to_any(
+    caption: str,
+    used_captions: Set[str],
+    threshold: float = 0.7
+) -> bool:
+    """Check if caption is too similar to any used caption."""
+    from difflib import SequenceMatcher
+
+    caption_lower = caption.lower()
+
+    for used in used_captions:
+        similarity = SequenceMatcher(None, caption_lower, used.lower()).ratio()
+        if similarity > threshold:
+            return True
+
+    return False
+
+
+def is_generic_portrait(img: Dict[str, Any]) -> bool:
+    """Detect generic portrait photos."""
+    caption = img.get('caption', '').lower()
+    categories = [cat.lower() for cat in img.get('categories', [])]
+
+    # Pattern matching in caption
+    portrait_patterns = [
+        r'\bportrait\b',
+        r'\bphoto(?:graph)?\s+of\b',
+        r'\bheadshot\b',
+        r'\bhead\s+and\s+shoulders\b',
+        r'\b(?:formal|official)\s+photo',
+    ]
+
+    for pattern in portrait_patterns:
+        if re.search(pattern, caption):
+            return True
+
+    # Check categories
+    portrait_category_keywords = ['portrait', 'headshot', 'photograph of']
+    for cat in categories:
+        if any(keyword in cat for keyword in portrait_category_keywords):
+            return True
+
+    return False
+
+
+def score_image_relevance(
+    img: Dict[str, Any],
+    event_skeleton: EventSkeleton
+) -> float:
+    """
+    Score image relevance to event (0.0 to 1.0).
+
+    Higher scores for:
+    - Caption words matching event title/description
+    - Categories matching event keywords
+    - Specific artifacts/documents over generic scenes
+    """
+    score = 0.0
+
+    caption = img.get('caption', '').lower()
+    categories = [cat.lower() for cat in img.get('categories', [])]
+
+    # Event context
+    event_text = f"{event_skeleton.title} {event_skeleton.description}".lower()
+    event_words = set(re.findall(r'\b\w{4,}\b', event_text))
+
+    # Caption word overlap (weight: 0.5)
+    caption_words = set(re.findall(r'\b\w{4,}\b', caption))
+    overlap = len(event_words & caption_words)
+    score += min(overlap * 0.1, 0.5)
+
+    # Category relevance (weight: 0.3)
+    category_text = ' '.join(categories)
+    category_words = set(re.findall(r'\b\w{4,}\b', category_text))
+    category_overlap = len(event_words & category_words)
+    score += min(category_overlap * 0.1, 0.3)
+
+    # Bonus for specific artifact types (weight: 0.2)
+    artifact_keywords = [
+        'manuscript', 'document', 'book', 'publication', 'letter',
+        'building', 'monument', 'memorial', 'plaque', 'artifact',
+        'machine', 'device', 'instrument', 'equipment'
+    ]
+    if any(keyword in caption or keyword in category_text for keyword in artifact_keywords):
+        score += 0.2
+
+    return min(score, 1.0)
+
+
+def filter_images_for_event(
+    images: List[Dict[str, Any]],
+    event_skeleton: EventSkeleton,
+    used_urls: Set[str],
+    used_captions: Set[str]
+) -> List[Dict[str, Any]]:
+    """
+    Apply intelligent filtering to remove poor candidates before AI selection.
+
+    Filters out:
+    - Already used URLs
+    - Semantically similar captions
+    - Generic portraits
+    - Low relevance images
+    """
+    filtered = []
+
+    for img in images:
+        # Filter by URL
+        if img['url'] in used_urls:
+            continue
+
+        # Filter by caption similarity
+        if is_caption_similar_to_any(img['caption'], used_captions, threshold=0.7):
+            continue
+
+        # Filter generic portraits
+        if is_generic_portrait(img):
+            continue
+
+        # Score relevance
+        relevance = score_image_relevance(img, event_skeleton)
+        img['relevance_score'] = relevance
+
+        # Only include if meets threshold
+        if relevance >= 0.3:  # Moderate threshold for pre-filtering
+            filtered.append(img)
+
+    # Sort by relevance
+    filtered.sort(key=lambda x: x['relevance_score'], reverse=True)
+
+    # Return top 5
+    return filtered[:5]
+
+
+# ============================================================================
 # PHASE 1: EVENT SKELETON GENERATION
 # ============================================================================
 
@@ -975,12 +1275,11 @@ def build_phase2_prompt(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
-    commons_images: List[Dict[str, Any]],
 ) -> str:
     """
     Build Phase 2 prompt for single event detail research.
 
-    Focus on specific details for THIS event only.
+    Focus on specific details for THIS event only (NO images - Phase 3).
     """
     prompt = f"Research details for this specific event:\n\n"
     prompt += f"Title: {event_skeleton.title}\n"
@@ -1023,22 +1322,15 @@ def build_phase2_prompt(
     prompt += "   - Examples: collaborators, opponents, witnesses, family members present\n"
     prompt += "   - Leave null if no other people directly involved\n\n"
 
-    prompt += "3. IMAGES:\n"
-    prompt += "   - Select AT MOST ONE relevant image from the available list below\n"
-    prompt += "   - Images shown are unique to this event (already used images filtered out)\n"
-    prompt += "   - Prefer images of buildings, documents, artifacts, or locations\n"
-    prompt += "   - DO NOT use generic portraits\n"
-    prompt += "   - Leave null if no suitable image available\n\n"
-
-    prompt += "4. SOURCES:\n"
+    prompt += "3. SOURCES:\n"
     prompt += "   - Provide 1-3 Wikipedia URLs from the related articles below\n"
     prompt += "   - Only include articles that specifically support THIS event\n\n"
 
-    prompt += "5. EVENT_TYPE_ICON:\n"
+    prompt += "4. EVENT_TYPE_ICON:\n"
     prompt += "   - Select the most appropriate MDI icon from the categories below\n"
     prompt += "   - Based on the semantic type of this event\n\n"
 
-    prompt += "6. ANNOTATIONS (0-3 per event, MOST EVENTS HAVE 0):\n"
+    prompt += "5. ANNOTATIONS (0-3 per event, MOST EVENTS HAVE 0):\n"
     prompt += "   - CRITICAL: Be extremely conservative - only annotate truly obscure terms that need explanation\n"
     prompt += "   - STRICT CRITERIA: Term must be BOTH obscure AND provide non-obvious context\n"
     prompt += "   - Annotate ONLY:\n"
@@ -1107,23 +1399,6 @@ def build_phase2_prompt(
                 if summary:
                     prompt += f"{summary}\n\n"
 
-    # Add Commons images
-    if commons_images and len(commons_images) > 0:
-        prompt += "\n" + "="*60 + "\n"
-        prompt += "AVAILABLE IMAGES (unique to this event - unused by other events):\n"
-        prompt += "="*60 + "\n\n"
-        # Limit to 20 images
-        for idx, img_data in enumerate(commons_images[:20], 1):
-            prompt += f"{idx}. {img_data.get('caption', 'Image')}\n"
-            prompt += f"   URL: {img_data['url']}\n"
-            if img_data.get("source"):
-                prompt += f"   Source: {img_data['source']}\n"
-            prompt += "\n"
-    else:
-        prompt += "\n" + "="*60 + "\n"
-        prompt += "AVAILABLE IMAGES: None remaining (all images already used by previous events)\n"
-        prompt += "="*60 + "\n\n"
-
     return prompt
 
 
@@ -1131,7 +1406,6 @@ def research_event_details(
     event_skeleton: EventSkeleton,
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
-    commons_images: List[Dict[str, Any]],
     model: str,
     retry_count: int = 2
 ) -> EventDetails:
@@ -1139,7 +1413,7 @@ def research_event_details(
     Research details for a single event with retry logic.
 
     Returns:
-        EventDetails with location, location_modern, involved_people, images, sources, icon
+        EventDetails with locations, involved_people, sources, icon (NO images - Phase 3)
     """
     # Filter articles
     filtered_articles = filter_related_articles_for_event(
@@ -1148,7 +1422,7 @@ def research_event_details(
 
     # Build prompt
     prompt = build_phase2_prompt(
-        event_skeleton, person_name, filtered_articles, commons_images
+        event_skeleton, person_name, filtered_articles
     )
 
     # Call AI with retries
@@ -1168,7 +1442,7 @@ def research_event_details(
 
             response = client.responses.parse(
                 model=model,
-                reasoning={"effort": DEFAULT_REASONING_EFFORT},
+                reasoning={"effort": LOW_REASONING_EFFORT},
                 input=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": prompt},
@@ -1187,20 +1461,16 @@ def research_event_details(
                 print(f"    Warning: Failed after {retry_count + 1} attempts, using fallback minimal details")
                 # Fallback: minimal details
                 return EventDetails(
-                    location=None,
-                    location_modern=None,
+                    locations=None,
                     involved_people=None,
-                    images=None,
                     sources=[],
                     event_type_icon="mdi-calendar"
                 )
 
     # Should never reach here, but fallback just in case
     return EventDetails(
-        location=None,
-        location_modern=None,
+        locations=None,
         involved_people=None,
-        images=None,
         sources=[],
         event_type_icon="mdi-calendar"
     )
@@ -1210,33 +1480,19 @@ def research_all_event_details(
     event_skeletons: List[EventSkeleton],
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
-    commons_images: List[Dict[str, Any]],
     model: str,
 ) -> List[EventDetails]:
-    """Research details for all events sequentially, tracking used images."""
+    """Research details for all events sequentially (NO images - Phase 3)."""
     details = []
-    used_image_urls: Set[str] = set()
 
     for idx, skeleton in enumerate(event_skeletons, 1):
         # Use ASCII-safe encoding for console output
         safe_title = skeleton.title.encode('ascii', 'replace').decode('ascii')
         print(f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title}")
 
-        # Filter out already-used images
-        available_images = [
-            img for img in commons_images
-            if img.get("url") and img["url"] not in used_image_urls
-        ]
-
         detail = research_event_details(
-            skeleton, person_name, all_related_articles, available_images, model
+            skeleton, person_name, all_related_articles, model
         )
-
-        # Track used images
-        if detail.images:
-            for img in detail.images:
-                if img.url:
-                    used_image_urls.add(img.url)
 
         details.append(detail)
 
@@ -1251,7 +1507,7 @@ def merge_event_skeleton_and_details(
     skeleton: EventSkeleton,
     details: EventDetails
 ) -> LifeEvent:
-    """Merge Phase 1 skeleton with Phase 2 details."""
+    """Merge Phase 1 skeleton with Phase 2 details (NO images - Phase 3)."""
 
     # Build locations array from EventDetails.locations
     locations = []
@@ -1270,7 +1526,7 @@ def merge_event_skeleton_and_details(
     # Merge description (prefer Phase 2 if provided with markers, else Phase 1)
     description = details.description if details.description else skeleton.description
 
-    # Create merged event
+    # Create merged event (NO images yet - assigned in Phase 3)
     return LifeEvent(
         date=skeleton.date,
         date_precision=skeleton.date_precision,
@@ -1283,7 +1539,7 @@ def merge_event_skeleton_and_details(
         locations=locations,
         involved_people=details.involved_people,
         sources=details.sources if details.sources else [],
-        images=details.images,
+        images=None,  # Images assigned in Phase 3
         event_type_icon=details.event_type_icon or "mdi-calendar",
         chapter=skeleton.chapter,
         annotations=annotations,
@@ -1302,6 +1558,187 @@ def merge_all_events(
         merge_event_skeleton_and_details(skeleton, details)
         for skeleton, details in zip(skeletons, details_list)
     ]
+
+
+# ============================================================================
+# PHASE 3: EVENT-SPECIFIC IMAGE ASSIGNMENT
+# ============================================================================
+
+def assign_image_to_event(
+    event_skeleton: EventSkeleton,
+    event_details: EventDetails,
+    filtered_images: List[Dict[str, Any]],
+    person_name: str,
+    model: str
+) -> Optional[ImageMetadata]:
+    """
+    Use AI to select the best image for this event (or none).
+
+    Returns ImageMetadata or None if no suitable image.
+    """
+    if not filtered_images:
+        return None
+
+    # Build conservative prompt
+    prompt = f"Event: {event_skeleton.title}\n"
+    prompt += f"Date: {event_skeleton.date}\n"
+    prompt += f"Description: {event_skeleton.description}\n"
+    prompt += f"Subject: {person_name}\n\n"
+
+    prompt += "="*60 + "\n"
+    prompt += "TASK: Select ONE image ONLY if truly relevant, otherwise select NONE\n"
+    prompt += "="*60 + "\n\n"
+
+    prompt += "STRICT CRITERIA FOR IMAGE SELECTION:\n"
+    prompt += "Select an image ONLY if it directly depicts:\n"
+    prompt += "  • A specific document/publication mentioned in this event\n"
+    prompt += "  • A building/location where this event occurred\n"
+    prompt += "  • An artifact/object central to this event\n"
+    prompt += "  • A scene/moment directly showing this event\n\n"
+
+    prompt += "ABSOLUTE PROHIBITIONS (NEVER select):\n"
+    prompt += "  • Generic portraits of any person\n"
+    prompt += "  • Images that could apply to multiple events\n"
+    prompt += "  • Images from different time periods\n"
+    prompt += "  • Tangentially related images\n\n"
+
+    prompt += "CONSERVATIVE APPROACH:\n"
+    prompt += "  • When in doubt, select NO IMAGE (return null)\n"
+    prompt += "  • Better to have no image than a loosely related one\n"
+    prompt += "  • Only 30-50% of events should have images\n\n"
+
+    prompt += "="*60 + "\n"
+    prompt += f"AVAILABLE IMAGES (pre-filtered, top {len(filtered_images)} candidates):\n"
+    prompt += "="*60 + "\n\n"
+
+    for idx, img in enumerate(filtered_images, 1):
+        prompt += f"{idx}. {img.get('caption', 'Image')}\n"
+        prompt += f"   URL: {img['url']}\n"
+        prompt += f"   Relevance score: {img.get('relevance_score', 0):.2f}\n"
+        if img.get('source'):
+            prompt += f"   Source: {img['source']}\n"
+        prompt += "\n"
+
+    # Define response model
+    class ImageSelectionResponse(BaseModel):
+        selected_image_index: Optional[int] = Field(
+            None,
+            description="1-based index of selected image, or null if none suitable"
+        )
+        reason: str = Field(
+            description="Brief explanation of selection or why no image selected"
+        )
+
+    # Call AI
+    try:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            return None
+
+        client = OpenAI(api_key=api_key)
+
+        system = (
+            "You are a conservative image curator for biographical timelines. "
+            "Only select images when they are truly relevant and add genuine value. "
+            "Most events should have NO image."
+        )
+
+        response = client.responses.parse(
+            model=model,
+            reasoning={"effort": LOW_REASONING_EFFORT},
+            input=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+            ],
+            text_format=ImageSelectionResponse,
+        )
+
+        if response.status != "completed" or not response.output_parsed:
+            return None
+
+        selection = response.output_parsed
+
+        # If no image selected, return None
+        if selection.selected_image_index is None:
+            return None
+
+        # Validate index
+        idx = selection.selected_image_index - 1  # Convert to 0-based
+        if idx < 0 or idx >= len(filtered_images):
+            return None
+
+        # Return selected image
+        selected = filtered_images[idx]
+        return ImageMetadata(
+            url=selected['url'],
+            caption=selected['caption'],
+            source=selected.get('source', '')
+        )
+
+    except Exception as e:
+        print(f"    Warning: Image selection failed: {e}")
+        return None
+
+
+def research_images_for_all_events(
+    merged_events: List[LifeEvent],
+    event_skeletons: List[EventSkeleton],
+    event_details_list: List[EventDetails],
+    person_name: str,
+    model: str
+) -> List[LifeEvent]:
+    """
+    Phase 3: Event-specific image discovery and conservative assignment.
+
+    For each event:
+    1. Search Commons for event-specific images
+    2. Apply intelligent filtering
+    3. AI selects best image (or none)
+    4. Track usage to prevent reuse
+    """
+    used_urls: Set[str] = set()
+    used_captions: Set[str] = set()
+
+    enriched_events = []
+
+    for idx, (event, skeleton, details) in enumerate(
+        zip(merged_events, event_skeletons, event_details_list), 1
+    ):
+        # Use ASCII-safe encoding for console output
+        safe_title = skeleton.title.encode('ascii', 'replace').decode('ascii')
+        print(f"  [{idx}/{len(merged_events)}] Searching images: {safe_title}")
+
+        # Search for event-specific images
+        candidate_images = search_commons_images_for_event(
+            skeleton, details, person_name, max_results=10
+        )
+
+        # Apply intelligent filtering
+        filtered_images = filter_images_for_event(
+            candidate_images, skeleton, used_urls, used_captions
+        )
+
+        print(f"      Found {len(candidate_images)} candidates, {len(filtered_images)} after filtering")
+
+        # AI selects best image (or none)
+        selected_image = assign_image_to_event(
+            skeleton, details, filtered_images, person_name, model
+        )
+
+        # Update event with image
+        event_dict = event.model_dump()
+        if selected_image:
+            event_dict['images'] = [selected_image.model_dump()]
+            used_urls.add(selected_image.url)
+            used_captions.add(selected_image.caption)
+            print(f"      ✓ Image assigned")
+        else:
+            event_dict.pop('images', None)
+            print(f"      ○ No suitable image")
+
+        enriched_events.append(LifeEvent(**event_dict))
+
+    return enriched_events
 
 
 # ============================================================================
@@ -1743,16 +2180,15 @@ def generate_person_events(
         Tuple of (file_path, person_id)
     """
 
-    print(f"[Step 1/9] Fetching Wikipedia article for '{subject}'...")
+    print(f"[Step 1/10] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject)
     article_title = page_data.get("title", subject)
-    print(f"[Step 1/9] Found article '{article_title}'")
+    print(f"[Step 1/10] Found article '{article_title}'")
 
     person_id = slugify(article_title)
 
-    # Load cache
-    print(f"[Step 2/9] Loading cached materials for '{person_id}'...")
-    commons_images = None
+    # Load cache (NO Commons images - fetched later in Phase 3)
+    print(f"[Step 2/10] Loading cached materials for '{person_id}'...")
     related_articles = None
     summary_data = {}
 
@@ -1765,9 +2201,6 @@ def generate_person_events(
             cached_summary = get_cached_wikipedia_summary(
                 person_id, article_title, use_cache=True
             )
-            commons_images = get_cached_commons_images(
-                person_id, article_title, limit=30, use_cache=True
-            )
 
             # Load related articles if available
             cache_dir = get_cache_dir(person_id)
@@ -1778,29 +2211,29 @@ def generate_person_events(
                         related_path.read_text(encoding="utf-8")
                     )
                     print(
-                        f"[Step 2/9] Using cached materials ({len(commons_images)} Commons images, {len(related_articles)} related articles)"
+                        f"[Step 2/10] Using cached materials ({len(related_articles)} related articles)"
                     )
                 except json.JSONDecodeError:
                     print(
-                        f"[Step 2/9] Using cached materials ({len(commons_images)} Commons images)"
+                        f"[Step 2/10] Using cached materials (no related articles)"
                     )
             else:
                 print(
-                    f"[Step 2/9] Using cached materials ({len(commons_images)} Commons images)"
+                    f"[Step 2/10] Using cached materials (no related articles)"
                 )
 
             page_data = cached_page
             summary_data = cached_summary
         except Exception as e:
-            print(f"[Step 2/9] Cache unavailable ({e}), fetching directly...")
+            print(f"[Step 2/10] Cache unavailable ({e}), fetching directly...")
             summary_data = fetch_wikipedia_summary(article_title)
     else:
-        print("[Step 2/9] Retrieving summary details...")
+        print("[Step 2/10] Retrieving summary details...")
         summary_data = fetch_wikipedia_summary(article_title)
 
     # Fetch related articles if not already loaded from cache
     if related_articles is None and fetch_related_articles is not None:
-        print("[Step 3/9] Fetching related articles...")
+        print(f"[Step 3/10] Fetching related articles (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
         try:
             related_articles = fetch_related_articles(
                 article_title,
@@ -1809,7 +2242,7 @@ def generate_person_events(
                 use_cache=use_cache,
                 person_id=person_id,
             )
-            print(f"[Step 3/9] Found {len(related_articles)} related articles")
+            print(f"[Step 3/10] Found {len(related_articles)} related articles")
 
             if related_articles and use_cache:
                 cache_dir = get_cache_dir(person_id)
@@ -1819,33 +2252,44 @@ def generate_person_events(
                     json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
                     encoding="utf-8",
                 )
-                print(f"[Step 3/9] Cached {len(related_articles)} related articles")
+                print(f"[Step 3/10] Cached {len(related_articles)} related articles")
         except Exception as e:
-            print(f"[Step 3/9] Warning: Failed to fetch related articles ({e})")
+            print(f"[Step 3/10] Warning: Failed to fetch related articles ({e})")
             related_articles = []
     else:
-        print(f"[Step 3/9] Using {len(related_articles) if related_articles else 0} related articles from cache")
+        print(f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache")
 
     # PHASE 1: Generate event skeletons
-    print("[Step 4/9] PHASE 1: Generating event skeletons and chapters...")
+    print(f"[Step 4/10] PHASE 1: Generating event skeletons and chapters (model: {model}, reasoning: {DEFAULT_REASONING_EFFORT})...")
     phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles)
     life_plan = call_openai_phase1(phase1_prompt, model)
-    print(f"[Step 4/9] Generated {len(life_plan.event_skeletons)} event skeletons")
+    print(f"[Step 4/10] Generated {len(life_plan.event_skeletons)} event skeletons")
 
-    # PHASE 2: Research event details
-    print("[Step 5/9] PHASE 2: Researching event details...")
+    # PHASE 2: Research event details (NO images - Phase 3)
+    print(f"[Step 5/10] PHASE 2: Researching event details (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
-        commons_images=commons_images or [],
         model=model,
     )
-    print(f"[Step 5/9] Researched details for {len(event_details_list)} events")
+    print(f"[Step 5/10] Researched details for {len(event_details_list)} events")
 
     # MERGE: Combine skeletons + details
-    print("[Step 6/9] Merging event skeletons with details...")
+    print("[Step 6/10] Merging event skeletons with details...")
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
+
+    # PHASE 3: Event-specific image discovery
+    print(f"[Step 7/10] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+    enriched_events = research_images_for_all_events(
+        merged_events=merged_events,
+        event_skeletons=life_plan.event_skeletons,
+        event_details_list=event_details_list,
+        person_name=life_plan.person.name,
+        model=model,
+    )
+    images_assigned = sum(1 for e in enriched_events if e.images)
+    print(f"[Step 7/10] Assigned images to {images_assigned} / {len(enriched_events)} events")
 
     # Build final payload
     payload = {
@@ -1853,21 +2297,21 @@ def generate_person_events(
         "created_on": life_plan.created_on,
         "person": life_plan.person.model_dump(),
         "chapters": [ch.model_dump() for ch in life_plan.chapters] if life_plan.chapters else None,
-        "events": [ev.model_dump() for ev in merged_events],
+        "events": [ev.model_dump() for ev in enriched_events],
     }
 
     # Normalize metadata
-    print("[Step 7/9] Normalizing dataset metadata...")
+    print("[Step 8/10] Normalizing dataset metadata...")
     payload = enforce_metadata(payload, page_data, summary_data)
-    print(f"[Step 7/9] Dataset includes {len(payload['events'])} events")
+    print(f"[Step 8/10] Dataset includes {len(payload['events'])} events")
 
     # Geocode with enhanced logic
-    print("[Step 8/9] Resolving event location coordinates...")
+    print("[Step 9/10] Resolving event location coordinates...")
     payload, geocoded_events = enrich_event_coordinates_v2(payload)
-    print(f"[Step 8/9] Coordinates resolved for {geocoded_events} events")
+    print(f"[Step 9/10] Coordinates resolved for {geocoded_events} events")
 
     # Write to file
-    print(f"[Step 9/9] Writing dataset for '{person_id}'...")
+    print(f"[Step 10/10] Writing dataset for '{person_id}'...")
     file_path = write_dataset(payload, person_id)
 
     if update_registry:
