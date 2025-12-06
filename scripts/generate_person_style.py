@@ -89,7 +89,7 @@ def strip_namespace(tag: str) -> str:
     return tag.split("}", 1)[1] if "}" in tag else tag
 
 
-def normalise_bw_color(value: str | None, *, allow_none: bool = False) -> str | None:
+def normalise_bw_color(value: str | None, *, allow_none: bool = False, warn: bool = False) -> str | None:
     if value is None:
         return None
     lowered = value.strip().lower()
@@ -108,7 +108,22 @@ def normalise_bw_color(value: str | None, *, allow_none: bool = False) -> str | 
     if rgb_match:
         r, g, b = (int(channel) for channel in rgb_match.groups()[:3])
         avg = (r + g + b) / 3
-        return "#FFFFFF" if avg >= 128 else "#000000"
+        normalized = "#FFFFFF" if avg >= 128 else "#000000"
+        if warn:
+            print(f"Warning: Color {value} normalized to {normalized}", file=sys.stderr)
+        return normalized
+    # Try to parse hex colors (including grays)
+    hex_match = re.fullmatch(r"#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})", value.strip())
+    if hex_match:
+        hex_val = hex_match.group(1)
+        if len(hex_val) == 3:
+            hex_val = "".join(c * 2 for c in hex_val)
+        r, g, b = int(hex_val[0:2], 16), int(hex_val[2:4], 16), int(hex_val[4:6], 16)
+        avg = (r + g + b) / 3
+        normalized = "#FFFFFF" if avg >= 128 else "#000000"
+        if warn:
+            print(f"Warning: Color {value} normalized to {normalized}", file=sys.stderr)
+        return normalized
     return None
 
 
@@ -182,7 +197,7 @@ def sanitise_pattern_svg(svg: str) -> str:
             value_text = element.attrib[attr]
             if lowered in {"fill", "stroke"}:
                 allow_none = lowered == "fill"
-                colour = normalise_bw_color(value_text, allow_none=allow_none)
+                colour = normalise_bw_color(value_text, allow_none=allow_none, warn=True)
                 if colour is None:
                     raise ValueError(
                         f"SVG {attr} must use only black (#000000), white (#FFFFFF), or none. Got: {value_text}"
@@ -333,12 +348,35 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
         "- background must remain dark (perceived luminance under 0.18).",
         "- primary and secondary should contrast well against the background and with each other.",
-        "- background_pattern_svg must be a 160x160 tileable SVG string that uses only black (#000000) and white (#FFFFFF).",
+        "- background_pattern_svg must be a 160x160 tileable SVG string that uses ONLY pure black (#000000) and pure white (#FFFFFF).",
+        "- CRITICAL: NO gray shades allowed—only #000000 (black) and #FFFFFF (white). No #111111, #EEEEEE, or any other color values.",
         "- Do NOT use opacity, fill-opacity, or stroke-opacity attributes in the SVG. Use stroke-width variations instead for visual hierarchy.",
         "- The pattern should be highly stylized and work as a tiled background, smoothly repeating.",
         "- Strong strokes are favored over thin lines for better visual impact.",
-        "- The pattern should be characteristic for the person, without making too direct references to real world objects—keep it abstract.",
-        "- The pattern should reflect the person's profession, activities, and key achievements through abstract geometric motifs.",
+        "- Create visual hierarchy through stroke-width variation (e.g., 1px, 2px, 4px, 8px) rather than color or opacity.",
+        "",
+        "PATTERN DESIGN PRINCIPLES (CRITICAL):",
+        "- Create a DISTINCTIVE geometric pattern that immediately evokes this person's unique character, era, and contributions.",
+        "- ALL PATTERNS MUST BE ABSTRACT AND GEOMETRIC—no figurative or representational elements.",
+        "- Use geometric primitives (circles, lines, rectangles, triangles, arcs, grids) arranged in characteristic ways.",
+        "- Study the person's work to extract geometric principles: symmetry vs asymmetry, order vs chaos, density vs sparseness, rigid vs flowing.",
+        "- Consider the person's era through geometric style: Art Deco angles for 1920s-30s, Bauhaus grids for modernists, circuit-like patterns for digital pioneers, ornate tessellations for Victorian era.",
+        "- Vary pattern complexity based on personality: minimalists get sparse clean geometry, complex thinkers get intricate tessellations, revolutionaries get dynamic asymmetric compositions.",
+        "- Use geometric rhythm and density to reflect their work style: precise regular grids for systematic thinkers, flowing curves for humanists, recursive patterns for mathematicians, modular repetition for engineers.",
+        "- Avoid generic/bland geometric patterns—even simple geometry should have a distinctive arrangement or rhythm.",
+        "- The geometric composition should encode their personality: tight control vs expressive freedom, mathematical precision vs artistic flow, traditional symmetry vs modern disruption.",
+        "",
+        "EXAMPLES OF DISTINCTIVE GEOMETRIC PATTERNS:",
+        "- Alan Turing: Binary-like grid patterns with computational rhythm, circuit board geometry with logical pathways, systematic rectangular grids with deliberate breaks suggesting computation.",
+        "- Ada Lovelace: Interwoven curved lines forming loop-like structures, Victorian geometric ornament with mathematical precision, concentric patterns suggesting iterative algorithms.",
+        "- Leonardo da Vinci: Golden ratio spiral grids, geometric constructions with circular and angular intersections, precise drafting-style line work.",
+        "- Marie Curie: Concentric circles suggesting atomic orbitals, radiating line patterns, crystalline angular grids, geometric wave forms.",
+        "- Frida Kahlo: Bold geometric shapes with strong bilateral symmetry, angular Art Deco-influenced patterns, geometric florals abstracted to pure form.",
+        "- Steve Jobs: Extreme minimalism—single rounded rectangles with precise spacing, zen-like asymmetric grids with generous negative space, clean lines with subtle golden ratio proportions.",
+        "- Virginia Woolf: Flowing parallel curves suggesting streams, modernist geometric abstraction, delicate linear patterns with rhythmic variation.",
+        "- Albert Einstein: Curved geometric grids suggesting spacetime, wave-like patterns, mathematical curve tessellations, asymmetric but balanced compositions.",
+        "- Johann Sebastian Bach: Geometric counterpoint—interwoven line patterns, symmetrical but complex geometric fugue-like arrangements, precise mathematical grids.",
+        "",
         "- Avoid gradients or colors beyond black and white in the SVG.",
         "- separator_glyph_svg must be a simple, distinctive glyph designed to work at small sizes (32x32 recommended viewBox).",
         "- The separator glyph should use the primary color as fill/stroke and be characteristic of the person's aesthetic.",
@@ -492,17 +530,36 @@ def generate_style(
     dry_run: bool = False,
 ) -> Dict[str, Any]:
     identifier = person_id or slugify(subject)
+
+    print(f"[Step 1/5] Loading context for '{identifier}'...")
     context = load_dataset_context(identifier)
+    if context:
+        print(f"[Step 1/5] Found context: {', '.join(context.keys())}")
+    else:
+        print("[Step 1/5] No context found, proceeding with subject name only")
+
+    print(f"[Step 2/5] Building style generation prompt...")
     prompt = build_prompt(subject, identifier, context)
+
+    print(f"[Step 3/5] Generating visual identity via {model} (reasoning: {DEFAULT_REASONING_EFFORT})...")
     payload = call_openai(prompt, model)
+
+    print("[Step 4/5] Validating and normalizing style configuration...")
     style_config = normalise_payload(payload)
+    print(f"[Step 4/5] Colors: primary={style_config['primary']}, secondary={style_config['secondary']}, background={style_config['background']}")
+    print(f"[Step 4/5] Fonts: heading={style_config['heading_font']}, body={style_config['body_font']}")
+    print(f"[Step 4/5] Pattern SVG: {len(style_config['background_pattern_svg'])} chars")
+    print(f"[Step 4/5] Separator SVG: {len(style_config['separator_glyph_svg'])} chars")
 
     if dry_run:
+        print("[Step 5/5] Dry run mode - skipping file write")
         return {"id": identifier, **style_config}
 
+    print(f"[Step 5/5] Writing style configuration to {STYLES_PATH}...")
     data = load_styles()
     data["styles"][identifier] = style_config
     write_styles(data)
+    print(f"[Step 5/5] Style generation complete for '{identifier}'")
     return {"id": identifier, **style_config}
 
 
@@ -536,6 +593,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
 
 def main(argv: Any = None) -> int:
     args = parse_args(argv)
+    print(f"Generating visual style for: {args.subject}")
+    print(f"Model: {args.model}")
+    print(f"Reasoning effort: {DEFAULT_REASONING_EFFORT}")
+    print()
+
     try:
         result = generate_style(
             args.subject,
@@ -544,13 +606,17 @@ def main(argv: Any = None) -> int:
             dry_run=args.dry_run,
         )
     except Exception as error:
-        print(f"Error: {error}", file=sys.stderr)
+        print(f"\nError: {error}", file=sys.stderr)
         return 1
 
+    print()
     if args.dry_run:
+        print("=== Generated Style Configuration (Dry Run) ===")
         print(json.dumps(result, indent=2, ensure_ascii=True))
     else:
-        print(f"Styling generated for '{result['id']}' and written to {STYLES_PATH}")
+        print(f"✓ Style successfully generated and saved to {STYLES_PATH}")
+        print(f"  Person ID: {result['id']}")
+        print(f"  View at: /story/{result['id']}")
     return 0
 
 
