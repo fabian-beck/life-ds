@@ -653,7 +653,8 @@
   .show-all-btn {
     appearance: none;
     border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
     color: var(--story-primary, #e2e8f0);
     padding: 0.35rem 0.65rem;
     border-radius: 999px;
@@ -909,7 +910,8 @@
 
   /* Person name highlighting */
   .person-mention {
-    font-weight: 700;
+    font-weight: bold;
+    text-shadow: 0 0 4px var(--story-secondary, rgba(56, 189, 248, 0.25));
   }
 
   /* Responsive positioning */

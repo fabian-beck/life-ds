@@ -280,7 +280,8 @@
   .person-chip {
     appearance: none;
     border: 1px solid rgba(148, 163, 184, 0.3);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
     color: #e2e8f0;
     padding: 0.4rem 0.75rem;
     border-radius: 999px;
@@ -289,6 +290,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    overflow: visible;
+    filter: drop-shadow(0 0 2px var(--story-secondary, rgba(56, 189, 248, 0.15)));
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
