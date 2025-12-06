@@ -748,10 +748,12 @@
   }
 
   .person-card::before {
+    background-color: var(--card-primary, #38bdf8);
     background-image: var(--card-pattern-image, none);
     background-size: var(--card-pattern-size, 400px);
     background-repeat: repeat;
-    opacity: var(--card-pattern-opacity, 0.85);
+    background-blend-mode: multiply;
+    opacity: var(--card-pattern-opacity, 1);
     mix-blend-mode: overlay;
   }
 

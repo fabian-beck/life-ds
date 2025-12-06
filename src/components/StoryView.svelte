@@ -1072,10 +1072,12 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
+    background-color: var(--story-primary, #38bdf8);
     background-image: var(--story-pattern-image, none);
     background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
-    opacity: 0.35;
+    background-blend-mode: multiply;
+    opacity: 0.7;
     mix-blend-mode: overlay;
     z-index: 0;
   }
@@ -1303,9 +1305,11 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    background-color: var(--story-primary, #38bdf8);
     background-image: var(--story-pattern-image, none);
     background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
+    background-blend-mode: multiply;
     background-position: 0 calc(-1 * var(--header-height, 0px));
     mix-blend-mode: overlay;
     mask-image: linear-gradient(
