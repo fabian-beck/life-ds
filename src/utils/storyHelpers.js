@@ -388,11 +388,17 @@ export function getSubcategory(relationshipType) {
 
 /**
  * Escape special regex characters in a string.
+ * Also normalizes hyphens to match various Unicode hyphen characters.
  * @param {string} str - String to escape
- * @returns {string} Escaped string
+ * @returns {string} Escaped string with hyphen normalization
  */
 function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // First escape special regex characters
+  let escaped = str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Replace all types of hyphens with a character class that matches any hyphen variant
+  // This handles: regular hyphen (-), non-breaking hyphen (‑), en-dash (–), em-dash (—), minus sign (−)
+  escaped = escaped.replace(/[-\u2010\u2011\u2012\u2013\u2014\u2212]/g, '[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212]');
+  return escaped;
 }
 
 /**
@@ -436,26 +442,65 @@ export function normalizePersonName(name) {
 
   let normalized = name.trim();
 
+  // Normalize all hyphen variants to standard ASCII hyphen
+  // This handles: non-breaking hyphen (‑), en-dash (–), em-dash (—), hyphen (‐), minus sign (−)
+  normalized = normalized.replace(/[\u2010\u2011\u2012\u2013\u2014\u2212]/g, '-');
+
+  // Extract maiden name if present: "Ingrid Otto (née Smolla)" → maidenName = "Smolla"
+  // Also handles: "née", "born", "geborene", "geb."
+  let maidenName = null;
+  const maidenMatch = normalized.match(/\(\s*(?:née|nee|born|geborene|geb\.?)\s+([^)]+)\)/i);
+  if (maidenMatch) {
+    maidenName = maidenMatch[1].trim();
+  }
+
   // Remove parenthetical clarifications: "Ethel Sara Turing (née Stoney)" → "Ethel Sara Turing"
   normalized = normalized.replace(/\s*\([^)]*\)/g, '');
 
   // Remove bracketed clarifications: "D. G. [David Gawen] Champernowne" → "D. G. Champernowne"
   normalized = normalized.replace(/\s*\[[^\]]*\]/g, '');
 
-  // Remove suffixes: "John von Neumann Jr." → "John von Neumann"
-  normalized = normalized.replace(/\s+(Jr|Sr|II|III|IV)\.?$/i, '');
+  // Remove comma-separated titles: "Henry II, Holy Roman Emperor" → "Henry II"
+  // This handles titles that come after a comma
+  normalized = normalized.replace(/,\s*(Holy Roman Emperor|Holy Roman Empress|King|Queen|Emperor|Empress|Duke|Duchess|Count|Countess|Prince|Princess|Bishop|Archbishop|Pope|Saint|Dr\.|Prof\.).*$/i, '');
+
+  // Remove suffixes like Jr., Sr. but NOT Roman numerals (II, III, IV, V, etc.) as they're part of regnal names
+  normalized = normalized.replace(/\s+(Jr|Sr)\.?$/i, '');
+
+  // Remove titles with geographic qualifiers: "Count of Luxembourg", "Duke of Bavaria", "Bishop of Metz"
+  // Pattern: (Title) of (Place) - these are descriptive, not part of the actual name
+  normalized = normalized.replace(/,?\s*(Count|Duke|Duchess|Bishop|Archbishop|King|Queen|Prince|Princess|Emperor|Empress|Lord|Lady|Earl|Baron|Baroness|Margrave|Landgrave|Elector)\s+of\s+[\w\s-]+$/i, '');
+
+  // Also handle "of Place" at the end for names like "Cunigunde of Luxembourg" → keep as is but don't use place as last name
+  // We'll handle this by detecting the "of Place" pattern
+  const ofPlaceMatch = normalized.match(/^(.+?)\s+of\s+([\w\s-]+)$/i);
+  let isGeographicName = false;
+  if (ofPlaceMatch) {
+    // This is a name like "Cunigunde of Luxembourg" or "Henry of Bavaria"
+    // The part after "of" is a place, not a surname
+    isGeographicName = true;
+  }
 
   // Split into tokens
   const tokens = normalized.split(/\s+/).filter(t => t.length > 0);
   if (tokens.length === 0) return null;
 
-  // Handle "von", "de", "van" etc. as part of last name
+  // Handle "von", "de", "van" etc. as part of last name (but NOT "of" which is geographic)
   const particleIndex = tokens.findIndex(t =>
     ['von', 'van', 'de', 'del', 'della', 'di'].includes(t.toLowerCase())
   );
 
   let lastName, firstNames;
-  if (particleIndex > -1 && particleIndex < tokens.length - 1) {
+
+  if (isGeographicName) {
+    // For names like "Cunigunde of Luxembourg", use the first part as the name
+    // Don't use the geographic part as the last name
+    const nameBeforeOf = ofPlaceMatch[1];
+    const nameTokens = nameBeforeOf.split(/\s+/).filter(t => t.length > 0);
+    if (nameTokens.length === 0) return null;
+    lastName = nameTokens[nameTokens.length - 1];
+    firstNames = nameTokens.slice(0, -1);
+  } else if (particleIndex > -1 && particleIndex < tokens.length - 1) {
     // Include particle in last name
     lastName = tokens.slice(particleIndex).join(' ');
     firstNames = tokens.slice(0, particleIndex);
@@ -470,8 +515,10 @@ export function normalizePersonName(name) {
     fullName: normalized,
     firstName: firstName,
     lastName: lastName,
+    maidenName: maidenName,
     tokens: tokens.map(t => t.toLowerCase()),
     originalName: name,
+    isGeographicName: isGeographicName,
   };
 }
 
@@ -496,7 +543,12 @@ export function generateNameVariants(name) {
 
   // Variant 2: Last name only (medium priority, requires caution)
   // Only if last name is distinctive (>4 chars, not a common word)
-  if (normalized.lastName.length > 4 && !isCommonWord(normalized.lastName)) {
+  // Skip for geographic names where the "last name" is really the only name (e.g., "Cunigunde" from "Cunigunde of Luxembourg")
+  // For geographic names, the lastName IS the firstName, so skip last-name-only variant
+  if (normalized.lastName.length > 4 &&
+      !isCommonWord(normalized.lastName) &&
+      !normalized.isGeographicName &&
+      normalized.firstName) {  // Must have a distinct first name
     variants.push({
       text: normalized.lastName,
       regex: new RegExp(`\\b${escapeRegex(normalized.lastName)}\\b`, 'gi'),
@@ -506,7 +558,7 @@ export function generateNameVariants(name) {
   }
 
   // Variant 3: First + Last (in case middle names/initials differ)
-  if (normalized.firstName && normalized.tokens.length > 2) {
+  if (normalized.firstName && normalized.tokens.length > 2 && !normalized.isGeographicName) {
     const firstLast = `${normalized.firstName} ${normalized.lastName}`;
     variants.push({
       text: firstLast,
@@ -516,15 +568,139 @@ export function generateNameVariants(name) {
     });
   }
 
+  // Variant 4: First name only (lowest priority, for rulers/single-name persons)
+  // Only if first name is distinctive enough (>4 chars, not too common)
+  // This helps match "Henry" in text when the person is "Henry II"
+  if (normalized.firstName &&
+      normalized.firstName.length > 4 &&
+      !isCommonWord(normalized.firstName)) {
+    variants.push({
+      text: normalized.firstName,
+      regex: new RegExp(`\\b${escapeRegex(normalized.firstName)}\\b`, 'gi'),
+      type: 'first',
+      priority: 3,
+    });
+  }
+
+  // Variant 5: First name + maiden name (for married women)
+  // E.g., "Ingrid Otto (née Smolla)" → also match "Ingrid Smolla"
+  if (normalized.maidenName && normalized.firstName) {
+    const firstMaiden = `${normalized.firstName} ${normalized.maidenName}`;
+    variants.push({
+      text: firstMaiden,
+      regex: new RegExp(`\\b${escapeRegex(firstMaiden)}\\b`, 'gi'),
+      type: 'maiden',
+      priority: 1,
+    });
+  }
+
   // Sort by priority (lower number = higher priority)
   return variants.sort((a, b) => a.priority - b.priority);
 }
 
 /**
+ * Calculate a similarity score between two normalized names.
+ * Returns a score from 0 (no match) to 1 (exact match).
+ * @param {Object} name1 - First normalized name
+ * @param {Object} name2 - Second normalized name
+ * @returns {number} Similarity score 0-1
+ */
+function calculateNameSimilarity(name1, name2) {
+  if (!name1 || !name2) return 0;
+
+  // Exact full name match = perfect score
+  if (name1.fullName.toLowerCase() === name2.fullName.toLowerCase()) {
+    return 1.0;
+  }
+
+  let score = 0;
+
+  // Check for Roman numeral pattern
+  const romanNumeralPattern = /^(I{1,3}|IV|V|VI{0,3}|IX|X|XI{0,3}|XIV|XV)$/i;
+
+  // Check first name match
+  const firstName1 = name1.firstName?.toLowerCase() || '';
+  const firstName2 = name2.firstName?.toLowerCase() || '';
+  const firstNamesMatch = firstName1 && firstName2 && firstName1 === firstName2;
+
+  // Check last name match - but ignore if last name is a Roman numeral
+  const lastName1 = name1.lastName?.toLowerCase() || '';
+  const lastName2 = name2.lastName?.toLowerCase() || '';
+  const lastName1IsNumeral = romanNumeralPattern.test(lastName1);
+  const lastName2IsNumeral = romanNumeralPattern.test(lastName2);
+
+  // Only count last name match if neither is a Roman numeral
+  const lastNamesMatch = lastName1 && lastName2 &&
+    !lastName1IsNumeral && !lastName2IsNumeral &&
+    lastName1 === lastName2;
+
+  // Check if last names are contained in each other (handles partial matches)
+  // Also skip if either is a Roman numeral
+  const lastNameContained = lastName1 && lastName2 &&
+    !lastName1IsNumeral && !lastName2IsNumeral && (
+    lastName1.includes(lastName2) || lastName2.includes(lastName1)
+  );
+
+  // Check for Roman numeral in either name (important for rulers)
+  const hasRomanNumeral1 = name1.tokens?.some(t => romanNumeralPattern.test(t));
+  const hasRomanNumeral2 = name2.tokens?.some(t => romanNumeralPattern.test(t));
+
+  // If both have Roman numerals, they MUST match AND first names must also match
+  if (hasRomanNumeral1 && hasRomanNumeral2) {
+    const numeral1 = name1.tokens.find(t => romanNumeralPattern.test(t))?.toUpperCase();
+    const numeral2 = name2.tokens.find(t => romanNumeralPattern.test(t))?.toUpperCase();
+    if (numeral1 !== numeral2) {
+      return 0; // Different rulers (e.g., Henry II vs Henry V), no match
+    }
+    // Same numeral but different first names = different person (e.g., Henry II vs Dietrich II)
+    if (!firstNamesMatch) {
+      return 0;
+    }
+    // Same numeral AND same first name = likely same person
+    score += 0.5;
+  }
+
+  // First name match is important
+  if (firstNamesMatch) {
+    score += 0.4;
+  }
+
+  // Last name match (only for real surnames, not Roman numerals)
+  if (lastNamesMatch) {
+    score += 0.4;
+  } else if (lastNameContained && lastName1.length > 3 && lastName2.length > 3) {
+    // Partial last name match (for married names, etc.)
+    score += 0.2;
+  }
+
+  // Check if one full name contains the other (handles titles being stripped)
+  const full1 = name1.fullName.toLowerCase();
+  const full2 = name2.fullName.toLowerCase();
+  if (full1.includes(full2) || full2.includes(full1)) {
+    score += 0.2;
+  }
+
+  // Check maiden name matching (for married women)
+  // E.g., "Ingrid Smolla" should match "Ingrid Otto (née Smolla)"
+  const maiden1 = name1.maidenName?.toLowerCase();
+  const maiden2 = name2.maidenName?.toLowerCase();
+
+  if (firstNamesMatch) {
+    // If first names match, check if one's last name matches the other's maiden name
+    if (maiden1 && lastName2 === maiden1) {
+      score += 0.4; // "Ingrid Smolla" matches "Ingrid Otto (née Smolla)"
+    } else if (maiden2 && lastName1 === maiden2) {
+      score += 0.4; // Same, other direction
+    }
+  }
+
+  // Cap at 0.95 for non-exact matches
+  return Math.min(score, 0.95);
+}
+
+/**
  * Get people relevant to an event from the ego network.
- * Two-phase approach:
- * 1. PRIMARY: Use involved_people field if present
- * 2. FALLBACK: Smart text matching with name variants
+ * Uses a scoring-based approach for matching involved_people to network connections.
  * @param {Object} event - Event object
  * @param {Object} egoNetwork - Ego network with connections array
  * @returns {Array} Relevant connections (max 5)
@@ -537,6 +713,9 @@ export function getRelevantPeople(event, egoNetwork) {
   const eventYear = event?.date ? parseInt(event.date.substring(0, 4)) : null;
   const connections = egoNetwork.connections;
 
+  // Minimum similarity threshold for a match
+  const MATCH_THRESHOLD = 0.6;
+
   // PHASE 1: Use involved_people field if present
   if (event.involved_people && Array.isArray(event.involved_people) && event.involved_people.length > 0) {
     // Normalize all involved people names
@@ -548,35 +727,12 @@ export function getRelevantPeople(event, egoNetwork) {
       const connNormalized = normalizePersonName(conn.person_name);
       if (!connNormalized) return false;
 
-      // Try to match against involved_people
-      const isMatch = involvedNormalized.some(involved => {
-        // Exact full name match
-        if (involved.fullName === connNormalized.fullName) return true;
+      // Find the best similarity score against any involved person
+      const bestScore = Math.max(
+        ...involvedNormalized.map(involved => calculateNameSimilarity(involved, connNormalized))
+      );
 
-        // Fuzzy match for family members: same first name is sufficient
-        // This handles cases like "Elsa Stowasser" (event) vs "Elsa Hundertwasser" (network)
-        // Common for mothers with different married names, or name variants
-        if (involved.firstName && connNormalized.firstName) {
-          const firstNamesMatch = involved.firstName.toLowerCase() === connNormalized.firstName.toLowerCase();
-          const isFamily = conn.relationship_type?.startsWith('family/');
-
-          if (firstNamesMatch && isFamily) {
-            return true;
-          }
-
-          // For non-family, require last name match too
-          if (firstNamesMatch) {
-            const involvedLower = involved.fullName.toLowerCase();
-            const connLower = connNormalized.fullName.toLowerCase();
-            return involvedLower.includes(connNormalized.lastName.toLowerCase()) ||
-                   connLower.includes(involved.lastName.toLowerCase());
-          }
-        }
-
-        return false;
-      });
-
-      if (!isMatch) return false;
+      if (bestScore < MATCH_THRESHOLD) return false;
 
       // Still apply year-range filtering
       return isWithinYearRange(eventYear, conn.start_year, conn.end_year);
@@ -678,6 +834,7 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
   }
 
   // Step 2: Find person name matches
+  // We only want ONE match per person - the best one (longest/highest priority)
   const personMatches = [];
 
   // Check if multiple people share the same last name (ambiguity detection)
@@ -696,6 +853,9 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
 
     // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
     const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+
+    // Find the best match for this person (we only want one)
+    let bestMatch = null;
 
     for (const variant of variants) {
       // Skip last-name-only matches if ambiguous
@@ -716,16 +876,30 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
         );
 
         if (!overlapsAnnotation) {
-          personMatches.push({
+          const candidate = {
             start,
             end,
             type: 'person',
             person,
             matchedText: match[0],
             priority: variant.priority,
-          });
+          };
+
+          // Keep this match if it's better than the current best
+          // Better = lower priority number (full name beats last name)
+          // If same priority, prefer longer match
+          if (!bestMatch ||
+              candidate.priority < bestMatch.priority ||
+              (candidate.priority === bestMatch.priority && candidate.matchedText.length > bestMatch.matchedText.length)) {
+            bestMatch = candidate;
+          }
         }
       }
+    }
+
+    // Add only the best match for this person
+    if (bestMatch) {
+      personMatches.push(bestMatch);
     }
   }
 
