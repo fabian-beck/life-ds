@@ -2442,9 +2442,13 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     entry = {
         "id": person_id,
         "name": person.get("name", person_id.replace("_", " ").title()),
-        "tagline": person.get("tagline"),
         "summary": person.get("summary"),
     }
+
+    # Only include tagline if it's actually set (to preserve existing tagline when updating)
+    tagline = person.get("tagline")
+    if tagline is not None:
+        entry["tagline"] = tagline
 
     # Explicitly set portrait (or None to remove it)
     entry["portrait"] = portrait

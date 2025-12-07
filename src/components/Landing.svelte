@@ -537,12 +537,6 @@
             </div>
             {#if entry.tagline}
               <p class="card-tagline">{entry.tagline}</p>
-            {:else if summary}
-              <p class="card-tagline">{summary}</p>
-            {:else}
-              <p class="card-tagline placeholder">
-                Explore their life story
-              </p>
             {/if}
           </div>
         </article>
@@ -940,11 +934,6 @@
     font-weight: 500;
     font-style: italic;
     font-family: var(--card-body-font, Inter, sans-serif);
-  }
-
-  .card-tagline.placeholder {
-    color: #94a3b8;
-    font-weight: 400;
   }
 
   .eyebrow {

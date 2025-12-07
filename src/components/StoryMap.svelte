@@ -152,16 +152,16 @@
     // Get the marker container's position
     const container = label.closest(".story-map-marker-container");
     if (!container) return null;
-    
+
     const containerRect = container.getBoundingClientRect();
     const labelWidth = label.offsetWidth || 80; // estimate if not rendered
     const labelHeight = label.offsetHeight || 16;
-    
+
     // Calculate label position based on whether it's top or bottom
     const centerX = containerRect.left + containerRect.width / 2;
     const left = centerX - labelWidth / 2;
     const right = left + labelWidth;
-    
+
     let top, bottom;
     if (position === "top") {
       bottom = containerRect.top - 1; // margin
@@ -170,7 +170,7 @@
       top = containerRect.bottom + 1; // margin
       bottom = top + labelHeight;
     }
-    
+
     return { left, right, top, bottom, centerX, centerY: (top + bottom) / 2 };
   }
 
@@ -222,49 +222,49 @@
     // 2. Doesn't overlap with other markers (excluding own marker)
     const preferredPosition = calculateLabelPosition(lat);
     const altPosition = preferredPosition === "top" ? "bottom" : "top";
-    
+
     // Get bounds for both positions
     label.classList.remove("story-map-label-top", "story-map-label-bottom");
     label.classList.add(`story-map-label-${preferredPosition}`);
     void label.offsetHeight;
     const preferredBounds = getLabelBounds(label, preferredPosition);
     const preferredEdge = isNearMapEdge(preferredBounds, mapRect);
-    
+
     label.classList.remove("story-map-label-top", "story-map-label-bottom");
     label.classList.add(`story-map-label-${altPosition}`);
     void label.offsetHeight;
     const altBounds = getLabelBounds(label, altPosition);
     const altEdge = isNearMapEdge(altBounds, mapRect);
-    
+
     // Check marker overlaps for both positions (exclude own marker)
-    const otherMarkers = allMarkerBounds.filter(m => 
-      !ownMarkerBounds || 
-      Math.abs(m.left - ownMarkerBounds.left) > 1 || 
+    const otherMarkers = allMarkerBounds.filter(m =>
+      !ownMarkerBounds ||
+      Math.abs(m.left - ownMarkerBounds.left) > 1 ||
       Math.abs(m.top - ownMarkerBounds.top) > 1
     );
-    
+
     const preferredOverlapsMarker = otherMarkers.some(m => rectsOverlap(preferredBounds, m, 4));
     const altOverlapsMarker = otherMarkers.some(m => rectsOverlap(altBounds, m, 4));
-    
+
     // Score each position (lower is better)
     let preferredScore = 0;
     let altScore = 0;
-    
+
     if (preferredPosition === "top" && preferredEdge.nearTop) preferredScore += 10;
     if (preferredPosition === "bottom" && preferredEdge.nearBottom) preferredScore += 10;
     if (preferredOverlapsMarker) preferredScore += 5;
-    
+
     if (altPosition === "top" && altEdge.nearTop) altScore += 10;
     if (altPosition === "bottom" && altEdge.nearBottom) altScore += 10;
     if (altOverlapsMarker) altScore += 5;
-    
+
     return altScore < preferredScore ? altPosition : preferredPosition;
   }
 
   function overlapsAnyMarker(labelBounds, allMarkerBounds, ownMarkerBounds) {
-    const otherMarkers = allMarkerBounds.filter(m => 
-      !ownMarkerBounds || 
-      Math.abs(m.left - ownMarkerBounds.left) > 1 || 
+    const otherMarkers = allMarkerBounds.filter(m =>
+      !ownMarkerBounds ||
+      Math.abs(m.left - ownMarkerBounds.left) > 1 ||
       Math.abs(m.top - ownMarkerBounds.top) > 1
     );
     return otherMarkers.some(m => rectsOverlap(labelBounds, m, 4));
@@ -276,7 +276,7 @@
 
     // Get map container bounds for edge detection
     const mapRect = mapContainer?.getBoundingClientRect();
-    
+
     // Get all marker bounds for overlap detection
     const allMarkerBounds = getAllMarkerBounds();
 
@@ -350,13 +350,13 @@
           // Check if it still overlaps after flip
           void labelData[j].label.offsetHeight;
           const newBounds = getLabelBounds(labelData[j].label, altPosition);
-          
+
           // Also check if new position clips the edge or overlaps markers
           const edgeCheck = isNearMapEdge(newBounds, mapRect);
-          const clipsEdge = (altPosition === "top" && edgeCheck.nearTop) || 
+          const clipsEdge = (altPosition === "top" && edgeCheck.nearTop) ||
                            (altPosition === "bottom" && edgeCheck.nearBottom);
           const overlapsMarker = overlapsAnyMarker(newBounds, allMarkerBounds, labelData[j].ownMarkerBounds);
-          
+
           // Check against all previous labels
           let stillOverlaps = false;
           for (let k = 0; k <= i; k++) {
