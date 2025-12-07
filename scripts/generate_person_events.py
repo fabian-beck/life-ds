@@ -1171,12 +1171,15 @@ def match_images_to_events(
     prompt += "2. Match other images to specific life events\n\n"
 
     prompt += "PORTRAIT SELECTION:\n"
-    prompt += "  \u2022 Choose ONE image that shows this person's ACTUAL FACE\n"
-    prompt += "  \u2022 MUST BE: a photograph, painting, or drawing of the person themselves\n"
-    prompt += "  \u2022 Prefer: clear face shots, professional photos, well-known portraits\n"
-    prompt += "  \u2022 NEVER SELECT: statues, monuments, buildings, plaques, memorials, artworks by (not of) the person\n"
-    prompt += "  \u2022 If no actual portrait of the person exists, set portrait to null\n"
-    prompt += "  \u2022 The portrait image will NOT be used for any event\n\n"
+    prompt += "  • Choose ONE image that shows this person's ACTUAL FACE\n"
+    prompt += "  • MUST BE: a photograph, painting, or drawing of the person themselves\n"
+    prompt += "  • Prefer: clear face shots, professional photos, well-known portraits\n"
+    prompt += "  • For PRE-PHOTOGRAPHY historical figures: prefer medieval manuscripts, period paintings, tomb sculptures, coins, or seals - these are AUTHENTIC historical depictions\n"
+    prompt += "  • NEVER SELECT: statues, monuments, buildings, plaques, memorials, artworks by (not of) the person\n"
+    prompt += "  • NEVER SELECT: costume illustrations from books like 'Costumes of All Nations', 'Trachten der Völker', or similar costume/fashion reference books - these are GENERIC costume drawings, NOT actual portraits\n"
+    prompt += "  • NEVER SELECT: modern artistic recreations or imaginative illustrations of historical figures\n"
+    prompt += "  • If no actual portrait of the person exists, set portrait to null\n"
+    prompt += "  • The portrait image will NOT be used for any event\n\n"
 
     prompt += "EVENT IMAGE MATCHING:\n"
 
