@@ -110,7 +110,7 @@
     return JSON.parse(JSON.stringify(basemapStyleCache));
   }
 
-  function createMarkerElement(color, { opacity = 1, size = 14, label = null, lat = null } = {}) {
+  function createMarkerElement(color, { opacity = 1, size = 14, label = null, lat = null, primary = false } = {}) {
     const container = document.createElement("div");
     container.className = "story-map-marker-container";
 
@@ -129,6 +129,7 @@
       labelElement.className = "story-map-label";
       labelElement.textContent = label;
       labelElement.dataset.lat = lat?.toString() ?? "";
+      labelElement.dataset.primary = primary ? "true" : "false";
       container.appendChild(labelElement);
     }
 
@@ -147,14 +148,240 @@
     return lat > center ? "bottom" : "top";
   }
 
+  function getLabelBounds(label, position) {
+    // Get the marker container's position
+    const container = label.closest(".story-map-marker-container");
+    if (!container) return null;
+    
+    const containerRect = container.getBoundingClientRect();
+    const labelWidth = label.offsetWidth || 80; // estimate if not rendered
+    const labelHeight = label.offsetHeight || 16;
+    
+    // Calculate label position based on whether it's top or bottom
+    const centerX = containerRect.left + containerRect.width / 2;
+    const left = centerX - labelWidth / 2;
+    const right = left + labelWidth;
+    
+    let top, bottom;
+    if (position === "top") {
+      bottom = containerRect.top - 1; // margin
+      top = bottom - labelHeight;
+    } else {
+      top = containerRect.bottom + 1; // margin
+      bottom = top + labelHeight;
+    }
+    
+    return { left, right, top, bottom, centerX, centerY: (top + bottom) / 2 };
+  }
+
+  function rectsOverlap(a, b, padding = 2) {
+    if (!a || !b) return false;
+    return !(
+      a.right + padding < b.left ||
+      b.right + padding < a.left ||
+      a.bottom + padding < b.top ||
+      b.bottom + padding < a.top
+    );
+  }
+
+  function getMarkerBounds(container) {
+    const marker = container.querySelector(".story-map-marker");
+    if (!marker) return null;
+    const rect = marker.getBoundingClientRect();
+    return {
+      left: rect.left,
+      right: rect.right,
+      top: rect.top,
+      bottom: rect.bottom,
+    };
+  }
+
+  function getAllMarkerBounds() {
+    const containers = document.querySelectorAll(".story-map-marker-container");
+    const bounds = [];
+    containers.forEach((container) => {
+      const markerBounds = getMarkerBounds(container);
+      if (markerBounds) {
+        bounds.push(markerBounds);
+      }
+    });
+    return bounds;
+  }
+
+  function isNearMapEdge(bounds, mapRect, edgeMargin = 20) {
+    if (!bounds || !mapRect) return { nearTop: false, nearBottom: false };
+    return {
+      nearTop: bounds.top < mapRect.top + edgeMargin,
+      nearBottom: bounds.bottom > mapRect.bottom - edgeMargin,
+    };
+  }
+
+  function getOptimalPosition(label, lat, mapRect, allMarkerBounds, ownMarkerBounds) {
+    // Try both positions and pick the one that:
+    // 1. Doesn't clip the edge
+    // 2. Doesn't overlap with other markers (excluding own marker)
+    const preferredPosition = calculateLabelPosition(lat);
+    const altPosition = preferredPosition === "top" ? "bottom" : "top";
+    
+    // Get bounds for both positions
+    label.classList.remove("story-map-label-top", "story-map-label-bottom");
+    label.classList.add(`story-map-label-${preferredPosition}`);
+    void label.offsetHeight;
+    const preferredBounds = getLabelBounds(label, preferredPosition);
+    const preferredEdge = isNearMapEdge(preferredBounds, mapRect);
+    
+    label.classList.remove("story-map-label-top", "story-map-label-bottom");
+    label.classList.add(`story-map-label-${altPosition}`);
+    void label.offsetHeight;
+    const altBounds = getLabelBounds(label, altPosition);
+    const altEdge = isNearMapEdge(altBounds, mapRect);
+    
+    // Check marker overlaps for both positions (exclude own marker)
+    const otherMarkers = allMarkerBounds.filter(m => 
+      !ownMarkerBounds || 
+      Math.abs(m.left - ownMarkerBounds.left) > 1 || 
+      Math.abs(m.top - ownMarkerBounds.top) > 1
+    );
+    
+    const preferredOverlapsMarker = otherMarkers.some(m => rectsOverlap(preferredBounds, m, 4));
+    const altOverlapsMarker = otherMarkers.some(m => rectsOverlap(altBounds, m, 4));
+    
+    // Score each position (lower is better)
+    let preferredScore = 0;
+    let altScore = 0;
+    
+    if (preferredPosition === "top" && preferredEdge.nearTop) preferredScore += 10;
+    if (preferredPosition === "bottom" && preferredEdge.nearBottom) preferredScore += 10;
+    if (preferredOverlapsMarker) preferredScore += 5;
+    
+    if (altPosition === "top" && altEdge.nearTop) altScore += 10;
+    if (altPosition === "bottom" && altEdge.nearBottom) altScore += 10;
+    if (altOverlapsMarker) altScore += 5;
+    
+    return altScore < preferredScore ? altPosition : preferredPosition;
+  }
+
+  function overlapsAnyMarker(labelBounds, allMarkerBounds, ownMarkerBounds) {
+    const otherMarkers = allMarkerBounds.filter(m => 
+      !ownMarkerBounds || 
+      Math.abs(m.left - ownMarkerBounds.left) > 1 || 
+      Math.abs(m.top - ownMarkerBounds.top) > 1
+    );
+    return otherMarkers.some(m => rectsOverlap(labelBounds, m, 4));
+  }
+
   function updateLabelPositions() {
-    const labels = document.querySelectorAll(".story-map-label");
-    labels.forEach((label) => {
+    const labels = Array.from(document.querySelectorAll(".story-map-label"));
+    if (labels.length === 0) return;
+
+    // Get map container bounds for edge detection
+    const mapRect = mapContainer?.getBoundingClientRect();
+    
+    // Get all marker bounds for overlap detection
+    const allMarkerBounds = getAllMarkerBounds();
+
+    // First pass: assign initial positions based on viewport and edge avoidance
+    const labelData = labels.map((label, index) => {
       const lat = parseFloat(label.dataset.lat);
-      if (!isNaN(lat)) {
-        const position = calculateLabelPosition(lat);
-        label.classList.remove("story-map-label-top", "story-map-label-bottom");
-        label.classList.add(`story-map-label-${position}`);
+      const isPrimary = label.dataset.primary === "true";
+      const container = label.closest(".story-map-marker-container");
+      const ownMarkerBounds = container ? getMarkerBounds(container) : null;
+      return {
+        label,
+        lat,
+        index,
+        isPrimary,
+        ownMarkerBounds,
+        position: "top", // will be set properly
+        alternatePosition: "bottom",
+        hidden: false,
+      };
+    });
+
+    // Sort: primary first, then by latitude (higher lat = further north)
+    labelData.sort((a, b) => {
+      if (a.isPrimary && !b.isPrimary) return -1;
+      if (!a.isPrimary && b.isPrimary) return 1;
+      return (b.lat || 0) - (a.lat || 0);
+    });
+
+    // Temporarily show labels for measurement
+    labelData.forEach(({ label }) => {
+      label.classList.remove("story-map-label-top", "story-map-label-bottom", "story-map-label-visible", "story-map-label-hidden");
+      label.classList.add("story-map-label-top"); // default for measurement
+      label.style.visibility = "hidden";
+      label.style.opacity = "1";
+    });
+
+    // Force layout recalc
+    void labels[0]?.offsetHeight;
+
+    // Second pass: assign optimal positions considering edges and markers (primary first)
+    labelData.forEach((data) => {
+      if (!isNaN(data.lat)) {
+        data.position = getOptimalPosition(data.label, data.lat, mapRect, allMarkerBounds, data.ownMarkerBounds);
+        data.alternatePosition = data.position === "top" ? "bottom" : "top";
+      }
+      data.label.classList.remove("story-map-label-top", "story-map-label-bottom");
+      data.label.classList.add(`story-map-label-${data.position}`);
+    });
+
+    // Force layout recalc again
+    void labels[0]?.offsetHeight;
+
+    // Third pass: detect and resolve overlaps (primary is already first, so it gets priority)
+    for (let i = 0; i < labelData.length; i++) {
+      if (labelData[i].hidden) continue;
+
+      const currentBounds = getLabelBounds(labelData[i].label, labelData[i].position);
+
+      for (let j = i + 1; j < labelData.length; j++) {
+        if (labelData[j].hidden) continue;
+
+        const otherBounds = getLabelBounds(labelData[j].label, labelData[j].position);
+
+        if (rectsOverlap(currentBounds, otherBounds)) {
+          // Try flipping the later (non-primary) label to its alternate position
+          const altPosition = labelData[j].alternatePosition;
+          labelData[j].label.classList.remove("story-map-label-top", "story-map-label-bottom");
+          labelData[j].label.classList.add(`story-map-label-${altPosition}`);
+          labelData[j].position = altPosition;
+
+          // Check if it still overlaps after flip
+          void labelData[j].label.offsetHeight;
+          const newBounds = getLabelBounds(labelData[j].label, altPosition);
+          
+          // Also check if new position clips the edge or overlaps markers
+          const edgeCheck = isNearMapEdge(newBounds, mapRect);
+          const clipsEdge = (altPosition === "top" && edgeCheck.nearTop) || 
+                           (altPosition === "bottom" && edgeCheck.nearBottom);
+          const overlapsMarker = overlapsAnyMarker(newBounds, allMarkerBounds, labelData[j].ownMarkerBounds);
+          
+          // Check against all previous labels
+          let stillOverlaps = false;
+          for (let k = 0; k <= i; k++) {
+            if (labelData[k].hidden) continue;
+            const prevBounds = getLabelBounds(labelData[k].label, labelData[k].position);
+            if (rectsOverlap(newBounds, prevBounds)) {
+              stillOverlaps = true;
+              break;
+            }
+          }
+
+          if (stillOverlaps || clipsEdge || overlapsMarker) {
+            // Hide the overlapping label as last resort
+            labelData[j].hidden = true;
+            labelData[j].label.classList.add("story-map-label-hidden");
+          }
+        }
+      }
+    }
+
+    // Final pass: show labels with proper styling
+    labelData.forEach(({ label, hidden }) => {
+      label.style.visibility = "";
+      label.style.opacity = "";
+      if (!hidden) {
         label.classList.add("story-map-label-visible");
       }
     });
@@ -242,6 +469,7 @@
         size: 17,
         label: primaryLoc.name || null,
         lat: primaryLoc.lat,
+        primary: true,
       });
       primaryElement.querySelector(".story-map-marker")?.classList.add("current");
       const primaryMarker = new maplibregl.Marker({
@@ -277,7 +505,7 @@
     if (positions.length === 1) {
       mapInstance.easeTo({
         center: [positions[0].lon, positions[0].lat],
-        zoom: 5.5,
+        zoom: 5.0,
         duration: 900,
       });
       return;
@@ -294,9 +522,9 @@
       );
 
     mapInstance.fitBounds(bounds, {
-      padding: { top: 100, bottom: 100, left: 60, right: 60 },
+      padding: { top: 120, bottom: 120, left: 80, right: 80 },
       duration: 900,
-      maxZoom: 6.5,
+      maxZoom: 5.5,
     });
   }
 
@@ -510,6 +738,11 @@
 
   :global(.story-map-label.story-map-label-visible) {
     opacity: 1;
+  }
+
+  :global(.story-map-label.story-map-label-hidden) {
+    opacity: 0 !important;
+    pointer-events: none;
   }
 
   :global(.story-map-label-top) {
