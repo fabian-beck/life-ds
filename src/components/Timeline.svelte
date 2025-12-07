@@ -29,6 +29,7 @@
   export let onNextSlide = () => {};
   export let onGoToEvent = () => {};
   export let onScrollToIndex = () => {};
+  export let onOpenNetwork = null; // Callback to open network modal
   export let initialExpanded = false; // NEW: Initial expanded state from URL
 
   const dispatch = createEventDispatcher();
@@ -566,6 +567,7 @@
                                   {subcategory}
                                   {styleConfig}
                                   onToggle={handleTogglePersonInfo}
+                                  {onOpenNetwork}
                                   containerSelector=".expanded-timeline-container"
                                 />
                               {/each}

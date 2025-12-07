@@ -5,7 +5,6 @@
     mdiInformationOutline,
     mdiWikipedia,
     mdiAccountOutline,
-    mdiAccountMultipleOutline,
     mdiMagnifyPlusOutline,
   } from "@mdi/js";
   import { _ } from "../stores/language";
@@ -237,23 +236,9 @@
                   {subcategory}
                   {styleConfig}
                   onToggle={onTogglePersonInfo}
+                  {onOpenNetwork}
                 />
               {/each}
-              <button
-                type="button"
-                class="show-all-btn"
-                on:click={onOpenNetwork}
-                aria-label={$_("story.show_network")}
-              >
-                <svg
-                  class="icon icon-inline"
-                  viewBox="0 0 24 24"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <path d={mdiAccountMultipleOutline} />
-                </svg>
-              </button>
             </div>
           </li>
         </ul>
@@ -681,34 +666,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-
-  .show-all-btn {
-    appearance: none;
-    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(8px);
-    color: var(--story-primary, #e2e8f0);
-    padding: 0.35rem 0.65rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .show-all-btn:hover,
-  .show-all-btn:focus {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
-    transform: translateY(-1px);
-    outline: none;
   }
 
   .sources-wrapper {

@@ -969,6 +969,7 @@
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
     onScrollToIndex={scrollToIndexExternal}
+    onOpenNetwork={openNetworkModal}
     on:expandchange={handleTimelineExpandChange}
   />
 </div>

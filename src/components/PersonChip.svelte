@@ -1,11 +1,13 @@
 <script>
   import { tick, onDestroy } from "svelte";
+  import { mdiAccountMultipleOutline } from "@mdi/js";
   import { _ } from "../stores/language";
 
   export let person = {};
   export let personKey = "";
   export let visiblePersonInfo = null;
   export let onToggle = () => {};
+  export let onOpenNetwork = null; // Optional: callback to open the full network view
   export let containerSelector = null; // Optional: restrict positioning to container (e.g., ".modal-content")
   export let subcategory = null; // Optional: subcategory to display instead of full relationship_type
   export let styleConfig = null; // Optional: style configuration for separator
@@ -269,6 +271,24 @@
         {/if}
       </div>
     {/if}
+    {#if onOpenNetwork}
+      <button
+        type="button"
+        class="tooltip-network-btn"
+        on:click|stopPropagation={() => { onToggle(personKey); onOpenNetwork(); }}
+        aria-label={$_("story.show_network")}
+      >
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          role="presentation"
+          aria-hidden="true"
+        >
+          <path d={mdiAccountMultipleOutline} />
+        </svg>
+        <span>{$_("story.show_network")}</span>
+      </button>
+    {/if}
   </div>
 {/if}
 
@@ -385,13 +405,13 @@
 
   .person-info-tooltip {
     position: fixed;
-    min-width: 280px;
-    max-width: min(340px, 90vw);
+    min-width: 240px;
+    max-width: min(300px, 90vw);
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(148, 163, 184, 0.3);
     border-radius: 0.5rem;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     z-index: 10000;
     animation: fadeInTooltip 0.2s ease;
@@ -409,52 +429,52 @@
   }
 
   .tooltip-title {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
+    margin: 0 0 0.35rem 0;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--story-primary, #f8fafc);
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-relationship {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.85rem;
+    margin: 0 0 0.3rem 0;
+    font-size: 0.78rem;
     color: #e2e8f0;
-    line-height: 1.5;
+    line-height: 1.4;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-years {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.75rem;
+    margin: 0 0 0.3rem 0;
+    font-size: 0.7rem;
     color: var(--story-secondary, #94a3b8);
     font-weight: 500;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-activities {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.75rem;
+    margin: 0 0 0.3rem 0;
+    font-size: 0.7rem;
     color: rgba(148, 163, 184, 0.85);
     font-style: italic;
-    line-height: 1.4;
+    line-height: 1.35;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .tooltip-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+    padding-top: 0.35rem;
     border-top: 1px solid rgba(148, 163, 184, 0.2);
   }
 
   .meta-item {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.7rem;
+    gap: 0.25rem;
+    font-size: 0.65rem;
   }
 
   .meta-label {
@@ -486,5 +506,42 @@
     font-weight: 400;
     color: rgba(226, 232, 240, 0.7);
     font-style: italic;
+  }
+
+  .tooltip-network-btn {
+    appearance: none;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 0.3rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--story-secondary, #94a3b8);
+    font-size: 0.7rem;
+    font-weight: 500;
+    font-family: var(--story-body-font, Inter, sans-serif);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .tooltip-network-btn:hover,
+  .tooltip-network-btn:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--story-secondary, rgba(148, 163, 184, 0.5));
+    color: var(--story-primary, #e2e8f0);
+    outline: none;
+  }
+
+  .tooltip-network-btn .icon {
+    width: 0.85rem;
+    height: 0.85rem;
+    fill: currentColor;
   }
 </style>
