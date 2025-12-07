@@ -110,7 +110,7 @@
     return JSON.parse(JSON.stringify(basemapStyleCache));
   }
 
-  function createMarkerElement(color, { opacity = 1, size = 14, label = null, labelPosition = "top" } = {}) {
+  function createMarkerElement(color, { opacity = 1, size = 14, label = null, lat = null } = {}) {
     const container = document.createElement("div");
     container.className = "story-map-marker-container";
 
@@ -126,8 +126,9 @@
 
     if (label) {
       const labelElement = document.createElement("span");
-      labelElement.className = `story-map-label story-map-label-${labelPosition}`;
+      labelElement.className = "story-map-label";
       labelElement.textContent = label;
+      labelElement.dataset.lat = lat?.toString() ?? "";
       container.appendChild(labelElement);
     }
 
@@ -144,6 +145,19 @@
     // If marker is in the top half of the viewport, place label below
     // If marker is in the bottom half, place label above
     return lat > center ? "bottom" : "top";
+  }
+
+  function updateLabelPositions() {
+    const labels = document.querySelectorAll(".story-map-label");
+    labels.forEach((label) => {
+      const lat = parseFloat(label.dataset.lat);
+      if (!isNaN(lat)) {
+        const position = calculateLabelPosition(lat);
+        label.classList.remove("story-map-label-top", "story-map-label-bottom");
+        label.classList.add(`story-map-label-${position}`);
+        label.classList.add("story-map-label-visible");
+      }
+    });
   }
 
   function clearMarkers() {
@@ -211,7 +225,7 @@
           opacity: 1.0,
           size: 15,
           label: coords.name || null,
-          labelPosition: calculateLabelPosition(coords.lat),
+          lat: coords.lat,
         });
         const marker = new maplibregl.Marker({
           element: markerElement,
@@ -227,7 +241,7 @@
         opacity: 1.0,
         size: 17,
         label: primaryLoc.name || null,
-        labelPosition: calculateLabelPosition(primaryLoc.lat),
+        lat: primaryLoc.lat,
       });
       primaryElement.querySelector(".story-map-marker")?.classList.add("current");
       const primaryMarker = new maplibregl.Marker({
@@ -317,6 +331,9 @@
     mapInstance.on("load", () => {
       mapReady = true;
       updateMapState(activeCoordinates, markerTrail);
+    });
+    mapInstance.on("moveend", () => {
+      updateLabelPositions();
     });
   }
 
@@ -473,29 +490,36 @@
 
   :global(.story-map-label) {
     position: absolute;
-    padding: 4px 10px;
-    background: rgba(2, 6, 23, 0.92);
-    color: #ffffff;
-    font-size: 13px;
+    padding: 1px 4px;
+    background: rgba(2, 6, 23, 0.35);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11px;
     font-weight: 500;
     white-space: nowrap;
-    border-radius: 4px;
-    box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    box-shadow: none;
     pointer-events: none;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    letter-spacing: 0.01em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.02em;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  :global(.story-map-label.story-map-label-visible) {
+    opacity: 1;
   }
 
   :global(.story-map-label-top) {
     bottom: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 1px;
   }
 
   :global(.story-map-label-bottom) {
     top: 100%;
-    margin-top: 8px;
+    margin-top: 1px;
   }
 
   @keyframes markerPulse {
