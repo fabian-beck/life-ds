@@ -61,6 +61,9 @@
             url: portrait.image,
             caption: portrait.caption || null,
             source: portrait.source || null,
+            creator: portrait.creator || null,
+            license: portrait.license || null,
+            licenseUrl: portrait.licenseUrl || null,
           })}
         aria-label={$_("story.enlarge_portrait")}
       >

@@ -878,7 +878,7 @@ def search_wikimedia_commons(
         # Extract filename from page title
         filename = page_data.get("title", "").replace("File:", "")
 
-        # Extract caption from metadata
+        # Extract caption and attribution from metadata
         extmetadata = image_info.get("extmetadata", {})
         caption = (
             extmetadata.get("ImageDescription", {}).get("value", "")
@@ -886,6 +886,14 @@ def search_wikimedia_commons(
             or filename
         )
         caption = _strip_html_tags(caption)
+
+        # Extract creator (artist)
+        creator_raw = extmetadata.get("Artist", {}).get("value", "")
+        creator = _strip_html_tags(creator_raw) if creator_raw else None
+
+        # Extract license info
+        license_name = extmetadata.get("LicenseShortName", {}).get("value", "")
+        license_url = extmetadata.get("LicenseUrl", {}).get("value", "")
 
         # Build source URL
         source = f"https://commons.wikimedia.org/wiki/{page_data.get('title', '').replace(' ', '_')}"
@@ -895,6 +903,9 @@ def search_wikimedia_commons(
             "filename": filename,
             "caption": caption,
             "source": source,
+            "creator": creator,
+            "license": license_name if license_name else None,
+            "licenseUrl": license_url if license_url else None,
         })
 
     return images
@@ -957,12 +968,31 @@ def search_openverse(
         # Add provider info to help with deduplication
         provider = item.get("provider", "openverse")
 
+        # Extract creator and license info
+        creator = item.get("creator")
+        license_code = item.get("license", "")
+        license_version = item.get("license_version", "")
+        license_url = item.get("license_url", "")
+
+        # Format license name (e.g., "by-sa" + "3.0" -> "CC BY-SA 3.0")
+        license_name = None
+        if license_code:
+            license_upper = license_code.upper().replace("-", " ").replace("BY", "BY-")
+            if license_upper.startswith("BY-"):
+                license_upper = license_upper.replace("BY-", "BY-", 1)
+            license_name = f"CC {license_code.upper()}"
+            if license_version:
+                license_name += f" {license_version}"
+
         images.append({
             "url": url,
             "filename": filename,
             "caption": caption,
             "source": source,
             "provider": provider,
+            "creator": creator,
+            "license": license_name,
+            "licenseUrl": license_url if license_url else None,
         })
 
     return images
@@ -2610,6 +2640,12 @@ def generate_person_events(
         }
         if portrait.get("caption"):
             portrait_data["caption"] = portrait["caption"]
+        if portrait.get("creator"):
+            portrait_data["creator"] = portrait["creator"]
+        if portrait.get("license"):
+            portrait_data["license"] = portrait["license"]
+        if portrait.get("licenseUrl"):
+            portrait_data["licenseUrl"] = portrait["licenseUrl"]
         person_data["portrait"] = portrait_data
 
     payload = {
@@ -2769,6 +2805,12 @@ def regenerate_images_only(
         }
         if portrait.get("caption"):
             portrait_data["caption"] = portrait["caption"]
+        if portrait.get("creator"):
+            portrait_data["creator"] = portrait["creator"]
+        if portrait.get("license"):
+            portrait_data["license"] = portrait["license"]
+        if portrait.get("licenseUrl"):
+            portrait_data["licenseUrl"] = portrait["licenseUrl"]
         payload["person"]["portrait"] = portrait_data
     else:
         # AI found no suitable portrait - remove any existing one
@@ -2779,11 +2821,18 @@ def regenerate_images_only(
     for idx, event in enumerate(events):
         if idx in assignments:
             img = assignments[idx]
-            event['images'] = [{
+            image_data = {
                 "url": img['url'],
                 "caption": img['caption'],
                 "source": img['source'],
-            }]
+            }
+            if img.get('creator'):
+                image_data['creator'] = img['creator']
+            if img.get('license'):
+                image_data['license'] = img['license']
+            if img.get('licenseUrl'):
+                image_data['licenseUrl'] = img['licenseUrl']
+            event['images'] = [image_data]
             safe_title = event.get('title', '').encode('ascii', 'replace').decode('ascii')
             print(f"    ✓ Event {idx}: {safe_title}")
         else:

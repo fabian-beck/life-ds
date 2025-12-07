@@ -296,19 +296,35 @@
         {#if image.caption}
           <p class="caption-text">{image.caption}</p>
         {/if}
-        {#if image.source}
-          <p class="caption-source">
-            {$_("image.source")}
+        <p class="caption-attribution">
+          {#if image.creator}
+            <span class="attribution-creator">{image.creator}</span>
+          {/if}
+          {#if image.license}
+            {#if image.creator}<span class="attribution-separator">·</span>{/if}
+            {#if image.licenseUrl}
+              <a
+                href={image.licenseUrl}
+                target="_blank"
+                rel="noreferrer"
+                on:click|stopPropagation
+                class="attribution-license"
+              >{image.license}</a>
+            {:else}
+              <span class="attribution-license">{image.license}</span>
+            {/if}
+          {/if}
+          {#if image.source}
+            {#if image.creator || image.license}<span class="attribution-separator">·</span>{/if}
             <a
               href={image.source}
               target="_blank"
               rel="noreferrer"
               on:click|stopPropagation
-            >
-              {getSourceName(image.source)}
-            </a>
-          </p>
-        {/if}
+              class="attribution-source"
+            >{getSourceName(image.source)}</a>
+          {/if}
+        </p>
       </div>
     {/if}
 
@@ -437,6 +453,44 @@
     font-size: 1rem;
     font-weight: 600;
     color: #f8fafc;
+  }
+
+  .caption-attribution {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .attribution-creator {
+    color: #94a3b8;
+  }
+
+  .attribution-separator {
+    color: #475569;
+  }
+
+  .attribution-license,
+  .attribution-source {
+    color: #64748b;
+    text-decoration: none;
+  }
+
+  a.attribution-license,
+  a.attribution-source {
+    color: #64748b;
+  }
+
+  a.attribution-license:hover,
+  a.attribution-license:focus,
+  a.attribution-source:hover,
+  a.attribution-source:focus {
+    color: #94a3b8;
+    text-decoration: underline;
   }
 
   .caption-source {
