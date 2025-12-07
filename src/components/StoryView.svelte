@@ -26,6 +26,7 @@
     resolveEventIcon,
     computeYearsLabel,
     createDateFormatters,
+    getValidImages,
   } from "../utils/storyHelpers.js";
 
   export let dataset = null;
@@ -38,6 +39,8 @@
   export let onSlideChange = () => {};
 
   let enlargedImage = null;
+  let currentImageGlobalIndex = -1;
+  let lastViewedSlideIndex = 0;
   let visibleDateNote = null;
   let visiblePersonInfo = null;
   let visibleSources = null;
@@ -85,6 +88,45 @@
   $: totalPanels = slides.length;
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
+
+  // Flattened collection of all images across the story with event metadata
+  $: allImages = [
+    // Portrait from overview slide (if exists)
+    ...(portrait?.image
+      ? [
+          {
+            url: portrait.image,
+            caption: portrait.caption || null,
+            source: portrait.source || null,
+            creator: portrait.creator || null,
+            license: portrait.license || null,
+            licenseUrl: portrait.licenseUrl || null,
+            eventIndex: -1,
+            eventTitle: null,
+            eventDate: null,
+            slideIndex: 0,
+          },
+        ]
+      : []),
+    // All event images
+    ...eventSlides.flatMap((slide) =>
+      getValidImages(slide.images).map((img) => {
+        const imgObj = typeof img === "string" ? { url: img } : img;
+        return {
+          url: imgObj.url,
+          caption: imgObj.caption || null,
+          source: imgObj.source || null,
+          creator: imgObj.creator || null,
+          license: imgObj.license || null,
+          licenseUrl: imgObj.licenseUrl || null,
+          eventIndex: slide.eventIndex,
+          eventTitle: slide.title,
+          eventDate: slide.date,
+          slideIndex: slide.eventIndex + 1, // +1 because overview is at 0
+        };
+      })
+    ),
+  ];
 
   // Track the last activeIndex value to detect external changes (e.g., from browser history)
   let lastPropActiveIndex = activeIndex;
@@ -382,12 +424,41 @@
     onClose();
   }
 
-  function enlargeImage(imageData) {
-    enlargedImage = imageData; // Now stores full image object with url, caption, source
+  function enlargeImage(imageData, slide = null) {
+    // Find this image in the flattened collection
+    const globalIndex = allImages.findIndex((img) => {
+      if (img.url !== imageData.url) return false;
+      // If slide context provided, match the event index too
+      if (slide && img.eventIndex !== slide.eventIndex) return false;
+      return true;
+    });
+
+    currentImageGlobalIndex = globalIndex >= 0 ? globalIndex : 0;
+    lastViewedSlideIndex = activeIndex;
+    enlargedImage =
+      globalIndex >= 0 ? allImages[globalIndex] : { ...imageData, slideIndex: activeIndex };
   }
 
   function closeEnlargedImage() {
     enlargedImage = null;
+    currentImageGlobalIndex = -1;
+  }
+
+  function handleImageNavigate(newIndex) {
+    if (newIndex >= 0 && newIndex < allImages.length) {
+      currentImageGlobalIndex = newIndex;
+      enlargedImage = allImages[newIndex];
+    }
+  }
+
+  function handleJumpToEvent(slideIndex) {
+    if (slideIndex >= 0 && slideIndex < slides.length) {
+      requestScrollTo(slideIndex, {
+        source: "image-viewer-jump",
+        updateStateImmediately: true,
+      });
+      lastViewedSlideIndex = slideIndex; // Update so closing doesn't jump back
+    }
   }
 
   function handleScroll() {
@@ -902,7 +973,16 @@
   />
 </div>
 
-<ImageViewer image={enlargedImage} onClose={closeEnlargedImage} />
+<ImageViewer
+  image={enlargedImage}
+  {styleConfig}
+  {allImages}
+  currentIndex={currentImageGlobalIndex}
+  activeSlideIndex={activeIndex}
+  onClose={closeEnlargedImage}
+  onNavigate={handleImageNavigate}
+  onJumpToEvent={handleJumpToEvent}
+/>
 
 {#if showNetworkModal}
   <NetworkModal
