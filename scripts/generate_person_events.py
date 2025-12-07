@@ -900,6 +900,74 @@ def search_wikimedia_commons(
     return images
 
 
+def search_openverse(
+    query: str,
+    limit: int = 10
+) -> List[Dict[str, Any]]:
+    """
+    Search Openverse API for CC-licensed images.
+
+    Openverse aggregates images from Flickr, Wikimedia, museums, and other sources.
+    Returns list of image metadata dicts with url, caption, source, filename.
+    """
+    api_url = "https://api.openverse.org/v1/images/"
+
+    params = {
+        "q": query,
+        "page_size": limit,
+        # Filter for licenses that allow reuse
+        "license_type": "commercial,modification",
+    }
+
+    headers = {
+        "User-Agent": "life-ds-project/1.0 (biographical timeline generator)"
+    }
+
+    try:
+        response = requests.get(
+            api_url,
+            params=params,
+            timeout=30,
+            headers=headers
+        )
+        response.raise_for_status()
+        data = response.json()
+    except Exception as e:
+        print(f"    Openverse API error for '{query}': {e}")
+        return []
+
+    results = data.get("results", [])
+    images = []
+
+    for item in results:
+        url = item.get("url")
+        if not url:
+            continue
+
+        # Extract filename from URL or title
+        title = item.get("title", "")
+        filename = title or url.split("/")[-1]
+
+        # Use title as caption, fall back to attribution
+        caption = title or item.get("attribution", filename)
+
+        # Source is the foreign landing URL (original page)
+        source = item.get("foreign_landing_url", url)
+
+        # Add provider info to help with deduplication
+        provider = item.get("provider", "openverse")
+
+        images.append({
+            "url": url,
+            "filename": filename,
+            "caption": caption,
+            "source": source,
+            "provider": provider,
+        })
+
+    return images
+
+
 def generate_image_search_strings(
     event_skeletons: List[EventSkeleton],
     person_name: str,
@@ -977,30 +1045,54 @@ def generate_image_search_strings(
     return [person_name]
 
 
-def execute_batch_commons_search(
+def execute_batch_image_search(
     search_strings: List[str],
     images_per_query: int = 10
 ) -> List[Dict[str, Any]]:
     """
-    Execute all search queries and collect unique images.
+    Execute all search queries against Wikimedia Commons and Openverse.
 
     Returns deduplicated list of image candidates with metadata.
     """
     all_images = []
     seen_urls: Set[str] = set()
 
+    # Search Wikimedia Commons
+    print("    [Source 1/2] Wikimedia Commons:")
     for query in search_strings:
         safe_query = query.encode('ascii', 'replace').decode('ascii')
-        print(f"    Searching: '{safe_query}'")
+        print(f"      Searching: '{safe_query}'")
 
         try:
             results = search_wikimedia_commons(query, limit=images_per_query)
             for img in results:
                 if img['url'] not in seen_urls:
                     seen_urls.add(img['url'])
+                    img['provider'] = 'wikimedia'
                     all_images.append(img)
         except Exception as e:
-            print(f"      Warning: Search failed: {e}")
+            print(f"        Warning: Search failed: {e}")
+
+    commons_count = len(all_images)
+    print(f"      Found {commons_count} unique images from Commons")
+
+    # Search Openverse (aggregates Flickr, museums, etc.)
+    print("    [Source 2/2] Openverse (Flickr, museums, etc.):")
+    for query in search_strings:
+        safe_query = query.encode('ascii', 'replace').decode('ascii')
+        print(f"      Searching: '{safe_query}'")
+
+        try:
+            results = search_openverse(query, limit=images_per_query)
+            for img in results:
+                if img['url'] not in seen_urls:
+                    seen_urls.add(img['url'])
+                    all_images.append(img)
+        except Exception as e:
+            print(f"        Warning: Search failed: {e}")
+
+    openverse_count = len(all_images) - commons_count
+    print(f"      Found {openverse_count} unique images from Openverse")
 
     print(f"    Total unique images found: {len(all_images)}")
     return all_images
@@ -1079,12 +1171,15 @@ def match_images_to_events(
     prompt += "  • Assigning same type of image (e.g., plaques) to multiple events\n\n"
 
     prompt += "CAPTION GUIDELINES:\n"
-    prompt += "  • Write a clean, concise caption (5-15 words) for each assigned image\n"
-    prompt += "  • Describe what the image shows, not why it was chosen\n"
-    prompt += "  • Use proper capitalization and no trailing punctuation\n"
-    prompt += "  • Examples: 'Bletchley Park mansion, wartime codebreaking headquarters'\n"
-    prompt += "  • Examples: 'The bombe machine used to decrypt Enigma messages'\n"
-    prompt += "  • Examples: 'Exterior view of the Vitra Fire Station'\n"
+    prompt += "  • IMPORTANT: You CANNOT see the images - only filenames and metadata\n"
+    prompt += "  • Base captions ONLY on what the filename/metadata explicitly tells you\n"
+    prompt += "  • Do NOT assume or describe visual details you cannot verify\n"
+    prompt += "  • Keep captions factual and minimal (5-12 words)\n"
+    prompt += "  • Use the original source caption/title if it's descriptive enough\n"
+    prompt += "  • For buildings/places: just name the place, don't describe what you can't see\n"
+    prompt += "  • Good: 'Bletchley Park, wartime codebreaking headquarters'\n"
+    prompt += "  • Good: 'The Olympiastadion Munich roof structure'\n"
+    prompt += "  • Bad: 'Aerial view showing the curved tensile membrane' (you can't see this)\n"
 
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -1122,6 +1217,8 @@ def match_images_to_events(
             portrait_img_idx = result.portrait.image_id - 1  # Convert to 0-based
             if 0 <= portrait_img_idx < len(candidate_images):
                 portrait_image = candidate_images[portrait_img_idx].copy()
+                # Use original source caption for portrait (already in the image dict)
+                # The 'caption' field from search results contains the title/description
 
         # Build mapping, validating indices
         assignments: Dict[int, Dict[str, Any]] = {}
@@ -1895,8 +1992,8 @@ def research_images_for_all_events(
     )
     print(f"    Generated {len(search_strings)} search strings")
 
-    print("  [Phase 3b] Executing Wikimedia Commons searches...")
-    candidate_images = execute_batch_commons_search(search_strings, images_per_query=10)
+    print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
+    candidate_images = execute_batch_image_search(search_strings, images_per_query=10)
 
     if not candidate_images:
         print("    No images found, skipping assignment")
@@ -2507,10 +2604,13 @@ def generate_person_events(
     person_data = life_plan.person.model_dump()
     # Apply AI-selected portrait if available
     if portrait:
-        person_data["portrait"] = {
+        portrait_data = {
             "image": portrait["url"],
             "source": portrait["source"],
         }
+        if portrait.get("caption"):
+            portrait_data["caption"] = portrait["caption"]
+        person_data["portrait"] = portrait_data
 
     payload = {
         "dataset": life_plan.dataset,
@@ -2645,8 +2745,8 @@ def regenerate_images_only(
         safe_ss = ss.encode('ascii', 'replace').decode('ascii')
         print(f"      • {safe_ss}")
 
-    print("  [Phase 3b] Executing Wikimedia Commons searches...")
-    candidate_images = execute_batch_commons_search(search_strings, images_per_query=10)
+    print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
+    candidate_images = execute_batch_image_search(search_strings, images_per_query=10)
 
     if not candidate_images:
         print("    No images found")
@@ -2663,10 +2763,13 @@ def regenerate_images_only(
     # Apply portrait to person data
     print("[Step 3/4] Updating events with new image assignments...")
     if portrait:
-        payload["person"]["portrait"] = {
+        portrait_data = {
             "image": portrait["url"],
             "source": portrait["source"],
         }
+        if portrait.get("caption"):
+            portrait_data["caption"] = portrait["caption"]
+        payload["person"]["portrait"] = portrait_data
     else:
         # AI found no suitable portrait - remove any existing one
         payload["person"].pop("portrait", None)

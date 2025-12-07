@@ -27,6 +27,31 @@
     resetView();
   }
 
+  /**
+   * Extract a human-readable source name from a URL.
+   * Returns provider name like "Flickr", "Wikimedia Commons", etc.
+   */
+  function getSourceName(url) {
+    if (!url) return "";
+    try {
+      const hostname = new URL(url).hostname.toLowerCase();
+      if (hostname.includes("flickr.com")) return "Flickr";
+      if (hostname.includes("commons.wikimedia.org")) return "Wikimedia Commons";
+      if (hostname.includes("wikimedia.org")) return "Wikimedia";
+      if (hostname.includes("wikipedia.org")) return "Wikipedia";
+      if (hostname.includes("met.museum") || hostname.includes("metmuseum.org")) return "The Met";
+      if (hostname.includes("smithsonian")) return "Smithsonian";
+      if (hostname.includes("loc.gov")) return "Library of Congress";
+      if (hostname.includes("europeana.eu")) return "Europeana";
+      if (hostname.includes("unsplash.com")) return "Unsplash";
+      // Fallback: extract domain name
+      const parts = hostname.replace("www.", "").split(".");
+      return parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+    } catch {
+      return "Source";
+    }
+  }
+
   function handleWheel(event) {
     if (!container || !imageWrapper) return;
     event.preventDefault();
@@ -280,7 +305,7 @@
               rel="noreferrer"
               on:click|stopPropagation
             >
-              {$_("image.wikimedia_commons")}
+              {getSourceName(image.source)}
             </a>
           </p>
         {/if}
