@@ -300,7 +300,7 @@
   .person-chip {
     appearance: none;
     border: 1px solid rgba(148, 163, 184, 0.3);
-    background: rgba(15, 23, 42, 0.75);
+    background: rgba(15, 23, 42, 0.3);
     backdrop-filter: blur(8px);
     color: #e2e8f0;
     padding: 0.4rem 0.75rem;
@@ -347,6 +347,31 @@
     border-color: var(--story-secondary, rgba(148, 163, 184, 0.5));
     transform: translateY(-1px);
     outline: none;
+  }
+
+  /* Compact person chips for landscape mobile */
+  @media (max-height: 450px) {
+    .person-chip {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.65rem;
+      gap: 0.35rem;
+      background: rgba(15, 23, 42, 0.25);
+      border-color: rgba(148, 163, 184, 0.2);
+    }
+
+    .person-chip.strength-weak,
+    .person-chip.strength-moderate {
+      padding: 0.25rem 0.5rem;
+    }
+
+    .person-chip.strength-strong {
+      padding: calc(0.25rem - 1.5px) calc(0.5rem - 1.5px);
+    }
+
+    .subcategory {
+      font-size: 0.55rem;
+      padding: 0.1rem 0.3rem;
+    }
   }
 
   .person-chip.strength-weak:hover,

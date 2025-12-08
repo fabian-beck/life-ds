@@ -330,6 +330,7 @@
   .event-content {
     display: flex;
     flex-direction: column;
+    padding-top: clamp(0.0rem, 8vh, 10rem);
   }
 
   .event-header {
@@ -360,7 +361,7 @@
     .event-body {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
       align-items: start;
     }
 
@@ -921,6 +922,72 @@
   @media (max-width: 768px) {
     .annotation-popup {
       max-width: 100%;
+    }
+  }
+
+  /* Landscape mobile optimizations for short viewports */
+  @media (max-height: 450px) {
+    .event-header {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* Title first, date second */
+    .event-header h2 {
+      order: 1;
+    }
+
+    .event-header .date-wrapper {
+      order: 2;
+    }
+
+    .date-wrapper {
+      flex-shrink: 0;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin: 0;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .date {
+      font-size: 0.8rem;
+    }
+
+    .age {
+      font-size: 0.75rem;
+    }
+
+    .description {
+      font-size: 0.8rem;
+      max-height: 35vh;
+    }
+
+    .details {
+      font-size: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .label {
+      font-size: 0.6rem;
+    }
+
+    .event-body {
+      gap: 0.5rem;
+    }
+
+    .content {
+      gap: 0.2rem;
+    }
+
+    .image-thumbnail {
+      width: 180px;
+      height: 180px;
     }
   }
 </style>

@@ -1383,4 +1383,51 @@
       height: 1.1rem;
     }
   }
+
+  /* Landscape mobile optimizations - compact timeline for short viewports */
+  @media (max-height: 450px) {
+    .indicator {
+      --dot-size: clamp(1rem, 2.5vw, 1.25rem);
+      bottom: 0.35rem;
+    }
+
+    .indicator-track {
+      padding: 0.4rem 0.6rem;
+      border-radius: 1rem;
+    }
+
+    .nav-btn {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+
+    .chapter-indicator-box {
+      bottom: calc(100% + 0.15rem);
+    }
+
+    .chapter-indicator-content {
+      padding: 0.35rem 0.75rem;
+      border-radius: 0.75rem;
+    }
+
+    .chapter-indicator-label {
+      font-size: 0.65rem;
+    }
+
+    .chapter-chevron {
+      width: 0.85rem;
+      height: 0.85rem;
+    }
+
+    .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0.35rem;
+    }
+
+    .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
 </style>

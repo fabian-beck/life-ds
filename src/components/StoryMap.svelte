@@ -485,7 +485,12 @@
       ? [...allActive, ...history]
       : history;
 
-    if (positions.length === 0) {
+    // Additional validation to prevent NaN coordinates from reaching maplibre
+    const validPositions = positions.filter(
+      coord => Number.isFinite(coord?.lon) && Number.isFinite(coord?.lat)
+    );
+
+    if (validPositions.length === 0) {
       if (lastViewportKey !== "baseline") {
         mapInstance.easeTo({ center: [0, 0], zoom: 1.0, duration: 700 });
         lastViewportKey = "baseline";
@@ -493,7 +498,7 @@
       return;
     }
 
-    const viewportKey = positions
+    const viewportKey = validPositions
       .map((coord) => `${coord.lon.toFixed(4)},${coord.lat.toFixed(4)}`)
       .join("|");
 
@@ -502,30 +507,68 @@
     }
     lastViewportKey = viewportKey;
 
-    if (positions.length === 1) {
+    if (validPositions.length === 1) {
       mapInstance.easeTo({
-        center: [positions[0].lon, positions[0].lat],
+        center: [validPositions[0].lon, validPositions[0].lat],
         zoom: 5.0,
         duration: 900,
       });
       return;
     }
 
-    const bounds = positions
+    const bounds = validPositions
       .slice(1)
       .reduce(
         (accumulator, coord) => accumulator.extend([coord.lon, coord.lat]),
         new maplibregl.LngLatBounds(
-          [positions[0].lon, positions[0].lat],
-          [positions[0].lon, positions[0].lat]
+          [validPositions[0].lon, validPositions[0].lat],
+          [validPositions[0].lon, validPositions[0].lat]
         )
       );
 
-    mapInstance.fitBounds(bounds, {
-      padding: { top: 120, bottom: 120, left: 80, right: 80 },
-      duration: 900,
-      maxZoom: 5.5,
-    });
+    // Safety check: ensure bounds are valid before calling fitBounds
+    try {
+      const ne = bounds.getNorthEast();
+      const sw = bounds.getSouthWest();
+      if (!Number.isFinite(ne.lng) || !Number.isFinite(ne.lat) ||
+          !Number.isFinite(sw.lng) || !Number.isFinite(sw.lat)) {
+        console.warn('Invalid bounds detected, skipping fitBounds');
+        return;
+      }
+
+      // Calculate safe padding based on container size to prevent NaN errors
+      const containerWidth = mapContainer?.clientWidth || 0;
+      const containerHeight = mapContainer?.clientHeight || 0;
+
+      // Ensure minimum usable area after padding (at least 50px)
+      const maxHorizontalPadding = Math.max(0, (containerWidth - 50) / 2);
+      const maxVerticalPadding = Math.max(0, (containerHeight - 50) / 2);
+
+      const safePadding = {
+        top: Math.min(120, maxVerticalPadding),
+        bottom: Math.min(120, maxVerticalPadding),
+        left: Math.min(80, maxHorizontalPadding),
+        right: Math.min(80, maxHorizontalPadding),
+      };
+
+      // Skip fitBounds if container is too small
+      if (containerWidth < 100 || containerHeight < 100) {
+        mapInstance.easeTo({
+          center: [validPositions[0].lon, validPositions[0].lat],
+          zoom: 3.0,
+          duration: 900,
+        });
+        return;
+      }
+
+      mapInstance.fitBounds(bounds, {
+        padding: safePadding,
+        duration: 900,
+        maxZoom: 5.5,
+      });
+    } catch (err) {
+      console.warn('fitBounds error:', err);
+    }
   }
 
   async function initialiseMap() {

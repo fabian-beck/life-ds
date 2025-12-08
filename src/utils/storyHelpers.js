@@ -219,7 +219,7 @@ export function normalizePrimaryLocation(event) {
 /**
  * Get all location coordinates from an event.
  * @param {Object} event - Event with locations array
- * @returns {Array} Array of {lon, lat, name} objects
+ * @returns {Array} Array of {lon, lat, name, primary} objects
  */
 export function normalizeAllLocations(event) {
   if (!event?.locations || !Array.isArray(event.locations)) {
@@ -231,7 +231,7 @@ export function normalizeAllLocations(event) {
     .map(loc => {
       const [lng, lat] = loc.centroid.map(Number);
       return Number.isFinite(lng) && Number.isFinite(lat)
-        ? { lon: lng, lat: lat, name: loc.name_historic }
+        ? { lon: lng, lat: lat, name: loc.name_historic, primary: loc.primary === true }
         : null;
     })
     .filter(coord => coord !== null);

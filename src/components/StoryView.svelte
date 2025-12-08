@@ -1267,21 +1267,69 @@
 
   /* Compact masthead for landscape mobile (short viewports)
      - Applies to rotated phones with limited vertical space
-     - Makes header more compact to preserve screen real estate */
-  @media (max-height: 500px) {
+     - Makes header more compact and positioned on right side only */
+  @media (max-height: 450px) {
     .masthead {
-      padding: 0.15rem 0.5rem;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: auto;
+      width: auto;
+      max-width: 40%;
+      padding: 0.15rem 0.35rem;
+      border-radius: 0 0 0 0.5rem;
+      border: none;
+      border-left: 1px solid rgba(148, 163, 184, 0.15);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      background: rgba(var(--story-bg-rgb, 15, 23, 42), 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 10;
     }
 
     .compact-info {
-      font-size: 0.7rem;
-      gap: 0.4rem;
+      font-size: 0.65rem;
+      gap: 0.35rem;
+      justify-content: flex-end;
+    }
+
+    .compact-info .name {
+      max-width: 8rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .compact-info .lifespan {
+      display: none;
+    }
+
+    .compact-info .separator {
+      display: none;
     }
 
     .close-story {
-      padding: 0.15rem 0.5rem;
-      font-size: 0.65rem;
-      gap: 0.3rem;
+      padding: 0.2rem 0.4rem;
+      font-size: 0.6rem;
+      gap: 0.25rem;
+    }
+
+    .slide {
+      padding: 0.15rem 1rem 2.5rem;
+      gap: 0.25rem;
+    }
+
+    /* Disable auto-centering in landscape mobile - keep content at top */
+    .slide > .content {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .slides-wrapper.map-enabled .slide:not(.overview) {
+      padding-bottom: 12rem;
+    }
+
+    .slide.overview {
+      padding-top: 0.5rem;
+      padding-bottom: 6rem;
     }
   }
 
@@ -1334,16 +1382,22 @@
     flex: 0 0 100%;
     height: 100%;
     min-height: 100%;
-    padding: 2.75rem 1.5rem 3.25rem;
+    padding: 0rem 1.5rem 3.25rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
     position: relative;
     gap: 1.25rem;
     background-color: rgb(var(--story-bg-rgb, 15, 23, 42));
     border-right: 1px solid rgba(148, 163, 184, 0.12);
-    overflow: visible;
+    overflow-y: auto;
+  }
+
+  /* Center content vertically when there's space, but never clip at top */
+  .slide > .content {
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   .slide-loaded {
