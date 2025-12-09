@@ -311,6 +311,8 @@
     align-items: center;
     gap: 0.5rem;
     overflow: visible;
+    height: 2rem;
+    box-sizing: border-box;
     filter: drop-shadow(0 0 2px var(--story-secondary, rgba(56, 189, 248, 0.15)));
     transition:
       background-color 0.2s ease,
@@ -357,6 +359,7 @@
       gap: 0.35rem;
       background: rgba(15, 23, 42, 0.25);
       border-color: rgba(148, 163, 184, 0.2);
+      height: 1.5rem;
     }
 
     .person-chip.strength-weak,
@@ -413,18 +416,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 1;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .person-name.long-name {
     font-size: 0.72rem;
+    line-height: 1;
   }
 
   .person-role {
     font-weight: 400;
     color: var(--story-secondary, #94a3b8);
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
+    line-height: 1.2;
+    overflow: visible;
+    display: flex;
+    align-items: center;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
