@@ -814,6 +814,7 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
   // Step 1: Parse annotations first (they take priority)
   const annotationPattern = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
   const annotationRanges = [];
+  const seenTermKeys = new Set(); // Track which terms we've already annotated
   let match;
 
   while ((match = annotationPattern.exec(description)) !== null) {
@@ -821,7 +822,9 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
     const displayText = match[2] || match[1];
     const annotation = annotations[termKey];
 
-    if (annotation) {
+    // Only add annotation if it exists AND we haven't seen this term before
+    if (annotation && !seenTermKeys.has(termKey)) {
+      seenTermKeys.add(termKey); // Mark this term as used
       annotationRanges.push({
         start: match.index,
         end: annotationPattern.lastIndex,

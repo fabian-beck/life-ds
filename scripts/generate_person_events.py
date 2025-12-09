@@ -179,10 +179,6 @@ class EventSkeleton(BaseModel):
     )
     title: str = Field(description="Brief title of the event (2-6 words)")
     description: str = Field(description="Detailed description of the event (2-4 sentences)")
-    annotations: Optional[Dict[str, Annotation]] = Field(
-        None,
-        description="Dictionary mapping term keys to their explanations"
-    )
 
 
 class LifePlan(BaseModel):
@@ -1392,6 +1388,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- Write rich descriptions (2-4 sentences) that mention context, people involved, and places\n"
         "- DO NOT specify exact locations, images, or detailed sources (Phase 2 will research these)\n"
         "- DO mention places, people, and context in the description naturally\n"
+        "- DO NOT add annotations - Phase 2 will handle all annotations\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
         "title, and description. "
@@ -1556,40 +1553,67 @@ def build_phase2_prompt(
     prompt += "5. ANNOTATIONS (0-3 per event, MOST EVENTS HAVE 0):\n"
     prompt += "   - CRITICAL: Be extremely conservative - only annotate truly obscure terms that need explanation\n"
     prompt += "   - STRICT CRITERIA: Term must be BOTH obscure AND provide non-obvious context\n"
+    prompt += "   - ⚠️ UNIQUENESS RULE: Each term can be annotated AT MOST ONCE per event\n"
+    prompt += "   - ⚠️ If a term appears multiple times in the description, only annotate the FIRST occurrence\n"
     prompt += "   - Annotate ONLY:\n"
-    prompt += "     * Highly technical/specialized concepts (e.g., 'Entscheidungsproblem', 'transautomatism')\n"
+    prompt += "     * Highly technical/specialized concepts (e.g., 'Entscheidungsproblem', 'Difference Engine', 'Analytical Engine', 'transautomatism')\n"
+    prompt += "     * Historical inventions/machines requiring explanation (e.g., 'Difference Engine' - mechanical calculator, 'Jacquard loom' - programmable weaving machine)\n"
     prompt += "     * Obscure institutions with significant historical context (e.g., 'Bletchley Park' - secret codebreaking facility)\n"
     prompt += "     * Specialized movements/events requiring context (e.g., 'Anschluss' - Nazi annexation, 'documenta' - contemporary art exhibition)\n"
-    prompt += "     * Regional terms unknown outside specific areas (e.g., 'Matura' - Austrian graduation exam)\n"
+    prompt += "     * Regional/cultural terms unknown outside specific areas (e.g., 'Matura' - Austrian graduation exam, 'soirée' - French social gathering)\n"
     prompt += "   - ABSOLUTE PROHIBITIONS (NEVER annotate):\n"
-    prompt += "     * ANY person names - these are ALWAYS handled separately\n"
-    prompt += "     * ANY major cities (Tokyo, Hamburg, Paris, London, Vienna, Berlin, New York, etc.)\n"
+    prompt += "     * ❌ NEVER ANNOTATE PERSON NAMES - Person names belong in INVOLVED_PEOPLE field (section 2), NOT in annotations\n"
+    prompt += "     * ❌ This includes: full names, first names, last names, titles (e.g., '8th Baron King'), nicknames, or any reference to a human being\n"
+    prompt += "     * ❌ Examples of FORBIDDEN person annotations: 'William', 'William King', '8th Baron King', 'King William', 'Ada', 'Lord Byron', etc.\n"
+    prompt += "     * ANY major cities - these are well-known and need no explanation (Tokyo, Hamburg, Paris, Prague, London, Vienna, Berlin, Munich, New York, Rome, etc.)\n"
     prompt += "     * ANY countries or continents (Japan, Germany, USA, Europe, Asia, etc.)\n"
     prompt += "     * ANY common places (university, school, museum, gallery, studio, farmhouse, etc.)\n"
     prompt += "     * ANY well-known historical periods or events (WWII, Renaissance, Cold War, etc.)\n"
     prompt += "     * ANY basic artistic/cultural terms (exhibition, retrospective, painting, prize, award, etc.)\n"
     prompt += "     * ANY geographic features everyone knows (rivers, seas, mountains, islands, etc.)\n"
-    prompt += "   - REDUNDANCY CHECK: Do NOT annotate if the description already explains the term\n"
-    prompt += "     * BAD: Annotating 'Hitler Youth' if description says 'Nazi youth organization'\n"
-    prompt += "     * BAD: Annotating 'Montessori' if description says 'child-centered education'\n"
-    prompt += "     * GOOD: Annotating 'Leopoldstadt' if description only says 'district' without historical context\n"
-    prompt += "   - VALUE TEST: Does this annotation add meaningful information the description lacks?\n"
+    prompt += "   - CRITICAL REDUNDANCY CHECK - Read the FULL event description before annotating:\n"
+    prompt += "     * ❌ NEVER annotate if the description already provides the same or similar information\n"
+    prompt += "     * ❌ NEVER annotate if the surrounding context makes the term clear\n"
+    prompt += "     * ❌ BAD: Annotating 'Architectural Association School of Architecture' as 'prestigious architecture school' when description says 'hotbed of avant-garde experimentation' - context already explains it\n"
+    prompt += "     * ❌ BAD: Annotating 'Kaufungen' as 'royal estate' when description says 'royal estate of Kaufungen'\n"
+    prompt += "     * ❌ BAD: Annotating 'Hitler Youth' if description says 'Nazi youth organization'\n"
+    prompt += "     * ❌ BAD: Annotating 'Montessori' if description says 'child-centered education'\n"
+    prompt += "     * ✓ GOOD: Annotating 'Leopoldstadt' if description only says 'district' without historical context\n"
+    prompt += "   - STRICT VALUE TEST: Annotation must add SUBSTANTIAL NEW information the description completely lacks\n"
+    prompt += "   - If the description provides adequate context (even implicitly), DO NOT annotate - no matter how obscure the term is\n"
+    prompt += "   - When in doubt about redundancy, SKIP the annotation\n"
     prompt += "   - GEOGRAPHY RULE: Only annotate very specific/obscure places with crucial historical significance\n"
-    prompt += "     * GOOD: 'Leopoldstadt' (specific district with Holocaust context)\n"
+    prompt += "     * GOOD: 'Leopoldstadt' (specific district with Holocaust context that's not obvious from name)\n"
+    prompt += "     * GOOD: 'Bletchley Park' (specific historic site with special significance)\n"
+    prompt += "     * BAD: 'Prague' (major European city everyone knows)\n"
     prompt += "     * BAD: 'Hamburg' (major German city everyone knows)\n"
     prompt += "     * BAD: 'Japan' (country everyone knows)\n"
     prompt += "     * BAD: 'Normandy' (well-known French region)\n"
     prompt += "   - EXAMPLES of GOOD annotations:\n"
+    prompt += "     * 'Difference Engine' - Babbage's mechanical calculator (historical invention requiring context)\n"
     prompt += "     * 'Entscheidungsproblem' - mathematical concept requiring technical explanation\n"
+    prompt += "     * 'soirée' - French evening social gathering (cultural term)\n"
     prompt += "     * 'Matura' - Austrian-specific term not used elsewhere\n"
     prompt += "     * 'documenta' - specific art event most people don't know\n"
     prompt += "   - EXAMPLES of BAD annotations (NEVER annotate):\n"
-    prompt += "     * 'Hamburg' - major city\n"
-    prompt += "     * 'Japan' - country\n"
-    prompt += "     * 'Paris' - major city\n"
+    prompt += "     * ❌ 'William' - person name (use INVOLVED_PEOPLE instead)\n"
+    prompt += "     * ❌ '8th Baron King' - person title (use INVOLVED_PEOPLE instead)\n"
+    prompt += "     * ❌ 'Lord Byron' - person name (use INVOLVED_PEOPLE instead)\n"
+    prompt += "     * ❌ ANY other person name or title\n"
+    prompt += "     * ❌ 'Architectural Association School of Architecture' - REDUNDANT if description says 'hotbed of avant-garde experimentation' (context is clear)\n"
+    prompt += "     * ❌ 'Kaufungen' - REDUNDANT if description already says 'royal estate of Kaufungen'\n"
+    prompt += "     * ❌ ANY term already explained or made clear by surrounding context (redundancy)\n"
+    prompt += "     * 'Prague' - major European city (well-known)\n"
+    prompt += "     * 'Hamburg' - major city (well-known)\n"
+    prompt += "     * 'Japan' - country (well-known)\n"
+    prompt += "     * 'Paris' - major city (well-known)\n"
     prompt += "     * 'exhibition' - common term\n"
     prompt += "     * 'university' - common term\n"
-    prompt += "     * Any person name\n"
+    prompt += "   - ANNOTATION LENGTH RULE: Annotate ONLY the minimal technical term, not entire phrases\n"
+    prompt += "     * ✓ GOOD: [[general relativity|general theory of relativity]]\n"
+    prompt += "     * ❌ BAD: [[Einstein presents the final form of the field equations of the general theory of relativity|Einstein presents...]]\n"
+    prompt += "     * Keep annotations SHORT - typically 1-4 words maximum\n"
+    prompt += "     * Annotate the NOUN PHRASE that needs explanation, not the entire sentence\n"
     prompt += "   - Mark terms using [[term|display_text]] syntax\n"
     prompt += "   - Explanations must ADD information not in description (no redundancy)\n"
     prompt += "   - Optional: Include wikipedia_url for further reading\n"
@@ -1743,8 +1767,8 @@ def merge_event_skeleton_and_details(
                 "primary": loc.primary
             })
 
-    # Merge annotations (prefer Phase 2 details, fallback to Phase 1 skeleton)
-    annotations = details.annotations if details.annotations else skeleton.annotations
+    # Annotations come ONLY from Phase 2 (Phase 1 doesn't generate them)
+    annotations = details.annotations
 
     # Merge description (prefer Phase 2 if provided with markers, else Phase 1)
     description = details.description if details.description else skeleton.description
