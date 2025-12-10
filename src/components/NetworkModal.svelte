@@ -3,6 +3,10 @@
   import PersonChip from "./PersonChip.svelte";
   import { _ } from "../stores/language";
   import { storyStyleVars } from "../utils/helpers.js";
+  import {
+    normalizePersonName,
+    generateNameVariants,
+  } from "../utils/storyHelpers.js";
 
   export let egoNetwork = null;
   export let personName = "";
@@ -10,6 +14,156 @@
   export let onClose = () => {};
 
   let visiblePersonInfo = null;
+
+  /**
+   * Parse text and highlight person names and unique subcategories from the network
+   * @param {string} text - Text to parse
+   * @param {Array} connections - Array of connection objects
+   * @returns {Array} Array of segments with type 'text' or 'person'
+   */
+  function parseTextWithPeople(text, connections = []) {
+    if (!text || !connections.length) {
+      return [{ type: 'text', content: text || '' }];
+    }
+
+    const allMatches = [];
+
+    // Step 1: Find unique subcategories (only those assigned to one person)
+    const subcategoryCounts = new Map();
+    for (const conn of connections) {
+      const subcategory = getSubcategory(conn.relationship_type);
+      if (subcategory) {
+        const count = subcategoryCounts.get(subcategory) || 0;
+        subcategoryCounts.set(subcategory, count + 1);
+      }
+    }
+
+    // Build a list of unique subcategories and their associated person
+    const uniqueSubcategories = [];
+    for (const conn of connections) {
+      const subcategory = getSubcategory(conn.relationship_type);
+      if (subcategory && subcategoryCounts.get(subcategory) === 1) {
+        uniqueSubcategories.push({ subcategory, person: conn });
+      }
+    }
+
+    // Match unique subcategories in the text
+    for (const { subcategory, person } of uniqueSubcategories) {
+      // Create a word-boundary regex for the subcategory
+      const regex = new RegExp(`\\b${subcategory}\\b`, 'gi');
+      let match;
+
+      while ((match = regex.exec(text)) !== null) {
+        allMatches.push({
+          start: match.index,
+          end: regex.lastIndex,
+          person,
+          matchedText: match[0],
+          priority: 5, // Lower priority than full names
+          type: 'subcategory',
+        });
+      }
+    }
+
+    // Step 2: Find person name matches
+    const lastNameCounts = new Map();
+    for (const conn of connections) {
+      const normalized = normalizePersonName(conn.person_name);
+      if (normalized) {
+        const count = lastNameCounts.get(normalized.lastName) || 0;
+        lastNameCounts.set(normalized.lastName, count + 1);
+      }
+    }
+
+    for (const conn of connections) {
+      const normalized = normalizePersonName(conn.person_name);
+      const variants = generateNameVariants(conn.person_name);
+      const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+
+      let bestMatch = null;
+
+      for (const variant of variants) {
+        // Skip last-name-only matches if ambiguous
+        if (hasAmbiguousLastName && variant.type === 'last') {
+          continue;
+        }
+
+        let match;
+        variant.regex.lastIndex = 0;
+
+        while ((match = variant.regex.exec(text)) !== null) {
+          const start = match.index;
+          const end = variant.regex.lastIndex;
+
+          const candidate = {
+            start,
+            end,
+            person: conn,
+            matchedText: match[0],
+            priority: variant.priority,
+            type: 'person',
+          };
+
+          if (!bestMatch ||
+              candidate.priority < bestMatch.priority ||
+              (candidate.priority === bestMatch.priority && candidate.matchedText.length > bestMatch.matchedText.length)) {
+            bestMatch = candidate;
+          }
+        }
+      }
+
+      if (bestMatch) {
+        allMatches.push(bestMatch);
+      }
+    }
+
+    // Step 3: Sort by position and priority, then remove overlaps
+    const sortedMatches = allMatches.sort((a, b) => {
+      if (a.start !== b.start) return a.start - b.start;
+      // If same position, prefer lower priority (person names over subcategories)
+      return a.priority - b.priority;
+    });
+
+    const filteredMatches = [];
+    let lastEnd = 0;
+
+    for (const match of sortedMatches) {
+      if (match.start >= lastEnd) {
+        filteredMatches.push(match);
+        lastEnd = match.end;
+      }
+    }
+
+    // Step 4: Build segments
+    const segments = [];
+    let currentPos = 0;
+
+    for (const match of filteredMatches) {
+      if (match.start > currentPos) {
+        segments.push({
+          type: 'text',
+          content: text.slice(currentPos, match.start),
+        });
+      }
+
+      segments.push({
+        type: 'person',
+        content: match.matchedText,
+        person: match.person,
+      });
+
+      currentPos = match.end;
+    }
+
+    if (currentPos < text.length) {
+      segments.push({
+        type: 'text',
+        content: text.slice(currentPos),
+      });
+    }
+
+    return segments;
+  }
 
   function groupPeopleByType(connections) {
     const groups = {};
@@ -157,7 +311,8 @@
               >
             </h4>
             {#if summaryMap[type]}
-              <p class="category-summary">{summaryMap[type]}</p>
+              {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
+              <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
             {/if}
 
             {#if familySubgroups.parents.length > 0}
@@ -253,7 +408,8 @@
               >
             </h4>
             {#if summaryMap[type]}
-              <p class="category-summary">{summaryMap[type]}</p>
+              {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
+              <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
             {/if}
             <div class="group-people">
               {#each sortByStrength(people) as person, idx}
@@ -469,6 +625,12 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
+  }
+
+  /* Person name highlighting */
+  .person-mention {
+    font-weight: bold;
+    text-shadow: 0 0 4px var(--story-secondary, rgba(56, 189, 248, 0.25));
   }
 
   @media (min-width: 768px) {
