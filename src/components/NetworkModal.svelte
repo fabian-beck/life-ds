@@ -182,6 +182,100 @@
     return groups;
   }
 
+  /**
+   * Group connections by subcategory if subcategories repeat (≥2 occurrences)
+   * @param {Array} connections - Array of connection objects
+   * @returns {Array} Array of {subcategory, label, people} objects
+   */
+  function groupBySubcategory(connections) {
+    // Count subcategory occurrences
+    const subcategoryCounts = new Map();
+    connections.forEach((conn) => {
+      const subcategory = getSubcategory(conn.relationship_type);
+      if (subcategory) {
+        const count = subcategoryCounts.get(subcategory) || 0;
+        subcategoryCounts.set(subcategory, count + 1);
+      }
+    });
+
+    // Find repeated subcategories (≥2 occurrences)
+    const repeatedSubcategories = new Set();
+    subcategoryCounts.forEach((count, subcategory) => {
+      if (count >= 2) {
+        repeatedSubcategories.add(subcategory);
+      }
+    });
+
+    // If no repeated subcategories, return ungrouped
+    if (repeatedSubcategories.size === 0) {
+      return [{ subcategory: null, label: null, people: sortByStrength(connections) }];
+    }
+
+    // Group by subcategory
+    const groups = new Map();
+    const ungrouped = [];
+
+    connections.forEach((conn) => {
+      const subcategory = getSubcategory(conn.relationship_type);
+      if (subcategory && repeatedSubcategories.has(subcategory)) {
+        if (!groups.has(subcategory)) {
+          groups.set(subcategory, []);
+        }
+        groups.get(subcategory).push(conn);
+      } else {
+        ungrouped.push(conn);
+      }
+    });
+
+    // Convert to array with accumulated strength scores
+    const groupsArray = [];
+    groups.forEach((people, subcategory) => {
+      const accumulatedStrength = calculateAccumulatedStrength(people);
+      groupsArray.push({
+        subcategory,
+        label: capitalizeSubcategory(subcategory),
+        people: sortByStrength(people),
+        accumulatedStrength,
+      });
+    });
+
+    // Sort by accumulated strength (lower is stronger)
+    groupsArray.sort((a, b) => a.accumulatedStrength - b.accumulatedStrength);
+
+    // Add ungrouped people at the end (always last)
+    if (ungrouped.length > 0) {
+      groupsArray.push({
+        subcategory: null,
+        label: 'Other',
+        people: sortByStrength(ungrouped),
+        accumulatedStrength: Infinity, // Ensures it's always last
+      });
+    }
+
+    return groupsArray;
+  }
+
+  /**
+   * Calculate accumulated strength score for a group of connections
+   * Lower score = stronger overall connections
+   * @param {Array} connections - Array of connection objects
+   * @returns {number} Accumulated strength score
+   */
+  function calculateAccumulatedStrength(connections) {
+    const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
+    return connections.reduce((sum, conn) => {
+      return sum + (strengthOrder[conn.strength] ?? 3);
+    }, 0);
+  }
+
+  function capitalizeSubcategory(subcategory) {
+    if (!subcategory) return '';
+    return subcategory
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
   function subdivideFamilyMembers(familyConnections) {
     const parents = [];
     const spouses = [];
@@ -310,96 +404,103 @@
                 >{$_("network.group_count", { count: people.length })}</span
               >
             </h4>
-            {#if summaryMap[type]}
-              {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
-              <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
-            {/if}
-
-            {#if familySubgroups.parents.length > 0}
-              <h5 class="subgroup-title">Parents</h5>
-              <div class="group-people">
-                {#each familySubgroups.parents as person, idx}
-                  {@const personKey = `family-parents-${idx}`}
-                  {@const subcategory = getSubcategory(
-                    person.relationship_type
-                  )}
-                  <PersonChip
-                    {person}
-                    {personKey}
-                    {visiblePersonInfo}
-                    {subcategory}
-                    {styleConfig}
-                    onToggle={togglePersonInfo}
-                    containerSelector=".modal-content"
-                  />
-                {/each}
+            <div class="group-layout">
+              <div class="group-description">
+                {#if summaryMap[type]}
+                  {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
+                  <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
+                {/if}
               </div>
-            {/if}
 
-            {#if familySubgroups.spouses.length > 0}
-              <h5 class="subgroup-title">Spouse/Partner</h5>
-              <div class="group-people">
-                {#each familySubgroups.spouses as person, idx}
-                  {@const personKey = `family-spouses-${idx}`}
-                  {@const subcategory = getSubcategory(
-                    person.relationship_type
-                  )}
-                  <PersonChip
-                    {person}
-                    {personKey}
-                    {visiblePersonInfo}
-                    {subcategory}
-                    {styleConfig}
-                    onToggle={togglePersonInfo}
-                    containerSelector=".modal-content"
-                  />
-                {/each}
-              </div>
-            {/if}
+              <div class="group-connections">
+                {#if familySubgroups.parents.length > 0}
+                  <h5 class="subgroup-title">Parents</h5>
+                  <div class="group-people">
+                    {#each familySubgroups.parents as person, idx}
+                      {@const personKey = `family-parents-${idx}`}
+                      {@const subcategory = getSubcategory(
+                        person.relationship_type
+                      )}
+                      <PersonChip
+                        {person}
+                        {personKey}
+                        {visiblePersonInfo}
+                        {subcategory}
+                        {styleConfig}
+                        onToggle={togglePersonInfo}
+                        containerSelector=".modal-content"
+                      />
+                    {/each}
+                  </div>
+                {/if}
 
-            {#if familySubgroups.children.length > 0}
-              <h5 class="subgroup-title">Children</h5>
-              <div class="group-people">
-                {#each familySubgroups.children as person, idx}
-                  {@const personKey = `family-children-${idx}`}
-                  {@const subcategory = getSubcategory(
-                    person.relationship_type
-                  )}
-                  <PersonChip
-                    {person}
-                    {personKey}
-                    {visiblePersonInfo}
-                    {subcategory}
-                    {styleConfig}
-                    onToggle={togglePersonInfo}
-                    containerSelector=".modal-content"
-                  />
-                {/each}
-              </div>
-            {/if}
+                {#if familySubgroups.spouses.length > 0}
+                  <h5 class="subgroup-title">Spouse/Partner</h5>
+                  <div class="group-people">
+                    {#each familySubgroups.spouses as person, idx}
+                      {@const personKey = `family-spouses-${idx}`}
+                      {@const subcategory = getSubcategory(
+                        person.relationship_type
+                      )}
+                      <PersonChip
+                        {person}
+                        {personKey}
+                        {visiblePersonInfo}
+                        {subcategory}
+                        {styleConfig}
+                        onToggle={togglePersonInfo}
+                        containerSelector=".modal-content"
+                      />
+                    {/each}
+                  </div>
+                {/if}
 
-            {#if familySubgroups.otherRelatives.length > 0}
-              <h5 class="subgroup-title">Other Relatives</h5>
-              <div class="group-people">
-                {#each familySubgroups.otherRelatives as person, idx}
-                  {@const personKey = `family-other-${idx}`}
-                  {@const subcategory = getSubcategory(
-                    person.relationship_type
-                  )}
-                  <PersonChip
-                    {person}
-                    {personKey}
-                    {visiblePersonInfo}
-                    {subcategory}
-                    {styleConfig}
-                    onToggle={togglePersonInfo}
-                    containerSelector=".modal-content"
-                  />
-                {/each}
+                {#if familySubgroups.children.length > 0}
+                  <h5 class="subgroup-title">Children</h5>
+                  <div class="group-people">
+                    {#each familySubgroups.children as person, idx}
+                      {@const personKey = `family-children-${idx}`}
+                      {@const subcategory = getSubcategory(
+                        person.relationship_type
+                      )}
+                      <PersonChip
+                        {person}
+                        {personKey}
+                        {visiblePersonInfo}
+                        {subcategory}
+                        {styleConfig}
+                        onToggle={togglePersonInfo}
+                        containerSelector=".modal-content"
+                      />
+                    {/each}
+                  </div>
+                {/if}
+
+                {#if familySubgroups.otherRelatives.length > 0}
+                  <h5 class="subgroup-title">Other Relatives</h5>
+                  <div class="group-people">
+                    {#each familySubgroups.otherRelatives as person, idx}
+                      {@const personKey = `family-other-${idx}`}
+                      {@const subcategory = getSubcategory(
+                        person.relationship_type
+                      )}
+                      <PersonChip
+                        {person}
+                        {personKey}
+                        {visiblePersonInfo}
+                        {subcategory}
+                        {styleConfig}
+                        onToggle={togglePersonInfo}
+                        containerSelector=".modal-content"
+                      />
+                    {/each}
+                  </div>
+                {/if}
               </div>
-            {/if}
+            </div>
           </div>
         {:else}
+          {@const subgroups = groupBySubcategory(people)}
           <div class="person-group">
             <h4 class="group-title">
               {type}
@@ -407,24 +508,36 @@
                 >{$_("network.group_count", { count: people.length })}</span
               >
             </h4>
-            {#if summaryMap[type]}
-              {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
-              <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
-            {/if}
-            <div class="group-people">
-              {#each sortByStrength(people) as person, idx}
-                {@const personKey = `${type}-${idx}`}
-                {@const subcategory = getSubcategory(person.relationship_type)}
-                <PersonChip
-                  {person}
-                  {personKey}
-                  {visiblePersonInfo}
-                  {subcategory}
-                  {styleConfig}
-                  onToggle={togglePersonInfo}
-                  containerSelector=".modal-content"
-                />
-              {/each}
+            <div class="group-layout">
+              <div class="group-description">
+                {#if summaryMap[type]}
+                  {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
+                  <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
+                {/if}
+              </div>
+
+              <div class="group-connections">
+                {#each subgroups as subgroup}
+                  {#if subgroup.label}
+                    <h5 class="subgroup-title">{subgroup.label}</h5>
+                  {/if}
+                  <div class="group-people">
+                    {#each subgroup.people as person, idx}
+                      {@const personKey = `${type}-${subgroup.subcategory || 'default'}-${idx}`}
+                      {@const subcategory = getSubcategory(person.relationship_type)}
+                      <PersonChip
+                        {person}
+                        {personKey}
+                        {visiblePersonInfo}
+                        {subcategory}
+                        {styleConfig}
+                        onToggle={togglePersonInfo}
+                        containerSelector=".modal-content"
+                      />
+                    {/each}
+                  </div>
+                {/each}
+              </div>
             </div>
           </div>
         {/if}
@@ -551,6 +664,23 @@
     gap: 0.5rem;
   }
 
+  .group-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .group-description {
+    flex: 1 1 auto;
+  }
+
+  .group-connections {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
   .category-summary {
     margin: 0;
     font-size: 0.85rem;
@@ -569,6 +699,7 @@
     font-family: var(--story-heading-font, Inter, sans-serif);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     letter-spacing: 0.01em;
   }
@@ -647,6 +778,22 @@
 
     .modal-header {
       padding: 1.25rem 1.5rem;
+    }
+
+    /* Two-column layout for wider screens */
+    .group-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .group-description {
+      grid-column: 1;
+    }
+
+    .group-connections {
+      grid-column: 2;
     }
   }
 </style>
