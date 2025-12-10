@@ -660,7 +660,7 @@
   .map-overlay {
     position: absolute;
     inset: auto 0 0;
-    height: clamp(240px, 45vh, 340px);
+    height: 45vh;
     pointer-events: none;
     z-index: 1;
     opacity: 1;
@@ -715,7 +715,6 @@
   .map-container {
     width: 100%;
     height: 100%;
-    min-height: clamp(180px, 28vh, 260px);
     border-radius: 0;
     overflow: hidden;
     border: none;
