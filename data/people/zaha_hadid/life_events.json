@@ -1,6 +1,6 @@
 {
-  "dataset": "wiki-biography-timeline",
-  "created_on": "2025-12-06",
+  "dataset": "wiki-biography",
+  "created_on": "2025-12-09",
   "person": {
     "name": "Zaha_Hadid",
     "birth_date": "1950-10-31",
@@ -11,7 +11,7 @@
       "artist"
     ],
     "tagline": "Queen of Curves in Architecture",
-    "summary": "Zaha Hadid was an Iraqi-British architect, designer, and artist whose radical, fluid geometries transformed late\u201120th and early\u201121st\u2011century architecture. Trained in mathematics in Beirut and architecture in London, she first gained fame for visionary, often unbuilt projects before emerging as a global practitioner with landmark works such as the Vitra Fire Station, Bergisel Ski Jump, MAXXI, Guangzhou Opera House, and the London Aquatics Centre. In 2004 she became the first woman to receive the Pritzker Architecture Prize and later won consecutive Stirling Prizes, a Damehood, and the RIBA Royal Gold Medal. She died in 2016 with numerous major projects still under construction worldwide.",
+    "summary": "Zaha Hadid (1950\u20132016) was an Iraqi\u2011British architect, artist, and designer whose radical, fluid forms reshaped late\u201120th\u2011 and early\u201121st\u2011century architecture. Educated in mathematics in Beirut and in architecture at the Architectural Association in London, she first became known for visionary, largely unbuilt projects and for her role in the deconstructivist movement. With works such as the Vitra Fire Station, the MAXXI Museum in Rome, the Guangzhou Opera House, and London\u2019s Aquatics Centre, she translated her dynamic paintings into complex built structures worldwide. The first woman to win the Pritzker Architecture Prize and the RIBA Royal Gold Medal, she combined avant\u2011garde experimentation with large\u2011scale public and cultural commissions.",
     "wikipedia": "https://en.wikipedia.org/wiki/Zaha_Hadid",
     "portrait": {
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/73/Zaha_Hadid_in_Heydar_Aliyev_Cultural_center_in_Baku_nov_2013.jpg",
@@ -20,15 +20,15 @@
   },
   "chapters": [
     {
-      "id": "cosmopolitan_formative_years",
-      "headline": "Cosmopolitan Formative Years",
-      "description": "Early life in Iraq and Europe shapes her cosmopolitan outlook and awakens a fascination with architecture and abstraction.",
+      "id": "baghdad_roots_and_cosmopolitan_schooling",
+      "headline": "Baghdad Roots, Cosmopolitan Schooling",
+      "description": "Formative years in Iraq, Europe, and Lebanon shape her intellectual curiosity, mathematical rigor, and fascination with landscape and geometry.",
       "date_start": "1950-10-31",
       "date_start_precision": "day",
       "date_end": "1971",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 21,
+      "age_end": 20,
       "involved_people": [
         "Mohammed Hadid",
         "Wajiha al-Sabunji"
@@ -36,69 +36,68 @@
       "location": "Middle East and Europe"
     },
     {
-      "id": "avant_garde_education_experimentation",
-      "headline": "Avant\u2011Garde Education Experimentation",
-      "description": "Intense architectural training in London and early professional work in Europe establish her radical design language and reputation within avant\u2011garde circles.",
+      "id": "avant_garde_formation_in_london",
+      "headline": "Avant\u2011Garde Formation in London",
+      "description": "Moves to London, immerses herself in radical architectural discourse, and begins forging a distinctive deconstructivist and painterly approach to design.",
       "date_start": "1972",
       "date_start_precision": "year",
-      "date_end": "1988",
+      "date_end": "1983",
       "date_end_precision": "year",
-      "age_start": 22,
-      "age_end": 38,
+      "age_start": 21,
+      "age_end": 32,
       "involved_people": [
         "Rem Koolhaas",
         "Elia Zenghelis",
         "Bernard Tschumi",
-        "Philip Johnson",
-        "Mark Wigley",
-        "Frank Gehry"
-      ],
-      "location": "Western Europe and United States"
-    },
-    {
-      "id": "from_paper_to_built_forms",
-      "headline": "From Paper to Built Forms",
-      "description": "Her transition from visionary unbuilt projects to realized buildings begins, as early commissions in Europe prove her radical architecture can be constructed.",
-      "date_start": "1989",
-      "date_start_precision": "year",
-      "date_end": "2001",
-      "date_end_precision": "year",
-      "age_start": 39,
-      "age_end": 51,
-      "involved_people": [
-        "Rolf Fehlbaum"
+        "Peter Rice"
       ],
       "location": "Western Europe"
     },
     {
-      "id": "global_acclaim_and_landmarks",
-      "headline": "Global Acclaim Ascendant",
-      "description": "Major cultural projects, landmark awards, and expanding international commissions cement her status as a leading global architect.",
-      "date_start": "2002",
+      "id": "unbuilt_vision_to_built_breakthrough",
+      "headline": "Unbuilt Vision to Built Breakthrough",
+      "description": "Transitions from influential but largely unbuilt, theoretical projects to her first major realized work, establishing that her radical geometries can be constructed.",
+      "date_start": "1988",
       "date_start_precision": "year",
-      "date_end": "2011",
+      "date_end": "1993",
       "date_end_precision": "year",
-      "age_start": 52,
-      "age_end": 61,
+      "age_start": 37,
+      "age_end": 42,
       "involved_people": [
-        "Thomas J. Pritzker"
+        "Philip Johnson",
+        "Mark Wigley",
+        "Frank Gehry",
+        "Rem Koolhaas"
       ],
-      "location": "Europe and North America"
+      "location": "Western Europe and United States"
     },
     {
-      "id": "late_honours_enduring_legacy",
-      "headline": "Late Honours Enduring Legacy",
-      "description": "Prestigious British honours, Olympic visibility, and final awards precede her sudden death, leaving a thriving global practice and ongoing projects as her legacy.",
+      "id": "global_recognition_and_cultural_landmarks",
+      "headline": "Global Recognition, Cultural Landmarks",
+      "description": "Secures major museum commissions, wins architecture\u2019s highest honours, and emerges as a leading designer of complex cultural buildings worldwide.",
+      "date_start": "2003",
+      "date_start_precision": "year",
+      "date_end": "2010",
+      "date_end_precision": "year",
+      "age_start": 52,
+      "age_end": 59,
+      "involved_people": [
+        "Rem Koolhaas"
+      ],
+      "location": "Europe and United States"
+    },
+    {
+      "id": "establishment_honours_and_final_legacy",
+      "headline": "Establishment Honours, Final Legacy",
+      "description": "Receives top British and professional distinctions while delivering high\u2011profile public architecture, before her sudden death leaves an influential global legacy.",
       "date_start": "2012",
       "date_start_precision": "year",
       "date_end": "2016-03-31",
       "date_end_precision": "day",
-      "age_start": 62,
+      "age_start": 61,
       "age_end": 65,
       "involved_people": [
-        "Elizabeth II",
-        "Queen Elizabeth II",
-        "Patrik Schumacher"
+        "Elizabeth II"
       ],
       "location": "United Kingdom and United States"
     }
@@ -107,9 +106,9 @@
     {
       "date": "1950-10-31",
       "date_precision": "day",
-      "age": 0,
+      "age": null,
       "title": "Birth in Baghdad",
-      "description": "Zaha Mohammad Hadid is born into an upper\u2011class Iraqi family in Baghdad. Her father, Muhammad al\u2011Hajj Husayn Hadid, is an industrialist and prominent democratic politician, and her mother, Wajiha al\u2011Sabunji, is an artist. Growing up in a cosmopolitan, politically engaged household with roots in Mosul exposes her early to both modernity and the cultural depth of the region.",
+      "description": "Zaha Mohammad Hadid is born in Baghdad, Iraq, into an affluent and politically active family. Her father Muhammad al-Hajj Husayn Hadid is an industrialist and prominent democratic politician, and her mother Wajiha al-Sabunji is an artist. Growing up in this environment, with frequent family discussions about politics and culture, lays an early foundation for her intellectual curiosity and visual sensibility.",
       "locations": [
         {
           "name_historic": "Baghdad",
@@ -119,15 +118,6 @@
             33.3152
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Mosul",
-          "name_modern": "Mosul, Iraq",
-          "centroid": [
-            43.13,
-            36.345
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
@@ -139,23 +129,30 @@
         "https://en.wikipedia.org/wiki/Mohammed_Hadid",
         "https://en.wikipedia.org/wiki/Foulath_Hadid"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/13-08-06-bagdad-nachts.jpg",
+          "caption": "Baghdad, Iraq at night from high altitude",
+          "source": "https://commons.wikimedia.org/wiki/File:13-08-06-bagdad-nachts.jpg"
+        }
+      ],
       "event_type_icon": "mdi-candle",
-      "chapter": "cosmopolitan_formative_years"
+      "chapter": "baghdad_roots_and_cosmopolitan_schooling"
     },
     {
       "date": "1960",
       "date_precision": "year",
-      "date_note": "Represents her childhood and teenage years in the early\u2013mid 1960s",
-      "age": null,
-      "title": "Early inspirations and schooling",
-      "description": "As a child and teenager, Hadid travels with her family to ancient Sumerian cities in southern Iraq, an experience she later credits with sparking her fascination with architecture and landscape. During the 1960s she attends boarding schools in England and Switzerland, gaining fluency in multiple cultures and languages. This mix of Mesopotamian heritage and European education shapes her later ability to work confidently across continents.",
+      "date_note": "Attended boarding schools in England and Switzerland during the 1960s; year approximate for the start of this period",
+      "age": 9,
+      "title": "Sent to European boarding schools",
+      "description": "In the 1960s Hadid is sent from Iraq to boarding schools in England and Switzerland. The move exposes her as a teenager to Western education and culture, contrasting sharply with her earlier childhood in Baghdad. The combination of cosmopolitan schooling and memories of trips to ancient [[Sumerian|Sumerian]] sites in southern Iraq deepens her fascination with geometry, landscape, and historical form.",
       "locations": [
         {
-          "name_historic": "southern Iraq",
-          "name_modern": "Southern Iraq, Iraq",
+          "name_historic": "Baghdad",
+          "name_modern": "Baghdad, Iraq",
           "centroid": [
-            46.5,
-            31.0
+            44.3661,
+            33.3152
           ],
           "primary": true
         },
@@ -164,7 +161,7 @@
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5072
+            51.5074
           ],
           "primary": false
         },
@@ -176,22 +173,39 @@
             46.8182
           ],
           "primary": false
+        },
+        {
+          "name_historic": "Southern Iraq",
+          "name_modern": "Dhi Qar, Iraq",
+          "centroid": [
+            46.25,
+            31.0
+          ],
+          "primary": false
         }
       ],
       "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "cosmopolitan_formative_years"
+      "event_type_icon": "mdi-relocation",
+      "chapter": "baghdad_roots_and_cosmopolitan_schooling",
+      "annotations": {
+        "Sumerian": {
+          "explanation": "Relating to Sumer, one of the earliest known civilizations in southern Mesopotamia (in present-day southern Iraq), flourishing in the 4th\u20133rd millennia BCE and noted for its cities, ziggurats, and early writing system.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sumer"
+        }
+      }
     },
     {
-      "date": "1971",
+      "date": "1968",
       "date_precision": "year",
-      "date_note": "Approximate year she completes undergraduate study",
-      "age": 21,
+      "date_end": "1971",
+      "date_end_precision": "year",
+      "date_note": "Exact enrollment and graduation years from the American University of Beirut are approximate within the late 1960s to early 1970s",
+      "age": 17,
       "title": "Studies mathematics in Beirut",
-      "description": "Hadid studies mathematics at the American University of Beirut, immersing herself in a rigorous, abstract discipline before turning formally to architecture. The training in mathematical thinking later underpins her willingness to engage with advanced geometry and complex structural forms. Beirut at this time is a lively intellectual and cultural centre, reinforcing her cosmopolitan outlook.",
+      "description": "Hadid enrolls at the [[American University of Beirut|American University of Beirut]], where she studies mathematics as an undergraduate. Living in Lebanon during a period of political tension but rich cultural life, she develops a rigorous analytical mindset that will later underpin her architectural work. Her training in abstract reasoning and numerical structures helps shape the way she conceives space and complex geometries.",
       "locations": [
         {
           "name_historic": "Beirut",
@@ -207,15 +221,28 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/American_University_of_Beirut_-_1970.jpg",
+          "caption": "American University of Beirut campus in 1970",
+          "source": "https://commons.wikimedia.org/wiki/File:American_University_of_Beirut_-_1970.jpg"
+        }
+      ],
       "event_type_icon": "mdi-school",
-      "chapter": "cosmopolitan_formative_years"
+      "chapter": "baghdad_roots_and_cosmopolitan_schooling",
+      "annotations": {
+        "American University of Beirut": {
+          "explanation": "AUB is a private, English-language research university in Beirut founded in 1866, long regarded as one of the leading higher-education institutions in the Middle East.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/American_University_of_Beirut"
+        }
+      }
     },
     {
       "date": "1972",
       "date_precision": "year",
-      "age": 22,
-      "title": "Enrolls at AA School, London",
-      "description": "Hadid moves to London and enrolls at the Architectural Association School of Architecture, then one of the most radical architecture schools in Europe. She studies under figures such as Rem Koolhaas, Elia Zenghelis and Bernard Tschumi, who recognize her as an exceptionally original talent. Within the AA's experimental milieu she begins to push beyond conventional drawing, developing abstract paintings as a primary design tool.",
+      "age": 21,
+      "title": "Moves to London, enrolls at AA",
+      "description": "Hadid moves to London and joins the [[Architectural Association School of Architecture|Architectural Association School of Architecture]], then a hotbed of avant\u2011garde experimentation. She studies under influential figures such as Rem Koolhaas, Elia Zenghelis, and Bernard Tschumi, who quickly recognize her as an exceptionally original talent. Immersed in radical studio culture, she begins to fuse her mathematical background with emerging [[deconstructivist|deconstructivist]] and Russian avant\u2011garde ideas.",
       "locations": [
         {
           "name_historic": "London",
@@ -234,28 +261,71 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Rem_Koolhaas",
-        "https://en.wikipedia.org/wiki/Elia_Zenghelis"
+        "https://en.wikipedia.org/wiki/Architectural_Association_School_of_Architecture",
+        "https://en.wikipedia.org/wiki/Rem_Koolhaas"
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "avant_garde_education_experimentation"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/AA_School_of_Architecture_with_Pavilion.jpg",
+          "caption": "Architectural Association School of Architecture in London",
+          "source": "https://commons.wikimedia.org/wiki/File:AA_School_of_Architecture_with_Pavilion.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-enrollment",
+      "chapter": "avant_garde_formation_in_london",
+      "annotations": {
+        "Architectural Association School of Architecture": {
+          "explanation": "A prestigious, independent architecture school in London known for its experimental and avant\u2011garde approach to architectural education.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Architectural_Association_School_of_Architecture"
+        },
+        "deconstructivist": {
+          "explanation": "Relating to deconstructivism, an architectural movement characterized by fragmentation, non\u2011linear design, and the controlled manipulation of surface and structure to challenge traditional forms.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Deconstructivism"
+        }
+      }
     },
     {
       "date": "1977",
       "date_precision": "year",
-      "age": 27,
-      "title": "Thesis 'Malevich's Tektonik' and joins OMA",
-      "description": "Hadid completes her AA graduation thesis, 'Malevich's [[Suprematism|Tektonik]]', a visionary design for a multi\u2011level hotel on London's Hungerford Bridge, rendered as a large acrylic painting influenced by Suprematism and Kazimir Malevich. The project crystallizes her interest in abstraction, fragmentation and dynamic urban form. After graduating she joins her former teachers Rem Koolhaas and Elia Zenghelis at the Office for Metropolitan Architecture (OMA) in Rotterdam, gaining early experience in avant\u2011garde practice.",
+      "age": 26,
+      "title": "Graduates with Malevich\u2019s Tektonik",
+      "description": "Hadid completes her AA diploma with the project \"[[Malevich\u2019s Tektonik|Malevich\u2019s Tektonik]],\" a 14\u2011storey hotel conceived as an abstract composition above London\u2019s Hungerford Bridge. Executed as a large acrylic painting inspired by Kazimir Malevich and [[Suprematism|Suprematism]], the thesis reimagines architectural design as spatial painting rather than conventional plans and sections. The work establishes her reputation within the school as a visionary willing to explode orthodox ideas of form and structure.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5072
+            51.5074
           ],
           "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Elia_Zenghelis",
+        "https://en.wikipedia.org/wiki/Rem_Koolhaas"
+      ],
+      "event_type_icon": "mdi-thesis",
+      "chapter": "avant_garde_formation_in_london",
+      "annotations": {
+        "Malevich\u2019s Tektonik": {
+          "explanation": "Zaha Hadid\u2019s 1977 graduation project at the Architectural Association, a conceptual hotel design presented as a large, abstract painting rather than conventional architectural drawings."
         },
+        "Suprematism": {
+          "explanation": "An early 20th\u2011century abstract art movement, founded by Kazimir Malevich, focused on basic geometric forms and pure artistic feeling rather than depiction of objects.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Suprematism"
+        }
+      }
+    },
+    {
+      "date": "1977",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Joins Office for Metropolitan Architecture",
+      "description": "After graduation Hadid joins the [[Office for Metropolitan Architecture|Office for Metropolitan Architecture (OMA)]] in Rotterdam, working with her former tutors Rem Koolhaas and Elia Zenghelis. At OMA she contributes to speculative urban and architectural projects and meets structural engineer Peter Rice, who becomes an important supporter of her early career. The experience consolidates her interest in large\u2011scale metropolitan projects and strengthens her confidence to pursue an independent path.",
+      "locations": [
         {
           "name_historic": "Rotterdam",
           "name_modern": "Rotterdam, Netherlands",
@@ -263,40 +333,48 @@
             4.47917,
             51.9225
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
         "Rem Koolhaas",
-        "Elia Zenghelis"
+        "Elia Zenghelis",
+        "Peter Rice"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Office_for_Metropolitan_Architecture"
+        "https://en.wikipedia.org/wiki/Office_for_Metropolitan_Architecture",
+        "https://en.wikipedia.org/wiki/Rem_Koolhaas"
       ],
-      "event_type_icon": "mdi-book-open-variant",
-      "chapter": "avant_garde_education_experimentation",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Logo_of_OMA.png",
+          "caption": "Logo of the Office for Metropolitan Architecture (OMA)",
+          "source": "https://commons.wikimedia.org/wiki/File:Logo_of_OMA.png"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "avant_garde_formation_in_london",
       "annotations": {
-        "Suprematism": {
-          "explanation": "Suprematism is an early 20th\u2011century avant\u2011garde art movement, founded by Kazimir Malevich in Russia, focused on basic geometric forms and pure artistic feeling rather than depicting objects.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Suprematism"
+        "Office for Metropolitan Architecture": {
+          "explanation": "An international architecture firm founded in 1975 in Rotterdam, known for experimental, research-driven design and influential urban theory.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Office_for_Metropolitan_Architecture"
         }
       }
     },
     {
       "date": "1980",
       "date_precision": "year",
-      "date_note": "Around this time she also becomes a naturalised citizen of the United Kingdom",
-      "age": 30,
+      "age": 29,
       "title": "Founds Zaha Hadid Architects",
-      "description": "Hadid establishes her own practice, Zaha Hadid Architects, in London, marking the start of her career as an independent architect. At a moment when postmodern historicism dominates, she pursues an uncompromisingly experimental modernism, expressed through highly detailed paintings and drawings. In parallel she begins a long teaching career at the Architectural Association and later at Harvard, Cambridge, Chicago, Hamburg, Illinois at Chicago, and Columbia, spreading her ideas through studios and lectures worldwide.",
+      "description": "Hadid establishes her own practice, Zaha Hadid Architects, in London. Operating with a small team, she produces highly detailed, often large\u2011format paintings and drawings that present dramatically fragmented and tilted landscapes and buildings. Although few of these early projects are built, they circulate widely in architectural journals and exhibitions, marking her as a radical voice resisting the then\u2011fashionable turn toward postmodern [[historicism|postmodern historicism]].",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
           ],
           "primary": true
         }
@@ -307,53 +385,61 @@
         "https://en.wikipedia.org/wiki/Zaha_Hadid_Architects"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "avant_garde_education_experimentation"
+      "chapter": "avant_garde_formation_in_london",
+      "annotations": {
+        "historicism": {
+          "explanation": "In architecture, historicism refers to design approaches that revive or imitate styles from earlier historical periods rather than pursuing radically new forms.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Historicism_(art_and_architecture)"
+        }
+      }
     },
     {
       "date": "1983",
       "date_precision": "year",
-      "age": 33,
+      "age": 32,
       "title": "Wins The Peak competition",
-      "description": "Hadid wins the international competition for The Peak, a leisure club carved into a Hong Kong hillside, with a daring, fractured composition that seems to explode the mountain. Though never built, the project\u2019s drawings and paintings become icons of radical late\u201120th\u2011century architecture. Throughout the 1980s she gains a reputation as a 'paper architect' whose unbuilt schemes, such as The Peak and a later Cardiff Bay opera house proposal, profoundly influence discourse despite remaining unrealized.",
+      "description": "Hadid wins the international competition for [[The Peak|The Peak]], a leisure club project on a mountainside above Hong Kong. Her design, a crystalline landscape of interlocking planes and voids, shocks jurors and commentators with its uncompromising abstraction. Though never realized, [[The Peak|The Peak]] becomes one of the most discussed unbuilt projects of the decade and cements her status as a leading theoretician of new architectural forms.",
       "locations": [
         {
           "name_historic": "Hong Kong",
-          "name_modern": "Hong Kong",
+          "name_modern": "Hong Kong, China",
           "centroid": [
             114.1694,
             22.3193
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Cardiff",
-          "name_modern": "Cardiff, UK",
-          "centroid": [
-            -3.1791,
-            51.4816
-          ],
-          "primary": false
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/The_Peak_(Hong_Kong)",
-        "https://en.wikipedia.org/wiki/Cardiff_Bay_Opera_House"
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/3144/2866920131_6f39524c6f_b.jpg",
+          "caption": "The Peak, Hong Kong",
+          "source": "https://www.flickr.com/photos/30643063@N06/2866920131"
+        }
       ],
       "event_type_icon": "mdi-design",
-      "chapter": "avant_garde_education_experimentation"
+      "chapter": "avant_garde_formation_in_london",
+      "annotations": {
+        "The Peak": {
+          "explanation": "An unbuilt 1982\u201383 design by Zaha Hadid for a leisure and recreational complex on a Hong Kong hillside, famous as a seminal deconstructivist architectural project.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Zaha_Hadid"
+        }
+      }
     },
     {
       "date": "1988",
       "date_precision": "year",
-      "age": 38,
-      "title": "MoMA Deconstructivism breakthrough",
-      "description": "Her work is featured in the landmark '[[Deconstructivist Architecture|Deconstructivist Architecture]]' exhibition at the Museum of Modern Art in New York, curated by Philip Johnson and Mark Wigley. Shown alongside architects such as Frank Gehry and Rem Koolhaas, Hadid is identified as a key figure in a new, formally adventurous strain of architecture. The exhibition and related conferences at institutions including the Tate in London propel her name onto the global architectural stage.",
+      "age": 37,
+      "title": "Featured in MoMA Deconstructivism show",
+      "description": "The Museum of Modern Art in New York includes Hadid as one of seven architects in the landmark exhibition \"[[Deconstructivist Architecture|Deconstructivist Architecture]]\", curated by Philip Johnson and Mark Wigley. Her drawings and paintings are shown alongside work by Frank Gehry, Rem Koolhaas, and others, presenting her to a global audience as part of a new architectural vanguard. The exhibition, together with lectures and conferences in London and elsewhere, transforms her from a cult figure into an internationally recognized name.",
       "locations": [
         {
           "name_historic": "New York City",
-          "name_modern": "New York City, USA",
+          "name_modern": "New York City, New York, USA",
           "centroid": [
             -74.006,
             40.7128
@@ -379,13 +465,20 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Deconstructivism",
-        "https://en.wikipedia.org/wiki/Philippe_Johnson"
+        "https://en.wikipedia.org/wiki/Museum_of_Modern_Art"
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "avant_garde_education_experimentation",
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/1504/24372920641_e1d2cf7376_b.jpg",
+          "caption": "Cover or material from MoMA Deconstructivist Architecture exhibition",
+          "source": "https://www.flickr.com/photos/136374633@N04/24372920641"
+        }
+      ],
+      "event_type_icon": "mdi-palette",
+      "chapter": "unbuilt_vision_to_built_breakthrough",
       "annotations": {
         "Deconstructivist Architecture": {
-          "explanation": "'Deconstructivist Architecture' was a 1988 exhibition at New York's Museum of Modern Art that introduced and grouped several architects under the emerging style later known as deconstructivism, helping to define a major late-20th-century architectural movement.",
+          "explanation": "A 1988 exhibition at New York's Museum of Modern Art that introduced a group of architects associated with fragmented, non-orthogonal forms, helping define the architectural movement later called deconstructivism.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Deconstructivism"
         }
       }
@@ -393,9 +486,9 @@
     {
       "date": "1993",
       "date_precision": "year",
-      "age": 43,
-      "title": "Vitra Fire Station completed",
-      "description": "The Vitra Fire Station in Weil am Rhein, commissioned by Vitra director Rolf Fehlbaum, becomes Hadid\u2019s first major built work. Constructed from raw concrete and glass with sharp, colliding planes, the building reads as a frozen snapshot of movement rather than a conventional fire station. Although it soon becomes an exhibition space rather than a working station, the project serves as the launching pad of her built career and demonstrates that her radical language can be realized in concrete and steel.",
+      "age": 42,
+      "title": "Completes Vitra Fire Station",
+      "description": "Hadid\u2019s first major commissioned building, the Vitra Fire Station in Weil am Rhein, Germany, is completed. Composed of sharply angled concrete and glass planes, the structure appears like a frozen explosion, translating her dynamic graphic language into built form. Although it soon ceases to function as a fire station and becomes an exhibition space, the project serves as the launch pad for her built career and demonstrates that her radical geometries can be realized at full scale.",
       "locations": [
         {
           "name_historic": "Weil am Rhein",
@@ -407,134 +500,65 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Rolf Fehlbaum"
-      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Vitra_Fire_Station"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Baden-W%C3%BCrttemberg_Weil_am_Rhein_Vitra_Fire_station_01.jpg",
-          "caption": "Bade-Wurtemberg Weil am Rhein Vitra Fire Station (Zaha Hadid)",
-          "source": "https://commons.wikimedia.org/wiki/File:Baden-W\u00fcrttemberg_Weil_am_Rhein_Vitra_Fire_station_01.jpg"
-        }
-      ],
-      "event_type_icon": "mdi-building_construction",
-      "chapter": "from_paper_to_built_forms"
-    },
-    {
-      "date": "2002",
-      "date_precision": "year",
-      "age": 52,
-      "title": "Bergisel Ski Jump opens",
-      "description": "Hadid\u2019s Bergisel Ski Jump in Innsbruck is completed, replacing an older Olympic structure with a striking 'organic hybrid' that fuses tower, bridge, and viewing platform. Built under tight time pressure and amid resistance from traditionalists, the 48\u2011metre\u2011high concrete and steel form showcases her ability to translate dynamic movement into built form. The project leads to a series of European commissions, including housing in Berlin and the Spittelau Viaducts housing scheme in Vienna.",
-      "locations": [
-        {
-          "name_historic": "Innsbruck",
-          "name_modern": "Innsbruck, Austria",
-          "centroid": [
-            11.4041,
-            47.2692
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Germany",
-          "centroid": [
-            13.405,
-            52.52
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3738,
-            48.2082
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Bergisel_Ski_Jump",
-        "https://en.wikipedia.org/wiki/Zaha_Hadid"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Bergisel_Ski-Jump_%2832053673714%29.jpg",
-          "caption": "Innsbruck",
-          "source": "https://commons.wikimedia.org/wiki/File:Bergisel_Ski-Jump_(32053673714).jpg"
+          "url": "https://live.staticflickr.com/3173/2500940335_65245cf050_b.jpg",
+          "caption": "Vitra Fire Station by Zaha Hadid, 1993",
+          "source": "https://www.flickr.com/photos/16707687@N00/2500940335"
         }
       ],
       "event_type_icon": "mdi-office-building",
-      "chapter": "global_acclaim_and_landmarks"
+      "chapter": "unbuilt_vision_to_built_breakthrough"
     },
     {
       "date": "2003",
       "date_precision": "year",
-      "age": 53,
-      "title": "Contemporary Arts Center Cincinnati",
-      "description": "The Contemporary Arts Center in Cincinnati opens, making Hadid the first woman to design a major art museum in the United States. The building\u2019s dramatic interior, organized around a 30\u2011metre black stairway slicing between curving concrete walls, demonstrates how her abstract formal language can create powerful public spaces. Around the same period she wins and executes further large commissions such as the Phaeno Science Center in Wolfsburg and the BMW administration building in Leipzig, consolidating her global presence.",
+      "age": 52,
+      "title": "Opens Contemporary Arts Center Cincinnati",
+      "description": "The Contemporary Arts Center in Cincinnati, Ohio, opens as Hadid\u2019s first completed museum and her first building in the United States. Selected over established figures including Rem Koolhaas, she creates a compact yet dramatic sequence of galleries organized around a striking black stair that cuts through the building. The project showcases her ability to choreograph public movement and interior space and makes her a prominent figure in the American cultural landscape.",
       "locations": [
         {
           "name_historic": "Cincinnati",
-          "name_modern": "Cincinnati, Ohio, United States",
+          "name_modern": "Cincinnati, Ohio, USA",
           "centroid": [
             -84.512,
             39.1031
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Wolfsburg",
-          "name_modern": "Wolfsburg, Germany",
-          "centroid": [
-            10.7815,
-            52.4227
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Leipzig",
-          "name_modern": "Leipzig, Germany",
-          "centroid": [
-            12.3731,
-            51.3397
-          ],
-          "primary": false
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "Rem Koolhaas"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Contemporary_Arts_Center_(Cincinnati)",
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Phaeno_Science_Center"
+        "https://en.wikipedia.org/wiki/Contemporary_Arts_Center",
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Contemp_Art_Center.JPG",
-          "caption": "The Contemporary Art Center, Cincinnati OH by: Zaha Hadid.",
-          "source": "https://commons.wikimedia.org/wiki/File:Contemp_Art_Center.JPG"
+          "url": "https://live.staticflickr.com/7816/46306691005_46eb4b6f12_b.jpg",
+          "caption": "Contemporary Arts Center, Cincinnati, Ohio",
+          "source": "https://www.flickr.com/photos/59081381@N03/46306691005"
         }
       ],
       "event_type_icon": "mdi-building_construction",
-      "chapter": "global_acclaim_and_landmarks"
+      "chapter": "global_recognition_and_cultural_landmarks"
     },
     {
       "date": "2004",
       "date_precision": "year",
-      "age": 54,
+      "age": 53,
       "title": "Awarded Pritzker Architecture Prize",
-      "description": "Hadid receives the [[Pritzker Architecture Prize|Pritzker Architecture Prize]], becoming the first woman to be honoured with what is often called the 'Nobel Prize of architecture'. The award recognizes both her visionary unbuilt work and her emerging portfolio of completed projects across Europe and North America. It significantly increases her visibility and leads to a surge of high\u2011profile commissions, including museums, cultural centres, and urban masterplans from Guangzhou to Rome.",
+      "description": "Hadid becomes the first woman to receive the Pritzker Architecture Prize, often described as architecture\u2019s equivalent of the Nobel. The jury cites both her visionary unbuilt projects and her growing body of realized work, praising the way she \"liberated architectural geometry\" from conventional constraints. The award significantly elevates her global profile and leads to a surge of major commissions on several continents.",
       "locations": [
         {
           "name_historic": "St. Petersburg",
-          "name_modern": "Saint Petersburg, Russia",
+          "name_modern": "St. Petersburg, Russia",
           "centroid": [
             30.3141,
             59.9386
@@ -542,31 +566,20 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Thomas J. Pritzker"
-      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Pritzker_Architecture_Prize"
       ],
       "event_type_icon": "mdi-trophy",
-      "chapter": "global_acclaim_and_landmarks",
-      "annotations": {
-        "Pritzker Architecture Prize": {
-          "explanation": "An international architecture award established in 1979 and funded by the Pritzker family, widely regarded as the most prestigious prize in architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pritzker_Architecture_Prize"
-        }
-      }
+      "chapter": "global_recognition_and_cultural_landmarks"
     },
     {
       "date": "2010",
       "date_precision": "year",
-      "date_end": "2011",
-      "date_end_precision": "year",
-      "date_note": "Spans consecutive Stirling Prize awards in 2010 and 2011",
-      "age": 60,
-      "title": "Back\u2011to\u2011back Stirling Prizes",
-      "description": "Hadid wins the UK\u2019s Stirling Prize in 2010 for [[MAXXI|MAXXI, the National Museum of 21st Century Arts]] in Rome, whose flowing concrete galleries and bridges embody her fluid spatial language. In 2011 she receives the prize again, this time for the Evelyn Grace Academy in London, a school organized around a dynamic, zigzagging running track. The consecutive awards confirm her practice as one of the most influential and consistently celebrated of its generation.",
+      "age": 59,
+      "title": "MAXXI Museum and first Stirling Prize",
+      "description": "Rome\u2019s MAXXI \u2013 National Museum of 21st Century Arts, one of Hadid\u2019s most ambitious cultural projects, is completed and soon wins the 2010 Stirling Prize, the UK\u2019s top architectural award. The museum\u2019s intertwining concrete ribbons and flowing galleries exemplify her mature style, combining complex geometry with sensuous public spaces. The prize affirms her as not only a visionary designer but also a master of technically demanding, large\u2011scale construction.",
       "locations": [
         {
           "name_historic": "Rome",
@@ -582,39 +595,72 @@
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
           ],
           "primary": false
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Maxxi",
         "https://en.wikipedia.org/wiki/Stirling_Prize",
-        "https://en.wikipedia.org/wiki/Maxxi"
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Rome._MAXXI_%2837118718003%29.jpg",
-          "caption": "Fotografia a It\u00e0lia.",
-          "source": "https://commons.wikimedia.org/wiki/File:Rome._MAXXI_(37118718003).jpg"
+          "url": "https://live.staticflickr.com/2823/34196059542_382de86c85_b.jpg",
+          "caption": "MAXXI Museum in Rome, exterior view",
+          "source": "https://www.flickr.com/photos/72746018@N00/34196059542"
         }
       ],
       "event_type_icon": "mdi-trophy",
-      "chapter": "global_acclaim_and_landmarks",
-      "annotations": {
-        "MAXXI": {
-          "explanation": "The National Museum of 21st Century Arts in Rome, a state-run contemporary art and architecture museum designed by Zaha Hadid and completed in 2010.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Maxxi"
-        }
-      }
+      "chapter": "global_recognition_and_cultural_landmarks"
     },
     {
       "date": "2012",
       "date_precision": "year",
-      "age": 62,
-      "title": "London Aquatics Centre and Damehood",
-      "description": "Her [[London Aquatics Centre|London Aquatics Centre]], with its sweeping wave\u2011like roof, serves as a centerpiece of the 2012 Olympic Games and introduces her work to a vast global television audience. The building\u2019s transformation from Olympic venue to community facility demonstrates her interest in long\u2011term urban legacy. The same year Queen Elizabeth II appoints her Dame Commander of the Order of the British Empire for services to architecture, formal recognition of her impact on British and international design.",
+      "age": 61,
+      "title": "Damehood and London Aquatics Centre",
+      "description": "In 2012 Hadid is made a Dame Commander of the [[Order of the British Empire|Order of the British Empire]] for services to architecture, recognizing her contribution to British cultural and professional life. That same year, her London Aquatics Centre serves as a centerpiece of the 2012 Olympic Games, its sweeping roof and fluid interior housing swimming and diving events watched worldwide. Together, the honour and the high\u2011profile project symbolize her transition from controversial avant\u2011gardist to celebrated public architect.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, UK",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Zaha_Hadid_Architects",
+        "https://en.wikipedia.org/wiki/London_Aquatics_Centre"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/7058/6809237392_847b5d83f5_b.jpg",
+          "caption": "London Aquatics Centre designed by Zaha Hadid",
+          "source": "https://www.flickr.com/photos/44343967@N00/6809237392"
+        }
+      ],
+      "event_type_icon": "mdi-shield-crown",
+      "chapter": "establishment_honours_and_final_legacy",
+      "annotations": {
+        "Order of the British Empire": {
+          "explanation": "A British order of chivalry established in 1917 that rewards contributions to the arts, sciences, charity, and public service; its ranks include the titles of Knight and Dame Commander.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Order_of_the_British_Empire"
+        }
+      }
+    },
+    {
+      "date": "2016-02",
+      "date_precision": "month",
+      "age": 65,
+      "title": "Receives RIBA Royal Gold Medal",
+      "description": "Hadid becomes the first woman to be awarded the [[Royal Gold Medal|Royal Institute of British Architects\u2019 Royal Gold Medal]] in her own right. Approved by Queen Elizabeth II and presented in London, the medal acknowledges a lifetime of achievement and influence on the discipline. The recognition, coming from the UK\u2019s principal professional body for architects, represents a culmination of her long struggle for acceptance within an often conservative establishment.",
       "locations": [
         {
           "name_historic": "London",
@@ -631,56 +677,14 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/London_Aquatics_Centre",
-        "https://en.wikipedia.org/wiki/Order_of_the_British_Empire"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/London_Aquatics_Centre_%2825109572020%29.jpg",
-          "caption": "London Aquatics Centre",
-          "source": "https://commons.wikimedia.org/wiki/File:London_Aquatics_Centre_(25109572020).jpg"
-        }
-      ],
-      "event_type_icon": "mdi-shield-crown",
-      "chapter": "late_honours_enduring_legacy",
-      "annotations": {
-        "London Aquatics Centre": {
-          "explanation": "An indoor swimming and diving facility in the Queen Elizabeth Olympic Park in London, designed by Zaha Hadid as one of the main venues for the 2012 Summer Olympics and later converted for public and community use.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/London_Aquatics_Centre"
-        }
-      }
-    },
-    {
-      "date": "2016-02",
-      "date_precision": "month",
-      "date_note": "Month of the Royal Gold Medal presentation; exact day not specified",
-      "age": 65,
-      "title": "Receives RIBA Royal Gold Medal",
-      "description": "In one of her final public honours, Hadid is awarded the Royal Gold Medal by the [[Royal Institute of British Architects|Royal Institute of British Architects (RIBA)]], becoming the first woman to receive the medal in her own right. The award, personally approved by Queen Elizabeth II, recognizes a lifetime of achievements that reshaped architectural geometry and expanded the possibilities of digital design and engineering. By this point her office is overseeing major projects worldwide, including airports, museums and stadiums still under construction.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1276,
-            51.5072
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Queen Elizabeth II"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Royal_Gold_Medal"
       ],
       "event_type_icon": "mdi-medal",
-      "chapter": "late_honours_enduring_legacy",
+      "chapter": "establishment_honours_and_final_legacy",
       "annotations": {
-        "Royal Institute of British Architects": {
-          "explanation": "The Royal Institute of British Architects (RIBA) is the main professional body for architects in the United Kingdom, which awards the Royal Gold Medal in recognition of a lifetime\u2019s work in architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_Institute_of_British_Architects"
+        "Royal Gold Medal": {
+          "explanation": "A prestigious international architecture award given annually by the Royal Institute of British Architects (RIBA) in recognition of a lifetime\u2019s work that has had a significant influence on the advancement of architecture.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_Gold_Medal"
         }
       }
     },
@@ -689,40 +693,31 @@
       "date_precision": "day",
       "age": 65,
       "title": "Death in Miami",
-      "description": "Hadid dies suddenly in [[Miami|Miami]], after suffering a heart attack while being treated for bronchitis, cutting short a career still in full momentum. She leaves behind no spouse or children but a large extended family and a global practice led by longtime collaborator Patrik Schumacher. At the time of her death many of her most ambitious projects, including major transport hubs and sports venues, are still in progress, ensuring that her built legacy will continue to expand posthumously.",
+      "description": "Hadid dies suddenly in Miami, Florida, after suffering a heart attack while being treated for bronchitis. Her death at 65 shocks the architectural world, as numerous projects for cultural institutions, offices, housing, and infrastructure are still under construction or in design. She leaves behind a global practice, a generation of younger architects influenced by her work, and a body of buildings that redefined what architectural form could be.",
       "locations": [
         {
           "name_historic": "Miami",
           "name_modern": "Miami, Florida, USA",
           "centroid": [
-            -80.1918,
-            25.7617
+            -80.19179,
+            25.76168
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Patrik Schumacher"
-      ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Patrik_Schumacher"
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "late_honours_enduring_legacy",
-      "annotations": {
-        "Miami": {
-          "explanation": "Major city in southeastern Florida that serves as an international center for finance, culture, and tourism; Zaha Hadid died there in 2016 while visiting.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Miami"
-        }
-      },
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Gravestone_with_her_name_on_grave_of_architect_Zaha_Hadid%2C_at_Brookwood_Cemetery_%28cropped%29.jpg",
-          "caption": "Gravestone with her name on grave of architect Zaha Hadid, at Brookwood Cemetery. On the the left and right (visible in original photo) are the graves of her father and brother.",
-          "source": "https://commons.wikimedia.org/wiki/File:Gravestone_with_her_name_on_grave_of_architect_Zaha_Hadid,_at_Brookwood_Cemetery_(cropped).jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Gravestone_with_her_name_on_grave_of_architect_Zaha_Hadid%2C_at_Brookwood_Cemetery_%28perspective_canged_to_front_view%29.jpg",
+          "caption": "Gravestone of architect Zaha Hadid at Brookwood Cemetery",
+          "source": "https://commons.wikimedia.org/wiki/File:Gravestone_with_her_name_on_grave_of_architect_Zaha_Hadid,_at_Brookwood_Cemetery_(perspective_canged_to_front_view).jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "establishment_honours_and_final_legacy"
     }
   ]
 }
