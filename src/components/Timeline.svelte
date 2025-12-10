@@ -469,6 +469,7 @@
               type="button"
               class="chapter-indicator-box"
               class:has-chapter={currentChapter}
+              class:show-event-count={activeIndex === 0 && !currentChapter}
               style="--chapter-offset: {chapterIndicatorOffset}%;"
               on:click={toggleExpanded}
               aria-label={currentChapter
@@ -488,6 +489,13 @@
                     key={currentChapter.id}
                   >
                     {currentChapter.headline}
+                  </span>
+                {:else if activeIndex === 0 && totalSlides > 0}
+                  <span
+                    class="chapter-indicator-label event-count-label"
+                    transition:fade={{ duration: 300 }}
+                  >
+                    {$_(`timeline.event_${totalSlides === 1 ? 'one' : 'other'}`, { count: totalSlides })}
                   </span>
                 {/if}
                 <svg
@@ -1254,17 +1262,28 @@
     transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* When no chapter, make it a compact icon-only button */
-  .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+  /* When no chapter and not showing event count, make it a compact icon-only button */
+  .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
     padding: 0.6rem;
     border-radius: 50%;
     width: 3.25rem;
     height: 3.25rem;
   }
 
-  .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+  .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
     width: 1.5rem;
     height: 1.5rem;
+  }
+
+  /* When showing event count on overview slide */
+  .chapter-indicator-box.show-event-count .chapter-indicator-content {
+    padding: 0.7rem 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .event-count-label {
+    font-size: 0.85rem;
+    font-weight: 600;
   }
 
   .chapter-indicator-content {
@@ -1336,6 +1355,10 @@
       font-size: 0.75rem;
     }
 
+    .event-count-label {
+      font-size: 0.75rem;
+    }
+
     .chapter-indicator-content {
       padding: 0.4rem 0.85rem;
     }
@@ -1345,20 +1368,28 @@
       height: 1rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
       width: 3rem;
       height: 3rem;
       padding: 0.5rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
       width: 1.4rem;
       height: 1.4rem;
+    }
+
+    .chapter-indicator-box.show-event-count .chapter-indicator-content {
+      padding: 0.4rem 0.85rem;
     }
   }
 
   @media (max-width: 480px) {
     .chapter-indicator-label {
+      font-size: 0.7rem;
+    }
+
+    .event-count-label {
       font-size: 0.7rem;
     }
 
@@ -1372,15 +1403,19 @@
       height: 0.95rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
       width: 2.75rem;
       height: 2.75rem;
       padding: 0.45rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
       width: 1.1rem;
       height: 1.1rem;
+    }
+
+    .chapter-indicator-box.show-event-count .chapter-indicator-content {
+      padding: 0.5rem 0.9rem;
     }
   }
 
@@ -1419,15 +1454,23 @@
       height: 0.85rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter) .chapter-indicator-content {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
       width: 2.25rem;
       height: 2.25rem;
       padding: 0.35rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter) .chapter-chevron {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
       width: 1rem;
       height: 1rem;
+    }
+
+    .chapter-indicator-box.show-event-count .chapter-indicator-content {
+      padding: 0.35rem 0.75rem;
+    }
+
+    .event-count-label {
+      font-size: 0.65rem;
     }
   }
 </style>
