@@ -149,54 +149,11 @@
     // Fallback to indicatorIcons if event_type_icon not available or invalid
     return indicatorIcons[idx] || null;
   });
-  let trackElement = null;
   let expandedContainerElement = null;
 
   $: totalPanels = totalSlides > 0 ? totalSlides + 1 : 1; // +1 for overview slide
   $: hasEvents = totalSlides > 0;
   $: hasChapters = Array.isArray(chapters) && chapters.length > 0;
-
-  // Lens-based magnification: calculate scale for each dot based on distance from active
-  $: dotScales = (() => {
-    if (isExpanded) return Array(totalSlides).fill(1.0);
-
-    const scales = [];
-    for (let i = 0; i < totalSlides; i++) {
-      const distance = Math.abs(i - activeEventIndex);
-
-      if (distance === 0 && activeEventIndex >= 0) {
-        scales.push(1.6); // Active dot: 60% larger
-      } else if (distance === 1) {
-        scales.push(1.3); // Adjacent dots: 30% larger
-      } else if (distance === 2) {
-        scales.push(1.15); // Next adjacent: 15% larger
-      } else {
-        scales.push(1.0); // Normal size
-      }
-    }
-    return scales;
-  })();
-
-  // Lens "pushing" effect: push adjacent dots outward slightly
-  $: dotTranslations = (() => {
-    if (isExpanded) return Array(totalSlides).fill(0);
-
-    const translations = [];
-    for (let i = 0; i < totalSlides; i++) {
-      const distance = i - activeEventIndex;
-
-      if (distance === 0) {
-        translations.push(0); // Active stays centered
-      } else if (Math.abs(distance) === 1) {
-        translations.push(distance * 0.3); // Push adjacent 0.3rem away
-      } else if (Math.abs(distance) === 2) {
-        translations.push(distance * 0.15); // Push next adjacent 0.15rem away
-      } else {
-        translations.push(0); // Others stay in place
-      }
-    }
-    return translations;
-  })();
 
   // Group events by chapter for display
   $: groupedEvents = (() => {
@@ -249,33 +206,36 @@
   })();
 
   // Build flat list of items with chapter dots for collapsed timeline
+  // Each item represents a slide (overview, chapter, or event) with timeline dot
   $: timelineItems = (() => {
-    if (!hasChapters) {
-      // No chapters: just return all events in order
-      return eventSlides.map((event, idx) => ({ type: 'event', index: idx }));
+    if (!slides || slides.length === 0) {
+      return [];
     }
 
     const items = [];
-    let lastChapterId = null;
+    let eventCount = 0;
 
-    eventSlides.forEach((event, idx) => {
-      const currentChapterId = event.chapter || null;
+    // Iterate through slides array (excluding overview slide at index 0)
+    for (let i = 1; i < slides.length; i++) {
+      const slide = slides[i];
 
-      // Insert chapter dot when chapter changes (but not at the very start)
-      if (currentChapterId !== lastChapterId && items.length > 0 && currentChapterId) {
-        const chapter = chapters.find((ch) => ch.id === currentChapterId);
-        if (chapter) {
-          items.push({
-            type: 'chapter',
-            chapter: chapter,
-            eventIndex: idx, // Index of first event in this chapter
-          });
-        }
+      if (slide.type === 'chapter') {
+        // Chapter slide gets a chapter dot
+        items.push({
+          type: 'chapter',
+          chapter: slide.chapter,
+          slideIndex: i,
+        });
+      } else {
+        // Event slide gets an event dot (event slides don't have type property)
+        items.push({
+          type: 'event',
+          index: eventCount,
+          slideIndex: i,
+        });
+        eventCount++;
       }
-
-      items.push({ type: 'event', index: idx });
-      lastChapterId = currentChapterId;
-    });
+    }
 
     return items;
   })();
@@ -296,19 +256,6 @@
     return chapter || null;
   })();
 
-  // Track which chapter slide is currently active (if any)
-  $: activeChapterSlide = (() => {
-    if (activeIndex < 0 || !slides || slides.length === 0) {
-      return null;
-    }
-
-    const currentSlide = slides[activeIndex];
-    if (currentSlide?.type === "chapter") {
-      return currentSlide.chapter.id;
-    }
-
-    return null;
-  })();
 
   // Calculate horizontal offset for chapter indicator based on active slide position
   $: chapterIndicatorOffset = (() => {
@@ -347,17 +294,6 @@
     }
   } else {
     hasScrolledToActive = false;
-  }
-
-  function onGoToChapter(eventIndex) {
-    // Find the chapter slide that precedes this event index
-    const slideIndex = slides.findIndex(
-      (slide) => slide.type === "chapter" && slide.eventIndex === eventIndex
-    );
-
-    if (slideIndex !== -1) {
-      onGoToSlide(slideIndex);
-    }
   }
 
   function toggleExpanded() {
@@ -419,7 +355,6 @@
         class="indicator-track"
         class:single={!hasMultipleEvents}
         class:expanded={isExpanded}
-        bind:this={trackElement}
         role="group"
         aria-label={$_("timeline.scrubber")}
       >
@@ -469,29 +404,37 @@
                 </svg>
               </button>
             </div>
-            <div class="chapter-spacer" aria-hidden="true"></div>
-            {#each timelineItems as item, i}
+            {#each timelineItems as item}
               {#if item.type === 'chapter'}
+                {@const chapterSlideIndex = item.slideIndex}
+                {@const distance = Math.abs(chapterSlideIndex - activeIndex)}
+                {@const scale = distance === 0 ? 1.6 : (distance === 1 ? 1.3 : (distance === 2 ? 1.15 : 1.0))}
+                {@const translate = distance === 0 ? 0 : (Math.abs(distance) === 1 ? (chapterSlideIndex - activeIndex) * 0.3 : (Math.abs(distance) === 2 ? (chapterSlideIndex - activeIndex) * 0.15 : 0))}
                 <div class="dot-wrapper">
                   <button
                     type="button"
                     class="dot chapter-dot"
-                    class:active={activeChapterSlide === item.chapter.id}
-                    on:click={() => onGoToChapter(item.eventIndex)}
+                    class:active={activeIndex === item.slideIndex}
+                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(scale * 10)};"
+                    on:click={() => onGoToSlide(item.slideIndex)}
                     aria-label={$_("timeline.go_to_chapter", { chapter: item.chapter.headline })}
-                    aria-current={activeChapterSlide === item.chapter.id ? "true" : undefined}
+                    aria-current={activeIndex === item.slideIndex ? "true" : undefined}
                   >
                     <span class="dot-inner-chapter"></span>
                   </button>
                 </div>
               {:else if item.type === 'event'}
                 {@const idx = item.index}
+                {@const eventSlideIndex = item.slideIndex}
+                {@const distance = Math.abs(eventSlideIndex - activeIndex)}
+                {@const scale = distance === 0 ? 1.6 : (distance === 1 ? 1.3 : (distance === 2 ? 1.15 : 1.0))}
+                {@const translate = distance === 0 ? 0 : (Math.abs(distance) === 1 ? (eventSlideIndex - activeIndex) * 0.3 : (Math.abs(distance) === 2 ? (eventSlideIndex - activeIndex) * 0.15 : 0))}
                 <div class="dot-wrapper">
                   <button
                     type="button"
                     class="dot"
                     class:active={idx === activeEventIndex}
-                    style="transform: scale({dotScales[idx]}) translateX({dotTranslations[idx]}rem); z-index: {Math.round(dotScales[idx] * 10)};"
+                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(scale * 10)};"
                     on:click={() => onGoToEvent(idx)}
                     aria-label={`Show event ${idx + 1} of ${totalSlides}`}
                     aria-current={idx === activeEventIndex ? "true" : undefined}
@@ -884,29 +827,17 @@
     .dots-container:not(.expanded) .dot:not(.square) {
       margin-left: -0.3rem;
     }
-    .dots-container:not(.expanded) .chapter-spacer {
-      margin-left: -0.3rem;
-      width: calc(var(--dot-size) * 0.7);
-    }
   }
 
   @media (max-width: 480px) {
     .dots-container:not(.expanded) .dot:not(.square) {
       margin-left: -0.5rem;
     }
-    .dots-container:not(.expanded) .chapter-spacer {
-      margin-left: -0.5rem;
-      width: calc(var(--dot-size) * 0.5);
-    }
   }
 
   @media (max-width: 380px) {
     .dots-container:not(.expanded) .dot:not(.square) {
       margin-left: -0.7rem;
-    }
-    .dots-container:not(.expanded) .chapter-spacer {
-      margin-left: -0.7rem;
-      width: calc(var(--dot-size) * 0.3);
     }
   }
 
@@ -964,31 +895,29 @@
     padding: 0;
     background: transparent;
     border: none;
-    transform: none !important; /* Don't apply lens effect to chapter dots */
+    flex: 0 0 auto; /* Ensure chapter dots don't shrink */
+    transition:
+      background-color 0.25s ease,
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .dot-inner-chapter {
     width: 100%;
     height: 100%;
-    border: 2px solid rgba(var(--primary-rgb), 0.5);
-    background: transparent;
+    border: none;
+    background: rgba(148, 163, 184, 0.3);
     border-radius: 50%;
     transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease;
+      background-color 0.25s ease,
+      transform 0.25s ease;
   }
 
   .dot.chapter-dot:hover .dot-inner-chapter {
-    border-color: rgba(var(--primary-rgb), 0.8);
-    background: rgba(var(--primary-rgb), 0.15);
-    transform: scale(1.2);
+    background: rgba(148, 163, 184, 0.5);
   }
 
   .dot.chapter-dot.active .dot-inner-chapter {
-    background: rgba(var(--primary-rgb), 0.4);
-    border-color: rgba(var(--primary-rgb), 1);
-    border-width: 2.5px;
+    background: var(--story-secondary, #38bdf8);
   }
 
   .expanded-timeline-container {
