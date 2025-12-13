@@ -22,12 +22,14 @@
   export let indicatorProgress = 0;
   export let indicatorIcons = []; // Fallback icons (deprecated, prefer event_type_icon in eventSlides)
   export let eventSlides = []; // Array of event objects with titles and event_type_icon
+  export let slides = []; // Array of all slides including chapter slides
   export let chapters = []; // Array of chapter objects with headlines
   export let egoNetwork = null; // Ego network data for person lookups
   export let styleConfig = null; // Style configuration for person chips
   export let onPrevSlide = () => {};
   export let onNextSlide = () => {};
   export let onGoToEvent = () => {};
+  export let onGoToSlide = () => {}; // Navigate to specific slide index (for chapter slides)
   export let onScrollToIndex = () => {};
   export let onOpenNetwork = null; // Callback to open network modal
   export let initialExpanded = false; // NEW: Initial expanded state from URL
@@ -246,7 +248,7 @@
     return result;
   })();
 
-  // Build flat list of items with chapter spacers for collapsed timeline
+  // Build flat list of items with chapter dots for collapsed timeline
   $: timelineItems = (() => {
     if (!hasChapters) {
       // No chapters: just return all events in order
@@ -259,9 +261,16 @@
     eventSlides.forEach((event, idx) => {
       const currentChapterId = event.chapter || null;
 
-      // Insert spacer when chapter changes (but not at the very start)
-      if (currentChapterId !== lastChapterId && items.length > 0) {
-        items.push({ type: 'spacer', chapterId: currentChapterId });
+      // Insert chapter dot when chapter changes (but not at the very start)
+      if (currentChapterId !== lastChapterId && items.length > 0 && currentChapterId) {
+        const chapter = chapters.find((ch) => ch.id === currentChapterId);
+        if (chapter) {
+          items.push({
+            type: 'chapter',
+            chapter: chapter,
+            eventIndex: idx, // Index of first event in this chapter
+          });
+        }
       }
 
       items.push({ type: 'event', index: idx });
@@ -285,6 +294,20 @@
     // Find the chapter object by ID
     const chapter = chapters.find((ch) => ch.id === currentEvent.chapter);
     return chapter || null;
+  })();
+
+  // Track which chapter slide is currently active (if any)
+  $: activeChapterSlide = (() => {
+    if (activeIndex < 0 || !slides || slides.length === 0) {
+      return null;
+    }
+
+    const currentSlide = slides[activeIndex];
+    if (currentSlide?.type === "chapter") {
+      return currentSlide.chapter.id;
+    }
+
+    return null;
   })();
 
   // Calculate horizontal offset for chapter indicator based on active slide position
@@ -324,6 +347,17 @@
     }
   } else {
     hasScrolledToActive = false;
+  }
+
+  function onGoToChapter(eventIndex) {
+    // Find the chapter slide that precedes this event index
+    const slideIndex = slides.findIndex(
+      (slide) => slide.type === "chapter" && slide.eventIndex === eventIndex
+    );
+
+    if (slideIndex !== -1) {
+      onGoToSlide(slideIndex);
+    }
   }
 
   function toggleExpanded() {
@@ -437,8 +471,19 @@
             </div>
             <div class="chapter-spacer" aria-hidden="true"></div>
             {#each timelineItems as item, i}
-              {#if item.type === 'spacer'}
-                <div class="chapter-spacer" aria-hidden="true"></div>
+              {#if item.type === 'chapter'}
+                <div class="dot-wrapper">
+                  <button
+                    type="button"
+                    class="dot chapter-dot"
+                    class:active={activeChapterSlide === item.chapter.id}
+                    on:click={() => onGoToChapter(item.eventIndex)}
+                    aria-label={$_("timeline.go_to_chapter", { chapter: item.chapter.headline })}
+                    aria-current={activeChapterSlide === item.chapter.id ? "true" : undefined}
+                  >
+                    <span class="dot-inner-chapter"></span>
+                  </button>
+                </div>
               {:else if item.type === 'event'}
                 {@const idx = item.index}
                 <div class="dot-wrapper">
@@ -908,6 +953,42 @@
     flex: 0 0 auto;
     pointer-events: none;
     opacity: 0;
+  }
+
+  /* Chapter dots - smaller than event dots */
+  .dot.chapter-dot {
+    width: calc(var(--dot-size) * 0.5);
+    height: calc(var(--dot-size) * 0.5);
+    min-width: calc(var(--dot-size) * 0.5);
+    min-height: calc(var(--dot-size) * 0.5);
+    padding: 0;
+    background: transparent;
+    border: none;
+    transform: none !important; /* Don't apply lens effect to chapter dots */
+  }
+
+  .dot-inner-chapter {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(var(--primary-rgb), 0.5);
+    background: transparent;
+    border-radius: 50%;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .dot.chapter-dot:hover .dot-inner-chapter {
+    border-color: rgba(var(--primary-rgb), 0.8);
+    background: rgba(var(--primary-rgb), 0.15);
+    transform: scale(1.2);
+  }
+
+  .dot.chapter-dot.active .dot-inner-chapter {
+    background: rgba(var(--primary-rgb), 0.4);
+    border-color: rgba(var(--primary-rgb), 1);
+    border-width: 2.5px;
   }
 
   .expanded-timeline-container {

@@ -7,6 +7,7 @@
   import NetworkModal from "./NetworkModal.svelte";
   import OverviewSlide from "./OverviewSlide.svelte";
   import EventSlide from "./EventSlide.svelte";
+  import ChapterSlide from "./ChapterSlide.svelte";
   import StoryMap from "./StoryMap.svelte";
   import Timeline from "./Timeline.svelte";
   import { _, currentLanguage } from "../stores/language";
@@ -81,11 +82,80 @@
       allCoordinates: normalizeAllLocations(event),
     }));
   $: totalSlides = eventSlides.length;
-  $: slides =
-    totalSlides > 0
-      ? [{ type: "overview" }, ...eventSlides]
-      : [{ type: "overview" }];
+
+  // Build slides array with chapter slides inserted before first event of each chapter
+  $: slides = (() => {
+    if (totalSlides === 0) return [{ type: "overview" }];
+
+    const result = [{ type: "overview" }];
+    const hasChapters = chapters && chapters.length > 0;
+
+    if (!hasChapters) {
+      return [{ type: "overview" }, ...eventSlides];
+    }
+
+    let lastChapterId = null;
+
+    eventSlides.forEach((event, index) => {
+      const eventChapter = event.chapter;
+
+      // Insert chapter slide when entering a new chapter
+      if (eventChapter && eventChapter !== lastChapterId) {
+        const chapter = chapters.find((ch) => ch.id === eventChapter);
+        if (chapter) {
+          result.push({
+            type: "chapter",
+            chapter: chapter,
+            chapterIndex: chapters.indexOf(chapter),
+            eventIndex: index, // Index of first event in this chapter
+          });
+        }
+        lastChapterId = eventChapter;
+      }
+
+      result.push(event);
+    });
+
+    return result;
+  })();
+
   $: totalPanels = slides.length;
+
+  // Map slide index to event index (accounting for chapter slides)
+  $: slideIndexToEventIndex = (() => {
+    const map = new Map();
+    let eventIndex = 0;
+
+    slides.forEach((slide, slideIndex) => {
+      if (slide.type === "overview") {
+        map.set(slideIndex, -1); // Overview = event index -1
+      } else if (slide.type === "chapter") {
+        map.set(slideIndex, null); // Chapter slides don't map to events
+      } else {
+        map.set(slideIndex, eventIndex);
+        eventIndex++;
+      }
+    });
+
+    return map;
+  })();
+
+  // Map event index to slide index (for timeline navigation)
+  $: eventIndexToSlideIndex = (() => {
+    const map = new Map();
+
+    slides.forEach((slide, slideIndex) => {
+      if (slide.type !== "overview" && slide.type !== "chapter") {
+        const eventIdx = slideIndexToEventIndex.get(slideIndex);
+        if (eventIdx !== null && eventIdx !== undefined && eventIdx !== -1) {
+          map.set(eventIdx, slideIndex);
+        }
+      }
+    });
+
+    return map;
+  })();
+
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
 
@@ -163,10 +233,15 @@
     });
   }
 
-  $: activeEventIndex =
-    totalSlides > 0 && activeIndex > 0
-      ? Math.min(Math.max(activeIndex - 1, 0), totalSlides - 1)
-      : -1;
+  // Update activeEventIndex to use the slide-to-event mapping
+  $: activeEventIndex = (() => {
+    const mappedIndex = slideIndexToEventIndex.get(activeIndex);
+    // null means chapter slide, -1 means overview, number >= 0 means event
+    if (mappedIndex === null || mappedIndex === -1) {
+      return -1;
+    }
+    return mappedIndex;
+  })();
 
   $: activeCoordinates =
     activeEventIndex >= 0
@@ -403,10 +478,21 @@
   function goToEvent(eventIndex) {
     if (!Number.isInteger(eventIndex)) return;
     const clamped = clamp(eventIndex, 0, Math.max(eventSlides.length - 1, 0));
-    const targetIndex = clamped + 1;
-    if (totalPanels === 0) return;
+    // Use the event-to-slide mapping to find the correct slide index
+    const targetIndex = eventIndexToSlideIndex.get(clamped);
+    if (targetIndex === undefined || totalPanels === 0) return;
     requestScrollTo(targetIndex, {
       source: "timeline_event",
+      updateStateImmediately: true,
+    });
+  }
+
+  function goToSlide(slideIndex) {
+    if (!Number.isInteger(slideIndex)) return;
+    const clamped = clamp(slideIndex, 0, Math.max(totalPanels - 1, 0));
+    if (totalPanels === 0) return;
+    requestScrollTo(clamped, {
+      source: "timeline_chapter",
       updateStateImmediately: true,
     });
   }
@@ -893,13 +979,16 @@
           </div>
         </section>
       {:else if totalPanels > 0}
-        {#each slides as slide (slide.eventIndex)}
+        {#each slides as slide, index (slide.type === 'chapter' ? `chapter-${slide.chapter.id}` : slide.eventIndex)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
+            class:chapter={slide.type === "chapter"}
             aria-label={slide.type === "overview"
               ? `Overview: ${personName}`
-              : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
+              : slide.type === "chapter"
+                ? `Chapter: ${slide.chapter.headline}`
+                : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
           >
             {#if slide.type === "overview"}
               <OverviewSlide
@@ -914,6 +1003,15 @@
                 onEnlargeImage={enlargeImage}
                 onOpenNetwork={openNetworkModal}
                 {checkOverflow}
+              />
+            {:else if slide.type === "chapter"}
+              <ChapterSlide
+                chapter={slide.chapter}
+                personId={dataset.person_id}
+                {personName}
+                personStyle={styleConfig}
+                {egoNetwork}
+                activeSlideIndex={activeIndex}
               />
             {:else if slide.type !== "spacer"}
               <EventSlide
@@ -961,6 +1059,7 @@
     {indicatorProgress}
     {indicatorIcons}
     {eventSlides}
+    {slides}
     {chapters}
     {egoNetwork}
     {styleConfig}
@@ -968,6 +1067,7 @@
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
+    onGoToSlide={goToSlide}
     onScrollToIndex={scrollToIndexExternal}
     onOpenNetwork={openNetworkModal}
     on:expandchange={handleTimelineExpandChange}
@@ -1323,11 +1423,12 @@
       margin-bottom: 0;
     }
 
-    .slides-wrapper.map-enabled .slide:not(.overview) {
+    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter) {
       padding-bottom: 12rem;
     }
 
-    .slide.overview {
+    .slide.overview,
+    .slide.chapter {
       padding-top: 0.5rem;
       padding-bottom: 6rem;
     }
@@ -1413,8 +1514,15 @@
     }
   }
 
-  .slides-wrapper.map-enabled .slide:not(.overview) {
+  .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter) {
     padding-bottom: 16rem;
+  }
+
+  .slide.chapter {
+    justify-content: flex-start;
+    padding-top: 1rem;
+    padding-bottom: 8rem;
+    position: relative;
   }
 
   .slide::before {
@@ -1548,8 +1656,12 @@
       gap: 1.75rem;
     }
 
-    .slides-wrapper.map-enabled .slide:not(.overview) {
+    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter) {
       padding-bottom: 18rem;
+    }
+
+    .slide.chapter {
+      padding-top: 2.5rem;
     }
 
     .compact-info {
