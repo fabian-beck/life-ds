@@ -535,9 +535,16 @@
                   {@const chapterAge = group.chapter.age_start ?? 0}
                   {@const chapterPeople = getChapterPeople(group.chapter)}
                   {@const chapterLocation = group.chapter.location}
+                  {@const chapterSlideIndex = slides.findIndex(s => s.type === 'chapter' && s.chapter.id === group.chapter.id)}
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
                   <div
-                    class="chapter-header"
+                    class="chapter-header clickable"
+                    class:active={activeIndex === chapterSlideIndex}
                     style="--event-age: {chapterAge};"
+                    role="button"
+                    tabindex="0"
+                    on:click={() => chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
+                    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
                   >
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
                     {#if chapterPeople.length > 0 || chapterLocation}
@@ -1048,6 +1055,53 @@
       rgba(var(--primary-rgb, 94, 208, 255), 0.08) 0%,
       transparent 100%
     );
+  }
+
+  .chapter-header.clickable {
+    cursor: pointer;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    margin-top: calc(0.75rem - 0.2rem);
+    margin-bottom: calc(0.35rem - 0.2rem);
+    margin-right: -0.5rem;
+    margin-left: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
+    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100 + 0.5rem);
+    border-radius: 0.5rem;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .chapter-header.clickable:hover {
+    background: linear-gradient(
+      to right,
+      rgba(var(--primary-rgb, 94, 208, 255), 0.15) 0%,
+      rgba(148, 163, 184, 0.06) 100%
+    );
+    border-left-color: var(--story-primary, rgba(148, 163, 184, 0.7));
+  }
+
+  .chapter-header.clickable:focus {
+    outline: 2px solid var(--story-primary, rgba(148, 163, 184, 0.4));
+    outline-offset: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(var(--primary-rgb, 94, 208, 255), 0.12) 0%,
+      rgba(148, 163, 184, 0.05) 100%
+    );
+  }
+
+  .chapter-header.clickable:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .chapter-header.clickable.active {
+    background: linear-gradient(
+      to right,
+      rgba(var(--primary-rgb, 94, 208, 255), 0.2) 0%,
+      rgba(148, 163, 184, 0.08) 100%
+    );
+    border-left-color: var(--story-secondary, #38bdf8);
+    border-left-width: 3px;
   }
 
   .chapter-header:first-of-type {

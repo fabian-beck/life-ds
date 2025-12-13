@@ -243,6 +243,12 @@
     return mappedIndex;
   })();
 
+  // Determine if current slide is a chapter slide
+  $: isChapterSlide = (() => {
+    if (activeIndex < 0 || activeIndex >= slides.length) return false;
+    return slides[activeIndex]?.type === "chapter";
+  })();
+
   $: activeCoordinates =
     activeEventIndex >= 0
       ? (eventSlides[activeEventIndex]?.coordinates ?? DEFAULT_COORDINATES)
@@ -1012,6 +1018,7 @@
                 personStyle={styleConfig}
                 {egoNetwork}
                 activeSlideIndex={activeIndex}
+                onOpenNetwork={openNetworkModal}
               />
             {:else if slide.type !== "spacer"}
               <EventSlide
@@ -1047,6 +1054,7 @@
         {markerTrail}
         {hasMapData}
         {activeIndex}
+        {isChapterSlide}
         {styleConfig}
       />
     {/if}

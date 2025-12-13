@@ -12,6 +12,7 @@
   export let markerTrail = [];
   export let hasMapData = false;
   export let activeIndex = 0;
+  export let isChapterSlide = false;
   export let styleConfig = null;
 
   // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
@@ -633,7 +634,7 @@
     initialiseMap();
   }
 
-  $: if (mapReady && hasMapData) {
+  $: if (mapReady && hasMapData && !isChapterSlide) {
     updateMapState(activeCoordinates, markerTrail);
   }
 
@@ -645,6 +646,7 @@
 <div
   class="map-overlay"
   class:hidden={activeIndex === 0}
+  class:blended-out={isChapterSlide}
   aria-hidden="true"
 >
   <div class="map-gradient" />
@@ -664,12 +666,16 @@
     pointer-events: none;
     z-index: 1;
     opacity: 1;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.6s ease;
   }
 
   .map-overlay.hidden {
     opacity: 0;
     pointer-events: none;
+  }
+
+  .map-overlay.blended-out {
+    opacity: 0;
   }
 
   .map-gradient {

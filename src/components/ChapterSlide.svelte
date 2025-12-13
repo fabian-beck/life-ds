@@ -10,6 +10,7 @@
   export let personStyle = null;
   export let egoNetwork = null;
   export let activeSlideIndex = -1; // Track active slide to close popups on navigation
+  export let onOpenNetwork = null; // Callback to open the network modal
 
   let visiblePersonInfo = null;
 
@@ -77,11 +78,6 @@
       visiblePersonInfo = null;
     }
   }
-
-  function openNetworkModal() {
-    // This could be passed as a prop if needed
-    console.log("Open network modal");
-  }
 </script>
 
 <div class="content chapter-content" on:click={handleClickOutside}>
@@ -122,7 +118,7 @@
             {visiblePersonInfo}
             {subcategory}
             onToggle={togglePersonInfo}
-            onOpenNetwork={openNetworkModal}
+            {onOpenNetwork}
             styleConfig={personStyle}
           />
         {/each}
