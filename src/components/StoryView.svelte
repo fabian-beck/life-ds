@@ -1062,6 +1062,7 @@
   <Timeline
     {activeIndex}
     {totalSlides}
+    {totalPanels}
     {activeEventIndex}
     {hasMultipleEvents}
     {indicatorProgress}

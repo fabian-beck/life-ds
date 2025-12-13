@@ -17,6 +17,7 @@
 
   export let activeIndex = 0;
   export let totalSlides = 0;
+  export let totalPanels = 0; // Total number of slides including overview and chapter slides
   export let activeEventIndex = -1;
   export let hasMultipleEvents = false;
   export let indicatorProgress = 0;
@@ -151,7 +152,6 @@
   });
   let expandedContainerElement = null;
 
-  $: totalPanels = totalSlides > 0 ? totalSlides + 1 : 1; // +1 for overview slide
   $: hasEvents = totalSlides > 0;
   $: hasChapters = Array.isArray(chapters) && chapters.length > 0;
 
