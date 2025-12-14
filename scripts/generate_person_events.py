@@ -2552,12 +2552,20 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
 def generate_person_events(
     subject: str,
     *,
+    person_id: Optional[str] = None,
     update_registry: bool = True,
     model: str = DEFAULT_MODEL,
     use_cache: bool = True,
 ) -> Tuple[Path, str]:
     """
     Generate person life events dataset using two-phase approach.
+
+    Args:
+        subject: Person name or Wikipedia URL to research
+        person_id: Optional person ID to use instead of auto-generating from article title
+        update_registry: Whether to update persons.json registry
+        model: OpenAI model to use
+        use_cache: Whether to use cached Wikipedia materials
 
     Returns:
         Tuple of (file_path, person_id)
@@ -2568,25 +2576,26 @@ def generate_person_events(
     article_title = page_data.get("title", subject)
     print(f"[Step 1/10] Found article '{article_title}'")
 
-    person_id = slugify(article_title)
+    # Use provided person_id or generate from article title
+    identifier = person_id or slugify(article_title)
 
     # Load cache (NO Commons images - fetched later in Phase 3)
-    print(f"[Step 2/10] Loading cached materials for '{person_id}'...")
+    print(f"[Step 2/10] Loading cached materials for '{identifier}'...")
     related_articles = None
     summary_data = {}
 
     if use_cache:
         try:
-            ensure_cache(person_id, article_title, person_name=article_title)
+            ensure_cache(identifier, article_title, person_name=article_title)
             cached_page = get_cached_wikipedia_page(
-                person_id, article_title, use_cache=True
+                identifier, article_title, use_cache=True
             )
             cached_summary = get_cached_wikipedia_summary(
-                person_id, article_title, use_cache=True
+                identifier, article_title, use_cache=True
             )
 
             # Load related articles if available
-            cache_dir = get_cache_dir(person_id)
+            cache_dir = get_cache_dir(identifier)
             related_path = cache_dir / "related_articles.json"
             if related_path.exists():
                 try:
@@ -2623,12 +2632,12 @@ def generate_person_events(
                 max_related=15,
                 model=model,
                 use_cache=use_cache,
-                person_id=person_id,
+                person_id=identifier,
             )
             print(f"[Step 3/10] Found {len(related_articles)} related articles")
 
             if related_articles and use_cache:
-                cache_dir = get_cache_dir(person_id)
+                cache_dir = get_cache_dir(identifier)
                 related_path = cache_dir / "related_articles.json"
                 cache_dir.mkdir(parents=True, exist_ok=True)
                 related_path.write_text(
@@ -2724,17 +2733,17 @@ def generate_person_events(
     print(f"[Step 10/11] Coordinates resolved for {geocoded_events} events")
 
     # Write to file
-    print(f"[Step 11/11] Writing dataset for '{person_id}'...")
-    file_path = write_dataset(payload, person_id)
+    print(f"[Step 11/11] Writing dataset for '{identifier}'...")
+    file_path = write_dataset(payload, identifier)
 
     if update_registry:
         print("Updating persons register...")
-        update_register(person_id, payload, file_path)
+        update_register(identifier, payload, file_path)
         print("Register update complete")
     else:
         print("Register update skipped")
 
-    return file_path, person_id
+    return file_path, identifier
 
 
 # ============================================================================
@@ -2745,7 +2754,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate life event datasets using two-phase AI approach."
     )
-    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
+    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'.")
+    parser.add_argument(
+        "--url",
+        help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",
+    )
     parser.add_argument(
         "--no-register", action="store_true", help="Skip updating the persons register."
     )
@@ -2917,15 +2930,24 @@ def regenerate_images_only(
 def main(argv: Any = None) -> int:
     args = parse_args(argv)
     try:
+        # When URL is provided, use it for fetching but preserve original subject as person_id
+        if args.url:
+            subject_for_fetch = args.url
+            person_id_override = slugify(args.subject)
+        else:
+            subject_for_fetch = args.subject
+            person_id_override = None
+
         if args.images_only:
             file_path, person_id = regenerate_images_only(
-                args.subject,
+                subject_for_fetch,
                 model=args.model,
             )
             print(f"\nDataset updated at {file_path}")
         else:
             file_path, person_id = generate_person_events(
-                args.subject,
+                subject_for_fetch,
+                person_id=person_id_override,
                 update_registry=not args.no_register,
                 model=args.model,
                 use_cache=not args.no_cache,

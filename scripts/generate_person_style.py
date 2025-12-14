@@ -568,7 +568,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
         description="Generate a personalised dark-mode styling configuration using the OpenAI API."
     )
     parser.add_argument(
-        "subject", help="Name or description of the person, e.g. 'Ada Lovelace'."
+        "subject", help="Name or description of the person, e.g. 'Ada Lovelace' or 'henry_II'."
+    )
+    parser.add_argument(
+        "--url",
+        help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",
     )
     parser.add_argument(
         "--id",
@@ -593,6 +597,16 @@ def parse_args(argv: Any) -> argparse.Namespace:
 
 def main(argv: Any = None) -> int:
     args = parse_args(argv)
+
+    # When URL is provided, use it for fetching but preserve original subject as person_id
+    if args.url:
+        subject_for_fetch = args.url
+        # If --id is provided, use it; otherwise slugify the subject
+        person_id_override = args.person_id or slugify(args.subject)
+    else:
+        subject_for_fetch = args.subject
+        person_id_override = args.person_id
+
     print(f"Generating visual style for: {args.subject}")
     print(f"Model: {args.model}")
     print(f"Reasoning effort: {DEFAULT_REASONING_EFFORT}")
@@ -600,8 +614,8 @@ def main(argv: Any = None) -> int:
 
     try:
         result = generate_style(
-            args.subject,
-            person_id=args.person_id,
+            subject_for_fetch,
+            person_id=person_id_override,
             model=args.model,
             dry_run=args.dry_run,
         )

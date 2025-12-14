@@ -665,7 +665,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate person network datasets using Wikipedia and the OpenAI API."
     )
-    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
+    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'.")
+    parser.add_argument(
+        "--url",
+        help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",
+    )
     parser.add_argument(
         "--no-register", action="store_true", help="Skip updating the persons register."
     )
@@ -689,9 +693,19 @@ def parse_args(argv: Any) -> argparse.Namespace:
 def main(argv: Any = None) -> int:
     """Main entry point."""
     args = parse_args(argv)
+
+    # When URL is provided, use it for fetching but preserve original subject as person_id
+    if args.url:
+        subject_for_fetch = args.url
+        person_id_override = slugify(args.subject)
+    else:
+        subject_for_fetch = args.subject
+        person_id_override = None
+
     try:
         file_path = generate_person_network(
-            args.subject,
+            subject_for_fetch,
+            person_id=person_id_override,
             update_registry=not args.no_register,
             model=args.model,
             use_cache=not args.no_cache,

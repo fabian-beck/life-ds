@@ -247,6 +247,27 @@ This runs all three generators:
 2. `generate_person_style.py` - Visual design
 3. `generate_person_network.py` - Ego network
 
+**Disambiguate with Wikipedia URL** (for ambiguous names):
+
+When a person's name is ambiguous (e.g., "Henry II"), you can specify the exact Wikipedia article using the `--url` argument. The URL will be used to fetch the correct Wikipedia article, while the subject parameter determines the `person_id` (directory name):
+
+```bash
+python scripts/generate_person.py "henry_II" --url https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor
+```
+
+This creates a person with ID `henry_ii` (from the subject "henry_II") but fetches data from the specified Wikipedia article. The data will be stored in `data/people/henry_ii/`.
+
+The `--url` argument works with all generation scripts:
+
+```bash
+python scripts/generate_person_events.py "henry_II" --url https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor
+python scripts/generate_person_style.py "henry_II" --url https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor
+python scripts/generate_person_network.py "henry_II" --url https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor
+python scripts/cache_wikipedia_materials.py "henry_II" --url https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor
+```
+
+**Important**: When using `--url`, the subject parameter controls the person_id, not the URL. This allows you to use clean, simple IDs (like "henry_II") even when the Wikipedia article has a long, disambiguated title.
+
 **Individual generators**:
 
 ```bash

@@ -19,7 +19,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate complete person dataset (life events, interface style, and ego network)."
     )
-    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace'.")
+    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'.")
+    parser.add_argument(
+        "--url",
+        help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",
+    )
     parser.add_argument(
         "--no-register", action="store_true", help="Skip updating the persons register."
     )
@@ -53,6 +57,15 @@ def main(argv: Any = None) -> int:
     args = parse_args(argv)
     update_registry = not args.no_register
 
+    # When URL is provided, use it for fetching but preserve original subject as person_id
+    if args.url:
+        subject_for_fetch = args.url
+        from generate_person_events import slugify
+        person_id_override = slugify(args.subject)
+    else:
+        subject_for_fetch = args.subject
+        person_id_override = None
+
     # Determine which models to use
     dataset_model = args.model or DATASET_MODEL
     style_model = args.model or STYLE_MODEL
@@ -65,7 +78,7 @@ def main(argv: Any = None) -> int:
 
     try:
         # Determine person_id from dataset generation or by loading existing data
-        person_id = None
+        person_id = person_id_override
 
         # Step 1: Generate life events dataset
         if run_dataset:
@@ -73,7 +86,8 @@ def main(argv: Any = None) -> int:
             print("STEP 1/3: Generating life events dataset")
             print("=" * 60 + "\n")
             dataset_path, person_id = generate_dataset(
-                args.subject,
+                subject_for_fetch,
+                person_id=person_id_override,
                 update_registry=update_registry,
                 model=dataset_model,
             )
@@ -87,7 +101,7 @@ def main(argv: Any = None) -> int:
             print("STEP 2/3: Generating interface style")
             print("=" * 60 + "\n")
             style_result = generate_style(
-                args.subject,
+                subject_for_fetch,
                 person_id=person_id,
                 model=style_model,
             )
@@ -101,7 +115,7 @@ def main(argv: Any = None) -> int:
             print("STEP 3/3: Generating ego network")
             print("=" * 60 + "\n")
             network_path = generate_person_network(
-                args.subject,
+                subject_for_fetch,
                 person_id=person_id,
                 update_registry=update_registry,
                 model=network_model,
