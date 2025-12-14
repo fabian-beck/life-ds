@@ -10,10 +10,8 @@
   export let rolesLabel = "";
   export let personSummary = "";
   export let egoNetwork = null;
-  export let descriptionOverflows = new Set();
   export let onEnlargeImage = () => {};
   export let onOpenNetwork = () => {};
-  export let checkOverflow = () => {};
 
   $: hasPersonSummary = Boolean(personSummary);
 
@@ -118,11 +116,7 @@
       </button>
     {/if}
     {#if hasPersonSummary}
-      <p
-        class="description"
-        class:has-fade={descriptionOverflows.has("overview")}
-        use:checkOverflow={"overview"}
-      >
+      <p class="description">
         {personSummary}
       </p>
     {:else if person}
@@ -239,27 +233,10 @@
     margin-left: auto;
     margin-right: auto;
     font-family: var(--story-body-font, Inter, sans-serif);
-    max-height: 30vh;
-    overflow-y: auto;
     color: #e2e8f0;
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
-  }
-
-  .overview-text .description.has-fade {
-    padding-bottom: 5em;
-    padding-right: 0.5em;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      black calc(100% - 5em),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      black calc(100% - 5em),
-      transparent 100%
-    );
   }
 
   .overview-text .description.placeholder {
@@ -429,7 +406,6 @@
       flex-basis: 100%;
       text-align: left;
       margin-top: 1rem;
-      max-height: 45vh;
     }
   }
 </style>

@@ -1077,10 +1077,8 @@
                 {rolesLabel}
                 {personSummary}
                 {egoNetwork}
-                {descriptionOverflows}
                 onEnlargeImage={enlargeImage}
                 onOpenNetwork={openNetworkModal}
-                {checkOverflow}
               />
             {:else if slide.type === "chapter"}
               <ChapterSlide
