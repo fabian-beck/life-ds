@@ -52,7 +52,7 @@ Each person has a unique `id` (snake_case, e.g., `alan_turing`) and exists in th
 
 ### Life Events Schema
 
-Events are the core narrative units displayed as slides. Events can optionally be grouped into chapters representing distinct life phases:
+Events are the core narrative units displayed as slides. Events can optionally be grouped into chapters representing distinct life phases, with a conclusion statement summarizing the person's legacy:
 
 ```json
 {
@@ -60,8 +60,8 @@ Events are the core narrative units displayed as slides. Events can optionally b
   "chapters": [
     {
       "id": "early_years",
-      "headline": "Early Years and Education",
-      "description": "Turing's formative years and academic development.",
+      "headline": "The Making of a Mind",
+      "description": "Before the codebreaking and computing breakthroughs, a young Turing grappled with loss, discovered mathematics as both refuge and calling.",
       "date_start": "1912",
       "date_start_precision": "year",
       "date_end": "1938",
@@ -70,6 +70,7 @@ Events are the core narrative units displayed as slides. Events can optionally b
       "age_end": 26
     }
   ],
+  "conclusion": "Turing's mind bridged abstract mathematics and wartime necessity, inventing the computer age before a cruel society silenced him.",
   "events": [
     {
       "date": "1936",
@@ -106,6 +107,12 @@ Events are the core narrative units displayed as slides. Events can optionally b
 - `location_modern`: Modern geographic name for geocoding (e.g., "Kaliningrad, Russia" for historic "Königsberg")
 - `involved_people`: List of people directly involved in this event (excludes the main subject)
 - `event_type_icon`: MDI icon identifier for visual categorization (e.g., "mdi-crown", "mdi-book", "mdi-school")
+
+**Chapter Structure**:
+- `headline`: Catchy, story-like title (2-5 words) - vivid and evocative like a book chapter
+- `description`: Narrative commentary (1-2 sentences) providing storytelling context, not dry summary
+- Chapters flow together to create narrative momentum
+- `conclusion`: Crisp statement (1-2 sentences) capturing the person's legacy or life essence
 
 **Important**:
 - Events may not have locations (non-geographic events) or images

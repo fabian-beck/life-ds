@@ -206,6 +206,7 @@
   .chapter-description {
     font-family: var(--story-body-font, sans-serif);
     font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    font-style: italic;
     line-height: 1.6;
     color: #e2e8f0;
     margin: 0;

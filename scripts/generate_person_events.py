@@ -117,9 +117,9 @@ class LifeChapter(BaseModel):
         description="Unique identifier for the chapter (lowercase, snake_case)"
     )
     headline: str = Field(
-        description="Short, evocative chapter headline (3-6 words). Avoid using 'and' - prefer more specific, focused headlines.")
+        description="Catchy, story-like chapter headline (2-5 words). Make it engaging and evocative, like a book chapter title. Avoid using 'and' - prefer vivid, specific headlines.")
     description: str = Field(
-        description="Brief description of this life period (1-2 sentences)"
+        description="Crisp narrative commentary on this life period (1-2 sentences). Write like a storyteller providing context, not a dry summary. Connect to the overarching story arc."
     )
     date_start: str = Field(
         description="ISO-8601 date when this chapter begins (YYYY-MM-DD, YYYY-MM, or YYYY)"
@@ -153,6 +153,9 @@ class ChapterGenerationOutput(BaseModel):
     """Output model for chapter generation phase."""
     chapters: List[LifeChapter] = Field(
         description="List of life chapters grouping the events"
+    )
+    conclusion: str = Field(
+        description="A crisp, powerful conclusion statement about this person's life story (1-2 sentences). Capture their legacy or the essence of their journey."
     )
 
 
@@ -1879,25 +1882,29 @@ def call_openai_chapter_generation(
     client = OpenAI(api_key=api_key)
 
     system = (
-        "You are a meticulous historian organizing biographical events into meaningful life chapters. "
-        "Create coherent narrative groupings that represent distinct phases of the person's life. "
+        "You are a skilled biographer crafting a compelling narrative from life events. "
+        "Your task is to organize events into engaging chapters that read like a well-told story. "
+        "Write with energy and insight, making each chapter feel like part of a coherent journey. "
         "All output must be in English only."
     )
 
     instructions = (
-        "Based on the established life events provided, create 3-5 meaningful life chapters that group these events.\n\n"
+        "Based on the established life events provided, create 3-5 compelling life chapters that tell this person's story.\n\n"
         "CHAPTER REQUIREMENTS:\n"
         "- Each chapter represents a distinct phase of the person's life\n"
         "- Chapters must be chronological and non-overlapping\n"
         "- The first chapter should start with or before the first event\n"
         "- The last chapter should end with or after the last event\n"
-        "- Every event must belong to exactly one chapter based on its date\n\n"
+        "- Every event must belong to exactly one chapter based on its date\n"
+        "- Chapters should flow into each other, creating narrative momentum\n\n"
         "CHAPTER STRUCTURE:\n"
         "- id: Unique identifier (lowercase, snake_case)\n"
-        "- headline: Short, evocative headline (3-6 words). IMPORTANT: Avoid using 'and' in headlines - "
-        "instead, choose a more focused, specific theme. For example, instead of 'Education and Early Career', "
-        "use 'Academic Foundations' or 'Scholarly Beginnings'. Instead of 'War and Persecution', use 'Wartime Struggles'.\n"
-        "- description: Brief description of this life period (1-2 sentences)\n"
+        "- headline: CATCHY, story-like chapter title (2-5 words). Think like a book chapter - vivid, evocative, intriguing. "
+        "AVOID 'and' - be specific and focused. Examples: 'Breaking the Code', 'Exile in Paris', 'The Vienna Circle', "
+        "'Rise to Power', 'Final Reckoning', 'A Mind Divided', 'Into the Unknown'.\n"
+        "- description: NARRATIVE COMMENTARY (1-2 sentences). Don't just summarize - provide storytelling context. "
+        "Set the tone, hint at stakes, connect to the broader arc. Write like you're introducing a chapter in a biography. "
+        "Use active, engaging language.\n"
         "- date_start, date_start_precision: When this chapter begins\n"
         "- date_end, date_end_precision: When this chapter ends\n"
         "- age_start, age_end: Subject's age at chapter start/end (null if not applicable)\n"
@@ -1906,12 +1913,17 @@ def call_openai_chapter_generation(
         "- location: A summary of the main geographic area for this chapter - NOT a list of cities, but a regional summary. "
         "For example: 'England' (not 'London, Cambridge, Manchester'), 'United States' (not 'Princeton, New York, Boston'), "
         "'Central Europe' (not 'Vienna, Prague, Budapest'). Use the broadest appropriate region.\n\n"
-        "HEADLINE GUIDELINES:\n"
-        "- DO NOT use 'and' to combine two themes - pick the dominant theme\n"
-        "- Good examples: 'Early Years in Vienna', 'Wartime Service', 'Academic Career', 'Literary Fame', 'Final Years'\n"
-        "- Bad examples: 'Education and Career', 'War and Peace', 'Writing and Teaching'\n"
-        "- Each headline should capture the essence of that life period in a focused way\n\n"
-        "Analyze the events and create chapters that tell a coherent life story."
+        "CONCLUSION:\n"
+        "- After all chapters, provide a crisp, powerful conclusion statement (1-2 sentences)\n"
+        "- Capture the person's legacy, lasting impact, or the essence of their life journey\n"
+        "- Make it memorable and meaningful - this is the final word on their story\n\n"
+        "STORYTELLING GUIDELINES:\n"
+        "- Headlines should intrigue and invite the reader in\n"
+        "- Descriptions should provide narrative context, not just facts\n"
+        "- Connect chapters so they flow as a continuous story\n"
+        "- Use vivid, concrete language over abstract generalities\n"
+        "- The conclusion should resonate and leave a lasting impression\n\n"
+        "Craft a story that does justice to this remarkable life."
     )
 
     for attempt in range(retry_count + 1):
@@ -2001,12 +2013,12 @@ def generate_chapters_for_events(
     birth_date: Optional[str],
     death_date: Optional[str],
     model: str,
-) -> Tuple[List[LifeChapter], List[LifeEvent]]:
+) -> Tuple[List[LifeChapter], List[LifeEvent], str]:
     """
     Generate chapters for the established events and assign events to chapters.
 
     Returns:
-        Tuple of (chapters, events_with_chapter_assignments)
+        Tuple of (chapters, events_with_chapter_assignments, conclusion)
     """
     # Build prompt with all event information
     prompt = build_chapter_generation_prompt(
@@ -2021,7 +2033,7 @@ def generate_chapters_for_events(
         merged_events, chapter_output.chapters
     )
 
-    return chapter_output.chapters, events_with_chapters
+    return chapter_output.chapters, events_with_chapters, chapter_output.conclusion
 
 
 def research_images_for_all_events(
@@ -2639,14 +2651,14 @@ def generate_person_events(
 
     # CHAPTER GENERATION: Create chapters based on established events
     print(f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
-    chapters, events_with_chapters = generate_chapters_for_events(
+    chapters, events_with_chapters, conclusion = generate_chapters_for_events(
         merged_events=merged_events,
         person_name=life_plan.person.name,
         birth_date=life_plan.person.birth_date,
         death_date=life_plan.person.death_date,
         model=model,
     )
-    print(f"[Step 7/11] Generated {len(chapters)} chapters")
+    print(f"[Step 7/11] Generated {len(chapters)} chapters with conclusion")
 
     # PHASE 3: Event-specific image discovery
     print(
@@ -2684,6 +2696,7 @@ def generate_person_events(
         "created_on": life_plan.created_on,
         "person": person_data,
         "chapters": [ch.model_dump() for ch in chapters] if chapters else None,
+        "conclusion": conclusion if conclusion else None,
         "events": [ev.model_dump() for ev in enriched_events],
     }
 
