@@ -822,7 +822,9 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
     const displayText = match[2] || match[1];
     const annotation = annotations[termKey];
 
-    // Only add annotation if it exists AND we haven't seen this term before
+    // Track this range regardless of whether annotation exists
+    // If annotation exists AND we haven't seen this term before, mark it as an annotation
+    // Otherwise, mark it as plain text (to strip the markup)
     if (annotation && !seenTermKeys.has(termKey)) {
       seenTermKeys.add(termKey); // Mark this term as used
       annotationRanges.push({
@@ -832,6 +834,15 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
         termKey,
         displayText,
         annotation,
+      });
+    } else {
+      // Annotation markup exists but no annotation definition, or duplicate
+      // Add as a plain text replacement (strip the markup, keep display text)
+      annotationRanges.push({
+        start: match.index,
+        end: annotationPattern.lastIndex,
+        type: 'unresolved-annotation',
+        displayText,
       });
     }
   }
@@ -947,6 +958,12 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
         termKey: range.termKey,
         displayText: range.displayText,
         annotation: range.annotation,
+      });
+    } else if (range.type === 'unresolved-annotation') {
+      // Unresolved annotation: just add the display text as plain text
+      segments.push({
+        type: 'text',
+        content: range.displayText,
       });
     } else if (range.type === 'person') {
       segments.push({
