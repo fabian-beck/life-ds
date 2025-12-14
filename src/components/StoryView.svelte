@@ -248,6 +248,8 @@
     ...eventSlides.flatMap((slide) =>
       getValidImages(slide.images).map((img) => {
         const imgObj = typeof img === "string" ? { url: img } : img;
+        // Find the actual slide index for this event
+        const actualSlideIndex = eventIndexToSlideIndex.get(slide.eventIndex) ?? -1;
         return {
           url: imgObj.url,
           caption: imgObj.caption || null,
@@ -258,7 +260,7 @@
           eventIndex: slide.eventIndex,
           eventTitle: slide.title,
           eventDate: slide.date,
-          slideIndex: slide.eventIndex + 1, // +1 because overview is at 0
+          slideIndex: actualSlideIndex,
         };
       })
     ),

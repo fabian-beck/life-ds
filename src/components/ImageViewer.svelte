@@ -42,8 +42,8 @@
   $: isDifferentEvent =
     image &&
     image.slideIndex !== undefined &&
-    image.slideIndex !== activeSlideIndex &&
-    image.slideIndex > 0;
+    image.slideIndex >= 0 &&
+    image.slideIndex !== activeSlideIndex;
 
   // Navigation availability
   $: canGoPrev = currentIndex > 0;
