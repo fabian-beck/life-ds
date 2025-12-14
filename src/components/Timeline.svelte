@@ -1014,7 +1014,7 @@
     width: 100%;
     height: 100%;
     border: none;
-    background: rgba(var(--secondary-rgb, 56, 189, 248), 0.4);
+    background: rgba(148, 163, 184, 0.3);
     border-radius: 2px; /* Small rounded corners for square */
     transition:
       background-color 0.25s ease,
@@ -1022,7 +1022,7 @@
   }
 
   .dot.conclusion-dot:hover .dot-inner-conclusion {
-    background: rgba(var(--secondary-rgb, 56, 189, 248), 0.6);
+    background: rgba(148, 163, 184, 0.5);
   }
 
   .dot.conclusion-dot.active .dot-inner-conclusion {
