@@ -1,230 +1,310 @@
 {
-  "dataset": "wikipedia-life-events",
-  "created_on": "2025-11-18",
+  "dataset": "wikipedia-life-timeline",
+  "created_on": "2025-12-14",
   "person": {
     "name": "Henry_II",
     "birth_date": null,
     "death_date": "1024-07-13",
     "primary_roles": [
-      "monarch",
-      "emperor"
+      "emperor",
+      "ruler",
+      "patron"
     ],
-    "summary": "Henry II (6 May 973 \u2013 13 July 1024), also known as Saint Henry, was Duke of Bavaria, King of the Romans, King of Italy, and Holy Roman Emperor. The last ruler of the Ottonian dynasty, he consolidated royal power north of the Alps, relied heavily on the Church and episcopal administration, promoted monastic reform, founded the Diocese of Bamberg, and fought major wars against Boles\u0142aw I of Poland and rivals in Italy. Deeply pious and childless, he was canonized in 1146.",
+    "tagline": "Saint-emperor who founded Bamberg",
+    "summary": "Henry II of the Ottonian dynasty ruled as King of Germany and Italy and, from 1014, as Holy Roman Emperor. His reign was marked by close collaboration with the Church, major conflicts on the empire\u2019s eastern frontiers, and enduring institutional foundations such as the Diocese of Bamberg. Married to Cunigunde of Luxembourg, he died childless and was later venerated as a saint.",
     "wikipedia": "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
     "portrait": {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/Henry_II%2C_Holy_Roman_Emperor.jpg",
-      "source": "https://commons.wikimedia.org/wiki/File:Henry_II,_Holy_Roman_Emperor.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Seal_of_Henry_II%2C_Holy_Roman_Emperor.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Seal_of_Henry_II,_Holy_Roman_Emperor.jpg",
+      "caption": "Seal of Henry II, Holy Roman Emperor.",
+      "creator": "Unknown authorUnknown author",
+      "license": "Public domain"
     }
   },
+  "chapters": [
+    {
+      "id": "border_wars_sacred_statecraft",
+      "headline": "Border Wars, Sacred Statecraft",
+      "description": "Kingship forces Henry south over the Alps and east toward the marches, where every frontier dispute threatens to unravel the realm\u2019s authority. He answers with a signature blend\u2014campaigns in Italy, hard bargaining with Poland, and bold church-building like Bamberg\u2014making bishops and new dioceses the scaffolding of imperial rule.",
+      "date_start": "1004",
+      "date_start_precision": "year",
+      "date_end": "1013",
+      "date_end_precision": "year",
+      "age_start": 31,
+      "age_end": 40,
+      "involved_people": [
+        "Arduin of Ivrea",
+        "Thietmar of Merseburg",
+        "Boles\u0142aw I the Brave",
+        "Cunigunde of Luxembourg",
+        "Otto III, Holy Roman Emperor"
+      ],
+      "location": "Central Europe"
+    },
+    {
+      "id": "imperial_crowning_final_settlements",
+      "headline": "Imperial Crown, Final Settlements",
+      "description": "In Rome, Henry\u2019s coronation transforms a hard-won kingship into a claim on Christendom itself, bound tightly to papal partnership and Cunigunde\u2019s co-rulership. With Arduin finally crushed, Poland pacified at Bautzen, and reform pushed at Pavia, his last decade reads like a drive for order\u2014until death without an heir turns stability into a new contest.",
+      "date_start": "1014-02-14",
+      "date_start_precision": "day",
+      "date_end": "1024-07-13",
+      "date_end_precision": "day",
+      "age_start": 40,
+      "age_end": 51,
+      "involved_people": [
+        "Pope Benedict VIII",
+        "Cunigunde of Luxembourg",
+        "Arduin of Ivrea",
+        "Boles\u0142aw I the Brave",
+        "Conrad II, Holy Roman Emperor"
+      ],
+      "location": "Central Europe"
+    }
+  ],
+  "conclusion": "Henry II ruled like a builder in an age of fracture\u2014raising dioceses, welding throne to altar, and treating reform as a weapon of governance. He left no child to inherit his crown, but he left institutions strong enough to outlive him, and a model of imperial authority shaped by the Church\u2019s restless conscience.",
   "events": [
     {
-      "date": "1002-07-09",
+      "date": "1002-06-07",
       "date_precision": "day",
+      "date_end": "1002-09-08",
+      "date_end_precision": "day",
       "age": 29,
-      "title": "Contested accession and coronation as King of Germany (King of the Romans)",
-      "description": "After the death of Emperor Otto III without heirs in January 1002 and a contested succession, Henry secured sufficient support to be anointed and crowned King of Germany (Rex Romanorum) by Archbishop Willigis at Mainz on 9 July 1002. He was the first German king to adopt the title King of the Romans prior to imperial coronation in Rome and the first since Otto I not to be crowned at Aachen.",
+      "title": "Elected and crowned German king",
+      "description": "After the sudden death of Otto III without an heir, Henry moved quickly to secure election as King of the Romans and to obtain the regalia needed to legitimize his claim. He was crowned with support from key church leaders, then spent months compelling recognition across regions where opposition or hesitation remained. This succession struggle established him as the new head of the Ottonian realm.",
       "locations": [
         {
-          "name_historic": "Mainz, Duchy of Franconia",
-          "name_modern": null,
+          "name_historic": "Mainz",
+          "name_modern": "Mainz, Germany",
           "centroid": [
             8.2736253,
             49.9995205
           ],
           "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
-      ],
-      "images": [
+        },
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Kronung_Heinrich_II.jpg",
-          "caption": "Medieval illumination depicting the coronation of Henry II as King of the Romans.",
-          "source": "https://commons.wikimedia.org/wiki/File:Kronung_Heinrich_II.jpg"
-        }
-      ]
-    },
-    {
-      "date": "1002-08-10",
-      "date_precision": "day",
-      "age": 29,
-      "title": "Cunigunde crowned Queen of Germany",
-      "description": "Shortly after his own coronation, Henry arranged for Archbishop Willigis to crown his wife Cunigunde of Luxembourg as Queen of Germany at Paderborn on 10 August 1002. Her coronation formalized her role as Henry's consort and political partner within the kingdom.",
-      "locations": [
-        {
-          "name_historic": "Paderborn, Duchy of Saxony",
-          "name_modern": null,
+          "name_historic": "Aachen",
+          "name_modern": "Aachen, Germany",
           "centroid": [
-            8.752653,
-            51.7177044
+            6.083862,
+            50.776351
           ],
-          "primary": true
+          "primary": false
+        },
+        {
+          "name_historic": "Pavia",
+          "name_modern": "Pavia, Italy",
+          "centroid": [
+            9.1378251,
+            45.0368547
+          ],
+          "primary": false
         }
       ],
+      "involved_people": [
+        "Otto III, Holy Roman Emperor",
+        "Willigis",
+        "Eckard I, Margrave of Meissen",
+        "Herman II, Duke of Swabia",
+        "Arduin of Ivrea"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
-        "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg"
+        "https://en.wikipedia.org/wiki/1002_German_royal_election",
+        "https://en.wikipedia.org/wiki/Otto_III,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Arduin_of_Ivrea"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Heinrich_II_und_Kunigunde.JPG",
-          "caption": "Relief showing Emperor Henry II with his wife Cunigunde.",
-          "source": "https://commons.wikimedia.org/wiki/File:Heinrich_II_und_Kunigunde.JPG"
-        }
-      ]
-    },
-    {
-      "date": "1002-10-01",
-      "date_precision": "day",
-      "age": 29,
-      "title": "Submission of Herman II of Swabia and consolidation of royal authority",
-      "description": "After months of armed conflict and political struggle over the succession, Herman II, Duke of Swabia, was defeated near Strasbourg and on 1 October 1002 submitted to Henry II's authority. Though Herman retained the ducal title until his death, Henry effectively secured the recognition of his kingship across Swabia, strengthening his control over the duchies.",
-      "locations": [
-        {
-          "name_historic": "Near Strasbourg, Duchy of Swabia",
-          "name_modern": null,
-          "centroid": null,
-          "primary": true
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Kr%C3%B6nungsbild_Heinrichs_II.jpg",
+          "caption": "Depiction of the coronation of Henry II (Regensburg Sacramentary)",
+          "source": "https://commons.wikimedia.org/wiki/File:Kr\u00f6nungsbild_Heinrichs_II.jpg"
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Henry_II_at_the_synod_of_Frankfurt%2C_1007.jpg",
-          "caption": "Nineteenth-century depiction of Henry II presiding at a royal assembly, symbolizing his authority over the German nobility.",
-          "source": "https://commons.wikimedia.org/wiki/File:Henry_II_at_the_synod_of_Frankfurt,_1007.jpg"
-        }
-      ]
+      "event_type_icon": "mdi-crown",
+      "chapter": "ducal_power_royal_gamble"
     },
     {
-      "date": "1004-05-15",
+      "date": "1004-05-14",
       "date_precision": "day",
       "age": 31,
-      "title": "Anointed King of Italy at Pavia after first Italian expedition",
-      "description": "Responding to appeals from Italian bishops opposed to the self-proclaimed king Arduin of Ivrea, Henry II led an expedition into northern Italy in 1004. After gaining the allegiance of many clergy and nobles and entering Pavia, he was anointed King of Italy (Rex Italiae) on 15 May 1004, reasserting German royal authority over the Italian kingdom.",
+      "title": "Crowned King of Italy",
+      "description": "Henry led a major expedition into Italy to contest the rule of the Italian king Arduin of Ivrea and to assert imperial authority south of the Alps. He received the [[Lombard crown|Lombard crown]] in a politically charged ceremony at Pavia, reinforcing the traditional link between German kingship and Italian rule. The campaign demonstrated both his ambition and the ongoing instability of Italy within the empire.",
       "locations": [
         {
-          "name_historic": "Pavia, Kingdom of Italy",
-          "name_modern": null,
+          "name_historic": "Pavia",
+          "name_modern": "Pavia, Lombardy, Italy",
           "centroid": [
             9.1378251,
             45.0368547
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Ivrea",
+          "name_modern": "Ivrea, Piedmont, Italy",
+          "centroid": [
+            7.874797,
+            45.4673791
+          ],
+          "primary": false
         }
+      ],
+      "involved_people": [
+        "Arduin of Ivrea"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
         "https://en.wikipedia.org/wiki/Arduin_of_Ivrea"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Italy_1000_AD_alt1.svg",
-          "caption": "Political map of Italy around the year 1000, showing the fragmented territories over which Henry II claimed kingship.",
-          "source": "https://commons.wikimedia.org/wiki/File:Italy_1000_AD_alt1.svg"
+      "event_type_icon": "mdi-crown",
+      "chapter": "border_wars_sacred_statecraft",
+      "annotations": {
+        "Lombard crown": {
+          "explanation": "The Iron Crown of Lombardy, traditionally used in the coronation of kings of Italy, symbolizing rule over the former Lombard kingdom in northern Italy.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Iron_Crown_of_Lombardy"
         }
-      ]
+      }
     },
     {
       "date": "1004",
       "date_precision": "year",
-      "date_end": "1018",
-      "date_end_precision": "year",
-      "date_note": "Henry\u2019s major conflicts with Boles\u0142aw I spanned much of his reign, culminating in the Peace of Bautzen in 1018",
       "age": 31,
-      "title": "Prolonged wars and diplomacy with Boles\u0142aw I of Poland",
-      "description": "From the early years of his reign Henry II engaged in a series of wars and negotiations with Boles\u0142aw I the Brave of Poland over control of Meissen, Lusatia, Bohemia, and other border regions. Campaigns, alliances, and truces alternated until the Peace of Bautzen in 1018 confirmed a compromise settlement. The Polish conflict dominated Henry\u2019s foreign policy and highlighted his use of both military and diplomatic means.",
+      "title": "Restores Merseburg bishopric",
+      "description": "Henry backed the re-establishment of the Diocese of Merseburg, reversing an earlier suppression and strengthening ecclesiastical structures in a strategically sensitive frontier region. The move aligned royal authority with missionary and administrative goals along the Elbe and eastern borderlands. It also signaled his reliance on bishops as partners in governance.",
       "locations": [
         {
-          "name_historic": "Eastern Marches of the Holy Roman Empire",
-          "name_modern": null,
+          "name_historic": "Merseburg",
+          "name_modern": "Merseburg, Germany",
           "centroid": [
-            19.134422,
-            52.215933
+            11.996148,
+            51.3564413
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Thietmar of Merseburg"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
-        "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave"
+        "https://en.wikipedia.org/wiki/Thietmar_of_Merseburg"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Boleslaw_I_Chrobry_%28274954%29.jpg",
-          "caption": "Later depiction of Boles\u0142aw I the Brave, Henry II\u2019s main Polish adversary.",
-          "source": "https://commons.wikimedia.org/wiki/File:Boleslaw_I_Chrobry_(274954).jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Merseburg_Cathedral_%281%29.jpg",
+          "caption": "Merseburg Cathedral (Saints John the Baptist and Lawrence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Merseburg_Cathedral_(1).jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-church",
+      "chapter": "border_wars_sacred_statecraft"
+    },
+    {
+      "date": "1005",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Makes peace with Poland",
+      "description": "Amid intensifying conflict with Boles\u0142aw I of Poland over borderlands and influence among Slavic regions, Henry reached an early settlement intended to stabilize the eastern frontier. The agreement temporarily limited further escalation while Henry managed other pressures within the empire. The struggle with Poland, however, would continue in renewed phases.",
+      "locations": [],
+      "involved_people": [
+        "Boles\u0142aw I the Brave"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave"
+      ],
+      "event_type_icon": "mdi-handshake",
+      "chapter": "border_wars_sacred_statecraft"
     },
     {
       "date": "1007",
       "date_precision": "year",
       "age": 34,
-      "title": "Foundation of the Diocese of Bamberg",
-      "description": "In 1007 Henry II founded the Diocese of Bamberg by elevating the region around Bamberg and endowing it with extensive lands, many taken from his own Bavarian and royal domains. The new bishopric strengthened royal control over eastern Franconia and served Henry's program of using the Church as a pillar of imperial administration and missionary work.",
+      "title": "Founds Diocese of Bamberg",
+      "description": "Henry established the [[Diocese of Bamberg|Diocese of Bamberg]], a major ecclesiastical foundation designed to strengthen Christian organization and royal presence in a key region of the realm. The new bishopric, supported by endowments and royal patronage, became closely associated with Henry and Cunigunde\u2019s pious rulership. It later served as an enduring monument to his church-centered political strategy.",
       "locations": [
         {
-          "name_historic": "Bamberg, Duchy of Franconia",
-          "name_modern": null,
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Bavaria, Germany",
           "centroid": [
             10.8868478,
             49.8916044
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Frankfurt",
+          "name_modern": "Frankfurt am Main, Germany",
+          "centroid": [
+            8.6820917,
+            50.1106444
+          ],
+          "primary": false
         }
       ],
+      "involved_people": [
+        "Cunigunde of Luxembourg",
+        "Otto III, Holy Roman Emperor"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
-        "https://en.wikipedia.org/wiki/Prince-Bishopric_of_Bamberg"
+        "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg",
+        "https://en.wikipedia.org/wiki/Otto_III,_Holy_Roman_Emperor"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Consecration_of_the_Bamberg_Cathedral_in_the_presence_of_Emperor_Henry_II_and_his_wife_Cunigunde_in_1007.jpg",
-          "caption": "Historical painting of the consecration of Bamberg Cathedral in the presence of Henry II and Cunigunde in 1007.",
+          "caption": "Consecration of Bamberg Cathedral with Henry II and Cunigunde",
           "source": "https://commons.wikimedia.org/wiki/File:Consecration_of_the_Bamberg_Cathedral_in_the_presence_of_Emperor_Henry_II_and_his_wife_Cunigunde_in_1007.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-church",
+      "chapter": "border_wars_sacred_statecraft",
+      "annotations": {
+        "Diocese of Bamberg": {
+          "explanation": "A bishopric created in 1007 by Henry II, with its seat at Bamberg; it became an important ecclesiastical principality within the Holy Roman Empire.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Roman_Catholic_Archdiocese_of_Bamberg"
+        }
+      }
     },
     {
-      "date": "1011",
+      "date": "1013",
       "date_precision": "year",
-      "age": 38,
-      "title": "Issuance of royal and imperial charters under his signum manus",
-      "description": "Throughout his reign Henry II issued numerous royal diplomas and charters granting privileges to churches, monasteries, and nobles. A charter from 1011 bearing his signum manus exemplifies his formal exercise of royal authority and close collaboration with ecclesiastical institutions in governance.",
+      "age": 40,
+      "title": "Reaches Merseburg settlement",
+      "description": "In 1013, Henry negotiated a new settlement with [[Boles\u0142aw I|Boles\u0142aw I]] at Merseburg that reshaped contested arrangements in the eastern marches and sought to bind elites through diplomacy. The agreement included a dynastic marriage alliance involving Henry\u2019s relatives and the Polish ruling house, reflecting the use of kinship ties to manage frontier politics. Despite this, mistrust and renewed warfare soon re-emerged.",
       "locations": [
         {
-          "name_historic": "Holy Roman Empire",
-          "name_modern": null,
-          "centroid": null,
+          "name_historic": "Merseburg",
+          "name_modern": "Merseburg, Germany",
+          "centroid": [
+            11.996148,
+            51.3564413
+          ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
-        "https://commons.wikimedia.org/wiki/File:Kaiser_Heinrich_II._signum_manus_(1011).png"
+      "involved_people": [
+        "Boles\u0142aw I the Brave"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Kaiser_Heinrich_II._signum_manus_%281011%29.png",
-          "caption": "Facsimile of Henry II\u2019s signum manus on a charter issued in 1011.",
-          "source": "https://commons.wikimedia.org/wiki/File:Kaiser_Heinrich_II._signum_manus_(1011).png"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave",
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
+      ],
+      "event_type_icon": "mdi-handshake",
+      "chapter": "border_wars_sacred_statecraft",
+      "annotations": {
+        "Boles\u0142aw I": {
+          "explanation": "Ruler of Poland (Duke 992\u20131025; crowned first King of Poland in 1025) and Henry II\u2019s main eastern rival and negotiating partner in the early 11th-century Polish\u2013German wars.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave"
         }
-      ]
+      }
     },
     {
       "date": "1014-02-14",
       "date_precision": "day",
       "age": 40,
-      "title": "Coronation as Holy Roman Emperor by Pope Benedict VIII",
-      "description": "On 14 February 1014, during his second Italian expedition, Henry II was crowned Holy Roman Emperor by Pope Benedict VIII in Rome. The imperial coronation confirmed his position as emperor of the Romans and symbolized the alliance between the German monarchy and the papacy.",
+      "title": "Crowned Holy Roman Emperor",
+      "description": "In Rome, Henry was crowned emperor by Pope Benedict VIII, publicly affirming the alliance between the German monarchy and the papacy. Cunigunde was crowned empress alongside him, reinforcing their image as a ruling partnership. The coronation capped Henry\u2019s efforts to secure authority across both Germany and Italy and to place imperial power at the heart of Western Christendom.",
       "locations": [
         {
-          "name_historic": "Rome, Papal States",
-          "name_modern": null,
+          "name_historic": "Rome",
+          "name_modern": "Rome, Italy",
           "centroid": [
             12.4829321,
             41.8933203
@@ -232,71 +312,180 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Pope Benedict VIII",
+        "Cunigunde of Luxembourg"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
-        "https://en.wikipedia.org/wiki/Benedict_VIII"
+        "https://en.wikipedia.org/wiki/Pope_Benedict_VIII",
+        "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Henry_II_crowned_Holy_Roman_Emperor.jpg",
-          "caption": "Illumination showing Henry II being crowned Holy Roman Emperor by the pope.",
-          "source": "https://commons.wikimedia.org/wiki/File:Henry_II_crowned_Holy_Roman_Emperor.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/71/Benedetto-viii-benefattore.jpg",
+          "caption": "Pope Benedict VIII with Emperor Henry II (Vatican fresco)",
+          "source": "https://commons.wikimedia.org/wiki/File:Benedetto-viii-benefattore.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-crown",
+      "chapter": "imperial_crowning_final_settlements"
     },
     {
       "date": "1014",
       "date_precision": "year",
       "age": 41,
-      "title": "Commission and donation of the Gospel Book of Henry II",
-      "description": "Around the time of his imperial coronation, Henry II commissioned and donated a richly illuminated Gospel Book to the Church, reflecting his piety and patronage of Ottonian art. The manuscript, now known as the Gospel Book of Henry II, illustrates his desire to associate imperial rulership with liturgical splendour and monastic reform.",
+      "title": "Forces Arduin\u2019s submission",
+      "description": "Henry\u2019s renewed Italian intervention helped bring the long contest with Arduin of Ivrea to an end, as Arduin\u2019s position collapsed and he retired from power in 1014. This outcome strengthened the imperial claim to Italy, though Italian politics remained volatile and often resistant to distant rule. Henry\u2019s response combined military pressure with the political use of church allies.",
       "locations": [
         {
-          "name_historic": "Holy Roman Empire",
-          "name_modern": null,
-          "centroid": null,
+          "name_historic": "Ivrea",
+          "name_modern": "Ivrea, Piedmont, Italy",
+          "centroid": [
+            7.874797,
+            45.4673791
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Rome",
+          "name_modern": "Rome, Italy",
+          "centroid": [
+            12.4829321,
+            41.8933203
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Pavia",
+          "name_modern": "Pavia, Lombardy, Italy",
+          "centroid": [
+            9.1378251,
+            45.0368547
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Arduin of Ivrea"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Arduin_of_Ivrea",
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "border_wars_sacred_statecraft"
+    },
+    {
+      "date": "1018-01-30",
+      "date_precision": "day",
+      "age": 44,
+      "title": "Concludes Peace of Bautzen",
+      "description": "Henry reached a major peace settlement with Poland, concluding the [[Peace of Bautzen|Peace of Bautzen]] and ending a long cycle of warfare that had strained imperial resources and frontier stability. The agreement acknowledged political realities in the border marches and concluded hostilities that had repeatedly flared since the early years of his reign. It marked a turning point toward consolidation after years of conflict.",
+      "locations": [
+        {
+          "name_historic": "Bautzen",
+          "name_modern": "Bautzen, Germany",
+          "centroid": [
+            14.4276003,
+            51.1809132
+          ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Boles\u0142aw I the Brave"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
-        "https://en.wikipedia.org/wiki/Ottonian_art"
+        "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave"
+      ],
+      "event_type_icon": "mdi-handshake",
+      "chapter": "imperial_crowning_final_settlements",
+      "annotations": {
+        "Peace of Bautzen": {
+          "explanation": "A 1018 peace treaty between Henry II and Boles\u0142aw I that ended their wars and confirmed Boles\u0142aw\u2019s control of the March of Lusatia and the Milceni lands (around Bautzen).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Peace_of_Bautzen"
+        }
+      }
+    },
+    {
+      "date": "1022",
+      "date_precision": "year",
+      "age": 49,
+      "title": "Holds reform synod at Pavia",
+      "description": "Henry and Pope Benedict VIII convened a major synod at Pavia to address clerical discipline and abuses such as [[simony|simony]] and [[clerical celibacy|sexual incontinence among clergy]]. The council reflected Henry\u2019s broader reliance on Church reform as a tool of governance and moral authority. It also demonstrated the continuing political importance of cooperation between emperor and pope.",
+      "locations": [
+        {
+          "name_historic": "Pavia",
+          "name_modern": "Pavia, Italy",
+          "centroid": [
+            9.1378251,
+            45.0368547
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pope Benedict VIII"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Pope_Benedict_VIII"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/31/11th-century_painters_-_Gospel_Book_of_Henry_II_-_WGA15924.jpg",
-          "caption": "Illuminated page from the Gospel Book of Henry II, commissioned for imperial liturgical use.",
-          "source": "https://commons.wikimedia.org/wiki/File:11th-century_painters_-_Gospel_Book_of_Henry_II_-_WGA15924.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Duomo_Pavia.jpg",
+          "caption": "Duomo of Pavia, Italy",
+          "source": "https://commons.wikimedia.org/wiki/File:Duomo_Pavia.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-book-cross",
+      "chapter": "imperial_crowning_final_settlements",
+      "annotations": {
+        "simony": {
+          "explanation": "The buying or selling of church offices or spiritual benefits, a major target of medieval reform movements.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Simony"
+        },
+        "clerical celibacy": {
+          "explanation": "The discipline requiring ordained clergy to abstain from sexual relations and marriage; enforcement was a recurrent issue in 11th-century church reform.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Clerical_celibacy"
+        }
+      }
     },
     {
       "date": "1024-07-13",
       "date_precision": "day",
       "age": 51,
-      "title": "Death of Henry II at Grone",
-      "description": "Henry II died on 13 July 1024 at Grone near G\u00f6ttingen, having ruled as Holy Roman Emperor for a decade and as king for over twenty years. Childless, he was the last ruler of the Ottonian dynasty; after his death, the German princes elected Conrad II, initiating the Salian line of emperors.",
+      "title": "Death without an heir",
+      "description": "Henry died after an eventful reign in which he expanded royal influence through ecclesiastical institutions and sustained military and diplomatic struggles on multiple frontiers. His childlessness made the imperial succession a pressing political question, shaping the transition to the next dynasty. He was buried at Bamberg, the see most closely tied to his personal patronage.",
       "locations": [
         {
-          "name_historic": "Grone (near G\u00f6ttingen), Duchy of Saxony",
-          "name_modern": null,
+          "name_historic": "Grona",
+          "name_modern": "Gronau (Leine), Germany",
           "centroid": [
-            9.9112023,
-            45.727504
+            9.7754675,
+            52.0843618
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Germany",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
         }
+      ],
+      "involved_people": [
+        "Cunigunde of Luxembourg",
+        "Conrad II, Holy Roman Emperor"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
+        "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
+        "https://en.wikipedia.org/wiki/Conrad_II,_Holy_Roman_Emperor"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/BambergDom-GrabHeinrichKunigunde.JPG",
-          "caption": "Tomb of Henry II and Cunigunde in Bamberg Cathedral.",
-          "source": "https://commons.wikimedia.org/wiki/File:BambergDom-GrabHeinrichKunigunde.JPG"
-        }
-      ]
+      "event_type_icon": "mdi-cross",
+      "chapter": "imperial_crowning_final_settlements"
     }
   ]
 }

@@ -1,0 +1,240 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2025-12-14",
+  "ego": {
+    "name": "Levi Strauss",
+    "birth_year": 1829,
+    "death_year": 1902,
+    "primary_roles": [
+      "businessman",
+      "industrialist",
+      "entrepreneur"
+    ],
+    "summary": "German-born American merchant and industrialist who built a leading San Francisco dry-goods firm (Levi Strauss & Co.) and, with tailor Jacob W. Davis, patented riveted work pants that became modern blue jeans.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Levi_Strauss"
+  },
+  "connections": [
+    {
+      "person_name": "Hirsch Strau\u00df",
+      "relationship_type": "family/father",
+      "relationship_description": "Father of Levi Strauss; a traveling peddler who died of tuberculosis when Levi was 16, contributing to the family's financial hardship and later emigration.",
+      "start_year": 1829,
+      "end_year": 1845,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Family life in Buttenheim"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "Death year is inferred from Levi being 16 when his father died."
+    },
+    {
+      "person_name": "Rebecca Strauss",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother of Levi Strauss; emigrated with Levi and younger children to the United States in 1847 to join older sons in New York.",
+      "start_year": 1829,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Emigration from Bavaria to the United States (New York)",
+        "Early resettlement in New York"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "Her death year is not provided in the supplied text."
+    },
+    {
+      "person_name": "Louis Strauss",
+      "relationship_type": "family/brother",
+      "relationship_description": "Brother of Levi Strauss; worked in the family textile trade and later helped found the San Francisco business with Levi and their brother-in-law.",
+      "start_year": 1829,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Family textile/mercantile work in New York (contextual)",
+        "Co-founding the San Francisco dry-goods business (1853)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "The German article explicitly names Louis as Levi's brother involved in the 1853 founding."
+    },
+    {
+      "person_name": "Fanny Stern (n\u00e9e Strauss)",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Sister of Levi Strauss; Levi lived in San Francisco in the household of her family later in life.",
+      "start_year": 1829,
+      "end_year": 1902,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Shared household in San Francisco (late life)",
+        "Extended family life with her children (Levi's nephews)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "The German article states Levi died in a house where he lived with the family of his sister Fanny."
+    },
+    {
+      "person_name": "Jonas Strauss",
+      "relationship_type": "family/brother",
+      "relationship_description": "One of Levi Strauss's older brothers in New York, part of the family textile trade that Levi joined after emigrating.",
+      "start_year": 1847,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Family textile/mercantile business in New York"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Levi_Strauss",
+        "https://de.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "The German article mentions two older brothers in New York but does not name them; the English Levi Strauss article provides the name Jonas."
+    },
+    {
+      "person_name": "Jacob Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Nephew (son of David Stern and Fanny Stern n\u00e9e Strauss); among the nephews who inherited Levi Strauss & Co. after Levi died childless.",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Family relationship as uncle/nephew",
+        "Company succession (ownership/control passed to nephews after 1902)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "David Stern article lists Jacob Stern as an officer at incorporation and part of the post-1902 ownership."
+    },
+    {
+      "person_name": "Sigmund Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Nephew; among the nephews who inherited the company upon Levi Strauss's death and participated in company leadership in the Stern family era.",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Family relationship as uncle/nephew",
+        "Company succession and later corporate officer role (noted at 1890 incorporation)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "The German article states Levi left the firm to four nephews; the Stern article names Sigmund as one of them."
+    },
+    {
+      "person_name": "Louis Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Nephew; one of the four nephews who inherited Levi Strauss & Co. after Levi's death and later served in company leadership (e.g., treasurer at incorporation per related article).",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Family relationship as uncle/nephew",
+        "Company succession and corporate roles in the Stern family period"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Not to be confused with Levi's brother Louis Strauss."
+    },
+    {
+      "person_name": "Abraham Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Nephew; one of the four nephews who inherited the firm from Levi Strauss, with later formal company role (e.g., secretary at incorporation per related article).",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Family relationship as uncle/nephew",
+        "Company succession after Levi Strauss's death (1902)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "The German article specifies four nephews as heirs; the Stern article identifies Abraham as one of the four surviving sons who took over."
+    },
+    {
+      "person_name": "David Stern (businessman)",
+      "relationship_type": "business/co-founder",
+      "relationship_description": "Brother-in-law and business partner; co-founded the San Francisco dry-goods firm that became Levi Strauss & Co., with Stern acting as manager in early years.",
+      "start_year": 1853,
+      "end_year": 1875,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Co-founding and operating the San Francisco dry-goods business",
+        "Management and sales roles in early company operations"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Also a family tie: he married Levi's sister Fanny."
+    },
+    {
+      "person_name": "Jacob W. Davis",
+      "relationship_type": "innovation/co-inventor",
+      "relationship_description": "Tailor and key collaborator; proposed reinforcing work pants with metal rivets, approached Strauss for funding, and jointly received the 1873 patent that launched riveted jeans (\"waist overalls\").",
+      "start_year": 1870,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Fabric supply relationship (Davis bought duck/denim from Levi Strauss & Co.)",
+        "Funding and filing the rivet patent application (1872)",
+        "Holding the patent for riveted pocket openings (granted 1873)",
+        "Scaling production of riveted workwear through Strauss's company"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis",
+        "https://de.wikipedia.org/wiki/Jacob_Davis_(Schneider)"
+      ],
+      "notes": "The German article dates Davis's rivet idea to December 1870 and the patent to 20 May 1873."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Levi Strauss\u2019s family network is central to his life story: his father\u2019s early death and his mother\u2019s decision to emigrate shaped his trajectory, while siblings and extended family anchored his household in San Francisco. Although he never married and had no children, he maintained close ties with siblings and nephews."
+    },
+    {
+      "relationship_type": "business",
+      "summary": "Strauss\u2019s business relationships were strongly intertwined with kinship: he co-founded the San Francisco firm with his brother and brother-in-law, and later transferred the company to four nephews. These ties supported continuity of ownership and leadership beyond his death."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "The most consequential innovation tie in Strauss\u2019s network was his partnership with tailor Jacob W. Davis, who originated the rivet reinforcement idea and sought Strauss\u2019s financial backing. Their collaboration produced the 1873 patent and enabled scaling durable workwear into a mass-market product."
+    }
+  ]
+}

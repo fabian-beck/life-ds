@@ -1,16 +1,17 @@
 {
-  "dataset": "wiki-bio-timelines",
-  "created_on": "2025-12-05",
+  "dataset": "wikipedia-timeline-outline",
+  "created_on": "2025-12-14",
   "person": {
     "name": "Friedensreich_Hundertwasser",
     "birth_date": "1928-12-15",
     "death_date": "2000-02-19",
     "primary_roles": [
-      "painter",
+      "artist",
       "architect",
-      "activist"
+      "environmentalist"
     ],
-    "summary": "Friedensreich Hundertwasser (born Friedrich Stowasser) was an Austrian artist, architectural designer, and environmentalist known for his colorful, organic paintings and his radical, anti-rectilinear approach to architecture. After early travels and exposure to avant\u2011garde art in postwar Europe, he developed a personal style that rejected straight lines and standardized forms, advocating instead for individuality, nature\u2011integrated buildings, and ecological living. From the 1970s onward he realized numerous building projects in Europe and beyond, promoted green roofs and \"tree tenants,\" and lived a peripatetic life between Austria and New Zealand until his death at sea in 2000.",
+    "tagline": "Rebel of nature-filled architecture",
+    "summary": "Friedensreich Hundertwasser (born Friedrich Stowasser) was an Austrian artist best known for vividly colored paintings, graphic works, and idiosyncratic architectural designs that rejected straight lines and standardization. Marked by wartime survival and decades of travel, he developed an artistic worldview centered on organic form and the rights of nature. From the 1970s onward he became a prominent environmental voice and designed influential buildings that integrated vegetation and irregular, human-centered forms.",
     "wikipedia": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
     "portrait": {
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
@@ -19,170 +20,153 @@
   },
   "chapters": [
     {
-      "id": "early_life_and_war",
-      "headline": "Childhood, War, and First Art",
-      "description": "An only child in interwar Vienna, Friedrich Stowasser grew up amid family loss, Nazi persecution, and early recognition of his artistic talent, experiences that shaped his lifelong individualism and attachment to nature.",
+      "id": "vienna_under_shadow",
+      "headline": "Vienna Under Shadow",
+      "description": "Born into a city that would soon be swallowed by dictatorship, Friedrich Stowasser\u2019s earliest years were shaped by loss at home and danger in the streets. Surviving Nazi persecution with his mother left him with a lifelong distrust of imposed uniformity\u2014and a moral compass that later made his art feel like resistance.",
       "date_start": "1928-12-15",
       "date_start_precision": "day",
-      "date_end": "1948",
+      "date_end": "1945",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 20
+      "age_end": 16,
+      "involved_people": [
+        "Ernst Stowasser",
+        "Elsa Stowasser"
+      ],
+      "location": "Austria"
     },
     {
-      "id": "travels_and_artistic_breakthrough",
-      "headline": "Travels and Artistic Breakthrough",
-      "description": "As a young man he briefly attended art academy, adopted the name Hundertwasser, and roamed Europe and North Africa, absorbing influences and formulating his own theory of painting and perception while gaining international recognition.",
+      "id": "self_made_artist_on_the_road",
+      "headline": "Self-Made Artist, Open Roads",
+      "description": "After school, he breaks with the academy almost as quickly as he enters it, choosing a wilder education: travel, looking, and relentless making. Italy, Paris, and the Mediterranean become his informal studio, where \u201cHundertwasser\u201d is born as both a name and a stance\u2014art as instinct, nature as ally.",
       "date_start": "1948",
       "date_start_precision": "year",
-      "date_end": "1968",
+      "date_end": "1951",
       "date_end_precision": "year",
       "age_start": 19,
-      "age_end": 39
+      "age_end": 22,
+      "involved_people": [
+        "Ren\u00e9 Br\u00f4"
+      ],
+      "location": "Western Europe"
     },
     {
-      "id": "retreats_nature_and_global_reach",
-      "headline": "Retreats, Nature, and Global Reach",
-      "description": "Increasingly successful, Hundertwasser withdrew to rural retreats while expanding his exhibitions worldwide, deepening his ecological thinking, and laying the foundations for his later architectural and environmental projects.",
-      "date_start": "1968",
+      "id": "paris_breakthrough_public_dissenter",
+      "headline": "Paris Breakthrough, Public Dissenter",
+      "description": "In postwar Europe\u2019s crowded art arguments, Hundertwasser fights for a painting that feels alive\u2014ornamental, spiritual, defiantly nonstandard\u2014and he finds an audience. A Normandy refuge, a short-lived marriage, and the Hamburg \u201cInfinite Line\u201d rupture sharpen his public persona: not just an artist, but a provocateur unwilling to be managed.",
+      "date_start": "1952",
       "date_start_precision": "year",
-      "date_end": "1980",
+      "date_end": "1960",
       "date_end_precision": "year",
-      "age_start": 39,
-      "age_end": 51
+      "age_start": 23,
+      "age_end": 31,
+      "involved_people": [
+        "Michel Tapi\u00e9",
+        "Herta Leitner"
+      ],
+      "location": "Western Europe"
     },
     {
-      "id": "architecture_and_ecological_activism",
-      "headline": "Architecture and Ecological Activism",
-      "description": "In his later decades he became a celebrated architectural designer and public environmental advocate, realized landmark buildings, engaged in high\u2011profile protests, and divided his life between Europe and his reforestation project in New Zealand until his death.",
-      "date_start": "1980",
+      "id": "global_fame_new_identities",
+      "headline": "Global Fame, New Identities",
+      "description": "Japan crowns him with major recognition and becomes a stage for reinvention\u2014new name, new public myth, and a marriage that burns bright, then ends. The Venice Biennale seals his stature, and a secluded Austrian refuge gives him the alternating rhythm that will define him: disappear into nature, reemerge onto the world stage.",
+      "date_start": "1961",
+      "date_start_precision": "year",
+      "date_end": "1975",
+      "date_end_precision": "year",
+      "age_start": 32,
+      "age_end": 46,
+      "involved_people": [
+        "Yuko Ikewada",
+        "Vinzenz Oberhammer"
+      ],
+      "location": "Europe"
+    },
+    {
+      "id": "building_utopias_green_militancy",
+      "headline": "Building Utopias, Green Militancy",
+      "description": "Hundertwasser turns philosophy into infrastructure\u2014reforesting a New Zealand valley, pushing trees into architecture, then reshaping cities with buildings that reject the straight line. By the time Vienna gives him a museum and he dies at sea returning from his adopted Pacific home, his life reads like a single argument made in color, brick, and leaves: civilization must make room for nature.",
+      "date_start": "1982",
       "date_start_precision": "year",
       "date_end": "2000-02-19",
       "date_end_precision": "day",
-      "age_start": 51,
-      "age_end": 71
+      "age_start": 53,
+      "age_end": 71,
+      "involved_people": [
+        "Josef Krawina"
+      ],
+      "location": "Austria"
     }
   ],
+  "conclusion": "Hundertwasser transformed survival into a worldview and worldview into form, insisting that beauty, ecology, and human dignity belong in the same frame. His legacy lives wherever a building dares to become a habitat\u2014rejecting the straight line in favor of a more humane, living order.",
   "events": [
     {
       "date": "1928-12-15",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Vienna",
-      "description": "Friedrich Stowasser, later known as Friedensreich Hundertwasser, was born in Vienna as the only child of engineer Ernst Stowasser and Elsa Stowasser, n\u00e9e Scheuer, who was of Jewish origin. His family background combined roots in Bohemia on his father\u2019s side and Moravia on his mother\u2019s side, foreshadowing his later sense of Central European identity.",
+      "description": "Friedrich Stowasser was born in Vienna, the only child of engineer Ernst Stowasser and Elsa Stowasser (n\u00e9e Scheuer), who was of Jewish origin. His family background included roots in Bohemia and Moravia, a context that later shaped both his identity and his wartime experiences.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Bohemia",
-          "name_modern": "Bohemia, Czech Republic",
-          "centroid": [
-            14.5,
-            49.75
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Moravia",
-          "name_modern": "Moravia, Czech Republic",
-          "centroid": [
-            16.75,
-            49.5
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Ernst Stowasser",
-        "Elsa Stowasser"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Vienna"
-      ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "early_life_and_war"
-    },
-    {
-      "date": "1929",
-      "date_precision": "year",
-      "date_note": "Father died when he was about one year old",
-      "age": 1,
-      "title": "Early death of his father",
-      "description": "Around his first birthday, Hundertwasser\u2019s father Ernst died suddenly of appendicitis, leaving Elsa to raise their son alone in Vienna. Growing up fatherless during a turbulent period contributed to his sensitivity and independence, traits that would later be reflected in his rejection of conventional paths in art and life.",
-      "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Ernst Stowasser",
-        "Elsa Stowasser"
+        "Elsa Stowasser (n\u00e9e Scheuer)"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "early_life_and_war"
+      "event_type_icon": "mdi-candle",
+      "chapter": "vienna_under_shadow"
     },
     {
-      "date": "1935",
+      "date": "1929",
       "date_precision": "year",
-      "age": 6,
-      "title": "Montessori school and baptism",
-      "description": "At about six to seven years old, Hundertwasser attended a Montessori school in Vienna, where art teachers praised his exceptional sense for form and color. In the same year he was baptized Catholic, a step that likely offered some protection in a society increasingly hostile to Jews and that later fed into his complex relationship with religion and identity.",
+      "date_end": "1935",
+      "date_end_precision": "year",
+      "date_note": "His father died shortly after his first birthday; baptism year and early schooling are given without exact dates",
+      "age": 1,
+      "title": "Father dies; early formation",
+      "description": "Soon after his first birthday, Hundertwasser\u2019s father died from appendicitis, leaving his mother to raise him alone. He attended a Montessori school in Vienna and was noted by teachers for an exceptional sense of form and color. In 1935 he was baptized as a Catholic, a decision that intersected with the increasingly dangerous climate for families with Jewish ancestry.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
           "primary": true
         }
       ],
       "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Ausstellung_%C2%ABFriedensreich_Hundertwasser_%E2%80%93_Die_Ernte_der_Tr%C3%A4ume%C2%BB_im_Forum_W%C3%BCrth_Arlesheim.jpg",
-          "caption": "Exhibition of paintings and graphic works by Friedensreich Hundertwasser from the W\u00fcrth Collection, illustrating the kind of color- and form-rich art for which he had shown talent since childhood.",
-          "source": "https://commons.wikimedia.org/wiki/File:Ausstellung_%C2%ABFriedensreich_Hundertwasser_%E2%80%93_Die_Ernte_der_Tr%C3%A4ume%C2%BB_im_Forum_W%C3%BCrth_Arlesheim.jpg"
-        }
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "early_life_and_war"
+      "sources": [],
+      "event_type_icon": "mdi-cross",
+      "chapter": "vienna_under_shadow"
     },
     {
       "date": "1938",
       "date_precision": "year",
-      "date_note": "Year of the Anschluss of Austria to Nazi Germany",
+      "date_end": "1945",
+      "date_end_precision": "year",
       "age": 9,
-      "title": "Nazi persecution and forced relocation",
-      "description": "After [[Anschluss|Nazi Germany annexed Austria]], Hundertwasser\u2019s life as a child of a Jewish mother changed drastically: he was placed in the [[Hitler Youth|Hitler Youth]] while his mother tried to shield him by moving him from a private to a state school. Mother and son were forcibly resettled with other Jews into a crowded house in Vienna\u2019s [[Leopoldstadt|Leopoldstadt district]], where they survived the war while his maternal grandmother and some 70 relatives were deported and murdered.",
+      "title": "Survives Nazi persecution",
+      "description": "After the [[Anschluss|Anschluss]], he was enrolled in the Hitler Youth and moved from private to state schooling to avoid drawing attention. He and his mother were forcibly relocated in Vienna by Nazi authorities, while many relatives were murdered during the Holocaust. Their survival amid systematic persecution became a defining biographical fact and a lasting moral backdrop to his later public stances.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
           "primary": true
         }
@@ -192,264 +176,180 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Leopoldstadt",
         "https://en.wikipedia.org/wiki/Anschluss"
       ],
-      "event_type_icon": "mdi-home-move",
-      "chapter": "early_life_and_war",
+      "event_type_icon": "mdi-shield",
+      "chapter": "vienna_under_shadow",
       "annotations": {
         "Anschluss": {
-          "explanation": "The \"Anschluss\" was the annexation of Austria into Nazi Germany in March 1938, which brought Austrian Jews under Nazi racial laws and persecution.",
+          "explanation": "The 1938 annexation of Austria into Nazi Germany, after which Nazi racial laws and institutions were imposed in Austria.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Anschluss"
-        },
-        "Hitler Youth": {
-          "explanation": "The Hitler Youth was the youth organization of the Nazi Party, which aimed to indoctrinate boys and girls with Nazi ideology and prepare them for service to the regime.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hitler_Youth"
-        },
-        "Leopoldstadt": {
-          "explanation": "Leopoldstadt is Vienna\u2019s 2nd district, which before and during World War II had a large Jewish population and was a focal area for persecution and forced housing of Jews under Nazi rule.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Leopoldstadt"
         }
       }
     },
     {
       "date": "1948",
       "date_precision": "year",
+      "date_end": "1949",
+      "date_end_precision": "year",
+      "date_note": "He attended the Academy of Fine Arts Vienna for only about three months in winter 1948/49",
       "age": 19,
-      "title": "Matura and brief art academy studies",
-      "description": "In 1948 Hundertwasser completed his secondary education with the [[Matura|Matura]] at the [[Bundesgymnasium Horn|Bundesgymnasium]] in Horn. That autumn he enrolled at the [[Academy of Fine Arts Vienna|Academy of Fine Arts]] in Vienna, but he stayed only about three months before abandoning formal study, dissatisfied with academic norms and already convinced he had to find his own path as an artist.",
+      "title": "Finishes school; adopts artist name",
+      "description": "After completing his [[Matura|Matura]] in 1948, he enrolled briefly at the Academy of Fine Arts Vienna but left after only a short period. During this transition he began signing works with the artist name \u201cHundertwasser,\u201d derived from a Germanized reading of the Slavic \u201csto\u201d (\u201chundred\u201d) in his family name. The break with formal training reinforced his self-image as an independent, anti-academic artist.",
       "locations": [
-        {
-          "name_historic": "Horn",
-          "name_modern": "Horn, Lower Austria, Austria",
-          "centroid": [
-            15.6567,
-            48.6642
-          ],
-          "primary": false
-        },
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
           "primary": true
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Academy_of_Fine_Arts,_Vienna"
+        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Akademie_der_bildenden_Kuenste_DSC_2400w.jpg",
+          "caption": "Academy of Fine Arts Vienna, main building",
+          "source": "https://commons.wikimedia.org/wiki/File:Akademie_der_bildenden_Kuenste_DSC_2400w.jpg"
+        }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "early_life_and_war",
+      "chapter": "self_made_artist_on_the_road",
       "annotations": {
         "Matura": {
-          "explanation": "The Matura is the school-leaving examination in Austria and some other European countries, qualifying students for university entrance.",
+          "explanation": "The secondary-school leaving examination in Austria (and some neighboring countries) that qualifies students for university study.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
-        },
-        "Bundesgymnasium Horn": {
-          "explanation": "Bundesgymnasium Horn is a federal academic secondary school (Gymnasium) in the town of Horn, Lower Austria.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Bundesgymnasium_und_Bundesrealgymnasium_Horn"
-        },
-        "Academy of Fine Arts Vienna": {
-          "explanation": "The Academy of Fine Arts Vienna is a renowned Austrian art school, founded in 1692, offering higher education in the visual arts and architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Academy_of_Fine_Arts,_Vienna"
         }
       }
     },
     {
       "date": "1949-04",
       "date_precision": "month",
-      "age": 20,
-      "title": "First Italian journey and name \"Hundertwasser\"",
-      "description": "In April 1949 he traveled for the first time to Italy, beginning a pattern of restless artistic wandering. During this period he began signing his works with the artist name Hundertwasser, a Germanized play on his birth name Stowasser (with \"[[sto|sto]]\" meaning \"hundred\" in several Slavic languages), marking a conscious reinvention of his identity as an artist.",
-      "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3738,
-            48.2082
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Florence",
-          "name_modern": "Florence, Italy",
-          "centroid": [
-            11.2558,
-            43.7696
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Rome",
-          "name_modern": "Rome, Italy",
-          "centroid": [
-            12.4964,
-            41.9028
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Furoshiki_designed_by_Friedensreich_Hundertwasser_for_%27Fernw%C3%A4rme_Wien%27_AG.jpg",
-          "caption": "Textile design by Friedensreich Hundertwasser, reflecting the distinctive visual style he developed after his postwar travels and artistic self-reinvention.",
-          "source": "https://commons.wikimedia.org/wiki/File:Furoshiki_designed_by_Friedensreich_Hundertwasser_for_%27Fernw%C3%A4rme_Wien%27_AG.jpg"
-        }
-      ],
-      "event_type_icon": "mdi-map-marker",
-      "chapter": "travels_and_artistic_breakthrough",
-      "annotations": {
-        "sto": {
-          "explanation": "In several Slavic languages (such as Czech and Slovak), the word or root \"sto\" means \"one hundred,\" which Hundertwasser used as the basis for Germanizing his birth name Stowasser into Hundertwasser.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Slavic_languages"
-        }
-      }
-    },
-    {
-      "date": "1951",
-      "date_precision": "year",
       "date_end": "1951",
       "date_end_precision": "year",
-      "date_note": "Travel period in the first half of 1951",
-      "age": 22,
-      "title": "Formative travels in North Africa",
-      "description": "In the early 1950s Hundertwasser undertook extensive journeys to Morocco, Tunisia, and later Sicily, immersing himself in North African light, color, and [[vernacular architecture|vernacular architecture]]. He later described the impressions from this trip as decisive for his painting, reinforcing his fascination with vibrant, organic forms and the [[ensouled nature|\"ensouled nature\"]] that would dominate his imagery.",
+      "age": 20,
+      "title": "Travel apprenticeship abroad",
+      "description": "Beginning with a first trip to Italy, Hundertwasser embarked on an intensive period of travel that took him through Italy, to Paris with the French artist Ren\u00e9 Br\u00f4, and onward to North Africa and the Mediterranean. These journeys strongly influenced his palette and motifs, deepening his focus on trees, vegetation, and what he framed as a \u201censouled\u201d nature. Encounters with modern artists and admired figures such as Egon Schiele and Paul Klee helped him refine an expressive language distinct from prevailing abstraction.",
       "locations": [
         {
-          "name_historic": "Morocco",
-          "name_modern": "Morocco",
+          "name_historic": "Italy",
+          "name_modern": "Italy",
           "centroid": [
-            -6.0,
-            32.0
+            12.674297,
+            42.6384261
           ],
           "primary": true
         },
         {
-          "name_historic": "Tunisia",
-          "name_modern": "Tunisia",
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
           "centroid": [
-            9.0,
-            34.0
+            2.3483915,
+            48.8534951
           ],
           "primary": false
         },
         {
-          "name_historic": "Sicily",
-          "name_modern": "Sicily, Italy",
+          "name_historic": "North Africa",
+          "name_modern": "North Africa",
           "centroid": [
-            14.0,
-            37.5
+            2.159665,
+            41.362599
           ],
           "primary": false
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "Ren\u00e9 Br\u00f4"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_02.jpg",
-          "caption": "The Waldspirale residential complex in Darmstadt, Germany, designed by Friedensreich Hundertwasser, illustrating the vibrant colors and organic forms that his earlier travels helped to shape.",
-          "source": "https://commons.wikimedia.org/wiki/File:Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_02.jpg"
-        }
-      ],
       "event_type_icon": "mdi-map-marker",
-      "chapter": "travels_and_artistic_breakthrough",
-      "annotations": {
-        "vernacular architecture": {
-          "explanation": "Architecture designed based on local needs, materials, and traditions, typically without formal architectural training and reflecting a region\u2019s cultural and environmental conditions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vernacular_architecture"
-        },
-        "ensouled nature": {
-          "explanation": "A key notion in Hundertwasser\u2019s aesthetic and ecological thinking, referring to nature as a living, spiritually animated presence rather than inert matter."
-        }
-      }
+      "chapter": "self_made_artist_on_the_road"
     },
     {
       "date": "1952",
       "date_precision": "year",
       "date_end": "1956",
       "date_end_precision": "year",
-      "date_note": "Span of his first important solo exhibitions in Europe",
       "age": 23,
-      "title": "First major exhibitions in Europe",
-      "description": "Between 1952 and 1956 Hundertwasser\u2019s paintings were shown in solo exhibitions in Vienna, Milan, and the Galerie Facchetti in Paris, bringing him to the attention of the postwar European avant\u2011garde. Living mainly in Paris at the time, he engaged with debates between geometric and expressive abstraction and began formulating his own approach, which rejected the straight line and emphasized spirals, vivid colors, and individual perception.",
+      "title": "Breakthrough exhibitions in Europe",
+      "description": "Hundertwasser began exhibiting publicly in the early 1950s, with shows in Vienna and later in Paris and Milan. Living largely in Paris, he positioned himself in debates around postwar abstraction and developed the concept of \u201c[[Transautomatism|Transautomatism]]\u201d as a response to gestural, chance-based painting. Contacts with critics and artists in the Paris milieu helped establish him as a distinctive voice combining decorative intensity with ideological opposition to standardization.",
       "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.3483915,
+            48.8534951
+          ],
+          "primary": true
+        },
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
-          "primary": true
+          "primary": false
         },
         {
           "name_historic": "Milan",
           "name_modern": "Milan, Italy",
           "centroid": [
-            9.19,
-            45.4642
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Paris",
-          "name_modern": "Paris, France",
-          "centroid": [
-            2.3522,
-            48.8566
+            9.1896346,
+            45.4641943
           ],
           "primary": false
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "Michel Tapi\u00e9"
+      ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Michel_Tapi%C3%A9",
         "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Lisboa_-_Pain%C3%A9is_da_esta%C3%A7%C3%A3o_de_metro_do_Oriente_por_Friedensreich_Hundertwasser_%2851411094119%29.jpg",
-          "caption": "Ceramic mural panels by Friedensreich Hundertwasser in the Oriente metro station in Lisbon, illustrating his characteristic use of spirals, vivid colors, and irregular lines similar to the pictorial style he developed in the 1950s.",
-          "source": "https://commons.wikimedia.org/wiki/File:Lisboa_-_Pain%C3%A9is_da_esta%C3%A7%C3%A3o_de_metro_do_Oriente_por_Friedensreich_Hundertwasser_(51411094119).jpg"
-        }
-      ],
       "event_type_icon": "mdi-palette",
-      "chapter": "travels_and_artistic_breakthrough"
+      "chapter": "paris_breakthrough_public_dissenter",
+      "annotations": {
+        "Transautomatism": {
+          "explanation": "Hundertwasser\u2019s early-1950s term for an approach to painting that rejected pure chance/gesture in postwar abstraction, emphasizing intentional, organic form and a personal pictorial order.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+        }
+      }
     },
     {
       "date": "1957",
       "date_precision": "year",
+      "date_end": "1960",
+      "date_end_precision": "year",
       "age": 28,
-      "title": "Buys Normandy farm and marries Herta Leitner",
-      "description": "In 1957 Hundertwasser purchased a small farm on the edge of Normandy, securing a rural refuge from city life where he could live closer to nature. The following year he married the 16\u2011year\u2011old Herta Leitner in Gibraltar, entering briefly into conventional domesticity, though the marriage would end in divorce in 1960 as his itinerant, bohemian lifestyle proved incompatible with stable family life.",
+      "title": "Normandy farm and Hamburg rupture",
+      "description": "In 1957, he purchased a farmhouse near Normandy, creating a rural base aligned with his emphasis on nature and self-sufficient living. In 1958 he married Herta Leitner; the marriage ended in divorce two years later. In 1959 he was appointed guest lecturer in Hamburg, where his collaborative classroom action \u201cUnendliche Linie\u201d (Infinite Line) was forcibly halted by the school leadership, prompting him to resign\u2014an episode that strengthened his public role as an artistic dissenter.",
       "locations": [
         {
           "name_historic": "Normandy",
           "name_modern": "Normandy, France",
           "centroid": [
-            -0.5,
-            49.2
+            0.3138532,
+            49.0677708
           ],
           "primary": true
         },
         {
-          "name_historic": "Gibraltar",
-          "name_modern": "Gibraltar",
+          "name_historic": "Hamburg",
+          "name_modern": "Hamburg, Germany",
           "centroid": [
-            -5.3536,
-            36.1408
+            10.000654,
+            53.550341
           ],
           "primary": false
         }
@@ -460,59 +360,18 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "travels_and_artistic_breakthrough"
-    },
-    {
-      "date": "1959",
-      "date_precision": "year",
-      "age": 30,
-      "title": "Guest professorship and \"Unendliche Linie\" action",
-      "description": "In 1959 he became a guest lecturer at the Hochschule f\u00fcr bildende K\u00fcnste in [[Hamburg|Hamburg]], where in December he staged the \"[[Unendliche Linie|Unendliche Linie (Endless Line)]]\" action with Bazon Brock, Herbert Schuldt, and students, drawing a continuous line through his classroom until the director halted the performance. When ordered to stop, Hundertwasser resigned his post, underscoring his principled opposition to institutional constraints and the \"straight line\" in art and life.",
-      "locations": [
-        {
-          "name_historic": "Hamburg",
-          "name_modern": "Hamburg, Germany",
-          "centroid": [
-            9.9937,
-            53.5511
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Bazon Brock",
-        "Herbert Schuldt"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Bazon_Brock"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_04.jpg",
-          "caption": "The Waldspirale residential complex in Darmstadt, Germany, designed by Friedensreich Hundertwasser, illustrating his rejection of the straight line in architecture that underpinned actions such as the 1959 \"Unendliche Linie\" performance.",
-          "source": "https://commons.wikimedia.org/wiki/File:Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_04.jpg"
-        }
-      ],
-      "event_type_icon": "mdi-teach",
-      "chapter": "travels_and_artistic_breakthrough",
-      "annotations": {
-        "Hamburg": {
-          "explanation": "Hamburg is a city-state in northern West Germany where the Hochschule f\u00fcr bildende K\u00fcnste (University of Fine Arts) served as an important postwar centre for experimental art and teaching.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hamburg"
-        },
-        "Unendliche Linie": {
-          "explanation": "\"Unendliche Linie\" (\"Endless Line\") was a 1959 classroom action by Hundertwasser and collaborators in which a single continuous line was drawn through the teaching space as a performative critique of academic authority and the straight line in art."
-        }
-      }
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "paris_breakthrough_public_dissenter"
     },
     {
       "date": "1961",
       "date_precision": "year",
+      "date_end": "1968",
+      "date_end_precision": "year",
+      "date_note": "The exact year he began using the name forms 'Friedereich/Friedenreich/Friedensreich' evolved across the 1960s",
       "age": 32,
-      "title": "First Japan visit and Mainichi Prize",
-      "description": "In 1961 Hundertwasser traveled to [[Japan|Japan]], a country whose culture and aesthetics fascinated him, and participated in the [[Mainichi Art Exhibition|6th International Art Exhibition in Tokyo]]. There he received the prestigious Mainichi Prize, and during his stays in Japan over the following years he experimented with Japanese scripts to reshape his given name, a process that would culminate in his adopting the forename Friedensreich later in the decade.",
+      "title": "Japan recognition and renaming",
+      "description": "Traveling to Japan, Hundertwasser won the [[Mainichi Prize|Mainichi Prize]] at the 6th International Art Exhibition in Tokyo, marking a major moment of international recognition. He married the Japanese artist Yuko Ikewada in 1962, and the years around Japan also saw him reshape his public identity by transforming his given name into forms culminating in \u201cFriedensreich.\u201d The marriage ended in divorce in 1966, but Japan remained a key site of both professional validation and personal reinvention.",
       "locations": [
         {
           "name_historic": "Tokyo",
@@ -524,27 +383,17 @@
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Mainichi_Art_Award"
+      "involved_people": [
+        "Yuko Ikewada"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_05.jpg",
-          "caption": "The Waldspirale residential complex in Darmstadt, Germany, designed by Friedensreich Hundertwasser, illustrating his mature architectural style that grew out of ideas he was already developing during his travels in the 1960s, including his visits to Japan.",
-          "source": "https://commons.wikimedia.org/wiki/File:Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_05.jpg"
-        }
+      "sources": [
+        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
       "event_type_icon": "mdi-trophy",
-      "chapter": "travels_and_artistic_breakthrough",
+      "chapter": "global_fame_new_identities",
       "annotations": {
-        "Japan": {
-          "explanation": "Post\u2011war Japan became a major center for avant\u2011garde and international art exchanges, attracting many Western artists inspired by its aesthetics and traditions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Japan"
-        },
-        "Mainichi Art Exhibition": {
-          "explanation": "An annual art exhibition in Japan organized by the Mainichi Newspapers company, associated with the conferral of the Mainichi Art Award (Mainichi Prize) on selected artists.",
+        "Mainichi Prize": {
+          "explanation": "A set of Japanese cultural awards sponsored by The Mainichi Newspapers, including major art prizes given in conjunction with prominent exhibitions in Tokyo.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Mainichi_Art_Award"
         }
       }
@@ -553,8 +402,8 @@
       "date": "1962",
       "date_precision": "year",
       "age": 33,
-      "title": "Venice Biennale retrospective breakthrough",
-      "description": "In 1962 Hundertwasser achieved a major international breakthrough when the Austrian Pavilion at the [[Venice Biennale|Venice Biennale]] devoted a retrospective to his work, curated by Vinzenz Oberhammer. The show, followed by a traveling retrospective organized by the [[Kestner-Gesellschaft|Kestner\u2011Gesellschaft]] in Hannover and the publication of his first [[catalogue raisonn\u00e9|catalogue raisonn\u00e9]] by Wieland Schmied, established him as a prominent figure in postwar European art.",
+      "title": "Venice Biennale retrospective success",
+      "description": "Hundertwasser achieved a major breakthrough with a highly successful presentation in the Austrian pavilion at the [[Venice Biennale|Venice Biennale]], arranged as a retrospective and installed by Vinzenz Oberhammer. The show consolidated his position as a leading Austrian artist with a recognizable visual and ideological program. It also helped set the stage for subsequent large-scale retrospectives and broader institutional attention.",
       "locations": [
         {
           "name_historic": "Venice",
@@ -564,47 +413,27 @@
             45.4371908
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Hanover",
-          "name_modern": "Hanover, Germany",
-          "centroid": [
-            9.7356861,
-            52.3744779
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Vinzenz Oberhammer",
-        "Wieland Schmied"
+        "Vinzenz Oberhammer"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Venice_Biennale",
-        "https://en.wikipedia.org/wiki/Kestnergesellschaft"
+        "https://en.wikipedia.org/wiki/Venice_Biennale"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_08.jpg",
-          "caption": "The Waldspirale residential complex in Darmstadt, Germany, a later architectural work by Friedensreich Hundertwasser, illustrating the distinctive organic forms and colorful aesthetic that contributed to his international reputation established after the 1962 Venice Biennale retrospective.",
-          "source": "https://commons.wikimedia.org/wiki/File:Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_08.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Biennale_Pavillon_%C3%96sterreich_1.jpg",
+          "caption": "Austrian Pavilion at the Venice Biennale",
+          "source": "https://commons.wikimedia.org/wiki/File:Biennale_Pavillon_\u00d6sterreich_1.jpg"
         }
       ],
       "event_type_icon": "mdi-palette",
-      "chapter": "travels_and_artistic_breakthrough",
+      "chapter": "global_fame_new_identities",
       "annotations": {
         "Venice Biennale": {
-          "explanation": "A major international contemporary art exhibition held biennially in Venice that serves as one of the most prestigious platforms for artists worldwide.",
+          "explanation": "A major international contemporary art exhibition held in Venice since 1895, with participating countries typically presenting curated shows in national pavilions.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Venice_Biennale"
-        },
-        "Kestner-Gesellschaft": {
-          "explanation": "A contemporary art society and exhibition venue in Hanover, Germany, known for organizing influential modern and postwar art retrospectives.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Kestnergesellschaft"
-        },
-        "catalogue raisonn\u00e9": {
-          "explanation": "A comprehensive, scholarly reference work that systematically lists and documents all known artworks by a particular artist.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Catalogue_raisonn%C3%A9"
         }
       }
     },
@@ -612,15 +441,15 @@
       "date": "1966",
       "date_precision": "year",
       "age": 37,
-      "title": "Buys \"Hahns\u00e4ge\" retreat in Waldviertel",
-      "description": "In 1966 Hundertwasser bought the disused \"Hahns\u00e4ge\" sawmill in the sparsely populated [[Waldviertel|Waldviertel region]] of Lower Austria and converted it into a rustic home and studio. Surrounded by forests and far from urban pressures, this base allowed him to live out his ideals of simplicity, closeness to nature, and self\u2011sufficiency while continuing to produce paintings and graphic works.",
+      "title": "Creates Waldviertel refuge",
+      "description": "He acquired the disused 'Hahns\u00e4ge' in Austria\u2019s [[Waldviertel|Waldviertel region]], turning it into a secluded home and workplace. The site embodied his preference for living close to nature and away from urban standardization. It became one of several residences that supported a rhythm of travel and retreat central to his working life.",
       "locations": [
         {
           "name_historic": "Waldviertel",
           "name_modern": "Waldviertel, Lower Austria, Austria",
           "centroid": [
-            15.25,
-            48.65
+            15.2644358,
+            48.5959058
           ],
           "primary": true
         }
@@ -628,121 +457,13 @@
       "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
-          "caption": "Friedensreich Hundertwasser on rural land in New Zealand in 1998, reflecting his preference for simple, nature\u2011oriented living similar to his earlier retreat at the Hahns\u00e4ge in the Waldviertel.",
-          "source": "https://commons.wikimedia.org/wiki/File:Hundertwasser_nz_1998_hg.jpg"
-        }
       ],
       "event_type_icon": "mdi-home-move",
-      "chapter": "retreats_nature_and_global_reach",
+      "chapter": "global_fame_new_identities",
       "annotations": {
         "Waldviertel": {
-          "explanation": "The Waldviertel is a sparsely populated, forested highland region in the northwest of Lower Austria, known for its rural landscapes and traditional villages.",
+          "explanation": "A rural upland region in northwestern Lower Austria, known for forests and a low population density\u2014fitting Hundertwasser\u2019s preference for secluded living.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Waldviertel"
-        }
-      }
-    },
-    {
-      "date": "1968",
-      "date_precision": "year",
-      "date_end": "1969",
-      "date_end_precision": "year",
-      "age": 39,
-      "title": "American touring exhibition and ship \"Regentag\"",
-      "description": "In 1968 Hundertwasser traveled to [[California|California]] to work with art historian Herschel Chipp on a major museum exhibition that toured several U.S. cities from 1968 to 1969. The same year he sailed an old salt freighter from [[Sicily|Sicily]] to [[Venice|Venice]], later transforming it into his beloved ship \"Regentag\" (Rainy Day), a floating studio and symbol of his seafaring, nomadic existence.",
-      "locations": [
-        {
-          "name_historic": "California",
-          "name_modern": "California, USA",
-          "centroid": [
-            -119.4179,
-            36.7783
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Sicily",
-          "name_modern": "Sicily, Italy",
-          "centroid": [
-            14.0154,
-            37.5999
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Venice",
-          "name_modern": "Venice, Italy",
-          "centroid": [
-            12.3346,
-            45.4372
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Herschel B. Chipp"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Herschel_B._Chipp",
-        "https://en.wikipedia.org/wiki/Regentag"
-      ],
-      "event_type_icon": "mdi-journey",
-      "chapter": "retreats_nature_and_global_reach",
-      "annotations": {
-        "California": {
-          "explanation": "A U.S. state on the west coast where Hundertwasser collaborated with art historian Herschel B. Chipp on a touring museum exhibition of his work in 1968.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/California"
-        },
-        "Sicily": {
-          "explanation": "The largest island in the Mediterranean Sea and an autonomous region of Italy; Hundertwasser acquired an old freighter here in 1968 before sailing it to Venice and converting it into his ship Regentag.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Sicily"
-        },
-        "Venice": {
-          "explanation": "A historic port city in northeastern Italy, built on a lagoon; in 1968 it was the destination where Hundertwasser brought the freighter that he later transformed into his studio-ship Regentag.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Venice"
-        }
-      }
-    },
-    {
-      "date": "1972",
-      "date_precision": "year",
-      "age": 43,
-      "title": "Founds Gruener Janura AG rights company",
-      "description": "In 1972 Hundertwasser founded the Swiss company [[Gruener Janura AG|Gruener Janura AG]] (later [[Namida AG|Namida AG]]) to manage his copyrights and reproductions, a sign of his growing commercial success and need for professional administration of his oeuvre. The structure allowed him to control how his works were printed, catalogued, and disseminated while he focused on creation and travel.",
-      "locations": [
-        {
-          "name_historic": "St. Gallen",
-          "name_modern": "St. Gallen, Switzerland",
-          "centroid": [
-            9.3731188,
-            47.4244818
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/00_1648_Magdeburg_-_Gr%C3%BCne_Zitadelle.jpg",
-          "caption": "The Green Citadel of Magdeburg, a later architectural work by Friedensreich Hundertwasser, illustrating the kind of oeuvre whose rights were managed through his companies Gruener Janura AG and Namida AG.",
-          "source": "https://commons.wikimedia.org/wiki/File:00_1648_Magdeburg_-_Gr%C3%BCne_Zitadelle.jpg"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "retreats_nature_and_global_reach",
-      "annotations": {
-        "Gruener Janura AG": {
-          "explanation": "A Swiss company founded by Friedensreich Hundertwasser in 1972 in St. Gallen to administer his copyrights, reproductions, and commercial rights to his artworks."
-        },
-        "Namida AG": {
-          "explanation": "The later name of Gruener Janura AG, the Swiss rights-management company handling Friedensreich Hundertwasser\u2019s artistic and commercial interests."
         }
       }
     },
@@ -750,122 +471,173 @@
       "date": "1973",
       "date_precision": "year",
       "age": 44,
-      "title": "Establishes New Zealand reforestation estate",
-      "description": "Following a traveling exhibition in New Zealand and Australia, Hundertwasser first visited New Zealand in 1973 and soon acquired several properties encompassing the entire Kaurinui Valley in the Bay of Islands. There he embarked on a long\u2011term ecological project, planting over 100,000 native trees, building ponds and natural wastewater treatment systems, and living in simple structures such as a converted farmhouse and bottle house, seeking to return the land to nature.",
+      "title": "Begins New Zealand eco-project",
+      "description": "After touring exhibitions in New Zealand and Australia, Hundertwasser traveled to New Zealand and bought extensive land in the Bay of Islands, encompassing the Kaurinui Valley. He pursued an ambitious program of ecological restoration, planting vast numbers of native trees and experimenting with low-impact infrastructure such as ponds, canals, and plant-based wastewater treatment. The project operationalized his environmental philosophy as lived practice rather than only artistic theme.",
       "locations": [
         {
           "name_historic": "Bay of Islands",
           "name_modern": "Bay of Islands, Northland, New Zealand",
           "centroid": [
-            174.0833,
-            -35.2167
+            174.1626731,
+            -35.2550085
           ],
           "primary": true
         },
         {
-          "name_historic": "Auckland",
-          "name_modern": "Auckland, New Zealand",
+          "name_historic": "New Zealand",
+          "name_modern": "New Zealand",
           "centroid": [
-            174.7633,
-            -36.8485
+            172.8344077,
+            -41.5000831
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Australia",
+          "name_modern": "Australia",
+          "centroid": [
+            134.755,
+            -24.7761086
           ],
           "primary": false
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser%27s_public_toilets_in_Kawakawa"
+        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Hundertwasser_nz_1998_hg_%28cropped%29.jpg",
-          "caption": "Friedensreich Hundertwasser on his land in New Zealand in 1998, part of the reforestation estate he began developing in the 1970s.",
-          "source": "https://commons.wikimedia.org/wiki/File:Hundertwasser_nz_1998_hg_(cropped).jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/00_0866_Island_of_the_Bay_of_Islands.jpg",
+          "caption": "Bay of Islands, New Zealand",
+          "source": "https://commons.wikimedia.org/wiki/File:00_0866_Island_of_the_Bay_of_Islands.jpg"
         }
       ],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "retreats_nature_and_global_reach"
+      "event_type_icon": "mdi-leaf",
+      "chapter": "global_fame_new_identities"
     },
     {
-      "date": "1984",
+      "date": "1975",
       "date_precision": "year",
-      "age": 55,
-      "title": "Activism at Hainburger Au occupation",
-      "description": "In 1984 Hundertwasser took part in the citizens\u2019 occupation of the [[Hainburger Au|Hainburger Au wetlands]] east of Vienna to protest a planned power plant, camping with activists in freezing temperatures. At a press conference he dramatically tore up, on camera, the high Austrian State Prize he had been awarded, signaling his willingness to sacrifice official honors in defense of nature and grassroots democracy.",
+      "age": 46,
+      "title": "Launches 'Tree Tenant' actions",
+      "description": "At the [[Triennale di Milano|Triennale di Milano]] in [[Milan|Milan]] he staged a 'Baummieter' (\u201cTree Tenant\u201d) action, installing trees through windows and publishing the manifesto 'Inquilino Albero.' These interventions argued for a right of nature to inhabit buildings and for residents to become stewards of living facades. The actions later expanded to other cities and helped position him as a pioneer of fa\u00e7ade greening and vertical garden concepts.",
       "locations": [
         {
-          "name_historic": "Hainburg an der Donau",
-          "name_modern": "Hainburg an der Donau, Austria",
+          "name_historic": "Milan",
+          "name_modern": "Milan, Italy",
           "centroid": [
-            16.946,
-            48.145
+            9.1896346,
+            45.4641943
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3738,
-            48.2082
-          ],
-          "primary": false
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Hainburger_Au",
-        "https://en.wikipedia.org/wiki/Hundertwasser%27s_painting_style#Environmental_activism"
+        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
-      "event_type_icon": "mdi-flag-triangle",
-      "chapter": "architecture_and_ecological_activism",
+      "event_type_icon": "mdi-microphone",
+      "chapter": "global_fame_new_identities",
       "annotations": {
-        "Hainburger Au": {
-          "explanation": "The Hainburger Au is a floodplain forest and wetland area along the Danube near Hainburg an der Donau in eastern Austria, which became a major symbol of the Austrian environmental movement after a mass occupation in 1984 stopped a proposed power plant.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hainburger_Au"
+        "Triennale di Milano": {
+          "explanation": "A major Italian institution for design and contemporary visual culture that organizes influential exhibitions and events, historically centered in Milan.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Triennale_di_Milano"
         }
       }
     },
     {
-      "date": "1986-02-17",
-      "date_precision": "day",
-      "date_note": "Date of handover to tenants",
-      "age": 57,
-      "title": "Completion of Vienna Hundertwasserhaus",
-      "description": "On 17 February 1986, the [[Hundertwasserhaus|Hundertwasserhaus social housing complex]] in Vienna, a municipal apartment building designed in collaboration with architect Josef Krawina, was officially handed over to its tenants. With its irregular fa\u00e7ade, colorful tiles, planted terraces, and undulating floors, the building became an icon of his architectural philosophy\u2014rejecting rigid modernism in favor of individuality and the integration of trees and greenery into human dwellings.",
+      "date": "1982",
+      "date_precision": "year",
+      "date_end": "1986-02-17",
+      "date_end_precision": "day",
+      "date_note": "The Vienna housing complex was handed over to tenants on 1986-02-17; associated design work spanned multiple years",
+      "age": 53,
+      "title": "Architectural turn and Hundertwasserhaus",
+      "description": "In the early 1980s Hundertwasser expanded decisively into architectural design, including high-profile fa\u00e7ade work such as the Rosenthal factory in Selb. He developed the concept for the Hundertwasserhaus in Vienna, a municipal housing project realized with professional architectural collaboration and marked by irregular forms, strong color, and integrated vegetation. The building\u2019s handover to tenants in 1986 crystallized his influence on public architecture and brought his anti\u2013straight-line philosophy into everyday urban life.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Selb",
+          "name_modern": "Selb, Bavaria, Germany",
+          "centroid": [
+            12.1297769,
+            50.169121
+          ],
+          "primary": false
         }
       ],
       "involved_people": [
         "Josef Krawina"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hundertwasserhaus",
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+        "https://de.wikipedia.org/wiki/Josef_Krawina"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_09.jpg",
-          "caption": "The Waldspirale residential complex in Darmstadt, another example of Friedensreich Hundertwasser's later residential architecture integrating irregular forms and greenery, comparable in concept to the earlier Vienna Hundertwasserhaus.",
-          "source": "https://commons.wikimedia.org/wiki/File:Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_09.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Wien%2C_Hundertwasserhaus_--_2018_--_3166.jpg",
+          "caption": "Hundertwasserhaus, Vienna, Austria",
+          "source": "https://commons.wikimedia.org/wiki/File:Wien,_Hundertwasserhaus_--_2018_--_3166.jpg"
         }
       ],
-      "event_type_icon": "mdi-building_construction",
-      "chapter": "architecture_and_ecological_activism",
+      "event_type_icon": "mdi-drawing",
+      "chapter": "building_utopias_green_militancy"
+    },
+    {
+      "date": "1984-12",
+      "date_precision": "month",
+      "age": 55,
+      "title": "Hainburg Au environmental protest",
+      "description": "Hundertwasser participated actively in protests against the planned hydropower project in the [[Hainburger Au|Hainburger Au]], joining activists in harsh winter conditions. In a highly public gesture at a press conference, he tore up the [[Grand Austrian State Prize|Grand Austrian State Prize]] that had been awarded to him, framing the act as a protest against state priorities. The episode made him one of the most visible cultural figures aligned with Austria\u2019s emerging environmental movement.",
+      "locations": [
+        {
+          "name_historic": "Hainburg an der Donau",
+          "name_modern": "Hainburg an der Donau, Lower Austria, Austria",
+          "centroid": [
+            16.9422459,
+            48.1466103
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://de.wikipedia.org/wiki/Besetzung_der_Hainburger_Au"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/95/Nationalpark_Donauauen%2C_Stopfenreuther_%28Hainburger%29_Au.jpg",
+          "caption": "Nationalpark Donauauen, Stopfenreuther (Hainburger) Au",
+          "source": "https://commons.wikimedia.org/w/index.php?curid=48651491"
+        }
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "building_utopias_green_militancy",
       "annotations": {
-        "Hundertwasserhaus": {
-          "explanation": "A municipal apartment building in Vienna completed in 1985\u201386, designed by artist Friedensreich Hundertwasser with architect Josef Krawina, known for its irregular forms, bright colors, and integration of vegetation into the architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hundertwasserhaus"
+        "Hainburger Au": {
+          "explanation": "A protected Danube floodplain forest and river landscape near Hainburg an der Donau; it became a focal point of Austria\u2019s 1984 anti-dam protests and is now part of Donau-Auen National Park (since 1996).",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Besetzung_der_Hainburger_Au"
+        },
+        "Grand Austrian State Prize": {
+          "explanation": "Austria\u2019s highest state award for achievements in the arts and sciences (Gro\u00dfer \u00d6sterreichischer Staatspreis), which Hundertwasser publicly rejected by tearing up the certificate during the Hainburg Au protests.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Besetzung_der_Hainburger_Au"
         }
       }
     },
@@ -873,86 +645,56 @@
       "date": "1991-04-09",
       "date_precision": "day",
       "age": 62,
-      "title": "Opening of KunstHausWien Museum Hundertwasser",
-      "description": "On 9 April 1991 the KunstHausWien Museum Hundertwasser opened in Vienna in a former factory he had redesigned, providing the only permanent museum devoted to his work. The institution displays his youth works, paintings, graphics, tapestries, applied art, and architectural projects, consolidating his status as a major cultural figure while embodying his ideals of a lively, nature\u2011embracing built environment.",
+      "title": "KunstHausWien opens",
+      "description": "The KunstHausWien (Museum Hundertwasser) opened as a dedicated venue for his work and for international temporary exhibitions. For Hundertwasser, the museum institutionalized the breadth of his practice, spanning painting, graphics, applied arts, and architectural thinking. Its opening also reinforced Vienna\u2019s role as a central base in a life otherwise shaped by travel and multiple residences.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3738,
-            48.2082
+            16.3725042,
+            48.2083537
           ],
           "primary": true
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/KunstHausWien"
+        "https://en.wikipedia.org/wiki/Kunst_Haus_Wien",
+        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_10.jpg",
-          "caption": "The Waldspirale residential complex in Darmstadt, Germany, a later architectural work by Friedensreich Hundertwasser that reflects the same organic, irregular design principles showcased in KunstHausWien Museum Hundertwasser.",
-          "source": "https://commons.wikimedia.org/wiki/File:Waldspirale_-_Darmstadt_-_Friedensreich_Hundertwasser_-_Heinz_Springmann_-_10.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/KunstHausWien.jpg",
+          "caption": "KunstHausWien (Museum Hundertwasser), Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:KunstHausWien.jpg"
         }
       ],
-      "event_type_icon": "mdi-office-building",
-      "chapter": "architecture_and_ecological_activism"
+      "event_type_icon": "mdi-calendar",
+      "chapter": "building_utopias_green_militancy"
     },
     {
       "date": "2000-02-19",
       "date_precision": "day",
       "age": 71,
-      "title": "Death at sea and burial in New Zealand",
-      "description": "On 19 February 2000 Hundertwasser died of heart failure aboard the ocean liner [[Queen Elizabeth 2|Queen Elizabeth 2]] during a return voyage from [[New Zealand|New Zealand]] to Europe. In accordance with his wishes he was buried on his New Zealand property, without a coffin and wrapped in a shroud bearing his own [[koru\u2011flag|koru\u2011flag]] design, with a tulip tree planted above his grave\u2014his final personal union of art, body, and living nature.",
-      "locations": [
-        {
-          "name_historic": "Queen Elizabeth 2 (at sea)",
-          "name_modern": null,
-          "centroid": [
-            1.1363272,
-            51.7845689
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Kawakawa",
-          "name_modern": "Kawakawa, Northland, New Zealand",
-          "centroid": [
-            174.074,
-            -35.384
-          ],
-          "primary": false
-        }
-      ],
+      "title": "Death aboard ocean liner",
+      "description": "Hundertwasser died of heart failure aboard the [[Queen Elizabeth 2|Queen Elizabeth 2]] while returning from New Zealand toward Europe. His death ended an itinerant career that combined studio art, architectural intervention, and outspoken environmental advocacy. In his final years he remained engaged with projects spanning several countries, consistent with the transnational scope of his working life.",
+      "locations": [],
       "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Queen_Elizabeth_2"
-      ],
+      "sources": [],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Friedensreich_Hundertwasser%27s_public_toilets_in_Kawakawa_1.jpg",
-          "caption": "Public toilets in Kawakawa, New Zealand, designed by Friedensreich Hundertwasser near the area where he lived and was buried.",
-          "source": "https://commons.wikimedia.org/wiki/File:Friedensreich_Hundertwasser%27s_public_toilets_in_Kawakawa_1.jpg"
+          "url": "https://live.staticflickr.com/3238/2885183796_3d1a0130c3_b.jpg",
+          "caption": "RMS Queen Elizabeth 2",
+          "source": "https://www.flickr.com/photos/30671219@N06/2885183796"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "architecture_and_ecological_activism",
+      "chapter": "building_utopias_green_militancy",
       "annotations": {
         "Queen Elizabeth 2": {
-          "explanation": "A British ocean liner operated by the Cunard Line from 1969 to 2008, used primarily for transatlantic crossings and cruises.",
+          "explanation": "A British ocean liner (often known as \u201cQE2\u201d) operated by Cunard Line from 1969 to 2008, used for transatlantic and round-the-world voyages.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Queen_Elizabeth_2"
-        },
-        "New Zealand": {
-          "explanation": "An island country in the southwestern Pacific Ocean where Hundertwasser maintained a rural property and chose to be buried.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/New_Zealand"
-        },
-        "koru\u2011flag": {
-          "explanation": "A personal flag design by Hundertwasser based on the M\u0101ori koru spiral motif, symbolizing new life, growth, and harmony with nature.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser#Flag_and_stamp_designs"
         }
       }
     }
