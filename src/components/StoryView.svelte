@@ -8,6 +8,7 @@
   import OverviewSlide from "./OverviewSlide.svelte";
   import EventSlide from "./EventSlide.svelte";
   import ChapterSlide from "./ChapterSlide.svelte";
+  import ConclusionSlide from "./ConclusionSlide.svelte";
   import StoryMap from "./StoryMap.svelte";
   import Timeline from "./Timeline.svelte";
   import { _, currentLanguage } from "../stores/language";
@@ -32,6 +33,8 @@
 
   export let dataset = null;
   export let egoNetwork = null;
+  export let personsRegistry = null;
+  export let personStylesRegistry = null;
   export let isLoading = false;
   export let loadingStage = null;
   export let activeIndex = 0;
@@ -82,16 +85,74 @@
       allCoordinates: normalizeAllLocations(event),
     }));
   $: totalSlides = eventSlides.length;
+  $: conclusion = dataset?.conclusion ?? null;
+
+  // Compute related persons by role overlap
+  $: relatedPersons = (() => {
+    if (!person?.primary_roles || !personsRegistry?.people) return [];
+
+    // Match current person by name in registry
+    const currentPersonName = person?.name?.replace(/_/g, " ");
+    const currentPersonEntry = personsRegistry.people.find(
+      (p) => p.name?.replace(/_/g, " ") === currentPersonName
+    );
+
+    if (!currentPersonEntry) return [];
+
+    const currentRoles = new Set(
+      (person.primary_roles || []).map((r) => r.toLowerCase())
+    );
+
+    if (currentRoles.size === 0) return [];
+
+    return personsRegistry.people
+      .filter((p) => p.id !== currentPersonEntry.id) // Exclude self
+      .map((p) => {
+        const personRoles = new Set((p.primaryRoles || []).map((r) => r.toLowerCase()));
+        const overlap = [...currentRoles].filter((r) => personRoles.has(r));
+
+        // Check if person is in ego network
+        const inNetwork = egoNetwork?.connections?.some((c) =>
+          c.person_name?.toLowerCase().includes(p.name.toLowerCase().replace(/_/g, " "))
+        ) ? 1 : 0;
+
+        // Weight: (roleOverlapCount × 3) + (inEgoNetwork × 3)
+        const overlapCount = overlap.length;
+        const score = (overlapCount * 3) + (inNetwork * 3);
+
+        return { person: p, overlapCount, score, sharedRoles: overlap };
+      })
+      .filter((r) => r.overlapCount > 0) // At least one role in common
+      .sort((a, b) => b.score - a.score || b.overlapCount - a.overlapCount)
+      .slice(0, 5); // Top 5
+  })();
 
   // Build slides array with chapter slides inserted before first event of each chapter
   $: slides = (() => {
-    if (totalSlides === 0) return [{ type: "overview" }];
+    // Check if we should add a conclusion slide
+    const hasConclusion = conclusion || (relatedPersons && relatedPersons.length > 0);
+
+    if (totalSlides === 0) {
+      // If no events but there's a conclusion, show overview + conclusion
+      if (hasConclusion) {
+        return [
+          { type: "overview" },
+          { type: "conclusion", conclusion, relatedPersons }
+        ];
+      }
+      return [{ type: "overview" }];
+    }
 
     const result = [{ type: "overview" }];
     const hasChapters = chapters && chapters.length > 0;
 
     if (!hasChapters) {
-      return [{ type: "overview" }, ...eventSlides];
+      const allSlides = [{ type: "overview" }, ...eventSlides];
+      // Add conclusion at the end if it exists
+      if (hasConclusion) {
+        allSlides.push({ type: "conclusion", conclusion, relatedPersons });
+      }
+      return allSlides;
     }
 
     let lastChapterId = null;
@@ -116,12 +177,17 @@
       result.push(event);
     });
 
+    // Add conclusion at the end if it exists
+    if (hasConclusion) {
+      result.push({ type: "conclusion", conclusion, relatedPersons });
+    }
+
     return result;
   })();
 
   $: totalPanels = slides.length;
 
-  // Map slide index to event index (accounting for chapter slides)
+  // Map slide index to event index (accounting for chapter and conclusion slides)
   $: slideIndexToEventIndex = (() => {
     const map = new Map();
     let eventIndex = 0;
@@ -129,8 +195,8 @@
     slides.forEach((slide, slideIndex) => {
       if (slide.type === "overview") {
         map.set(slideIndex, -1); // Overview = event index -1
-      } else if (slide.type === "chapter") {
-        map.set(slideIndex, null); // Chapter slides don't map to events
+      } else if (slide.type === "chapter" || slide.type === "conclusion") {
+        map.set(slideIndex, null); // Chapter and conclusion slides don't map to events
       } else {
         map.set(slideIndex, eventIndex);
         eventIndex++;
@@ -243,10 +309,11 @@
     return mappedIndex;
   })();
 
-  // Determine if current slide is a chapter slide
+  // Determine if current slide is a chapter or conclusion slide (for map fade)
   $: isChapterSlide = (() => {
     if (activeIndex < 0 || activeIndex >= slides.length) return false;
-    return slides[activeIndex]?.type === "chapter";
+    const slideType = slides[activeIndex]?.type;
+    return slideType === "chapter" || slideType === "conclusion";
   })();
 
   $: activeCoordinates =
@@ -985,16 +1052,19 @@
           </div>
         </section>
       {:else if totalPanels > 0}
-        {#each slides as slide, index (slide.type === 'chapter' ? `chapter-${slide.chapter.id}` : slide.eventIndex)}
+        {#each slides as slide, index (slide.type === 'chapter' ? `chapter-${slide.chapter.id}` : slide.type === 'conclusion' ? 'conclusion' : slide.eventIndex)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
             class:chapter={slide.type === "chapter"}
+            class:conclusion={slide.type === "conclusion"}
             aria-label={slide.type === "overview"
               ? `Overview: ${personName}`
               : slide.type === "chapter"
                 ? `Chapter: ${slide.chapter.headline}`
-                : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
+                : slide.type === "conclusion"
+                  ? $_("conclusion.aria_label")
+                  : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
           >
             {#if slide.type === "overview"}
               <OverviewSlide
@@ -1019,6 +1089,13 @@
                 {egoNetwork}
                 activeSlideIndex={activeIndex}
                 onOpenNetwork={openNetworkModal}
+              />
+            {:else if slide.type === "conclusion"}
+              <ConclusionSlide
+                conclusion={slide.conclusion}
+                relatedPersons={slide.relatedPersons}
+                personStyle={styleConfig}
+                personStylesRegistry={personStylesRegistry}
               />
             {:else if slide.type !== "spacer"}
               <EventSlide
@@ -1432,12 +1509,13 @@
       margin-bottom: 0;
     }
 
-    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter) {
+    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
       padding-bottom: 12rem;
     }
 
     .slide.overview,
-    .slide.chapter {
+    .slide.chapter,
+    .slide.conclusion {
       padding-top: 0.5rem;
       padding-bottom: 6rem;
     }
@@ -1523,11 +1601,18 @@
     }
   }
 
-  .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter) {
+  .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
     padding-bottom: 16rem;
   }
 
   .slide.chapter {
+    justify-content: flex-start;
+    padding-top: 1rem;
+    padding-bottom: 8rem;
+    position: relative;
+  }
+
+  .slide.conclusion {
     justify-content: flex-start;
     padding-top: 1rem;
     padding-bottom: 8rem;
@@ -1665,11 +1750,12 @@
       gap: 1.75rem;
     }
 
-    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter) {
+    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
       padding-bottom: 18rem;
     }
 
-    .slide.chapter {
+    .slide.chapter,
+    .slide.conclusion {
       padding-top: 2.5rem;
     }
 

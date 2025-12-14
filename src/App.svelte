@@ -422,6 +422,8 @@ import { displayName } from "./utils/helpers.js";
     <StoryView
       {dataset}
       {egoNetwork}
+      personsRegistry={registry}
+      personStylesRegistry={personStyles}
       isLoading={dataLoading}
       {loadingStage}
       activeIndex={slideParam ?? 0}

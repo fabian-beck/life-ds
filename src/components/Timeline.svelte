@@ -206,7 +206,7 @@
   })();
 
   // Build flat list of items with chapter dots for collapsed timeline
-  // Each item represents a slide (overview, chapter, or event) with timeline dot
+  // Each item represents a slide (overview, chapter, conclusion, or event) with timeline dot
   $: timelineItems = (() => {
     if (!slides || slides.length === 0) {
       return [];
@@ -224,6 +224,12 @@
         items.push({
           type: 'chapter',
           chapter: slide.chapter,
+          slideIndex: i,
+        });
+      } else if (slide.type === 'conclusion') {
+        // Conclusion slide gets a conclusion dot
+        items.push({
+          type: 'conclusion',
           slideIndex: i,
         });
       } else {
@@ -247,6 +253,10 @@
       const currentSlide = slides[activeIndex];
       if (currentSlide?.type === 'chapter' && currentSlide?.chapter) {
         return currentSlide.chapter;
+      }
+      // Check if we're on a conclusion slide
+      if (currentSlide?.type === 'conclusion') {
+        return { id: 'conclusion', headline: $_("conclusion.title").toUpperCase() };
       }
     }
 
@@ -432,6 +442,24 @@
                     aria-current={activeIndex === item.slideIndex ? "true" : undefined}
                   >
                     <span class="dot-inner-chapter"></span>
+                  </button>
+                </div>
+              {:else if item.type === 'conclusion'}
+                {@const conclusionSlideIndex = item.slideIndex}
+                {@const distance = Math.abs(conclusionSlideIndex - activeIndex)}
+                {@const scale = distance === 0 ? 1.6 : (distance === 1 ? 1.3 : (distance === 2 ? 1.15 : 1.0))}
+                {@const translate = distance === 0 ? 0 : (Math.abs(distance) === 1 ? (conclusionSlideIndex - activeIndex) * 0.3 : (Math.abs(distance) === 2 ? (conclusionSlideIndex - activeIndex) * 0.15 : 0))}
+                <div class="dot-wrapper">
+                  <button
+                    type="button"
+                    class="dot conclusion-dot square"
+                    class:active={activeIndex === item.slideIndex}
+                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(scale * 10)};"
+                    on:click={() => onGoToSlide(item.slideIndex)}
+                    aria-label={$_("timeline.go_to_conclusion")}
+                    aria-current={activeIndex === item.slideIndex ? "true" : undefined}
+                  >
+                    <span class="dot-inner-conclusion"></span>
                   </button>
                 </div>
               {:else if item.type === 'event'}
@@ -658,6 +686,35 @@
                   </div>
                 {/each}
               {/each}
+
+              <!-- Add conclusion at the end of expanded timeline if it exists -->
+              {#if slides[slides.length - 1]?.type === 'conclusion'}
+                {@const conclusionSlideIndex = slides.length - 1}
+                <div
+                  class="timeline-item home-item conclusion-item clickable"
+                  class:active={activeIndex === conclusionSlideIndex}
+                  role="button"
+                  tabindex="0"
+                  on:click={() => onGoToSlide(conclusionSlideIndex)}
+                  on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onGoToSlide(conclusionSlideIndex)}
+                >
+                  <button
+                    type="button"
+                    class="dot square conclusion-dot"
+                    class:active={activeIndex === conclusionSlideIndex}
+                    style="transform: scale({activeIndex === conclusionSlideIndex ? 1.4 : 1.0}); transition: transform 0.25s ease;"
+                    on:click|stopPropagation={() => onGoToSlide(conclusionSlideIndex)}
+                    aria-label={$_("timeline.show_conclusion")}
+                    aria-current={activeIndex === conclusionSlideIndex ? "true" : undefined}
+                    tabindex="-1"
+                  >
+                    <span class="dot-inner-conclusion"></span>
+                  </button>
+                  <div class="timeline-content">
+                    <span class="event-title">{$_("conclusion.title").toUpperCase()}</span>
+                  </div>
+                </div>
+              {/if}
             </div>
           {/if}
         </div>
@@ -936,6 +993,52 @@
 
   .dot.chapter-dot.active .dot-inner-chapter {
     background: var(--story-secondary, #38bdf8);
+  }
+
+  /* Conclusion dots - small square */
+  .dot.conclusion-dot {
+    width: calc(var(--dot-size) * 0.5);
+    height: calc(var(--dot-size) * 0.5);
+    min-width: calc(var(--dot-size) * 0.5);
+    min-height: calc(var(--dot-size) * 0.5);
+    padding: 0;
+    background: transparent;
+    border: none;
+    flex: 0 0 auto;
+    transition:
+      background-color 0.25s ease,
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dot-inner-conclusion {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: rgba(var(--secondary-rgb, 56, 189, 248), 0.4);
+    border-radius: 2px; /* Small rounded corners for square */
+    transition:
+      background-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .dot.conclusion-dot:hover .dot-inner-conclusion {
+    background: rgba(var(--secondary-rgb, 56, 189, 248), 0.6);
+  }
+
+  .dot.conclusion-dot.active .dot-inner-conclusion {
+    background: var(--story-secondary, #38bdf8);
+  }
+
+  /* Conclusion item in expanded timeline */
+  .timeline-item.conclusion-item {
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+  }
+
+  .timeline-item.home-item.conclusion-item .event-title {
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.05em;
   }
 
   .expanded-timeline-container {
