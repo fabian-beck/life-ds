@@ -35,6 +35,19 @@ from utils.wikipedia_cache import (
     get_cache_dir,
 )
 
+# ============================================================================
+# AI REASONING EFFORT CONFIGURATION
+# ============================================================================
+# Configure reasoning effort for each phase of the generation pipeline
+# This ensures consistent configuration between AI calls and logging
+
+PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation (medium)
+PHASE2_REASONING_EFFORT = LOW_REASONING_EFFORT      # Event detail research (none)
+PHASE3_IMAGE_SEARCH_REASONING = LOW_REASONING_EFFORT  # Image search string generation (none)
+PHASE3_IMAGE_MATCH_REASONING = LOW_REASONING_EFFORT   # Image-to-event matching (none)
+CHAPTER_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Chapter generation (medium)
+RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT    # Related article discovery (none)
+
 # Import from cache_wikipedia_materials for related articles functionality
 try:
     from cache_wikipedia_materials import fetch_related_articles
@@ -1053,7 +1066,7 @@ def generate_image_search_strings(
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": LOW_REASONING_EFFORT},
+            reasoning={"effort": PHASE3_IMAGE_SEARCH_REASONING},
             input=[
                 {
                     "role": "system",
@@ -1222,7 +1235,7 @@ def match_images_to_events(
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": LOW_REASONING_EFFORT},
+            reasoning={"effort": PHASE3_IMAGE_MATCH_REASONING},
             input=[
                 {
                     "role": "system",
@@ -1412,7 +1425,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": DEFAULT_REASONING_EFFORT},
+            reasoning={"effort": PHASE1_REASONING_EFFORT},
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": instructions},
@@ -1692,7 +1705,7 @@ def research_event_details(
 
             response = client.responses.parse(
                 model=model,
-                reasoning={"effort": LOW_REASONING_EFFORT},
+                reasoning={"effort": PHASE2_REASONING_EFFORT},
                 input=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": prompt},
@@ -1930,7 +1943,7 @@ def call_openai_chapter_generation(
         try:
             response = client.responses.parse(
                 model=model,
-                reasoning={"effort": LOW_REASONING_EFFORT},
+                reasoning={"effort": CHAPTER_REASONING_EFFORT},
                 input=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": instructions},
@@ -2603,7 +2616,7 @@ def generate_person_events(
 
     # Fetch related articles if not already loaded from cache
     if related_articles is None and fetch_related_articles is not None:
-        print(f"[Step 3/10] Fetching related articles (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+        print(f"[Step 3/10] Fetching related articles (model: {model}, reasoning: {RELATED_ARTICLES_REASONING})...")
         try:
             related_articles = fetch_related_articles(
                 article_title,
@@ -2630,13 +2643,13 @@ def generate_person_events(
         print(f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache")
 
     # PHASE 1: Generate event skeletons
-    print(f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {DEFAULT_REASONING_EFFORT})...")
+    print(f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})...")
     phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles)
     life_plan = call_openai_phase1(phase1_prompt, model)
     print(f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons")
 
     # PHASE 2: Research event details (NO images - Phase 3)
-    print(f"[Step 5/11] PHASE 2: Researching event details (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+    print(f"[Step 5/11] PHASE 2: Researching event details (model: {model}, reasoning: {PHASE2_REASONING_EFFORT})...")
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
         person_name=life_plan.person.name,
@@ -2650,7 +2663,7 @@ def generate_person_events(
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
 
     # CHAPTER GENERATION: Create chapters based on established events
-    print(f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+    print(f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {CHAPTER_REASONING_EFFORT})...")
     chapters, events_with_chapters, conclusion = generate_chapters_for_events(
         merged_events=merged_events,
         person_name=life_plan.person.name,
@@ -2662,7 +2675,7 @@ def generate_person_events(
 
     # PHASE 3: Event-specific image discovery
     print(
-        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {LOW_REASONING_EFFORT})...")
+        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {PHASE3_IMAGE_SEARCH_REASONING}/{PHASE3_IMAGE_MATCH_REASONING})...")
     enriched_events, portrait = research_images_for_all_events(
         merged_events=events_with_chapters,
         event_skeletons=life_plan.event_skeletons,
