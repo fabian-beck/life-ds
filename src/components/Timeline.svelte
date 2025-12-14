@@ -240,8 +240,17 @@
     return items;
   })();
 
-  // Compute current chapter for active event
+  // Compute current chapter for active slide (either from event or chapter slide)
   $: currentChapter = (() => {
+    // First check if we're on a chapter slide
+    if (activeIndex > 0 && activeIndex < slides.length) {
+      const currentSlide = slides[activeIndex];
+      if (currentSlide?.type === 'chapter' && currentSlide?.chapter) {
+        return currentSlide.chapter;
+      }
+    }
+
+    // Otherwise check if active event has a chapter
     if (activeEventIndex < 0 || activeEventIndex >= eventSlides.length) {
       return null; // Overview slide or invalid index
     }
@@ -259,12 +268,14 @@
 
   // Calculate horizontal offset for chapter indicator based on active slide position
   $: chapterIndicatorOffset = (() => {
-    if (activeEventIndex < 0 || totalSlides === 0) {
+    if (activeIndex === 0 || totalPanels === 0) {
       return 0; // Centered when on overview
     }
 
-    // Calculate position as percentage (0 = first event, 1 = last event)
-    const progress = activeEventIndex / (totalSlides - 1);
+    // Calculate position as percentage based on activeIndex (includes chapter slides)
+    // activeIndex ranges from 0 (overview) to totalPanels - 1
+    // We want first content slide (index 1) at left, last slide at right
+    const progress = (activeIndex - 1) / Math.max(1, totalPanels - 2);
 
     // Map to offset range: -20% to +20% (leftward for early slides, rightward for later slides)
     // Subtract 0.5 to center around 0, multiply by 40% for range
