@@ -38,13 +38,13 @@ export function storyStyleVars(style) {
   if (style.secondary) segments.push(`--story-secondary: ${style.secondary}`);
   if (style.backgroundPatternDataUrl) {
     segments.push(
-      `--story-pattern-image: url(${style.backgroundPatternDataUrl})`
+      `--story-pattern-image: url("${style.backgroundPatternDataUrl}")`
     );
     segments.push(`--story-pattern-size: 500px`);
   }
   if (style.separatorGlyphDataUrl) {
     segments.push(
-      `--story-separator-glyph: url(${style.separatorGlyphDataUrl})`
+      `--story-separator-glyph: url("${style.separatorGlyphDataUrl}")`
     );
   }
   if (style.headingFont) {

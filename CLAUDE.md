@@ -109,9 +109,10 @@ Events are the core narrative units displayed as slides. Events can optionally b
 - `event_type_icon`: MDI icon identifier for visual categorization (e.g., "mdi-crown", "mdi-book", "mdi-school")
 
 **Chapter Structure**:
-- `headline`: Catchy, story-like title (2-5 words) - vivid and evocative like a book chapter
+- `headline`: Catchy, story-like title (2-5 words, varied lengths) - ONE unified concept, NOT a list. Vivid and evocative like a book chapter. Avoid commas, "and", or punctuation that creates lists.
 - `bridge_statement`: Brief bridge into the chapter (1 sentence, max 20 words) - sets mood and creates anticipation without spoiling events. Acts as a transition, not a summary.
-- Chapters flow together to create narrative momentum
+- Each chapter should have thematic coherence - events share a common thread or life phase
+- Aim for 3-6 chapters total that flow together to create narrative momentum
 - `conclusion`: Crisp statement (1-2 sentences) capturing the person's legacy or life essence
 
 **Important**:
