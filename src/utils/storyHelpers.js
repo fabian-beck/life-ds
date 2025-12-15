@@ -1025,6 +1025,7 @@ export function findPersonInNetwork(personName, egoNetwork) {
 /**
  * Get chapter people from involved_people list, matched against ego network.
  * Only returns people found in the network with fuzzy matching.
+ * Filters to only show people with "strong" connections.
  * @param {Object} chapter - Chapter object with involved_people array
  * @param {Object} egoNetwork - Ego network with connections
  * @returns {Array} Array of matched connection objects with metadata
@@ -1034,11 +1035,11 @@ export function getChapterPeople(chapter, egoNetwork) {
     return [];
   }
 
-  // Only return people that can be matched to the ego network
+  // Only return people that can be matched to the ego network with strong connections
   return chapter.involved_people
     .map((name, idx) => {
       const networkPerson = findPersonInNetwork(name, egoNetwork);
-      if (networkPerson) {
+      if (networkPerson && networkPerson.strength === 'strong') {
         return {
           ...networkPerson,
           _originalName: name,
