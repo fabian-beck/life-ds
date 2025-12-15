@@ -2,13 +2,14 @@
   import { mdiMapMarkerOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import { _ } from "../stores/language";
-  import { getSubcategory, getChapterPeople } from "../utils/storyHelpers.js";
+  import { getSubcategory, getChapterPeople, formatSingleDate } from "../utils/storyHelpers.js";
 
   export let chapter = {};
   export let personId = "";
   export let personName = "";
   export let personStyle = null;
   export let egoNetwork = null;
+  export let formatters = {};
   export let activeSlideIndex = -1; // Track active slide to close popups on navigation
   export let onOpenNetwork = null; // Callback to open the network modal
 
@@ -20,33 +21,43 @@
   }
 
   // Format date range for chapter
-  $: dateRangeLabel = (() => {
+  $: dateLabel = (() => {
     if (!chapter) return "";
 
     const start = chapter.date_start;
     const end = chapter.date_end;
+
+    // Date range - always use year precision for chapters
+    // Extract year from date strings (e.g., "1912-06-23" -> "1912")
+    const startYear = start ? start.split('-')[0] : null;
+    const endYear = end ? end.split('-')[0] : null;
+
+    const startLabel = formatSingleDate(startYear, "year", formatters);
+    const endLabel = formatSingleDate(endYear, "year", formatters);
+
+    if (startLabel && endLabel && startYear !== endYear) {
+      return `${startLabel} – ${endLabel}`;
+    } else if (startLabel) {
+      return startLabel;
+    }
+    return "";
+  })();
+
+  // Format age range for chapter
+  $: ageLabel = (() => {
+    if (!chapter) return "";
+
     const ageStart = chapter.age_start;
     const ageEnd = chapter.age_end;
 
-    const parts = [];
-
-    // Date range
-    if (start && end) {
-      parts.push(`${start} – ${end}`);
-    } else if (start) {
-      parts.push(start);
-    }
-
-    // Age range
     if (ageStart !== undefined && ageEnd !== undefined) {
       if (ageStart === 0) {
-        parts.push($_("story.at_birth") + ` – ${$_("story.age", { age: ageEnd })}`);
+        return $_("story.at_birth") + ` – ${$_("story.age", { age: ageEnd })}`;
       } else {
-        parts.push(`${$_("story.age", { age: ageStart })} – ${$_("story.age", { age: ageEnd })}`);
+        return $_("story.age", { age: ageStart }) + ` – ${ageEnd}`;
       }
     }
-
-    return parts.join(" • ");
+    return "";
   })();
 
   // Match involved people against ego network using shared fuzzy matching
@@ -71,10 +82,27 @@
   <div class="chapter-box">
     <h2 class="chapter-headline">{chapter.headline || ""}</h2>
 
-    {#if dateRangeLabel || chapter.location}
+    {#if dateLabel || ageLabel || chapter.location}
       <div class="chapter-metadata">
-        {#if dateRangeLabel}
-          <span class="chapter-date-range">{dateRangeLabel}</span>
+        {#if dateLabel}
+          <span class="chapter-date-range">{dateLabel}</span>
+        {/if}
+        {#if dateLabel && ageLabel}
+          {#if personStyle?.separatorGlyphDataUrl}
+            <span class="separator glyph-separator" aria-hidden="true"></span>
+          {:else}
+            <span class="separator">·</span>
+          {/if}
+        {/if}
+        {#if ageLabel}
+          <span class="chapter-age-range">{ageLabel}</span>
+        {/if}
+        {#if (dateLabel || ageLabel) && chapter.location}
+          {#if personStyle?.separatorGlyphDataUrl}
+            <span class="separator glyph-separator" aria-hidden="true"></span>
+          {:else}
+            <span class="separator">·</span>
+          {/if}
         {/if}
         {#if chapter.location}
           <span class="chapter-location">
@@ -91,8 +119,8 @@
       </div>
     {/if}
 
-    {#if chapter.description}
-      <p class="chapter-description">{chapter.description}</p>
+    {#if chapter.bridge_statement}
+      <p class="chapter-bridge">{chapter.bridge_statement}</p>
     {/if}
 
     {#if involvedPeople.length > 0}
@@ -163,7 +191,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem 1.25rem;
+    gap: 0.5rem;
     font-family: var(--story-body-font, sans-serif);
     font-size: 0.8125rem;
     color: var(--story-secondary, #38bdf8);
@@ -175,6 +203,27 @@
 
   .chapter-date-range {
     font-variant-numeric: tabular-nums;
+  }
+
+  .chapter-age-range {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .separator {
+    color: rgba(148, 163, 184, 0.8);
+    flex: 0 0 auto;
+  }
+
+  .separator.glyph-separator {
+    width: 0.9em;
+    height: 0.9em;
+    display: inline-block;
+    background-image: var(--story-separator-glyph);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6;
+    vertical-align: middle;
   }
 
   .chapter-location {
@@ -190,7 +239,7 @@
     opacity: 0.8;
   }
 
-  .chapter-description {
+  .chapter-bridge {
     font-family: var(--story-body-font, sans-serif);
     font-size: clamp(0.9375rem, 2vw, 1.0625rem);
     font-style: italic;
@@ -227,7 +276,7 @@
       gap: 0.4rem 1rem;
     }
 
-    .chapter-description {
+    .chapter-bridge {
       font-size: clamp(0.875rem, 3vw, 0.9375rem);
     }
   }

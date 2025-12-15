@@ -1087,6 +1087,7 @@
                 {personName}
                 personStyle={styleConfig}
                 {egoNetwork}
+                {formatters}
                 activeSlideIndex={activeIndex}
                 onOpenNetwork={openNetworkModal}
               />
