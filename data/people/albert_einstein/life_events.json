@@ -10,7 +10,7 @@
       "scientist"
     ],
     "tagline": "Architect of Relativity",
-    "summary": "Albert Einstein (1879\u20131955) was a German-born theoretical physicist whose work transformed modern understandings of space, time, matter, and energy. While working at the Swiss Patent Office he published his 1905 \u201cAnnus Mirabilis\u201d papers, including special relativity and the mass\u2013energy relation E=mc\u00b2, and a key explanation of the photoelectric effect. He later developed the general theory of relativity, received the 1921 Nobel Prize in Physics, emigrated from Nazi Germany to the United States, and used his worldwide fame to advocate for peace, international cooperation, and nuclear arms control.",
+    "summary": "Albert Einstein (1879–1955) was a German-born theoretical physicist whose work transformed modern understandings of space, time, matter, and energy. While working at the Swiss Patent Office he published his 1905 “Annus Mirabilis” papers, including special relativity and the mass–energy relation E=mc², and a key explanation of the photoelectric effect. He later developed the general theory of relativity, received the 1921 Nobel Prize in Physics, emigrated from Nazi Germany to the United States, and used his worldwide fame to advocate for peace, international cooperation, and nuclear arms control.",
     "wikipedia": "https://en.wikipedia.org/wiki/Albert_Einstein",
     "portrait": {
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Albert_Einstein_1921_by_F_Schmutzer.jpg",
@@ -21,7 +21,6 @@
     {
       "id": "formative_european_years",
       "headline": "Formative European Years",
-      "description": "Childhood and youth in Germany, Italy, and Switzerland shape Einstein\u2019s personality, skepticism of authority, and scientific promise as he progresses from schoolboy to prospective physicist.",
       "date_start": "1879-03-14",
       "date_start_precision": "day",
       "date_end": "1896-10-02",
@@ -30,15 +29,15 @@
       "age_end": 17,
       "involved_people": [
         "Hermann Einstein",
-        "Pauline Einstein (n\u00e9e Koch)",
+        "Pauline Einstein (née Koch)",
         "Jakob Einstein"
       ],
-      "location": "Central Europe"
+      "location": "Central Europe",
+      "bridge_statement": "Childhood and youth in Germany, Italy, and Switzerland shape Einstein’s personality, skepticism of authority, and scientific promise as he progresses from schoolboy to prospective physicist."
     },
     {
       "id": "student_to_patent_visionary",
       "headline": "Student To Patent Visionary",
-      "description": "Einstein\u2019s Zurich studies, early struggles for employment, and Bern patent office period culminate in his annus mirabilis papers that revolutionize modern physics while he builds a young family.",
       "date_start": "1896-10",
       "date_start_precision": "month",
       "date_end": "1909",
@@ -46,14 +45,14 @@
       "age_start": 17,
       "age_end": 30,
       "involved_people": [
-        "Mileva Mari\u0107"
+        "Mileva Marić"
       ],
-      "location": "Switzerland"
+      "location": "Switzerland",
+      "bridge_statement": "Einstein’s Zurich studies, early struggles for employment, and Bern patent office period culminate in his annus mirabilis papers that revolutionize modern physics while he builds a young family."
     },
     {
       "id": "berlin_theoretical_breakthroughs",
       "headline": "Berlin Theoretical Breakthroughs",
-      "description": "As a leading Berlin professor, Einstein develops general relativity, sees it triumphantly confirmed, and attains international fame capped by the Nobel Prize amid personal and political tensions in Europe.",
       "date_start": "1909",
       "date_start_precision": "year",
       "date_end": "1922-11-09",
@@ -61,7 +60,7 @@
       "age_start": 30,
       "age_end": 43,
       "involved_people": [
-        "Mileva Mari\u0107",
+        "Mileva Marić",
         "Hans Albert Einstein",
         "Eduard Einstein",
         "Elsa Einstein",
@@ -71,12 +70,12 @@
         "Charles Rundle Davidson",
         "Members of the Royal Swedish Academy of Sciences"
       ],
-      "location": "Central Europe"
+      "location": "Central Europe",
+      "bridge_statement": "As a leading Berlin professor, Einstein develops general relativity, sees it triumphantly confirmed, and attains international fame capped by the Nobel Prize amid personal and political tensions in Europe."
     },
     {
       "id": "exile_in_america",
       "headline": "Exile In America",
-      "description": "Fleeing Nazism, Einstein settles in the United States, uses his authority to warn of nuclear dangers, and becomes a moral voice on global issues while continuing his scientific work in Princeton.",
       "date_start": "1922-11-10",
       "date_start_precision": "day",
       "date_end": "1952-11-26",
@@ -84,7 +83,7 @@
       "age_start": 43,
       "age_end": 73,
       "involved_people": [
-        "Le\u00f3 Szil\u00e1rd",
+        "Leó Szilárd",
         "Franklin D. Roosevelt",
         "Edward Teller",
         "Eugene Wigner",
@@ -92,12 +91,12 @@
         "David Ben-Gurion",
         "Abba Eban"
       ],
-      "location": "United States"
+      "location": "United States",
+      "bridge_statement": "Fleeing Nazism, Einstein settles in the United States, uses his authority to warn of nuclear dangers, and becomes a moral voice on global issues while continuing his scientific work in Princeton."
     },
     {
       "id": "final_princeton_days",
       "headline": "Final Princeton Days",
-      "description": "In his last years in Princeton, Einstein remains intellectually active on unified field theories and public questions until his death, leaving a lasting scientific and cultural legacy.",
       "date_start": "1952-11-27",
       "date_start_precision": "day",
       "date_end": "1955-04-18",
@@ -105,7 +104,8 @@
       "age_start": 73,
       "age_end": 76,
       "involved_people": [],
-      "location": "United States"
+      "location": "United States",
+      "bridge_statement": "In his last years in Princeton, Einstein remains intellectually active on unified field theories and public questions until his death, leaving a lasting scientific and cultural legacy."
     }
   ],
   "events": [
@@ -114,11 +114,11 @@
       "date_precision": "day",
       "age": null,
       "title": "Birth in Ulm",
-      "description": "Albert Einstein is born in Ulm in the Kingdom of W\u00fcrttemberg to Hermann and Pauline Einstein, members of an assimilated middle-class German-Jewish family. Shortly after his birth the family will move to Munich, where his father and uncle work in the fledgling electrical industry.",
+      "description": "Albert Einstein is born in Ulm in the Kingdom of Württemberg to Hermann and Pauline Einstein, members of an assimilated middle-class German-Jewish family. Shortly after his birth the family will move to Munich, where his father and uncle work in the fledgling electrical industry.",
       "locations": [
         {
-          "name_historic": "Ulm, Kingdom of W\u00fcrttemberg",
-          "name_modern": "Ulm, Baden-W\u00fcrttemberg, Germany",
+          "name_historic": "Ulm, Kingdom of Württemberg",
+          "name_modern": "Ulm, Baden-Württemberg, Germany",
           "centroid": [
             9.9937,
             48.4011
@@ -137,7 +137,7 @@
       ],
       "involved_people": [
         "Hermann Einstein",
-        "Pauline Einstein (n\u00e9e Koch)",
+        "Pauline Einstein (née Koch)",
         "Jakob Einstein"
       ],
       "sources": [
@@ -147,8 +147,8 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Gorri%C3%B3n_de_Ulm%2C_Ulm%2C_Alemania%2C_2023-06-17%2C_DD_67.jpg",
-          "caption": "Ulm Sparrow statue in Einstein\u2019s birthplace, Ulm, Germany",
-          "source": "https://commons.wikimedia.org/wiki/File:Gorri\u00f3n_de_Ulm,_Ulm,_Alemania,_2023-06-17,_DD_67.jpg"
+          "caption": "Ulm Sparrow statue in Einstein’s birthplace, Ulm, Germany",
+          "source": "https://commons.wikimedia.org/wiki/File:Gorrión_de_Ulm,_Ulm,_Alemania,_2023-06-17,_DD_67.jpg"
         }
       ],
       "event_type_icon": "mdi-candle",
@@ -178,7 +178,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Luitpold-Gymnasium_Muenchen-2.jpg",
-          "caption": "Staatliches Luitpold-Gymnasium M\u00fcnchen school building",
+          "caption": "Staatliches Luitpold-Gymnasium München school building",
           "source": "https://commons.wikimedia.org/wiki/File:Luitpold-Gymnasium_Muenchen-2.jpg"
         }
       ],
@@ -186,7 +186,7 @@
       "chapter": "formative_european_years",
       "annotations": {
         "Prussian education system": {
-          "explanation": "A highly centralized, authoritarian schooling model developed in 18th\u201319th century Prussia, emphasizing discipline, obedience, and rote learning in state-run schools.",
+          "explanation": "A highly centralized, authoritarian schooling model developed in 18th–19th century Prussia, emphasizing discipline, obedience, and rote learning in state-run schools.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Education_in_Prussia"
         }
       }
@@ -196,7 +196,7 @@
       "date_precision": "day",
       "age": 17,
       "title": "Passes Swiss Matura in Aarau",
-      "description": "After leaving the Munich gymnasium and joining his family in Italy, Einstein moves alone to Aarau in Switzerland to complete his secondary schooling at the liberal Aargau Cantonal School. On 3 October 1896 he receives his [[Matura|Maturit\u00e4tszeugnis]] with top marks in the sciences, an important step that allows him to enter higher education while formally separating from both German citizenship and organized religion.",
+      "description": "After leaving the Munich gymnasium and joining his family in Italy, Einstein moves alone to Aarau in Switzerland to complete his secondary schooling at the liberal Aargau Cantonal School. On 3 October 1896 he receives his [[Matura|Maturitätszeugnis]] with top marks in the sciences, an important step that allows him to enter higher education while formally separating from both German citizenship and organized religion.",
       "locations": [
         {
           "name_historic": "Aarau",
@@ -242,7 +242,7 @@
       "chapter": "student_to_patent_visionary",
       "annotations": {
         "Matura": {
-          "explanation": "The Matura (German: Maturit\u00e4tspr\u00fcfung or Maturit\u00e4tszeugnis) is a standardized secondary-school leaving examination and diploma in several European countries that qualifies holders for university admission.",
+          "explanation": "The Matura (German: Maturitätsprüfung or Maturitätszeugnis) is a standardized secondary-school leaving examination and diploma in several European countries that qualifies holders for university admission.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
         }
       }
@@ -252,11 +252,11 @@
       "date_precision": "month",
       "age": 17,
       "title": "Enrolls at Zurich Polytechnic",
-      "description": "Einstein enrolls in the mathematics and physics teacher-training program at the [[Eidgen\u00f6ssisches Polytechnikum|Eidgen\u00f6ssisches Polytechnikum]] in Zurich (later ETH Zurich). There he studies under leading physicists and mathematicians, often skipping lectures he finds uninspiring while working intensively on theoretical problems with a small circle of friends, including his fellow student and future first wife Mileva Mari\u0107.",
+      "description": "Einstein enrolls in the mathematics and physics teacher-training program at the [[Eidgenössisches Polytechnikum|Eidgenössisches Polytechnikum]] in Zurich (later ETH Zurich). There he studies under leading physicists and mathematicians, often skipping lectures he finds uninspiring while working intensively on theoretical problems with a small circle of friends, including his fellow student and future first wife Mileva Marić.",
       "locations": [
         {
-          "name_historic": "Z\u00fcrich",
-          "name_modern": "Z\u00fcrich, Switzerland",
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Switzerland",
           "centroid": [
             8.5417,
             47.3769
@@ -265,7 +265,7 @@
         }
       ],
       "involved_people": [
-        "Mileva Mari\u0107"
+        "Mileva Marić"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -282,7 +282,7 @@
       "event_type_icon": "mdi-school",
       "chapter": "formative_european_years",
       "annotations": {
-        "Eidgen\u00f6ssisches Polytechnikum": {
+        "Eidgenössisches Polytechnikum": {
           "explanation": "The Swiss Federal Polytechnic School in Zurich, founded in 1855 and later renamed ETH Zurich, a leading institution for science and engineering education and research.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
         }
@@ -326,8 +326,8 @@
       "date": "1903-01-06",
       "date_precision": "day",
       "age": 23,
-      "title": "Marries Mileva Mari\u0107 in Bern",
-      "description": "Einstein marries his former [[ETH Zurich|ETH]] classmate Mileva Mari\u0107 in a civil ceremony in Bern, against the initial wishes of his family. The couple soon establish a household in the Kramgasse, later known as the Einsteinhaus, where they will raise two sons while Einstein continues to work at the patent office and develop his revolutionary ideas.",
+      "title": "Marries Mileva Marić in Bern",
+      "description": "Einstein marries his former [[ETH Zurich|ETH]] classmate Mileva Marić in a civil ceremony in Bern, against the initial wishes of his family. The couple soon establish a household in the Kramgasse, later known as the Einsteinhaus, where they will raise two sons while Einstein continues to work at the patent office and develop his revolutionary ideas.",
       "locations": [
         {
           "name_historic": "Bern",
@@ -340,7 +340,7 @@
         }
       ],
       "involved_people": [
-        "Mileva Mari\u0107"
+        "Mileva Marić"
       ],
       "sources": [
         "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87",
@@ -350,7 +350,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Albert_Einstein_and_his_wife_Mileva_Maric.jpg",
-          "caption": "Albert Einstein and his first wife Mileva Mari\u0107",
+          "caption": "Albert Einstein and his first wife Mileva Marić",
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_and_his_wife_Mileva_Maric.jpg"
         }
       ],
@@ -358,7 +358,7 @@
       "chapter": "student_to_patent_visionary",
       "annotations": {
         "ETH Zurich": {
-          "explanation": "The Swiss Federal Institute of Technology in Zurich, a leading science and engineering university where Albert Einstein and Mileva Mari\u0107 studied together.",
+          "explanation": "The Swiss Federal Institute of Technology in Zurich, a leading science and engineering university where Albert Einstein and Mileva Marić studied together.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
         }
       }
@@ -371,7 +371,7 @@
       "date_note": "Spans several papers published between June and September 1905",
       "age": 26,
       "title": "Publishes Annus Mirabilis papers",
-      "description": "While still a patent clerk in Bern, Einstein publishes a series of four landmark papers in a German physics journal that together reshape modern physics. They explain Brownian motion, introduce the light quantum to account for the photoelectric effect, formulate the special theory of relativity, and derive the mass\u2013energy relation E=mc\u00b2, bringing him to the attention of leading physicists across Europe.",
+      "description": "While still a patent clerk in Bern, Einstein publishes a series of four landmark papers in a German physics journal that together reshape modern physics. They explain Brownian motion, introduce the light quantum to account for the photoelectric effect, formulate the special theory of relativity, and derive the mass–energy relation E=mc², bringing him to the attention of leading physicists across Europe.",
       "locations": [
         {
           "name_historic": "Bern",
@@ -415,7 +415,7 @@
         },
         {
           "name_historic": "Zurich",
-          "name_modern": "Z\u00fcrich, Switzerland",
+          "name_modern": "Zürich, Switzerland",
           "centroid": [
             8.5417,
             47.3769
@@ -436,7 +436,7 @@
       "date_precision": "month",
       "age": 35,
       "title": "Moves to Berlin as leading professor",
-      "description": "Einstein accepts a prestigious position in Berlin as a member of the [[Prussian Academy of Sciences|Prussian Academy of Sciences]] and professor at the University of Berlin, while also becoming director-designate of a new physics institute. The move places him at the center of German scientific life on the eve of World War I, even as his marriage to Mileva Mari\u0107 deteriorates and his personal life becomes increasingly strained.",
+      "description": "Einstein accepts a prestigious position in Berlin as a member of the [[Prussian Academy of Sciences|Prussian Academy of Sciences]] and professor at the University of Berlin, while also becoming director-designate of a new physics institute. The move places him at the center of German scientific life on the eve of World War I, even as his marriage to Mileva Marić deteriorates and his personal life becomes increasingly strained.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -448,8 +448,8 @@
           "primary": true
         },
         {
-          "name_historic": "Z\u00fcrich",
-          "name_modern": "Z\u00fcrich, Switzerland",
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Switzerland",
           "centroid": [
             8.5417,
             47.3769
@@ -458,7 +458,7 @@
         }
       ],
       "involved_people": [
-        "Mileva Mari\u0107",
+        "Mileva Marić",
         "Hans Albert Einstein",
         "Eduard Einstein",
         "Elsa Einstein"
@@ -482,7 +482,7 @@
       "date_precision": "day",
       "age": 36,
       "title": "Presents general relativity field equations",
-      "description": "After years of intense work in [[general theory of relativity|Berlin, Einstein presents the final form of the field equations of the general theory of relativity]] to the Prussian Academy of Sciences. The new theory describes gravity as the curvature of spacetime caused by mass and energy, supplanting Newtonian gravitation and providing a framework for understanding phenomena such as the precession of Mercury\u2019s orbit.",
+      "description": "After years of intense work in [[general theory of relativity|Berlin, Einstein presents the final form of the field equations of the general theory of relativity]] to the Prussian Academy of Sciences. The new theory describes gravity as the curvature of spacetime caused by mass and energy, supplanting Newtonian gravitation and providing a framework for understanding phenomena such as the precession of Mercury’s orbit.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -503,7 +503,7 @@
       "chapter": "berlin_theoretical_breakthroughs",
       "annotations": {
         "general theory of relativity": {
-          "explanation": "A fundamental physical theory, finalized by Einstein in 1915, that describes gravity not as a force but as the geometric curvature of four\u2011dimensional spacetime produced by mass and energy.",
+          "explanation": "A fundamental physical theory, finalized by Einstein in 1915, that describes gravity not as a force but as the geometric curvature of four‑dimensional spacetime produced by mass and energy.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
         }
       }
@@ -514,7 +514,7 @@
       "date_note": "Date the confirming eclipse results were announced to the Royal Society and Royal Astronomical Society",
       "age": 40,
       "title": "Relativity confirmed by eclipse observations",
-      "description": "British astronomers announce in [[London|London]] that measurements of starlight during the May 1919 solar eclipse match the light-bending predicted by Einstein\u2019s [[general relativity|general relativity]]. The dramatic confirmation is widely reported in the international press, instantly making Einstein a global scientific celebrity and a symbol of postwar intellectual cooperation between former enemies.",
+      "description": "British astronomers announce in [[London|London]] that measurements of starlight during the May 1919 solar eclipse match the light-bending predicted by Einstein’s [[general relativity|general relativity]]. The dramatic confirmation is widely reported in the international press, instantly making Einstein a global scientific celebrity and a symbol of postwar intellectual cooperation between former enemies.",
       "locations": [
         {
           "name_historic": "London",
@@ -527,7 +527,7 @@
         },
         {
           "name_historic": "Principe",
-          "name_modern": "Pr\u00edncipe, S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+          "name_modern": "Príncipe, São Tomé and Príncipe",
           "centroid": [
             7.4,
             1.6
@@ -570,7 +570,7 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/London"
         },
         "general relativity": {
-          "explanation": "Einstein\u2019s 1915 theory of gravitation describing gravity as the curvature of spacetime, which predicts that light passing near a massive body like the Sun will be deflected.",
+          "explanation": "Einstein’s 1915 theory of gravitation describing gravity as the curvature of spacetime, which predicts that light passing near a massive body like the Sun will be deflected.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
         }
       }
@@ -581,7 +581,7 @@
       "date_note": "Einstein received the 1921 Nobel Prize at the 1922 ceremony",
       "age": 43,
       "title": "Receives Nobel Prize in Physics",
-      "description": "Einstein is awarded the Nobel Prize in Physics \"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\" The honor, based on his work in quantum theory rather than relativity, consolidates his standing in the scientific community and provides financial resources he had promised in part to his former wife Mileva Mari\u0107 under their divorce agreement.",
+      "description": "Einstein is awarded the Nobel Prize in Physics \"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\" The honor, based on his work in quantum theory rather than relativity, consolidates his standing in the scientific community and provides financial resources he had promised in part to his former wife Mileva Marić under their divorce agreement.",
       "locations": [
         {
           "name_historic": "Stockholm",
@@ -594,7 +594,7 @@
         }
       ],
       "involved_people": [
-        "Mileva Mari\u0107",
+        "Mileva Marić",
         "Members of the Royal Swedish Academy of Sciences"
       ],
       "sources": [
@@ -663,8 +663,8 @@
       "date": "1939-08-02",
       "date_precision": "day",
       "age": 60,
-      "title": "Signs Einstein\u2013Szilard letter to Roosevelt",
-      "description": "At the urging of fellow \u00e9migr\u00e9 physicists led by Le\u00f3 Szil\u00e1rd, Einstein signs a letter to U.S. President Franklin D. Roosevelt warning that Nazi Germany might be attempting to build atomic bombs and urging American attention to uranium research. The letter helps prompt the creation of U.S. advisory committees that eventually lead to the Manhattan Project, although Einstein himself will be excluded from direct work on the program.",
+      "title": "Signs Einstein–Szilard letter to Roosevelt",
+      "description": "At the urging of fellow émigré physicists led by Leó Szilárd, Einstein signs a letter to U.S. President Franklin D. Roosevelt warning that Nazi Germany might be attempting to build atomic bombs and urging American attention to uranium research. The letter helps prompt the creation of U.S. advisory committees that eventually lead to the Manhattan Project, although Einstein himself will be excluded from direct work on the program.",
       "locations": [
         {
           "name_historic": "Long Island",
@@ -686,7 +686,7 @@
         }
       ],
       "involved_people": [
-        "Le\u00f3 Szil\u00e1rd",
+        "Leó Szilárd",
         "Franklin D. Roosevelt",
         "Edward Teller",
         "Eugene Wigner"
@@ -697,7 +697,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/1-Einstein_and_Szilard_letter_to_Roosevelt_NNSA.jpg",
-          "caption": "Einstein and Le\u00f3 Szil\u00e1rd reenact signing Roosevelt letter",
+          "caption": "Einstein and Leó Szilárd reenact signing Roosevelt letter",
           "source": "https://commons.wikimedia.org/wiki/File:1-Einstein_and_Szilard_letter_to_Roosevelt_NNSA.jpg"
         }
       ],

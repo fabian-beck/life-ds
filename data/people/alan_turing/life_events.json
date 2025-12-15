@@ -1,6 +1,6 @@
 {
-  "dataset": "biographical_timeline",
-  "created_on": "2025-12-06",
+  "dataset": "biographical_timeline_outline",
+  "created_on": "2025-12-15",
   "person": {
     "name": "Alan_Turing",
     "birth_date": "1912-06-23",
@@ -10,21 +10,19 @@
       "computer scientist",
       "cryptanalyst"
     ],
-    "summary": "Alan Turing was an English mathematician and logician whose work founded theoretical computer science and deeply influenced artificial intelligence, cryptanalysis, and mathematical biology. He formalised the notion of computation with the Turing machine, proved the unsolvability of the Entscheidungsproblem, led key wartime efforts to break German ciphers, designed one of the first stored\u2011program computers, and later proposed what became known as the Turing test for machine intelligence.",
+    "tagline": "Father of theoretical computing",
+    "summary": "Alan Turing was an English mathematician and codebreaker whose work founded modern computability theory, helped break German wartime ciphers at Bletchley Park, and shaped early computer design and artificial intelligence research. His later career also produced influential ideas in mathematical biology. He was prosecuted for homosexual acts in 1952 and died in 1954 from cyanide poisoning.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing",
     "portrait": {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
-      "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
-      "caption": "Photograph portrait of Alan Turing, taken on 29 March 1951.",
-      "creator": "Elliott & Fry",
-      "license": "Public domain"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Alan_turing_header.jpg",
+      "source": "https://en.wikipedia.org/wiki/Alan_Turing"
     }
   },
   "chapters": [
     {
-      "id": "colonial_childhood_and_schooling",
-      "headline": "Colonial Childhood to Sherborne",
-      "description": "From birth into a family tied to the British Empire through his intellectually precocious school years at Sherborne, Turing\u2019s early life is shaped by separation from his parents, traditional education, and a rapidly emerging scientific talent.",
+      "id": "split_sunrise",
+      "headline": "Split Sunrise",
+      "bridge_statement": "A bright mind emerges in a childhood shaped by distance, discipline, and private intensity.",
       "date_start": "1912-06-23",
       "date_start_precision": "day",
       "date_end": "1930-02-13",
@@ -32,54 +30,53 @@
       "age_start": 0,
       "age_end": 17,
       "involved_people": [
-        "Julius Turing",
+        "Julius Mathison Turing",
         "Ethel Sara Turing",
-        "Christopher Morcom",
-        "Frances Morcom"
+        "John Turing",
+        "Christopher Morcom"
       ],
       "location": "England"
     },
     {
-      "id": "cambridge_foundations_of_computation",
-      "headline": "Cambridge Foundations of Computation",
-      "description": "As an undergraduate and then Fellow at King\u2019s College, followed by doctoral work at Princeton, Turing develops the conceptual framework of computability and oracle machines that will underpin modern computer science.",
-      "date_start": "1930-02-14",
-      "date_start_precision": "day",
+      "id": "logic_in_full_light",
+      "headline": "Logic in Full Light",
+      "bridge_statement": "At Cambridge, abstraction becomes a tool sharp enough to cut into the limits of certainty.",
+      "date_start": "1931-02",
+      "date_start_precision": "month",
       "date_end": "1938",
       "date_end_precision": "year",
-      "age_start": 17,
+      "age_start": 18,
       "age_end": 25,
       "involved_people": [
-        "Alonzo Church"
+        "Alonzo Church",
+        "Kurt G\u00f6del"
       ],
-      "location": "United Kingdom"
+      "location": "United Kingdom and United States"
     },
     {
-      "id": "wartime_codebreaking_leadership",
-      "headline": "Wartime Codebreaking Leadership",
-      "description": "With the onset of the Second World War, Turing moves from pure mathematics into cryptanalytic work at Bletchley Park, where he leads Hut 8 in breaking German naval Enigma and plays a central role in Allied signals intelligence.",
+      "id": "war_in_the_wires",
+      "headline": "War in the Wires",
+      "bridge_statement": "When the world demands speed, theory is forced to become machinery under pressure.",
       "date_start": "1939-09",
       "date_start_precision": "month",
       "date_end": "1943",
       "date_end_precision": "year",
       "age_start": 27,
-      "age_end": 31,
+      "age_end": 30,
       "involved_people": [
-        "Gordon Welchman",
-        "Joan Clarke",
         "Dilly Knox"
       ],
       "location": "United Kingdom"
     },
     {
-      "id": "postwar_computing_and_intelligence",
-      "headline": "Postwar Electronic Computing Vision",
-      "description": "After the war, Turing designs the Automatic Computing Engine at the National Physical Laboratory and then joins the Manchester Computing Laboratory, translating his theoretical ideas into some of the earliest practical stored\u2011program computers while beginning his work on machine intelligence.",
+      "id": "blueprints_for_thinking_machines",
+      "headline": "Blueprints for Thinking Machines",
+      "bridge_statement": "With peace comes a new race: building devices worthy of the mathematics that imagined them.",
       "date_start": "1945",
       "date_start_precision": "year",
       "date_end": "1950-10",
       "date_end_precision": "month",
-      "age_start": 33,
+      "age_start": 32,
       "age_end": 38,
       "involved_people": [
         "Max Newman"
@@ -87,14 +84,14 @@
       "location": "England"
     },
     {
-      "id": "persecution_morphogenesis_and_legacy",
-      "headline": "Persecution Morphogenesis Legacy",
-      "description": "In his final years at Manchester, Turing formulates the Turing test, endures prosecution and chemical castration for homosexuality, and pioneers mathematical morphogenesis before his untimely death from cyanide poisoning.",
-      "date_start": "1950-11",
-      "date_start_precision": "month",
+      "id": "brilliance_under_sentence",
+      "headline": "Brilliance Under Sentence",
+      "bridge_statement": "Even as his ideas widen into life itself, the world narrows around him.",
+      "date_start": "1952",
+      "date_start_precision": "year",
       "date_end": "1954-06-07",
       "date_end_precision": "day",
-      "age_start": 38,
+      "age_start": 39,
       "age_end": 41,
       "involved_people": [
         "Arnold Murray"
@@ -102,67 +99,58 @@
       "location": "England"
     }
   ],
+  "conclusion": "Alan Turing lived as a builder of invisible engines\u2014of logic, of wartime certainty, of machines that could imitate mind itself. His story is a triumph of intellect shadowed by injustice, yet his ideas outlasted every constraint placed upon him.",
   "events": [
     {
       "date": "1912-06-23",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in London",
-      "description": "Alan Mathison Turing is born in London to Julius and Ethel Sara Turing, a British civil servant in India and his Anglo\u2011Irish wife. The family soon returns to India, while arranging for Alan and his elder brother to be raised and educated in England, giving him early experience of a divided life between empire and home.",
+      "description": "Alan Mathison Turing was born in London to Julius Mathison Turing and Ethel Sara Turing (n\u00e9e Stoney). His parents\u2019 ties to British India shaped a childhood split between Britain and periods of parental absence. He grew up largely in southern England alongside his older brother John.",
       "locations": [
         {
           "name_historic": "London",
-          "name_modern": "London, UK",
+          "name_modern": "London, United Kingdom",
           "centroid": [
-            -0.1276,
-            51.5072
+            -0.1277653,
+            51.5074456
           ],
           "primary": true
-        },
-        {
-          "name_historic": "India",
-          "name_modern": "India",
-          "centroid": [
-            78.9629,
-            20.5937
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Julius Turing",
-        "Ethel Sara Turing"
+        "Julius Mathison Turing",
+        "Ethel Sara Turing",
+        "John Turing"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Ethel_Sara_Turing"
+        "https://de.wikipedia.org/wiki/Ethel_Sara_Turing"
       ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "colonial_childhood_and_schooling",
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Alan_Turing_%285025990183%29.jpg",
-          "caption": "Alan Turing blue plaque at his London birthplace",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(5025990183).jpg",
-          "creator": "Simon Harriyott from Uckfield, England",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "caption": "Blue plaque on Colonnade Hotel, Turing\u2019s birthplace",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(5025990183).jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "split_sunrise"
     },
     {
-      "date": "1926",
-      "date_precision": "year",
-      "age": 13,
-      "title": "Scientific prodigy at Sherborne",
-      "description": "At 13, Turing enters [[Sherborne School|Sherborne School]], a traditional English public school that prizes the classics over science. Despite some teachers\u2019 doubts about his unconventional interests, he independently works through advanced mathematics and later reads Albert Einstein, apparently rediscovering for himself aspects of Einstein\u2019s critique of Newtonian mechanics. His determination to pursue science, even in an unsympathetic environment, marks him out as an exceptional talent.",
+      "date": "1926-09",
+      "date_precision": "month",
+      "date_note": "Start month reflects the beginning of term at Sherborne School",
+      "age": 14,
+      "title": "Entered Sherborne School",
+      "description": "Turing began boarding at [[Sherborne School|Sherborne School]], where his aptitude for mathematics and science often clashed with a classics-oriented curriculum. His determination became famous when he bicycled a long distance to reach school during the [[1926 United Kingdom general strike|General Strike]] disruption. At Sherborne he developed habits of independent study that marked his later work.",
       "locations": [
         {
           "name_historic": "Sherborne",
-          "name_modern": "Sherborne, Dorset, England, UK",
+          "name_modern": "Sherborne, Dorset, UK",
           "centroid": [
-            -2.5203,
-            50.9463
+            -2.5179235,
+            50.950265
           ],
           "primary": true
         }
@@ -170,76 +158,116 @@
       "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Sherborne_School"
+        "https://en.wikipedia.org/wiki/Sherborne_School",
+        "https://en.wikipedia.org/wiki/1926_United_Kingdom_general_strike"
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "colonial_childhood_and_schooling",
-      "annotations": {
-        "Sherborne School": {
-          "explanation": "A long\u2011established English independent boarding school in Sherborne, Dorset, known in Turing\u2019s time for its strong emphasis on classical studies rather than science or mathematics.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Sherborne_School"
-        }
-      },
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg",
-          "caption": "Passport photo of Alan Turing at age 16",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_Aged_16.jpg",
-          "creator": "Possibly Arthur Reginald Chaffin (1893-1954)",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Dorset_sherbone_school.jpg",
+          "caption": "Sherborne School in Dorset",
+          "source": "https://commons.wikimedia.org/wiki/File:Dorset_sherbone_school.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "split_sunrise",
+      "annotations": {
+        "Sherborne School": {
+          "explanation": "An independent (private) boarding school in Sherborne, Dorset, historically known for a traditional, classics-heavy curriculum.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sherborne_School"
+        },
+        "1926 United Kingdom general strike": {
+          "explanation": "A nationwide British general strike (3\u201312 May 1926) called by the Trades Union Congress, disrupting transport and many public services.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/1926_United_Kingdom_general_strike"
+        }
+      }
     },
     {
       "date": "1930-02-13",
       "date_precision": "day",
       "age": 17,
-      "title": "Death of Christopher Morcom",
-      "description": "Turing\u2019s closest school friend and intellectual companion, Christopher Morcom, dies from complications of bovine tuberculosis. The loss devastates Turing, who responds by throwing himself even more intensely into mathematics and science. In letters to Morcom\u2019s mother he wrestles with questions about mind, matter, and the survival of the spirit, themes that echo through his later scientific and philosophical work.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1276,
-            51.5074
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Guildford",
-          "name_modern": "Guildford, UK",
-          "centroid": [
-            -0.5718,
-            51.2362
-          ],
-          "primary": false
-        }
-      ],
+      "title": "Morcom\u2019s death",
+      "description": "Turing\u2019s close friend Christopher Morcom died unexpectedly, a loss that deeply affected him. Turing responded by intensifying his dedication to science and mathematics, and he maintained a long correspondence with Morcom\u2019s mother. The event became a major emotional turning point in his youth.",
+      "locations": [],
       "involved_people": [
-        "Christopher Morcom",
-        "Frances Morcom"
+        "Christopher Morcom"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Turing%27s_proof"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "colonial_childhood_and_schooling"
+      "chapter": "split_sunrise"
     },
     {
-      "date": "1935-03-16",
-      "date_precision": "day",
-      "date_note": "Date of formal acceptance of his dissertation; fellowship election followed later in 1935",
+      "date": "1931-02",
+      "date_precision": "month",
+      "date_note": "He began undergraduate study at King's College, Cambridge in February 1931",
+      "age": 18,
+      "title": "Started at Cambridge",
+      "description": "Turing entered King\u2019s College, Cambridge to study mathematics. He quickly distinguished himself in advanced work, developing an approach that combined formal rigor with an engineer\u2019s instinct for mechanisms. Cambridge also connected him to mentors and peers central to his later breakthroughs in logic and computation.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, England, United Kingdom",
+          "centroid": [
+            0.1186637,
+            52.2055314
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/D._G._Champernowne"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/King%27s_College%2C_Cambridge2.jpg",
+          "caption": "King\u2019s College, Cambridge",
+          "source": "https://commons.wikimedia.org/wiki/File:King's_College,_Cambridge2.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "logic_in_full_light"
+    },
+    {
+      "date": "1934-11",
+      "date_precision": "month",
+      "date_note": "His dissertation was delivered in November 1934; related acceptance occurred later",
       "age": 22,
-      "title": "Elected Fellow of King\u0019s College",
-      "description": "After winning a scholarship and taking first\u2011class honours in mathematics at King\u2019s College, Cambridge, Turing writes a dissertation on the [[central limit theorem|central limit theorem]] that is accepted in March 1935. On the strength of this work he is elected a Fellow of King\u2019s College that same year, giving him a research post and marking his emergence as a promising young pure mathematician. The fellowship provides the intellectual freedom from which his ideas on computation soon grow.",
+      "title": "Graduated with first-class honours",
+      "description": "Turing completed his undergraduate degree at Cambridge with first-class honours in mathematics. His dissertation work, including results related to probability and the central limit theorem, helped establish his reputation for originality. This early recognition positioned him for rapid advancement in mathematical research.",
       "locations": [
         {
           "name_historic": "Cambridge",
           "name_modern": "Cambridge, UK",
           "centroid": [
-            0.1218,
-            52.2053
+            0.1186637,
+            52.2055314
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "logic_in_full_light"
+    },
+    {
+      "date": "1935",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Elected Fellow of King\u2019s",
+      "description": "Turing was elected a [[Fellow of King's College, Cambridge|Fellow of King\u2019s College, Cambridge]], reflecting confidence in his unusual methods and promise. The fellowship provided institutional standing and time for independent research. It also placed him within the Cambridge network that soon became central to foundational debates in logic.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, England, United Kingdom",
+          "centroid": [
+            0.1186637,
+            52.2055314
           ],
           "primary": true
         }
@@ -250,115 +278,94 @@
         "https://en.wikipedia.org/wiki/King%27s_College,_Cambridge"
       ],
       "event_type_icon": "mdi-account-group",
-      "chapter": "cambridge_foundations_of_computation",
+      "chapter": "logic_in_full_light",
       "annotations": {
-        "central limit theorem": {
-          "explanation": "A fundamental result in probability theory stating that the sum (or average) of many independent random variables tends toward a normal (Gaussian) distribution, under broad conditions, regardless of the original variables\u2019 distributions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Central_limit_theorem"
+        "Fellow of King's College, Cambridge": {
+          "explanation": "A research fellowship at King\u2019s College, Cambridge that provided a stipend, college membership, and time for independent scholarly work; election was a significant early academic recognition.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/King%27s_College,_Cambridge"
         }
       }
     },
     {
       "date": "1936-05-28",
       "date_precision": "day",
-      "date_note": "Completion and submission date of the paper",
       "age": 23,
-      "title": "Defines the Turing machine",
-      "description": "Turing completes and submits his landmark paper \"On Computable Numbers, with an Application to the [[Entscheidungsproblem|Entscheidungsproblem]].\" In it he introduces the abstract \"[[Turing machine|Turing machine]]\" to model computation and proves that no general algorithm can decide all mathematical propositions in a given formal system, answering Hilbert\u2019s Entscheidungsproblem in the negative. The work, developed independently but alongside Alonzo Church\u2019s results, becomes a foundation of theoretical computer science.",
+      "title": "Completed Turing machine paper",
+      "description": "Turing finished and delivered his paper \"On Computable Numbers, with an Application to the [[Entscheidungsproblem|Entscheidungsproblem]]\". In it he formalized computation through an idealized machine model and proved limits on what algorithms can decide. The work became foundational for theoretical computer science and the concept of a general-purpose computing device.",
       "locations": [
         {
           "name_historic": "Cambridge",
-          "name_modern": "Cambridge, UK",
+          "name_modern": "Cambridge, England, United Kingdom",
           "centroid": [
-            0.1218,
-            52.2053
+            0.1186637,
+            52.2055314
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Alonzo Church"
-      ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Turing%27s_proof",
-        "https://en.wikipedia.org/wiki/Alonzo_Church"
+        "https://en.wikipedia.org/wiki/Turing%27s_proof"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University.jpg",
+          "caption": "Alan Turing at Princeton University in 1936",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1912-1954)_in_1936_at_Princeton_University.jpg"
+        }
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "cambridge_foundations_of_computation",
+      "chapter": "logic_in_full_light",
       "annotations": {
         "Entscheidungsproblem": {
-          "explanation": "A decision problem in mathematical logic, posed by David Hilbert, asking for a general algorithm to determine whether any given formal statement is provable from axioms.",
+          "explanation": "A problem posed by David Hilbert asking for a single general algorithm to decide whether any given statement in a formal system is provable; Church and Turing showed no such algorithm exists in general (the problem is undecidable).",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Entscheidungsproblem"
-        },
-        "Turing machine": {
-          "explanation": "An abstract mathematical model of computation consisting of an infinite tape and a read\u2013write head following simple rules, used to formalize the notion of an algorithm.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_machine"
         }
       }
     },
     {
       "date": "1938",
       "date_precision": "year",
-      "date_note": "Year he received the PhD at Princeton",
+      "date_note": "He earned his Princeton doctorate in 1938; the dissertation is often associated with work published shortly after",
       "age": 25,
-      "title": "Doctorate at Princeton",
-      "description": "Turing spends two years at Princeton University under Alonzo Church, where he completes his PhD thesis, later published as [[Systems of Logic Based on Ordinals|Systems of Logic Based on Ordinals]]. The dissertation explores how to strengthen formal systems by iterating consistency\u2011strengthening steps along the ordinal numbers and introduces the notion of [[oracle computation|oracle computation]]. This work deepens his logical foundations and forges an important link between American and British research in the nascent theory of computation.",
+      "title": "Earned Princeton doctorate",
+      "description": "Turing completed doctoral study at Princeton University under Alonzo Church. His dissertation, \"Systems of Logic Based on Ordinals,\" extended research on formal systems after G\u00f6del\u2019s incompleteness results and introduced ideas influential in later computability theory. The Princeton period also strengthened his transatlantic connections in mathematical logic.",
       "locations": [
         {
-          "name_historic": "Princeton, New Jersey",
-          "name_modern": "Princeton, New Jersey, USA",
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, United States",
           "centroid": [
-            -74.6593,
-            40.3573
+            -74.6597376,
+            40.3496953
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, UK",
-          "centroid": [
-            0.1218,
-            52.2053
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Alonzo Church"
+        "Alonzo Church",
+        "Kurt G\u00f6del"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Systems_of_Logic_Based_on_Ordinals",
         "https://en.wikipedia.org/wiki/Alonzo_Church"
       ],
-      "event_type_icon": "mdi-book-open-variant",
-      "chapter": "cambridge_foundations_of_computation",
-      "annotations": {
-        "Systems of Logic Based on Ordinals": {
-          "explanation": "Alan Turing's 1938 Princeton PhD dissertation, in which he developed \"ordinal logics\" to analyze and extend formal mathematical systems beyond the limits shown by G\u00f6del's incompleteness theorems.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Systems_of_Logic_Based_on_Ordinals"
-        },
-        "oracle computation": {
-          "explanation": "A theoretical model of computation in which a Turing machine is allowed to query an abstract \"black box\" (an oracle) that can instantly solve a specified decision problem, used to study relative computability and degrees of unsolvability.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Oracle_machine"
-        }
-      },
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University.jpg",
-          "caption": "Alan Turing in 1936 at Princeton University",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1912-1954)_in_1936_at_Princeton_University.jpg",
-          "creator": "Unknown photographer",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Princeton_University_Graduate_College%2C_NJ_-_looking_north.jpg",
+          "caption": "Princeton University Graduate College, New Jersey",
+          "source": "https://commons.wikimedia.org/w/index.php?curid=135655772"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "logic_in_full_light"
     },
     {
       "date": "1939-09",
       "date_precision": "month",
-      "date_note": "Shortly after the outbreak of the Second World War he joined the Government Code and Cypher School",
+      "date_note": "He joined wartime codebreaking work at the outbreak of World War II",
       "age": 27,
-      "title": "Joins Bletchley Park codebreakers",
-      "description": "On the outbreak of the Second World War, Turing joins the [[Government Code and Cypher School|Government Code and Cypher School]], working at Britain\u2019s wartime codebreaking centre, later famous as [[Bletchley Park|Bletchley Park]]. Drawing on his theoretical work and his talent for practical ingenuity, he begins attacking German Enigma ciphers, quickly becoming central to the effort to read enemy communications. His move from pure logic into classified wartime service transforms both his own career and the course of the conflict.",
+      "title": "Joined Bletchley Park",
+      "description": "With the start of World War II, Turing began work for the [[Government Code and Cypher School|Government Code and Cypher School]] at [[Bletchley Park|Bletchley Park]]. He entered a high-pressure environment where cryptanalysis was treated as an urgent national security priority. This move shifted him from primarily academic logic into operational codebreaking at scale.",
       "locations": [
         {
           "name_historic": "Bletchley",
@@ -368,32 +375,28 @@
             51.9943694
           ],
           "primary": true
-        },
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": false
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Bletchley_Park",
-        "https://en.wikipedia.org/wiki/Government_Communications_Headquarters"
+        "https://en.wikipedia.org/wiki/Dilly_Knox"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/Bletchley_Park_Mansion.jpg",
+          "caption": "Bletchley Park Mansion",
+          "source": "https://commons.wikimedia.org/wiki/File:Bletchley_Park_Mansion.jpg"
+        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "wartime_codebreaking_leadership",
+      "chapter": "war_in_the_wires",
       "annotations": {
         "Government Code and Cypher School": {
-          "explanation": "The British government\u2019s pre\u2011GCHQ codebreaking and signals intelligence organisation, responsible for intercepting and deciphering foreign communications before and during the Second World War.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Government_Communications_Headquarters"
+          "explanation": "The British government's inter-service codebreaking organization (GC&CS), predecessor to GCHQ, which ran much of the UK's WWII cryptanalysis effort.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Government_Code_and_Cypher_School"
         },
         "Bletchley Park": {
-          "explanation": "A country estate in Buckinghamshire used as the main British codebreaking centre during the Second World War, where teams worked to decrypt Axis communications such as Enigma.",
+          "explanation": "The principal British wartime codebreaking center where GC&CS operated during WWII, famous for work against Axis ciphers including Enigma.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Bletchley_Park"
         }
       }
@@ -403,116 +406,154 @@
       "date_precision": "year",
       "date_end": "1943",
       "date_end_precision": "year",
-      "date_note": "Represents his main period leading Hut 8 and developing bombe techniques against naval Enigma",
-      "age": 28,
-      "title": "Leads Hut 8 and breaks naval Enigma",
-      "description": "Turing takes charge of [[Hut 8|Hut 8]], the section responsible for German naval cryptanalysis, and designs key methods and electromechanical devices to accelerate breaking Enigma keys, refining and extending prewar [[Polish techniques|prewar Polish techniques]]. His work on the [[bombe|bombe]] and on specialised procedures for U\u2011boat traffic enables the Allies to read large volumes of German messages, contributing decisively to the Battle of the Atlantic and the protection of convoys. Throughout this period he works with figures such as Gordon Welchman and Joan Clarke in a highly secret, intensely collaborative environment.",
+      "date_note": "The span reflects the period when his leadership in naval Enigma work and related mechanization was most central",
+      "age": 27,
+      "title": "Led Hut 8 naval cryptanalysis",
+      "description": "In 1940, Turing led [[Hut 8|Hut 8]], the section focused on German naval [[Enigma|Enigma]] traffic, and helped develop methods to speed decryption, building on pre-war Polish advances. His work contributed to breaking intercepted traffic that supported Allied operations, especially in the Battle of the Atlantic. The effort combined mathematical reasoning, machine-assisted search, and close coordination with other codebreaking teams at [[Bletchley Park|Bletchley Park]].",
       "locations": [
         {
           "name_historic": "Bletchley",
-          "name_modern": "Bletchley, Milton Keynes, UK",
+          "name_modern": "Bletchley, Milton Keynes, England, UK",
           "centroid": [
-            -0.7225,
-            51.9966
+            -0.7325655,
+            51.9943694
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Gordon Welchman",
-        "Joan Clarke",
         "Dilly Knox"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Gordon_Welchman",
-        "https://en.wikipedia.org/wiki/Joan_Clarke",
         "https://en.wikipedia.org/wiki/Dilly_Knox"
       ],
-      "event_type_icon": "mdi-research",
-      "chapter": "wartime_codebreaking_leadership",
-      "annotations": {
-        "Hut 8": {
-          "explanation": "A section of the British codebreaking centre at Bletchley Park dedicated primarily to breaking German naval Enigma ciphers during the Second World War.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hut_8"
-        },
-        "Polish techniques": {
-          "explanation": "Refers to cryptanalytic methods developed before the war by Polish mathematicians of the Cipher Bureau, notably Marian Rejewski and colleagues, to attack the Enigma machine.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Polish_cipher_bureau"
-        },
-        "bombe": {
-          "explanation": "An electromechanical device, originally devised by Polish cryptologists and significantly redesigned in Britain, used to speed up the process of finding Enigma encryption keys.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Bombe"
-        }
-      },
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Alan_Turing%27s_Office_in_Hut_8_at_Bletchley_Park_-_geograph.org.uk_-_5111900.jpg",
-          "caption": "Alan Turing's office in Hut 8 at Bletchley Park",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing's_Office_in_Hut_8_at_Bletchley_Park_-_geograph.org.uk_-_5111900.jpg",
-          "creator": "David Dixon",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/%22Hut_8%22%2C_Bletchley_Park_-_geograph.org.uk_-_1592862.jpg",
+          "caption": "Hut 8, Bletchley Park",
+          "source": "https://commons.wikimedia.org/wiki/File:\"Hut_8\",_Bletchley_Park_-_geograph.org.uk_-_1592862.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "war_in_the_wires",
+      "annotations": {
+        "Hut 8": {
+          "explanation": "A section at Bletchley Park responsible primarily for cryptanalysis of German Naval Enigma messages during World War II.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hut_8"
+        },
+        "Enigma": {
+          "explanation": "A family of cipher machines used by Nazi Germany; the naval version employed additional security features that made it harder to break than many army/air-force keys.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Enigma_machine"
+        },
+        "Bletchley Park": {
+          "explanation": "Britain's Government Code and Cypher School\u2019s main wartime site, where Allied codebreakers produced decrypted intelligence known as Ultra.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bletchley_Park"
+        }
+      }
     },
     {
       "date": "1945",
       "date_precision": "year",
-      "date_end": "1948",
+      "date_end": "1946",
       "date_end_precision": "year",
-      "date_note": "Covers his postwar tenure at the National Physical Laboratory working on the ACE design",
-      "age": 33,
-      "title": "Designs Automatic Computing Engine",
-      "description": "After the war, Turing joins the National Physical Laboratory and sets out a detailed design for the [[Automatic Computing Engine|Automatic Computing Engine (ACE)]], one of the earliest proposals for a high\u2011speed stored\u2011program electronic computer. His ACE reports specify a powerful architecture and programming concepts that anticipate later computer designs, though institutional delays hinder full realisation of the machine under his direction. The work shows him translating his abstract theory of computation into a practical blueprint for electronic computing.",
+      "date_note": "He moved into postwar computing work at the National Physical Laboratory in this period",
+      "age": 32,
+      "title": "Designed the ACE computer",
+      "description": "After the war, Turing joined the [[National Physical Laboratory|National Physical Laboratory]] and produced a design for the [[Automatic Computing Engine|Automatic Computing Engine (ACE)]]. His plan outlined a stored-program computer architecture and emphasized speed and practical implementation. Although delayed in realization, the design was among the earliest and most influential postwar computer proposals in Britain.",
       "locations": [
         {
-          "name_historic": "Teddington",
-          "name_modern": "Teddington, London, UK",
+          "name_historic": "London",
+          "name_modern": "London, UK",
           "centroid": [
-            -0.332,
-            51.424
+            -0.1277653,
+            51.5074456
           ],
           "primary": true
         }
       ],
       "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/National_Physical_Laboratory,_UK",
+        "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://en.wikipedia.org/wiki/Automatic_Computing_Engine",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/National_Physical_Laboratory_(United_Kingdom)"
       ],
-      "event_type_icon": "mdi-invention",
-      "chapter": "postwar_computing_and_intelligence",
-      "annotations": {
-        "Automatic Computing Engine": {
-          "explanation": "A pioneering electronic, stored-program computer project proposed by Alan Turing at the UK National Physical Laboratory in the mid\u20111940s, intended to be one of the fastest and most advanced general\u2011purpose computers of its time.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Automatic_Computing_Engine"
-        }
-      },
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/1/12/Pilot_ACE3.jpg",
-          "caption": "Pilot ACE computer at the Science Museum, London",
-          "source": "https://commons.wikimedia.org/wiki/File:Pilot_ACE3.jpg",
-          "creator": "Antoine Taveneaux",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "caption": "Pilot ACE computer (Science Museum, London)",
+          "source": "https://commons.wikimedia.org/wiki/File:Pilot_ACE3.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "blueprints_for_thinking_machines",
+      "annotations": {
+        "National Physical Laboratory": {
+          "explanation": "A UK government research laboratory; in 1945 it established a Mathematics Division where Turing drafted the ACE design as a proposal for an electronic stored-program computer.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Physical_Laboratory_(United_Kingdom)"
+        },
+        "Automatic Computing Engine": {
+          "explanation": "An early British design for a high-speed electronic stored-program computer proposed by Turing at the NPL; it later influenced the Pilot ACE and other British computers.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Automatic_Computing_Engine"
+        }
+      }
+    },
+    {
+      "date": "1946",
+      "date_precision": "year",
+      "date_note": "He was appointed an Officer of the Order of the British Empire (OBE) for wartime service; public recognition was constrained by secrecy",
+      "age": 33,
+      "title": "Appointed Officer of the OBE",
+      "description": "Turing received an [[Order of the British Empire|OBE]] in recognition of his wartime contribution to British cryptanalytic work. The honor was necessarily understated because much of the underlying work remained classified under the [[Official Secrets Act|Official Secrets Act]]. This reflected the pattern of limited public acknowledgment that characterized his lifetime achievements.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, UK",
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Order_of_the_British_Empire",
+        "https://en.wikipedia.org/wiki/Official_Secrets_Act_1911"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Medal%2C_order_%28AM_609796-1%29.jpg",
+          "caption": "Officer of the Order of the British Empire medal",
+          "source": "https://commons.wikimedia.org/wiki/File:Medal,_order_(AM_609796-1).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-star",
+      "chapter": "blueprints_for_thinking_machines",
+      "annotations": {
+        "Order of the British Empire": {
+          "explanation": "A British order of chivalry (created in 1917); its ranks include Member (MBE), Officer (OBE), Commander (CBE), and higher grades.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Order_of_the_British_Empire"
+        },
+        "Official Secrets Act": {
+          "explanation": "UK legislation that criminalizes unauthorized disclosure of official information; it helped keep wartime intelligence and codebreaking work secret for decades.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Official_Secrets_Act_1911"
+        }
+      }
     },
     {
       "date": "1948",
       "date_precision": "year",
       "age": 35,
-      "title": "Joins Manchester Computing Laboratory",
-      "description": "Turing accepts Max Newman's invitation to join the [[Computing Machine Laboratory|Computing Machine Laboratory]] at the University of Manchester, which is developing some of the first operational [[stored-program computers|stored\u2011program computers]]. There he contributes to the design and programming of the Manchester computers and turns his attention to practical issues of numerical computation, as well as beginning his celebrated work on machine intelligence. The Manchester period cements his role as both a visionary theorist and a working computer scientist.",
+      "title": "Joined Manchester computing laboratory",
+      "description": "Turing joined Max Newman\u2019s [[Computing Machine Laboratory|Computing Machine Laboratory]] at the [[University of Manchester|University of Manchester]]. There he contributed to early Manchester computers and worked within one of the world\u2019s leading groups building practical [[stored-program computer|stored-program]] machines. The move re-centered his career on the emerging field of electronic computing.",
       "locations": [
         {
           "name_historic": "Manchester",
-          "name_modern": "Manchester, England, UK",
+          "name_modern": "Manchester, England, United Kingdom",
           "centroid": [
-            -2.244644,
-            53.483959
+            -2.2451148,
+            53.4794892
           ],
           "primary": true
         }
@@ -521,46 +562,46 @@
         "Max Newman"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Max_Newman",
-        "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence"
+        "https://en.wikipedia.org/wiki/Max_Newman"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/University-of-Manchester-blue-plaque.jpg",
-          "caption": "Plaque marking Turing\u2019s Manchester computing work and office",
-          "source": "https://commons.wikimedia.org/wiki/File:University-of-Manchester-blue-plaque.jpg",
-          "creator": "Ben.Green",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Alan_Turing_Blue_Plaque%2C_University_of_Manchester.jpg",
+          "caption": "University of Manchester blue plaque commemorating Turing",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_Blue_Plaque,_University_of_Manchester.jpg"
         }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "postwar_computing_and_intelligence",
+      "chapter": "blueprints_for_thinking_machines",
       "annotations": {
         "Computing Machine Laboratory": {
-          "explanation": "Also known as the Royal Society Computing Machine Laboratory, this was the research group at the University of Manchester, led by Max Newman, that built the Manchester Baby and subsequent early electronic computers.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Manchester_Small-Scale_Experimental_Machine"
+          "explanation": "A pioneering computing research group founded by Max Newman at the University of Manchester that helped produce the first working stored-program electronic computer (the Manchester Baby) in 1948.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Max_Newman"
         },
-        "stored-program computers": {
-          "explanation": "Early electronic computers that store both program instructions and data in the same read\u2013write memory, an architecture that became standard for modern computers.",
+        "stored-program computer": {
+          "explanation": "A computer architecture in which program instructions and data are stored in the same memory, enabling flexible, general-purpose computation.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Stored-program_computer"
+        },
+        "University of Manchester": {
+          "explanation": "A major British university where Newman\u2019s computing laboratory operated and where Turing worked after leaving the National Physical Laboratory.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Manchester"
         }
       }
     },
     {
       "date": "1950-10",
       "date_precision": "month",
-      "date_note": "Published in the journal Mind in late 1950",
+      "date_note": "Published in the journal Mind in October 1950",
       "age": 38,
-      "title": "Introduces the Turing test",
-      "description": "Turing publishes \"[[Computing Machinery and Intelligence|Computing Machinery and Intelligence]]\" in the philosophy journal Mind, proposing his famous \"Imitation Game\" as a way to discuss whether machines can think. The paper defines what is now called the Turing test and addresses a range of philosophical objections to machine intelligence, shifting the question from inner consciousness to observable behaviour in conversation. It becomes a foundational text in the philosophy and early history of artificial intelligence.",
+      "title": "Published the Turing test paper",
+      "description": "Turing published \"Computing Machinery and Intelligence,\" reframing the question of machine thought through the [[imitation game|imitation game]]. He anticipated key objections and argued that digital computers could, in principle, exhibit behavior indistinguishable from human conversation under certain conditions. The paper became a cornerstone for later debates in artificial intelligence and philosophy of mind.",
       "locations": [
         {
-          "name_historic": "Manchester",
-          "name_modern": "Manchester, UK",
+          "name_historic": "Oxford",
+          "name_modern": "Oxford, England, United Kingdom",
           "centroid": [
-            -2.244644,
-            53.483959
+            -1.2578499,
+            51.7520131
           ],
           "primary": true
         }
@@ -570,84 +611,27 @@
         "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence"
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "postwar_computing_and_intelligence",
+      "chapter": "blueprints_for_thinking_machines",
       "annotations": {
-        "Computing Machinery and Intelligence": {
-          "explanation": "A 1950 paper by Alan Turing, published in the journal Mind, that introduces the idea now known as the Turing test for machine intelligence and systematically answers philosophical objections to artificial intelligence.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence"
+        "imitation game": {
+          "explanation": "Turing\u2019s proposed conversational test in which an interrogator tries to distinguish a human from a machine by written responses; it later became known as the Turing test.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_test"
         }
       }
     },
     {
-      "date": "1952-03",
-      "date_precision": "month",
-      "date_note": "Month approximated; his arrest and trial occurred in early 1952",
+      "date": "1952",
+      "date_precision": "year",
       "age": 39,
-      "title": "Prosecution and chemical castration",
-      "description": "In early 1952 Turing is prosecuted under British law for homosexual acts after reporting a burglary and thereby revealing his relationship with another man. Convicted, he accepts a course of hormone injections\u2014commonly described as chemical castration\u2014as an alternative to imprisonment. The conviction strips him of security clearance and brings intense personal and professional hardship, casting a long shadow over his final years.",
+      "title": "Published morphogenesis theory",
+      "description": "Turing published \"The Chemical Basis of Morphogenesis,\" proposing that biological patterns could emerge from [[reaction\u2013diffusion|reaction\u2013diffusion processes]]. He applied mathematical analysis to explain how stripes, spots, and other structures might arise from initially uniform conditions. This work broadened his scientific reach into theoretical biology and pattern formation.",
       "locations": [
         {
-          "name_historic": "Manchester",
-          "name_modern": "Manchester, UK",
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, UK",
           "centroid": [
-            -2.2451148,
-            53.4794892
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Knutsford",
-          "name_modern": "Knutsford, UK",
-          "centroid": [
-            -2.3716001,
-            53.3025402
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Wilmslow",
-          "name_modern": "Wilmslow, UK",
-          "centroid": [
-            -2.2327511,
-            53.3261292
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Arnold Murray"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Alan_Turing_law"
-      ],
-      "event_type_icon": "mdi-gavel",
-      "chapter": "persecution_morphogenesis_and_legacy",
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Alan_Turing_Code_Breaker_%26_Pioneer_of_Computer_Science_Love_Lived_Here_1912-1954.jpg",
-          "caption": "Rainbow plaque commemorating Alan Turing in Maida Vale",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_Code_Breaker_&_Pioneer_of_Computer_Science_Love_Lived_Here_1912-1954.jpg",
-          "creator": "Spudgun67",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ]
-    },
-    {
-      "date": "1952-08",
-      "date_precision": "month",
-      "date_note": "Year from publication; month approximate for the appearance of the paper in Philosophical Transactions of the Royal Society B",
-      "age": 40,
-      "title": "Publishes morphogenesis theory",
-      "description": "Turing publishes \"[[reaction\u2013diffusion theory|The Chemical Basis of Morphogenesis]]\", applying reaction\u2013diffusion equations to explain how patterns such as spots, stripes, and spirals can develop in living organisms from initially uniform conditions. The paper inaugurates what are now called Turing patterns and becomes a classic in theoretical biology, far ahead of experimental confirmation of such mechanisms. It shows his ability late in life to open an entirely new research field beyond logic and computing.",
-      "locations": [
-        {
-          "name_historic": "Manchester",
-          "name_modern": "Manchester, UK",
-          "centroid": [
-            -2.2426,
-            53.4808
+            0.1186637,
+            52.2055314
           ],
           "primary": true
         }
@@ -657,27 +641,71 @@
         "https://en.wikipedia.org/wiki/The_Chemical_Basis_of_Morphogenesis"
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "persecution_morphogenesis_and_legacy",
+      "chapter": "brilliance_under_sentence",
       "annotations": {
-        "reaction\u2013diffusion theory": {
-          "explanation": "A mathematical framework in which interacting chemical substances both react with each other and diffuse through space, showing how stable spatial patterns can spontaneously emerge from an initially uniform mixture.",
+        "reaction\u2013diffusion": {
+          "explanation": "A mathematical-chemical model in which interacting substances react locally and diffuse through space, producing stable spatial patterns from an initially uniform state.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system"
+        }
+      }
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "date_note": "The prosecution and its consequences unfolded across 1952; exact procedural dates vary by account",
+      "age": 39,
+      "title": "Prosecuted for homosexuality",
+      "description": "In 1952, Turing was prosecuted in [[United Kingdom|Britain]] for homosexual acts under then-existing law (\"gross indecency\"). He accepted hormone treatment (chemical castration) as an alternative to imprisonment, a decision that carried severe personal and professional consequences. The case led to closer official scrutiny and restrictions that effectively ended his access to some sensitive government work.",
+      "locations": [
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, England, United Kingdom",
+          "centroid": [
+            -2.2451148,
+            53.4794892
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "London",
+          "name_modern": "London, England, United Kingdom",
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Arnold Murray"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Alan_Turing#Homosexuality_and_conviction"
+      ],
+      "event_type_icon": "mdi-gavel",
+      "chapter": "brilliance_under_sentence",
+      "annotations": {
+        "United Kingdom": {
+          "explanation": "At the time, sex between men was criminalized in Britain under laws including the Labouchere Amendment (1885), with prosecutions commonly brought for \"gross indecency\".",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Labouchere_Amendment"
         }
       }
     },
     {
       "date": "1954-06-07",
       "date_precision": "day",
+      "date_note": "An inquest recorded suicide by cyanide poisoning; some evidence has also been considered consistent with accidental poisoning",
       "age": 41,
-      "title": "Death from cyanide poisoning",
-      "description": "Turing dies at his home in [[Wilmslow|Wilmslow]] from cyanide poisoning at the age of 41. A coroner\u2019s inquest rules the death a suicide, though some later commentators note that an accident cannot be entirely ruled out. His passing cuts short an extraordinary career that had already reshaped logic, computing, wartime intelligence, and mathematical biology.",
+      "title": "Death by cyanide poisoning",
+      "description": "Turing died at age 41 from [[cyanide poisoning|cyanide poisoning]]. An inquest determined the death to be suicide, though later discussion has noted alternative interpretations consistent with accident. His death ended a career that had already reshaped logic, cryptanalysis, early computing, and emerging ideas about machine intelligence.",
       "locations": [
         {
           "name_historic": "Wilmslow",
-          "name_modern": "Wilmslow, Cheshire, England, UK",
+          "name_modern": "Wilmslow, Cheshire, England",
           "centroid": [
-            -2.2374,
-            53.3274
+            -2.2327511,
+            53.3261292
           ],
           "primary": true
         }
@@ -686,24 +714,21 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "persecution_morphogenesis_and_legacy",
-      "annotations": {
-        "Wilmslow": {
-          "explanation": "A town in Cheshire, England, where Turing had a house on Hollymeade and where he was living at the time of his death in 1954.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Wilmslow"
-        }
-      },
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Alan_Turing_memorial%2C_Sackville_Gardens%2C_Manchester_-_geograph.org.uk_-_3794758.jpg",
-          "caption": "Alan Turing memorial in Sackville Gardens, Manchester",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_memorial,_Sackville_Gardens,_Manchester_-_geograph.org.uk_-_3794758.jpg",
-          "creator": "Tricia Neal",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Alan_Turing_Memorial%2C_Sackville_Park%2C_Manchester_-_geograph.org.uk_-_3703.jpg",
+          "caption": "Alan Turing Memorial, Sackville Park, Manchester",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_Memorial,_Sackville_Park,_Manchester_-_geograph.org.uk_-_3703.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "brilliance_under_sentence",
+      "annotations": {
+        "cyanide poisoning": {
+          "explanation": "Poisoning caused by exposure to cyanide (a rapidly acting toxin that prevents cells from using oxygen), which can be fatal if inhaled, ingested, or absorbed in sufficient amounts.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Cyanide_poisoning"
+        }
+      }
     }
   ]
 }

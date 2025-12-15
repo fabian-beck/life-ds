@@ -21,7 +21,6 @@
     {
       "id": "rural_roots_and_early_education",
       "headline": "Rural Roots to Mathematics",
-      "description": "From a farm near Lake Champlain to teacher-training in Albany, Allen\u2019s early years fostered a love of mathematics and education that first took shape in high-school teaching. This period ends as she turns toward graduate study to deepen her qualifications.",
       "date_start": "1932-08-04",
       "date_start_precision": "day",
       "date_end": "1955",
@@ -32,12 +31,12 @@
         "Unnamed father of Frances E. Allen",
         "Unnamed mother of Frances E. Allen"
       ],
-      "location": "United States"
+      "location": "United States",
+      "bridge_statement": "From a farm near Lake Champlain to teacher-training in Albany, Allen’s early years fostered a love of mathematics and education that first took shape in high-school teaching. This period ends as she turns toward graduate study to deepen her qualifications."
     },
     {
       "id": "graduate_study_and_ibm_beginnings",
       "headline": "Graduate Study to IBM",
-      "description": "Seeking advanced credentials, Allen pursued a master\u2019s degree in mathematics at Michigan, then joined IBM to teach Fortran, quickly becoming absorbed in compiler technology. Her early IBM work culminated in leadership on the Stretch\u2013Harvest projects, proving the power of high-level languages for demanding computation.",
       "date_start": "1956",
       "date_start_precision": "year",
       "date_end": "1961",
@@ -45,12 +44,12 @@
       "age_start": 24,
       "age_end": 29,
       "involved_people": [],
-      "location": "United States"
+      "location": "United States",
+      "bridge_statement": "Seeking advanced credentials, Allen pursued a master’s degree in mathematics at Michigan, then joined IBM to teach Fortran, quickly becoming absorbed in compiler technology. Her early IBM work culminated in leadership on the Stretch–Harvest projects, proving the power of high-level languages for demanding computation."
     },
     {
       "id": "foundations_of_optimizing_compilers",
       "headline": "Foundations of Optimizing Compilers",
-      "description": "At IBM\u2019s Watson Research Center, Allen helped create the theoretical and practical basis of modern optimizing compilers while deepening ties to academia through NYU. This era includes seminal publications, her collaboration with John Cocke, and the early years of her marriage to Jacob T. Schwartz.",
       "date_start": "1962",
       "date_start_precision": "year",
       "date_end": "1976",
@@ -61,12 +60,12 @@
         "John Cocke",
         "Jacob T. Schwartz"
       ],
-      "location": "United States"
+      "location": "United States",
+      "bridge_statement": "At IBM’s Watson Research Center, Allen helped create the theoretical and practical basis of modern optimizing compilers while deepening ties to academia through NYU. This era includes seminal publications, her collaboration with John Cocke, and the early years of her marriage to Jacob T. Schwartz."
     },
     {
       "id": "parallel_computing_leadership",
       "headline": "Parallel Computing Leadership",
-      "description": "Allen led IBM\u2019s advances in parallel computing, directing the PTRAN project and influencing massively parallel systems, while becoming the first woman IBM Fellow and a prominent mentor. During these years she also undertook influential teaching and mentoring roles at Stanford and other universities.",
       "date_start": "1977",
       "date_start_precision": "year",
       "date_end": "1995",
@@ -76,12 +75,12 @@
       "involved_people": [
         "Anita Borg"
       ],
-      "location": "United States"
+      "location": "United States",
+      "bridge_statement": "Allen led IBM’s advances in parallel computing, directing the PTRAN project and influencing massively parallel systems, while becoming the first woman IBM Fellow and a prominent mentor. During these years she also undertook influential teaching and mentoring roles at Stanford and other universities."
     },
     {
       "id": "late_recognition_and_legacy",
       "headline": "Global Recognition and Legacy",
-      "description": "Retiring as IBM Fellow Emerita, Allen continued mentoring and advocacy while receiving the field\u2019s highest honors, including the Turing Award and major academic and national academy recognitions. Her life closed in 2020 with widespread tributes to her transformative impact on compilers, parallel computing, and opportunities for women in computing.",
       "date_start": "1996",
       "date_start_precision": "year",
       "date_end": "2020-08-04",
@@ -91,7 +90,8 @@
       "involved_people": [
         "John Cocke"
       ],
-      "location": "North America"
+      "location": "North America",
+      "bridge_statement": "Retiring as IBM Fellow Emerita, Allen continued mentoring and advocacy while receiving the field’s highest honors, including the Turing Award and major academic and national academy recognitions. Her life closed in 2020 with widespread tributes to her transformative impact on compilers, parallel computing, and opportunities for women in computing."
     }
   ],
   "events": [
@@ -195,7 +195,7 @@
       "date_end": "1957",
       "date_end_precision": "year",
       "age": 25,
-      "title": "Completes Master\u2019s in Mathematics",
+      "title": "Completes Master’s in Mathematics",
       "description": "Allen received a Master of Science degree in mathematics from the University of Michigan. The degree left her with significant student debt, which led her to look for higher-paying work than high-school teaching could offer in the 1950s. This financial pressure directly prompted her next step: taking a programming position at IBM with the intent of staying only long enough to repay her loans.",
       "locations": [
         {
@@ -252,7 +252,7 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Fortran"
         },
         "compiler": {
-          "explanation": "A specialized program that translates code written in a high-level programming language into machine code that a computer\u2019s hardware can execute, often performing optimizations in the process.",
+          "explanation": "A specialized program that translates code written in a high-level programming language into machine code that a computer’s hardware can execute, often performing optimizations in the process.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Compiler"
         }
       }
@@ -262,10 +262,10 @@
       "date_precision": "year",
       "date_end": "1961",
       "date_end_precision": "year",
-      "date_note": "End year approximate for her primary Stretch\u2013Harvest work",
+      "date_note": "End year approximate for her primary Stretch–Harvest work",
       "age": 27,
-      "title": "Leads Stretch\u2013Harvest Optimizations",
-      "description": "Allen was assigned to the confidential [[IBM_7030_Stretch|Stretch]]\u2013[[Harvest_(computer)|Harvest]] projects, which supported [[National_Security_Agency|National Security Agency]] codebreaking activities during the Cold War. She managed the compiler optimization team for both the experimental IBM Stretch computer and the NSA\u2019s Harvest extension, working on the [[Alpha_(programming_language)|Alpha]] programming language and related tools. In this role she helped prove that compiled high-level languages could generate code fast enough for the most demanding intelligence workloads, challenging the prevailing belief that only hand-written assembly could be truly efficient.",
+      "title": "Leads Stretch–Harvest Optimizations",
+      "description": "Allen was assigned to the confidential [[IBM_7030_Stretch|Stretch]]–[[Harvest_(computer)|Harvest]] projects, which supported [[National_Security_Agency|National Security Agency]] codebreaking activities during the Cold War. She managed the compiler optimization team for both the experimental IBM Stretch computer and the NSA’s Harvest extension, working on the [[Alpha_(programming_language)|Alpha]] programming language and related tools. In this role she helped prove that compiled high-level languages could generate code fast enough for the most demanding intelligence workloads, challenging the prevailing belief that only hand-written assembly could be truly efficient.",
       "locations": [
         {
           "name_historic": "Poughkeepsie, New York",
@@ -287,7 +287,7 @@
       "chapter": "graduate_study_and_ibm_beginnings",
       "annotations": {
         "IBM_7030_Stretch": {
-          "explanation": "The IBM 7030 \"Stretch\" was an experimental supercomputer developed in the late 1950s as IBM's most powerful machine, pioneering many high\u2011performance architecture and reliability techniques.",
+          "explanation": "The IBM 7030 \"Stretch\" was an experimental supercomputer developed in the late 1950s as IBM's most powerful machine, pioneering many high‑performance architecture and reliability techniques.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/IBM_7030_Stretch"
         },
         "Harvest_(computer)": {
@@ -295,7 +295,7 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Harvest_(computer)"
         },
         "Alpha_(programming_language)": {
-          "explanation": "Alpha was a specialized high-level programming language and system developed at IBM for the NSA\u2019s Stretch\u2013Harvest systems, aimed at expressing complex data-processing and cryptanalytic tasks efficiently.",
+          "explanation": "Alpha was a specialized high-level programming language and system developed at IBM for the NSA’s Stretch–Harvest systems, aimed at expressing complex data-processing and cryptanalytic tasks efficiently.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Harvest_(computer)"
         },
         "National_Security_Agency": {
@@ -312,7 +312,7 @@
       "date_note": "Covers her early Watson Research work and the series of seminal compiler papers through the early 1970s",
       "age": 30,
       "title": "Moves to Watson, Founds Optimizing Compilers",
-      "description": "In 1962 Allen transferred to IBM\u2019s [[Thomas J. Watson Research Center|Thomas J. Watson Research Center]], joining advanced projects such as the [[ACS-1|ACS-1 architecture]] and later PL/I compiler work. Collaborating closely with John Cocke, she developed and implemented key algorithms and abstractions for machine- and language-independent optimization. During this period she published landmark papers including \u201cProgram Optimization\u201d (1966), \u201cControl Flow Analysis\u201d and \u201cA Basis for Program Optimization\u201d (1970), and, with Cocke, \u201cA Catalogue of Optimizing Transformations\u201d (1972), which systematically organized many of the techniques used in modern compilers. Their work introduced graph-theoretic representations and [[interprocedural analysis|interprocedural analysis]] that became foundational to both academic research and industrial compiler design.",
+      "description": "In 1962 Allen transferred to IBM’s [[Thomas J. Watson Research Center|Thomas J. Watson Research Center]], joining advanced projects such as the [[ACS-1|ACS-1 architecture]] and later PL/I compiler work. Collaborating closely with John Cocke, she developed and implemented key algorithms and abstractions for machine- and language-independent optimization. During this period she published landmark papers including “Program Optimization” (1966), “Control Flow Analysis” and “A Basis for Program Optimization” (1970), and, with Cocke, “A Catalogue of Optimizing Transformations” (1972), which systematically organized many of the techniques used in modern compilers. Their work introduced graph-theoretic representations and [[interprocedural analysis|interprocedural analysis]] that became foundational to both academic research and industrial compiler design.",
       "locations": [
         {
           "name_historic": "Yorktown Heights, New York",
@@ -335,14 +335,14 @@
       "chapter": "foundations_of_optimizing_compilers",
       "annotations": {
         "Thomas J. Watson Research Center": {
-          "explanation": "IBM\u2019s principal industrial research laboratory, opened in 1961 in Yorktown Heights, New York, which became a major center for advances in computer science and engineering.",
+          "explanation": "IBM’s principal industrial research laboratory, opened in 1961 in Yorktown Heights, New York, which became a major center for advances in computer science and engineering.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Thomas_J._Watson_Research_Center"
         },
         "ACS-1": {
-          "explanation": "A high\u2011performance experimental computer architecture project at IBM in the 1960s (Advanced Computing Systems), aimed at exploring aggressive hardware and compiler techniques."
+          "explanation": "A high‑performance experimental computer architecture project at IBM in the 1960s (Advanced Computing Systems), aimed at exploring aggressive hardware and compiler techniques."
         },
         "interprocedural analysis": {
-          "explanation": "A family of compiler techniques that analyze multiple procedures or functions together\u2014rather than one at a time\u2014to enable more powerful optimizations across function-call boundaries.",
+          "explanation": "A family of compiler techniques that analyze multiple procedures or functions together—rather than one at a time—to enable more powerful optimizations across function-call boundaries.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Interprocedural_optimization"
         }
       }
@@ -383,7 +383,7 @@
       "date_note": "Covers her decade-long marriage; precise divorce date in 1982",
       "age": 40,
       "title": "Marriage to Jacob Schwartz",
-      "description": "In 1972 Allen married Jacob T. Schwartz, a prominent [[New York University|New York University]] computer science professor and collaborator. The couple\u2019s relationship connected two vibrant centers of computing research, IBM and NYU, during a formative decade for theoretical and systems work in programming languages. They divorced in 1982, but Allen\u2019s New York academic ties remained strong.",
+      "description": "In 1972 Allen married Jacob T. Schwartz, a prominent [[New York University|New York University]] computer science professor and collaborator. The couple’s relationship connected two vibrant centers of computing research, IBM and NYU, during a formative decade for theoretical and systems work in programming languages. They divorced in 1982, but Allen’s New York academic ties remained strong.",
       "locations": [
         {
           "name_historic": "New York City",
@@ -419,7 +419,7 @@
       "date_note": "End year approximate; covers her Stanford sabbatical and immediate aftermath",
       "age": 45,
       "title": "Stanford Sabbatical and Mentoring",
-      "description": "Allen took another sabbatical in 1977 at [[Stanford University|Stanford University]], where she taught graduate courses in computer science. Among her students was Anita Borg, for whom Allen was the only woman professor during graduate school and who later became a leading advocate for women in computing. Allen\u2019s visiting professorships at Stanford and, later, distinguished lectureships at [[University of California, Berkeley|Berkeley]] and [[University of California, San Diego|UC San Diego]] reinforced her reputation as both a technical leader and an influential mentor.",
+      "description": "Allen took another sabbatical in 1977 at [[Stanford University|Stanford University]], where she taught graduate courses in computer science. Among her students was Anita Borg, for whom Allen was the only woman professor during graduate school and who later became a leading advocate for women in computing. Allen’s visiting professorships at Stanford and, later, distinguished lectureships at [[University of California, Berkeley|Berkeley]] and [[University of California, San Diego|UC San Diego]] reinforced her reputation as both a technical leader and an influential mentor.",
       "locations": [
         {
           "name_historic": "Stanford",
@@ -481,7 +481,7 @@
       "date_end_precision": "year",
       "age": 47,
       "title": "Leads IBM Parallel Computing",
-      "description": "From 1980 to 1995, Allen led IBM\u2019s work in the emerging field of parallel computing. She headed the [[PTRAN|PTRAN (Parallel Translator) project]], which introduced the [[program dependence graph|program dependence graph]] and advanced [[automatic parallelization|automatic-parallelization]] techniques that transformed sequential Fortran programs into efficiently parallel ones. Her group also contributed to software for massively parallel systems that fed into IBM\u2019s later Blue Gene project, helping to make high-performance parallel computing more accessible to scientists and engineers.",
+      "description": "From 1980 to 1995, Allen led IBM’s work in the emerging field of parallel computing. She headed the [[PTRAN|PTRAN (Parallel Translator) project]], which introduced the [[program dependence graph|program dependence graph]] and advanced [[automatic parallelization|automatic-parallelization]] techniques that transformed sequential Fortran programs into efficiently parallel ones. Her group also contributed to software for massively parallel systems that fed into IBM’s later Blue Gene project, helping to make high-performance parallel computing more accessible to scientists and engineers.",
       "locations": [
         {
           "name_historic": "Yorktown Heights, New York",
@@ -522,7 +522,7 @@
       "date_note": "Range covers her tenure as IBM Fellow and subsequent leadership of the IBM Academy steering committee",
       "age": 57,
       "title": "First Woman IBM Fellow",
-      "description": "In 1989 Allen became the first woman appointed as an [[IBM Fellow|IBM Fellow]], the company\u2019s highest technical rank, recognizing her decades of contributions to [[compiler|compilers]] and [[parallel computing|parallel computing]]. She later served as president of the [[IBM Academy of Technology|IBM Academy of Technology]]\u2019s steering committee, beginning in 1995, influencing the corporation\u2019s strategic technical directions. Throughout this period she actively recruited and mentored women and other underrepresented groups, helping to build compiler research teams in which women made up about half the staff.",
+      "description": "In 1989 Allen became the first woman appointed as an [[IBM Fellow|IBM Fellow]], the company’s highest technical rank, recognizing her decades of contributions to [[compiler|compilers]] and [[parallel computing|parallel computing]]. She later served as president of the [[IBM Academy of Technology|IBM Academy of Technology]]’s steering committee, beginning in 1995, influencing the corporation’s strategic technical directions. Throughout this period she actively recruited and mentored women and other underrepresented groups, helping to build compiler research teams in which women made up about half the staff.",
       "locations": [
         {
           "name_historic": "Yorktown Heights, New York",
@@ -556,7 +556,7 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Parallel_computing"
         },
         "IBM Academy of Technology": {
-          "explanation": "An internal IBM organization composed of the company\u2019s top technical leaders, established to provide independent technical advice and help shape IBM\u2019s long-term technology strategy.",
+          "explanation": "An internal IBM organization composed of the company’s top technical leaders, established to provide independent technical advice and help shape IBM’s long-term technology strategy.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/IBM_Academy_of_Technology"
         }
       }
@@ -568,7 +568,7 @@
       "date_end_precision": "year",
       "age": 70,
       "title": "Retires as IBM Fellow Emerita",
-      "description": "Allen retired from [[IBM Fellow|IBM]] in 2002 after a 45-year career, retaining an affiliation as an IBM Fellow Emerita. Even in retirement she remained active in the company\u2019s mentoring programs and in external initiatives to encourage women and girls to enter computing and science. That same year she received the Augusta Ada Lovelace Award from the [[Association for Women in Computing|Association for Women in Computing]], honoring both her technical achievements and her advocacy.",
+      "description": "Allen retired from [[IBM Fellow|IBM]] in 2002 after a 45-year career, retaining an affiliation as an IBM Fellow Emerita. Even in retirement she remained active in the company’s mentoring programs and in external initiatives to encourage women and girls to enter computing and science. That same year she received the Augusta Ada Lovelace Award from the [[Association for Women in Computing|Association for Women in Computing]], honoring both her technical achievements and her advocacy.",
       "locations": [
         {
           "name_historic": "Yorktown Heights, New York",
@@ -637,7 +637,7 @@
       "date_precision": "year",
       "date_end": "2010",
       "date_end_precision": "year",
-      "date_note": "Range groups her late-career honors around 2009\u20132010",
+      "date_note": "Range groups her late-career honors around 2009–2010",
       "age": 77,
       "title": "Late-Career Scientific Honors",
       "description": "In 2009 McGill University awarded Allen an honorary Doctor of Science degree for her pioneering contributions to optimizing compiler techniques and automatic parallel execution. Around the same time she was elected to the National Academy of Sciences (2010), adding to earlier honors from the National Academy of Engineering and the American Philosophical Society. These recognitions confirmed her status as one of the central figures in the history of programming languages and high-performance computing.",
@@ -677,7 +677,7 @@
       "date_end_precision": "day",
       "age": 88,
       "title": "Death on Her 88th Birthday",
-      "description": "Frances Allen died on August 4, 2020, her 88th birthday, from complications related to Alzheimer\u2019s disease. She spent her final years remembered not only for transforming compiler theory and practice but also for her tireless work mentoring colleagues and opening doors for women in computing. Her passing prompted tributes from researchers, professional societies, and former students worldwide who credited her with shaping both their field and their careers.",
+      "description": "Frances Allen died on August 4, 2020, her 88th birthday, from complications related to Alzheimer’s disease. She spent her final years remembered not only for transforming compiler theory and practice but also for her tireless work mentoring colleagues and opening doors for women in computing. Her passing prompted tributes from researchers, professional societies, and former students worldwide who credited her with shaping both their field and their careers.",
       "locations": [
         {
           "name_historic": "Schenectady, New York",
