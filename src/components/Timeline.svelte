@@ -899,19 +899,19 @@
 
   /* On narrow screens, allow items to overlap by using negative margins */
   @media (max-width: 768px) {
-    .dots-container:not(.expanded) .dot:not(.square) {
+    .dots-container:not(.expanded) .dot-wrapper:not(.home-dot) .dot {
       margin-left: -0.3rem;
     }
   }
 
   @media (max-width: 480px) {
-    .dots-container:not(.expanded) .dot:not(.square) {
+    .dots-container:not(.expanded) .dot-wrapper:not(.home-dot) .dot {
       margin-left: -0.5rem;
     }
   }
 
   @media (max-width: 380px) {
-    .dots-container:not(.expanded) .dot:not(.square) {
+    .dots-container:not(.expanded) .dot-wrapper:not(.home-dot) .dot {
       margin-left: -0.7rem;
     }
   }
