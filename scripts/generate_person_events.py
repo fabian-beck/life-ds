@@ -131,8 +131,8 @@ class LifeChapter(BaseModel):
     )
     headline: str = Field(
         description="Catchy, story-like chapter headline (2-5 words). Make it engaging and evocative, like a book chapter title. Avoid using 'and' - prefer vivid, specific headlines.")
-    description: str = Field(
-        description="Crisp narrative commentary on this life period (1-2 sentences). Write like a storyteller providing context, not a dry summary. Connect to the overarching story arc."
+    bridge_statement: str = Field(
+        description="Brief bridge into the chapter (1 sentence, max 20 words). Set the mood and create anticipation without spoiling events. Acts as a transition, not a summary."
     )
     date_start: str = Field(
         description="ISO-8601 date when this chapter begins (YYYY-MM-DD, YYYY-MM, or YYYY)"
@@ -1902,22 +1902,29 @@ def call_openai_chapter_generation(
     )
 
     instructions = (
-        "Based on the established life events provided, create 3-5 compelling life chapters that tell this person's story.\n\n"
+        "Based on the established life events provided, create 3-6 compelling life chapters that tell this person's story.\n\n"
         "CHAPTER REQUIREMENTS:\n"
-        "- Each chapter represents a distinct phase of the person's life\n"
-        "- Chapters must be chronological and non-overlapping\n"
+        "- Each chapter represents a distinct phase with a UNIFIED THEME or focus (e.g., education, war service, exile, creative peak, final years)\n"
+        "- Chapters must be chronologically ordered and non-overlapping\n"
+        "- Events within a chapter should feel related - avoid mixing disparate life phases (e.g., don't combine education + early career + major achievement)\n"
+        "- Aim for 3-6 chapters total - too few lacks nuance, too many fragments the story\n"
         "- The first chapter should start with or before the first event\n"
         "- The last chapter should end with or after the last event\n"
         "- Every event must belong to exactly one chapter based on its date\n"
-        "- Chapters should flow into each other, creating narrative momentum\n\n"
+        "- Chapters should flow into each other, creating narrative momentum\n"
+        "- If a life phase spans many years with different themes, consider splitting into multiple chapters\n\n"
         "CHAPTER STRUCTURE:\n"
         "- id: Unique identifier (lowercase, snake_case)\n"
-        "- headline: CATCHY, story-like chapter title (2-5 words). Think like a book chapter - vivid, evocative, intriguing. "
-        "AVOID 'and' - be specific and focused. Examples: 'Breaking the Code', 'Exile in Paris', 'The Vienna Circle', "
-        "'Rise to Power', 'Final Reckoning', 'A Mind Divided', 'Into the Unknown'.\n"
-        "- description: NARRATIVE COMMENTARY (1-2 sentences). Don't just summarize - provide storytelling context. "
-        "Set the tone, hint at stakes, connect to the broader arc. Write like you're introducing a chapter in a biography. "
-        "Use active, engaging language.\n"
+        "- headline: CATCHY, story-like chapter title (2-5 words, VARY THE LENGTH). Each headline should express ONE unified concept or theme - NOT a list. "
+        "Think like a book chapter - vivid, evocative, intriguing. AVOID 'and', commas, or other punctuation that creates lists. "
+        "Be specific and focused on a single idea.\n"
+        "  GOOD examples: 'Breaking the Code' (3), 'Exile in Paris' (3), 'The Vienna Circle' (3), 'Rise to Power' (3), "
+        "'Final Reckoning' (2), 'A Mind Divided' (3), 'Into the Unknown' (3), 'Wartime Service' (2), "
+        "'Building the Future' (3), 'Years of Struggle' (3), 'The Last Battle' (3), 'New Beginnings' (2).\n"
+        "  BAD examples: 'Adoption, Valley Spark' (comma creates list), 'Return, Reinvention, Last Act' (multiple concepts), "
+        "'Dropout, Zen Fire' (comma splits concepts), 'Early Life and Education' ('and' creates list).\n"
+        "- bridge_statement: BRIEF BRIDGE (1 sentence, max 20 words). Set the mood and create anticipation - DON'T spoil events or summarize. "
+        "This appears before the chapter events, so hint at what's coming without revealing outcomes. Acts as a transition into the chapter.\n"
         "- date_start, date_start_precision: When this chapter begins\n"
         "- date_end, date_end_precision: When this chapter ends\n"
         "- age_start, age_end: Subject's age at chapter start/end (null if not applicable)\n"
@@ -1931,12 +1938,14 @@ def call_openai_chapter_generation(
         "- Capture the person's legacy, lasting impact, or the essence of their life journey\n"
         "- Make it memorable and meaningful - this is the final word on their story\n\n"
         "STORYTELLING GUIDELINES:\n"
-        "- Headlines should intrigue and invite the reader in\n"
-        "- Descriptions should provide narrative context, not just facts\n"
-        "- Connect chapters so they flow as a continuous story\n"
+        "- Headlines should intrigue and invite the reader in - ONE clear concept, NO lists or comma-separated phrases\n"
+        "- VARY headline length (mix 2-word, 3-word, 4-word, and 5-word titles) to create rhythm and avoid monotony\n"
+        "- Each chapter should have thematic coherence - events should share a common thread or life phase\n"
+        "- Bridge statements should create anticipation, not spoil what's ahead - keep them SHORT (max 20 words)\n"
+        "- Connect chapters so they flow as a continuous story, with each building on the previous\n"
         "- Use vivid, concrete language over abstract generalities\n"
         "- The conclusion should resonate and leave a lasting impression\n\n"
-        "Craft a story that does justice to this remarkable life."
+        "Craft chapters that feel like distinct, meaningful phases of this person's journey - not arbitrary date ranges."
     )
 
     for attempt in range(retry_count + 1):
