@@ -691,7 +691,7 @@
               {#if slides[slides.length - 1]?.type === 'conclusion'}
                 {@const conclusionSlideIndex = slides.length - 1}
                 <div
-                  class="timeline-item home-item conclusion-item clickable"
+                  class="timeline-item home-item conclusion-item"
                   class:active={activeIndex === conclusionSlideIndex}
                   role="button"
                   tabindex="0"
@@ -1031,8 +1031,28 @@
 
   /* Conclusion item in expanded timeline */
   .timeline-item.conclusion-item {
-    margin-top: 2rem;
-    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+    width: calc(100% + 1rem);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .timeline-item.conclusion-item:hover {
+    background: rgba(148, 163, 184, 0.08);
+  }
+
+  .timeline-item.conclusion-item:focus {
+    outline: 2px solid var(--story-primary, rgba(148, 163, 184, 0.4));
+    outline-offset: 2px;
+    background: rgba(148, 163, 184, 0.05);
+  }
+
+  .timeline-item.conclusion-item:focus:not(:focus-visible) {
+    outline: none;
   }
 
   .timeline-item.home-item.conclusion-item .event-title {
