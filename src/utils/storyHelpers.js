@@ -988,6 +988,69 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
 }
 
 /**
+ * Find a person in the ego network by name using fuzzy matching.
+ * Uses multiple fallback strategies for robust matching.
+ * @param {string} personName - Name to search for
+ * @param {Object} egoNetwork - Ego network with connections array
+ * @returns {Object|null} Matching connection object or null
+ */
+export function findPersonInNetwork(personName, egoNetwork) {
+  if (!egoNetwork?.connections || !personName) return null;
+
+  const connections = egoNetwork.connections;
+  const searchNormalized = normalizePersonName(personName);
+  if (!searchNormalized) return null;
+
+  // Minimum similarity threshold for a match
+  const MATCH_THRESHOLD = 0.6;
+
+  // Find best match by similarity score
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const conn of connections) {
+    const connNormalized = normalizePersonName(conn.person_name);
+    if (!connNormalized) continue;
+
+    const score = calculateNameSimilarity(searchNormalized, connNormalized);
+    if (score >= MATCH_THRESHOLD && score > bestScore) {
+      bestScore = score;
+      bestMatch = conn;
+    }
+  }
+
+  return bestMatch;
+}
+
+/**
+ * Get chapter people from involved_people list, matched against ego network.
+ * Only returns people found in the network with fuzzy matching.
+ * @param {Object} chapter - Chapter object with involved_people array
+ * @param {Object} egoNetwork - Ego network with connections
+ * @returns {Array} Array of matched connection objects with metadata
+ */
+export function getChapterPeople(chapter, egoNetwork) {
+  if (!chapter?.involved_people || !Array.isArray(chapter.involved_people)) {
+    return [];
+  }
+
+  // Only return people that can be matched to the ego network
+  return chapter.involved_people
+    .map((name, idx) => {
+      const networkPerson = findPersonInNetwork(name, egoNetwork);
+      if (networkPerson) {
+        return {
+          ...networkPerson,
+          _originalName: name,
+          _index: idx,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+}
+
+/**
  * Create date formatters for a specific language.
  * @param {string} language - Language code like "en" or "de"
  * @returns {Object} Formatters for day, month, year

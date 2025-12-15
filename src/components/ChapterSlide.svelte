@@ -2,7 +2,7 @@
   import { mdiMapMarkerOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import { _ } from "../stores/language";
-  import { getSubcategory } from "../utils/storyHelpers.js";
+  import { getSubcategory, getChapterPeople } from "../utils/storyHelpers.js";
 
   export let chapter = {};
   export let personId = "";
@@ -49,24 +49,11 @@
     return parts.join(" • ");
   })();
 
-  // Match involved people against ego network
-  $: involvedPeople = (() => {
-    if (!chapter.involved_people || !Array.isArray(chapter.involved_people)) {
-      return [];
-    }
-    if (!egoNetwork?.connections) {
-      return [];
-    }
-
-    return chapter.involved_people
-      .map((personName) => {
-        const connection = egoNetwork.connections.find(
-          (c) => c.person_name === personName
-        );
-        return connection ? { ...connection, personKey: personName } : null;
-      })
-      .filter(Boolean);
-  })();
+  // Match involved people against ego network using shared fuzzy matching
+  $: involvedPeople = getChapterPeople(chapter, egoNetwork).map((person) => ({
+    ...person,
+    personKey: person._originalName,
+  }));
 
   function togglePersonInfo(personKey) {
     visiblePersonInfo = visiblePersonInfo === personKey ? null : personKey;

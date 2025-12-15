@@ -13,7 +13,7 @@
   import { createEventDispatcher } from "svelte";
   import * as mdiIcons from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
-  import { getSubcategory } from "../utils/storyHelpers.js";
+  import { getSubcategory, getChapterPeople } from "../utils/storyHelpers.js";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -61,67 +61,6 @@
     if (visiblePersonInfo) {
       visiblePersonInfo = null;
     }
-  }
-
-  // Find person data from egoNetwork by name
-  function findPersonInNetwork(personName) {
-    if (!egoNetwork?.connections || !personName) return null;
-
-    const nameLower = personName.toLowerCase().trim();
-
-    // Try exact match first
-    let match = egoNetwork.connections.find(
-      (conn) => conn.person_name?.toLowerCase() === nameLower
-    );
-
-    if (match) return match;
-
-    // Try partial match (first name + last name substring)
-    const nameParts = nameLower.split(/\s+/);
-    if (nameParts.length >= 2) {
-      const firstName = nameParts[0];
-      const lastName = nameParts[nameParts.length - 1];
-
-      match = egoNetwork.connections.find((conn) => {
-        const connName = conn.person_name?.toLowerCase() || "";
-        return connName.includes(firstName) && connName.includes(lastName);
-      });
-    }
-
-    // Try last name only match
-    if (!match && nameParts.length >= 1) {
-      const lastName = nameParts[nameParts.length - 1];
-      match = egoNetwork.connections.find((conn) => {
-        const connName = conn.person_name?.toLowerCase() || "";
-        const connParts = connName.split(/\s+/);
-        const connLastName = connParts[connParts.length - 1];
-        return connLastName === lastName;
-      });
-    }
-
-    return match || null;
-  }
-
-  // Get people data for a chapter's involved_people list (only returns people found in network)
-  function getChapterPeople(chapter) {
-    if (!chapter?.involved_people || !Array.isArray(chapter.involved_people)) {
-      return [];
-    }
-
-    // Only return people that can be matched to the ego network
-    return chapter.involved_people
-      .map((name, idx) => {
-        const networkPerson = findPersonInNetwork(name);
-        if (networkPerson) {
-          return {
-            ...networkPerson,
-            _originalName: name,
-            _index: idx,
-          };
-        }
-        return null;
-      })
-      .filter(Boolean);
   }
 
   // Helper function to resolve MDI icon path from icon name (e.g., "mdi-home" -> mdiHome)
@@ -572,7 +511,7 @@
               {#each groupedEvents as group, groupIndex}
                 {#if group.chapter}
                   {@const chapterAge = group.chapter.age_start ?? 0}
-                  {@const chapterPeople = getChapterPeople(group.chapter)}
+                  {@const chapterPeople = getChapterPeople(group.chapter, egoNetwork)}
                   {@const chapterLocation = group.chapter.location}
                   {@const chapterSlideIndex = slides.findIndex(s => s.type === 'chapter' && s.chapter.id === group.chapter.id)}
                   <!-- svelte-ignore a11y-no-static-element-interactions -->
