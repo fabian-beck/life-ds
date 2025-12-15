@@ -1028,7 +1028,7 @@
     margin-bottom: -0.35rem;
     margin-right: -0.5rem;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
-    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100 + 0.5rem);
+    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100 + 1rem);
     border-radius: 0;
     transition: background-color 0.2s ease;
   }
@@ -1137,7 +1137,7 @@
     margin-bottom: calc(0.35rem - 0.2rem);
     margin-right: -0.5rem;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
-    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100 + 0.5rem);
+    width: calc(100% - var(--event-age) * (100cqw - 200px) / 100 + 1rem);
     border-radius: 0;
     transition:
       background-color 0.2s ease,
