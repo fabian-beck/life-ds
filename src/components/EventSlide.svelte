@@ -84,26 +84,72 @@
     const img = event.target;
     if (!img || !img.naturalWidth || !img.naturalHeight) return;
 
-    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    const imageAspect = img.naturalWidth / img.naturalHeight;
 
-    // Define maximum bounds
-    const maxWidth = 45; // vw
-    const maxHeight = 45; // vh
+    // Get ACTUAL viewport dimensions in pixels
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const viewportAspect = viewportWidth / viewportHeight;
 
-    // Calculate container dimensions that preserve aspect ratio better
+    // Base bounds in relative units (vw/vh)
+    let baseMaxWidth, baseMaxHeight;
+
+    if (imageAspect < 0.8) {
+      // Portrait images - allow taller bounds
+      baseMaxWidth = 55;  // vw
+      baseMaxHeight = 75; // vh
+    } else if (imageAspect > 1.25) {
+      // Landscape images - allow wider bounds
+      baseMaxWidth = 75;  // vw
+      baseMaxHeight = 55; // vh
+    } else {
+      // Square/near-square images - balanced bounds
+      baseMaxWidth = 58;  // vw
+      baseMaxHeight = 58; // vh
+    }
+
+    // Aspect ratio correction factor: adjusts bounds based on how well the image
+    // aspect ratio matches the viewport aspect ratio.
+    //
+    // KEY INSIGHT: Images should be LARGER when their orientation matches the viewport,
+    // and SMALLER when orientations conflict.
+    //
+    // Calculate similarity: when both are portrait or both are landscape, aspects are similar.
+    // When one is portrait and one is landscape, they differ significantly.
+
+    // Measure how much image aspect differs from viewport aspect
+    const aspectRatioDifference = Math.abs(Math.log(imageAspect / viewportAspect));
+
+    // Convert difference to a correction factor:
+    // - Small difference (good match) → factor close to 1.0 or above
+    // - Large difference (bad match) → factor well below 1.0
+    //
+    // Using exp(-k * difference) where k controls sensitivity
+    const correctionFactor = Math.exp(-0.5 * aspectRatioDifference);
+
+    // Clamp the factor to prevent extreme adjustments
+    const clampedFactor = Math.max(0.65, Math.min(1.0, correctionFactor));
+
+    // Adjust max width by the correction factor
+    const adjustedMaxWidth = baseMaxWidth * clampedFactor;
+    const adjustedMaxHeight = baseMaxHeight;
+
+    // Calculate effective viewport aspect from adjusted bounds (in pixels)
+    const maxWidthPx = (adjustedMaxWidth / 100) * viewportWidth;
+    const maxHeightPx = (adjustedMaxHeight / 100) * viewportHeight;
+    const effectiveViewportAspect = maxWidthPx / maxHeightPx;
+
+    // Calculate container dimensions that preserve aspect ratio
     let containerWidth, containerHeight;
 
-    // Calculate which dimension hits the max bound first
-    const viewportAspect = maxWidth / maxHeight; // Currently 1:1
-
-    if (aspectRatio > viewportAspect) {
+    if (imageAspect > effectiveViewportAspect) {
       // Wide image - width hits max first
-      containerWidth = maxWidth;
-      containerHeight = maxWidth / aspectRatio;
+      containerWidth = adjustedMaxWidth;
+      containerHeight = (adjustedMaxWidth / imageAspect) * (viewportWidth / viewportHeight);
     } else {
       // Tall image - height hits max first
-      containerHeight = maxHeight;
-      containerWidth = maxHeight * aspectRatio;
+      containerHeight = adjustedMaxHeight;
+      containerWidth = (adjustedMaxHeight * imageAspect) * (viewportHeight / viewportWidth);
     }
 
     // Apply container dimensions
@@ -113,23 +159,29 @@
     // Calculate mask ellipse based on aspect ratio
     let horizontalRadius, verticalRadius;
 
-    if (aspectRatio > 1) {
-      horizontalRadius = Math.min(95, 80 + (aspectRatio - 1) * 10);
+    if (imageAspect > 1) {
+      horizontalRadius = Math.min(95, 80 + (imageAspect - 1) * 10);
       verticalRadius = 80;
     } else {
       horizontalRadius = 80;
-      verticalRadius = Math.min(98, 85 + (1 / aspectRatio - 1) * 10);
+      verticalRadius = Math.min(98, 85 + (1 / imageAspect - 1) * 10);
     }
 
     // DEBUG: Log aspect ratio and calculated dimensions
     console.log('🖼️ Image loaded:', {
       src: img.src.substring(0, 80) + '...',
       naturalSize: `${img.naturalWidth}×${img.naturalHeight}`,
-      aspectRatio: aspectRatio.toFixed(2),
+      imageAspect: imageAspect.toFixed(2),
+      viewportAspect: viewportAspect.toFixed(2),
+      aspectMatch: (Math.exp(-0.5 * Math.abs(Math.log(imageAspect / viewportAspect)))).toFixed(2),
+      baseBounds: `${baseMaxWidth}vw × ${baseMaxHeight}vh`,
+      correctionFactor: clampedFactor.toFixed(2),
+      adjustedBounds: `${adjustedMaxWidth.toFixed(1)}vw × ${adjustedMaxHeight}vh`,
       calculatedContainer: `${containerWidth.toFixed(1)}vw × ${containerHeight.toFixed(1)}vh`,
       actualContainer: `${img.parentElement.offsetWidth}×${img.parentElement.offsetHeight}`,
       maskEllipse: `${horizontalRadius}% × ${verticalRadius}%`,
-      orientation: aspectRatio > 1 ? 'LANDSCAPE/WIDE' : 'PORTRAIT/TALL'
+      category: imageAspect < 0.8 ? 'PORTRAIT' : imageAspect > 1.25 ? 'LANDSCAPE' : 'SQUARE',
+      match: imageAspect / viewportAspect > 0.8 && imageAspect / viewportAspect < 1.25 ? 'GOOD' : 'MISMATCH'
     });
 
     const maskImage = `radial-gradient(
@@ -429,10 +481,11 @@
     cursor: pointer;
     display: block;
     position: relative;
-    max-width: 45vw;
-    max-height: 45vh;
-    width: 45vw;
-    height: 45vh;
+    /* Fallback values before JavaScript runs - updated to match new max bounds */
+    max-width: 75vw;
+    max-height: 75vh;
+    width: 60vw;
+    height: 60vh;
     border-radius: 0;
     overflow: hidden;
     background: transparent;
