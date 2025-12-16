@@ -38,12 +38,15 @@
   // Caption visibility: hide when zoomed or dragging
   $: showCaption = scale <= 1 && !isDragging;
 
-  // Determine if current image is from a different event than active slide
-  $: isDifferentEvent =
+  // Determine if current image is from a different slide than active slide
+  $: isDifferentSlide =
     image &&
     image.slideIndex !== undefined &&
     image.slideIndex >= 0 &&
     image.slideIndex !== activeSlideIndex;
+
+  // Determine if the image is from the overview slide (eventTitle is null)
+  $: isFromOverview = image && image.eventTitle === null;
 
   // Navigation availability
   $: canGoPrev = currentIndex > 0;
@@ -421,24 +424,28 @@
       on:click|stopPropagation
       role="presentation"
     >
-      <!-- Event context banner (when image is from different event) -->
-      {#if isDifferentEvent}
+      <!-- Context banner (when image is from different slide) -->
+      {#if isDifferentSlide}
         <div class="event-context-row">
           <span class="context-info">
-            <span class="context-label">{$_("image.from_event")}:</span>
-            <span class="context-title">{image.eventTitle}</span>
-            {#if image.eventDate}
-              <span class="context-separator">·</span>
-              <span class="context-date">{image.eventDate}</span>
+            {#if isFromOverview}
+              <span class="context-label">{$_("image.from_overview")}</span>
+            {:else}
+              <span class="context-label">{$_("image.from_event")}:</span>
+              <span class="context-title">{image.eventTitle}</span>
+              {#if image.eventDate}
+                <span class="context-separator">·</span>
+                <span class="context-date">{image.eventDate}</span>
+              {/if}
             {/if}
           </span>
           <button
             type="button"
             class="jump-to-event-btn"
             on:click={jumpToEvent}
-            aria-label={$_("image.go_to_event")}
+            aria-label={isFromOverview ? $_("image.go_to_overview") : $_("image.go_to_event")}
           >
-            {$_("image.go_to_event")}
+            {isFromOverview ? $_("image.go_to_overview") : $_("image.go_to_event")}
             <svg class="icon icon-small" viewBox="0 0 24 24" aria-hidden="true">
               <path d={mdiArrowRight} />
             </svg>
