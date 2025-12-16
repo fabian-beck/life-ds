@@ -1,6 +1,6 @@
 {
-  "dataset": "hedy_lamarr_life_events",
-  "created_on": "2025-11-21",
+  "dataset": "wikipedia-biographical-timeline",
+  "created_on": "2025-12-16",
   "person": {
     "name": "Hedy_Lamarr",
     "birth_date": "1914-11-09",
@@ -9,24 +9,110 @@
       "actress",
       "inventor"
     ],
-    "summary": "Hedy Lamarr (born Hedwig Eva Maria Kiesler) was an Austrian-born American film actress and inventor. Rising to fame in Europe with the controversial film Ecstasy (1933), she later became a Hollywood star in such films as Algiers (1938), Boom Town (1940), White Cargo (1942), and Samson and Delilah (1949). During the Second World War she co\u2011invented, with composer George Antheil, a frequency\u2011hopping \"Secret Communication System\" for torpedo guidance, an important precursor to modern spread-spectrum technologies used in wireless communication.",
+    "tagline": "Hollywood star, wireless pioneer",
+    "summary": "Hedy Lamarr (born Hedwig Eva Maria Kiesler) was an Austrian-born American film star whose MGM career peaked from the late 1930s through the 1950s. During World War II she co-invented, with composer George Antheil, a frequency-hopping \u201csecret communication system\u201d intended to prevent jamming of radio-guided torpedoes\u2014an early spread-spectrum concept. In later decades she withdrew from public life but received belated recognition for her inventive work while still alive.",
     "wikipedia": "https://en.wikipedia.org/wiki/Hedy_Lamarr",
     "portrait": {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/Hedy_Lamarr%2C_1939.jpg",
-      "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr,_1939.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Hedy_Lamarr_Publicity_Photo_for_The_Heavenly_Body_1944.jpg",
+      "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr"
     }
   },
+  "chapters": [
+    {
+      "id": "viennese_sparks",
+      "headline": "Viennese Sparks",
+      "bridge_statement": "Curiosity and ambition flicker early, looking for a stage big enough to hold them.",
+      "date_start": "1914-11-09",
+      "date_start_precision": "day",
+      "date_end": "1932",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Emil Kiesler",
+        "Gertrud \"Trude\" Kiesler"
+      ],
+      "location": "Central Europe"
+    },
+    {
+      "id": "scandalous_fame_gilded_cage",
+      "headline": "Scandalous Fame Gilded Cage",
+      "bridge_statement": "Notoriety opens doors, then quietly starts locking them from the outside.",
+      "date_start": "1933",
+      "date_start_precision": "year",
+      "date_end": "1937",
+      "date_end_precision": "year",
+      "age_start": 18,
+      "age_end": 22,
+      "involved_people": [
+        "Gustav Machat\u00fd",
+        "Friedrich Mandl",
+        "Louis B. Mayer"
+      ],
+      "location": "Central Europe"
+    },
+    {
+      "id": "hollywood_mystique_machine_age",
+      "headline": "Hollywood Mystique Machine Age",
+      "bridge_statement": "A new name arrives with bright lights\u2014yet the mind keeps listening for hidden frequencies.",
+      "date_start": "1938",
+      "date_start_precision": "year",
+      "date_end": "1942-08-11",
+      "date_end_precision": "day",
+      "age_start": 23,
+      "age_end": 27,
+      "involved_people": [
+        "Louis B. Mayer",
+        "Gene Markey",
+        "George Antheil"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "domestic_tides_epic_glory",
+      "headline": "Domestic Tides Epic Glory",
+      "bridge_statement": "Private life swells against public myth, until one towering role resets the scale.",
+      "date_start": "1943",
+      "date_start_precision": "year",
+      "date_end": "1953",
+      "date_end_precision": "year",
+      "age_start": 28,
+      "age_end": 38,
+      "involved_people": [
+        "John Loder",
+        "Cecil B. DeMille",
+        "Victor Mature"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "quiet_exit_late_reckoning",
+      "headline": "Quiet Exit Late Reckoning",
+      "bridge_statement": "As the cameras fade, a different legacy waits patiently to be spoken aloud.",
+      "date_start": "1958",
+      "date_start_precision": "year",
+      "date_end": "2000-01-19",
+      "date_end_precision": "day",
+      "age_start": 43,
+      "age_end": 85,
+      "involved_people": [
+        "George Antheil"
+      ],
+      "location": "United States"
+    }
+  ],
+  "conclusion": "Hedy Lamarr lived like a double exposure: a studio-era icon in the foreground, a restless inventor in the shadows. Long after the spotlight dimmed, the world finally caught up to the signal she helped set free.",
   "events": [
     {
       "date": "1914-11-09",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Vienna",
-      "description": "Hedwig Eva Maria Kiesler, later known as Hedy Lamarr, was born to Jewish parents Gertrud \"Trude\" Kiesler (n\u00e9e Lichtwitz) and Emil Kiesler in Vienna, then part of Austria-Hungary. She grew up as an only child in a culturally sophisticated, upper-middle-class household.",
+      "description": "Hedwig Eva Maria Kiesler was born in Vienna to Emil Kiesler and Gertrud \u201cTrude\u201d Kiesler. As an only child, she grew up amid both cultural ambition and the pressures of interwar Central Europe. Her father encouraged curiosity about how devices worked, shaping a lifelong interest in technology alongside performance.",
       "locations": [
         {
           "name_historic": "Vienna",
-          "name_modern": null,
+          "name_modern": "Vienna, Austria",
           "centroid": [
             16.3725042,
             48.2083537
@@ -34,113 +120,74 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Emil Kiesler",
+        "Gertrud \"Trude\" Kiesler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "viennese_sparks"
+    },
+    {
+      "date": "1930",
+      "date_precision": "year",
+      "date_end": "1932",
+      "date_end_precision": "year",
+      "age": 15,
+      "title": "Breaks into European films",
+      "description": "As a teenager in Vienna, she pushed her way into the film world\u2014working at [[Sascha-Film|Sascha-Film]] and securing early screen appearances. She moved between Vienna and Berlin as roles expanded from extra work to speaking parts and leads. These formative years positioned her for a rapid rise in continental cinema.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",
-          "caption": "Flag of Austria, the country in which Hedy Lamarr was born in 1914.",
-          "source": "https://commons.wikimedia.org/wiki/File:Flag_of_Austria.svg"
-        }
-      ]
-    },
-    {
-      "date": "1926",
-      "date_precision": "year",
-      "date_note": "Lamarr won a beauty contest in Vienna at age 12",
-      "age": 11,
-      "title": "Wins Vienna beauty contest",
-      "description": "As a 12\u2011year\u2011old schoolgirl, Hedy Lamarr won a local beauty contest in Vienna. The experience, combined with her fascination with theater and film, encouraged her growing interest in performing and public appearance.",
-      "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": null,
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": true
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sascha-Film_Wien_Ansicht_2009.jpg",
+          "caption": "Former Sascha-Film headquarters building in Vienna (2009)",
+          "source": "https://commons.wikimedia.org/wiki/File:Sascha-Film_Wien_Ansicht_2009.jpg"
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
-    },
-    {
-      "date": "1930",
-      "date_precision": "year",
-      "age": 15,
-      "title": "First film appearance",
-      "description": "While working as a script girl at the Sascha-Film studios in Vienna, Hedy Lamarr made her first screen appearance as an extra in the romantic comedy film \"Money on the Street\" (Geld auf der Stra\u00dfe), marking the beginning of her professional film career.",
-      "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": null,
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": true
+      "event_type_icon": "mdi-movie",
+      "chapter": "viennese_sparks",
+      "annotations": {
+        "Sascha-Film": {
+          "explanation": "A major Austrian film production company based in Vienna, prominent in the 1920s\u20131930s and a key entry point to the Austrian film industry.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sascha-Film"
         }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
-    },
-    {
-      "date": "1931",
-      "date_precision": "year",
-      "age": 16,
-      "title": "Takes early leading roles",
-      "description": "After small parts in Austrian films and a stage appearance in the play \"The Weaker Sex\" at the Theater in der Josefstadt, Hedy Lamarr moved to Berlin, where she received a role in Alexis Granowsky's film \"The Trunks of Mr. O.F.\" and soon afterward her first leading role in the comedy \"No Money Needed\" (Kein Geld n\u00f6tig). These roles established her as a promising young actress in German-language cinema.",
-      "locations": [
-        {
-          "name_historic": "Berlin",
-          "name_modern": null,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
-    },
-    {
-      "date": "1933-01",
-      "date_precision": "month",
-      "date_note": "Lamarr was cast in Ecstasy in early 1933 at age 18",
-      "age": 18,
-      "title": "Stars in Ecstasy",
-      "description": "At age 18, Hedy Lamarr was cast in the lead role of Gustav Machat\u00fd's film \"Ecstasy\" (Ekstase). Her performance as a neglected young wife included scenes of nudity and simulated orgasm that made the film both celebrated and notorious, bringing her international attention and controversy.",
-      "locations": [
-        {
-          "name_historic": "Prague",
-          "name_modern": null,
-          "centroid": [
-            14.4212535,
-            50.0874654
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
+      }
     },
     {
       "date": "1933-08-10",
       "date_precision": "day",
       "age": 18,
       "title": "Marries Friedrich Mandl",
-      "description": "Hedy Lamarr married Austrian arms manufacturer Friedrich Mandl at the Karlskirche in Vienna. The marriage was highly controlling; Mandl attempted to curtail her acting career and kept her socially isolated, while exposing her to discussions of military technology at his business meetings.",
+      "description": "She married Austrian armaments manufacturer Friedrich Mandl, entering a wealthy but restrictive world tied to European authoritarian politics. Lamarr later described the marriage as controlling and professionally stifling, including efforts to suppress [[Ecstasy (1933 film)|Ecstasy]]. Exposure to Mandl\u2019s military-technology circles, however, expanded her knowledge of weapons and communications problems.",
       "locations": [
         {
           "name_historic": "Vienna",
-          "name_modern": null,
+          "name_modern": "Vienna, Austria",
           "centroid": [
             16.3725042,
             48.2083537
@@ -148,21 +195,103 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Friedrich Mandl"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
+        "https://en.wikipedia.org/wiki/Fritz_Mandl",
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "scandalous_fame_gilded_cage",
+      "annotations": {
+        "Ecstasy (1933 film)": {
+          "explanation": "A 1933 Czechoslovak romantic-drama film starring Hedy Lamarr that became notorious for its nude scenes and was controversial and banned in several places.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
+        }
+      }
     },
     {
-      "date": "1937-09",
-      "date_precision": "month",
-      "date_note": "In 1937 she traveled to London and met Louis B. Mayer there",
-      "age": 22,
-      "title": "Meets Louis B. Mayer",
-      "description": "After arriving in London from Paris, Hedy Lamarr met Louis B. Mayer of Metro-Goldwyn-Mayer, who was scouting European talent. Initially rejecting his contract offer, she later sailed on the same liner to New York, where she negotiated a much higher salary and agreed to work for MGM under the name Hedy Lamarr.",
+      "date": "1933",
+      "date_precision": "year",
+      "age": 18,
+      "title": "Stars in Ecstasy",
+      "description": "She became internationally famous as the lead in Gustav Machat\u00fd\u2019s film Ecstasy, which drew major controversy for its erotic content and brief nudity. The notoriety made her a household name across Europe while also limiting acceptable roles and creating lasting public stigma. The film\u2019s mixed reception\u2014artistic acclaim abroad and condemnation in the United States\u2014shadowed her as she reinvented herself.",
       "locations": [
         {
+          "name_historic": "Prague",
+          "name_modern": "Prague, Czech Republic",
+          "centroid": [
+            14.4212535,
+            50.0874654
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Venice",
+          "name_modern": "Venice, Italy",
+          "centroid": [
+            12.3345898,
+            45.4371908
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Gustav Machat\u00fd"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Gustav_Machat%C3%BD",
+        "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/Hedy_Kiesler_1933.jpg",
+          "caption": "Hedy Kiesler in the film Extase (1933)",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Kiesler_1933.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "scandalous_fame_gilded_cage"
+    },
+    {
+      "date": "1937",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Escapes to Paris and London",
+      "description": "After the marriage became untenable, she left Mandl and fled Austria, making her way first to Paris and then to London. In London she encountered MGM\u2019s Louis B. Mayer, who was scouting European talent. This flight from an increasingly dangerous political environment became the turning point that redirected her life to Hollywood.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.3483915,
+            48.8534951
+          ],
+          "primary": false
+        },
+        {
           "name_historic": "London",
-          "name_modern": null,
+          "name_modern": "London, United Kingdom",
           "centroid": [
             -0.1277653,
             51.5074456
@@ -170,70 +299,90 @@
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
-    },
-    {
-      "date": "1937",
-      "date_precision": "year",
-      "date_note": "Lamarr left Mandl and fled Austria in 1937; precise date uncertain",
-      "age": 22,
-      "title": "Escapes Mandl and Austria",
-      "description": "Finding her marriage to Friedrich Mandl intolerable and disturbed by his connections to fascist regimes, Hedy Lamarr left both her husband and Austria. Accounts differ on the details, but she fled to Paris, ending the relationship and beginning her life as an independent actress in Western Europe.",
-      "locations": [
-        {
-          "name_historic": "Paris",
-          "name_modern": null,
-          "centroid": [
-            2.3483915,
-            48.8534951
-          ],
-          "primary": true
-        }
+      "involved_people": [
+        "Fritz Mandl",
+        "Louis B. Mayer"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
+        "https://en.wikipedia.org/wiki/Fritz_Mandl",
+        "https://en.wikipedia.org/wiki/Louis_B._Mayer"
+      ],
+      "event_type_icon": "mdi-map-marker",
+      "chapter": "scandalous_fame_gilded_cage"
     },
     {
       "date": "1938",
       "date_precision": "year",
       "age": 23,
-      "title": "Hollywood breakthrough in Algiers",
-      "description": "Now promoted by MGM as \"the world's most beautiful woman,\" Hedy Lamarr was loaned to producer Walter Wanger to star opposite Charles Boyer in the romantic drama \"Algiers.\" Released in 1938, the film became a national sensation in the United States and established Lamarr as a major Hollywood star.",
+      "title": "Reinvents herself in Hollywood",
+      "description": "Louis B. Mayer brought her to the United States, secured a studio contract, and promoted her under the new name \u201cHedy Lamarr.\u201d She quickly transitioned from European notoriety to Hollywood mystique, marketed as a glamorous new discovery. That reinvention was designed to distance her from the \u201cEcstasy\u201d reputation and position her as a major MGM star.",
       "locations": [
         {
-          "name_historic": "Los Angeles",
-          "name_modern": null,
+          "name_historic": "Hollywood",
+          "name_modern": "Hollywood, Los Angeles, California, United States",
           "centroid": [
-            -118.242766,
-            34.0536909
+            -118.329523,
+            34.0980031
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Louis B. Mayer"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+        "https://en.wikipedia.org/wiki/Louis_B._Mayer"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Algiers_1938_%283%29.jpg",
-          "caption": "Publicity still showing Sigrid Gurie, Charles Boyer, and Hedy Lamarr for the 1938 film \"Algiers.\"",
-          "source": "https://commons.wikimedia.org/wiki/File:Algiers_1938_(3).jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Hedy_Lamarr_in_a_1940_MGM_publicity_still.jpg",
+          "caption": "Hedy Lamarr in a 1940 MGM publicity still",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_in_a_1940_MGM_publicity_still.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "hollywood_mystique_machine_age"
+    },
+    {
+      "date": "1939",
+      "date_precision": "year",
+      "date_end": "1941",
+      "date_end_precision": "year",
+      "age": 24,
+      "title": "Marries Gene Markey",
+      "description": "Lamarr married screenwriter Gene Markey, linking her to Hollywood\u2019s social and professional networks beyond MGM. During this period she used the name \u201cHedy Kiesler Markey,\u201d which later appeared on her wartime patent. The marriage ended after a short time, but it coincided with her consolidation as a prominent American screen star.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, United Kingdom",
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Gene Markey"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Gene_Markey"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "hollywood_mystique_machine_age"
     },
     {
       "date": "1940",
       "date_precision": "year",
+      "date_end": "1942",
+      "date_end_precision": "year",
       "age": 25,
-      "title": "Stars in Boom Town",
-      "description": "Hedy Lamarr co-starred with Clark Gable, Claudette Colbert, and Spencer Tracy in MGM's oilfield drama \"Boom Town.\" The film was a major box-office success, reinforcing her status as a leading lady in high-profile Hollywood productions.",
+      "title": "Leads major MGM hits",
+      "description": "She strengthened her box-office standing in high-profile [[Metro-Goldwyn-Mayer|MGM]] productions during the early 1940s, including prominent roles in films such as Boom Town and White Cargo. MGM frequently cast her as an alluring \u201cexotic\u201d figure, a typecasting that amplified her fame but limited the complexity of her screen parts. Lamarr later said the monotony of these roles helped push her toward inventive work off-camera.",
       "locations": [
         {
           "name_historic": "Los Angeles",
-          "name_modern": null,
+          "name_modern": "Los Angeles, California, United States",
           "centroid": [
             -118.242766,
             34.0536909
@@ -241,151 +390,225 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Louis B. Mayer"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+        "https://en.wikipedia.org/wiki/Louis_B._Mayer",
+        "https://en.wikipedia.org/wiki/George_Antheil"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Clark_Gable_and_Hedy_Lamarr_Publicity_Photo_for_Comrade_X_1940.jpg",
-          "caption": "Publicity photograph of Clark Gable and Hedy Lamarr for the 1940 MGM film \"Comrade X,\" made the same year as \"Boom Town.\"",
-          "source": "https://commons.wikimedia.org/wiki/File:Clark_Gable_and_Hedy_Lamarr_Publicity_Photo_for_Comrade_X_1940.jpg"
-        }
-      ]
-    },
-    {
-      "date": "1942-08-11",
-      "date_precision": "day",
-      "date_note": "U.S. patent 2,292,387 was filed 1940-06-10 and granted 1942-08-11; this event marks issuance",
-      "age": 27,
-      "title": "Patent for Secret Communication System",
-      "description": "Hedy Lamarr and composer George Antheil were granted U.S. Patent 2,292,387 for their \"Secret Communication System,\" a frequency-hopping radio guidance method designed to prevent jamming of Allied torpedoes during World War II. Although not implemented operationally at the time, their spread-spectrum concept later became foundational for secure wireless communication technologies.",
-      "locations": [
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": null,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": true
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Hedy_lamarr_-_1940.jpg",
+          "caption": "Publicity photo for the film Comrade X (1940)",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_lamarr_-_1940.jpg"
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
-        "https://en.wikipedia.org/wiki/Secret_Communications_System"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Lamarr_patent.png",
-          "caption": "Page from the U.S. patent for Hedy Lamarr and George Antheil's \"Secret Communication System.\"",
-          "source": "https://commons.wikimedia.org/wiki/File:Lamarr_patent.png"
+      "event_type_icon": "mdi-movie",
+      "chapter": "hollywood_mystique_machine_age",
+      "annotations": {
+        "Metro-Goldwyn-Mayer": {
+          "explanation": "Major Hollywood film studio (commonly known as MGM) that employed Lamarr and shaped her star image through its studio system in the 1940s.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Metro-Goldwyn-Mayer"
         }
-      ]
+      }
     },
     {
-      "date": "1942",
+      "date": "1941",
       "date_precision": "year",
-      "age": 27,
-      "title": "Leads in White Cargo",
-      "description": "Hedy Lamarr played the seductive character Tondelayo opposite Walter Pidgeon in MGM's drama \"White Cargo.\" The film was a huge box-office hit, and her provocative line \"I am Tondelayo. I make tiffin for you?\" became one of her most remembered screen moments, exemplifying the exotic roles she was often given.",
+      "date_end": "1942-08-11",
+      "date_end_precision": "day",
+      "age": 26,
+      "title": "Creates frequency-hopping system",
+      "description": "With composer and inventor George Antheil, Lamarr developed a \u201csecret communication system\u201d intended to prevent Axis jamming of radio-guided torpedoes by rapidly changing frequencies in sync. Their concept drew on mechanical synchronization ideas, including an approach resembling coordinated player-piano rolls. The work culminated in a U.S. patent granted on August 11, 1942, though the U.S. Navy did not adopt it at the time.",
       "locations": [
         {
-          "name_historic": "Los Angeles",
-          "name_modern": null,
+          "name_historic": "Hollywood",
+          "name_modern": "Hollywood, Los Angeles, California, United States",
           "centroid": [
-            -118.242766,
-            34.0536909
+            -118.329523,
+            34.0980031
           ],
           "primary": true
+        },
+        {
+          "name_historic": "United States",
+          "name_modern": "United States",
+          "centroid": [
+            -100.445882,
+            39.7837304
+          ],
+          "primary": false
         }
       ],
+      "involved_people": [
+        "George Antheil"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+        "https://en.wikipedia.org/wiki/George_Antheil"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Hedy_Lamarr_and_Walter_Pidgeon_in_White_Cargo_%281942%29.png",
-          "caption": "Hedy Lamarr and Walter Pidgeon in a scene from the 1942 film \"White Cargo.\"",
-          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_and_Walter_Pidgeon_in_White_Cargo_(1942).png"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Hedy_Lamarr_and_George_Antheil%27s_patent.webp",
+          "caption": "Lamarr and Antheil patent for secret communication system",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_and_George_Antheil's_patent.webp"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-cog",
+      "chapter": "hollywood_mystique_machine_age"
+    },
+    {
+      "date": "1943",
+      "date_precision": "year",
+      "date_end": "1947",
+      "date_end_precision": "year",
+      "age": 28,
+      "title": "Marries John Loder",
+      "description": "Lamarr married British actor John Loder in 1943 and built a larger family life while continuing her screen career. Their household included children and became a central part of her mid-1940s personal story as she balanced stardom with domestic pressures. The marriage ended in divorce, marking another major personal transition.",
+      "locations": [],
+      "involved_people": [
+        "John Loder"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Loder_(actor)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Hedy_Lamarr_and_John_Loder.jpg",
+          "caption": "Hedy Lamarr and John Loder in Los Angeles, 1946",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_and_John_Loder.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "domestic_tides_epic_glory"
     },
     {
       "date": "1949",
       "date_precision": "year",
       "age": 34,
-      "title": "Triumph with Samson and Delilah",
-      "description": "Hedy Lamarr starred as Delilah opposite Victor Mature in Cecil B. DeMille's biblical epic \"Samson and Delilah.\" Released in 1949, it became her most commercially successful film and one of the top box-office hits of the era, cementing her legacy as a major Hollywood star.",
+      "title": "Triumphs in Samson and Delilah",
+      "description": "Lamarr reached a major late-career peak with the biblical epic Samson and Delilah (1949), directed by Cecil B. DeMille, which became her most commercially successful film. The production leveraged her star image on an epic scale and brought renewed public attention at the end of the 1940s. It effectively defined her lasting identity as a classic Hollywood leading lady.",
       "locations": [
         {
-          "name_historic": "Los Angeles",
-          "name_modern": null,
+          "name_historic": "Hollywood",
+          "name_modern": "Hollywood, Los Angeles, California, USA",
           "centroid": [
-            -118.242766,
-            34.0536909
+            -118.329523,
+            34.0980031
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Cecil B. DeMille",
+        "Victor Mature"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+        "https://en.wikipedia.org/wiki/Cecil_B._DeMille",
+        "https://en.wikipedia.org/wiki/Victor_Mature"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Color_photograph_of_Victor_Mature_and_Hedy_Lamarr_as_Samson_and_Delilah.jpg",
-          "caption": "Color publicity photograph of Victor Mature and Hedy Lamarr in costume for \"Samson and Delilah\" (1949).",
-          "source": "https://commons.wikimedia.org/wiki/File:Color_photograph_of_Victor_Mature_and_Hedy_Lamarr_as_Samson_and_Delilah.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Hedy_Lamarr_by_A._L._Whitey_Schafer%2C_1949.jpg",
+          "caption": "Hedy Lamarr as Delilah in Samson and Delilah (1949)",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_by_A._L._Whitey_Schafer,_1949.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "domestic_tides_epic_glory"
+    },
+    {
+      "date": "1953",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Becomes U.S. citizen",
+      "description": "After years working in the American studio system, Lamarr became a [[naturalization|naturalized citizen]] of the United States in 1953. The change formalized her long-term shift from European celebrity to American public figure, and reflected the permanence of her postwar life in the United States.",
+      "locations": [],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "domestic_tides_epic_glory",
+      "annotations": {
+        "naturalization": {
+          "explanation": "The legal process by which a non-citizen voluntarily becomes a citizen of a country, typically after meeting residency and other eligibility requirements.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Naturalization"
+        }
+      }
     },
     {
       "date": "1958",
       "date_precision": "year",
       "age": 43,
-      "title": "Releases final feature film",
-      "description": "Hedy Lamarr appeared in her final feature film in 1958, after which she largely withdrew from motion pictures, making only occasional television appearances. This marked the effective end of her three-decade screen career spanning European and Hollywood cinema.",
-      "locations": [
-        {
-          "name_historic": "Los Angeles",
-          "name_modern": null,
-          "centroid": [
-            -118.242766,
-            34.0536909
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Releases final film",
+      "description": "Lamarr\u2019s last film was released in 1958, closing out a screen career that had spanned European cinema, MGM stardom, and postwar roles. Around this period she also appeared on television, but her presence in mainstream acting steadily diminished. The late 1950s marked her transition away from public performance work.",
+      "locations": [],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ]
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "quiet_exit_late_reckoning"
+    },
+    {
+      "date": "1997",
+      "date_precision": "year",
+      "age": 82,
+      "title": "Receives inventor recognition",
+      "description": "Late in life, Lamarr received prominent public recognition for her role in the [[frequency-hopping|frequency-hopping]] invention, including an award highlighting her technical contribution. The acknowledgment reframed her public narrative beyond glamour and film stardom, emphasizing her collaboration with Antheil during World War II. For Lamarr, it represented a rare moment of validation for work long overlooked.",
+      "locations": [],
+      "involved_people": [
+        "George Antheil"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Antheil"
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "quiet_exit_late_reckoning",
+      "annotations": {
+        "frequency-hopping": {
+          "explanation": "A spread-spectrum radio technique in which transmitter and receiver rapidly switch among many frequencies in a synchronized pattern, helping resist jamming and interception; Lamarr and Antheil proposed it for torpedo guidance.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Frequency-hopping_spread_spectrum"
+        }
+      }
     },
     {
       "date": "2000-01-19",
       "date_precision": "day",
       "age": 85,
-      "title": "Death in Florida",
-      "description": "Hedy Lamarr died in Casselberry, Florida, at the age of 85. The Austrian-born actress and inventor left behind a complex legacy as both a Hollywood icon and a pioneer of spread-spectrum communication technology.",
+      "title": "Dies in Florida",
+      "description": "Hedy Lamarr died at age 85 in [[Florida|Florida]] after decades that increasingly unfolded away from the spotlight. Her death closed a life that had moved from interwar Vienna to the height of Hollywood\u2019s studio era, alongside a parallel history of inventive ambition. She left behind a dual reputation as both a screen icon and an early contributor to secure wireless communication ideas.",
       "locations": [
         {
-          "name_historic": "Casselberry",
-          "name_modern": null,
+          "name_historic": "Florida",
+          "name_modern": "Florida, United States",
           "centroid": [
-            -81.3382005,
-            28.6714702
+            -81.4639835,
+            27.7567667
           ],
           "primary": true
         }
       ],
+      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+        "https://en.wikipedia.org/wiki/George_Antheil"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg",
-          "caption": "Flag of California, representing the U.S. state where Lamarr spent much of her career before retiring to Florida.",
-          "source": "https://commons.wikimedia.org/wiki/File:Flag_of_California.svg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/be/Wiener_Zentralfriedhof_-_Gruppe_33_G_-_Grab_von_Hedy_Lamarr.jpg",
+          "caption": "Grave of Hedy Lamarr at Vienna Central Cemetery",
+          "source": "https://commons.wikimedia.org/wiki/File:Wiener_Zentralfriedhof_-_Gruppe_33_G_-_Grab_von_Hedy_Lamarr.jpg"
         }
-      ]
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "quiet_exit_late_reckoning",
+      "annotations": {
+        "Florida": {
+          "explanation": "U.S. state where Lamarr died on January 19, 2000 (in the Orlando area).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Florida"
+        }
+      }
     }
   ]
 }
