@@ -85,6 +85,32 @@
     if (!img || !img.naturalWidth || !img.naturalHeight) return;
 
     const aspectRatio = img.naturalWidth / img.naturalHeight;
+
+    // Define maximum bounds
+    const maxWidth = 45; // vw
+    const maxHeight = 45; // vh
+
+    // Calculate container dimensions that preserve aspect ratio better
+    let containerWidth, containerHeight;
+
+    // Calculate which dimension hits the max bound first
+    const viewportAspect = maxWidth / maxHeight; // Currently 1:1
+
+    if (aspectRatio > viewportAspect) {
+      // Wide image - width hits max first
+      containerWidth = maxWidth;
+      containerHeight = maxWidth / aspectRatio;
+    } else {
+      // Tall image - height hits max first
+      containerHeight = maxHeight;
+      containerWidth = maxHeight * aspectRatio;
+    }
+
+    // Apply container dimensions
+    img.parentElement.style.width = `${containerWidth}vw`;
+    img.parentElement.style.height = `${containerHeight}vh`;
+
+    // Calculate mask ellipse based on aspect ratio
     let horizontalRadius, verticalRadius;
 
     if (aspectRatio > 1) {
@@ -94,6 +120,17 @@
       horizontalRadius = 80;
       verticalRadius = Math.min(98, 85 + (1 / aspectRatio - 1) * 10);
     }
+
+    // DEBUG: Log aspect ratio and calculated dimensions
+    console.log('🖼️ Image loaded:', {
+      src: img.src.substring(0, 80) + '...',
+      naturalSize: `${img.naturalWidth}×${img.naturalHeight}`,
+      aspectRatio: aspectRatio.toFixed(2),
+      calculatedContainer: `${containerWidth.toFixed(1)}vw × ${containerHeight.toFixed(1)}vh`,
+      actualContainer: `${img.parentElement.offsetWidth}×${img.parentElement.offsetHeight}`,
+      maskEllipse: `${horizontalRadius}% × ${verticalRadius}%`,
+      orientation: aspectRatio > 1 ? 'LANDSCAPE/WIDE' : 'PORTRAIT/TALL'
+    });
 
     const maskImage = `radial-gradient(
       ellipse ${horizontalRadius}% ${verticalRadius}% at 85% 15%,
@@ -392,6 +429,8 @@
     cursor: pointer;
     display: block;
     position: relative;
+    max-width: 45vw;
+    max-height: 45vh;
     width: 45vw;
     height: 45vh;
     border-radius: 0;
@@ -408,6 +447,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top right;
     display: block;
     filter: saturate(0.35) contrast(0.6) brightness(0.82);
     mask-image: radial-gradient(
