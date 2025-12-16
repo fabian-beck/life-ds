@@ -392,8 +392,8 @@
     cursor: pointer;
     display: block;
     position: relative;
-    width: 240px;
-    height: 240px;
+    width: 45vw;
+    height: 45vh;
     border-radius: 0;
     overflow: hidden;
     background: transparent;
@@ -787,11 +787,6 @@
       right: 0;
     }
 
-    .image-thumbnail {
-      width: min(380px, 35vw);
-      height: min(380px, 35vh);
-    }
-
     .image-thumbnail img {
       filter: saturate(0.35) contrast(0.6) brightness(0.82);
       mask-image: radial-gradient(
@@ -983,11 +978,6 @@
 
     .content {
       gap: 0.2rem;
-    }
-
-    .image-thumbnail {
-      width: 180px;
-      height: 180px;
     }
   }
 </style>
