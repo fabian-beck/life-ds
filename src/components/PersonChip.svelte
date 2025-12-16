@@ -319,6 +319,7 @@
       border-color 0.2s ease,
       border-width 0.2s ease,
       transform 0.2s ease;
+    pointer-events: auto;
   }
 
   /* Relationship strength border variations */

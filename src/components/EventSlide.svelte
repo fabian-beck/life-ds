@@ -414,6 +414,7 @@
     align-self: center;
     width: min(54rem, 100%);
     margin: 0 auto;
+    pointer-events: none;
   }
 
   .event-content {
@@ -596,6 +597,7 @@
     flex: 0 0 auto;
     width: 1.5rem;
     height: 1.5rem;
+    pointer-events: auto;
   }
 
   .date-info-btn:hover,
@@ -790,6 +792,7 @@
       color 0.2s ease,
       transform 0.2s ease;
     flex-shrink: 0;
+    pointer-events: auto;
   }
 
   .sources-toggle-btn:hover,
@@ -927,6 +930,7 @@
     transition: color 0.2s ease;
     -webkit-user-select: text;
     user-select: text;
+    pointer-events: auto;
   }
 
   .annotated-term:hover,
