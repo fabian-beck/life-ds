@@ -18,7 +18,7 @@ import time
 from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Set
+from typing import Any, Dict, List, Optional, Tuple, Set, Union, Literal
 from urllib.parse import quote
 
 import requests
@@ -100,6 +100,73 @@ class Annotation(BaseModel):
         None,
         description="Optional Wikipedia URL for further reading"
     )
+
+
+# ============================================================================
+# EVENT CLASSIFICATION MODELS (Phase 2 - Optional)
+# ============================================================================
+
+class MarriagePartnershipClassification(BaseModel):
+    """Classification for marriage/partnership events."""
+    type: Literal["marriage_partnership"] = Field(
+        default="marriage_partnership",
+        description="Always 'marriage_partnership'"
+    )
+    subtype: Literal["marriage", "partnership"] = Field(
+        description="Marriage (legal/ceremonial) or partnership (domestic/romantic)"
+    )
+    partner: str = Field(description="Full name of spouse/partner")
+    duration: Optional[str] = Field(
+        None,
+        description="Duration if applicable (e.g., 'until death', '17 years')"
+    )
+    children: Optional[int] = Field(
+        None,
+        description="Number of children from this union, if mentioned"
+    )
+    characterization: Optional[str] = Field(
+        None,
+        description="Brief characterization (e.g., 'happy marriage', 'political alliance') - 1-4 words"
+    )
+
+
+class EmigrationClassification(BaseModel):
+    """Classification for emigration/migration events."""
+    type: Literal["emigration"] = Field(
+        default="emigration",
+        description="Always 'emigration'"
+    )
+    from_location: str = Field(description="Origin location (city/region/country)")
+    to_location: str = Field(description="Destination location (city/region/country)")
+    characterization: Optional[str] = Field(
+        None,
+        description="Nature of move (e.g., 'political exile', 'career opportunity') - 1-4 words"
+    )
+
+
+class InventionClassification(BaseModel):
+    """Classification for invention/innovation events."""
+    type: Literal["invention"] = Field(
+        default="invention",
+        description="Always 'invention'"
+    )
+    title: str = Field(description="Name/title of invention")
+    description: str = Field(
+        description="Brief technical description (1-2 sentences)"
+    )
+    impact: Optional[str] = Field(
+        None,
+        description="Historical/practical impact (1-2 sentences)"
+    )
+
+
+# Union of all classification types
+# Note: Using standard Union instead of discriminated union for OpenAI compatibility
+EventClassification = Union[
+    MarriagePartnershipClassification,
+    EmigrationClassification,
+    InventionClassification
+]
 
 
 class Portrait(BaseModel):
@@ -254,6 +321,10 @@ class EventDetails(BaseModel):
         None,
         description="Dictionary mapping term keys to their explanations"
     )
+    event_class: Optional[EventClassification] = Field(
+        None,
+        description="Structured classification for specific event types. Omit if event doesn't match these categories."
+    )
 
 
 # Final Model
@@ -286,6 +357,10 @@ class LifeEvent(BaseModel):
     annotations: Optional[Dict[str, Annotation]] = Field(
         None,
         description="Dictionary mapping term keys to their explanations"
+    )
+    event_class: Optional[EventClassification] = Field(
+        None,
+        description="Structured classification for specific event types"
     )
 
 
@@ -1635,6 +1710,67 @@ def build_phase2_prompt(
     prompt += "   - Optional: Include wikipedia_url for further reading\n"
     prompt += "   - DEFAULT to 0 annotations - when in doubt, DO NOT annotate\n\n"
 
+    prompt += "6. EVENT_CLASS (optional - classify when event clearly matches one of 3 types):\n"
+    prompt += "   - Identify if this event is one of these specific biographical milestones:\n"
+    prompt += "     1. MARRIAGE_PARTNERSHIP - Wedding, marriage ceremony, or start of documented partnership\n"
+    prompt += "     2. EMIGRATION - Permanent move to different country (not temporary travel)\n"
+    prompt += "     3. INVENTION - Creation of novel device, machine, algorithm, or technique\n"
+    prompt += "   - For other events (births, deaths, education, publications, awards), omit this field\n"
+    prompt += "   - Classification adds structured metadata without replacing description\n\n"
+
+    prompt += "   Type 1: MARRIAGE_PARTNERSHIP\n"
+    prompt += "   When to classify:\n"
+    prompt += "   - Event title/description contains: 'married', 'marriage', 'wed', 'wedding', 'spouse'\n"
+    prompt += "   - Event describes beginning of legal marriage or long-term partnership\n"
+    prompt += "   - ALWAYS classify if event is explicitly about a marriage ceremony or partnership formation\n"
+    prompt += "   \n"
+    prompt += "   Required fields:\n"
+    prompt += "     * subtype: 'marriage' (legal/ceremonial) OR 'partnership' (domestic/romantic without ceremony)\n"
+    prompt += "     * partner: Full name of spouse/partner as written in description\n"
+    prompt += "   Optional fields:\n"
+    prompt += "     * duration: 'until death' (if lifelong), OR specific years (e.g., '17 years'), OR 'brief' if short\n"
+    prompt += "     * children: Integer count if mentioned in description or related materials\n"
+    prompt += "     * characterization: 1-4 words like 'happy marriage', 'political alliance', 'arranged', 'turbulent'\n"
+    prompt += "   \n"
+    prompt += "   Example: Event 'Married Gisela Brandes' → Classify as marriage_partnership\n\n"
+
+    prompt += "   Type 2: EMIGRATION\n"
+    prompt += "   When to classify:\n"
+    prompt += "   - Event describes permanent relocation to different country or major region\n"
+    prompt += "   - Words like: 'emigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge'\n"
+    prompt += "   - NOT temporary: conferences, visits, tours, business trips, wartime displacement\n"
+    prompt += "   - NOT within same country: moving cities within same nation\n"
+    prompt += "   \n"
+    prompt += "   Required fields:\n"
+    prompt += "     * from_location: Origin country/region (e.g., 'Berlin, Germany', 'Austria')\n"
+    prompt += "     * to_location: Destination country/region (e.g., 'United States', 'London, England')\n"
+    prompt += "   Optional fields:\n"
+    prompt += "     * characterization: Context in 1-4 words: 'political exile', 'seeking refuge', 'career opportunity', 'forced'\n"
+    prompt += "   \n"
+    prompt += "   Example: Event 'Emigrated to United States' → Classify as emigration\n\n"
+
+    prompt += "   Type 3: INVENTION\n"
+    prompt += "   When to classify:\n"
+    prompt += "   - Event describes creating/building/patenting a tangible invention, device, machine, or algorithm\n"
+    prompt += "   - Words like: 'invented', 'patented', 'built', 'designed', 'created' + technical artifact\n"
+    prompt += "   - MUST be novel creation with clear technical output (not just ideas)\n"
+    prompt += "   - Examples: computers, engines, tools, chemical processes, algorithms, machines\n"
+    prompt += "   - NOT theories, published papers, mathematical proofs (these lack physical/algorithmic artifact)\n"
+    prompt += "   \n"
+    prompt += "   Required fields:\n"
+    prompt += "     * title: Name of invention (e.g., 'Z3 Computer', 'Analytical Engine', 'frequency-hopping spread spectrum')\n"
+    prompt += "     * description: What it is and how it works (1-2 sentences, technical but accessible)\n"
+    prompt += "   Optional fields:\n"
+    prompt += "     * impact: Historical significance or modern application (1-2 sentences)\n"
+    prompt += "   \n"
+    prompt += "   Example: Event 'Completed Z3 computer' → Classify as invention\n\n"
+
+    prompt += "   DETECTION GUIDELINES:\n"
+    prompt += "   - Look for explicit keywords in title/description that signal these event types\n"
+    prompt += "   - When event clearly matches a type (marriage, emigration, invention), classify it\n"
+    prompt += "   - Births, deaths, education, publications, awards typically do NOT get classified\n"
+    prompt += "   - Omit classification only when event doesn't match any of the 3 types\n\n"
+
     # Add icon categories
     prompt += "\n" + "="*60 + "\n"
     prompt += "AVAILABLE ICONS:\n"
@@ -1714,14 +1850,34 @@ def research_event_details(
             )
 
             if response.status == "completed" and response.output_parsed:
-                return response.output_parsed
+                details = response.output_parsed
+
+                # Debug logging for event classification
+                if details.event_class:
+                    class_type = details.event_class.type
+                    if class_type == "marriage_partnership":
+                        print(f"      ✓ Classification: MARRIAGE ({details.event_class.partner})")
+                    elif class_type == "emigration":
+                        print(f"      ✓ Classification: EMIGRATION ({details.event_class.from_location} → {details.event_class.to_location})")
+                    elif class_type == "invention":
+                        print(f"      ✓ Classification: INVENTION ({details.event_class.title})")
+
+                return details
 
         except Exception as error:
+            error_msg = str(error)
+            error_type = type(error).__name__
             if attempt < retry_count:
                 print(f"    Retry {attempt + 1}/{retry_count}")
+                print(f"      {error_type}: {error_msg[:150]}")
                 time.sleep(2)
             else:
-                print(f"    Warning: Failed after {retry_count + 1} attempts, using fallback minimal details")
+                print(f"    ✗ Failed after {retry_count + 1} attempts, using fallback minimal details")
+                print(f"      {error_type}: {error_msg[:300]}")
+                # Print full traceback for debugging
+                import traceback
+                traceback_str = traceback.format_exc()
+                print(f"      Traceback (last 500 chars): ...{traceback_str[-500:]}")
                 # Fallback: minimal details
                 return EventDetails(
                     locations=None,
@@ -1746,6 +1902,7 @@ def research_all_event_details(
     model: str,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
+    print("  Event classification system: Active (marriage/partnership, emigration, invention)")
     details = []
 
     for idx, skeleton in enumerate(event_skeletons, 1):
@@ -1758,6 +1915,13 @@ def research_all_event_details(
         )
 
         details.append(detail)
+
+    # Summary of classifications
+    classified_count = sum(1 for d in details if d.event_class)
+    if classified_count > 0:
+        print(f"  ✓ Classified {classified_count}/{len(details)} events")
+    else:
+        print(f"  No events classified (all events are standard biographical milestones)")
 
     return details
 
@@ -1806,6 +1970,7 @@ def merge_event_skeleton_and_details(
         event_type_icon=details.event_type_icon or "mdi-calendar",
         chapter=None,  # Chapter assigned in Chapter generation phase
         annotations=annotations,
+        event_class=details.event_class,  # NEW: Pass through classification
     )
 
 
@@ -2023,6 +2188,7 @@ def assign_events_to_chapters(
             event_type_icon=event.event_type_icon,
             chapter=assigned_chapter,
             annotations=event.annotations,
+            event_class=event.event_class,  # CRITICAL: Preserve event classification
         )
         updated_events.append(updated_event)
 
@@ -2728,7 +2894,7 @@ def generate_person_events(
         "person": person_data,
         "chapters": [ch.model_dump() for ch in chapters] if chapters else None,
         "conclusion": conclusion if conclusion else None,
-        "events": [ev.model_dump() for ev in enriched_events],
+        "events": [ev.model_dump(exclude_none=True) for ev in enriched_events],
     }
 
     # Normalize metadata
