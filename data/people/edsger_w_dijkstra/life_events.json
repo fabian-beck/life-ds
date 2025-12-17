@@ -1,90 +1,120 @@
 {
-  "dataset": "edsger_w_dijkstra_life",
-  "created_on": "2025-11-29",
+  "dataset": "wikipedia: Edsger W. Dijkstra",
+  "created_on": "2025-12-17",
   "person": {
     "name": "Edsger_W._Dijkstra",
     "birth_date": "1930-05-11",
     "death_date": "2002-08-06",
     "primary_roles": [
       "computer scientist",
-      "programmer",
-      "mathematician"
+      "mathematician",
+      "writer"
     ],
-    "summary": "Edsger W. Dijkstra (1930–2002) was a Dutch computer scientist and pioneer of structured programming, operating systems, and algorithmic thinking. The first professional programmer in the Netherlands, he developed Dijkstra’s shortest-path algorithm, contributed to ALGOL 60 and the first ALGOL 60 compiler, designed the THE operating system, and wrote hundreds of influential essays and technical reports that helped shape modern computer science.",
+    "tagline": "Pioneer of structured programming",
+    "summary": "Edsger W. Dijkstra was a Dutch computer scientist whose ideas reshaped programming methodology, algorithms, and operating systems. He helped establish disciplined approaches to program design and correctness, and his research influenced both academic computer science and practical system building. He received the 1972 ACM Turing Award for foundational contributions to structured programming and programming languages.",
     "wikipedia": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
     "portrait": {
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
-      "source": "https://commons.wikimedia.org/wiki/File:Edsger_Wybe_Dijkstra.jpg"
+      "source": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
     }
   },
   "chapters": [
     {
-      "id": "early_life_and_education",
-      "headline": "Early Life and Education",
+      "id": "rotterdam_foundations",
+      "headline": "Rotterdam Sparks",
+      "bridge_statement": "A quiet household of science prepared a mind that would soon find its true instrument.",
       "date_start": "1930-05-11",
       "date_start_precision": "day",
-      "date_end": "1952-03",
-      "date_end_precision": "month",
+      "date_end": "1952",
+      "date_end_precision": "year",
       "age_start": 0,
       "age_end": 21,
-      "bridge_statement": "Childhood in Rotterdam, rigorous secondary schooling, and university studies in mathematics and physics that led him inadvertently into programming and computing."
+      "involved_people": null,
+      "location": "Netherlands"
     },
     {
-      "id": "mathematical_centre_and_algol",
-      "headline": "Mathematical Centre and ALGOL",
+      "id": "amsterdam_first_programmer",
+      "headline": "The First Programmer",
+      "bridge_statement": "In a newborn field, he chose precision over tradition and stepped into work no one had named yet.",
       "date_start": "1952-03",
       "date_start_precision": "month",
-      "date_end": "1962",
-      "date_end_precision": "year",
+      "date_end": "1960-08-24",
+      "date_end_precision": "day",
       "age_start": 21,
-      "age_end": 32,
-      "bridge_statement": "Years at Amsterdam’s Mathematisch Centrum as the Netherlands’ first programmer, where Dijkstra developed core algorithms, completed his PhD, and helped build the first ALGOL 60 compiler."
+      "age_end": 30,
+      "involved_people": [
+        "Johannes Haantjes",
+        "Adriaan van Wijngaarden",
+        "Maria \"Ria\" C. Debets",
+        "Jaap A. Zonneveld"
+      ],
+      "location": "Netherlands"
     },
     {
-      "id": "eindhoven_professorship",
-      "headline": "Eindhoven Professorship and THE OS",
+      "id": "eindhoven_structured_revolt",
+      "headline": "Structured Revolt",
+      "bridge_statement": "With a professor’s platform, he pushed against improvisation and demanded proofs where others accepted folklore.",
       "date_start": "1962",
       "date_start_precision": "year",
-      "date_end": "1973-08",
-      "date_end_precision": "month",
+      "date_end": "1972",
+      "date_end_precision": "year",
       "age_start": 32,
-      "age_end": 43,
-      "bridge_statement": "Professorial career in Eindhoven and Nuenen, during which Dijkstra led a small research group, built the influential THE operating system, and became a central figure in structured programming."
+      "age_end": 42,
+      "involved_people": null,
+      "location": "Netherlands"
     },
     {
-      "id": "burroughs_and_texas_years",
-      "headline": "Burroughs and Texas Years",
+      "id": "ewd_years",
+      "headline": "The EWD Workshop",
+      "bridge_statement": "Away from the spotlight, his home seminars became a forge for ideas sharp enough to travel the world.",
       "date_start": "1973-08",
       "date_start_precision": "month",
-      "date_end": "1999-11",
-      "date_end_precision": "month",
+      "date_end": "1984",
+      "date_end_precision": "year",
       "age_start": 43,
-      "age_end": 69,
-      "bridge_statement": "Work as Burroughs Corporation’s research fellow, prolific production of EWD manuscripts, and later his distinguished tenure at the University of Texas at Austin."
+      "age_end": 54,
+      "involved_people": null,
+      "location": "Netherlands"
     },
     {
-      "id": "retirement_and_final_years",
-      "headline": "Retirement and Final Years",
+      "id": "austin_last_institution",
+      "headline": "Austin Proof Culture",
+      "bridge_statement": "Across the Atlantic, his uncompromising style found a new classroom and a new generation to unsettle.",
+      "date_start": "1984",
+      "date_start_precision": "year",
+      "date_end": "1999-11",
+      "date_end_precision": "month",
+      "age_start": 54,
+      "age_end": 69,
+      "involved_people": null,
+      "location": "United States"
+    },
+    {
+      "id": "return_final_silence",
+      "headline": "Homeward Final Silence",
+      "bridge_statement": "After the lectures ended, the work of living remained—measured, private, and brave.",
       "date_start": "1999-11",
       "date_start_precision": "month",
       "date_end": "2002-08-06",
       "date_end_precision": "day",
       "age_start": 69,
       "age_end": 72,
-      "bridge_statement": "Retirement from Austin, return to Nuenen, continued recognition for his work, and his final battle with cancer in the Netherlands."
+      "involved_people": null,
+      "location": "Netherlands"
     }
   ],
+  "conclusion": "Dijkstra turned programming from clever improvisation into a discipline built on clarity, structure, and proof. His algorithms, systems, and relentless standards still shape how computer science thinks—and how it insists on being thought through.",
   "events": [
     {
       "date": "1930-05-11",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Rotterdam",
-      "description": "Edsger Wybe Dijkstra was born in Rotterdam to chemist Douwe Wybe Dijkstra and mathematician Brechtje Cornelia Kluijver, in a family that valued scientific education and precise thinking, influences that later shaped his approach to computing.",
+      "description": "Edsger Wybe Dijkstra was born in Rotterdam in the Netherlands. He grew up in a family that valued science and mathematics, with a father who taught chemistry and a mother trained in mathematics. This environment helped shape his early interest in analytical thinking.",
       "locations": [
         {
           "name_historic": "Rotterdam",
-          "name_modern": null,
+          "name_modern": "Rotterdam, Netherlands",
           "centroid": [
             4.47775,
             51.9244424
@@ -95,18 +125,19 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "chapter": "early_life_and_education"
+      "event_type_icon": "mdi-candle",
+      "chapter": "rotterdam_foundations"
     },
     {
       "date": "1948",
       "date_precision": "year",
-      "age": 18,
-      "title": "Graduates Gymnasium Erasmianum",
-      "description": "Dijkstra completed his secondary education at the prestigious Gymnasium Erasmianum in Rotterdam, initially considering a career in law and international diplomacy before his parents persuaded him to pursue university studies in mathematics and physics.",
+      "age": 17,
+      "title": "Finished Gymnasium Erasmianum",
+      "description": "Dijkstra completed his secondary education at the Gymnasium Erasmianum. At the time he considered pursuing law and international service rather than science. After graduation, he chose a university path in mathematics and physics.",
       "locations": [
         {
           "name_historic": "Rotterdam",
-          "name_modern": null,
+          "name_modern": "Rotterdam, Netherlands",
           "centroid": [
             4.47775,
             51.9244424
@@ -115,23 +146,35 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Gymnasium_Erasmianum"
       ],
-      "chapter": "early_life_and_education"
+      "images": [
+        {
+          "url": "https://images.memorix.nl/rce/thumb/fullsize/42595656-d941-d712-50d7-e41902e52f67.jpg",
+          "caption": "Coolsingel and Coolvest with Gymnasium Erasmianum (Rotterdam)",
+          "source": "https://beeldbank.cultureelerfgoed.nl/alle-afbeeldingen/detail/619b21b7-d57a-ce10-1cb9-670c8bffa90c/media/42595656-d941-d712-50d7-e41902e52f67"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "rotterdam_foundations"
     },
     {
       "date": "1948",
       "date_precision": "year",
-      "age": 18,
-      "title": "Begins studies at Leiden",
-      "description": "Following his parents’ advice, Dijkstra enrolled at the University of Leiden to study mathematics and physics and then theoretical physics, still regarding physics as his primary vocation while programming would soon emerge as a competing passion.",
+      "date_end": "1952",
+      "date_end_precision": "year",
+      "date_note": "The article describes studies in mathematics, physics, and theoretical physics at the University of Leiden; exact graduation date is not specified",
+      "age": 17,
+      "title": "Studied physics at Leiden",
+      "description": "He studied mathematics and physics and then theoretical physics at the [[Leiden University|University of Leiden]]. During these years, electronic computing was emerging as a new field, still viewed as a novelty. His scientific training provided the rigor that later characterized his approach to programming and proofs.",
       "locations": [
         {
           "name_historic": "Leiden",
-          "name_modern": null,
+          "name_modern": "Leiden, Netherlands",
           "centroid": [
-            4.4811089,
-            52.1518157
+            4.4908843,
+            52.1594747
           ],
           "primary": true
         }
@@ -139,18 +182,32 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "chapter": "early_life_and_education"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Entrance_of_the_Herta_Mohr_Building%2C_Leiden_University%2C_Witte_Singel%2C_Leiden%2C_2024_-_1.jpg",
+          "caption": "Entrance of the Herta Mohr Building, Leiden University (2024)",
+          "source": "https://commons.wikimedia.org/wiki/File:Entrance_of_the_Herta_Mohr_Building,_Leiden_University,_Witte_Singel,_Leiden,_2024_-_1.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "rotterdam_foundations",
+      "annotations": {
+        "Leiden University": {
+          "explanation": "A major Dutch research university in Leiden, founded in 1575, known for strong programs in mathematics and the sciences.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Leiden_University"
+        }
+      }
     },
     {
       "date": "1952-03",
       "date_precision": "month",
       "age": 21,
-      "title": "Becomes first Dutch programmer",
-      "description": "Through his Leiden supervisor Johannes Haantjes, Dijkstra met Adriaan van Wijngaarden and in March 1952 formally became the Netherlands’ first professional “programmer,” joining the Computation Department at the Mathematisch Centrum in Amsterdam while still finishing his physics studies.",
+      "title": "Became Netherlands' first programmer",
+      "description": "Through his supervisor Johannes Haantjes, Dijkstra met Adriaan van Wijngaarden at the [[Mathematical Centre|Mathematical Centre in Amsterdam]]. In March 1952 he officially took a position there as the Netherlands' first “programmer.” The job placed him at the center of early Dutch computing, linking software work to new machine development.",
       "locations": [
         {
           "name_historic": "Amsterdam",
-          "name_modern": null,
+          "name_modern": "Amsterdam, Netherlands",
           "centroid": [
             4.8924534,
             52.3730796
@@ -158,47 +215,63 @@
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden",
-        "https://en.wikipedia.org/wiki/Centrum_Wiskunde_%26_Informatica"
-      ],
-      "chapter": "early_life_and_education"
-    },
-    {
-      "date": "1954",
-      "date_precision": "year",
-      "date_note": "Approximate date for his career-defining discussion with Adriaan van Wijngaarden, described as occurring after ‘some three years’ of programming",
-      "age": 24,
-      "title": "Commits fully to programming",
-      "description": "After several years splitting his time between theoretical physics in Leiden and programming in Amsterdam, Dijkstra had a pivotal discussion with his mentor Adriaan van Wijngaarden at the Mathematisch Centrum, resolving to complete his physics degree with minimal effort and devote himself to establishing programming as an intellectually respectable discipline.",
-      "locations": [
-        {
-          "name_historic": "Amsterdam",
-          "name_modern": null,
-          "centroid": [
-            4.8924534,
-            52.3730796
-          ],
-          "primary": true
-        }
+      "involved_people": [
+        "Johannes Haantjes",
+        "Adriaan van Wijngaarden"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
         "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
       ],
-      "chapter": "mathematical_centre_and_algol"
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/6116/6343680225_4e15f6375c_b.jpg",
+          "caption": "Automatische Relais Rekenmachine Amsterdam, 1952 photograph",
+          "source": "https://www.flickr.com/photos/29780762@N07/6343680225"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "amsterdam_first_programmer",
+      "annotations": {
+        "Mathematical Centre": {
+          "explanation": "Dutch research institute for mathematics and early computing, later renamed Centrum Wiskunde & Informatica (CWI).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Centrum_Wiskunde_%26_Informatica"
+        }
+      }
+    },
+    {
+      "date": "1955",
+      "date_precision": "year",
+      "date_note": "Dijkstra later recalled making this decision after about three years of programming work at the Mathematical Centre",
+      "age": 24,
+      "title": "Chose programming over physics",
+      "description": "After trying to combine programming work with theoretical physics studies, Dijkstra struggled to reconcile the two paths. A long conversation with Adriaan van Wijngaarden convinced him that computers were “here to stay” and that programming could become a serious discipline. He decided to focus his career on making programming intellectually rigorous.",
+      "locations": [],
+      "involved_people": [
+        "Adriaan van Wijngaarden"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Centrum-wiskunde-informatica-logo.png",
+          "caption": "Official logo of Centrum Wiskunde & Informatica (CWI)",
+          "source": "https://commons.wikimedia.org/wiki/File:Centrum-wiskunde-informatica-logo.png"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "amsterdam_first_programmer"
     },
     {
       "date": "1956",
       "date_precision": "year",
-      "age": 26,
-      "title": "Invents shortest-path algorithm",
-      "description": "For the inauguration of the ARMAC computer at the Mathematisch Centrum, Dijkstra formulated and solved the single-source shortest-path problem, devising the algorithm that now bears his name; he delayed publication until 1959 due to the lack of specialized computing journals.",
+      "age": 25,
+      "title": "Solved shortest path problem",
+      "description": "In 1956, while preparing a demonstration for the inauguration of the [[ARMAC|ARMAC computer]], Dijkstra formulated and solved what became the shortest path problem, later published as [[Dijkstra's algorithm|Dijkstra's algorithm]].",
       "locations": [
         {
           "name_historic": "Amsterdam",
-          "name_modern": null,
+          "name_modern": "Amsterdam, Netherlands",
           "centroid": [
             4.8924534,
             52.3730796
@@ -207,43 +280,65 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Centrum_Wiskunde_%26_Informatica"
+        "https://en.wikipedia.org/wiki/Carel_S._Scholten"
       ],
-      "chapter": "mathematical_centre_and_algol"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/DijkstraNegativeWeightCounterExample.png",
+          "caption": "Counter-example with negative weights for Dijkstra's algorithm",
+          "source": "https://commons.wikimedia.org/wiki/File:DijkstraNegativeWeightCounterExample.png"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "amsterdam_first_programmer",
+      "annotations": {
+        "ARMAC": {
+          "explanation": "A Dutch early transistor-based computer developed at the Mathematisch Centrum, for which Dijkstra worked on software.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ARMAC"
+        },
+        "Dijkstra's algorithm": {
+          "explanation": "A 1956 graph-search algorithm that computes shortest paths from a source node to all other nodes in a weighted graph.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "Dijkstra's algorithm",
+        "description": "Single-source shortest-path algorithm that repeatedly selects the nearest unvisited vertex and relaxes incident weighted edges.",
+        "impact": "Became a foundational method for routing and graph optimization across computer science and engineering."
+      }
     },
     {
       "date": "1957",
       "date_precision": "year",
       "age": 27,
-      "title": "Marries Maria C. Debets",
-      "description": "Dijkstra married Maria “Ria” C. Debets; when required to declare his profession during the marriage rites, he insisted on calling himself a programmer, a label authorities initially rejected because programming was not yet recognized as a formal profession in the Netherlands.",
-      "locations": [
-        {
-          "name_historic": "Amsterdam",
-          "name_modern": null,
-          "centroid": [
-            4.8924534,
-            52.3730796
-          ],
-          "primary": true
-        }
+      "title": "Married Maria “Ria” Debets",
+      "description": "Dijkstra married Maria “Ria” C. Debets in 1957. During the marriage rites he was required to state his profession, and he declared himself a programmer; the declaration reportedly conflicted with Dutch authorities because “programmer” was not yet recognized as an official profession.",
+      "locations": [],
+      "involved_people": [
+        "Maria \"Ria\" C. Debets"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "chapter": "mathematical_centre_and_algol"
+      "event_type_icon": "mdi-ring",
+      "chapter": "amsterdam_first_programmer",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Maria “Ria” C. Debets"
+      }
     },
     {
       "date": "1959",
       "date_precision": "year",
       "age": 29,
-      "title": "Earns PhD in Amsterdam",
-      "description": "Dijkstra received his PhD from the University of Amsterdam for his thesis \"Communication with an Automatic Computer,\" which described the assembly language for the Electrologica X1, the first commercial computer developed in the Netherlands; his supervisor was Adriaan van Wijngaarden.",
+      "title": "Earned PhD in Amsterdam",
+      "description": "In 1959, Dijkstra received a PhD from the University of Amsterdam with the thesis “Communication with an Automatic Computer.” Supervised by Adriaan van Wijngaarden, the dissertation discussed an assembly language for the [[Electrologica X1|Electrologica X1]] and reflected their close professional relationship.",
       "locations": [
         {
           "name_historic": "Amsterdam",
-          "name_modern": null,
+          "name_modern": "Amsterdam, Netherlands",
           "centroid": [
             4.8924534,
             52.3730796
@@ -251,23 +346,37 @@
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Centrum_Wiskunde_%26_Informatica"
+      "involved_people": [
+        "Adriaan van Wijngaarden"
       ],
-      "chapter": "mathematical_centre_and_algol"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/89/University_of_Amsterdam_235_2094.jpg",
+          "caption": "University of Amsterdam building at Oudezijds Achterburgwal 235",
+          "source": "https://commons.wikimedia.org/wiki/File:University_of_Amsterdam_235_2094.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "amsterdam_first_programmer",
+      "annotations": {
+        "Electrologica X1": {
+          "explanation": "A Dutch early commercial computer (built by Electrologica) that was installed at universities and research institutions in the late 1950s and early 1960s."
+        }
+      }
     },
     {
       "date": "1960-08-24",
       "date_precision": "day",
-      "date_note": "Completion date is from related account of ALGOL 60 compiler work with Jaap A. Zonneveld",
       "age": 30,
-      "title": "Completes first ALGOL 60 compiler",
-      "description": "At the Mathematisch Centrum, Dijkstra and colleague Jaap A. Zonneveld finished the world’s first working ALGOL 60 compiler for the Electrologica X1, more than a year before any competing implementation, marking a major advance in structured programming and formal language implementation.",
+      "title": "Completed first ALGOL 60 compiler",
+      "description": "Working with Jaap A. Zonneveld, Dijkstra developed the first compiler for the programming language [[ALGOL 60|ALGOL 60]]. The compiler was completed on 24 August 1960 and helped show that a high-level language could be implemented effectively on contemporary machines, feeding into later structured-programming ideas.",
       "locations": [
         {
           "name_historic": "Amsterdam",
-          "name_modern": null,
+          "name_modern": "Amsterdam, Netherlands",
           "centroid": [
             4.8924534,
             52.3730796
@@ -275,28 +384,59 @@
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Jaap_A._Zonneveld",
-        "https://en.wikipedia.org/wiki/Centrum_Wiskunde_%26_Informatica"
+      "involved_people": [
+        "Jaap A. Zonneveld"
       ],
-      "chapter": "mathematical_centre_and_algol"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jaap_A._Zonneveld",
+        "https://en.wikipedia.org/wiki/IFIP_Working_Group_2.1"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Algol%26Fortran_Family_By_Skippppp.svg",
+          "caption": "Algol and Fortran family tree diagram",
+          "source": "https://commons.wikimedia.org/wiki/File:Algol&Fortran_Family_By_Skippppp.svg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "amsterdam_first_programmer",
+      "annotations": {
+        "ALGOL 60": {
+          "explanation": "A 1960 international algorithmic programming language standard that strongly influenced later languages and compiler design.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ALGOL_60"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "First ALGOL 60 compiler (Dijkstra–Zonneveld)",
+        "description": "A translator program that converted ALGOL 60 source code into executable machine instructions for contemporary computers.",
+        "impact": "It demonstrated practical high-level-language compilation and influenced later compiler construction and structured programming."
+      }
     },
     {
       "date": "1962",
       "date_precision": "year",
       "age": 32,
-      "title": "Moves to Eindhoven professorship",
-      "description": "Dijkstra left the Mathematisch Centrum and moved to the south of the Netherlands, taking up a professorship in the Mathematics Department at the Technische Hogeschool Eindhoven (later Eindhoven University of Technology), while living in nearby Nuenen and beginning to build a small group of collaborating computer scientists.",
+      "title": "Moved to Eindhoven professorship",
+      "description": "In 1962, Dijkstra moved to Eindhoven and later to Nuenen, joining the mathematics department at the [[Eindhoven University of Technology|Eindhoven University of Technology]] (then the Technische Hogeschool Eindhoven). With no separate computer science department, he tried to build a group of computer scientists within the existing mathematics culture, helping establish him as a leading academic voice on how programming should be practiced and taught.",
       "locations": [
         {
           "name_historic": "Eindhoven",
-          "name_modern": null,
+          "name_modern": "Eindhoven, Netherlands",
           "centroid": [
             5.4501225,
             51.4485569
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Nuenen",
+          "name_modern": "Nuenen, Netherlands",
+          "centroid": [
+            5.544007,
+            51.48603
+          ],
+          "primary": false
         }
       ],
       "sources": [
@@ -305,23 +445,33 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/TU_Eindhoven.jpg",
-          "caption": "Aerial view of the Eindhoven University of Technology campus, where Dijkstra served as professor of mathematics and computing.",
-          "source": "https://commons.wikimedia.org/wiki/File:TU_Eindhoven.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Hoofdgeboeuw_Technische_Universiteit_Eindhoven.jpg",
+          "caption": "Main Building of Eindhoven University of Technology",
+          "source": "https://commons.wikimedia.org/wiki/File:Hoofdgeboeuw_Technische_Universiteit_Eindhoven.jpg"
         }
       ],
-      "chapter": "eindhoven_professorship"
+      "event_type_icon": "mdi-teach",
+      "chapter": "eindhoven_structured_revolt",
+      "annotations": {
+        "Eindhoven University of Technology": {
+          "explanation": "A Dutch technical university founded in 1956; it was originally named Technische Hogeschool Eindhoven before adopting its current name in 1986.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+        }
+      }
     },
     {
       "date": "1968",
       "date_precision": "year",
-      "age": 38,
-      "title": "Builds THE multiprogramming system",
-      "description": "In the late 1960s at Eindhoven, Dijkstra led the design and construction of the layered THE multiprogramming system for the university’s computer, an operating system that pioneered the use of software-based paged virtual memory and influenced subsequent operating-system architectures.",
+      "date_end": "1969",
+      "date_end_precision": "year",
+      "date_note": "The article dates the THE multiprogramming system to the late 1960s",
+      "age": 37,
+      "title": "Built THE multiprogramming system",
+      "description": "In the late 1960s at the [[Technische Hogeschool Eindhoven|Technological University of Eindhoven]], he led a team that built the [[THE operating system|THE operating system]], named after his university, as part of his work on operating-system structuring and teaching.",
       "locations": [
         {
           "name_historic": "Eindhoven",
-          "name_modern": null,
+          "name_modern": "Eindhoven, Netherlands",
           "centroid": [
             5.4501225,
             51.4485569
@@ -330,76 +480,69 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+        "https://en.wikipedia.org/wiki/THE_multiprogramming_system",
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/TU_Eindhoven.jpg",
-          "caption": "Buildings of Eindhoven University of Technology, where Dijkstra designed the THE multiprogramming system.",
-          "source": "https://commons.wikimedia.org/wiki/File:TU_Eindhoven.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Operating_system_placement-fa.svg",
+          "caption": "Graph of typical operating system placement on computer usage",
+          "source": "https://commons.wikimedia.org/wiki/File:Operating_system_placement-fa.svg"
         }
       ],
-      "chapter": "eindhoven_professorship"
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "eindhoven_structured_revolt",
+      "annotations": {
+        "Technische Hogeschool Eindhoven": {
+          "explanation": "The former Dutch name (until 1986) of what is now Eindhoven University of Technology, where Dijkstra worked in the late 1960s.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+        },
+        "THE operating system": {
+          "explanation": "An early experimental operating system developed under Dijkstra at Eindhoven, best known for its layered design and role in OS research and teaching.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/THE_multiprogramming_system"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "THE multiprogramming system",
+        "description": "A layered operating system for the Electrologica X8 that supported multiprogramming and introduced software-based paged virtual memory.",
+        "impact": "It became a classic case study for structured OS design and influenced later operating-system architecture."
+      }
     },
     {
       "date": "1972",
       "date_precision": "year",
       "age": 42,
-      "title": "Receives ACM Turing Award",
-      "description": "The Association for Computing Machinery awarded Dijkstra the 1972 Turing Award for his fundamental contributions to developing structured programming languages and for his influential work on programming methodology and correctness.",
-      "locations": [
-        {
-          "name_historic": "New York City",
-          "name_modern": null,
-          "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Received ACM Turing Award",
+      "description": "Dijkstra received the 1972 [[ACM Turing Award|ACM Turing Award]] for fundamental contributions to programming languages and to the development of [[structured programming|structured programming]]. The award recognized both his technical results and his broader methodological arguments about disciplined program construction. By this point he was widely seen as a central figure shaping computer science as an academic field.",
+      "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Turing_Award"
       ],
-      "chapter": "eindhoven_professorship"
+      "event_type_icon": "mdi-medal",
+      "chapter": "eindhoven_structured_revolt",
+      "annotations": {
+        "ACM Turing Award": {
+          "explanation": "The Association for Computing Machinery's highest honor, awarded annually for major, lasting contributions to computer science.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_Award"
+        },
+        "structured programming": {
+          "explanation": "A programming approach that emphasizes clear control structures and avoidance of unrestricted jumps (e.g., \"goto\") to improve correctness and readability.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Structured_programming"
+        }
+      }
     },
     {
       "date": "1973-08",
       "date_precision": "month",
       "age": 43,
-      "title": "Becomes Burroughs research fellow",
-      "description": "Dijkstra joined Burroughs Corporation in August 1973 as its sole research fellow, working primarily from his study in Nuenen while periodically visiting Burroughs research centers in the United States, and significantly reducing his Eindhoven appointment to one day a week.",
+      "title": "Became Burroughs research fellow",
+      "description": "In August 1973, Dijkstra joined [[Burroughs Corporation|Burroughs Corporation]] as its sole research fellow while continuing a reduced university appointment. He largely worked from home in Nuenen, travelling occasionally to Burroughs research centers, and began the seminar culture known as the “Tuesday Afternoon Club.” The period also marked his most prolific output, including many items in his privately circulated “EWD” reports.",
       "locations": [
         {
           "name_historic": "Nuenen",
-          "name_modern": null,
-          "centroid": [
-            5.544007,
-            51.48603
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Burroughs_Corporation"
-      ],
-      "chapter": "burroughs_and_texas_years"
-    },
-    {
-      "date": "1975",
-      "date_precision": "year",
-      "date_end": "1983",
-      "date_end_precision": "year",
-      "date_note": "Approximate span of his most intensive work on the EWD manuscript series during his Burroughs years",
-      "age": 45,
-      "title": "Prolific EWD manuscript period",
-      "description": "During his years as Burroughs research fellow, Dijkstra wrote nearly 500 documents in his privately circulated \"EWD\" series—sharp, often polemical technical reports and essays on algorithms, programming methodology, and education—that deeply influenced a select international community of computer scientists.",
-      "locations": [
-        {
-          "name_historic": "Nuenen",
-          "name_modern": null,
+          "name_modern": "Nuenen, Netherlands",
           "centroid": [
             5.544007,
             51.48603
@@ -410,111 +553,42 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "chapter": "burroughs_and_texas_years"
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "ewd_years",
+      "annotations": {
+        "Burroughs Corporation": {
+          "explanation": "An American technology company known for manufacturing business computers and related systems; it later merged into Unisys (1986).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Burroughs_Corporation"
+        }
+      }
+    },
+    {
+      "date": "1976",
+      "date_precision": "year",
+      "age": 46,
+      "title": "Published A Discipline of Programming",
+      "description": "Dijkstra published the book A Discipline of Programming, a statement of his approach to constructing programs with mathematical precision. The work emphasized reasoning about program correctness and the careful design of control structures, helping crystallize his campaign to treat programming as a rigorous discipline rather than an ad hoc craft.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Tony_Hoare",
+        "https://en.wikipedia.org/wiki/Robert_W._Floyd"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "ewd_years"
     },
     {
       "date": "1984",
       "date_precision": "year",
       "age": 54,
-      "title": "Accepts chair at UT Austin",
-      "description": "Dijkstra accepted the Schlumberger Centennial Chair in the Computer Science Department at the University of Texas at Austin, relocating from the Netherlands to Texas and transplanting his famous \"Tuesday Afternoon Club\" seminar model to his new academic home.",
+      "title": "Joined UT Austin faculty",
+      "description": "Dijkstra accepted the Schlumberger Centennial Chair in the Computer Science Department at the University of Texas at Austin. In Austin he continued research and teaching, extending the influence of his seminar style and proof-focused approach to program reasoning. His presence shaped a generation of students and colleagues in formal thinking about programs.",
       "locations": [
         {
           "name_historic": "Austin",
-          "name_modern": null,
+          "name_modern": "Austin, Texas, United States",
           "centroid": [
             -97.7436995,
             30.2711286
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/University_of_Texas_at_Austin"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Main_Building_at_The_University_of_Texas_at_Austin.jpg",
-          "caption": "Main Building at the University of Texas at Austin, where Dijkstra held the Schlumberger Centennial Chair in Computer Science.",
-          "source": "https://commons.wikimedia.org/wiki/File:Main_Building_at_The_University_of_Texas_at_Austin.jpg"
-        }
-      ],
-      "chapter": "burroughs_and_texas_years"
-    },
-    {
-      "date": "1999-11",
-      "date_precision": "month",
-      "age": 69,
-      "title": "Retires from UT Austin",
-      "description": "After fifteen years on the faculty, Dijkstra retired from the University of Texas at Austin in November 1999; the department marked the occasion with preparations for a symposium to honor his more than four decades of seminal contributions to computing science.",
-      "locations": [
-        {
-          "name_historic": "Austin",
-          "name_modern": null,
-          "centroid": [
-            -97.7436995,
-            30.2711286
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/University_of_Texas_at_Austin"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Main_Building_at_The_University_of_Texas_at_Austin.jpg",
-          "caption": "View of the University of Texas at Austin campus, where Dijkstra taught until his retirement in 1999.",
-          "source": "https://commons.wikimedia.org/wiki/File:Main_Building_at_The_University_of_Texas_at_Austin.jpg"
-        }
-      ],
-      "chapter": "burroughs_and_texas_years"
-    },
-    {
-      "date": "2000-05-11",
-      "date_precision": "day",
-      "age": 70,
-      "title": "70th birthday symposium in Austin",
-      "description": "On Dijkstra’s 70th birthday, the University of Texas at Austin hosted a symposium celebrating his more than forty years of contributions to computing science, bringing together colleagues and former students to reflect on his impact on algorithms, programming, and education.",
-      "locations": [
-        {
-          "name_historic": "Austin",
-          "name_modern": null,
-          "centroid": [
-            -97.7436995,
-            30.2711286
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/University_of_Texas_at_Austin"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/%22Year_of_Programming%22_Symposium%2C_Austin%2C_Texas_1988_%286423344543%29.jpg",
-          "caption": "Group photo from a 1988 programming symposium in Austin featuring Dijkstra and other leading computer scientists, emblematic of his active role in UT Austin’s research community.",
-          "source": "https://commons.wikimedia.org/wiki/File:%22Year_of_Programming%22_Symposium,_Austin,_Texas_1988_(6423344543).jpg"
-        }
-      ],
-      "chapter": "retirement_and_final_years"
-    },
-    {
-      "date": "2002-08-06",
-      "date_precision": "day",
-      "age": 72,
-      "title": "Death in Nuenen",
-      "description": "Having returned to his longtime home in Nuenen after retiring from Austin, Dijkstra died on 6 August 2002 following a prolonged struggle with cancer, expressing his wish to end his life in the Netherlands; he was survived by his wife Ria and their three children.",
-      "locations": [
-        {
-          "name_historic": "Nuenen",
-          "name_modern": null,
-          "centroid": [
-            5.544007,
-            51.48603
           ],
           "primary": true
         }
@@ -522,7 +596,79 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "chapter": "retirement_and_final_years"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Aerial_view_of_University_of_Texas_at_Austin_Main_Campus.jpg",
+          "caption": "Aerial view of University of Texas at Austin main campus",
+          "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_University_of_Texas_at_Austin_Main_Campus.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "ewd_years"
+    },
+    {
+      "date": "1999-11",
+      "date_precision": "month",
+      "age": 69,
+      "title": "Retired from UT Austin",
+      "description": "Dijkstra retired from his position at the University of Texas at Austin in November 1999 after working there for fifteen years. Soon afterward, he and his wife returned to their home in Nuenen in the Netherlands. The move marked the close of his formal academic career after decades of influential writing, lecturing, and systems work.",
+      "locations": [
+        {
+          "name_historic": "Austin",
+          "name_modern": "Austin, Texas, United States",
+          "centroid": [
+            -97.7436995,
+            30.2711286
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Nuenen",
+          "name_modern": "Nuenen, Netherlands",
+          "centroid": [
+            5.544007,
+            51.48603
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "event_type_icon": "mdi-account-clock",
+      "chapter": "austin_last_institution"
+    },
+    {
+      "date": "2002-08-06",
+      "date_precision": "day",
+      "age": 72,
+      "title": "Died after cancer",
+      "description": "Dijkstra died on 6 August 2002 after a long struggle with cancer. He spent his final period in the Netherlands after returning from the United States. He was survived by his wife and their three children.",
+      "locations": [
+        {
+          "name_historic": "Nuenen",
+          "name_modern": "Nuenen, Netherlands",
+          "centroid": [
+            5.544007,
+            51.48603
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Netherlands",
+          "name_modern": "Netherlands",
+          "centroid": [
+            5.6343227,
+            52.2434979
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "return_final_silence"
     }
   ]
 }
