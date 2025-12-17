@@ -88,8 +88,8 @@ ICON_CATEGORIES = {
     "exile": "mdi-exit-to-app",
 
     # Scientific & Technical
-    "discovery": "mdi-lightbulb",
-    "invention": "mdi-cog",
+    "discovery": "mdi-lightbulb-on-outline",
+    "invention": "mdi-lightbulb-on-outline",
     "experiment": "mdi-test-tube",
     "research": "mdi-microscope",
     "observation": "mdi-eye",
