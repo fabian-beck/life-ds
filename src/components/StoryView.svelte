@@ -1054,7 +1054,7 @@
           </div>
         </section>
       {:else if totalPanels > 0}
-        {#each slides as slide, index (slide.type === 'chapter' ? `chapter-${slide.chapter.id}` : slide.type === 'conclusion' ? 'conclusion' : slide.eventIndex)}
+        {#each slides as slide, index (slide.type === 'chapter' ? `chapter-${index}` : slide.type === 'conclusion' ? 'conclusion' : slide.eventIndex)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
