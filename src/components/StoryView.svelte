@@ -147,7 +147,10 @@
     const hasChapters = chapters && chapters.length > 0;
 
     if (!hasChapters) {
-      const allSlides = [{ type: "overview" }, ...eventSlides];
+      const allSlides = [
+        { type: "overview" },
+        ...eventSlides.map(event => ({ ...event, type: "event" }))
+      ];
       // Add conclusion at the end if it exists
       if (hasConclusion) {
         allSlides.push({ type: "conclusion", conclusion, relatedPersons });
@@ -174,7 +177,7 @@
         lastChapterId = eventChapter;
       }
 
-      result.push(event);
+      result.push({ ...event, type: "event" });
     });
 
     // Add conclusion at the end if it exists
@@ -311,11 +314,19 @@
     return mappedIndex;
   })();
 
-  // Determine if current slide is a chapter or conclusion slide (for map fade)
+  // Determine if current slide is a chapter, conclusion, or invention slide (for map fade)
   $: isChapterSlide = (() => {
     if (activeIndex < 0 || activeIndex >= slides.length) return false;
-    const slideType = slides[activeIndex]?.type;
-    return slideType === "chapter" || slideType === "conclusion";
+    const slide = slides[activeIndex];
+    const slideType = slide?.type;
+
+    // Fade map for chapter/conclusion slides
+    if (slideType === "chapter" || slideType === "conclusion") return true;
+
+    // Also fade map for invention events
+    if (slideType === "event" && slide?.event_class?.type === "invention") return true;
+
+    return false;
   })();
 
   $: activeCoordinates =

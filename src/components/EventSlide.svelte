@@ -6,6 +6,9 @@
     mdiWikipedia,
     mdiAccountOutline,
     mdiMagnifyPlusOutline,
+    mdiLightbulbOnOutline,
+    mdiRing,
+    mdiStar,
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { joinWithSeparator } from "../utils/helpers.js";
@@ -79,6 +82,35 @@
 
     return joinWithSeparator(names, styleConfig);
   }
+
+  function getEventClassIcon(eventClass) {
+    if (!eventClass?.type) return null;
+
+    switch (eventClass.type) {
+      case 'invention':
+        return mdiLightbulbOnOutline;
+      case 'marriage_partnership':
+        return mdiRing;
+      default:
+        return mdiStar;
+    }
+  }
+
+  function getEventClassLabel(eventClass) {
+    if (!eventClass?.type) return '';
+
+    switch (eventClass.type) {
+      case 'invention':
+        return eventClass.title || 'Invention';
+      case 'marriage_partnership':
+        return eventClass.subtype === 'marriage' ? 'Marriage' : 'Partnership';
+      default:
+        return eventClass.type;
+    }
+  }
+
+  $: eventClassIcon = getEventClassIcon(slide.event_class);
+  $: eventClassLabel = getEventClassLabel(slide.event_class);
 
   function handleThumbnailLoad(event) {
     const img = event.target;
@@ -271,6 +303,19 @@
       {/if}
     </div>
     <h2>{slide.title}</h2>
+    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== 'invention'}
+      <div class="event-class-badge">
+        <svg
+          class="icon icon-inline"
+          viewBox="0 0 24 24"
+          role="presentation"
+          aria-hidden="true"
+        >
+          <path d={eventClassIcon} />
+        </svg>
+        <span class="event-class-label">{eventClassLabel}</span>
+      </div>
+    {/if}
   </div>
   <div class="event-body">
     <div class="event-description">
@@ -299,6 +344,29 @@
           </div>
         </div>
       {/each}
+      {#if slide.event_class?.type === 'invention'}
+        <div class="invention-info-box">
+          <div class="invention-header">
+            <svg
+              class="icon invention-icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiLightbulbOnOutline} />
+            </svg>
+            <h3 class="invention-title">{slide.event_class.title}</h3>
+          </div>
+          {#if slide.event_class.description}
+            <p class="invention-description">{slide.event_class.description}</p>
+          {/if}
+          {#if slide.event_class.impact}
+            <div class="invention-impact">
+              <span class="impact-label">Impact:</span><span class="impact-text"> {slide.event_class.impact}</span>
+            </div>
+          {/if}
+        </div>
+      {/if}
     </div>
     <div class="event-details">
       {#if relevantPeople.length > 0}
@@ -428,6 +496,38 @@
     flex-shrink: 0;
   }
 
+  .event-class-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    margin-top: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--story-secondary, #38bdf8);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    pointer-events: none;
+  }
+
+  .event-class-badge .icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
+
+  .event-class-label {
+    font-family: var(--story-body-font, Inter, sans-serif);
+    letter-spacing: 0.02em;
+  }
+
   .event-body {
     display: flex;
     flex-direction: column;
@@ -438,6 +538,87 @@
   .event-description {
     width: 100%;
     position: relative;
+  }
+
+  .invention-info-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 3px solid var(--story-secondary, #38bdf8);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
+  }
+
+  .invention-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .invention-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: var(--story-secondary, #38bdf8);
+    flex-shrink: 0;
+  }
+
+  .invention-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--story-primary, #f8fafc);
+    font-family: var(--story-heading-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .invention-description {
+    margin: 0 0 0.4rem 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.95);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .invention-impact {
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    line-height: 1.5;
+  }
+
+  .impact-label {
+    display: inline;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--story-secondary, #38bdf8);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .impact-text {
+    display: inline;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: rgba(226, 232, 240, 0.9);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    font-style: italic;
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
   .event-details {
@@ -865,6 +1046,29 @@
   @media (min-width: 768px) and (min-height: 600px) {
     h2 {
       font-size: 1.85rem;
+    }
+
+    .event-class-badge {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.9rem;
+      margin-top: 0.75rem;
+    }
+
+    .invention-info-box {
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .invention-title {
+      font-size: 1.25rem;
+    }
+
+    .invention-description {
+      font-size: 1rem;
+    }
+
+    .impact-text {
+      font-size: 0.95rem;
     }
 
     .description {
