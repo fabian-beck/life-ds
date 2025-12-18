@@ -21,6 +21,7 @@
     getSubcategory,
     getRelevantPeople,
     parseDescriptionSegments,
+    findPersonInNetwork,
   } from "../utils/storyHelpers.js";
   import PersonChip from "./PersonChip.svelte";
 
@@ -303,7 +304,7 @@
       {/if}
     </div>
     <h2>{slide.title}</h2>
-    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== 'invention'}
+    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== 'invention' && slide.event_class?.type !== 'marriage_partnership'}
       <div class="event-class-badge">
         <svg
           class="icon icon-inline"
@@ -319,6 +320,49 @@
   </div>
   <div class="event-body">
     <div class="event-description">
+      {#if slide.event_class?.type === 'marriage_partnership'}
+        {@const partnerPerson = findPersonInNetwork(slide.event_class.partner, egoNetwork)}
+        <div class="marriage-pretext">
+          <div class="marriage-meta-line">
+            <svg
+              class="icon marriage-icon-inline"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiRing} />
+            </svg>
+            <span class="marriage-inline-label">{slide.event_class.subtype === 'marriage' ? 'Marriage' : 'Partnership'}</span>
+            {#if slide.event_class.characterization}
+              <span class="marriage-separator">·</span>
+              <span class="marriage-characterization-inline">{slide.event_class.characterization}</span>
+            {/if}
+            {#if slide.event_class.children}
+              <span class="marriage-separator">·</span>
+              <span class="marriage-children-inline">{slide.event_class.children} {slide.event_class.children === 1 ? 'child' : 'children'}</span>
+            {/if}
+            {#if slide.event_class.duration}
+              <span class="marriage-separator">·</span>
+              <span class="marriage-duration-inline">{slide.event_class.duration}</span>
+            {/if}
+          </div>
+          {#if partnerPerson}
+            {@const personKey = `${slide.eventIndex}-partner`}
+            {@const subcategory = getSubcategory(partnerPerson.relationship_type)}
+            <div class="marriage-partner-chips">
+              <PersonChip
+                person={partnerPerson}
+                {personKey}
+                {visiblePersonInfo}
+                {subcategory}
+                {styleConfig}
+                onToggle={onTogglePersonInfo}
+                {onOpenNetwork}
+              />
+            </div>
+          {/if}
+        </div>
+      {/if}
       <p
         class="description"
         class:has-fade={descriptionOverflows.has(slide.eventIndex)}
@@ -369,7 +413,43 @@
       {/if}
     </div>
     <div class="event-details">
-      {#if relevantPeople.length > 0}
+      {#if slide.event_class?.type === 'marriage_partnership' && relevantPeople.length > 0}
+        {@const partnerPerson = findPersonInNetwork(slide.event_class.partner, egoNetwork)}
+        {@const otherPeople = partnerPerson
+          ? relevantPeople.filter(p => p.person_name !== partnerPerson.person_name)
+          : relevantPeople}
+        {#if otherPeople.length > 0}
+          <ul class="details">
+            <li>
+              <span class="label" aria-label="People">
+                <svg
+                  class="icon icon-inline"
+                  viewBox="0 0 24 24"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <path d={mdiAccountOutline} />
+                </svg>
+              </span>
+              <div class="people-list">
+                {#each otherPeople as person, idx}
+                  {@const personKey = `${slide.eventIndex}-other-${idx}`}
+                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  <PersonChip
+                    {person}
+                    {personKey}
+                    {visiblePersonInfo}
+                    {subcategory}
+                    {styleConfig}
+                    onToggle={onTogglePersonInfo}
+                    {onOpenNetwork}
+                  />
+                {/each}
+              </div>
+            </li>
+          </ul>
+        {/if}
+      {:else if relevantPeople.length > 0}
         <ul class="details">
           <li>
             <span class="label" aria-label="People">
@@ -619,6 +699,67 @@
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .marriage-pretext {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid var(--story-secondary, #38bdf8);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .marriage-meta-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.9);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .marriage-icon-inline {
+    width: 1em;
+    height: 1em;
+    fill: var(--story-secondary, #38bdf8);
+    flex-shrink: 0;
+  }
+
+  .marriage-inline-label {
+    font-weight: 600;
+    color: var(--story-secondary, #38bdf8);
+  }
+
+  .marriage-separator {
+    color: rgba(148, 163, 184, 0.6);
+    font-size: 0.9em;
+  }
+
+  .marriage-characterization-inline {
+    font-style: italic;
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .marriage-children-inline,
+  .marriage-duration-inline {
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .marriage-partner-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .event-details {
@@ -1068,6 +1209,14 @@
     }
 
     .impact-text {
+      font-size: 0.95rem;
+    }
+
+    .marriage-pretext {
+      padding: 1rem;
+    }
+
+    .marriage-meta-line {
       font-size: 0.95rem;
     }
 
