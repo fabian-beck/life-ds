@@ -262,6 +262,10 @@ class EventSkeleton(BaseModel):
     )
     title: str = Field(description="Brief title of the event (2-6 words)")
     description: str = Field(description="Detailed description of the event (2-4 sentences)")
+    event_class: Optional[EventClassification] = Field(
+        None,
+        description="Structured classification for specific event types (marriage_partnership, emigration, invention). Omit for standard biographical events."
+    )
 
 
 class LifePlan(BaseModel):
@@ -320,10 +324,6 @@ class EventDetails(BaseModel):
     annotations: Optional[Dict[str, Annotation]] = Field(
         None,
         description="Dictionary mapping term keys to their explanations"
-    )
-    event_class: Optional[EventClassification] = Field(
-        None,
-        description="Structured classification for specific event types. Omit if event doesn't match these categories."
     )
 
 
@@ -1480,6 +1480,34 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- DO NOT specify exact locations, images, or detailed sources (Phase 2 will research these)\n"
         "- DO mention places, people, and context in the description naturally\n"
         "- DO NOT add annotations - Phase 2 will handle all annotations\n"
+        "\n\nEVENT CLASSIFICATION (optional):\n"
+        "For each event skeleton, determine if it matches one of these 3 specific biographical event types:\n"
+        "  1. MARRIAGE_PARTNERSHIP - Wedding, marriage ceremony, or start of documented partnership\n"
+        "  2. EMIGRATION - Permanent move to different country (not temporary travel)\n"
+        "  3. INVENTION - Creation of novel device, machine, algorithm, or technique\n"
+        "\n"
+        "Detection guidelines:\n"
+        "- MARRIAGE_PARTNERSHIP: Event title/description contains 'married', 'marriage', 'wed', 'wedding', 'spouse'\n"
+        "  * subtype: 'marriage' (legal/ceremonial) OR 'partnership' (domestic/romantic)\n"
+        "  * partner: Full name of spouse/partner\n"
+        "  * Optional: duration (e.g., 'until death', '17 years'), children (integer), characterization (1-4 words)\n"
+        "\n"
+        "- EMIGRATION: Permanent relocation to different country\n"
+        "  * Words like: 'emigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge'\n"
+        "  * NOT temporary: conferences, visits, tours, business trips\n"
+        "  * from_location: Origin country/region\n"
+        "  * to_location: Destination country/region\n"
+        "  * Optional: characterization (e.g., 'political exile', 'career opportunity')\n"
+        "\n"
+        "- INVENTION: Creating/building/patenting tangible invention, device, machine, algorithm\n"
+        "  * Words like: 'invented', 'patented', 'built', 'designed', 'created' + technical artifact\n"
+        "  * MUST be novel creation with clear technical output (not just ideas/theories)\n"
+        "  * title: Name of invention\n"
+        "  * description: What it is and how it works (1 sentence, 15-25 words)\n"
+        "  * Optional: impact (1 sentence, 12-20 words)\n"
+        "\n"
+        "For other events (births, deaths, education, publications, awards): OMIT classification.\n"
+        "Only classify when event CLEARLY matches one of the 3 types above.\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
         "title, and description. "
@@ -1533,6 +1561,20 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     if parsed is None:
         raise RuntimeError("Failed to parse structured output from model (Phase 1)")
 
+    # Log classifications from Phase 1
+    classified_count = sum(1 for skeleton in parsed.event_skeletons if skeleton.event_class)
+    if classified_count > 0:
+        print(f"  Phase 1: Classified {classified_count}/{len(parsed.event_skeletons)} events")
+        for skeleton in parsed.event_skeletons:
+            if skeleton.event_class:
+                class_type = skeleton.event_class.type
+                if class_type == "marriage_partnership":
+                    print(f"    - {skeleton.title}: MARRIAGE ({skeleton.event_class.partner})")
+                elif class_type == "emigration":
+                    print(f"    - {skeleton.title}: EMIGRATION ({skeleton.event_class.from_location} → {skeleton.event_class.to_location})")
+                elif class_type == "invention":
+                    print(f"    - {skeleton.title}: INVENTION ({skeleton.event_class.title})")
+
     return parsed
 
 
@@ -1582,41 +1624,44 @@ def filter_related_articles_for_event(
     return [article for score, article in scored_articles[:max_articles]]
 
 
-def build_phase2_prompt(
+def build_phase2_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
 ) -> str:
     """
-    Build Phase 2 prompt for single event detail research.
+    Build base Phase 2 prompt (common sections for all event types).
 
+    Used for standard events (no classification) and as foundation for class-specific prompts.
     Focus on specific details for THIS event only (NO images - Phase 3).
     """
     prompt = f"Research details for this specific event:\n\n"
     prompt += f"Title: {event_skeleton.title}\n"
     prompt += f"Date: {event_skeleton.date}\n"
     prompt += f"Description: {event_skeleton.description}\n"
-    prompt += f"Subject: {person_name}\n\n"
+    prompt += f"Subject: {person_name}\n"
 
-    prompt += "="*60 + "\n"
+    # Add event class info if present
+    if event_skeleton.event_class:
+        class_type = event_skeleton.event_class.type
+        prompt += f"Event Class: {class_type}\n"
+
+    prompt += "\n" + "="*60 + "\n"
     prompt += "TASK: Provide the following details for THIS specific event:\n"
     prompt += "="*60 + "\n\n"
 
     prompt += "0. DESCRIPTION (with annotation markers):\n"
     prompt += "   - Return the event description with [[term|display]] markers inserted for any annotations\n"
-    prompt += "   - If you create annotations (section 6 below), you MUST insert the markers into this description\n"
+    prompt += "   - If you create annotations (section 5 below), you MUST insert the markers into this description\n"
     prompt += "   - If no annotations, return the original description text unchanged\n"
     prompt += "   - Example: If annotating 'Leopoldstadt', change 'Leopoldstadt district' to '[[Leopoldstadt|Leopoldstadt district]]'\n"
     prompt += "   \n"
     prompt += "   - CRITICAL ANTI-REDUNDANCY RULE for CLASSIFIED events (marriage/emigration/invention):\n"
-    prompt += "     * If you add a classification (section 6), you MUST REMOVE any existing annotation markers for the classified subject\n"
-    prompt += "     * Examples: Remove [[Z1]] or [[S1 and S2|S1 and S2]] markers when adding invention classification\n"
-    prompt += "     * DO NOT describe technical specifications, features, or characteristics in the description\n"
-    prompt += "     * DO NOT use adjectives that will appear in the classification (e.g., 'mechanical', 'binary', 'relay-based')\n"
-    prompt += "     * INSTEAD: Focus ONLY on the narrative context - where, when, why, with whom\n"
-    prompt += "     * Good (invention): 'In his parents' Berlin apartment, Zuse built the Z1 using scavenged materials.'\n"
-    prompt += "     * Bad (invention): 'Zuse built the Z1, an electrically driven mechanical binary calculating machine...'\n"
-    prompt += "     * The classification will provide ALL technical details - keep description contextual only\n\n"
+    prompt += "     * If this event has a classification (see Event Class above), DO NOT describe technical details\n"
+    prompt += "     * The classification already provides structured metadata - keep description narrative only\n"
+    prompt += "     * Focus ONLY on narrative context: where, when, why, with whom\n"
+    prompt += "     * Good (classified event): 'In his parents' Berlin apartment, Zuse built the Z1 using scavenged materials.'\n"
+    prompt += "     * Bad (classified event): 'Zuse built the Z1, an electrically driven mechanical binary calculating machine...'\n\n"
 
     prompt += "1. LOCATIONS (can be multiple):\n"
     prompt += "   - Identify ALL significant locations for THIS specific event\n"
@@ -1658,13 +1703,12 @@ def build_phase2_prompt(
     prompt += "   - ⚠️ If a term appears multiple times in the description, only annotate the FIRST occurrence\n"
     prompt += "   \n"
     prompt += "   ⛔ CRITICAL PROHIBITION FOR CLASSIFIED EVENTS:\n"
-    prompt += "   - If you are classifying this event (marriage/emigration/invention in section 6), DO NOT annotate the classification subject\n"
-    prompt += "   - Examples of FORBIDDEN annotations when there's a classification:\n"
-    prompt += "     * ❌ Don't annotate 'Z1', 'Z3', 'S1', 'S2' when creating an invention classification for them\n"
-    prompt += "     * ❌ Don't annotate partner's name when creating a marriage classification\n"
-    prompt += "     * ❌ Don't annotate destination country when creating an emigration classification\n"
-    prompt += "   - The classification provides all necessary details - annotations would be redundant and must be REMOVED\n"
-    prompt += "   - When adding a classification, REMOVE any annotations for the classified subject from the description\n"
+    prompt += "   - If this event has a classification (see Event Class above), DO NOT annotate the classification subject\n"
+    prompt += "   - Examples of FORBIDDEN annotations for classified events:\n"
+    prompt += "     * ❌ Don't annotate 'Z1', 'Z3' for invention events - classification provides technical details\n"
+    prompt += "     * ❌ Don't annotate partner's name for marriage events - use INVOLVED_PEOPLE instead\n"
+    prompt += "     * ❌ Don't annotate destination country for emigration events - classification provides locations\n"
+    prompt += "   - The classification provides all necessary details - annotations would be redundant\n"
     prompt += "   \n"
     prompt += "   - Annotate ONLY:\n"
     prompt += "     * Highly technical/specialized concepts (e.g., 'Entscheidungsproblem', 'Difference Engine', 'Analytical Engine', 'transautomatism')\n"
@@ -1733,71 +1777,6 @@ def build_phase2_prompt(
     prompt += "   - Optional: Include wikipedia_url for further reading\n"
     prompt += "   - DEFAULT to 0 annotations - when in doubt, DO NOT annotate\n\n"
 
-    prompt += "6. EVENT_CLASS (optional - classify when event clearly matches one of 3 types):\n"
-    prompt += "   - Identify if this event is one of these specific biographical milestones:\n"
-    prompt += "     1. MARRIAGE_PARTNERSHIP - Wedding, marriage ceremony, or start of documented partnership\n"
-    prompt += "     2. EMIGRATION - Permanent move to different country (not temporary travel)\n"
-    prompt += "     3. INVENTION - Creation of novel device, machine, algorithm, or technique\n"
-    prompt += "   - For other events (births, deaths, education, publications, awards), omit this field\n"
-    prompt += "   - Classification adds structured metadata without replacing description\n\n"
-
-    prompt += "   Type 1: MARRIAGE_PARTNERSHIP\n"
-    prompt += "   When to classify:\n"
-    prompt += "   - Event title/description contains: 'married', 'marriage', 'wed', 'wedding', 'spouse'\n"
-    prompt += "   - Event describes beginning of legal marriage or long-term partnership\n"
-    prompt += "   - ALWAYS classify if event is explicitly about a marriage ceremony or partnership formation\n"
-    prompt += "   \n"
-    prompt += "   Required fields:\n"
-    prompt += "     * subtype: 'marriage' (legal/ceremonial) OR 'partnership' (domestic/romantic without ceremony)\n"
-    prompt += "     * partner: Full name of spouse/partner as written in description\n"
-    prompt += "   Optional fields:\n"
-    prompt += "     * duration: 'until death' (if lifelong), OR specific years (e.g., '17 years'), OR 'brief' if short\n"
-    prompt += "     * children: Integer count if mentioned in description or related materials\n"
-    prompt += "     * characterization: 1-4 words like 'happy marriage', 'political alliance', 'arranged', 'turbulent'\n"
-    prompt += "   \n"
-    prompt += "   Example: Event 'Married Gisela Brandes' → Classify as marriage_partnership\n\n"
-
-    prompt += "   Type 2: EMIGRATION\n"
-    prompt += "   When to classify:\n"
-    prompt += "   - Event describes permanent relocation to different country or major region\n"
-    prompt += "   - Words like: 'emigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge'\n"
-    prompt += "   - NOT temporary: conferences, visits, tours, business trips, wartime displacement\n"
-    prompt += "   - NOT within same country: moving cities within same nation\n"
-    prompt += "   \n"
-    prompt += "   Required fields:\n"
-    prompt += "     * from_location: Origin country/region (e.g., 'Berlin, Germany', 'Austria')\n"
-    prompt += "     * to_location: Destination country/region (e.g., 'United States', 'London, England')\n"
-    prompt += "   Optional fields:\n"
-    prompt += "     * characterization: Context in 1-4 words: 'political exile', 'seeking refuge', 'career opportunity', 'forced'\n"
-    prompt += "   \n"
-    prompt += "   Example: Event 'Emigrated to United States' → Classify as emigration\n\n"
-
-    prompt += "   Type 3: INVENTION\n"
-    prompt += "   When to classify:\n"
-    prompt += "   - Event describes creating/building/patenting a tangible invention, device, machine, or algorithm\n"
-    prompt += "   - Words like: 'invented', 'patented', 'built', 'designed', 'created' + technical artifact\n"
-    prompt += "   - MUST be novel creation with clear technical output (not just ideas)\n"
-    prompt += "   - Examples: computers, engines, tools, chemical processes, algorithms, machines\n"
-    prompt += "   - NOT theories, published papers, mathematical proofs (these lack physical/algorithmic artifact)\n"
-    prompt += "   \n"
-    prompt += "   Required fields:\n"
-    prompt += "     * title: Name of invention (e.g., 'Z3', 'Analytical Engine', 'frequency hopping')\n"
-    prompt += "     * description: What it is and how it works (1 sentence, 15-25 words, technical but accessible)\n"
-    prompt += "   Optional fields:\n"
-    prompt += "     * impact: Historical significance or modern application (1 sentence, 12-20 words)\n"
-    prompt += "   \n"
-    prompt += "   BREVITY REQUIREMENT: Keep both description and impact crisp and focused\n"
-    prompt += "     * Avoid redundant phrases like 'special-purpose', 'implementing', 'rather than'\n"
-    prompt += "     * Focus on the core technical innovation and its primary significance\n"
-    prompt += "   \n"
-    prompt += "   Example: Event 'Completed Z3 computer' → Classify as invention\n\n"
-
-    prompt += "   DETECTION GUIDELINES:\n"
-    prompt += "   - Look for explicit keywords in title/description that signal these event types\n"
-    prompt += "   - When event clearly matches a type (marriage, emigration, invention), classify it\n"
-    prompt += "   - Births, deaths, education, publications, awards typically do NOT get classified\n"
-    prompt += "   - Omit classification only when event doesn't match any of the 3 types\n\n"
-
     # Add icon categories
     prompt += "\n" + "="*60 + "\n"
     prompt += "AVAILABLE ICONS:\n"
@@ -1828,6 +1807,119 @@ def build_phase2_prompt(
     return prompt
 
 
+def _add_related_articles_section(filtered_related_articles: List[Dict[str, Any]]) -> str:
+    """Helper to add related articles section to Phase 2 prompts."""
+    if not filtered_related_articles:
+        return ""
+
+    prompt = "\n" + "="*60 + "\n"
+    prompt += f"RELATED ARTICLES (filtered for this event, top {len(filtered_related_articles)}):\n"
+    prompt += "="*60 + "\n\n"
+
+    for idx, article in enumerate(filtered_related_articles, 1):
+        prompt += f"\nARTICLE {idx}: {article.get('title', 'Unknown')}\n"
+        prompt += f"URL: {article.get('url', '')}\n"
+        prompt += "-"*60 + "\n"
+
+        full_text = article.get("fullText", "")
+        if full_text:
+            truncated = full_text[:1000]
+            prompt += f"{truncated}...\n\n"
+        else:
+            summary = article.get("summary", "")
+            if summary:
+                prompt += f"{summary}\n\n"
+
+    return prompt
+
+
+def build_phase2_prompt_marriage(
+    event_skeleton: EventSkeleton,
+    person_name: str,
+    filtered_related_articles: List[Dict[str, Any]],
+) -> str:
+    """Phase 2 prompt for MARRIAGE_PARTNERSHIP events."""
+    # Get base prompt (sections 0-5)
+    base = build_phase2_prompt_base(event_skeleton, person_name, [])
+
+    # Add marriage-specific guidance
+    prompt = base + "\n\nMARRIAGE EVENT SPECIFIC GUIDANCE:\n"
+    prompt += "="*60 + "\n"
+    prompt += "This event has been classified as MARRIAGE_PARTNERSHIP in Phase 1.\n"
+    prompt += "The classification already contains: partner name, subtype, duration, children, characterization.\n\n"
+    prompt += "Your Phase 2 research should focus on:\n"
+    prompt += "- INVOLVED_PEOPLE: Include the partner's name (already in classification, but also list here)\n"
+    prompt += "- LOCATIONS: Wedding venue city (keep to city level, e.g., 'London' not full venue name)\n"
+    prompt += "- DESCRIPTION: Focus on ceremony details, circumstances, social context\n"
+    prompt += "  * DO NOT repeat partner name, duration, children count (classification has these)\n"
+    prompt += "  * DO NOT annotate the partner's name (use INVOLVED_PEOPLE field instead)\n"
+    prompt += "  * Example: 'The ceremony took place at a small chapel, attended by close family.'\n"
+    prompt += "- ANNOTATIONS: Never annotate person names (including partner)\n\n"
+
+    return prompt + _add_related_articles_section(filtered_related_articles)
+
+
+def build_phase2_prompt_emigration(
+    event_skeleton: EventSkeleton,
+    person_name: str,
+    filtered_related_articles: List[Dict[str, Any]],
+) -> str:
+    """Phase 2 prompt for EMIGRATION events."""
+    # Get base prompt (sections 0-5)
+    base = build_phase2_prompt_base(event_skeleton, person_name, [])
+
+    # Add emigration-specific guidance
+    prompt = base + "\n\nEMIGRATION EVENT SPECIFIC GUIDANCE:\n"
+    prompt += "="*60 + "\n"
+    prompt += "This event has been classified as EMIGRATION in Phase 1.\n"
+    prompt += "The classification already contains: from_location, to_location, characterization.\n\n"
+    prompt += "Your Phase 2 research should focus on:\n"
+    prompt += "- LOCATIONS: Provide TWO locations (departure and arrival cities)\n"
+    prompt += "  * First location: Origin city/region (mark as primary=false)\n"
+    prompt += "  * Second location: Destination city/region (mark as primary=true)\n"
+    prompt += "  * Use city-level names (e.g., 'Berlin, Germany' → 'New York, USA')\n"
+    prompt += "  * name_historic: City name at time of emigration\n"
+    prompt += "  * name_modern: Modern name for geocoding\n"
+    prompt += "- DESCRIPTION: Focus on reasons, journey details, immediate aftermath\n"
+    prompt += "  * DO NOT repeat from/to locations or characterization (classification has these)\n"
+    prompt += "  * DO NOT annotate destination country (classification provides location context)\n"
+    prompt += "  * Example: 'Fleeing political persecution, the family traveled by ship, arriving with few possessions.'\n"
+    prompt += "- INVOLVED_PEOPLE: People who traveled together or helped with migration\n\n"
+
+    return prompt + _add_related_articles_section(filtered_related_articles)
+
+
+def build_phase2_prompt_invention(
+    event_skeleton: EventSkeleton,
+    person_name: str,
+    filtered_related_articles: List[Dict[str, Any]],
+) -> str:
+    """Phase 2 prompt for INVENTION events."""
+    # Get base prompt (sections 0-5)
+    base = build_phase2_prompt_base(event_skeleton, person_name, [])
+
+    # Add invention-specific guidance
+    prompt = base + "\n\nINVENTION EVENT SPECIFIC GUIDANCE:\n"
+    prompt += "="*60 + "\n"
+    prompt += "This event has been classified as INVENTION in Phase 1.\n"
+    prompt += "The classification already contains: invention title, technical description, impact.\n\n"
+    prompt += "Your Phase 2 research should focus on:\n"
+    prompt += "- DESCRIPTION: Focus ONLY on narrative context (where, when, why, with whom)\n"
+    prompt += "  * DO NOT repeat technical specifications or features (classification has these)\n"
+    prompt += "  * DO NOT annotate the invention name (classification provides full technical details)\n"
+    prompt += "  * DO NOT use technical adjectives from classification (e.g., 'mechanical', 'binary', 'relay-based')\n"
+    prompt += "  * Good: 'In his parents' Berlin apartment, Zuse built the Z1 using scavenged materials over two years.'\n"
+    prompt += "  * Bad: 'Zuse built the Z1, a mechanical binary calculating machine using 20,000 parts...'\n"
+    prompt += "  * The classification provides ALL technical details - description is pure narrative context\n"
+    prompt += "- LOCATIONS: Where invention was created/built (workshop, laboratory, city)\n"
+    prompt += "- INVOLVED_PEOPLE: Collaborators, assistants, financial sponsors, advisors\n"
+    prompt += "- ANNOTATIONS: Absolutely DO NOT annotate the invention itself\n"
+    prompt += "  * ❌ FORBIDDEN: Annotating 'Z1', 'Z3', 'S1 and S2', etc.\n"
+    prompt += "  * The classification already explains what the invention is\n\n"
+
+    return prompt + _add_related_articles_section(filtered_related_articles)
+
+
 def research_event_details(
     event_skeleton: EventSkeleton,
     person_name: str,
@@ -1837,6 +1929,7 @@ def research_event_details(
 ) -> EventDetails:
     """
     Research details for a single event with retry logic.
+    Uses event-class-specific prompts for targeted research.
 
     Returns:
         EventDetails with locations, involved_people, sources, icon (NO images - Phase 3)
@@ -1846,10 +1939,21 @@ def research_event_details(
         event_skeleton, all_related_articles, max_articles=5
     )
 
-    # Build prompt
-    prompt = build_phase2_prompt(
-        event_skeleton, person_name, filtered_articles
-    )
+    # Route to event-class-specific prompt builder
+    if event_skeleton.event_class:
+        class_type = event_skeleton.event_class.type
+        if class_type == "marriage_partnership":
+            prompt = build_phase2_prompt_marriage(event_skeleton, person_name, filtered_articles)
+        elif class_type == "emigration":
+            prompt = build_phase2_prompt_emigration(event_skeleton, person_name, filtered_articles)
+        elif class_type == "invention":
+            prompt = build_phase2_prompt_invention(event_skeleton, person_name, filtered_articles)
+        else:
+            # Fallback to base prompt for unknown types
+            prompt = build_phase2_prompt_base(event_skeleton, person_name, filtered_articles)
+    else:
+        # Standard event (no classification)
+        prompt = build_phase2_prompt_base(event_skeleton, person_name, filtered_articles)
 
     # Call AI with retries
     for attempt in range(retry_count + 1):
@@ -1877,19 +1981,7 @@ def research_event_details(
             )
 
             if response.status == "completed" and response.output_parsed:
-                details = response.output_parsed
-
-                # Debug logging for event classification
-                if details.event_class:
-                    class_type = details.event_class.type
-                    if class_type == "marriage_partnership":
-                        print(f"      ✓ Classification: MARRIAGE ({details.event_class.partner})")
-                    elif class_type == "emigration":
-                        print(f"      ✓ Classification: EMIGRATION ({details.event_class.from_location} → {details.event_class.to_location})")
-                    elif class_type == "invention":
-                        print(f"      ✓ Classification: INVENTION ({details.event_class.title})")
-
-                return details
+                return response.output_parsed
 
         except Exception as error:
             error_msg = str(error)
@@ -1929,26 +2021,25 @@ def research_all_event_details(
     model: str,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
-    print("  Event classification system: Active (marriage/partnership, emigration, invention)")
-    details = []
+    # Log classification routing info
+    classified_count = sum(1 for skeleton in event_skeletons if skeleton.event_class)
+    print(f"  Phase 2: Using class-specific prompts for {classified_count}/{len(event_skeletons)} classified events")
 
+    details = []
     for idx, skeleton in enumerate(event_skeletons, 1):
-        # Use ASCII-safe encoding for console output
         safe_title = skeleton.title.encode('ascii', 'replace').decode('ascii')
-        print(f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title}")
+
+        # Show which prompt type is being used
+        prompt_type = "STANDARD"
+        if skeleton.event_class:
+            prompt_type = skeleton.event_class.type.upper()
+
+        print(f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title} [{prompt_type}]")
 
         detail = research_event_details(
             skeleton, person_name, all_related_articles, model
         )
-
         details.append(detail)
-
-    # Summary of classifications
-    classified_count = sum(1 for d in details if d.event_class)
-    if classified_count > 0:
-        print(f"  ✓ Classified {classified_count}/{len(details)} events")
-    else:
-        print(f"  No events classified (all events are standard biographical milestones)")
 
     return details
 
@@ -1997,7 +2088,7 @@ def merge_event_skeleton_and_details(
         event_type_icon=details.event_type_icon or "mdi-calendar",
         chapter=None,  # Chapter assigned in Chapter generation phase
         annotations=annotations,
-        event_class=details.event_class,  # NEW: Pass through classification
+        event_class=skeleton.event_class,  # From Phase 1, not Phase 2
     )
 
 
