@@ -524,6 +524,9 @@
                     on:click={() => chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
                     on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
                   >
+                    {#if chapterAge > 0}
+                      <span class="age-line chapter-age-line"></span>
+                    {/if}
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
                     {#if chapterPeople.length > 0 || chapterLocation}
                       <div class="chapter-meta">
@@ -593,34 +596,49 @@
                     on:click={() => onGoToEvent(idx)}
                     on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onGoToEvent(idx)}
                   >
-                    <button
-                      type="button"
-                      class="dot"
-                      class:active={idx === activeEventIndex}
-                      style="transform: scale({idx === activeEventIndex ? 1.4 : 1.0}); transition: transform 0.25s ease;"
-                      on:click|stopPropagation={() => onGoToEvent(idx)}
-                      aria-label={`Show event ${idx + 1} of ${totalSlides}`}
-                      aria-current={idx === activeEventIndex
-                        ? "true"
-                        : undefined}
-                      tabindex="-1"
-                    >
-                      {#if eventIcons[idx]}
-                        <svg
-                          class="dot-icon"
-                          viewBox="0 0 24 24"
-                          role="img"
-                          aria-hidden="true"
-                        >
-                          <path d={eventIcons[idx]} />
-                        </svg>
+                    <div class="event-box">
+                      {#if eventAge > 0}
+                        <span class="age-line"></span>
                       {/if}
-                    </button>
-                    <div class="timeline-content">
-                      {#if eventYear}
-                        <span class="event-year">{eventYear}</span>
-                      {/if}
-                      <span class="event-title">{eventTitle}</span>
+                      <button
+                        type="button"
+                        class="dot"
+                        class:active={idx === activeEventIndex}
+                        style="transform: scale({idx === activeEventIndex ? 1.4 : 1.0}); transition: transform 0.25s ease;"
+                        on:click|stopPropagation={() => onGoToEvent(idx)}
+                        aria-label={`Show event ${idx + 1} of ${totalSlides}`}
+                        aria-current={idx === activeEventIndex
+                          ? "true"
+                          : undefined}
+                        tabindex="-1"
+                      >
+                        {#if eventIcons[idx]}
+                          <svg
+                            class="dot-icon"
+                            viewBox="0 0 24 24"
+                            role="img"
+                            aria-hidden="true"
+                          >
+                            <path d={eventIcons[idx]} />
+                          </svg>
+                        {/if}
+                      </button>
+                      <div class="timeline-content">
+                        {#if eventYear || eventAge > 0}
+                          <span class="event-metadata">
+                            {#if eventYear}
+                              <span class="event-year">{eventYear}</span>
+                            {/if}
+                            {#if eventAge > 0}
+                              {#if eventYear}
+                                <span class="metadata-separator">•</span>
+                              {/if}
+                              <span class="age-label">{$_("story.age", { age: eventAge })}</span>
+                            {/if}
+                          </span>
+                        {/if}
+                        <span class="event-title">{eventTitle}</span>
+                      </div>
                     </div>
                   </div>
                 {/each}
@@ -1019,6 +1037,71 @@
     opacity: 0;
     animation: fadeIn 0.4s ease forwards;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100);
+    position: relative;
+  }
+
+  .event-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    position: relative;
+  }
+
+  .age-line {
+    position: absolute;
+    right: 100%;
+    height: 1px;
+    background: linear-gradient(
+      to left,
+      rgba(148, 163, 184, 0.4) 0%,
+      rgba(148, 163, 184, 0.15) 70%,
+      transparent 100%
+    );
+    width: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
+    pointer-events: none;
+  }
+
+  .event-metadata {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    line-height: 1.2;
+  }
+
+  .metadata-separator {
+    font-size: 0.6rem;
+    color: rgba(148, 163, 184, 0.5);
+    font-weight: 400;
+  }
+
+  .age-label {
+    font-size: 0.7rem;
+    color: rgba(148, 163, 184, 0.75);
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: var(--story-body-font, Inter, sans-serif);
+    letter-spacing: 0.01em;
+  }
+
+  @container (max-width: 600px) {
+    .age-label {
+      font-size: 0.65rem;
+    }
+
+    .metadata-separator {
+      font-size: 0.55rem;
+    }
+  }
+
+  @container (max-width: 400px) {
+    .age-label {
+      font-size: 0.6rem;
+    }
+
+    .metadata-separator {
+      font-size: 0.5rem;
+    }
   }
 
   .timeline-item.clickable {
@@ -1128,6 +1211,23 @@
       rgba(var(--primary-rgb, 94, 208, 255), 0.08) 0%,
       transparent 100%
     );
+    position: relative;
+  }
+
+  .chapter-age-line {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2px;
+    background: linear-gradient(
+      to left,
+      var(--story-primary, rgba(148, 163, 184, 0.6)) 0%,
+      rgba(148, 163, 184, 0.25) 70%,
+      transparent 100%
+    );
+    width: calc(var(--event-age) * (100cqw - 200px) / 100 - 0.5rem);
+    pointer-events: none;
   }
 
   .chapter-header.clickable {
