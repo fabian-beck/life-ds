@@ -691,6 +691,21 @@
     gap: 2rem;
   }
 
+  /* Make carousel full-width on mobile */
+  .header-container > :global(.meta-story-carousel) {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    width: calc(100% + 3rem);
+  }
+
+  @media (min-width: 768px) {
+    .header-container > :global(.meta-story-carousel) {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
+  }
+
   .landing-hero {
     display: flex;
     flex-direction: column;

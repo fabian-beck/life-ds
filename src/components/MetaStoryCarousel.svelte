@@ -278,14 +278,24 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: 0;
     background: linear-gradient(
       135deg,
       rgba(15, 23, 42, 0.95) 0%,
       rgba(30, 41, 59, 0.95) 100%
     );
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    border-left: none;
+    border-right: none;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .carousel-container {
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
   }
 
   .carousel-track {
