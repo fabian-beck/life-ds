@@ -161,7 +161,7 @@
                 {#each storyPersons as person (person.id)}
                   <button
                     class="portrait-column"
-                    on:click={() => onSelectPerson({ detail: person.id })}
+                    on:click={() => onSelectPerson(person.id)}
                     aria-label={`View ${displayName(person.name)}'s story`}
                   >
                     {#if person?.portrait?.image}
