@@ -957,7 +957,10 @@ def search_wikimedia_commons(
 
     for page_id, page_data in pages.items():
         image_info = page_data.get("imageinfo", [{}])[0]
-        url = image_info.get("url")
+
+        # For SVGs, prefer thumburl (PNG render) over url (raw SVG)
+        # thumburl is provided when iiurlwidth is set
+        url = image_info.get("thumburl") or image_info.get("url")
 
         if not url:
             continue

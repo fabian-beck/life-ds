@@ -315,11 +315,23 @@ export function getThumbnailUrl(imageUrl, width = 400) {
 
   // Optimize Wikimedia Commons images
   if (imageUrl.includes("upload.wikimedia.org/wikipedia/commons/")) {
+    // Check if URL is already a thumbnail
+    if (imageUrl.includes("/thumb/")) {
+      // URL is already a thumbnail - just adjust the size
+      // Example: .../thumb/a/b/File.svg/800px-File.svg.png -> .../thumb/a/b/File.svg/400px-File.svg.png
+      return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${width}px-$1`);
+    }
+
+    // Convert full URL to thumbnail URL
     const parts = imageUrl.split("/wikipedia/commons/");
     if (parts.length === 2) {
       const [base, path] = parts;
       const filename = path.split("/").pop();
-      return `${base}/wikipedia/commons/thumb/${path}/${width}px-${filename}`;
+      // For SVG files, append .png to get the rasterized version
+      const thumbFilename = filename.toLowerCase().endsWith('.svg')
+        ? `${filename}.png`
+        : filename;
+      return `${base}/wikipedia/commons/thumb/${path}/${width}px-${thumbFilename}`;
     }
   }
 
