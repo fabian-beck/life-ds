@@ -731,6 +731,11 @@
     z-index: 0;
   }
 
+  /* Apply filter only to the MapLibre canvas, not markers */
+  :global(.map-container .maplibregl-canvas) {
+    filter: contrast(1.3) brightness(1.4) saturate(1.2);
+  }
+
   .map-error {
     position: absolute;
     bottom: 1rem;
