@@ -7,6 +7,9 @@
     mdiChevronDown,
     mdiAccountOutline,
     mdiMapMarkerOutline,
+    mdiLightbulbOnOutline,
+    mdiRing,
+    mdiBook,
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { fade } from "svelte/transition";
@@ -80,13 +83,37 @@
     return mdiIcons[iconKey] || null;
   }
 
-  // Build icon array from event_type_icon in eventSlides, with fallback to indicatorIcons
+  // Helper function to get icon for event_class
+  function getEventClassIcon(eventClass) {
+    if (!eventClass?.type) return null;
+
+    switch (eventClass.type) {
+      case 'invention':
+        return mdiLightbulbOnOutline;
+      case 'marriage_partnership':
+        return mdiRing;
+      case 'publication':
+        return mdiBook;
+      default:
+        return null;
+    }
+  }
+
+  // Build icon array from event_class first, then event_type_icon, with fallback to indicatorIcons
   $: eventIcons = eventSlides.map((event, idx) => {
+    // Priority 1: event_class icon
+    if (event.event_class) {
+      const classIcon = getEventClassIcon(event.event_class);
+      if (classIcon) return classIcon;
+    }
+
+    // Priority 2: event_type_icon
     if (event.event_type_icon) {
       const iconPath = resolveIconPath(event.event_type_icon);
       if (iconPath) return iconPath;
     }
-    // Fallback to indicatorIcons if event_type_icon not available or invalid
+
+    // Priority 3: fallback to indicatorIcons
     return indicatorIcons[idx] || null;
   });
   let expandedContainerElement = null;

@@ -314,7 +314,7 @@
     return mappedIndex;
   })();
 
-  // Determine if current slide is a chapter, conclusion, or invention slide (for map fade)
+  // Determine if current slide is a chapter, conclusion, invention, or publication slide (for map fade)
   $: isChapterSlide = (() => {
     if (activeIndex < 0 || activeIndex >= slides.length) return false;
     const slide = slides[activeIndex];
@@ -323,8 +323,8 @@
     // Fade map for chapter/conclusion slides
     if (slideType === "chapter" || slideType === "conclusion") return true;
 
-    // Also fade map for invention events
-    if (slideType === "event" && slide?.event_class?.type === "invention") return true;
+    // Also fade map for invention and publication events
+    if (slideType === "event" && (slide?.event_class?.type === "invention" || slide?.event_class?.type === "publication")) return true;
 
     return false;
   })();

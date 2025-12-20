@@ -9,6 +9,7 @@
     mdiLightbulbOnOutline,
     mdiRing,
     mdiStar,
+    mdiBook,
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { joinWithSeparator } from "../utils/helpers.js";
@@ -92,6 +93,8 @@
         return mdiLightbulbOnOutline;
       case 'marriage_partnership':
         return mdiRing;
+      case 'publication':
+        return mdiBook;
       default:
         return mdiStar;
     }
@@ -304,7 +307,7 @@
       {/if}
     </div>
     <h2>{slide.title}</h2>
-    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== 'invention' && slide.event_class?.type !== 'marriage_partnership'}
+    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== 'invention' && slide.event_class?.type !== 'marriage_partnership' && slide.event_class?.type !== 'publication'}
       <div class="event-class-badge">
         <svg
           class="icon icon-inline"
@@ -404,6 +407,33 @@
           {/if}
           {#if slide.event_class.impact}
             <div class="invention-impact">
+              <span class="impact-label">Impact:</span><span class="impact-text"> {slide.event_class.impact}</span>
+            </div>
+          {/if}
+        </div>
+      {/if}
+      {#if slide.event_class?.type === 'publication'}
+        <div class="publication-info-box">
+          <div class="publication-header">
+            <svg
+              class="icon publication-icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiBook} />
+            </svg>
+            <h3 class="publication-title">{slide.event_class.title}</h3>
+          </div>
+          <div class="publication-meta">
+            <span class="publication-type-badge">{slide.event_class.publication_type || 'Publication'}</span>
+            {#if slide.event_class.significance}
+              <span class="publication-separator">·</span>
+              <span class="publication-significance">{slide.event_class.significance}</span>
+            {/if}
+          </div>
+          {#if slide.event_class.impact}
+            <div class="publication-impact">
               <span class="impact-label">Impact:</span><span class="impact-text"> {slide.event_class.impact}</span>
             </div>
           {/if}
@@ -697,6 +727,91 @@
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .publication-info-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 3px solid var(--story-secondary, #38bdf8);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
+  }
+
+  .publication-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .publication-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: var(--story-secondary, #38bdf8);
+    flex-shrink: 0;
+  }
+
+  .publication-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--story-primary, #f8fafc);
+    font-family: var(--story-heading-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .publication-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.9);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .publication-type-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: var(--story-secondary, #38bdf8);
+    letter-spacing: 0.02em;
+  }
+
+  .publication-separator {
+    color: rgba(148, 163, 184, 0.6);
+    font-size: 0.9em;
+  }
+
+  .publication-significance {
+    font-style: italic;
+    color: rgba(226, 232, 240, 0.85);
+    text-transform: capitalize;
+  }
+
+  .publication-impact {
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    line-height: 1.5;
   }
 
   .marriage-pretext {
@@ -1191,6 +1306,23 @@
 
     .impact-text {
       font-size: 0.95rem;
+    }
+
+    .publication-info-box {
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .publication-title {
+      font-size: 1.25rem;
+    }
+
+    .publication-meta {
+      font-size: 0.95rem;
+    }
+
+    .publication-type-badge {
+      font-size: 0.8rem;
     }
 
     .marriage-pretext {
