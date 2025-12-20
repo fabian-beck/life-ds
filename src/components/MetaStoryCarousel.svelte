@@ -96,6 +96,12 @@
     return uniquePersonIds
       .map((id) => persons.find((p) => p.id === id))
       .filter(Boolean)
+      .sort((a, b) => {
+        // Parse birth years from birthDate (format: YYYY-MM-DD or YYYY)
+        const yearA = a.birthDate ? parseInt(a.birthDate.split("-")[0]) : Infinity;
+        const yearB = b.birthDate ? parseInt(b.birthDate.split("-")[0]) : Infinity;
+        return yearA - yearB;
+      })
       .slice(0, 6); // Limit to 6 persons for display
   }
 
