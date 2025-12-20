@@ -19,6 +19,7 @@ import { displayName } from "./utils/helpers.js";
 
   // Initial registry (will be replaced with language-specific version)
   let registry = { people: [] };
+  let metaStories = [];
 
   // Load language-specific registry
   async function loadRegistry(language) {
@@ -40,8 +41,39 @@ import { displayName } from "./utils/helpers.js";
     }
   }
 
-  // Reload registry when language changes
+  // Load meta stories with detailed data
+  async function loadMetaStories() {
+    try {
+      const registryModule = await import("../data/meta_stories.json");
+      const metaStoryRegistry = registryModule.default?.meta_stories || [];
+
+      // Load detailed data for each meta story
+      const detailedStories = await Promise.all(
+        metaStoryRegistry.map(async (story) => {
+          try {
+            const detailModule = await import(`../data/meta_stories/${story.id}.json`);
+            const detailData = detailModule.default;
+            return {
+              ...story,
+              person_ids: detailData.meta_story?.person_ids || []
+            };
+          } catch (error) {
+            console.warn(`Failed to load details for meta story ${story.id}:`, error);
+            return story;
+          }
+        })
+      );
+
+      metaStories = detailedStories;
+    } catch (error) {
+      console.warn("Failed to load meta stories:", error);
+      metaStories = [];
+    }
+  }
+
+  // Reload registry when language changes and load meta stories on mount
   onMount(() => {
+    loadMetaStories();
     const unsubscribe = currentLanguage.subscribe((lang) => {
       loadRegistry(lang);
     });
@@ -434,6 +466,7 @@ import { displayName } from "./utils/helpers.js";
   {:else}
     <Landing
       entries={registryEntries}
+      {metaStories}
       getSummary={entrySummary}
       getStyle={styleFor}
       onSelectPerson={handleSelectPerson}

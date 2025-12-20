@@ -5,8 +5,10 @@
   import { push, location } from "svelte-spa-router";
   import { clamp, displayName } from "../utils/helpers.js";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
+  import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
 
   export let entries = [];
+  export let metaStories = [];
   export let getSummary = () => "";
   export let getStyle = () => ({});
   export let onSelectPerson = () => {};
@@ -15,6 +17,7 @@
   let activeTags = new Set();
   let searchQuery = "";
   let loadedImages = new Set();
+  let activeMetaStoryFilter = null;
 
   function handleImageLoad(entryId) {
     loadedImages.add(entryId);
@@ -160,49 +163,55 @@
     return birthAnniversary || deathAnniversary;
   }
 
-  // Filter and sort entries based on active tags, search query, and last updated date
+  // Filter and sort entries based on active tags, search query, meta story filter, and last updated date
   $: filteredEntries = (() => {
     let result = entries;
 
-    // Apply tag filters
-    if (activeTags.size > 0) {
-      result = result.filter((entry) => {
-        if (!Array.isArray(entry.primaryRoles)) return false;
-        return entry.primaryRoles.some((role) =>
-          activeTags.has(normalizeTag(role))
-        );
-      });
-    }
+    // Apply meta story filter first (takes precedence)
+    if (activeMetaStoryFilter) {
+      const metaStoryPersonIds = new Set(activeMetaStoryFilter.person_ids || []);
+      result = result.filter((entry) => metaStoryPersonIds.has(entry.id));
+    } else {
+      // Apply tag filters only if no meta story filter is active
+      if (activeTags.size > 0) {
+        result = result.filter((entry) => {
+          if (!Array.isArray(entry.primaryRoles)) return false;
+          return entry.primaryRoles.some((role) =>
+            activeTags.has(normalizeTag(role))
+          );
+        });
+      }
 
-    // Apply search query filter
-    if (searchQuery.trim()) {
-      const query = searchQuery.trim().toLowerCase();
-      result = result.filter((entry) => {
-        // Search in name
-        const name = displayName(entry.name || "").toLowerCase();
-        if (name.includes(query)) return true;
+      // Apply search query filter only if no meta story filter is active
+      if (searchQuery.trim()) {
+        const query = searchQuery.trim().toLowerCase();
+        result = result.filter((entry) => {
+          // Search in name
+          const name = displayName(entry.name || "").toLowerCase();
+          if (name.includes(query)) return true;
 
-        // Search in roles
-        if (Array.isArray(entry.primaryRoles)) {
-          if (
-            entry.primaryRoles.some((role) =>
-              role.toLowerCase().includes(query)
-            )
-          ) {
-            return true;
+          // Search in roles
+          if (Array.isArray(entry.primaryRoles)) {
+            if (
+              entry.primaryRoles.some((role) =>
+                role.toLowerCase().includes(query)
+              )
+            ) {
+              return true;
+            }
           }
-        }
 
-        // Search in summary
-        const summary = (
-          entry.summary ||
-          getSummary(entry) ||
-          ""
-        ).toLowerCase();
-        if (summary.includes(query)) return true;
+          // Search in summary
+          const summary = (
+            entry.summary ||
+            getSummary(entry) ||
+            ""
+          ).toLowerCase();
+          if (summary.includes(query)) return true;
 
-        return false;
-      });
+          return false;
+        });
+      }
     }
 
     // Sort by anniversary first, then by lastUpdated
@@ -244,6 +253,18 @@
   function handleSelect(id) {
     if (!id) return;
     onSelectPerson({ detail: id });
+  }
+
+  function handleFilterByMetaStory(metaStory) {
+    // Toggle filter - if same meta story is clicked again, clear the filter
+    if (activeMetaStoryFilter?.id === metaStory.id) {
+      activeMetaStoryFilter = null;
+    } else {
+      activeMetaStoryFilter = metaStory;
+    }
+    // Clear search query and tag filters when filtering by meta story
+    searchQuery = "";
+    activeTags = new Set();
   }
 
   function summaryFor(entry) {
@@ -429,7 +450,23 @@
           </button>
         {/if}
       </div>
-      {#if topTags.length > 0}
+      {#if activeMetaStoryFilter}
+        <div class="tag-filters">
+          <div class="tag-filters-header">
+            <span class="filter-label"
+              >{$_("landing.filtered_by")}: {activeMetaStoryFilter.title}</span
+            >
+            <button
+              class="clear-filters"
+              on:click={() => {
+                activeMetaStoryFilter = null;
+              }}
+            >
+              {$_("landing.clear_all")}
+            </button>
+          </div>
+        </div>
+      {:else if topTags.length > 0}
         <div class="tag-filters">
           <div class="tag-filters-header">
             <span class="filter-label">{$_("landing.filter_by_role")}</span>
@@ -463,6 +500,15 @@
       {/if}
     </div>
   </div>
+
+  <MetaStoryCarousel
+    {metaStories}
+    persons={entries}
+    getStyle={getStyle}
+    onSelectPerson={handleSelect}
+    onFilterByMetaStory={handleFilterByMetaStory}
+  />
+
   <div class="landing-grid">
     {#if filteredEntries.length > 0}
       {#each filteredEntries as entry (entry.id)}
