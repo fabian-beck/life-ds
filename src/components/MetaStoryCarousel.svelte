@@ -101,8 +101,7 @@
         const yearA = a.birthDate ? parseInt(a.birthDate.split("-")[0]) : Infinity;
         const yearB = b.birthDate ? parseInt(b.birthDate.split("-")[0]) : Infinity;
         return yearA - yearB;
-      })
-      .slice(0, 6); // Limit to 6 persons for display
+      });
   }
 
   function getThumbnailUrl(imageUrl, width = 80) {
