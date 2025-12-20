@@ -11,6 +11,7 @@
   import ConclusionSlide from "./ConclusionSlide.svelte";
   import StoryMap from "./StoryMap.svelte";
   import Timeline from "./Timeline.svelte";
+  import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import { _, currentLanguage } from "../stores/language";
   import {
     clamp,
@@ -49,6 +50,7 @@
   let visiblePersonInfo = null;
   let visibleSources = null;
   let visibleAnnotation = null;
+  let showAIModal = false;
 
   // Network modal state - reactive to URL query parameter
   $: showNetworkModal = $queryParams.network;
@@ -872,6 +874,14 @@
     replace(newUrl);
   }
 
+  function openAIModal() {
+    showAIModal = true;
+  }
+
+  function closeAIModal() {
+    showAIModal = false;
+  }
+
   function handleTimelineExpandChange(event) {
     const expanded = event.detail.expanded;
 
@@ -1019,6 +1029,28 @@
   </header>
 
   <div class="slides-wrapper" class:map-enabled={hasMapData}>
+    <button
+      class="ai-label"
+      on:click={openAIModal}
+      aria-label={$_("landing.learn_about_ai")}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>{$_("landing.ai_generated_label")}</span>
+    </button>
     <main
       class="slides"
       class:initial-loading={!initialScrollDone && activeIndex > 0}
@@ -1192,6 +1224,8 @@
   />
 {/if}
 
+<AIDisclaimerModal show={showAIModal} onClose={closeAIModal} />
+
 <style>
   .story-view {
     display: flex;
@@ -1208,6 +1242,44 @@
 
   .story-view:focus {
     outline: none;
+  }
+
+  .ai-label {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.375rem;
+    background: transparent;
+    border: none;
+    color: rgba(251, 191, 36, 0.7);
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .ai-label:hover {
+    background: rgba(251, 191, 36, 0.12);
+    color: rgba(251, 191, 36, 0.95);
+  }
+
+  .ai-label svg {
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+
+  /* Adjust AI label position for landscape mobile */
+  @media (max-height: 450px) {
+    .ai-label {
+      top: auto;
+      bottom: 0.5rem;
+      left: 0.5rem;
+    }
   }
 
   /* Loading skeleton styles */
