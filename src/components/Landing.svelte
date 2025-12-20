@@ -732,6 +732,16 @@
     grid-auto-rows: 1fr;
   }
 
+  /* Full-width cards only in true single column mode */
+  @media (max-width: 580px) {
+    .landing-grid {
+      gap: 0;
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      width: calc(100% + 3rem);
+    }
+  }
+
   .landing-empty {
     margin: 0;
     font-size: 1rem;
@@ -1133,6 +1143,14 @@
   .tag-chip.active .tag-count {
     background: rgba(56, 189, 248, 0.3);
     color: #e0f2fe;
+  }
+
+  @media (max-width: 580px) {
+    .person-card {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
   }
 
   @media (max-width: 480px) {
