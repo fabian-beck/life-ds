@@ -1,0 +1,764 @@
+{
+  "dataset": "meta_story",
+  "created_on": "2025-12-20T21:19:24.130195+01:00",
+  "meta_story": {
+    "id": "organic_shapes_in_architecture",
+    "title": "Building Like Nature",
+    "tagline": "Curves, canopies, living geometries",
+    "description": "Organic architecture is the recurring human urge to make buildings feel grown rather than assembled—shaped by gravity, wind, light, and the logic of living forms. Instead of treating nature as decoration, its practitioners translate natural principles into structure: branching, catenary curves, shells, membranes, and terrain-like surfaces.\n\nThis meta-story follows three architects who, in different eras and with different motivations, pushed architecture away from the rigid line and toward the continuous curve. From Gaudí’s stone-and-tile ecosystems, through Frei Otto’s experimentally proven “minimum” forms, to Zaha Hadid’s digitally enabled flows, organic shape becomes both an aesthetic language and a structural strategy. Hundertwasser adds a parallel, humanist revolt: a deliberately irregular, vegetal city that rejects the tyranny of straightness.\n\nTogether they show that “organic” is not one style but a family of methods—craft, experiment, computation, and ecological imagination—united by a belief that buildings can participate in nature’s geometries rather than resist them.",
+    "person_ids": [
+      "antoni_gaud",
+      "frei_otto",
+      "friedensreich_hundertwasser",
+      "zaha_hadid"
+    ],
+    "date_range_start": "1852",
+    "date_range_end": "2016",
+    "lastUpdated": "2025-12-20T21:19:24.130195+01:00"
+  },
+  "subtopics": [
+    {
+      "id": "nature_as_generator",
+      "title": "Nature as Generator",
+      "description": "Organic shape begins when nature isn’t referenced but used as a generative model—branching, erosion, growth, and curvature become design rules rather than motifs.",
+      "person_ids": [
+        "antoni_gaud",
+        "zaha_hadid",
+        "friedensreich_hundertwasser"
+      ]
+    },
+    {
+      "id": "form_found_structures",
+      "title": "Form-Finding Structures",
+      "description": "Here the ‘organic’ look is the consequence of physics: minimal surfaces, catenaries, and tensile equilibria produce shapes that feel inevitable—like webs, bones, or leaves.",
+      "person_ids": [
+        "frei_otto",
+        "antoni_gaud"
+      ]
+    },
+    {
+      "id": "anti_straight_line_city",
+      "title": "Against the Straight Line",
+      "description": "Organic architecture also becomes a cultural critique—an argument that human habitats should accept irregularity, comfort, and vegetation as core urban values.",
+      "person_ids": [
+        "friedensreich_hundertwasser",
+        "zaha_hadid"
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "craft_to_biomorphism",
+      "title": "Crafted Biomorphism (1852-1926)",
+      "date_start": "1852",
+      "date_start_precision": "year",
+      "date_end": "1926",
+      "date_end_precision": "year",
+      "bridge_statement": "Before computers and plastics, organic shape had to be argued in stone, tile, and gravity—made believable by craft and structural intuition.",
+      "person_events": [
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1852-06-25",
+          "event_date_precision": "day",
+          "event_title": "Birth in Baix Camp",
+          "event_index": 0
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1868",
+          "event_date_precision": "year",
+          "event_title": "Moved to Barcelona",
+          "event_index": 1
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1875",
+          "event_date_precision": "year",
+          "event_title": "Completed military service",
+          "event_index": 2
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1878",
+          "event_date_precision": "year",
+          "event_title": "Qualified as an architect",
+          "event_index": 3
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1878",
+          "event_date_precision": "year",
+          "event_title": "Won early public commissions",
+          "event_index": 4
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1883",
+          "event_date_precision": "year",
+          "event_title": "Built Casa Vicens",
+          "event_index": 5
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1883",
+          "event_date_precision": "year",
+          "event_title": "Took over Sagrada Família",
+          "event_index": 6
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1886",
+          "event_date_precision": "year",
+          "event_title": "Expanded work with Güell",
+          "event_index": 7
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1894",
+          "event_date_precision": "year",
+          "event_title": "Suffered fasting-related illness",
+          "event_index": 8
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1899",
+          "event_date_precision": "year",
+          "event_title": "Joined Catholic artistic circles",
+          "event_index": 9
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1900",
+          "event_date_precision": "year",
+          "event_title": "Won Casa Calvet prize",
+          "event_index": 10
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1900",
+          "event_date_precision": "year",
+          "event_title": "Developed Park Güell project",
+          "event_index": 11
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1904",
+          "event_date_precision": "year",
+          "event_title": "Created landmark urban houses",
+          "event_index": 12
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1910",
+          "event_date_precision": "year",
+          "event_title": "Exhibited work in Paris",
+          "event_index": 13
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1915",
+          "event_date_precision": "year",
+          "event_title": "Focused entirely on Sagrada Família",
+          "event_index": 14
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1925-05-31",
+          "event_date_precision": "day",
+          "event_title": "Birth in Siegmar",
+          "event_index": 0
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1926-06-07",
+          "event_date_precision": "day",
+          "event_title": "Tram accident and death",
+          "event_index": 15
+        }
+      ]
+    },
+    {
+      "id": "experiments_in_lightness",
+      "title": "Experiments in Lightness (1925-2000)",
+      "date_start": "1925",
+      "date_start_precision": "year",
+      "date_end": "2000",
+      "date_end_precision": "year",
+      "bridge_statement": "Mid-century builders start letting materials and forces ‘draw’ the building, trading monumental mass for membranes, nets, and living irregularity.",
+      "person_events": [
+        {
+          "person_id": "frei_otto",
+          "event_date": "1925-05-31",
+          "event_date_precision": "day",
+          "event_title": "Birth in Siegmar",
+          "event_index": 0
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1926-06-07",
+          "event_date_precision": "day",
+          "event_title": "Tram accident and death",
+          "event_index": 15
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1928-12-15",
+          "event_date_precision": "day",
+          "event_title": "Birth in Vienna",
+          "event_index": 0
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1929",
+          "event_date_precision": "year",
+          "event_title": "Father dies; early formation",
+          "event_index": 1
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1938",
+          "event_date_precision": "year",
+          "event_title": "Survives Nazi persecution",
+          "event_index": 2
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1943",
+          "event_date_precision": "year",
+          "event_title": "Starts studies and war service",
+          "event_index": 1
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1945",
+          "event_date_precision": "year",
+          "event_title": "POW design work in Chartres",
+          "event_index": 2
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1948",
+          "event_date_precision": "year",
+          "event_title": "Resumes Berlin studies and US scholarship",
+          "event_index": 3
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1948",
+          "event_date_precision": "year",
+          "event_title": "Finishes school; adopts artist name",
+          "event_index": 3
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1949-04",
+          "event_date_precision": "month",
+          "event_title": "Travel apprenticeship abroad",
+          "event_index": 4
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1950-10-31",
+          "event_date_precision": "day",
+          "event_title": "Birth in Baghdad",
+          "event_index": 0
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1952",
+          "event_date_precision": "year",
+          "event_title": "Opens Berlin office and marries",
+          "event_index": 4
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1952",
+          "event_date_precision": "year",
+          "event_title": "Breakthrough exhibitions in Europe",
+          "event_index": 5
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1954",
+          "event_date_precision": "year",
+          "event_title": "Publishes \"Das hängende Dach\" and teaches abroad",
+          "event_index": 5
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1957",
+          "event_date_precision": "year",
+          "event_title": "Founds lightweight lab and builds Sternwellenzelt",
+          "event_index": 6
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1957",
+          "event_date_precision": "year",
+          "event_title": "Normandy farm and Hamburg rupture",
+          "event_index": 6
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1960",
+          "event_date_precision": "year",
+          "event_title": "Sent to European boarding schools",
+          "event_index": 1
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1961",
+          "event_date_precision": "year",
+          "event_title": "Launches biology and lightweight institutes",
+          "event_index": 7
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1961",
+          "event_date_precision": "year",
+          "event_title": "Japan recognition and renaming",
+          "event_index": 7
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1962",
+          "event_date_precision": "year",
+          "event_title": "Venice Biennale retrospective success",
+          "event_index": 8
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1966",
+          "event_date_precision": "year",
+          "event_title": "Creates Waldviertel refuge",
+          "event_index": 9
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1967",
+          "event_date_precision": "year",
+          "event_title": "German Pavilion at Expo 67, Montreal",
+          "event_index": 8
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1968",
+          "event_date_precision": "year",
+          "event_title": "Spans Munich Olympic site with tensile roofs",
+          "event_index": 9
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1968",
+          "event_date_precision": "year",
+          "event_title": "Studies mathematics in Beirut",
+          "event_index": 2
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1969",
+          "event_date_precision": "year",
+          "event_title": "Leads major research on wide‑span and natural structures",
+          "event_index": 10
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1972",
+          "event_date_precision": "year",
+          "event_title": "Moves to London, enrolls at AA",
+          "event_index": 3
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1973",
+          "event_date_precision": "year",
+          "event_title": "Begins New Zealand eco-project",
+          "event_index": 10
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1975",
+          "event_date_precision": "year",
+          "event_title": "Launches 'Tree Tenant' actions",
+          "event_index": 11
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1976",
+          "event_date_precision": "year",
+          "event_title": "Professor at University of Stuttgart",
+          "event_index": 11
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1977",
+          "event_date_precision": "year",
+          "event_title": "Graduates with Malevich’s Tektonik",
+          "event_index": 4
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1977",
+          "event_date_precision": "year",
+          "event_title": "Joins Office for Metropolitan Architecture",
+          "event_index": 5
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1980",
+          "event_date_precision": "year",
+          "event_title": "Islamic lightweight roofs with Mahmoud Bodo Rasch",
+          "event_index": 12
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1980",
+          "event_date_precision": "year",
+          "event_title": "Founds Zaha Hadid Architects",
+          "event_index": 6
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1982",
+          "event_date_precision": "year",
+          "event_title": "Architectural turn and Hundertwasserhaus",
+          "event_index": 12
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1983",
+          "event_date_precision": "year",
+          "event_title": "Wins The Peak competition",
+          "event_index": 7
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1984-12",
+          "event_date_precision": "month",
+          "event_title": "Hainburg Au environmental protest",
+          "event_index": 13
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1988",
+          "event_date_precision": "year",
+          "event_title": "Featured in MoMA Deconstructivism show",
+          "event_index": 8
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1991-04-09",
+          "event_date_precision": "day",
+          "event_title": "KunstHausWien opens",
+          "event_index": 14
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1993",
+          "event_date_precision": "year",
+          "event_title": "Completes Vitra Fire Station",
+          "event_index": 9
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "2000",
+          "event_date_precision": "year",
+          "event_title": "Japanese Pavilion at Expo 2000, Hannover",
+          "event_index": 13
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "2000-02-19",
+          "event_date_precision": "day",
+          "event_title": "Death aboard ocean liner",
+          "event_index": 15
+        }
+      ]
+    },
+    {
+      "id": "digital_flows_iconic_curves",
+      "title": "Digital Flows, Iconic Curves (1950-2016)",
+      "date_start": "1950",
+      "date_start_precision": "year",
+      "date_end": "2016",
+      "date_end_precision": "year",
+      "bridge_statement": "When design tools catch up to imagination, curvature scales up—organic form becomes city-sized, precise, and globally legible.",
+      "person_events": [
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1950-10-31",
+          "event_date_precision": "day",
+          "event_title": "Birth in Baghdad",
+          "event_index": 0
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1952",
+          "event_date_precision": "year",
+          "event_title": "Opens Berlin office and marries",
+          "event_index": 4
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1952",
+          "event_date_precision": "year",
+          "event_title": "Breakthrough exhibitions in Europe",
+          "event_index": 5
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1954",
+          "event_date_precision": "year",
+          "event_title": "Publishes \"Das hängende Dach\" and teaches abroad",
+          "event_index": 5
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1957",
+          "event_date_precision": "year",
+          "event_title": "Founds lightweight lab and builds Sternwellenzelt",
+          "event_index": 6
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1957",
+          "event_date_precision": "year",
+          "event_title": "Normandy farm and Hamburg rupture",
+          "event_index": 6
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1960",
+          "event_date_precision": "year",
+          "event_title": "Sent to European boarding schools",
+          "event_index": 1
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1961",
+          "event_date_precision": "year",
+          "event_title": "Launches biology and lightweight institutes",
+          "event_index": 7
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1961",
+          "event_date_precision": "year",
+          "event_title": "Japan recognition and renaming",
+          "event_index": 7
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1962",
+          "event_date_precision": "year",
+          "event_title": "Venice Biennale retrospective success",
+          "event_index": 8
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1966",
+          "event_date_precision": "year",
+          "event_title": "Creates Waldviertel refuge",
+          "event_index": 9
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1967",
+          "event_date_precision": "year",
+          "event_title": "German Pavilion at Expo 67, Montreal",
+          "event_index": 8
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1968",
+          "event_date_precision": "year",
+          "event_title": "Spans Munich Olympic site with tensile roofs",
+          "event_index": 9
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1968",
+          "event_date_precision": "year",
+          "event_title": "Studies mathematics in Beirut",
+          "event_index": 2
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1969",
+          "event_date_precision": "year",
+          "event_title": "Leads major research on wide‑span and natural structures",
+          "event_index": 10
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1972",
+          "event_date_precision": "year",
+          "event_title": "Moves to London, enrolls at AA",
+          "event_index": 3
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1973",
+          "event_date_precision": "year",
+          "event_title": "Begins New Zealand eco-project",
+          "event_index": 10
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1975",
+          "event_date_precision": "year",
+          "event_title": "Launches 'Tree Tenant' actions",
+          "event_index": 11
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1976",
+          "event_date_precision": "year",
+          "event_title": "Professor at University of Stuttgart",
+          "event_index": 11
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1977",
+          "event_date_precision": "year",
+          "event_title": "Graduates with Malevich’s Tektonik",
+          "event_index": 4
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1977",
+          "event_date_precision": "year",
+          "event_title": "Joins Office for Metropolitan Architecture",
+          "event_index": 5
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1980",
+          "event_date_precision": "year",
+          "event_title": "Islamic lightweight roofs with Mahmoud Bodo Rasch",
+          "event_index": 12
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1980",
+          "event_date_precision": "year",
+          "event_title": "Founds Zaha Hadid Architects",
+          "event_index": 6
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1982",
+          "event_date_precision": "year",
+          "event_title": "Architectural turn and Hundertwasserhaus",
+          "event_index": 12
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1983",
+          "event_date_precision": "year",
+          "event_title": "Wins The Peak competition",
+          "event_index": 7
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1984-12",
+          "event_date_precision": "month",
+          "event_title": "Hainburg Au environmental protest",
+          "event_index": 13
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1988",
+          "event_date_precision": "year",
+          "event_title": "Featured in MoMA Deconstructivism show",
+          "event_index": 8
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1991-04-09",
+          "event_date_precision": "day",
+          "event_title": "KunstHausWien opens",
+          "event_index": 14
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1993",
+          "event_date_precision": "year",
+          "event_title": "Completes Vitra Fire Station",
+          "event_index": 9
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "2000",
+          "event_date_precision": "year",
+          "event_title": "Japanese Pavilion at Expo 2000, Hannover",
+          "event_index": 13
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "2000-02-19",
+          "event_date_precision": "day",
+          "event_title": "Death aboard ocean liner",
+          "event_index": 15
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2003",
+          "event_date_precision": "year",
+          "event_title": "Opens Contemporary Arts Center Cincinnati",
+          "event_index": 10
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2004",
+          "event_date_precision": "year",
+          "event_title": "Awarded Pritzker Architecture Prize",
+          "event_index": 11
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "2010",
+          "event_date_precision": "year",
+          "event_title": "Advises on Stuttgart 21 and criticizes risks",
+          "event_index": 14
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2010",
+          "event_date_precision": "year",
+          "event_title": "MAXXI Museum and first Stirling Prize",
+          "event_index": 12
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2012",
+          "event_date_precision": "year",
+          "event_title": "Damehood and London Aquatics Centre",
+          "event_index": 13
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "2015-03-09",
+          "event_date_precision": "day",
+          "event_title": "Pritzker recognition and death in Leonberg",
+          "event_index": 15
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2016-02",
+          "event_date_precision": "month",
+          "event_title": "Receives RIBA Royal Gold Medal",
+          "event_index": 14
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2016-03-31",
+          "event_date_precision": "day",
+          "event_title": "Death in Miami",
+          "event_index": 15
+        }
+      ]
+    }
+  ],
+  "conclusion": "Across a century and a half, organic architecture shifts from hand-crafted nature metaphors to experimentally discovered structures and, finally, to digitally controlled continuities. Gaudí, Otto, Hundertwasser, and Hadid each insist that curvature is not mere style: it is a claim that buildings can align with the logics of bodies, landscapes, and forces. Their legacy is a modern built world increasingly comfortable with forms that look less manufactured—and more alive."
+}
