@@ -12,6 +12,7 @@ from generate_person_network import (
     generate_person_network,
     DEFAULT_MODEL as NETWORK_MODEL,
 )
+from review_person import review_person_data
 
 
 def parse_args(argv: Any) -> argparse.Namespace:
@@ -48,6 +49,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--network-only",
         action="store_true",
         help="Generate only ego network (skip dataset and interface style).",
+    )
+    parser.add_argument(
+        "--skip-review",
+        action="store_true",
+        help="Skip the automatic review step after generation.",
     )
     return parser.parse_args(argv)
 
@@ -124,6 +130,30 @@ def main(argv: Any = None) -> int:
         else:
             print("\n⊘ Skipping ego network generation")
 
+        # Step 4: Review (if not skipped)
+        if not args.skip_review:
+            print("\n" + "=" * 60)
+            print("STEP 4/4: REVIEWING GENERATED DATA")
+            print("=" * 60)
+            print("Running quality review and polish...")
+            print("(Only high-confidence changes will be applied)")
+
+            try:
+                review_success = review_person_data(
+                    person_id or args.subject,
+                    skip_low_confidence=True,  # Auto-mode: only high-confidence
+                    verbose=False
+                )
+                if review_success:
+                    print("\n✓ Review complete")
+                else:
+                    print("\n⚠ Review encountered issues (data still usable)")
+            except Exception as e:
+                print(f"\n⚠ Review failed: {e}")
+                print("  Generated data is still usable, but not reviewed.")
+        else:
+            print("\n⊘ Skipping review step (--skip-review flag)")
+
         # Final summary
         print("\n" + "=" * 60)
         print("GENERATION COMPLETE")
@@ -134,6 +164,8 @@ def main(argv: Any = None) -> int:
         )
         if not update_registry:
             print("⊘ Register update skipped by request")
+        if args.skip_review:
+            print("⊘ Review skipped by request")
 
     except Exception as error:
         print(f"\n✗ Error: {error}", file=sys.stderr)
