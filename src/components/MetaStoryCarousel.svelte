@@ -359,9 +359,9 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
     max-width: 100%;
-    padding: 1.5rem 3rem;
+    padding: 1.25rem 3.5rem 2.5rem 3.5rem;
     background: linear-gradient(
       to top,
       rgba(0, 0, 0, 0.95) 0%,
@@ -373,20 +373,20 @@
 
   @media (max-width: 640px) {
     .slide-content {
-      padding: 1.25rem 2.5rem;
+      padding: 1rem 3rem 2rem 3rem;
     }
   }
 
   @media (min-width: 768px) {
     .slide-content {
-      padding: 2rem 4rem;
+      padding: 1.5rem 5rem 3rem 5rem;
     }
   }
 
   .slide-header {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
   }
 
   .slide-title {
@@ -418,7 +418,7 @@
     flex-wrap: wrap;
     font-size: 0.85rem;
     color: #94a3b8;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
   }
 
   .person-count {
@@ -461,8 +461,8 @@
 
   .carousel-nav {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 25%;
+    transform: translateY(50%);
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -485,26 +485,26 @@
   }
 
   .carousel-nav.prev {
-    left: 0.25rem;
+    left: 0.125rem;
   }
 
   .carousel-nav.next {
-    right: 0.25rem;
+    right: 0.125rem;
   }
 
   @media (min-width: 640px) {
     .carousel-nav.prev {
-      left: 0.5rem;
+      left: 0.25rem;
     }
 
     .carousel-nav.next {
-      right: 0.5rem;
+      right: 0.25rem;
     }
   }
 
   .carousel-indicators {
     position: absolute;
-    bottom: 1rem;
+    bottom: 0.75rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -552,11 +552,15 @@
     }
 
     .carousel-nav.prev {
-      left: 0.75rem;
+      left: 0.5rem;
     }
 
     .carousel-nav.next {
-      right: 0.75rem;
+      right: 0.5rem;
+    }
+
+    .carousel-indicators {
+      bottom: 1rem;
     }
   }
 </style>
