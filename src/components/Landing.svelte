@@ -1062,12 +1062,6 @@
     color: #cbd5e1;
   }
 
-  .tag-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
-  }
-
   .tag-chip {
     display: inline-flex;
     align-items: center;
