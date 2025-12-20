@@ -365,8 +365,6 @@
       {/if}
       <p
         class="description"
-        class:has-fade={descriptionOverflows.has(slide.eventIndex)}
-        use:checkOverflow={slide.eventIndex}
       >{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<span
               role="button"
               tabindex="0"
@@ -993,23 +991,6 @@
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
-    max-height: 25vh;
-    overflow-y: auto;
-  }
-
-  .description.has-fade {
-    padding-bottom: 1.5em;
-    padding-right: 0.5em;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      black calc(100% - 2em),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      black calc(100% - 2em),
-      transparent 100%
-    );
   }
 
   .icon {
