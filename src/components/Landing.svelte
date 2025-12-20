@@ -602,10 +602,6 @@
           <strong>{$_("landing.ai_accuracy")}</strong>
           {$_("landing.ai_accuracy_text")}
         </p>
-        <p>
-          <strong>{$_("landing.ai_privacy")}</strong>
-          {$_("landing.ai_privacy_text")}
-        </p>
       </div>
     </div>
   </div>
@@ -964,24 +960,29 @@
     justify-content: center;
     z-index: 1000;
     padding: 1rem;
+    overflow-y: auto;
   }
 
   .modal-content {
     position: relative;
     max-width: 600px;
     width: 100%;
+    max-height: calc(100vh - 2rem);
     background: rgba(15, 23, 42, 0.95);
     border: 1px solid rgba(148, 163, 184, 0.3);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .modal-close {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem;
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.4rem;
     border-radius: 0.5rem;
     background: transparent;
     border: none;
@@ -999,15 +1000,18 @@
   }
 
   .modal-content h2 {
-    margin: 0 0 1.25rem 0;
-    font-size: 1.5rem;
+    margin: 0 0 0.875rem 0;
+    font-size: 1.35rem;
     color: #fbbf24;
   }
 
   .modal-body {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.5;
     color: #cbd5e1;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   .modal-body strong {
@@ -1015,7 +1019,7 @@
   }
 
   .modal-body p {
-    margin: 0 0 0.75rem 0;
+    margin: 0 0 0.625rem 0;
   }
 
   .modal-body p:last-child {
@@ -1023,12 +1027,12 @@
   }
 
   .modal-body ul {
-    margin: 0.75rem 0;
-    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+    padding-left: 1.25rem;
   }
 
   .modal-body li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.375rem;
   }
 
   .modal-body li:last-child {
