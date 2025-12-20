@@ -1,0 +1,755 @@
+{
+  "dataset": "wikipedia-marie-curie-timeline",
+  "created_on": "2025-12-20",
+  "person": {
+    "name": "Marie_Curie",
+    "birth_date": "1867-11-07",
+    "death_date": "1934-07-04",
+    "primary_roles": [
+      "physicist",
+      "chemist",
+      "inventor"
+    ],
+    "tagline": "Pioneer of radioactivity research",
+    "summary": "Marie Curie was a Polish-born physicist and chemist who worked in France and transformed the study of radioactivity. She discovered the elements polonium and radium with Pierre Curie, introduced the term 'radioactivity,' and won Nobel Prizes in both Physics (1903) and Chemistry (1911). During World War I she organized mobile X-ray services for battlefield medicine and later led major radium research institutions.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "portrait": {
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Marie_Curie_%28Nobel-Chem%29.jpg",
+      "source": "https://de.wikipedia.org/wiki/Marie_Curie"
+    }
+  },
+  "chapters": [
+    {
+      "id": "warsaw_under_rule",
+      "headline": "Warsaw Under Rule",
+      "bridge_statement": "In a city where classrooms were policed, curiosity became her quiet form of resistance.",
+      "date_start": "1867-11-07",
+      "date_start_precision": "day",
+      "date_end": "1883",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 15,
+      "involved_people": [
+        "Władysław Skłodowski",
+        "Bronisława Skłodowska"
+      ],
+      "location": "Congress Poland"
+    },
+    {
+      "id": "secret_scholarship_years",
+      "headline": "The Hidden Curriculum",
+      "bridge_statement": "Shut out of universities, she built an education the authorities could never certify.",
+      "date_start": "1885-09",
+      "date_start_precision": "month",
+      "date_end": "1890",
+      "date_end_precision": "year",
+      "age_start": 17,
+      "age_end": 22,
+      "involved_people": [
+        "Żorawski family (landowners/employers)",
+        "Bronisława Dłuska"
+      ],
+      "location": "Congress Poland"
+    },
+    {
+      "id": "paris_hard_schooling",
+      "headline": "Cold Rooms Bright Mind",
+      "bridge_statement": "Paris offered knowledge at full price—paid in hunger, loneliness, and stubborn discipline.",
+      "date_start": "1891-11-03",
+      "date_start_precision": "day",
+      "date_end": "1894-07",
+      "date_end_precision": "month",
+      "age_start": 23,
+      "age_end": 26,
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Kazimierz Dłuski"
+      ],
+      "location": "France"
+    },
+    {
+      "id": "forging_radium_age",
+      "headline": "Forging the Radium Age",
+      "bridge_statement": "A cramped lab became an engine of discovery, driven by patience, measurement, and grit.",
+      "date_start": "1895-07-26",
+      "date_start_precision": "day",
+      "date_end": "1903",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 36,
+      "involved_people": [
+        "Pierre Curie",
+        "Irène Curie",
+        "Henri Becquerel"
+      ],
+      "location": "France"
+    },
+    {
+      "id": "solitary_authority",
+      "headline": "Solitary Authority",
+      "bridge_statement": "With the partnership broken, she faced fame’s glare and grief’s weight without flinching.",
+      "date_start": "1906-04-19",
+      "date_start_precision": "day",
+      "date_end": "1911",
+      "date_end_precision": "year",
+      "age_start": 38,
+      "age_end": 44,
+      "involved_people": [
+        "Pierre Curie",
+        "Paul Langevin"
+      ],
+      "location": "France"
+    },
+    {
+      "id": "science_in_service",
+      "headline": "Science on the Frontline",
+      "bridge_statement": "When Europe tore itself apart, her science moved from bench to battlefield, then into institutions built to last.",
+      "date_start": "1914-08",
+      "date_start_precision": "month",
+      "date_end": "1934-07-04",
+      "date_end_precision": "day",
+      "age_start": 46,
+      "age_end": 66,
+      "involved_people": null,
+      "location": "Western Europe"
+    }
+  ],
+  "conclusion": "Marie Curie turned exclusion into leverage, transforming perseverance into a new science that changed medicine and modern physics. Her life reads like proof that discovery can be both a personal conquest and a public service\u0014and that building institutions can matter as much as building theories.",
+  "events": [
+    {
+      "date": "1867-11-07",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Born in Russian-ruled Warsaw",
+      "description": "Maria Salomea Sk\u000142odowska was born in Warsaw in Russian-controlled [[Congress Poland|Congress Poland]]. She grew up in a household shaped by teaching: her father, W\u000142adys\u000142aw, taught mathematics and physics, and her mother, Bronis\u000142awa, ran a girls\u0002 school. In a city where Polish language and culture were increasingly constrained, the family\u0002s emphasis on education gave her an early sense that learning could be both refuge and leverage.",
+      "locations": [
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Władysław Skłodowski",
+        "Bronisława Skłodowska"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "event_type_icon": "mdi-baby-face-outline",
+      "chapter": "warsaw_under_rule",
+      "annotations": {
+        "Congress Poland": {
+          "explanation": "A semi-autonomous Polish kingdom created by the 1815 Congress of Vienna and ruled by the Russian Empire; by Curie’s birth it was effectively under direct Russian control.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Congress_Poland"
+        }
+      }
+    },
+    {
+      "date": "1878-05",
+      "date_precision": "month",
+      "age": 10,
+      "title": "Loses her mother to tuberculosis",
+      "description": "In May 1878, Curie\u0002s mother, Bronis\u000142awa Sk\u000142odowska\u0014an educator who had led a Warsaw girls\u0002 school\u0014died of [[tuberculosis]]. The loss deepened the family\u0002s hardship. It also unfolded in a school system shaped by [[Russification]], where Polish history and culture were pushed into the margins, sharpening Curie\u0002s sense that ambition would require endurance.",
+      "locations": [
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bronisława Skłodowska",
+        "Władysław Skłodowski"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "warsaw_under_rule",
+      "annotations": {
+        "tuberculosis": {
+          "explanation": "A bacterial infectious disease that most often affects the lungs; in the 19th century it was frequently fatal.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tuberculosis"
+        },
+        "Russification": {
+          "explanation": "Policies of the Russian Empire intended to promote Russian language and culture and weaken local institutions, including education in Poland.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Russification"
+        }
+      }
+    },
+    {
+      "date": "1883",
+      "date_precision": "year",
+      "age": 15,
+      "title": "Abitur as class valedictorian",
+      "description": "In 1883, Curie passed her Abitur as the best student in her class. Yet in Russian-controlled Poland, women were not admitted to university. The contrast between her performance and the closed door ahead set the pattern for her next years: finding unofficial routes to the education she had already proven she could master.",
+      "locations": [
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "warsaw_under_rule",
+      "annotations": {
+        "Congress Poland": {
+          "explanation": "A semi-autonomous Polish kingdom created in 1815 and controlled by the Russian Empire; by Curie’s youth it was heavily Russified and restricted Polish institutions and women’s access to higher education.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Congress_Poland"
+        }
+      }
+    },
+    {
+      "date": "1885-09",
+      "date_precision": "month",
+      "date_end": "1889-03",
+      "date_end_precision": "month",
+      "age": 17,
+      "title": "Governess and underground studies",
+      "description": "To earn money and keep the long-term plan for higher study alive, Curie worked as a governess for the \u0017borawski family, including years near [[Szczuki|Szczuki]]. She studied relentlessly in private and attended clandestine courses at the [[Flying University|Flying University]], an underground network that quietly offered advanced education to women.\n\nDuring this period she also grew close to Kazimierz \u0017borawski, but plans for marriage collapsed under family opposition\u0014another reminder that her future would have to be built against the grain of convention.",
+      "locations": [
+        {
+          "name_historic": "Szczuki (near Ciechanów)",
+          "name_modern": "Szczuki, Masovian Voivodeship, Poland",
+          "centroid": [
+            20.9924247,
+            52.9371213
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Kazimierz \u0017borawski",
+        "Jadwiga Szczawi\u000144ska-Dawidowa"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Flying_University"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "secret_scholarship_years",
+      "annotations": {
+        "Szczuki": {
+          "explanation": "A small village in the Masovian region where Maria Skłodowska worked as a governess (1885–1889) for the Żorawski family, while studying independently.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Marie_Curie"
+        },
+        "Flying University": {
+          "explanation": "A clandestine Polish educational institution in Warsaw that offered higher-level courses (including to women) when Russian-imposed restrictions limited Polish higher education.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Flying_University"
+        }
+      }
+    },
+    {
+      "date": "1890",
+      "date_precision": "year",
+      "age": 22,
+      "title": "First laboratory research in Warsaw",
+      "description": "Back in Warsaw, Curie gained access to laboratory facilities at the local [[Museum of Industry and Agriculture|Museum of Industry and Agriculture]]. In one of the few places where she could do hands-on experimental work, she began sustained chemical and physical experiments that confirmed what her self-study had been pointing toward: she wanted a life built around measurement, not just reading.",
+      "locations": [
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "event_type_icon": "mdi-test-tube",
+      "chapter": "secret_scholarship_years",
+      "annotations": {
+        "Museum of Industry and Agriculture": {
+          "explanation": "A Warsaw museum and research institution (Muzeum Przemys\u000142u i Rolnictwa) that provided rare access to laboratory space in Russian-ruled Warsaw.",
+          "wikipedia_url": "https://pl.wikipedia.org/wiki/Muzeum_Przemys%C5%82u_i_Rolnictwa_w_Warszawie"
+        }
+      }
+    },
+    {
+      "date": "1891-11-03",
+      "date_precision": "day",
+      "age": 23,
+      "title": "Leaves Warsaw for the Sorbonne",
+      "description": "In late 1891, Curie left Poland for Paris to pursue higher education, first staying with her sister Bronis\u000142awa and brother-in-law Kazimierz D\u000142uski. She began studying physics at the Sorbonne while navigating poverty, French-language instruction, and the reality of being one of few women in the lecture halls. The move was not just geographic\u0014it was a decision to trade familiar limits for difficult possibility.",
+      "locations": [
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Kazimierz Dłuski"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Cour_de_la_Sorbonne.jpg/960px-Cour_de_la_Sorbonne.jpg",
+          "caption": "Cour de la Sorbonne, University of Paris",
+          "source": "https://commons.wikimedia.org/wiki/File:Cour_de_la_Sorbonne.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-train",
+      "chapter": "paris_hard_schooling",
+      "event_class": {
+        "type": "emigration",
+        "from_location": "Russian Partition of Poland",
+        "to_location": "France",
+        "characterization": "education opportunity"
+      }
+    },
+    {
+      "date": "1893-07",
+      "date_precision": "month",
+      "date_end": "1894-07",
+      "date_end_precision": "month",
+      "age": 25,
+      "title": "Earns Sorbonne science degrees",
+      "description": "Curie earned a [[Licentiate (degree)|licentiate]] in physics at the Sorbonne in July 1893 and followed with a licentiate in mathematics the next year. The credentials placed her inside Paris\u0002 scientific world and opened paid research work, including a study of the magnetic properties of steel carried out under physicist Gabriel Lippmann\u0002s supervision.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "paris_hard_schooling",
+      "annotations": {
+        "Licentiate (degree)": {
+          "explanation": "A European university qualification; in late 19th-century France, it roughly corresponded to completing advanced undergraduate studies required for scientific careers.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Licentiate_(degree)"
+        }
+      },
+      "involved_people": [
+        "Gabriel Lippmann"
+      ]
+    },
+    {
+      "date": "1895-07-26",
+      "date_precision": "day",
+      "age": 27,
+      "title": "Marries Pierre Curie",
+      "description": "In Paris\u0002 physics circles, Curie was introduced to Pierre Curie through fellow physicist J\u0000f3zef Wierusz-Kowalski. What began as scientific conversation quickly became a partnership built on shared work and shared stubbornness. Marie and Pierre married on 26 July 1895, and their collaboration soon tightened into the painstaking routines that would define their discoveries.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "J\u0000f3zef Wierusz-Kowalski"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Pierre_Curie",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "forging_radium_age",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Pierre Curie",
+        "duration": "until his death",
+        "children": 2,
+        "characterization": "scientific partnership"
+      }
+    },
+    {
+      "date": "1897-09-12",
+      "date_precision": "day",
+      "age": 29,
+      "title": "Birth of Ir\u0000e8ne Curie",
+      "description": "On 12 September 1897, Curie gave birth to her first daughter, Ir\u0000e8ne. Family life did not end her research ambitions; instead, it forced her to compress time and concentrate effort. In the same years she was moving from student to independent investigator, building the experimental discipline that soon made her work unavoidable in Paris science.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ir\u0000e8ne Joliot-Curie",
+        "Pierre Curie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Marie%2C_Pierre%2C_Irene_Curie_1903.jpg/960px-Marie%2C_Pierre%2C_Irene_Curie_1903.jpg",
+          "caption": "Marie, Pierre, and Irène Curie (1903)",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie,_Pierre,_Irene_Curie_1903.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-baby-face-outline",
+      "chapter": "forging_radium_age"
+    },
+    {
+      "date": "1897-12-16",
+      "date_precision": "day",
+      "age": 30,
+      "title": "Begins research on radioactivity",
+      "description": "In December 1897, Curie began systematic experiments in Paris on the radiation observed in uranium compounds, building on Henri Becquerel\u0002s earlier findings. As she measured and compared emissions across different materials, she helped establish [[radioactivity]] as a property of atoms rather than a quirk of chemistry\u0014and she coined the term itself.\n\nHer work drew on a web of support typical of laboratory science: instruments and collaboration from Pierre Curie, and access to materials supplied by other scientists such as Henri Moissan and Antoine Lacroix.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Henri Becquerel",
+        "Pierre Curie",
+        "Henri Moissan",
+        "Antoine Lacroix"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henri_Becquerel",
+        "https://de.wikipedia.org/wiki/Pierre_Curie"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Pierre_and_Marie_Curie.jpg/960px-Pierre_and_Marie_Curie.jpg",
+          "caption": "Pierre and Marie Curie demonstrating radioactivity apparatus",
+          "source": "https://commons.wikimedia.org/wiki/File:Pierre_and_Marie_Curie.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "forging_radium_age",
+      "annotations": {
+        "radioactivity": {
+          "explanation": "The spontaneous emission of radiation from unstable atomic nuclei; Curie popularized the concept and coined the term in her early research.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Radioactivity"
+        }
+      }
+    },
+    {
+      "date": "1898-07",
+      "date_precision": "month",
+      "date_end": "1898-12",
+      "date_end_precision": "month",
+      "age": 30,
+      "title": "Discovers polonium and radium",
+      "description": "Working through tons of [[pitchblende|pitchblende]] residue in a cramped Paris laboratory, Marie Curie and Pierre Curie found evidence for new, intensely radioactive substances. In July 1898 they announced polonium\u0014named as a salute to her native Poland\u0014and later that year reported radium.\n\nThe discovery was also a collaborative achievement: Gustave B\u0000e9mont helped prepare highly active samples, and spectroscopist Eug\u0000e8ne-Anatole Demar\u0000e7ay provided crucial spectral evidence supporting the identification of a new element.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Gustave B\u0000e9mont",
+        "Eug\u0000e8ne-Anatole Demar\u0000e7ay"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Polonium",
+        "https://en.wikipedia.org/wiki/Radium"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Marie_et_Pierre_Curie.jpg/960px-Marie_et_Pierre_Curie.jpg",
+          "caption": "Marie and Pierre Curie in their Paris laboratory",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie_et_Pierre_Curie.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "forging_radium_age",
+      "annotations": {
+        "pitchblende": {
+          "explanation": "A uranium-rich mineral (uraninite) whose residues, after uranium extraction, were found to contain unusually strong radioactivity—key to the Curies’ isolation work.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Uraninite"
+        }
+      }
+    },
+    {
+      "date": "1903",
+      "date_precision": "year",
+      "age": 36,
+      "title": "Wins Nobel Prize in Physics",
+      "description": "In 1903, Curie shared the Nobel Prize in Physics with Pierre Curie and Henri Becquerel for research on radiation phenomena. That same year she completed her doctorate, cementing her reputation as a leading authority on radioactivity at a moment when the field was still being defined by careful measurement rather than settled theory.",
+      "locations": [
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Sweden",
+          "centroid": [
+            18.0710935,
+            59.3251172
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Henri Becquerel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henri_Becquerel",
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/1903_Nobel_Prize_in_Physics"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Marie_and_Pierre_Curie%27s_Nobel_Prize_in_Physics_1903.jpg/960px-Marie_and_Pierre_Curie%27s_Nobel_Prize_in_Physics_1903.jpg",
+          "caption": "Marie and Pierre Curie’s Nobel Prize in Physics (1903)",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie_and_Pierre_Curie's_Nobel_Prize_in_Physics_1903.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "forging_radium_age"
+    },
+    {
+      "date": "1906-04-19",
+      "date_precision": "day",
+      "age": 38,
+      "title": "After Pierre\u0002s death, she leads at the Sorbonne",
+      "description": "On 19 April 1906, Pierre Curie was killed in a street accident in Paris. Curie, suddenly responsible for two daughters, kept their scientific program alive while grieving in public. In 1906 she was assigned Pierre\u0002s teaching duties at the Sorbonne; later she was appointed to the chair created for him, becoming the Sorbonne\u0002s first woman professor.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Ir\u0000e8ne Joliot-Curie",
+        "\u0000c8ve Curie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Pierre_Curie",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "solitary_authority"
+    },
+    {
+      "date": "1911",
+      "date_precision": "year",
+      "age": 44,
+      "title": "Wins Nobel Chemistry amid backlash",
+      "description": "In 1911, Curie received the Nobel Prize in Chemistry for isolating radium and polonium and establishing radium\u0002s properties. In Paris that same year, her attempt to join the Acad\u0000e9mie des sciences failed in a close vote.\n\nWhen her relationship with Paul Langevin became public, parts of the boulevard press attacked her personally\u0014framing her as a foreigner and an unwelcome intellectual, even labeling her a Jew and a \u0004strange\u0004 woman. She still traveled to Stockholm to accept the prize, refusing to let public scandal rewrite her scientific record.",
+      "locations": [
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Sweden",
+          "centroid": [
+            18.0710935,
+            59.3251172
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Paul Langevin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Acad%C3%A9mie_des_Sciences",
+        "https://de.wikipedia.org/wiki/Paul_Langevin"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Marie_Sk%C5%82odowska-Curie%27s_Nobel_Prize_in_Chemistry_1911.jpg/960px-Marie_Sk%C5%82odowska-Curie%27s_Nobel_Prize_in_Chemistry_1911.jpg",
+          "caption": "Marie Skłodowska-Curie’s Nobel Prize in Chemistry diploma (1911)",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie_Skłodowska-Curie's_Nobel_Prize_in_Chemistry_1911.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "solitary_authority",
+      "annotations": {
+        "Nobel Prize in Chemistry": {
+          "explanation": "One of the annual Nobel Prizes awarded by the Royal Swedish Academy of Sciences to recognize outstanding contributions to chemistry; Curie received it in 1911.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nobel_Prize_in_Chemistry"
+        },
+        "French Academy of Sciences": {
+          "explanation": "A leading French learned society (part of the Institut de France); Curie’s 1911 candidacy was rejected in a closely contested vote amid public controversy.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Acad%C3%A9mie_des_Sciences"
+        }
+      }
+    },
+    {
+      "date": "1914-08",
+      "date_precision": "month",
+      "date_end": "1918-11",
+      "date_end_precision": "month",
+      "age": 46,
+      "title": "Deploys mobile X-ray units",
+      "description": "During [[World War I|World War I]], Curie redirected her expertise toward medical radiology for wounded soldiers. From Paris, she organized and equipped mobile radiography vehicles and helped train technicians and nurses, bringing X-ray diagnosis closer to frontline treatment and surgery.\n\nHer daughter Ir\u0000e8ne assisted in this wartime effort, learning radiography early in life in the practical, high-pressure setting Curie had created.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/World_War_I"
+      ],
+      "event_type_icon": "mdi-x-ray",
+      "chapter": "science_in_service",
+      "annotations": {
+        "World War I": {
+          "explanation": "A global conflict (1914–1918) in which France fought mainly on the Western Front, creating mass casualties and urgent demand for improved battlefield medicine.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_I"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "Mobile radiography vehicle (\"Little Curie\")",
+        "description": "Vehicle-mounted X-ray system with onboard power and shielding, enabling radiographic imaging near battlefront medical stations.",
+        "impact": "Expanded battlefield diagnostics and accelerated adoption of medical radiology in military and civilian hospitals."
+      },
+      "involved_people": [
+        "Ir\u0000e8ne Joliot-Curie"
+      ]
+    },
+    {
+      "date": "1934-07-04",
+      "date_precision": "day",
+      "age": 66,
+      "title": "Dies in Passy after years of illness",
+      "description": "Marie Curie died on 4 July 1934 near Passy, France. Wikipedia attributes her death to aplastic anemia, widely linked to long-term exposure during her early radioactivity research and later wartime radiology work.\n\nIn her final decades she also shaped science as an institution-builder: she led the Paris [[Radium Institute|Radium Institute]] and worked through the [[League of Nations]] to improve conditions for scientific work. Even as her body failed, the infrastructure she helped create kept training new researchers and widening access for women and international students.",
+      "locations": [
+        {
+          "name_historic": "Sallanches",
+          "name_modern": "Sallanches, Haute-Savoie, France",
+          "centroid": [
+            6.6302551,
+            45.9361246
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "science_in_service",
+      "annotations": {
+        "Radium Institute": {
+          "explanation": "The Institut du Radium in Paris (later linked to the Curie Institute), a major center for radioactivity research that Curie led and used to support women and international students.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Curie_Institute_(Paris)"
+        },
+        "League of Nations": {
+          "explanation": "An international organization founded after World War I; Curie served on its International Commission on Intellectual Cooperation.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/League_of_Nations"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Passy",
+          "name": "Passy, Haute-Savoie, France",
+          "primary": true,
+          "centroid": [
+            6.709,
+            45.922
+          ],
+          "source": "https://en.wikipedia.org/wiki/Marie_Curie"
+        }
+      ]
+    }
+  ]
+}
