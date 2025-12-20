@@ -8,6 +8,7 @@
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
 
   export let entries = [];
+  export let englishEntries = []; // English registry entries for carousel portraits
   export let metaStories = [];
   export let getSummary = () => "";
   export let getStyle = () => ({});
@@ -402,13 +403,17 @@
       <p class="eyebrow">{$_("app.title")}</p>
       <h1>{$_("app.tagline")}</h1>
     </div>
-    <MetaStoryCarousel
-      {metaStories}
-      persons={entries}
-      getStyle={getStyle}
-      onSelectPerson={handleSelect}
-      onFilterByMetaStory={handleFilterByMetaStory}
-    />
+    {#if $currentLanguage === "en"}
+      {#key $currentLanguage}
+        <MetaStoryCarousel
+          {metaStories}
+          persons={englishEntries}
+          getStyle={getStyle}
+          onSelectPerson={handleSelect}
+          onFilterByMetaStory={handleFilterByMetaStory}
+        />
+      {/key}
+    {/if}
   </div>
 
   <div class="filters-section">

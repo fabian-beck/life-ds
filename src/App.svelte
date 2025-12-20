@@ -19,7 +19,19 @@ import { displayName } from "./utils/helpers.js";
 
   // Initial registry (will be replaced with language-specific version)
   let registry = { people: [] };
+  let englishRegistry = { people: [] }; // Always keep English registry for carousel
   let metaStories = [];
+
+  // Load English registry (for carousel portraits)
+  async function loadEnglishRegistry() {
+    try {
+      const module = await import("../data/persons.json");
+      englishRegistry = module.default;
+    } catch (error) {
+      console.warn("Failed to load English registry:", error);
+      englishRegistry = { people: [] };
+    }
+  }
 
   // Load language-specific registry
   async function loadRegistry(language) {
@@ -73,6 +85,7 @@ import { displayName } from "./utils/helpers.js";
 
   // Reload registry when language changes and load meta stories on mount
   onMount(() => {
+    loadEnglishRegistry(); // Load English registry once for carousel
     loadMetaStories();
     const unsubscribe = currentLanguage.subscribe((lang) => {
       loadRegistry(lang);
@@ -310,6 +323,17 @@ import { displayName } from "./utils/helpers.js";
     }));
   })();
 
+  // Build English registry entries for carousel (portraits always from English data)
+  $: englishRegistryEntries = (() => {
+    if (!Array.isArray(englishRegistry?.people)) {
+      return [];
+    }
+    return englishRegistry.people.map((entry) => ({
+      ...entry,
+      style: styleFor(entry.id),
+    }));
+  })();
+
   function entrySummary(entry) {
     if (!entry?.id) return "";
     return entry.summary ?? "";
@@ -466,6 +490,7 @@ import { displayName } from "./utils/helpers.js";
   {:else}
     <Landing
       entries={registryEntries}
+      englishEntries={englishRegistryEntries}
       {metaStories}
       getSummary={entrySummary}
       getStyle={styleFor}
