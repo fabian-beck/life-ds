@@ -191,7 +191,7 @@
                       title: metaStory.title,
                     })}
                   >
-                    {$_("landing.meta_story_person_count", {
+                    {$_("landing.select_persons", {
                       count: metaStory.person_count,
                     })}
                   </button>
