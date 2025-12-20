@@ -130,11 +130,11 @@ class MarriagePartnershipClassification(BaseModel):
     )
 
 
-class EmigrationClassification(BaseModel):
-    """Classification for emigration/migration events."""
-    type: Literal["emigration"] = Field(
-        default="emigration",
-        description="Always 'emigration'"
+class MigrationClassification(BaseModel):
+    """Classification for migration events (emigration, immigration, relocation, exile, etc.)."""
+    type: Literal["migration"] = Field(
+        default="migration",
+        description="Always 'migration'"
     )
     from_location: str = Field(description="Origin location (city/region/country)")
     to_location: str = Field(description="Destination location (city/region/country)")
@@ -164,7 +164,7 @@ class InventionClassification(BaseModel):
 # Note: Using standard Union instead of discriminated union for OpenAI compatibility
 EventClassification = Union[
     MarriagePartnershipClassification,
-    EmigrationClassification,
+    MigrationClassification,
     InventionClassification
 ]
 
@@ -264,7 +264,7 @@ class EventSkeleton(BaseModel):
     description: str = Field(description="Detailed description of the event (2-4 sentences)")
     event_class: Optional[EventClassification] = Field(
         None,
-        description="Structured classification for specific event types (marriage_partnership, emigration, invention). Omit for standard biographical events."
+        description="Structured classification for specific event types (marriage_partnership, migration, invention). Omit for standard biographical events."
     )
 
 
@@ -1841,7 +1841,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "\n\nEVENT CLASSIFICATION (optional):\n"
         "For each event skeleton, determine if it matches one of these 3 specific biographical event types:\n"
         "  1. MARRIAGE_PARTNERSHIP - Wedding, marriage ceremony, or start of documented partnership\n"
-        "  2. EMIGRATION - Permanent move to different country (not temporary travel)\n"
+        "  2. MIGRATION - Permanent or significant relocation (emigration, immigration, exile, refugee movement)\n"
         "  3. INVENTION - Creation of novel device, machine, algorithm, or technique\n"
         "\n"
         "Detection guidelines:\n"
@@ -1850,12 +1850,13 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "  * partner: Full name of spouse/partner\n"
         "  * Optional: duration (e.g., 'until death', '17 years'), children (integer), characterization (1-4 words)\n"
         "\n"
-        "- EMIGRATION: Permanent relocation to different country\n"
-        "  * Words like: 'emigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge'\n"
-        "  * NOT temporary: conferences, visits, tours, business trips\n"
+        "- MIGRATION: Permanent or significant relocation to different country/region\n"
+        "  * Words like: 'emigrated', 'immigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge', 'relocated'\n"
+        "  * Includes: emigration, immigration, exile, refugee movement, major relocations\n"
+        "  * NOT temporary: conferences, visits, tours, business trips, brief study abroad\n"
         "  * from_location: Origin country/region\n"
         "  * to_location: Destination country/region\n"
-        "  * Optional: characterization (e.g., 'political exile', 'career opportunity')\n"
+        "  * Optional: characterization (e.g., 'political exile', 'career opportunity', 'refugee flight')\n"
         "\n"
         "- INVENTION: Creating/building/patenting tangible invention, device, machine, algorithm\n"
         "  * Words like: 'invented', 'patented', 'built', 'designed', 'created' + technical artifact\n"
@@ -1928,8 +1929,8 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
                 class_type = skeleton.event_class.type
                 if class_type == "marriage_partnership":
                     print(f"    - {skeleton.title}: MARRIAGE ({skeleton.event_class.partner})")
-                elif class_type == "emigration":
-                    print(f"    - {skeleton.title}: EMIGRATION ({skeleton.event_class.from_location} → {skeleton.event_class.to_location})")
+                elif class_type == "migration":
+                    print(f"    - {skeleton.title}: MIGRATION ({skeleton.event_class.from_location} → {skeleton.event_class.to_location})")
                 elif class_type == "invention":
                     print(f"    - {skeleton.title}: INVENTION ({skeleton.event_class.title})")
 
@@ -2014,7 +2015,7 @@ def build_phase2_prompt_base(
     prompt += "   - If no annotations, return the original description text unchanged\n"
     prompt += "   - Example: If annotating 'Leopoldstadt', change 'Leopoldstadt district' to '[[Leopoldstadt|Leopoldstadt district]]'\n"
     prompt += "   \n"
-    prompt += "   - CRITICAL ANTI-REDUNDANCY RULE for CLASSIFIED events (marriage/emigration/invention):\n"
+    prompt += "   - CRITICAL ANTI-REDUNDANCY RULE for CLASSIFIED events (marriage/migration/invention):\n"
     prompt += "     * If this event has a classification (see Event Class above), DO NOT describe technical details\n"
     prompt += "     * The classification already provides structured metadata - keep description narrative only\n"
     prompt += "     * Focus ONLY on narrative context: where, when, why, with whom\n"
@@ -2065,7 +2066,7 @@ def build_phase2_prompt_base(
     prompt += "   - Examples of FORBIDDEN annotations for classified events:\n"
     prompt += "     * ❌ Don't annotate 'Z1', 'Z3' for invention events - classification provides technical details\n"
     prompt += "     * ❌ Don't annotate partner's name for marriage events - use INVOLVED_PEOPLE instead\n"
-    prompt += "     * ❌ Don't annotate destination country for emigration events - classification provides locations\n"
+    prompt += "     * ❌ Don't annotate destination country for migration events - classification provides locations\n"
     prompt += "   - The classification provides all necessary details - annotations would be redundant\n"
     prompt += "   \n"
     prompt += "   - Annotate ONLY:\n"
@@ -2078,7 +2079,7 @@ def build_phase2_prompt_base(
     prompt += "     * ❌ NEVER ANNOTATE PERSON NAMES - Person names belong in INVOLVED_PEOPLE field (section 2), NOT in annotations\n"
     prompt += "     * ❌ This includes: full names, first names, last names, titles (e.g., '8th Baron King'), nicknames, or any reference to a human being\n"
     prompt += "     * ❌ Examples of FORBIDDEN person annotations: 'William', 'William King', '8th Baron King', 'King William', 'Ada', 'Lord Byron', etc.\n"
-    prompt += "     * ❌ NEVER ANNOTATE CLASSIFIED SUBJECTS - If classifying this event (marriage, emigration, invention), DO NOT annotate the subject\n"
+    prompt += "     * ❌ NEVER ANNOTATE CLASSIFIED SUBJECTS - If classifying this event (marriage, migration, invention), DO NOT annotate the subject\n"
     prompt += "     * ❌ Examples: Don't annotate 'Z3', 'S1 and S2' if you're creating an invention classification for them\n"
     prompt += "     * ❌ The classification provides full details - annotations would be redundant\n"
     prompt += "     * ANY major cities - these are well-known and need no explanation (Tokyo, Hamburg, Paris, Prague, London, Vienna, Berlin, Munich, New York, Rome, etc.)\n"
@@ -2217,26 +2218,26 @@ def build_phase2_prompt_marriage(
     return prompt + _add_related_articles_section(filtered_related_articles)
 
 
-def build_phase2_prompt_emigration(
+def build_phase2_prompt_migration(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
 ) -> str:
-    """Phase 2 prompt for EMIGRATION events."""
+    """Phase 2 prompt for MIGRATION events."""
     # Get base prompt (sections 0-5)
     base = build_phase2_prompt_base(event_skeleton, person_name, [])
 
-    # Add emigration-specific guidance
-    prompt = base + "\n\nEMIGRATION EVENT SPECIFIC GUIDANCE:\n"
+    # Add migration-specific guidance
+    prompt = base + "\n\nMIGRATION EVENT SPECIFIC GUIDANCE:\n"
     prompt += "="*60 + "\n"
-    prompt += "This event has been classified as EMIGRATION in Phase 1.\n"
+    prompt += "This event has been classified as MIGRATION in Phase 1.\n"
     prompt += "The classification already contains: from_location, to_location, characterization.\n\n"
     prompt += "Your Phase 2 research should focus on:\n"
     prompt += "- LOCATIONS: Provide TWO locations (departure and arrival cities)\n"
     prompt += "  * First location: Origin city/region (mark as primary=false)\n"
     prompt += "  * Second location: Destination city/region (mark as primary=true)\n"
     prompt += "  * Use city-level names (e.g., 'Berlin, Germany' → 'New York, USA')\n"
-    prompt += "  * name_historic: City name at time of emigration\n"
+    prompt += "  * name_historic: City name at time of migration\n"
     prompt += "  * name_modern: Modern name for geocoding\n"
     prompt += "- DESCRIPTION: Focus on reasons, journey details, immediate aftermath\n"
     prompt += "  * DO NOT repeat from/to locations or characterization (classification has these)\n"
@@ -2302,8 +2303,8 @@ def research_event_details(
         class_type = event_skeleton.event_class.type
         if class_type == "marriage_partnership":
             prompt = build_phase2_prompt_marriage(event_skeleton, person_name, filtered_articles)
-        elif class_type == "emigration":
-            prompt = build_phase2_prompt_emigration(event_skeleton, person_name, filtered_articles)
+        elif class_type == "migration":
+            prompt = build_phase2_prompt_migration(event_skeleton, person_name, filtered_articles)
         elif class_type == "invention":
             prompt = build_phase2_prompt_invention(event_skeleton, person_name, filtered_articles)
         else:
