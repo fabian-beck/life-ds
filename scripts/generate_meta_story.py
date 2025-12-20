@@ -89,9 +89,8 @@ class MetaStoryPlan(BaseModel):
         description="Rich narrative overview (2-3 paragraphs) explaining the story's significance"
     )
     selected_people: List[PersonReference] = Field(
-        description="4-12 people selected for this meta-story",
-        min_length=4,
-        max_length=12
+        description="All people who clearly fit this meta-story (no fixed number - select based on fit)",
+        min_length=1
     )
     subtopics: List[Subtopic] = Field(
         description="2-4 thematic subtopics organizing the selected people",
@@ -300,27 +299,32 @@ Provide a relevance_note for each person explaining their fit.
 """
     else:
         # Automatic mode: AI selects people + creates structure
-        prompt = f"""Create a meta-story for the topic "{topic_title}" by selecting 4-12 relevant people from the registry.
+        prompt = f"""Create a meta-story for the topic "{topic_title}" by selecting ALL people from the registry who clearly fit this topic.
 
 Available people:
 {json.dumps(people_summary, indent=2)}
 
 Your task:
-1. SELECT 4-12 people who best represent this topic
+1. SELECT ALL people who clearly and directly fit this topic
+   - Do NOT limit yourself to a fixed number - select everyone who truly belongs
    - Focus on thematic coherence (shared profession, movement, domain, or era)
-   - Aim for diversity in time period and contribution type
+   - Aim for diversity in time period and contribution type when multiple candidates exist
    - Provide brief relevance note for each selected person
 2. Create compelling title, tagline, and description
 3. Organize selected people into 2-4 thematic subtopics
 4. Design 3-6 temporal chapters covering their combined lifespans
 5. Write conclusion statement
 
-SELECTION CRITERIA:
-- ONLY select people whose primaryRoles/summary clearly fit the topic
+SELECTION CRITERIA - BE STRICT:
+- ONLY select people whose primaryRoles/summary CLEARLY and DIRECTLY fit the topic
+- When in doubt about a person's fit, OMIT them - better too few than too many weak matches
+- A tangential connection is NOT enough - the person must be central to the topic
+- Each person must have strong thematic relevance, not just superficial keyword overlap
+- Do NOT artificially limit selections to hit a target number - include ALL who clearly fit
 - Prefer people with overlapping time periods for richer cross-connections
 - Balance: mix of well-known figures and lesser-known contributors
-- Minimum 4 people, maximum 12 people
-- Each person should bring something unique to the narrative
+- Each person should bring something unique and substantial to the narrative
+- REJECT people who are only marginally related or require stretching the topic definition
 
 TITLE & NARRATIVE:
 - Title should be compelling and thematic (2-5 words)
