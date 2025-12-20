@@ -265,7 +265,7 @@
 <style>
   .meta-story-carousel {
     width: 100%;
-    margin: 0 0 2rem;
+    margin: 0;
     overflow: hidden;
   }
 

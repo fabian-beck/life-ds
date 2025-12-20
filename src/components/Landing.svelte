@@ -402,54 +402,64 @@
       <p class="eyebrow">{$_("app.title")}</p>
       <h1>{$_("app.tagline")}</h1>
     </div>
-    <div class="filters-section">
-      <div class="search-box">
-        <svg
-          class="search-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+    <MetaStoryCarousel
+      {metaStories}
+      persons={entries}
+      getStyle={getStyle}
+      onSelectPerson={handleSelect}
+      onFilterByMetaStory={handleFilterByMetaStory}
+    />
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <svg
+        class="search-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input
+        type="text"
+        class="search-input"
+        placeholder={$_("landing.search_placeholder")}
+        bind:value={searchQuery}
+      />
+      {#if searchQuery}
+        <button
+          class="clear-search"
+          on:click={() => {
+            searchQuery = "";
+          }}
+          aria-label={$_("landing.clear_search")}
         >
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
-        </svg>
-        <input
-          type="text"
-          class="search-input"
-          placeholder={$_("landing.search_placeholder")}
-          bind:value={searchQuery}
-        />
-        {#if searchQuery}
-          <button
-            class="clear-search"
-            on:click={() => {
-              searchQuery = "";
-            }}
-            aria-label={$_("landing.clear_search")}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        {/if}
-      </div>
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      {/if}
+    </div>
+    <div class="filters-right">
       {#if activeMetaStoryFilter}
         <div class="tag-filters">
           <div class="tag-filters-header">
@@ -468,46 +478,34 @@
         </div>
       {:else if topTags.length > 0}
         <div class="tag-filters">
-          <div class="tag-filters-header">
-            <span class="filter-label">{$_("landing.filter_by_role")}</span>
-            {#if activeTags.size > 0}
-              <button
-                class="clear-filters"
-                on:click={() => {
-                  activeTags = new Set();
-                }}
+          <span class="filter-label">{$_("landing.filter_by_role")}</span>
+          {#each topTags as tag (tag.normalized)}
+            <button
+              class="tag-chip"
+              class:active={activeTags.has(tag.normalized)}
+              on:click={() => toggleTag(tag.normalized)}
+              aria-pressed={activeTags.has(tag.normalized)}
+            >
+              {tag.display}
+              <span class="tag-count"
+                >{tagFrequencies.get(tag.normalized).count}</span
               >
-                {$_("landing.clear_all")}
-              </button>
-            {/if}
-          </div>
-          <div class="tag-chips">
-            {#each topTags as tag (tag.normalized)}
-              <button
-                class="tag-chip"
-                class:active={activeTags.has(tag.normalized)}
-                on:click={() => toggleTag(tag.normalized)}
-                aria-pressed={activeTags.has(tag.normalized)}
-              >
-                {tag.display}
-                <span class="tag-count"
-                  >{tagFrequencies.get(tag.normalized).count}</span
-                >
-              </button>
-            {/each}
-          </div>
+            </button>
+          {/each}
+          {#if activeTags.size > 0}
+            <button
+              class="clear-filters"
+              on:click={() => {
+                activeTags = new Set();
+              }}
+            >
+              {$_("landing.clear_all")}
+            </button>
+          {/if}
         </div>
       {/if}
     </div>
   </div>
-
-  <MetaStoryCarousel
-    {metaStories}
-    persons={entries}
-    getStyle={getStyle}
-    onSelectPerson={handleSelect}
-    onFilterByMetaStory={handleFilterByMetaStory}
-  />
 
   <div class="landing-grid">
     {#if filteredEntries.length > 0}
@@ -961,6 +959,12 @@
     gap: 1.25rem;
   }
 
+  .filters-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
   .search-box {
     position: relative;
     display: flex;
@@ -1021,7 +1025,8 @@
 
   .tag-filters {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 0.75rem;
   }
 
@@ -1141,7 +1146,7 @@
 
     .header-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 2fr;
       gap: 3rem;
       align-items: start;
     }
@@ -1155,7 +1160,20 @@
     }
 
     .filters-section {
-      padding-top: 2.5rem;
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .search-box {
+      flex-shrink: 0;
+      max-width: 400px;
+    }
+
+    .filters-right {
+      flex: 1;
+      min-width: 0;
     }
 
     .landing-grid {
