@@ -399,7 +399,7 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
     details.append(f"Subject identifier: {person_id}\nRequested subject: {subject}")
     if context:
         details.append("Context data:")
-        details.append(json.dumps(context, ensure_ascii=True, indent=2))
+        details.append(json.dumps(context, ensure_ascii=False, indent=2))
     return "\n".join(details)
 
 
@@ -518,7 +518,7 @@ def load_styles() -> Dict[str, Any]:
 def write_styles(data: Dict[str, Any]) -> None:
     STYLES_PATH.parent.mkdir(parents=True, exist_ok=True)
     STYLES_PATH.write_text(
-        json.dumps(data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
 
@@ -626,7 +626,7 @@ def main(argv: Any = None) -> int:
     print()
     if args.dry_run:
         print("=== Generated Style Configuration (Dry Run) ===")
-        print(json.dumps(result, indent=2, ensure_ascii=True))
+        print(json.dumps(result, indent=2, ensure_ascii=False))
     else:
         print(f"✓ Style successfully generated and saved to {STYLES_PATH}")
         print(f"  Person ID: {result['id']}")

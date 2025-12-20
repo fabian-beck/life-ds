@@ -312,7 +312,10 @@
 
   .portrait-background {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75%;
     display: flex;
     z-index: 0;
   }
@@ -370,10 +373,10 @@
     padding: 1.25rem 3.5rem 2.5rem 3.5rem;
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.85) 30%,
-      rgba(0, 0, 0, 0.5) 60%,
-      rgba(0, 0, 0, 0) 100%
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.9) 40%,
+      rgba(0, 0, 0, 0) 70%
     );
   }
 

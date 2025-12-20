@@ -86,7 +86,7 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
 
     try:
         REGISTER_PATH.write_text(
-            json.dumps(register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+            json.dumps(register, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
         )
         print(f"✓ Updated register at {REGISTER_PATH}")
     except Exception as error:

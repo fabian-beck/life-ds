@@ -343,10 +343,10 @@ def build_prompt(
     if existing_dataset:
         person_info = existing_dataset.get("person", {})
         combined += "Known information about the person:\n"
-        combined += json.dumps(person_info, indent=2, ensure_ascii=True)
+        combined += json.dumps(person_info, indent=2, ensure_ascii=False)
         combined += "\n\nSample life events:\n"
         events = existing_dataset.get("events", [])[:10]
-        combined += json.dumps(events, indent=2, ensure_ascii=True)
+        combined += json.dumps(events, indent=2, ensure_ascii=False)
         combined += "\n\n"
 
     if extract_text:
@@ -514,7 +514,7 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "ego_network.json"
     output_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     return output_path
 
@@ -560,7 +560,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
 
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
     REGISTER_PATH.write_text(
-        json.dumps(register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(register, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
 

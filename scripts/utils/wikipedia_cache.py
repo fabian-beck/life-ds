@@ -301,17 +301,17 @@ def save_cache(
 
     # Save page data
     (cache_dir / "wikipedia_page.json").write_text(
-        json.dumps(page_data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(page_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
     # Save summary data
     (cache_dir / "wikipedia_summary.json").write_text(
-        json.dumps(summary_data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(summary_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
     # Save Commons images
     (cache_dir / "commons_images.json").write_text(
-        json.dumps(commons_images, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(commons_images, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
 

@@ -509,7 +509,7 @@ def cache_person(
                 cache_dir = get_cache_dir(identifier)
                 related_path = cache_dir / "related_articles.json"
                 related_path.write_text(
-                    json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
+                    json.dumps(related_articles, indent=2, ensure_ascii=False) + "\n",
                     encoding="utf-8",
                 )
                 print(f"  - Cached {len(related_articles)} related articles")

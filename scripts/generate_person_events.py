@@ -3279,7 +3279,7 @@ def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "life_events.json"
     output_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     return output_path
 
@@ -3348,7 +3348,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     people.sort(key=lambda item: item.get("name", ""))
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
     REGISTER_PATH.write_text(
-        json.dumps(register, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(register, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
 
@@ -3448,7 +3448,7 @@ def generate_person_events(
                 related_path = cache_dir / "related_articles.json"
                 cache_dir.mkdir(parents=True, exist_ok=True)
                 related_path.write_text(
-                    json.dumps(related_articles, indent=2, ensure_ascii=True) + "\n",
+                    json.dumps(related_articles, indent=2, ensure_ascii=False) + "\n",
                     encoding="utf-8",
                 )
                 print(f"[Step 3/10] Cached {len(related_articles)} related articles")
@@ -3746,7 +3746,7 @@ def regenerate_images_only(
     # Write updated file
     print(f"[Step 4/4] Writing updated dataset...")
     events_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
     images_assigned = sum(1 for e in events if e.get('images'))
