@@ -320,12 +320,20 @@
     padding: 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 85%);
-    margin-right: -1px;
+    clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
+    margin-left: -5%;
+  }
+
+  .portrait-column:first-child {
+    margin-left: -2%;
+  }
+
+  .portrait-column:last-child {
+    margin-right: -2%;
   }
 
   .portrait-column:hover {
-    flex: 1.2;
+    flex: 1.15;
     z-index: 1;
   }
 
@@ -336,10 +344,11 @@
     object-position: center top;
     display: block;
     transition: transform 0.3s ease;
+    transform: scaleX(0.92);
   }
 
   .portrait-column:hover img {
-    transform: scale(1.05);
+    transform: scaleX(1) scale(1.02);
   }
 
   .slide-content {
