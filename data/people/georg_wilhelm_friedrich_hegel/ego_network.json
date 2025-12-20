@@ -1,0 +1,407 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2025-12-20",
+  "ego": {
+    "name": "Georg Wilhelm Friedrich Hegel",
+    "birth_year": 1770,
+    "death_year": 1831,
+    "primary_roles": [
+      "philosopher",
+      "writer",
+      "academic"
+    ],
+    "summary": "Georg Wilhelm Friedrich Hegel was a German philosopher and the culminating figure of German idealism, known for an ambitious system spanning logic, nature, spirit, history, art, religion, and politics. His university career developed from early theological studies and private tutoring through professorships at Jena, Heidelberg, and Berlin, where his lectures and major books established him as a central thinker of modern philosophy.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+  },
+  "connections": [
+    {
+      "person_name": "Georg Ludwig Hegel",
+      "relationship_type": "family/father",
+      "relationship_description": "Hegel's father; a Württemberg administrative official (Rentkammersekretär) in Stuttgart. His death in 1799 left Hegel a modest inheritance that enabled the move to Jena and a more direct academic career path.",
+      "start_year": 1770,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family upbringing in Stuttgart",
+        "inheritance enabling academic move to Jena"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Mentioned explicitly in the 'Schul- und Studienzeit (Stuttgart)' section of the provided extract."
+    },
+    {
+      "person_name": "Maria Magdalena Louisa Hegel (née Fromm)",
+      "relationship_type": "family/mother",
+      "relationship_description": "Hegel's mother, from a prosperous Stuttgart legal family; part of the pietist household milieu that shaped his early education and sensibilities. She died when Hegel was young.",
+      "start_year": 1770,
+      "end_year": 1783,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family upbringing in Stuttgart",
+        "early education and household culture"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Named in the extract; her death is implied by dates."
+    },
+    {
+      "person_name": "Christiane Luise Hegel",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Hegel’s younger sister (1773–1832), part of the immediate Stuttgart family circle and later connected to inheritance arrangements involving Hegel’s children.",
+      "start_year": 1773,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family correspondence and obligations",
+        "family inheritance arrangements affecting Hegel's children"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Christiane_Luise_Hegel"
+      ],
+      "notes": "The connection is anchored by the Hegel article naming her as sibling; details are expanded in her biography."
+    },
+    {
+      "person_name": "Georg Ludwig Hegel (1776–1812)",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Hegel's younger brother, raised with him in Stuttgart as part of the immediate family unit.",
+      "start_year": 1776,
+      "end_year": 1812,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "shared childhood household in Stuttgart"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Named as a sibling in the provided extract."
+    },
+    {
+      "person_name": "Friedrich Hölderlin",
+      "relationship_type": "social/friend",
+      "relationship_description": "Close friend and former roommate from the Tübinger Stift. Maintained intensive intellectual exchange; later helped Hegel secure a tutoring position in Frankfurt.",
+      "start_year": 1788,
+      "end_year": 1800,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "shared study at the Tübinger Stift",
+        "political and philosophical discussions",
+        "career support: arranged Frankfurt tutoring placement"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_H%C3%B6lderlin"
+      ],
+      "notes": "The extract emphasizes intellectual exchange and Hölderlin's role in the Frankfurt move."
+    },
+    {
+      "person_name": "Friedrich Wilhelm Joseph Schelling",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Tübingen friend (one of the 'Tübinger Drei') and later Jena colleague. Hegel aligned with Schelling against Fichte in 1801 and co-edited the Kritisches Journal der Philosophie with him (1802–1803); Schelling supported Hegel's appointment as extraordinary professor in 1805.",
+      "start_year": 1788,
+      "end_year": 1803,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "shared study at the Tübinger Stift",
+        "co-editing Kritisches Journal der Philosophie (1802–1803)",
+        "philosophical collaboration and debate in Jena",
+        "support for Hegel's academic appointment"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling"
+      ],
+      "notes": "The extract explicitly notes the co-editorship and appointment support."
+    },
+    {
+      "person_name": "Karl Friedrich von Steiger",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Head of the Bern patrician household where Hegel worked as a private tutor (Hauslehrer) beginning in 1793; the family's library and political milieu shaped Hegel's reading in political theory and social thought.",
+      "start_year": 1793,
+      "end_year": 1796,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "private tutoring of the Steiger children",
+        "access to household library and political-social context in Bern"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Named in the extract as the Bern employer."
+    },
+    {
+      "person_name": "Johann Noe Gogel",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Frankfurt wine merchant whose household employed Hegel as a private tutor from 1797; the move widened Hegel’s view of modern commercial society.",
+      "start_year": 1797,
+      "end_year": 1800,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "private tutoring in Frankfurt household",
+        "continued study of political economy and contemporary politics"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Explicitly mentioned in the extract."
+    },
+    {
+      "person_name": "Johann Gottlieb Fichte",
+      "relationship_type": "academic/rival",
+      "relationship_description": "Major contemporary philosopher whose system Hegel publicly contrasted with Schelling's in 1801, positioning himself largely with Schelling against Fichte in the Jena debates.",
+      "start_year": 1801,
+      "end_year": 1803,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "philosophical controversy and comparison (1801 essay)",
+        "participation in post-Kantian debates in Jena"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Johann_Gottlieb_Fichte"
+      ],
+      "notes": "Relationship is primarily intellectual and polemical rather than personal."
+    },
+    {
+      "person_name": "Johann Wolfgang von Goethe",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Prominent cultural figure who (together with Schelling) supported Hegel's appointment as extraordinary professor at Jena in February 1805.",
+      "start_year": 1805,
+      "end_year": 1805,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "academic patronage/recommendation for Jena appointment"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe"
+      ],
+      "notes": "The extract names Goethe among key supporters for the 1805 appointment."
+    },
+    {
+      "person_name": "Christina Charlotte Burkhardt (née Fischer)",
+      "relationship_type": "social/romantic_partner",
+      "relationship_description": "Widow with whom Hegel had an extramarital relationship in Jena; mother of his first, illegitimate son Ludwig Fischer. Hegel withdrew a marriage promise when leaving Jena and learned of the child's birth while in Bamberg.",
+      "start_year": 1806,
+      "end_year": 1807,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "relationship in Jena during the 1806–1807 crisis",
+        "parenthood of Ludwig Fischer"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Described in the extract around the 1807 Bamberg transition and the child's birth."
+    },
+    {
+      "person_name": "Friedrich Immanuel Niethammer",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend and correspondent who supported Hegel during the 1806 Jena crisis and helped him obtain the Nuremberg position.",
+      "start_year": 1806,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "correspondence during Jena crisis (1806)",
+        "career support and mediation (Nürnberg appointment)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_Immanuel_Niethammer"
+      ],
+      "notes": "Niethammer is named as a friend in the extract (letter reference) and as mediator for Nürnberg."
+    },
+    {
+      "person_name": "Napoleon Bonaparte",
+      "relationship_type": "social/encounter",
+      "relationship_description": "Hegel witnessed Napoleon’s entry into Jena in 1806 and interpreted it as a world-historical sign tied to his philosophy of history.",
+      "start_year": 1806,
+      "end_year": 1806,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "witnessing Napoleon's entry into Jena (1806)",
+        "historical interpretation tied to Hegel's philosophy of history"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Napoleon_Bonaparte"
+      ],
+      "notes": "The extract frames the encounter as intellectually formative and symbolically important."
+    },
+    {
+      "person_name": "Ludwig Fischer",
+      "relationship_type": "family/child",
+      "relationship_description": "Hegel’s first (illegitimate) son (born 5 February 1807 in Jena), from his relationship with Christina Charlotte Burkhardt; later brought into the Hegel household.",
+      "start_year": 1807,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family responsibility and later household integration (1817)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "The extract specifies birth date, mother, early care, and later inclusion in the family."
+    },
+    {
+      "person_name": "Johanna Frommann",
+      "relationship_type": "social/caregiver",
+      "relationship_description": "Caretaker who raised Hegel's illegitimate son Ludwig Fischer in Jena during his early childhood; she was the sister of the publisher Carl Friedrich Ernst Frommann.",
+      "start_year": 1807,
+      "end_year": 1817,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "childcare arrangement for Ludwig Fischer in Jena"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Mentioned in the extract as Ludwig Fischer's early caregiver."
+    },
+    {
+      "person_name": "Marie Helena Susanna von Tucher",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Hegel's wife (from the Nuremberg patrician Tucher family). Their marriage formed Hegel's later family and household, including the eventual integration of his illegitimate son into the family in 1817.",
+      "start_year": 1811,
+      "end_year": 1831,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "household and family life during Hegel's Nürnberg/Heidelberg/Berlin years"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_von_Hegel"
+      ],
+      "notes": "Spouse is referenced via the son's biography and Hegel's family context; the extract clearly mentions the later integration of Ludwig Fischer into the 'family Hegel' in 1817."
+    },
+    {
+      "person_name": "Eduard Gans",
+      "relationship_type": "academic/student",
+      "relationship_description": "Berlin student and later influential Hegelian lecturer who helped disseminate Hegel’s legal-political philosophy.",
+      "start_year": 1820,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "university teaching relationship in Berlin",
+        "development and dissemination of Hegelian legal-political philosophy"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Eduard_Gans"
+      ],
+      "notes": "Gans appears in the Hegel article as an example of the 'right/Old Hegelians'."
+    },
+    {
+      "person_name": "Heinrich Gustav Hotho",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student and later editor of Hegel's lectures, notably the Vorlesungen über die Ästhetik (published 1835–1838), based partly on his own lecture notes and other transcripts.",
+      "start_year": 1820,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "attendance at Hegel's Berlin lectures",
+        "posthumous editing of Hegel's Aesthetics lectures"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Heinrich_Gustav_Hotho"
+      ],
+      "notes": "Hotho is a key conduit for Hegel's reception via edited lecture publications."
+    },
+    {
+      "person_name": "Karl Rosenkranz",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student and later one of Hegel's most important biographers and editors; the extract notes that Rosenkranz compiled Hegel's Nürnberg-era teaching materials into the Philosophische Propädeutik from student notes.",
+      "start_year": 1825,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Hegelian scholarship after Hegel's death",
+        "editing/compiling Hegel's pedagogical materials (Propädeutik)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_Rosenkranz"
+      ],
+      "notes": "Relationship is largely posthumous via Rosenkranz's editorial work but based on being a student of Hegel."
+    },
+    {
+      "person_name": "Karl Marx",
+      "relationship_type": "academic/influencee",
+      "relationship_description": "Later thinker strongly influenced by Hegel’s works and the Berlin Hegelian milieu (including Eduard Gans’ lectures).",
+      "start_year": 1836,
+      "end_year": 1883,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "intellectual influence through Hegel's works and Berlin lecture tradition",
+        "development of Young Hegelian critique and later Marxism"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_Marx",
+        "https://de.wikipedia.org/wiki/Eduard_Gans"
+      ],
+      "notes": "No personal contact; influence is textual and institutional (Berlin intellectual milieu)."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "A pietist Stuttgart family background (parents and siblings) expands into a later Nuremberg household through marriage—complicated by an illegitimate son later brought into the family."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "From formative peers (Schelling, Hölderlin) and a key rival (Fichte) to Berlin students/editors (Gans, Hotho, Rosenkranz) who shaped Hegel’s reception."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Early tutoring posts financed the work; later patronage and mediation (e.g., Goethe, Niethammer) smoothed decisive career transitions."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Friendships and correspondents sustained him, while one consequential Jena relationship and a charged historical sighting—Napoleon in 1806—left lasting marks."
+    }
+  ]
+}

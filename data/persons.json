@@ -4,7 +4,7 @@
       "id": "ada_lovelace",
       "name": "Ada_Lovelace",
       "tagline": "Visionary pioneer of computing",
-      "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) was an English mathematician and writer best known for her work on Charles Babbage's proposed Analytical Engine. Educated intensively in mathematics and science by her mother to counteract the perceived 'poetic madness' of her father, Lord Byron, she combined rigorous analysis with an imaginative, philosophical outlook she called 'poetical science'. In 1842\u20131843 she translated Luigi Menabrea\u2019s article on the Analytical Engine and added extensive Notes that included a detailed algorithm for computing Bernoulli numbers and a far\u2011reaching vision of machines manipulating symbols to create music, graphics, and more. Although often ill and constrained by Victorian society, she maintained an active network with leading scientists and tried to apply mathematics even to gambling, before dying at 36 from uterine cancer.",
+      "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) was an English mathematician and writer best known for her work on Charles Babbage's proposed Analytical Engine. Educated intensively in mathematics and science by her mother to counteract the perceived 'poetic madness' of her father, Lord Byron, she combined rigorous analysis with an imaginative, philosophical outlook she called 'poetical science'. In 1842–1843 she translated Luigi Menabrea’s article on the Analytical Engine and added extensive Notes that included a detailed algorithm for computing Bernoulli numbers and a far‑reaching vision of machines manipulating symbols to create music, graphics, and more. Although often ill and constrained by Victorian society, she maintained an active network with leading scientists and tried to apply mathematics even to gambling, before dying at 36 from uterine cancer.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
         "source": "https://en.wikipedia.org/wiki/Ada_Lovelace"
@@ -25,8 +25,11 @@
       "tagline": "Father of theoretical computing",
       "summary": "Alan Turing was an English mathematician and codebreaker whose work founded modern computability theory, helped break German wartime ciphers at Bletchley Park, and shaped early computer design and artificial intelligence research. His later career also produced influential ideas in mathematical biology. He was prosecuted for homosexual acts in 1952 and died in 1954 from cyanide poisoning.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Alan_turing_header.jpg",
-        "source": "https://en.wikipedia.org/wiki/Alan_Turing"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
+        "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
+        "caption": "Photograph portrait of Alan Turing, taken on 29 March 1951.",
+        "creator": "Elliott & Fry",
+        "license": "Public domain"
       },
       "primaryRoles": [
         "mathematician",
@@ -34,7 +37,7 @@
         "cryptanalyst"
       ],
       "created": "2025-11-07T16:52:54+01:00",
-      "lastUpdated": "2025-12-15T20:28:18.846055+01:00",
+      "lastUpdated": "2025-12-20T16:25:06.366776+01:00",
       "birthDate": "1912-06-23",
       "deathDate": "1954-06-07"
     },
@@ -42,7 +45,7 @@
       "id": "albert_einstein",
       "name": "Albert_Einstein",
       "tagline": "Architect of Relativity",
-      "summary": "Albert Einstein (1879\u20131955) was a German-born theoretical physicist whose work transformed modern understandings of space, time, matter, and energy. While working at the Swiss Patent Office he published his 1905 \u201cAnnus Mirabilis\u201d papers, including special relativity and the mass\u2013energy relation E=mc\u00b2, and a key explanation of the photoelectric effect. He later developed the general theory of relativity, received the 1921 Nobel Prize in Physics, emigrated from Nazi Germany to the United States, and used his worldwide fame to advocate for peace, international cooperation, and nuclear arms control.",
+      "summary": "Albert Einstein (1879–1955) was a German-born theoretical physicist whose work transformed modern understandings of space, time, matter, and energy. While working at the Swiss Patent Office he published his 1905 “Annus Mirabilis” papers, including special relativity and the mass–energy relation E=mc², and a key explanation of the photoelectric effect. He later developed the general theory of relativity, received the 1921 Nobel Prize in Physics, emigrated from Nazi Germany to the United States, and used his worldwide fame to advocate for peace, international cooperation, and nuclear arms control.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Albert_Einstein_1921_by_F_Schmutzer.jpg",
         "source": "https://de.wikipedia.org/wiki/Albert_Einstein"
@@ -57,10 +60,28 @@
       "lastUpdated": "2025-12-09T21:34:33.927123+01:00"
     },
     {
+      "id": "antoni_gaud",
+      "name": "Antoni_Gaudí",
+      "summary": "Antoni Gaudí i Cornet was a Catalan architect and designer, the leading figure of Catalan Modernisme. Working largely in Barcelona, he developed a highly personal style rooted in natural forms, craft traditions, and an increasingly intense Catholic spirituality. He is best known for transforming the Sagrada Família into his lifelong project.",
+      "tagline": "Architect of nature-inspired modernism",
+      "portrait": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/7/72/Antoni_Gaudi_1878.jpg",
+        "source": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      },
+      "birthDate": "1852-06-25",
+      "deathDate": "1926-06-10",
+      "primaryRoles": [
+        "architect",
+        "designer"
+      ],
+      "created": "2025-12-20T21:14:19.142816+01:00",
+      "lastUpdated": "2025-12-20T21:16:07.760865+01:00"
+    },
+    {
       "id": "cunigunde_of_luxembourg",
       "name": "Cunigunde_of_Luxembourg",
       "tagline": "Pious empress and imperial co-ruler",
-      "summary": "Cunigunde of Luxembourg (c. 975 \u2013 3 March 1040) was a noblewoman of the House of Ardenne\u2013Luxembourg who became queen of Germany and later Holy Roman Empress as the wife of Henry II. Celebrated for her piety and political acumen, she was a close adviser to Henry, appeared frequently in royal charters as consors regni (\u201cpartner in rule\u201d), and played a notable role in imperial church patronage, especially at Bamberg. After acting briefly as regent following Henry\u2019s death in 1024, she retired to the Benedictine monastery she had founded at Kaufungen, where she lived a life of prayer and charity until her death.",
+      "summary": "Cunigunde of Luxembourg (c. 975 – 3 March 1040) was a noblewoman of the House of Ardenne–Luxembourg who became queen of Germany and later Holy Roman Empress as the wife of Henry II. Celebrated for her piety and political acumen, she was a close adviser to Henry, appeared frequently in royal charters as consors regni (“partner in rule”), and played a notable role in imperial church patronage, especially at Bamberg. After acting briefly as regent following Henry’s death in 1024, she retired to the Benedictine monastery she had founded at Kaufungen, where she lived a life of prayer and charity until her death.",
       "birthDate": "0975-01-01",
       "deathDate": "1040-03-03",
       "primaryRoles": [
@@ -71,7 +92,7 @@
       "lastUpdated": "2025-12-07T11:28:27.234239+01:00",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Di%C3%B6zesanmuseum_Bamberg_-_Adamspforte_Heinrich_02.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Di\u00f6zesanmuseum_Bamberg_-_Adamspforte_Heinrich_02.jpg",
+        "source": "https://commons.wikimedia.org/wiki/File:Diözesanmuseum_Bamberg_-_Adamspforte_Heinrich_02.jpg",
         "caption": "Bamberg ( Upper Franconia ). Lapidarium in the cloisters of Bamberg cathedral: Statue ( 1225 ) of Holy Roman empress Cunigunde",
         "creator": "Wolfgang Sauber",
         "license": "CC BY 4.0",
@@ -120,7 +141,7 @@
       "id": "emmy_noether",
       "name": "Emmy_Noether",
       "tagline": "Mother of Modern Algebra",
-      "summary": "Emmy Noether (1882\u20131935) was a German mathematician whose work transformed abstract algebra and profoundly influenced mathematical physics. At Erlangen and later at G\u00f6ttingen she developed the modern theory of rings, ideals, and modules, introduced the notion of Noetherian structures, and proved Noether\u2019s theorems linking symmetries with conservation laws in physics. Barred for years from paid academic posts because she was a woman and Jewish, she nonetheless led a renowned school of algebraists before being dismissed by the Nazis and continuing her research and teaching at Bryn Mawr College and the Institute for Advanced Study in the United States.",
+      "summary": "Emmy Noether (1882–1935) was a German mathematician whose work transformed abstract algebra and profoundly influenced mathematical physics. At Erlangen and later at Göttingen she developed the modern theory of rings, ideals, and modules, introduced the notion of Noetherian structures, and proved Noether’s theorems linking symmetries with conservation laws in physics. Barred for years from paid academic posts because she was a woman and Jewish, she nonetheless led a renowned school of algebraists before being dismissed by the Nazis and continuing her research and teaching at Bryn Mawr College and the Institute for Advanced Study in the United States.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
         "source": "https://en.wikipedia.org/wiki/Emmy_Noether"
@@ -135,19 +156,20 @@
     },
     {
       "id": "erich_k_stner",
-      "name": "Erich_K\u00e4stner",
-      "tagline": "Voice of Childhood and Conscience",
-      "summary": "Erich K\u00e4stner was a German writer, poet, screenwriter, journalist, and satirist, best known for his socially critical verse and for modern, urban children\u2019s books such as \"Emil and the Detectives\", \"P\u00fcnktchen und Anton\", \"Das fliegende Klassenzimmer\" and \"Das doppelte Lottchen\". Rising to prominence in Weimar Berlin, he chose to remain in Nazi Germany despite censorship and book burnings, wrote under pseudonyms, and survived wartime repression to become an influential post\u2011war public intellectual and children\u2019s author based in Munich. In 1960 he received the international Hans Christian Andersen Award for his autobiography \"Als ich ein kleiner Junge war\".",
+      "name": "Erich_Kästner",
+      "tagline": "Satirist of modern German life",
+      "summary": "Erich Kästner was a German writer, poet, and screenwriter whose witty, socially observant work ranged from Weimar-era satire to enduring children’s classics such as \"Emil and the Detectives\" and \"Das doppelte Lottchen\". He remained in Germany under National Socialism despite bans on his books, continuing to work under pseudonyms, and re-emerged after 1945 as a leading public intellectual and editor in Munich. In later decades he received major international recognition, including the Hans Christian Andersen Award.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/5/52/Erich_K%C3%A4stner_1961.jpg",
         "source": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner"
       },
       "primaryRoles": [
         "writer",
-        "poet"
+        "poet",
+        "screenwriter"
       ],
       "created": "2025-11-20T05:22:05+01:00",
-      "lastUpdated": "2025-12-05T09:21:03.744682+01:00",
+      "lastUpdated": "2025-12-20T16:58:30.385613+01:00",
       "birthDate": "1899-02-23",
       "deathDate": "1974-07-29"
     },
@@ -173,7 +195,7 @@
       "id": "franz_kafka",
       "name": "Franz_Kafka",
       "tagline": "Master of the Kafkaesque imagination",
-      "summary": "Franz Kafka (1883\u20131924) was a German-language Jewish writer from Prague whose unsettling, precise prose reshaped 20th\u2011century literature. Trained as a lawyer and employed in insurance, he wrote fiction in his spare hours, portraying isolated protagonists trapped in opaque bureaucratic systems. Only a handful of works, including \"The Metamorphosis\" and the story collections \"Contemplation\" and \"A Country Doctor\", appeared during his lifetime, but they influenced generations of writers, philosophers, and artists. His early death from tuberculosis left his novels unfinished and his reputation to grow posthumously from near-obscurity to global prominence.",
+      "summary": "Franz Kafka (1883–1924) was a German-language Jewish writer from Prague whose unsettling, precise prose reshaped 20th‑century literature. Trained as a lawyer and employed in insurance, he wrote fiction in his spare hours, portraying isolated protagonists trapped in opaque bureaucratic systems. Only a handful of works, including \"The Metamorphosis\" and the story collections \"Contemplation\" and \"A Country Doctor\", appeared during his lifetime, but they influenced generations of writers, philosophers, and artists. His early death from tuberculosis left his novels unfinished and his reputation to grow posthumously from near-obscurity to global prominence.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/2/26/Franz_Kafka%2C_1923.jpg",
         "source": "https://de.wikipedia.org/wiki/Franz_Kafka"
@@ -191,7 +213,7 @@
       "id": "frei_otto",
       "name": "Frei_Otto",
       "tagline": "Pioneer of lightweight tensile architecture",
-      "summary": "Frei Otto was a German architect, structural innovator and professor whose experimental work with cable nets, gridshells and other tensile structures transformed 20th\u2011century architecture. Starting from gliding and prisoner\u2011of\u2011war camp construction, he developed a lifelong quest for building with minimal material, energy and environmental impact, founding the Institute for Lightweight Structures in Stuttgart and shaping icons such as the Munich Olympic roofs and the German pavilion at Expo 67. A leading voice of organic and ecological design, he received the Pritzker Architecture Prize in 2015, shortly before his death.",
+      "summary": "Frei Otto was a German architect, structural innovator and professor whose experimental work with cable nets, gridshells and other tensile structures transformed 20th‑century architecture. Starting from gliding and prisoner‑of‑war camp construction, he developed a lifelong quest for building with minimal material, energy and environmental impact, founding the Institute for Lightweight Structures in Stuttgart and shaping icons such as the Munich Olympic roofs and the German pavilion at Expo 67. A leading voice of organic and ecological design, he received the Pritzker Architecture Prize in 2015, shortly before his death.",
       "birthDate": "1925-05-31",
       "deathDate": "2015-03-09",
       "primaryRoles": [
@@ -205,7 +227,7 @@
         "image": "https://live.staticflickr.com/7285/16624485718_cd8417277d.jpg",
         "source": "https://www.flickr.com/photos/44343967@N00/16624485718",
         "caption": "Frei Otto - portrait 03",
-        "creator": "\u6e96\u5efa\u7bc9\u4eba\u624b\u672d\u7db2\u7ad9 Forgemind ArchiMedia",
+        "creator": "準建築人手札網站 Forgemind ArchiMedia",
         "license": "CC BY 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
       }
@@ -230,10 +252,29 @@
       "deathDate": "2000-02-19"
     },
     {
+      "id": "georg_wilhelm_friedrich_hegel",
+      "name": "Georg_Wilhelm_Friedrich_Hegel",
+      "summary": "Georg Wilhelm Friedrich Hegel was a German philosopher and the culminating figure of German idealism, known for an ambitious system spanning logic, nature, spirit, history, art, religion, and politics. His university career developed from early theological studies and private tutoring through professorships at Jena, Heidelberg, and Berlin, where his lectures and major books established him as a central thinker of modern philosophy.",
+      "tagline": "System-builder of German idealism",
+      "portrait": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/b/bf/1831_Schlesinger_Philosoph_Georg_Friedrich_Wilhelm_Hegel_anagoria.JPG",
+        "source": "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      },
+      "birthDate": "1770-08-27",
+      "deathDate": "1831-11-14",
+      "primaryRoles": [
+        "philosopher",
+        "writer",
+        "academic"
+      ],
+      "created": "2025-12-20T18:33:15.595889+01:00",
+      "lastUpdated": "2025-12-20T18:36:11.908084+01:00"
+    },
+    {
       "id": "grace_hopper",
       "name": "Grace_Hopper",
       "tagline": "Queen of Code",
-      "summary": "Grace Hopper was an American computer scientist, mathematician, and U.S. Navy rear admiral who became one of the earliest programmers of the Harvard Mark I, a creator of the first working compiler, and a key figure in the development of FLOW-MATIC and COBOL, foundational high-level programming languages. Over a parallel academic, industrial, and naval career spanning more than four decades, she championed machine-independent, English\u2011like programming and helped standardize programming language practices across the U.S. Navy and the computing industry.",
+      "summary": "Grace Hopper was an American computer scientist, mathematician, and U.S. Navy rear admiral who became one of the earliest programmers of the Harvard Mark I, a creator of the first working compiler, and a key figure in the development of FLOW-MATIC and COBOL, foundational high-level programming languages. Over a parallel academic, industrial, and naval career spanning more than four decades, she championed machine-independent, English‑like programming and helped standardize programming language practices across the U.S. Navy and the computing industry.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
         "source": "https://en.wikipedia.org/wiki/Grace_Hopper"
@@ -251,7 +292,7 @@
       "id": "hedy_lamarr",
       "name": "Hedy_Lamarr",
       "tagline": "Hollywood star, wireless pioneer",
-      "summary": "Hedy Lamarr (born Hedwig Eva Maria Kiesler) was an Austrian-born American film star whose MGM career peaked from the late 1930s through the 1950s. During World War II she co-invented, with composer George Antheil, a frequency-hopping \u201csecret communication system\u201d intended to prevent jamming of radio-guided torpedoes\u2014an early spread-spectrum concept. In later decades she withdrew from public life but received belated recognition for her inventive work while still alive.",
+      "summary": "Hedy Lamarr (born Hedwig Eva Maria Kiesler) was an Austrian-born American film star whose MGM career peaked from the late 1930s through the 1950s. During World War II she co-invented, with composer George Antheil, a frequency-hopping “secret communication system” intended to prevent jamming of radio-guided torpedoes—an early spread-spectrum concept. In later decades she withdrew from public life but received belated recognition for her inventive work while still alive.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Hedy_Lamarr_Publicity_Photo_for_The_Heavenly_Body_1944.jpg",
         "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr"
@@ -269,7 +310,7 @@
       "id": "heinz_nixdorf",
       "name": "Heinz_Nixdorf",
       "tagline": "Germany's Computer Entrepreneur",
-      "summary": "Heinz Nixdorf (1925\u20131986) was a German computer pioneer and entrepreneur who founded Nixdorf Computer AG and built it from a tiny start\u2011up into a major international electronics and computing company. Coming from a poor railway family and interrupted by wartime service, he fought his way back to complete secondary school, study applied physics, and gain crucial experience in calculator development at Remington Rand. With early backing from the utility RWE, he created Germany\u2019s first tube\u2011based computer, then shifted to transistor and semiconductor technology, becoming a leading figure of the German Wirtschaftswunder and a key promoter of decentralized data processing and workforce training until his sudden death at a trade fair in 1986.",
+      "summary": "Heinz Nixdorf (1925–1986) was a German computer pioneer and entrepreneur who founded Nixdorf Computer AG and built it from a tiny start‑up into a major international electronics and computing company. Coming from a poor railway family and interrupted by wartime service, he fought his way back to complete secondary school, study applied physics, and gain crucial experience in calculator development at Remington Rand. With early backing from the utility RWE, he created Germany’s first tube‑based computer, then shifted to transistor and semiconductor technology, becoming a leading figure of the German Wirtschaftswunder and a key promoter of decentralized data processing and workforce training until his sudden death at a trade fair in 1986.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
         "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
@@ -287,7 +328,7 @@
       "id": "henry_ii",
       "name": "Henry_II",
       "tagline": "Saint-emperor who founded Bamberg",
-      "summary": "Henry II of the Ottonian dynasty ruled as King of Germany and Italy and, from 1014, as Holy Roman Emperor. His reign was marked by close collaboration with the Church, major conflicts on the empire\u2019s eastern frontiers, and enduring institutional foundations such as the Diocese of Bamberg. Married to Cunigunde of Luxembourg, he died childless and was later venerated as a saint.",
+      "summary": "Henry II of the Ottonian dynasty ruled as King of Germany and Italy and, from 1014, as Holy Roman Emperor. His reign was marked by close collaboration with the Church, major conflicts on the empire’s eastern frontiers, and enduring institutional foundations such as the Diocese of Bamberg. Married to Cunigunde of Luxembourg, he died childless and was later venerated as a saint.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Seal_of_Henry_II%2C_Holy_Roman_Emperor.jpg",
         "source": "https://commons.wikimedia.org/wiki/File:Seal_of_Henry_II,_Holy_Roman_Emperor.jpg",
@@ -309,7 +350,7 @@
       "id": "john_von_neumann",
       "name": "John_von_Neumann",
       "tagline": "Polymath of the Atomic Age",
-      "summary": "John von Neumann was a Hungarian\u2011American mathematician, physicist, computer scientist, and engineer whose work reshaped pure mathematics, quantum mechanics, game theory, economics, and the architecture of modern digital computers. A child prodigy from Budapest, he became one of the youngest Privatdozenten in Germany, then a founding professor at the Institute for Advanced Study in Princeton. During World War II and the early Cold War he was central to the Manhattan Project, the development of high\u2011speed computing, and U.S. nuclear and missile strategy. He died in 1957 from metastatic cancer.",
+      "summary": "John von Neumann was a Hungarian‑American mathematician, physicist, computer scientist, and engineer whose work reshaped pure mathematics, quantum mechanics, game theory, economics, and the architecture of modern digital computers. A child prodigy from Budapest, he became one of the youngest Privatdozenten in Germany, then a founding professor at the Institute for Advanced Study in Princeton. During World War II and the early Cold War he was central to the Manhattan Project, the development of high‑speed computing, and U.S. nuclear and missile strategy. He died in 1957 from metastatic cancer.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/a/a9/John_von_Neumann.jpg",
         "source": "https://commons.wikimedia.org/wiki/File:John_von_Neumann.jpg"
@@ -328,7 +369,7 @@
       "id": "joseph_weizenbaum",
       "name": "Joseph_Weizenbaum",
       "tagline": "Creator of ELIZA, Critic of AI",
-      "summary": "Joseph Weizenbaum was a German\u2011American computer scientist and a prominent critic of unreflective faith in computers and artificial intelligence. After emigrating from Nazi Germany to the United States in 1936, he studied mathematics, worked as a system engineer at General Electric, and joined MIT in 1963, where he helped develop early list\u2011processing languages and contributed to the ARPANET. His 1960s program ELIZA became a landmark in natural\u2011language processing and led him to question the social and ethical implications of AI, themes he explored in his influential 1976 book \"Computer Power and Human Reason.\" In later life he became a leading public intellectual on technology and responsibility, eventually returning to live in Berlin in 1996, where he remained active until his death in 2008.",
+      "summary": "Joseph Weizenbaum was a German‑American computer scientist and a prominent critic of unreflective faith in computers and artificial intelligence. After emigrating from Nazi Germany to the United States in 1936, he studied mathematics, worked as a system engineer at General Electric, and joined MIT in 1963, where he helped develop early list‑processing languages and contributed to the ARPANET. His 1960s program ELIZA became a landmark in natural‑language processing and led him to question the social and ethical implications of AI, themes he explored in his influential 1976 book \"Computer Power and Human Reason.\" In later life he became a leading public intellectual on technology and responsibility, eventually returning to live in Berlin in 1996, where he remained active until his death in 2008.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
         "source": "https://de.wikipedia.org/wiki/Joseph_Weizenbaum"
@@ -346,7 +387,7 @@
       "id": "konrad_zuse",
       "name": "Konrad_Zuse",
       "tagline": "Builder of the first programmable computer",
-      "summary": "Konrad Zuse was a German engineer and inventor whose relay-based Z3 (operational in 1941) is widely regarded as the first working, freely programmable, automatic digital computer. He later founded one of Germany\u2019s earliest computer firms and pursued ideas in computing theory alongside artistic work.",
+      "summary": "Konrad Zuse was a German engineer and inventor whose relay-based Z3 (operational in 1941) is widely regarded as the first working, freely programmable, automatic digital computer. He later founded one of Germany’s earliest computer firms and pursued ideas in computing theory alongside artistic work.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/Konrad_Zuse_%281992%29.jpg",
         "source": "https://de.wikipedia.org/wiki/Konrad_Zuse"
@@ -383,7 +424,7 @@
     {
       "id": "marie_curie",
       "name": "Marie_Curie",
-      "summary": "Marie Curie was a Polish-born physicist and chemist who worked in France and transformed the study of radioactivity. She discovered the elements polonium and radium with Pierre Curie, introduced the term 'radioactivity,' and won Nobel Prizes in both Physics (1903) and Chemistry (1911). During World War I she organized mobile X-ray services for battlefield medicine and later led major radium research institutions.",
+      "summary": "Marie Curie was a Polish-born physicist and chemist who built her career in France and transformed the study of radioactivity. She discovered the elements polonium and radium with Pierre Curie, introduced key concepts and measurement methods for radioactive phenomena, and won Nobel Prizes in both Physics and Chemistry. During World War I she advanced battlefield radiology, and later led major research institutions while promoting international scientific cooperation.",
       "tagline": "Pioneer of radioactivity research",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Marie_Curie_%28Nobel-Chem%29.jpg",
@@ -393,11 +434,10 @@
       "deathDate": "1934-07-04",
       "primaryRoles": [
         "physicist",
-        "chemist",
-        "inventor"
+        "chemist"
       ],
       "created": "2025-12-20T14:37:16.122965+01:00",
-      "lastUpdated": "2025-12-20T14:39:12.874237+01:00"
+      "lastUpdated": "2025-12-20T21:36:12.635100+01:00"
     },
     {
       "id": "steve_jobs",
@@ -422,7 +462,7 @@
       "id": "umberto_eco",
       "name": "Umberto_Eco",
       "tagline": "Scholar Who Wrote Bestsellers",
-      "summary": "Umberto Eco was an Italian medievalist, philosopher and semiotician who became internationally famous as the author of the novel The Name of the Rose and as a leading theorist of semiotics, mass media, and contemporary culture. Trained in medieval philosophy, he developed influential ideas about the \u201copen work,\u201d interpretative semiotics, and fascism, while teaching at major Italian universities and writing widely read fiction and essays.",
+      "summary": "Umberto Eco was an Italian medievalist, philosopher and semiotician who became internationally famous as the author of the novel The Name of the Rose and as a leading theorist of semiotics, mass media, and contemporary culture. Trained in medieval philosophy, he developed influential ideas about the “open work,” interpretative semiotics, and fascism, while teaching at major Italian universities and writing widely read fiction and essays.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Italiaanse_schrijver_Umberto_Eco%2C_portret.jpg",
         "source": "https://en.wikipedia.org/wiki/Umberto_Eco"
@@ -440,7 +480,7 @@
       "id": "zaha_hadid",
       "name": "Zaha_Hadid",
       "tagline": "Queen of Curves in Architecture",
-      "summary": "Zaha Hadid (1950\u20132016) was an Iraqi\u2011British architect, artist, and designer whose radical, fluid forms reshaped late\u201120th\u2011 and early\u201121st\u2011century architecture. Educated in mathematics in Beirut and in architecture at the Architectural Association in London, she first became known for visionary, largely unbuilt projects and for her role in the deconstructivist movement. With works such as the Vitra Fire Station, the MAXXI Museum in Rome, the Guangzhou Opera House, and London\u2019s Aquatics Centre, she translated her dynamic paintings into complex built structures worldwide. The first woman to win the Pritzker Architecture Prize and the RIBA Royal Gold Medal, she combined avant\u2011garde experimentation with large\u2011scale public and cultural commissions.",
+      "summary": "Zaha Hadid (1950–2016) was an Iraqi‑British architect, artist, and designer whose radical, fluid forms reshaped late‑20th‑ and early‑21st‑century architecture. Educated in mathematics in Beirut and in architecture at the Architectural Association in London, she first became known for visionary, largely unbuilt projects and for her role in the deconstructivist movement. With works such as the Vitra Fire Station, the MAXXI Museum in Rome, the Guangzhou Opera House, and London’s Aquatics Centre, she translated her dynamic paintings into complex built structures worldwide. The first woman to win the Pritzker Architecture Prize and the RIBA Royal Gold Medal, she combined avant‑garde experimentation with large‑scale public and cultural commissions.",
       "portrait": {
         "image": "https://upload.wikimedia.org/wikipedia/commons/7/73/Zaha_Hadid_in_Heydar_Aliyev_Cultural_center_in_Baku_nov_2013.jpg",
         "source": "https://en.wikipedia.org/wiki/Zaha_Hadid"
