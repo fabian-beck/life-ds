@@ -413,8 +413,15 @@
       mapInstance.removeSource('migration-route');
     }
 
+    // Cancel animations
+    if (window.migrationAnimations) {
+      window.migrationAnimations.forEach(id => cancelAnimationFrame(id));
+      window.migrationAnimations = [];
+    }
+
     // Remove all arrow markers
-    for (const marker of migrationPathMarkers) {
+    for (const item of migrationPathMarkers) {
+      const marker = item.marker || item;
       marker.remove();
     }
     migrationPathMarkers = [];
@@ -423,6 +430,7 @@
   function createArrowElement(color) {
     const container = document.createElement("div");
     container.className = "migration-arrow-container";
+    container.style.opacity = "0"; // Start invisible for fade-in
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("width", "24");
@@ -452,7 +460,7 @@
    * @param {number} numPoints - Number of points along the arc
    * @returns {Array} Array of [lon, lat] coordinates
    */
-  function createCurvedPath(from, to, numPoints = 30) {
+  function createCurvedPath(from, to, numPoints = 100) {
     const coordinates = [];
 
     // Calculate midpoint
@@ -523,6 +531,122 @@
     return coordinates;
   }
 
+  function addMigrationArrows(from, to, curvedCoordinates) {
+    // Calculate arrow count based on pixel distance at current viewport
+    const fromPoint = mapInstance.project([from.lon, from.lat]);
+    const toPoint = mapInstance.project([to.lon, to.lat]);
+    const pixelDistance = Math.sqrt(
+      Math.pow(toPoint.x - fromPoint.x, 2) + Math.pow(toPoint.y - fromPoint.y, 2)
+    );
+
+    // Dynamically calculate number of arrows based on pixel distance
+    // Aim for one arrow roughly every 100-120 pixels, minimum 1, maximum 5
+    const numArrows = Math.max(1, Math.min(5, Math.round(pixelDistance / 110)));
+
+    // Remove existing arrow markers
+    for (const marker of migrationPathMarkers) {
+      marker.remove();
+    }
+    migrationPathMarkers = [];
+
+    // Animation duration in seconds - much slower, longer paths take longer
+    const animationDuration = Math.max(8, Math.min(20, pixelDistance / 30));
+
+    // Create arrows that will animate along the path
+    for (let i = 0; i < numArrows; i++) {
+      // Stagger the start of each arrow's animation
+      const delay = (i / numArrows) * animationDuration;
+
+      // Start arrow at the beginning of the path
+      const startIndex = 0;
+      const current = curvedCoordinates[startIndex];
+      const next = curvedCoordinates[Math.min(3, curvedCoordinates.length - 1)];
+
+      // Calculate initial angle
+      const deltaX = next[0] - current[0];
+      const deltaY = next[1] - current[1];
+      const initialAngle = Math.atan2(deltaX, deltaY) * (180 / Math.PI);
+
+      const arrowElement = createArrowElement(primaryMarkerColor);
+
+      // Add animation to the arrow container
+      arrowElement.style.animation = `migrate-arrow ${animationDuration}s linear ${delay}s infinite`;
+
+      const marker = new maplibregl.Marker({
+        element: arrowElement,
+        anchor: "center",
+        rotationAlignment: "map",
+        pitchAlignment: "map",
+      })
+        .setLngLat([current[0], current[1]])
+        .setRotation(initialAngle)
+        .addTo(mapInstance);
+
+      migrationPathMarkers.push({ marker, coords: curvedCoordinates });
+    }
+
+    // Animate arrows along the path
+    let animationFrameId;
+    const startTime = Date.now();
+
+    function animateArrows() {
+      const elapsed = (Date.now() - startTime) / 1000; // seconds
+
+      migrationPathMarkers.forEach(({ marker, coords }, i) => {
+        const delay = (i / numArrows) * animationDuration;
+        const progress = ((elapsed - delay) % animationDuration) / animationDuration;
+
+        if (progress >= 0) {
+          // Calculate position along the curve with smooth interpolation
+          const exactIndex = progress * (coords.length - 1);
+          const index = Math.floor(exactIndex);
+          const nextIndex = Math.min(index + 1, coords.length - 1);
+          const fraction = exactIndex - index; // 0-1 between current and next point
+
+          const current = coords[index];
+          const next = coords[nextIndex];
+
+          // Smoothly interpolate position between points
+          const lon = current[0] + (next[0] - current[0]) * fraction;
+          const lat = current[1] + (next[1] - current[1]) * fraction;
+
+          // Update position
+          marker.setLngLat([lon, lat]);
+
+          // Calculate rotation using a few points ahead for smoother direction
+          const lookAheadIndex = Math.min(index + 5, coords.length - 1);
+          const lookAhead = coords[lookAheadIndex];
+          const deltaX = lookAhead[0] - current[0];
+          const deltaY = lookAhead[1] - current[1];
+          const angle = Math.atan2(deltaX, deltaY) * (180 / Math.PI);
+          marker.setRotation(angle);
+
+          // Update opacity (fade in at start, fade out at end)
+          const element = marker.getElement();
+          if (element) {
+            let opacity;
+            if (progress < 0.1) {
+              opacity = progress / 0.1;
+            } else if (progress > 0.9) {
+              opacity = (1 - progress) / 0.1;
+            } else {
+              opacity = 1;
+            }
+            element.style.opacity = opacity * 0.85;
+          }
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animateArrows);
+    }
+
+    animateArrows();
+
+    // Store animation ID for cleanup
+    if (!window.migrationAnimations) window.migrationAnimations = [];
+    window.migrationAnimations.push(animationFrameId);
+  }
+
   function updateMigrationPath(path) {
     if (!mapInstance || !mapReady) return;
 
@@ -569,61 +693,18 @@
       paint: {
         'line-color': primaryMarkerColor,
         'line-width': 2.5,
-        'line-opacity': 0.5,
+        'line-opacity': 0.25,
         'line-dasharray': [3, 2]
       }
     });
 
-    // Add arrow markers along the path
-    // Number of arrows depends on visual length on screen (accounting for zoom)
-    const fromPoint = mapInstance.project([from.lon, from.lat]);
-    const toPoint = mapInstance.project([to.lon, to.lat]);
-    const pixelDistance = Math.sqrt(
-      Math.pow(toPoint.x - fromPoint.x, 2) + Math.pow(toPoint.y - fromPoint.y, 2)
-    );
-
-    // Dynamically calculate number of arrows based on pixel distance
-    // Aim for one arrow roughly every 100-120 pixels, minimum 1, maximum 5
-    const numArrows = Math.max(1, Math.min(5, Math.round(pixelDistance / 110)));
-
-    // Distribute arrows evenly along the path
-    // For n arrows: place them at positions that divide the path into n+1 segments
-    // e.g., 1 arrow: [0.5], 2 arrows: [0.33, 0.67], 3 arrows: [0.25, 0.5, 0.75]
-    const arrowPositions = [];
-    for (let i = 1; i <= numArrows; i++) {
-      arrowPositions.push(i / (numArrows + 1));
-    }
-
-    for (const position of arrowPositions) {
-      const index = Math.floor(position * (curvedCoordinates.length - 1));
-
-      // Look ahead a few points to get better tangent direction
-      const lookAhead = 3;
-      const nextIndex = Math.min(index + lookAhead, curvedCoordinates.length - 1);
-
-      const current = curvedCoordinates[index];
-      const next = curvedCoordinates[nextIndex];
-
-      // Calculate simple angle in screen space (not great circle bearing)
-      // This gives the visual angle we want on the map
-      const deltaX = next[0] - current[0];
-      const deltaY = next[1] - current[1];
-      const angle = Math.atan2(deltaX, deltaY) * (180 / Math.PI);
-
-      const arrowElement = createArrowElement(primaryMarkerColor);
-
-      const marker = new maplibregl.Marker({
-        element: arrowElement,
-        anchor: "center",
-        rotationAlignment: "map",
-        pitchAlignment: "map",
-      })
-        .setLngLat([current[0], current[1]])
-        .setRotation(angle) // Use MapLibre's rotation method
-        .addTo(mapInstance);
-
-      migrationPathMarkers.push(marker);
-    }
+    // Defer arrow placement until after map animation completes (900ms + buffer)
+    // This ensures arrows are counted based on final viewport, not initial state
+    setTimeout(() => {
+      if (mapInstance && mapReady) {
+        addMigrationArrows(from, to, curvedCoordinates);
+      }
+    }, 1000);
   }
 
   function teardownMapInstance() {
@@ -1054,5 +1135,22 @@
   :global(.migration-arrow-container) {
     pointer-events: none;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  }
+
+  @keyframes migrate-flow {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.85;
+    }
+    90% {
+      opacity: 0.85;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
   }
 </style>
