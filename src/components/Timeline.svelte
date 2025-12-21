@@ -94,6 +94,8 @@
         return mdiRing;
       case 'publication':
         return mdiBook;
+      case 'migration':
+        return resolveIconPath('mdi-map-marker-multiple');
       default:
         return null;
     }

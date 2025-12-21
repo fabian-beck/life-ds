@@ -10,6 +10,7 @@
     mdiRing,
     mdiStar,
     mdiBook,
+    mdiMapMarkerMultiple,
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { joinWithSeparator } from "../utils/helpers.js";
@@ -95,6 +96,8 @@
         return mdiRing;
       case 'publication':
         return mdiBook;
+      case 'migration':
+        return mdiSignDirection;
       default:
         return mdiStar;
     }

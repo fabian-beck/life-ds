@@ -83,7 +83,7 @@ ICON_CATEGORIES = {
     "journey": "mdi-map-marker",
     "expedition": "mdi-compass",
     "exploration": "mdi-compass",
-    "migration": "mdi-airplane",
+    "migration": "mdi-map-marker-multiple",
     "relocation": "mdi-home-move",
     "exile": "mdi-exit-to-app",
 
