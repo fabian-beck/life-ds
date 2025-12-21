@@ -97,7 +97,7 @@
       case 'publication':
         return mdiBook;
       case 'migration':
-        return mdiSignDirection;
+        return mdiMapMarkerMultiple;
       default:
         return mdiStar;
     }
