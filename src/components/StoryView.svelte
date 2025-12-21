@@ -30,6 +30,7 @@
     computeYearsLabel,
     createDateFormatters,
     getValidImages,
+    getMigrationPath,
   } from "../utils/storyHelpers.js";
 
   export let dataset = null;
@@ -335,6 +336,11 @@
     activeEventIndex >= 0
       ? (eventSlides[activeEventIndex]?.coordinates ?? DEFAULT_COORDINATES)
       : DEFAULT_COORDINATES;
+
+  $: activeMigrationPath =
+    activeEventIndex >= 0 && eventSlides[activeEventIndex]
+      ? getMigrationPath(eventSlides[activeEventIndex])
+      : null;
 
   $: markerTrail =
     hasMapData && activeEventIndex > 0
@@ -1177,6 +1183,7 @@
         {activeIndex}
         {isChapterSlide}
         {styleConfig}
+        migrationPath={activeMigrationPath}
       />
     {/if}
   </div>

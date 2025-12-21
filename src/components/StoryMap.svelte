@@ -14,6 +14,7 @@
   export let activeIndex = 0;
   export let isChapterSlide = false;
   export let styleConfig = null;
+  export let migrationPath = null; // {from: {lon, lat}, to: {lon, lat}} or null
 
   // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
   const DEFAULT_PM_TILES_URL = "/basemap.pmtiles";
@@ -399,8 +400,235 @@
     trailMarkers = [];
   }
 
+  let migrationPathMarkers = [];
+
+  function clearMigrationPath() {
+    if (!mapInstance) return;
+
+    // Remove layers first, then sources
+    if (mapInstance.getLayer('migration-path')) {
+      mapInstance.removeLayer('migration-path');
+    }
+    if (mapInstance.getSource('migration-route')) {
+      mapInstance.removeSource('migration-route');
+    }
+
+    // Remove all arrow markers
+    for (const marker of migrationPathMarkers) {
+      marker.remove();
+    }
+    migrationPathMarkers = [];
+  }
+
+  function createArrowElement(color) {
+    const container = document.createElement("div");
+    container.className = "migration-arrow-container";
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "24");
+    svg.setAttribute("height", "24");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.style.display = "block";
+
+    // Larger, clearer arrow pointing upward (north), will be rotated by MapLibre
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M12 3 L20 15 L12 12 L4 15 Z");
+    path.setAttribute("fill", color);
+    path.setAttribute("opacity", "0.85");
+    path.setAttribute("stroke", "rgba(2, 6, 23, 0.9)");
+    path.setAttribute("stroke-width", "1.5");
+
+    svg.appendChild(path);
+    container.appendChild(svg);
+
+    return container;
+  }
+
+  /**
+   * Generate a curved arc between two points for migration path.
+   * Uses a consistent curving direction that works well regardless of migration direction.
+   * @param {Object} from - {lon, lat}
+   * @param {Object} to - {lon, lat}
+   * @param {number} numPoints - Number of points along the arc
+   * @returns {Array} Array of [lon, lat] coordinates
+   */
+  function createCurvedPath(from, to, numPoints = 30) {
+    const coordinates = [];
+
+    // Calculate midpoint
+    const midLon = (from.lon + to.lon) / 2;
+    const midLat = (from.lat + to.lat) / 2;
+
+    // Calculate distance in degrees
+    const deltaLon = to.lon - from.lon;
+    const deltaLat = to.lat - from.lat;
+    const distance = Math.sqrt(deltaLon * deltaLon + deltaLat * deltaLat);
+
+    // Arc height: use a moderate, distance-scaled offset
+    // Cap at reasonable values to avoid extreme curves
+    const baseHeight = Math.min(distance * 0.2, 8);
+    const minHeight = Math.min(distance * 0.1, 3);
+    const arcHeight = Math.max(baseHeight, minHeight);
+
+    // Calculate perpendicular direction
+    // Cross product approach: rotate direction vector 90° counterclockwise
+    let perpLon = -deltaLat;
+    let perpLat = deltaLon;
+    const perpLength = Math.sqrt(perpLon * perpLon + perpLat * perpLat);
+
+    if (perpLength === 0) {
+      // Points are identical, return straight line
+      return [[from.lon, from.lat], [to.lon, to.lat]];
+    }
+
+    // Normalize perpendicular vector
+    perpLon /= perpLength;
+    perpLat /= perpLength;
+
+    // Determine curve direction based on geography
+    // For east-west migrations, curve based on hemisphere
+    // For north-south migrations, curve based on longitude direction
+    let curveDirection = 1; // default: curve "upward"
+
+    if (Math.abs(deltaLon) > Math.abs(deltaLat)) {
+      // Primarily east-west migration
+      // Curve northward in northern hemisphere, southward in southern hemisphere
+      curveDirection = midLat >= 0 ? 1 : -1;
+    } else {
+      // Primarily north-south migration
+      // Curve eastward when going from west to east, westward when going from east to west
+      curveDirection = deltaLon >= 0 ? 1 : -1;
+    }
+
+    // Apply curve direction
+    const controlLon = midLon + (perpLon * arcHeight * curveDirection);
+    const controlLat = midLat + (perpLat * arcHeight * curveDirection);
+
+    // Generate points along quadratic Bézier curve
+    for (let i = 0; i <= numPoints; i++) {
+      const t = i / numPoints;
+      const oneMinusT = 1 - t;
+
+      // Quadratic Bézier: B(t) = (1-t)²P₀ + 2(1-t)tP₁ + t²P₂
+      const lon = oneMinusT * oneMinusT * from.lon +
+                  2 * oneMinusT * t * controlLon +
+                  t * t * to.lon;
+      const lat = oneMinusT * oneMinusT * from.lat +
+                  2 * oneMinusT * t * controlLat +
+                  t * t * to.lat;
+
+      coordinates.push([lon, lat]);
+    }
+
+    return coordinates;
+  }
+
+  function updateMigrationPath(path) {
+    if (!mapInstance || !mapReady) return;
+
+    clearMigrationPath();
+
+    if (!path || !path.from || !path.to) return;
+
+    const { from, to} = path;
+
+    // Validate coordinates
+    if (!Number.isFinite(from.lon) || !Number.isFinite(from.lat) ||
+        !Number.isFinite(to.lon) || !Number.isFinite(to.lat)) {
+      return;
+    }
+
+    // Create curved path coordinates
+    const curvedCoordinates = createCurvedPath(from, to);
+
+    // Create GeoJSON for the migration path
+    const lineGeoJSON = {
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: curvedCoordinates
+      },
+      properties: {}
+    };
+
+    // Add source
+    mapInstance.addSource('migration-route', {
+      type: 'geojson',
+      data: lineGeoJSON
+    });
+
+    // Add line layer with more subtle styling
+    mapInstance.addLayer({
+      id: 'migration-path',
+      type: 'line',
+      source: 'migration-route',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': primaryMarkerColor,
+        'line-width': 2.5,
+        'line-opacity': 0.5,
+        'line-dasharray': [3, 2]
+      }
+    });
+
+    // Add arrow markers along the path
+    // Number of arrows depends on visual length on screen (accounting for zoom)
+    const fromPoint = mapInstance.project([from.lon, from.lat]);
+    const toPoint = mapInstance.project([to.lon, to.lat]);
+    const pixelDistance = Math.sqrt(
+      Math.pow(toPoint.x - fromPoint.x, 2) + Math.pow(toPoint.y - fromPoint.y, 2)
+    );
+
+    // Dynamically calculate number of arrows based on pixel distance
+    // Aim for one arrow roughly every 100-120 pixels, minimum 1, maximum 5
+    const numArrows = Math.max(1, Math.min(5, Math.round(pixelDistance / 110)));
+
+    // Distribute arrows evenly along the path
+    // For n arrows: place them at positions that divide the path into n+1 segments
+    // e.g., 1 arrow: [0.5], 2 arrows: [0.33, 0.67], 3 arrows: [0.25, 0.5, 0.75]
+    const arrowPositions = [];
+    for (let i = 1; i <= numArrows; i++) {
+      arrowPositions.push(i / (numArrows + 1));
+    }
+
+    for (const position of arrowPositions) {
+      const index = Math.floor(position * (curvedCoordinates.length - 1));
+
+      // Look ahead a few points to get better tangent direction
+      const lookAhead = 3;
+      const nextIndex = Math.min(index + lookAhead, curvedCoordinates.length - 1);
+
+      const current = curvedCoordinates[index];
+      const next = curvedCoordinates[nextIndex];
+
+      // Calculate simple angle in screen space (not great circle bearing)
+      // This gives the visual angle we want on the map
+      const deltaX = next[0] - current[0];
+      const deltaY = next[1] - current[1];
+      const angle = Math.atan2(deltaX, deltaY) * (180 / Math.PI);
+
+      const arrowElement = createArrowElement(primaryMarkerColor);
+
+      const marker = new maplibregl.Marker({
+        element: arrowElement,
+        anchor: "center",
+        rotationAlignment: "map",
+        pitchAlignment: "map",
+      })
+        .setLngLat([current[0], current[1]])
+        .setRotation(angle) // Use MapLibre's rotation method
+        .addTo(mapInstance);
+
+      migrationPathMarkers.push(marker);
+    }
+  }
+
   function teardownMapInstance() {
     clearMarkers();
+    clearMigrationPath();
     if (mapInstance) {
       mapInstance.remove();
       mapInstance = null;
@@ -431,7 +659,7 @@
         });
         const marker = new maplibregl.Marker({
           element: markerElement,
-          anchor: "bottom",
+          anchor: "center",
         })
           .setLngLat([coords.lon, coords.lat])
           .addTo(mapInstance);
@@ -457,7 +685,7 @@
         });
         const marker = new maplibregl.Marker({
           element: markerElement,
-          anchor: "bottom",
+          anchor: "center",
         })
           .setLngLat([coords.lon, coords.lat])
           .addTo(mapInstance);
@@ -475,7 +703,7 @@
       primaryElement.querySelector(".story-map-marker")?.classList.add("current");
       const primaryMarker = new maplibregl.Marker({
         element: primaryElement,
-        anchor: "bottom",
+        anchor: "center",
       })
         .setLngLat([primaryLoc.lon, primaryLoc.lat])
         .addTo(mapInstance);
@@ -636,6 +864,7 @@
 
   $: if (mapReady && hasMapData && !isChapterSlide) {
     updateMapState(activeCoordinates, markerTrail);
+    updateMigrationPath(migrationPath);
   }
 
   $: if (!hasMapData && mapInstance) {
@@ -820,5 +1049,10 @@
         0 0 16px rgba(255, 255, 255, 0.6),
         0 8px 18px rgba(2, 6, 23, 0.5);
     }
+  }
+
+  :global(.migration-arrow-container) {
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
   }
 </style>
