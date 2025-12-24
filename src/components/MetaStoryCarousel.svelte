@@ -1,6 +1,7 @@
 <script>
   import { _ } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
+  import { getThumbnailUrl } from "../utils/storyHelpers.js";
 
   export let metaStories = [];
   export let persons = [];
@@ -104,28 +105,6 @@
       });
   }
 
-  function getThumbnailUrl(imageUrl, width = 80) {
-    if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
-
-    // Optimize Wikimedia Commons images
-    if (imageUrl.includes("upload.wikimedia.org/wikipedia/commons/")) {
-      if (imageUrl.includes("/thumb/")) {
-        return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${width}px-$1`);
-      }
-
-      const parts = imageUrl.split("/wikipedia/commons/");
-      if (parts.length === 2) {
-        const [base, path] = parts;
-        const filename = path.split("/").pop();
-        const thumbFilename = filename.toLowerCase().endsWith(".svg")
-          ? `${filename}.png`
-          : filename;
-        return `${base}/wikipedia/commons/thumb/${path}/${width}px-${thumbFilename}`;
-      }
-    }
-
-    return imageUrl;
-  }
 
   // Start autoplay on mount
   import { onMount, onDestroy } from "svelte";
@@ -169,10 +148,10 @@
                     on:click={() => onSelectPerson(person.id)}
                     aria-label={`View ${displayName(person.name)}'s story`}
                   >
-                    {#if person?.portrait?.image}
+                    {#if person?.portrait}
                       <img
-                        src={getThumbnailUrl(person.portrait.image, 200)}
-                        srcset={`${getThumbnailUrl(person.portrait.image, 200)} 1x, ${getThumbnailUrl(person.portrait.image, 400)} 2x`}
+                        src={getThumbnailUrl(person.portrait, 400)}
+                        srcset={`${getThumbnailUrl(person.portrait, 400)} 1x, ${getThumbnailUrl(person.portrait, 800)} 2x`}
                         alt={person.portrait.alt ??
                           `Portrait of ${displayName(person.name)}`}
                         loading="lazy"
