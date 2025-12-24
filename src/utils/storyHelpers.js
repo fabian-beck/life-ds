@@ -305,12 +305,40 @@ export function resolveEventIcon(event) {
 }
 
 /**
- * Get Wikimedia Commons thumbnail URL at specified width.
- * @param {string} imageUrl - Original image URL
+ * Get optimized image URL based on desired width.
+ * For portrait objects with multi-size WebP support, selects appropriate size.
+ * For Wikimedia Commons URLs, uses their thumbnail service.
+ * For direct URLs, returns as-is.
+ * @param {Object|string} imageOrPortrait - Portrait object or direct URL string
  * @param {number} width - Desired width in pixels
- * @returns {string} Thumbnail URL or original URL
+ * @returns {string} Optimized URL or original
  */
-export function getThumbnailUrl(imageUrl, width = 400) {
+export function getThumbnailUrl(imageOrPortrait, width = 400) {
+  // Handle portrait objects with multi-size WebP support
+  if (imageOrPortrait && typeof imageOrPortrait === 'object') {
+    const portrait = imageOrPortrait;
+
+    // Select appropriate size based on target width
+    if (portrait.thumbnail || portrait.medium || portrait.full) {
+      if (width <= 200 && portrait.thumbnail) {
+        return portrait.thumbnail;
+      } else if (width <= 400 && portrait.medium) {
+        return portrait.medium;
+      } else if (portrait.full) {
+        return portrait.full;
+      }
+      // Fallback to any available size
+      return portrait.thumbnail || portrait.medium || portrait.full;
+    }
+
+    // Legacy: portrait object has image property
+    if (portrait.image) {
+      imageOrPortrait = portrait.image;
+    }
+  }
+
+  // From here on, imageOrPortrait should be a string URL
+  const imageUrl = imageOrPortrait;
   if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
 
   // Optimize Wikimedia Commons images

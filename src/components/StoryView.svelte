@@ -234,10 +234,10 @@
   // Flattened collection of all images across the story with event metadata
   $: allImages = [
     // Portrait from overview slide (if exists)
-    ...(portrait?.image
+    ...(portrait?.image || portrait?.full
       ? [
           {
-            url: portrait.image,
+            url: portrait.full || portrait.image, // Use full-size for image viewer
             caption: portrait.caption || null,
             source: portrait.source || null,
             creator: portrait.creator || null,

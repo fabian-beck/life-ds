@@ -57,21 +57,23 @@
               style="--card-primary: {relatedPersonStyle?.primary || '#f8fafc'}; --card-secondary: {relatedPersonStyle?.secondary || '#38bdf8'}; --card-heading-font: {relatedPersonStyle?.headingFont ? `'${relatedPersonStyle.headingFont}', sans-serif` : 'var(--story-heading-font, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont ? `'${relatedPersonStyle.bodyFont}', sans-serif` : 'var(--story-body-font, sans-serif)'};"
               aria-label={`Open life story for ${displayName(person.name)}`}
             >
-              <figure class="person-thumb">
-                {#if person?.portrait?.image}
+              {#if person?.portrait?.image}
+                <figure class="person-thumb">
                   <img
                     src={getThumbnailUrl(person.portrait.image, 120)}
                     srcset={`${getThumbnailUrl(person.portrait.image, 120)} 1x, ${getThumbnailUrl(person.portrait.image, 240)} 2x`}
-                    alt={`Portrait of ${displayName(person.name)}`}
+                    alt=""
                     loading="lazy"
                     decoding="async"
                   />
-                {:else}
+                </figure>
+              {:else}
+                <figure class="person-thumb">
                   <div class="thumb-fallback" aria-hidden="true">
                     {initialsFromName(person.name)}
                   </div>
-                {/if}
-              </figure>
+                </figure>
+              {/if}
               <div class="card-info">
                 <h4 class="card-name">{displayName(person.name)}</h4>
                 {#if lifespan}
@@ -184,8 +186,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.625rem;
-    padding: 1rem 0.75rem;
+    gap: 0;
+    padding: 0.375rem 0.75rem 1rem;
     background: rgba(15, 23, 42, 0.6);
     border-radius: 0.5rem;
     border: 1px solid rgba(148, 163, 184, 0.2);
@@ -206,7 +208,7 @@
   }
 
   .person-thumb {
-    width: 80px;
+    width: 130px;
     aspect-ratio: 2 / 3;
     overflow: hidden;
     margin: 0;
@@ -255,6 +257,7 @@
     gap: 0.25rem;
     align-items: center;
     text-align: center;
+    margin-top: -1.25rem;
   }
 
   .card-name {
@@ -321,7 +324,7 @@
     }
 
     .person-thumb {
-      width: 70px;
+      width: 110px;
     }
 
     .card-name {

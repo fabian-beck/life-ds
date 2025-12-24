@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate stylized portrait images for persons using OpenAI GPT-Image-1.5 API."""
+"""Generate stylized portrait images for persons using OpenAI GPT-Image-1.5 API with multi-size WebP optimization."""
 
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ from urllib.parse import urlparse
 
 import requests
 from openai import APIStatusError, OpenAI
+from PIL import Image
 
 from config import DEFAULT_MODEL
 
@@ -197,9 +198,74 @@ def load_person_colors(person_id: str) -> Dict[str, str]:
         return {"primary": "#5ED0FF", "secondary": "#9A7BFF"}
 
 
+def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]:
+    """
+    Create multiple WebP sizes from source image for optimized loading.
+
+    Args:
+        source_image_path: Path to source PNG image
+        person_id: Person identifier
+
+    Returns:
+        Dict with size keys (thumbnail, medium, full) mapped to local paths
+    """
+    sizes = {
+        "thumbnail": 200,  # For landing page grid
+        "medium": 400,     # For story overview slide
+        "full": 1024,      # For image viewer
+    }
+
+    result_paths = {}
+
+    try:
+        # Open source image
+        img = Image.open(source_image_path)
+
+        for size_key, target_size in sizes.items():
+            # Calculate new dimensions maintaining aspect ratio
+            aspect_ratio = img.width / img.height
+            if aspect_ratio > 1:
+                # Landscape
+                new_width = target_size
+                new_height = int(target_size / aspect_ratio)
+            else:
+                # Portrait or square
+                new_height = target_size
+                new_width = int(target_size * aspect_ratio)
+
+            # Resize image with high-quality Lanczos resampling
+            resized = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+            # Save as WebP
+            output_filename = f"{person_id}_{size_key}.webp"
+            output_path = PORTRAITS_DIR / output_filename
+
+            # WebP quality: 85 for full, 80 for smaller sizes (excellent quality, good compression)
+            quality = 85 if size_key == "full" else 80
+            resized.save(output_path, "WEBP", quality=quality, method=6)  # method=6 = slowest but best compression
+
+            # Store relative path for use in data files
+            result_paths[size_key] = f"/portraits/{output_filename}"
+
+            file_size_kb = output_path.stat().st_size / 1024
+            print(f"  ✓ Created {size_key} ({new_width}x{new_height}): {output_filename} ({file_size_kb:.1f}KB)")
+
+    except Exception as e:
+        print(f"  Warning: Failed to create WebP sizes: {e}", file=sys.stderr)
+        # Fallback: use original PNG for all sizes
+        fallback_path = f"/portraits/{person_id}.png"
+        return {
+            "thumbnail": fallback_path,
+            "medium": fallback_path,
+            "full": fallback_path,
+        }
+
+    return result_paths
+
+
 def update_person_registry(
     person_id: str,
-    portrait_local_path: str,
+    portrait_paths: Dict[str, str],
     original_image_url: str,
 ) -> None:
     """
@@ -207,7 +273,7 @@ def update_person_registry(
 
     Args:
         person_id: Person identifier
-        portrait_local_path: Path to generated portrait (e.g., "/portraits/alan_turing.png")
+        portrait_paths: Dict with 'thumbnail', 'medium', 'full' paths
         original_image_url: Original Wikimedia Commons URL
     """
     registry = load_person_registry()
@@ -222,9 +288,12 @@ def update_person_registry(
     original_source = original_portrait.get("source")
     original_caption = original_portrait.get("caption")
 
-    # Update with generated portrait
+    # Update with generated portrait (multi-size WebP)
     person["portrait"] = {
-        "image": portrait_local_path,
+        "image": portrait_paths.get("thumbnail", portrait_paths.get("full")),  # Default to thumbnail for landing page
+        "thumbnail": portrait_paths.get("thumbnail"),
+        "medium": portrait_paths.get("medium"),
+        "full": portrait_paths.get("full"),
         "source": original_source or "https://commons.wikimedia.org/",
         "caption": "Stylized portrait based on historical photograph",
         "creator": "AI generated artwork",
@@ -650,17 +719,28 @@ Professional and dignified composition, portrait orientation, shoulders visible.
 
             print(f"  ✓ Portrait saved to: {output_path}")
 
+        # Create optimized WebP sizes
+        print(f"[Step 5/6] Creating optimized WebP sizes...")
+
+        if dry_run:
+            print("  (Dry run: skipping WebP creation)")
+            portrait_paths = {
+                "thumbnail": f"/portraits/{person_id}_thumbnail.webp",
+                "medium": f"/portraits/{person_id}_medium.webp",
+                "full": f"/portraits/{person_id}_full.webp",
+            }
+        else:
+            portrait_paths = create_webp_sizes(output_path, person_id)
+
         # Update registry and life_events.json
-        print(f"[Step 5/6] Updating persons registry and life events...")
+        print(f"[Step 6/6] Updating persons registry and life events...")
 
         if dry_run:
             print("  (Dry run: skipping registry update)")
         else:
-            portrait_local_path = f"/portraits/{person_id}.png"
-
-            # Update persons.json
-            update_person_registry(person_id, portrait_local_path, reference_image_url)
-            print(f"  ✓ Registry updated with portrait path: {portrait_local_path}")
+            # Update persons.json with multi-size paths
+            update_person_registry(person_id, portrait_paths, reference_image_url)
+            print(f"  ✓ Registry updated with portrait paths")
 
             # Get the portrait data that was just saved to the registry
             registry = load_person_registry()
@@ -671,7 +751,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             else:
                 print(f"  Warning: Could not retrieve portrait data from registry", file=sys.stderr)
 
-        print(f"[Step 6/6] Portrait generation complete!")
+        print(f"[Step 7/6] Portrait generation complete!")
 
         return {
             "id": person_id,

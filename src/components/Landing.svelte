@@ -289,7 +289,30 @@
     return `${first}${last}`;
   }
 
-  function getThumbnailUrl(imageUrl, width = 200) {
+  /**
+   * Get optimized portrait URL based on desired width.
+   * For local portraits, uses pre-generated WebP sizes.
+   * For Wikimedia Commons, uses their thumbnail service.
+   */
+  function getPortraitUrl(portrait, targetWidth = 200) {
+    if (!portrait) return null;
+
+    // For local portraits with multi-size WebP support
+    if (portrait.thumbnail || portrait.medium || portrait.full) {
+      // Select appropriate size based on target width
+      if (targetWidth <= 200 && portrait.thumbnail) {
+        return portrait.thumbnail;
+      } else if (targetWidth <= 400 && portrait.medium) {
+        return portrait.medium;
+      } else if (portrait.full) {
+        return portrait.full;
+      }
+      // Fallback to any available size
+      return portrait.thumbnail || portrait.medium || portrait.full;
+    }
+
+    // Legacy: portrait.image is a string URL
+    const imageUrl = portrait.image || portrait;
     if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
 
     // Optimize Wikimedia Commons images
@@ -298,7 +321,7 @@
       if (imageUrl.includes("/thumb/")) {
         // URL is already a thumbnail - just adjust the size
         // Example: .../thumb/a/b/File.svg/800px-File.svg.png -> .../thumb/a/b/File.svg/200px-File.svg.png
-        return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${width}px-$1`);
+        return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${targetWidth}px-$1`);
       }
 
       // Convert full URL to thumbnail URL
@@ -312,7 +335,7 @@
         const thumbFilename = filename.toLowerCase().endsWith('.svg')
           ? `${filename}.png`
           : filename;
-        return `${base}/wikipedia/commons/thumb/${path}/${width}px-${thumbFilename}`;
+        return `${base}/wikipedia/commons/thumb/${path}/${targetWidth}px-${thumbFilename}`;
       }
     }
 
@@ -562,10 +585,10 @@
             <span class="new-badge">{$_("landing.new_label")}</span>
           {/if}
           <figure class="person-thumb">
-            {#if entry?.portrait?.image}
+            {#if entry?.portrait}
               <img
-                src={getThumbnailUrl(entry.portrait.image, 200)}
-                srcset={`${getThumbnailUrl(entry.portrait.image, 200)} 1x, ${getThumbnailUrl(entry.portrait.image, 400)} 2x`}
+                src={getPortraitUrl(entry.portrait, 200)}
+                srcset={`${getPortraitUrl(entry.portrait, 200)} 1x, ${getPortraitUrl(entry.portrait, 400)} 2x`}
                 alt={loadedImages.has(entry.id)
                   ? (entry.portrait.alt ??
                     `Portrait of ${displayName(entry.name)}`)
