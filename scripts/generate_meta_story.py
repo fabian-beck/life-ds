@@ -230,9 +230,15 @@ def phase1_story_planning(
     people_summary = []
     for person in registry.get("people", []):
         summary_text = person.get("summary", "")
-        # Truncate summaries for token efficiency
+        # Truncate summaries for token efficiency, preserving sentence boundaries
         if len(summary_text) > 200:
-            summary_text = summary_text[:197] + "..."
+            truncated = summary_text[:197]
+            # Try to break at sentence boundary to preserve context
+            last_period = truncated.rfind('.')
+            if last_period > 100:  # Keep at least half
+                summary_text = truncated[:last_period + 1]
+            else:
+                summary_text = truncated + "..."
 
         people_summary.append({
             "id": person.get("id"),
@@ -315,16 +321,21 @@ Your task:
 4. Design 3-6 temporal chapters covering their combined lifespans
 5. Write conclusion statement
 
-SELECTION CRITERIA - BE STRICT:
-- ONLY select people whose primaryRoles/summary CLEARLY and DIRECTLY fit the topic
-- When in doubt about a person's fit, OMIT them - better too few than too many weak matches
-- A tangential connection is NOT enough - the person must be central to the topic
+SELECTION CRITERIA - BE THOUGHTFUL:
+- Select people whose primaryRoles OR summary CLEARLY and DIRECTLY fit the topic
+- When a person has multiple roles, evaluate ALL roles for thematic fit
+  * Example: "artist, architect, environmentalist" fits architecture topics if summary confirms architectural work
+  * Role order does NOT indicate importance - evaluate based on substantive contribution
 - Each person must have strong thematic relevance, not just superficial keyword overlap
+- A tangential connection is NOT enough - the person must have made substantial contributions
 - Do NOT artificially limit selections to hit a target number - include ALL who clearly fit
-- Prefer people with overlapping time periods for richer cross-connections
-- Balance: mix of well-known figures and lesser-known contributors
+- PREFER diversity in approach over perfect thematic overlap
+  * Include people with DIFFERENT perspectives on the same theme (e.g., structural vs. aesthetic approaches to organic architecture)
+  * Mix of well-known pioneers and lesser-known innovators
+  * Variety in time periods for richer cross-connections
 - Each person should bring something unique and substantial to the narrative
 - REJECT people who are only marginally related or require stretching the topic definition
+- When in doubt: if someone is widely recognized for work central to the topic, INCLUDE them
 
 TITLE & NARRATIVE:
 - Title should be compelling and thematic (2-5 words)
