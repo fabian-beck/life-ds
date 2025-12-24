@@ -751,10 +751,10 @@
   .person-card {
     position: relative;
     display: grid;
-    grid-template-columns: 82px 1fr;
+    grid-template-columns: 100px 1fr;
     align-items: stretch;
-    gap: 1rem;
-    padding: 1.25rem 1.35rem;
+    gap: 1.25rem;
+    padding: 1.25rem 0.75rem 1.25rem 1rem;
     border-radius: 1rem;
     background-color: var(--card-bg, rgba(15, 23, 42, 0.94));
     border: 1px solid rgba(148, 163, 184, 0.18);
@@ -819,17 +819,18 @@
   }
 
   .person-thumb {
-    margin: 0;
-    width: 82px;
-    height: 82px;
+    margin: -0.5rem 0 -0.5rem -1rem;
+    width: 120px;
+    height: 180px; /* 2:3 aspect ratio (120 * 3/2 = 180) */
     border-radius: 0.9rem;
     overflow: hidden;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    z-index: 1;
+    mix-blend-mode: lighten;
   }
 
   .person-thumb img {
@@ -838,6 +839,7 @@
     object-fit: cover;
     object-position: top;
     display: block;
+    mix-blend-mode: lighten;
   }
 
   .person-thumb img[alt=""] {
@@ -1156,12 +1158,14 @@
   @media (max-width: 480px) {
     .person-card {
       grid-template-columns: 70px 1fr;
-      padding: 1.1rem 1.2rem;
+      gap: 1rem;
+      padding: 1.1rem 0.6rem 1.1rem 1.2rem;
     }
 
     .person-thumb {
-      width: 70px;
-      height: 70px;
+      margin: -0.5rem 0 -0.5rem -0.8rem;
+      width: 90px;
+      height: 135px; /* 2:3 aspect ratio (90 * 3/2 = 135) */
     }
   }
 
@@ -1214,13 +1218,15 @@
     }
 
     .person-card {
-      padding: 1.5rem 1.75rem;
+      padding: 1.5rem 1rem 1.5rem 1.75rem;
       grid-template-columns: 92px 1fr;
+      gap: 1.5rem;
     }
 
     .person-thumb {
-      width: 92px;
-      height: 92px;
+      margin: -0.75rem 0 -0.75rem -1.25rem;
+      width: 130px;
+      height: 195px; /* 2:3 aspect ratio (130 * 3/2 = 195) */
     }
 
     .person-card h2 {
