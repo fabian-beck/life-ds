@@ -12,6 +12,7 @@ from generate_person_network import (
     generate_person_network,
     DEFAULT_MODEL as NETWORK_MODEL,
 )
+from generate_person_portrait import generate_portrait
 from review_person import review_person_data
 
 
@@ -54,6 +55,16 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--skip-review",
         action="store_true",
         help="Skip the automatic review step after generation.",
+    )
+    parser.add_argument(
+        "--skip-portrait",
+        action="store_true",
+        help="Skip portrait generation (stylized artwork from reference image).",
+    )
+    parser.add_argument(
+        "--portrait-model",
+        default="gpt-image-1",
+        help="OpenAI model for portrait generation (default: gpt-image-1).",
     )
     return parser.parse_args(argv)
 
@@ -130,10 +141,40 @@ def main(argv: Any = None) -> int:
         else:
             print("\n⊘ Skipping ego network generation")
 
-        # Step 4: Review (if not skipped)
+        # Step 4: Generate portrait (if not skipped)
+        if not args.skip_portrait:
+            print("\n" + "=" * 60)
+            print("STEP 4/5: Generating stylized portrait")
+            print("=" * 60 + "\n")
+            try:
+                from pathlib import Path
+                portrait_result = generate_portrait(
+                    person_id=person_id,
+                    reference_image_url=None,  # Will use reference from registry
+                    source_page_url=None,
+                    master_style_path=Path(__file__).resolve().parents[1] / "public" / "master_style_portrait.png",
+                    model=args.portrait_model,
+                    dry_run=False,
+                    force=False,
+                )
+                if portrait_result["success"]:
+                    if portrait_result.get("cached"):
+                        print(f"\n⊘ {portrait_result['message']}")
+                    else:
+                        print(f"\n✓ Portrait generated: {portrait_result.get('local_path')}")
+                else:
+                    print(f"\n⚠ Portrait generation failed: {portrait_result['message']}")
+                    print("  Continuing with other generation steps...")
+            except Exception as e:
+                print(f"\n⚠ Portrait generation failed: {e}")
+                print("  Continuing with other generation steps...")
+        else:
+            print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
+
+        # Step 5: Review (if not skipped)
         if not args.skip_review:
             print("\n" + "=" * 60)
-            print("STEP 4/4: REVIEWING GENERATED DATA")
+            print("STEP 5/5: REVIEWING GENERATED DATA")
             print("=" * 60)
             print("Running quality review and polish...")
             print("(Only high-confidence changes will be applied)")
@@ -159,13 +200,18 @@ def main(argv: Any = None) -> int:
         print("GENERATION COMPLETE")
         print("=" * 60)
         steps_run = sum([run_dataset, run_style, run_network])
+        total_steps = 3
+        if not args.skip_portrait:
+            total_steps += 1
         print(
-            f"✓ Successfully generated {steps_run} of 3 datasets for '{args.subject}'"
+            f"✓ Successfully generated {steps_run} of {total_steps} components for '{args.subject}'"
         )
         if not update_registry:
             print("⊘ Register update skipped by request")
         if args.skip_review:
             print("⊘ Review skipped by request")
+        if args.skip_portrait:
+            print("⊘ Portrait generation skipped by request")
 
     except Exception as error:
         print(f"\n✗ Error: {error}", file=sys.stderr)
