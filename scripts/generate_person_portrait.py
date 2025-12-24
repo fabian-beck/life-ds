@@ -831,6 +831,13 @@ def parse_args(argv: Any) -> argparse.Namespace:
         default="gpt-image-1",
         help="OpenAI model to use (default: gpt-image-1). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5",
     )
+
+    parser.add_argument(
+        "--url",
+        type=str,
+        default=None,
+        help="Optional: Reference image URL to use instead of the one from the registry."
+    )
     return parser.parse_args(argv)
 
 
@@ -854,39 +861,45 @@ def main(argv: Any = None) -> int:
         print("Force: Regenerate even if exists")
     print()
 
+
     try:
-        # Load registry to get reference portrait URL
-        registry = load_person_registry()
-        person = find_person_in_registry(registry, person_id)
+        # If --url is provided, use it as the reference image URL
+        if args.url:
+            reference_url = args.url
+            print(f"Using reference image from --url: {reference_url}")
+        else:
+            # Load registry to get reference portrait URL
+            registry = load_person_registry()
+            person = find_person_in_registry(registry, person_id)
 
-        if not person:
-            print(f"✗ Error: Person '{person_id}' not found in registry", file=sys.stderr)
-            print(f"  Registry path: {REGISTER_PATH}", file=sys.stderr)
-            return 1
+            if not person:
+                print(f"✗ Error: Person '{person_id}' not found in registry", file=sys.stderr)
+                print(f"  Registry path: {REGISTER_PATH}", file=sys.stderr)
+                return 1
 
-        # Get reference portrait URL
-        portrait = person.get("portrait", {})
-        reference_url = portrait.get("image")
+            # Get reference portrait URL
+            portrait = person.get("portrait", {})
+            reference_url = portrait.get("image")
 
-        # If portrait is a local path (already generated), use the original Wikimedia URL
-        if reference_url and reference_url.startswith("/portraits/"):
-            reference_url = portrait.get("originalImage")
-            if reference_url:
-                print(f"Using original Wikimedia portrait (stored in originalImage field)")
+            # If portrait is a local path (already generated), use the original Wikimedia URL
+            if reference_url and reference_url.startswith("/portraits/"):
+                reference_url = portrait.get("originalImage")
+                if reference_url:
+                    print(f"Using original Wikimedia portrait (stored in originalImage field)")
 
-        if not reference_url:
-            print(f"✗ Error: No reference portrait found for '{person_id}'", file=sys.stderr)
-            print("  Run generate_person_events.py first to create portrait", file=sys.stderr)
-            return 1
+            if not reference_url:
+                print(f"✗ Error: No reference portrait found for '{person_id}'", file=sys.stderr)
+                print("  Run generate_person_events.py first to create portrait", file=sys.stderr)
+                return 1
 
-        # Handle Wikimedia Commons URLs
-        if not reference_url.startswith("http"):
-            print(f"✗ Error: Invalid portrait URL: {reference_url}", file=sys.stderr)
-            print("  Portrait should be a Wikimedia Commons URL", file=sys.stderr)
-            return 1
+            # Handle Wikimedia Commons URLs
+            if not reference_url.startswith("http"):
+                print(f"✗ Error: Invalid portrait URL: {reference_url}", file=sys.stderr)
+                print("  Portrait should be a Wikimedia Commons URL", file=sys.stderr)
+                return 1
 
-        print(f"Reference portrait: {reference_url}")
-        print()
+            print(f"Reference portrait: {reference_url}")
+            print()
 
         # Generate portrait
         result = generate_portrait(
