@@ -1,0 +1,816 @@
+{
+  "dataset": "wikipedia-biographical-timelines",
+  "created_on": "2025-12-24",
+  "person": {
+    "name": "Frank_Lloyd_Wright",
+    "birth_date": "1867-06-08",
+    "death_date": "1959-04-09",
+    "primary_roles": [
+      "architect",
+      "designer",
+      "writer"
+    ],
+    "tagline": "Champion of organic architecture",
+    "summary": "Frank Lloyd Wright was an American architect whose long career reshaped modern architecture through the Prairie School, Usonian housing ideas, and major works such as Fallingwater and the Guggenheim Museum design. He also wrote widely and trained generations of apprentices through the Taliesin Fellowship.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+    "portrait": {
+      "image": "/portraits/frank_lloyd_wright_thumbnail.webp",
+      "thumbnail": "/portraits/frank_lloyd_wright_thumbnail.webp",
+      "medium": "/portraits/frank_lloyd_wright_medium.webp",
+      "full": "/portraits/frank_lloyd_wright_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/30/Frank_Lloyd_Wright_portrait.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "wisconsin_origins",
+      "headline": "Wisconsin Beginnings",
+      "bridge_statement": "In a restless household, an early certainty takes root—one that will demand a larger world.",
+      "date_start": "1867-06-08",
+      "date_start_precision": "day",
+      "date_end": "1885",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "William Cary Wright",
+        "Anna Lloyd Jones",
+        "Catherine Wright",
+        "William Carey Wright",
+        "Anna Lloyd Jones Wright"
+      ],
+      "location": "Wisconsin, United States"
+    },
+    {
+      "id": "chicago_apprentice_years",
+      "headline": "Forged in Chicago",
+      "bridge_statement": "Opportunity turns ruthless in the big city, where ambition finds its first true discipline.",
+      "date_start": "1886",
+      "date_start_precision": "year",
+      "date_end": "1893-05",
+      "date_end_precision": "month",
+      "age_start": 19,
+      "age_end": 26,
+      "involved_people": [
+        "Joseph Lyman Silsbee",
+        "Louis Sullivan",
+        "Dankmar Adler",
+        "Catherine Lee \"Kitty\" Tobin"
+      ],
+      "location": "Midwestern United States"
+    },
+    {
+      "id": "prairie_defiance_taliesin_tragedy",
+      "headline": "Taliesin Reckoning",
+      "bridge_statement": "A new voice rises from the prairie—then insists on a life bold enough to burn.",
+      "date_start": "1893-06",
+      "date_start_precision": "month",
+      "date_end": "1914-08-15",
+      "date_end_precision": "day",
+      "age_start": 26,
+      "age_end": 47,
+      "involved_people": [
+        "Louis Sullivan",
+        "Dankmar Adler",
+        "Mamah Borthwick Cheney",
+        "Catherine Lee \"Kitty\" Tobin Wright",
+        "Julian Carlton",
+        "John Borthwick Cheney",
+        "Martha Cheney",
+        "David Lindblom",
+        "Ernest Weston",
+        "Thomas Brunker",
+        "Herbert Fritz",
+        "William Weston"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "tokyo_monumental_gamble",
+      "headline": "Tokyo Monumental Gamble",
+      "bridge_statement": "Far from home, scale and risk collide, testing whether vision can survive enormity.",
+      "date_start": "1915",
+      "date_start_precision": "year",
+      "date_end": "1923",
+      "date_end_precision": "year",
+      "age_start": 48,
+      "age_end": 56,
+      "involved_people": [
+        "Aisaku Hayashi"
+      ],
+      "location": "Japan"
+    },
+    {
+      "id": "taliesin_fellowship_renaissance",
+      "headline": "Desert Studio Revival",
+      "bridge_statement": "When the commissions thin, he builds something harder to erase than a building: a way of living.",
+      "date_start": "1928-08-25",
+      "date_start_precision": "day",
+      "date_end": "1937",
+      "date_end_precision": "year",
+      "age_start": 61,
+      "age_end": 70,
+      "involved_people": [
+        "Olgivanna Lazović",
+        "Olgivanna Lloyd Wright"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "late_icon_last_work",
+      "headline": "Curves Against Time",
+      "bridge_statement": "In old age, he wagers everything on form—daring the public to follow where space leads.",
+      "date_start": "1943",
+      "date_start_precision": "year",
+      "date_end": "1959-04-09",
+      "date_end_precision": "day",
+      "age_start": 76,
+      "age_end": 91,
+      "involved_people": [
+        "Solomon R. Guggenheim",
+        "Hilla von Rebay",
+        "Olgivanna Lloyd Wright"
+      ],
+      "location": "United States"
+    }
+  ],
+  "conclusion": "Frank Lloyd Wright turned private conviction into public space, repeatedly remaking himself when scandal, loss, or fashion tried to end him. His buildings\u0014and the Taliesin Fellowship behind them\u0014left architecture more daring, more human, and permanently less obedient.",
+  "events": [
+    {
+      "date": "1867-06-08",
+      "date_precision": "day",
+      "date_note": "Wright sometimes claimed a birth year of 1869, but official records support 1867",
+      "age": 0,
+      "title": "Born in Richland Center, Wisconsin",
+      "description": "Frank Lloyd Wright was born in Richland Center, Wisconsin, to William Cary Wright, a musician and occasional preacher, and Anna Lloyd Jones, a teacher from the close-knit Lloyd Jones family. In later years Wright liked to frame his childhood as a kind of early prophecy: a mother who nurtured ambition, a household that moved and strained, and a boy already collecting shapes and ideas that would become buildings.",
+      "locations": [
+        {
+          "name_historic": "Richland Center, Wisconsin",
+          "name_modern": "Richland Center, Wisconsin, United States",
+          "centroid": [
+            -90.3854141,
+            43.3355298
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Wisconsin",
+          "name_modern": "Wisconsin, United States",
+          "centroid": [
+            -89.6884637,
+            44.4308975
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "William Cary Wright",
+        "Anna Lloyd Jones"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "wisconsin_origins"
+    },
+    {
+      "date": "1876",
+      "date_precision": "year",
+      "age": 9,
+      "title": "Learns Froebel design blocks",
+      "description": "As a child, Wright spent extensive time with [[Froebel gifts|Froebel kindergarten blocks]] purchased by his mother, Anna Lloyd Jones. He later credited these geometric exercises with shaping his lifelong sense of form, pattern, and spatial composition\u0014the kind of quiet training that made structure feel like play, and play feel like destiny.",
+      "locations": [
+        {
+          "name_historic": "Richland Center, Wisconsin",
+          "name_modern": "Richland Center, Wisconsin, USA",
+          "centroid": [
+            -90.3854141,
+            43.3355298
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Madison, Wisconsin",
+          "name_modern": "Madison, Wisconsin, USA",
+          "centroid": [
+            -89.3841663,
+            43.07469
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Anna Lloyd Jones"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Friedrich_Froebel"
+      ],
+      "event_type_icon": "mdi-cube",
+      "chapter": "wisconsin_origins",
+      "annotations": {
+        "Froebel gifts": {
+          "explanation": "A set of early-childhood educational toys devised by Friedrich Fröbel—geometric blocks and other materials used in kindergarten to teach form, pattern, and spatial relationships.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Froebel_gifts"
+        }
+      }
+    },
+    {
+      "date": "1881",
+      "date_precision": "year",
+      "date_end": "1885",
+      "date_end_precision": "year",
+      "age": 14,
+      "title": "Family separation and divorce",
+      "description": "Wright\u0019s parents separated as his adolescence began, amid financial strain and an unstable home life. The divorce was finalized in 1885, after which his father, William Cary Wright, left Wisconsin; Wright later said he never saw him again. The break became a private fault line\u0014one he would revisit in his own restless patterns of attachment and escape.",
+      "locations": [
+        {
+          "name_historic": "Wisconsin",
+          "name_modern": "Wisconsin, United States",
+          "centroid": [
+            -89.6884637,
+            44.4308975
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "William Cary Wright",
+        "Anna Lloyd Jones"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-heart-broken",
+      "chapter": "wisconsin_origins"
+    },
+    {
+      "date": "1886",
+      "date_precision": "year",
+      "date_end": "1887",
+      "date_end_precision": "year",
+      "age": 19,
+      "title": "Studies civil engineering",
+      "description": "Wright enrolled at the [[University of Wisconsin\u0013Madison|University of Wisconsin\u0013Madison]] in 1886 as a special student to study civil engineering, but left without earning a degree. The decision was less a failure than a pivot: he chose the speed and severity of office work over the patience of classrooms, aiming straight for architectural practice through apprenticeship.",
+      "locations": [
+        {
+          "name_historic": "Madison",
+          "name_modern": "Madison, Wisconsin, United States",
+          "centroid": [
+            -89.3841663,
+            43.07469
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/University_of_Wisconsin%E2%80%93Madison"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "chicago_apprentice_years",
+      "annotations": {
+        "University of Wisconsin–Madison": {
+          "explanation": "The main campus of the University of Wisconsin system in Madison, a major U.S. public research university founded in 1848.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Wisconsin%E2%80%93Madison"
+        }
+      },
+      "involved_people": [
+        "Allan D. Conover"
+      ]
+    },
+    {
+      "date": "1887",
+      "date_precision": "year",
+      "age": 20,
+      "title": "Moves to Chicago as a draftsman",
+      "description": "In 1887, seeking opportunity in the booming building market, Wright moved to Chicago and looked for work in architectural offices. He was hired as a draftsman by Joseph Lyman Silsbee, where he gained early office experience on church and residential commissions and further refined his drafting and presentation skills.",
+      "locations": [
+        {
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, United States",
+          "centroid": [
+            -87.6244212,
+            41.8755616
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Madison",
+          "name_modern": "Madison, Wisconsin, United States",
+          "centroid": [
+            -89.3841663,
+            43.07469
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Joseph Lyman Silsbee"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Lyman_Silsbee",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "chicago_apprentice_years",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Wisconsin",
+        "to_location": "Chicago, Illinois",
+        "characterization": "career opportunity"
+      }
+    },
+    {
+      "date": "1888",
+      "date_precision": "year",
+      "date_end": "1893",
+      "date_end_precision": "year",
+      "age": 21,
+      "title": "Trains under Louis Sullivan",
+      "description": "In 1888, Wright joined [[Adler & Sullivan|Adler & Sullivan]], working under Louis Sullivan and absorbing the firm\u0019s modern approach to form and ornament. He rose to become head draftsman for residential work, gaining confidence and responsibility\u0014while also taking on unauthorized side commissions that foreshadowed his eventual independence.",
+      "locations": [
+        {
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, United States",
+          "centroid": [
+            -87.6244212,
+            41.8755616
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Louis Sullivan",
+        "Dankmar Adler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Louis_Sullivan",
+        "https://en.wikipedia.org/wiki/Dankmar_Adler"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "chicago_apprentice_years",
+      "annotations": {
+        "Adler & Sullivan": {
+          "explanation": "A Chicago architectural partnership (Dankmar Adler and Louis Sullivan) known for influential late-19th-century commercial buildings and for mentoring Frank Lloyd Wright early in his career.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Dankmar_Adler"
+        }
+      }
+    },
+    {
+      "date": "1889",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Marries Catherine Tobin",
+      "description": "In 1889, Wright married [[Catherine Tobin|Catherine Lee \u001cKitty\u001d Tobin]], beginning a family life that ran alongside his rapid ascent in the Chicago area. The marriage would later become a public point of tension when he left home in 1909, and the private became inseparable from the professional.",
+      "locations": [
+        {
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, United States",
+          "centroid": [
+            -87.6244212,
+            41.8755616
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Catherine Lee \"Kitty\" Tobin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "chicago_apprentice_years",
+      "annotations": {
+        "Catherine Tobin": {
+          "explanation": "Wright\u0019s first wife, commonly called \u001cKitty\u001d; their marriage and six children formed the domestic backdrop to his early career.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Catherine Lee \"Kitty\" Tobin",
+        "duration": "until divorce (formalized later)",
+        "children": 6,
+        "characterization": "early family life"
+      }
+    },
+    {
+      "date": "1893",
+      "date_precision": "year",
+      "date_end": "1898",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "Establishes independent practice",
+      "description": "After a rupture with [[Adler & Sullivan|Adler & Sullivan]] over his private commissions, Wright launched his own Chicago-area practice. He soon created a home-and-work base in Oak Park; by 1898, his studio there became a center for early innovations as he developed the language later associated with the [[Prairie School]] movement.",
+      "locations": [
+        {
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, United States",
+          "centroid": [
+            -87.6244212,
+            41.8755616
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Oak Park",
+          "name_modern": "Oak Park, Illinois, United States",
+          "centroid": [
+            -87.7887615,
+            41.8878145
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Dankmar Adler",
+        "Louis Sullivan"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Dankmar_Adler",
+        "https://en.wikipedia.org/wiki/Louis_Sullivan"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Frank_Lloyd_Wright_Home_and_Studio_%28west_side_zoom%29_cropped.jpg/960px-Frank_Lloyd_Wright_Home_and_Studio_%28west_side_zoom%29_cropped.jpg",
+          "caption": "Frank Lloyd Wright Home and Studio, Oak Park, Illinois",
+          "source": "https://commons.wikimedia.org/wiki/File:Frank_Lloyd_Wright_Home_and_Studio_(west_side_zoom)_cropped.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "chicago_apprentice_years",
+      "annotations": {
+        "Adler & Sullivan": {
+          "explanation": "The Chicago architectural partnership of Dankmar Adler and Louis Sullivan (active 1881\u00131895), where Wright worked before starting his own practice.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Dankmar_Adler"
+        },
+        "Prairie School": {
+          "explanation": "A Midwestern architectural movement known for horizontal lines, open plans, and designs meant to harmonize with the landscape.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Prairie_School"
+        }
+      }
+    },
+    {
+      "date": "1909",
+      "date_precision": "year",
+      "date_end": "1910",
+      "date_end_precision": "year",
+      "age": 42,
+      "title": "Leaves with Mamah Cheney",
+      "description": "In 1909, Wright left his wife and children in Oak Park and traveled to Europe with Mamah Borthwick Cheney, a decision that triggered a major public scandal and damaged his standing in the United States. While abroad, he shaped a publication-ready record of his work\u0014later known as the [[Wasmuth Portfolio]]\u0014that helped carry his designs to European audiences and future modernists.",
+      "locations": [
+        {
+          "name_historic": "Oak Park",
+          "name_modern": "Oak Park, Illinois, United States",
+          "centroid": [
+            -87.7887615,
+            41.8878145
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Europe",
+          "name_modern": null,
+          "centroid": [
+            10.0,
+            51.0
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Mamah Borthwick Cheney",
+        "Catherine Lee \"Kitty\" Tobin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Frederick_C._Robie_House%2C_Woodlawn_Avenue_and_58th_Street%2C_Hyde_Park%2C_Chicago%2C_IL_-_54214023795.jpg/960px-Frederick_C._Robie_House%2C_Woodlawn_Avenue_and_58th_Street%2C_Hyde_Park%2C_Chicago%2C_IL_-_54214023795.jpg",
+          "caption": "Frederick C. Robie House, Chicago, Illinois",
+          "source": "https://commons.wikimedia.org/wiki/File:Frederick_C._Robie_House,_Woodlawn_Avenue_and_58th_Street,_Hyde_Park,_Chicago,_IL_-_54214023795.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-heart",
+      "chapter": "prairie_defiance_taliesin_tragedy",
+      "annotations": {
+        "Oak Park": {
+          "explanation": "A suburb immediately west of Chicago where Wright lived and maintained his home and studio at the time he left for Europe in 1909.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Oak_Park,_Illinois"
+        },
+        "Wasmuth Portfolio": {
+          "explanation": "An influential early publication of Wright\u0019s designs that helped introduce his work to architects in Europe.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Wasmuth_Portfolio"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "partnership",
+        "partner": "Mamah Borthwick Cheney",
+        "duration": "until her death",
+        "characterization": "scandalous union"
+      }
+    },
+    {
+      "date": "1911",
+      "date_precision": "year",
+      "age": 44,
+      "title": "Builds Taliesin in Wisconsin",
+      "description": "In 1911, Wright began building Taliesin near Spring Green, Wisconsin, as a personal refuge and working estate shaped by his relationship with Mamah Cheney. The compound became both a declaration of defiance and a laboratory: architecture tied to a specific landscape, daily life arranged as an extension of design, and a place he would return to\u0014even after disaster\u0014to begin again.",
+      "locations": [
+        {
+          "name_historic": "Spring Green, Wisconsin",
+          "name_modern": "Spring Green, Wisconsin, United States",
+          "centroid": [
+            -90.0680478,
+            43.1769367
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mamah Borthwick Cheney"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Taliesin_-_exterior.jpg/960px-Taliesin_-_exterior.jpg",
+          "caption": "View of Taliesin from below",
+          "source": "https://commons.wikimedia.org/wiki/File:Taliesin_-_exterior.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "prairie_defiance_taliesin_tragedy"
+    },
+    {
+      "date": "1914-08-15",
+      "date_precision": "day",
+      "age": 47,
+      "title": "Taliesin murders and fire",
+      "description": "While Wright was away in Chicago on a project, a Taliesin staff member, [[Julian Carlton|a Barbadian-born servant employed at Taliesin]], set fire to the residence and murdered Mamah Borthwick Cheney, her two visiting children, and several others at the estate near Spring Green, Wisconsin. The catastrophe became one of the most notorious episodes of Wright\u0019s life\u0014a moment of brutal rupture that left him devastated, yet determined to rebuild.",
+      "locations": [
+        {
+          "name_historic": "Spring Green",
+          "name_modern": "Spring Green, Wisconsin, United States",
+          "centroid": [
+            -90.0680478,
+            43.1769367
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mamah Borthwick Cheney",
+        "Julian Carlton",
+        "John Borthwick Cheney",
+        "Martha Cheney",
+        "David Lindblom",
+        "Ernest Weston",
+        "Thomas Brunker",
+        "Herbert Fritz",
+        "William Weston"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+      ],
+      "event_type_icon": "mdi-fire",
+      "chapter": "prairie_defiance_taliesin_tragedy",
+      "annotations": {
+        "Julian Carlton": {
+          "explanation": "A Barbadian-born servant employed at Wright’s Taliesin who carried out the arson-and-axe attack on August 15, 1914; he later died after ingesting acid.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+        }
+      }
+    },
+    {
+      "date": "1915",
+      "date_precision": "year",
+      "date_end": "1923",
+      "date_end_precision": "year",
+      "age": 48,
+      "title": "Designs Imperial Hotel Tokyo",
+      "description": "Wright undertook the ambitious [[Imperial Hotel, Tokyo|Imperial Hotel project]] in Tokyo, one of his most important international commissions. The long, complex effort expanded his reach beyond the United States and demonstrated his ability to integrate structure, ornament, and planning at monumental scale\u0014culminating in a building that opened in 1923.",
+      "locations": [
+        {
+          "name_historic": "Tokyo",
+          "name_modern": "Tokyo, Japan",
+          "centroid": [
+            139.7638947,
+            35.6768601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aisaku Hayashi"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Imperial_Hotel,_Tokyo",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Imperial_Hotel_Tokyo.JPG/960px-Imperial_Hotel_Tokyo.JPG",
+          "caption": "Imperial Hotel Tokyo",
+          "source": "https://commons.wikimedia.org/wiki/File:Imperial_Hotel_Tokyo.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "tokyo_monumental_gamble",
+      "annotations": {
+        "Imperial Hotel, Tokyo": {
+          "explanation": "A major luxury hotel in Tokyo whose second main building (designed by Wright, commissioned in the 1910s and opened in 1923) became famous for its bold design and for surviving the 1923 Great Kantō earthquake.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Imperial_Hotel,_Tokyo"
+        }
+      }
+    },
+    {
+      "date": "1928-08-25",
+      "date_precision": "day",
+      "age": 61,
+      "title": "Marries Olgivanna Lazović",
+      "description": "Wright met Olgivanna Lazovi\u00107 in November 1924, and after a turbulent interlude in his personal life, married her in 1928. The couple went on to live and work together primarily at Taliesin in Wisconsin, where she became a central organizer of his domestic life and helped support the apprenticeship community that grew up around his studio.",
+      "locations": [
+        {
+          "name_historic": "Wisconsin",
+          "name_modern": "Wisconsin, United States",
+          "centroid": [
+            -89.6884637,
+            44.4308975
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Olgivanna Lazovi\u000107"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "taliesin_fellowship_renaissance",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Olgivanna Lazović",
+        "duration": "until death",
+        "characterization": "stabilizing marriage"
+      },
+      "location_coordinates": [
+        {
+          "label": "Wisconsin",
+          "name": "Wisconsin, United States",
+          "primary": true,
+          "centroid": [
+            -89.6884637,
+            44.4308975
+          ],
+          "source": "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
+        }
+      ]
+    },
+    {
+      "date": "1932",
+      "date_precision": "year",
+      "date_end": "1937",
+      "date_end_precision": "year",
+      "age": 65,
+      "title": "Launches the Taliesin Fellowship",
+      "description": "In 1932, Wright and Olgivanna established the Taliesin Fellowship, formalizing a community of apprentices who learned through work, living, and study under Wright\u0019s direction at Taliesin in [[Spring Green|Spring Green, Wisconsin]]. Over the following years he regained national prominence through major commissions\u0014including [[Fallingwater]]\u0014and expanded the Fellowship\u0019s year-round rhythm by creating a winter base at Taliesin West near [[Scottsdale|Scottsdale, Arizona]].",
+      "locations": [
+        {
+          "name_historic": "Spring Green",
+          "name_modern": "Spring Green, Wisconsin, USA",
+          "centroid": [
+            -90.0680478,
+            43.1769367
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Scottsdale",
+          "name_modern": "Scottsdale, Arizona, USA",
+          "centroid": [
+            -111.926018,
+            33.4942189
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Olgivanna Lazovi\u000107",
+        "Edgar J. Kaufmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Taliesin_Fellowship",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Scottsdale-Taliesin_West-1931-3.JPG/960px-Scottsdale-Taliesin_West-1931-3.JPG",
+          "caption": "Taliesin West, Scottsdale, Arizona (built 1931)",
+          "source": "https://commons.wikimedia.org/wiki/File:Scottsdale-Taliesin_West-1931-3.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "taliesin_fellowship_renaissance",
+      "annotations": {
+        "Spring Green": {
+          "explanation": "Village in Wisconsin where Wright\u0019s Taliesin estate served as the original headquarters of the Taliesin Fellowship and its apprenticeship program.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Spring_Green,_Wisconsin"
+        },
+        "Scottsdale": {
+          "explanation": "Arizona city near the site of Taliesin West, established as the Fellowship\u0019s winter headquarters in the desert outside Phoenix.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Scottsdale,_Arizona"
+        },
+        "Fallingwater": {
+          "explanation": "Wright\u0019s 1935 house design built over a waterfall in Pennsylvania, often cited as a defining example of his organic architecture.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fallingwater"
+        }
+      }
+    },
+    {
+      "date": "1943",
+      "date_precision": "year",
+      "age": 76,
+      "title": "Receives Guggenheim commission",
+      "description": "Wright was commissioned in 1943 to design the [[Solomon R. Guggenheim Museum|Solomon R. Guggenheim Museum]] in New York, a project that occupied him through years of iterative design and controversy. It became a defining late-career platform for his ideas about movement through space and the choreography of a public interior.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Solomon R. Guggenheim",
+        "Hilla von Rebay"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Solomon_R._Guggenheim_Museum",
+        "https://en.wikipedia.org/wiki/Hilla_von_Rebay"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Solomon_R._Guggenheim_Museum_skylight.jpg/960px-Solomon_R._Guggenheim_Museum_skylight.jpg",
+          "caption": "Solomon R. Guggenheim Museum skylight, Manhattan",
+          "source": "https://commons.wikimedia.org/wiki/File:Solomon_R._Guggenheim_Museum_skylight.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "late_icon_last_work",
+      "annotations": {
+        "Solomon R. Guggenheim Museum": {
+          "explanation": "A modern art museum conceived as the home for Solomon R. Guggenheim’s non-objective art collection, developed under the direction of Hilla von Rebay; Wright’s design ultimately opened in 1959.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Solomon_R._Guggenheim_Museum"
+        }
+      }
+    },
+    {
+      "date": "1959-04-09",
+      "date_precision": "day",
+      "age": 91,
+      "title": "Dies at age 91",
+      "description": "Wright died on April 9, 1959, after a seven-decade career that ranged from early Prairie School experimentation to large-scale late projects. At the end he remained engaged with design work and the [[Taliesin Fellowship|apprentice community]] he had built around his practice.",
+      "locations": [
+        {
+          "name_historic": "Phoenix",
+          "name_modern": "Phoenix, Arizona, United States",
+          "centroid": [
+            -112.074141,
+            33.4484367
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Olgivanna Lloyd Wright"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "late_icon_last_work",
+      "annotations": {
+        "Taliesin Fellowship": {
+          "explanation": "Wright\u0019s apprenticeship program and communal living/working group centered at Taliesin and Taliesin West.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Taliesin_Fellowship"
+        }
+      }
+    }
+  ]
+}
