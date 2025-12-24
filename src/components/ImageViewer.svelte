@@ -500,15 +500,15 @@
                   <span class="attribution-license">{image.license}</span>
                 {/if}
               {/if}
-              {#if image.source}
+              {#if image.originalImage || image.source}
                 {#if image.creator || image.license}<span class="meta-separator">·</span>{/if}
                 <a
-                  href={image.source}
+                  href={image.originalImage || image.source}
                   target="_blank"
                   rel="noreferrer"
                   on:click|stopPropagation
                   class="attribution-source"
-                >{getSourceName(image.source)}</a>
+                >{getSourceName(image.originalImage || image.source)}</a>
               {/if}
             {/if}
           </p>

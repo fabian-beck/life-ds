@@ -291,7 +291,7 @@ python scripts/remove_person.py "Ada Lovelace"
 python scripts/generate_person_portrait.py "Alan Turing"
 ```
 
-This uses OpenAI GPT-Image-1.5 to transform the existing Wikimedia Commons portrait into a stylized illustration with consistent artistic treatment. Requires a master style reference portrait at `public/master_style_portrait.png`.
+This uses OpenAI image generation to transform the existing Wikimedia Commons portrait into a stylized illustration with consistent artistic treatment. Requires a master style reference portrait at `public/master_style_portrait.png`.
 
 **Features**:
 - Uses master style image for consistent artistic treatment across all persons
