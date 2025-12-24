@@ -67,6 +67,40 @@ def slugify(value: str) -> str:
     return slug.strip("_") or "person"
 
 
+def normalize_wikimedia_url(url: str) -> str:
+    """
+    Convert Wikimedia thumbnail URLs to full-size image URLs.
+
+    Wikimedia thumbnail URLs with specific dimensions (e.g., /thumb/.../NNNpx-...)
+    often get rate-limited. This function converts them to the original full-size URL.
+
+    Args:
+        url: Wikimedia Commons URL (thumbnail or original)
+
+    Returns:
+        Full-size image URL without thumbnail parameters
+    """
+    # Pattern: https://upload.wikimedia.org/wikipedia/commons/thumb/X/XX/Filename.jpg/NNNpx-Filename.jpg
+    # Target:  https://upload.wikimedia.org/wikipedia/commons/X/XX/Filename.jpg
+
+    if "/thumb/" in url:
+        parts = url.split("/thumb/")
+        if len(parts) == 2:
+            # Extract the path after /thumb/ up to the last /
+            # e.g., "5/57/Henry_II%2C_Holy_Roman_Emperor.jpg/956px-Henry_II%2C_Holy_Roman_Emperor.jpg"
+            path_after_thumb = parts[1]
+            # Split by / and take all parts except the last one (which has the size prefix)
+            path_components = path_after_thumb.split("/")
+            if len(path_components) >= 2:
+                # Reconstruct: base_url + /wikipedia/commons/ + path components without last one
+                original_path = "/".join(path_components[:-1])
+                base_url = parts[0].replace("/thumb", "")
+                return f"{base_url}/{original_path}"
+
+    # If not a thumbnail URL or pattern doesn't match, return as-is
+    return url
+
+
 def download_image(url: str, output_path: Path, max_retries: int = 3) -> bool:
     """
     Download image from URL to local file with retry logic.
@@ -79,6 +113,12 @@ def download_image(url: str, output_path: Path, max_retries: int = 3) -> bool:
     Returns:
         True if successful, False otherwise
     """
+    # Normalize Wikimedia URLs to avoid thumbnail rate limiting
+    normalized_url = normalize_wikimedia_url(url)
+    if normalized_url != url:
+        print(f"  Normalized thumbnail URL to original: {normalized_url}")
+        url = normalized_url
+
     # Set User-Agent header for Wikimedia Commons compatibility
     headers = {
         "User-Agent": "life-ds-portrait-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
