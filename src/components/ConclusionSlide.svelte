@@ -57,7 +57,7 @@
               style="--card-primary: {relatedPersonStyle?.primary || '#f8fafc'}; --card-secondary: {relatedPersonStyle?.secondary || '#38bdf8'}; --card-heading-font: {relatedPersonStyle?.headingFont ? `'${relatedPersonStyle.headingFont}', sans-serif` : 'var(--story-heading-font, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont ? `'${relatedPersonStyle.bodyFont}', sans-serif` : 'var(--story-body-font, sans-serif)'};"
               aria-label={`Open life story for ${displayName(person.name)}`}
             >
-              <figure class="person-thumb" style="border-color: {relatedPersonStyle?.secondary || 'rgba(148, 163, 184, 0.3)'}">
+              <figure class="person-thumb">
                 {#if person?.portrait?.image}
                   <img
                     src={getThumbnailUrl(person.portrait.image, 120)}
@@ -207,20 +207,34 @@
 
   .person-thumb {
     width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    aspect-ratio: 2 / 3;
     overflow: hidden;
     margin: 0;
     flex-shrink: 0;
-    background: rgba(148, 163, 184, 0.1);
-    border-width: 2px;
-    border-style: solid;
+    mix-blend-mode: lighten;
   }
 
   .person-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    mix-blend-mode: lighten;
+    mask-image: radial-gradient(
+      ellipse 45% 55% at center,
+      rgba(0, 0, 0, 1) 35%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.7) 65%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0) 90%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 45% 55% at center,
+      rgba(0, 0, 0, 1) 35%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.7) 65%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0) 90%
+    );
   }
 
   .thumb-fallback {
@@ -308,7 +322,6 @@
 
     .person-thumb {
       width: 70px;
-      height: 70px;
     }
 
     .card-name {
