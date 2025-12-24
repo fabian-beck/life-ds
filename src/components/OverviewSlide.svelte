@@ -153,14 +153,13 @@
 
   .overview-portrait img {
     max-width: 100%;
-    max-height: min(25dvh, 180px);
+    max-height: min(40dvh, 300px);
     width: auto;
     height: auto;
     object-fit: contain;
     border-radius: 1rem;
     box-shadow: none;
     border: none;
-    filter: saturate(0.55) contrast(0.8) brightness(0.92);
     mask-image: radial-gradient(
       ellipse 45% 55% at center,
       rgba(0, 0, 0, 1) 35%,
@@ -359,8 +358,8 @@
     }
 
     .overview-portrait img {
-      max-width: 420px;
-      max-height: min(40dvh, 320px);
+      max-width: 520px;
+      max-height: min(50dvh, 450px);
     }
 
     .overview-text {
