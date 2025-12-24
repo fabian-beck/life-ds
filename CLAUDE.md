@@ -190,6 +190,8 @@ life-ds/
 │   ├── generate_person_events.py    # Life events (two-phase AI)
 │   ├── generate_person_style.py     # Visual style only
 │   ├── generate_person_network.py   # Ego network only
+│   ├── generate_person_portrait.py  # Stylized portrait generation
+│   ├── generate_all_portraits.py    # Batch portrait generation
 │   ├── icon_categories.py           # MDI icon mappings
 │   ├── translate_person.py          # Translate single person
 │   ├── translate_all_persons.py     # Batch translate all persons
@@ -282,6 +284,43 @@ python scripts/generate_person_network.py "Ada Lovelace"
 ```bash
 python scripts/remove_person.py "Ada Lovelace"
 ```
+
+**Generate stylized portrait** (optional):
+
+```bash
+python scripts/generate_person_portrait.py "Alan Turing"
+```
+
+This uses OpenAI GPT-Image-1.5 to transform the existing Wikimedia Commons portrait into a stylized illustration with consistent artistic treatment. Requires a master style reference portrait at `public/master_style_portrait.png`.
+
+**Features**:
+- Uses master style image for consistent artistic treatment across all persons
+- Preserves facial likeness from Wikimedia portraits
+- Saves to `public/portraits/{person_id}.png`
+- Automatically updates `data/persons.json` with generated portrait path
+- Automatically syncs portrait data to `data/people/{person_id}/life_events.json` (main and all translations)
+- Cost: ~$0.05 per portrait
+
+**Prerequisites**:
+1. Create master style reference portrait at `public/master_style_portrait.png` (1024x1024 PNG)
+2. Ensure person has existing Wikimedia portrait (from `generate_person_events.py`)
+
+**Options**:
+- `--force`: Regenerate even if portrait already exists
+- `--dry-run`: Test without API calls or file writes
+- `--master-style PATH`: Use custom master style image
+- `--model MODEL`: Specify OpenAI model (default: gpt-image-1.5)
+
+**Master Style Portrait**:
+The master style portrait defines the artistic style applied to all generated portraits. Create it once (manually or using AI tools), then all generated portraits will match its style through AI-powered style transfer.
+
+**Portrait Data Syncing**:
+The portrait generation script automatically ensures portrait data consistency across all files:
+1. Updates `data/persons.json` with the generated portrait path and metadata
+2. Syncs the same portrait data to `data/people/{person_id}/life_events.json`
+3. Updates all language translations (e.g., `data/people/{person_id}/de/life_events.json`)
+
+This ensures the generated portraits appear consistently on both the landing page (which reads from `persons.json`) and the story overview slide (which reads from `life_events.json`).
 
 ### Two-Phase Event Generation
 
