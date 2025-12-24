@@ -11,10 +11,11 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 from urllib.parse import urlparse
 
 import requests
+from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
 from PIL import Image
 
@@ -99,6 +100,154 @@ def normalize_wikimedia_url(url: str) -> str:
 
     # If not a thumbnail URL or pattern doesn't match, return as-is
     return url
+
+
+def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Extract the main image URL from a web page (Openverse, Flickr, Wikimedia Commons, etc.).
+
+    Args:
+        page_url: URL to a web page containing an image
+
+    Returns:
+        Tuple of (image_url, source_page_url) or (None, None) if extraction fails
+    """
+    try:
+        parsed_url = urlparse(page_url)
+        domain = parsed_url.netloc.lower()
+        image_url = None
+
+        # Openverse - use API instead of scraping (they block automated requests)
+        if 'openverse.org' in domain:
+            # URL format: https://openverse.org/image/{image_id}?...
+            # API endpoint: https://api.openverse.org/v1/images/{image_id}/
+            image_id_match = re.search(r'/image/([a-f0-9-]+)', page_url)
+            if image_id_match:
+                image_id = image_id_match.group(1)
+                api_url = f"https://api.openverse.org/v1/images/{image_id}/"
+
+                api_headers = {
+                    "User-Agent": "life-ds-portrait-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
+                }
+                api_response = requests.get(api_url, headers=api_headers, timeout=30)
+                api_response.raise_for_status()
+                api_data = api_response.json()
+
+                # Get the full-size image URL
+                image_url = api_data.get('url') or api_data.get('thumbnail')
+
+                if image_url:
+                    return image_url, page_url
+
+            return None, None
+
+        # For other sites, fetch the HTML page
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1"
+        }
+        response = requests.get(page_url, timeout=30, headers=headers)
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Flickr
+        if 'flickr.com' in domain:
+            # Flickr has specific meta tags
+            og_image = soup.find('meta', property='og:image')
+            if og_image and og_image.get('content'):
+                image_url = og_image['content']
+
+            # Alternative: look for the main photo
+            if not image_url:
+                main_photo = soup.find('img', {'class': lambda x: x and 'main-photo' in x})
+                if main_photo and main_photo.get('src'):
+                    image_url = main_photo['src']
+
+        # Wikimedia Commons file pages
+        if 'commons.wikimedia.org' in domain and '/File:' in page_url:
+            # Look for the full-size image link
+            fullsize_link = soup.find('a', {'class': 'internal'}, href=lambda x: x and '/wikipedia/commons/' in x and '/thumb/' not in x)
+            if fullsize_link and fullsize_link.get('href'):
+                href = fullsize_link['href']
+                if href.startswith('//'):
+                    image_url = 'https:' + href
+                elif href.startswith('/'):
+                    image_url = 'https://upload.wikimedia.org' + href
+                else:
+                    image_url = href
+
+        # Generic fallback: try Open Graph image or largest image on page
+        if not image_url:
+            og_image = soup.find('meta', property='og:image')
+            if og_image and og_image.get('content'):
+                image_url = og_image['content']
+            else:
+                # Find the largest image on the page
+                images = soup.find_all('img')
+                max_size = 0
+                best_img = None
+                for img in images:
+                    src = img.get('src', '')
+                    # Skip tiny images, icons, tracking pixels
+                    width = img.get('width', 0)
+                    height = img.get('height', 0)
+                    try:
+                        width = int(width) if width else 0
+                        height = int(height) if height else 0
+                        size = width * height
+                        if size > max_size and size > 10000:  # At least 100x100
+                            max_size = size
+                            best_img = src
+                    except (ValueError, TypeError):
+                        pass
+
+                if best_img:
+                    image_url = best_img
+
+        # Make URL absolute if relative
+        if image_url:
+            if image_url.startswith('//'):
+                image_url = 'https:' + image_url
+            elif image_url.startswith('/'):
+                image_url = f"{parsed_url.scheme}://{parsed_url.netloc}{image_url}"
+
+            return image_url, page_url
+
+        return None, None
+
+    except Exception as e:
+        print(f"  Warning: Failed to extract image from page: {e}", file=sys.stderr)
+        return None, None
+
+
+def is_direct_image_url(url: str) -> bool:
+    """
+    Check if a URL points directly to an image file.
+
+    Args:
+        url: URL to check
+
+    Returns:
+        True if URL appears to be a direct image URL
+    """
+    parsed = urlparse(url)
+    path = parsed.path.lower()
+
+    # Check file extension
+    image_extensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp']
+    if any(path.endswith(ext) for ext in image_extensions):
+        return True
+
+    # Check for image hosting domains with direct links
+    if 'staticflickr.com' in parsed.netloc or 'upload.wikimedia.org' in parsed.netloc:
+        return True
+
+    return False
 
 
 def download_image(url: str, output_path: Path, max_retries: int = 3) -> bool:
@@ -307,6 +456,7 @@ def update_person_registry(
     person_id: str,
     portrait_paths: Dict[str, str],
     original_image_url: str,
+    source_page_url: Optional[str] = None,
 ) -> None:
     """
     Update data/persons.json with generated portrait.
@@ -314,7 +464,8 @@ def update_person_registry(
     Args:
         person_id: Person identifier
         portrait_paths: Dict with 'thumbnail', 'medium', 'full' paths
-        original_image_url: Original Wikimedia Commons URL
+        original_image_url: Original image URL used for generation
+        source_page_url: Optional source page URL for attribution (e.g., Openverse, Flickr page)
     """
     registry = load_person_registry()
     person = find_person_in_registry(registry, person_id)
@@ -325,8 +476,13 @@ def update_person_registry(
 
     # Preserve original portrait data
     original_portrait = person.get("portrait", {})
-    original_source = original_portrait.get("source")
     original_caption = original_portrait.get("caption")
+
+    # Determine source URL: use provided source page, or fall back to original source
+    if source_page_url:
+        source_url = source_page_url
+    else:
+        source_url = original_portrait.get("source", "https://commons.wikimedia.org/")
 
     # Update with generated portrait (multi-size WebP)
     person["portrait"] = {
@@ -334,7 +490,7 @@ def update_person_registry(
         "thumbnail": portrait_paths.get("thumbnail"),
         "medium": portrait_paths.get("medium"),
         "full": portrait_paths.get("full"),
-        "source": original_source or "https://commons.wikimedia.org/",
+        "source": source_url,
         "caption": "Stylized portrait based on historical photograph",
         "creator": "AI generated artwork",
         "originalImage": original_image_url,
@@ -419,6 +575,7 @@ def generate_portrait(
     person_id: str,
     reference_image_url: str,
     *,
+    source_page_url: Optional[str] = None,
     master_style_path: Path = DEFAULT_MASTER_STYLE_PATH,
     model: str = "gpt-image-1.5",
     dry_run: bool = False,
@@ -429,7 +586,8 @@ def generate_portrait(
 
     Args:
         person_id: Person identifier (e.g., "alan_turing")
-        reference_image_url: URL to Wikimedia Commons portrait
+        reference_image_url: URL to image file for portrait generation
+        source_page_url: Optional URL to source page for attribution (e.g., Openverse, Flickr page)
         master_style_path: Path to master style reference image
         model: OpenAI model to use (default: gpt-image-1.5)
         dry_run: If True, skip API calls and file writes
@@ -778,8 +936,8 @@ Professional and dignified composition, portrait orientation, shoulders visible.
         if dry_run:
             print("  (Dry run: skipping registry update)")
         else:
-            # Update persons.json with multi-size paths
-            update_person_registry(person_id, portrait_paths, reference_image_url)
+            # Update persons.json with multi-size paths and source attribution
+            update_person_registry(person_id, portrait_paths, reference_image_url, source_page_url)
             print(f"  ✓ Registry updated with portrait paths")
 
             # Get the portrait data that was just saved to the registry
@@ -863,10 +1021,35 @@ def main(argv: Any = None) -> int:
 
 
     try:
-        # If --url is provided, use it as the reference image URL
+        # Determine reference image URL and source page URL
+        reference_url = None
+        source_page_url = None
+
+        # If --url is provided, check if it's a page or direct image
         if args.url:
-            reference_url = args.url
-            print(f"Using reference image from --url: {reference_url}")
+            print(f"Processing URL: {args.url}")
+
+            # Check if it's a direct image URL or a web page
+            if is_direct_image_url(args.url):
+                # Direct image URL
+                reference_url = args.url
+                source_page_url = None
+                print(f"  Detected direct image URL")
+            else:
+                # Web page - extract image
+                print(f"  Detected web page - extracting main image...")
+                extracted_image_url, extracted_source_url = extract_image_from_page(args.url)
+
+                if not extracted_image_url:
+                    print(f"✗ Error: Could not extract image from page: {args.url}", file=sys.stderr)
+                    print(f"  Please provide a direct image URL instead", file=sys.stderr)
+                    return 1
+
+                reference_url = extracted_image_url
+                source_page_url = extracted_source_url
+                print(f"  ✓ Extracted image URL: {reference_url}")
+                print(f"  ✓ Source page for attribution: {source_page_url}")
+
         else:
             # Load registry to get reference portrait URL
             registry = load_person_registry()
@@ -881,21 +1064,21 @@ def main(argv: Any = None) -> int:
             portrait = person.get("portrait", {})
             reference_url = portrait.get("image")
 
-            # If portrait is a local path (already generated), use the original Wikimedia URL
+            # If portrait is a local path (already generated), use the original image URL
             if reference_url and reference_url.startswith("/portraits/"):
                 reference_url = portrait.get("originalImage")
                 if reference_url:
-                    print(f"Using original Wikimedia portrait (stored in originalImage field)")
+                    print(f"Using original image (stored in originalImage field)")
 
             if not reference_url:
                 print(f"✗ Error: No reference portrait found for '{person_id}'", file=sys.stderr)
                 print("  Run generate_person_events.py first to create portrait", file=sys.stderr)
                 return 1
 
-            # Handle Wikimedia Commons URLs
+            # Validate URL
             if not reference_url.startswith("http"):
                 print(f"✗ Error: Invalid portrait URL: {reference_url}", file=sys.stderr)
-                print("  Portrait should be a Wikimedia Commons URL", file=sys.stderr)
+                print("  Portrait should be a valid HTTP(S) URL", file=sys.stderr)
                 return 1
 
             print(f"Reference portrait: {reference_url}")
@@ -905,6 +1088,7 @@ def main(argv: Any = None) -> int:
         result = generate_portrait(
             person_id=person_id,
             reference_image_url=reference_url,
+            source_page_url=source_page_url,
             master_style_path=args.master_style,
             model=args.model,
             dry_run=args.dry_run,
