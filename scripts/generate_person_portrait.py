@@ -239,6 +239,74 @@ def update_person_registry(
     save_person_registry(registry)
 
 
+def update_life_events_portrait(
+    person_id: str,
+    portrait_data: Dict[str, Any],
+) -> None:
+    """
+    Update life_events.json with generated portrait for main language and translations.
+
+    Args:
+        person_id: Person identifier
+        portrait_data: Portrait data dict to sync to life_events.json
+    """
+    people_dir = DATA_DIR / "people" / person_id
+
+    if not people_dir.exists():
+        print(f"  Warning: Person directory not found: {people_dir}", file=sys.stderr)
+        return
+
+    # Update main life_events.json
+    life_events_file = people_dir / "life_events.json"
+    if life_events_file.exists():
+        try:
+            life_events = json.loads(life_events_file.read_text(encoding="utf-8"))
+
+            if not life_events.get("person"):
+                life_events["person"] = {}
+
+            life_events["person"]["portrait"] = portrait_data
+
+            life_events_file.write_text(
+                json.dumps(life_events, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            print(f"  ✓ Updated life_events.json")
+        except Exception as e:
+            print(f"  Warning: Failed to update life_events.json: {e}", file=sys.stderr)
+
+    # Update translated life_events.json files
+    updated_translations = []
+    for lang_dir in people_dir.iterdir():
+        if not lang_dir.is_dir():
+            continue
+
+        # Skip _cache directory
+        if lang_dir.name.startswith("_"):
+            continue
+
+        translated_life_events = lang_dir / "life_events.json"
+        if translated_life_events.exists():
+            try:
+                life_events = json.loads(translated_life_events.read_text(encoding="utf-8"))
+
+                if not life_events.get("person"):
+                    life_events["person"] = {}
+
+                life_events["person"]["portrait"] = portrait_data
+
+                translated_life_events.write_text(
+                    json.dumps(life_events, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8",
+                )
+                updated_translations.append(lang_dir.name)
+            except Exception as e:
+                print(f"  Warning: Failed to update {lang_dir.name}/life_events.json: {e}", file=sys.stderr)
+
+    if updated_translations:
+        print(f"  ✓ Updated translations: {', '.join(updated_translations)}")
+
+
 def generate_portrait(
     person_id: str,
     reference_image_url: str,
@@ -583,15 +651,26 @@ Professional and dignified composition, portrait orientation, shoulders visible.
 
             print(f"  ✓ Portrait saved to: {output_path}")
 
-        # Update registry
-        print(f"[Step 5/6] Updating persons registry...")
+        # Update registry and life_events.json
+        print(f"[Step 5/6] Updating persons registry and life events...")
 
         if dry_run:
             print("  (Dry run: skipping registry update)")
         else:
             portrait_local_path = f"/portraits/{person_id}.png"
+
+            # Update persons.json
             update_person_registry(person_id, portrait_local_path, reference_image_url)
             print(f"  ✓ Registry updated with portrait path: {portrait_local_path}")
+
+            # Get the portrait data that was just saved to the registry
+            registry = load_person_registry()
+            person = find_person_in_registry(registry, person_id)
+            if person and person.get("portrait"):
+                # Update life_events.json and translations with the same portrait data
+                update_life_events_portrait(person_id, person["portrait"])
+            else:
+                print(f"  Warning: Could not retrieve portrait data from registry", file=sys.stderr)
 
         print(f"[Step 6/6] Portrait generation complete!")
 
