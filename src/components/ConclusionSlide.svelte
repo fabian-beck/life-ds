@@ -120,6 +120,7 @@
     align-items: center;
     gap: 1.5rem;
     padding: 2rem;
+    isolation: isolate;
   }
 
   .conclusion-headline {
@@ -188,7 +189,7 @@
     align-items: center;
     gap: 0;
     padding: 0.375rem 0.75rem 1rem;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.95);
     border-radius: 0.5rem;
     border: 1px solid rgba(148, 163, 184, 0.2);
     text-decoration: none;
@@ -198,12 +199,13 @@
       background 0.2s ease,
       border-color 0.2s ease;
     cursor: pointer;
+    isolation: isolate;
   }
 
   .related-person-card:hover,
   .related-person-card:focus {
     transform: translateY(-2px);
-    background: rgba(15, 23, 42, 0.8);
+    background: rgb(15, 23, 42);
     outline: none;
   }
 
