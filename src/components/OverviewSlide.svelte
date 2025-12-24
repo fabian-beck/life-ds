@@ -56,7 +56,7 @@
         class="portrait-button"
         on:click={() =>
           onEnlargeImage({
-            url: portrait.image,
+            url: portrait.full || portrait.image,
             caption: portrait.caption || null,
             source: portrait.source || null,
             creator: portrait.creator || null,
@@ -66,8 +66,8 @@
         aria-label={$_("story.enlarge_portrait")}
       >
         <img
-          src={getThumbnailUrl(portrait.image, 400)}
-          srcset={`${getThumbnailUrl(portrait.image, 400)} 1x, ${getThumbnailUrl(portrait.image, 800)} 2x`}
+          src={getThumbnailUrl(portrait, 400)}
+          srcset={`${getThumbnailUrl(portrait, 400)} 1x, ${getThumbnailUrl(portrait, 800)} 2x`}
           alt={portrait.alt ?? `Portrait of ${personName}`}
           loading="lazy"
           decoding="async"
