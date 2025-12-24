@@ -776,7 +776,7 @@
     display: grid;
     grid-template-columns: 100px 1fr;
     align-items: stretch;
-    gap: 1.25rem;
+    gap: 1.5rem;
     padding: 1.25rem 0.75rem 1.25rem 1rem;
     border-radius: 1rem;
     background-color: var(--card-bg, rgba(15, 23, 42, 0.94));
@@ -842,7 +842,7 @@
   }
 
   .person-thumb {
-    margin: -0.5rem 0 -0.5rem -1rem;
+    margin: -0.5rem 0 -0.5rem -0.25rem;
     width: 120px;
     height: 180px; /* 2:3 aspect ratio (120 * 3/2 = 180) */
     border-radius: 0.9rem;
@@ -1181,12 +1181,12 @@
   @media (max-width: 480px) {
     .person-card {
       grid-template-columns: 70px 1fr;
-      gap: 1rem;
+      gap: 1.25rem;
       padding: 1.1rem 0.6rem 1.1rem 1.2rem;
     }
 
     .person-thumb {
-      margin: -0.5rem 0 -0.5rem -0.8rem;
+      margin: -0.5rem 0 -0.5rem -0.4rem;
       width: 90px;
       height: 135px; /* 2:3 aspect ratio (90 * 3/2 = 135) */
     }
@@ -1243,11 +1243,11 @@
     .person-card {
       padding: 1.5rem 1rem 1.5rem 1.75rem;
       grid-template-columns: 92px 1fr;
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
 
     .person-thumb {
-      margin: -0.75rem 0 -0.75rem -1.25rem;
+      margin: -0.75rem 0 -0.75rem -0.25rem;
       width: 130px;
       height: 195px; /* 2:3 aspect ratio (130 * 3/2 = 195) */
     }
