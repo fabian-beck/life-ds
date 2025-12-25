@@ -574,6 +574,35 @@ class LifeEvent(BaseModel):
 # UTILITY FUNCTIONS (copied from generate_person_dataset.py)
 # ============================================================================
 
+def _fix_control_characters(text: str) -> str:
+    """
+    Replace ASCII control characters with proper Unicode typographic characters.
+
+    OpenAI API sometimes returns control characters instead of proper Unicode:
+    - \\x14 (DC4) should be — (em dash, U+2014)
+    - \\x19 (EM) should be ' (right single quotation mark, U+2019)
+    - \\x1c (FS) should be " (left double quotation mark, U+201C)
+    - \\x1d (GS) should be " (right double quotation mark, U+201D)
+    - \\x13 (DC3) should be – (en dash, U+2013)
+    """
+    if not isinstance(text, str):
+        return text
+
+    replacements = {
+        '\x14': '\u2014',  # DC4 → em dash (—)
+        '\x19': '\u2019',  # EM → right single quotation mark (')
+        '\x1c': '\u201c',  # FS → left double quotation mark (")
+        '\x1d': '\u201d',  # GS → right double quotation mark (")
+        '\x13': '\u2013',  # DC3 → en dash (–)
+    }
+
+    for bad_char, good_char in replacements.items():
+        if bad_char in text:
+            text = text.replace(bad_char, good_char)
+
+    return text
+
+
 def _strip_wrapping_quotes(value: str) -> str:
     trimmed = value.strip()
     quotes = "\"'""''"
@@ -2983,6 +3012,23 @@ def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any]
 # METADATA ENFORCEMENT (adapted from generate_person_dataset.py)
 # ============================================================================
 
+def _clean_all_strings(data: Any) -> Any:
+    """
+    Recursively fix control characters in all strings within a data structure.
+
+    This ensures AI-generated text doesn't contain incorrect Unicode control
+    characters that should be typographic punctuation.
+    """
+    if isinstance(data, dict):
+        return {key: _clean_all_strings(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [_clean_all_strings(item) for item in data]
+    elif isinstance(data, str):
+        return _fix_control_characters(data)
+    else:
+        return data
+
+
 def enforce_metadata(
     payload: Dict[str, Any],
     page_data: Dict[str, Any],
@@ -3267,6 +3313,9 @@ def enforce_metadata(
             payload.pop("chapters", None)
     else:
         payload.pop("chapters", None)
+
+    # Fix any control characters in all strings throughout the payload
+    payload = _clean_all_strings(payload)
 
     return payload
 
