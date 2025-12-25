@@ -1707,6 +1707,8 @@ def generate_image_search_strings(
     prompt += "  • Use 2-4 words MAXIMUM per search string\n"
     prompt += "  • At least 5 searches should include the person's name\n"
     prompt += "  • Focus on: building names, artwork names, award names, institution names\n"
+    prompt += "  • ALWAYS combine the person's name with generic terms (city names, professions, etc.)\n"
+    prompt += "  • NO standalone city names, countries, or professions without the person's name\n"
     prompt += "  • NO adjectives, NO years, NO descriptive phrases\n"
     prompt += "  • NO long phrases like 'exterior view of' or 'night view'\n\n"
 
@@ -1717,12 +1719,20 @@ def generate_image_search_strings(
     prompt += "  • 'Heydar Aliyev Center'\n"
     prompt += "  • 'Pritzker Prize'\n"
     prompt += "  • 'Zaha Hadid architecture'\n"
-    prompt += "  • 'London Aquatics Centre'\n\n"
+    prompt += "  • 'London Aquatics Centre'\n"
+    prompt += "  • 'Béla Bartók portrait' (person + generic term)\n"
+    prompt += "  • 'Bartók Budapest' (person + city)\n\n"
 
-    prompt += "BAD EXAMPLES (too long/complex):\n"
-    prompt += "  • 'Vitra Fire Station Weil am Rhein exterior 1993 Zaha Hadid' ❌\n"
-    prompt += "  • 'Deconstructivist Architecture exhibition 1988 MoMA New York' ❌\n"
-    prompt += "  • 'ancient Sumerian city ruins Iraq Ur archaeological site' ❌\n"
+    prompt += "BAD EXAMPLES (too generic or too long):\n"
+    prompt += "  • 'Budapest' ❌ (too generic - use 'Bartók Budapest' instead)\n"
+    prompt += "  • 'composer' ❌ (too generic - use 'Bartók composer' instead)\n"
+    prompt += "  • 'Hungary' ❌ (too generic - use 'Bartók Hungary' instead)\n"
+    prompt += "  • 'Vitra Fire Station Weil am Rhein exterior 1993 Zaha Hadid' ❌ (too long)\n"
+    prompt += "  • 'Deconstructivist Architecture exhibition 1988 MoMA New York' ❌ (too long)\n"
+    prompt += "  • 'ancient Sumerian city ruins Iraq Ur archaeological site' ❌ (too long)\n\n"
+
+    prompt += "CRITICAL RULE: Never search for standalone generic terms (cities, countries, professions).\n"
+    prompt += "Always anchor generic terms to the person's name or specific named entities.\n"
 
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
