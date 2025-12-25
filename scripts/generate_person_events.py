@@ -3635,21 +3635,71 @@ def generate_person_events(
 
     # Build final payload
     person_data = life_plan.person.model_dump()
-    # Apply AI-selected portrait if available
+
+    # Check if there's already a generated portrait in the registry OR on disk
+    existing_generated_portrait = None
+    try:
+        # First check registry
+        if REGISTER_PATH.exists():
+            registry = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+            people = registry.get("people", [])
+            for person in people:
+                if person.get("id") == identifier:
+                    existing_portrait = person.get("portrait", {})
+                    # Check if it's a generated portrait (local path starting with /portraits/)
+                    if existing_portrait and isinstance(existing_portrait.get("image"), str):
+                        if existing_portrait["image"].startswith("/portraits/"):
+                            existing_generated_portrait = existing_portrait
+                            print(f"  Found existing generated portrait in registry: {existing_portrait['image']}")
+                    break
+
+        # If not in registry, check if portrait files exist on disk
+        if not existing_generated_portrait:
+            portraits_dir = Path(__file__).resolve().parents[1] / "public" / "portraits"
+            thumbnail_path = portraits_dir / f"{identifier}_thumbnail.webp"
+            if thumbnail_path.exists():
+                # Found generated portrait files - reconstruct portrait data
+                existing_generated_portrait = {
+                    "image": f"/portraits/{identifier}_thumbnail.webp",
+                    "thumbnail": f"/portraits/{identifier}_thumbnail.webp",
+                    "medium": f"/portraits/{identifier}_medium.webp",
+                    "full": f"/portraits/{identifier}_full.webp",
+                    "caption": "Stylized portrait based on historical photograph",
+                    "creator": "AI generated artwork",
+                }
+                print(f"  Found existing generated portrait files on disk: {thumbnail_path.name}")
+    except Exception as e:
+        print(f"  Warning: Could not check for existing portrait: {e}")
+
+    # Apply AI-selected portrait if available, but preserve generated portraits
     if portrait:
-        portrait_data = {
-            "image": portrait["url"],
-            "source": portrait["source"],
-        }
-        if portrait.get("caption"):
-            portrait_data["caption"] = portrait["caption"]
-        if portrait.get("creator"):
-            portrait_data["creator"] = portrait["creator"]
-        if portrait.get("license"):
-            portrait_data["license"] = portrait["license"]
-        if portrait.get("licenseUrl"):
-            portrait_data["licenseUrl"] = portrait["licenseUrl"]
+        if existing_generated_portrait:
+            # Preserve generated portrait but update originalImage field
+            portrait_data = existing_generated_portrait.copy()
+            portrait_data["originalImage"] = portrait["url"]
+            # Update source to point to the Wikimedia Commons page
+            if "source" not in portrait_data or not portrait_data["source"].startswith("http"):
+                portrait_data["source"] = portrait["source"]
+            print(f"  Preserving generated portrait, updating originalImage to: {portrait['url']}")
+        else:
+            # No generated portrait, use AI-selected Wikimedia portrait
+            portrait_data = {
+                "image": portrait["url"],
+                "source": portrait["source"],
+            }
+            if portrait.get("caption"):
+                portrait_data["caption"] = portrait["caption"]
+            if portrait.get("creator"):
+                portrait_data["creator"] = portrait["creator"]
+            if portrait.get("license"):
+                portrait_data["license"] = portrait["license"]
+            if portrait.get("licenseUrl"):
+                portrait_data["licenseUrl"] = portrait["licenseUrl"]
         person_data["portrait"] = portrait_data
+    elif existing_generated_portrait:
+        # No AI portrait but we have a generated one - keep it
+        person_data["portrait"] = existing_generated_portrait
+        print(f"  No AI portrait found, keeping existing generated portrait")
 
     payload = {
         "dataset": life_plan.dataset,
@@ -3831,22 +3881,72 @@ def regenerate_images_only(
 
     # Apply portrait to person data
     print("[Step 3/4] Updating events with new image assignments...")
+
+    # Check if there's already a generated portrait in the registry OR on disk
+    existing_generated_portrait = None
+    try:
+        # First check registry
+        if REGISTER_PATH.exists():
+            registry = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+            people = registry.get("people", [])
+            for person in people:
+                if person.get("id") == person_id:
+                    existing_portrait = person.get("portrait", {})
+                    # Check if it's a generated portrait (local path starting with /portraits/)
+                    if existing_portrait and isinstance(existing_portrait.get("image"), str):
+                        if existing_portrait["image"].startswith("/portraits/"):
+                            existing_generated_portrait = existing_portrait
+                            print(f"    Found existing generated portrait in registry: {existing_portrait['image']}")
+                    break
+
+        # If not in registry, check if portrait files exist on disk
+        if not existing_generated_portrait:
+            portraits_dir = Path(__file__).resolve().parents[1] / "public" / "portraits"
+            thumbnail_path = portraits_dir / f"{person_id}_thumbnail.webp"
+            if thumbnail_path.exists():
+                # Found generated portrait files - reconstruct portrait data
+                existing_generated_portrait = {
+                    "image": f"/portraits/{person_id}_thumbnail.webp",
+                    "thumbnail": f"/portraits/{person_id}_thumbnail.webp",
+                    "medium": f"/portraits/{person_id}_medium.webp",
+                    "full": f"/portraits/{person_id}_full.webp",
+                    "caption": "Stylized portrait based on historical photograph",
+                    "creator": "AI generated artwork",
+                }
+                print(f"    Found existing generated portrait files on disk: {thumbnail_path.name}")
+    except Exception as e:
+        print(f"    Warning: Could not check for existing portrait: {e}")
+
     if portrait:
-        portrait_data = {
-            "image": portrait["url"],
-            "source": portrait["source"],
-        }
-        if portrait.get("caption"):
-            portrait_data["caption"] = portrait["caption"]
-        if portrait.get("creator"):
-            portrait_data["creator"] = portrait["creator"]
-        if portrait.get("license"):
-            portrait_data["license"] = portrait["license"]
-        if portrait.get("licenseUrl"):
-            portrait_data["licenseUrl"] = portrait["licenseUrl"]
+        if existing_generated_portrait:
+            # Preserve generated portrait but update originalImage field
+            portrait_data = existing_generated_portrait.copy()
+            portrait_data["originalImage"] = portrait["url"]
+            # Update source to point to the Wikimedia Commons page
+            if "source" not in portrait_data or not portrait_data["source"].startswith("http"):
+                portrait_data["source"] = portrait["source"]
+            print(f"    Preserving generated portrait, updating originalImage to: {portrait['url']}")
+        else:
+            # No generated portrait, use AI-selected Wikimedia portrait
+            portrait_data = {
+                "image": portrait["url"],
+                "source": portrait["source"],
+            }
+            if portrait.get("caption"):
+                portrait_data["caption"] = portrait["caption"]
+            if portrait.get("creator"):
+                portrait_data["creator"] = portrait["creator"]
+            if portrait.get("license"):
+                portrait_data["license"] = portrait["license"]
+            if portrait.get("licenseUrl"):
+                portrait_data["licenseUrl"] = portrait["licenseUrl"]
         payload["person"]["portrait"] = portrait_data
+    elif existing_generated_portrait:
+        # No AI portrait but we have a generated one - keep it
+        payload["person"]["portrait"] = existing_generated_portrait
+        print(f"    No AI portrait found, keeping existing generated portrait")
     else:
-        # AI found no suitable portrait - remove any existing one
+        # AI found no suitable portrait and no generated portrait exists
         payload["person"].pop("portrait", None)
         print("    No suitable portrait found - removed existing portrait")
 
