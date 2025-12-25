@@ -1076,7 +1076,7 @@ export function getChapterPeople(chapter, egoNetwork) {
   }
 
   // Only return people that can be matched to the ego network with strong connections
-  return chapter.involved_people
+  const matchedPeople = chapter.involved_people
     .map((name, idx) => {
       const networkPerson = findPersonInNetwork(name, egoNetwork);
       if (networkPerson && networkPerson.strength === 'strong') {
@@ -1089,6 +1089,17 @@ export function getChapterPeople(chapter, egoNetwork) {
       return null;
     })
     .filter(Boolean);
+
+  // Deduplicate by person_name (in case multiple variations match same network person)
+  const seen = new Map();
+  return matchedPeople.filter((person) => {
+    const key = person.person_name;
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.set(key, true);
+    return true;
+  });
 }
 
 /**

@@ -2732,7 +2732,9 @@ def call_openai_chapter_generation(
         "- date_end, date_end_precision: When this chapter ends\n"
         "- age_start, age_end: Subject's age at chapter start/end (null if not applicable)\n"
         "- involved_people: Aggregate the key people mentioned across all events in this chapter "
-        "(exclude the main subject, include only significant individuals)\n"
+        "(exclude the main subject, include only significant individuals). "
+        "IMPORTANT: Use each person's most canonical name form ONLY ONCE - avoid duplicates or name variations "
+        "(e.g., use 'Anna Lloyd Jones' not both 'Anna Lloyd Jones' and 'Anna Lloyd Jones Wright')\n"
         "- location: A summary of the main geographic area for this chapter - NOT a list of cities, but a regional summary. "
         "For example: 'England' (not 'London, Cambridge, Manchester'), 'United States' (not 'Princeton, New York, Boston'), "
         "'Central Europe' (not 'Vienna, Prague, Budapest'). Use the broadest appropriate region.\n\n"
@@ -2776,6 +2778,54 @@ def call_openai_chapter_generation(
                 raise RuntimeError(f"Chapter generation failed: {error}") from error
 
     raise RuntimeError("Chapter generation failed unexpectedly")
+
+
+def deduplicate_person_names(names: List[str]) -> List[str]:
+    """
+    Deduplicate person names by removing variations of the same person.
+
+    Uses fuzzy matching to identify names that are likely the same person
+    (e.g., "Anna Lloyd Jones" and "Anna Lloyd Jones Wright").
+    Keeps the shorter, more canonical form.
+    """
+    if not names:
+        return []
+
+    # Normalize names for comparison
+    def normalize(name: str) -> str:
+        # Remove common suffixes, lowercase, strip whitespace
+        normalized = name.lower().strip()
+        # Remove parentheticals like "(Lady Byron)"
+        normalized = re.sub(r'\s*\([^)]*\)\s*', ' ', normalized)
+        # Normalize whitespace
+        normalized = ' '.join(normalized.split())
+        return normalized
+
+    # Group similar names
+    seen = {}
+    result = []
+
+    for name in names:
+        norm = normalize(name)
+
+        # Check if this is a variation of an existing name
+        found_match = False
+        for existing_norm, existing_name in seen.items():
+            # If one is a substring of the other, they're likely the same person
+            if norm in existing_norm or existing_norm in norm:
+                # Keep the shorter (more canonical) name
+                if len(norm) < len(existing_norm):
+                    # Replace with shorter name
+                    seen[norm] = name
+                    result[result.index(existing_name)] = name
+                found_match = True
+                break
+
+        if not found_match:
+            seen[norm] = name
+            result.append(name)
+
+    return result
 
 
 def assign_events_to_chapters(
@@ -2854,12 +2904,32 @@ def generate_chapters_for_events(
     # Call AI to generate chapters
     chapter_output = call_openai_chapter_generation(prompt, model)
 
+    # Deduplicate involved_people in chapters (remove name variations)
+    deduplicated_chapters = []
+    for chapter in chapter_output.chapters:
+        if chapter.involved_people:
+            deduplicated_people = deduplicate_person_names(chapter.involved_people)
+            chapter = LifeChapter(
+                id=chapter.id,
+                headline=chapter.headline,
+                bridge_statement=chapter.bridge_statement,
+                date_start=chapter.date_start,
+                date_start_precision=chapter.date_start_precision,
+                date_end=chapter.date_end,
+                date_end_precision=chapter.date_end_precision,
+                age_start=chapter.age_start,
+                age_end=chapter.age_end,
+                involved_people=deduplicated_people,
+                location=chapter.location,
+            )
+        deduplicated_chapters.append(chapter)
+
     # Assign events to chapters
     events_with_chapters = assign_events_to_chapters(
-        merged_events, chapter_output.chapters
+        merged_events, deduplicated_chapters
     )
 
-    return chapter_output.chapters, events_with_chapters, chapter_output.conclusion
+    return deduplicated_chapters, events_with_chapters, chapter_output.conclusion
 
 
 def research_images_for_all_events(
