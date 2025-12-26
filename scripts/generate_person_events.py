@@ -2047,6 +2047,45 @@ def build_phase1_prompt(
     return combined
 
 
+def _validate_chronological_order(event_skeletons: List[EventSkeleton]) -> None:
+    """
+    Validate that events are in strict chronological order and contain no "Other Events" categorization.
+
+    Raises RuntimeError if:
+    - Events are not chronologically ordered
+    - Any event title contains "Other" or similar categorization terms
+    """
+    # Check for "Other Events" or similar problematic categorizations
+    prohibited_terms = ["other events", "other", "miscellaneous", "additional events", "various events"]
+    for event in event_skeletons:
+        title_lower = event.title.lower()
+        for term in prohibited_terms:
+            if term in title_lower:
+                raise RuntimeError(
+                    f"Event title contains prohibited categorization term '{term}': '{event.title}'. "
+                    f"All events must be equally important biographical events without 'other' or 'miscellaneous' categories."
+                )
+
+    # Validate chronological ordering
+    for i in range(len(event_skeletons) - 1):
+        current_event = event_skeletons[i]
+        next_event = event_skeletons[i + 1]
+
+        # Compare dates
+        current_date = current_event.date
+        next_date = next_event.date
+
+        if current_date > next_date:
+            raise RuntimeError(
+                f"Events are not in chronological order: "
+                f"'{current_event.title}' ({current_date}) comes after "
+                f"'{next_event.title}' ({next_date})"
+            )
+
+    print(f"  ✓ Chronological order validated ({len(event_skeletons)} events)")
+    print(f"  ✓ No 'Other Events' categorizations found")
+
+
 def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     """
     Call OpenAI for Phase 1 using structured outputs.
@@ -2076,6 +2115,9 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "Do not include events that occur after the TARGET SUBJECT's death or that focus on their legacy. "
         "\n\nREMINDER: You must output between 12 and 16 events total. If you find yourself creating more than 16 events, "
         "consolidate related events or remove less significant ones. "
+        "\n\nABSOLUTE PROHIBITION: DO NOT create any section, category, or grouping labeled 'Other Events' or similar. "
+        "ALL events must be equally important and presented in strict chronological order without any 'miscellaneous' category. "
+        "Every event is a main biographical event - there are no 'other' or secondary events. "
         "\n\nIMPORTANT - Event Skeleton Guidelines:\n"
         "- Keep event titles crisp and concise (2-6 words)\n"
         "- Use active, specific language that captures the essence of the event\n"
@@ -2148,6 +2190,9 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     if parsed is None:
         raise RuntimeError("Failed to parse structured output from model (Phase 1)")
 
+    # Ensure events are sorted chronologically (defensive programming)
+    parsed.event_skeletons.sort(key=lambda e: e.date)
+
     # Log classifications from Phase 1 (using centralized config)
     classified_count = sum(1 for skeleton in parsed.event_skeletons if skeleton.event_class)
     if classified_count > 0:
@@ -2161,6 +2206,9 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
                 else:
                     # Fallback for unknown types
                     print(f"    - {skeleton.title}: {class_type.upper()}")
+
+    # Validate chronological ordering
+    _validate_chronological_order(parsed.event_skeletons)
 
     return parsed
 

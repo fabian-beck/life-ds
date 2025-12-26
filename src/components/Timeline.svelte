@@ -142,7 +142,6 @@
 
     // Group events by their chapter
     const groups = new Map();
-    const uncategorized = [];
 
     eventSlides.forEach((event, idx) => {
       const eventWithIndex = { ...event, originalIndex: idx };
@@ -156,19 +155,43 @@
         }
         groups.get(chapterId).events.push(eventWithIndex);
       } else {
-        uncategorized.push(eventWithIndex);
+        // For events without a chapter, assign them to the appropriate chapter based on date
+        // Find the chapter whose date range contains this event
+        let assignedChapter = null;
+        for (const chapter of chapters) {
+          if (event.date >= chapter.date_start && event.date <= chapter.date_end) {
+            assignedChapter = chapter.id;
+            break;
+          }
+        }
+
+        // If we found a matching chapter by date, add to that chapter
+        if (assignedChapter && chapterMap.has(assignedChapter)) {
+          if (!groups.has(assignedChapter)) {
+            groups.set(assignedChapter, {
+              chapter: chapterMap.get(assignedChapter),
+              events: [],
+            });
+          }
+          groups.get(assignedChapter).events.push(eventWithIndex);
+        } else {
+          // If no matching chapter found, create a standalone group (will be inserted in chronological order below)
+          const standaloneKey = `_standalone_${idx}`;
+          groups.set(standaloneKey, {
+            chapter: null,
+            events: [eventWithIndex],
+            sortDate: event.date, // Add sort date for ordering
+          });
+        }
       }
     });
 
-    // Convert to array in chapter order
-    const result = chapters
-      .filter((ch) => groups.has(ch.id))
-      .map((ch) => groups.get(ch.id));
-
-    // Add uncategorized events at the end if any
-    if (uncategorized.length > 0) {
-      result.push({ chapter: null, events: uncategorized });
-    }
+    // Convert to array and sort by chapter date (or event date for standalone groups)
+    const result = Array.from(groups.values()).sort((a, b) => {
+      const dateA = a.chapter ? a.chapter.date_start : (a.sortDate || '9999');
+      const dateB = b.chapter ? b.chapter.date_start : (b.sortDate || '9999');
+      return dateA.localeCompare(dateB);
+    });
 
     return result;
   })();
@@ -602,10 +625,6 @@
                         {/if}
                       </div>
                     {/if}
-                  </div>
-                {:else if groupIndex > 0}
-                  <div class="chapter-header">
-                    <h3 class="chapter-headline">Other Events</h3>
                   </div>
                 {/if}
                 {#each group.events as event}
