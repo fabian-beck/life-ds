@@ -445,7 +445,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     instructions = (
         "Analyze the provided Wikipedia content and extract an ego network for the subject. "
         "Include 10-25 significant connections/relationships. For each connection provide:\n"
-        "- person_name: Full name of the connected person\n"
+        "- person_name: Full name of the connected person (IMPORTANT: Each person should appear ONLY ONCE in the network - do not create separate entries for the same person in different roles)\n"
         "- relationship_type: Use format 'category/subcategory' where you select from 3-5 main categories that best represent the person's network. "
         "Common categories include 'family', 'professional', 'social', 'artistic', 'academic', but choose only the most relevant 3-5 categories for this person. "
         "Add specific subcategories like 'family/father', 'family/mother', 'family/sibling', 'family/spouse', 'family/child', "
@@ -522,6 +522,121 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     return parsed.model_dump()
 
 
+def _normalize_person_name(name: str) -> str:
+    """
+    Normalize a person name for deduplication.
+
+    Removes parenthetical notes, extra whitespace, and normalizes case.
+    Examples:
+        'Eugene Wigner' -> 'eugene wigner'
+        'Eugene Wigner (as biographer/assessor)' -> 'eugene wigner'
+        'Max (Miksa) von Neumann' -> 'max von neumann'
+    """
+    # Remove parenthetical content (e.g., "(as biographer/assessor)", "(Miksa)")
+    name = re.sub(r'\s*\([^)]*\)', '', name)
+    # Normalize whitespace
+    name = ' '.join(name.split())
+    # Lowercase for comparison
+    return name.strip().lower()
+
+
+def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Deduplicate connections by person name, merging information from duplicates.
+
+    When duplicates are found (same normalized name):
+    - Keep the first occurrence as the base
+    - Merge relationship descriptions
+    - Combine shared_activities (deduplicated)
+    - Combine sources (deduplicated)
+    - Prefer 'strong' over 'moderate' over 'weak' strength
+    - Prefer more frequent interaction_frequency
+    - Keep 'bidirectional' influence if present, otherwise prefer alter_to_ego
+    - Use the earliest start_year and latest end_year
+    """
+    seen_names: Dict[str, int] = {}  # normalized_name -> index in result
+    result: List[Dict[str, Any]] = []
+
+    strength_priority = {'strong': 3, 'moderate': 2, 'weak': 1}
+    frequency_priority = {
+        'daily': 6, 'weekly': 5, 'monthly': 4,
+        'yearly': 3, 'occasional': 2, 'rare': 1
+    }
+
+    for conn in connections:
+        person_name = conn.get('person_name', '')
+        normalized = _normalize_person_name(person_name)
+
+        if normalized in seen_names:
+            # Merge with existing entry
+            idx = seen_names[normalized]
+            existing = result[idx]
+
+            # Clean up the person_name (remove parenthetical notes)
+            existing['person_name'] = re.sub(r'\s*\([^)]*\)', '', person_name).strip()
+
+            # Merge descriptions
+            desc1 = existing.get('relationship_description', '')
+            desc2 = conn.get('relationship_description', '')
+            if desc2 and desc2 not in desc1:
+                existing['relationship_description'] = f"{desc1} {desc2}".strip()
+
+            # Merge shared_activities (deduplicate)
+            activities = set(existing.get('shared_activities', []))
+            activities.update(conn.get('shared_activities', []))
+            existing['shared_activities'] = sorted(activities)
+
+            # Merge sources (deduplicate)
+            sources = set(existing.get('sources', []))
+            sources.update(conn.get('sources', []))
+            existing['sources'] = sorted(sources)
+
+            # Merge notes
+            notes1 = existing.get('notes', '')
+            notes2 = conn.get('notes', '')
+            if notes2 and notes2 not in notes1:
+                existing['notes'] = f"{notes1} {notes2}".strip() if notes1 else notes2
+
+            # Use stronger relationship strength
+            str1 = strength_priority.get(existing.get('strength', '').lower(), 0)
+            str2 = strength_priority.get(conn.get('strength', '').lower(), 0)
+            if str2 > str1:
+                existing['strength'] = conn['strength']
+
+            # Use more frequent interaction
+            freq1 = frequency_priority.get(existing.get('interaction_frequency', '').lower(), 0)
+            freq2 = frequency_priority.get(conn.get('interaction_frequency', '').lower(), 0)
+            if freq2 > freq1:
+                existing['interaction_frequency'] = conn['interaction_frequency']
+
+            # Prefer bidirectional influence
+            if conn.get('influence_direction') == 'bidirectional':
+                existing['influence_direction'] = 'bidirectional'
+            elif existing.get('influence_direction') != 'bidirectional' and conn.get('influence_direction') == 'alter_to_ego':
+                existing['influence_direction'] = 'alter_to_ego'
+
+            # Use earliest start_year
+            start1 = existing.get('start_year')
+            start2 = conn.get('start_year')
+            if start2 is not None and (start1 is None or start2 < start1):
+                existing['start_year'] = start2
+
+            # Use latest end_year
+            end1 = existing.get('end_year')
+            end2 = conn.get('end_year')
+            if end2 is not None and (end1 is None or end2 > end1):
+                existing['end_year'] = end2
+
+        else:
+            # First time seeing this person
+            # Clean up the person_name (remove parenthetical notes)
+            conn['person_name'] = re.sub(r'\s*\([^)]*\)', '', person_name).strip()
+            seen_names[normalized] = len(result)
+            result.append(conn)
+
+    return result
+
+
 def enforce_metadata(
     payload: Dict[str, Any],
     page_data: Dict[str, Any],
@@ -537,8 +652,11 @@ def enforce_metadata(
     if page_data.get("fullurl"):
         ego.setdefault("wikipedia", page_data["fullurl"])
 
-    # Sort connections by start_year (nulls last), then by relationship strength
+    # Deduplicate connections by person name (case-insensitive, normalized)
     connections = payload.get("connections", [])
+    connections = _deduplicate_connections(connections)
+
+    # Sort connections by start_year (nulls last), then by relationship strength
 
     def connection_sort_key(conn: Dict[str, Any]) -> tuple:
         start_year = conn.get("start_year")
