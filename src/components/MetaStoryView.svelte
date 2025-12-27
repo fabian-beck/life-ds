@@ -17,10 +17,10 @@
   let isScrollLockActive = false;
   let resizeTimeout;
   let isUpdatingScroll = false; // Prevent infinite scroll loops
-  let scrollSyncTimeout; // Debounce horizontal->vertical scroll sync
-  let verticalScrollTimeout; // Throttle vertical->horizontal updates
   let lastTimelineScrollLeft = 0; // Track last known timeline scroll position
   let scrollProgress = 0; // 0 to 1, current scroll position for timeline indicator
+  let lastScrollOrigin = null; // Track origin of last scroll: 'vertical' | 'horizontal' | null
+  let timelineScrollListenerAttached = false; // Track if listener is attached
 
   // Navigate to person's story at specific event
   function viewPersonEvent(personId, eventIndex) {
@@ -38,6 +38,18 @@
     requestAnimationFrame(() => {
       calculateProxyHeight();
     });
+  }
+
+  // Attach scroll listener to timeline after it renders
+  $: if (timelineContainer && !timelineScrollListenerAttached) {
+    // Use setTimeout to ensure MetaStoryTimeline has rendered its DOM
+    setTimeout(() => {
+      const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+      if (actualTimelineContainer) {
+        actualTimelineContainer.addEventListener('scroll', handleTimelineScroll, { passive: true });
+        timelineScrollListenerAttached = true;
+      }
+    }, 100);
   }
 
   function calculateProxyHeight() {
@@ -59,7 +71,8 @@
 
   // Handle vertical scroll and translate to horizontal timeline scroll
   function handleVerticalScroll() {
-    if (isUpdatingScroll) return; // Prevent feedback loop
+    // Only skip if the last update came from horizontal scroll
+    if (isUpdatingScroll && lastScrollOrigin === 'horizontal') return;
 
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       return;
@@ -90,10 +103,11 @@
 
       // Update timeline scroll directly without debouncing
       isUpdatingScroll = true;
+      lastScrollOrigin = 'vertical'; // Track that this update came from vertical scroll
       actualTimelineContainer.scrollLeft = newScrollLeft;
       lastTimelineScrollLeft = newScrollLeft; // Track expected position
 
-      // Use requestAnimationFrame to reset flag
+      // Use consistent timing for flag reset
       requestAnimationFrame(() => {
         isUpdatingScroll = false;
       });
@@ -109,9 +123,10 @@
 
   // Handle horizontal timeline scroll and sync to vertical scroll position
   function handleTimelineScroll() {
-    if (isUpdatingScroll) return; // Prevent feedback loop
+    // Only skip if the last update came from vertical scroll
+    if (isUpdatingScroll && lastScrollOrigin === 'vertical') return;
 
-    if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0 || !isScrollLockActive) {
+    if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       return;
     }
 
@@ -123,34 +138,41 @@
     // Only sync if scroll position changed from what we set programmatically
     // This means user is manually scrolling the timeline
     const scrollDiff = Math.abs(currentScrollLeft - lastTimelineScrollLeft);
-    if (scrollDiff < 1) {
-      // Scroll position matches our last update - this is from vertical scroll, not user input
+
+    if (scrollDiff < 2) {
+      // Scroll position matches our last update (within 2px for sub-pixel rendering tolerance)
+      // This is likely from vertical scroll, not user input
+      // Update lastTimelineScrollLeft to prevent drift
+      lastTimelineScrollLeft = currentScrollLeft;
       return;
     }
 
-    // User is manually scrolling timeline, sync to vertical scroll
-    clearTimeout(scrollSyncTimeout);
-    scrollSyncTimeout = setTimeout(() => {
-      const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
-      const currentScrollProgress = maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
-      scrollProgress = currentScrollProgress; // Update for scroll indicator
+    // User is manually scrolling timeline, sync to vertical scroll immediately for smooth momentum
+    const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+    const currentScrollProgress = maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
+    scrollProgress = currentScrollProgress; // Update for scroll indicator
 
-      // Calculate target vertical scroll position
-      const rect = scrollProxyContainer.getBoundingClientRect();
-      const proxyContainerTop = rect.top + window.scrollY;
-      const targetScrollY = proxyContainerTop + (currentScrollProgress * proxyHeight);
+    // Calculate target vertical scroll position
+    const rect = scrollProxyContainer.getBoundingClientRect();
+    const proxyContainerTop = rect.top + window.scrollY;
+    const targetScrollY = proxyContainerTop + (currentScrollProgress * proxyHeight);
 
-      // Update vertical scroll position
-      isUpdatingScroll = true;
-      lastTimelineScrollLeft = currentScrollLeft; // Update tracked position
+    // Set flag BEFORE scrolling to prevent any feedback
+    isUpdatingScroll = true;
+    lastScrollOrigin = 'horizontal'; // Track that this update came from horizontal scroll
+    lastTimelineScrollLeft = currentScrollLeft; // Update tracked position
 
-      requestAnimationFrame(() => {
-        window.scrollTo(0, targetScrollY);
-        setTimeout(() => {
-          isUpdatingScroll = false;
-        }, 10);
-      });
-    }, 50); // Slightly longer debounce for manual scroll
+    // Use scrollTo with instant behavior to avoid animation delays
+    window.scrollTo({
+      top: targetScrollY,
+      left: 0,
+      behavior: 'instant'
+    });
+
+    // Reset flag after a brief delay to ensure scroll event has been processed
+    setTimeout(() => {
+      isUpdatingScroll = false;
+    }, 50);
   }
 
   // Handle window resize
@@ -173,13 +195,9 @@
     window.addEventListener('scroll', handleVerticalScroll, { passive: true });
     window.addEventListener('resize', handleResize);
 
-    // Attach scroll listener to actual timeline container for bidirectional sync
+    // Timeline scroll listener is now attached reactively (see reactive statement above)
+    // Wheel listener for preventing native horizontal scroll
     if (timelineContainer) {
-      const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
-      if (actualTimelineContainer) {
-        actualTimelineContainer.addEventListener('scroll', handleTimelineScroll, { passive: true });
-      }
-
       timelineContainer.addEventListener('wheel', preventNativeHorizontalScroll, { passive: false });
     }
   });
@@ -190,7 +208,7 @@
 
     if (timelineContainer) {
       const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
-      if (actualTimelineContainer) {
+      if (actualTimelineContainer && timelineScrollListenerAttached) {
         actualTimelineContainer.removeEventListener('scroll', handleTimelineScroll);
       }
       timelineContainer.removeEventListener('wheel', preventNativeHorizontalScroll);
