@@ -128,10 +128,16 @@
         deathYear,
         leftPx: startOffset * PIXELS_PER_YEAR,
         widthPx: lifespan * PIXELS_PER_YEAR,
-        isAlive: !deathYear
+        isAlive: !deathYear,
+        portrait: person.portrait?.thumbnail || person.portrait?.image
       };
     }).filter(p => p !== null);
   })();
+
+  // Handle person click - navigate to their story
+  function handlePersonClick(personId) {
+    window.location.hash = `/story/${personId}`;
+  }
 </script>
 
 <div class="meta-timeline-container">
@@ -172,7 +178,20 @@
           class:alive={personData.isAlive}
           style="left: {personData.leftPx}px; width: {personData.widthPx}px; top: {index * 50}px;"
           title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
+          on:click={() => handlePersonClick(personData.personId)}
+          on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
+          role="button"
+          tabindex="0"
         >
+          {#if personData.portrait}
+            <div class="person-portrait">
+              <img
+                src={personData.portrait}
+                alt={personData.person.name.replace(/_/g, ' ')}
+                class="portrait-image"
+              />
+            </div>
+          {/if}
           <div class="person-bar">
             <span class="person-birth">{personData.birthYear}</span>
             <span class="person-name">{personData.person.name.replace(/_/g, ' ')}</span>
@@ -199,6 +218,7 @@
   .timeline-wrapper {
     position: relative;
     min-height: 600px;
+    margin-left: 40px;
   }
 
   /* Chapters row - absolute positioning */
@@ -291,8 +311,10 @@
   /* Individual person lifespan */
   .person-lifespan {
     position: absolute;
-    height: 40px;
+    height: 28px;
     transition: all 0.2s;
+    cursor: pointer;
+    outline: none;
   }
 
   .person-lifespan:hover {
@@ -300,17 +322,63 @@
     transform: translateY(-2px);
   }
 
+  .person-lifespan:focus-visible {
+    outline: 2px solid rgba(56, 189, 248, 1);
+    outline-offset: 2px;
+  }
+
+  /* Portrait thumbnail container */
+  .person-portrait {
+    position: absolute;
+    left: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid rgba(56, 189, 248, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    background: rgba(15, 23, 42, 0.9);
+    transition: all 0.2s;
+    z-index: 10;
+    overflow: hidden;
+  }
+
+  /* Portrait image inside container */
+  .portrait-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    scale: 1.25;
+  }
+
+  .person-lifespan:hover .person-portrait {
+    border-color: rgba(56, 189, 248, 1);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.6);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .person-lifespan.alive .person-portrait {
+    border-color: rgba(34, 197, 94, 0.8);
+  }
+
+  .person-lifespan.alive:hover .person-portrait {
+    border-color: rgba(34, 197, 94, 1);
+  }
+
   .person-bar {
     height: 100%;
     background: linear-gradient(135deg, rgba(56, 189, 248, 0.6), rgba(154, 123, 255, 0.6));
     border: 2px solid rgba(56, 189, 248, 0.8);
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 12px;
+    padding: 0 12px 0 40px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    transition: all 0.2s;
   }
 
   .person-lifespan:hover .person-bar {
@@ -376,8 +444,24 @@
     }
 
     /* Adjust person bars for mobile */
+    .person-lifespan {
+      height: 24px;
+    }
+
     .person-bar {
-      padding: 0 8px;
+      padding: 0 8px 0 36px;
+    }
+
+    .person-portrait {
+      width: 48px;
+      height: 48px;
+      left: -20px;
+      border-width: 2px;
+    }
+
+    .portrait-image {
+      scale: 1.25;
+      object-position: center 35%;
     }
 
     .person-name {
