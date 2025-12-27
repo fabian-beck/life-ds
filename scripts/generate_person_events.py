@@ -3244,22 +3244,32 @@ def enforce_metadata(
     if page_data.get("fullurl"):
         person.setdefault("wikipedia", page_data["fullurl"])
 
-    original = page_data.get("original", {})
-    if original:
-        # Extract image URL from Wikipedia's pageimages API response
-        image_url = original.get("source")
-        if image_url:
-            # Always set/overwrite portrait if we have a valid image URL from Wikipedia
-            person["portrait"] = {
-                "image": image_url,
-                "source": page_data.get("fullurl"),
-            }
-    # If no portrait from Wikipedia API, ensure portrait is None or has proper structure
-    if not person.get("portrait") or (
-        isinstance(person.get("portrait"), dict)
-        and person["portrait"].get("image") is None
-    ):
-        person["portrait"] = None
+    # Only set Wikipedia portrait if we don't already have a generated portrait
+    # (generated portraits have image paths starting with /portraits/)
+    existing_portrait = person.get("portrait", {})
+    has_generated_portrait = (
+        isinstance(existing_portrait, dict)
+        and isinstance(existing_portrait.get("image"), str)
+        and existing_portrait["image"].startswith("/portraits/")
+    )
+
+    if not has_generated_portrait:
+        # No generated portrait - use Wikipedia page image if available
+        original = page_data.get("original", {})
+        if original:
+            # Extract image URL from Wikipedia's pageimages API response
+            image_url = original.get("source")
+            if image_url:
+                person["portrait"] = {
+                    "image": image_url,
+                    "source": page_data.get("fullurl"),
+                }
+        # If no portrait from Wikipedia API, ensure portrait is None or has proper structure
+        if not person.get("portrait") or (
+            isinstance(person.get("portrait"), dict)
+            and person["portrait"].get("image") is None
+        ):
+            person["portrait"] = None
 
     death_cutoff: Optional[date] = None
     death_value = person.get("death_date")
