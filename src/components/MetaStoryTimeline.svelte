@@ -336,7 +336,7 @@
     </div>
 
     <!-- Scroll position indicator -->
-    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; height: {timelineHeightPx}px;">
+    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: 60px; height: {timelineHeightPx - 60}px;">
       {#if currentIndicatorYear}
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
@@ -607,9 +607,9 @@
   /* Scroll position indicator */
   .scroll-indicator {
     position: absolute;
-    top: 0;
-    width: 3px;
-    background: rgba(56, 189, 248, 0.2);
+    width: 2px;
+    background: none;
+    border-left: 2px dashed rgba(56, 189, 248, 0.4);
     pointer-events: none;
     z-index: 0;
     transition: left 0.1s ease-out;
@@ -621,7 +621,7 @@
   /* Scroll indicator year label */
   .scroll-indicator-label {
     position: sticky;
-    bottom: 10px;
+    bottom: 0;
     transform: translateX(-50%);
     background: rgba(4, 10, 24, 0.95);
     color: #38bdf8;
