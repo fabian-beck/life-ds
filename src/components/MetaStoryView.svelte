@@ -1,7 +1,6 @@
 <script>
   import { _ } from "../stores/language";
   import { push } from "svelte-spa-router";
-  import PersonCard from "./PersonCard.svelte";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
 
   export let metaStoryData = null;
@@ -9,11 +8,6 @@
   export let currentLanguage = "en";
   export let getStyle = () => ({});
   export let isLoading = false;
-
-  // Helper to get person data by ID
-  function getPersonById(personId) {
-    return personsRegistry.find(p => p.id === personId);
-  }
 
   // Navigate to person's story at specific event
   function viewPersonEvent(personId, eventIndex) {
@@ -23,11 +17,6 @@
   // Navigate back to landing
   function backToLanding() {
     push(`/${currentLanguage}`);
-  }
-
-  // Navigate to person's story
-  function viewPerson(person) {
-    push(`/${currentLanguage}/story/${person.id}`);
   }
 </script>
 
@@ -52,31 +41,6 @@
       <p class="description">{metaStoryData.meta_story.description}</p>
     </header>
 
-    <!-- Subtopics section -->
-    {#if metaStoryData.subtopics?.length}
-      <section class="subtopics">
-        <h2>{$_('meta_story.subtopics_heading')}</h2>
-        {#each metaStoryData.subtopics as subtopic}
-          <div class="subtopic">
-            <h3>{subtopic.title}</h3>
-            <p>{subtopic.description}</p>
-            <div class="person-cards">
-              {#each subtopic.person_ids as personId}
-                {@const person = getPersonById(personId)}
-                {#if person}
-                  <PersonCard
-                    {person}
-                    personStyle={getStyle(personId)}
-                    onClick={viewPerson}
-                  />
-                {/if}
-              {/each}
-            </div>
-          </div>
-        {/each}
-      </section>
-    {/if}
-
     <!-- Chapters section - full width, breaks out of container -->
     {#if metaStoryData.chapters?.length}
       <section class="chapters-fullwidth">
@@ -85,6 +49,7 @@
           chapters={metaStoryData.chapters}
           personsRegistry={personsRegistry}
           onEventClick={viewPersonEvent}
+          subtopics={metaStoryData.subtopics}
         />
       </section>
     {/if}
@@ -163,29 +128,6 @@
     padding-bottom: 0.5rem;
   }
 
-  /* Subtopics */
-  .subtopic {
-    margin-bottom: 2rem;
-  }
-
-  .subtopic h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .subtopic p {
-    line-height: 1.7;
-    color: #cbd5e1;
-    margin-bottom: 1rem;
-  }
-
-  .person-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
-    width: 100%;
-  }
-
   /* Chapters section - full width */
   .chapters-fullwidth {
     width: 100vw;
@@ -229,11 +171,6 @@
 
     h1 {
       font-size: 2rem;
-    }
-
-    .event-item {
-      grid-template-columns: 1fr;
-      gap: 0.25rem;
     }
   }
 </style>

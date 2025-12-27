@@ -2,6 +2,7 @@
   export let chapters = [];
   export let personsRegistry = [];
   export let onEventClick = () => {};
+  export let subtopics = [];
 
   // Helper to get person data by ID
   function getPersonById(personId) {
@@ -47,6 +48,11 @@
 
   // Define pixels per year scale
   const PIXELS_PER_YEAR = 15;
+
+  // Constants for theme grouping vertical spacing
+  const THEME_TITLE_HEIGHT = 60; // Increased to add more space below title
+  const PERSON_ROW_HEIGHT = 50;
+  const THEME_SPACING = 10; // Reduced spacing between theme groups
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
@@ -95,11 +101,10 @@
     });
   })();
 
-  // Extract unique persons from all chapters and calculate their timeline positions
-  $: personsWithPositions = (() => {
+  // Helper: Extract persons from chapters (fallback when no subtopics)
+  function extractPersonsFromChapters() {
     if (!chapters || chapters.length === 0 || !personsRegistry) return [];
 
-    // Get unique person IDs from all chapters
     const personIds = new Set();
     chapters.forEach(chapter => {
       chapter.person_events?.forEach(event => {
@@ -107,14 +112,12 @@
       });
     });
 
-    // Calculate position and width for each person in pixels
     return Array.from(personIds).map(personId => {
       const person = getPersonById(personId);
       if (!person) return null;
 
       const birthYear = getYear(person.birthDate);
       const deathYear = getYear(person.deathDate);
-
       if (!birthYear) return null;
 
       const startOffset = birthYear - timelineBounds.minYear;
@@ -132,7 +135,87 @@
         portrait: person.portrait?.thumbnail || person.portrait?.image
       };
     }).filter(p => p !== null);
+  }
+
+  // Group persons by subtopic/theme, preserving theme order
+  $: themesWithPersons = (() => {
+    if (!subtopics || subtopics.length === 0 || !personsRegistry) {
+      // Fallback: show all persons from chapters ungrouped
+      return [{
+        title: null,
+        themeId: null,
+        persons: extractPersonsFromChapters(),
+        leftPx: 0,
+        widthPx: 0
+      }];
+    }
+
+    // Create theme groups from subtopics
+    return subtopics.map(subtopic => {
+      const persons = subtopic.person_ids
+        .map(personId => {
+          const person = getPersonById(personId);
+          if (!person) return null;
+
+          const birthYear = getYear(person.birthDate);
+          const deathYear = getYear(person.deathDate);
+          if (!birthYear) return null;
+
+          const startOffset = birthYear - timelineBounds.minYear;
+          const endYear = deathYear || timelineBounds.maxYear;
+          const lifespan = endYear - birthYear;
+
+          return {
+            person,
+            personId,
+            birthYear,
+            deathYear,
+            leftPx: startOffset * PIXELS_PER_YEAR,
+            widthPx: lifespan * PIXELS_PER_YEAR,
+            isAlive: !deathYear,
+            portrait: person.portrait?.thumbnail || person.portrait?.image
+          };
+        })
+        .filter(p => p !== null);
+
+      // Calculate theme title row bounds (leftmost to rightmost person)
+      let themeLeftPx = 0;
+      let themeWidthPx = 0;
+      if (persons.length > 0) {
+        const minLeft = Math.min(...persons.map(p => p.leftPx));
+        const maxRight = Math.max(...persons.map(p => p.leftPx + p.widthPx));
+        themeLeftPx = minLeft;
+        themeWidthPx = maxRight - minLeft;
+      }
+
+      return {
+        title: subtopic.title,
+        themeId: subtopic.id,
+        persons: persons,
+        leftPx: themeLeftPx,
+        widthPx: themeWidthPx
+      };
+    }).filter(theme => theme.persons.length > 0);
   })();
+
+  // Calculate vertical offset for theme title
+  function calculateThemeTop(themeIndex) {
+    let offset = 0;
+    for (let i = 0; i < themeIndex; i++) {
+      offset += THEME_TITLE_HEIGHT;
+      offset += themesWithPersons[i].persons.length * PERSON_ROW_HEIGHT;
+      offset += THEME_SPACING;
+    }
+    return offset;
+  }
+
+  // Calculate vertical offset for person within theme
+  function calculatePersonTop(themeIndex, personIndex) {
+    let offset = calculateThemeTop(themeIndex);
+    offset += THEME_TITLE_HEIGHT;
+    offset += personIndex * PERSON_ROW_HEIGHT;
+    return offset;
+  }
 
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
@@ -170,39 +253,49 @@
       {/each}
     </div>
 
-    <!-- Person lifespans -->
+    <!-- Person lifespans grouped by theme -->
     <div class="persons-layer">
-      {#each personsWithPositions as personData, index}
-        <div
-          class="person-lifespan"
-          class:alive={personData.isAlive}
-          style="left: {personData.leftPx}px; width: {personData.widthPx}px; top: {index * 50}px;"
-          title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
-          on:click={() => handlePersonClick(personData.personId)}
-          on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
-          role="button"
-          tabindex="0"
-        >
-          <div class="person-name-wrapper">
-            <div class="person-name-label">
-              {personData.person.name.replace(/_/g, ' ')}
+      {#each themesWithPersons as theme, themeIndex}
+        <!-- Theme title row (only if title exists) -->
+        {#if theme.title}
+          <div class="theme-title-row" style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(themeIndex)}px;">
+            <h4 class="theme-title">{theme.title}</h4>
+          </div>
+        {/if}
+
+        <!-- Persons in this theme -->
+        {#each theme.persons as personData, personIndex}
+          <div
+            class="person-lifespan"
+            class:alive={personData.isAlive}
+            style="left: {personData.leftPx}px; width: {personData.widthPx}px; top: {calculatePersonTop(themeIndex, personIndex)}px;"
+            title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
+            on:click={() => handlePersonClick(personData.personId)}
+            on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
+            role="button"
+            tabindex="0"
+          >
+            <div class="person-name-wrapper">
+              <div class="person-name-label">
+                {personData.person.name.replace(/_/g, ' ')}
+              </div>
+            </div>
+            {#if personData.portrait}
+              <div class="person-portrait">
+                <img
+                  src={personData.portrait}
+                  alt={personData.person.name.replace(/_/g, ' ')}
+                  class="portrait-image"
+                />
+              </div>
+            {/if}
+            <div class="person-line"></div>
+            <div class="person-dates">
+              <span class="person-birth">{personData.birthYear}</span>
+              <span class="person-death">{personData.deathYear || '...'}</span>
             </div>
           </div>
-          {#if personData.portrait}
-            <div class="person-portrait">
-              <img
-                src={personData.portrait}
-                alt={personData.person.name.replace(/_/g, ' ')}
-                class="portrait-image"
-              />
-            </div>
-          {/if}
-          <div class="person-line"></div>
-          <div class="person-dates">
-            <span class="person-birth">{personData.birthYear}</span>
-            <span class="person-death">{personData.deathYear || '...'}</span>
-          </div>
-        </div>
+        {/each}
       {/each}
     </div>
   </div>
@@ -309,8 +402,33 @@
   .persons-layer {
     position: relative;
     margin-top: 20px;
-    min-height: 400px;
+    min-height: auto;
     z-index: 10;
+  }
+
+  /* Theme title row */
+  .theme-title-row {
+    position: absolute;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    z-index: 5;
+  }
+
+  .theme-title {
+    position: sticky;
+    left: 0;
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #38bdf8;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    background: rgba(4, 10, 24, 0.95);
+    line-height: 1;
   }
 
   /* Individual person lifespan */
@@ -513,6 +631,14 @@
     .person-birth,
     .person-death {
       font-size: 0.65rem;
+    }
+
+    .theme-title-row {
+      height: 32px;
+    }
+
+    .theme-title {
+      font-size: 0.95rem;
     }
   }
 </style>
