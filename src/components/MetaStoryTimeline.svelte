@@ -185,13 +185,14 @@
 </div>
 
 <style>
-  /* Container */
+  /* Container - full width scrollable panel */
   .meta-timeline-container {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
+    width: 100%;
+    height: 100vh;
     overflow-x: auto;
-    overflow-y: visible;
-    padding: 1rem 0;
+    overflow-y: auto;
+    padding: 1rem;
+    background: rgba(4, 10, 24, 0.95);
   }
 
   /* Wrapper - fixed width based on timeline scale */
@@ -354,44 +355,38 @@
     white-space: nowrap;
   }
 
-  /* Responsive */
+  /* Responsive - keep horizontal scrolling on mobile */
   @media (max-width: 768px) {
+    .meta-timeline-container {
+      padding: 0.5rem;
+    }
+
+    /* Keep horizontal scroll behavior on mobile */
     .timeline-wrapper {
-      width: auto !important;
+      /* Width is calculated dynamically, don't override */
     }
 
-    .chapters-row {
-      position: static;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    /* Make chapters slightly narrower on mobile for easier scanning */
+    .chapter-header h3 {
+      font-size: 0.875rem;
     }
 
-    .chapter {
-      position: static !important;
-      width: auto !important;
-      left: auto !important;
-      border-right: none;
-      border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    .bridge {
+      font-size: 0.75rem;
     }
 
-    .year-axis {
-      display: none;
+    /* Adjust person bars for mobile */
+    .person-bar {
+      padding: 0 8px;
     }
 
-    .persons-layer {
-      position: static;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+    .person-name {
+      font-size: 0.75rem;
     }
 
-    .person-lifespan {
-      position: static !important;
-      width: auto !important;
-      left: auto !important;
-      top: auto !important;
+    .person-birth,
+    .person-death {
+      font-size: 0.65rem;
     }
   }
 </style>

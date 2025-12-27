@@ -77,9 +77,9 @@
       </section>
     {/if}
 
-    <!-- Chapters section -->
+    <!-- Chapters section - full width, breaks out of container -->
     {#if metaStoryData.chapters?.length}
-      <section class="chapters">
+      <section class="chapters-fullwidth">
         <h2>{$_('meta_story.chapters_heading')}</h2>
         <MetaStoryTimeline
           chapters={metaStoryData.chapters}
@@ -186,7 +186,22 @@
     width: 100%;
   }
 
-  /* Chapters section - styles handled in MetaStoryTimeline component */
+  /* Chapters section - full width */
+  .chapters-fullwidth {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-bottom: 3rem;
+    padding: 0;
+  }
+
+  .chapters-fullwidth h2 {
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-size: 1.875rem;
+    margin: 0 auto 1.5rem;
+    max-width: 800px;
+    padding: 0 1rem 0.5rem;
+    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+  }
 
   /* Conclusion */
   .conclusion p {
