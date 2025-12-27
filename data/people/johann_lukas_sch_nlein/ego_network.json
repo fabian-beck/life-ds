@@ -1,0 +1,524 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2025-12-27",
+  "ego": {
+    "name": "Johann Lukas Schönlein",
+    "birth_year": 1793,
+    "death_year": 1864,
+    "primary_roles": [
+      "physician",
+      "pathologist",
+      "medical historian"
+    ],
+    "summary": "Johann Lukas Schönlein was a German physician and professor who helped shift German medicine from speculative natural philosophy toward empirically grounded bedside clinical practice. He held major clinical posts in Würzburg, Zürich, and Berlin (Charité), emphasized systematic physical diagnosis and autopsy-clinic correlation, and influenced a large cohort of later leaders in internal medicine and pathology.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+  },
+  "connections": [
+    {
+      "person_name": "Ludwig Rumpf",
+      "relationship_type": "social/friend",
+      "relationship_description": "Youth friend; Schönlein later recommended him to the university (1819).",
+      "start_year": 1810,
+      "end_year": 1862,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Friendship from early years",
+        "Shared interest context around collecting/natural history",
+        "Academic recommendation (1819) to Würzburg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "notes": "The Schönlein article explicitly calls Rumpf a youth friend and notes Schönlein recommended him to the university."
+    },
+    {
+      "person_name": "Andreas Röschlaub",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "One of Schönlein's teachers during his early medical studies in Landshut.",
+      "start_year": 1811,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Medical studies at Landshut",
+        "Exposure to early 19th-century German medical theory and teaching"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Andreas_R%C3%B6schlaub"
+      ],
+      "notes": "The Schönlein page lists Röschlaub among his Landshut teachers."
+    },
+    {
+      "person_name": "Friedrich Tiedemann",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Teacher during Schönlein's Landshut studies; part of his formative scientific/medical education.",
+      "start_year": 1811,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Medical studies at Landshut",
+        "Instruction in anatomy/physiology context"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Friedrich_Tiedemann"
+      ],
+      "notes": "Named in the Schönlein article as one of his teachers in Landshut."
+    },
+    {
+      "person_name": "Philipp Franz von Walther",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Teacher during Schönlein's Landshut studies; described as surgeon and pathologist in the Schönlein article.",
+      "start_year": 1811,
+      "end_year": 1813,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Medical studies at Landshut",
+        "Clinical/surgical-pathological teaching exposure"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Philipp_Franz_von_Walther"
+      ],
+      "notes": "Listed among Schönlein's Landshut teachers in the biography."
+    },
+    {
+      "person_name": "Ignaz Döllinger",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Key teacher and dissertation supervisor in Würzburg; Schönlein wrote his 1816 dissertation under Döllinger.",
+      "start_year": 1813,
+      "end_year": 1817,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Medical studies at Würzburg",
+        "Doctoral dissertation work (1816)",
+        "Early pathological-anatomy teaching context"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Ignaz_D%C3%B6llinger"
+      ],
+      "notes": "The Schönlein page explicitly mentions study in Würzburg under Döllinger and the dissertation written 'bei Döllinger'."
+    },
+    {
+      "person_name": "Lorenz Oken",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Mentor/teacher during Schönlein's practical period in Jena, mentioned as 'bei Lorenz Oken'.",
+      "start_year": 1817,
+      "end_year": 1818,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Practical training period in Jena",
+        "Participation in scientific/medical circles"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Lorenz_Oken"
+      ],
+      "notes": "The Schönlein article notes time in Jena explicitly 'bei Lorenz Oken'."
+    },
+    {
+      "person_name": "Nicolaus Anton Friedreich",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Senior clinician at Würzburg whom Schönlein substituted for in clinical teaching before Friedreich's final retirement/emeritus status.",
+      "start_year": 1819,
+      "end_year": 1826,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Clinical instruction at Juliusspital",
+        "Transition of leadership/teaching responsibilities in Würzburg clinic"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "notes": "The Schönlein article states he initially taught clinically as deputy for the ill Friedreich and later led the clinic after Friedreich's definitive emeritus status."
+    },
+    {
+      "person_name": "Carl Friedrich von Marcus",
+      "relationship_type": "academic/student",
+      "relationship_description": "Former pupil/assistant at Juliusspital who later succeeded Schönlein in Würzburg after Schönlein’s 1832 removal.",
+      "start_year": 1821,
+      "end_year": 1833,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Assistantship at Juliusspital (1821–1824)",
+        "Continuation of Schönlein's clinical school traditions in Würzburg",
+        "Succession in clinic leadership (from 1832/33)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Carl_Friedrich_von_Marcus"
+      ],
+      "notes": "The Schönlein article describes Marcus as a former student/assistant and as Schönlein's successor in Würzburg."
+    },
+    {
+      "person_name": "Karl von Pfeufer",
+      "relationship_type": "academic/student",
+      "relationship_description": "Listed among Schönlein's pupils at Juliusspital; later became a notable physician/academic in his own right.",
+      "start_year": 1822,
+      "end_year": 1832,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Clinical/academic training network around Juliusspital"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Karl_von_Pfeufer"
+      ],
+      "notes": "Appears in the Juliusspital student list in the Schönlein article."
+    },
+    {
+      "person_name": "Philipp Franz von Siebold",
+      "relationship_type": "academic/student",
+      "relationship_description": "Included among Schönlein's Juliusspital pupils; later became prominent (noted as part of the student roster).",
+      "start_year": 1824,
+      "end_year": 1832,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Training within Würzburg clinical and academic setting"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Philipp_Franz_von_Siebold"
+      ],
+      "notes": "Siebold is explicitly listed among Schönlein's pupils at the Juliusspital."
+    },
+    {
+      "person_name": "Carl Friedrich Canstatt",
+      "relationship_type": "academic/student",
+      "relationship_description": "One of Schönlein's many pupils at the Juliusspital clinic in Würzburg; promoted under his influence (doctorate noted in the article).",
+      "start_year": 1826,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Bedside teaching at Juliusspital",
+        "Clinical training under Schönlein's method"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "notes": "The Schönlein page explicitly lists Canstatt among his students and notes Canstatt's promotion (1831)."
+    },
+    {
+      "person_name": "Joseph Oegg",
+      "relationship_type": "professional/critic",
+      "relationship_description": "Public critic of Schönlein's vaccination/inoculation experiments during a local smallpox-related epidemic; argued they may have helped spread disease.",
+      "start_year": 1826,
+      "end_year": 1826,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Medical controversy over inoculation experiments and public health risk",
+        "Written criticism in Würzburg context"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "notes": "The Schönlein article names Joseph Oegg as critic of these experiments in 1826."
+    },
+    {
+      "person_name": "Johann Joseph von Scherer",
+      "relationship_type": "academic/student",
+      "relationship_description": "Named among Schönlein's Juliusspital pupils; part of the cohort shaped by Schönlein's bedside and pathological-anatomical approach.",
+      "start_year": 1828,
+      "end_year": 1832,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Clinical education at Juliusspital",
+        "Participation in Schönlein's clinical teaching environment"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Johann_Joseph_von_Scherer"
+      ],
+      "notes": "Scherer is listed among Schönlein's Juliusspital students in the biography."
+    },
+    {
+      "person_name": "Wilhelm Joseph Behr",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend within Würzburg liberal circles; mentioned as a liberal mayor who was friends with Schönlein and his student Gottfried Eisenmann amid political suspicion in 1832.",
+      "start_year": 1830,
+      "end_year": 1832,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Liberal political-social networks in Würzburg",
+        "Context around political persecution and Schönlein's dismissal/exile"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Wilhelm_Joseph_Behr"
+      ],
+      "notes": "The Schönlein article describes Behr as a liberal mayor and friend linked to the 1832 political suspicions."
+    },
+    {
+      "person_name": "Adolphe Brongniart",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Collaborated with Schönlein in paleobotany; Schönlein provided fossil material for description work.",
+      "start_year": 1830,
+      "end_year": 1864,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Exchange of fossil plant material",
+        "Paleobotanical description and publication pipeline"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Adolphe_Th%C3%A9odore_Brongniart"
+      ],
+      "notes": "The Schönlein article states he worked with paleobotanists including Brongniart and provided fossil material."
+    },
+    {
+      "person_name": "Wilhelm Griesinger",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student of Schönlein in Zürich; part of the Zürich cohort trained under his clinical leadership.",
+      "start_year": 1833,
+      "end_year": 1839,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Teaching and clinical work at University of Zürich and associated hospital",
+        "Development of modern clinical methods"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Wilhelm_Griesinger"
+      ],
+      "notes": "The Schönlein article names Griesinger among his Zürich students."
+    },
+    {
+      "person_name": "Hermann Lebert",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student of Schönlein in Zürich; named among his pupils there.",
+      "start_year": 1833,
+      "end_year": 1839,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Clinical teaching at University of Zürich",
+        "Hospital-based training"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Hermann_Lebert"
+      ],
+      "notes": "The Schönlein article lists Lebert among Schönlein's Zürich students."
+    },
+    {
+      "person_name": "Philipp Schönlein",
+      "relationship_type": "family/child",
+      "relationship_description": "Son of Johann Lukas Schönlein; his early death is noted in Schönlein's biography.",
+      "start_year": 1834,
+      "end_year": 1856,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Family life in Berlin period",
+        "Philipp's research travel (ended with death at Cape Palmas)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "notes": "The article states Philipp Schönlein (1834–1856) died during a research expedition to Cape Palmas (now Liberia)."
+    },
+    {
+      "person_name": "Napoleon III",
+      "relationship_type": "professional/patient",
+      "relationship_description": "Notable patient during Schönlein's Zürich period; listed among his patients.",
+      "start_year": 1836,
+      "end_year": 1837,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Clinical care in Zürich"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Napoleon_III"
+      ],
+      "notes": "The Schönlein article names the French emperor Napoleon III among his Zürich patients."
+    },
+    {
+      "person_name": "Georg Büchner",
+      "relationship_type": "professional/patient",
+      "relationship_description": "Patient in Zürich; Büchner is mentioned among Schönlein's patients and was also a Privatdozent of medicine in Zürich.",
+      "start_year": 1836,
+      "end_year": 1837,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Medical care in Zürich",
+        "Shared Zürich medical-academic milieu"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Georg_B%C3%BCchner"
+      ],
+      "notes": "The Schönlein article explicitly identifies Büchner as a patient and notes his Zürich medical teaching role."
+    },
+    {
+      "person_name": "Rudolf Virchow",
+      "relationship_type": "academic/student",
+      "relationship_description": "One of Schönlein's Berlin students; later wrote a memorial address for Schönlein (1865), reflecting lasting intellectual lineage.",
+      "start_year": 1840,
+      "end_year": 1846,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Teaching relationship in Berlin medical training context",
+        "Later commemoration of Schönlein's work and influence"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Rudolf_Virchow"
+      ],
+      "notes": "The Schönlein page lists Virchow as a student; the Virchow page includes works commemorating Schönlein."
+    },
+    {
+      "person_name": "Robert Remak",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student of Schönlein in Berlin, mentioned among those he taught there.",
+      "start_year": 1840,
+      "end_year": 1846,
+      "strength": "weak",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Medical teaching environment at University of Berlin/Charité"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Robert_Remak"
+      ],
+      "notes": "Remak is explicitly named as one of Schönlein's Berlin students in the Schönlein article."
+    },
+    {
+      "person_name": "Joseph August Schenk",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Paleobotanical collaborator; text notes that drawings of Schönlein's fossil plants were published posthumously with text by Schenk.",
+      "start_year": 1840,
+      "end_year": 1864,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Preparation and use of fossil plant drawings",
+        "Posthumous publication work based on Schönlein's materials"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Joseph_August_Schenk"
+      ],
+      "notes": "The Schönlein article explicitly mentions posthumous publication with text by Joseph August Schenk."
+    },
+    {
+      "person_name": "Friedrich Wilhelm IV of Prussia",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Schönlein served as personal physician (Leibarzt) to the Prussian king from 1842 while working in Berlin.",
+      "start_year": 1842,
+      "end_year": 1858,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Royal medical care",
+        "Court physician duties alongside academic/Charité work"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_IV."
+      ],
+      "notes": "Schönlein's article states he became Leibarzt of King Friedrich Wilhelm IV in 1842."
+    },
+    {
+      "person_name": "Eduard Heinrich Henoch",
+      "relationship_type": "professional/legacy",
+      "relationship_description": "Later physician whose work helped define the syndrome that became known as Henoch–Schönlein purpura; linked by medical eponym and diagnostic tradition rather than direct co-work in 1837.",
+      "start_year": 1843,
+      "end_year": 1850,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Shared disease concept lineage (purpura / peliosis rheumatica)",
+        "Eponym formation in later clinical tradition"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Henoch%E2%80%93Sch%C3%B6nlein_purpura"
+      ],
+      "notes": "The provided Schönlein timeline and text connect Schönlein's purpura work to the later combined eponym."
+    },
+    {
+      "person_name": "Ludwig Traube",
+      "relationship_type": "academic/student",
+      "relationship_description": "Clinical assistant at the Berlin Charité who worked under Schönlein, reflecting Schönlein’s role in training leading internists.",
+      "start_year": 1849,
+      "end_year": 1853,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Clinical work at Charité (internal medicine)",
+        "Teaching/clinical routines in Berlin"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Ludwig_Traube_(Mediziner)",
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "notes": "Traube's biography explicitly states he became first civil assistant to Schönlein at the Charité in 1849."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "The Wikipedia extract provides limited family detail, but it does document Schönlein's son Philipp and his premature death during a research expedition. No named parents or spouse appear in the provided text, restricting the family network to documented relatives."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Schönlein’s academic web runs from early mentors (Röschlaub, Tiedemann, Walther, Döllinger, Oken) to large cohorts of pupils formed by his bedside-centered clinical method in Würzburg, Zurich, and Berlin (e.g., Virchow, Griesinger, Lebert, Traube)."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "His major posts at Würzburg (Juliusspital), Zurich (new university clinic), and Berlin (Charité) connected him to elite patients and patrons, culminating in service as physician to Friedrich Wilhelm IV."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Friendships and liberal circles mattered most in the Würzburg crisis of 1832 (e.g., Wilhelm Joseph Behr) and in long-running personal ties like Ludwig Rumpf."
+    }
+  ]
+}
