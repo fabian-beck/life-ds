@@ -16,6 +16,10 @@
   let proxyHeight = 0;
   let isScrollLockActive = false;
   let resizeTimeout;
+  let isUpdatingScroll = false; // Prevent infinite scroll loops
+  let scrollSyncTimeout; // Debounce horizontal->vertical scroll sync
+  let verticalScrollTimeout; // Throttle vertical->horizontal updates
+  let lastTimelineScrollLeft = 0; // Track last known timeline scroll position
 
   // Navigate to person's story at specific event
   function viewPersonEvent(personId, eventIndex) {
@@ -64,6 +68,8 @@
 
   // Handle vertical scroll and translate to horizontal timeline scroll
   function handleVerticalScroll() {
+    if (isUpdatingScroll) return; // Prevent feedback loop
+
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       console.log('[ScrollProxy] handleVerticalScroll: early return', {
         hasProxyContainer: !!scrollProxyContainer,
@@ -111,10 +117,79 @@
         currentScrollLeft: actualTimelineContainer.scrollLeft
       });
 
+      // Update timeline scroll directly without debouncing
+      isUpdatingScroll = true;
       actualTimelineContainer.scrollLeft = newScrollLeft;
+      lastTimelineScrollLeft = newScrollLeft; // Track expected position
+
+      // Use requestAnimationFrame to reset flag
+      requestAnimationFrame(() => {
+        isUpdatingScroll = false;
+      });
     } else {
       isScrollLockActive = false;
     }
+  }
+
+  // Handle horizontal timeline scroll and sync to vertical scroll position
+  function handleTimelineScroll() {
+    if (isUpdatingScroll) return; // Prevent feedback loop
+
+    if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0 || !isScrollLockActive) {
+      return;
+    }
+
+    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    if (!actualTimelineContainer) return;
+
+    const currentScrollLeft = actualTimelineContainer.scrollLeft;
+
+    // Only sync if scroll position changed from what we set programmatically
+    // This means user is manually scrolling the timeline
+    const scrollDiff = Math.abs(currentScrollLeft - lastTimelineScrollLeft);
+    if (scrollDiff < 1) {
+      // Scroll position matches our last update - this is from vertical scroll, not user input
+      return;
+    }
+
+    console.log('[ScrollProxy] User manually scrolled timeline:', {
+      currentScrollLeft,
+      lastTimelineScrollLeft,
+      scrollDiff
+    });
+
+    // User is manually scrolling timeline, sync to vertical scroll
+    clearTimeout(scrollSyncTimeout);
+    scrollSyncTimeout = setTimeout(() => {
+      const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+      const scrollProgress = maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
+
+      // Calculate target vertical scroll position
+      const rect = scrollProxyContainer.getBoundingClientRect();
+      const proxyContainerTop = rect.top + window.scrollY;
+      const targetScrollY = proxyContainerTop + (scrollProgress * proxyHeight);
+
+      console.log('[ScrollProxy] handleTimelineScroll sync:', {
+        currentScrollLeft,
+        maxTimelineScroll,
+        scrollProgress,
+        proxyContainerTop,
+        targetScrollY,
+        currentScrollY: window.scrollY,
+        diff: targetScrollY - window.scrollY
+      });
+
+      // Update vertical scroll position
+      isUpdatingScroll = true;
+      lastTimelineScrollLeft = currentScrollLeft; // Update tracked position
+
+      requestAnimationFrame(() => {
+        window.scrollTo(0, targetScrollY);
+        setTimeout(() => {
+          isUpdatingScroll = false;
+        }, 10);
+      });
+    }, 50); // Slightly longer debounce for manual scroll
   }
 
   // Handle window resize
@@ -142,8 +217,14 @@
     window.addEventListener('scroll', handleVerticalScroll, { passive: true });
     window.addEventListener('resize', handleResize);
 
-    // Prevent native horizontal scroll on timeline container
+    // Attach scroll listener to actual timeline container for bidirectional sync
     if (timelineContainer) {
+      const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+      if (actualTimelineContainer) {
+        actualTimelineContainer.addEventListener('scroll', handleTimelineScroll, { passive: true });
+        console.log('[ScrollProxy] Added scroll listener to actualTimelineContainer');
+      }
+
       timelineContainer.addEventListener('wheel', preventNativeHorizontalScroll, { passive: false });
       console.log('[ScrollProxy] Added wheel listener to timelineContainer');
     } else {
@@ -168,6 +249,10 @@
     window.removeEventListener('resize', handleResize);
 
     if (timelineContainer) {
+      const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+      if (actualTimelineContainer) {
+        actualTimelineContainer.removeEventListener('scroll', handleTimelineScroll);
+      }
       timelineContainer.removeEventListener('wheel', preventNativeHorizontalScroll);
     }
   });
