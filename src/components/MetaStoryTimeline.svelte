@@ -50,9 +50,9 @@
   const PIXELS_PER_YEAR = 15;
 
   // Constants for theme grouping vertical spacing
-  const THEME_TITLE_HEIGHT = 60; // Increased to add more space below title
-  const PERSON_ROW_HEIGHT = 50;
-  const THEME_SPACING = 10; // Reduced spacing between theme groups
+  const THEME_TITLE_HEIGHT = 45; // Compact theme title row with adequate spacing
+  const PERSON_ROW_HEIGHT = 42; // Compact person rows with enough space for names
+  const THEME_SPACING = 12; // Spacing between theme groups
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
@@ -218,6 +218,32 @@
     return offset;
   }
 
+  // Calculate total timeline height needed
+  $: timelineHeightPx = (() => {
+    if (!themesWithPersons || themesWithPersons.length === 0) return 300;
+
+    // Fixed heights for top sections
+    const chaptersRowHeight = 60; // .chapters-row height
+    const yearAxisHeight = 40; // .year-axis height
+    const yearAxisMarginTop = 5;
+    const personsLayerMarginTop = 10;
+
+    // Calculate persons layer height
+    let personsLayerHeight = 0;
+    themesWithPersons.forEach((theme, index) => {
+      personsLayerHeight += THEME_TITLE_HEIGHT;
+      personsLayerHeight += theme.persons.length * PERSON_ROW_HEIGHT;
+      if (index < themesWithPersons.length - 1) {
+        personsLayerHeight += THEME_SPACING;
+      }
+    });
+
+    // Add some bottom padding
+    const bottomPadding = 20;
+
+    return chaptersRowHeight + yearAxisMarginTop + yearAxisHeight + personsLayerMarginTop + personsLayerHeight + bottomPadding;
+  })();
+
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
     window.location.hash = `/story/${personId}`;
@@ -225,7 +251,7 @@
 </script>
 
 <div class="meta-timeline-container">
-  <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
+  <div class="timeline-wrapper" style="width: {timelineWidthPx}px; height: {timelineHeightPx}px;">
     <!-- Chapters row -->
     <div class="chapters-row">
       {#each chaptersWithPositions as chapter, index}
@@ -236,9 +262,6 @@
         >
           <div class="chapter-header">
             <h3>{chapter.title}</h3>
-          </div>
-          <div class="chapter-body">
-            <p class="bridge">{chapter.bridge_statement}</p>
           </div>
         </div>
       {/each}
@@ -306,24 +329,22 @@
   /* Container - full width scrollable panel */
   .meta-timeline-container {
     width: 100%;
-    height: 100vh;
     overflow-x: auto;
-    overflow-y: auto;
+    overflow-y: visible;
     padding: 1rem;
     background: rgba(4, 10, 24, 0.95);
   }
 
-  /* Wrapper - fixed width based on timeline scale */
+  /* Wrapper - dynamically sized based on content */
   .timeline-wrapper {
     position: relative;
-    min-height: 600px;
     margin-left: 40px;
   }
 
   /* Chapters row - absolute positioning */
   .chapters-row {
     position: relative;
-    height: 150px;
+    height: 60px;
     z-index: 1;
   }
 
@@ -333,7 +354,7 @@
     top: 0;
     height: 100%;
     border-right: 1px solid rgba(56, 189, 248, 0.3);
-    padding: 1rem;
+    padding: 0.5rem;
     background: rgba(15, 23, 42, 0.2);
   }
 
@@ -343,37 +364,22 @@
 
   /* Chapter header */
   .chapter-header {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
   }
 
   .chapter-header h3 {
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: 0;
     color: #38bdf8;
-    line-height: 1.3;
-  }
-
-  /* Chapter body */
-  .chapter-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .bridge {
-    font-style: italic;
-    color: #94a3b8;
-    margin: 0;
-    line-height: 1.5;
-    font-size: 0.85rem;
+    line-height: 1.2;
   }
 
   /* Year axis */
   .year-axis {
     position: relative;
-    height: 60px;
-    margin-top: 10px;
+    height: 40px;
+    margin-top: 5px;
     border-top: 2px solid rgba(56, 189, 248, 0.4);
     z-index: 5;
   }
@@ -402,7 +408,7 @@
   /* Persons layer */
   .persons-layer {
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
     min-height: auto;
     z-index: 10;
   }
@@ -410,7 +416,7 @@
   /* Theme title row */
   .theme-title-row {
     position: absolute;
-    height: 40px;
+    height: 30px;
     display: flex;
     align-items: center;
     background: rgba(15, 23, 42, 0.6);
@@ -422,7 +428,7 @@
     position: sticky;
     left: 0;
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #38bdf8;
     margin: 0;
@@ -435,7 +441,7 @@
   /* Individual person lifespan */
   .person-lifespan {
     position: absolute;
-    height: 28px;
+    height: 30px;
     transition: all 0.2s;
     cursor: pointer;
     outline: none;
@@ -454,7 +460,7 @@
   /* Person name wrapper - positioned above the line */
   .person-name-wrapper {
     position: absolute;
-    left: 34px;
+    left: 26px;
     right: 0;
     top: -10px;
     height: 14px;
@@ -467,7 +473,7 @@
     position: sticky;
     left: 0;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #e2e8f0;
     white-space: nowrap;
     padding: 0;
@@ -480,13 +486,13 @@
   /* Portrait thumbnail container */
   .person-portrait {
     position: absolute;
-    left: -24px;
+    left: -22px;
     top: 50%;
     transform: translateY(-50%);
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 3px solid rgba(56, 189, 248, 0.8);
+    border: 2px solid rgba(56, 189, 248, 0.8);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     background: rgba(15, 23, 42, 0.9);
     transition: all 0.2s;
@@ -520,11 +526,11 @@
   /* Person lifespan line */
   .person-line {
     position: absolute;
-    left: 32px;
+    left: 24px;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    height: 4px;
+    height: 3px;
     background: linear-gradient(90deg, rgba(56, 189, 248, 0.6), rgba(154, 123, 255, 0.6));
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -550,9 +556,9 @@
   /* Person dates container */
   .person-dates {
     position: absolute;
-    left: 32px;
+    left: 24px;
     right: 0;
-    top: calc(50% + 3px);
+    top: calc(50% + 2px);
     display: flex;
     justify-content: space-between;
     pointer-events: none;
@@ -560,12 +566,12 @@
 
   .person-birth,
   .person-death {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: #94a3b8;
     font-weight: 500;
     white-space: nowrap;
     background: rgba(4, 10, 24, 0.8);
-    padding: 1px 4px;
+    padding: 1px 3px;
     border-radius: 2px;
     line-height: 1;
   }
@@ -579,10 +585,6 @@
     /* Make chapters slightly narrower on mobile for easier scanning */
     .chapter-header h3 {
       font-size: 0.875rem;
-    }
-
-    .bridge {
-      font-size: 0.75rem;
     }
 
     /* Adjust person elements for mobile */
