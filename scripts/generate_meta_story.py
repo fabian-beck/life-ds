@@ -307,13 +307,35 @@ def phase1_story_planning(
             else:
                 summary_text = truncated + "..."
 
+        # Load location & event title data from life events to help with place-based/thematic topics
+        person_id = person.get("id")
+        locations = []
+        key_events = []
+        life_events = load_person_life_events(person_id)
+        if life_events:
+            # Extract unique location names from events
+            location_set = set()
+            for event in life_events.get("events", []):
+                for loc_data in event.get("location_coordinates", []):
+                    loc_name = loc_data.get("name")
+                    if loc_name:
+                        # Extract city/region (before first comma)
+                        city = loc_name.split(",")[0].strip()
+                        location_set.add(city)
+            locations = sorted(list(location_set))[:10]  # Limit to top 10
+
+            # Extract event titles (helps with thematic matching)
+            key_events = [e.get("title", "") for e in life_events.get("events", [])[:15]]  # First 15 events
+
         people_summary.append({
             "id": person.get("id"),
             "name": person.get("name"),
             "primaryRoles": person.get("primaryRoles", []),
             "birthDate": person.get("birthDate"),
             "deathDate": person.get("deathDate"),
-            "summary": summary_text
+            "summary": summary_text,
+            "locations": locations,  # NEW: Add locations for place-based selection
+            "key_events": key_events  # NEW: Add event titles for thematic matching
         })
 
     if manual_person_ids:
@@ -390,10 +412,19 @@ Your task:
 5. Write conclusion statement
 
 SELECTION CRITERIA - BE THOUGHTFUL:
-- Select people whose primaryRoles OR summary CLEARLY and DIRECTLY fit the topic
+- Select people whose primaryRoles, summary, locations, OR key_events CLEARLY and DIRECTLY fit the topic
+- When evaluating fit, consider ALL available data:
+  * primaryRoles: profession/occupation
+  * summary: career overview
+  * locations: cities/regions where they lived/worked (especially important for place-based topics)
+  * key_events: sample event titles from their life (reveals specific contributions)
 - When a person has multiple roles, evaluate ALL roles for thematic fit
   * Example: "artist, architect, environmentalist" fits architecture topics if summary confirms architectural work
   * Role order does NOT indicate importance - evaluate based on substantive contribution
+- For PLACE-BASED topics (e.g., "Citizens of Bamberg", "Berlin Intellectuals"):
+  * Check the "locations" field - if the target city appears, this is STRONG evidence
+  * Also check key_events for mentions of the place or activities there
+  * Include anyone with significant residence, work, or contribution in that place
 - Each person must have strong thematic relevance, not just superficial keyword overlap
 - A tangential connection is NOT enough - the person must have made substantial contributions
 - Do NOT artificially limit selections to hit a target number - include ALL who clearly fit
@@ -705,14 +736,14 @@ EXCLUDE personal life events like births, deaths, marriages, relocations unless 
                     ))
                     total_included += 1
                     if verbose:
-                        print(f"    ✓ {event_data['person_name']}: {event_data['event'].get('title', '')}")
-                        print(f"      Reason: {decision['reason']}")
+                        print(f"    [+] {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                        print(f"        Reason: {decision['reason']}")
                 else:
                     total_excluded += 1
                     if verbose:
-                        print(f"    ✗ {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                        print(f"    [-] {event_data['person_name']}: {event_data['event'].get('title', '')}")
                         if decision:
-                            print(f"      Reason: {decision['reason']}")
+                            print(f"        Reason: {decision['reason']}")
 
             total_reviewed += len(batch)
 
