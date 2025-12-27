@@ -2,6 +2,7 @@
   import { _ } from "../stores/language";
   import { push } from "svelte-spa-router";
   import PersonCard from "./PersonCard.svelte";
+  import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
 
   export let metaStoryData = null;
   export let personsRegistry = [];
@@ -80,27 +81,11 @@
     {#if metaStoryData.chapters?.length}
       <section class="chapters">
         <h2>{$_('meta_story.chapters_heading')}</h2>
-        {#each metaStoryData.chapters as chapter}
-          <div class="chapter">
-            <h3>{chapter.title}</h3>
-            <p class="bridge">{chapter.bridge_statement}</p>
-            <ul class="event-list">
-              {#each chapter.person_events as event}
-                {@const person = getPersonById(event.person_id)}
-                <li>
-                  <button
-                    class="event-item"
-                    on:click={() => viewPersonEvent(event.person_id, event.event_index)}
-                  >
-                    <span class="event-date">{event.event_date}</span>
-                    <span class="event-person">{person?.name || event.person_id}</span>
-                    <span class="event-title">{event.event_title}</span>
-                  </button>
-                </li>
-              {/each}
-            </ul>
-          </div>
-        {/each}
+        <MetaStoryTimeline
+          chapters={metaStoryData.chapters}
+          personsRegistry={personsRegistry}
+          onEventClick={viewPersonEvent}
+        />
       </section>
     {/if}
 
@@ -201,60 +186,7 @@
     width: 100%;
   }
 
-  /* Chapters */
-  .chapter {
-    margin-bottom: 2.5rem;
-  }
-
-  .chapter h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .bridge {
-    font-style: italic;
-    color: #94a3b8;
-    margin-bottom: 1rem;
-  }
-
-  .event-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .event-item {
-    display: grid;
-    grid-template-columns: 100px 150px 1fr;
-    gap: 1rem;
-    padding: 0.75rem;
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
-    transition: all 0.2s;
-  }
-
-  .event-item:hover {
-    background: rgba(56, 189, 248, 0.1);
-    border-color: rgba(56, 189, 248, 0.4);
-  }
-
-  .event-date {
-    color: #94a3b8;
-    font-size: 0.875rem;
-  }
-
-  .event-person {
-    color: #38bdf8;
-    font-weight: 500;
-  }
-
-  .event-title {
-    color: #e2e8f0;
-  }
+  /* Chapters section - styles handled in MetaStoryTimeline component */
 
   /* Conclusion */
   .conclusion p {
