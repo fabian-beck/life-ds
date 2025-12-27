@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Generate meta-story datasets using a two-phase approach:
+Generate meta-story datasets using a three-phase approach:
 1. Phase 1: Story planning and person selection (1 AI call)
-2. Phase 2: Event mapping (programmatic, no AI)
+2. Phase 2: Event collection (programmatic, no AI)
+3. Phase 3: AI-powered event filtering for topic relevance (batched AI calls)
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -120,6 +121,29 @@ class PersonEvent(BaseModel):
     event_index: int = Field(description="Index in person's events array")
 
 
+class EventForReview(BaseModel):
+    """Event to be reviewed for topic relevance."""
+    event_id: str = Field(description="Unique identifier for tracking (person_id:event_index)")
+    person_name: str = Field(description="Person's name")
+    event_title: str = Field(description="Event title")
+    event_date: str = Field(description="Event date")
+    event_description: str = Field(description="Event description (first 200 chars)")
+
+
+class EventRelevanceDecision(BaseModel):
+    """AI decision on whether an event is relevant to the meta-story topic."""
+    event_id: str = Field(description="Event identifier (matches EventForReview.event_id)")
+    is_relevant: bool = Field(description="True if event directly relates to meta-story topic")
+    reason: str = Field(description="Brief explanation (1 sentence) of why event is/isn't relevant")
+
+
+class BatchEventRelevanceDecisions(BaseModel):
+    """Batch of relevance decisions for multiple events."""
+    decisions: List[EventRelevanceDecision] = Field(
+        description="Relevance decision for each event in the batch"
+    )
+
+
 class ChapterWithEvents(TemporalChapter):
     """Chapter with mapped events from multiple people."""
     person_events: List[PersonEvent] = Field(
@@ -194,6 +218,49 @@ def parse_event_date(event: Dict[str, Any]) -> Optional[int]:
         return int(date_str.split("-")[0])
     except (ValueError, IndexError):
         return None
+
+
+def is_topic_relevant_event(event: Dict[str, Any]) -> bool:
+    """
+    Check if an event is topic-relevant (exclude personal life events).
+
+    Excludes:
+    - Birth, death events
+    - Migration, relocation events
+    - Marriage, family events
+    - General personal milestones
+
+    Includes:
+    - Professional achievements
+    - Publications, inventions, discoveries
+    - Awards, recognitions
+    - Collaborations, significant meetings
+    - Work-related events
+    """
+    title = event.get("title", "").lower()
+    description = event.get("description", "").lower()
+
+    # Exclude patterns (birth, death, personal life)
+    exclude_patterns = [
+        # Life events
+        r'\bbirth\b', r'\bborn\b', r'\bdeath\b', r'\bdies\b', r'\bdied\b',
+        # Migration and location changes
+        r'\bmigrat', r'\bemigrat', r'\bimmigrat', r'\bmoves to\b', r'\bmoved to\b',
+        r'\brelocat', r'\bflees\b', r'\bfled\b', r'\bexile\b',
+        # Family events
+        r'\bmarr(y|ies|ied|iage)\b', r'\bengag', r'\bwedding\b',
+        r'\bdivorce\b', r'\bchild\b', r'\bbaby\b',
+        # Generic personal milestones
+        r'\badolescen', r'\bchildhood\b', r'\bearly life\b',
+    ]
+
+    combined_text = f"{title} {description}"
+
+    for pattern in exclude_patterns:
+        if re.search(pattern, combined_text, re.IGNORECASE):
+            return False
+
+    return True
 
 
 # ============================================================================
@@ -280,7 +347,8 @@ SUBTOPICS (2-4):
 - NOT just job title duplicates (avoid "Mathematicians", "Scientists", "Writers")
 - Should tell a story within the story (e.g., "Breaking the Unbreakable", "From Theory to Practice")
 - 2-4 people per subtopic is ideal
-- OK to have overlapping membership (person can appear in multiple subtopics)
+- IMPORTANT: Each person must be assigned to EXACTLY ONE subtopic (no overlaps, no omissions)
+- All selected people must be distributed across subtopics
 
 CHAPTERS (3-6):
 - Era-based with clear date ranges (year precision only)
@@ -348,7 +416,8 @@ SUBTOPICS (2-4):
 - NOT just job title duplicates (avoid "Mathematicians", "Scientists", "Writers")
 - Should tell a story within the story (e.g., "Breaking the Unbreakable", "From Theory to Practice")
 - 2-4 people per subtopic is ideal
-- OK to have overlapping membership (person can appear in multiple subtopics)
+- IMPORTANT: Each person must be assigned to EXACTLY ONE subtopic (no overlaps, no omissions)
+- All selected people must be distributed across subtopics
 
 GOOD SUBTOPIC EXAMPLES:
 - "Theoretical Foundations" (mathematicians who defined computation)
@@ -408,10 +477,40 @@ MISSING PEOPLE SUGGESTIONS:
                 print(f"Error: AI selected non-existent person IDs: {invalid_ids}")
                 return None
 
+            # Validate subtopic assignments
+            selected_person_ids = {p.person_id for p in plan.selected_people}
+            subtopic_person_ids = set()
+            person_assignment_count = {}
+
+            for subtopic in plan.subtopics:
+                for person_id in subtopic.person_ids:
+                    if person_id not in selected_person_ids:
+                        print(f"Error: Subtopic '{subtopic.id}' references non-selected person: {person_id}")
+                        return None
+
+                    # Track how many times each person is assigned
+                    person_assignment_count[person_id] = person_assignment_count.get(person_id, 0) + 1
+                    subtopic_person_ids.add(person_id)
+
+            # Check for people assigned to multiple subtopics
+            multi_assigned = [pid for pid, count in person_assignment_count.items() if count > 1]
+            if multi_assigned:
+                print(f"Error: These people are assigned to multiple subtopics: {multi_assigned}")
+                print("Each person must be assigned to exactly ONE subtopic.")
+                return None
+
+            # Check for people not assigned to any subtopic
+            unassigned = selected_person_ids - subtopic_person_ids
+            if unassigned:
+                print(f"Error: These people are not assigned to any subtopic: {list(unassigned)}")
+                print("All selected people must be assigned to exactly ONE subtopic.")
+                return None
+
             if verbose:
                 print(f"Selected {len(plan.selected_people)} people")
                 print(f"Created {len(plan.subtopics)} subtopics")
                 print(f"Designed {len(plan.chapters)} chapters")
+                print(f"Validated: All people assigned to exactly one subtopic")
 
             return plan
         elif result.refusal:
@@ -436,28 +535,33 @@ MISSING PEOPLE SUGGESTIONS:
 
 
 # ============================================================================
-# PHASE 2: EVENT MAPPING
+# PHASE 2: EVENT COLLECTION
 # ============================================================================
 
-def phase2_event_mapping(
+def phase2_event_collection(
     plan: MetaStoryPlan,
+    registry: Dict[str, Any],
     verbose: bool = False
-) -> List[ChapterWithEvents]:
+) -> Dict[str, List[Dict[str, Any]]]:
     """
-    Phase 2: Map events to temporal chapters (programmatic, no AI).
+    Phase 2: Collect all events from selected people within chapter date ranges.
+    Does NOT filter for relevance - that happens in Phase 3.
 
     Args:
         plan: Output from Phase 1
+        registry: Persons registry (for name lookup)
         verbose: Enable logging
 
     Returns:
-        List of chapters with person_events arrays
+        Dict mapping chapter IDs to lists of raw event data
     """
     if verbose:
-        print(f"\n=== PHASE 2: Event Mapping ===")
+        print(f"\n=== PHASE 2: Event Collection ===")
 
     # Load all person life events
     person_events = {}
+    person_names = {}
+
     for person_ref in plan.selected_people:
         person_id = person_ref.person_id
         life_events = load_person_life_events(person_id)
@@ -468,13 +572,20 @@ def phase2_event_mapping(
                 print(f"Warning: No life events found for {person_id}")
             person_events[person_id] = []
 
-    # Map events to chapters
-    chapters_with_events = []
+        # Get person name from registry
+        for person in registry.get("people", []):
+            if person.get("id") == person_id:
+                person_names[person_id] = person.get("name", person_id)
+                break
+
+    # Collect events by chapter (unfiltered)
+    chapter_events = {}
+
     for chapter in plan.chapters:
         chapter_start = int(chapter.date_start.split("-")[0])
         chapter_end = int(chapter.date_end.split("-")[0])
 
-        mapped_events = []
+        collected_events = []
 
         for person_id, events in person_events.items():
             for idx, event in enumerate(events):
@@ -482,20 +593,133 @@ def phase2_event_mapping(
                 if event_year is None:
                     continue
 
-                # Check if event falls within chapter range
+                # Only check date range - NO filtering yet
                 if chapter_start <= event_year <= chapter_end:
-                    mapped_events.append(PersonEvent(
-                        person_id=person_id,
-                        event_date=event.get("date", ""),
-                        event_date_precision=event.get("date_precision", "year"),
-                        event_title=event.get("title", ""),
-                        event_index=idx
+                    # Apply basic regex filter for obviously irrelevant events
+                    if not is_topic_relevant_event(event):
+                        continue
+
+                    collected_events.append({
+                        "person_id": person_id,
+                        "person_name": person_names.get(person_id, person_id),
+                        "event_index": idx,
+                        "event": event
+                    })
+
+        chapter_events[chapter.id] = collected_events
+
+        if verbose:
+            print(f"  Chapter '{chapter.title}': {len(collected_events)} events collected")
+
+    total_collected = sum(len(events) for events in chapter_events.values())
+    if verbose:
+        print(f"\nTotal: {total_collected} events collected (basic filtering applied)")
+
+    return chapter_events
+
+
+# ============================================================================
+# PHASE 3: AI-POWERED EVENT FILTERING
+# ============================================================================
+
+def phase3_ai_event_filtering(
+    plan: MetaStoryPlan,
+    chapter_events: Dict[str, List[Dict[str, Any]]],
+    client: OpenAI,
+    model: str,
+    verbose: bool = False,
+    batch_size: int = 20
+) -> List[ChapterWithEvents]:
+    """
+    Phase 3: Use AI to filter events for topic relevance.
+
+    Args:
+        plan: Output from Phase 1
+        chapter_events: Output from Phase 2 (unfiltered events by chapter)
+        client: OpenAI client
+        model: Model to use
+        verbose: Enable logging
+        batch_size: Number of events to process per AI call
+
+    Returns:
+        List of chapters with filtered person_events arrays
+    """
+    if verbose:
+        print(f"\n=== PHASE 3: AI Event Filtering ===")
+
+    # Prepare topic context for AI
+    topic_context = f"""Meta-Story Topic: {plan.title}
+Tagline: {plan.tagline}
+Description: {plan.description}
+
+This meta-story focuses on events that directly relate to this specific topic.
+EXCLUDE personal life events like births, deaths, marriages, relocations unless they have direct relevance to the topic."""
+
+    chapters_with_filtered_events = []
+    total_reviewed = 0
+    total_included = 0
+    total_excluded = 0
+
+    for chapter in plan.chapters:
+        chapter_id = chapter.id
+        events_to_review = chapter_events.get(chapter_id, [])
+
+        if not events_to_review:
+            # Empty chapter
+            chapters_with_filtered_events.append(ChapterWithEvents(
+                id=chapter.id,
+                title=chapter.title,
+                date_start=chapter.date_start,
+                date_start_precision=chapter.date_start_precision,
+                date_end=chapter.date_end,
+                date_end_precision=chapter.date_end_precision,
+                bridge_statement=chapter.bridge_statement,
+                person_events=[]
+            ))
+            continue
+
+        if verbose:
+            print(f"\n  Chapter: {chapter.title}")
+            print(f"  Reviewing {len(events_to_review)} events...")
+
+        # Process events in batches
+        filtered_events = []
+        for i in range(0, len(events_to_review), batch_size):
+            batch = events_to_review[i:i + batch_size]
+            batch_decisions = _filter_event_batch(
+                batch, topic_context, client, model, verbose
+            )
+
+            # Apply decisions
+            for event_data in batch:
+                event_id = f"{event_data['person_id']}:{event_data['event_index']}"
+                decision = batch_decisions.get(event_id)
+
+                if decision and decision["is_relevant"]:
+                    filtered_events.append(PersonEvent(
+                        person_id=event_data["person_id"],
+                        event_date=event_data["event"].get("date", ""),
+                        event_date_precision=event_data["event"].get("date_precision", "year"),
+                        event_title=event_data["event"].get("title", ""),
+                        event_index=event_data["event_index"]
                     ))
+                    total_included += 1
+                    if verbose:
+                        print(f"    ✓ {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                        print(f"      Reason: {decision['reason']}")
+                else:
+                    total_excluded += 1
+                    if verbose:
+                        print(f"    ✗ {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                        if decision:
+                            print(f"      Reason: {decision['reason']}")
 
-        # Sort events by date within chapter
-        mapped_events.sort(key=lambda e: parse_event_date({"date": e.event_date}) or 0)
+            total_reviewed += len(batch)
 
-        chapters_with_events.append(ChapterWithEvents(
+        # Sort events by date
+        filtered_events.sort(key=lambda e: parse_event_date({"date": e.event_date}) or 0)
+
+        chapters_with_filtered_events.append(ChapterWithEvents(
             id=chapter.id,
             title=chapter.title,
             date_start=chapter.date_start,
@@ -503,13 +727,126 @@ def phase2_event_mapping(
             date_end=chapter.date_end,
             date_end_precision=chapter.date_end_precision,
             bridge_statement=chapter.bridge_statement,
-            person_events=mapped_events
+            person_events=filtered_events
         ))
 
         if verbose:
-            print(f"  Chapter '{chapter.title}': {len(mapped_events)} events")
+            print(f"  Result: {len(filtered_events)} events included")
 
-    return chapters_with_events
+    if verbose:
+        print(f"\n=== Filtering Summary ===")
+        print(f"Total reviewed: {total_reviewed}")
+        if total_reviewed > 0:
+            print(f"Included: {total_included} ({100*total_included/total_reviewed:.1f}%)")
+            print(f"Excluded: {total_excluded} ({100*total_excluded/total_reviewed:.1f}%)")
+        else:
+            print(f"Included: {total_included}")
+            print(f"Excluded: {total_excluded}")
+
+    return chapters_with_filtered_events
+
+
+def _filter_event_batch(
+    events: List[Dict[str, Any]],
+    topic_context: str,
+    client: OpenAI,
+    model: str,
+    verbose: bool
+) -> Dict[str, Dict[str, Any]]:
+    """
+    Make a single AI call to filter a batch of events.
+
+    Returns:
+        Dict mapping event_id to decision dict {"is_relevant": bool, "reason": str}
+    """
+    # Prepare events for review
+    events_for_review = []
+    for event_data in events:
+        event = event_data["event"]
+        event_id = f"{event_data['person_id']}:{event_data['event_index']}"
+
+        # Truncate description for token efficiency
+        description = event.get("description", "")
+        if len(description) > 300:
+            description = description[:297] + "..."
+
+        events_for_review.append(EventForReview(
+            event_id=event_id,
+            person_name=event_data["person_name"],
+            event_title=event.get("title", ""),
+            event_date=event.get("date", ""),
+            event_description=description
+        ))
+
+    prompt = f"""{topic_context}
+
+Review the following events and determine which ones are DIRECTLY RELEVANT to this meta-story topic.
+
+INCLUDE events that:
+- Represent key achievements, discoveries, or contributions related to the topic
+- Show professional collaborations, publications, or innovations relevant to the topic
+- Demonstrate impact or influence in the topic area
+- Mark significant milestones in the topic domain
+
+EXCLUDE events that:
+- Are purely personal (births, deaths, marriages, family matters) UNLESS they have direct relevance
+- Describe relocations, migrations, or moves UNLESS directly related to the topic
+- Cover general education or childhood UNLESS pivotal to the topic
+- Are about unrelated professional work outside the topic scope
+
+For each event, provide:
+1. is_relevant: true/false
+2. reason: One sentence explaining your decision
+
+Events to review:
+{json.dumps([e.model_dump() for e in events_for_review], indent=2)}
+"""
+
+    try:
+        response = client.beta.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert curator deciding which biographical events are relevant to specific thematic meta-stories. Be selective and focus on topic relevance."
+                },
+                {"role": "user", "content": prompt}
+            ],
+            response_format=BatchEventRelevanceDecisions,
+        )
+
+        result = response.choices[0].message
+        if result.parsed:
+            decisions = {}
+            for decision in result.parsed.decisions:
+                decisions[decision.event_id] = {
+                    "is_relevant": decision.is_relevant,
+                    "reason": decision.reason
+                }
+            return decisions
+        else:
+            if verbose:
+                print(f"  Warning: No parsed result from AI, including all events by default")
+            # Default: include all if AI fails
+            return {
+                f"{e['person_id']}:{e['event_index']}": {
+                    "is_relevant": True,
+                    "reason": "AI filtering failed, included by default"
+                }
+                for e in events
+            }
+
+    except Exception as e:
+        if verbose:
+            print(f"  Warning: AI filtering error: {e}")
+        # Default: include all if error
+        return {
+            f"{e['person_id']}:{e['event_index']}": {
+                "is_relevant": True,
+                "reason": "AI filtering error, included by default"
+            }
+            for e in events
+        }
 
 
 # ============================================================================
@@ -671,6 +1008,17 @@ def main():
         action="store_true",
         help="Enable verbose output"
     )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=20,
+        help="Number of events to process per AI call in Phase 3 (default: 20)"
+    )
+    parser.add_argument(
+        "--skip-ai-filtering",
+        action="store_true",
+        help="Skip AI event filtering (Phase 3) - include all collected events"
+    )
 
     args = parser.parse_args()
 
@@ -728,8 +1076,53 @@ def main():
         print("ERROR: Phase 1 failed")
         sys.exit(1)
 
-    # Phase 2: Event mapping
-    chapters = phase2_event_mapping(plan, verbose=args.verbose)
+    # Phase 2: Event collection
+    chapter_events = phase2_event_collection(
+        plan=plan,
+        registry=registry,
+        verbose=args.verbose
+    )
+
+    # Phase 3: AI event filtering
+    if args.skip_ai_filtering:
+        if args.verbose:
+            print("\n=== PHASE 3: AI Event Filtering (SKIPPED) ===")
+        # Convert collected events directly to ChapterWithEvents
+        chapters = []
+        for chapter in plan.chapters:
+            events_data = chapter_events.get(chapter.id, [])
+            person_events = [
+                PersonEvent(
+                    person_id=e["person_id"],
+                    event_date=e["event"].get("date", ""),
+                    event_date_precision=e["event"].get("date_precision", "year"),
+                    event_title=e["event"].get("title", ""),
+                    event_index=e["event_index"]
+                )
+                for e in events_data
+            ]
+            # Sort by date
+            person_events.sort(key=lambda e: parse_event_date({"date": e.event_date}) or 0)
+
+            chapters.append(ChapterWithEvents(
+                id=chapter.id,
+                title=chapter.title,
+                date_start=chapter.date_start,
+                date_start_precision=chapter.date_start_precision,
+                date_end=chapter.date_end,
+                date_end_precision=chapter.date_end_precision,
+                bridge_statement=chapter.bridge_statement,
+                person_events=person_events
+            ))
+    else:
+        chapters = phase3_ai_event_filtering(
+            plan=plan,
+            chapter_events=chapter_events,
+            client=client,
+            model=args.model,
+            verbose=args.verbose,
+            batch_size=args.batch_size
+        )
 
     # Build dataset
     dataset = build_meta_story_dataset(plan, chapters, story_id)
