@@ -335,7 +335,7 @@
   /* Person name wrapper - positioned above the line */
   .person-name-wrapper {
     position: absolute;
-    left: 32px;
+    left: 34px;
     right: 0;
     top: -10px;
     height: 14px;
@@ -348,7 +348,7 @@
     position: sticky;
     left: 0;
     font-weight: 600;
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: #e2e8f0;
     white-space: nowrap;
     padding: 0;
@@ -497,13 +497,13 @@
     }
 
     .person-name-wrapper {
-      left: 28px;
+      left: 30px;
       top: -8px;
       height: 12px;
     }
 
     .person-name-label {
-      font-size: 0.75rem;
+      font-size: 0.875rem;
     }
 
     .person-dates {
