@@ -3,6 +3,7 @@
   export let personsRegistry = [];
   export let onEventClick = () => {};
   export let subtopics = [];
+  export let scrollProgress = 0; // 0 to 1, representing horizontal scroll position
 
   // Helper to get person data by ID
   function getPersonById(personId) {
@@ -56,6 +57,17 @@
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
+
+  // Calculate scroll indicator position based on scroll progress
+  $: scrollIndicatorLeftPx = scrollProgress * timelineWidthPx;
+
+  // Calculate current year at scroll indicator position
+  $: currentIndicatorYear = (() => {
+    if (!timelineBounds) return null;
+    const yearsFromStart = (scrollIndicatorLeftPx / PIXELS_PER_YEAR);
+    const year = Math.round(timelineBounds.minYear + yearsFromStart);
+    return Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
+  })();
 
   // Generate year markers for the axis
   $: yearMarkers = (() => {
@@ -322,6 +334,13 @@
         {/each}
       {/each}
     </div>
+
+    <!-- Scroll position indicator -->
+    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; height: {timelineHeightPx}px;">
+      {#if currentIndicatorYear}
+        <div class="scroll-indicator-label">{currentIndicatorYear}</div>
+      {/if}
+    </div>
   </div>
 </div>
 
@@ -333,6 +352,15 @@
     overflow-y: visible;
     padding: 1rem;
     background: rgba(4, 10, 24, 0.95);
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  .meta-timeline-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .meta-timeline-container {
+    scrollbar-width: none;
   }
 
   /* Wrapper - dynamically sized based on content */
@@ -574,6 +602,37 @@
     padding: 1px 3px;
     border-radius: 2px;
     line-height: 1;
+  }
+
+  /* Scroll position indicator */
+  .scroll-indicator {
+    position: absolute;
+    top: 0;
+    width: 3px;
+    background: rgba(56, 189, 248, 0.2);
+    pointer-events: none;
+    z-index: 0;
+    transition: left 0.1s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* Scroll indicator year label */
+  .scroll-indicator-label {
+    position: sticky;
+    bottom: 10px;
+    transform: translateX(-50%);
+    background: rgba(4, 10, 24, 0.95);
+    color: #38bdf8;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    white-space: nowrap;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   /* Responsive - keep horizontal scrolling on mobile */

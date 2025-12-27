@@ -20,6 +20,7 @@
   let scrollSyncTimeout; // Debounce horizontal->vertical scroll sync
   let verticalScrollTimeout; // Throttle vertical->horizontal updates
   let lastTimelineScrollLeft = 0; // Track last known timeline scroll position
+  let scrollProgress = 0; // 0 to 1, current scroll position for timeline indicator
 
   // Navigate to person's story at specific event
   function viewPersonEvent(personId, eventIndex) {
@@ -80,11 +81,12 @@
 
       // Calculate scroll progress (0 to 1)
       const scrolledPastTop = Math.abs(containerTop);
-      const scrollProgress = Math.min(scrolledPastTop / proxyHeight, 1);
+      const currentScrollProgress = Math.min(scrolledPastTop / proxyHeight, 1);
+      scrollProgress = currentScrollProgress; // Update for scroll indicator
 
       // Apply to timeline horizontal scroll
       const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
-      const newScrollLeft = scrollProgress * maxTimelineScroll;
+      const newScrollLeft = currentScrollProgress * maxTimelineScroll;
 
       // Update timeline scroll directly without debouncing
       isUpdatingScroll = true;
@@ -97,6 +99,11 @@
       });
     } else {
       isScrollLockActive = false;
+      // Update scroll progress based on actual timeline scroll when not in lock zone
+      if (actualTimelineContainer) {
+        const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+        scrollProgress = maxTimelineScroll > 0 ? actualTimelineContainer.scrollLeft / maxTimelineScroll : 0;
+      }
     }
   }
 
@@ -125,12 +132,13 @@
     clearTimeout(scrollSyncTimeout);
     scrollSyncTimeout = setTimeout(() => {
       const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
-      const scrollProgress = maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
+      const currentScrollProgress = maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
+      scrollProgress = currentScrollProgress; // Update for scroll indicator
 
       // Calculate target vertical scroll position
       const rect = scrollProxyContainer.getBoundingClientRect();
       const proxyContainerTop = rect.top + window.scrollY;
-      const targetScrollY = proxyContainerTop + (scrollProgress * proxyHeight);
+      const targetScrollY = proxyContainerTop + (currentScrollProgress * proxyHeight);
 
       // Update vertical scroll position
       isUpdatingScroll = true;
@@ -228,6 +236,7 @@
                 personsRegistry={personsRegistry}
                 onEventClick={viewPersonEvent}
                 subtopics={metaStoryData.subtopics}
+                scrollProgress={scrollProgress}
               />
             </div>
           </div>
