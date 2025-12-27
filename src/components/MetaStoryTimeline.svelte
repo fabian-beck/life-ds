@@ -183,6 +183,11 @@
           role="button"
           tabindex="0"
         >
+          <div class="person-name-wrapper">
+            <div class="person-name-label">
+              {personData.person.name.replace(/_/g, ' ')}
+            </div>
+          </div>
           {#if personData.portrait}
             <div class="person-portrait">
               <img
@@ -192,9 +197,9 @@
               />
             </div>
           {/if}
-          <div class="person-bar">
+          <div class="person-line"></div>
+          <div class="person-dates">
             <span class="person-birth">{personData.birthYear}</span>
-            <span class="person-name">{personData.person.name.replace(/_/g, ' ')}</span>
             <span class="person-death">{personData.deathYear || '...'}</span>
           </div>
         </div>
@@ -327,6 +332,32 @@
     outline-offset: 2px;
   }
 
+  /* Person name wrapper - positioned above the line */
+  .person-name-wrapper {
+    position: absolute;
+    left: 32px;
+    right: 0;
+    top: -10px;
+    height: 14px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  /* Person name label - sticky horizontal positioning */
+  .person-name-label {
+    position: sticky;
+    left: 0;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #e2e8f0;
+    white-space: nowrap;
+    padding: 0;
+    background: transparent;
+    width: fit-content;
+    pointer-events: none;
+    line-height: 1;
+  }
+
   /* Portrait thumbnail container */
   .person-portrait {
     position: absolute;
@@ -367,71 +398,63 @@
     border-color: rgba(34, 197, 94, 1);
   }
 
-  .person-bar {
-    height: 100%;
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.6), rgba(154, 123, 255, 0.6));
-    border: 2px solid rgba(56, 189, 248, 0.8);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px 0 40px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  /* Person lifespan line */
+  .person-line {
+    position: absolute;
+    left: 32px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 4px;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.6), rgba(154, 123, 255, 0.6));
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: all 0.2s;
   }
 
-  .person-lifespan:hover .person-bar {
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.8), rgba(154, 123, 255, 0.8));
-    border-color: rgba(56, 189, 248, 1);
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+  .person-lifespan:hover .person-line {
+    height: 6px;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.8), rgba(154, 123, 255, 0.8));
+    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
   }
 
-  .person-lifespan.alive .person-bar {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.6), rgba(56, 189, 248, 0.6));
-    border-color: rgba(34, 197, 94, 0.8);
+  .person-lifespan.alive .person-line {
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.6), rgba(56, 189, 248, 0.6));
   }
 
-  .person-lifespan.alive:hover .person-bar {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(56, 189, 248, 0.8));
-    border-color: rgba(34, 197, 94, 1);
+  .person-lifespan.alive:hover .person-line {
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.8), rgba(56, 189, 248, 0.8));
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
   }
 
-  .person-birth {
-    font-size: 0.75rem;
-    color: #e2e8f0;
-    font-weight: 500;
-    white-space: nowrap;
-    margin-right: 8px;
+  /* Person dates container */
+  .person-dates {
+    position: absolute;
+    left: 32px;
+    right: 0;
+    top: calc(50% + 3px);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
   }
 
-  .person-name {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-  }
-
+  .person-birth,
   .person-death {
-    font-size: 0.75rem;
-    color: #e2e8f0;
+    font-size: 0.7rem;
+    color: #94a3b8;
     font-weight: 500;
-    margin-left: 8px;
     white-space: nowrap;
+    background: rgba(4, 10, 24, 0.8);
+    padding: 1px 4px;
+    border-radius: 2px;
+    line-height: 1;
   }
 
   /* Responsive - keep horizontal scrolling on mobile */
   @media (max-width: 768px) {
     .meta-timeline-container {
       padding: 0.5rem;
-    }
-
-    /* Keep horizontal scroll behavior on mobile */
-    .timeline-wrapper {
-      /* Width is calculated dynamically, don't override */
     }
 
     /* Make chapters slightly narrower on mobile for easier scanning */
@@ -443,13 +466,9 @@
       font-size: 0.75rem;
     }
 
-    /* Adjust person bars for mobile */
+    /* Adjust person elements for mobile */
     .person-lifespan {
       height: 24px;
-    }
-
-    .person-bar {
-      padding: 0 8px 0 36px;
     }
 
     .person-portrait {
@@ -459,13 +478,36 @@
       border-width: 2px;
     }
 
+    .person-line {
+      left: 28px;
+      height: 3px;
+    }
+
+    .person-lifespan:hover .person-line {
+      height: 5px;
+    }
+
+    .person-dates {
+      left: 28px;
+    }
+
     .portrait-image {
       scale: 1.25;
       object-position: center 35%;
     }
 
-    .person-name {
+    .person-name-wrapper {
+      left: 28px;
+      top: -8px;
+      height: 12px;
+    }
+
+    .person-name-label {
       font-size: 0.75rem;
+    }
+
+    .person-dates {
+      top: calc(50% + 2px);
     }
 
     .person-birth,
