@@ -1,6 +1,7 @@
 <script>
   import { _ } from "../stores/language";
   import { push } from "svelte-spa-router";
+  import { onMount, onDestroy } from "svelte";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
 
   export let metaStoryData = null;
@@ -8,6 +9,13 @@
   export let currentLanguage = "en";
   export let getStyle = () => ({});
   export let isLoading = false;
+
+  // Scroll proxy variables
+  let scrollProxyContainer;
+  let timelineContainer;
+  let proxyHeight = 0;
+  let isScrollLockActive = false;
+  let resizeTimeout;
 
   // Navigate to person's story at specific event
   function viewPersonEvent(personId, eventIndex) {
@@ -18,6 +26,151 @@
   function backToLanding() {
     push(`/${currentLanguage}`);
   }
+
+  // Calculate proxy height based on timeline's horizontal scroll distance
+  $: if (timelineContainer && metaStoryData?.chapters?.length) {
+    // Use requestAnimationFrame to ensure DOM is updated
+    requestAnimationFrame(() => {
+      calculateProxyHeight();
+    });
+  }
+
+  function calculateProxyHeight() {
+    if (!timelineContainer) {
+      console.log('[ScrollProxy] calculateProxyHeight: no timelineContainer');
+      return;
+    }
+
+    // Find the actual scrollable .meta-timeline-container inside MetaStoryTimeline
+    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+
+    if (!actualTimelineContainer) {
+      console.warn('[ScrollProxy] Could not find .meta-timeline-container inside wrapper');
+      return;
+    }
+
+    const scrollWidth = actualTimelineContainer.scrollWidth;
+    const clientWidth = actualTimelineContainer.clientWidth;
+    proxyHeight = Math.max(scrollWidth - clientWidth, 0);
+
+    console.log('[ScrollProxy] calculateProxyHeight:', {
+      scrollWidth,
+      clientWidth,
+      proxyHeight,
+      wrapperElement: timelineContainer,
+      actualContainer: actualTimelineContainer
+    });
+  }
+
+  // Handle vertical scroll and translate to horizontal timeline scroll
+  function handleVerticalScroll() {
+    if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
+      console.log('[ScrollProxy] handleVerticalScroll: early return', {
+        hasProxyContainer: !!scrollProxyContainer,
+        hasTimelineContainer: !!timelineContainer,
+        proxyHeight
+      });
+      return;
+    }
+
+    // Find the actual scrollable container
+    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    if (!actualTimelineContainer) return;
+
+    const rect = scrollProxyContainer.getBoundingClientRect();
+    const containerTop = rect.top;
+    const containerBottom = rect.bottom;
+    const viewportHeight = window.innerHeight;
+
+    console.log('[ScrollProxy] handleVerticalScroll:', {
+      containerTop,
+      containerBottom,
+      viewportHeight,
+      proxyHeight,
+      isInLockZone: containerTop <= 0 && containerBottom > viewportHeight
+    });
+
+    // Check if we're in the scroll-lock zone
+    // Lock activates when container top reaches viewport top
+    if (containerTop <= 0 && containerBottom > viewportHeight) {
+      isScrollLockActive = true;
+
+      // Calculate scroll progress (0 to 1)
+      const scrolledPastTop = Math.abs(containerTop);
+      const scrollProgress = Math.min(scrolledPastTop / proxyHeight, 1);
+
+      // Apply to timeline horizontal scroll
+      const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+      const newScrollLeft = scrollProgress * maxTimelineScroll;
+
+      console.log('[ScrollProxy] Applying scroll lock:', {
+        scrolledPastTop,
+        scrollProgress,
+        maxTimelineScroll,
+        newScrollLeft,
+        currentScrollLeft: actualTimelineContainer.scrollLeft
+      });
+
+      actualTimelineContainer.scrollLeft = newScrollLeft;
+    } else {
+      isScrollLockActive = false;
+    }
+  }
+
+  // Handle window resize
+  function handleResize() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      calculateProxyHeight();
+    }, 150);
+  }
+
+  // Prevent native horizontal scroll during scroll lock
+  function preventNativeHorizontalScroll(event) {
+    if (isScrollLockActive && Math.abs(event.deltaX) > 0) {
+      // Only prevent horizontal scroll input during scroll lock
+      event.preventDefault();
+    }
+  }
+
+  onMount(() => {
+    console.log('[ScrollProxy] onMount called', {
+      hasProxyContainer: !!scrollProxyContainer,
+      hasTimelineContainer: !!timelineContainer
+    });
+
+    window.addEventListener('scroll', handleVerticalScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+
+    // Prevent native horizontal scroll on timeline container
+    if (timelineContainer) {
+      timelineContainer.addEventListener('wheel', preventNativeHorizontalScroll, { passive: false });
+      console.log('[ScrollProxy] Added wheel listener to timelineContainer');
+    } else {
+      console.warn('[ScrollProxy] timelineContainer not available in onMount');
+    }
+
+    // Log initial state after a delay to let DOM settle
+    setTimeout(() => {
+      console.log('[ScrollProxy] Initial state check:', {
+        scrollProxyContainer,
+        timelineContainer,
+        proxyHeight,
+        containerHeight: scrollProxyContainer?.offsetHeight,
+        timelineScrollWidth: timelineContainer?.scrollWidth,
+        timelineClientWidth: timelineContainer?.clientWidth
+      });
+    }, 500);
+  });
+
+  onDestroy(() => {
+    window.removeEventListener('scroll', handleVerticalScroll);
+    window.removeEventListener('resize', handleResize);
+
+    if (timelineContainer) {
+      timelineContainer.removeEventListener('wheel', preventNativeHorizontalScroll);
+    }
+  });
 </script>
 
 <!-- Loading state -->
@@ -41,16 +194,32 @@
       <p class="description">{metaStoryData.meta_story.description}</p>
     </header>
 
-    <!-- Chapters section - full width, breaks out of container -->
+    <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
     {#if metaStoryData.chapters?.length}
-      <section class="chapters-fullwidth">
-        <h2>{$_('meta_story.chapters_heading')}</h2>
-        <MetaStoryTimeline
-          chapters={metaStoryData.chapters}
-          personsRegistry={personsRegistry}
-          onEventClick={viewPersonEvent}
-          subtopics={metaStoryData.subtopics}
-        />
+      <section
+        class="scroll-proxy-container"
+        bind:this={scrollProxyContainer}
+        style="height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
+      >
+        <!-- Debug indicator -->
+        <div class="debug-indicator" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #0f0; padding: 10px; font-family: monospace; font-size: 11px; z-index: 9999; max-width: 300px;">
+          <div>Proxy Height: {proxyHeight}px</div>
+          <div>Container Height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px</div>
+          <div>Scroll Lock: {isScrollLockActive ? 'ACTIVE' : 'inactive'}</div>
+          <div>Timeline Scroll: {timelineContainer?.querySelector('.meta-timeline-container')?.scrollLeft || 0}px / {(timelineContainer?.querySelector('.meta-timeline-container')?.scrollWidth || 0) - (timelineContainer?.querySelector('.meta-timeline-container')?.clientWidth || 0)}px</div>
+        </div>
+
+        <div class="timeline-sticky-wrapper">
+          <h2>{$_('meta_story.chapters_heading')}</h2>
+          <div class="timeline-horizontal-container" bind:this={timelineContainer}>
+            <MetaStoryTimeline
+              chapters={metaStoryData.chapters}
+              personsRegistry={personsRegistry}
+              onEventClick={viewPersonEvent}
+              subtopics={metaStoryData.subtopics}
+            />
+          </div>
+        </div>
       </section>
     {/if}
 
@@ -128,21 +297,55 @@
     padding-bottom: 0.5rem;
   }
 
-  /* Chapters section - full width */
-  .chapters-fullwidth {
+  /* Scroll proxy container - tall container for vertical scroll -> horizontal scroll translation */
+  .scroll-proxy-container {
+    position: relative;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     margin-bottom: 3rem;
-    padding: 0;
+    /* Height set dynamically via inline style */
   }
 
-  .chapters-fullwidth h2 {
+  /* Timeline wrapper - sticks to top during scroll lock */
+  .timeline-sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 50;
+  }
+
+  /* Timeline heading - stays at very top */
+  .scroll-proxy-container h2 {
+    position: sticky;
+    top: 0;
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
     font-size: 1.875rem;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 0;
     max-width: 800px;
-    padding: 0 1rem 0.5rem;
+    padding: 1rem 1rem 0.5rem;
     border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+    background: rgba(4, 10, 24, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+  }
+
+  /* Timeline horizontal scroll container */
+  .timeline-horizontal-container {
+    height: calc(100vh - 70px); /* Subtract heading height */
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  .timeline-horizontal-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .timeline-horizontal-container {
+    scrollbar-width: none;
   }
 
   /* Conclusion */
