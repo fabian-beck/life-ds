@@ -1,130 +1,54 @@
 {
   "dataset": "meta_story",
-  "created_on": "2025-12-20T21:04:11.379782+01:00",
+  "created_on": "2025-12-27T13:55:06.903171+01:00",
   "meta_story": {
     "id": "citizens_of_bamberg",
-    "title": "Bamberg’s Imperial Imprint",
-    "tagline": "Power, piety, and a city made",
-    "description": "To tell a story of “Citizens of Bamberg” from this registry is to tell it through the people who most visibly shaped Bamberg’s identity at its moment of greatest constitutional and spiritual consequence: the early 11th century, when Bamberg was elevated into an imperial project. In this lens, “citizenship” is less a modern legal status than a lived bond—patronage, pilgrimage, and memory—binding rulers, church institutions, and urban life.\n\nHenry II and Cunigunde of Luxembourg stand at the city’s formative crossroads: empire and ecclesiastical reform, political strategy and personal sanctity. Their legacy is not simply that they passed through Bamberg, but that they anchored it—by endowing institutions, concentrating prestige, and leaving behind a cult of remembrance that would echo through the city’s streets, churches, and civic self-understanding for centuries.\n\nThis meta-story follows Bamberg’s origin as an imperial-religious “city idea,” tracing how a medieval foundation becomes an enduring civic identity—one that later Bambergers would inherit, contest, and reinterpret, even when the founders were long gone.",
+    "title": "Bamberg’s Living Memory",
+    "tagline": "Saints, scribes, and city soul",
+    "description": "To call someone a “citizen of Bamberg” is to point not just to a place on a map, but to a city that repeatedly reinvented what belonging can mean—imperial seat, ecclesiastical powerhouse, and later a cultivated Franconian town where administration, music, and letters could thrive in close quarters.\n\nIn this meta-story, Bamberg appears less as backdrop than as a civic instrument: a city whose institutions—cathedral chapter, courtly and legal bureaucracies, and educated publics—shaped who could act, speak, and be remembered. The arc begins with the imperial-foundational moment that made Bamberg a center of authority, then shifts to the long afterlife of that authority in culture: how a city built to project sacred power later becomes a generator of modern imagination.\n\nBecause “citizenship” in medieval and early modern Europe does not map neatly onto modern legal nationality, this story emphasizes the figures in the registry whose lives and legacies are directly and widely tied to Bamberg—its founding dynasty and its most famous resident-creator—rather than stretching the label to loosely “German” or “Bavarian” celebrities.",
     "person_ids": [
       "henry_ii",
       "cunigunde_of_luxembourg",
-      "e_t_a_hoffmann",
-      "georg_wilhelm_friedrich_hegel"
+      "e_t_a_hoffmann"
     ],
     "date_range_start": "973",
-    "date_range_end": "1040",
-    "lastUpdated": "2025-12-20T21:04:11.379782+01:00"
+    "date_range_end": "1822",
+    "lastUpdated": "2025-12-27T13:55:06.903171+01:00"
   },
   "subtopics": [
     {
-      "id": "founding_a_city_idea",
-      "title": "Founding a City-Idea",
-      "description": "Bamberg is cast as a deliberate project: a place designed to concentrate authority, learning, and sacred legitimacy in one urban landscape.",
+      "id": "imperial_founders_and_sacred_civics",
+      "title": "Imperial Founders, Sacred Civics",
+      "description": "Bamberg’s “citizenship” begins as a political-theological blueprint: an emperor and empress using institutions, patronage, and sanctity to make a city speak for the realm.",
       "person_ids": [
         "henry_ii",
         "cunigunde_of_luxembourg"
       ]
     },
     {
-      "id": "sanctity_and_statecraft",
-      "title": "Sanctity and Statecraft",
-      "description": "Here, rulership is narrated not only through power but through virtue, reform, and the afterlife of reputation—how leaders become exemplars in a city’s collective memory.",
+      "id": "romantic_bamberg_and_the_modern_imagination",
+      "title": "Romantic Bamberg, Modern Imagination",
+      "description": "Centuries later, Bamberg’s streets and civic routines become raw material for a new kind of cultural citizen—one whose membership is expressed through music, law, and uncanny fiction.",
       "person_ids": [
-        "cunigunde_of_luxembourg",
-        "henry_ii"
+        "e_t_a_hoffmann"
       ]
     }
   ],
   "chapters": [
     {
-      "id": "ottonian_horizons",
-      "title": "Ottonian Horizons (973-995)",
+      "id": "ottonian_city_making",
+      "title": "Imperial City-Making (973-1024)",
       "date_start": "973",
-      "date_start_precision": "year",
-      "date_end": "995",
-      "date_end_precision": "year",
-      "bridge_statement": "Before Bamberg is a destination, it is an ambition: a frontier between dynastic opportunity and ecclesiastical vision.",
-      "person_events": [
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "0975",
-          "event_date_precision": "year",
-          "event_title": "Birth into Luxembourg dynasty",
-          "event_index": 0
-        }
-      ]
-    },
-    {
-      "id": "an_imperial_foundation",
-      "title": "An Imperial Foundation (996-1024)",
-      "date_start": "996",
       "date_start_precision": "year",
       "date_end": "1024",
       "date_end_precision": "year",
-      "bridge_statement": "A city is not only built with stone—its status is built with charters, endowments, and the careful choreography of power and piety.",
+      "bridge_statement": "A city can be built like an argument: stone, clergy, and law arranged to prove a vision of order.",
       "person_events": [
         {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "0999",
-          "event_date_precision": "year",
-          "event_title": "Marriage to Henry of Bavaria",
-          "event_index": 1
-        },
-        {
           "person_id": "henry_ii",
-          "event_date": "1002-06-07",
-          "event_date_precision": "day",
-          "event_title": "Elected and crowned German king",
-          "event_index": 0
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1002-07-09",
-          "event_date_precision": "day",
-          "event_title": "Shares Mainz royal coronation",
-          "event_index": 2
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1002-08-10",
-          "event_date_precision": "day",
-          "event_title": "Crowned Queen at Paderborn",
-          "event_index": 3
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1002",
-          "event_date_precision": "year",
-          "event_title": "Acts as consors regni",
-          "event_index": 4
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1004-05-14",
-          "event_date_precision": "day",
-          "event_title": "Crowned King of Italy",
-          "event_index": 1
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1004",
-          "event_date_precision": "year",
-          "event_title": "Restores Merseburg bishopric",
-          "event_index": 2
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1005",
-          "event_date_precision": "year",
-          "event_title": "Makes peace with Poland",
-          "event_index": 3
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1007",
-          "event_date_precision": "year",
-          "event_title": "Founds Diocese of Bamberg",
+          "event_date": "1007-11",
+          "event_date_precision": "month",
+          "event_title": "Founded Diocese of Bamberg",
           "event_index": 4
         },
         {
@@ -135,102 +59,49 @@
           "event_index": 5
         },
         {
+          "person_id": "henry_ii",
+          "event_date": "1012",
+          "event_date_precision": "year",
+          "event_title": "Patronized imperial book art",
+          "event_index": 5
+        },
+        {
           "person_id": "cunigunde_of_luxembourg",
           "event_date": "1012",
           "event_date_precision": "year",
           "event_title": "Pericopes of Henry II commissioned",
           "event_index": 6
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1013",
-          "event_date_precision": "year",
-          "event_title": "Reaches Merseburg settlement",
-          "event_index": 5
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1014-02-14",
-          "event_date_precision": "day",
-          "event_title": "Crowned Holy Roman Emperor",
-          "event_index": 6
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1014",
-          "event_date_precision": "year",
-          "event_title": "Forces Arduin’s submission",
-          "event_index": 7
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1014-02-14",
-          "event_date_precision": "day",
-          "event_title": "Crowned Holy Roman Empress",
-          "event_index": 7
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1017",
-          "event_date_precision": "year",
-          "event_title": "Illness and Kaufungen vow",
-          "event_index": 8
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1018-01-30",
-          "event_date_precision": "day",
-          "event_title": "Concludes Peace of Bautzen",
-          "event_index": 8
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1022",
-          "event_date_precision": "year",
-          "event_title": "Holds reform synod at Pavia",
-          "event_index": 9
-        },
-        {
-          "person_id": "henry_ii",
-          "event_date": "1024-07-13",
-          "event_date_precision": "day",
-          "event_title": "Death without an heir",
-          "event_index": 10
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1024-07-13",
-          "event_date_precision": "day",
-          "event_title": "Widowhood and imperial regency",
-          "event_index": 9
         }
       ]
     },
     {
-      "id": "afterlives_of_founders",
-      "title": "Afterlives of the Founders (1025-1040)",
+      "id": "sanctity_and_dynastic_memory",
+      "title": "Sanctity and Dynastic Memory (1025-1040)",
       "date_start": "1025",
       "date_start_precision": "year",
       "date_end": "1040",
       "date_end_precision": "year",
-      "bridge_statement": "When rulers die, a city decides what they meant—turning biography into legend and legacy into local identity.",
+      "bridge_statement": "After power passes, reputation remains—Bamberg learns how to turn personal piety into public permanence.",
+      "person_events": []
+    },
+    {
+      "id": "romantic_resident_culture",
+      "title": "The Romantic Resident (1776-1822)",
+      "date_start": "1776",
+      "date_start_precision": "year",
+      "date_end": "1822",
+      "date_end_precision": "year",
+      "bridge_statement": "In the quiet machinery of a provincial town, a restless mind discovers that bureaucracy and fantasy can share the same address.",
       "person_events": [
         {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1025",
+          "person_id": "e_t_a_hoffmann",
+          "event_date": "1808",
           "event_date_precision": "year",
-          "event_title": "Enters Kaufungen as Benedictine nun",
+          "event_title": "Bamberg theatre turn",
           "event_index": 10
-        },
-        {
-          "person_id": "cunigunde_of_luxembourg",
-          "event_date": "1040-03-03",
-          "event_date_precision": "day",
-          "event_title": "Death at Kaufungen Abbey",
-          "event_index": 11
         }
       ]
     }
   ],
-  "conclusion": "In this registry, Bamberg’s civic story concentrates around two lives that function like a cornerstone: Henry II’s institutional ambition and Cunigunde’s remembered virtue. Together they show how a city can be “founded” twice—first in policy and patronage, then again in memory, ritual, and the stories a community chooses to keep telling."
+  "conclusion": "Across eight centuries, Bamberg’s story in this registry moves from founding power to imaginative afterlife: first a city engineered to embody empire and church, then a city capable of shaping modern art from everyday civic life. These “citizens” show how places manufacture memory—and how memory, in turn, keeps a city alive."
 }
