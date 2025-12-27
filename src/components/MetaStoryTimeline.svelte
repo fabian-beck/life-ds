@@ -8,14 +8,28 @@
     return personsRegistry.find(p => p.id === personId);
   }
 
-  // Calculate total year span across all chapters
-  $: totalSpan = (() => {
-    if (!chapters || chapters.length === 0) return 1;
+  // Extract year from date string (YYYY-MM-DD or YYYY)
+  function getYear(dateString) {
+    if (!dateString) return null;
+    return parseInt(dateString.split('-')[0]);
+  }
+
+  // Calculate timeline boundaries (min/max years across all chapters)
+  $: timelineBounds = (() => {
+    if (!chapters || chapters.length === 0) return { minYear: 1800, maxYear: 2000 };
     const years = chapters.flatMap(c => [
       parseInt(c.date_start),
       parseInt(c.date_end)
     ]);
-    const span = Math.max(...years) - Math.min(...years);
+    return {
+      minYear: Math.min(...years),
+      maxYear: Math.max(...years)
+    };
+  })();
+
+  // Calculate total year span
+  $: totalSpan = (() => {
+    const span = timelineBounds.maxYear - timelineBounds.minYear;
     return span > 0 ? span : 1; // Prevent division by zero
   })();
 
@@ -30,38 +44,141 @@
       return `${widthFr}fr`;
     }).join(' ');
   })();
+
+  // Define pixels per year scale
+  const PIXELS_PER_YEAR = 15;
+
+  // Calculate timeline width in pixels
+  $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
+
+  // Generate year markers for the axis
+  $: yearMarkers = (() => {
+    const markers = [];
+    const { minYear, maxYear } = timelineBounds;
+
+    // Calculate appropriate interval (every 10, 20, 50, or 100 years)
+    const span = maxYear - minYear;
+    let interval = 10;
+    if (span > 200) interval = 50;
+    if (span > 500) interval = 100;
+
+    // Generate markers at interval
+    const startYear = Math.ceil(minYear / interval) * interval;
+    for (let year = startYear; year <= maxYear; year += interval) {
+      const offsetYears = year - minYear;
+      const leftPx = offsetYears * PIXELS_PER_YEAR;
+      markers.push({ year, leftPx });
+    }
+
+    return markers;
+  })();
+
+  // Calculate chapter positions in pixels
+  $: chaptersWithPositions = (() => {
+    if (!chapters || chapters.length === 0) return [];
+
+    return chapters.map(chapter => {
+      const startYear = parseInt(chapter.date_start);
+      const endYear = parseInt(chapter.date_end);
+      const offsetYears = startYear - timelineBounds.minYear;
+      const span = endYear - startYear;
+
+      return {
+        ...chapter,
+        leftPx: offsetYears * PIXELS_PER_YEAR,
+        widthPx: span * PIXELS_PER_YEAR
+      };
+    });
+  })();
+
+  // Extract unique persons from all chapters and calculate their timeline positions
+  $: personsWithPositions = (() => {
+    if (!chapters || chapters.length === 0 || !personsRegistry) return [];
+
+    // Get unique person IDs from all chapters
+    const personIds = new Set();
+    chapters.forEach(chapter => {
+      chapter.person_events?.forEach(event => {
+        personIds.add(event.person_id);
+      });
+    });
+
+    // Calculate position and width for each person in pixels
+    return Array.from(personIds).map(personId => {
+      const person = getPersonById(personId);
+      if (!person) return null;
+
+      const birthYear = getYear(person.birthDate);
+      const deathYear = getYear(person.deathDate);
+
+      if (!birthYear) return null;
+
+      const startOffset = birthYear - timelineBounds.minYear;
+      const endYear = deathYear || timelineBounds.maxYear;
+      const lifespan = endYear - birthYear;
+
+      return {
+        person,
+        personId,
+        birthYear,
+        deathYear,
+        leftPx: startOffset * PIXELS_PER_YEAR,
+        widthPx: lifespan * PIXELS_PER_YEAR,
+        isAlive: !deathYear
+      };
+    }).filter(p => p !== null);
+  })();
 </script>
 
 <div class="meta-timeline-container">
-  <div class="chapters-row" style="--grid-template: {gridTemplate};">
-    {#each chapters as chapter, index}
-      <div class="chapter" data-chapter-index={index}>
-        <div class="chapter-header">
-          <h3>{chapter.title}</h3>
-          <div class="date-range">
-            {chapter.date_start} - {chapter.date_end}
+  <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
+    <!-- Chapters row -->
+    <div class="chapters-row">
+      {#each chaptersWithPositions as chapter, index}
+        <div
+          class="chapter"
+          data-chapter-index={index}
+          style="left: {chapter.leftPx}px; width: {chapter.widthPx}px;"
+        >
+          <div class="chapter-header">
+            <h3>{chapter.title}</h3>
+            <div class="date-range">
+              {chapter.date_start} - {chapter.date_end}
+            </div>
+          </div>
+          <div class="chapter-body">
+            <p class="bridge">{chapter.bridge_statement}</p>
           </div>
         </div>
-        <div class="chapter-body">
-          <p class="bridge">{chapter.bridge_statement}</p>
-          <ul class="event-list">
-            {#each chapter.person_events as event}
-              {@const person = getPersonById(event.person_id)}
-              <li>
-                <button
-                  class="event-item"
-                  on:click={() => onEventClick(event.person_id, event.event_index)}
-                >
-                  <span class="event-date">{event.event_date}</span>
-                  <span class="event-person">{person?.name || event.person_id}</span>
-                  <span class="event-title">{event.event_title}</span>
-                </button>
-              </li>
-            {/each}
-          </ul>
+      {/each}
+    </div>
+
+    <!-- Year axis -->
+    <div class="year-axis">
+      {#each yearMarkers as marker}
+        <div class="year-marker" style="left: {marker.leftPx}px;">
+          <div class="year-tick"></div>
+          <div class="year-label">{marker.year}</div>
         </div>
-      </div>
-    {/each}
+      {/each}
+    </div>
+
+    <!-- Person lifespans -->
+    <div class="persons-layer">
+      {#each personsWithPositions as personData, index}
+        <div
+          class="person-lifespan"
+          class:alive={personData.isAlive}
+          style="left: {personData.leftPx}px; width: {personData.widthPx}px; top: {index * 50}px;"
+          title="{personData.person.name} ({personData.birthYear}–{personData.deathYear || 'present'})"
+        >
+          <div class="person-bar">
+            <span class="person-name">{personData.person.name}</span>
+            <span class="person-years">{personData.birthYear}–{personData.deathYear || '...'}</span>
+          </div>
+        </div>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -74,48 +191,51 @@
     padding: 1rem 0;
   }
 
-  /* Grid layout for chapters */
-  .chapters-row {
-    display: grid;
-    grid-template-columns: var(--grid-template);
-    gap: 0;
-    min-width: max-content;
+  /* Wrapper - fixed width based on timeline scale */
+  .timeline-wrapper {
+    position: relative;
+    min-height: 600px;
   }
 
-  /* Individual chapter column */
+  /* Chapters row - absolute positioning */
+  .chapters-row {
+    position: relative;
+    height: 150px;
+    z-index: 1;
+  }
+
+  /* Individual chapter - absolutely positioned */
   .chapter {
+    position: absolute;
+    top: 0;
+    height: 100%;
     border-right: 1px solid rgba(56, 189, 248, 0.3);
     padding: 1rem;
-    min-height: 400px;
-    background: rgba(15, 23, 42, 0.3);
+    background: rgba(15, 23, 42, 0.2);
   }
 
   .chapter:nth-child(even) {
-    background: rgba(15, 23, 42, 0.5);
-  }
-
-  .chapter:last-child {
-    border-right: none;
+    background: rgba(15, 23, 42, 0.3);
   }
 
   /* Chapter header */
   .chapter-header {
-    margin-bottom: 1rem;
-    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    padding-bottom: 0.5rem;
   }
 
   .chapter-header h3 {
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    margin: 0 0 0.25rem 0;
     color: #38bdf8;
     line-height: 1.3;
   }
 
   .date-range {
-    font-size: 0.875rem;
-    color: #94a3b8;
+    font-size: 0.75rem;
+    color: #64748b;
     font-weight: 500;
   }
 
@@ -123,80 +243,152 @@
   .chapter-body {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .bridge {
     font-style: italic;
     color: #94a3b8;
     margin: 0;
-    line-height: 1.6;
-    font-size: 0.9rem;
+    line-height: 1.5;
+    font-size: 0.85rem;
   }
 
-  /* Event list */
-  .event-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  /* Year axis */
+  .year-axis {
+    position: relative;
+    height: 60px;
+    margin-top: 10px;
+    border-top: 2px solid rgba(56, 189, 248, 0.4);
+    z-index: 5;
   }
 
-  .event-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.75rem;
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 0.5rem;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
+  .year-marker {
+    position: absolute;
+    top: 0;
+  }
+
+  .year-tick {
+    width: 2px;
+    height: 12px;
+    background: rgba(56, 189, 248, 0.6);
+    margin: 0 auto;
+  }
+
+  .year-label {
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Persons layer */
+  .persons-layer {
+    position: relative;
+    margin-top: 20px;
+    min-height: 400px;
+    z-index: 10;
+  }
+
+  /* Individual person lifespan */
+  .person-lifespan {
+    position: absolute;
+    height: 40px;
     transition: all 0.2s;
   }
 
-  .event-item:hover {
-    background: rgba(56, 189, 248, 0.1);
-    border-color: rgba(56, 189, 248, 0.4);
+  .person-lifespan:hover {
+    z-index: 100;
+    transform: translateY(-2px);
   }
 
-  .event-date {
-    color: #94a3b8;
+  .person-bar {
+    height: 100%;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.6), rgba(154, 123, 255, 0.6));
+    border: 2px solid rgba(56, 189, 248, 0.8);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
+
+  .person-lifespan:hover .person-bar {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.8), rgba(154, 123, 255, 0.8));
+    border-color: rgba(56, 189, 248, 1);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+  }
+
+  .person-lifespan.alive .person-bar {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.6), rgba(56, 189, 248, 0.6));
+    border-color: rgba(34, 197, 94, 0.8);
+  }
+
+  .person-lifespan.alive:hover .person-bar {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(56, 189, 248, 0.8));
+    border-color: rgba(34, 197, 94, 1);
+  }
+
+  .person-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
+
+  .person-years {
     font-size: 0.75rem;
-    font-weight: 500;
-  }
-
-  .event-person {
-    color: #38bdf8;
-    font-weight: 500;
-    font-size: 0.875rem;
-  }
-
-  .event-title {
     color: #e2e8f0;
-    font-size: 0.875rem;
-    line-height: 1.4;
+    font-weight: 500;
+    margin-left: 8px;
+    white-space: nowrap;
   }
 
   /* Responsive */
   @media (max-width: 768px) {
+    .timeline-wrapper {
+      width: auto !important;
+    }
+
     .chapters-row {
+      position: static;
+      height: auto;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .chapter {
+      position: static !important;
+      width: auto !important;
+      left: auto !important;
       border-right: none;
       border-bottom: 1px solid rgba(56, 189, 248, 0.3);
-      min-height: auto;
     }
 
-    .chapter:last-child {
-      border-bottom: none;
+    .year-axis {
+      display: none;
+    }
+
+    .persons-layer {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .person-lifespan {
+      position: static !important;
+      width: auto !important;
+      left: auto !important;
+      top: auto !important;
     }
   }
 </style>
