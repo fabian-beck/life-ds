@@ -41,7 +41,6 @@
 
   function calculateProxyHeight() {
     if (!timelineContainer) {
-      console.log('[ScrollProxy] calculateProxyHeight: no timelineContainer');
       return;
     }
 
@@ -49,21 +48,12 @@
     const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
 
     if (!actualTimelineContainer) {
-      console.warn('[ScrollProxy] Could not find .meta-timeline-container inside wrapper');
       return;
     }
 
     const scrollWidth = actualTimelineContainer.scrollWidth;
     const clientWidth = actualTimelineContainer.clientWidth;
     proxyHeight = Math.max(scrollWidth - clientWidth, 0);
-
-    console.log('[ScrollProxy] calculateProxyHeight:', {
-      scrollWidth,
-      clientWidth,
-      proxyHeight,
-      wrapperElement: timelineContainer,
-      actualContainer: actualTimelineContainer
-    });
   }
 
   // Handle vertical scroll and translate to horizontal timeline scroll
@@ -71,11 +61,6 @@
     if (isUpdatingScroll) return; // Prevent feedback loop
 
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
-      console.log('[ScrollProxy] handleVerticalScroll: early return', {
-        hasProxyContainer: !!scrollProxyContainer,
-        hasTimelineContainer: !!timelineContainer,
-        proxyHeight
-      });
       return;
     }
 
@@ -87,14 +72,6 @@
     const containerTop = rect.top;
     const containerBottom = rect.bottom;
     const viewportHeight = window.innerHeight;
-
-    console.log('[ScrollProxy] handleVerticalScroll:', {
-      containerTop,
-      containerBottom,
-      viewportHeight,
-      proxyHeight,
-      isInLockZone: containerTop <= 0 && containerBottom > viewportHeight
-    });
 
     // Check if we're in the scroll-lock zone
     // Lock activates when container top reaches viewport top
@@ -108,14 +85,6 @@
       // Apply to timeline horizontal scroll
       const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
       const newScrollLeft = scrollProgress * maxTimelineScroll;
-
-      console.log('[ScrollProxy] Applying scroll lock:', {
-        scrolledPastTop,
-        scrollProgress,
-        maxTimelineScroll,
-        newScrollLeft,
-        currentScrollLeft: actualTimelineContainer.scrollLeft
-      });
 
       // Update timeline scroll directly without debouncing
       isUpdatingScroll = true;
@@ -152,12 +121,6 @@
       return;
     }
 
-    console.log('[ScrollProxy] User manually scrolled timeline:', {
-      currentScrollLeft,
-      lastTimelineScrollLeft,
-      scrollDiff
-    });
-
     // User is manually scrolling timeline, sync to vertical scroll
     clearTimeout(scrollSyncTimeout);
     scrollSyncTimeout = setTimeout(() => {
@@ -168,16 +131,6 @@
       const rect = scrollProxyContainer.getBoundingClientRect();
       const proxyContainerTop = rect.top + window.scrollY;
       const targetScrollY = proxyContainerTop + (scrollProgress * proxyHeight);
-
-      console.log('[ScrollProxy] handleTimelineScroll sync:', {
-        currentScrollLeft,
-        maxTimelineScroll,
-        scrollProgress,
-        proxyContainerTop,
-        targetScrollY,
-        currentScrollY: window.scrollY,
-        diff: targetScrollY - window.scrollY
-      });
 
       // Update vertical scroll position
       isUpdatingScroll = true;
@@ -209,11 +162,6 @@
   }
 
   onMount(() => {
-    console.log('[ScrollProxy] onMount called', {
-      hasProxyContainer: !!scrollProxyContainer,
-      hasTimelineContainer: !!timelineContainer
-    });
-
     window.addEventListener('scroll', handleVerticalScroll, { passive: true });
     window.addEventListener('resize', handleResize);
 
@@ -222,26 +170,10 @@
       const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
       if (actualTimelineContainer) {
         actualTimelineContainer.addEventListener('scroll', handleTimelineScroll, { passive: true });
-        console.log('[ScrollProxy] Added scroll listener to actualTimelineContainer');
       }
 
       timelineContainer.addEventListener('wheel', preventNativeHorizontalScroll, { passive: false });
-      console.log('[ScrollProxy] Added wheel listener to timelineContainer');
-    } else {
-      console.warn('[ScrollProxy] timelineContainer not available in onMount');
     }
-
-    // Log initial state after a delay to let DOM settle
-    setTimeout(() => {
-      console.log('[ScrollProxy] Initial state check:', {
-        scrollProxyContainer,
-        timelineContainer,
-        proxyHeight,
-        containerHeight: scrollProxyContainer?.offsetHeight,
-        timelineScrollWidth: timelineContainer?.scrollWidth,
-        timelineClientWidth: timelineContainer?.clientWidth
-      });
-    }, 500);
   });
 
   onDestroy(() => {
@@ -289,14 +221,6 @@
           bind:this={scrollProxyContainer}
           style="height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
         >
-          <!-- Debug indicator -->
-          <div class="debug-indicator" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #0f0; padding: 10px; font-family: monospace; font-size: 11px; z-index: 9999; max-width: 300px;">
-            <div>Proxy Height: {proxyHeight}px</div>
-            <div>Container Height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px</div>
-            <div>Scroll Lock: {isScrollLockActive ? 'ACTIVE' : 'inactive'}</div>
-            <div>Timeline Scroll: {timelineContainer?.querySelector('.meta-timeline-container')?.scrollLeft || 0}px / {(timelineContainer?.querySelector('.meta-timeline-container')?.scrollWidth || 0) - (timelineContainer?.querySelector('.meta-timeline-container')?.clientWidth || 0)}px</div>
-          </div>
-
           <div class="timeline-sticky-wrapper">
             <div class="timeline-horizontal-container" bind:this={timelineContainer}>
               <MetaStoryTimeline
