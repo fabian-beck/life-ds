@@ -573,7 +573,7 @@ def update_life_events_portrait(
 
 def generate_portrait(
     person_id: str,
-    reference_image_url: str,
+    reference_image_url: Optional[str] = None,
     *,
     source_page_url: Optional[str] = None,
     master_style_path: Path = DEFAULT_MASTER_STYLE_PATH,
@@ -586,7 +586,8 @@ def generate_portrait(
 
     Args:
         person_id: Person identifier (e.g., "alan_turing")
-        reference_image_url: URL to image file for portrait generation
+        reference_image_url: Optional URL to image file for portrait generation.
+                           If None, will load from person's registry entry.
         source_page_url: Optional URL to source page for attribution (e.g., Openverse, Flickr page)
         master_style_path: Path to master style reference image
         model: OpenAI model to use (default: gpt-image-1.5)
@@ -601,6 +602,53 @@ def generate_portrait(
     # Load person's color scheme
     colors = load_person_colors(person_id)
     print(f"  Primary color: {colors['primary']}, Secondary color: {colors['secondary']}")
+
+    # If reference_image_url is None, load from registry
+    if reference_image_url is None:
+        registry = load_person_registry()
+        person = find_person_in_registry(registry, person_id)
+
+        if not person:
+            error_msg = f"Person '{person_id}' not found in registry"
+            print(f"✗ Error: {error_msg}", file=sys.stderr)
+            return {
+                "id": person_id,
+                "success": False,
+                "message": error_msg,
+            }
+
+        # Get reference portrait URL from registry
+        portrait = person.get("portrait", {})
+        reference_image_url = portrait.get("image")
+
+        # If portrait is a local path (already generated), use the original image URL
+        if reference_image_url and reference_image_url.startswith("/portraits/"):
+            reference_image_url = portrait.get("originalImage")
+            if reference_image_url:
+                print(f"  Using original image from registry (originalImage field)")
+
+        if not reference_image_url:
+            error_msg = f"No reference portrait found for '{person_id}'"
+            print(f"✗ Error: {error_msg}", file=sys.stderr)
+            print("  Run generate_person_events.py first to create portrait metadata", file=sys.stderr)
+            return {
+                "id": person_id,
+                "success": False,
+                "message": error_msg,
+            }
+
+        # Validate URL format
+        if not reference_image_url.startswith("http"):
+            error_msg = f"Invalid portrait URL: {reference_image_url}"
+            print(f"✗ Error: {error_msg}", file=sys.stderr)
+            print("  Portrait should be a valid HTTP(S) URL", file=sys.stderr)
+            return {
+                "id": person_id,
+                "success": False,
+                "message": error_msg,
+            }
+
+        print(f"  Loaded reference portrait from registry: {reference_image_url}")
 
     # Check if portrait already exists
     output_path = PORTRAITS_DIR / f"{person_id}.png"
