@@ -83,8 +83,12 @@
       const offsetYears = startYear - timelineBounds.minYear;
       const span = endYear - startYear;
 
+      // Remove date range from title (e.g., "Title (1815-1899)" -> "Title")
+      const titleWithoutDates = chapter.title.replace(/\s*\(\d{4}-\d{4}\)\s*$/, '');
+
       return {
         ...chapter,
+        title: titleWithoutDates,
         leftPx: offsetYears * PIXELS_PER_YEAR,
         widthPx: span * PIXELS_PER_YEAR
       };
@@ -142,9 +146,6 @@
         >
           <div class="chapter-header">
             <h3>{chapter.title}</h3>
-            <div class="date-range">
-              {chapter.date_start} - {chapter.date_end}
-            </div>
           </div>
           <div class="chapter-body">
             <p class="bridge">{chapter.bridge_statement}</p>
@@ -170,11 +171,12 @@
           class="person-lifespan"
           class:alive={personData.isAlive}
           style="left: {personData.leftPx}px; width: {personData.widthPx}px; top: {index * 50}px;"
-          title="{personData.person.name} ({personData.birthYear}–{personData.deathYear || 'present'})"
+          title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
         >
           <div class="person-bar">
-            <span class="person-name">{personData.person.name}</span>
-            <span class="person-years">{personData.birthYear}–{personData.deathYear || '...'}</span>
+            <span class="person-birth">{personData.birthYear}</span>
+            <span class="person-name">{personData.person.name.replace(/_/g, ' ')}</span>
+            <span class="person-death">{personData.deathYear || '...'}</span>
           </div>
         </div>
       {/each}
@@ -185,7 +187,8 @@
 <style>
   /* Container */
   .meta-timeline-container {
-    width: 100%;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
     overflow-x: auto;
     overflow-y: visible;
     padding: 1rem 0;
@@ -221,22 +224,14 @@
   /* Chapter header */
   .chapter-header {
     margin-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-    padding-bottom: 0.5rem;
   }
 
   .chapter-header h3 {
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
     font-size: 1rem;
-    margin: 0 0 0.25rem 0;
+    margin: 0;
     color: #38bdf8;
     line-height: 1.3;
-  }
-
-  .date-range {
-    font-size: 0.75rem;
-    color: #64748b;
-    font-weight: 500;
   }
 
   /* Chapter body */
@@ -333,6 +328,14 @@
     border-color: rgba(34, 197, 94, 1);
   }
 
+  .person-birth {
+    font-size: 0.75rem;
+    color: #e2e8f0;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-right: 8px;
+  }
+
   .person-name {
     font-weight: 600;
     font-size: 0.875rem;
@@ -343,7 +346,7 @@
     flex: 1;
   }
 
-  .person-years {
+  .person-death {
     font-size: 0.75rem;
     color: #e2e8f0;
     font-weight: 500;
