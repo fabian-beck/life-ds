@@ -281,28 +281,31 @@
 
     <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
     {#if metaStoryData.chapters?.length}
-      <section
-        class="scroll-proxy-container"
-        bind:this={scrollProxyContainer}
-        style="height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
-      >
-        <!-- Debug indicator -->
-        <div class="debug-indicator" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #0f0; padding: 10px; font-family: monospace; font-size: 11px; z-index: 9999; max-width: 300px;">
-          <div>Proxy Height: {proxyHeight}px</div>
-          <div>Container Height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px</div>
-          <div>Scroll Lock: {isScrollLockActive ? 'ACTIVE' : 'inactive'}</div>
-          <div>Timeline Scroll: {timelineContainer?.querySelector('.meta-timeline-container')?.scrollLeft || 0}px / {(timelineContainer?.querySelector('.meta-timeline-container')?.scrollWidth || 0) - (timelineContainer?.querySelector('.meta-timeline-container')?.clientWidth || 0)}px</div>
-        </div>
+      <section class="chapters-section">
+        <h2>{$_('meta_story.chapters_heading')}</h2>
 
-        <div class="timeline-sticky-wrapper">
-          <h2>{$_('meta_story.chapters_heading')}</h2>
-          <div class="timeline-horizontal-container" bind:this={timelineContainer}>
-            <MetaStoryTimeline
-              chapters={metaStoryData.chapters}
-              personsRegistry={personsRegistry}
-              onEventClick={viewPersonEvent}
-              subtopics={metaStoryData.subtopics}
-            />
+        <div
+          class="scroll-proxy-container"
+          bind:this={scrollProxyContainer}
+          style="height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
+        >
+          <!-- Debug indicator -->
+          <div class="debug-indicator" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #0f0; padding: 10px; font-family: monospace; font-size: 11px; z-index: 9999; max-width: 300px;">
+            <div>Proxy Height: {proxyHeight}px</div>
+            <div>Container Height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px</div>
+            <div>Scroll Lock: {isScrollLockActive ? 'ACTIVE' : 'inactive'}</div>
+            <div>Timeline Scroll: {timelineContainer?.querySelector('.meta-timeline-container')?.scrollLeft || 0}px / {(timelineContainer?.querySelector('.meta-timeline-container')?.scrollWidth || 0) - (timelineContainer?.querySelector('.meta-timeline-container')?.clientWidth || 0)}px</div>
+          </div>
+
+          <div class="timeline-sticky-wrapper">
+            <div class="timeline-horizontal-container" bind:this={timelineContainer}>
+              <MetaStoryTimeline
+                chapters={metaStoryData.chapters}
+                personsRegistry={personsRegistry}
+                onEventClick={viewPersonEvent}
+                subtopics={metaStoryData.subtopics}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -382,12 +385,16 @@
     padding-bottom: 0.5rem;
   }
 
+  /* Chapters section - wrapper for heading and scroll proxy */
+  .chapters-section {
+    margin-bottom: 3rem;
+  }
+
   /* Scroll proxy container - tall container for vertical scroll -> horizontal scroll translation */
   .scroll-proxy-container {
     position: relative;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    margin-bottom: 3rem;
     /* Height set dynamically via inline style */
   }
 
@@ -400,24 +407,9 @@
     z-index: 50;
   }
 
-  /* Timeline heading - stays at very top */
-  .scroll-proxy-container h2 {
-    position: sticky;
-    top: 0;
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 1.875rem;
-    margin: 0 auto 0;
-    max-width: 800px;
-    padding: 1rem 1rem 0.5rem;
-    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-    background: rgba(4, 10, 24, 0.98);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-  }
-
   /* Timeline horizontal scroll container */
   .timeline-horizontal-container {
-    height: calc(100vh - 70px); /* Subtract heading height */
+    height: 100vh;
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-x: none;
