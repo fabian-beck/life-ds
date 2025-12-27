@@ -176,7 +176,8 @@
             portrait: person.portrait?.thumbnail || person.portrait?.image
           };
         })
-        .filter(p => p !== null);
+        .filter(p => p !== null)
+        .sort((a, b) => a.birthYear - b.birthYear);
 
       // Calculate theme title row bounds (leftmost to rightmost person)
       let themeLeftPx = 0;
