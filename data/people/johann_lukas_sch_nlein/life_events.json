@@ -1,5 +1,5 @@
 {
-  "dataset": "Biographical timeline outline: Johann Lukas Schönlein",
+  "dataset": "biographical_timeline_wikipedia",
   "created_on": "2025-12-27",
   "person": {
     "name": "Johann_Lukas_Schönlein",
@@ -8,10 +8,10 @@
     "primary_roles": [
       "physician",
       "pathologist",
-      "medical historian"
+      "professor"
     ],
-    "tagline": "Founder of modern German clinical method",
-    "summary": "Johann Lukas Schönlein was a German physician and academic who helped shift German medicine from speculative natural philosophy toward empirically grounded, bedside-based clinical practice. He taught and led major clinics in Würzburg, Zürich, and Berlin, promoted systematic physical diagnosis and autopsy correlation, and contributed to disease classification and terminology. He is also known for work in dermatology and for identifying a fungal pathogen associated with favus.",
+    "tagline": "Pioneer of modern clinical method",
+    "summary": "Johann Lukas Schönlein was a German physician and academic who helped shift German medicine toward a natural-scientific, clinic-based approach, teaching at Würzburg, Zürich, and Berlin and serving as physician to the Prussian court.",
     "wikipedia": "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
     "portrait": {
       "image": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
@@ -26,9 +26,9 @@
   },
   "chapters": [
     {
-      "id": "bamberg_seedbed",
-      "headline": "Bamberg Seedbed",
-      "bridge_statement": "A rope-maker’s son begins listening closely to nature, certain that medicine can be rebuilt from evidence.",
+      "id": "craftsman_roots",
+      "headline": "Craftsman Roots",
+      "bridge_statement": "From a workshop household, ambition quietly gathers force in the classrooms of a changing Bavaria.",
       "date_start": "1793-11-30",
       "date_start_precision": "day",
       "date_end": "1816",
@@ -38,94 +38,83 @@
       "involved_people": [
         "Andreas Röschlaub",
         "Friedrich Tiedemann",
-        "Philipp Franz von Walther",
-        "Ignaz Döllinger"
+        "Ignaz Döllinger",
+        "Philipp Franz von Walther"
       ],
       "location": "Bavaria"
     },
     {
-      "id": "lectern_to_bedside",
-      "headline": "Bedside Discipline",
-      "bridge_statement": "Credentials come quickly, but the real ambition is to make the ward the center of learning.",
+      "id": "juliusspital_bedside_revolution",
+      "headline": "Juliusspital Bedside Revolution",
+      "bridge_statement": "A young lecturer tests new ways of seeing disease, turning wards into laboratories of truth.",
       "date_start": "1817",
       "date_start_precision": "year",
-      "date_end": "1825",
+      "date_end": "1832",
       "date_end_precision": "year",
       "age_start": 23,
-      "age_end": 31,
-      "involved_people": null,
-      "location": "Bavaria"
-    },
-    {
-      "id": "juliusspital_laboratory",
-      "headline": "Juliusspital Laboratory",
-      "bridge_statement": "With authority finally in hand, teaching becomes an experiment conducted in full view of patients.",
-      "date_start": "1826-06-21",
-      "date_start_precision": "day",
-      "date_end": "1832-09",
-      "date_end_precision": "month",
-      "age_start": 32,
       "age_end": 38,
-      "involved_people": null,
+      "involved_people": [
+        "Nicolaus Anton Friedreich"
+      ],
       "location": "Bavaria"
     },
     {
-      "id": "exile_to_zurich",
-      "headline": "Exile Finds a Clinic",
-      "bridge_statement": "Politics snaps the old life in two, forcing him to rebuild his work on new ground.",
-      "date_start": "1832-10",
-      "date_start_precision": "month",
-      "date_end": "1836",
+      "id": "zurich_exile_clinic",
+      "headline": "Zurich Exile Clinic",
+      "bridge_statement": "Forced to start over, he finds freedom in a new university where observation becomes a creed.",
+      "date_start": "1833",
+      "date_start_precision": "year",
+      "date_end": "1837",
       "date_end_precision": "year",
-      "age_start": 38,
-      "age_end": 42,
+      "age_start": 39,
+      "age_end": 43,
       "involved_people": null,
       "location": "Switzerland"
     },
     {
-      "id": "berlin_masterclass",
-      "headline": "To Berlin",
-      "bridge_statement": "A Zurich reputation hardens into authority as Berlin draws him into medicine’s brightest, most political arena.",
-      "date_start": "1837",
+      "id": "prussian_court_physician",
+      "headline": "Prussian Court Physician",
+      "bridge_statement": "In the capital’s glare, his clinical authority hardens into influence that reaches far beyond the ward.",
+      "date_start": "1839",
       "date_start_precision": "year",
-      "date_end": "1844",
+      "date_end": "1856",
       "date_end_precision": "year",
-      "age_start": 43,
-      "age_end": 50,
+      "age_start": 45,
+      "age_end": 62,
       "involved_people": [
-        "Eduard Heinrich Henoch",
-        "Rudolf Virchow",
-        "Ludwig Traube",
-        "Friedrich Wilhelm IV of Prussia"
+        "Friedrich Wilhelm IV of Prussia",
+        "Philipp Schönlein"
       ],
       "location": "Prussia"
     },
     {
-      "id": "final_homecoming",
-      "headline": "Homecoming of the Archives",
-      "bridge_statement": "When public medicine falls away, he turns to memory, books, and the quiet weight of legacy.",
+      "id": "quiet_legacy_in_bamberg",
+      "headline": "Quiet Legacy in Bamberg",
+      "bridge_statement": "As public life recedes, he shapes what will outlast him—one decision, one gift, one final return.",
       "date_start": "1859",
       "date_start_precision": "year",
       "date_end": "1864-01-23",
       "date_end_precision": "day",
       "age_start": 65,
       "age_end": 70,
-      "involved_people": null,
+      "involved_people": [
+        "Friedrich Wilhelm IV of Prussia"
+      ],
       "location": "Bavaria"
     }
   ],
-  "conclusion": "Johann Lukas Schönlein helped drag clinical medicine toward modernity—away from speculation, toward bedside observation anchored in pathological proof. His influence lived on less as a monument than as a method, carried forward by the generations he trained and transformed.",
+  "conclusion": "Johann Lukas Schönlein helped push medicine toward modern clinical thinking—naming diseases precisely, hunting tangible causes, and teaching at the bedside. Even in retreat, he curated knowledge like a final diagnosis: ordered, enduring, meant to serve the next generation.",
   "events": [
     {
       "date": "1793-11-30",
       "date_precision": "day",
       "age": 0,
-      "title": "Born in Bamberg, a rope-maker’s son",
-      "description": "Johann Schönlein was born in Bamberg on 30 November 1793, the son of a rope-maker (Seilermeister). He attended the local Gymnasium and grew up in a setting where practical craft and careful observation mattered. Later, as he shaped a new style of clinical teaching, he would present himself not just as a physician but as someone determined to rebuild medicine from what could be seen, tested, and demonstrated at the bedside.\n\nIn keeping with that self-image, he later adopted the additional given name “Lucas/Lukas,” identifying with the apostle and patron saint of physicians. Even before he held any formal power in a clinic, the gesture signaled a career-long ambition: to make medicine a disciplined calling grounded in evidence rather than speculation.",
+      "title": "Birth in Bamberg",
+      "description": "Johann Lukas Schönlein was born in Bamberg on 30 November 1793, the son of a rope-maker, and was raised in a craftsman’s household before attending the local gymnasium.",
       "locations": [
         {
           "name_historic": "Bamberg",
-          "name_modern": "Bamberg, Bavaria, Germany",
+          "name_modern": "Bamberg, Germany",
           "centroid": [
             10.8868478,
             49.8916044
@@ -137,7 +126,7 @@
         "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "bamberg_seedbed"
+      "chapter": "craftsman_roots"
     },
     {
       "date": "1811",
@@ -145,8 +134,8 @@
       "date_end": "1816",
       "date_end_precision": "year",
       "age": 17,
-      "title": "Studies medicine in Landshut and Würzburg",
-      "description": "From 1811, Schönlein studied natural sciences and medicine in Landshut, then continued from 1813 to 1816 in Würzburg. The period mattered less for any single exam than for the intellectual tensions it exposed him to: older speculative systems still shaped medical theory, while anatomy, physiology, and clinical demonstration were beginning to demand a more empirical language.\n\nAmong the teachers named in his biography are Andreas Röschlaub, Friedrich Tiedemann, and the surgeon and pathologist Philipp Franz von Walther in Landshut, and the anatomist and physiologist Ignaz Döllinger in Würzburg. This mix of theoretical ambition and concrete anatomical instruction helps explain why Schönlein later insisted that diagnosis should be learned with patients in front of you, tested by physical signs, and anchored by pathological findings rather than by grand philosophical systems alone.",
+      "title": "Medical studies begin",
+      "description": "In 1811, Schönlein began studying natural sciences and medicine in Landshut, attending lectures by Andreas Röschlaub, Friedrich Tiedemann, and Philipp Franz von Walther. From 1813 he continued his studies in Würzburg, where he studied with the anatomist and physiologist Ignaz Döllinger and joined a secret student association. During these years he adopted the additional name “Lukas/Lucas,” aligning himself with a physician-saint naming tradition.",
       "locations": [
         {
           "name_historic": "Landshut",
@@ -174,25 +163,19 @@
         "Ignaz Döllinger"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
         "https://en.wikipedia.org/wiki/Andreas_R%C3%B6schlaub",
-        "https://de.wikipedia.org/wiki/Friedrich_Tiedemann"
+        "https://de.wikipedia.org/wiki/Friedrich_Tiedemann",
+        "https://de.wikipedia.org/wiki/Ignaz_D%C3%B6llinger"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "bamberg_seedbed",
-      "annotations": {
-        "Landshut": {
-          "explanation": "A Bavarian university town where Schönlein began medical study in 1811; the local university was later transferred to Munich (today’s LMU).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Ludwig_Maximilian_University_of_Munich"
-        }
-      }
+      "chapter": "craftsman_roots"
     },
     {
       "date": "1816",
       "date_precision": "year",
       "age": 22,
-      "title": "Doctorate under Döllinger in Würzburg",
-      "description": "In 1816, working under Ignaz Döllinger in Würzburg, Schönlein completed his doctoral dissertation, Von der Hirnmetamorphose. The work dealt with comparative embryological brain development in mammals and humans, placing him early in a tradition that treated anatomy and development as routes to understanding disease.\n\nAlthough his later fame would come from bedside teaching and clinical reform, the dissertation already shows a pattern that stayed with him: a preference for carefully described structures and observable change over purely speculative explanation. It also secured him a foothold in academic medicine at the moment he began to move from student to teacher.",
+      "title": "Completes doctoral dissertation",
+      "description": "In [[Würzburg|Würzburg]] he completed his doctoral dissertation, titled “Von der Hirnmetamorphose,” on comparative embryological brain development in mammals and humans under the supervision of Ignaz Döllinger.",
       "locations": [
         {
           "name_historic": "Würzburg",
@@ -210,22 +193,21 @@
       "sources": [
         "https://de.wikipedia.org/wiki/Ignaz_D%C3%B6llinger"
       ],
-      "event_type_icon": "mdi-book",
-      "chapter": "bamberg_seedbed",
-      "event_class": {
-        "type": "publication",
-        "title": "Von der Hirnmetamorphose",
-        "publication_type": "thesis",
-        "significance": "doctoral thesis",
-        "impact": "The dissertation anchored his early reputation in comparative anatomy and embryology and supported his transition into academic medicine."
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "craftsman_roots",
+      "annotations": {
+        "Würzburg": {
+          "explanation": "A Franconian university city in Bavaria; in the early 19th century it was an important center for medical and anatomical teaching in southern Germany.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/W%C3%BCrzburg"
+        }
       }
     },
     {
       "date": "1817",
       "date_precision": "year",
       "age": 23,
-      "title": "State exam and early pathology lectures",
-      "description": "After completing his dissertation, Schönlein broadened his practical experience beyond Würzburg. His biography notes time at the Allgemeines Krankenhaus in Bamberg, and further practical periods in Jena (with Lorenz Oken), Göttingen, and Munich. In 1817 he passed the Proberelation, the rough equivalent of today’s medical state examination, in Würzburg.\n\nThat same year he habilitated in pathological anatomy at the University of Würzburg. As one of the earliest Privatdozenten in this specialty in Germany, he taught with a strong emphasis on demonstration rather than rhetoric—training students to connect what they saw in bodies and tissues to what they observed in living patients. The ambition behind the credential was already clear: to make medicine answerable to evidence.",
+      "title": "Qualifies and habilitates",
+      "description": "After practical training at the general hospital in Bamberg and further clinical experience in Jena, Göttingen, and Munich, he passed the Würzburg [[Proberelation|\"Proberelation\"]] (a state-exam equivalent). In 1817 he also completed his [[habilitation|habilitation]] at the University of Würzburg in pathological anatomy, entering academic life as a lecturer in a newly emerging field.",
       "locations": [
         {
           "name_historic": "Würzburg",
@@ -235,67 +217,66 @@
             49.7780356
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Bavaria, Germany",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Thuringia, Germany",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Lower Saxony, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Bavaria, Germany",
+          "centroid": [
+            11.5753822,
+            48.1371079
+          ],
+          "primary": false
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
       ],
       "event_type_icon": "mdi-certificate",
-      "chapter": "lectern_to_bedside",
+      "chapter": "juliusspital_bedside_revolution",
       "annotations": {
-        "habilitation": {
-          "explanation": "A postdoctoral qualification in many German-speaking universities that grants the right to teach independently as a university lecturer (venia legendi).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
+        "Proberelation": {
+          "explanation": "A historical Würzburg medical qualifying examination (probationary report/oral exam) functioning roughly as a state medical exam before admission to practice or academic advancement."
         },
-        "pathological anatomy": {
-          "explanation": "A discipline that studies disease by examining organs and tissues and relating those findings to clinical symptoms.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pathology"
+        "habilitation": {
+          "explanation": "A postdoctoral university qualification in German-speaking Europe that certifies the ability to teach independently (venia legendi) and is traditionally required for a lectureship/professorship track.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
         }
-      },
-      "involved_people": [
-        "Lorenz Oken"
-      ]
+      }
     },
     {
-      "date": "1819",
+      "date": "1817",
       "date_precision": "year",
-      "age": 25,
-      "title": "Rises in Würzburg’s medical clinic",
-      "description": "In 1819, Schönlein was appointed an associate professor (außerordentlicher Professor) for internal medicine and special therapy in Würzburg. The appointment did not simply reward teaching talent—it gave him leverage inside the clinic. He initially held clinical instruction as deputy for the ill senior clinician Nicolaus Anton Friedreich and was entrusted with provisional leadership of the Juliusspital medical clinic, which the biography describes as having around 200 beds.\n\nThese were the years in which his “bedside discipline” became a recognizable school. Instead of treating the ward as a place where students merely watched, he treated it as the core classroom: observe, compare cases, test diagnostic guesses against physical signs, and push students to justify claims with what could be demonstrated. In the process he drew in a cohort of pupils who would later carry variations of his method across German-speaking medicine.",
-      "locations": [
-        {
-          "name_historic": "Würzburg",
-          "name_modern": "Würzburg, Germany",
-          "centroid": [
-            9.9434769,
-            49.7780356
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
-      ],
-      "event_type_icon": "mdi-teach",
-      "chapter": "lectern_to_bedside",
-      "annotations": {
-        "internal medicine": {
-          "explanation": "A medical specialty focused on diagnosing and treating diseases of adults, emphasizing comprehensive, non-surgical care across organ systems.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Internal_medicine"
-        }
-      },
-      "involved_people": [
-        "Nicolaus Anton Friedreich"
-      ]
-    },
-    {
-      "date": "1826-06-21",
-      "date_precision": "day",
-      "date_end": "1832",
-      "date_end_precision": "year",
-      "age": 32,
-      "title": "Takes over the Juliusspital clinic",
-      "description": "On 21 June 1826, Schönlein became head of the medical clinic and associated clinical institutions at the Juliusspital in Würzburg. The role formalized what he had already been building for years: a clinic where teaching was not an afterthought but a method performed in front of patients, case by case.\n\nHe also served as dean of the medical faculty in 1826/27. From this position he pushed a model of training in which students were expected to learn diagnostic discipline at the bedside and to connect clinical pictures to pathological findings. The Juliusspital years became the prototype of a “clinical school” associated with his name—an influence that followed him even when politics later forced him out of Würzburg.",
+      "age": 23,
+      "title": "Lectures in Juliusspital pavilion",
+      "description": "In 1817, Schönlein began teaching pathological anatomy at Würzburg as a [[Privatdozent|Privatdozent]], giving his instruction in a garden pavilion of the Juliusspital and linking his lessons to the hospital’s long-established anatomical and surgical demonstrations.",
       "locations": [
         {
           "name_historic": "Würzburg",
@@ -312,35 +293,127 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Juliusspital-Wuerzburg.jpg/960px-Juliusspital-Wuerzburg.jpg",
-          "caption": "Juliusspital an der Juliuspromenade in Würzburg",
-          "source": "https://commons.wikimedia.org/wiki/File:Juliusspital-Wuerzburg.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/W%C3%BCrzburg%2C_Juliusspital%2C_Gartenpavillon%2C_8.jpeg/960px-W%C3%BCrzburg%2C_Juliusspital%2C_Gartenpavillon%2C_8.jpeg",
+          "caption": "Garden pavilion of the Juliusspital, Würzburg",
+          "source": "https://commons.wikimedia.org/wiki/File:Würzburg,_Juliusspital,_Gartenpavillon,_8.jpeg"
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "juliusspital_laboratory",
+      "event_type_icon": "mdi-teach",
+      "chapter": "juliusspital_bedside_revolution",
       "annotations": {
-        "Juliusspital": {
-          "explanation": "A major Würzburg charitable foundation (founded in 1576) that operated a hospital and supported medical care and training, closely connected with the city’s medical institutions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Juliusspital"
+        "Privatdozent": {
+          "explanation": "A German academic title for an independent university lecturer who has the right to teach (venia legendi) but is typically unpaid by the university and supported by student fees.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
         }
-      },
-      "involved_people": [
-        "Nicolaus Anton Friedreich",
-        "Joseph Oegg"
-      ]
+      }
     },
     {
-      "date": "1832-10",
-      "date_precision": "month",
-      "date_note": "The dismissal is described as occurring in autumn 1832 amid political repression after the Hambach Festival",
-      "age": 38,
-      "title": "Dismissed and driven into Zurich exile",
-      "description": "In the autumn of 1832, amid political repression described in his biography as a Demagogenverfolgung following the Hambach Festival, Schönlein was stripped of his academic offices in Würzburg. He was pressured to accept a government-directed administrative medical post, but instead refused the assigned position and fled Bavaria.\n\nThe flight was more than a change of address. It severed him from the clinic where his teaching method had taken institutional form and forced him to rebuild his work on different ground. Yet the same rupture also pushed his career onto an international path, turning a local Würzburg school into a reputation that could travel.",
+      "date": "1819",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Takes over clinical teaching",
+      "description": "In 1819, in [[Würzburg|Würzburg]], Schönlein was appointed associate professor for internal medicine (special therapy) and was entrusted with clinical teaching in place of the ill Nicolaus Anton Friedreich. He also assumed provisional leadership of the [[Juliusspital|Juliusspital]] medical clinic, overseeing a large ward service while continuing bedside instruction.",
       "locations": [
         {
           "name_historic": "Würzburg",
           "name_modern": "Würzburg, Bavaria, Germany",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Nicolaus Anton Friedreich"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Juliusspital"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Würzburg": {
+          "explanation": "A university and episcopal city in Franconia (Bavaria) where Schönlein worked at the University of Würzburg and its associated clinics.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/W%C3%BCrzburg"
+        },
+        "Juliusspital": {
+          "explanation": "A major charitable hospital and foundation in Würzburg that included a teaching hospital/medical clinic used for clinical instruction.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Juliusspital"
+        }
+      }
+    },
+    {
+      "date": "1824",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Promoted to full professor",
+      "description": "In 1824, Schönlein was appointed full professor of special pathology and therapy in Würzburg, expanding his teaching to include sustained supervision of clinical students in the hospital setting.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bavaria, Germany",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "juliusspital_bedside_revolution"
+    },
+    {
+      "date": "1826-06-21",
+      "date_precision": "day",
+      "age": 32,
+      "title": "Leads Juliusspital medical clinic",
+      "description": "On 21 June 1826, as senior staff departed, Schönlein was appointed head of the medical clinic and the medical-clinical institutions at the [[Juliusspital|Juliusspital]] in Würzburg. There he emphasized systematic bedside teaching, with growing reliance on physical examination and clinic-based observation, and he also served as dean of the university’s medical faculty in 1826–1827.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bavaria, Germany",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Juliusspital"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Juliusspital-Wuerzburg.jpg/960px-Juliusspital-Wuerzburg.jpg",
+          "caption": "Juliusspital in Würzburg (Juliuspromenade)",
+          "source": "https://commons.wikimedia.org/wiki/File:Juliusspital-Wuerzburg.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Juliusspital": {
+          "explanation": "A historic hospital and charitable foundation in Würzburg (founded in the 16th century) that operated major clinical and teaching facilities connected with local medical training.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Juliusspital"
+        }
+      }
+    },
+    {
+      "date": "1832",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Dismissed and flees Würzburg",
+      "description": "In the political crackdown after the [[Hambach Festival|Hambach Festival]], Schönlein was removed from his academic posts in Würzburg amid investigations of suspected “demagogues.” Under pressure from Bavarian authorities, he left rather than accept an assigned state medical post in Passau.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Germany",
           "centroid": [
             9.9434769,
             49.7780356
@@ -355,33 +428,46 @@
             47.3744489
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Passau",
+          "name_modern": "Passau, Germany",
+          "centroid": [
+            13.4609744,
+            48.5748229
+          ],
+          "primary": false
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Hambach_Festival"
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "exile_to_zurich",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Hambach Festival": {
+          "explanation": "A large 1832 pro-democracy and German-national demonstration at Hambach Castle that triggered intensified repression by several German states, including Bavaria.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hambach_Festival"
+        }
+      },
       "event_class": {
         "type": "migration",
-        "from_location": "Bavaria",
-        "to_location": "Zürich",
+        "from_location": "Bavaria (Würzburg)",
+        "to_location": "Switzerland (Zürich)",
         "characterization": "political exile"
-      },
-      "involved_people": [
-        "Wilhelm Joseph Behr"
-      ]
+      }
     },
     {
       "date": "1833",
       "date_precision": "year",
       "age": 39,
-      "title": "Builds Zurich’s new clinical teaching",
-      "description": "In 1833, Schönlein accepted a call as professor of clinical medicine at the newly founded University of Zurich and became head of the associated hospital. The move gave him what exile had taken away: a fresh institutional canvas. In Zurich he helped shape clinical teaching around real patients, daily observation, and methodical comparison of cases—training students in the habit of treating diagnosis as something earned rather than assumed.\n\nThe Zurich years also widened his visibility beyond academic medicine. His biography notes that prominent figures appeared among his patients, and a new cohort of students gathered around his clinical style. By the time Berlin came calling, Schönlein had turned forced flight into a platform: the clinic as classroom, rebuilt in a new city and noticed across Europe.",
+      "title": "Appointed in Zürich",
+      "description": "In 1833, Schönlein accepted a call to the newly founded [[University of Zürich|University of Zürich]] as professor of clinical medicine and director of the associated hospital. Alongside teaching, he also helped plan the new cantonal hospital and took on faculty duties, including serving as dean.",
       "locations": [
         {
           "name_historic": "Zürich",
-          "name_modern": "Zürich, Switzerland",
+          "name_modern": "Zurich, Switzerland",
           "centroid": [
             8.5410422,
             47.3744489
@@ -396,82 +482,32 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Z%C3%BCrich_Switzerland-University-of-Zurich-Main-Building-01.jpg/960px-Z%C3%BCrich_Switzerland-University-of-Zurich-Main-Building-01.jpg",
-          "caption": "University of Zurich (Main Building)",
+          "caption": "University of Zurich main building",
           "source": "https://commons.wikimedia.org/wiki/File:Zürich_Switzerland-University-of-Zurich-Main-Building-01.jpg"
         }
       ],
       "event_type_icon": "mdi-teach",
-      "chapter": "exile_to_zurich",
-      "involved_people": [
-        "Georg Büchner",
-        "Napoleon III",
-        "Wilhelm Griesinger",
-        "Hermann Lebert"
-      ]
+      "chapter": "zurich_exile_clinic",
+      "annotations": {
+        "University of Zürich": {
+          "explanation": "Swiss public university founded in 1833 by the canton of Zürich, among the first European universities created by a democratic state rather than a monarch or church authority.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Zurich"
+        }
+      }
     },
     {
       "date": "1837",
       "date_precision": "year",
       "age": 43,
-      "title": "Defines peliosis rheumatica (purpura)",
-      "description": "In 1837, during his Zurich period, Schönlein published an account of “Peliosis rheumatica,” describing a recurring pattern of symptoms that helped distinguish one disease picture from another. In later medical tradition, this clinical description became part of the pathway to what is now known as Henoch–Schönlein purpura (IgA vasculitis).\n\nThe lasting importance was less the name than the approach: Schönlein treated syndromes as things that could be recognized reliably when physicians were trained to observe consistently. For students learning his method, the lesson was that clinical medicine could move forward by carefully identifying patterns at the bedside and insisting that diagnoses correspond to repeatable findings.",
+      "title": "Identifies favus fungus",
+      "description": "In 1837, Schönlein reported that [[favus|favus (Erbgrind)]] was associated with a specific pathogenic skin fungus, later referred to as Achorion schoenleinii (now Trichophyton schoenleinii), reflecting his emphasis on identifying distinct disease entities with material causes in clinical practice.",
       "locations": [
         {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Germany",
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
-        "https://en.wikipedia.org/wiki/Henoch%E2%80%93Sch%C3%B6nlein_purpura"
-      ],
-      "event_type_icon": "mdi-book",
-      "chapter": "berlin_masterclass",
-      "annotations": {
-        "peliosis rheumatica": {
-          "explanation": "A historical Latin clinical term used in the 19th century for a purpura-like syndrome; it is linked in medical history to what is now called IgA vasculitis (Henoch–Schönlein purpura).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Henoch%E2%80%93Sch%C3%B6nlein_purpura"
-        }
-      },
-      "event_class": {
-        "type": "publication",
-        "title": "Peliosis rheumatica (Purpura rheumatica) description",
-        "publication_type": "paper",
-        "significance": "clinical description",
-        "impact": "His characterization helped establish a recognizable clinical syndrome and reinforced his influence on disease classification in internal medicine."
-      },
-      "location_coordinates": [
-        {
-          "label": "Zürich",
-          "name": "Zürich, Switzerland",
-          "primary": true,
+          "name_historic": "Zürich",
+          "name_modern": "Zurich, Switzerland",
           "centroid": [
             8.5410422,
             47.3744489
-          ],
-          "source": "https://en.wikipedia.org/wiki/Z%C3%BCrich"
-        }
-      ]
-    },
-    {
-      "date": "1839",
-      "date_precision": "year",
-      "age": 45,
-      "title": "Links favus to a fungal pathogen",
-      "description": "In 1839, Schönlein reported that [[favus]]—a chronic, scarring scalp infection—was associated with a specific fungus. The organism was later known as [[Trichophyton schoenleinii|Trichophyton schoenleinii]] (historically also described under the name Achorion schoenleinii). For nineteenth-century medicine, the claim mattered because it treated a stubborn disease not as a vague imbalance but as something with a concrete, observable cause.\n\nThis kind of etiological argument fit Schönlein’s broader reform: teach clinicians to look closely, describe what they see, and connect clinical appearances to demonstrable findings. Long before bacteriology became a dominant framework, the favus work offered a persuasive example of how bedside medicine could be strengthened by identifying specific agents rather than relying on speculation.",
-      "locations": [
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Germany",
-          "centroid": [
-            13.3951309,
-            52.5173885
           ],
           "primary": true
         }
@@ -483,39 +519,26 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Microscope_view_of_a_Trichophyton_genus_fungus_01.jpg/960px-Microscope_view_of_a_Trichophyton_genus_fungus_01.jpg",
-          "caption": "Microscope view of a Trichophyton genus fungus",
-          "source": "https://commons.wikimedia.org/wiki/File:Microscope_view_of_a_Trichophyton_genus_fungus_01.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/An_American_text-book_of_the_diseases_of_children_%281895%29_%2814595747510%29.jpg/960px-An_American_text-book_of_the_diseases_of_children_%281895%29_%2814595747510%29.jpg",
+          "caption": "Trichophyton schoenleinii infecting a hair follicle (book illustration)",
+          "source": "https://commons.wikimedia.org/wiki/File:An_American_text-book_of_the_diseases_of_children_(1895)_(14595747510).jpg"
         }
       ],
-      "event_type_icon": "mdi-book",
-      "chapter": "berlin_masterclass",
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "zurich_exile_clinic",
       "annotations": {
         "favus": {
-          "explanation": "A chronic fungal infection (classically of the scalp) that can cause thick crusting and scarring hair loss.",
+          "explanation": "A chronic fungal infection of the scalp and skin (a type of tinea) that characteristically forms yellow, cup-shaped crusts called scutula and can lead to hair loss.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Favus"
-        },
-        "Trichophyton schoenleinii": {
-          "explanation": "A dermatophyte fungus historically linked to favus; its species name commemorates Schönlein.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Trichophyton_schoenleinii"
         }
-      },
-      "event_class": {
-        "type": "publication",
-        "title": "Report on Achorion schoenleinii (favus pathogen)",
-        "publication_type": "paper",
-        "significance": "etiological finding",
-        "impact": "The work provided an early model for linking a specific organism to a specific disease, anticipating later medical microbiology."
       }
     },
     {
       "date": "1839",
       "date_precision": "year",
-      "date_end": "1840",
-      "date_end_precision": "year",
       "age": 45,
-      "title": "Called to Berlin’s Charité clinic",
-      "description": "In 1839, Schönlein accepted a call to the University of Berlin and began work connected with the Charité, Berlin’s major teaching hospital. The move placed his bedside-centered method in one of Europe’s most visible academic settings and expanded his influence beyond the Zurich rebuild.\n\nIn Berlin, his clinical teaching and diagnostic discipline shaped students and younger physicians who would later become leaders in nineteenth-century medicine. The Charité setting also meant that his work operated at the intersection of university instruction, hospital practice, and elite private medicine—an environment where clinical authority could quickly become social and political authority as well.",
+      "title": "Moves to Berlin",
+      "description": "In 1839, following a call to the [[University of Berlin|University of Berlin]], Schönlein relocated to take up clinical and teaching duties in the Prussian capital, working at the [[Charité|Charité]] while continuing a private medical practice.",
       "locations": [
         {
           "name_historic": "Zürich",
@@ -536,49 +559,80 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Rudolf Virchow",
-        "Robert Remak"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
-        "https://de.wikipedia.org/wiki/Rudolf_Virchow",
-        "https://de.wikipedia.org/wiki/Ludwig_Traube_(Mediziner)"
+        "https://en.wikipedia.org/wiki/Charit%C3%A9"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/20240815_Campus_Charit%C3%A9_Mitte.jpg/960px-20240815_Campus_Charit%C3%A9_Mitte.jpg",
-          "caption": "Campus Charité Mitte, Berlin",
+          "caption": "Campus Charité Mitte (view across the Humboldthafen)",
           "source": "https://commons.wikimedia.org/wiki/File:20240815_Campus_Charité_Mitte.jpg"
         }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "berlin_masterclass",
+      "chapter": "prussian_court_physician",
       "annotations": {
         "University of Berlin": {
-          "explanation": "The historic name of today’s Humboldt University of Berlin, a leading Prussian university that became a major center of medical training and research in the 19th century.",
+          "explanation": "The Prussian state university in Berlin (today Humboldt University of Berlin), a leading center of German research and medical teaching in the 19th century.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Humboldt_University_of_Berlin"
         },
         "Charité": {
-          "explanation": "Berlin’s main teaching hospital (Charité – Universitätsmedizin Berlin), which developed into one of Europe’s most influential centers for clinical medicine.",
+          "explanation": "Berlin’s major teaching hospital, closely linked to the University of Berlin and one of Europe’s most influential medical institutions.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Charit%C3%A9"
         }
       },
       "event_class": {
         "type": "migration",
-        "from_location": "Zürich",
-        "to_location": "Berlin",
+        "from_location": "Switzerland (Zürich)",
+        "to_location": "Prussia (Berlin)",
         "characterization": "career appointment"
+      }
+    },
+    {
+      "date": "1839",
+      "date_precision": "year",
+      "date_note": "Year of publication given in the source; the exact title is not specified there",
+      "age": 45,
+      "title": "Publishes on skin fungus",
+      "description": "In 1839, while working in [[Berlin|Berlin]], Schönlein issued a report based on his hospital experience and microscopy, helping to frame a fungal agent as central to a defined skin disorder.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Favus"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "prussian_court_physician",
+      "annotations": {
+        "Berlin": {
+          "explanation": "In the late 1830s Schönlein was based in Berlin as a professor of medicine and director at the Charité, which provided clinical material for his medical publications.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Berlin"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Publication on the favus fungus (Achorion schoenleinii)",
+        "publication_type": "paper",
+        "significance": "clinical mycology",
+        "impact": "The work documented a specific fungal agent in a defined skin disease and circulated his findings to the medical community."
       }
     },
     {
       "date": "1842",
       "date_precision": "year",
-      "date_end": "1844",
-      "date_end_precision": "year",
       "age": 48,
-      "title": "Becomes physician to Friedrich Wilhelm IV",
-      "description": "In 1842, Schönlein was appointed personal physician (Leibarzt) to King Friedrich Wilhelm IV, formalizing his position within Berlin’s highest medical and political circles. The appointment made his clinical authority visible not only to students and colleagues but also to the Prussian court, where medical access could translate into extraordinary professional standing.\n\nAround this period he also received major professional recognition, including election to the Leopoldina. Together, these honors reflected how far his bedside method had carried him: from a Würzburg teacher building a clinic as a classroom to a figure whose name signaled clinical prestige across German-speaking Europe.",
+      "title": "Becomes royal physician",
+      "description": "In 1842, Schönlein was appointed personal physician (a [[Leibarzt|Leibarzt]]) to King Friedrich Wilhelm IV of Prussia, a role that brought him into regular contact with the Prussian court while he continued his clinical and teaching work in Berlin.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -597,22 +651,100 @@
         "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
         "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_IV."
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Friedrich_Wilhelm_IV_of_Prussia_%281847%29.jpg",
+          "caption": "Photograph of Friedrich Wilhelm IV of Prussia (1847)",
+          "source": "https://commons.wikimedia.org/wiki/File:Friedrich_Wilhelm_IV_of_Prussia_(1847).jpg"
+        }
+      ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "berlin_masterclass",
+      "chapter": "prussian_court_physician",
       "annotations": {
-        "Leopoldina": {
-          "explanation": "The German National Academy of Sciences (founded 1652), one of Europe’s oldest continuous scientific academies; election signified high scientific prestige.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/German_National_Academy_of_Sciences_Leopoldina"
+        "Leibarzt": {
+          "explanation": "A German court title meaning the sovereign’s personal physician (literally “body physician”), typically attached to royal household service.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Leibarzt"
         }
       }
     },
     {
+      "date": "1844",
+      "date_precision": "year",
+      "age": 50,
+      "title": "Elected to Leopoldina",
+      "description": "In 1844, during his Berlin period, Schönlein was elected to the [[Leopoldina|Leopoldina]], reflecting his growing recognition within German scientific and medical circles.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/German_Academy_of_Sciences_Leopoldina"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/2017-01-28_Leopoldina_Halle_a.d.Saale.jpg/960px-2017-01-28_Leopoldina_Halle_a.d.Saale.jpg",
+          "caption": "Main building of the Leopoldina in Halle (Saale)",
+          "source": "https://commons.wikimedia.org/wiki/File:2017-01-28_Leopoldina_Halle_a.d.Saale.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-star",
+      "chapter": "prussian_court_physician",
+      "annotations": {
+        "Leopoldina": {
+          "explanation": "The German National Academy of Sciences (founded in 1652), one of the oldest continuously existing scientific academies in the world; election was a significant scholarly honor.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Academy_of_Sciences_Leopoldina"
+        }
+      }
+    },
+    {
+      "date": "1856",
+      "date_precision": "year",
+      "age": 62,
+      "title": "Son dies on expedition",
+      "description": "In 1856, Schönlein’s son Philipp Schönlein (born 1834) died during a research journey to Cape Palmas in West Africa (present-day Liberia), a loss that reached the family while Johann Lukas Schönlein was living and working in Berlin.",
+      "locations": [
+        {
+          "name_historic": "Cape Palmas",
+          "name_modern": "Cape Palmas, Liberia",
+          "centroid": [
+            -7.7285881,
+            4.3653077
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Philipp Schönlein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "prussian_court_physician"
+    },
+    {
       "date": "1859",
       "date_precision": "year",
-      "date_note": "His retirement followed the king’s abdication and coincided with worsening health problems",
       "age": 65,
-      "title": "Retires and returns home to Bamberg",
-      "description": "In 1859, suffering from chronic illness and amid changing circumstances at the Prussian court, Schönlein retired from his Berlin posts and returned to Bamberg. By this time the court world that had elevated him was also shifting as Friedrich Wilhelm IV’s health failed and political influence moved to others.\n\nBack in his native city he turned away from public clinical leadership and devoted himself largely to private scholarly work and to his collections. The return did not erase the decades of institutional power he had held in Würzburg, Zurich, and Berlin—but it changed the tempo of his life from daily teaching and patients to memory, books, and legacy.",
+      "title": "Retires and returns home",
+      "description": "After years of illness marked by an enlarged thyroid, he retired from his post following the abdication of [[Frederick William IV|the king]] and devoted himself to private life, spending much of his time arranging and working with his extensive collections.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -625,7 +757,7 @@
         },
         {
           "name_historic": "Bamberg",
-          "name_modern": "Bamberg, Bavaria, Germany",
+          "name_modern": "Bamberg, Germany",
           "centroid": [
             10.8868478,
             49.8916044
@@ -633,32 +765,34 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Frederick William IV of Prussia"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
-        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_IV."
+        "https://en.wikipedia.org/wiki/Frederick_William_IV_of_Prussia"
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "final_homecoming",
+      "chapter": "quiet_legacy_in_bamberg",
       "annotations": {
-        "Prussian court": {
-          "explanation": "The royal household and political circle around the King of Prussia, where shifts in influence and appointments could affect senior state positions in Berlin.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Kingdom_of_Prussia"
+        "Frederick William IV": {
+          "explanation": "King of Prussia (reigned 1840–1861); his 1858–1859 incapacity and ensuing regency/abdication ended Schönlein’s court-physician role in Berlin.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Frederick_William_IV_of_Prussia"
         }
       },
       "event_class": {
         "type": "migration",
-        "from_location": "Berlin",
-        "to_location": "Bamberg",
-        "characterization": "retirement"
+        "from_location": "Prussia (Berlin)",
+        "to_location": "Bavaria (Bamberg)",
+        "characterization": "retirement return"
       }
     },
     {
       "date": "1862",
       "date_precision": "year",
-      "date_note": "occurring two years before his death",
       "age": 68,
-      "title": "Donated medical history library",
-      "description": "Two years before his death, he donated his massive medical-history and epidemic-history book collection known as the “[[Schönleiniana|Schönleiniana]]” to the University of Würzburg. The gift reflected his sustained commitment to medical historiography and the documentary foundations of clinical knowledge, and it reinforced his long-standing ties to Würzburg despite his forced departure decades earlier.",
+      "title": "Donates major library collection",
+      "description": "In 1862, Schönlein donated his large epidemiological and medical-historical book collection, known as the \"[[Schönleiniana|Schönleiniana]]\", to the University of Würzburg; he also directed another substantial part of his seuchenhistorical holdings to the royal library in Bamberg, which he had used since his school days.",
       "locations": [
         {
           "name_historic": "Würzburg",
@@ -668,16 +802,25 @@
             49.7780356
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Germany",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
         }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
       ],
       "event_type_icon": "mdi-hand-coin",
-      "chapter": "final_homecoming",
+      "chapter": "quiet_legacy_in_bamberg",
       "annotations": {
         "Schönleiniana": {
-          "explanation": "The name given to Johann Lukas Schönlein’s large personal library/collection of medical and epidemic-history works, which he later donated to the University of Würzburg.",
+          "explanation": "Name used for Johann Lukas Schönlein’s personal library/collection of medical and epidemiological works that he donated to the University of Würzburg in 1862.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
         }
       }
@@ -686,8 +829,8 @@
       "date": "1864-01-23",
       "date_precision": "day",
       "age": 70,
-      "title": "Dies in Bamberg, leaving a method behind",
-      "description": "Schönlein died in Bamberg on 23 January 1864 after years of declining health. His death closed a career that helped reshape German clinical training by insisting that students learn from patients directly, cultivate disciplined physical diagnosis, and connect clinical observation to pathological evidence.\n\nBy the end of his life he was widely regarded as a central figure in the transition toward a more scientifically oriented medicine in German-speaking Europe. The most durable part of his legacy was not a single book or discovery, but a style of clinical thinking that his students carried forward into the next generation.",
+      "title": "Death in Bamberg",
+      "description": "Schönlein died on 23 January 1864 in Bamberg, aged 70, at his villa in the city.",
       "locations": [
         {
           "name_historic": "Bamberg",
@@ -704,13 +847,13 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Grab_Johann_Lukas_Sch%C3%B6nlein.jpg/960px-Grab_Johann_Lukas_Sch%C3%B6nlein.jpg",
-          "caption": "Grave of Johann Lukas Schönlein in Bamberg",
-          "source": "https://commons.wikimedia.org/wiki/File:Grab_Johann_Lukas_Schönlein.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Bamberg%2C_Sch%C3%B6nleinsplatz%2C_Denkmal_f%C3%BCr_Johann_Lukas_von_Sch%C3%B6nlein_20170722_001.jpg/960px-Bamberg%2C_Sch%C3%B6nleinsplatz%2C_Denkmal_f%C3%BCr_Johann_Lukas_von_Sch%C3%B6nlein_20170722_001.jpg",
+          "caption": "Denkmal für Johann Lukas von Schönlein, Schönleinsplatz, Bamberg",
+          "source": "https://commons.wikimedia.org/wiki/File:Bamberg,_Schönleinsplatz,_Denkmal_für_Johann_Lukas_von_Schönlein_20170722_001.jpg"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "final_homecoming"
+      "chapter": "quiet_legacy_in_bamberg"
     }
   ]
 }
