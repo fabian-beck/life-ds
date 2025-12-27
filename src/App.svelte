@@ -4,6 +4,7 @@
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import ExhibitionView from "./components/ExhibitionView.svelte";
+  import MetaStoryView from "./components/MetaStoryView.svelte";
   import { currentLanguage, loadTranslations, _ } from "./stores/language";
   import { queryParams, buildUrlWithParams } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
@@ -110,6 +111,15 @@ import { displayName } from "./utils/helpers.js";
       "../data/people/*/ego_network.json",
       "../data/people/*/de/ego_network.json",
       "../data/people/*/fr/ego_network.json",
+    ],
+    {
+      import: "default",
+    }
+  );
+
+  const metaStoryDetailModules = import.meta.glob(
+    [
+      "../data/meta_stories/*.json",
     ],
     {
       import: "default",
@@ -312,6 +322,23 @@ import { displayName } from "./utils/helpers.js";
     }
   }
 
+  async function loadMetaStoryData(metaStoryId) {
+    const path = `../data/meta_stories/${metaStoryId}.json`;
+    const loader = metaStoryDetailModules[path];
+
+    if (!loader) {
+      console.warn(`Meta story not found: ${metaStoryId}`);
+      return null;
+    }
+
+    try {
+      return await loader();
+    } catch (error) {
+      console.error(`Failed to load meta story ${metaStoryId}:`, error);
+      return null;
+    }
+  }
+
   // Build registry entries directly from registry data (no dataset loading needed)
   $: registryEntries = (() => {
     if (!Array.isArray(registry?.people)) {
@@ -346,14 +373,16 @@ import { displayName } from "./utils/helpers.js";
   $: exhibitionMatch = currentPath.match(
     /^\/(?:([a-z]{2})\/)?exhibition\/([^/]+)/
   );
+  $: metaMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?meta\/([^/]+)/);
   // Also match landing page with language prefix: /en, /de, etc.
   $: landingMatch = currentPath.match(/^\/([a-z]{2})(?:\/|$)/);
-  $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || landingMatch?.[1] || null;
+  $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || metaMatch?.[1] || landingMatch?.[1] || null;
   $: personId = storyMatch
     ? decodeURIComponent(storyMatch[2])
     : exhibitionMatch
       ? decodeURIComponent(exhibitionMatch[2])
       : null;
+  $: metaStoryId = metaMatch ? decodeURIComponent(metaMatch[2]) : null;
   $: slideParam = $queryParams.slide;
 
   // Sync language from URL to store (URL takes precedence for shareable intent)
@@ -378,6 +407,7 @@ import { displayName } from "./utils/helpers.js";
   // Reactive data loading - load when personId OR language changes
   let dataset = null;
   let egoNetwork = null;
+  let metaStoryData = null;
   let dataLoading = false;
   let loadingStage = null; // Track which part is loading: 'initial', 'dataset', 'network', null
 
@@ -413,6 +443,27 @@ import { displayName } from "./utils/helpers.js";
     egoNetwork = null;
     dataLoading = false;
     loadingStage = null;
+  }
+
+  // Reactive meta story loading - load when metaStoryId changes
+  $: if (metaStoryId) {
+    dataLoading = true;
+    metaStoryData = null;
+    dataset = null;
+    egoNetwork = null;
+
+    loadMetaStoryData(metaStoryId)
+      .then((result) => {
+        metaStoryData = result;
+        dataLoading = false;
+      })
+      .catch((error) => {
+        console.error("Failed to load meta story:", error);
+        metaStoryData = null;
+        dataLoading = false;
+      });
+  } else if (!metaStoryId && !personId) {
+    metaStoryData = null;
   }
 
   // Reactive page title: use current person's name if available, else generic.
@@ -467,7 +518,15 @@ import { displayName } from "./utils/helpers.js";
 </script>
 
 <div class="shell">
-  {#if exhibitionMatch}
+  {#if metaMatch}
+    <MetaStoryView
+      {metaStoryData}
+      personsRegistry={registry.people}
+      currentLanguage={$currentLanguage}
+      getStyle={styleFor}
+      isLoading={dataLoading}
+    />
+  {:else if exhibitionMatch}
     <ExhibitionView
       {dataset}
       {egoNetwork}

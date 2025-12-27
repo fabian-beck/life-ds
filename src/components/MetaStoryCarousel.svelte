@@ -8,6 +8,7 @@
   export let getStyle = () => ({});
   export let onSelectPerson = () => {};
   export let onFilterByMetaStory = () => {};
+  export let onExploreMetaStory = () => {};
 
   let currentSlide = 0;
   let autoplayInterval;
@@ -168,17 +169,26 @@
                 <h2 class="slide-title">{metaStory.title}</h2>
                 <p class="slide-tagline">{metaStory.tagline}</p>
                 <div class="slide-meta">
-                  <button
-                    class="person-count"
-                    on:click={() => onFilterByMetaStory(metaStory)}
-                    aria-label={$_("landing.filter_by_meta_story", {
-                      title: metaStory.title,
-                    })}
-                  >
-                    {$_("landing.select_persons", {
-                      count: metaStory.person_count,
-                    })}
-                  </button>
+                  <div class="button-container">
+                    <button
+                      class="person-count"
+                      on:click={() => onFilterByMetaStory(metaStory)}
+                      aria-label={$_("landing.filter_by_meta_story", {
+                        title: metaStory.title,
+                      })}
+                    >
+                      {$_("landing.select_persons", {
+                        count: metaStory.person_count,
+                      })}
+                    </button>
+                    <button
+                      class="explore-story"
+                      on:click={() => onExploreMetaStory(metaStory)}
+                      aria-label={$_("landing.explore_meta_story")}
+                    >
+                      {$_("landing.explore_meta_story")}
+                    </button>
+                  </div>
                   <span class="date-range"
                     >{metaStory.date_range_start}–{metaStory.date_range_end}</span
                   >
@@ -372,6 +382,14 @@
     .slide-content {
       padding: 1rem 3rem 2rem 3rem;
     }
+
+    .button-container {
+      flex-direction: column;
+    }
+
+    .button-container button {
+      width: 100%;
+    }
   }
 
   @media (min-width: 768px) {
@@ -445,6 +463,42 @@
   }
 
   .person-count:active {
+    transform: translateY(0);
+  }
+
+  .button-container {
+    display: flex;
+    gap: 0.75rem;
+    flex-direction: row;
+  }
+
+  .explore-story {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-shadow:
+      0 3px 10px rgba(0, 0, 0, 1),
+      0 2px 6px rgba(0, 0, 0, 1),
+      0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  .explore-story:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .explore-story:active {
     transform: translateY(0);
   }
 

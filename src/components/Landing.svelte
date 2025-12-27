@@ -268,6 +268,11 @@
     activeTags = new Set();
   }
 
+  function handleExploreMetaStory(metaStory) {
+    // Navigate to meta story view
+    push(`/${$currentLanguage}/meta/${metaStory.id}`);
+  }
+
   function summaryFor(entry) {
     return entry?.summary ?? getSummary(entry);
   }
@@ -434,6 +439,7 @@
           getStyle={getStyle}
           onSelectPerson={handleSelect}
           onFilterByMetaStory={handleFilterByMetaStory}
+          onExploreMetaStory={handleExploreMetaStory}
         />
       {/key}
     {/if}
