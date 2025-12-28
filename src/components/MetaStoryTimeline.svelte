@@ -597,10 +597,7 @@
         </div>
 
         {#if activeEventTooltip.event.theme_connection}
-          <div class="tooltip-theme-connection">
-            <div class="tooltip-theme-label">{$_('meta_story.why_included')}</div>
-            <div class="tooltip-theme-text">{activeEventTooltip.event.theme_connection}</div>
-          </div>
+          <p class="tooltip-description">{activeEventTooltip.event.theme_connection}</p>
         {/if}
 
         <button
@@ -1115,58 +1112,10 @@
   }
 
   .tooltip-description {
-    font-size: 0.75rem;
-    line-height: 1.4;
-    color: #cbd5e1;
-    margin: 0 0 0.5rem 0;
-    max-height: 4.2rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
-
-  .tooltip-meta {
-    display: flex;
-    gap: 0.25rem;
-    font-size: 0.7rem;
-    color: #94a3b8;
-    margin-bottom: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.2);
-  }
-
-  .meta-label {
-    font-weight: 500;
-  }
-
-  .meta-value {
-    color: #cbd5e1;
-  }
-
-  .tooltip-theme-connection {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    background: rgba(56, 189, 248, 0.1);
-    border-left: 3px solid rgba(56, 189, 248, 0.6);
-    border-radius: 4px;
-  }
-
-  .tooltip-theme-label {
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #38bdf8;
-    margin-bottom: 0.25rem;
-  }
-
-  .tooltip-theme-text {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     line-height: 1.5;
-    color: rgba(203, 213, 225, 0.9);
-    font-style: italic;
+    color: #cbd5e1;
+    margin: 0.5rem 0 0.75rem 0;
   }
 
   .tooltip-action {
