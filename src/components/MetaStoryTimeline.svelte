@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+
   export let chapters = [];
   export let personsRegistry = [];
   export let onEventClick = () => {};
@@ -256,10 +258,119 @@
     return chaptersRowHeight + yearAxisMarginTop + yearAxisHeight + personsLayerMarginTop + personsLayerHeight + bottomPadding;
   })();
 
+  // Extract events for each person from chapters
+  $: personEventsData = (() => {
+    console.log('[MetaStoryTimeline] Processing person events data');
+    console.log('  chapters:', chapters?.length || 0);
+    console.log('  themesWithPersons:', themesWithPersons?.length || 0);
+
+    if (!chapters || chapters.length === 0 || !themesWithPersons) {
+      console.log('  -> No chapters or themes, returning empty Map');
+      return new Map();
+    }
+
+    const eventsByPerson = new Map();
+
+    chapters.forEach((chapter, chapterIndex) => {
+      console.log(`  Chapter ${chapterIndex}: "${chapter.title}"`);
+      console.log('    person_events:', chapter.person_events?.length || 0);
+
+      if (!chapter.person_events) {
+        console.log('    -> No person_events in this chapter');
+        return;
+      }
+
+      chapter.person_events.forEach((event, eventIndex) => {
+        console.log(`    Event ${eventIndex}:`, {
+          person_id: event.person_id,
+          event_date: event.event_date,
+          event_title: event.event_title,
+          event_index: event.event_index
+        });
+
+        if (!eventsByPerson.has(event.person_id)) {
+          eventsByPerson.set(event.person_id, []);
+        }
+
+        const eventYear = getYear(event.event_date);
+        console.log(`      eventYear: ${eventYear}`);
+
+        if (!eventYear) {
+          console.log('      -> No valid year, skipping');
+          return;
+        }
+
+        const offsetYears = eventYear - timelineBounds.minYear;
+        const leftPx = offsetYears * PIXELS_PER_YEAR;
+
+        console.log(`      offsetYears: ${offsetYears}, leftPx: ${leftPx}`);
+
+        eventsByPerson.get(event.person_id).push({
+          ...event,
+          title: event.event_title,
+          date: event.event_date,
+          year: eventYear,
+          leftPx: leftPx,
+          chapterTitle: chapter.title
+        });
+      });
+    });
+
+    console.log('  Final eventsByPerson Map:', eventsByPerson);
+    console.log('  Total persons with events:', eventsByPerson.size);
+    eventsByPerson.forEach((events, personId) => {
+      console.log(`    ${personId}: ${events.length} events`);
+    });
+
+    return eventsByPerson;
+  })();
+
+  // Tooltip state management
+  let activeEventTooltip = null; // { personId, eventIndex, event, x, y }
+  let tooltipElement = null; // DOM reference for positioning
+
+  function showEventTooltip(personId, eventIndex, event, clickEvent) {
+    const rect = clickEvent.target.getBoundingClientRect();
+    activeEventTooltip = {
+      personId,
+      eventIndex,
+      event,
+      x: rect.left + rect.width / 2,
+      y: rect.top
+    };
+  }
+
+  function hideEventTooltip() {
+    activeEventTooltip = null;
+  }
+
+  function handleEventClick(personId, event) {
+    // Navigate to the specific event in the person's story
+    // Use event_index from the meta story data which references the actual event index in life_events.json
+    const targetIndex = event.event_index !== undefined ? event.event_index : 0;
+    console.log(`[Navigate] Going to /story/${personId}/${targetIndex}`);
+    window.location.hash = `/story/${personId}/${targetIndex}`;
+  }
+
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
     window.location.hash = `/story/${personId}`;
   }
+
+  // Click-outside handler to close tooltip
+  onMount(() => {
+    function handleClickOutside(event) {
+      if (activeEventTooltip && tooltipElement && !tooltipElement.contains(event.target)) {
+        hideEventTooltip();
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  });
 </script>
 
 <div class="meta-timeline-container">
@@ -330,6 +441,43 @@
               <span class="person-birth">{personData.birthYear}</span>
               <span class="person-death">{personData.deathYear || '...'}</span>
             </div>
+
+            <!-- Event markers -->
+            {#if personEventsData.has(personData.personId)}
+              {@const events = personEventsData.get(personData.personId)}
+              {@const _ = console.log(`[Render] Person ${personData.personId} has ${events.length} events`)}
+              {#each events as event, eventIndex}
+                {@const relativeLeftPx = event.leftPx - personData.leftPx}
+                {@const __ = console.log(`  Rendering event marker ${eventIndex}: ${event.title}`, {
+                  eventYear: event.year,
+                  personBirth: personData.birthYear,
+                  absoluteLeftPx: event.leftPx,
+                  personLeftPx: personData.leftPx,
+                  relativeLeftPx: relativeLeftPx
+                })}
+                <div
+                  class="event-marker"
+                  style="left: {relativeLeftPx}px;"
+                  on:click={(e) => {
+                    e.stopPropagation();
+                    showEventTooltip(personData.personId, eventIndex, event, e);
+                  }}
+                  on:keydown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.stopPropagation();
+                      showEventTooltip(personData.personId, eventIndex, event, e);
+                    }
+                  }}
+                  role="button"
+                  tabindex="0"
+                  aria-label="{event.title} ({event.year})"
+                >
+                  <div class="event-dot"></div>
+                </div>
+              {/each}
+            {:else}
+              {@const ___ = console.log(`[Render] Person ${personData.personId} has NO events in personEventsData`)}
+            {/if}
           </div>
         {/each}
       {/each}
@@ -341,6 +489,34 @@
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
     </div>
+
+    <!-- Event tooltip -->
+    {#if activeEventTooltip}
+      <div
+        class="event-tooltip"
+        bind:this={tooltipElement}
+        style="left: {activeEventTooltip.x}px; top: {activeEventTooltip.y}px;"
+        on:click={(e) => e.stopPropagation()}
+        on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
+        role="dialog"
+        aria-label="Event details"
+      >
+        <div class="tooltip-header">
+          <h4 class="tooltip-title">{activeEventTooltip.event.title}</h4>
+          <span class="tooltip-year">{activeEventTooltip.event.year}</span>
+        </div>
+
+        <button
+          class="tooltip-action"
+          on:click={() => handleEventClick(
+            activeEventTooltip.personId,
+            activeEventTooltip.event
+          )}
+        >
+          Jump to Event →
+        </button>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -702,5 +878,157 @@
     .theme-title {
       font-size: 0.95rem;
     }
+  }
+
+  /* Event markers */
+  .event-marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.2s;
+  }
+
+  .event-marker:hover {
+    z-index: 30;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+
+  .event-marker:focus-visible {
+    outline: 2px solid rgba(56, 189, 248, 1);
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  .event-dot {
+    width: 14px;
+    height: 14px;
+    background: rgba(56, 189, 248, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .event-marker:hover .event-dot {
+    background: rgba(56, 189, 248, 1);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.6);
+  }
+
+  /* Event tooltip - matches PersonChip styling */
+  .event-tooltip {
+    position: fixed;
+    min-width: 240px;
+    max-width: min(320px, 90vw);
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+    transform: translate(-50%, calc(-100% - 12px));
+    animation: fadeInTooltip 0.2s ease;
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+  }
+
+  @keyframes fadeInTooltip {
+    from {
+      opacity: 0;
+      transform: translate(-50%, calc(-100% - 8px));
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, calc(-100% - 12px));
+    }
+  }
+
+  .tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tooltip-title {
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #38bdf8;
+    margin: 0;
+    line-height: 1.2;
+    flex: 1;
+  }
+
+  .tooltip-year {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .tooltip-description {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: #cbd5e1;
+    margin: 0 0 0.5rem 0;
+    max-height: 4.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .tooltip-meta {
+    display: flex;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .meta-label {
+    font-weight: 500;
+  }
+
+  .meta-value {
+    color: #cbd5e1;
+  }
+
+  .tooltip-action {
+    width: 100%;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+  }
+
+  .tooltip-action:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+  }
+
+  .tooltip-action:active {
+    transform: translateY(0);
   }
 </style>
