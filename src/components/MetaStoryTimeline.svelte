@@ -483,20 +483,34 @@
     const containerRect = timelineContainer.getBoundingClientRect();
     const scrollLeft = timelineContainer.scrollLeft;
 
-    // Calculate screen position
-    const screenX = containerRect.left + eventLeftPx - scrollLeft + 40; // +40 for margin-left
-    const screenY = containerRect.top + personTopPx + 60; // Approximate position with offsets
+    // Calculate screen position of the event marker
+    // Add offsets: 40px for timeline-wrapper margin-left, person row height adjustments
+    const screenX = containerRect.left + eventLeftPx - scrollLeft + 40;
+    const screenY = containerRect.top + 60 + 40 + 10 + personTopPx + 15; // chapters-row + year-axis + margin + person position + half person height
 
     const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
     const tooltipWidth = 320;
-    const tooltipHeight = 200;
+    const tooltipHeight = 250; // More accurate estimate with content
 
     let placement = 'top';
     let y = screenY;
 
-    if (screenY < tooltipHeight + 20) {
+    // Check vertical space - prefer top placement
+    if (screenY - tooltipHeight - 20 < 0) {
+      // Not enough space above, place below
       placement = 'bottom';
-      y = screenY + 30;
+      y = screenY + 20; // Add more clearance below marker
+    } else {
+      // Enough space above
+      y = screenY - 10; // Small offset above marker
+    }
+
+    // Check if too close to bottom
+    if (placement === 'bottom' && y + tooltipHeight + 20 > viewportHeight) {
+      // Force top placement if bottom would go off screen
+      placement = 'top';
+      y = screenY - 10;
     }
 
     let adjustedX = screenX;
@@ -651,6 +665,7 @@
                 {@const relativeLeftPx = event.leftPx - personData.leftPx}
                 {@const eventKey = `${personData.personId}-${eventIndex}`}
                 {@const isHoveredByIndicator = hoveredEventsByIndicator.has(eventKey)}
+                {@const isActive = activeEventTooltip && activeEventTooltip.personId === personData.personId && activeEventTooltip.eventIndex === eventIndex}
                 {@const __ = console.log(`  Rendering event marker ${eventIndex}: ${event.title}`, {
                   eventYear: event.year,
                   personBirth: personData.birthYear,
@@ -663,6 +678,7 @@
                   class:essential={event.relevance_strength === 'essential'}
                   class:supporting={event.relevance_strength === 'supporting'}
                   class:indicator-hover={isHoveredByIndicator}
+                  class:active={isActive}
                   style="left: {relativeLeftPx}px;"
                   on:click={(e) => {
                     e.stopPropagation();
@@ -1110,6 +1126,12 @@
     transform: translate(-50%, -50%) scale(1.15);
   }
 
+  /* Active state - event with open tooltip */
+  .event-marker.active {
+    z-index: 40;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+
   .event-marker:focus-visible {
     outline: 2px solid rgba(56, 189, 248, 1);
     outline-offset: 2px;
@@ -1135,6 +1157,32 @@
     background: rgba(var(--person-primary-rgb), 1);
     border-color: rgba(255, 255, 255, 1);
     box-shadow: 0 4px 12px rgba(var(--person-primary-rgb), 0.6);
+  }
+
+  /* Active event marker - distinctive glow and pulsing animation */
+  .event-marker.active .event-dot {
+    background: rgba(var(--person-primary-rgb), 1);
+    border: 3px solid #38bdf8;
+    box-shadow:
+      0 0 0 2px rgba(56, 189, 248, 0.4),
+      0 0 20px rgba(var(--person-primary-rgb), 0.8),
+      0 0 40px rgba(56, 189, 248, 0.4);
+    animation: pulse-active 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-active {
+    0%, 100% {
+      box-shadow:
+        0 0 0 2px rgba(56, 189, 248, 0.4),
+        0 0 20px rgba(var(--person-primary-rgb), 0.8),
+        0 0 40px rgba(56, 189, 248, 0.4);
+    }
+    50% {
+      box-shadow:
+        0 0 0 4px rgba(56, 189, 248, 0.6),
+        0 0 30px rgba(var(--person-primary-rgb), 1),
+        0 0 60px rgba(56, 189, 248, 0.6);
+    }
   }
 
   /* Essential events: larger, more prominent */
