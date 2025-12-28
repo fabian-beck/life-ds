@@ -714,12 +714,20 @@
 
     <!-- Event tooltip -->
     {#if activeEventTooltip}
+      {@const tooltipColors = getPersonColors(activeEventTooltip.personId)}
       <div
         class="event-tooltip"
         class:placement-top={activeEventTooltip.placement === 'top'}
         class:placement-bottom={activeEventTooltip.placement === 'bottom'}
         bind:this={tooltipElement}
-        style="left: {activeEventTooltip.x}px; top: {activeEventTooltip.y}px;"
+        style="
+          left: {activeEventTooltip.x}px;
+          top: {activeEventTooltip.y}px;
+          --tooltip-primary: {tooltipColors.primary};
+          --tooltip-secondary: {tooltipColors.secondary};
+          --tooltip-primary-rgb: {tooltipColors.primaryRgb};
+          --tooltip-secondary-rgb: {tooltipColors.secondaryRgb};
+        "
         on:click={(e) => e.stopPropagation()}
         on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
         role="dialog"
@@ -1206,17 +1214,19 @@
     background: rgba(var(--person-primary-rgb), 0.8);
   }
 
-  /* Event tooltip - matches PersonChip styling */
+  /* Event tooltip - styled with person's colors */
   .event-tooltip {
     position: fixed;
     min-width: 240px;
     max-width: min(320px, 90vw);
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(148, 163, 184, 0.3);
+    border: 2px solid rgba(var(--tooltip-primary-rgb), 0.5);
     border-radius: 0.5rem;
     padding: 0.75rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(var(--tooltip-primary-rgb), 0.2);
     z-index: 10000;
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
   }
@@ -1267,7 +1277,7 @@
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
     font-size: 0.85rem;
     font-weight: 600;
-    color: #38bdf8;
+    color: var(--tooltip-primary);
     margin: 0;
     line-height: 1.2;
     flex: 1;
@@ -1275,9 +1285,12 @@
 
   .tooltip-year {
     font-size: 0.7rem;
-    color: #94a3b8;
+    color: rgba(var(--tooltip-primary-rgb), 0.7);
     font-weight: 500;
     white-space: nowrap;
+    background: rgba(var(--tooltip-primary-rgb), 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
   }
 
   .tooltip-description {
@@ -1285,15 +1298,17 @@
     line-height: 1.5;
     color: #cbd5e1;
     margin: 0.5rem 0 0.75rem 0;
+    border-left: 3px solid rgba(var(--tooltip-secondary-rgb), 0.5);
+    padding-left: 0.5rem;
   }
 
   .tooltip-action {
     width: 100%;
-    background: rgba(56, 189, 248, 0.15);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    background: linear-gradient(135deg, rgba(var(--tooltip-primary-rgb), 0.15), rgba(var(--tooltip-secondary-rgb), 0.15));
+    border: 1px solid rgba(var(--tooltip-primary-rgb), 0.4);
     border-radius: 0.375rem;
     padding: 0.5rem 0.75rem;
-    color: #38bdf8;
+    color: var(--tooltip-primary);
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
@@ -1302,10 +1317,10 @@
   }
 
   .tooltip-action:hover {
-    background: rgba(56, 189, 248, 0.25);
-    border-color: rgba(56, 189, 248, 0.5);
+    background: linear-gradient(135deg, rgba(var(--tooltip-primary-rgb), 0.25), rgba(var(--tooltip-secondary-rgb), 0.25));
+    border-color: rgba(var(--tooltip-primary-rgb), 0.6);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 2px 8px rgba(var(--tooltip-primary-rgb), 0.4);
   }
 
   .tooltip-action:active {
