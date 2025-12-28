@@ -400,10 +400,25 @@
       }
     }
 
+    // Close tooltip on scroll
+    function handleScroll() {
+      if (activeEventTooltip) {
+        hideEventTooltip();
+      }
+    }
+
+    const timelineContainer = document.querySelector('.meta-timeline-container');
+
     document.addEventListener('click', handleClickOutside);
+    if (timelineContainer) {
+      timelineContainer.addEventListener('scroll', handleScroll);
+    }
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
+      if (timelineContainer) {
+        timelineContainer.removeEventListener('scroll', handleScroll);
+      }
     };
   });
 </script>
