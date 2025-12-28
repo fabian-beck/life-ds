@@ -1,13 +1,14 @@
 {
   "dataset": "meta_story",
-  "created_on": "2025-12-27T08:12:57.789500+01:00",
+  "created_on": "2025-12-28T07:53:56.355603+01:00",
   "meta_story": {
     "id": "computing_pioneers",
-    "title": "Architects of Computation",
-    "tagline": "From engines to ethics",
-    "description": "“Computing pioneers” are not one tribe but a relay team: theorists who defined what it means to compute, engineers who made machines obey, software innovators who taught hardware to speak human intentions, and public-facing builders who carried computation from laboratories into everyday life.\n\nThis meta-story follows that relay across nearly two centuries. It begins with a conceptual leap—treating calculation as a programmable process—then accelerates through wartime urgency and early digital architectures, before turning to the quieter revolutions of programming methodology, compiler optimization, and parallelism. Finally, it widens into questions of power: who controls computing as it scales, and who warns about the temptations of treating machines as moral substitutes.\n\nTaken together, these figures show computing as a layered invention: ideas become architectures, architectures become software ecosystems, and ecosystems become social forces that demand criticism as much as celebration.",
+    "title": "Computing Pioneers",
+    "tagline": "From engines to ecosystems",
+    "description": "This collection traces the making of computing as both an idea and an industry—from the first serious attempts to mechanize calculation to the software principles and product ecosystems that made computation ubiquitous.\n\nAcross two centuries, these figures show how “computing” emerged through a constant braid of theory and engineering: abstract models of what a machine could do, wartime pressures that accelerated implementation, and postwar innovations that turned programming from artisanal practice into disciplined craft. The later pioneers push the story outward—into optimizing compilers, human–computer interaction, and the ethical shockwaves of intelligent systems.\n\nRead together, they reveal computing’s defining pattern: each generation inherits constraints (hardware limits, language barriers, social needs) and answers them with new abstractions—algorithms, architectures, compilers, products, and critiques that reshape what society expects machines to be.",
     "person_ids": [
       "ada_lovelace",
+      "charles_babbage",
       "alan_turing",
       "john_von_neumann",
       "konrad_zuse",
@@ -18,34 +19,34 @@
       "heinz_nixdorf",
       "steve_jobs"
     ],
-    "date_range_start": "1815",
+    "date_range_start": "1790",
     "date_range_end": "2020",
-    "lastUpdated": "2025-12-27T08:12:57.789500+01:00"
+    "lastUpdated": "2025-12-28T07:53:56.355603+01:00"
   },
   "subtopics": [
     {
-      "id": "dreams_of_programmability",
-      "title": "Dreams of Programmability",
-      "description": "Before computers were common objects, they were arguments: that a machine could follow symbolic instructions and that “computation” could be defined with precision.",
+      "id": "engines_and_enchantments",
+      "title": "Engines & Imagination",
+      "description": "Before electronics, computing began as a bold claim: calculation could be mechanized—and even programmed. These pioneers framed the machine as a general-purpose symbol manipulator, not just a calculator.",
       "person_ids": [
-        "ada_lovelace",
+        "charles_babbage",
+        "ada_lovelace"
+      ]
+    },
+    {
+      "id": "formal_limits_real_machines",
+      "title": "From Proof to Hardware",
+      "description": "Computation became modern when abstract definitions of what machines can do met concrete architectures that could actually run programs—often under the extreme pressures of war and state investment.",
+      "person_ids": [
         "alan_turing",
-        "john_von_neumann"
+        "john_von_neumann",
+        "konrad_zuse"
       ]
     },
     {
-      "id": "machines_that_ran",
-      "title": "Machines That Ran",
-      "description": "Turning theory into working artifacts required bold engineering—devices that actually executed programs, survived constraints, and proved feasibility in the real world.",
-      "person_ids": [
-        "konrad_zuse",
-        "heinz_nixdorf"
-      ]
-    },
-    {
-      "id": "teaching_machines_to_think_in_code",
-      "title": "Teaching Machines in Code",
-      "description": "Once hardware existed, the bottleneck became human: languages, compilers, and disciplined methods that made software legible, efficient, and trustworthy at scale.",
+      "id": "software_as_engineering",
+      "title": "Software Becomes a Discipline",
+      "description": "As computers spread, the bottleneck shifted to programming. Languages, compilers, and rigorous methods turned code into an engineering medium that could be optimized, shared, and trusted.",
       "person_ids": [
         "grace_hopper",
         "edsger_w_dijkstra",
@@ -53,10 +54,11 @@
       ]
     },
     {
-      "id": "computing_meets_society",
-      "title": "Computing Meets Society",
-      "description": "As computers moved from institutions to everyday life, two complementary roles emerged: the builder of mass adoption and the skeptic who insisted on moral and social limits.",
+      "id": "computing_at_scale_and_in_society",
+      "title": "Platforms, Power, and Doubt",
+      "description": "When computing moved from labs into institutions and everyday life, new pioneers scaled companies and products—while others forced the field to confront the human and moral consequences of its success.",
       "person_ids": [
+        "heinz_nixdorf",
         "steve_jobs",
         "joseph_weizenbaum"
       ]
@@ -64,494 +66,681 @@
   ],
   "chapters": [
     {
-      "id": "mechanical_imagination",
-      "title": "Mechanical Imagination (1815-1899)",
-      "date_start": "1815",
+      "id": "mechanical_blueprints",
+      "title": "Mechanical Blueprints (1790-1871)",
+      "date_start": "1790-01-01",
       "date_start_precision": "year",
-      "date_end": "1899",
+      "date_end": "1871-01-01",
       "date_end_precision": "year",
-      "bridge_statement": "Computation begins as a provocation: what if calculation were a programmable art, not a clerical task?",
+      "bridge_statement": "Long before circuits, computation was a wager against human error—could a machine carry rules faithfully, step after step, without fatigue or bias?",
       "person_events": [
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1822",
+          "event_date_precision": "year",
+          "event_title": "Conceived Difference Engine",
+          "event_index": 7,
+          "theme_connection": "Conceiving the Difference Engine is a seminal “engines & imagination” milestone: a serious attempt to mechanize calculation to eliminate human table-making errors, initiating the modern trajectory toward automated computation.",
+          "relevance_strength": "essential"
+        },
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1823",
+          "event_date_precision": "year",
+          "event_title": "Secured state backing for engine",
+          "event_index": 8,
+          "theme_connection": "Government funding and precision engineering partnership show early state-backed, industrial-scale attempts to build computing machinery—an early instance of moving from concept to hardware implementation.",
+          "relevance_strength": "supporting"
+        },
         {
           "person_id": "ada_lovelace",
           "event_date": "1833-06-05",
           "event_date_precision": "day",
           "event_title": "First meeting with Charles Babbage",
-          "event_index": 5
+          "event_index": 5,
+          "theme_connection": "Her first exposure to Babbage’s Difference Engine connects her to the early mechanical computation movement and sets up the later, more consequential work on the Analytical Engine as a programmable machine.",
+          "relevance_strength": "supporting"
+        },
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1833-06-05",
+          "event_date_precision": "day",
+          "event_title": "Met Ada Lovelace",
+          "event_index": 12,
+          "theme_connection": "The meeting with Ada Lovelace at a demonstration of calculating machinery is a key connective event linking Babbage’s hardware vision to Lovelace’s later articulation of programmability and symbolic computation.",
+          "relevance_strength": "supporting"
+        },
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1837",
+          "event_date_precision": "year",
+          "event_title": "Designed Analytical Engine",
+          "event_index": 13,
+          "theme_connection": "Designing the Analytical Engine is a cornerstone of the computing meta-story: it introduces a general-purpose programmable architecture (control via punched cards, separation of store/mill) anticipating modern computers.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "ada_lovelace",
           "event_date": "1840",
           "event_date_precision": "year",
           "event_title": "Advanced mathematical training",
-          "event_index": 9
+          "event_index": 9,
+          "theme_connection": "Advanced training under De Morgan provided the mathematical foundation that enabled her to articulate and extend the Analytical Engine’s programmable capabilities, supporting the “engines & imagination” subtheme.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "ada_lovelace",
           "event_date": "1842-09",
           "event_date_precision": "month",
           "event_title": "Undertakes Menabrea translation",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "Taking on Menabrea’s translation with the explicit intent to add substantive Notes is the key step that produced her influential exposition of the Analytical Engine as a general-purpose programmable device.",
+          "relevance_strength": "essential"
+        },
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1842",
+          "event_date_precision": "year",
+          "event_title": "Government halted Difference Engine",
+          "event_index": 14,
+          "theme_connection": "The government’s halt highlights the practical constraints (funding, engineering feasibility) that shaped early computing efforts and pushed Babbage toward the more ambitious Analytical Engine vision.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "ada_lovelace",
           "event_date": "1843-08",
           "event_date_precision": "month",
           "event_title": "Publishes Notes on the Analytical Engine",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "Her published Notes (including Note G’s algorithm) are a foundational articulation of programming for a general-purpose machine and of computation beyond arithmetic—central to “engines & imagination” and early software concepts.",
+          "relevance_strength": "essential"
         }
       ]
     },
     {
-      "id": "formal_limits_real_urgency",
-      "title": "Formal Limits, Real Urgency (1900-1945)",
-      "date_start": "1900",
+      "id": "computability_and_war_acceleration",
+      "title": "Computability & War Acceleration (1910-1945)",
+      "date_start": "1910-01-01",
       "date_start_precision": "year",
-      "date_end": "1945",
+      "date_end": "1945-01-01",
       "date_end_precision": "year",
-      "bridge_statement": "Logic tightens into definitions just as war demands machines that can outpace human minds.",
+      "bridge_statement": "Theory sharpened the definition of a “computer,” then war demanded speed—turning abstract models into urgent, working machines.",
       "person_events": [
         {
           "person_id": "konrad_zuse",
           "event_date": "1935",
           "event_date_precision": "year",
           "event_title": "Earned engineering diploma",
-          "event_index": 4
+          "event_index": 4,
+          "theme_connection": "His engineering training and subsequent structural-analysis work exposed him to repetitive manual computation, directly motivating his push to mechanize calculation—an origin point for the “engines & imagination” arc that leads to programmable machines.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1936-05-28",
           "event_date_precision": "day",
           "event_title": "Completed Turing machine paper",
-          "event_index": 6
+          "event_index": 6,
+          "theme_connection": "Defines computation via the Turing machine and proves fundamental limits of algorithmic decision—core to “Engines & Imagination” and the theoretical foundations of modern computing.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "konrad_zuse",
           "event_date": "1936",
           "event_date_precision": "year",
           "event_title": "Builds the Z1 in his parents’ apartment",
-          "event_index": 5
+          "event_index": 5,
+          "theme_connection": "Building the Z1 is a concrete early attempt to realize a programmable calculating machine, embodying the pre-electronic leap from calculation to programmable computation (general-purpose machine thinking).",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1938",
           "event_date_precision": "year",
           "event_title": "Earned Princeton doctorate",
-          "event_index": 7
+          "event_index": 7,
+          "theme_connection": "His Princeton work extends formal logic/computability ideas that fed into theoretical computer science, strengthening the “proof-to-practice” intellectual lineage.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1939-09",
           "event_date_precision": "month",
           "event_title": "Joined Bletchley Park",
-          "event_index": 8
+          "event_index": 8,
+          "theme_connection": "Bletchley Park marks the wartime shift where abstract methods were forced into scalable, operational computation and mechanized cryptanalysis—key to “From Proof to Hardware.”",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1940",
           "event_date_precision": "year",
           "event_title": "Led Hut 8 naval cryptanalysis",
-          "event_index": 9
+          "event_index": 9,
+          "theme_connection": "Leading Hut 8 and accelerating Enigma decryption demonstrates applied algorithmic/engineering work under wartime pressure, illustrating how computation matured through national-scale needs.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "konrad_zuse",
           "event_date": "1940",
           "event_date_precision": "year",
           "event_title": "Demonstrated Z2 prototype",
-          "event_index": 6
+          "event_index": 6,
+          "theme_connection": "The Z2 demonstration shows theory moving toward workable hardware and institutional backing—an important step in turning an inventor’s concept into a fundable engineering project under wartime/state-linked pressures.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "konrad_zuse",
           "event_date": "1941-05-12",
           "event_date_precision": "day",
           "event_title": "Unveils the Z3",
-          "event_index": 7
+          "event_index": 7,
+          "theme_connection": "The Z3 presentation is a landmark in program-controlled digital computing, representing the transition “from proof to hardware” with a functioning freely programmable machine that helped define what a computer could be.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1943",
           "event_date_precision": "year",
           "event_title": "Enters Navy Reserve and WAVES",
-          "event_index": 6
+          "event_index": 6,
+          "theme_connection": "Her entry into WWII naval service is the enabling transition that placed her into wartime computing work—illustrating how military needs accelerated implementation and talent mobilization for early computing.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1944",
           "event_date_precision": "year",
           "event_title": "Programs the Harvard Mark I",
-          "event_index": 7
+          "event_index": 7,
+          "theme_connection": "Programming the Harvard Mark I is a foundational early-software event, showing computation becoming operational in hardware and the emergence of programming practice that later evolves into disciplined software engineering and languages.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1945",
           "event_date_precision": "year",
           "event_title": "Designed the ACE computer",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "The ACE design is a seminal stored-program architecture proposal aimed at practical speed and implementation, directly advancing postwar computer engineering and the hardware-software model.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "john_von_neumann",
           "event_date": "1945-06-30",
           "event_date_precision": "day",
           "event_title": "Shaped stored-program computing",
-          "event_index": 13
+          "event_index": 13,
+          "theme_connection": "The EDVAC “First Draft” crystallized the stored-program concept and spread it through research networks, directly shaping modern computer architecture—central to “From Proof to Hardware.”",
+          "relevance_strength": "essential"
         }
       ]
     },
     {
       "id": "stored_program_world",
-      "title": "The Stored-Program World (1946-1965)",
-      "date_start": "1946",
+      "title": "The Stored-Program World (1946-1959)",
+      "date_start": "1946-01-01",
       "date_start_precision": "year",
-      "date_end": "1965",
+      "date_end": "1959-01-01",
       "date_end_precision": "year",
-      "bridge_statement": "With programs inside memory, computers stop being special-purpose tools and become general engines for any symbolic task.",
+      "bridge_statement": "Once programs could live inside memory, the machine stopped being a fixed tool and became a reconfigurable instrument—limited less by hardware than by ideas.",
       "person_events": [
+        {
+          "person_id": "alan_turing",
+          "event_date": "1946",
+          "event_date_precision": "year",
+          "event_title": "Appointed Officer of the OBE",
+          "event_index": 11,
+          "theme_connection": "The OBE publicly (if indirectly) recognizes Turing’s wartime cryptanalytic work, which was a major driver for early large-scale computation under state pressure. It supports the “From Proof to Hardware” arc by marking the impact and secrecy surrounding early computing’s wartime origins.",
+          "relevance_strength": "supporting"
+        },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1946",
           "event_date_precision": "year",
           "event_title": "Completes mathematics degree and becomes assistant",
-          "event_index": 5
+          "event_index": 5,
+          "theme_connection": "His participation in designing and operating an early large mainframe links theory-trained mathematicians to the hands-on creation and running of modern computers, illustrating the transition “from proof to hardware” in the postwar era.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1948",
           "event_date_precision": "year",
           "event_title": "Joined Manchester computing laboratory",
-          "event_index": 12
+          "event_index": 12,
+          "theme_connection": "At Manchester, Turing worked within a leading stored-program computer lab, helping bridge theoretical computation to practical, runnable architectures. This directly advances the collection’s “From Proof to Hardware” narrative.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "konrad_zuse",
           "event_date": "1949",
           "event_date_precision": "year",
           "event_title": "Founded Zuse KG",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "Founding Zuse KG marks a key shift from invention to products, showing how early computing became an industry and ecosystem after WWII. It also ties to early practical deployment of Zuse machines (e.g., Z4 in scientific use), advancing computing beyond prototypes.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1949",
           "event_date_precision": "year",
           "event_title": "Joins Eckert–Mauchly and UNIVAC I",
-          "event_index": 8
+          "event_index": 8,
+          "theme_connection": "Hopper’s move to Eckert–Mauchly/UNIVAC places her at the heart of early commercial electronic computing, where software practices had to scale with real customers and machines. This directly supports “Software Becomes a Discipline” and the industry transition.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "alan_turing",
           "event_date": "1950-10",
           "event_date_precision": "month",
           "event_title": "Published the Turing test paper",
-          "event_index": 13
+          "event_index": 13,
+          "theme_connection": "“Computing Machinery and Intelligence” reframed what digital computers could be (general symbol manipulators) and launched enduring debates in AI and human–machine interaction. It anchors the “Platforms, Power, and Doubt” subtheme by introducing ethical/philosophical shockwaves of intelligent systems.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1952",
           "event_date_precision": "year",
           "event_title": "Builds A-0 Compiler Link-Loader",
-          "event_index": 9
+          "event_index": 9,
+          "theme_connection": "The A-0 system operationalized the compiler idea—automatic translation and linking—turning programming from manual machine-code craft into a higher-level, tool-supported process. This is a core “Software Becomes a Discipline” milestone.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1952-03",
           "event_date_precision": "month",
           "event_title": "Became Netherlands' first programmer",
-          "event_index": 3
+          "event_index": 3,
+          "theme_connection": "Becoming the Netherlands’ first professional programmer captures the emergence of programming as a recognized occupation and practice in early computing centers. It supports the “Software Becomes a Discipline” arc by showing the formation of the role itself.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1952",
           "event_date_precision": "year",
           "event_title": "Systems engineer at General Electric",
-          "event_index": 6
+          "event_index": 6,
+          "theme_connection": "Work at GE on both hardware/software and early computerized banking systems shows computing’s expansion from labs into institutional platforms, demonstrating how systems engineering enabled real-world product ecosystems and automation.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "heinz_nixdorf",
           "event_date": "1952",
           "event_date_precision": "year",
           "event_title": "Founds Labor für Impulstechnik",
-          "event_index": 4
+          "event_index": 4,
+          "theme_connection": "Founding a lab to pursue electronic (vacuum-tube) calculators marks an entrepreneurial step toward building computing as an industry, aligning with the move from experimental ideas to implemented machines.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1954",
           "event_date_precision": "year",
           "event_title": "Leads Automatic Programming Department",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "Leading an Automatic Programming department shows the institutionalization and productization of compiler-based programming, moving it from concept to repeatable engineering practice. It illustrates software becoming an organized discipline within companies.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "heinz_nixdorf",
           "event_date": "1954",
           "event_date_precision": "year",
           "event_title": "Delivers first German tube computer",
-          "event_index": 5
+          "event_index": 5,
+          "theme_connection": "Delivering a pioneering German vacuum-tube computing/calculating machine for business bookkeeping is a concrete hardware milestone and an early example of computing’s adoption in organizational workflows, bridging engineering into practical data processing.",
+          "relevance_strength": "essential"
+        },
+        {
+          "person_id": "edsger_w_dijkstra",
+          "event_date": "1955",
+          "event_date_precision": "year",
+          "event_title": "Chose programming over physics",
+          "event_index": 4,
+          "theme_connection": "Choosing programming as a serious discipline (encouraged by Van Wijngaarden) reflects the moment when software began to be treated as an intellectual/engineering field rather than ad hoc clerical work. It helps motivate the later methodological breakthroughs.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1956",
           "event_date_precision": "year",
           "event_title": "Solved shortest path problem",
-          "event_index": 5
+          "event_index": 5,
+          "theme_connection": "Dijkstra’s shortest-path algorithm is a canonical example of algorithmic abstraction shaping what computers can efficiently do, foundational for networks, optimization, and systems. It directly advances the collection’s emphasis on new abstractions (algorithms) overcoming constraints.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "frances_allen",
           "event_date": "1957",
           "event_date_precision": "year",
           "event_title": "Joins IBM, Teaches Fortran",
-          "event_index": 4
+          "event_index": 4,
+          "theme_connection": "Allen’s early IBM role training staff in the newly released Fortran reflects the shift to “software becomes a discipline,” helping standardize high-level programming practices inside a major computing institution.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1959-04",
           "event_date_precision": "month",
           "event_title": "Advises CODASYL on COBOL",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "Her CODASYL consulting role connects directly to the design of COBOL, a foundational business language that made software portable, standardized, and widespread across institutions. This is central to programming becoming a disciplined, ecosystem-shaping medium.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1959",
           "event_date_precision": "year",
           "event_title": "Earned PhD in Amsterdam",
-          "event_index": 7
+          "event_index": 7,
+          "theme_connection": "His PhD on “Communication with an Automatic Computer,” including work on assembly language for the Electrologica X1, reflects early formalization of how humans program machines. It supports “Software Becomes a Discipline” through language/tooling development.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "frances_allen",
           "event_date": "1959",
           "event_date_precision": "year",
           "event_title": "Leads Stretch–Harvest Optimizations",
-          "event_index": 5
-        },
+          "event_index": 5,
+          "theme_connection": "Leading compiler optimization work for the Stretch–Harvest systems directly advances the story of optimizing compilers and performance-oriented software engineering under Cold War/state pressure—key to making computing scalable and reliable.",
+          "relevance_strength": "essential"
+        }
+      ]
+    },
+    {
+      "id": "languages_compilers_and_method",
+      "title": "Languages, Compilers, and Method (1960-1980)",
+      "date_start": "1960-01-01",
+      "date_start_precision": "year",
+      "date_end": "1980-01-01",
+      "date_end_precision": "year",
+      "bridge_statement": "As computers multiplied, humans became the scarce resource; whoever tamed complexity—through languages, compilers, and rigor—would define the next era.",
+      "person_events": [
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1960-08-24",
           "event_date_precision": "day",
           "event_title": "Completed first ALGOL 60 compiler",
-          "event_index": 8
+          "event_index": 8,
+          "theme_connection": "Building the first ALGOL 60 compiler is a foundational milestone in making high-level languages practical, demonstrating how abstractions (languages) became executable through compiler engineering.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1964",
           "event_date_precision": "year",
           "event_title": "Develops list‑processing language SLIP",
-          "event_index": 8
+          "event_index": 8,
+          "theme_connection": "SLIP and related publications contributed to list processing and data-structure techniques that helped shape early programming practice and AI-oriented symbolic computation.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1964",
           "event_date_precision": "year",
           "event_title": "Creates ELIZA, pioneering chatbot",
-          "event_index": 9
+          "event_index": 9,
+          "theme_connection": "ELIZA is a seminal early NLP/HCI program that influenced how society understood human–computer interaction and exposed the psychological and ethical stakes of ‘intelligent’ systems.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1965",
           "event_date_precision": "year",
           "event_title": "Contributes to ARPANET development",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "Participation in early ARPANET-era integration of time-sharing and networking supports the ‘platforms and ecosystems’ arc by showing the move from isolated machines to interconnected systems.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1965",
           "event_date_precision": "year",
           "event_title": "Refuses weapons research during Vietnam War",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "His refusal of weapons research foregrounds the ethical dimension of computing’s institutional power, aligning with the collection’s ‘Power, and Doubt’ subtopic.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "heinz_nixdorf",
           "event_date": "1965",
           "event_date_precision": "year",
           "event_title": "Presents Wanderer Logatronic",
-          "event_index": 7
-        }
-      ]
-    },
-    {
-      "id": "software_as_infrastructure",
-      "title": "Software as Infrastructure (1966-1985)",
-      "date_start": "1966",
-      "date_start_precision": "year",
-      "date_end": "1985",
-      "date_end_precision": "year",
-      "bridge_statement": "The decisive breakthroughs move up the stack: correctness, compilers, and performance turn machines into dependable systems.",
-      "person_events": [
+          "event_index": 7,
+          "theme_connection": "The Logatronic marks a push toward compact, more accessible computing hardware—part of the transition from specialized installations to productized systems for broader organizational use.",
+          "relevance_strength": "supporting"
+        },
         {
           "person_id": "grace_hopper",
           "event_date": "1967",
           "event_date_precision": "year",
           "event_title": "Directs Navy Programming Languages Group",
-          "event_index": 12
+          "event_index": 12,
+          "theme_connection": "Leading the Navy Programming Languages Group and overseeing COBOL validation/conformance work reflects the shift from ad‑hoc coding to disciplined, standardized software engineering practices at scale.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "heinz_nixdorf",
           "event_date": "1967",
           "event_date_precision": "year",
           "event_title": "Launches Nixdorf System 820",
-          "event_index": 8
+          "event_index": 8,
+          "theme_connection": "The System 820 as a freely programmable small computer exemplifies the product/platform turn that made computing more ubiquitous, integrating memory, I/O, and programmability into a deployable system.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1968",
           "event_date_precision": "year",
           "event_title": "Built THE multiprogramming system",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "THE is a landmark in operating-system structuring and multiprogramming, illustrating the move from single-program machines to disciplined system architectures that manage complexity.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "heinz_nixdorf",
           "event_date": "1968-04",
           "event_date_precision": "month",
           "event_title": "Creates Nixdorf Computer AG",
-          "event_index": 9
+          "event_index": 9,
+          "theme_connection": "Founding Nixdorf Computer AG marks the scaling of computing from engineering projects into an industrial firm building business computing systems—part of the shift to platforms and ecosystems serving institutions.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1970",
           "event_date_precision": "year",
           "event_title": "Champions Standards and Networks",
-          "event_index": 13
+          "event_index": 13,
+          "theme_connection": "Her advocacy for distributed systems and language standards connects to the maturation of computing into interoperable networks and institutional software ecosystems governed by formal conformance testing.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1972",
           "event_date_precision": "year",
           "event_title": "Received ACM Turing Award",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "The Turing Award recognition is tightly tied to his foundational impact on structured programming and programming-language methodology—key to ‘software becomes a discipline’ in the meta-story.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1972",
           "event_date_precision": "year",
           "event_title": "Formulates the Weizenbaum Test",
-          "event_index": 12
+          "event_index": 12,
+          "theme_connection": "The Weizenbaum Test directly contributes to the collection’s critique thread by formalizing questions about when computer/AI deployment is morally acceptable beyond technical feasibility.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "heinz_nixdorf",
           "event_date": "1972",
           "event_date_precision": "year",
           "event_title": "Breaks into U.S. market",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "Breaking into the U.S. market shows how computing became ubiquitous through commercial expansion into banking, retail, and industry—illustrating the rise of product ecosystems and institutional adoption beyond the lab.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1976",
           "event_date_precision": "year",
           "event_title": "Published A Discipline of Programming",
-          "event_index": 13
+          "event_index": 13,
+          "theme_connection": "A Discipline of Programming crystallized rigorous reasoning about correctness and program construction, strongly advancing the idea of programming as an engineering/mathematical discipline.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "joseph_weizenbaum",
           "event_date": "1976",
           "event_date_precision": "year",
           "event_title": "Publishes \"Computer Power and Human Reason\"",
-          "event_index": 13
+          "event_index": 13,
+          "theme_connection": "Computer Power and Human Reason is a defining work in computing ethics and AI skepticism, shaping how the field and public think about the limits and social consequences of computation.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "1976-04-01",
           "event_date_precision": "day",
           "event_title": "Co-founded Apple",
-          "event_index": 4
+          "event_index": 4,
+          "theme_connection": "Co-founding Apple is a defining platform-era milestone: it helped turn personal computing into a mass-market industry by productizing microcomputer designs and building a company around a computing ecosystem.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "1977-04",
           "event_date_precision": "month",
           "event_title": "Apple II and IPO boom",
-          "event_index": 5
+          "event_index": 5,
+          "theme_connection": "Apple II’s mass-market success and the IPO-driven growth exemplify computing’s shift from hobbyist machines to mainstream products and industry-scale ecosystems, shaping public expectations of personal computers.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "1979",
           "event_date_precision": "year",
           "event_title": "Pursued GUI after Xerox",
-          "event_index": 6
+          "event_index": 6,
+          "theme_connection": "Jobs’s push to adopt the Xerox PARC GUI and mouse helped mainstream human–computer interaction as a core computing abstraction, steering personal computing toward user-friendly interfaces that became platform standards.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "frances_allen",
           "event_date": "1980",
           "event_date_precision": "year",
           "event_title": "Leads IBM Parallel Computing",
-          "event_index": 10
+          "event_index": 10,
+          "theme_connection": "Leading IBM’s parallel computing work (PTRAN, program dependence graphs, automatic parallelization) is central to optimizing compilers and scaling computation beyond single-processor limits.",
+          "relevance_strength": "essential"
+        }
+      ]
+    },
+    {
+      "id": "personal_platforms_and_reckoning",
+      "title": "Personal Platforms & Ethical Reckoning (1981-2020)",
+      "date_start": "1981-01-01",
+      "date_start_precision": "year",
+      "date_end": "2020-01-01",
+      "date_end_precision": "year",
+      "bridge_statement": "Computing left the specialist’s room and entered everyone’s pocket—raising new questions about power, persuasion, and what should never be automated.",
+      "person_events": [
+        {
+          "person_id": "edsger_w_dijkstra",
+          "event_date": "1984",
+          "event_date_precision": "year",
+          "event_title": "Joined UT Austin faculty",
+          "event_index": 14,
+          "theme_connection": "Dijkstra’s UT Austin appointment mattered because it propagated his proof-oriented approach to programming and program correctness, supporting the shift from ad hoc coding to rigorous software engineering methods.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "1984-01",
           "event_date_precision": "month",
           "event_title": "Launched Macintosh platform",
-          "event_index": 7
+          "event_index": 7,
+          "theme_connection": "The Macintosh launch is a defining platform moment in human–computer interaction and product ecosystems—bringing GUI computing to mass markets and enabling new software industries like desktop publishing.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "1985",
           "event_date_precision": "year",
           "event_title": "Founded NeXT",
-          "event_index": 9
-        }
-      ]
-    },
-    {
-      "id": "personal_and_contested_computing",
-      "title": "Personal and Contested Computing (1986-2020)",
-      "date_start": "1986",
-      "date_start_precision": "year",
-      "date_end": "2020",
-      "date_end_precision": "year",
-      "bridge_statement": "Computing becomes intimate and ubiquitous—raising the stakes of design choices and the need for principled dissent.",
-      "person_events": [
-        {
-          "person_id": "steve_jobs",
-          "event_date": "1986",
-          "event_date_precision": "year",
-          "event_title": "Built Pixar into studio",
-          "event_index": 10
+          "event_index": 9,
+          "theme_connection": "Founding NeXT advanced the platform/ecosystem thread by building an influential software-centric computing stack that later fed directly into Apple’s modern operating system lineage.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "frances_allen",
           "event_date": "1989",
           "event_date_precision": "year",
           "event_title": "First Woman IBM Fellow",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "Becoming the first woman IBM Fellow marks institutional recognition of Allen’s foundational compiler optimization and parallel computing contributions—key to the collection’s focus on turning programming into an optimized, scalable engineering discipline.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "grace_hopper",
           "event_date": "1991",
           "event_date_precision": "year",
           "event_title": "Receives National Medal of Technology",
-          "event_index": 16
+          "event_index": 16,
+          "theme_connection": "The National Medal of Technology explicitly recognizes Hopper’s compiler and COBOL work, reinforcing the “Software Becomes a Discipline” arc by highlighting the mainstream validation and industrial importance of high-level languages and compilation.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "1997-09",
           "event_date_precision": "month",
           "event_title": "Returned to rescue Apple",
-          "event_index": 11
+          "event_index": 11,
+          "theme_connection": "Jobs’s return and restructuring of Apple is relevant as a platform strategy reset that enabled Apple’s later ecosystem-building and mass-market computing influence, even if it’s more managerial than technical.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "2001-05",
           "event_date_precision": "month",
           "event_title": "Created Apple’s digital ecosystem",
-          "event_index": 12
+          "event_index": 12,
+          "theme_connection": "The iPod+iTunes+retail strategy exemplifies computing’s shift into integrated product ecosystems—hardware, software, and services—reshaping how computation is packaged, distributed, and experienced by everyday users.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "frances_allen",
           "event_date": "2006",
           "event_date_precision": "year",
           "event_title": "Receives the Turing Award",
-          "event_index": 13
+          "event_index": 13,
+          "theme_connection": "Allen’s Turing Award spotlights seminal advances in optimizing compilers (control/data-flow analysis, parallelization), directly anchoring the ‘Software Becomes a Discipline’ subtopic in core techniques that made modern performance and scalability possible.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "steve_jobs",
           "event_date": "2007-01-09",
           "event_date_precision": "day",
           "event_title": "Unveiled the iPhone",
-          "event_index": 14
+          "event_index": 14,
+          "theme_connection": "The iPhone launch is a pivotal expansion of computing into ubiquitous mobile platforms, redefining the industry’s hardware–software ecosystem model and accelerating the modern app-centric computing era.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "frances_allen",
           "event_date": "2009",
           "event_date_precision": "year",
           "event_title": "Late-Career Scientific Honors",
-          "event_index": 14
+          "event_index": 14,
+          "theme_connection": "These major honors (honorary doctorate, NAS election) underscore the lasting impact of her compiler optimization work, reinforcing its importance to modern computing practice even if they don’t add a new technical milestone.",
+          "relevance_strength": "supporting"
         }
       ]
     }
   ],
-  "conclusion": "Computing’s pioneers did more than invent devices: they defined computation, built workable architectures, engineered software scale, and confronted the societal consequences of machine intelligence. Their combined legacy is a world where ideas can be mechanized—yet must still be governed by human judgment."
+  "conclusion": "Computing pioneers rarely solved the same problem twice: they repeatedly changed what the problem was—from mechanized arithmetic, to universal computation, to scalable software, to platforms that reorganize daily life. Their shared legacy is not a single invention, but a cascading sequence of abstractions that made machines both more capable and more consequential—demanding, in turn, deeper responsibility."
 }
