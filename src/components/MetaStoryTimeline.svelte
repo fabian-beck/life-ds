@@ -107,7 +107,7 @@
   // Detect when scroll indicator hovers over event markers
   $: {
     const HOVER_THRESHOLD = 8; // pixels of tolerance for intersection
-    const newHoveredEvents = new Set();
+    const eventsByPosition = new Map(); // leftPx -> [event objects]
 
     if (themesWithPersons && personEventsData && scrollIndicatorLeftPx > 0) {
       themesWithPersons.forEach((theme, themeIndex) => {
@@ -118,47 +118,62 @@
           events.forEach((event, eventIndex) => {
             // Check if scroll indicator is near this event's position
             if (Math.abs(event.leftPx - scrollIndicatorLeftPx) <= HOVER_THRESHOLD) {
-              const key = `${personData.personId}-${eventIndex}`;
-              newHoveredEvents.add(key);
-
-              // Only trigger tooltip if not already showing a click-triggered one
-              if (!activeEventTooltip || !activeEventTooltip.clickTriggered) {
-                // Clear existing timeout
-                if (indicatorHoverTimeout) {
-                  clearTimeout(indicatorHoverTimeout);
-                }
-
-                // Set new timeout to show tooltip after delay
-                indicatorHoverTimeout = setTimeout(() => {
-                  // Double-check no click-triggered tooltip was opened during the delay
-                  if (!activeEventTooltip || !activeEventTooltip.clickTriggered) {
-                    const personTopPx = calculatePersonTop(themeIndex, personIndex);
-                    showEventTooltipAtPosition(
-                      personData.personId,
-                      eventIndex,
-                      event,
-                      event.leftPx,
-                      personTopPx
-                    );
-                  }
-                }, 600); // 600ms delay before showing tooltip
+              // Group by position
+              if (!eventsByPosition.has(event.leftPx)) {
+                eventsByPosition.set(event.leftPx, []);
               }
+
+              eventsByPosition.get(event.leftPx).push({
+                personId: personData.personId,
+                eventIndex,
+                event,
+                personName: personData.person.name.replace(/_/g, ' '),
+                colors: getPersonColors(personData.personId),
+                themeIndex,
+                personIndex,
+                personTopPx: calculatePersonTop(themeIndex, personIndex)
+              });
             }
           });
         });
       });
     }
 
-    // Update hovered events set
+    // Find the primary hovered cluster (closest to indicator)
+    let closestCluster = null;
+    let closestDistance = Infinity;
+
+    eventsByPosition.forEach((events, leftPx) => {
+      const distance = Math.abs(leftPx - scrollIndicatorLeftPx);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestCluster = { leftPx, events };
+      }
+    });
+
+    // Update hovered events set (for visual feedback on markers)
+    const newHoveredEvents = new Set();
+    if (closestCluster) {
+      closestCluster.events.forEach(evt => {
+        newHoveredEvents.add(`${evt.personId}-${evt.eventIndex}`);
+      });
+    }
     hoveredEventsByIndicator = newHoveredEvents;
 
-    // Clear tooltip if no events are hovered
-    if (newHoveredEvents.size === 0) {
+    // Show grouped tooltip after delay
+    if (closestCluster && (!activeEventTooltip || !activeEventTooltip.clickTriggered)) {
+      if (indicatorHoverTimeout) clearTimeout(indicatorHoverTimeout);
+
+      indicatorHoverTimeout = setTimeout(() => {
+        if (!activeEventTooltip || !activeEventTooltip.clickTriggered) {
+          showGroupedEventTooltip(closestCluster);
+        }
+      }, 600);
+    } else if (!closestCluster) {
       if (indicatorHoverTimeout) {
         clearTimeout(indicatorHoverTimeout);
         indicatorHoverTimeout = null;
       }
-      // Only hide tooltip if it wasn't triggered by a click
       if (activeEventTooltip && !activeEventTooltip.clickTriggered) {
         hideEventTooltip();
       }
@@ -439,10 +454,19 @@
       indicatorHoverTimeout = null;
     }
 
+    // Find person data for colors
+    const person = getPersonById(personId);
+    const colors = getPersonColors(personId);
+
     activeEventTooltip = {
-      personId,
-      eventIndex,
-      event,
+      events: [{
+        personId,
+        eventIndex,
+        event,
+        personName: person.name.replace(/_/g, ' '),
+        colors
+      }],
+      year: event.year,
       x: adjustedX,
       y: y,
       placement: placement,
@@ -454,44 +478,52 @@
     activeEventTooltip = null;
   }
 
-  // Show tooltip for event at specific coordinates (used by scroll indicator)
-  function showEventTooltipAtPosition(personId, eventIndex, event, eventLeftPx, personTopPx) {
+  // Show grouped tooltip for event cluster (used by scroll indicator)
+  function showGroupedEventTooltip(cluster) {
     const timelineContainer = document.querySelector('.meta-timeline-container');
     if (!timelineContainer) return;
 
     const containerRect = timelineContainer.getBoundingClientRect();
     const scrollLeft = timelineContainer.scrollLeft;
 
-    // Calculate screen position of the event marker
-    // Add offsets: 40px for timeline-wrapper margin-left, person row height adjustments
+    // Calculate screen position for the cluster
+    const eventLeftPx = cluster.leftPx;
     const screenX = containerRect.left + eventLeftPx - scrollLeft + 40;
-    const screenY = containerRect.top + 60 + 40 + 10 + personTopPx + 15; // chapters-row + year-axis + margin + person position + half person height
+
+    // Use the topmost event's vertical position
+    const topEvent = cluster.events.reduce((top, evt) =>
+      evt.personTopPx < top.personTopPx ? evt : top
+    );
+    const screenY = containerRect.top + 60 + 40 + 10 + topEvent.personTopPx + 15;
 
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const tooltipWidth = 320;
-    const tooltipHeight = 250; // More accurate estimate with content
+    const tooltipWidth = 520; // Much wider for grouped content
+
+    // Estimate height based on event count (header + items)
+    const baseHeight = 60; // Header
+    const itemHeight = 110; // Per event (name + title + description + button)
+    const estimatedHeight = Math.min(baseHeight + (cluster.events.length * itemHeight), 450);
 
     let placement = 'top';
     let y = screenY;
 
-    // Check vertical space - prefer top placement
-    if (screenY - tooltipHeight - 20 < 0) {
-      // Not enough space above, place below
+    // Prefer top with extra clearance for grouped tooltip
+    const topClearance = 40; // Extra space above markers
+    if (screenY - estimatedHeight - topClearance < 0) {
       placement = 'bottom';
-      y = screenY + 20; // Add more clearance below marker
+      y = screenY + 30; // More clearance below markers
     } else {
-      // Enough space above
-      y = screenY - 10; // Small offset above marker
+      y = screenY - 20;
     }
 
-    // Check if too close to bottom
-    if (placement === 'bottom' && y + tooltipHeight + 20 > viewportHeight) {
-      // Force top placement if bottom would go off screen
+    // Check bottom overflow when forced to bottom placement
+    if (placement === 'bottom' && y + estimatedHeight + 20 > viewportHeight) {
       placement = 'top';
-      y = screenY - 10;
+      y = screenY - 20;
     }
 
+    // Horizontal centering with bounds checking
     let adjustedX = screenX;
     if (screenX - tooltipWidth / 2 < 10) {
       adjustedX = tooltipWidth / 2 + 10;
@@ -500,13 +532,12 @@
     }
 
     activeEventTooltip = {
-      personId,
-      eventIndex,
-      event,
+      events: cluster.events,
+      year: cluster.events[0].event.year,
       x: adjustedX,
       y: y,
       placement: placement,
-      clickTriggered: false // Mark as indicator-triggered
+      clickTriggered: false
     };
   }
 
@@ -680,45 +711,53 @@
       {/if}
     </div>
 
-    <!-- Event tooltip -->
+    <!-- Event tooltip (single or grouped) -->
     {#if activeEventTooltip}
-      {@const tooltipColors = getPersonColors(activeEventTooltip.personId)}
       <div
         class="event-tooltip"
         class:placement-top={activeEventTooltip.placement === 'top'}
         class:placement-bottom={activeEventTooltip.placement === 'bottom'}
+        class:grouped={activeEventTooltip.events.length > 1}
         bind:this={tooltipElement}
         style="
           left: {activeEventTooltip.x}px;
           top: {activeEventTooltip.y}px;
-          --tooltip-primary: {tooltipColors.primary};
-          --tooltip-secondary: {tooltipColors.secondary};
-          --tooltip-primary-rgb: {tooltipColors.primaryRgb};
-          --tooltip-secondary-rgb: {tooltipColors.secondaryRgb};
         "
         on:click={(e) => e.stopPropagation()}
         on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
         role="dialog"
         aria-label="Event details"
       >
-        <div class="tooltip-header">
-          <h4 class="tooltip-title">{activeEventTooltip.event.title}</h4>
-          <span class="tooltip-year">{activeEventTooltip.event.year}</span>
+        <!-- Event list (always scrollable) -->
+        <div class="tooltip-events">
+          {#each activeEventTooltip.events as evt}
+            <div
+              class="event-item"
+              style="
+                --item-primary: {evt.colors.primary};
+                --item-primary-rgb: {evt.colors.primaryRgb};
+              "
+            >
+              <div class="event-item-header">
+                <div class="event-item-header-content">
+                  <div class="event-person-name">{evt.personName}</div>
+                  <div class="event-item-title">{evt.event.title}</div>
+                </div>
+                <button
+                  class="tooltip-action-compact"
+                  on:click={() => handleEventClick(evt.personId, evt.event)}
+                  title="Jump to event in person's story"
+                >
+                  →
+                </button>
+              </div>
+
+              {#if evt.event.theme_connection}
+                <p class="event-item-description">{evt.event.theme_connection}</p>
+              {/if}
+            </div>
+          {/each}
         </div>
-
-        {#if activeEventTooltip.event.theme_connection}
-          <p class="tooltip-description">{activeEventTooltip.event.theme_connection}</p>
-        {/if}
-
-        <button
-          class="tooltip-action"
-          on:click={() => handleEventClick(
-            activeEventTooltip.personId,
-            activeEventTooltip.event
-          )}
-        >
-          Jump to Event →
-        </button>
       </div>
     {/if}
   </div>
@@ -1187,14 +1226,11 @@
     position: fixed;
     min-width: 240px;
     max-width: min(320px, 90vw);
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(8px);
-    border: 2px solid rgba(var(--tooltip-primary-rgb), 0.5);
+    background: rgb(15, 23, 42);
+    border: 2px solid rgba(56, 189, 248, 0.5);
     border-radius: 0.5rem;
     padding: 0.75rem;
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.4),
-      0 0 30px rgba(var(--tooltip-primary-rgb), 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     z-index: 10000;
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
   }
@@ -1293,5 +1329,135 @@
 
   .tooltip-action:active {
     transform: translateY(0);
+  }
+
+  /* Grouped tooltip adjustments */
+  .event-tooltip.grouped {
+    min-width: 400px;
+    max-width: min(560px, 90vw);
+    max-height: 450px;
+    display: flex;
+    flex-direction: column;
+    background: rgb(15, 23, 42);
+  }
+
+  /* Event list container - always scrollable with proper constraints */
+  .tooltip-events {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.25rem;
+  }
+
+  /* Individual event item */
+  .event-item {
+    position: relative;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--item-primary);
+    min-width: 0; /* Allow flex children to shrink below content size */
+  }
+
+  .event-item + .event-item {
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .event-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    min-width: 0;
+  }
+
+  .event-item-header-content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .event-person-name {
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--item-primary);
+    margin-bottom: 0.25rem;
+    text-transform: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .event-item-title {
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .event-item-description {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: #cbd5e1;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Compact jump button in top-right */
+  .tooltip-action-compact {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: rgba(var(--item-primary-rgb), 0.15);
+    border: 1px solid rgba(var(--item-primary-rgb), 0.4);
+    border-radius: 4px;
+    color: var(--item-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+  }
+
+  .tooltip-action-compact:hover {
+    background: rgba(var(--item-primary-rgb), 0.3);
+    border-color: rgba(var(--item-primary-rgb), 0.7);
+    transform: translateX(2px);
+  }
+
+  .tooltip-action-compact:active {
+    transform: translateX(0);
+  }
+
+  /* Scrollbar styling for event list */
+  .tooltip-events::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .tooltip-events::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 3px;
+  }
+
+  .tooltip-events::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.4);
+    border-radius: 3px;
+  }
+
+  .tooltip-events::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 189, 248, 0.6);
   }
 </style>
