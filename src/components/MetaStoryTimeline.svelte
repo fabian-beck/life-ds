@@ -361,17 +361,44 @@
   })();
 
   // Tooltip state management
-  let activeEventTooltip = null; // { personId, eventIndex, event, x, y }
+  let activeEventTooltip = null; // { personId, eventIndex, event, x, y, placement }
   let tooltipElement = null; // DOM reference for positioning
 
   function showEventTooltip(personId, eventIndex, event, clickEvent) {
     const rect = clickEvent.target.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const tooltipWidth = 320; // max-width from CSS
+    const tooltipHeight = 200; // estimated height
+
+    // Calculate optimal position
+    let x = rect.left + rect.width / 2;
+    let y = rect.top;
+    let placement = 'top'; // default: above the marker
+
+    // Check if tooltip would go off the top
+    if (rect.top < tooltipHeight + 20) {
+      placement = 'bottom';
+      y = rect.bottom;
+    }
+
+    // Check horizontal bounds and adjust
+    let adjustedX = x;
+    if (x - tooltipWidth / 2 < 10) {
+      // Too close to left edge
+      adjustedX = tooltipWidth / 2 + 10;
+    } else if (x + tooltipWidth / 2 > viewportWidth - 10) {
+      // Too close to right edge
+      adjustedX = viewportWidth - tooltipWidth / 2 - 10;
+    }
+
     activeEventTooltip = {
       personId,
       eventIndex,
       event,
-      x: rect.left + rect.width / 2,
-      y: rect.top
+      x: adjustedX,
+      y: y,
+      placement: placement
     };
   }
 
@@ -555,6 +582,8 @@
     {#if activeEventTooltip}
       <div
         class="event-tooltip"
+        class:placement-top={activeEventTooltip.placement === 'top'}
+        class:placement-bottom={activeEventTooltip.placement === 'bottom'}
         bind:this={tooltipElement}
         style="left: {activeEventTooltip.x}px; top: {activeEventTooltip.y}px;"
         on:click={(e) => e.stopPropagation()}
@@ -1023,12 +1052,22 @@
     padding: 0.75rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     z-index: 10000;
-    transform: translate(-50%, calc(-100% - 12px));
-    animation: fadeInTooltip 0.2s ease;
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
   }
 
-  @keyframes fadeInTooltip {
+  /* Placement: above the marker (default) */
+  .event-tooltip.placement-top {
+    transform: translate(-50%, calc(-100% - 12px));
+    animation: fadeInTooltipTop 0.2s ease;
+  }
+
+  /* Placement: below the marker */
+  .event-tooltip.placement-bottom {
+    transform: translate(-50%, 12px);
+    animation: fadeInTooltipBottom 0.2s ease;
+  }
+
+  @keyframes fadeInTooltipTop {
     from {
       opacity: 0;
       transform: translate(-50%, calc(-100% - 8px));
@@ -1036,6 +1075,17 @@
     to {
       opacity: 1;
       transform: translate(-50%, calc(-100% - 12px));
+    }
+  }
+
+  @keyframes fadeInTooltipBottom {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 8px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 12px);
     }
   }
 
