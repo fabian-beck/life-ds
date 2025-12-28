@@ -354,38 +354,20 @@
 
   // Extract events for each person from chapters
   $: personEventsData = (() => {
-    console.log('[MetaStoryTimeline] Processing person events data');
-    console.log('  chapters:', chapters?.length || 0);
-    console.log('  themesWithPersons:', themesWithPersons?.length || 0);
-
     if (!chapters || chapters.length === 0 || !themesWithPersons) {
-      console.log('  -> No chapters or themes, returning empty Map');
       return new Map();
     }
 
     const eventsByPerson = new Map();
 
-    chapters.forEach((chapter, chapterIndex) => {
-      console.log(`  Chapter ${chapterIndex}: "${chapter.title}"`);
-      console.log('    person_events:', chapter.person_events?.length || 0);
-
+    chapters.forEach((chapter) => {
       if (!chapter.person_events) {
-        console.log('    -> No person_events in this chapter');
         return;
       }
 
-      chapter.person_events.forEach((event, eventIndex) => {
-        console.log(`    Event ${eventIndex}:`, {
-          person_id: event.person_id,
-          event_date: event.event_date,
-          event_title: event.event_title,
-          event_index: event.event_index,
-          relevance_strength: event.relevance_strength
-        });
-
+      chapter.person_events.forEach((event) => {
         // Only include essential events (top priority)
         if (event.relevance_strength !== 'essential') {
-          console.log('      -> Skipping non-essential event');
           return;
         }
 
@@ -394,17 +376,13 @@
         }
 
         const eventYear = getYear(event.event_date);
-        console.log(`      eventYear: ${eventYear}`);
 
         if (!eventYear) {
-          console.log('      -> No valid year, skipping');
           return;
         }
 
         const offsetYears = eventYear - timelineBounds.minYear;
         const leftPx = offsetYears * PIXELS_PER_YEAR;
-
-        console.log(`      offsetYears: ${offsetYears}, leftPx: ${leftPx}`);
 
         eventsByPerson.get(event.person_id).push({
           ...event,
@@ -417,12 +395,6 @@
           relevance_strength: event.relevance_strength
         });
       });
-    });
-
-    console.log('  Final eventsByPerson Map:', eventsByPerson);
-    console.log('  Total persons with events:', eventsByPerson.size);
-    eventsByPerson.forEach((events, personId) => {
-      console.log(`    ${personId}: ${events.length} events`);
     });
 
     return eventsByPerson;
@@ -542,7 +514,6 @@
     // Navigate to the specific event in the person's story
     // Use event_index from the meta story data which references the actual event index in life_events.json
     const targetIndex = event.event_index !== undefined ? event.event_index : 0;
-    console.log(`[Navigate] Going to /story/${personId}/${targetIndex}`);
     window.location.hash = `/story/${personId}/${targetIndex}`;
   }
 
@@ -667,19 +638,11 @@
             <!-- Event markers -->
             {#if personEventsData.has(personData.personId)}
               {@const events = personEventsData.get(personData.personId)}
-              {@const _ = console.log(`[Render] Person ${personData.personId} has ${events.length} events`)}
               {#each events as event, eventIndex}
                 {@const relativeLeftPx = event.leftPx - personData.leftPx}
                 {@const eventKey = `${personData.personId}-${eventIndex}`}
                 {@const isHoveredByIndicator = hoveredEventsByIndicator.has(eventKey)}
                 {@const isActive = activeEventTooltip && activeEventTooltip.personId === personData.personId && activeEventTooltip.eventIndex === eventIndex}
-                {@const __ = console.log(`  Rendering event marker ${eventIndex}: ${event.title}`, {
-                  eventYear: event.year,
-                  personBirth: personData.birthYear,
-                  absoluteLeftPx: event.leftPx,
-                  personLeftPx: personData.leftPx,
-                  relativeLeftPx: relativeLeftPx
-                })}
                 <div
                   class="event-marker"
                   class:essential={event.relevance_strength === 'essential'}
@@ -704,8 +667,6 @@
                   <div class="event-dot"></div>
                 </div>
               {/each}
-            {:else}
-              {@const ___ = console.log(`[Render] Person ${personData.personId} has NO events in personEventsData`)}
             {/if}
           </div>
         {/each}
