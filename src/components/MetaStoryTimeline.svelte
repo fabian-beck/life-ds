@@ -379,8 +379,15 @@
           person_id: event.person_id,
           event_date: event.event_date,
           event_title: event.event_title,
-          event_index: event.event_index
+          event_index: event.event_index,
+          relevance_strength: event.relevance_strength
         });
+
+        // Only include essential events (top priority)
+        if (event.relevance_strength !== 'essential') {
+          console.log('      -> Skipping non-essential event');
+          return;
+        }
 
         if (!eventsByPerson.has(event.person_id)) {
           eventsByPerson.set(event.person_id, []);
