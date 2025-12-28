@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { _ } from '../stores/language.js';
 
   export let chapters = [];
   export let personsRegistry = [];
@@ -311,7 +312,9 @@
           date: event.event_date,
           year: eventYear,
           leftPx: leftPx,
-          chapterTitle: chapter.title
+          chapterTitle: chapter.title,
+          theme_connection: event.theme_connection,
+          relevance_strength: event.relevance_strength
         });
       });
     });
@@ -457,6 +460,8 @@
                 })}
                 <div
                   class="event-marker"
+                  class:essential={event.relevance_strength === 'essential'}
+                  class:supporting={event.relevance_strength === 'supporting'}
                   style="left: {relativeLeftPx}px;"
                   on:click={(e) => {
                     e.stopPropagation();
@@ -505,6 +510,13 @@
           <h4 class="tooltip-title">{activeEventTooltip.event.title}</h4>
           <span class="tooltip-year">{activeEventTooltip.event.year}</span>
         </div>
+
+        {#if activeEventTooltip.event.theme_connection}
+          <div class="tooltip-theme-connection">
+            <div class="tooltip-theme-label">{$_('meta_story.why_included')}</div>
+            <div class="tooltip-theme-text">{activeEventTooltip.event.theme_connection}</div>
+          </div>
+        {/if}
 
         <button
           class="tooltip-action"
@@ -923,6 +935,26 @@
     box-shadow: 0 4px 12px rgba(56, 189, 248, 0.6);
   }
 
+  /* Essential events: larger, more prominent */
+  .event-marker.essential .event-dot {
+    width: 18px;
+    height: 18px;
+    background: rgba(56, 189, 248, 1);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 3px 8px rgba(56, 189, 248, 0.5);
+  }
+
+  .event-marker.essential:hover .event-dot {
+    box-shadow: 0 5px 15px rgba(56, 189, 248, 0.7);
+  }
+
+  /* Supporting events: standard size */
+  .event-marker.supporting .event-dot {
+    width: 14px;
+    height: 14px;
+    background: rgba(56, 189, 248, 0.8);
+  }
+
   /* Event tooltip - matches PersonChip styling */
   .event-tooltip {
     position: fixed;
@@ -1005,6 +1037,30 @@
 
   .meta-value {
     color: #cbd5e1;
+  }
+
+  .tooltip-theme-connection {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: rgba(56, 189, 248, 0.1);
+    border-left: 3px solid rgba(56, 189, 248, 0.6);
+    border-radius: 4px;
+  }
+
+  .tooltip-theme-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #38bdf8;
+    margin-bottom: 0.25rem;
+  }
+
+  .tooltip-theme-text {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: rgba(203, 213, 225, 0.9);
+    font-style: italic;
   }
 
   .tooltip-action {

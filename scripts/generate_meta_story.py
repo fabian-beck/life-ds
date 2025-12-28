@@ -113,12 +113,18 @@ class MetaStoryPlan(BaseModel):
 
 
 class PersonEvent(BaseModel):
-    """Reference to a specific event from a person's life_events.json."""
+    """Reference to a specific event from a person's life_events.json with meta-story context."""
     person_id: str = Field(description="Person ID")
     event_date: str = Field(description="Event date (from life_events.json)")
     event_date_precision: str = Field(description="Date precision")
     event_title: str = Field(description="Event title (from life_events.json)")
     event_index: int = Field(description="Index in person's events array")
+    theme_connection: str = Field(
+        description="Explanation of how this event contributes to the meta-story theme"
+    )
+    relevance_strength: str = Field(
+        description="Strength of relevance: 'essential', 'supporting', or 'weak'"
+    )
 
 
 class EventForReview(BaseModel):
@@ -134,7 +140,13 @@ class EventRelevanceDecision(BaseModel):
     """AI decision on whether an event is relevant to the collection topic."""
     event_id: str = Field(description="Event identifier (matches EventForReview.event_id)")
     is_relevant: bool = Field(description="True if event directly relates to collection topic")
-    reason: str = Field(description="Brief explanation (1 sentence) of why event is/isn't relevant")
+    relevance_strength: Optional[str] = Field(
+        default=None,
+        description="Strength of relevance: 'essential' (core contribution), 'supporting' (illustrative), or 'weak' (tangential). Only for relevant events."
+    )
+    theme_connection: str = Field(
+        description="Brief explanation (1-2 sentences) of HOW this event contributes to the meta-story theme. Be specific about which aspect of the topic it demonstrates."
+    )
 
 
 class BatchEventRelevanceDecisions(BaseModel):
@@ -683,8 +695,12 @@ def phase3_ai_event_filtering(
 Tagline: {plan.tagline}
 Description: {plan.description}
 
-This collection focuses on events that directly relate to this specific topic.
-EXCLUDE personal life events like births, deaths, marriages, relocations unless they have direct relevance to the topic."""
+Thematic Subtopics:
+{chr(10).join(f"- {st.title}: {st.description}" for st in plan.subtopics)}
+
+Your task: Identify events that DIRECTLY contribute to this meta-story's narrative.
+Focus on events that demonstrate the theme through concrete achievements, innovations, or impacts.
+Exclude personal life events (births, deaths, marriages, relocations) unless they have CLEAR thematic relevance."""
 
     chapters_with_filtered_events = []
     total_reviewed = 0
@@ -721,29 +737,41 @@ EXCLUDE personal life events like births, deaths, marriages, relocations unless 
                 batch, topic_context, client, model, verbose
             )
 
-            # Apply decisions
+            # Apply decisions with strength filtering
             for event_data in batch:
                 event_id = f"{event_data['person_id']}:{event_data['event_index']}"
                 decision = batch_decisions.get(event_id)
 
                 if decision and decision["is_relevant"]:
+                    strength = decision.get("relevance_strength", "supporting")
+
+                    # Filter out weak events (only include essential and supporting)
+                    if strength == "weak":
+                        total_excluded += 1
+                        if verbose:
+                            print(f"    [-] WEAK: {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                            print(f"        Reason: {decision['theme_connection']}")
+                        continue
+
                     filtered_events.append(PersonEvent(
                         person_id=event_data["person_id"],
                         event_date=event_data["event"].get("date", ""),
                         event_date_precision=event_data["event"].get("date_precision", "year"),
                         event_title=event_data["event"].get("title", ""),
-                        event_index=event_data["event_index"]
+                        event_index=event_data["event_index"],
+                        theme_connection=decision["theme_connection"],
+                        relevance_strength=strength
                     ))
                     total_included += 1
                     if verbose:
-                        print(f"    [+] {event_data['person_name']}: {event_data['event'].get('title', '')}")
-                        print(f"        Reason: {decision['reason']}")
+                        print(f"    [+] {strength.upper()}: {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                        print(f"        Connection: {decision['theme_connection']}")
                 else:
                     total_excluded += 1
                     if verbose:
                         print(f"    [-] {event_data['person_name']}: {event_data['event'].get('title', '')}")
                         if decision:
-                            print(f"        Reason: {decision['reason']}")
+                            print(f"        Reason: {decision.get('theme_connection', 'Not relevant')}")
 
             total_reviewed += len(batch)
 
@@ -811,23 +839,38 @@ def _filter_event_batch(
 
     prompt = f"""{topic_context}
 
-Review the following events and determine which ones are DIRECTLY RELEVANT to this collection topic.
+Review the following events and determine which ones DIRECTLY CONTRIBUTE to this meta-story.
 
-INCLUDE events that:
-- Represent key achievements, discoveries, or contributions related to the topic
-- Show professional collaborations, publications, or innovations relevant to the topic
-- Demonstrate impact or influence in the topic area
-- Mark significant milestones in the topic domain
+EVALUATION CRITERIA:
 
-EXCLUDE events that:
-- Are purely personal (births, deaths, marriages, family matters) UNLESS they have direct relevance
-- Describe relocations, migrations, or moves UNLESS directly related to the topic
-- Cover general education or childhood UNLESS pivotal to the topic
-- Are about unrelated professional work outside the topic scope
+1. THEMATIC RELEVANCE (required):
+   - Does this event demonstrate a concrete achievement, discovery, or milestone directly related to the topic?
+   - Does it illustrate one of the subtopic themes listed above?
+   - Would removing this event leave a gap in the meta-story narrative?
+
+2. AVOID GENERIC BIOGRAPHICAL EVENTS:
+   - Exclude: births, deaths, marriages, general relocations, childhood events
+   - Exclude: routine professional work (e.g., "gave a lecture" without topic significance)
+   - Exclude: tangential connections (e.g., met someone famous but no collaboration)
+
+3. INCLUDE SUBSTANTIVE CONTRIBUTIONS:
+   - Publications, inventions, discoveries that advanced the topic domain
+   - Pivotal collaborations or mentorships related to the theme
+   - Awards or recognition specifically for work in the topic area
+   - Events that show impact, influence, or innovation within the theme
+
+4. RELEVANCE STRENGTH GUIDELINES:
+   - **essential**: Core breakthrough, seminal work, or defining moment for the meta-story theme
+     Examples: "Published foundational paper", "Invented key technology", "Led major project"
+   - **supporting**: Illustrative example, important milestone, or significant contribution
+     Examples: "Collaborated on related project", "Received award for topic work", "Applied theory to practice"
+   - **weak**: Tangentially related, background context, or minor connection
+     Examples: "Studied under X" (without collaboration), "Attended conference", "General education"
 
 For each event, provide:
-1. is_relevant: true/false
-2. reason: One sentence explaining your decision
+1. **is_relevant**: true if the event makes a clear, direct contribution to the meta-story (essential or supporting strength). False for weak or irrelevant events.
+2. **relevance_strength**: 'essential', 'supporting', or 'weak' (only if is_relevant=true)
+3. **theme_connection**: 1-2 sentences explaining SPECIFICALLY how this event contributes to the meta-story theme. Which aspect of the topic does it demonstrate? What makes it important to include?
 
 Events to review:
 {json.dumps([e.model_dump() for e in events_for_review], indent=2)}
@@ -852,7 +895,8 @@ Events to review:
             for decision in result.parsed.decisions:
                 decisions[decision.event_id] = {
                     "is_relevant": decision.is_relevant,
-                    "reason": decision.reason
+                    "theme_connection": decision.theme_connection,
+                    "relevance_strength": decision.relevance_strength
                 }
             return decisions
         else:
@@ -862,7 +906,8 @@ Events to review:
             return {
                 f"{e['person_id']}:{e['event_index']}": {
                     "is_relevant": True,
-                    "reason": "AI filtering failed, included by default"
+                    "theme_connection": "AI filtering failed, included by default",
+                    "relevance_strength": "supporting"
                 }
                 for e in events
             }
@@ -874,7 +919,8 @@ Events to review:
         return {
             f"{e['person_id']}:{e['event_index']}": {
                 "is_relevant": True,
-                "reason": "AI filtering error, included by default"
+                "theme_connection": "AI filtering error, included by default",
+                "relevance_strength": "supporting"
             }
             for e in events
         }
