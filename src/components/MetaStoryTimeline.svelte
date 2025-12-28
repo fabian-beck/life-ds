@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { _ } from '../stores/language.js';
+  import personStylesData from '../../data/person_styles.json';
 
   export let chapters = [];
   export let personsRegistry = [];
@@ -8,9 +9,40 @@
   export let subtopics = [];
   export let scrollProgress = 0; // 0 to 1, representing horizontal scroll position
 
+  // Person styles registry
+  const personStyles = personStylesData.styles;
+
   // Helper to get person data by ID
   function getPersonById(personId) {
     return personsRegistry.find(p => p.id === personId);
+  }
+
+  // Helper to get person style colors
+  function getPersonColors(personId) {
+    const style = personStyles[personId];
+    if (!style) {
+      return {
+        primary: '#38bdf8', // Default cyan
+        secondary: '#9a7bff', // Default purple
+        primaryRgb: '56, 189, 248',
+        secondaryRgb: '154, 123, 255'
+      };
+    }
+
+    // Convert hex to RGB
+    const hexToRgb = (hex) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result
+        ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+        : '255, 255, 255';
+    };
+
+    return {
+      primary: style.primary,
+      secondary: style.secondary,
+      primaryRgb: hexToRgb(style.primary),
+      secondaryRgb: hexToRgb(style.secondary)
+    };
   }
 
   // Extract year from date string (YYYY-MM-DD or YYYY)
@@ -415,10 +447,19 @@
 
         <!-- Persons in this theme -->
         {#each theme.persons as personData, personIndex}
+          {@const colors = getPersonColors(personData.personId)}
           <div
             class="person-lifespan"
             class:alive={personData.isAlive}
-            style="left: {personData.leftPx}px; width: {personData.widthPx}px; top: {calculatePersonTop(themeIndex, personIndex)}px;"
+            style="
+              left: {personData.leftPx}px;
+              width: {personData.widthPx}px;
+              top: {calculatePersonTop(themeIndex, personIndex)}px;
+              --person-primary: {colors.primary};
+              --person-secondary: {colors.secondary};
+              --person-primary-rgb: {colors.primaryRgb};
+              --person-secondary-rgb: {colors.secondaryRgb};
+            "
             title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
             on:click={() => handlePersonClick(personData.personId)}
             on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
@@ -708,7 +749,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    border: 2px solid rgba(56, 189, 248, 0.8);
+    border: 2px solid rgba(var(--person-primary-rgb), 0.8);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     background: rgba(15, 23, 42, 0.9);
     transition: all 0.2s;
@@ -726,17 +767,17 @@
   }
 
   .person-lifespan:hover .person-portrait {
-    border-color: rgba(56, 189, 248, 1);
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.6);
+    border-color: rgba(var(--person-primary-rgb), 1);
+    box-shadow: 0 4px 12px rgba(var(--person-primary-rgb), 0.6);
     transform: translateY(-50%) scale(1.1);
   }
 
   .person-lifespan.alive .person-portrait {
-    border-color: rgba(34, 197, 94, 0.8);
+    border-color: rgba(var(--person-secondary-rgb), 0.8);
   }
 
   .person-lifespan.alive:hover .person-portrait {
-    border-color: rgba(34, 197, 94, 1);
+    border-color: rgba(var(--person-secondary-rgb), 1);
   }
 
   /* Person lifespan line */
@@ -747,7 +788,7 @@
     top: 50%;
     transform: translateY(-50%);
     height: 3px;
-    background: linear-gradient(90deg, rgba(56, 189, 248, 0.6), rgba(154, 123, 255, 0.6));
+    background: linear-gradient(90deg, rgba(var(--person-primary-rgb), 0.6), rgba(var(--person-secondary-rgb), 0.6));
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     cursor: pointer;
@@ -756,17 +797,17 @@
 
   .person-lifespan:hover .person-line {
     height: 6px;
-    background: linear-gradient(90deg, rgba(56, 189, 248, 0.8), rgba(154, 123, 255, 0.8));
-    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
+    background: linear-gradient(90deg, rgba(var(--person-primary-rgb), 0.8), rgba(var(--person-secondary-rgb), 0.8));
+    box-shadow: 0 2px 8px rgba(var(--person-primary-rgb), 0.4);
   }
 
   .person-lifespan.alive .person-line {
-    background: linear-gradient(90deg, rgba(34, 197, 94, 0.6), rgba(56, 189, 248, 0.6));
+    background: linear-gradient(90deg, rgba(var(--person-secondary-rgb), 0.6), rgba(var(--person-primary-rgb), 0.6));
   }
 
   .person-lifespan.alive:hover .person-line {
-    background: linear-gradient(90deg, rgba(34, 197, 94, 0.8), rgba(56, 189, 248, 0.8));
-    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+    background: linear-gradient(90deg, rgba(var(--person-secondary-rgb), 0.8), rgba(var(--person-primary-rgb), 0.8));
+    box-shadow: 0 2px 8px rgba(var(--person-secondary-rgb), 0.4);
   }
 
   /* Person dates container */
@@ -918,7 +959,7 @@
   .event-dot {
     width: 14px;
     height: 14px;
-    background: rgba(56, 189, 248, 0.9);
+    background: rgba(var(--person-primary-rgb), 0.9);
     border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
@@ -930,29 +971,29 @@
   }
 
   .event-marker:hover .event-dot {
-    background: rgba(56, 189, 248, 1);
+    background: rgba(var(--person-primary-rgb), 1);
     border-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.6);
+    box-shadow: 0 4px 12px rgba(var(--person-primary-rgb), 0.6);
   }
 
   /* Essential events: larger, more prominent */
   .event-marker.essential .event-dot {
     width: 18px;
     height: 18px;
-    background: rgba(56, 189, 248, 1);
+    background: rgba(var(--person-primary-rgb), 1);
     border: 3px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 3px 8px rgba(56, 189, 248, 0.5);
+    box-shadow: 0 3px 8px rgba(var(--person-primary-rgb), 0.5);
   }
 
   .event-marker.essential:hover .event-dot {
-    box-shadow: 0 5px 15px rgba(56, 189, 248, 0.7);
+    box-shadow: 0 5px 15px rgba(var(--person-primary-rgb), 0.7);
   }
 
   /* Supporting events: standard size */
   .event-marker.supporting .event-dot {
     width: 14px;
     height: 14px;
-    background: rgba(56, 189, 248, 0.8);
+    background: rgba(var(--person-primary-rgb), 0.8);
   }
 
   /* Event tooltip - matches PersonChip styling */
