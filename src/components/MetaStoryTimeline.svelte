@@ -850,6 +850,7 @@
     font-weight: 500;
     text-align: center;
     white-space: nowrap;
+    background: transparent;
   }
 
   /* Persons layer */
@@ -1017,7 +1018,7 @@
     color: #94a3b8;
     font-weight: 500;
     white-space: nowrap;
-    background: rgba(4, 10, 24, 0.8);
+    background: transparent;
     padding: 1px 3px;
     border-radius: 2px;
     line-height: 1;
