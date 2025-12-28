@@ -104,6 +104,67 @@
     return Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
   })();
 
+  // Detect when scroll indicator hovers over event markers
+  $: {
+    const HOVER_THRESHOLD = 8; // pixels of tolerance for intersection
+    const newHoveredEvents = new Set();
+
+    if (themesWithPersons && personEventsData && scrollIndicatorLeftPx > 0) {
+      themesWithPersons.forEach((theme, themeIndex) => {
+        theme.persons.forEach((personData, personIndex) => {
+          const events = personEventsData.get(personData.personId);
+          if (!events) return;
+
+          events.forEach((event, eventIndex) => {
+            // Check if scroll indicator is near this event's position
+            if (Math.abs(event.leftPx - scrollIndicatorLeftPx) <= HOVER_THRESHOLD) {
+              const key = `${personData.personId}-${eventIndex}`;
+              newHoveredEvents.add(key);
+
+              // Only trigger tooltip if not already showing a click-triggered one
+              if (!activeEventTooltip || !activeEventTooltip.clickTriggered) {
+                // Clear existing timeout
+                if (indicatorHoverTimeout) {
+                  clearTimeout(indicatorHoverTimeout);
+                }
+
+                // Set new timeout to show tooltip after delay
+                indicatorHoverTimeout = setTimeout(() => {
+                  // Double-check no click-triggered tooltip was opened during the delay
+                  if (!activeEventTooltip || !activeEventTooltip.clickTriggered) {
+                    const personTopPx = calculatePersonTop(themeIndex, personIndex);
+                    showEventTooltipAtPosition(
+                      personData.personId,
+                      eventIndex,
+                      event,
+                      event.leftPx,
+                      personTopPx
+                    );
+                  }
+                }, 600); // 600ms delay before showing tooltip
+              }
+            }
+          });
+        });
+      });
+    }
+
+    // Update hovered events set
+    hoveredEventsByIndicator = newHoveredEvents;
+
+    // Clear tooltip if no events are hovered
+    if (newHoveredEvents.size === 0) {
+      if (indicatorHoverTimeout) {
+        clearTimeout(indicatorHoverTimeout);
+        indicatorHoverTimeout = null;
+      }
+      // Only hide tooltip if it wasn't triggered by a click
+      if (activeEventTooltip && !activeEventTooltip.clickTriggered) {
+        hideEventTooltip();
+      }
+    }
+  }
+
   // Generate year markers for the axis
   $: yearMarkers = (() => {
     const markers = [];
@@ -363,11 +424,12 @@
   // Tooltip state management
   let activeEventTooltip = null; // { personId, eventIndex, event, x, y, placement }
   let tooltipElement = null; // DOM reference for positioning
+  let hoveredEventsByIndicator = new Set(); // Track which events are hovered by scroll indicator
+  let indicatorHoverTimeout = null; // Delay before showing tooltip on indicator hover
 
   function showEventTooltip(personId, eventIndex, event, clickEvent) {
     const rect = clickEvent.target.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
     const tooltipWidth = 320; // max-width from CSS
     const tooltipHeight = 200; // estimated height
 
@@ -392,18 +454,67 @@
       adjustedX = viewportWidth - tooltipWidth / 2 - 10;
     }
 
+    // Clear any pending indicator hover timeout
+    if (indicatorHoverTimeout) {
+      clearTimeout(indicatorHoverTimeout);
+      indicatorHoverTimeout = null;
+    }
+
     activeEventTooltip = {
       personId,
       eventIndex,
       event,
       x: adjustedX,
       y: y,
-      placement: placement
+      placement: placement,
+      clickTriggered: true // Mark as click-triggered
     };
   }
 
   function hideEventTooltip() {
     activeEventTooltip = null;
+  }
+
+  // Show tooltip for event at specific coordinates (used by scroll indicator)
+  function showEventTooltipAtPosition(personId, eventIndex, event, eventLeftPx, personTopPx) {
+    const timelineContainer = document.querySelector('.meta-timeline-container');
+    if (!timelineContainer) return;
+
+    const containerRect = timelineContainer.getBoundingClientRect();
+    const scrollLeft = timelineContainer.scrollLeft;
+
+    // Calculate screen position
+    const screenX = containerRect.left + eventLeftPx - scrollLeft + 40; // +40 for margin-left
+    const screenY = containerRect.top + personTopPx + 60; // Approximate position with offsets
+
+    const viewportWidth = window.innerWidth;
+    const tooltipWidth = 320;
+    const tooltipHeight = 200;
+
+    let placement = 'top';
+    let y = screenY;
+
+    if (screenY < tooltipHeight + 20) {
+      placement = 'bottom';
+      y = screenY + 30;
+    }
+
+    let adjustedX = screenX;
+    if (screenX - tooltipWidth / 2 < 10) {
+      adjustedX = tooltipWidth / 2 + 10;
+    } else if (screenX + tooltipWidth / 2 > viewportWidth - 10) {
+      adjustedX = viewportWidth - tooltipWidth / 2 - 10;
+    }
+
+    activeEventTooltip = {
+      personId,
+      eventIndex,
+      event,
+      x: adjustedX,
+      y: y,
+      placement: placement,
+      clickTriggered: false // Mark as indicator-triggered
+    };
   }
 
   function handleEventClick(personId, event) {
@@ -445,6 +556,10 @@
       document.removeEventListener('click', handleClickOutside);
       if (timelineContainer) {
         timelineContainer.removeEventListener('scroll', handleScroll);
+      }
+      // Clear pending timeout on unmount
+      if (indicatorHoverTimeout) {
+        clearTimeout(indicatorHoverTimeout);
       }
     };
   });
@@ -534,6 +649,8 @@
               {@const _ = console.log(`[Render] Person ${personData.personId} has ${events.length} events`)}
               {#each events as event, eventIndex}
                 {@const relativeLeftPx = event.leftPx - personData.leftPx}
+                {@const eventKey = `${personData.personId}-${eventIndex}`}
+                {@const isHoveredByIndicator = hoveredEventsByIndicator.has(eventKey)}
                 {@const __ = console.log(`  Rendering event marker ${eventIndex}: ${event.title}`, {
                   eventYear: event.year,
                   personBirth: personData.birthYear,
@@ -545,6 +662,7 @@
                   class="event-marker"
                   class:essential={event.relevance_strength === 'essential'}
                   class:supporting={event.relevance_strength === 'supporting'}
+                  class:indicator-hover={isHoveredByIndicator}
                   style="left: {relativeLeftPx}px;"
                   on:click={(e) => {
                     e.stopPropagation();
@@ -986,7 +1104,8 @@
     transition: all 0.2s;
   }
 
-  .event-marker:hover {
+  .event-marker:hover,
+  .event-marker.indicator-hover {
     z-index: 30;
     transform: translate(-50%, -50%) scale(1.15);
   }
@@ -1011,7 +1130,8 @@
     transform: translate(-50%, -50%);
   }
 
-  .event-marker:hover .event-dot {
+  .event-marker:hover .event-dot,
+  .event-marker.indicator-hover .event-dot {
     background: rgba(var(--person-primary-rgb), 1);
     border-color: rgba(255, 255, 255, 1);
     box-shadow: 0 4px 12px rgba(var(--person-primary-rgb), 0.6);
@@ -1026,7 +1146,8 @@
     box-shadow: 0 3px 8px rgba(var(--person-primary-rgb), 0.5);
   }
 
-  .event-marker.essential:hover .event-dot {
+  .event-marker.essential:hover .event-dot,
+  .event-marker.essential.indicator-hover .event-dot {
     box-shadow: 0 5px 15px rgba(var(--person-primary-rgb), 0.7);
   }
 
