@@ -74,23 +74,23 @@ class TemporalChapter(BaseModel):
 
 
 class MissingPersonSuggestion(BaseModel):
-    """Suggestion for a person not in the registry who would fit this topic."""
+    """Suggestion for a person not in the registry who would strengthen this collection."""
     name: str = Field(description="Full name of the suggested person")
     reason: str = Field(
-        description="Brief explanation of why this person would fit the topic (1-2 sentences)"
+        description="Brief explanation of why this person would strengthen the collection (1-2 sentences)"
     )
     role: str = Field(description="Primary role or contribution (e.g., 'mathematician', 'architect')")
 
 
 class MetaStoryPlan(BaseModel):
-    """Phase 1 output: Complete meta-story plan with selected people."""
-    title: str = Field(description="Meta-story title (2-5 words)")
+    """Phase 1 output: Complete collection plan with selected people."""
+    title: str = Field(description="Collection title (2-5 words)")
     tagline: str = Field(description="Short hook (3-10 words)")
     description: str = Field(
-        description="Rich narrative overview (2-3 paragraphs) explaining the story's significance"
+        description="Rich narrative overview (2-3 paragraphs) explaining the collection's significance"
     )
     selected_people: List[PersonReference] = Field(
-        description="All people who clearly fit this meta-story (no fixed number - select based on fit)",
+        description="All people who clearly fit this collection (no fixed number - select based on fit)",
         min_length=1
     )
     subtopics: List[Subtopic] = Field(
@@ -104,11 +104,11 @@ class MetaStoryPlan(BaseModel):
         max_length=6
     )
     conclusion: str = Field(
-        description="Overall narrative conclusion (2-3 sentences) tying the meta-story together"
+        description="Overall narrative conclusion (2-3 sentences) tying the collection together"
     )
     missing_people_suggestions: Optional[List[MissingPersonSuggestion]] = Field(
         default=None,
-        description="3-5 suggestions for people NOT in the registry who would strengthen this meta-story"
+        description="3-5 suggestions for people NOT in the registry who would strengthen this collection"
     )
 
 
@@ -131,9 +131,9 @@ class EventForReview(BaseModel):
 
 
 class EventRelevanceDecision(BaseModel):
-    """AI decision on whether an event is relevant to the meta-story topic."""
+    """AI decision on whether an event is relevant to the collection topic."""
     event_id: str = Field(description="Event identifier (matches EventForReview.event_id)")
-    is_relevant: bool = Field(description="True if event directly relates to meta-story topic")
+    is_relevant: bool = Field(description="True if event directly relates to collection topic")
     reason: str = Field(description="Brief explanation (1 sentence) of why event is/isn't relevant")
 
 
@@ -342,13 +342,13 @@ def phase1_story_planning(
         # Manual mode: AI only creates structure, uses provided people
         relevant_people = [p for p in people_summary if p["id"] in manual_person_ids]
 
-        prompt = f"""Create a meta-story structure for the topic "{topic_title}".
+        prompt = f"""Create a thematic collection structure for the topic "{topic_title}".
 
 You MUST use these specific people (already selected):
 {json.dumps(manual_person_ids, indent=2)}
 
 Your task:
-1. Create a compelling title, tagline, and description for this meta-story
+1. Create a compelling title, tagline, and description for this collection
 2. Organize the people into 2-4 thematic subtopics (based on their roles/contributions)
 3. Design 3-6 temporal chapters covering their combined lifespans
 4. Write a conclusion statement tying the story together
@@ -385,7 +385,7 @@ CONCLUSION:
 - Should feel like the closing paragraph of a compelling essay
 
 MISSING PEOPLE SUGGESTIONS:
-- After creating the meta-story, suggest 3-5 notable people NOT in the registry who would strengthen this narrative
+- After creating the collection, suggest 3-5 notable people NOT in the registry who would strengthen this narrative
 - For each suggestion: provide name, reason (why they'd fit), and role
 - Focus on people who would fill gaps or add important perspectives
 - These are recommendations for future dataset expansion
@@ -395,7 +395,7 @@ Provide a relevance_note for each person explaining their fit.
 """
     else:
         # Automatic mode: AI selects people + creates structure
-        prompt = f"""Create a meta-story for the topic "{topic_title}" by selecting ALL people from the registry who clearly fit this topic.
+        prompt = f"""Create a thematic collection for the topic "{topic_title}" by selecting ALL people from the registry who clearly fit this topic.
 
 Available people:
 {json.dumps(people_summary, indent=2)}
@@ -475,7 +475,7 @@ CONCLUSION:
 - Should feel like the closing paragraph of a compelling essay
 
 MISSING PEOPLE SUGGESTIONS:
-- After creating the meta-story, suggest 3-5 notable people NOT in the registry who would strengthen this narrative
+- After creating the collection, suggest 3-5 notable people NOT in the registry who would strengthen this narrative
 - For each suggestion: provide name, reason (why they'd fit), and role
 - Focus on people who would fill gaps or add important perspectives
 - These are recommendations for future dataset expansion
@@ -487,7 +487,7 @@ MISSING PEOPLE SUGGESTIONS:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert historian and narrative designer. Create compelling meta-stories that organize biographical data thematically and chronologically."
+                    "content": "You are an expert historian and narrative designer. Create compelling thematic collections that organize biographical data thematically and chronologically."
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -679,11 +679,11 @@ def phase3_ai_event_filtering(
         print(f"\n=== PHASE 3: AI Event Filtering ===")
 
     # Prepare topic context for AI
-    topic_context = f"""Meta-Story Topic: {plan.title}
+    topic_context = f"""Collection Topic: {plan.title}
 Tagline: {plan.tagline}
 Description: {plan.description}
 
-This meta-story focuses on events that directly relate to this specific topic.
+This collection focuses on events that directly relate to this specific topic.
 EXCLUDE personal life events like births, deaths, marriages, relocations unless they have direct relevance to the topic."""
 
     chapters_with_filtered_events = []
@@ -811,7 +811,7 @@ def _filter_event_batch(
 
     prompt = f"""{topic_context}
 
-Review the following events and determine which ones are DIRECTLY RELEVANT to this meta-story topic.
+Review the following events and determine which ones are DIRECTLY RELEVANT to this collection topic.
 
 INCLUDE events that:
 - Represent key achievements, discoveries, or contributions related to the topic
@@ -839,7 +839,7 @@ Events to review:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert curator deciding which biographical events are relevant to specific thematic meta-stories. Be selective and focus on topic relevance."
+                    "content": "You are an expert curator deciding which biographical events are relevant to specific thematic collections. Be selective and focus on topic relevance."
                 },
                 {"role": "user", "content": prompt}
             ],
