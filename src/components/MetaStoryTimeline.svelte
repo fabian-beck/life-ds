@@ -415,30 +415,38 @@
     return eventsByPerson;
   })();
 
-  // Extract unique years with events for navigation
+  // Extract unique years with events for navigation, including timeline start and end
   $: yearsWithEvents = (() => {
-    if (!personEventsData || personEventsData.size === 0) return [];
+    if (!timelineBounds) return [];
 
     const yearSet = new Set();
-    personEventsData.forEach((events) => {
-      events.forEach((event) => {
-        if (event.year) {
-          yearSet.add(event.year);
-        }
+
+    // Always include timeline start and end as navigable targets
+    yearSet.add(timelineBounds.minYear);
+    yearSet.add(timelineBounds.maxYear);
+
+    // Add all years with events
+    if (personEventsData && personEventsData.size > 0) {
+      personEventsData.forEach((events) => {
+        events.forEach((event) => {
+          if (event.year) {
+            yearSet.add(event.year);
+          }
+        });
       });
-    });
+    }
 
     return Array.from(yearSet).sort((a, b) => a - b);
   })();
 
   // Export navigation functions for parent component
   export function getNextYear() {
-    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined) return null;
+    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined || !timelineBounds) return null;
     return yearsWithEvents.find(y => y > currentIndicatorYear) || null;
   }
 
   export function getPrevYear() {
-    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined) return null;
+    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined || !timelineBounds) return null;
     return [...yearsWithEvents].reverse().find(y => y < currentIndicatorYear) || null;
   }
 
