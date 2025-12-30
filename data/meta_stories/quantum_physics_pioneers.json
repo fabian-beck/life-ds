@@ -1,474 +1,127 @@
 {
   "dataset": "meta_story",
-  "created_on": "2025-12-20T18:23:13.191653+01:00",
+  "created_on": "2025-12-30T08:39:42.202076+01:00",
   "meta_story": {
     "id": "quantum_physics_pioneers",
-    "title": "Quantum’s First Architects",
-    "tagline": "From quanta to paradox",
-    "description": "Quantum physics didn’t arrive as a single discovery—it was assembled, piece by piece, from stubborn experimental facts and daring mathematical reconstructions of reality. In the early 20th century, new phenomena in radiation and matter forced physicists to abandon comfortable classical pictures. Soon, the argument shifted from “what works” to “what it means,” as probability, measurement, and uncertainty became features of nature rather than flaws in our instruments.\n\nThis meta-story follows a tightly connected chain of pioneers who each pushed on a different load-bearing wall of the emerging quantum framework. Marie Curie’s radioactivity opened a vista into the atom’s hidden interior; Albert Einstein’s light quanta and debates over indeterminacy made quantum theory unavoidable and controversial; Emmy Noether provided the symmetry logic that allowed the new physics to cohere; and John von Neumann supplied the rigorous mathematical architecture that turned quantum mechanics into a discipline with rules—and unsettling implications.",
+    "title": "Quantum Physics Pioneers",
+    "tagline": "From quanta to modern formalism",
+    "description": "Quantum physics didn’t arrive as a single discovery—it crystallized through a chain of conceptual shocks: the unsettling discreteness of energy, the strange accounting of radiation and atoms, and the eventual need for a rigorous mathematical language to keep the theory from dissolving into paradox.\n\nThis collection follows a tight arc through three figures in the registry who directly shaped that transformation. Einstein helped force the quantum into existence by treating light itself as quantized, even as he remained a sharp critic of quantum indeterminacy. Curie built the experimental and conceptual terrain of radioactivity, revealing that the atom was not an indivisible unit but a dynamic, energetic system—an essential precondition for quantum atomic theory. Von Neumann then supplied quantum mechanics with one of its most durable foundations: a precise formalism that made the theory computable, generalizable, and philosophically unavoidable.\n\nTogether they show quantum physics as both a revolution in nature’s rules and a revolution in how science proves, models, and trusts what it claims to know.",
     "person_ids": [
-      "marie_curie",
       "albert_einstein",
-      "emmy_noether",
+      "marie_curie",
       "john_von_neumann"
     ],
-    "date_range_start": "1895",
+    "date_range_start": "1867",
     "date_range_end": "1957",
-    "lastUpdated": "2025-12-20T18:23:13.191653+01:00"
+    "lastUpdated": "2025-12-30T08:39:42.202076+01:00"
   },
   "subtopics": [
     {
-      "id": "atoms_opened_from_within",
-      "title": "Atoms Opened from Within",
-      "description": "Before wavefunctions and operators, there were stubborn signals from the atom—radiation and decay—that implied hidden, quantized mechanisms.",
-      "person_ids": [
-        "marie_curie",
-        "albert_einstein"
-      ]
-    },
-    {
-      "id": "quantum_reality_disputed",
-      "title": "Quantum Reality Disputed",
-      "description": "Quantum theory did not merely change equations; it challenged what counts as a physical fact, turning measurement and probability into the battleground.",
+      "id": "forcing_the_quantum_question",
+      "title": "Forcing the Quantum Question",
+      "description": "Before “quantum mechanics” existed, anomalies in light and matter demanded new rules; these figures made discreteness scientifically unavoidable.",
       "person_ids": [
         "albert_einstein",
-        "john_von_neumann"
+        "marie_curie"
       ]
     },
     {
-      "id": "the_math_that_made_it_work",
-      "title": "The Math That Made It Work",
-      "description": "Quantum physics needed more than clever hypotheses—it required a new kind of mathematical discipline to keep its abstractions consistent and predictive.",
+      "id": "making_quantum_precise",
+      "title": "Making Quantum Precise",
+      "description": "Once the new physics arrived, it needed a hard mathematical spine—definitions, structures, and proofs that could support prediction and debate.",
       "person_ids": [
-        "emmy_noether",
-        "john_von_neumann",
-        "albert_einstein"
+        "john_von_neumann"
       ]
     }
   ],
   "chapters": [
     {
-      "id": "radical_clues_in_radiation_1895_1905",
-      "title": "Radical Clues in Radiation (1895-1905)",
-      "date_start": "1895",
+      "id": "energy_becomes_granular",
+      "title": "Energy Becomes Granular (1867-1905)",
+      "date_start": "1867",
       "date_start_precision": "year",
       "date_end": "1905",
       "date_end_precision": "year",
-      "bridge_statement": "Invisible rays and unexpected decay hint that atoms are not solid clockwork—something discrete is happening inside matter itself.",
+      "bridge_statement": "As atoms stop behaving like tidy billiard balls, new kinds of evidence begin to suggest that nature counts in packets, not continua.",
       "person_events": [
-        {
-          "person_id": "marie_curie",
-          "event_date": "1895-07-26",
-          "event_date_precision": "day",
-          "event_title": "Marries Pierre Curie",
-          "event_index": 7
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1896-10-03",
-          "event_date_precision": "day",
-          "event_title": "Passes Swiss Matura in Aarau",
-          "event_index": 2
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1896-10",
-          "event_date_precision": "month",
-          "event_title": "Enrolls at Zurich Polytechnic",
-          "event_index": 3
-        },
-        {
-          "person_id": "marie_curie",
-          "event_date": "1897-09-12",
-          "event_date_precision": "day",
-          "event_title": "Birth of Ir\u0000e8ne Curie",
-          "event_index": 8
-        },
         {
           "person_id": "marie_curie",
           "event_date": "1897-12-16",
           "event_date_precision": "day",
-          "event_title": "Begins research on radioactivity",
-          "event_index": 9
+          "event_title": "Launched radioactivity research",
+          "event_index": 7,
+          "theme_connection": "Launching systematic, quantitative radioactivity experiments helped establish radioactivity as a measurable physical phenomenon and expanded the empirical problems any atomic theory had to explain—supporting the preconditions for quantum atomic theory.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "marie_curie",
           "event_date": "1898-07",
           "event_date_precision": "month",
-          "event_title": "Discovers polonium and radium",
-          "event_index": 10
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1900",
-          "event_date_precision": "year",
-          "event_title": "Chooses mathematics over teaching",
-          "event_index": 1
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1902-06",
-          "event_date_precision": "month",
-          "event_title": "Joins Swiss Patent Office in Bern",
-          "event_index": 4
+          "event_title": "Discovered polonium and radium",
+          "event_index": 8,
+          "theme_connection": "Discovering polonium and radium and arguing that pitchblende’s activity exceeded uranium’s made atomic “indivisibility” untenable and cemented radioactivity as a new domain of energetic transformations—core experimental groundwork that pressured the development of modern atomic/quantum theory.",
+          "relevance_strength": "essential"
         },
         {
           "person_id": "marie_curie",
           "event_date": "1903",
           "event_date_precision": "year",
-          "event_title": "Wins Nobel Prize in Physics",
-          "event_index": 11
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1903-01-06",
-          "event_date_precision": "day",
-          "event_title": "Marries Mileva Marić in Bern",
-          "event_index": 5
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1903-12-28",
-          "event_date_precision": "day",
-          "event_title": "Birth in Budapest",
-          "event_index": 0
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1904-10",
-          "event_date_precision": "month",
-          "event_title": "Fully matriculates in Erlangen",
-          "event_index": 2
+          "event_title": "Doctorate and Nobel Prize in Physics",
+          "event_index": 9,
+          "theme_connection": "Her doctorate consolidated a coherent research program on radioactive substances, and the 1903 Nobel recognition amplified the legitimacy and impact of radioactivity research—strengthening the experimental foundation that fed into early 20th-century atomic and quantum developments.",
+          "relevance_strength": "supporting"
         },
         {
           "person_id": "albert_einstein",
           "event_date": "1905-06-30",
           "event_date_precision": "day",
           "event_title": "Publishes Annus Mirabilis papers",
-          "event_index": 6
+          "event_index": 6,
+          "theme_connection": "The 1905 papers include the light-quantum explanation of the photoelectric effect, a decisive step in making energy discreteness scientifically unavoidable—directly matching the collection’s “Forcing the Quantum Question” arc.",
+          "relevance_strength": "essential"
         }
       ]
     },
     {
-      "id": "quanta_enter_the_light_1906_1919",
-      "title": "Quanta Enter the Light (1906-1919)",
+      "id": "the_atom_opens_up",
+      "title": "The Atom Opens Up (1906-1925)",
       "date_start": "1906",
       "date_start_precision": "year",
-      "date_end": "1919",
+      "date_end": "1925",
       "date_end_precision": "year",
-      "bridge_statement": "A daring idea—light as packets—turns an anomaly into a new principle, and physics begins to trade certainty for explanation.",
+      "bridge_statement": "Radioactivity and quanta converge on a single unsettling message: the atom has an interior life, and classical physics can’t describe it.",
       "person_events": [
         {
           "person_id": "marie_curie",
-          "event_date": "1906-04-19",
+          "event_date": "1911-12-10",
           "event_date_precision": "day",
-          "event_title": "After Pierre\u0002s death, she leads at the Sorbonne",
-          "event_index": 12
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1907",
-          "event_date_precision": "year",
-          "event_title": "Doctorate under Paul Gordan",
-          "event_index": 3
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1908",
-          "event_date_precision": "year",
-          "event_title": "Unpaid lecturer at Erlangen",
-          "event_index": 4
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1909",
-          "event_date_precision": "year",
-          "event_title": "Leaves patent office for Zurich professorship",
-          "event_index": 7
-        },
-        {
-          "person_id": "marie_curie",
-          "event_date": "1911",
-          "event_date_precision": "year",
-          "event_title": "Wins Nobel Chemistry amid backlash",
-          "event_index": 13
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1913-02-20",
-          "event_date_precision": "day",
-          "event_title": "Family Raised to Nobility",
-          "event_index": 1
-        },
-        {
-          "person_id": "marie_curie",
-          "event_date": "1914-08",
-          "event_date_precision": "month",
-          "event_title": "Deploys mobile X-ray units",
-          "event_index": 14
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1914-04",
-          "event_date_precision": "month",
-          "event_title": "Moves to Berlin as leading professor",
-          "event_index": 8
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1914",
-          "event_date_precision": "year",
-          "event_title": "Enters Fasori Gymnasium",
-          "event_index": 2
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1915-11-25",
-          "event_date_precision": "day",
-          "event_title": "Presents general relativity field equations",
-          "event_index": 9
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1915-04",
-          "event_date_precision": "month",
-          "event_title": "Moves to Göttingen amid opposition",
-          "event_index": 5
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1918-07-26",
-          "event_date_precision": "day",
-          "event_title": "Establishes Noether's theorem",
-          "event_index": 6
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1918",
-          "event_date_precision": "year",
-          "event_title": "Advanced Study with Gábor Szegő",
-          "event_index": 3
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1919-11-06",
-          "event_date_precision": "day",
-          "event_title": "Relativity confirmed by eclipse observations",
-          "event_index": 10
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1919-06",
-          "event_date_precision": "month",
-          "event_title": "Habilitation and Privatdozent",
-          "event_index": 7
+          "event_title": "Won Nobel Prize in Chemistry",
+          "event_index": 11,
+          "theme_connection": "The Nobel Prize in Chemistry explicitly recognizes Curie’s radiochemical work on radioactivity, which helped establish the atom as an energetic, transformable system—critical experimental groundwork that made quantum atomic theory unavoidable.",
+          "relevance_strength": "supporting"
         }
       ]
     },
     {
-      "id": "symmetry_and_structure_1920_1935",
-      "title": "Symmetry and Structure (1920-1935)",
-      "date_start": "1920",
-      "date_start_precision": "year",
-      "date_end": "1935",
-      "date_end_precision": "year",
-      "bridge_statement": "As quantum rules multiply, the deeper question becomes: what must stay invariant for the universe to be intelligible at all?",
-      "person_events": [
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1921",
-          "event_date_precision": "year",
-          "event_title": "Founds Noetherian ring theory",
-          "event_index": 8
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1922-11-09",
-          "event_date_precision": "day",
-          "event_title": "Receives Nobel Prize in Physics",
-          "event_index": 11
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1923-09",
-          "event_date_precision": "month",
-          "event_title": "Studies at ETH Zurich and Budapest",
-          "event_index": 4
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1924",
-          "event_date_precision": "year",
-          "event_title": "Leads Göttingen algebra school",
-          "event_index": 9
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1926",
-          "event_date_precision": "year",
-          "event_title": "Earns Ph.D. and Engineering Degree",
-          "event_index": 5
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1927-12-13",
-          "event_date_precision": "day",
-          "event_title": "Habilitation and Youngest Berlin Privatdozent",
-          "event_index": 6
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1929-10",
-          "event_date_precision": "month",
-          "event_title": "Visiting Lecturer at Princeton",
-          "event_index": 7
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1930",
-          "event_date_precision": "year",
-          "event_title": "Conversion and First Marriage",
-          "event_index": 8
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1932-09",
-          "event_date_precision": "month",
-          "event_title": "Plenary address at Zürich ICM",
-          "event_index": 10
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1933-10-17",
-          "event_date_precision": "day",
-          "event_title": "Emigrates from Germany to the United States",
-          "event_index": 12
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1933-04",
-          "event_date_precision": "month",
-          "event_title": "Dismissed by Nazis from Göttingen",
-          "event_index": 11
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1933",
-          "event_date_precision": "year",
-          "event_title": "Joins Institute for Advanced Study",
-          "event_index": 9
-        },
-        {
-          "person_id": "marie_curie",
-          "event_date": "1934-07-04",
-          "event_date_precision": "day",
-          "event_title": "Dies in Passy after years of illness",
-          "event_index": 15
-        },
-        {
-          "person_id": "emmy_noether",
-          "event_date": "1935-04-14",
-          "event_date_precision": "day",
-          "event_title": "Death in Pennsylvania",
-          "event_index": 12
-        }
-      ]
-    },
-    {
-      "id": "axioms_measurement_and_aftershocks_1936_1957",
-      "title": "Axioms, Measurement, and Aftershocks (1936-1957)",
-      "date_start": "1936",
+      "id": "foundations_and_fallout",
+      "title": "Foundations and Fallout (1926-1957)",
+      "date_start": "1926",
       "date_start_precision": "year",
       "date_end": "1957",
       "date_end_precision": "year",
-      "bridge_statement": "Quantum mechanics hardens into formalism—yet the cleaner the axioms become, the stranger the act of measurement appears.",
+      "bridge_statement": "With quantum mechanics in hand, the next battle is over meaning and method—how to formalize the theory, and what its strangeness implies for reality.",
       "person_events": [
         {
           "person_id": "john_von_neumann",
-          "event_date": "1937",
+          "event_date": "1932",
           "event_date_precision": "year",
-          "event_title": "Naturalized U.S. Citizen",
-          "event_index": 10
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1938-11-17",
-          "event_date_precision": "day",
-          "event_title": "Marries Klára Dán",
-          "event_index": 11
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1939-08-02",
-          "event_date_precision": "day",
-          "event_title": "Signs Einstein–Szilard letter to Roosevelt",
-          "event_index": 13
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1943",
-          "event_date_precision": "year",
-          "event_title": "Consultant to Los Alamos",
-          "event_index": 12
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1944",
-          "event_date_precision": "year",
-          "event_title": "Co‑authors Theory of Games and Economic Behavior",
-          "event_index": 13
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1945-07-16",
-          "event_date_precision": "day",
-          "event_title": "Witnesses Trinity Test",
-          "event_index": 14
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1945",
-          "event_date_precision": "year",
-          "event_title": "Formulates Stored‑Program Architecture",
-          "event_index": 15
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1952-11-26",
-          "event_date_precision": "day",
-          "event_title": "Declines presidency of Israel",
-          "event_index": 14
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1953",
-          "event_date_precision": "year",
-          "event_title": "Chairs Strategic Missile Committees",
-          "event_index": 16
-        },
-        {
-          "person_id": "albert_einstein",
-          "event_date": "1955-04-18",
-          "event_date_precision": "day",
-          "event_title": "Dies in Princeton",
-          "event_index": 15
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1955",
-          "event_date_precision": "year",
-          "event_title": "Diagnosed with Metastatic Cancer",
-          "event_index": 17
-        },
-        {
-          "person_id": "john_von_neumann",
-          "event_date": "1957-02-08",
-          "event_date_precision": "day",
-          "event_title": "Death at Walter Reed and Burial",
-          "event_index": 18
+          "event_title": "Published quantum mechanics classic",
+          "event_index": 7,
+          "theme_connection": "Von Neumann’s 1932 quantum mechanics book codified the Hilbert-space/operator formalism and axiomatic structure that made quantum theory precise, computable, and philosophically rigorous—directly matching the subtopic “Making Quantum Precise.”",
+          "relevance_strength": "essential"
         }
       ]
     }
   ],
-  "conclusion": "Together these figures show quantum physics as both discovery and negotiation: experiments forced the issue, ideas reframed the problem, and mathematics made the new world navigable. Their combined legacy is a theory that works with uncanny precision while continuously pressuring our intuitions about reality."
+  "conclusion": "Quantum physics was born from both confrontation and construction: confronting experimental surprises that broke classical intuition, then constructing a formal language strong enough to carry the new world. Einstein, Curie, and von Neumann together show how modern physics advances—by discovery, by redefinition, and by the mathematics that makes the revolution durable."
 }
