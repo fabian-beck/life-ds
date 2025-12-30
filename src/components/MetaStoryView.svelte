@@ -364,8 +364,8 @@
               />
             </div>
 
-            <!-- Timeline navigation buttons -->
-            {#if metaTimelineComponent && (canNavigatePrev || canNavigateNext)}
+            <!-- Timeline navigation buttons - only show when in scroll lock zone -->
+            {#if metaTimelineComponent && isScrollLockActive && (canNavigatePrev || canNavigateNext)}
               <button
                 type="button"
                 class="timeline-nav-btn prev"
