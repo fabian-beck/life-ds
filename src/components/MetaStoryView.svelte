@@ -3,6 +3,7 @@
   import { push } from "svelte-spa-router";
   import { onMount, onDestroy } from "svelte";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
+  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   export let metaStoryData = null;
   export let personsRegistry = [];
@@ -71,8 +72,8 @@
 
   // Handle vertical scroll and translate to horizontal timeline scroll
   function handleVerticalScroll() {
-    // Only skip if the last update came from horizontal scroll
-    if (isUpdatingScroll && lastScrollOrigin === 'horizontal') return;
+    // Only skip if the last update came from horizontal scroll or navigation
+    if (isUpdatingScroll && (lastScrollOrigin === 'horizontal' || lastScrollOrigin === 'navigation')) return;
 
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       return;
@@ -123,8 +124,8 @@
 
   // Handle horizontal timeline scroll and sync to vertical scroll position
   function handleTimelineScroll() {
-    // Only skip if the last update came from vertical scroll
-    if (isUpdatingScroll && lastScrollOrigin === 'vertical') return;
+    // Only skip if the last update came from vertical scroll or navigation
+    if (isUpdatingScroll && (lastScrollOrigin === 'vertical' || lastScrollOrigin === 'navigation')) return;
 
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       return;
@@ -191,7 +192,100 @@
     }
   }
 
+  // Reference to MetaStoryTimeline component
+  let metaTimelineComponent;
+
+  // Navigation state
+  let canNavigatePrev = false;
+  let canNavigateNext = false;
+
+  // Update navigation button states based on current position
+  // This reactive statement re-runs whenever scrollProgress changes,
+  // ensuring button states update during manual scrolling
+  $: if (metaTimelineComponent) {
+    canNavigatePrev = metaTimelineComponent.getPrevYear?.() !== null;
+    canNavigateNext = metaTimelineComponent.getNextYear?.() !== null;
+  }
+
+  function handleNextYear() {
+    if (!metaTimelineComponent) return;
+
+    const nextYear = metaTimelineComponent.getNextYear?.();
+    if (nextYear === null) return;
+
+    const targetScrollProgress = metaTimelineComponent.yearToScrollProgress?.(nextYear);
+    if (targetScrollProgress === null) return;
+
+    navigateToScrollProgress(targetScrollProgress);
+  }
+
+  function handlePrevYear() {
+    if (!metaTimelineComponent) return;
+
+    const prevYear = metaTimelineComponent.getPrevYear?.();
+    if (prevYear === null) return;
+
+    const targetScrollProgress = metaTimelineComponent.yearToScrollProgress?.(prevYear);
+    if (targetScrollProgress === null) return;
+
+    navigateToScrollProgress(targetScrollProgress);
+  }
+
+  function navigateToScrollProgress(targetScrollProgress) {
+    if (!scrollProxyContainer) return;
+
+    // Calculate target vertical scroll position
+    const rect = scrollProxyContainer.getBoundingClientRect();
+    const proxyContainerTop = rect.top + window.scrollY;
+    const targetScrollY = proxyContainerTop + (targetScrollProgress * proxyHeight);
+
+    // Set flag to prevent feedback loops
+    isUpdatingScroll = true;
+    lastScrollOrigin = 'navigation';
+
+    // Smooth scroll to target year
+    window.scrollTo({
+      top: targetScrollY,
+      left: 0,
+      behavior: 'smooth'
+    });
+
+    // Update scroll progress for immediate visual feedback
+    scrollProgress = targetScrollProgress;
+
+    // Reset flag after smooth scroll completes (~500ms)
+    setTimeout(() => {
+      isUpdatingScroll = false;
+      lastScrollOrigin = null;
+    }, 500);
+  }
+
+  // Keyboard shortcuts for timeline navigation
+  function handleMetaTimelineKeydown(event) {
+    // Only active when meta story data is loaded
+    if (!metaStoryData || !timelineContainer) return;
+
+    // Don't intercept when typing in input fields
+    const activeElement = document.activeElement;
+    if (activeElement?.tagName === 'INPUT' ||
+        activeElement?.tagName === 'TEXTAREA' ||
+        activeElement?.isContentEditable) {
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      event.stopPropagation();
+      handlePrevYear();
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      event.stopPropagation();
+      handleNextYear();
+    }
+  }
+
   onMount(() => {
+    window.addEventListener('keydown', handleMetaTimelineKeydown);
     window.addEventListener('scroll', handleVerticalScroll, { passive: true });
     window.addEventListener('resize', handleResize);
 
@@ -203,6 +297,7 @@
   });
 
   onDestroy(() => {
+    window.removeEventListener('keydown', handleMetaTimelineKeydown);
     window.removeEventListener('scroll', handleVerticalScroll);
     window.removeEventListener('resize', handleResize);
 
@@ -250,6 +345,7 @@
           <div class="timeline-sticky-wrapper">
             <div class="timeline-horizontal-container" bind:this={timelineContainer}>
               <MetaStoryTimeline
+                bind:this={metaTimelineComponent}
                 chapters={metaStoryData.chapters}
                 personsRegistry={personsRegistry}
                 onEventClick={viewPersonEvent}
@@ -257,6 +353,33 @@
                 scrollProgress={scrollProgress}
               />
             </div>
+
+            <!-- Timeline navigation buttons -->
+            {#if metaTimelineComponent && (canNavigatePrev || canNavigateNext)}
+              <button
+                type="button"
+                class="timeline-nav-btn prev"
+                on:click={handlePrevYear}
+                disabled={!canNavigatePrev}
+                aria-label={$_('meta_story.prev_year')}
+              >
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d={mdiChevronLeft} />
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                class="timeline-nav-btn next"
+                on:click={handleNextYear}
+                disabled={!canNavigateNext}
+                aria-label={$_('meta_story.next_year')}
+              >
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d={mdiChevronRight} />
+                </svg>
+              </button>
+            {/if}
           </div>
         </div>
       </section>
@@ -394,7 +517,85 @@
     color: #94a3b8;
   }
 
+  /* Timeline navigation buttons */
+  .timeline-nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 60; /* Above timeline (z-index: 50), below modals (z-index: 10000) */
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .timeline-nav-btn.prev {
+    left: 1rem;
+  }
+
+  .timeline-nav-btn.next {
+    right: 1rem;
+  }
+
+  .timeline-nav-btn:hover:not(:disabled),
+  .timeline-nav-btn:focus:not(:disabled) {
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(148, 163, 184, 0.6);
+    transform: translateY(-50%) scale(1.05);
+    outline: none;
+  }
+
+  .timeline-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: translateY(-50%);
+  }
+
+  .timeline-nav-btn .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+  }
+
   /* Responsive */
+  @media (max-width: 768px) {
+    .timeline-nav-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .timeline-nav-btn.prev {
+      left: 0.5rem;
+    }
+
+    .timeline-nav-btn.next {
+      right: 0.5rem;
+    }
+
+    .timeline-nav-btn .icon {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+  }
+
+  @media (max-height: 500px) {
+    .timeline-nav-btn {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+  }
+
   @media (max-width: 640px) {
     .meta-story-view {
       padding: 1rem;

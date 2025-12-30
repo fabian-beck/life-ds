@@ -415,6 +415,51 @@
     return eventsByPerson;
   })();
 
+  // Extract unique years with events for navigation
+  $: yearsWithEvents = (() => {
+    if (!personEventsData || personEventsData.size === 0) return [];
+
+    const yearSet = new Set();
+    personEventsData.forEach((events) => {
+      events.forEach((event) => {
+        if (event.year) {
+          yearSet.add(event.year);
+        }
+      });
+    });
+
+    return Array.from(yearSet).sort((a, b) => a - b);
+  })();
+
+  // Export navigation functions for parent component
+  export function getNextYear() {
+    if (!currentIndicatorYear || yearsWithEvents.length === 0) return null;
+    return yearsWithEvents.find(y => y > currentIndicatorYear) || null;
+  }
+
+  export function getPrevYear() {
+    if (!currentIndicatorYear || yearsWithEvents.length === 0) return null;
+    return [...yearsWithEvents].reverse().find(y => y < currentIndicatorYear) || null;
+  }
+
+  export function yearToScrollProgress(targetYear) {
+    if (!timelineBounds || !targetYear || timelineWidthPx === 0) return null;
+
+    // Calculate pixel position of target year on timeline
+    const offsetYears = targetYear - timelineBounds.minYear;
+    const targetLeftPx = offsetYears * PIXELS_PER_YEAR;
+
+    // The scroll indicator is positioned at: scrollProgress * timelineWidthPx
+    // We want: scrollIndicatorLeftPx === targetLeftPx
+    // Therefore: scrollProgress * timelineWidthPx === targetLeftPx
+    // Solving: scrollProgress = targetLeftPx / timelineWidthPx
+
+    const scrollProgress = targetLeftPx / timelineWidthPx;
+
+    // Clamp to valid range [0, 1]
+    return Math.max(0, Math.min(scrollProgress, 1));
+  }
+
   // Tooltip state management
   let activeEventTooltip = null; // { personId, eventIndex, event, x, y, placement }
   let tooltipElement = null; // DOM reference for positioning
