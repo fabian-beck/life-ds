@@ -198,6 +198,7 @@
   // Navigation state
   let canNavigatePrev = false;
   let canNavigateNext = false;
+  let navigationTimeout = null;
 
   // Update navigation button states based on current position
   // This reactive statement re-runs whenever scrollProgress changes,
@@ -234,6 +235,12 @@
   function navigateToScrollProgress(targetScrollProgress) {
     if (!scrollProxyContainer || !timelineContainer) return;
 
+    // Cancel any in-progress navigation
+    if (navigationTimeout !== null) {
+      clearTimeout(navigationTimeout);
+      navigationTimeout = null;
+    }
+
     // Find the actual timeline container
     const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
     if (!actualTimelineContainer) return;
@@ -264,9 +271,10 @@
     });
 
     // Reset flag after smooth scroll completes (~500ms)
-    setTimeout(() => {
+    navigationTimeout = setTimeout(() => {
       isUpdatingScroll = false;
       lastScrollOrigin = null;
+      navigationTimeout = null;
     }, 500);
   }
 
