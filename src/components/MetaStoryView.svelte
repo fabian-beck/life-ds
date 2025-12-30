@@ -45,6 +45,9 @@
   $: if (timelineContainer && !timelineScrollListenerAttached) {
     // Use setTimeout to ensure MetaStoryTimeline has rendered its DOM
     setTimeout(() => {
+      // Check if timelineContainer still exists (component might have been destroyed)
+      if (!timelineContainer) return;
+
       const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
       if (actualTimelineContainer) {
         actualTimelineContainer.addEventListener('scroll', handleTimelineScroll, { passive: true });
