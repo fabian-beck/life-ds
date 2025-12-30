@@ -202,7 +202,7 @@
   // Update navigation button states based on current position
   // This reactive statement re-runs whenever scrollProgress changes,
   // ensuring button states update during manual scrolling
-  $: if (metaTimelineComponent) {
+  $: if (metaTimelineComponent && scrollProgress !== undefined) {
     canNavigatePrev = metaTimelineComponent.getPrevYear?.() !== null;
     canNavigateNext = metaTimelineComponent.getNextYear?.() !== null;
   }
@@ -232,26 +232,36 @@
   }
 
   function navigateToScrollProgress(targetScrollProgress) {
-    if (!scrollProxyContainer) return;
+    if (!scrollProxyContainer || !timelineContainer) return;
+
+    // Find the actual timeline container
+    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    if (!actualTimelineContainer) return;
 
     // Calculate target vertical scroll position
     const rect = scrollProxyContainer.getBoundingClientRect();
     const proxyContainerTop = rect.top + window.scrollY;
     const targetScrollY = proxyContainerTop + (targetScrollProgress * proxyHeight);
 
+    // Calculate target horizontal scroll position for timeline
+    const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+    const targetScrollLeft = targetScrollProgress * maxTimelineScroll;
+
     // Set flag to prevent feedback loops
     isUpdatingScroll = true;
     lastScrollOrigin = 'navigation';
 
-    // Smooth scroll to target year
+    // Update scroll progress and timeline horizontal scroll immediately for visual feedback
+    scrollProgress = targetScrollProgress;
+    actualTimelineContainer.scrollLeft = targetScrollLeft;
+    lastTimelineScrollLeft = targetScrollLeft;
+
+    // Smooth scroll vertically to target year
     window.scrollTo({
       top: targetScrollY,
       left: 0,
       behavior: 'smooth'
     });
-
-    // Update scroll progress for immediate visual feedback
-    scrollProgress = targetScrollProgress;
 
     // Reset flag after smooth scroll completes (~500ms)
     setTimeout(() => {

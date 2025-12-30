@@ -433,12 +433,12 @@
 
   // Export navigation functions for parent component
   export function getNextYear() {
-    if (!currentIndicatorYear || yearsWithEvents.length === 0) return null;
+    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined) return null;
     return yearsWithEvents.find(y => y > currentIndicatorYear) || null;
   }
 
   export function getPrevYear() {
-    if (!currentIndicatorYear || yearsWithEvents.length === 0) return null;
+    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined) return null;
     return [...yearsWithEvents].reverse().find(y => y < currentIndicatorYear) || null;
   }
 
