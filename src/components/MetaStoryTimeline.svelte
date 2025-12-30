@@ -106,10 +106,14 @@
 
   // Detect when scroll indicator hovers over event markers
   $: {
-    const HOVER_THRESHOLD = 8; // pixels of tolerance for intersection
-    const eventsByPosition = new Map(); // leftPx -> [event objects]
+    // Don't trigger tooltip updates while we're calculating placement
+    if (isCalculatingPlacement) {
+      // Skip this reactive block to prevent infinite loops
+    } else {
+      const HOVER_THRESHOLD = 8; // pixels of tolerance for intersection
+      const eventsByPosition = new Map(); // leftPx -> [event objects]
 
-    if (themesWithPersons && personEventsData && scrollIndicatorLeftPx > 0) {
+      if (themesWithPersons && personEventsData && scrollIndicatorLeftPx > 0) {
       themesWithPersons.forEach((theme, themeIndex) => {
         theme.persons.forEach((personData, personIndex) => {
           const events = personEventsData.get(personData.personId);
@@ -162,13 +166,26 @@
 
     // Show grouped tooltip after delay
     if (closestCluster && (!activeEventTooltip || !activeEventTooltip.clickTriggered)) {
-      if (indicatorHoverTimeout) clearTimeout(indicatorHoverTimeout);
+      // Check if we're already showing a tooltip for this exact cluster
+      const isShowingSameCluster = activeEventTooltip &&
+        !activeEventTooltip.clickTriggered &&
+        activeEventTooltip.events &&
+        activeEventTooltip.events.length === closestCluster.events.length &&
+        activeEventTooltip.events.every((evt, idx) =>
+          evt.personId === closestCluster.events[idx].personId &&
+          evt.eventIndex === closestCluster.events[idx].eventIndex
+        );
 
-      indicatorHoverTimeout = setTimeout(() => {
-        if (!activeEventTooltip || !activeEventTooltip.clickTriggered) {
-          showGroupedEventTooltip(closestCluster);
-        }
-      }, 600);
+      if (!isShowingSameCluster) {
+        if (indicatorHoverTimeout) clearTimeout(indicatorHoverTimeout);
+
+        indicatorHoverTimeout = setTimeout(() => {
+          // Double-check we're not in the middle of calculating placement
+          if (!isCalculatingPlacement && (!activeEventTooltip || !activeEventTooltip.clickTriggered)) {
+            showGroupedEventTooltip(closestCluster);
+          }
+        }, 600);
+      }
     } else if (!closestCluster) {
       if (indicatorHoverTimeout) {
         clearTimeout(indicatorHoverTimeout);
@@ -178,6 +195,7 @@
         hideEventTooltip();
       }
     }
+    } // End of isCalculatingPlacement check
   }
 
   // Generate year markers for the axis
@@ -474,44 +492,585 @@
   let hoveredEventsByIndicator = new Set(); // Track which events are hovered by scroll indicator
   let indicatorHoverTimeout = null; // Delay before showing tooltip on indicator hover
 
+  // Cache for density map performance
+  let cachedDensityMap = null;
+  let lastDensityMapScroll = 0;
+
+  // Guard against infinite tooltip placement loops
+  let isCalculatingPlacement = false;
+
+  // Helper to render tooltip content for runtime measurement
+  function renderTooltipContentForMeasurement(config) {
+    const { events } = config;
+
+    // Build HTML structure matching actual tooltip
+    const eventItems = events.map(evt => `
+      <div class="event-item" style="--item-primary: ${evt.colors.primary}; --item-primary-rgb: ${evt.colors.primaryRgb};">
+        <div class="event-item-header">
+          <div class="event-item-header-content">
+            <div class="event-person-name">${evt.personName}</div>
+            <div class="event-item-title">${evt.event.title}</div>
+          </div>
+          <button class="tooltip-action-compact">→</button>
+        </div>
+        ${evt.event.theme_connection ? `
+          <p class="event-item-description">${evt.event.theme_connection}</p>
+        ` : ''}
+      </div>
+    `).join('');
+
+    return `<div class="tooltip-events">${eventItems}</div>`;
+  }
+
+  // Measure actual tooltip dimensions at runtime (replaces static estimates)
+  function measureTooltipDimensions(tooltipConfig) {
+    // Create invisible clone of tooltip for measurement
+    const measurementElement = document.createElement('div');
+    measurementElement.className = `event-tooltip ${
+      tooltipConfig.events.length > 1 ? 'grouped' : ''
+    }`;
+
+    // Apply max-width constraints to match actual tooltip CSS
+    // Use consistent width for both single and multiple events
+    // Reserve space for nav buttons (40px on each side)
+    const maxWidth = Math.min(540, (window.innerWidth - 80) * 0.9);
+
+    measurementElement.style.cssText = `
+      position: fixed;
+      visibility: hidden;
+      pointer-events: none;
+      top: -10000px;
+      left: -10000px;
+      max-width: ${maxWidth}px;
+      opacity: 0;
+      z-index: -9999;
+    `;
+
+    // Render tooltip content structure
+    measurementElement.innerHTML = renderTooltipContentForMeasurement(tooltipConfig);
+
+    // Prevent this measurement from triggering any events or observers
+    measurementElement.setAttribute('data-measuring', 'true');
+
+    document.body.appendChild(measurementElement);
+
+    const rect = measurementElement.getBoundingClientRect();
+    const dimensions = {
+      width: rect.width,
+      height: rect.height,
+      safeWidth: rect.width + 8,  // Safety margin for borders/scrollbars
+      safeHeight: rect.height + 8
+    };
+
+    document.body.removeChild(measurementElement);
+
+    console.log('[Tooltip Measurement] Measured dimensions:', dimensions, 'for', tooltipConfig.events.length, 'events');
+
+    return dimensions;
+  }
+
+  // Gather all boundary constraints for placement decisions
+  function gatherBoundaryConstraints(triggerElement) {
+    const timelineContainer = document.querySelector('.meta-timeline-container');
+
+    return {
+      viewport: {
+        left: 40,  // Padding to avoid prev/next buttons
+        top: 0,
+        right: window.innerWidth - 40,  // Padding to avoid prev/next buttons
+        bottom: window.innerHeight,
+        width: window.innerWidth - 80,  // Account for both side paddings
+        height: window.innerHeight
+      },
+      container: timelineContainer
+        ? timelineContainer.getBoundingClientRect()
+        : null,
+      trigger: triggerElement.getBoundingClientRect(),
+      scrollLeft: timelineContainer?.scrollLeft || 0
+    };
+  }
+
+  // Generate 8 placement candidates (not just 2)
+  function generatePlacementCandidates(boundaries, dimensions) {
+    const { trigger, viewport } = boundaries;
+    const CLEARANCE = 12;
+
+    // Calculate trigger center for proximity scoring
+    const triggerCenterX = trigger.left + (trigger.width / 2);
+    const triggerCenterY = trigger.top + (trigger.height / 2);
+
+    // Clamp trigger X position to visible viewport bounds
+    // This prevents tooltips from being positioned off-screen when timeline is scrolled
+    const safeMargin = 10;
+    const clampedTriggerLeft = Math.max(
+      viewport.left + dimensions.safeWidth * 0.5 + safeMargin,
+      Math.min(trigger.left, viewport.right - dimensions.safeWidth * 0.5 - safeMargin)
+    );
+    const clampedTriggerRight = Math.max(
+      viewport.left + dimensions.safeWidth + safeMargin,
+      Math.min(trigger.right, viewport.right - safeMargin)
+    );
+    const clampedTriggerCenterX = Math.max(
+      viewport.left + dimensions.safeWidth * 0.5 + safeMargin,
+      Math.min(triggerCenterX, viewport.right - dimensions.safeWidth * 0.5 - safeMargin)
+    );
+
+    return [
+      // Priority 1: Top-center (default preference)
+      {
+        name: 'top-center',
+        x: clampedTriggerCenterX,
+        y: trigger.top - CLEARANCE,
+        anchor: { x: 0.5, y: 1.0 },
+        priority: 1
+      },
+
+      // Priority 2: Bottom-center (mobile-friendly)
+      {
+        name: 'bottom-center',
+        x: clampedTriggerCenterX,
+        y: trigger.bottom + CLEARANCE,
+        anchor: { x: 0.5, y: 0.0 },
+        priority: 2
+      },
+
+      // Priority 3: Horizontal placements (for vertical constraints)
+      {
+        name: 'left-middle',
+        x: clampedTriggerLeft - CLEARANCE,
+        y: triggerCenterY,
+        anchor: { x: 1.0, y: 0.5 },
+        priority: 3
+      },
+
+      {
+        name: 'right-middle',
+        x: clampedTriggerRight + CLEARANCE,
+        y: triggerCenterY,
+        anchor: { x: 0.0, y: 0.5 },
+        priority: 3
+      },
+
+      // Priority 4: Corner placements (last resort)
+      {
+        name: 'top-left',
+        x: clampedTriggerLeft,
+        y: trigger.top - CLEARANCE,
+        anchor: { x: 0.0, y: 1.0 },
+        priority: 4
+      },
+
+      {
+        name: 'top-right',
+        x: clampedTriggerRight,
+        y: trigger.top - CLEARANCE,
+        anchor: { x: 1.0, y: 1.0 },
+        priority: 4
+      },
+
+      {
+        name: 'bottom-left',
+        x: clampedTriggerLeft,
+        y: trigger.bottom + CLEARANCE,
+        anchor: { x: 0.0, y: 0.0 },
+        priority: 4
+      },
+
+      {
+        name: 'bottom-right',
+        x: clampedTriggerRight,
+        y: trigger.bottom + CLEARANCE,
+        anchor: { x: 1.0, y: 0.0 },
+        priority: 4
+      }
+    ];
+  }
+
+  // Analyze timeline density to prefer empty space (with caching for performance)
+  function analyzeTimelineDensity(forceRefresh = false) {
+    const timelineContainer = document.querySelector('.meta-timeline-container');
+    if (!timelineContainer) return null;
+
+    const currentScroll = timelineContainer.scrollLeft;
+    const scrollDelta = Math.abs(currentScroll - lastDensityMapScroll);
+
+    // Use cache if scroll movement < 100px
+    if (!forceRefresh && cachedDensityMap && scrollDelta < 100) {
+      return cachedDensityMap;
+    }
+
+    const personsLayer = timelineContainer.querySelector('.persons-layer');
+    if (!personsLayer) return null;
+
+    const containerRect = timelineContainer.getBoundingClientRect();
+
+    // Create density grid (50px cells)
+    const CELL_SIZE = 50;
+    const gridWidth = Math.ceil(containerRect.width / CELL_SIZE);
+    const gridHeight = Math.ceil(containerRect.height / CELL_SIZE);
+
+    const densityGrid = Array(gridHeight).fill(0).map(() =>
+      Array(gridWidth).fill(0)
+    );
+
+    // Mark cells occupied by event markers (high density)
+    const allMarkers = Array.from(personsLayer.querySelectorAll('.event-marker'));
+    allMarkers.forEach(marker => {
+      const rect = marker.getBoundingClientRect();
+      const cellX = Math.floor((rect.left - containerRect.left + timelineContainer.scrollLeft) / CELL_SIZE);
+      const cellY = Math.floor((rect.top - containerRect.top) / CELL_SIZE);
+
+      if (cellX >= 0 && cellX < gridWidth && cellY >= 0 && cellY < gridHeight) {
+        densityGrid[cellY][cellX] += 1.0; // Markers are high priority obstacles
+      }
+    });
+
+    // Mark cells occupied by person lifespans (lower density)
+    const allLifespans = Array.from(personsLayer.querySelectorAll('.person-lifespan'));
+    allLifespans.forEach(lifespan => {
+      const rect = lifespan.getBoundingClientRect();
+      const startCell = Math.floor((rect.left - containerRect.left + timelineContainer.scrollLeft) / CELL_SIZE);
+      const endCell = Math.floor((rect.right - containerRect.left + timelineContainer.scrollLeft) / CELL_SIZE);
+      const cellY = Math.floor((rect.top - containerRect.top) / CELL_SIZE);
+
+      for (let x = startCell; x <= endCell && x < gridWidth; x++) {
+        if (x >= 0 && cellY >= 0 && cellY < gridHeight) {
+          densityGrid[cellY][x] += 0.3; // Lifespans are lower priority
+        }
+      }
+    });
+
+    cachedDensityMap = {
+      grid: densityGrid,
+      cellSize: CELL_SIZE,
+      containerRect: containerRect
+    };
+    lastDensityMapScroll = currentScroll;
+
+    return cachedDensityMap;
+  }
+
+  // Calculate density score for a placement
+  function calculateDensityScore(placement, dimensions, densityMap) {
+    if (!densityMap) return 0;
+
+    const { grid, cellSize, containerRect } = densityMap;
+
+    // Calculate tooltip bounding box
+    const tooltipRect = {
+      left: placement.x - (dimensions.safeWidth * placement.anchor.x),
+      top: placement.y - (dimensions.safeHeight * placement.anchor.y),
+      width: dimensions.safeWidth,
+      height: dimensions.safeHeight
+    };
+
+    // Determine which cells the tooltip would overlap
+    const startCellX = Math.floor((tooltipRect.left - containerRect.left) / cellSize);
+    const endCellX = Math.floor((tooltipRect.left + tooltipRect.width - containerRect.left) / cellSize);
+    const startCellY = Math.floor((tooltipRect.top - containerRect.top) / cellSize);
+    const endCellY = Math.floor((tooltipRect.top + tooltipRect.height - containerRect.top) / cellSize);
+
+    let totalDensity = 0;
+    let cellCount = 0;
+
+    for (let y = startCellY; y <= endCellY; y++) {
+      for (let x = startCellX; x <= endCellX; x++) {
+        if (y >= 0 && y < grid.length && x >= 0 && x < grid[0].length) {
+          totalDensity += grid[y][x];
+          cellCount++;
+        }
+      }
+    }
+
+    // Return average density (0 = empty space, higher = more crowded)
+    return cellCount > 0 ? totalDensity / cellCount : 0;
+  }
+
+  // Comprehensive boundary checking
+  function calculateBoundaryScore(placement, dimensions, boundaries) {
+    const { viewport } = boundaries;
+
+    // Calculate tooltip bounding box based on anchor point
+    const tooltipRect = {
+      left: placement.x - (dimensions.safeWidth * placement.anchor.x),
+      top: placement.y - (dimensions.safeHeight * placement.anchor.y),
+      right: placement.x + (dimensions.safeWidth * (1 - placement.anchor.x)),
+      bottom: placement.y + (dimensions.safeHeight * (1 - placement.anchor.y))
+    };
+
+    console.log(`[Boundary Check] ${placement.name}:`, {
+      placementXY: { x: placement.x, y: placement.y },
+      anchor: placement.anchor,
+      dimensions: { width: dimensions.safeWidth, height: dimensions.safeHeight },
+      tooltipRect,
+      viewport
+    });
+
+    let clipping = 0;
+    const violations = [];
+
+    // Check all four viewport edges
+    if (tooltipRect.left < viewport.left) {
+      const overflow = viewport.left - tooltipRect.left;
+      clipping += overflow;
+      violations.push(`left: ${overflow.toFixed(0)}px`);
+    }
+
+    if (tooltipRect.right > viewport.right) {
+      const overflow = tooltipRect.right - viewport.right;
+      clipping += overflow;
+      violations.push(`right: ${overflow.toFixed(0)}px`);
+    }
+
+    if (tooltipRect.top < viewport.top) {
+      const overflow = viewport.top - tooltipRect.top;
+      clipping += overflow;
+      violations.push(`top: ${overflow.toFixed(0)}px`);
+    }
+
+    if (tooltipRect.bottom > viewport.bottom) {
+      const overflow = tooltipRect.bottom - viewport.bottom;
+      clipping += overflow;
+      violations.push(`bottom: ${overflow.toFixed(0)}px`);
+    }
+
+    console.log(`[Boundary Check] ${placement.name} result:`, {
+      clipping,
+      violations,
+      calculatedTooltipRect: tooltipRect
+    });
+
+    return {
+      clipping,        // Total pixels clipped (0 = no clipping)
+      violations,      // List of boundary violations
+      tooltipRect      // Final computed position
+    };
+  }
+
+  // Multi-factor scoring system to select optimal placement
+  function selectOptimalPlacement(candidates, dimensions, boundaries, densityMap) {
+    const scoredCandidates = candidates.map(candidate => {
+      let score = 0;
+      const debugReasons = [];
+
+      // Factor 1: Boundary compliance (CRITICAL - 100 points or disqualified)
+      const boundaryScore = calculateBoundaryScore(candidate, dimensions, boundaries);
+      if (boundaryScore.clipping > 0) {
+        score = -1000; // Disqualified
+        debugReasons.push(`CLIPPED: ${boundaryScore.violations.join(', ')}`);
+      } else {
+        score += 100;
+        debugReasons.push('✓ No clipping');
+      }
+
+      // Factor 2: Empty space preference (50 points max)
+      const densityScore = calculateDensityScore(candidate, dimensions, densityMap);
+      const emptySpacePoints = Math.max(0, 50 - (densityScore * 10));
+      score += emptySpacePoints;
+      debugReasons.push(`Density: ${densityScore.toFixed(2)} → ${emptySpacePoints.toFixed(1)}pts`);
+
+      // Factor 3: Proximity to trigger (30 points max)
+      const triggerCenterX = boundaries.trigger.left + (boundaries.trigger.width / 2);
+      const triggerCenterY = boundaries.trigger.top + (boundaries.trigger.height / 2);
+      const distance = Math.sqrt(
+        Math.pow(candidate.x - triggerCenterX, 2) +
+        Math.pow(candidate.y - triggerCenterY, 2)
+      );
+      const proximityPoints = Math.max(0, 30 - (distance / 10));
+      score += proximityPoints;
+      debugReasons.push(`Distance: ${distance.toFixed(0)}px → ${proximityPoints.toFixed(1)}pts`);
+
+      // Factor 4: Priority bonus (20 points max)
+      const priorityPoints = (5 - candidate.priority) * 5;
+      score += priorityPoints;
+      debugReasons.push(`Priority: ${candidate.priority} → ${priorityPoints}pts`);
+
+      return {
+        ...candidate,
+        score,
+        debugReasons,
+        boundaryScore: boundaryScore
+      };
+    });
+
+    // Sort by score (highest first)
+    scoredCandidates.sort((a, b) => b.score - a.score);
+
+    // Return best candidate (or fallback if all clipped)
+    const best = scoredCandidates[0];
+
+    if (best.score < 0) {
+      console.warn('[Tooltip] All placements clipped, using fallback');
+      return generateFallbackPlacement(boundaries, dimensions);
+    }
+
+    console.log(`[Tooltip] Selected: ${best.name} (${best.score.toFixed(1)} pts)`, best.debugReasons);
+    return best;
+  }
+
+  // Fallback placement when all candidates clip
+  function generateFallbackPlacement(boundaries, dimensions) {
+    const { viewport, trigger } = boundaries;
+
+    // Strategy: Center horizontally, position at top of viewport with scroll
+    const x = Math.min(
+      Math.max(
+        trigger.left + (trigger.width / 2),
+        dimensions.safeWidth / 2 + 10
+      ),
+      viewport.right - dimensions.safeWidth / 2 - 10
+    );
+
+    const y = viewport.top + 60; // 60px from top
+
+    return {
+      name: 'fallback-top',
+      x,
+      y,
+      anchor: { x: 0.5, y: 0.0 },
+      priority: 5,
+      score: -500, // Negative score indicates fallback
+      isFallback: true,
+      debugReasons: ['All placements violated boundaries - using fallback']
+    };
+  }
+
+  // Mobile-specific optimizations
+  function applyMobileOptimizations(placement, dimensions, boundaries) {
+    const { viewport } = boundaries;
+    const isMobile = viewport.width < 768;
+    const isVerySmall = viewport.width < 400 || viewport.height < 500;
+
+    if (!isMobile) return placement;
+
+    // Very small screens: Force bottom placement with constrained width
+    if (isVerySmall) {
+      const maxWidth = viewport.width - 20;
+
+      // If tooltip is too tall for viewport, enable internal scrolling
+      if (dimensions.safeHeight > viewport.height * 0.7) {
+        return {
+          ...placement,
+          name: 'mobile-scroll-bottom',
+          x: viewport.width / 2,
+          y: viewport.top + 60,
+          anchor: { x: 0.5, y: 0.0 },
+          maxWidth,
+          maxHeight: viewport.height * 0.7,
+          enableInternalScroll: true,
+          mobileOverride: true
+        };
+      }
+
+      // Otherwise, prefer bottom placement (thumb-friendly)
+      if (!placement.name.includes('bottom')) {
+        return {
+          ...placement,
+          name: 'mobile-bottom',
+          y: Math.min(
+            boundaries.trigger.bottom + 20,
+            viewport.bottom - dimensions.safeHeight - 10
+          ),
+          anchor: { x: 0.5, y: 0.0 },
+          maxWidth,
+          mobileOverride: true
+        };
+      }
+    }
+
+    return placement;
+  }
+
+  // Main placement orchestrator - unified logic for all tooltips
+  function calculateTooltipPlacement(triggerElement, tooltipConfig) {
+    // Guard against infinite loops
+    if (isCalculatingPlacement) {
+      console.warn('[Tooltip Placement] Already calculating placement, aborting to prevent infinite loop');
+      return null;
+    }
+
+    isCalculatingPlacement = true;
+
+    try {
+      console.log('[Tooltip Placement] === Starting placement calculation ===');
+
+      // Phase 1: Gather information
+      const dimensions = measureTooltipDimensions(tooltipConfig);
+    console.log('[Tooltip Placement] Dimensions:', dimensions);
+
+    const boundaries = gatherBoundaryConstraints(triggerElement);
+    console.log('[Tooltip Placement] Boundaries:', {
+      viewport: boundaries.viewport,
+      trigger: boundaries.trigger,
+      scrollLeft: boundaries.scrollLeft
+    });
+
+    const densityMap = analyzeTimelineDensity();
+    console.log('[Tooltip Placement] Density map:', densityMap ? 'Generated' : 'null');
+
+    // Phase 2: Generate candidates
+    const candidates = generatePlacementCandidates(boundaries, dimensions);
+    console.log('[Tooltip Placement] Generated candidates:', candidates.map(c => ({
+      name: c.name,
+      x: c.x,
+      y: c.y,
+      anchor: c.anchor,
+      priority: c.priority
+    })));
+
+    // Phase 3: Score and select optimal placement
+    let placement = selectOptimalPlacement(
+      candidates,
+      dimensions,
+      boundaries,
+      densityMap
+    );
+    console.log('[Tooltip Placement] Selected placement before mobile optimizations:', {
+      name: placement.name,
+      x: placement.x,
+      y: placement.y,
+      anchor: placement.anchor,
+      score: placement.score
+    });
+
+    // Phase 4: Apply mobile optimizations
+    placement = applyMobileOptimizations(placement, dimensions, boundaries);
+    console.log('[Tooltip Placement] Final placement after mobile optimizations:', {
+      name: placement.name,
+      x: placement.x,
+      y: placement.y,
+      anchor: placement.anchor,
+      maxWidth: placement.maxWidth,
+      maxHeight: placement.maxHeight,
+      enableInternalScroll: placement.enableInternalScroll
+    });
+
+      // Phase 5: Return final placement with dimensions
+      return {
+        ...placement,
+        dimensions,
+        boundaries
+      };
+    } finally {
+      // Reset flag after a small delay to let reactive statements settle
+      setTimeout(() => {
+        isCalculatingPlacement = false;
+      }, 50);
+    }
+  }
+
   function showEventTooltip(personId, eventIndex, event, clickEvent) {
-    const rect = clickEvent.target.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    const tooltipWidth = 320; // max-width from CSS
-    const tooltipHeight = 200; // estimated height
-
-    // Calculate optimal position
-    let x = rect.left + rect.width / 2;
-    let y = rect.top;
-    let placement = 'top'; // default: above the marker
-
-    // Check if tooltip would go off the top
-    if (rect.top < tooltipHeight + 20) {
-      placement = 'bottom';
-      y = rect.bottom;
-    }
-
-    // Check horizontal bounds and adjust
-    let adjustedX = x;
-    if (x - tooltipWidth / 2 < 10) {
-      // Too close to left edge
-      adjustedX = tooltipWidth / 2 + 10;
-    } else if (x + tooltipWidth / 2 > viewportWidth - 10) {
-      // Too close to right edge
-      adjustedX = viewportWidth - tooltipWidth / 2 - 10;
-    }
-
     // Clear any pending indicator hover timeout
     if (indicatorHoverTimeout) {
       clearTimeout(indicatorHoverTimeout);
       indicatorHoverTimeout = null;
     }
 
-    // Find person data for colors
+    // Build event configuration
     const person = getPersonById(personId);
     const colors = getPersonColors(personId);
 
-    activeEventTooltip = {
+    const eventConfig = {
       events: [{
         personId,
         eventIndex,
@@ -519,12 +1078,20 @@
         personName: person.name.replace(/_/g, ' '),
         colors
       }],
-      year: event.year,
-      x: adjustedX,
-      y: y,
-      placement: placement,
-      clickTriggered: true // Mark as click-triggered
+      clickTriggered: true
     };
+
+    // Use unified placement algorithm
+    const placement = calculateTooltipPlacement(clickEvent.target, eventConfig);
+
+    // Update reactive state (only if placement succeeded)
+    if (placement) {
+      activeEventTooltip = {
+        ...eventConfig,
+        ...placement,
+        year: event.year
+      };
+    }
   }
 
   function hideEventTooltip() {
@@ -539,59 +1106,70 @@
     const containerRect = timelineContainer.getBoundingClientRect();
     const scrollLeft = timelineContainer.scrollLeft;
 
-    // Calculate screen position for the cluster
-    const eventLeftPx = cluster.leftPx;
-    const screenX = containerRect.left + eventLeftPx - scrollLeft + 40;
-
-    // Use the topmost event's vertical position
+    // Find topmost event for vertical positioning
     const topEvent = cluster.events.reduce((top, evt) =>
       evt.personTopPx < top.personTopPx ? evt : top
     );
-    const screenY = containerRect.top + 60 + 40 + 10 + topEvent.personTopPx + 15;
 
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const tooltipWidth = 520; // Much wider for grouped content
+    // Create virtual trigger element at cluster position
+    const virtualTrigger = {
+      getBoundingClientRect: () => {
+        const x = containerRect.left + cluster.leftPx - scrollLeft + 40;
+        const y = containerRect.top + 60 + 40 + 10 + topEvent.personTopPx + 15;
 
-    // Estimate height based on event count (header + items)
-    const baseHeight = 60; // Header
-    const itemHeight = 110; // Per event (name + title + description + button)
-    const estimatedHeight = Math.min(baseHeight + (cluster.events.length * itemHeight), 450);
+        return {
+          left: x,
+          top: y,
+          right: x + 24,
+          bottom: y + 24,
+          width: 24,
+          height: 24
+        };
+      }
+    };
 
-    let placement = 'top';
-    let y = screenY;
-
-    // Prefer top with extra clearance for grouped tooltip
-    const topClearance = 40; // Extra space above markers
-    if (screenY - estimatedHeight - topClearance < 0) {
-      placement = 'bottom';
-      y = screenY + 30; // More clearance below markers
-    } else {
-      y = screenY - 20;
-    }
-
-    // Check bottom overflow when forced to bottom placement
-    if (placement === 'bottom' && y + estimatedHeight + 20 > viewportHeight) {
-      placement = 'top';
-      y = screenY - 20;
-    }
-
-    // Horizontal centering with bounds checking
-    let adjustedX = screenX;
-    if (screenX - tooltipWidth / 2 < 10) {
-      adjustedX = tooltipWidth / 2 + 10;
-    } else if (screenX + tooltipWidth / 2 > viewportWidth - 10) {
-      adjustedX = viewportWidth - tooltipWidth / 2 - 10;
-    }
-
-    activeEventTooltip = {
+    const eventConfig = {
       events: cluster.events,
-      year: cluster.events[0].event.year,
-      x: adjustedX,
-      y: y,
-      placement: placement,
       clickTriggered: false
     };
+
+    // Use unified placement algorithm
+    const placement = calculateTooltipPlacement(virtualTrigger, eventConfig);
+
+    // Update reactive state (only if placement succeeded)
+    if (placement) {
+      activeEventTooltip = {
+        ...eventConfig,
+        ...placement,
+        year: cluster.events[0].event.year
+      };
+
+      // Debug: Verify actual rendered position after next frame
+      requestAnimationFrame(() => {
+        if (tooltipElement) {
+          const actualRect = tooltipElement.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(tooltipElement);
+          console.log('[Tooltip Debug] Actual rendered position:', {
+            expectedLeft: placement.x - (placement.dimensions.safeWidth * placement.anchor.x),
+            expectedTop: placement.y - (placement.dimensions.safeHeight * placement.anchor.y),
+            actualRect: {
+              left: actualRect.left,
+              top: actualRect.top,
+              right: actualRect.right,
+              bottom: actualRect.bottom,
+              width: actualRect.width,
+              height: actualRect.height
+            },
+            computedCSS: {
+              left: computedStyle.left,
+              top: computedStyle.top,
+              transform: computedStyle.transform,
+              position: computedStyle.position
+            }
+          });
+        }
+      });
+    }
   }
 
   function handleEventClick(personId, event) {
@@ -619,24 +1197,49 @@
       if (activeEventTooltip) {
         hideEventTooltip();
       }
+
+      // Invalidate density map cache on significant scroll
+      const timelineContainer = document.querySelector('.meta-timeline-container');
+      if (timelineContainer) {
+        const scrollDelta = Math.abs(timelineContainer.scrollLeft - lastDensityMapScroll);
+        if (scrollDelta > 100) {
+          cachedDensityMap = null;
+        }
+      }
+    }
+
+    function handleResize() {
+      // Invalidate density map on viewport change
+      cachedDensityMap = null;
+
+      // Close tooltips on resize (position may be invalid)
+      if (activeEventTooltip) {
+        hideEventTooltip();
+      }
     }
 
     const timelineContainer = document.querySelector('.meta-timeline-container');
 
     document.addEventListener('click', handleClickOutside);
+    window.addEventListener('resize', handleResize);
     if (timelineContainer) {
       timelineContainer.addEventListener('scroll', handleScroll);
     }
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('resize', handleResize);
       if (timelineContainer) {
         timelineContainer.removeEventListener('scroll', handleScroll);
       }
-      // Clear pending timeout on unmount
+
+      // Clear timeout on unmount
       if (indicatorHoverTimeout) {
         clearTimeout(indicatorHoverTimeout);
       }
+
+      // Clear cache
+      cachedDensityMap = null;
     };
   });
 </script>
@@ -763,58 +1366,62 @@
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
     </div>
-
-    <!-- Event tooltip (single or grouped) -->
-    {#if activeEventTooltip}
-      <div
-        class="event-tooltip"
-        class:placement-top={activeEventTooltip.placement === 'top'}
-        class:placement-bottom={activeEventTooltip.placement === 'bottom'}
-        class:grouped={activeEventTooltip.events.length > 1}
-        bind:this={tooltipElement}
-        style="
-          left: {activeEventTooltip.x}px;
-          top: {activeEventTooltip.y}px;
-        "
-        on:click={(e) => e.stopPropagation()}
-        on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
-        role="dialog"
-        aria-label="Event details"
-      >
-        <!-- Event list (always scrollable) -->
-        <div class="tooltip-events">
-          {#each activeEventTooltip.events as evt}
-            <div
-              class="event-item"
-              style="
-                --item-primary: {evt.colors.primary};
-                --item-primary-rgb: {evt.colors.primaryRgb};
-              "
-            >
-              <div class="event-item-header">
-                <div class="event-item-header-content">
-                  <div class="event-person-name">{evt.personName}</div>
-                  <div class="event-item-title">{evt.event.title}</div>
-                </div>
-                <button
-                  class="tooltip-action-compact"
-                  on:click={() => handleEventClick(evt.personId, evt.event)}
-                  title="Jump to event in person's story"
-                >
-                  →
-                </button>
-              </div>
-
-              {#if evt.event.theme_connection}
-                <p class="event-item-description">{evt.event.theme_connection}</p>
-              {/if}
-            </div>
-          {/each}
-        </div>
-      </div>
-    {/if}
   </div>
 </div>
+
+<!-- Event tooltip (single or grouped) - rendered outside timeline container for proper fixed positioning -->
+{#if activeEventTooltip}
+  <div
+    class="event-tooltip"
+    class:grouped={activeEventTooltip.events.length > 1}
+    data-mobile-scroll={activeEventTooltip.enableInternalScroll || false}
+    bind:this={tooltipElement}
+    style="
+      left: {activeEventTooltip.x}px;
+      top: {activeEventTooltip.y}px;
+      --anchor-x: {activeEventTooltip.anchor.x};
+      --anchor-y: {activeEventTooltip.anchor.y};
+      --tooltip-max-width: {activeEventTooltip.maxWidth ? `${activeEventTooltip.maxWidth}px` : 'min(540px, calc(90vw - 80px))'};
+      --tooltip-max-height: {activeEventTooltip.maxHeight ? `${activeEventTooltip.maxHeight}px` : 'none'};
+      --tooltip-overflow: {activeEventTooltip.enableInternalScroll ? 'auto' : 'visible'};
+    "
+    on:click={(e) => e.stopPropagation()}
+    on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
+    role="dialog"
+    aria-label="Event details"
+  >
+    <!-- Event list (always scrollable) -->
+    <div class="tooltip-events">
+      {#each activeEventTooltip.events as evt}
+        <div
+          class="event-item"
+          style="
+            --item-primary: {evt.colors.primary};
+            --item-primary-rgb: {evt.colors.primaryRgb};
+          "
+        >
+          <div class="event-item-header">
+            <div class="event-item-header-content">
+              <div class="event-person-name">{evt.personName}</div>
+              <div class="event-item-title">{evt.event.title}</div>
+            </div>
+            <button
+              class="tooltip-action-compact"
+              on:click={() => handleEventClick(evt.personId, evt.event)}
+              title="Jump to event in person's story"
+            >
+              →
+            </button>
+          </div>
+
+          {#if evt.event.theme_connection}
+            <p class="event-item-description">{evt.event.theme_connection}</p>
+          {/if}
+        </div>
+      {/each}
+    </div>
+  </div>
+{/if}
 
 <style>
   /* Container - full width scrollable panel */
@@ -1275,11 +1882,10 @@
     background: rgba(var(--person-primary-rgb), 0.8);
   }
 
-  /* Event tooltip - styled with person's colors */
+  /* Event tooltip - now supports multiple placement modes */
   .event-tooltip {
     position: fixed;
-    min-width: 240px;
-    max-width: min(320px, 90vw);
+    width: min(540px, calc(90vw - 80px));
     background: rgb(15, 23, 42);
     border: 2px solid rgba(56, 189, 248, 0.5);
     border-radius: 0.5rem;
@@ -1287,39 +1893,40 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     z-index: 10000;
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+
+    /* Mobile constraint overrides */
+    width: var(--tooltip-max-width, min(540px, calc(90vw - 80px)));
+    max-height: var(--tooltip-max-height, none);
+    overflow-y: var(--tooltip-overflow, visible);
+
+    /* Dynamic transform based on anchor point */
+    transform: translate(
+      calc(-100% * var(--anchor-x, 0.5)),
+      calc(-100% * var(--anchor-y, 0.5))
+    );
+    animation: fadeInTooltip 0.2s ease;
   }
 
-  /* Placement: above the marker (default) */
-  .event-tooltip.placement-top {
-    transform: translate(-50%, calc(-100% - 12px));
-    animation: fadeInTooltipTop 0.2s ease;
+  /* Mobile scroll override */
+  .event-tooltip[data-mobile-scroll="true"] .tooltip-events {
+    max-height: inherit;
+    overflow-y: auto;
   }
 
-  /* Placement: below the marker */
-  .event-tooltip.placement-bottom {
-    transform: translate(-50%, 12px);
-    animation: fadeInTooltipBottom 0.2s ease;
-  }
-
-  @keyframes fadeInTooltipTop {
+  @keyframes fadeInTooltip {
     from {
       opacity: 0;
-      transform: translate(-50%, calc(-100% - 8px));
+      transform: translate(
+        calc(-100% * var(--anchor-x, 0.5)),
+        calc(-100% * var(--anchor-y, 0.5) - 10px)
+      );
     }
     to {
       opacity: 1;
-      transform: translate(-50%, calc(-100% - 12px));
-    }
-  }
-
-  @keyframes fadeInTooltipBottom {
-    from {
-      opacity: 0;
-      transform: translate(-50%, 8px);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, 12px);
+      transform: translate(
+        calc(-100% * var(--anchor-x, 0.5)),
+        calc(-100% * var(--anchor-y, 0.5))
+      );
     }
   }
 
@@ -1385,14 +1992,9 @@
     transform: translateY(0);
   }
 
-  /* Grouped tooltip adjustments */
+  /* Grouped tooltip - same width as single tooltip for consistency */
   .event-tooltip.grouped {
-    min-width: 400px;
-    max-width: min(560px, 90vw);
-    max-height: 450px;
-    display: flex;
-    flex-direction: column;
-    background: rgb(15, 23, 42);
+    /* Width is consistent with single tooltips */
   }
 
   /* Event list container - always scrollable with proper constraints */

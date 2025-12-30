@@ -498,7 +498,7 @@
     position: sticky;
     top: 0;
     height: 100vh;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to allow tooltips to overflow */
     z-index: 50;
   }
 
