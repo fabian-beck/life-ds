@@ -107,50 +107,31 @@
   // Calculate visible viewport bounds in pixel coordinates
   $: viewportBounds = (() => {
     if (typeof window === 'undefined') {
-      console.log('[ViewportBounds] SSR - returning null');
       return null;
     }
 
     const container = document.querySelector('.meta-timeline-container');
     if (!container) {
-      console.log('[ViewportBounds] Container not found');
       return null;
     }
 
     const viewportWidthPx = container.clientWidth;
     const scrollLeftPx = scrollProgress * Math.max(0, timelineWidthPx - viewportWidthPx);
 
-    const bounds = {
+    return {
       left: scrollLeftPx,
       right: scrollLeftPx + viewportWidthPx
     };
-
-    console.log('[ViewportBounds]', {
-      scrollProgress,
-      timelineWidthPx,
-      viewportWidthPx,
-      scrollLeftPx,
-      bounds
-    });
-
-    return bounds;
   })();
 
   // Track which persons are visible in viewport (as array for Svelte reactivity)
   $: visiblePersonIds = (() => {
     if (!viewportBounds || !themesWithPersons) {
-      console.log('[VisiblePersons] Missing dependencies:', {
-        hasViewportBounds: !!viewportBounds,
-        hasThemesWithPersons: !!themesWithPersons,
-        themesCount: themesWithPersons?.length
-      });
       return [];
     }
 
     const visible = [];
     const VISIBILITY_MARGIN = 100; // Extra pixels for smooth transitions
-
-    console.log('[VisiblePersons] Checking visibility with bounds:', viewportBounds);
 
     themesWithPersons.forEach((theme, themeIdx) => {
       theme.persons.forEach((personData, personIdx) => {
@@ -163,21 +144,11 @@
           personLeft < (viewportBounds.right + VISIBILITY_MARGIN)
         );
 
-        console.log(`[VisiblePersons] ${personData.personId}:`, {
-          personLeft,
-          personRight,
-          viewportLeft: viewportBounds.left - VISIBILITY_MARGIN,
-          viewportRight: viewportBounds.right + VISIBILITY_MARGIN,
-          isVisible
-        });
-
         if (isVisible) {
           visible.push(personData.personId);
         }
       });
     });
-
-    console.log('[VisiblePersons] Final visible persons:', visible);
 
     return visible;
   })();
