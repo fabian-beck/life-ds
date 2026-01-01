@@ -1321,10 +1321,6 @@
               --person-secondary-rgb: {colors.secondaryRgb};
             "
             title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
-            on:click={() => handlePersonClick(personData.personId)}
-            on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
-            role="button"
-            tabindex="0"
           >
             <div class="person-name-wrapper">
               <div class="person-name-label">
@@ -1332,7 +1328,13 @@
               </div>
             </div>
             {#if personData.portrait}
-              <div class="person-portrait">
+              <div
+                class="person-portrait"
+                on:click={() => handlePersonClick(personData.personId)}
+                on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
+                role="button"
+                tabindex="0"
+              >
                 <img
                   src={personData.portrait}
                   alt={personData.person.name.replace(/_/g, ' ')}
@@ -1610,19 +1612,7 @@
   .person-lifespan {
     position: absolute;
     height: 30px;
-    transition: height 0.3s ease-out, top 0.3s ease-out, transform 0.2s ease-out;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .person-lifespan:hover {
-    z-index: 100;
-    transform: translateY(-2px);
-  }
-
-  .person-lifespan:focus-visible {
-    outline: 2px solid rgba(56, 189, 248, 1);
-    outline-offset: 2px;
+    transition: height 0.3s ease-out, top 0.3s ease-out;
   }
 
   /* Collapsed state - reduced height when not in viewport */
@@ -1707,6 +1697,13 @@
     transition: all 0.2s;
     z-index: 10;
     overflow: hidden;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .person-portrait:focus-visible {
+    outline: 2px solid rgba(56, 189, 248, 1);
+    outline-offset: 2px;
   }
 
   /* Portrait image inside container */
@@ -1718,7 +1715,7 @@
     scale: 1.25;
   }
 
-  .person-lifespan:hover .person-portrait {
+  .person-portrait:hover {
     border-color: rgba(var(--person-primary-rgb), 1);
     box-shadow: 0 4px 12px rgba(var(--person-primary-rgb), 0.6);
     transform: translateY(-50%) scale(1.1);
@@ -1728,7 +1725,7 @@
     border-color: rgba(var(--person-secondary-rgb), 0.8);
   }
 
-  .person-lifespan.alive:hover .person-portrait {
+  .person-lifespan.alive .person-portrait:hover {
     border-color: rgba(var(--person-secondary-rgb), 1);
   }
 
@@ -1743,23 +1740,12 @@
     background: linear-gradient(90deg, rgba(var(--person-primary-rgb), 0.6), rgba(var(--person-secondary-rgb), 0.6));
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
     transition: all 0.2s;
-  }
-
-  .person-lifespan:hover .person-line {
-    height: 6px;
-    background: linear-gradient(90deg, rgba(var(--person-primary-rgb), 0.8), rgba(var(--person-secondary-rgb), 0.8));
-    box-shadow: 0 2px 8px rgba(var(--person-primary-rgb), 0.4);
+    pointer-events: none;
   }
 
   .person-lifespan.alive .person-line {
     background: linear-gradient(90deg, rgba(var(--person-secondary-rgb), 0.6), rgba(var(--person-primary-rgb), 0.6));
-  }
-
-  .person-lifespan.alive:hover .person-line {
-    background: linear-gradient(90deg, rgba(var(--person-secondary-rgb), 0.8), rgba(var(--person-primary-rgb), 0.8));
-    box-shadow: 0 2px 8px rgba(var(--person-secondary-rgb), 0.4);
   }
 
   /* Person dates container */
