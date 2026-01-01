@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { fade } from 'svelte/transition';
   import { _ } from '../stores/language.js';
   import personStylesData from '../../data/person_styles.json';
 
@@ -8,6 +9,7 @@
   export let onEventClick = () => {};
   export let subtopics = [];
   export let scrollProgress = 0; // 0 to 1, representing horizontal scroll position
+  export let isSticky = false; // Whether timeline is in sticky/fullscreen mode
 
   // Person styles registry
   const personStyles = personStylesData.styles;
@@ -294,6 +296,22 @@
     });
   })();
 
+  // Determine which chapter is currently active based on year indicator position
+  $: currentChapterByIndicator = (() => {
+    if (!currentIndicatorYear || !chaptersWithPositions || chaptersWithPositions.length === 0) {
+      return null;
+    }
+
+    // Find the chapter whose date range contains the current indicator year
+    const activeChapter = chaptersWithPositions.find(chapter => {
+      const startYear = parseInt(chapter.date_start);
+      const endYear = parseInt(chapter.date_end);
+      return currentIndicatorYear >= startYear && currentIndicatorYear <= endYear;
+    });
+
+    return activeChapter || null;
+  })();
+
   // Helper: Extract persons from chapters (fallback when no subtopics)
   function extractPersonsFromChapters() {
     if (!chapters || chapters.length === 0 || !personsRegistry) return [];
@@ -439,7 +457,7 @@
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
     // Fixed heights for top sections
-    const chaptersRowHeight = 60; // .chapters-row height
+    const topPadding = 100; // .timeline-wrapper padding-top for fixed chapter header
     const yearAxisHeight = 40; // .year-axis height
     const yearAxisMarginTop = 5;
     const personsLayerMarginTop = 10;
@@ -462,7 +480,7 @@
     // Add some bottom padding
     const bottomPadding = 20;
 
-    return chaptersRowHeight + yearAxisMarginTop + yearAxisHeight + personsLayerMarginTop + personsLayerHeight + bottomPadding;
+    return topPadding + yearAxisMarginTop + yearAxisHeight + personsLayerMarginTop + personsLayerHeight + bottomPadding;
   })();
 
   // Extract events for each person from chapters
@@ -1246,22 +1264,26 @@
 </script>
 
 <div class="meta-timeline-container">
-  <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
-    <!-- Chapters row -->
-    <div class="chapters-row">
-      {#each chaptersWithPositions as chapter, index}
-        <div
-          class="chapter"
-          data-chapter-index={index}
-          style="left: {chapter.leftPx}px; width: {chapter.widthPx}px;"
-        >
-          <div class="chapter-header">
-            <h3>{chapter.title}</h3>
+  <!-- Fixed chapter header display - only shown when timeline is sticky -->
+  {#if isSticky && currentChapterByIndicator}
+    {#key currentChapterByIndicator.id}
+      <div class="fixed-chapter-header" in:fade={{ duration: 300, delay: 100 }} out:fade={{ duration: 200 }}>
+        <div class="chapter-title-display">
+          <div class="chapter-header-main">
+            <h3 class="chapter-title-text">{currentChapterByIndicator.title}</h3>
+            <span class="chapter-year-range">
+              {parseInt(currentChapterByIndicator.date_start)}–{parseInt(currentChapterByIndicator.date_end)}
+            </span>
           </div>
+          {#if currentChapterByIndicator.bridge_statement}
+            <p class="chapter-description">{currentChapterByIndicator.bridge_statement}</p>
+          {/if}
         </div>
-      {/each}
-    </div>
+      </div>
+    {/key}
+  {/if}
 
+  <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
     <!-- Year axis -->
     <div class="year-axis">
       {#each yearMarkers as marker}
@@ -1363,7 +1385,7 @@
     </div>
 
     <!-- Scroll position indicator -->
-    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: 50px;">
+    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: 90px;">
       {#if currentIndicatorYear}
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
@@ -1450,40 +1472,73 @@
     position: relative;
     margin-left: 40px;
     height: 100%;
+    padding-top: 100px; /* Space for fixed chapter header */
   }
 
-  /* Chapters row - absolute positioning */
-  .chapters-row {
-    position: relative;
-    height: 60px;
-    z-index: 1;
+  /* Fixed chapter header - positioned at top, doesn't scroll */
+  .fixed-chapter-header {
+    position: fixed;
+    top: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    pointer-events: none;
   }
 
-  /* Individual chapter - absolutely positioned */
-  .chapter {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    border-right: 1px solid rgba(56, 189, 248, 0.3);
-    padding: 0.5rem;
-    background: rgba(15, 23, 42, 0.2);
+  .chapter-title-display {
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
+    max-width: min(600px, 90vw);
+
+    /* Smooth transitions */
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .chapter:nth-child(even) {
-    background: rgba(15, 23, 42, 0.3);
+  .chapter-title-display:hover {
+    border-color: rgba(56, 189, 248, 0.7);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.5);
   }
 
-  /* Chapter header */
-  .chapter-header {
-    margin-bottom: 0;
+  .chapter-header-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
   }
 
-  .chapter-header h3 {
+  .chapter-title-text {
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 0.9rem;
-    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: #38bdf8;
+    margin: 0;
     line-height: 1.2;
+  }
+
+  .chapter-year-range {
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(148, 163, 184, 0.9);
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+  }
+
+  .chapter-description {
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: #cbd5e1;
+    margin: 0;
+    text-align: center;
+    font-style: italic;
   }
 
   /* Year axis */
@@ -1771,9 +1826,34 @@
       padding: 0.5rem;
     }
 
-    /* Make chapters slightly narrower on mobile for easier scanning */
-    .chapter-header h3 {
-      font-size: 0.875rem;
+    /* Fixed chapter header - mobile adjustments */
+    .fixed-chapter-header {
+      top: 1rem;
+    }
+
+    .chapter-title-display {
+      padding: 0.75rem 1rem;
+      max-width: min(500px, 90vw);
+    }
+
+    .chapter-header-main {
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .chapter-title-text {
+      font-size: 0.9rem;
+    }
+
+    .chapter-year-range {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .chapter-description {
+      font-size: 0.75rem;
+      line-height: 1.4;
     }
 
     /* Adjust person elements for mobile */
@@ -1840,6 +1920,42 @@
 
     .theme-title {
       font-size: 0.95rem;
+    }
+  }
+
+  /* Very small screens */
+  @media (max-width: 480px) {
+    .chapter-title-display {
+      padding: 0.5rem 0.75rem;
+      max-width: calc(100vw - 1.5rem);
+    }
+
+    .chapter-header-main {
+      gap: 0.35rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .chapter-title-text {
+      font-size: 0.8rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .chapter-year-range {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.35rem;
+    }
+
+    .chapter-description {
+      font-size: 0.7rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

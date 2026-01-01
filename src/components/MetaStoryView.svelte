@@ -372,6 +372,7 @@
                 onEventClick={viewPersonEvent}
                 subtopics={metaStoryData.subtopics}
                 scrollProgress={scrollProgress}
+                isSticky={isScrollLockActive}
               />
             </div>
 
