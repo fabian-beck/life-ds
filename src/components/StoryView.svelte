@@ -56,6 +56,11 @@
   // Network modal state - reactive to URL query parameter
   $: showNetworkModal = $queryParams.network;
 
+  // Timeline expanded state - check if timeline parameter is in URL
+  $: hasTimelineParam = new URLSearchParams($location.split("?")[1] || "").has("timeline");
+  // Default to expanded when at start of timeline (overview or first event) and no explicit timeline param
+  $: initialTimelineExpanded = hasTimelineParam ? $queryParams.timeline : (activeIndex === 0 || activeIndex === 1);
+
   const DEFAULT_COORDINATES = null;
   let lastDatasetName = null;
   let datasetName = null;
@@ -1200,7 +1205,7 @@
     {chapters}
     {egoNetwork}
     {styleConfig}
-    initialExpanded={$queryParams.timeline}
+    initialExpanded={initialTimelineExpanded}
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
