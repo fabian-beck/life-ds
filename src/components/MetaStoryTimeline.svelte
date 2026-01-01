@@ -312,6 +312,45 @@
     return activeChapter || null;
   })();
 
+  // Calculate the horizontal position for the sticky chapter header
+  // It should follow the scroll indicator but stay within viewport boundaries
+  $: chapterHeaderStyle = (() => {
+    if (!isSticky || !currentChapterByIndicator || typeof window === 'undefined') {
+      return 'left: 50%; transform: translateX(-50%);';
+    }
+
+    const container = document.querySelector('.meta-timeline-container');
+    if (!container) return 'left: 50%; transform: translateX(-50%);';
+
+    const viewportWidth = container.clientWidth;
+
+    // The indicator is at scrollIndicatorLeftPx relative to timeline-wrapper
+    // We need its position relative to the viewport.
+    const wrapper = container.querySelector('.timeline-wrapper');
+    if (!wrapper) return 'left: 50%; transform: translateX(-50%);';
+
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const indicatorViewportX = wrapperRect.left + scrollIndicatorLeftPx;
+
+    // Use a fallback width if not yet measured to prevent jumpy initial positioning
+    const currentWidth = chapterHeaderWidth || 400;
+    const halfWidth = currentWidth / 2;
+    const margin = 20; // Minimum margin from viewport edges
+
+    const minX = halfWidth + margin;
+    const maxX = viewportWidth - halfWidth - margin;
+
+    // If the viewport is too small to even fit the header with margins, just center it
+    if (maxX < minX) {
+      return 'left: 50%; transform: translateX(-50%);';
+    }
+
+    const clampedX = Math.max(minX, Math.min(indicatorViewportX, maxX));
+
+    // Use transform for positioning to avoid squishing the box when left is near viewport edge
+    return `transform: translateX(${clampedX}px) translateX(-50%);`;
+  })();
+
   // Helper: Extract persons from chapters (fallback when no subtopics)
   function extractPersonsFromChapters() {
     if (!chapters || chapters.length === 0 || !personsRegistry) return [];
@@ -589,6 +628,9 @@
   let tooltipElement = null; // DOM reference for positioning
   let hoveredEventsByIndicator = new Set(); // Track which events are hovered by scroll indicator
   let indicatorHoverTimeout = null; // Delay before showing tooltip on indicator hover
+
+  // Chapter header tracking
+  let chapterHeaderWidth = 0;
 
   // Cache for density map performance
   let cachedDensityMap = null;
@@ -1267,8 +1309,13 @@
   <!-- Fixed chapter header display - only shown when timeline is sticky -->
   {#if isSticky && currentChapterByIndicator}
     {#key currentChapterByIndicator.id}
-      <div class="fixed-chapter-header" in:fade={{ duration: 300, delay: 100 }} out:fade={{ duration: 200 }}>
-        <div class="chapter-title-display">
+      <div
+        class="fixed-chapter-header"
+        in:fade={{ duration: 300, delay: 100 }}
+        out:fade={{ duration: 200 }}
+        style={chapterHeaderStyle}
+      >
+        <div class="chapter-title-display" bind:clientWidth={chapterHeaderWidth}>
           <div class="chapter-header-main">
             <h3 class="chapter-title-text">{currentChapterByIndicator.title}</h3>
             <span class="chapter-year-range">
@@ -1493,10 +1540,10 @@
   .fixed-chapter-header {
     position: fixed;
     top: 0.75rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     z-index: 100;
     pointer-events: none;
+    transition: transform 0.1s ease-out;
   }
 
   .chapter-title-display {
