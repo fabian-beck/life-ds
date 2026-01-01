@@ -1498,7 +1498,7 @@
     border-radius: 0.5rem;
     padding: 0.6rem 1rem;
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
-    max-width: min(600px, 90vw);
+    max-width: 700px;
 
     /* Smooth transitions */
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1543,7 +1543,7 @@
     line-height: 1.35;
     color: #cbd5e1;
     margin: 0;
-    text-align: center;
+    text-align: left;
     font-style: italic;
   }
 
@@ -1834,32 +1834,40 @@
 
     /* Fixed chapter header - mobile adjustments */
     .fixed-chapter-header {
-      top: 1rem;
+      top: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .chapter-title-display {
-      padding: 0.75rem 1rem;
-      max-width: min(500px, 90vw);
+      padding: 0.6rem 0.75rem;
+      max-width: calc(100vw - 2rem);
+      width: calc(100vw - 2rem);
     }
 
     .chapter-header-main {
-      flex-direction: column;
+      flex-direction: row;
       gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+      align-items: center;
     }
 
     .chapter-title-text {
       font-size: 0.9rem;
+      flex: 1;
+      min-width: 0;
     }
 
     .chapter-year-range {
       font-size: 0.7rem;
       padding: 0.2rem 0.4rem;
+      flex-shrink: 0;
     }
 
     .chapter-description {
       font-size: 0.75rem;
       line-height: 1.4;
+      text-align: left;
     }
 
     /* Adjust person elements for mobile */
@@ -1931,9 +1939,13 @@
 
   /* Very small screens */
   @media (max-width: 480px) {
+    .fixed-chapter-header {
+      top: 0.35rem;
+    }
+
     .chapter-title-display {
-      padding: 0.5rem 0.75rem;
-      max-width: calc(100vw - 1.5rem);
+      padding: 0.5rem 0.65rem;
+      max-width: calc(100vw - 0.7rem);
     }
 
     .chapter-header-main {
@@ -1958,7 +1970,7 @@
       font-size: 0.7rem;
       line-height: 1.3;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
