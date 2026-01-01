@@ -463,7 +463,7 @@
     return offset;
   }
 
-  // Calculate total timeline height needed (accounting for collapsed states)
+  // Calculate total timeline height needed (always use full expanded height to prevent jumps)
   $: timelineHeightPx = (() => {
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
@@ -473,16 +473,14 @@
     const yearAxisMarginTop = 5;
     const personsLayerMarginTop = 10;
 
-    // Calculate persons layer height (accounting for collapsed state)
-    const visibleSet = new Set(visiblePersonIds);
+    // Calculate persons layer height (always use expanded height to prevent layout shifts)
     let personsLayerHeight = 0;
     themesWithPersons.forEach((theme, index) => {
       personsLayerHeight += THEME_TITLE_HEIGHT;
 
-      // Add height for each person (collapsed or expanded)
+      // Always use expanded height for all persons to maintain consistent container height
       theme.persons.forEach(personData => {
-        const isVisible = visibleSet.has(personData.personId);
-        personsLayerHeight += isVisible ? PERSON_ROW_HEIGHT : PERSON_ROW_HEIGHT_COLLAPSED;
+        personsLayerHeight += PERSON_ROW_HEIGHT;
       });
 
       if (index < themesWithPersons.length - 1) {
@@ -1277,7 +1275,7 @@
 </script>
 
 <div class="meta-timeline-container">
-  <div class="timeline-wrapper" style="width: {timelineWidthPx}px; height: {timelineHeightPx}px;">
+  <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
     <!-- Chapters row -->
     <div class="chapters-row">
       {#each chaptersWithPositions as chapter, index}
@@ -1394,7 +1392,7 @@
     </div>
 
     <!-- Scroll position indicator -->
-    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: 60px; height: {timelineHeightPx - 60}px;">
+    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: 50px;">
       {#if currentIndicatorYear}
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
@@ -1457,9 +1455,10 @@
 {/if}
 
 <style>
-  /* Container - full width scrollable panel */
+  /* Container - full width and height scrollable panel */
   .meta-timeline-container {
     width: 100%;
+    height: 100vh;
     overflow-x: auto;
     overflow-y: visible;
     padding: 1rem;
@@ -1475,10 +1474,11 @@
     scrollbar-width: none;
   }
 
-  /* Wrapper - dynamically sized based on content */
+  /* Wrapper - fills full height to prevent layout jumps */
   .timeline-wrapper {
     position: relative;
     margin-left: 40px;
+    height: 100%;
   }
 
   /* Chapters row - absolute positioning */
@@ -1759,35 +1759,39 @@
     line-height: 1;
   }
 
-  /* Scroll position indicator */
+  /* Scroll position indicator - full height */
   .scroll-indicator {
     position: absolute;
+    /* top is set inline (50px) */
+    height: calc(100% - 50px);
     width: 2px;
     background: none;
     border-left: 2px dashed rgba(56, 189, 248, 0.4);
     pointer-events: none;
-    z-index: 0;
+    z-index: 15;
     transition: left 0.1s ease-out;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
-  /* Scroll indicator year label */
+  /* Scroll indicator year label - vertically centered on timeline axis */
   .scroll-indicator-label {
     position: sticky;
-    bottom: 0;
+    top: -20px;
     transform: translateX(-50%);
-    background: rgba(4, 10, 24, 0.95);
-    color: #38bdf8;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    color: #e2e8f0;
     font-size: 0.875rem;
     font-weight: 600;
     padding: 4px 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
     white-space: nowrap;
     width: fit-content;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
   }
 
   /* Responsive - keep horizontal scrolling on mobile */
