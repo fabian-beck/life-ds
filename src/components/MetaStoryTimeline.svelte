@@ -104,6 +104,87 @@
     return Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
   })();
 
+  // Calculate visible viewport bounds in pixel coordinates
+  $: viewportBounds = (() => {
+    if (typeof window === 'undefined') {
+      console.log('[ViewportBounds] SSR - returning null');
+      return null;
+    }
+
+    const container = document.querySelector('.meta-timeline-container');
+    if (!container) {
+      console.log('[ViewportBounds] Container not found');
+      return null;
+    }
+
+    const viewportWidthPx = container.clientWidth;
+    const scrollLeftPx = scrollProgress * Math.max(0, timelineWidthPx - viewportWidthPx);
+
+    const bounds = {
+      left: scrollLeftPx,
+      right: scrollLeftPx + viewportWidthPx
+    };
+
+    console.log('[ViewportBounds]', {
+      scrollProgress,
+      timelineWidthPx,
+      viewportWidthPx,
+      scrollLeftPx,
+      bounds
+    });
+
+    return bounds;
+  })();
+
+  // Track which persons are visible in viewport (as array for Svelte reactivity)
+  $: visiblePersonIds = (() => {
+    if (!viewportBounds || !themesWithPersons) {
+      console.log('[VisiblePersons] Missing dependencies:', {
+        hasViewportBounds: !!viewportBounds,
+        hasThemesWithPersons: !!themesWithPersons,
+        themesCount: themesWithPersons?.length
+      });
+      return [];
+    }
+
+    const visible = [];
+    const VISIBILITY_MARGIN = 100; // Extra pixels for smooth transitions
+
+    console.log('[VisiblePersons] Checking visibility with bounds:', viewportBounds);
+
+    themesWithPersons.forEach((theme, themeIdx) => {
+      theme.persons.forEach((personData, personIdx) => {
+        const personLeft = personData.leftPx;
+        const personRight = personData.leftPx + personData.widthPx;
+
+        // Check overlap with viewport (with margin)
+        const isVisible = (
+          personRight > (viewportBounds.left - VISIBILITY_MARGIN) &&
+          personLeft < (viewportBounds.right + VISIBILITY_MARGIN)
+        );
+
+        console.log(`[VisiblePersons] ${personData.personId}:`, {
+          personLeft,
+          personRight,
+          viewportLeft: viewportBounds.left - VISIBILITY_MARGIN,
+          viewportRight: viewportBounds.right + VISIBILITY_MARGIN,
+          isVisible
+        });
+
+        if (isVisible) {
+          visible.push(personData.personId);
+        }
+      });
+    });
+
+    console.log('[VisiblePersons] Final visible persons:', visible);
+
+    return visible;
+  })();
+
+  // Convert to Set for fast lookup (but keep reactive dependency on array)
+  $: visiblePersons = new Set(visiblePersonIds);
+
   // Detect when scroll indicator hovers over event markers
   $: {
     // Don't trigger tooltip updates while we're calculating placement
@@ -135,7 +216,7 @@
                 colors: getPersonColors(personData.personId),
                 themeIndex,
                 personIndex,
-                personTopPx: calculatePersonTop(themeIndex, personIndex)
+                personTopPx: calculatePersonTop(themeIndex, personIndex, visiblePersonIds)
               });
             }
           });
@@ -340,26 +421,49 @@
     }).filter(theme => theme.persons.length > 0);
   })();
 
+  // Heights for collapsed vs expanded states
+  const PERSON_ROW_HEIGHT_COLLAPSED = 10; // Desktop collapsed height
+  const PERSON_ROW_HEIGHT_COLLAPSED_MOBILE = 8; // Mobile collapsed height (not used in calculation, just CSS)
+
   // Calculate vertical offset for theme title
-  function calculateThemeTop(themeIndex) {
+  function calculateThemeTop(themeIndex, _visibleIds) {
+    if (!themesWithPersons) return 0;
+    const visibleSet = new Set(_visibleIds);
+
     let offset = 0;
     for (let i = 0; i < themeIndex; i++) {
       offset += THEME_TITLE_HEIGHT;
-      offset += themesWithPersons[i].persons.length * PERSON_ROW_HEIGHT;
+
+      // Add height for each person in this theme (accounting for collapsed state)
+      themesWithPersons[i].persons.forEach(personData => {
+        const isVisible = visibleSet.has(personData.personId);
+        offset += isVisible ? PERSON_ROW_HEIGHT : PERSON_ROW_HEIGHT_COLLAPSED;
+      });
+
       offset += THEME_SPACING;
     }
     return offset;
   }
 
   // Calculate vertical offset for person within theme
-  function calculatePersonTop(themeIndex, personIndex) {
-    let offset = calculateThemeTop(themeIndex);
+  function calculatePersonTop(themeIndex, personIndex, _visibleIds) {
+    if (!themesWithPersons) return 0;
+    const visibleSet = new Set(_visibleIds);
+
+    let offset = calculateThemeTop(themeIndex, _visibleIds);
     offset += THEME_TITLE_HEIGHT;
-    offset += personIndex * PERSON_ROW_HEIGHT;
+
+    // Add height for each person before this one in the same theme
+    for (let i = 0; i < personIndex; i++) {
+      const personData = themesWithPersons[themeIndex].persons[i];
+      const isVisible = visibleSet.has(personData.personId);
+      offset += isVisible ? PERSON_ROW_HEIGHT : PERSON_ROW_HEIGHT_COLLAPSED;
+    }
+
     return offset;
   }
 
-  // Calculate total timeline height needed
+  // Calculate total timeline height needed (accounting for collapsed states)
   $: timelineHeightPx = (() => {
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
@@ -369,11 +473,18 @@
     const yearAxisMarginTop = 5;
     const personsLayerMarginTop = 10;
 
-    // Calculate persons layer height
+    // Calculate persons layer height (accounting for collapsed state)
+    const visibleSet = new Set(visiblePersonIds);
     let personsLayerHeight = 0;
     themesWithPersons.forEach((theme, index) => {
       personsLayerHeight += THEME_TITLE_HEIGHT;
-      personsLayerHeight += theme.persons.length * PERSON_ROW_HEIGHT;
+
+      // Add height for each person (collapsed or expanded)
+      theme.persons.forEach(personData => {
+        const isVisible = visibleSet.has(personData.personId);
+        personsLayerHeight += isVisible ? PERSON_ROW_HEIGHT : PERSON_ROW_HEIGHT_COLLAPSED;
+      });
+
       if (index < themesWithPersons.length - 1) {
         personsLayerHeight += THEME_SPACING;
       }
@@ -1197,7 +1308,7 @@
       {#each themesWithPersons as theme, themeIndex}
         <!-- Theme title row (only if title exists) -->
         {#if theme.title}
-          <div class="theme-title-row" style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(themeIndex)}px;">
+          <div class="theme-title-row" style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(themeIndex, visiblePersonIds)}px;">
             <h4 class="theme-title">{theme.title}</h4>
           </div>
         {/if}
@@ -1208,10 +1319,11 @@
           <div
             class="person-lifespan"
             class:alive={personData.isAlive}
+            class:collapsed={!visiblePersonIds.includes(personData.personId)}
             style="
               left: {personData.leftPx}px;
               width: {personData.widthPx}px;
-              top: {calculatePersonTop(themeIndex, personIndex)}px;
+              top: {calculatePersonTop(themeIndex, personIndex, visiblePersonIds)}px;
               --person-primary: {colors.primary};
               --person-secondary: {colors.secondary};
               --person-primary-rgb: {colors.primaryRgb};
@@ -1451,6 +1563,7 @@
     background: rgba(15, 23, 42, 0.6);
     border-bottom: 1px solid rgba(56, 189, 248, 0.2);
     z-index: 5;
+    transition: top 0.3s ease-out;
   }
 
   .theme-title {
@@ -1471,7 +1584,7 @@
   .person-lifespan {
     position: absolute;
     height: 30px;
-    transition: all 0.2s;
+    transition: height 0.3s ease-out, top 0.3s ease-out, transform 0.2s ease-out;
     cursor: pointer;
     outline: none;
   }
@@ -1484,6 +1597,47 @@
   .person-lifespan:focus-visible {
     outline: 2px solid rgba(56, 189, 248, 1);
     outline-offset: 2px;
+  }
+
+  /* Collapsed state - reduced height when not in viewport */
+  .person-lifespan.collapsed {
+    height: 10px;
+  }
+
+  /* Hide portraits when collapsed */
+  .person-lifespan.collapsed .person-portrait {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.6);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  /* Hide person names when collapsed */
+  .person-lifespan.collapsed .person-name-wrapper {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Hide dates when collapsed */
+  .person-lifespan.collapsed .person-dates {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Reduce lifespan line height when collapsed */
+  .person-lifespan.collapsed .person-line {
+    height: 2px;
+    transition: height 0.3s ease-out;
+  }
+
+  /* Keep event markers visible but smaller */
+  .person-lifespan.collapsed .event-marker {
+    transform: translate(-50%, -50%) scale(0.7);
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Restore height on hover for better UX */
+  .person-lifespan.collapsed:hover {
+    height: 30px;
   }
 
   /* Person name wrapper - positioned above the line */
@@ -1649,6 +1803,15 @@
 
     /* Adjust person elements for mobile */
     .person-lifespan {
+      height: 24px;
+    }
+
+    /* Mobile collapsed state */
+    .person-lifespan.collapsed {
+      height: 8px;
+    }
+
+    .person-lifespan.collapsed:hover {
       height: 24px;
     }
 
