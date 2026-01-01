@@ -564,8 +564,6 @@
 
     document.body.removeChild(measurementElement);
 
-    console.log('[Tooltip Measurement] Measured dimensions:', dimensions, 'for', tooltipConfig.events.length, 'events');
-
     return dimensions;
   }
 
@@ -798,14 +796,6 @@
       bottom: placement.y + (dimensions.safeHeight * (1 - placement.anchor.y))
     };
 
-    console.log(`[Boundary Check] ${placement.name}:`, {
-      placementXY: { x: placement.x, y: placement.y },
-      anchor: placement.anchor,
-      dimensions: { width: dimensions.safeWidth, height: dimensions.safeHeight },
-      tooltipRect,
-      viewport
-    });
-
     let clipping = 0;
     const violations = [];
 
@@ -833,12 +823,6 @@
       clipping += overflow;
       violations.push(`bottom: ${overflow.toFixed(0)}px`);
     }
-
-    console.log(`[Boundary Check] ${placement.name} result:`, {
-      clipping,
-      violations,
-      calculatedTooltipRect: tooltipRect
-    });
 
     return {
       clipping,        // Total pixels clipped (0 = no clipping)
@@ -900,11 +884,9 @@
     const best = scoredCandidates[0];
 
     if (best.score < 0) {
-      console.warn('[Tooltip] All placements clipped, using fallback');
       return generateFallbackPlacement(boundaries, dimensions);
     }
 
-    console.log(`[Tooltip] Selected: ${best.name} (${best.score.toFixed(1)} pts)`, best.debugReasons);
     return best;
   }
 
@@ -985,65 +967,30 @@
   function calculateTooltipPlacement(triggerElement, tooltipConfig) {
     // Guard against infinite loops
     if (isCalculatingPlacement) {
-      console.warn('[Tooltip Placement] Already calculating placement, aborting to prevent infinite loop');
       return null;
     }
 
     isCalculatingPlacement = true;
 
     try {
-      console.log('[Tooltip Placement] === Starting placement calculation ===');
-
       // Phase 1: Gather information
       const dimensions = measureTooltipDimensions(tooltipConfig);
-    console.log('[Tooltip Placement] Dimensions:', dimensions);
+      const boundaries = gatherBoundaryConstraints(triggerElement);
+      const densityMap = analyzeTimelineDensity();
 
-    const boundaries = gatherBoundaryConstraints(triggerElement);
-    console.log('[Tooltip Placement] Boundaries:', {
-      viewport: boundaries.viewport,
-      trigger: boundaries.trigger,
-      scrollLeft: boundaries.scrollLeft
-    });
+      // Phase 2: Generate candidates
+      const candidates = generatePlacementCandidates(boundaries, dimensions);
 
-    const densityMap = analyzeTimelineDensity();
-    console.log('[Tooltip Placement] Density map:', densityMap ? 'Generated' : 'null');
+      // Phase 3: Score and select optimal placement
+      let placement = selectOptimalPlacement(
+        candidates,
+        dimensions,
+        boundaries,
+        densityMap
+      );
 
-    // Phase 2: Generate candidates
-    const candidates = generatePlacementCandidates(boundaries, dimensions);
-    console.log('[Tooltip Placement] Generated candidates:', candidates.map(c => ({
-      name: c.name,
-      x: c.x,
-      y: c.y,
-      anchor: c.anchor,
-      priority: c.priority
-    })));
-
-    // Phase 3: Score and select optimal placement
-    let placement = selectOptimalPlacement(
-      candidates,
-      dimensions,
-      boundaries,
-      densityMap
-    );
-    console.log('[Tooltip Placement] Selected placement before mobile optimizations:', {
-      name: placement.name,
-      x: placement.x,
-      y: placement.y,
-      anchor: placement.anchor,
-      score: placement.score
-    });
-
-    // Phase 4: Apply mobile optimizations
-    placement = applyMobileOptimizations(placement, dimensions, boundaries);
-    console.log('[Tooltip Placement] Final placement after mobile optimizations:', {
-      name: placement.name,
-      x: placement.x,
-      y: placement.y,
-      anchor: placement.anchor,
-      maxWidth: placement.maxWidth,
-      maxHeight: placement.maxHeight,
-      enableInternalScroll: placement.enableInternalScroll
-    });
+      // Phase 4: Apply mobile optimizations
+      placement = applyMobileOptimizations(placement, dimensions, boundaries);
 
       // Phase 5: Return final placement with dimensions
       return {
@@ -1143,32 +1090,6 @@
         ...placement,
         year: cluster.events[0].event.year
       };
-
-      // Debug: Verify actual rendered position after next frame
-      requestAnimationFrame(() => {
-        if (tooltipElement) {
-          const actualRect = tooltipElement.getBoundingClientRect();
-          const computedStyle = window.getComputedStyle(tooltipElement);
-          console.log('[Tooltip Debug] Actual rendered position:', {
-            expectedLeft: placement.x - (placement.dimensions.safeWidth * placement.anchor.x),
-            expectedTop: placement.y - (placement.dimensions.safeHeight * placement.anchor.y),
-            actualRect: {
-              left: actualRect.left,
-              top: actualRect.top,
-              right: actualRect.right,
-              bottom: actualRect.bottom,
-              width: actualRect.width,
-              height: actualRect.height
-            },
-            computedCSS: {
-              left: computedStyle.left,
-              top: computedStyle.top,
-              transform: computedStyle.transform,
-              position: computedStyle.position
-            }
-          });
-        }
-      });
     }
   }
 
