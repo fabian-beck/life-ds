@@ -541,8 +541,7 @@
   /* Timeline navigation buttons */
   .timeline-nav-btn {
     position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 2rem;
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 999px;
@@ -573,14 +572,13 @@
   .timeline-nav-btn:focus:not(:disabled) {
     background: rgba(15, 23, 42, 0.85);
     border-color: rgba(148, 163, 184, 0.6);
-    transform: translateY(-50%) scale(1.05);
+    transform: scale(1.05);
     outline: none;
   }
 
   .timeline-nav-btn:disabled {
     opacity: 0.35;
     cursor: not-allowed;
-    transform: translateY(-50%);
   }
 
   .timeline-nav-btn .icon {
