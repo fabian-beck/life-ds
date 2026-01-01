@@ -1284,6 +1284,18 @@
   {/if}
 
   <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
+    <!-- Chapter backgrounds -->
+    <div class="chapters-layer">
+      {#each chaptersWithPositions as chapter, i}
+        <div
+          class="chapter-box"
+          class:light={i % 2 === 0}
+          class:dark={i % 2 !== 0}
+          style="left: {chapter.leftPx}px; width: {chapter.widthPx}px;"
+        ></div>
+      {/each}
+    </div>
+
     <!-- Year axis -->
     <div class="year-axis">
       {#each yearMarkers as marker}
@@ -1541,6 +1553,32 @@
     margin: 0;
     text-align: left;
     font-style: italic;
+  }
+
+  /* Chapters layer */
+  .chapters-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .chapter-box {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: background 0.3s ease;
+  }
+
+  .chapter-box.light {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .chapter-box.dark {
+    background: rgba(255, 255, 255, 0.01);
   }
 
   /* Year axis */
