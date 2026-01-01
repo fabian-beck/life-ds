@@ -1283,7 +1283,7 @@
     {/key}
   {/if}
 
-  <div class="timeline-wrapper" class:with-header-space={isSticky} style="width: {timelineWidthPx}px;">
+  <div class="timeline-wrapper" style="width: {timelineWidthPx}px;">
     <!-- Year axis -->
     <div class="year-axis">
       {#each yearMarkers as marker}
@@ -1472,13 +1472,7 @@
     position: relative;
     margin-left: 40px;
     height: 100%;
-    padding-top: 0;
-    transition: padding-top 0.2s ease;
-  }
-
-  /* Add padding only when sticky to make room for fixed chapter header */
-  .timeline-wrapper.with-header-space {
-    padding-top: 100px;
+    padding-top: 100px; /* Always reserve space for sticky header */
   }
 
   /* Fixed chapter header - positioned at top, doesn't scroll */
