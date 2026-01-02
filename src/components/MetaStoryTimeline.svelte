@@ -1176,6 +1176,8 @@
       activeEventTooltip = {
         ...eventConfig,
         ...placement,
+        personId,      // Add for active state detection
+        eventIndex,    // Add for active state detection
         year: event.year
       };
     }
@@ -1415,7 +1417,10 @@
                 {@const relativeLeftPx = event.leftPx - personData.leftPx}
                 {@const eventKey = `${personData.personId}-${eventIndex}`}
                 {@const isHoveredByIndicator = hoveredEventsByIndicator.has(eventKey)}
-                {@const isActive = activeEventTooltip && activeEventTooltip.personId === personData.personId && activeEventTooltip.eventIndex === eventIndex}
+                {@const isActive = activeEventTooltip && (
+                  (activeEventTooltip.personId === personData.personId && activeEventTooltip.eventIndex === eventIndex) ||
+                  (activeEventTooltip.events && activeEventTooltip.events.some(evt => evt.personId === personData.personId && evt.eventIndex === eventIndex))
+                )}
                 <div
                   class="event-marker"
                   class:essential={event.relevance_strength === 'essential'}
@@ -2106,7 +2111,7 @@
     border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    transition: all 0.2s;
+    transition: background 0.2s, border 0.2s;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -2122,27 +2127,26 @@
 
   /* Active event marker - distinctive glow and pulsing animation */
   .event-marker.active .event-dot {
-    background: rgba(var(--person-primary-rgb), 1);
-    border: 3px solid #38bdf8;
-    box-shadow:
-      0 0 0 2px rgba(56, 189, 248, 0.4),
-      0 0 20px rgba(var(--person-primary-rgb), 0.8),
-      0 0 40px rgba(56, 189, 248, 0.4);
-    animation: pulse-active 2s ease-in-out infinite;
+    background: #38bdf8;
+    border: 3px solid #ffffff;
+    transition: none; /* Disable transitions for animation to work */
+    animation: pulse-active 1.5s ease-in-out infinite;
   }
 
   @keyframes pulse-active {
     0%, 100% {
       box-shadow:
-        0 0 0 2px rgba(56, 189, 248, 0.4),
-        0 0 20px rgba(var(--person-primary-rgb), 0.8),
-        0 0 40px rgba(56, 189, 248, 0.4);
+        0 0 0 3px rgba(56, 189, 248, 0.5),
+        0 0 20px rgba(56, 189, 248, 0.9),
+        0 0 40px rgba(56, 189, 248, 0.6);
+      transform: translate(-50%, -50%) scale(1);
     }
     50% {
       box-shadow:
-        0 0 0 4px rgba(56, 189, 248, 0.6),
-        0 0 30px rgba(var(--person-primary-rgb), 1),
-        0 0 60px rgba(56, 189, 248, 0.6);
+        0 0 0 6px rgba(56, 189, 248, 0.7),
+        0 0 35px rgba(56, 189, 248, 1),
+        0 0 70px rgba(56, 189, 248, 0.8);
+      transform: translate(-50%, -50%) scale(1.15);
     }
   }
 
