@@ -1338,6 +1338,7 @@
           class="chapter-box"
           class:light={i % 2 === 0}
           class:dark={i % 2 !== 0}
+          class:active={currentChapterByIndicator && currentChapterByIndicator.id === chapter.id}
           style="left: {chapter.leftPx}px; width: {chapter.widthPx}px;"
         ></div>
       {/each}
@@ -1550,12 +1551,14 @@
   }
 
   .chapter-title-display {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    border: 1px solid rgba(56, 189, 248, 0.7);
     border-radius: 0.5rem;
     padding: 0.6rem 1rem;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(56, 189, 248, 0.2);
     max-width: 700px;
 
     /* Smooth transitions */
@@ -1629,6 +1632,27 @@
 
   .chapter-box.dark {
     background: rgba(255, 255, 255, 0.01);
+  }
+
+  .chapter-box.active {
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.15);
+    z-index: 2;
+    animation: chapter-glow 5s ease-in-out infinite;
+  }
+
+  @keyframes chapter-glow {
+    0%, 100% {
+      background: rgba(56, 189, 248, 0.08);
+      box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    50% {
+      background: rgba(56, 189, 248, 0.11);
+      box-shadow: inset 0 0 35px rgba(56, 189, 248, 0.2);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
   }
 
   /* Year axis */
