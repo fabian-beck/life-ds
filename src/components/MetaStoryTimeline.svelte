@@ -1517,6 +1517,9 @@
     overflow-y: visible;
     padding: 1rem;
     background: rgba(4, 10, 24, 0.95);
+    border-top: 1px solid rgba(56, 189, 248, 0.3);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
   }
 
   /* Hide scrollbar but keep scrollable */
