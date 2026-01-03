@@ -384,6 +384,7 @@ import { displayName } from "./utils/helpers.js";
       : null;
   $: metaStoryId = metaMatch ? decodeURIComponent(metaMatch[2]) : null;
   $: slideParam = $queryParams.slide;
+  $: eventParam = $queryParams.event;
 
   // Sync language from URL to store (URL takes precedence for shareable intent)
   $: if (langFromUrl && langFromUrl !== $currentLanguage) {
@@ -542,6 +543,7 @@ import { displayName } from "./utils/helpers.js";
       isLoading={dataLoading}
       {loadingStage}
       activeIndex={slideParam ?? 0}
+      targetEventIndex={eventParam}
       styleConfig={styleFor(personId)}
       onClose={handleCloseStory}
       onSlideChange={handleSlideChange}

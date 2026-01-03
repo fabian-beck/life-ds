@@ -4,17 +4,20 @@ import { querystring } from "svelte-spa-router";
 /**
  * Derived store that parses query parameters from the current URL
  * Returns an object with boolean flags for timeline and network modals,
- * and the slide index (null if not present or slide 0)
+ * the slide index, and the event index (both null if not present)
  */
 export const queryParams = derived(querystring, ($querystring) => {
   const params = new URLSearchParams($querystring || "");
   const slideStr = params.get("slide");
   const slideIndex = slideStr ? parseInt(slideStr, 10) : null;
+  const eventStr = params.get("event");
+  const eventIndex = eventStr ? parseInt(eventStr, 10) : null;
 
   return {
     timeline: params.get("timeline") === "1",
     network: params.get("network") === "1",
     slide: slideIndex,
+    event: eventIndex,
   };
 });
 

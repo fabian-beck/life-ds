@@ -40,6 +40,7 @@
   export let isLoading = false;
   export let loadingStage = null;
   export let activeIndex = 0;
+  export let targetEventIndex = null; // Optional: if set, navigate to this event index
   export let styleConfig = null;
   export let onClose = () => {};
   export let onSlideChange = () => {};
@@ -282,6 +283,35 @@
 
   // Track the last notified index to avoid duplicate notifications
   let lastNotifiedIndex = activeIndex;
+
+  // Track the last processed targetEventIndex to avoid reprocessing
+  let lastProcessedEventIndex = null;
+
+  // Convert targetEventIndex to slide index when dataset is ready
+  $: if (
+    targetEventIndex !== null &&
+    targetEventIndex !== undefined &&
+    targetEventIndex !== lastProcessedEventIndex &&
+    eventIndexToSlideIndex &&
+    eventIndexToSlideIndex.size > 0
+  ) {
+    const targetSlideIndex = eventIndexToSlideIndex.get(Number(targetEventIndex));
+
+    if (targetSlideIndex !== undefined && targetSlideIndex >= 0) {
+      // Mark as processed
+      lastProcessedEventIndex = targetEventIndex;
+
+      // Clear the event param from URL and replace with slide param
+      // This will cause activeIndex to update, which will trigger the normal scroll logic
+      const basePath = $location.split("?")[0];
+      const newUrl = buildUrlWithParams(basePath, {
+        slide: targetSlideIndex,
+        timeline: $queryParams.timeline,
+        network: $queryParams.network,
+      });
+      replace(newUrl);
+    }
+  }
 
   // When activeIndex prop changes externally (browser back/forward), scroll to it
   $: if (
@@ -937,7 +967,11 @@
       !initialScrollDone &&
       slidesContainer &&
       totalPanels > 0 &&
-      activeIndex === 0
+      activeIndex === 0 &&
+      // Don't mark as done if we're waiting to process an event parameter
+      // or if we just processed one (lastProcessedEventIndex will be set)
+      !(targetEventIndex !== null && targetEventIndex !== lastProcessedEventIndex) &&
+      lastProcessedEventIndex === null
     ) {
       // No initial scroll needed (starting at index 0)
       initialScrollDone = true;

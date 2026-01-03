@@ -206,23 +206,6 @@
       verticalRadius = Math.min(98, 85 + (1 / imageAspect - 1) * 10);
     }
 
-    // DEBUG: Log aspect ratio and calculated dimensions
-    console.log('🖼️ Image loaded:', {
-      src: img.src.substring(0, 80) + '...',
-      naturalSize: `${img.naturalWidth}×${img.naturalHeight}`,
-      imageAspect: imageAspect.toFixed(2),
-      viewportAspect: viewportAspect.toFixed(2),
-      aspectMatch: (Math.exp(-0.5 * Math.abs(Math.log(imageAspect / viewportAspect)))).toFixed(2),
-      baseBounds: `${baseMaxWidth}vw × ${baseMaxHeight}vh`,
-      correctionFactor: clampedFactor.toFixed(2),
-      adjustedBounds: `${adjustedMaxWidth.toFixed(1)}vw × ${adjustedMaxHeight}vh`,
-      calculatedContainer: `${containerWidth.toFixed(1)}vw × ${containerHeight.toFixed(1)}vh`,
-      actualContainer: `${img.parentElement.offsetWidth}×${img.parentElement.offsetHeight}`,
-      maskEllipse: `${horizontalRadius}% × ${verticalRadius}%`,
-      category: imageAspect < 0.8 ? 'PORTRAIT' : imageAspect > 1.25 ? 'LANDSCAPE' : 'SQUARE',
-      match: imageAspect / viewportAspect > 0.8 && imageAspect / viewportAspect < 1.25 ? 'GOOD' : 'MISMATCH'
-    });
-
     const maskImage = `radial-gradient(
       ellipse ${horizontalRadius}% ${verticalRadius}% at 85% 15%,
       rgba(0, 0, 0, 1) 50%,

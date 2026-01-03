@@ -1269,13 +1269,21 @@
   function handleEventClick(personId, event) {
     // Navigate to the specific event in the person's story
     // Use event_index from the meta story data which references the actual event index in life_events.json
-    const targetIndex = event.event_index !== undefined ? event.event_index : 0;
-    window.location.hash = `/story/${personId}/${targetIndex}`;
+    // Note: We use the 'event' query parameter because event index ≠ slide index when chapters exist
+    const targetEventIndex = event.event_index !== undefined ? event.event_index : 0;
+
+    // Get current language from the URL
+    const currentLang = window.location.hash.match(/^\#\/([a-z]{2})\//)?.[1] || 'en';
+
+    // Build URL with event query parameter
+    window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}`;
   }
 
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
-    window.location.hash = `/story/${personId}`;
+    // Get current language from the URL
+    const currentLang = window.location.hash.match(/^\#\/([a-z]{2})\//)?.[1] || 'en';
+    window.location.hash = `/${currentLang}/story/${personId}`;
   }
 
   // Click-outside handler to close tooltip
