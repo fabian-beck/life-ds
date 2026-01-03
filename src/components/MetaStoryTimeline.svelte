@@ -129,8 +129,34 @@
 
   // Track which persons are visible in viewport (as array for Svelte reactivity)
   $: visiblePersonIds = (() => {
-    if (!viewportBounds || !themesWithPersons) {
+    if (!themesWithPersons) {
       return [];
+    }
+
+    // On initial load, if viewportBounds is not yet available, show persons at the start
+    if (!viewportBounds) {
+      const visible = [];
+      const INITIAL_VIEWPORT_WIDTH = typeof window !== 'undefined' ? window.innerWidth : 1200;
+      const VISIBILITY_MARGIN = 100;
+
+      themesWithPersons.forEach((theme) => {
+        theme.persons.forEach((personData) => {
+          const personLeft = personData.leftPx;
+          const personRight = personData.leftPx + personData.widthPx;
+
+          // Check if person is visible in initial viewport (starting at 0)
+          const isVisible = (
+            personRight > (0 - VISIBILITY_MARGIN) &&
+            personLeft < (INITIAL_VIEWPORT_WIDTH + VISIBILITY_MARGIN)
+          );
+
+          if (isVisible) {
+            visible.push(personData.personId);
+          }
+        });
+      });
+
+      return visible;
     }
 
     const visible = [];
