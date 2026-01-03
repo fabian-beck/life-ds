@@ -639,6 +639,10 @@
   // Guard against infinite tooltip placement loops
   let isCalculatingPlacement = false;
 
+  // Debug mode for showing tooltip trigger positions
+  let debugMode = true; // Set to false to disable debug markers
+  let debugMarkers = []; // Array of {x, y, label} objects for visual debugging
+
   // Helper to render tooltip content for runtime measurement
   function renderTooltipContentForMeasurement(config) {
     const { events } = config;
@@ -1171,6 +1175,16 @@
     // Use unified placement algorithm
     const placement = calculateTooltipPlacement(clickEvent.target, eventConfig);
 
+    // Add debug marker for clicked event
+    if (debugMode && placement) {
+      const triggerRect = clickEvent.target.getBoundingClientRect();
+      debugMarkers = [{
+        x: triggerRect.left + triggerRect.width / 2,
+        y: triggerRect.top + triggerRect.height / 2,
+        label: `Event Click: ${event.title.substring(0, 20)}...`
+      }];
+    }
+
     // Update reactive state (only if placement succeeded)
     if (placement) {
       activeEventTooltip = {
@@ -1185,6 +1199,10 @@
 
   function hideEventTooltip() {
     activeEventTooltip = null;
+    // Clear debug markers when tooltip is hidden
+    if (debugMode) {
+      debugMarkers = [];
+    }
   }
 
   // Show grouped tooltip for event cluster (used by scroll indicator)
@@ -1200,11 +1218,57 @@
       evt.personTopPx < top.personTopPx ? evt : top
     );
 
+    // Try to find the actual DOM element for the first event in the cluster
+    // This ensures we use the real position instead of calculating it
+    const firstEvent = cluster.events[0];
+    const eventMarkerSelector = `.person-lifespan [class*="event-marker"]`;
+    const timelineWrapper = timelineContainer.querySelector('.timeline-wrapper');
+    let actualEventElement = null;
+
+    if (timelineWrapper) {
+      // Try to find the actual event marker element
+      const allMarkers = Array.from(timelineWrapper.querySelectorAll(eventMarkerSelector));
+      // Since we can't easily identify which marker by event data, we'll use position-based matching
+      actualEventElement = allMarkers.find(marker => {
+        const rect = marker.getBoundingClientRect();
+        const markerX = rect.left - containerRect.left + scrollLeft;
+        // Check if marker is at approximately the cluster's X position (within 5px tolerance)
+        return Math.abs(markerX - cluster.leftPx - 40) < 5;
+      });
+    }
+
     // Create virtual trigger element at cluster position
     const virtualTrigger = {
       getBoundingClientRect: () => {
+        // If we found the actual element, use its position directly
+        if (actualEventElement) {
+          return actualEventElement.getBoundingClientRect();
+        }
+
+        // Fallback to calculated position using correct layout values
+        // Layout structure from CSS:
+        // - timeline-wrapper padding-top: 100px
+        // - year-axis margin-top: 5px, height: 40px
+        // - persons-layer margin-top: 10px
+        // - person-lifespan top: calculatePersonTop() result
+        // - event-marker top: 50% (center of person row)
+
+        const WRAPPER_PADDING_TOP = 100;
+        const YEAR_AXIS_MARGIN_TOP = 5;
+        const YEAR_AXIS_HEIGHT = 40;
+        const PERSONS_LAYER_MARGIN_TOP = 10;
+
+        // Get the timeline wrapper's position
+        const wrapper = timelineContainer.querySelector('.timeline-wrapper');
+        const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
+
+        // Calculate Y position from top of wrapper
+        const yFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP + YEAR_AXIS_HEIGHT +
+                               PERSONS_LAYER_MARGIN_TOP + topEvent.personTopPx +
+                               (PERSON_ROW_HEIGHT / 2); // Center of person row
+
         const x = containerRect.left + cluster.leftPx - scrollLeft + 40;
-        const y = containerRect.top + 60 + 40 + 10 + topEvent.personTopPx + 15;
+        const y = wrapperRect.top + yFromWrapperTop;
 
         return {
           left: x,
@@ -1224,6 +1288,38 @@
 
     // Use unified placement algorithm
     const placement = calculateTooltipPlacement(virtualTrigger, eventConfig);
+
+    // Add debug markers for grouped events
+    if (debugMode && placement) {
+      const triggerRect = virtualTrigger.getBoundingClientRect();
+      const source = actualEventElement ? 'DOM' : 'Calculated';
+      debugMarkers = [{
+        x: triggerRect.left + triggerRect.width / 2,
+        y: triggerRect.top + triggerRect.height / 2,
+        label: `${source}: Tooltip trigger (${cluster.events.length} events)`,
+        type: 'trigger'
+      }];
+
+      // If we used calculated position, also show where the actual DOM element is
+      if (!actualEventElement && timelineWrapper) {
+        const allMarkers = Array.from(timelineWrapper.querySelectorAll('.event-marker'));
+        const nearbyMarker = allMarkers.find(marker => {
+          const rect = marker.getBoundingClientRect();
+          const markerX = rect.left - containerRect.left + scrollLeft;
+          return Math.abs(markerX - cluster.leftPx - 40) < 5;
+        });
+
+        if (nearbyMarker) {
+          const actualRect = nearbyMarker.getBoundingClientRect();
+          debugMarkers.push({
+            x: actualRect.left + actualRect.width / 2,
+            y: actualRect.top + actualRect.height / 2,
+            label: 'Actual DOM element',
+            type: 'actual'
+          });
+        }
+      }
+    }
 
     // Update reactive state (only if placement succeeded)
     if (placement) {
@@ -1512,6 +1608,21 @@
       {/each}
     </div>
   </div>
+{/if}
+
+<!-- Debug markers for tooltip trigger positions -->
+{#if debugMode && debugMarkers.length > 0}
+  {#each debugMarkers as marker}
+    <div
+      class="debug-marker"
+      class:actual-marker={marker.type === 'actual'}
+      style="left: {marker.x}px; top: {marker.y}px;"
+      title={marker.label}
+    >
+      <div class="debug-marker-dot"></div>
+      <div class="debug-marker-label">{marker.label}</div>
+    </div>
+  {/each}
 {/if}
 
 <style>
@@ -2404,5 +2515,96 @@
 
   .tooltip-events::-webkit-scrollbar-thumb:hover {
     background: rgba(56, 189, 248, 0.6);
+  }
+
+  /* Debug markers for tooltip positioning */
+  .debug-marker {
+    position: fixed;
+    z-index: 100000;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Calculated position marker (magenta) */
+  .debug-marker-dot {
+    width: 16px;
+    height: 16px;
+    background: rgba(255, 0, 255, 0.8);
+    border: 3px solid rgba(255, 255, 0, 0.9);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2px rgba(0, 0, 0, 0.8),
+      0 0 20px rgba(255, 0, 255, 0.8),
+      0 0 40px rgba(255, 0, 255, 0.5);
+    animation: debug-pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Actual DOM element marker (green) */
+  .debug-marker.actual-marker .debug-marker-dot {
+    background: rgba(0, 255, 0, 0.8);
+    border: 3px solid rgba(0, 255, 255, 0.9);
+    box-shadow:
+      0 0 0 2px rgba(0, 0, 0, 0.8),
+      0 0 20px rgba(0, 255, 0, 0.8),
+      0 0 40px rgba(0, 255, 0, 0.5);
+    animation: debug-pulse-actual 1.5s ease-in-out infinite;
+  }
+
+  .debug-marker-label {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: #ffff00;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 0, 255, 0.8);
+    white-space: nowrap;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 4px rgba(255, 255, 0, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  .debug-marker.actual-marker .debug-marker-label {
+    color: #00ff00;
+    border: 1px solid rgba(0, 255, 0, 0.8);
+    text-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
+  }
+
+  @keyframes debug-pulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 0, 255, 0.8),
+        0 0 40px rgba(255, 0, 255, 0.5);
+    }
+    50% {
+      transform: scale(1.3);
+      box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(255, 0, 255, 1),
+        0 0 60px rgba(255, 0, 255, 0.7);
+    }
+  }
+
+  @keyframes debug-pulse-actual {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 255, 0, 0.8),
+        0 0 40px rgba(0, 255, 0, 0.5);
+    }
+    50% {
+      transform: scale(1.3);
+      box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(0, 255, 0, 1),
+        0 0 60px rgba(0, 255, 0, 0.7);
+    }
   }
 </style>
