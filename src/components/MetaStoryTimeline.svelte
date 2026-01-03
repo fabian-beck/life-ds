@@ -641,7 +641,8 @@
 
   // Debug mode for showing tooltip trigger positions
   let debugMode = true; // Set to false to disable debug markers
-  let debugMarkers = []; // Array of {x, y, label} objects for visual debugging
+  let debugMarkers = []; // Array of {x, y, label, type} objects for visual debugging
+  let debugBoundingBox = null; // {left, top, width, height} for trigger bounding box
 
   // Helper to render tooltip content for runtime measurement
   function renderTooltipContentForMeasurement(config) {
@@ -1178,11 +1179,16 @@
     // Add debug marker for clicked event
     if (debugMode && placement) {
       const triggerRect = clickEvent.target.getBoundingClientRect();
-      debugMarkers = [{
+      const markerData = {
         x: triggerRect.left + triggerRect.width / 2,
         y: triggerRect.top + triggerRect.height / 2,
-        label: `Event Click: ${event.title.substring(0, 20)}...`
-      }];
+        label: `Event Click: ${event.title.substring(0, 20)}...`,
+        type: 'trigger'
+      };
+      console.log('Debug marker for clicked event:', markerData, 'triggerRect:', triggerRect);
+      debugMarkers = [markerData];
+      // Single event clicks don't have a bounding box
+      debugBoundingBox = null;
     }
 
     // Update reactive state (only if placement succeeded)
@@ -1202,6 +1208,7 @@
     // Clear debug markers when tooltip is hidden
     if (debugMode) {
       debugMarkers = [];
+      debugBoundingBox = null;
     }
   }
 
@@ -1212,71 +1219,113 @@
 
     const containerRect = timelineContainer.getBoundingClientRect();
     const scrollLeft = timelineContainer.scrollLeft;
-
-    // Find topmost event for vertical positioning
-    const topEvent = cluster.events.reduce((top, evt) =>
-      evt.personTopPx < top.personTopPx ? evt : top
-    );
-
-    // Try to find the actual DOM element for the first event in the cluster
-    // This ensures we use the real position instead of calculating it
-    const firstEvent = cluster.events[0];
-    const eventMarkerSelector = `.person-lifespan [class*="event-marker"]`;
     const timelineWrapper = timelineContainer.querySelector('.timeline-wrapper');
-    let actualEventElement = null;
+
+    // Find ALL actual DOM elements for events in this cluster
+    const clusterEventElements = [];
 
     if (timelineWrapper) {
-      // Try to find the actual event marker element
-      const allMarkers = Array.from(timelineWrapper.querySelectorAll(eventMarkerSelector));
-      // Since we can't easily identify which marker by event data, we'll use position-based matching
-      actualEventElement = allMarkers.find(marker => {
-        const rect = marker.getBoundingClientRect();
-        const markerX = rect.left - containerRect.left + scrollLeft;
-        // Check if marker is at approximately the cluster's X position (within 5px tolerance)
-        return Math.abs(markerX - cluster.leftPx - 40) < 5;
-      });
-    }
+      const allMarkers = Array.from(timelineWrapper.querySelectorAll('.event-marker'));
 
-    // Create virtual trigger element at cluster position
-    const virtualTrigger = {
-      getBoundingClientRect: () => {
-        // If we found the actual element, use its position directly
-        if (actualEventElement) {
-          return actualEventElement.getBoundingClientRect();
-        }
-
-        // Fallback to calculated position using correct layout values
-        // Layout structure from CSS:
-        // - timeline-wrapper padding-top: 100px
-        // - year-axis margin-top: 5px, height: 40px
-        // - persons-layer margin-top: 10px
-        // - person-lifespan top: calculatePersonTop() result
-        // - event-marker top: 50% (center of person row)
-
+      // For each event in the cluster, try to find its DOM element
+      cluster.events.forEach(evt => {
+        // Calculate expected position for this event
         const WRAPPER_PADDING_TOP = 100;
         const YEAR_AXIS_MARGIN_TOP = 5;
         const YEAR_AXIS_HEIGHT = 40;
         const PERSONS_LAYER_MARGIN_TOP = 10;
 
-        // Get the timeline wrapper's position
         const wrapper = timelineContainer.querySelector('.timeline-wrapper');
         const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
 
-        // Calculate Y position from top of wrapper
-        const yFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP + YEAR_AXIS_HEIGHT +
-                               PERSONS_LAYER_MARGIN_TOP + topEvent.personTopPx +
-                               (PERSON_ROW_HEIGHT / 2); // Center of person row
+        const expectedYFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP +
+                                       YEAR_AXIS_HEIGHT + PERSONS_LAYER_MARGIN_TOP +
+                                       evt.personTopPx + (PERSON_ROW_HEIGHT / 2);
+        const expectedY = wrapperRect.top + expectedYFromWrapperTop;
 
-        const x = containerRect.left + cluster.leftPx - scrollLeft + 40;
-        const y = wrapperRect.top + yFromWrapperTop;
+        // Find marker that matches both X and Y position
+        const matchingMarker = allMarkers.find(marker => {
+          const rect = marker.getBoundingClientRect();
+          const markerCenterX = rect.left + rect.width / 2;
+          const markerCenterY = rect.top + rect.height / 2;
+
+          // Expected X position (screen coordinates)
+          const wrapper = timelineContainer.querySelector('.timeline-wrapper');
+          const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
+          const expectedX = wrapperRect.left + cluster.leftPx;
+
+          // Check if marker is at approximately the expected position
+          // Loosen Y tolerance since we know there's an ~8px discrepancy
+          const xMatch = Math.abs(markerCenterX - expectedX) < 10;
+          const yMatch = Math.abs(markerCenterY - expectedY) < 15;
+
+          return xMatch && yMatch;
+        });
+
+        if (matchingMarker) {
+          clusterEventElements.push({
+            element: matchingMarker,
+            rect: matchingMarker.getBoundingClientRect(),
+            eventData: evt
+          });
+        }
+      });
+    }
+
+    // Create a bounding box that encompasses ALL events in the cluster
+    const virtualTrigger = {
+      getBoundingClientRect: () => {
+        // If we found actual DOM elements, create a bounding box around all of them
+        if (clusterEventElements.length > 0) {
+          const rects = clusterEventElements.map(e => e.rect);
+          const minLeft = Math.min(...rects.map(r => r.left));
+          const minTop = Math.min(...rects.map(r => r.top));
+          const maxRight = Math.max(...rects.map(r => r.right));
+          const maxBottom = Math.max(...rects.map(r => r.bottom));
+
+          return {
+            left: minLeft,
+            top: minTop,
+            right: maxRight,
+            bottom: maxBottom,
+            width: maxRight - minLeft,
+            height: maxBottom - minTop
+          };
+        }
+
+        // Fallback: create bounding box from calculated positions for all events
+        const WRAPPER_PADDING_TOP = 100;
+        const YEAR_AXIS_MARGIN_TOP = 5;
+        const YEAR_AXIS_HEIGHT = 40;
+        const PERSONS_LAYER_MARGIN_TOP = 10;
+
+        const wrapper = timelineContainer.querySelector('.timeline-wrapper');
+        const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
+
+        // Calculate bounds for all events
+        let minY = Infinity;
+        let maxY = -Infinity;
+
+        cluster.events.forEach(evt => {
+          const yFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP + YEAR_AXIS_HEIGHT +
+                                 PERSONS_LAYER_MARGIN_TOP + evt.personTopPx + (PERSON_ROW_HEIGHT / 2);
+          const y = wrapperRect.top + yFromWrapperTop;
+          minY = Math.min(minY, y - 12); // Account for marker size
+          maxY = Math.max(maxY, y + 12);
+        });
+
+        // X position: wrapper left edge + event's absolute position within timeline
+        // Note: wrapperRect.left is already screen coordinates, and the wrapper itself scrolls,
+        // so we don't subtract scrollLeft (the wrapper moves with scrolling)
+        const x = wrapperRect.left + cluster.leftPx;
 
         return {
-          left: x,
-          top: y,
-          right: x + 24,
-          bottom: y + 24,
+          left: x - 12,
+          top: minY,
+          right: x + 12,
+          bottom: maxY,
           width: 24,
-          height: 24
+          height: maxY - minY
         };
       }
     };
@@ -1292,32 +1341,87 @@
     // Add debug markers for grouped events
     if (debugMode && placement) {
       const triggerRect = virtualTrigger.getBoundingClientRect();
-      const source = actualEventElement ? 'DOM' : 'Calculated';
-      debugMarkers = [{
+      const source = clusterEventElements.length > 0 ? 'DOM' : 'Calculated';
+
+      debugMarkers = [];
+
+      // Store the bounding box for visualization
+      debugBoundingBox = {
+        left: triggerRect.left,
+        top: triggerRect.top,
+        width: triggerRect.width,
+        height: triggerRect.height
+      };
+
+      // Show the bounding box as the main trigger marker
+      debugMarkers.push({
         x: triggerRect.left + triggerRect.width / 2,
         y: triggerRect.top + triggerRect.height / 2,
-        label: `${source}: Tooltip trigger (${cluster.events.length} events)`,
+        label: `${source} Trigger: ${cluster.events.length} events (bbox)`,
         type: 'trigger'
-      }];
+      });
 
-      // If we used calculated position, also show where the actual DOM element is
-      if (!actualEventElement && timelineWrapper) {
-        const allMarkers = Array.from(timelineWrapper.querySelectorAll('.event-marker'));
-        const nearbyMarker = allMarkers.find(marker => {
-          const rect = marker.getBoundingClientRect();
-          const markerX = rect.left - containerRect.left + scrollLeft;
-          return Math.abs(markerX - cluster.leftPx - 40) < 5;
-        });
+      const debugWrapper = timelineWrapper ? timelineWrapper.getBoundingClientRect() : null;
 
-        if (nearbyMarker) {
-          const actualRect = nearbyMarker.getBoundingClientRect();
+      // Find an actual event marker at this position to compare
+      const allMarkersForDebug = timelineWrapper ? Array.from(timelineWrapper.querySelectorAll('.event-marker')) : [];
+      const actualMarkerAtPosition = allMarkersForDebug.find(marker => {
+        const rect = marker.getBoundingClientRect();
+        const markerCenterX = rect.left + rect.width / 2;
+        const expectedX = debugWrapper ? debugWrapper.left + cluster.leftPx : 0;
+        return Math.abs(markerCenterX - expectedX) < 10;
+      });
+
+      console.log('Debug markers for grouped events:', {
+        source,
+        bbox: debugBoundingBox,
+        triggerRect,
+        clusterEventElements: clusterEventElements.length,
+        totalMarkers: debugMarkers.length,
+        clusterLeftPx: cluster.leftPx,
+        scrollLeft: scrollLeft,
+        wrapperRect: debugWrapper,
+        containerRect: containerRect,
+        actualMarkerRect: actualMarkerAtPosition ? actualMarkerAtPosition.getBoundingClientRect() : null,
+        calculatedY: triggerRect.top,
+        actualY: actualMarkerAtPosition ? actualMarkerAtPosition.getBoundingClientRect().top : null,
+        yDifference: actualMarkerAtPosition ? (triggerRect.top - actualMarkerAtPosition.getBoundingClientRect().top) : null
+      });
+
+      // Show each individual event marker position
+      if (clusterEventElements.length > 0) {
+        // Show actual DOM positions
+        clusterEventElements.forEach((elem, idx) => {
           debugMarkers.push({
-            x: actualRect.left + actualRect.width / 2,
-            y: actualRect.top + actualRect.height / 2,
-            label: 'Actual DOM element',
+            x: elem.rect.left + elem.rect.width / 2,
+            y: elem.rect.top + elem.rect.height / 2,
+            label: `Event ${idx + 1}: ${elem.eventData.event.title.substring(0, 12)}...`,
             type: 'actual'
           });
-        }
+        });
+      } else {
+        // Show calculated positions for each event
+        cluster.events.forEach((evt, idx) => {
+          const WRAPPER_PADDING_TOP = 100;
+          const YEAR_AXIS_MARGIN_TOP = 5;
+          const YEAR_AXIS_HEIGHT = 40;
+          const PERSONS_LAYER_MARGIN_TOP = 10;
+
+          const wrapper = timelineContainer.querySelector('.timeline-wrapper');
+          const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
+
+          const yFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP + YEAR_AXIS_HEIGHT +
+                                 PERSONS_LAYER_MARGIN_TOP + evt.personTopPx + (PERSON_ROW_HEIGHT / 2);
+          const y = wrapperRect.top + yFromWrapperTop;
+          const x = wrapperRect.left + cluster.leftPx - scrollLeft;
+
+          debugMarkers.push({
+            x: x,
+            y: y,
+            label: `Event ${idx + 1}: ${evt.event.title.substring(0, 12)}...`,
+            type: 'actual'
+          });
+        });
       }
     }
 
@@ -1611,18 +1715,35 @@
 {/if}
 
 <!-- Debug markers for tooltip trigger positions -->
-{#if debugMode && debugMarkers.length > 0}
-  {#each debugMarkers as marker}
+{#if debugMode}
+  <!-- Bounding box visualization -->
+  {#if debugBoundingBox}
     <div
-      class="debug-marker"
-      class:actual-marker={marker.type === 'actual'}
-      style="left: {marker.x}px; top: {marker.y}px;"
-      title={marker.label}
-    >
-      <div class="debug-marker-dot"></div>
-      <div class="debug-marker-label">{marker.label}</div>
-    </div>
-  {/each}
+      class="debug-bbox"
+      style="
+        left: {debugBoundingBox.left}px;
+        top: {debugBoundingBox.top}px;
+        width: {debugBoundingBox.width}px;
+        height: {debugBoundingBox.height}px;
+      "
+      title="Trigger bounding box (tooltip avoids this area)"
+    ></div>
+  {/if}
+
+  <!-- Individual event markers -->
+  {#if debugMarkers.length > 0}
+    {#each debugMarkers as marker}
+      <div
+        class="debug-marker"
+        class:actual-marker={marker.type === 'actual'}
+        style="left: {marker.x}px; top: {marker.y}px;"
+        title={marker.label}
+      >
+        <div class="debug-marker-dot"></div>
+        <div class="debug-marker-label">{marker.label}</div>
+      </div>
+    {/each}
+  {/if}
 {/if}
 
 <style>
@@ -2515,6 +2636,30 @@
 
   .tooltip-events::-webkit-scrollbar-thumb:hover {
     background: rgba(56, 189, 248, 0.6);
+  }
+
+  /* Debug bounding box visualization */
+  .debug-bbox {
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    border: 2px dashed rgba(255, 165, 0, 0.8);
+    background: rgba(255, 165, 0, 0.1);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.8),
+      inset 0 0 20px rgba(255, 165, 0, 0.2);
+    animation: debug-bbox-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes debug-bbox-pulse {
+    0%, 100% {
+      border-color: rgba(255, 165, 0, 0.6);
+      background: rgba(255, 165, 0, 0.05);
+    }
+    50% {
+      border-color: rgba(255, 165, 0, 1);
+      background: rgba(255, 165, 0, 0.15);
+    }
   }
 
   /* Debug markers for tooltip positioning */
