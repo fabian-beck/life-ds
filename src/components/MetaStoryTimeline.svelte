@@ -1222,110 +1222,52 @@
     const timelineWrapper = timelineContainer.querySelector('.timeline-wrapper');
 
     // Find ALL actual DOM elements for events in this cluster
+    // Strategy: Find all event markers at the cluster's X position
     const clusterEventElements = [];
 
     if (timelineWrapper) {
       const allMarkers = Array.from(timelineWrapper.querySelectorAll('.event-marker'));
+      const wrapperRect = timelineWrapper.getBoundingClientRect();
+      const expectedX = wrapperRect.left + cluster.leftPx;
 
-      // For each event in the cluster, try to find its DOM element
-      cluster.events.forEach(evt => {
-        // Calculate expected position for this event
-        const WRAPPER_PADDING_TOP = 100;
-        const YEAR_AXIS_MARGIN_TOP = 5;
-        const YEAR_AXIS_HEIGHT = 40;
-        const PERSONS_LAYER_MARGIN_TOP = 10;
+      // Find ALL markers at the cluster's X position (they're all part of the cluster)
+      allMarkers.forEach(marker => {
+        const rect = marker.getBoundingClientRect();
+        const markerCenterX = rect.left + rect.width / 2;
 
-        const wrapper = timelineContainer.querySelector('.timeline-wrapper');
-        const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
-
-        const expectedYFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP +
-                                       YEAR_AXIS_HEIGHT + PERSONS_LAYER_MARGIN_TOP +
-                                       evt.personTopPx + (PERSON_ROW_HEIGHT / 2);
-        const expectedY = wrapperRect.top + expectedYFromWrapperTop;
-
-        // Find marker that matches both X and Y position
-        const matchingMarker = allMarkers.find(marker => {
-          const rect = marker.getBoundingClientRect();
-          const markerCenterX = rect.left + rect.width / 2;
-          const markerCenterY = rect.top + rect.height / 2;
-
-          // Expected X position (screen coordinates)
-          const wrapper = timelineContainer.querySelector('.timeline-wrapper');
-          const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
-          const expectedX = wrapperRect.left + cluster.leftPx;
-
-          // Check if marker is at approximately the expected position
-          // Loosen Y tolerance since we know there's an ~8px discrepancy
-          const xMatch = Math.abs(markerCenterX - expectedX) < 10;
-          const yMatch = Math.abs(markerCenterY - expectedY) < 15;
-
-          return xMatch && yMatch;
-        });
-
-        if (matchingMarker) {
+        // If this marker is at approximately the cluster's X position, include it
+        if (Math.abs(markerCenterX - expectedX) < 10) { // 10px tolerance
           clusterEventElements.push({
-            element: matchingMarker,
-            rect: matchingMarker.getBoundingClientRect(),
-            eventData: evt
+            element: marker,
+            rect: rect,
+            eventData: null // We don't need to match specific event data
           });
         }
       });
     }
 
-    // Create a bounding box that encompasses ALL events in the cluster
+    // If we couldn't find the DOM elements, bail out
+    if (clusterEventElements.length === 0) {
+      console.warn('Could not find DOM elements for event cluster at', cluster.leftPx);
+      return;
+    }
+
+    // Create a bounding box that encompasses ALL events in the cluster using actual DOM positions
     const virtualTrigger = {
       getBoundingClientRect: () => {
-        // If we found actual DOM elements, create a bounding box around all of them
-        if (clusterEventElements.length > 0) {
-          const rects = clusterEventElements.map(e => e.rect);
-          const minLeft = Math.min(...rects.map(r => r.left));
-          const minTop = Math.min(...rects.map(r => r.top));
-          const maxRight = Math.max(...rects.map(r => r.right));
-          const maxBottom = Math.max(...rects.map(r => r.bottom));
-
-          return {
-            left: minLeft,
-            top: minTop,
-            right: maxRight,
-            bottom: maxBottom,
-            width: maxRight - minLeft,
-            height: maxBottom - minTop
-          };
-        }
-
-        // Fallback: create bounding box from calculated positions for all events
-        const WRAPPER_PADDING_TOP = 100;
-        const YEAR_AXIS_MARGIN_TOP = 5;
-        const YEAR_AXIS_HEIGHT = 40;
-        const PERSONS_LAYER_MARGIN_TOP = 10;
-
-        const wrapper = timelineContainer.querySelector('.timeline-wrapper');
-        const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
-
-        // Calculate bounds for all events
-        let minY = Infinity;
-        let maxY = -Infinity;
-
-        cluster.events.forEach(evt => {
-          const yFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP + YEAR_AXIS_HEIGHT +
-                                 PERSONS_LAYER_MARGIN_TOP + evt.personTopPx + (PERSON_ROW_HEIGHT / 2);
-          const y = wrapperRect.top + yFromWrapperTop;
-          minY = Math.min(minY, y - 12); // Account for marker size
-          maxY = Math.max(maxY, y + 12);
-        });
-
-        // X position: wrapper left edge + event's absolute position within timeline
-        // Note: wrapperRect.left is already screen coordinates, and the wrapper itself scrolls,
-        // so we don't subtract scrollLeft (the wrapper moves with scrolling)
-        const x = wrapperRect.left + cluster.leftPx;
+        const rects = clusterEventElements.map(e => e.rect);
+        const minLeft = Math.min(...rects.map(r => r.left));
+        const minTop = Math.min(...rects.map(r => r.top));
+        const maxRight = Math.max(...rects.map(r => r.right));
+        const maxBottom = Math.max(...rects.map(r => r.bottom));
 
         return {
-          left: x - 12,
-          top: minY,
-          right: x + 12,
-          bottom: maxY,
-          width: 24,
-          height: maxY - minY
+          left: minLeft,
+          top: minTop,
+          right: maxRight,
+          bottom: maxBottom,
+          width: maxRight - minLeft,
+          height: maxBottom - minTop
         };
       }
     };
@@ -1395,30 +1337,7 @@
           debugMarkers.push({
             x: elem.rect.left + elem.rect.width / 2,
             y: elem.rect.top + elem.rect.height / 2,
-            label: `Event ${idx + 1}: ${elem.eventData.event.title.substring(0, 12)}...`,
-            type: 'actual'
-          });
-        });
-      } else {
-        // Show calculated positions for each event
-        cluster.events.forEach((evt, idx) => {
-          const WRAPPER_PADDING_TOP = 100;
-          const YEAR_AXIS_MARGIN_TOP = 5;
-          const YEAR_AXIS_HEIGHT = 40;
-          const PERSONS_LAYER_MARGIN_TOP = 10;
-
-          const wrapper = timelineContainer.querySelector('.timeline-wrapper');
-          const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : containerRect;
-
-          const yFromWrapperTop = WRAPPER_PADDING_TOP + YEAR_AXIS_MARGIN_TOP + YEAR_AXIS_HEIGHT +
-                                 PERSONS_LAYER_MARGIN_TOP + evt.personTopPx + (PERSON_ROW_HEIGHT / 2);
-          const y = wrapperRect.top + yFromWrapperTop;
-          const x = wrapperRect.left + cluster.leftPx - scrollLeft;
-
-          debugMarkers.push({
-            x: x,
-            y: y,
-            label: `Event ${idx + 1}: ${evt.event.title.substring(0, 12)}...`,
+            label: `Marker ${idx + 1} of ${clusterEventElements.length}`,
             type: 'actual'
           });
         });
