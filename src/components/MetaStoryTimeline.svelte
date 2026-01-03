@@ -4,6 +4,7 @@
   import { _ } from '../stores/language.js';
   import personStylesData from '../../data/person_styles.json';
 
+  export let metaStoryId = null; // ID of the meta story (for navigation context)
   export let chapters = [];
   export let personsRegistry = [];
   export let onEventClick = () => {};
@@ -1275,15 +1276,22 @@
     // Get current language from the URL
     const currentLang = window.location.hash.match(/^\#\/([a-z]{2})\//)?.[1] || 'en';
 
-    // Build URL with event query parameter
-    window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}`;
+    // Include meta story context if available
+    const fromMetaParam = metaStoryId ? `&from_meta=${metaStoryId}` : '';
+
+    // Build URL with event query parameter and meta story context
+    window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}${fromMetaParam}`;
   }
 
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
     // Get current language from the URL
     const currentLang = window.location.hash.match(/^\#\/([a-z]{2})\//)?.[1] || 'en';
-    window.location.hash = `/${currentLang}/story/${personId}`;
+
+    // Include meta story context if available
+    const fromMetaParam = metaStoryId ? `?from_meta=${metaStoryId}` : '';
+
+    window.location.hash = `/${currentLang}/story/${personId}${fromMetaParam}`;
   }
 
   // Click-outside handler to close tooltip

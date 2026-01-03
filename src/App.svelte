@@ -485,6 +485,10 @@ import { displayName } from "./utils/helpers.js";
     push("/");
   }
 
+  // Extract from_meta parameter to preserve meta story context
+  // Use the queryParams store which is already reactive to URL changes
+  $: fromMetaStoryId = $queryParams.from_meta;
+
   function handleSelectPerson(event) {
     const id = event.detail;
     if (id) {
@@ -493,7 +497,11 @@ import { displayName } from "./utils/helpers.js";
   }
 
   function handleCloseStory() {
-    push(`/${$currentLanguage}`);
+    if (fromMetaStoryId) {
+      push(`/${$currentLanguage}/meta/${fromMetaStoryId}`);
+    } else {
+      push(`/${$currentLanguage}`);
+    }
   }
 
   function handleSlideChange(event) {
@@ -503,11 +511,12 @@ import { displayName } from "./utils/helpers.js";
       // Base path without slide (slide is now a query param)
       const basePath = `/${$currentLanguage}/story/${encodeURIComponent(personId)}`;
 
-      // Build URL with all query params (slide, timeline, network)
+      // Build URL with all query params (slide, timeline, network, from_meta)
       const newPath = buildUrlWithParams(basePath, {
         slide: slideIndex,
         timeline: $queryParams.timeline,
         network: $queryParams.network,
+        from_meta: $queryParams.from_meta, // Preserve meta story context
       });
 
       // Always use replace() - slide changes are presentation state,
@@ -545,6 +554,7 @@ import { displayName } from "./utils/helpers.js";
       activeIndex={slideParam ?? 0}
       targetEventIndex={eventParam}
       styleConfig={styleFor(personId)}
+      {fromMetaStoryId}
       onClose={handleCloseStory}
       onSlideChange={handleSlideChange}
     />

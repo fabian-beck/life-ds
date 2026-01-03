@@ -42,6 +42,7 @@
   export let activeIndex = 0;
   export let targetEventIndex = null; // Optional: if set, navigate to this event index
   export let styleConfig = null;
+  export let fromMetaStoryId = null; // Optional: meta story ID to return to on close
   export let onClose = () => {};
   export let onSlideChange = () => {};
 
@@ -308,6 +309,7 @@
         slide: targetSlideIndex,
         timeline: $queryParams.timeline,
         network: $queryParams.network,
+        from_meta: $queryParams.from_meta, // Preserve meta story context
       });
       replace(newUrl);
     }

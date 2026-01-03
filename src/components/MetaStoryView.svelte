@@ -367,6 +367,7 @@
             <div class="timeline-horizontal-container" bind:this={timelineContainer}>
               <MetaStoryTimeline
                 bind:this={metaTimelineComponent}
+                metaStoryId={metaStoryData.meta_story.id}
                 chapters={metaStoryData.chapters}
                 personsRegistry={personsRegistry}
                 onEventClick={viewPersonEvent}

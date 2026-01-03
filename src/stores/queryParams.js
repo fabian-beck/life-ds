@@ -4,7 +4,7 @@ import { querystring } from "svelte-spa-router";
 /**
  * Derived store that parses query parameters from the current URL
  * Returns an object with boolean flags for timeline and network modals,
- * the slide index, and the event index (both null if not present)
+ * the slide index, the event index, and the from_meta context (all null if not present)
  */
 export const queryParams = derived(querystring, ($querystring) => {
   const params = new URLSearchParams($querystring || "");
@@ -18,13 +18,14 @@ export const queryParams = derived(querystring, ($querystring) => {
     network: params.get("network") === "1",
     slide: slideIndex,
     event: eventIndex,
+    from_meta: params.get("from_meta") || null,
   };
 });
 
 /**
  * Helper function to build a URL with query parameters
  * @param {string} basePath - The base path without query string
- * @param {Object} params - Object with timeline, network, and slide
+ * @param {Object} params - Object with timeline, network, slide, and from_meta
  * @returns {string} - Complete URL with query string if params are present
  */
 export function buildUrlWithParams(basePath, params) {
@@ -44,6 +45,11 @@ export function buildUrlWithParams(basePath, params) {
 
   if (params.network) {
     search.set("network", "1");
+  }
+
+  // Preserve from_meta parameter if present
+  if (params.from_meta) {
+    search.set("from_meta", params.from_meta);
   }
 
   const searchStr = search.toString();
