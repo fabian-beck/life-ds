@@ -89,9 +89,9 @@
   const PIXELS_PER_YEAR = 15;
 
   // Constants for theme grouping vertical spacing
-  const THEME_TITLE_HEIGHT = 45; // Compact theme title row with adequate spacing
+  const THEME_TITLE_HEIGHT = 32; // Compact theme title row with reduced spacing
   const PERSON_ROW_HEIGHT = 42; // Compact person rows with enough space for names
-  const THEME_SPACING = 12; // Spacing between theme groups
+  const THEME_SPACING = 8; // Spacing between theme groups
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
@@ -508,6 +508,10 @@
     let offset = calculateThemeTop(themeIndex, _visibleIds);
     offset += THEME_TITLE_HEIGHT;
 
+    // Add small gap after theme title before first person
+    const THEME_TITLE_GAP = 6;
+    offset += THEME_TITLE_GAP;
+
     // Add height for each person before this one in the same theme
     for (let i = 0; i < personIndex; i++) {
       const personData = themesWithPersons[themeIndex].persons[i];
@@ -524,14 +528,16 @@
 
     // Fixed heights for top sections
     const topPadding = 100; // .timeline-wrapper padding-top for fixed chapter header
-    const yearAxisHeight = 40; // .year-axis height
-    const yearAxisMarginTop = 5;
+    const yearAxisHeight = 28; // .year-axis height
+    const yearAxisMarginTop = 3;
     const personsLayerMarginTop = 10;
 
     // Calculate persons layer height (always use expanded height to prevent layout shifts)
+    const THEME_TITLE_GAP = 6; // Gap after theme title before first person
     let personsLayerHeight = 0;
     themesWithPersons.forEach((theme, index) => {
       personsLayerHeight += THEME_TITLE_HEIGHT;
+      personsLayerHeight += THEME_TITLE_GAP; // Gap after title
 
       // Always use expanded height for all persons to maintain consistent container height
       theme.persons.forEach(personData => {
@@ -1737,8 +1743,8 @@
   /* Year axis */
   .year-axis {
     position: relative;
-    height: 40px;
-    margin-top: 5px;
+    height: 28px;
+    margin-top: 3px;
     border-top: 2px solid rgba(56, 189, 248, 0.4);
     z-index: 5;
   }
@@ -1750,14 +1756,14 @@
 
   .year-tick {
     width: 2px;
-    height: 12px;
+    height: 8px;
     background: rgba(56, 189, 248, 0.6);
     margin: 0 auto;
   }
 
   .year-label {
-    margin-top: 4px;
-    font-size: 0.75rem;
+    margin-top: 2px;
+    font-size: 0.7rem;
     color: #94a3b8;
     font-weight: 500;
     text-align: center;
@@ -1776,7 +1782,7 @@
   /* Theme title row */
   .theme-title-row {
     position: absolute;
-    height: 30px;
+    height: 24px;
     display: flex;
     align-items: center;
     background: rgba(15, 23, 42, 0.6);
@@ -1789,7 +1795,7 @@
     position: sticky;
     left: 0;
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #38bdf8;
     margin: 0;
@@ -2100,11 +2106,11 @@
     }
 
     .theme-title-row {
-      height: 32px;
+      height: 24px;
     }
 
     .theme-title {
-      font-size: 0.95rem;
+      font-size: 0.8rem;
     }
   }
 
