@@ -639,11 +639,6 @@
   // Guard against infinite tooltip placement loops
   let isCalculatingPlacement = false;
 
-  // Debug mode for showing tooltip trigger positions
-  let debugMode = true; // Set to false to disable debug markers
-  let debugMarkers = []; // Array of {x, y, label, type} objects for visual debugging
-  let debugBoundingBox = null; // {left, top, width, height} for trigger bounding box
-
   // Helper to render tooltip content for runtime measurement
   function renderTooltipContentForMeasurement(config) {
     const { events } = config;
@@ -1176,21 +1171,6 @@
     // Use unified placement algorithm
     const placement = calculateTooltipPlacement(clickEvent.target, eventConfig);
 
-    // Add debug marker for clicked event
-    if (debugMode && placement) {
-      const triggerRect = clickEvent.target.getBoundingClientRect();
-      const markerData = {
-        x: triggerRect.left + triggerRect.width / 2,
-        y: triggerRect.top + triggerRect.height / 2,
-        label: `Event Click: ${event.title.substring(0, 20)}...`,
-        type: 'trigger'
-      };
-      console.log('Debug marker for clicked event:', markerData, 'triggerRect:', triggerRect);
-      debugMarkers = [markerData];
-      // Single event clicks don't have a bounding box
-      debugBoundingBox = null;
-    }
-
     // Update reactive state (only if placement succeeded)
     if (placement) {
       activeEventTooltip = {
@@ -1205,11 +1185,6 @@
 
   function hideEventTooltip() {
     activeEventTooltip = null;
-    // Clear debug markers when tooltip is hidden
-    if (debugMode) {
-      debugMarkers = [];
-      debugBoundingBox = null;
-    }
   }
 
   // Show grouped tooltip for event cluster (used by scroll indicator)
@@ -1280,69 +1255,6 @@
     // Use unified placement algorithm
     const placement = calculateTooltipPlacement(virtualTrigger, eventConfig);
 
-    // Add debug markers for grouped events
-    if (debugMode && placement) {
-      const triggerRect = virtualTrigger.getBoundingClientRect();
-      const source = clusterEventElements.length > 0 ? 'DOM' : 'Calculated';
-
-      debugMarkers = [];
-
-      // Store the bounding box for visualization
-      debugBoundingBox = {
-        left: triggerRect.left,
-        top: triggerRect.top,
-        width: triggerRect.width,
-        height: triggerRect.height
-      };
-
-      // Show the bounding box as the main trigger marker
-      debugMarkers.push({
-        x: triggerRect.left + triggerRect.width / 2,
-        y: triggerRect.top + triggerRect.height / 2,
-        label: `${source} Trigger: ${cluster.events.length} events (bbox)`,
-        type: 'trigger'
-      });
-
-      const debugWrapper = timelineWrapper ? timelineWrapper.getBoundingClientRect() : null;
-
-      // Find an actual event marker at this position to compare
-      const allMarkersForDebug = timelineWrapper ? Array.from(timelineWrapper.querySelectorAll('.event-marker')) : [];
-      const actualMarkerAtPosition = allMarkersForDebug.find(marker => {
-        const rect = marker.getBoundingClientRect();
-        const markerCenterX = rect.left + rect.width / 2;
-        const expectedX = debugWrapper ? debugWrapper.left + cluster.leftPx : 0;
-        return Math.abs(markerCenterX - expectedX) < 10;
-      });
-
-      console.log('Debug markers for grouped events:', {
-        source,
-        bbox: debugBoundingBox,
-        triggerRect,
-        clusterEventElements: clusterEventElements.length,
-        totalMarkers: debugMarkers.length,
-        clusterLeftPx: cluster.leftPx,
-        scrollLeft: scrollLeft,
-        wrapperRect: debugWrapper,
-        containerRect: containerRect,
-        actualMarkerRect: actualMarkerAtPosition ? actualMarkerAtPosition.getBoundingClientRect() : null,
-        calculatedY: triggerRect.top,
-        actualY: actualMarkerAtPosition ? actualMarkerAtPosition.getBoundingClientRect().top : null,
-        yDifference: actualMarkerAtPosition ? (triggerRect.top - actualMarkerAtPosition.getBoundingClientRect().top) : null
-      });
-
-      // Show each individual event marker position
-      if (clusterEventElements.length > 0) {
-        // Show actual DOM positions
-        clusterEventElements.forEach((elem, idx) => {
-          debugMarkers.push({
-            x: elem.rect.left + elem.rect.width / 2,
-            y: elem.rect.top + elem.rect.height / 2,
-            label: `Marker ${idx + 1} of ${clusterEventElements.length}`,
-            type: 'actual'
-          });
-        });
-      }
-    }
 
     // Update reactive state (only if placement succeeded)
     if (placement) {
@@ -1633,37 +1545,6 @@
   </div>
 {/if}
 
-<!-- Debug markers for tooltip trigger positions -->
-{#if debugMode}
-  <!-- Bounding box visualization -->
-  {#if debugBoundingBox}
-    <div
-      class="debug-bbox"
-      style="
-        left: {debugBoundingBox.left}px;
-        top: {debugBoundingBox.top}px;
-        width: {debugBoundingBox.width}px;
-        height: {debugBoundingBox.height}px;
-      "
-      title="Trigger bounding box (tooltip avoids this area)"
-    ></div>
-  {/if}
-
-  <!-- Individual event markers -->
-  {#if debugMarkers.length > 0}
-    {#each debugMarkers as marker}
-      <div
-        class="debug-marker"
-        class:actual-marker={marker.type === 'actual'}
-        style="left: {marker.x}px; top: {marker.y}px;"
-        title={marker.label}
-      >
-        <div class="debug-marker-dot"></div>
-        <div class="debug-marker-label">{marker.label}</div>
-      </div>
-    {/each}
-  {/if}
-{/if}
 
 <style>
   /* Container - full width and height scrollable panel */
@@ -2557,118 +2438,4 @@
     background: rgba(56, 189, 248, 0.6);
   }
 
-  /* Debug bounding box visualization */
-  .debug-bbox {
-    position: fixed;
-    z-index: 99999;
-    pointer-events: none;
-    border: 2px dashed rgba(255, 165, 0, 0.8);
-    background: rgba(255, 165, 0, 0.1);
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.8),
-      inset 0 0 20px rgba(255, 165, 0, 0.2);
-    animation: debug-bbox-pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes debug-bbox-pulse {
-    0%, 100% {
-      border-color: rgba(255, 165, 0, 0.6);
-      background: rgba(255, 165, 0, 0.05);
-    }
-    50% {
-      border-color: rgba(255, 165, 0, 1);
-      background: rgba(255, 165, 0, 0.15);
-    }
-  }
-
-  /* Debug markers for tooltip positioning */
-  .debug-marker {
-    position: fixed;
-    z-index: 100000;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-  }
-
-  /* Calculated position marker (magenta) */
-  .debug-marker-dot {
-    width: 16px;
-    height: 16px;
-    background: rgba(255, 0, 255, 0.8);
-    border: 3px solid rgba(255, 255, 0, 0.9);
-    border-radius: 50%;
-    box-shadow:
-      0 0 0 2px rgba(0, 0, 0, 0.8),
-      0 0 20px rgba(255, 0, 255, 0.8),
-      0 0 40px rgba(255, 0, 255, 0.5);
-    animation: debug-pulse 1.5s ease-in-out infinite;
-  }
-
-  /* Actual DOM element marker (green) */
-  .debug-marker.actual-marker .debug-marker-dot {
-    background: rgba(0, 255, 0, 0.8);
-    border: 3px solid rgba(0, 255, 255, 0.9);
-    box-shadow:
-      0 0 0 2px rgba(0, 0, 0, 0.8),
-      0 0 20px rgba(0, 255, 0, 0.8),
-      0 0 40px rgba(0, 255, 0, 0.5);
-    animation: debug-pulse-actual 1.5s ease-in-out infinite;
-  }
-
-  .debug-marker-label {
-    position: absolute;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.95);
-    color: #ffff00;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 4px 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 0, 255, 0.8);
-    white-space: nowrap;
-    font-family: 'Courier New', monospace;
-    text-shadow: 0 0 4px rgba(255, 255, 0, 0.5);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  }
-
-  .debug-marker.actual-marker .debug-marker-label {
-    color: #00ff00;
-    border: 1px solid rgba(0, 255, 0, 0.8);
-    text-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
-  }
-
-  @keyframes debug-pulse {
-    0%, 100% {
-      transform: scale(1);
-      box-shadow:
-        0 0 0 2px rgba(0, 0, 0, 0.8),
-        0 0 20px rgba(255, 0, 255, 0.8),
-        0 0 40px rgba(255, 0, 255, 0.5);
-    }
-    50% {
-      transform: scale(1.3);
-      box-shadow:
-        0 0 0 2px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(255, 0, 255, 1),
-        0 0 60px rgba(255, 0, 255, 0.7);
-    }
-  }
-
-  @keyframes debug-pulse-actual {
-    0%, 100% {
-      transform: scale(1);
-      box-shadow:
-        0 0 0 2px rgba(0, 0, 0, 0.8),
-        0 0 20px rgba(0, 255, 0, 0.8),
-        0 0 40px rgba(0, 255, 0, 0.5);
-    }
-    50% {
-      transform: scale(1.3);
-      box-shadow:
-        0 0 0 2px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(0, 255, 0, 1),
-        0 0 60px rgba(0, 255, 0, 0.7);
-    }
-  }
 </style>
