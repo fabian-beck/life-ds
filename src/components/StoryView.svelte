@@ -952,9 +952,20 @@
       initialScrollPending = true;
       tick()
         .then(() => {
-          // Add a small delay to ensure DOM is fully rendered
+          // Wait for all slide DOM elements to be rendered
+          // This is crucial for correct scroll positioning, especially on first load
           return new Promise((resolve) => {
-            setTimeout(resolve, 50);
+            const checkSlides = () => {
+              const renderedSlides = slidesContainer.querySelectorAll('section.slide').length;
+              if (renderedSlides >= totalPanels) {
+                // All slides are rendered, wait one more frame for layout
+                requestAnimationFrame(() => resolve());
+              } else {
+                // Not ready yet, check again soon
+                setTimeout(checkSlides, 10);
+              }
+            };
+            checkSlides();
           });
         })
         .then(() => {
