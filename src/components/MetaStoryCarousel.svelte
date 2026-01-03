@@ -167,7 +167,12 @@
             <div class="slide-content">
               <div class="slide-header">
                 <h2 class="slide-title">{metaStory.title}</h2>
-                <p class="slide-tagline">{metaStory.tagline}</p>
+                <div class="tagline-and-date">
+                  <p class="slide-tagline">{metaStory.tagline}</p>
+                  <span class="date-range"
+                    >{metaStory.date_range_start}–{metaStory.date_range_end}</span
+                  >
+                </div>
                 <div class="slide-meta">
                   <div class="button-container">
                     <button
@@ -177,21 +182,16 @@
                         title: metaStory.title,
                       })}
                     >
-                      {$_("landing.select_persons", {
-                        count: metaStory.person_count,
-                      })}
+                      {$_("landing.filter")}
                     </button>
                     <button
                       class="explore-story"
                       on:click={() => onExploreMetaStory(metaStory)}
                       aria-label={$_("landing.explore_meta_story")}
                     >
-                      {$_("landing.explore_meta_story")}
+                      {$_("landing.timeline")}
                     </button>
                   </div>
-                  <span class="date-range"
-                    >{metaStory.date_range_start}–{metaStory.date_range_end}</span
-                  >
                 </div>
               </div>
             </div>
@@ -416,6 +416,13 @@
       0 1px 4px rgba(0, 0, 0, 0.9);
   }
 
+  .tagline-and-date {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
   .slide-tagline {
     font-size: 1rem;
     color: #cbd5e1;
@@ -428,11 +435,6 @@
   }
 
   .slide-meta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    font-size: 0.85rem;
-    color: #94a3b8;
     margin-top: 0.25rem;
   }
 
