@@ -390,6 +390,12 @@ CHAPTERS (3-6):
 - Chapters should be chronological and non-overlapping
 - Bridge statement: narrative hook, not summary (1-2 sentences, max 30 words)
 - Each bridge should create anticipation for what happened during that era
+- CRITICAL: Chapter date ranges should focus on periods of ACTIVE CONTRIBUTION to the topic
+  * DO NOT start chapters with birth years unless early life directly relates to the topic
+  * Base date ranges on when people actually made their contributions (publications, discoveries, work, influence)
+  * Example: If someone born in 1900 only contributed to computing in 1935-1950, the chapter should span 1935-1950, NOT 1900-1950
+  * Use the key_events field to identify when actual topic-relevant work occurred
+  * Chapters should capture the era when meaningful events happened, not entire lifespans
 
 CONCLUSION:
 - Synthesize the overall narrative (2-3 sentences)
@@ -480,6 +486,12 @@ CHAPTERS (3-6):
 - Bridge statement: narrative hook, not summary (1-2 sentences, max 30 words)
 - Each bridge should create anticipation for what happened during that era
 - Aim for roughly equal time spans when possible
+- CRITICAL: Chapter date ranges should focus on periods of ACTIVE CONTRIBUTION to the topic
+  * DO NOT start chapters with birth years unless early life directly relates to the topic
+  * Base date ranges on when people actually made their contributions (publications, discoveries, work, influence)
+  * Example: If someone born in 1900 only contributed to computing in 1935-1950, the chapter should span 1935-1950, NOT 1900-1950
+  * Use the key_events field to identify when actual topic-relevant work occurred
+  * Chapters should capture the era when meaningful events happened, not entire lifespans
 
 CONCLUSION:
 - Synthesize the overall narrative (2-3 sentences)
