@@ -369,6 +369,12 @@ TITLE & NARRATIVE:
 - Tagline should be a short hook (3-10 words)
 - Description should be rich narrative (2-3 paragraphs) explaining significance
 - Write for a general educated audience, not just academics
+- CRITICAL: Write description like a journalist or educator introducing the topic
+  * DO NOT use meta-references like "This collection...", "These figures...", "This meta-story..."
+  * Instead, write directly about the topic itself as an engaging introduction
+  * Example GOOD: "Computing pioneers turned calculation from a human craft into..."
+  * Example BAD: "This collection traces how computing pioneers turned..."
+  * Think of it as the opening paragraphs of a feature article or documentary introduction
 
 SUBTOPICS (2-4):
 - Reflect meaningful thematic groupings (e.g., "Theoretical Foundations", "Wartime Applications")
@@ -456,6 +462,12 @@ TITLE & NARRATIVE:
 - Tagline should be a short hook (3-10 words)
 - Description should be rich narrative (2-3 paragraphs) explaining significance
 - Write for a general educated audience, not just academics
+- CRITICAL: Write description like a journalist or educator introducing the topic
+  * DO NOT use meta-references like "This collection...", "These figures...", "This meta-story..."
+  * Instead, write directly about the topic itself as an engaging introduction
+  * Example GOOD: "Computing pioneers turned calculation from a human craft into..."
+  * Example BAD: "This collection traces how computing pioneers turned..."
+  * Think of it as the opening paragraphs of a feature article or documentary introduction
 
 SUBTOPICS (2-4):
 - Reflect meaningful thematic groupings (e.g., "Theoretical Foundations", "Wartime Applications")
