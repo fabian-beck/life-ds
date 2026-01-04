@@ -533,7 +533,6 @@ import { displayName } from "./utils/helpers.js";
       {metaStoryData}
       personsRegistry={registry.people}
       currentLanguage={$currentLanguage}
-      getStyle={styleFor}
       isLoading={dataLoading}
     />
   {:else if exhibitionMatch}

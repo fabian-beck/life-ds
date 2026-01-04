@@ -5,7 +5,6 @@
 
   export let conclusion = null;
   export let relatedPersons = [];
-  export let personStyle = null;
   export let personStylesRegistry = null;
 
   // Format lifespan for a person

@@ -9,7 +9,6 @@
   export let metaStoryData = null;
   export let personsRegistry = [];
   export let currentLanguage = "en";
-  export let getStyle = () => ({});
   export let isLoading = false;
 
   // Scroll proxy variables
@@ -209,7 +208,7 @@
 
   // Sticky header state
   let showStickyHeader = false;
-  let headerScrollThreshold = 300; // pixels scrolled before showing sticky header
+  const headerScrollThreshold = 300; // pixels scrolled before showing sticky header
   let stickyHeaderElement = null;
   let stickyHeaderHeight = 0;
 
@@ -437,7 +436,6 @@
                 metaStoryId={metaStoryData.meta_story.id}
                 chapters={metaStoryData.chapters}
                 personsRegistry={personsRegistry}
-                onEventClick={viewPersonEvent}
                 subtopics={metaStoryData.subtopics}
                 scrollProgress={scrollProgress}
                 isSticky={isScrollLockActive}

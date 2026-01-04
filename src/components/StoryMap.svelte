@@ -46,19 +46,24 @@
   async function resolvePmtilesUrl() {
     if (basemapResolved) return pmtilesUrl;
     const candidates = [...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean))];
-    for (const url of candidates) {
-      try {
+
+    // Use Promise.any to test URLs in parallel instead of sequential await
+    const results = await Promise.allSettled(
+      candidates.map(async (url) => {
         const res = await fetch(url, { method: "HEAD" });
-        if (res.ok) {
-          pmtilesUrl = url;
-          basemapError = null;
-          basemapResolved = true;
-          basemapStyleCache = null;
-          return pmtilesUrl;
-        }
-      } catch (_err) {
-        // ignore and continue
-      }
+        if (res.ok) return url;
+        throw new Error(`Failed to fetch ${url}`);
+      })
+    );
+
+    // Find first successful result
+    const successfulResult = results.find(r => r.status === 'fulfilled');
+    if (successfulResult) {
+      pmtilesUrl = successfulResult.value;
+      basemapError = null;
+      basemapResolved = true;
+      basemapStyleCache = null;
+      return pmtilesUrl;
     }
     basemapError = $_("story.basemap_error");
     basemapResolved = true;

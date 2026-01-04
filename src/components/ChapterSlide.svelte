@@ -5,8 +5,6 @@
   import { getSubcategory, getChapterPeople, formatSingleDate } from "../utils/storyHelpers.js";
 
   export let chapter = {};
-  export let personId = "";
-  export let personName = "";
   export let personStyle = null;
   export let egoNetwork = null;
   export let formatters = {};
@@ -78,7 +76,12 @@
   }
 </script>
 
-<div class="content chapter-content" on:click={handleClickOutside}>
+<div
+  class="content chapter-content"
+  on:click={handleClickOutside}
+  on:keydown={(e) => e.key === 'Escape' && visiblePersonInfo && (visiblePersonInfo = null)}
+  role="presentation"
+>
   <div class="chapter-box">
     <h2 class="chapter-headline">{chapter.headline || ""}</h2>
 

@@ -12,8 +12,14 @@
 </script>
 
 {#if show}
-  <div class="modal-backdrop" on:click={handleBackdropClick}>
-    <div class="modal-content" on:click|stopPropagation>
+  <div
+    class="modal-backdrop"
+    on:click={handleBackdropClick}
+    on:keydown={(e) => e.key === 'Escape' && onClose()}
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="modal-content" on:click|stopPropagation role="document">
       <button
         class="modal-close"
         on:click={onClose}

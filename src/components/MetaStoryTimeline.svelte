@@ -7,7 +7,6 @@
   export let metaStoryId = null; // ID of the meta story (for navigation context)
   export let chapters = [];
   export let personsRegistry = [];
-  export let onEventClick = () => {};
   export let subtopics = [];
   export let scrollProgress = 0; // 0 to 1, representing horizontal scroll position
   export let isSticky = false; // Whether timeline is in sticky/fullscreen mode
@@ -74,17 +73,6 @@
     return span > 0 ? span : 1; // Prevent division by zero
   })();
 
-  // Generate grid template columns based on proportional date ranges
-  $: gridTemplate = (() => {
-    if (!chapters || chapters.length === 0) return '1fr';
-
-    return chapters.map(chapter => {
-      const span = parseInt(chapter.date_end) - parseInt(chapter.date_start);
-      // Ensure minimum width for very short chapters (at least 1 year)
-      const widthFr = Math.max(span, 1);
-      return `${widthFr}fr`;
-    }).join(' ');
-  })();
 
   // Define pixels per year scale
   const PIXELS_PER_YEAR = 15;
@@ -163,8 +151,8 @@
     const visible = [];
     const VISIBILITY_MARGIN = 100; // Extra pixels for smooth transitions
 
-    themesWithPersons.forEach((theme, themeIdx) => {
-      theme.persons.forEach((personData, personIdx) => {
+    themesWithPersons.forEach((theme) => {
+      theme.persons.forEach((personData) => {
         const personLeft = personData.leftPx;
         const personRight = personData.leftPx + personData.widthPx;
 
@@ -183,8 +171,6 @@
     return visible;
   })();
 
-  // Convert to Set for fast lookup (but keep reactive dependency on array)
-  $: visiblePersons = new Set(visiblePersonIds);
 
   // Detect when scroll indicator hovers over event markers
   $: {
@@ -482,7 +468,6 @@
 
   // Heights for collapsed vs expanded states
   const PERSON_ROW_HEIGHT_COLLAPSED = 10; // Desktop collapsed height
-  const PERSON_ROW_HEIGHT_COLLAPSED_MOBILE = 8; // Mobile collapsed height (not used in calculation, just CSS)
 
   // Calculate vertical offset for theme title
   function calculateThemeTop(themeIndex, _visibleIds) {
@@ -527,7 +512,7 @@
   }
 
   // Calculate total timeline height needed (always use full expanded height to prevent jumps)
-  $: timelineHeightPx = (() => {
+  $: _timelineHeightPx = (() => {
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
     // Fixed heights for top sections
@@ -544,7 +529,7 @@
       personsLayerHeight += THEME_TITLE_GAP; // Gap after title
 
       // Always use expanded height for all persons to maintain consistent container height
-      theme.persons.forEach(personData => {
+      theme.persons.forEach(() => {
         personsLayerHeight += PERSON_ROW_HEIGHT;
       });
 
@@ -1229,8 +1214,6 @@
     const timelineContainer = document.querySelector('.meta-timeline-container');
     if (!timelineContainer) return;
 
-    const containerRect = timelineContainer.getBoundingClientRect();
-    const scrollLeft = timelineContainer.scrollLeft;
     const timelineWrapper = timelineContainer.querySelector('.timeline-wrapper');
 
     // Find ALL actual DOM elements for events in this cluster
@@ -1310,7 +1293,7 @@
     const targetEventIndex = event.event_index !== undefined ? event.event_index : 0;
 
     // Get current language from the URL
-    const currentLang = window.location.hash.match(/^\#\/([a-z]{2})\//)?.[1] || 'en';
+    const currentLang = window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || 'en';
 
     // Include meta story context if available
     const fromMetaParam = metaStoryId ? `&from_meta=${metaStoryId}` : '';
@@ -1322,7 +1305,7 @@
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
     // Get current language from the URL
-    const currentLang = window.location.hash.match(/^\#\/([a-z]{2})\//)?.[1] || 'en';
+    const currentLang = window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || 'en';
 
     // Include meta story context if available
     const fromMetaParam = metaStoryId ? `?from_meta=${metaStoryId}` : '';
@@ -1545,6 +1528,7 @@
 
 <!-- Event tooltip (single or grouped) - rendered outside timeline container for proper fixed positioning -->
 {#if activeEventTooltip}
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     class="event-tooltip"
     class:grouped={activeEventTooltip.events.length > 1}
@@ -2303,67 +2287,6 @@
     }
   }
 
-  .tooltip-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .tooltip-title {
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--tooltip-primary);
-    margin: 0;
-    line-height: 1.2;
-    flex: 1;
-  }
-
-  .tooltip-year {
-    font-size: 0.7rem;
-    color: rgba(var(--tooltip-primary-rgb), 0.7);
-    font-weight: 500;
-    white-space: nowrap;
-    background: rgba(var(--tooltip-primary-rgb), 0.1);
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-
-  .tooltip-description {
-    font-size: 0.8rem;
-    line-height: 1.5;
-    color: #cbd5e1;
-    margin: 0.5rem 0 0.75rem 0;
-    border-left: 3px solid rgba(var(--tooltip-secondary-rgb), 0.5);
-    padding-left: 0.5rem;
-  }
-
-  .tooltip-action {
-    width: 100%;
-    background: linear-gradient(135deg, rgba(var(--tooltip-primary-rgb), 0.15), rgba(var(--tooltip-secondary-rgb), 0.15));
-    border: 1px solid rgba(var(--tooltip-primary-rgb), 0.4);
-    border-radius: 0.375rem;
-    padding: 0.5rem 0.75rem;
-    color: var(--tooltip-primary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-  }
-
-  .tooltip-action:hover {
-    background: linear-gradient(135deg, rgba(var(--tooltip-primary-rgb), 0.25), rgba(var(--tooltip-secondary-rgb), 0.25));
-    border-color: rgba(var(--tooltip-primary-rgb), 0.6);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(var(--tooltip-primary-rgb), 0.4);
-  }
-
-  .tooltip-action:active {
-    transform: translateY(0);
-  }
 
   /* Grouped tooltip - same width as single tooltip for consistency */
   .event-tooltip.grouped {

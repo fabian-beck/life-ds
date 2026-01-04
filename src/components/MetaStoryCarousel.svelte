@@ -5,7 +5,6 @@
 
   export let metaStories = [];
   export let persons = [];
-  export let getStyle = () => ({});
   export let onSelectPerson = () => {};
   export let onFilterByMetaStory = () => {};
   export let onExploreMetaStory = () => {};
@@ -241,7 +240,7 @@
         </button>
 
         <div class="carousel-indicators">
-          {#each metaStories as metaStoryItem, index}
+          {#each metaStories as _metaStoryItem, index}
             {@const slideLabel = $_("landing.go_to_slide", { number: index + 1 })}
             <button
               class="indicator"

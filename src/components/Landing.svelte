@@ -273,10 +273,6 @@
     push(`/${$currentLanguage}/meta/${metaStory.id}`);
   }
 
-  function summaryFor(entry) {
-    return entry?.summary ?? getSummary(entry);
-  }
-
   function initialsFromName(name = "") {
     const cleaned = displayName(name);
     const parts = cleaned
@@ -421,7 +417,6 @@
         <MetaStoryCarousel
           {metaStories}
           persons={englishEntries}
-          getStyle={getStyle}
           onSelectPerson={handleSelect}
           onFilterByMetaStory={handleFilterByMetaStory}
           onExploreMetaStory={handleExploreMetaStory}
@@ -529,18 +524,13 @@
   <div class="landing-grid">
     {#if filteredEntries.length > 0}
       {#each filteredEntries as entry (entry.id)}
-        {@const summary = summaryFor(entry)}
         {@const style = entry.style ?? getStyle(entry.id)}
         {@const lifespan = formatLifespan(entry)}
         {@const anniversary = getAnniversary(entry)}
-        <article
+        <button
           class="person-card"
           style={cardStyleVars(style)}
           on:click={() => handleSelect(entry.id)}
-          on:keydown={(e) =>
-            (e.key === "Enter" || e.key === " ") && handleSelect(entry.id)}
-          role="button"
-          tabindex="0"
           aria-label={`Open life story for ${displayName(entry.name)}`}
         >
           {#if anniversary}
@@ -614,7 +604,7 @@
               <p class="card-tagline">{entry.tagline}</p>
             {/if}
           </div>
-        </article>
+        </button>
       {/each}
     {:else if entries.length === 0}
       <p class="landing-empty">
@@ -778,6 +768,10 @@
       border-color 0.22s ease,
       box-shadow 0.22s ease;
     min-height: 0;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
     overflow: hidden;
     color: #e2e8f0;
     isolation: isolate;

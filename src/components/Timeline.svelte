@@ -560,13 +560,12 @@
                   <span class="event-title">Overview</span>
                 </div>
               </div>
-              {#each groupedEvents as group, groupIndex}
+              {#each groupedEvents as group}
                 {#if group.chapter}
                   {@const chapterAge = group.chapter.age_start ?? 0}
                   {@const chapterPeople = getChapterPeople(group.chapter, egoNetwork)}
                   {@const chapterLocation = group.chapter.location}
                   {@const chapterSlideIndex = slides.findIndex(s => s.type === 'chapter' && s.chapter.id === group.chapter.id)}
-                  <!-- svelte-ignore a11y-no-static-element-interactions -->
                   <div
                     class="chapter-header clickable"
                     class:active={activeIndex === chapterSlideIndex}
@@ -958,13 +957,6 @@
     display: contents;
   }
 
-  /* Chapter spacer for visual clustering */
-  .chapter-spacer {
-    width: var(--dot-size);
-    flex: 0 0 auto;
-    pointer-events: none;
-    opacity: 0;
-  }
 
   /* Chapter dots - smaller than event dots */
   .dot.chapter-dot {

@@ -24,8 +24,6 @@
     normalizePrimaryLocation,
     normalizeAllLocations,
     isCoordinate,
-    parseHexColor,
-    rgbaFromHex,
     resolveEventIcon,
     computeYearsLabel,
     createDateFormatters,
@@ -48,7 +46,6 @@
 
   let enlargedImage = null;
   let currentImageGlobalIndex = -1;
-  let lastViewedSlideIndex = 0;
   let visibleDateNote = null;
   let visiblePersonInfo = null;
   let visibleSources = null;
@@ -80,7 +77,6 @@
   $: portrait = person?.portrait;
   $: personName = displayName(person?.name);
   $: personSummary = person?.summary ?? "";
-  $: hasDataset = Boolean(dataset);
   $: yearsLabel = computeYearsLabel(person);
   $: rolesLabel = Array.isArray(person?.primary_roles)
     ? joinWithSeparator(person.primary_roles, styleConfig)
@@ -651,7 +647,6 @@
     });
 
     currentImageGlobalIndex = globalIndex >= 0 ? globalIndex : 0;
-    lastViewedSlideIndex = activeIndex;
     enlargedImage =
       globalIndex >= 0 ? allImages[globalIndex] : { ...imageData, slideIndex: activeIndex };
   }
@@ -674,7 +669,6 @@
         source: "image-viewer-jump",
         updateStateImmediately: true,
       });
-      lastViewedSlideIndex = slideIndex; // Update so closing doesn't jump back
     }
   }
 
@@ -1184,8 +1178,6 @@
             {:else if slide.type === "chapter"}
               <ChapterSlide
                 chapter={slide.chapter}
-                personId={dataset.person_id}
-                {personName}
                 personStyle={styleConfig}
                 {egoNetwork}
                 {formatters}
@@ -1196,7 +1188,6 @@
               <ConclusionSlide
                 conclusion={slide.conclusion}
                 relatedPersons={slide.relatedPersons}
-                personStyle={styleConfig}
                 personStylesRegistry={personStylesRegistry}
               />
             {:else if slide.type !== "spacer"}
@@ -1209,14 +1200,12 @@
                 {visiblePersonInfo}
                 {visibleSources}
                 {visibleAnnotation}
-                {descriptionOverflows}
                 onEnlargeImage={enlargeImage}
                 onToggleDateNote={toggleDateNote}
                 onTogglePersonInfo={togglePersonInfo}
                 onToggleSources={toggleSources}
                 onToggleAnnotation={toggleAnnotation}
                 onOpenNetwork={openNetworkModal}
-                {checkOverflow}
               />
             {/if}
           </section>

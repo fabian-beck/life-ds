@@ -1,6 +1,5 @@
 <script>
   import {
-    mdiMapMarkerOutline,
     mdiLinkVariant,
     mdiInformationOutline,
     mdiWikipedia,
@@ -13,7 +12,6 @@
     mdiMapMarkerMultiple,
   } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { joinWithSeparator } from "../utils/helpers.js";
   import {
     formatDate,
     getDateNote,
@@ -35,20 +33,17 @@
   export let visiblePersonInfo = null;
   export let visibleSources = null;
   export let visibleAnnotation = null;
-  export let descriptionOverflows = new Set();
   export let onEnlargeImage = () => {};
   export let onToggleDateNote = () => {};
   export let onTogglePersonInfo = () => {};
   export let onToggleSources = () => {};
   export let onToggleAnnotation = () => {};
   export let onOpenNetwork = () => {};
-  export let checkOverflow = () => {};
 
-  function handleAnnotationClick(termKey, segment) {
+  function handleAnnotationClick(termKey, _segment) {
     onToggleAnnotation(slide.eventIndex, termKey);
   }
 
-  $: UNKNOWN_LOCATION_LABEL = $_("story.location_unknown");
   $: validImages = getValidImages(slide.images);
   $: relevantPeople = getRelevantPeople(slide, egoNetwork);
   $: dateLabel = formatDate(slide, formatters);
@@ -71,19 +66,6 @@
   function formatAgeLabel(age) {
     if (age == null) return null;
     return age === 0 ? $_("story.at_birth") : $_("story.age", { age });
-  }
-
-  function formatLocations(locations = []) {
-    if (!locations.length) return UNKNOWN_LOCATION_LABEL;
-
-    // Extract historic names from location objects
-    const names = locations
-      .filter(loc => loc && loc.name_historic)
-      .map(loc => loc.name_historic);
-
-    if (names.length === 0) return UNKNOWN_LOCATION_LABEL;
-
-    return joinWithSeparator(names, styleConfig);
   }
 
   function getEventClassIcon(eventClass) {
