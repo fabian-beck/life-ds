@@ -394,8 +394,20 @@
 
     <!-- Header section -->
     <header class="meta-story-header">
-      <button on:click={backToLanding} class="back-button">
-        ← {$_('meta_story.back_to_stories')}
+      <button
+        type="button"
+        class="close-button"
+        on:click={backToLanding}
+        aria-label={$_('meta_story.back_to_stories')}
+      >
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          role="presentation"
+          aria-hidden="true"
+        >
+          <path d={mdiClose} />
+        </svg>
       </button>
       <h1>{metaStoryData.meta_story.title}</h1>
       <p class="tagline">{metaStoryData.meta_story.tagline}</p>
@@ -586,22 +598,44 @@
 
   /* Header */
   .meta-story-header {
+    position: relative;
     margin-bottom: 3rem;
   }
 
-  .back-button {
-    background: rgba(56, 189, 248, 0.1);
-    color: #38bdf8;
+  .close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
     border: 1px solid rgba(56, 189, 248, 0.3);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #38bdf8;
+    border-radius: 999px;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
-    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
   }
 
-  .back-button:hover {
-    background: rgba(56, 189, 248, 0.2);
-    border-color: rgba(56, 189, 248, 0.5);
+  .close-button:hover,
+  .close-button:focus {
+    border-color: rgba(56, 189, 248, 0.6);
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  .close-button .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+    flex: 0 0 auto;
   }
 
   h1 {
