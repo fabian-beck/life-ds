@@ -279,6 +279,35 @@ python scripts/generate_person_style.py "Ada Lovelace"
 python scripts/generate_person_network.py "Ada Lovelace"
 ```
 
+**Review and improve person data**:
+
+```bash
+python scripts/review_person.py "Alan Turing"
+python scripts/review_person.py "alan_turing" --aspect events
+python scripts/review_person.py "ada_lovelace" --dry-run
+```
+
+This script acts as an AI-powered constructive critic to review and improve the quality of generated person data. It can review life events, ego network, and visual styles, proposing improvements for readability, accuracy, and storytelling quality.
+
+**What it reviews**:
+- **Life events**: Event descriptions, titles, chronological accuracy, historical context
+- **Ego network**: Relationship descriptions, connection strength, interaction frequency
+- **Visual styles**: Color harmony, font pairings, design coherence
+
+**Features**:
+- Confidence-based changes (only applies high-confidence improvements by default)
+- Dry-run mode for previewing changes without applying them
+- Aspect-specific review (events, network, style, or all)
+- Uses Wikipedia cache for contextual understanding
+
+**Options**:
+- `--aspect {all,events,network,style}` - Which aspect to review (default: all)
+- `--dry-run` - Show proposed changes without applying them
+- `--skip-low-confidence` - Only apply high-confidence changes (default: True)
+- `--model MODEL` - Override OpenAI model
+- `--reasoning-effort {low,medium,high}` - Override reasoning effort levels
+- `--verbose` - Enable detailed logging
+
 **Remove a person**:
 
 ```bash

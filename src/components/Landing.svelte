@@ -3,7 +3,7 @@
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { push, location } from "svelte-spa-router";
-  import { clamp, displayName } from "../utils/helpers.js";
+  import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
 
@@ -373,21 +373,6 @@
       segments.push(`--card-body-font: "${style.bodyFont}", Inter, sans-serif`);
     }
     return segments.join("; ");
-  }
-
-  function joinWithSeparator(items, styleConfig) {
-    if (!items || items.length === 0) return "";
-    if (items.length === 1) return items[0];
-
-    // Use separator_glyph_svg if available
-    if (styleConfig?.separatorGlyphSvg) {
-      return items.join(
-        `<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
-      );
-    }
-
-    // Fallback to middle dot
-    return items.join(" · ");
   }
 </script>
 
