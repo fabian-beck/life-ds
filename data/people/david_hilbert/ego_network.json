@@ -1,0 +1,458 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-01-04",
+  "ego": {
+    "name": "David Hilbert",
+    "birth_year": 1862,
+    "death_year": 1943,
+    "primary_roles": [
+      "mathematician",
+      "logician",
+      "university professor"
+    ],
+    "summary": "David Hilbert (1862–1943) was a German mathematician and professor whose work reshaped algebra, geometry, analysis, mathematical physics, and the foundations of mathematics. Based first in Königsberg and then Göttingen, he influenced 20th-century research through major programs (notably his 1900 problem list and the Hilbert program), editorial leadership, and extensive mentoring of doctoral students.",
+    "wikipedia": "https://de.wikipedia.org/wiki/David_Hilbert"
+  },
+  "connections": [
+    {
+      "person_name": "Otto Hilbert",
+      "relationship_type": "family/father",
+      "relationship_description": "Hilbert's father; a court official from an East Prussian legal family, described as skeptical about an academic career for his son.",
+      "start_year": 1862,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Königsberg",
+        "early education environment"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "The article contrasts the father's skepticism with the mother's encouragement."
+    },
+    {
+      "person_name": "Maria Theresia Erdtmann",
+      "relationship_type": "family/mother",
+      "relationship_description": "Hilbert's mother; encouraged his wide interests (including astronomy and philosophy) and supported his intellectual development.",
+      "start_year": 1862,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Königsberg",
+        "support for schooling (including reportedly helping with writing)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "The article notes she sometimes wrote his school essays and promoted broader interests."
+    },
+    {
+      "person_name": "Elise Frenzel",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Hilbert's younger sister (née Hilbert); married a judge and died young (1897).",
+      "start_year": 1862,
+      "end_year": 1897,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "shared childhood and family life in Königsberg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "Died at age 28 according to the article."
+    },
+    {
+      "person_name": "Heinrich Weber",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "One of Hilbert's key university teachers in Königsberg; recognized and encouraged Hilbert's talent and facilitated a study semester in Heidelberg.",
+      "start_year": 1880,
+      "end_year": 1883,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "university teaching at Königsberg",
+        "facilitated study period in Heidelberg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "Weber is described as an early promoter of Hilbert's mathematical ability."
+    },
+    {
+      "person_name": "Hermann Minkowski",
+      "relationship_type": "social/friend",
+      "relationship_description": "Lifelong close friend from Königsberg student days; Hilbert later helped with Minkowski’s appointments and edited his collected works after Minkowski’s death in 1909.",
+      "start_year": 1880,
+      "end_year": 1909,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "student mathematical circles in Königsberg",
+        "joint scientific discussions and long walks",
+        "faculty colleagues in Göttingen (after 1902)",
+        "Hilbert edited Minkowski's collected papers after 1909"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Hermann_Minkowski"
+      ],
+      "notes": "Hilbert’s obituary for Minkowski is quoted in the Minkowski article as evidence of their closeness."
+    },
+    {
+      "person_name": "Ferdinand von Lindemann",
+      "relationship_type": "academic/advisor",
+      "relationship_description": "Held the Königsberg chair after Weber; suggested Hilbert's dissertation topic and later left for Munich, after which Hilbert became Ordinarius (1893).",
+      "start_year": 1883,
+      "end_year": 1893,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "doctoral topic selection",
+        "faculty context at University of Königsberg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Ferdinand_von_Lindemann"
+      ],
+      "notes": "The article states Lindemann had limited influence aside from proposing the dissertation topic."
+    },
+    {
+      "person_name": "Adolf Hurwitz",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Close early colleague in Königsberg whose intense mathematical exchange deeply shaped Hilbert; Hilbert later wrote Hurwitz’s obituary.",
+      "start_year": 1884,
+      "end_year": 1919,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "regular scientific exchange in Königsberg",
+        "long mathematical walks and discussions",
+        "ongoing professional friendship after Hurwitz's move"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Adolf_Hurwitz"
+      ],
+      "notes": "The Königsberg period emphasizes intensive joint exploration of mathematics with Hurwitz as a 'guide'."
+    },
+    {
+      "person_name": "Felix Klein",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Mentor and institutional ally: met Hilbert during the 1885/86 study trip, corresponded extensively, and backed Hilbert’s move to Göttingen and later recruitment efforts (including Noether).",
+      "start_year": 1885,
+      "end_year": 1925,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "scientific correspondence",
+        "career support for Göttingen chair (1895)",
+        "joint efforts strengthening Göttingen mathematics",
+        "supporting Emmy Noether's position in Göttingen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "notes": "Klein’s recruitment of Hilbert to Göttingen is explicitly described in both Hilbert and Klein articles."
+    },
+    {
+      "person_name": "Käthe Jerosch",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Hilbert’s wife (married 1892) who provided steady practical support, including preparing fair copies of letters and manuscripts.",
+      "start_year": 1892,
+      "end_year": 1943,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "marriage and household management",
+        "preparing clean copies of letters and book manuscripts"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "The article describes her as an essential support for Hilbert's work and later as nearly blind and isolated."
+    },
+    {
+      "person_name": "Franz Hilbert",
+      "relationship_type": "family/child",
+      "relationship_description": "Hilbert’s only child (born 1893); Franz’s lifelong psychiatric illness strained the relationship and shaped Hilbert’s private life in later years.",
+      "start_year": 1893,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life",
+        "arranged tutoring support (via Courant)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "The relationship is portrayed as strained; Franz later appeared at Hilbert's 60th and 75th birthdays."
+    },
+    {
+      "person_name": "Friedrich Althoff",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Prussian ministry official who, together with Klein, drove the strategy to build Göttingen into a leading research center; part of the institutional context enabling Hilbert's 1895 call to Göttingen.",
+      "start_year": 1894,
+      "end_year": 1908,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "higher-education policy supporting Göttingen mathematics expansion",
+        "institutional recruitment environment for Hilbert"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "Althoff is mentioned as a driving force in the ministry's Göttingen strategy."
+    },
+    {
+      "person_name": "Otto Blumenthal",
+      "relationship_type": "academic/student",
+      "relationship_description": "Hilbert's doctoral student (PhD 1898) and long-term assistant; supported Hilbert's editorial work (notably for Mathematische Annalen).",
+      "start_year": 1896,
+      "end_year": 1933,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "doctoral supervision at Göttingen",
+        "assistance with Mathematische Annalen editorial work",
+        "Göttingen mathematical community"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Otto_Blumenthal"
+      ],
+      "notes": "The Hilbert article states Blumenthal supported Hilbert's journal editorship for many years."
+    },
+    {
+      "person_name": "Max Born",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Part of Hilbert's Göttingen circle; Born later joined Hilbert's circle and had previously been Hilbert's assistant. Born reported Einstein's advice referencing what Hilbert endured socially in Göttingen.",
+      "start_year": 1904,
+      "end_year": 1933,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Göttingen academic community",
+        "collegial interaction within mathematics/physics milieu"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Max_Born"
+      ],
+      "notes": "The Hilbert article frames Born as joining Hilbert's friend circle after deciding for Göttingen."
+    },
+    {
+      "person_name": "Hermann Weyl",
+      "relationship_type": "academic/student",
+      "relationship_description": "Hilbert's doctoral student (PhD 1908) and later a leading figure in Göttingen; forced out of his position after 1933 according to the Hilbert article's account of Nazi purges.",
+      "start_year": 1905,
+      "end_year": 1933,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "doctoral supervision and research training",
+        "Göttingen mathematics department"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Hermann_Weyl"
+      ],
+      "notes": "Included as a prominent student explicitly listed among Hilbert's doctoral advisees."
+    },
+    {
+      "person_name": "Richard Courant",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Assistant and key collaborator in Göttingen; helped shape Hilbert’s lectures into the influential Methods of Mathematical Physics and tutored Hilbert’s son Franz.",
+      "start_year": 1909,
+      "end_year": 1933,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "assistantship at Göttingen",
+        "tutoring Franz Hilbert",
+        "textbook collaboration (Methods of Mathematical Physics)",
+        "Göttingen institute building and teaching environment"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Richard_Courant"
+      ],
+      "notes": "The Hilbert article describes Courant being tasked to tutor Franz; the Courant article emphasizes the Hilbert–Courant book."
+    },
+    {
+      "person_name": "Edmund Landau",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Prominent Göttingen colleague (arrived 1909); later forced out after 1933 as part of the Nazi dismantling of Göttingen's mathematical center described in Hilbert's biography.",
+      "start_year": 1909,
+      "end_year": 1933,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Göttingen faculty and seminars",
+        "shared institutional environment in mathematics"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Edmund_Landau"
+      ],
+      "notes": "Hilbert's page explicitly lists Landau among mathematicians removed under the Nazi regime."
+    },
+    {
+      "person_name": "Arnold Sommerfeld",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Supported Hilbert's work on foundational problems in physics by repeatedly sending assistants from his group to Göttingen (e.g., Ewald, Landé, Kratzer).",
+      "start_year": 1912,
+      "end_year": 1921,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "coordination of assistants for physics-related foundational work",
+        "Göttingen–Munich academic exchange"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Arnold_Sommerfeld"
+      ],
+      "notes": "The Hilbert article gives examples of Sommerfeld sending assistants in 1912, 1913, and 1920/21."
+    },
+    {
+      "person_name": "Luitzen Egbertus Jan Brouwer",
+      "relationship_type": "social/rival",
+      "relationship_description": "A major foundations rival; their conflict culminated when Hilbert removed Brouwer from the Mathematische Annalen editorship in 1928.",
+      "start_year": 1914,
+      "end_year": 1928,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Mathematische Annalen editorial involvement",
+        "public dispute in foundations of mathematics (intuitionism vs formalism)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Luitzen_Egbertus_Jan_Brouwer"
+      ],
+      "notes": "Brouwer’s article explicitly describes Hilbert excluding him from the editorship after the Bologna controversy."
+    },
+    {
+      "person_name": "Emmy Noether",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Brought to Göttingen in 1915 with Hilbert’s support; he publicly defended her right to teach when faculty opposition blocked her advancement.",
+      "start_year": 1915,
+      "end_year": 1933,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "recruitment to Göttingen",
+        "departmental advocacy around habilitation and teaching",
+        "Göttingen mathematical community"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "notes": "Hilbert’s quoted remark that a faculty is 'not a bathhouse' is widely associated with this conflict."
+    },
+    {
+      "person_name": "Paul Bernays",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Assistant and close collaborator on proof theory and the Hilbert program, leading to the two-volume Grundlagen der Mathematik (1934/1939).",
+      "start_year": 1917,
+      "end_year": 1943,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "proof theory and foundations of arithmetic (Hilbert program)",
+        "coauthoring Grundlagen der Mathematik",
+        "teaching and research in Göttingen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Paul_Bernays",
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "Bernays is explicitly described as Hilbert’s assistant and close collaborator."
+    },
+    {
+      "person_name": "Wilhelm Ackermann",
+      "relationship_type": "academic/student",
+      "relationship_description": "Hilbert's doctoral student (PhD 1925) in mathematical logic and proof theory; later helped Hilbert convert lecture material into a foundational logic text (Hilbert–Ackermann).",
+      "start_year": 1923,
+      "end_year": 1930,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "doctoral supervision in Göttingen",
+        "work on proof theory and consistency methods",
+        "preparation of logic lecture material into text"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Wilhelm_Ackermann"
+      ],
+      "notes": "Ackermann’s article describes his PhD under Hilbert and later assistance in turning Hilbert’s lectures into a book."
+    },
+    {
+      "person_name": "Bernhard Rust",
+      "relationship_type": "professional/political_authority",
+      "relationship_description": "Prussian education minister who confronted Hilbert in 1934 about Nazi dismissals; Hilbert replied that the institute no longer existed.",
+      "start_year": 1934,
+      "end_year": 1934,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "1934 banquet interaction concerning Nazi dismissals at Göttingen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "This is a documented anecdote illustrating Hilbert's reaction to the destruction of Göttingen's academic environment."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Hilbert’s family life mixed support and strain: an encouraging mother, a skeptical father, a sister who died young, and a marriage sustained by Käthe’s practical help. His only son Franz’s illness weighed heavily in later years."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Institution-builders and collaborators amplified Hilbert’s influence—from Klein and ministry strategy to assistants like Courant and Bernays. Politics later shattered that environment in Göttingen."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Hilbert’s academic lineage ran both ways: early mentors (Weber, Lindemann) shaped him, and his students and protégés (e.g., Weyl, Ackermann, Noether) shaped Göttingen in return."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Personal ties mattered: friendships like Minkowski’s intertwined with research and appointments, while clashes like the Brouwer dispute exposed high-stakes differences over foundations."
+    }
+  ]
+}

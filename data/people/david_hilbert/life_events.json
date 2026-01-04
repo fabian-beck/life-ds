@@ -1,0 +1,812 @@
+{
+  "dataset": "biographical_timeline",
+  "created_on": "2026-01-04",
+  "person": {
+    "name": "David_Hilbert",
+    "birth_date": "1862-01-23",
+    "death_date": "1943-02-14",
+    "primary_roles": [
+      "mathematician",
+      "logician",
+      "professor"
+    ],
+    "tagline": "Architect of modern mathematical rigor",
+    "summary": "David Hilbert was a German mathematician whose work ranged across algebra, geometry, analysis, mathematical physics, and the foundations of mathematics. As a leading professor in Königsberg and then Göttingen, he shaped research agendas through influential publications, ambitious foundational programs, and a generation of doctoral students.",
+    "wikipedia": "https://de.wikipedia.org/wiki/David_Hilbert",
+    "portrait": {
+      "image": "/portraits/david_hilbert_thumbnail.webp",
+      "thumbnail": "/portraits/david_hilbert_thumbnail.webp",
+      "medium": "/portraits/david_hilbert_medium.webp",
+      "full": "/portraits/david_hilbert_full.webp",
+      "source": "https://de.wikipedia.org/wiki/David_Hilbert",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/David_Hilbert_postcard_retusche.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "east_prussian_roots",
+      "headline": "East Prussian Roots",
+      "bridge_statement": "A curious mind takes shape in a provincial city that quietly trains it for world-scale questions.",
+      "date_start": "1862-01-23",
+      "date_start_precision": "day",
+      "date_end": "1880-04",
+      "date_end_precision": "month",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Otto Hilbert",
+        "Maria Theresia Erdtmann",
+        "Elise Hilbert"
+      ],
+      "location": "East Prussia"
+    },
+    {
+      "id": "apprentice_of_invariants",
+      "headline": "Apprentice of Invariants",
+      "bridge_statement": "University circles and new mentors turn talent into method, then into a vocation that can travel.",
+      "date_start": "1880-04",
+      "date_start_precision": "month",
+      "date_end": "1893-08-11",
+      "date_end_precision": "day",
+      "age_start": 18,
+      "age_end": 31,
+      "involved_people": [
+        "Hermann Minkowski",
+        "Ferdinand von Lindemann",
+        "Felix Klein",
+        "Charles Hermite",
+        "Henri Poincaré",
+        "Camille Jordan",
+        "Adolf Hurwitz",
+        "Käthe Jerosch",
+        "Käthe Hilbert",
+        "Franz Hilbert"
+      ],
+      "location": "Central Europe"
+    },
+    {
+      "id": "gottingen_powerhouse",
+      "headline": "Göttingen Powerhouse",
+      "bridge_statement": "In a new home, ambition becomes infrastructure—lectures, books, and hiring choices that remake a discipline.",
+      "date_start": "1895",
+      "date_start_precision": "year",
+      "date_end": "1915",
+      "date_end_precision": "year",
+      "age_start": 33,
+      "age_end": 53,
+      "involved_people": [
+        "Felix Klein",
+        "Lazarus Fuchs",
+        "Emmy Noether"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "problems_set_the_century_ablaze",
+      "headline": "Problems Ignite a Century",
+      "bridge_statement": "A public challenge becomes a private engine, pushing ideas outward into a shared mathematical future.",
+      "date_start": "1897",
+      "date_start_precision": "year",
+      "date_end": "1924",
+      "date_end_precision": "year",
+      "age_start": 35,
+      "age_end": 62,
+      "involved_people": [
+        "Richard Courant"
+      ],
+      "location": "Western Europe"
+    },
+    {
+      "id": "quiet_withdrawal",
+      "headline": "Quiet Withdrawal",
+      "bridge_statement": "When the lecture hall recedes, what remains is the harder work of endurance and legacy.",
+      "date_start": "1930",
+      "date_start_precision": "year",
+      "date_end": "1943-02-14",
+      "date_end_precision": "day",
+      "age_start": 68,
+      "age_end": 81,
+      "involved_people": [
+        "Franz Hilbert"
+      ],
+      "location": "Germany"
+    }
+  ],
+  "conclusion": "Hilbert reshaped mathematics by turning scattered frontiers into a coherent agenda—then building institutions strong enough to pursue it. His push for rigor and his foundational program set problems others would test, extend, and sometimes overturn—yet the ambition still sets the pace for modern theory.",
+  "events": [
+    {
+      "date": "1862-01-23",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth in Königsberg",
+      "description": "David Hilbert was born in Königsberg on 23 January 1862 to Otto Hilbert, a court official from a long East Prussian legal family, and Maria Theresia Erdtmann, from a Königsberg merchant family. His mother encouraged wide interests, while his father was skeptical about an academic career; he grew up with a younger sister, Elise (later Frenzel).",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Otto Hilbert",
+        "Maria Theresia Erdtmann",
+        "Elise Frenzel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/K%C3%B6nigsberg"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Neue_Universit%C3%A4t_K%C3%B6nigsberg.JPG/960px-Neue_Universit%C3%A4t_K%C3%B6nigsberg.JPG",
+          "caption": "Neue Albertus-Universität Königsberg (opened 1862)",
+          "source": "https://commons.wikimedia.org/wiki/File:Neue_Universität_Königsberg.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-baby",
+      "chapter": "east_prussian_roots"
+    },
+    {
+      "date": "1880-04",
+      "date_precision": "month",
+      "date_note": "Start of the summer semester at the University of Königsberg",
+      "age": 18,
+      "title": "Began university mathematics",
+      "description": "In April 1880, Hilbert began studying mathematics at the [[University of Königsberg|University of Königsberg]] in [[Königsberg|Königsberg]]. As a student he took part in the university’s mathematical circles and formed close ties with fellow students, notably Hermann Minkowski; among his important early teachers was Heinrich Weber, who recognized and encouraged his talent.",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Hermann Minkowski",
+        "Heinrich Weber"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Hermann_Minkowski"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Albertina%2C_K%C3%B6nigsberg.JPG/960px-Albertina%2C_K%C3%B6nigsberg.JPG",
+          "caption": "Albertina (University building), Königsberg",
+          "source": "https://commons.wikimedia.org/wiki/File:Albertina,_Königsberg.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "east_prussian_roots",
+      "annotations": {
+        "University of Königsberg": {
+          "explanation": "A historic German university in East Prussia (founded 1544), later dissolved after World War II; it was the main university of Königsberg.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_K%C3%B6nigsberg"
+        },
+        "Königsberg": {
+          "explanation": "Then a major city of East Prussia; after World War II it became Kaliningrad in present-day Russia.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/K%C3%B6nigsberg"
+        }
+      }
+    },
+    {
+      "date": "1885-11",
+      "date_precision": "month",
+      "date_end": "1886-06",
+      "date_end_precision": "month",
+      "date_note": "Study trip described as winter 1885/86; end month approximate",
+      "age": 23,
+      "title": "Studied with Klein in Leipzig",
+      "description": "In November 1885, Hilbert traveled to [[Leipzig|Leipzig]] for further study and worked with Felix Klein, who recognized his talent and began a sustained correspondence with him. On Klein’s advice, Hilbert also spent time in Paris, where he met French mathematicians including Charles Hermite, Henri Poincaré, and Camille Jordan, broadening his professional contacts beyond Königsberg.",
+      "locations": [
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3747329,
+            51.3406321
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Felix Klein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Felix_Klein%2C_Leipzig_years.png",
+          "caption": "Felix Klein during his Leipzig days",
+          "source": "https://commons.wikimedia.org/wiki/File:Felix_Klein,_Leipzig_years.png"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "apprentice_of_invariants",
+      "annotations": {
+        "Leipzig": {
+          "explanation": "A major German university and publishing city where Hilbert visited to study with Klein in 1885, before Klein’s later move to Göttingen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Leipzig"
+        }
+      }
+    },
+    {
+      "date": "1885",
+      "date_precision": "year",
+      "title": "Earned doctorate in Königsberg",
+      "description": "In 1885, Hilbert earned his doctorate in [[Königsberg|Königsberg]] (then in East Prussia), completing a dissertation in [[invariant theory]] on the invariant properties of special binary forms (including spherical functions) and formally entering academic mathematics.",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ferdinand von Lindemann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Ferdinand_von_Lindemann"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "apprentice_of_invariants",
+      "annotations": {
+        "Königsberg": {
+          "explanation": "A historic Prussian city on the Baltic Sea; after World War II it was annexed by the Soviet Union and renamed Kaliningrad.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/K%C3%B6nigsberg"
+        },
+        "invariant theory": {
+          "explanation": "A branch of algebra studying quantities that stay unchanged under transformations (especially important in 19th-century algebra and geometry).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
+        }
+      }
+    },
+    {
+      "date": "1886",
+      "date_precision": "year",
+      "title": "Completed habilitation and lectured",
+      "description": "In 1886, Hilbert completed his [[habilitation|habilitation]] at the [[University of Königsberg|University of Königsberg]] with work in invariant theory, qualifying as a [[Privatdozent|Privatdozent]]. He then began lecturing independently and taking a fuller part in the university’s mathematical life, building his standing through regular exchanges with colleagues and friends.",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "apprentice_of_invariants",
+      "annotations": {
+        "habilitation": {
+          "explanation": "A postdoctoral qualification in German-speaking universities, traditionally involving a major scholarly work and granting the right to teach independently (venia legendi).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
+        },
+        "University of Königsberg": {
+          "explanation": "The Albertus University (Albertina), the historic university of Königsberg in East Prussia where Hilbert studied and began his academic career.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_K%C3%B6nigsberg"
+        },
+        "Privatdozent": {
+          "explanation": "An unsalaried university lecturer in the German system who, after habilitation, could teach independently and earn income from student fees.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      }
+    },
+    {
+      "date": "1892-10-12",
+      "date_precision": "day",
+      "age": 30,
+      "title": "Married Käthe Jerosch",
+      "description": "On 12 October 1892, Hilbert married Käthe Jerosch and established a household that became a practical base for his work; she helped by preparing clean copies of letters and manuscripts for printing.",
+      "locations": [],
+      "involved_people": [
+        "Käthe Jerosch"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "apprentice_of_invariants",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Käthe Jerosch",
+        "duration": "until Hilbert's death",
+        "children": 1,
+        "characterization": "supportive"
+      },
+      "location_coordinates": [
+        {
+          "label": "Königsberg (then East Prussia)",
+          "name": "Königsberg (now Kaliningrad, Russia)",
+          "primary": true,
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "source": "https://en.wikipedia.org/wiki/David_Hilbert"
+        }
+      ]
+    },
+    {
+      "date": "1892",
+      "date_precision": "year",
+      "title": "Succeeded Hurwitz in chair",
+      "description": "In 1892, after Adolf Hurwitz left [[Königsberg|Königsberg]] to take up a professorship in Zürich, David Hilbert was appointed to succeed him there as an extraordinary professor, giving him a more prominent role in the department’s teaching and research.",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zurich, Switzerland",
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Adolf Hurwitz"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://de.wikipedia.org/wiki/Adolf_Hurwitz"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "apprentice_of_invariants",
+      "annotations": {
+        "Königsberg": {
+          "explanation": "Historic Prussian university city on the Baltic Sea; it is now Kaliningrad (Russia).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/K%C3%B6nigsberg"
+        }
+      }
+    },
+    {
+      "date": "1893-08-11",
+      "date_precision": "day",
+      "age": 31,
+      "title": "Birth of son Franz",
+      "description": "On 11 August 1893, Hilbert and his wife Käthe became parents to their only child, Franz Hilbert.",
+      "locations": [],
+      "involved_people": [
+        "Käthe Jerosch",
+        "Franz Hilbert"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "event_type_icon": "mdi-baby",
+      "chapter": "apprentice_of_invariants",
+      "location_coordinates": [
+        {
+          "label": "Königsberg (then East Prussia)",
+          "name": "Königsberg (now Kaliningrad, Russia)",
+          "primary": true,
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "source": "https://en.wikipedia.org/wiki/David_Hilbert"
+        }
+      ]
+    },
+    {
+      "date": "1893",
+      "date_precision": "year",
+      "title": "Became full professor",
+      "description": "In 1893, after Ferdinand von Lindemann left [[Königsberg|Königsberg]] for [[Munich|Munich]], Hilbert was promoted to a full professorship ([[Ordinarius|Ordinarius]]) at the University of Königsberg. He then used the resulting vacancy and his standing in the faculty to help secure a professorial appointment in Königsberg for his close friend Hermann Minkowski, reinforcing their existing mathematical circle.",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.5753822,
+            48.1371079
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Ferdinand von Lindemann",
+        "Hermann Minkowski"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Hermann_Minkowski"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "apprentice_of_invariants",
+      "annotations": {
+        "Königsberg": {
+          "explanation": "Capital of East Prussia at the time; today it is Kaliningrad in Russia.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/K%C3%B6nigsberg"
+        },
+        "Munich": {
+          "explanation": "Major Bavarian university city; in this context, the destination of Lindemann's move from Königsberg.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Munich"
+        },
+        "Ordinarius": {
+          "explanation": "German term for a tenured full professor holding a chair (Ordinary Professor) in the traditional university system.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ordinary_professor"
+        }
+      }
+    },
+    {
+      "date": "1895",
+      "date_precision": "year",
+      "title": "Moved to Göttingen chair",
+      "description": "In 1895, Hilbert accepted a call to the University of Göttingen, supported by Felix Klein and the Prussian ministry’s efforts to strengthen Göttingen as a major center for mathematical research. He moved into a new institutional setting where he began teaching and helping shape the department’s research culture and ambitions.",
+      "locations": [
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.4565666,
+            54.7046485
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Felix Klein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Aula_am_Wilhelmsplatz_Georg-August-Universit%C3%A4t_G%C3%B6ttingen_2017_01.jpg/960px-Aula_am_Wilhelmsplatz_Georg-August-Universit%C3%A4t_G%C3%B6ttingen_2017_01.jpg",
+          "caption": "Assembly hall, University of Göttingen (Aula am Wilhelmsplatz)",
+          "source": "https://commons.wikimedia.org/wiki/File:Aula_am_Wilhelmsplatz_Georg-August-Universität_Göttingen_2017_01.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "gottingen_powerhouse",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Königsberg, East Prussia",
+        "to_location": "Göttingen, Prussia",
+        "characterization": "career appointment"
+      }
+    },
+    {
+      "date": "1897",
+      "date_precision": "year",
+      "title": "Published the Zahlbericht survey",
+      "description": "In 1897, Hilbert published the [[Zahlbericht]] in the [[Jahresbericht der Deutschen Mathematiker-Vereinigung|Jahresbericht of the German Mathematical Society]], a major survey that helped consolidate contemporary work in algebraic number theory into a widely used reference.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Zahlbericht"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Hilbert%27s_Twelfth_Problem_First_Page.jpg",
+          "caption": "Hilbert's Twelfth Problem, first page",
+          "source": "https://commons.wikimedia.org/wiki/File:Hilbert's_Twelfth_Problem_First_Page.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "gottingen_powerhouse",
+      "annotations": {
+        "Jahresbericht der Deutschen Mathematiker-Vereinigung": {
+          "explanation": "The official periodical of the German Mathematical Society, which published influential surveys and reports in Hilbert’s era.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Mathematiker-Vereinigung"
+        },
+        "Zahlbericht": {
+          "explanation": "Hilbert’s influential 1897 report surveying algebraic number theory, widely read as a reference and entry point for the field.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Zahlbericht"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Zahlbericht (report on algebraic number theory)",
+        "publication_type": "article",
+        "publisher": "Jahresbericht der Deutschen Mathematiker-Vereinigung",
+        "significance": "major survey",
+        "impact": "It consolidated a broad body of number theory into a systematic reference for contemporaries."
+      }
+    },
+    {
+      "date": "1900-08",
+      "date_precision": "month",
+      "date_note": "International Congress of Mathematicians held in Paris in 1900",
+      "age": 38,
+      "title": "Presented Paris problem list",
+      "description": "In August 1900, at the [[International Congress of Mathematicians|International Congress of Mathematicians]] in Paris, Hilbert delivered his lecture “[[Hilbert's problems|Hilbert's problems]],” presenting a list of open questions as a shared research agenda for mathematicians across multiple fields.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/International_Congress_of_Mathematicians",
+        "https://en.wikipedia.org/wiki/Hilbert%27s_problems"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Hilbert_-_Sur_les_probl%C3%A8mes_futurs_des_math%C3%A9matiques_%28page_1%29.jpg/960px-Hilbert_-_Sur_les_probl%C3%A8mes_futurs_des_math%C3%A9matiques_%28page_1%29.jpg",
+          "caption": "Hilbert \"Sur les problèmes futurs des mathématiques\" (page 1)",
+          "source": "https://commons.wikimedia.org/wiki/File:Hilbert_-_Sur_les_problèmes_futurs_des_mathématiques_(page_1).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "gottingen_powerhouse",
+      "annotations": {
+        "International Congress of Mathematicians": {
+          "explanation": "A major international mathematics conference, later held every four years; the 1900 meeting took place in Paris during the Exposition Universelle.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/International_Congress_of_Mathematicians"
+        },
+        "Hilbert's problems": {
+          "explanation": "Hilbert’s published list of 23 unsolved problems presented in 1900, which helped shape major directions in 20th-century mathematical research.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hilbert%27s_problems"
+        }
+      }
+    },
+    {
+      "date": "1902",
+      "date_precision": "year",
+      "title": "Declined Berlin call",
+      "description": "In 1902, Hilbert declined a call to Berlin to succeed [[Lazarus Fuchs|Lazarus Fuchs]] and chose to remain in Göttingen; during the ensuing negotiations he secured improved conditions for Göttingen’s mathematical staff and greater influence over departmental appointments.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Lazarus Fuchs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Lazarus_Fuchs"
+      ],
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "gottingen_powerhouse",
+      "annotations": {
+        "Lazarus Fuchs": {
+          "explanation": "German mathematician known for major work in differential equations; the Berlin professorship Hilbert was offered was to fill the vacancy created by Fuchs.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Lazarus_Fuchs"
+        }
+      }
+    },
+    {
+      "date": "1915",
+      "date_precision": "year",
+      "title": "Recruited Emmy Noether",
+      "description": "In 1915, Hilbert and Felix Klein helped bring Emmy Noether to [[Göttingen|Göttingen]] to work within the city’s mathematical community. Because of faculty opposition to a woman’s academic advancement, she initially taught under Hilbert’s name, while he publicly defended her right to lecture and participate on equal intellectual terms.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Emmy Noether",
+        "Felix Klein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "gottingen_powerhouse",
+      "annotations": {
+        "Göttingen": {
+          "explanation": "A major German university town whose university became a leading international center for mathematics in the early 20th century, where Hilbert and Klein worked.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/G%C3%B6ttingen"
+        }
+      }
+    },
+    {
+      "date": "1924",
+      "date_precision": "year",
+      "title": "Published mathematical physics volume",
+      "description": "In 1924, Hilbert and Richard Courant brought into print the first volume of the work that grew out of Hilbert’s [[Göttingen|Göttingen]] lectures, with Courant closely shaping the material into publishable form.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Richard Courant"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert",
+        "https://en.wikipedia.org/wiki/Richard_Courant"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "problems_set_the_century_ablaze",
+      "annotations": {
+        "Göttingen": {
+          "explanation": "A German university town whose University of Göttingen was a major international center for mathematics in the early 20th century, closely associated with Hilbert’s academic work.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/G%C3%B6ttingen"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Methoden der mathematischen Physik (Vol. 1)",
+        "publication_type": "book",
+        "publisher": "Springer",
+        "significance": "textbook",
+        "impact": "It provided a structured presentation of mathematical tools used in theoretical physics and advanced analysis."
+      }
+    },
+    {
+      "date": "1930",
+      "date_precision": "year",
+      "date_note": "Hilbert's transition to emeritus status occurred around 1930–1932 in differing summaries",
+      "title": "Retired from Göttingen teaching",
+      "description": "In 1930, Hilbert withdrew from regular teaching at the [[University of Göttingen|University of Göttingen]] and formally retired from his professorial post. His day-to-day participation in seminars and supervision of students largely ceased as the institute continued under other faculty. At home, strain persisted as the family dealt with their son Franz Hilbert’s long-term illness and arrangements for his care. In the following years, the Nazi dismissals hollowed out Göttingen’s mathematical community, and Hilbert’s bleak remark to minister Bernhard Rust became a shorthand for what was lost.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Franz Hilbert",
+        "Bernhard Rust"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/G%C3%B6ttinger_Gedenktafel%2C_Hilbert%2C_David%2C_1%2C_Wilhelm-Weber-Stra%C3%9Fe_29%2C_Oststadt%2C_G%C3%B6ttingen%2C_Landkreis_G%C3%B6ttingen.jpg/960px-G%C3%B6ttinger_Gedenktafel%2C_Hilbert%2C_David%2C_1%2C_Wilhelm-Weber-Stra%C3%9Fe_29%2C_Oststadt%2C_G%C3%B6ttingen%2C_Landkreis_G%C3%B6ttingen.jpg",
+          "caption": "Göttingen memorial plaque for David Hilbert (Wilhelm-Weber-Straße 29)",
+          "source": "https://commons.wikimedia.org/wiki/File:Göttinger_Gedenktafel,_Hilbert,_David,_1,_Wilhelm-Weber-Straße_29,_Oststadt,_Göttingen,_Landkreis_Göttingen.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-clock",
+      "chapter": "quiet_withdrawal",
+      "annotations": {
+        "University of Göttingen": {
+          "explanation": "A major German research university where Hilbert held a chair in mathematics and helped build Göttingen into an international center for mathematical research in the early 20th century.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_G%C3%B6ttingen"
+        }
+      }
+    },
+    {
+      "date": "1943-02-14",
+      "date_precision": "day",
+      "age": 81,
+      "title": "Death in Göttingen",
+      "description": "David Hilbert died in Göttingen on 14 February 1943, aged 81, after spending the central decades of his academic career living and working in the city.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/G%C3%B6ttingen_Stadtfriedhof_Grab_David_Hilbert_retusche.jpg/911px-G%C3%B6ttingen_Stadtfriedhof_Grab_David_Hilbert_retusche.jpg",
+          "caption": "Tomb of David Hilbert in Göttingen",
+          "source": "https://commons.wikimedia.org/wiki/File:Göttingen_Stadtfriedhof_Grab_David_Hilbert_retusche.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "quiet_withdrawal"
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-01-04",
+  "ego": {
+    "name": "Herman Hollerith",
+    "birth_year": 1860,
+    "death_year": 1929,
+    "primary_roles": [
+      "inventor",
+      "statistician",
+      "businessman"
+    ],
+    "summary": "German-American statistician, inventor, and businessman who pioneered electromechanical punched-card tabulation, first used at scale for U.S. census processing. He founded the Tabulating Machine Company, which was later amalgamated into the Computing-Tabulating-Recording Company (CTR), renamed IBM in 1924.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Herman_Hollerith"
+  },
+  "connections": [
+    {
+      "person_name": "Georg Hollerith",
+      "relationship_type": "family/father",
+      "relationship_description": "Hollerith's father; a German immigrant (a 'Forty-eighter') who worked as a schoolteacher and Lutheran minister.",
+      "start_year": 1860,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Family life in Buffalo, New York",
+        "Immigrant household and education-oriented upbringing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "Hollerith's mother is mentioned only as a German immigrant parent in the provided extract, but her name is not given."
+    },
+    {
+      "person_name": "John Shaw Billings",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Senior census and medical-statistics figure who suggested the approach that helped lead Hollerith toward punched-card/electromechanical tabulation for census statistics.",
+      "start_year": 1880,
+      "end_year": 1890,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "U.S. census statistical compilation context",
+        "Early conceptual development of punched-card tabulation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/John_Shaw_Billings"
+      ],
+      "notes": "Billings is explicitly credited (in the provided extract) with suggesting the mechanism/approach that Hollerith developed."
+    },
+    {
+      "person_name": "Francis Amasa Walker",
+      "relationship_type": "professional/institutional_context",
+      "relationship_description": "Superintendent of the 1880 U.S. census; the slow processing of that census formed part of the backdrop for later mechanization.",
+      "start_year": 1880,
+      "end_year": 1880,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Census administration context (1880 census backlog and processing constraints)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1880_United_States_census",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "The relationship is indirect (institutional): the 1880 census processing difficulties set the stage for Hollerith’s mechanized approach."
+    },
+    {
+      "person_name": "Robert P. Porter",
+      "relationship_type": "professional/government_client",
+      "relationship_description": "Superintendent overseeing the 1890 U.S. census during the first large-scale adoption of Hollerith’s tabulating machines.",
+      "start_year": 1889,
+      "end_year": 1893,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Operational deployment of punched-card tabulation for the 1890 U.S. census"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "The census page explicitly names Porter as superintendent during the census that first used Hollerith’s machines."
+    },
+    {
+      "person_name": "Carroll D. Wright",
+      "relationship_type": "professional/institutional_context",
+      "relationship_description": "Census superintendent after Robert P. Porter during the extended 1890 census statistical program that relied on Hollerith’s machines.",
+      "start_year": 1893,
+      "end_year": 1897,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Continuation/oversight of census statistical work following the 1890 census enumeration"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census"
+      ],
+      "notes": "Indirect relationship via census governance rather than documented close collaboration."
+    },
+    {
+      "person_name": "Frederick Howard Wines",
+      "relationship_type": "professional/institutional_context",
+      "relationship_description": "Named in the 1900 census’s statistical oversight; tied to the continued government use of Hollerith equipment.",
+      "start_year": 1899,
+      "end_year": 1901,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Census statistical oversight context (1900 U.S. census using Hollerith systems)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1900_United_States_census",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "The 1900 census article names Wines as overseeing statistics; Hollerith’s page notes his machines were used again in the 1900 census."
+    },
+    {
+      "person_name": "Walter F. Willcox",
+      "relationship_type": "professional/institutional_context",
+      "relationship_description": "Statistician listed in oversight of the 1900 U.S. census, during continued use of Hollerith tabulation.",
+      "start_year": 1899,
+      "end_year": 1901,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Census statistical oversight context (1900 U.S. census using Hollerith systems)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1900_United_States_census",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "As with Wines, this is an institutional connection documented through census oversight roles."
+    },
+    {
+      "person_name": "Willy Heidinger",
+      "relationship_type": "professional/licensee",
+      "relationship_description": "Founder of DEHOMAG in Germany, which became a licensee/distributor and lessor of Hollerith-style punched-card machines and related equipment in the German market.",
+      "start_year": 1910,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Technology licensing and commercialization of punched-card machinery in Germany"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/DEHOMAG"
+      ],
+      "notes": "This is primarily a technology-and-business linkage (Hollerith’s system commercialized by a foreign licensee)."
+    },
+    {
+      "person_name": "Charles Ranlett Flint",
+      "relationship_type": "professional/business_partner",
+      "relationship_description": "Financier and 'trust organizer' who orchestrated the 1911 amalgamation creating CTR and bought Hollerith’s tabulating business as part of that process.",
+      "start_year": 1911,
+      "end_year": 1921,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Amalgamation of Tabulating Machine Company into CTR",
+        "Corporate transition; Hollerith continued as consulting engineer post-amalgamation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "CTR sources specify Flint’s role and the purchase terms; Hollerith remained involved as a consultant until retirement."
+    },
+    {
+      "person_name": "George Winthrop Fairchild",
+      "relationship_type": "professional/corporate_leader",
+      "relationship_description": "Chairman of CTR after the 1911 amalgamation; Hollerith worked within the CTR structure while serving as consulting engineer.",
+      "start_year": 1911,
+      "end_year": 1921,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "CTR governance period overlapping Hollerith’s consulting role"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+      ],
+      "notes": "Documented at the corporate-structure level rather than through personal anecdotes."
+    },
+    {
+      "person_name": "Frank N. Kandolf",
+      "relationship_type": "professional/corporate_leader",
+      "relationship_description": "CTR president beginning in 1912; part of the leadership environment during Hollerith’s years as consulting engineer.",
+      "start_year": 1912,
+      "end_year": 1921,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "CTR operations and integration of subsidiaries affecting the tabulating business"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+      ],
+      "notes": "Included due to documented overlap with Hollerith’s consulting tenure."
+    },
+    {
+      "person_name": "Thomas J. Watson Sr.",
+      "relationship_type": "professional/corporate_successor",
+      "relationship_description": "CTR general manager (1914) and later president who prioritized and expanded the tabulating business built from Hollerith’s technology; Hollerith overlapped with Watson’s early CTR leadership while serving as consulting engineer.",
+      "start_year": 1914,
+      "end_year": 1921,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "CTR/IBM organizational development around punched-card tabulating systems",
+        "Continuation of the leasing/service model associated with tabulators"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/Thomas_J._Watson",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "CTR article describes Watson’s strategic focus on tabulating; Hollerith is noted there as consulting engineer until 1921."
+    },
+    {
+      "person_name": "Brian Randell",
+      "relationship_type": "other/posthumous_editor",
+      "relationship_description": "Computer historian/editor who republished Hollerith’s 1889 system description in a 1982 sourcebook, shaping later historical understanding.",
+      "start_year": 1982,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Preservation and dissemination of Hollerith’s technical writings",
+        "Historical framing of early digital computing origins"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "Posthumous legacy relationship (editorial/curatorial)."
+    },
+    {
+      "person_name": "Virginia Hollerith",
+      "relationship_type": "family/child",
+      "relationship_description": "Hollerith’s daughter; mentioned mainly through later archival and estate references rather than detailed biography.",
+      "start_year": null,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Family relationship"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "The provided extract references her indirectly (via estate-settlement archival material) without giving dates."
+    },
+    {
+      "person_name": "Richard Hollerith",
+      "relationship_type": "family/grandchild",
+      "relationship_description": "Hollerith’s grandson; referenced through a family papers/archival collection rather than direct biographical narrative.",
+      "start_year": null,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Family relationship"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": "The extract notes 'Richard Hollerith Papers' and identifies him as Hollerith's grandson, but does not document direct interactions."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family detail is limited in the provided extract: Georg Hollerith is central early on, while later descendants appear mainly through archival references."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Professional ties dominate: Billings as a key early influence, census administrators tied to the 1890/1900 deployments, and CTR leaders involved in the 1911 merger and its aftermath."
+    },
+    {
+      "relationship_type": "other",
+      "summary": "A small set of posthumous links (like Brian Randell’s 1982 republication) reflects how Hollerith’s work was curated into computing history."
+    }
+  ]
+}

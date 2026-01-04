@@ -1,0 +1,788 @@
+{
+  "dataset": "biographical_timeline",
+  "created_on": "2026-01-04",
+  "person": {
+    "name": "Herman_Hollerith",
+    "birth_date": "1860-02-29",
+    "death_date": "1929-11-17",
+    "primary_roles": [
+      "inventor",
+      "statistician",
+      "businessman"
+    ],
+    "tagline": "Punched-card tabulation pioneer",
+    "summary": "Herman Hollerith was a German-American statistician and inventor who developed electromechanical punched-card systems for compiling and sorting large bodies of information, first demonstrated at scale in U.S. census work. He built a business around leasing tabulators and cards to governments and firms, and his company later became part of the Computing-Tabulating-Recording Company, a precursor of IBM.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Herman_Hollerith",
+    "portrait": {
+      "image": "/portraits/herman_hollerith_thumbnail.webp",
+      "thumbnail": "/portraits/herman_hollerith_thumbnail.webp",
+      "medium": "/portraits/herman_hollerith_medium.webp",
+      "full": "/portraits/herman_hollerith_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Herman_Hollerith",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/42/Hollerith.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "immigrant_roots",
+      "headline": "Immigrant Roots",
+      "bridge_statement": "A restless curiosity forms early, shaped by a household that prized learning and hard-earned reinvention.",
+      "date_start": "1860-02-29",
+      "date_start_precision": "day",
+      "date_end": "1874",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 14,
+      "involved_people": [
+        "Georg Hollerith"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "engineering_mind_awakened",
+      "headline": "Engineering Mind Awakened",
+      "bridge_statement": "In crowded classrooms and practical training, numbers begin to feel less like theory than raw power.",
+      "date_start": "1875",
+      "date_start_precision": "year",
+      "date_end": "1879",
+      "date_end_precision": "year",
+      "age_start": 15,
+      "age_end": 19,
+      "involved_people": null,
+      "location": "United States"
+    },
+    {
+      "id": "machines_for_information",
+      "headline": "Machines for Information",
+      "bridge_statement": "A young instructor starts seeing data as something you can touch, arrange, and command.",
+      "date_start": "1882",
+      "date_start_precision": "year",
+      "date_end": "1886",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 26,
+      "involved_people": null,
+      "location": "United States"
+    },
+    {
+      "id": "census_breakthrough",
+      "headline": "Census Breakthrough",
+      "bridge_statement": "Washington’s paperwork crisis becomes the proving ground where an invention must perform, not merely impress.",
+      "date_start": "1884",
+      "date_start_precision": "year",
+      "date_end": "1890-06-02",
+      "date_end_precision": "day",
+      "age_start": 24,
+      "age_end": 30,
+      "involved_people": null,
+      "location": "United States"
+    },
+    {
+      "id": "building_the_punched_card_empire",
+      "headline": "Punched-Card Empire",
+      "bridge_statement": "Once the idea works, the harder challenge begins—turning a clever machine into a dependable system.",
+      "date_start": "1896",
+      "date_start_precision": "year",
+      "date_end": "1911-06-16",
+      "date_end_precision": "day",
+      "age_start": 36,
+      "age_end": 51,
+      "involved_people": [
+        "Charles R. Flint"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "quiet_legacy_years",
+      "headline": "Quiet Legacy Years",
+      "bridge_statement": "As industry consolidates around his methods, he steps back and watches the future arrive in his wake.",
+      "date_start": "1921",
+      "date_start_precision": "year",
+      "date_end": "1929-11-17",
+      "date_end_precision": "day",
+      "age_start": 61,
+      "age_end": 69,
+      "involved_people": null,
+      "location": "United States"
+    }
+  ],
+  "conclusion": "Herman Hollerith turned the census bottleneck into a new way of thinking: information could be mechanized and scaled. His punched-card system didn’t just speed counting—it helped set the pattern for modern data processing and the corporate lineage that would become IBM.",
+  "events": [
+    {
+      "date": "1860-02-29",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Born in Buffalo, New York",
+      "description": "Herman Hollerith was born in Buffalo, New York, to German immigrant parents. His father, Georg Hollerith, was a [[Forty-eighter]] who had taken part in the [[Revolutions of 1848 in the German states|1848 upheavals in the German states]] before emigrating, and he worked in the United States as a schoolteacher and Lutheran minister. Hollerith’s earliest years unfolded inside that immigrant household, where education and reinvention were daily necessities rather than slogans.",
+      "locations": [
+        {
+          "name_historic": "Buffalo",
+          "name_modern": "Buffalo, New York, United States",
+          "centroid": [
+            -78.8781493,
+            42.8864163
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Georg Hollerith"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "immigrant_roots",
+      "annotations": {
+        "Forty-eighter": {
+          "explanation": "A term for German-speaking political refugees and emigrants who left after the failed 1848–1849 revolutions, many bringing liberal ideals to the United States.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Forty-eighters"
+        },
+        "Revolutions of 1848 in the German states": {
+          "explanation": "A series of liberal and nationalist uprisings across the German-speaking states in 1848–1849 that were ultimately suppressed, prompting some participants to emigrate.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Revolutions_of_1848_in_the_German_states"
+        }
+      }
+    },
+    {
+      "date": "1875",
+      "date_precision": "year",
+      "age": 15,
+      "title": "Enters City College of New York",
+      "description": "In 1875, Hollerith enrolled at the [[City College of New York|City College of New York]] in New York City to begin his higher education.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/City_College_of_New_York"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/CityCollegeofNewYork.JPG/960px-CityCollegeofNewYork.JPG",
+          "caption": "City College of New York main building",
+          "source": "https://commons.wikimedia.org/wiki/File:CityCollegeofNewYork.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "engineering_mind_awakened",
+      "annotations": {
+        "City College of New York": {
+          "explanation": "A public college in New York City (founded in 1847 as the Free Academy) that became part of the City University of New York system and was known for providing affordable higher education.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/City_College_of_New_York"
+        }
+      }
+    },
+    {
+      "date": "1879",
+      "date_precision": "year",
+      "age": 19,
+      "title": "Graduated Columbia Mines",
+      "description": "In 1879, at age 19, Hollerith graduated from the [[Columbia School of Mines|Columbia School of Mines]] with an Engineer of Mines degree, completing a course of study oriented toward practical engineering and quantitative work.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/%22COLUMBIA_UNIVERSITY%22_%22LIBRARY%22_%22HAVEMEYER_HALL%22_%22SCHERMERHORN_HALL%22_%22FAYERWEATHER_HALL%22_%22ST_PAULS_CHAPEL%22_%22OBSERVATORY%22_%22SCHOOL_OF_MINES%22_%22SCHOOL_OF_ENGINEERING%22_map_in_1916%2C_from-_Bromley_Manhattan_Plate_132_publ._1916_%28cropped%29.jpg/960px-thumbnail.jpg",
+          "caption": "1916 map showing Columbia University buildings, including School of Mines",
+          "source": "https://commons.wikimedia.org/wiki/File:\"COLUMBIA_UNIVERSITY\"_\"LIBRARY\"_\"HAVEMEYER_HALL\"_\"SCHERMERHORN_HALL\"_\"FAYERWEATHER_HALL\"_\"ST_PAULS_CHAPEL\"_\"OBSERVATORY\"_\"SCHOOL_OF_MINES\"_\"SCHOOL_OF_ENGINEERING\"_map_in_1916,_from-_Bromley_Manhattan_Plate_132_publ._1916_(cropped).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "engineering_mind_awakened",
+      "annotations": {
+        "Columbia School of Mines": {
+          "explanation": "The engineering school of Columbia College (later Columbia University) that trained students in mining, metallurgy, and related applied sciences in the late 19th century.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fu_Foundation_School_of_Engineering_and_Applied_Science#History"
+        }
+      }
+    },
+    {
+      "date": "1882",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Joined MIT faculty",
+      "description": "In 1882, Hollerith joined the [[Massachusetts Institute of Technology|Massachusetts Institute of Technology (MIT)]] faculty, teaching mechanical engineering. In the same hands-on environment of labs and workshops, he began early experiments with the [[punched card|punched-card]] idea: representing information as a physical pattern that a machine could read and tally.",
+      "locations": [
+        {
+          "name_historic": "Cambridge, Massachusetts",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1040018,
+            42.3656347
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "event_type_icon": "mdi-teach",
+      "chapter": "machines_for_information",
+      "annotations": {
+        "Massachusetts Institute of Technology": {
+          "explanation": "A U.S. science and engineering institute (founded 1861) known for combining classroom instruction with laboratory and machine-shop work.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology"
+        },
+        "punched card": {
+          "explanation": "A stiff card that stores data as holes in fixed positions, designed to be read mechanically or electrically for counting, sorting, or tabulating.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Punched_card"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Cambridge, Massachusetts",
+          "name": "Cambridge, Massachusetts, United States",
+          "primary": true,
+          "centroid": [
+            -71.1040018,
+            42.3656347
+          ],
+          "source": "logical inference from MIT location in existing data"
+        }
+      ]
+    },
+    {
+      "date": "1884-09-23",
+      "date_precision": "day",
+      "age": 24,
+      "title": "Filed first tabulation patent",
+      "description": "On 23 September 1884, Hollerith filed a U.S. patent application titled “Art of Compiling Statistics,” formalizing his attempt to turn statistical compilation into a repeatable, machine-assisted process—work that aligned with his growing involvement in federal census statistics.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census",
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "machines_for_information",
+      "event_class": {
+        "type": "invention",
+        "title": "Art of Compiling Statistics",
+        "description": "A punched-card method for encoding individual data items and compiling totals via electromechanical reading and counting."
+      }
+    },
+    {
+      "date": "1884",
+      "date_precision": "year",
+      "age": 24,
+      "title": "Moves into Census Work in Washington",
+      "description": "In 1884, Hollerith left teaching to take up government statistical work in Washington, D.C., working for the [[United States Census Office]]. The shift put him close to the very bottleneck his machines aimed to break: how to compile and publish national statistics fast enough to stay useful.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0578303,
+            42.3588336
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, DC, United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/United_States_Census_Bureau"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Census_Bureau_headquarters%2C_Suitland%2C_Maryland%2C_2007.jpg/960px-Census_Bureau_headquarters%2C_Suitland%2C_Maryland%2C_2007.jpg",
+          "caption": "United States Census Bureau headquarters, Suitland, Maryland",
+          "source": "https://commons.wikimedia.org/wiki/File:Census_Bureau_headquarters,_Suitland,_Maryland,_2007.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "machines_for_information",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Massachusetts",
+        "to_location": "Washington, D.C.",
+        "characterization": "career opportunity"
+      },
+      "annotations": {
+        "United States Census Office": {
+          "explanation": "The federal census organization in the 19th century; it later evolved into today’s permanent U.S. Census Bureau.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Census_Bureau"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Cambridge, Massachusetts",
+          "name": "Cambridge, Massachusetts, United States",
+          "primary": false,
+          "centroid": [
+            -71.1040018,
+            42.3656347
+          ],
+          "source": "inferred from preceding MIT event location"
+        },
+        {
+          "label": "Washington, D.C.",
+          "name": "Washington, D.C., United States",
+          "primary": true,
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "source": "existing event location"
+        }
+      ]
+    },
+    {
+      "date": "1886",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Adopted punched-card layout",
+      "description": "By the mid‑1880s, Hollerith’s core mechanism was coming into focus. At the suggestion of [[John Shaw Billings]], he pursued a method where a datum was recorded as the presence or absence of a hole in a specific position on a card, and electrical contacts could complete circuits to increment mechanical counters. It was a simple idea with a brutal ambition: make statistics behave like something a machine could count.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Hollerith_card_reader_closeup.jpg/960px-Hollerith_card_reader_closeup.jpg",
+          "caption": "Punch card reader on Hollerith census tabulator",
+          "source": "https://commons.wikimedia.org/wiki/File:Hollerith_card_reader_closeup.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "machines_for_information",
+      "annotations": {
+        "John Shaw Billings": {
+          "explanation": "An American physician and statistics-minded administrator credited in Hollerith’s biography with suggesting the electrical-contact approach that shaped Hollerith’s tabulation mechanism.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/John_Shaw_Billings"
+        }
+      },
+      "involved_people": [
+        "John Shaw Billings"
+      ],
+      "location_coordinates": [
+        {
+          "label": "Washington, D.C.",
+          "name": "Washington, D.C., United States",
+          "primary": true,
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "source": "logical inference from Hollerith’s Washington census-work period in provided biography excerpt"
+        }
+      ]
+    },
+    {
+      "date": "1889-01-08",
+      "date_precision": "day",
+      "age": 28,
+      "title": "Received key US patent",
+      "description": "On 8 January 1889, Herman Hollerith was granted [[U.S. Patent 395,782|U.S. Patent 395,782]] by the [[United States Patent Office|United States Patent Office]], bolstering his standing as he moved toward supplying punched-card tabulating equipment for the upcoming 1890 U.S. census.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census",
+        "https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Counting_wheels_%282586171146%29.jpg/960px-Counting_wheels_%282586171146%29.jpg",
+          "caption": "Counting wheels of the Hollerith tabulator",
+          "source": "https://commons.wikimedia.org/wiki/File:Counting_wheels_(2586171146).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "census_breakthrough",
+      "annotations": {
+        "U.S. Patent 395,782": {
+          "explanation": "A U.S. patent issued to Hollerith on 8 January 1889 for his punched-card-based tabulation system, a key step toward mechanized census data processing.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tabulating_machine"
+        },
+        "United States Patent Office": {
+          "explanation": "The U.S. federal patent-granting authority (later reorganized as today’s USPTO), headquartered in Washington, D.C. in the 19th century.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office"
+        }
+      }
+    },
+    {
+      "date": "1889-04",
+      "date_precision": "month",
+      "age": 29,
+      "title": "Published tabulation system paper",
+      "description": "In April 1889, Hollerith described his system in “An Electric Tabulating System,” explaining how perforated cards could control electrical circuits that advanced counters. He submitted this account to Columbia University as part of the work that would later underpin his doctorate.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "census_breakthrough",
+      "event_class": {
+        "type": "publication",
+        "title": "An Electric Tabulating System",
+        "publication_type": "article",
+        "publisher": "The Quarterly, Columbia University School of Mines",
+        "significance": "technical exposition"
+      },
+      "location_coordinates": [
+        {
+          "label": "New York City",
+          "name": "New York City, United States",
+          "primary": true,
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "source": "linked to Columbia University in the provided biography excerpt"
+        }
+      ]
+    },
+    {
+      "date": "1890-06-02",
+      "date_precision": "day",
+      "age": 30,
+      "title": "Tabulated 1890 US Census",
+      "description": "When the 1890 census enumeration began on June 2, the Census Office was preparing for an unprecedented tabulation job. Under superintendent [[Robert P. Porter]], returns were processed using [[Hollerith tabulating machine|Hollerith’s punched-card tabulators]] under contract, turning piles of paper into countable, sortable cards and proving the approach could work at national scale.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg",
+          "caption": "Hollerith electric tabulating machine used for the 1890 census",
+          "source": "https://commons.wikimedia.org/wiki/File:1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "census_breakthrough",
+      "annotations": {
+        "Hollerith tabulating machine": {
+          "explanation": "An electromechanical punched-card data-processing system invented by Herman Hollerith and adopted for the 1890 U.S. census to speed counting and sorting of census returns.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tabulating_machine"
+        },
+        "Robert P. Porter": {
+          "explanation": "Superintendent of the 1890 United States census, the first U.S. census to use Hollerith’s machines at scale.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/1890_United_States_census"
+        }
+      },
+      "involved_people": [
+        "Robert P. Porter"
+      ]
+    },
+    {
+      "date": "1890",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Earned PhD at Columbia",
+      "description": "In 1890, Hollerith received a Doctor of Philosophy (PhD) from [[Columbia University|Columbia University]] in New York, with his tabulating system serving as the basis of his doctoral submission on its application to statistical compilation.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/IBM"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "census_breakthrough",
+      "annotations": {
+        "Columbia University": {
+          "explanation": "A private Ivy League research university in Manhattan, New York City, formally known as Columbia University in the City of New York.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Columbia_University"
+        }
+      }
+    },
+    {
+      "date": "1890",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Received Elliott Cresson Medal",
+      "description": "In 1890, Hollerith received the [[Elliott Cresson Medal|Franklin Institute’s Elliott Cresson Medal]] for his punched-card tabulating machine, a high-profile recognition that helped bolster his public standing as he promoted the technology.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1635262,
+            39.9527237
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Elliott-Cresson-Medaille"
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "census_breakthrough",
+      "annotations": {
+        "Elliott Cresson Medal": {
+          "explanation": "The Franklin Institute’s top award (1875–1997), given for notable achievements in science, engineering, and invention.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Elliott-Cresson-Medaille"
+        }
+      }
+    },
+    {
+      "date": "1896",
+      "date_precision": "year",
+      "age": 36,
+      "title": "Founded Tabulating Machine Company",
+      "description": "In 1896, Hollerith founded the [[Tabulating Machine Company|Tabulating Machine Company]] to formalize the business of leasing and servicing punched-card equipment, supplying tabulators and related machinery to U.S. census offices and commercial customers such as insurance firms.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/IBM"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Tabulating_Machine_Co._plant.jpg",
+          "caption": "Tabulating Machine Co. plant",
+          "source": "https://commons.wikimedia.org/wiki/File:Tabulating_Machine_Co._plant.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "building_the_punched_card_empire",
+      "annotations": {
+        "Tabulating Machine Company": {
+          "explanation": "Hollerith's company (incorporated in 1896) that marketed and leased punched-card tabulating systems; it later became one of the firms merged into the Computing-Tabulating-Recording Company (CTR), a predecessor of IBM.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+        }
+      }
+    },
+    {
+      "date": "1906",
+      "date_precision": "year",
+      "age": 46,
+      "title": "Introduced control-panel tabulator",
+      "description": "In 1906, Hollerith introduced the Type I tabulator’s control panel, a practical change that made rewiring for new questions and new customers faster and less error-prone. It marked a shift from a one-off census machine toward a configurable system operators could adapt from job to job.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "building_the_punched_card_empire",
+      "event_class": {
+        "type": "invention",
+        "title": "Type I Tabulator control panel",
+        "description": "A plugboard-style control panel that allowed rapid rewiring of tabulators for different counting and sorting programs."
+      }
+    },
+    {
+      "date": "1911-06-16",
+      "date_precision": "day",
+      "age": 51,
+      "title": "Company merged into CTR",
+      "description": "On 16 June 1911, Hollerith’s Tabulating Machine Company merged with three other firms—Bundy Manufacturing Company, International Time Recording Company, and the Computing Scale Company of America—to form the [[Computing-Tabulating-Recording Company|Computing-Tabulating-Recording Company (CTR)]]. Organized by financier Charles Ranlett Flint, the deal ended Hollerith’s independence, but not his influence: he stayed on in an engineering role inside the larger organization.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Endicott, New York",
+          "name_modern": "Endicott, New York, United States",
+          "centroid": [
+            -76.0493684,
+            42.098408
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Charles Ranlett Flint"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/IBM"
+      ],
+      "event_type_icon": "mdi-handshake",
+      "chapter": "building_the_punched_card_empire",
+      "annotations": {
+        "Computing-Tabulating-Recording Company": {
+          "explanation": "A holding company created in 1911 by merging four firms, including Hollerith’s Tabulating Machine Company; it was later renamed International Business Machines (IBM).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+        }
+      }
+    },
+    {
+      "date": "1921",
+      "date_precision": "year",
+      "age": 61,
+      "title": "Retired as consulting engineer",
+      "description": "In 1921, Hollerith retired from his consulting work with the [[Computing-Tabulating-Recording Company|CTR]] organization. He had been living in Georgetown, Washington, D.C., with a nearby business office tied to his professional affairs—a quiet setup for someone whose ideas were becoming industrial routine.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/IBM"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Tabulating_Machine_Co_org_chart.mw.jpg/960px-Tabulating_Machine_Co_org_chart.mw.jpg",
+          "caption": "Organization chart of the Tabulating Machine Co., December 1917",
+          "source": "https://commons.wikimedia.org/wiki/File:Tabulating_Machine_Co_org_chart.mw.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-clock",
+      "chapter": "quiet_legacy_years",
+      "annotations": {
+        "Computing-Tabulating-Recording Company": {
+          "explanation": "The company formed in 1911 by merging several firms including Hollerith’s; it was renamed International Business Machines (IBM) in 1924.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+        }
+      }
+    },
+    {
+      "date": "1929-11-17",
+      "date_precision": "day",
+      "age": 69,
+      "title": "Died in Washington, D.C.",
+      "description": "Herman Hollerith died in Washington, D.C., on November 17, 1929, aged 69; the cause was reported as a heart attack. He was buried at [[Oak Hill Cemetery|Oak Hill Cemetery]] in Georgetown.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Oak_Hill_Cemetery_(Washington,_D.C.)",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Hollerith_Herman_grave.jpg/849px-Hollerith_Herman_grave.jpg",
+          "caption": "Grave of Herman Hollerith",
+          "source": "https://commons.wikimedia.org/wiki/File:Hollerith_Herman_grave.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "quiet_legacy_years",
+      "annotations": {
+        "Oak Hill Cemetery": {
+          "explanation": "A historic rural cemetery in Washington, D.C.'s Georgetown neighborhood, founded in the mid-19th century and the burial place of many prominent Americans.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Oak_Hill_Cemetery_(Washington,_D.C.)"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Washington, D.C.",
+          "name": "Washington, D.C., United States",
+          "primary": true,
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "source": "existing event location"
+        },
+        {
+          "label": "Oak Hill Cemetery",
+          "name": "Oak Hill Cemetery, Georgetown, Washington, D.C., United States",
+          "primary": false,
+          "centroid": [
+            -77.0617,
+            38.9126
+          ],
+          "source": "Oak Hill Cemetery (Washington, D.C.) Wikipedia + logical geocoding"
+        }
+      ]
+    }
+  ]
+}
