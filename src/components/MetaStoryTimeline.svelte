@@ -11,6 +11,7 @@
   export let subtopics = [];
   export let scrollProgress = 0; // 0 to 1, representing horizontal scroll position
   export let isSticky = false; // Whether timeline is in sticky/fullscreen mode
+  export let stickyHeaderHeight = 0; // Height of MetaStoryView's sticky header (for positioning)
 
   // Person styles registry
   const personStyles = personStylesData.styles;
@@ -374,8 +375,11 @@
 
     const clampedX = Math.max(minX, Math.min(indicatorViewportX, maxX));
 
+    // Calculate top position: base offset (0.75rem) + sticky header height
+    const topOffset = stickyHeaderHeight > 0 ? `${stickyHeaderHeight + 12}px` : '0.75rem';
+
     // Use transform for positioning to avoid squishing the box when left is near viewport edge
-    return `transform: translateX(${clampedX}px) translateX(-50%);`;
+    return `transform: translateX(${clampedX}px) translateX(-50%); top: ${topOffset};`;
   })();
 
   // Helper: Extract persons from chapters (fallback when no subtopics)
@@ -1628,7 +1632,7 @@
   /* Fixed chapter header - positioned at top, doesn't scroll */
   .fixed-chapter-header {
     position: fixed;
-    top: 0.75rem;
+    /* top is set dynamically via inline style to account for sticky header */
     left: 0;
     z-index: 100;
     pointer-events: none;
@@ -2011,7 +2015,7 @@
 
     /* Fixed chapter header - mobile adjustments */
     .fixed-chapter-header {
-      top: 0.5rem;
+      /* top is set dynamically via inline style */
       left: 50%;
       transform: translateX(-50%);
     }
@@ -2117,7 +2121,7 @@
   /* Very small screens */
   @media (max-width: 480px) {
     .fixed-chapter-header {
-      top: 0.35rem;
+      /* top is set dynamically via inline style */
     }
 
     .chapter-title-display {

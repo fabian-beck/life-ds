@@ -2,8 +2,9 @@
   import { _ } from "../stores/language";
   import { push } from "svelte-spa-router";
   import { onMount, onDestroy } from "svelte";
+  import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
-  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+  import { mdiChevronLeft, mdiChevronRight, mdiClose } from '@mdi/js';
 
   export let metaStoryData = null;
   export let personsRegistry = [];
@@ -75,6 +76,9 @@
 
   // Handle vertical scroll and translate to horizontal timeline scroll
   function handleVerticalScroll() {
+    // Update sticky header visibility
+    handleHeaderVisibility();
+
     // Only skip if the last update came from horizontal scroll or navigation
     if (isUpdatingScroll && (lastScrollOrigin === 'horizontal' || lastScrollOrigin === 'navigation')) return;
 
@@ -202,6 +206,25 @@
   let canNavigatePrev = false;
   let canNavigateNext = false;
   let navigationTimeout = null;
+
+  // Sticky header state
+  let showStickyHeader = false;
+  let headerScrollThreshold = 300; // pixels scrolled before showing sticky header
+  let stickyHeaderElement = null;
+  let stickyHeaderHeight = 0;
+
+  // Handle sticky header visibility based on scroll position
+  function handleHeaderVisibility() {
+    const scrollY = window.scrollY;
+    showStickyHeader = scrollY > headerScrollThreshold;
+  }
+
+  // Update sticky header height when it appears/changes
+  $: if (stickyHeaderElement && showStickyHeader) {
+    stickyHeaderHeight = stickyHeaderElement.offsetHeight;
+  } else {
+    stickyHeaderHeight = 0;
+  }
 
   // Update navigation button states based on current position
   // This reactive statement re-runs whenever scrollProgress changes,
@@ -337,6 +360,38 @@
   <div class="loading">Loading meta story...</div>
 {:else if metaStoryData}
   <div class="meta-story-view">
+    <!-- Sticky header - appears when scrolling down -->
+    {#if showStickyHeader}
+      <header
+        class="meta-sticky-header"
+        bind:this={stickyHeaderElement}
+        transition:fade={{ duration: 200 }}
+      >
+        <div class="sticky-compact-info">
+          <span class="sticky-name">{metaStoryData.meta_story.title}</span>
+          <span class="separator">·</span>
+          <span class="sticky-years">
+            {metaStoryData.meta_story.date_range_start}–{metaStoryData.meta_story.date_range_end}
+          </span>
+          <button
+            type="button"
+            class="close-meta-story"
+            on:click={backToLanding}
+            aria-label={$_('meta_story.back_to_stories')}
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiClose} />
+            </svg>
+          </button>
+        </div>
+      </header>
+    {/if}
+
     <!-- Header section -->
     <header class="meta-story-header">
       <button on:click={backToLanding} class="back-button">
@@ -363,7 +418,7 @@
           bind:this={scrollProxyContainer}
           style="height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
         >
-          <div class="timeline-sticky-wrapper">
+          <div class="timeline-sticky-wrapper" style="top: {stickyHeaderHeight}px;">
             <div class="timeline-horizontal-container" bind:this={timelineContainer}>
               <MetaStoryTimeline
                 bind:this={metaTimelineComponent}
@@ -374,6 +429,7 @@
                 subtopics={metaStoryData.subtopics}
                 scrollProgress={scrollProgress}
                 isSticky={isScrollLockActive}
+                stickyHeaderHeight={stickyHeaderHeight}
               />
             </div>
 
@@ -425,6 +481,107 @@
     margin: 0 auto;
     padding: 2rem 1rem;
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+  }
+
+  /* Sticky header - appears when scrolling down, styled like StoryView masthead */
+  .meta-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 150; /* Above timeline chapter header (100) */
+    padding: 0.5rem 2vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(0, 0, 0, 0.28) 100%
+      ),
+      rgba(15, 23, 42, 0.58);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .sticky-compact-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(0.5rem, 0.9vh, 0.75rem);
+    font-size: clamp(0.85rem, 1.1vh, 0.95rem);
+    font-weight: 600;
+    color: #e2e8f0;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .sticky-compact-info span {
+    min-width: 0;
+  }
+
+  .sticky-name {
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: clip;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    padding-bottom: 0.1rem;
+  }
+
+  .sticky-name::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sticky-compact-info .separator {
+    color: rgba(148, 163, 184, 0.8);
+    flex: 0 0 auto;
+  }
+
+  .sticky-years {
+    color: #94a3b8;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .close-meta-story {
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: #38bdf8;
+    border-radius: 999px;
+    padding: clamp(0.3rem, 0.9vh, 0.45rem) clamp(0.7rem, 2.2vw, 0.95rem);
+    font-size: clamp(0.75rem, 1.2vh, 0.85rem);
+    font-weight: 600;
+    cursor: pointer;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.35rem, 0.9vh, 0.45rem);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .close-meta-story:hover,
+  .close-meta-story:focus {
+    border-color: rgba(56, 189, 248, 0.6);
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+  }
+
+  .close-meta-story .icon {
+    width: 1.1em;
+    height: 1.1em;
+    fill: currentColor;
+    flex: 0 0 auto;
   }
 
   /* Header */
@@ -495,10 +652,10 @@
     /* Height set dynamically via inline style */
   }
 
-  /* Timeline wrapper - sticks to top during scroll lock */
+  /* Timeline wrapper - sticks to top during scroll lock (top position set dynamically) */
   .timeline-sticky-wrapper {
     position: sticky;
-    top: 0;
+    /* top is set dynamically via inline style to account for sticky header */
     height: 100vh;
     overflow: visible; /* Changed from hidden to allow tooltips to overflow */
     z-index: 50;
@@ -614,6 +771,52 @@
     .timeline-nav-btn {
       width: 2.2rem;
       height: 2.2rem;
+    }
+  }
+
+  /* Landscape mobile - compact sticky header on right side */
+  @media (max-height: 450px) {
+    .meta-sticky-header {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: auto;
+      width: auto;
+      max-width: 40%;
+      padding: 0.15rem 0.35rem;
+      border-radius: 0 0 0 0.5rem;
+      border: none;
+      border-left: 1px solid rgba(148, 163, 184, 0.15);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    .sticky-compact-info {
+      font-size: 0.65rem;
+      gap: 0.35rem;
+      justify-content: flex-end;
+    }
+
+    .sticky-name {
+      max-width: 8rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sticky-years {
+      display: none;
+    }
+
+    .sticky-compact-info .separator {
+      display: none;
+    }
+
+    .close-meta-story {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.6rem;
+      gap: 0.25rem;
     }
   }
 
