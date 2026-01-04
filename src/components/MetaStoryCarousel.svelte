@@ -164,8 +164,8 @@
                   >
                     {#if person?.portrait}
                       <img
-                        src={getThumbnailUrl(person.portrait, 400)}
-                        srcset={`${getThumbnailUrl(person.portrait, 400)} 1x, ${getThumbnailUrl(person.portrait, 800)} 2x`}
+                        src={getThumbnailUrl(person.portrait, 600)}
+                        srcset={`${getThumbnailUrl(person.portrait, 600)} 1x, ${getThumbnailUrl(person.portrait, 1200)} 2x`}
                         alt={person.portrait.alt ??
                           `Portrait of ${displayName(person.name)}`}
                         loading="lazy"
