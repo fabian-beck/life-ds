@@ -617,11 +617,7 @@
       }
 
       chapter.person_events.forEach((event) => {
-        // Only include essential events (top priority)
-        if (event.relevance_strength !== 'essential') {
-          return;
-        }
-
+        // All events are essential (weak events filtered during generation)
         if (!eventsByPerson.has(event.person_id)) {
           eventsByPerson.set(event.person_id, []);
         }
@@ -642,8 +638,7 @@
           year: eventYear,
           leftPx: leftPx,
           chapterTitle: chapter.title,
-          theme_connection: event.theme_connection,
-          relevance_strength: event.relevance_strength
+          theme_connection: event.theme_connection
         });
       });
     });
@@ -1547,9 +1542,7 @@
                   (activeEventTooltip.events && activeEventTooltip.events.some(evt => evt.personId === personData.personId && evt.eventIndex === eventIndex))
                 )}
                 <div
-                  class="event-marker"
-                  class:essential={event.relevance_strength === 'essential'}
-                  class:supporting={event.relevance_strength === 'supporting'}
+                  class="event-marker essential"
                   class:indicator-hover={isHoveredByIndicator}
                   class:active={isActive}
                   style="left: {relativeLeftPx}px;"

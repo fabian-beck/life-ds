@@ -122,9 +122,7 @@ class PersonEvent(BaseModel):
     theme_connection: str = Field(
         description="Explanation of how this event contributes to the meta-story theme"
     )
-    relevance_strength: str = Field(
-        description="Strength of relevance: 'essential', 'supporting', or 'weak'"
-    )
+    # All events stored are essential (weak events are filtered out during generation)
 
 
 class EventForReview(BaseModel):
@@ -137,15 +135,11 @@ class EventForReview(BaseModel):
 
 
 class EventRelevanceDecision(BaseModel):
-    """AI decision on whether an event is relevant to the collection topic."""
+    """AI decision on whether an event is essential to the collection topic."""
     event_id: str = Field(description="Event identifier (matches EventForReview.event_id)")
-    is_relevant: bool = Field(description="True if event directly relates to collection topic")
-    relevance_strength: Optional[str] = Field(
-        default=None,
-        description="Strength of relevance: 'essential' (core contribution), 'supporting' (illustrative), or 'weak' (tangential). Only for relevant events."
-    )
+    is_relevant: bool = Field(description="True if event is ESSENTIAL to the collection topic (core contribution). False if weak/tangential.")
     theme_connection: str = Field(
-        description="Brief explanation (1-2 sentences) of HOW this event contributes to the meta-story theme. Be specific about which aspect of the topic it demonstrates."
+        description="Brief explanation (1-2 sentences) of HOW this event contributes to the meta-story theme. Be specific about which aspect of the topic it demonstrates. If not relevant, explain why it's too tangential."
     )
 
 
@@ -381,8 +375,11 @@ SUBTOPICS (2-4):
 - NOT just job title duplicates (avoid "Mathematicians", "Scientists", "Writers")
 - Should tell a story within the story (e.g., "Breaking the Unbreakable", "From Theory to Practice")
 - 2-4 people per subtopic is ideal
-- IMPORTANT: Each person must be assigned to EXACTLY ONE subtopic (no overlaps, no omissions)
-- All selected people must be distributed across subtopics
+- CRITICAL CONSTRAINT: Each person must be assigned to EXACTLY ONE subtopic
+  * NO OVERLAPS: A person cannot appear in multiple subtopics
+  * NO OMISSIONS: Every selected person must appear in exactly one subtopic
+  * If a person fits multiple themes, choose their PRIMARY contribution
+- All selected people must be distributed across subtopics with no duplicates
 
 CHAPTERS (3-6):
 - Era-based with clear date ranges (year precision only)
@@ -465,8 +462,11 @@ SUBTOPICS (2-4):
 - NOT just job title duplicates (avoid "Mathematicians", "Scientists", "Writers")
 - Should tell a story within the story (e.g., "Breaking the Unbreakable", "From Theory to Practice")
 - 2-4 people per subtopic is ideal
-- IMPORTANT: Each person must be assigned to EXACTLY ONE subtopic (no overlaps, no omissions)
-- All selected people must be distributed across subtopics
+- CRITICAL CONSTRAINT: Each person must be assigned to EXACTLY ONE subtopic
+  * NO OVERLAPS: A person cannot appear in multiple subtopics
+  * NO OMISSIONS: Every selected person must appear in exactly one subtopic
+  * If a person fits multiple themes, choose their PRIMARY contribution
+- All selected people must be distributed across subtopics with no duplicates
 
 GOOD SUBTOPIC EXAMPLES:
 - "Theoretical Foundations" (mathematicians who defined computation)
@@ -482,7 +482,12 @@ BAD SUBTOPIC EXAMPLES:
 CHAPTERS (3-6):
 - Era-based with clear date ranges (year precision only)
 - Title format: "Era Name (YYYY-YYYY)" (e.g., "Early Foundations (1900-1920)")
-- Chapters should be chronological and non-overlapping
+- CRITICAL: Chapters MUST be strictly chronological and COMPLETELY NON-OVERLAPPING
+  * NO OVERLAP ALLOWED: Each chapter's date_end MUST be BEFORE the next chapter's date_start
+  * Chapters must be in chronological order from earliest to latest
+  * Example CORRECT: Chapter 1 (1900-1920), Chapter 2 (1921-1945), Chapter 3 (1946-1970)
+  * Example WRONG: Chapter 1 (1900-1930), Chapter 2 (1920-1950) ← OVERLAP NOT ALLOWED
+  * If an event could fit multiple chapters, assign it to the chapter where it has PRIMARY thematic importance
 - Bridge statement: narrative hook, not summary (1-2 sentences, max 30 words)
 - Each bridge should create anticipation for what happened during that era
 - Aim for roughly equal time spans when possible
@@ -511,7 +516,7 @@ MISSING PEOPLE SUGGESTIONS:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert historian and narrative designer. Create compelling thematic collections that organize biographical data thematically and chronologically."
+                    "content": "You are an expert historian and narrative designer. Create compelling thematic collections that organize biographical data thematically and chronologically. CRITICAL: Each person must appear in EXACTLY ONE subtopic - no duplicates allowed across subtopics."
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -561,11 +566,27 @@ MISSING PEOPLE SUGGESTIONS:
                 print("All selected people must be assigned to exactly ONE subtopic.")
                 return None
 
+            # Validate chapters are strictly non-overlapping and chronological
+            sorted_chapters = sorted(plan.chapters, key=lambda c: int(c.date_start))
+            for i in range(len(sorted_chapters) - 1):
+                current_chapter = sorted_chapters[i]
+                next_chapter = sorted_chapters[i + 1]
+                current_end = int(current_chapter.date_end)
+                next_start = int(next_chapter.date_start)
+
+                if current_end >= next_start:
+                    print(f"Error: Chapters overlap!")
+                    print(f"  '{current_chapter.title}' ends in {current_end}")
+                    print(f"  '{next_chapter.title}' starts in {next_start}")
+                    print(f"Chapters must be strictly non-overlapping (date_end < next date_start)")
+                    return None
+
             if verbose:
                 print(f"Selected {len(plan.selected_people)} people")
                 print(f"Created {len(plan.subtopics)} subtopics")
                 print(f"Designed {len(plan.chapters)} chapters")
                 print(f"Validated: All people assigned to exactly one subtopic")
+                print(f"Validated: All chapters are strictly non-overlapping")
 
             return plan
         elif result.refusal:
@@ -749,41 +770,40 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
                 batch, topic_context, client, model, verbose
             )
 
-            # Apply decisions with strength filtering
+            # Apply decisions - only include essential events (is_relevant=true)
             for event_data in batch:
                 event_id = f"{event_data['person_id']}:{event_data['event_index']}"
                 decision = batch_decisions.get(event_id)
 
                 if decision and decision["is_relevant"]:
-                    strength = decision.get("relevance_strength", "supporting")
-
-                    # Filter out weak events (only include essential and supporting)
-                    if strength == "weak":
-                        total_excluded += 1
-                        if verbose:
-                            print(f"    [-] WEAK: {event_data['person_name']}: {event_data['event'].get('title', '')}")
-                            print(f"        Reason: {decision['theme_connection']}")
-                        continue
-
+                    # Include this essential event
                     filtered_events.append(PersonEvent(
                         person_id=event_data["person_id"],
                         event_date=event_data["event"].get("date", ""),
                         event_date_precision=event_data["event"].get("date_precision", "year"),
                         event_title=event_data["event"].get("title", ""),
                         event_index=event_data["event_index"],
-                        theme_connection=decision["theme_connection"],
-                        relevance_strength=strength
+                        theme_connection=decision["theme_connection"]
                     ))
                     total_included += 1
                     if verbose:
-                        print(f"    [+] {strength.upper()}: {event_data['person_name']}: {event_data['event'].get('title', '')}")
-                        print(f"        Connection: {decision['theme_connection']}")
+                        # Use ASCII-safe encoding for console output
+                        person_name = event_data['person_name'].encode('ascii', 'replace').decode('ascii')
+                        event_title = event_data['event'].get('title', '').encode('ascii', 'replace').decode('ascii')
+                        connection = decision['theme_connection'].encode('ascii', 'replace').decode('ascii')
+                        print(f"    [+] ESSENTIAL: {person_name}: {event_title}")
+                        print(f"        Connection: {connection}")
                 else:
+                    # Exclude weak/tangential events
                     total_excluded += 1
                     if verbose:
-                        print(f"    [-] {event_data['person_name']}: {event_data['event'].get('title', '')}")
+                        # Use ASCII-safe encoding for console output
+                        person_name = event_data['person_name'].encode('ascii', 'replace').decode('ascii')
+                        event_title = event_data['event'].get('title', '').encode('ascii', 'replace').decode('ascii')
+                        print(f"    [-] WEAK: {person_name}: {event_title}")
                         if decision:
-                            print(f"        Reason: {decision.get('theme_connection', 'Not relevant')}")
+                            reason = decision.get('theme_connection', 'Not relevant').encode('ascii', 'replace').decode('ascii')
+                            print(f"        Reason: {reason}")
 
             total_reviewed += len(batch)
 
@@ -804,6 +824,24 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
         if verbose:
             print(f"  Result: {len(filtered_events)} events included")
 
+    # Validate: Each person must have at least one essential event across ALL chapters
+    person_event_counts = {}
+    for chapter_data in chapters_with_filtered_events:
+        for event in chapter_data.person_events:
+            person_event_counts[event.person_id] = person_event_counts.get(event.person_id, 0) + 1
+
+    missing_persons = []
+    for person in plan.selected_people:
+        if person.person_id not in person_event_counts:
+            missing_persons.append(person.person_id)
+
+    if missing_persons:
+        print(f"\nWARNING: The following persons have NO essential events in the meta-story:")
+        for person_id in missing_persons:
+            print(f"  - {person_id}")
+        print("This likely means their contributions fall outside the chapter date ranges,")
+        print("or the AI filtering was too strict. Consider adjusting chapter ranges or person selection.")
+
     if verbose:
         print(f"\n=== Filtering Summary ===")
         print(f"Total reviewed: {total_reviewed}")
@@ -813,6 +851,11 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
         else:
             print(f"Included: {total_included}")
             print(f"Excluded: {total_excluded}")
+        print(f"\nPerson coverage:")
+        for person in plan.selected_people:
+            count = person_event_counts.get(person.person_id, 0)
+            status = "[OK]" if count > 0 else "[NONE]"
+            print(f"  {status} {person.person_id}: {count} event(s)")
 
     return chapters_with_filtered_events
 
@@ -849,40 +892,68 @@ def _filter_event_batch(
             event_description=description
         ))
 
+    # Group events by person to track coverage
+    events_by_person = {}
+    for event_review in events_for_review:
+        person_name = event_review.person_name
+        if person_name not in events_by_person:
+            events_by_person[person_name] = []
+        events_by_person[person_name].append(event_review)
+
     prompt = f"""{topic_context}
 
-Review the following events and determine which ones DIRECTLY CONTRIBUTE to this meta-story.
+Review the following events and determine which ones are TRULY ESSENTIAL to this meta-story.
 
-EVALUATION CRITERIA:
+CRITICAL REQUIREMENTS:
+1. Be HIGHLY SELECTIVE - most events should be marked as weak/not relevant
+2. Only mark events as essential if they represent MAJOR contributions to the topic
+3. It is ACCEPTABLE for a person to have ZERO essential events in this batch if none meet the criteria
+   (Each person needs at least one essential event across the ENTIRE meta-story, not per batch/chapter)
 
-1. THEMATIC RELEVANCE (required):
-   - Does this event demonstrate a concrete achievement, discovery, or milestone directly related to the topic?
-   - Does it illustrate one of the subtopic themes listed above?
-   - Would removing this event leave a gap in the meta-story narrative?
+ESSENTIAL EVENT CRITERIA (is_relevant=true) - ALL must apply:
+   ✓ DIRECT IMPACT: The event directly advanced the field/topic (not just participation)
+   ✓ LANDMARK STATUS: Widely recognized as a significant milestone or breakthrough
+   ✓ CONCRETE OUTPUT: Produced a lasting artifact (publication, invention, system, theory)
+   ✓ IRREPLACEABLE: Removing this event would leave a major gap in the meta-story
 
-2. AVOID GENERIC BIOGRAPHICAL EVENTS:
-   - Exclude: births, deaths, marriages, general relocations, childhood events
-   - Exclude: routine professional work (e.g., "gave a lecture" without topic significance)
-   - Exclude: tangential connections (e.g., met someone famous but no collaboration)
+   Examples of TRULY essential events:
+   - "Published seminal paper that founded new subfield"
+   - "Invented breakthrough technology that enabled X"
+   - "Led team that created first working system for Y"
+   - "Proved fundamental theorem that changed the field"
 
-3. INCLUDE SUBSTANTIVE CONTRIBUTIONS:
-   - Publications, inventions, discoveries that advanced the topic domain
-   - Pivotal collaborations or mentorships related to the theme
-   - Awards or recognition specifically for work in the topic area
-   - Events that show impact, influence, or innovation within the theme
+WEAK/TANGENTIAL EVENTS (is_relevant=false) - Mark as NOT relevant if ANY apply:
+   ✗ Background/setup work (even if related to topic)
+   ✗ Routine professional activities (teaching, consulting, management)
+   ✗ Generic career milestones (appointments, promotions, awards for general work)
+   ✗ Biographical context (education, training, meetings, relocations, career decisions)
+   ✗ Preparatory or enabling work (unless it IS the breakthrough itself)
+   ✗ Collaborations where this person was NOT the primary contributor
+   ✗ Applications of existing ideas (unless groundbreaking application)
+   ✗ Company/institution founding (unless the company/product IS the breakthrough)
 
-4. RELEVANCE STRENGTH GUIDELINES:
-   - **essential**: Core breakthrough, seminal work, or defining moment for the meta-story theme
-     Examples: "Published foundational paper", "Invented key technology", "Led major project"
-   - **supporting**: Illustrative example, important milestone, or significant contribution
-     Examples: "Collaborated on related project", "Received award for topic work", "Applied theory to practice"
-   - **weak**: Tangentially related, background context, or minor connection
-     Examples: "Studied under X" (without collaboration), "Attended conference", "General education"
+   Examples of events to REJECT:
+   - "Appointed to X position" → Career milestone, not contribution
+   - "Studied under Y" → Background, not achievement
+   - "Contributed to project Z" → Vague participation, not leadership
+   - "Received award for career" → Recognition of past work, not the work itself
+   - "Founded company/lab" → Setup activity, not the innovation itself
+   - "Applied X theory to Y" → Application, not breakthrough (unless revolutionary)
+   - "Break from teaching track" → Career decision, not contribution
+   - "Joined X organization" → Career move, not achievement
+
+STRICTNESS REQUIREMENT:
+- DEFAULT TO REJECTING events unless they clearly meet ALL essential criteria
+- If uncertain whether an event is essential → mark as is_relevant=false
+- Only mark 1-3 events per person as essential (their absolute best contributions)
+- Aim for 30-50% inclusion rate across all events reviewed
+- DO NOT include weak events just to ensure coverage - quality over quantity
 
 For each event, provide:
-1. **is_relevant**: true if the event makes a clear, direct contribution to the meta-story (essential or supporting strength). False for weak or irrelevant events.
-2. **relevance_strength**: 'essential', 'supporting', or 'weak' (only if is_relevant=true)
-3. **theme_connection**: 1-2 sentences explaining SPECIFICALLY how this event contributes to the meta-story theme. Which aspect of the topic does it demonstrate? What makes it important to include?
+1. **is_relevant**: true ONLY if event meets ALL essential criteria above, false otherwise
+2. **theme_connection**:
+   - If essential: Explain the CONCRETE contribution and why it's a landmark
+   - If not essential: Briefly state why it doesn't meet the essential criteria
 
 Events to review:
 {json.dumps([e.model_dump() for e in events_for_review], indent=2)}
@@ -894,7 +965,7 @@ Events to review:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert curator deciding which biographical events are relevant to specific thematic collections. Be selective and focus on topic relevance."
+                    "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic."
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -907,8 +978,7 @@ Events to review:
             for decision in result.parsed.decisions:
                 decisions[decision.event_id] = {
                     "is_relevant": decision.is_relevant,
-                    "theme_connection": decision.theme_connection,
-                    "relevance_strength": decision.relevance_strength
+                    "theme_connection": decision.theme_connection
                 }
             return decisions
         else:
@@ -918,8 +988,7 @@ Events to review:
             return {
                 f"{e['person_id']}:{e['event_index']}": {
                     "is_relevant": True,
-                    "theme_connection": "AI filtering failed, included by default",
-                    "relevance_strength": "supporting"
+                    "theme_connection": "AI filtering failed, included by default"
                 }
                 for e in events
             }
@@ -931,8 +1000,7 @@ Events to review:
         return {
             f"{e['person_id']}:{e['event_index']}": {
                 "is_relevant": True,
-                "theme_connection": "AI filtering error, included by default",
-                "relevance_strength": "supporting"
+                "theme_connection": "AI filtering error, included by default"
             }
             for e in events
         }
@@ -1186,7 +1254,8 @@ def main():
                     event_date=e["event"].get("date", ""),
                     event_date_precision=e["event"].get("date_precision", "year"),
                     event_title=e["event"].get("title", ""),
-                    event_index=e["event_index"]
+                    event_index=e["event_index"],
+                    theme_connection="Included without AI filtering"
                 )
                 for e in events_data
             ]
