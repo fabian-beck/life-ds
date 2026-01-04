@@ -332,7 +332,8 @@
   }
 
   .portrait-column {
-    flex: 1;
+    flex: 1 1 0;
+    max-width: 25%; /* Prevent extreme widening when few portraits */
     position: relative;
     overflow: hidden;
     border: none;
