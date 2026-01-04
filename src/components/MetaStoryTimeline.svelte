@@ -55,13 +55,71 @@
     return parseInt(dateString.split('-')[0]);
   }
 
-  // Calculate timeline boundaries (min/max years across all chapters)
+  // Calculate timeline boundaries (min/max years from meta story persons' birth/death dates)
   $: timelineBounds = (() => {
-    if (!chapters || chapters.length === 0) return { minYear: 1800, maxYear: 2000 };
-    const years = chapters.flatMap(c => [
-      parseInt(c.date_start),
-      parseInt(c.date_end)
-    ]);
+    if (!subtopics || subtopics.length === 0 || !personsRegistry) {
+      // Fallback: extract person IDs from chapters
+      if (!chapters || chapters.length === 0) {
+        return { minYear: 1800, maxYear: 2000 };
+      }
+
+      const personIds = new Set();
+      chapters.forEach(chapter => {
+        chapter.person_events?.forEach(event => {
+          personIds.add(event.person_id);
+        });
+      });
+
+      if (personIds.size === 0) {
+        return { minYear: 1800, maxYear: 2000 };
+      }
+
+      const years = [];
+      personIds.forEach(personId => {
+        const person = getPersonById(personId);
+        if (person) {
+          const birthYear = getYear(person.birthDate);
+          const deathYear = getYear(person.deathDate);
+          if (birthYear) years.push(birthYear);
+          if (deathYear) years.push(deathYear);
+        }
+      });
+
+      if (years.length === 0) {
+        return { minYear: 1800, maxYear: 2000 };
+      }
+
+      return {
+        minYear: Math.min(...years),
+        maxYear: Math.max(...years)
+      };
+    }
+
+    // Extract person IDs from subtopics
+    const personIds = new Set();
+    subtopics.forEach(subtopic => {
+      subtopic.person_ids?.forEach(id => personIds.add(id));
+    });
+
+    if (personIds.size === 0) {
+      return { minYear: 1800, maxYear: 2000 };
+    }
+
+    const years = [];
+    personIds.forEach(personId => {
+      const person = getPersonById(personId);
+      if (person) {
+        const birthYear = getYear(person.birthDate);
+        const deathYear = getYear(person.deathDate);
+        if (birthYear) years.push(birthYear);
+        if (deathYear) years.push(deathYear);
+      }
+    });
+
+    if (years.length === 0) {
+      return { minYear: 1800, maxYear: 2000 };
+    }
+
     return {
       minYear: Math.min(...years),
       maxYear: Math.max(...years)
