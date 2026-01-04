@@ -12,6 +12,7 @@
 </script>
 
 {#if show}
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     class="modal-backdrop"
     on:click={handleBackdropClick}
@@ -19,6 +20,8 @@
     role="dialog"
     aria-modal="true"
   >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <div class="modal-content" on:click|stopPropagation role="document">
       <button
         class="modal-close"

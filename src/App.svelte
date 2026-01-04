@@ -553,7 +553,6 @@ import { displayName } from "./utils/helpers.js";
       activeIndex={slideParam ?? 0}
       targetEventIndex={eventParam}
       styleConfig={styleFor(personId)}
-      {fromMetaStoryId}
       onClose={handleCloseStory}
       onSlideChange={handleSlideChange}
     />

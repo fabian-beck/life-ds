@@ -1128,10 +1128,6 @@
     min-width: 0;
   }
 
-  .details.details-compact li > span:not(.label) {
-    flex: 0 1 auto;
-  }
-
   .label {
     text-transform: uppercase;
     letter-spacing: 0.08em;

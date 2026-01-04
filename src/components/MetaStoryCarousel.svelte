@@ -125,6 +125,7 @@
 {#if metaStories.length > 0}
   <section class="meta-story-carousel">
     <div class="carousel-container">
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="carousel-track"
         bind:this={carouselElement}

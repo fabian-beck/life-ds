@@ -23,11 +23,6 @@
   let lastScrollOrigin = null; // Track origin of last scroll: 'vertical' | 'horizontal' | null
   let timelineScrollListenerAttached = false; // Track if listener is attached
 
-  // Navigate to person's story at specific event
-  function viewPersonEvent(personId, eventIndex) {
-    push(`/${currentLanguage}/story/${personId}?slide=${eventIndex}`);
-  }
-
   // Navigate back to landing
   function backToLanding() {
     push(`/${currentLanguage}`);

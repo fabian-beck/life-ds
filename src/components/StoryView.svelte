@@ -40,7 +40,6 @@
   export let activeIndex = 0;
   export let targetEventIndex = null; // Optional: if set, navigate to this event index
   export let styleConfig = null;
-  export let fromMetaStoryId = null; // Optional: meta story ID to return to on close
   export let onClose = () => {};
   export let onSlideChange = () => {};
 
@@ -444,7 +443,6 @@
   let slidesContainer;
   let initialScrollDone = false;
   let initialScrollPending = false;
-  let descriptionOverflows = new Set(); // Track which descriptions overflow
 
   // Scroll state machine (replaces boolean isScrolling flag)
   const SCROLL_STATE = {
@@ -508,28 +506,6 @@
     }
   }
 
-  function checkOverflow(element, slideId) {
-    if (!element) return;
-
-    const check = () => {
-      const isOverflowing = element.scrollHeight > element.clientHeight;
-      isOverflowing
-        ? descriptionOverflows.add(slideId)
-        : descriptionOverflows.delete(slideId);
-      descriptionOverflows = new Set(descriptionOverflows); // Trigger reactivity
-    };
-
-    // Check immediately and after content loads
-    check();
-    setTimeout(check, 0);
-
-    return {
-      destroy() {
-        descriptionOverflows.delete(slideId);
-        descriptionOverflows = new Set(descriptionOverflows);
-      },
-    };
-  }
 
   async function requestScrollTo(targetIndex, options = {}) {
     const {
@@ -1040,6 +1016,7 @@
   });
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <div
   bind:this={storyViewElement}
   class="story-view"
