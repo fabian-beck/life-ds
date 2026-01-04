@@ -94,7 +94,7 @@
     // Remove duplicates from person_ids first
     const uniquePersonIds = [...new Set(metaStory.person_ids)];
 
-    return uniquePersonIds
+    let personsForStory = uniquePersonIds
       .map((id) => persons.find((p) => p.id === id))
       .filter(Boolean)
       .sort((a, b) => {
@@ -103,6 +103,19 @@
         const yearB = b.birthDate ? parseInt(b.birthDate.split("-")[0]) : Infinity;
         return yearA - yearB;
       });
+
+    // If more than 6 people, show a random subset of 6
+    if (personsForStory.length > 6) {
+      // Create a copy and shuffle using Fisher-Yates algorithm
+      const shuffled = [...personsForStory];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled.slice(0, 6);
+    }
+
+    return personsForStory;
   }
 
 
