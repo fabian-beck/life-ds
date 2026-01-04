@@ -98,9 +98,9 @@
     if (!person?.primary_roles || !personsRegistry?.people) return [];
 
     // Match current person by name in registry
-    const currentPersonName = person?.name?.replace(/_/g, " ");
+    const currentPersonName = displayName(person?.name);
     const currentPersonEntry = personsRegistry.people.find(
-      (p) => p.name?.replace(/_/g, " ") === currentPersonName
+      (p) => displayName(p.name) === currentPersonName
     );
 
     if (!currentPersonEntry) return [];
@@ -119,7 +119,7 @@
 
         // Check if person is in ego network
         const inNetwork = egoNetwork?.connections?.some((c) =>
-          c.person_name?.toLowerCase().includes(p.name.toLowerCase().replace(/_/g, " "))
+          c.person_name?.toLowerCase().includes(displayName(p.name).toLowerCase())
         ) ? 1 : 0;
 
         // Weight: (roleOverlapCount × 3) + (inEgoNetwork × 3)

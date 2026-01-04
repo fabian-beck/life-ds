@@ -2,6 +2,7 @@
   import { tick, onDestroy } from "svelte";
   import { mdiAccountMultipleOutline } from "@mdi/js";
   import { _ } from "../stores/language";
+  import { displayName } from "../utils/helpers.js";
 
   export let person = {};
   export let personKey = "";
@@ -209,10 +210,10 @@
     <span class="person-name" class:long-name={isLongName}>{truncatedName}</span
     >
     {#if subcategory}
-      <span class="person-role">{subcategory.replace(/_/g, " ")}</span>
+      <span class="person-role">{displayName(subcategory)}</span>
     {:else}
       <span class="person-role"
-        >{person.relationship_type?.replace(/_/g, " ") || ""}</span
+        >{displayName(person.relationship_type) || ""}</span
       >
     {/if}
   </button>
@@ -265,7 +266,7 @@
           <span class="meta-item">
             <span class="meta-label">{$_("person.influence")}</span>
             <span class="meta-value"
-              >{person.influence_direction.replace(/_/g, " ")}</span
+              >{displayName(person.influence_direction)}</span
             >
           </span>
         {/if}

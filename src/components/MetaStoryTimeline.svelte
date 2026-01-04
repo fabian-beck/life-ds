@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
   import { _ } from '../stores/language.js';
+  import { displayName } from '../utils/helpers.js';
   import personStylesData from '../../data/person_styles.json';
 
   export let metaStoryId = null; // ID of the meta story (for navigation context)
@@ -199,7 +200,7 @@
                 personId: personData.personId,
                 eventIndex,
                 event,
-                personName: personData.person.name.replace(/_/g, ' '),
+                personName: displayName(personData.person.name),
                 colors: getPersonColors(personData.personId),
                 themeIndex,
                 personIndex,
@@ -1184,7 +1185,7 @@
         personId,
         eventIndex,
         event,
-        personName: person.name.replace(/_/g, ' '),
+        personName: displayName(person.name),
         colors
       }],
       clickTriggered: true
@@ -1448,11 +1449,11 @@
               --person-primary-rgb: {colors.primaryRgb};
               --person-secondary-rgb: {colors.secondaryRgb};
             "
-            title="{personData.person.name.replace(/_/g, ' ')} ({personData.birthYear}–{personData.deathYear || 'present'})"
+            title="{displayName(personData.person.name)} ({personData.birthYear}–{personData.deathYear || 'present'})"
           >
             <div class="person-name-wrapper">
               <div class="person-name-label">
-                {personData.person.name.replace(/_/g, ' ')}
+                {displayName(personData.person.name)}
               </div>
             </div>
             {#if personData.portrait}
@@ -1465,7 +1466,7 @@
               >
                 <img
                   src={personData.portrait}
-                  alt={personData.person.name.replace(/_/g, ' ')}
+                  alt={displayName(personData.person.name)}
                   class="portrait-image"
                 />
               </div>
