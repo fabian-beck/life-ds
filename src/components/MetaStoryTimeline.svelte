@@ -388,19 +388,26 @@
   // Calculate the horizontal position for the sticky chapter header
   // It should follow the scroll indicator but stay within viewport boundaries
   $: chapterHeaderStyle = (() => {
+    // Calculate top position: base offset (0.75rem) + sticky header height
+    const topOffset = stickyHeaderHeight > 0 ? `${stickyHeaderHeight + 12}px` : '0.75rem';
+
     if (!isSticky || !currentChapterByIndicator || typeof window === 'undefined') {
-      return 'left: 50%; transform: translateX(-50%);';
+      return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
     }
 
     const container = document.querySelector('.meta-timeline-container');
-    if (!container) return 'left: 50%; transform: translateX(-50%);';
+    if (!container) {
+      return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
+    }
 
     const viewportWidth = container.clientWidth;
 
     // The indicator is at scrollIndicatorLeftPx relative to timeline-wrapper
     // We need its position relative to the viewport.
     const wrapper = container.querySelector('.timeline-wrapper');
-    if (!wrapper) return 'left: 50%; transform: translateX(-50%);';
+    if (!wrapper) {
+      return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
+    }
 
     const wrapperRect = wrapper.getBoundingClientRect();
     const indicatorViewportX = wrapperRect.left + scrollIndicatorLeftPx;
@@ -415,16 +422,13 @@
 
     // If the viewport is too small to even fit the header with margins, just center it
     if (maxX < minX) {
-      return 'left: 50%; transform: translateX(-50%);';
+      return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
     }
 
     const clampedX = Math.max(minX, Math.min(indicatorViewportX, maxX));
 
-    // Calculate top position: base offset (0.75rem) + sticky header height
-    const topOffset = stickyHeaderHeight > 0 ? `${stickyHeaderHeight + 12}px` : '0.75rem';
-
     // Use transform for positioning to avoid squishing the box when left is near viewport edge
-    return `transform: translateX(${clampedX}px) translateX(-50%); top: ${topOffset};`;
+    return `left: 0; transform: translateX(${clampedX}px) translateX(-50%); top: ${topOffset};`;
   })();
 
   // Helper: Extract persons from chapters (fallback when no subtopics)
@@ -2051,9 +2055,8 @@
 
     /* Fixed chapter header - mobile adjustments */
     .fixed-chapter-header {
-      /* top is set dynamically via inline style */
-      left: 50%;
-      transform: translateX(-50%);
+      /* top and transform are set dynamically via inline style */
+      /* Don't override transform here - let JavaScript positioning work */
     }
 
     .chapter-title-display {
