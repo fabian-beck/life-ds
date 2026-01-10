@@ -1,0 +1,434 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-01-09",
+  "ego": {
+    "name": "Lina Bo Bardi",
+    "birth_year": 1914,
+    "death_year": 1992,
+    "primary_roles": [
+      "architect",
+      "designer",
+      "editor"
+    ],
+    "summary": "Italian-born Brazilian modernist architect and designer who developed an influential practice in Brazil spanning architecture, exhibition design, publishing, and teaching; known for linking modernism to vernacular culture and public life (e.g., MASP and SESC Pompéia).",
+    "wikipedia": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+  },
+  "connections": [
+    {
+      "person_name": "Enrico Bo",
+      "relationship_type": "family/father",
+      "relationship_description": "Father; her early decision to become an architect met with limited support from him, but his adventurous, anarchist life is cited as an influence on her graphic representational style.",
+      "start_year": 1914,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Rome",
+        "early exposure to art and drawing influences"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "The article notes her father was not fully supportive of her architectural ambitions; it also attributes aspects of her drawing style to inspiration from him."
+    },
+    {
+      "person_name": "Giovanna Bo",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother; part of her family background in Rome (parents of Achillina Bo, later Lina Bo Bardi).",
+      "start_year": 1914,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life in Rome"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "Less detailed in the article than her father, but explicitly named as her mother."
+    },
+    {
+      "person_name": "Graziella Bo",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Younger sister; mentioned as the second daughter of Enrico and Giovanna Bo.",
+      "start_year": 1914,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "childhood family life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "The Wikipedia text provides minimal additional detail beyond identification."
+    },
+    {
+      "person_name": "Carlo Pagani",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Early Milan collaborator; she worked with him at Studio Bo e Pagani and later traveled through postwar Italy with him for Domus commissions and co-founded a weekly architecture/culture magazine with him and Bruno Zevi.",
+      "start_year": 1939,
+      "end_year": 1946,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "work at Studio Bo e Pagani (Milan)",
+        "Domus-commissioned travel documenting postwar Italy (1945)",
+        "founding the weekly magazine A – Attualità, Architettura, Abitazione, Arte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "One of her most documented early professional relationships."
+    },
+    {
+      "person_name": "Gio Ponti",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Architect/designer and editor; she collaborated with him on the magazine Lo Stile (until 1943) and later worked as Deputy Director of Domus (a magazine he founded).",
+      "start_year": 1940,
+      "end_year": 1943,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "magazine work on Lo Stile",
+        "professional network around Italian design publishing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Gio_Ponti"
+      ],
+      "notes": "The relationship is primarily professional/publishing and likely formative early in her career."
+    },
+    {
+      "person_name": "Bruno Zevi",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Italian architect and critic; co-established with Bo Bardi and Carlo Pagani the weekly magazine A – Attualità, Architettura, Abitazione, Arte (A Cultura della Vita) in Milan.",
+      "start_year": 1945,
+      "end_year": 1946,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "founding/editing the weekly magazine A – Attualità, Architettura, Abitazione, Arte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Bruno_Zevi"
+      ],
+      "notes": "Connects Bo Bardi to a broader postwar architectural debate and publishing network."
+    },
+    {
+      "person_name": "Federico Patellani",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Photographer who traveled with Bo Bardi and Carlo Pagani around Italy in 1945 for a Domus assignment documenting war damage and living conditions.",
+      "start_year": 1945,
+      "end_year": 1945,
+      "strength": "weak",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "field documentation travel for Domus in postwar Italy"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "Short but well-defined collaboration tied to a specific reportage project."
+    },
+    {
+      "person_name": "Elio Vittorini",
+      "relationship_type": "professional/editor",
+      "relationship_description": "Writer/editor who directed the newspaper Milano Sera, where Bo Bardi collaborated as a contributor in the immediate postwar period.",
+      "start_year": 1945,
+      "end_year": 1946,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "journalistic collaboration with Milano Sera"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Elio_Vittorini"
+      ],
+      "notes": "Primarily an editorial/professional relationship via publication work."
+    },
+    {
+      "person_name": "Pietro Maria Bardi",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Husband and major lifelong collaborator; co-founded the magazine Habitat with her, and worked closely with her on MASP’s early organization and exhibition approaches.",
+      "start_year": 1946,
+      "end_year": 1992,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and relocation to Brazil (1946)",
+        "co-founding Habitat magazine",
+        "founding and developing MASP (São Paulo Museum of Art)",
+        "museum exhibition and spatial concepts (open exhibition space / innovative display)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+      ],
+      "notes": "Their partnership is presented as both personal and institutional (museum and publishing)."
+    },
+    {
+      "person_name": "Assis Chateaubriand",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Brazilian media magnate and arts patron; invited Pietro Maria Bardi to establish MASP and thereby became a key institutional sponsor enabling Bo Bardi’s museum work in São Paulo.",
+      "start_year": 1947,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "founding support for MASP",
+        "institutional patronage via Diários Associados"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Assis_Chateaubriand"
+      ],
+      "notes": "More of an enabling/patron relationship than a day-to-day collaboration."
+    },
+    {
+      "person_name": "Philip L. Goodwin",
+      "relationship_type": "professional/influence",
+      "relationship_description": "American architect; her early MASP sketches referenced the facade of the 1939 MoMA building designed by Goodwin (with Edward Durell Stone), indicating design influence on circulation and museum conception.",
+      "start_year": 1947,
+      "end_year": 1947,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "conceptual reference point for MASP early sketches (MoMA 1939 building)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Philip_L._Goodwin"
+      ],
+      "notes": "Influence-based tie; no direct personal interaction is stated."
+    },
+    {
+      "person_name": "Edward Durell Stone",
+      "relationship_type": "professional/influence",
+      "relationship_description": "American architect; co-designer (with Philip L. Goodwin) of MoMA’s 1939 building, cited indirectly as a reference in Bo Bardi’s early MASP sketches.",
+      "start_year": 1947,
+      "end_year": 1947,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "conceptual reference point for museum facade/circulation ideas (MoMA 1939 building)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Edward_Durell_Stone"
+      ],
+      "notes": "Included as part of a specifically documented reference in the MASP founding narrative."
+    },
+    {
+      "person_name": "Giancarlo Palanti",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Italian immigrant architect; collaborated with Bo Bardi on redesigning MASP exhibition spaces in the Diários Associados building (1950) and worked with her in the Studio d’Arte Palma (until 1951).",
+      "start_year": 1948,
+      "end_year": 1951,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Studio d’Arte Palma (São Paulo)",
+        "redesign of MASP interiors/exhibition space (1950)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "A central collaborator in her early Brazilian museum/interiors work."
+    },
+    {
+      "person_name": "Valeria Piacentini Cirell",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Member of the Studio d’Arte Palma team; responsible for the antiquarian section within the collective that included Bo Bardi, Pietro Maria Bardi, and Giancarlo Palanti.",
+      "start_year": 1948,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Studio d’Arte Palma (shared studio and programmatic division of labor)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "Included to represent the studio’s internal professional network and gender balance where documented."
+    },
+    {
+      "person_name": "Lucjan Korngold",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Polish architect whose building housed Studio d’Arte Palma (18th floor); Bo Bardi’s studio collective was located in a building by him.",
+      "start_year": 1948,
+      "end_year": 1951,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "shared physical/institutional context: Studio d’Arte Palma located in Korngold-designed building"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Lucjan_Korngold"
+      ],
+      "notes": "Connection is primarily spatial/institutional (building author), not a documented close collaboration."
+    },
+    {
+      "person_name": "El Lissitzky",
+      "relationship_type": "artistic/influence",
+      "relationship_description": "Avant-garde artist/designer; Bo Bardi’s MASP exhibition redesign is described as influenced by interwar avant-garde practices including Lissitzky’s work.",
+      "start_year": 1950,
+      "end_year": 1950,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "exhibition design reference (interwar avant-garde display strategies)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/El_Lissitzky"
+      ],
+      "notes": "Included because the Wikipedia text explicitly names these influences in relation to her exhibition design shift."
+    },
+    {
+      "person_name": "Franco Albini",
+      "relationship_type": "artistic/influence",
+      "relationship_description": "Italian architect/designer; cited as an influence on Bo Bardi’s 1950 MASP exhibition approach within a lineage of interwar/modern display practices.",
+      "start_year": 1950,
+      "end_year": 1950,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "museum and exhibition design reference (modern display strategies)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Franco_Albini"
+      ],
+      "notes": "The influence is framed through her exhibition design rethinking rather than direct personal contact."
+    },
+    {
+      "person_name": "Ludwig Mies van der Rohe",
+      "relationship_type": "professional/influence",
+      "relationship_description": "Modern architect; her Glass House is described as drawing from (among other works) Mies’s Farnsworth House, indicating a strong formal and conceptual influence.",
+      "start_year": 1951,
+      "end_year": 1951,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "architectural reference for the Glass House (Farnsworth House as precedent)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe"
+      ],
+      "notes": "Influence tie grounded in explicit textual reference to a specific work."
+    },
+    {
+      "person_name": "Charles Eames",
+      "relationship_type": "professional/influence",
+      "relationship_description": "Designer/architect; her Glass House is described as drawing from American modernist works including Case Study House No. 8, associated with Charles Eames.",
+      "start_year": 1951,
+      "end_year": 1951,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "architectural precedent for domestic modernism (Case Study House No. 8 referenced)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Charles_and_Ray_Eames"
+      ],
+      "notes": "Influence relationship; the Wikipedia text frames these as widely publicized references."
+    },
+    {
+      "person_name": "Ray Eames",
+      "relationship_type": "professional/influence",
+      "relationship_description": "Designer/architect; cited alongside Charles Eames via Case Study House No. 8 as an American modernist precedent referenced in discussion of Bo Bardi’s Glass House.",
+      "start_year": 1951,
+      "end_year": 1951,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "architectural precedent for domestic modernism (Case Study House No. 8 referenced)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Charles_and_Ray_Eames"
+      ],
+      "notes": "Included separately from Charles Eames to represent the creative partnership while keeping each person unique in the network."
+    },
+    {
+      "person_name": "Bernard Rudofsky",
+      "relationship_type": "professional/influence",
+      "relationship_description": "Architect/writer; her Glass House is noted as possibly influenced by Rudofsky’s courtyard houses featured in the 'Brazil Builds' exposition (1940–1942).",
+      "start_year": 1951,
+      "end_year": 1951,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "conceptual influence via published exhibition precedent (Brazil Builds / courtyard houses)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Bernard_Rudofsky"
+      ],
+      "notes": "Influence is stated as possible/attributed, not as a direct collaboration."
+    },
+    {
+      "person_name": "Martim Gonçalves",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Theatre director; collaborated with Bo Bardi on the 1959 exhibition 'Bahia in Ibirapuera' associated with the V São Paulo Bienal, combining objects, music, images, and craft from Bahia.",
+      "start_year": 1959,
+      "end_year": 1959,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "design and production of the 'Bahia' exhibition in Ibirapuera",
+        "biennial exhibition-making and cultural programming"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "The article identifies this as a crucial transitional moment in her exhibition design approach."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Bo Bardi’s closest personal ties were to her parents (Enrico and Giovanna Bo), her sister Graziella, and especially her husband Pietro Maria Bardi, whose marriage was also a durable creative partnership shaping her Brazilian career."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Her professional network spans Italian wartime/postwar publishing and practice (Carlo Pagani, Gio Ponti, Bruno Zevi, Federico Patellani, Elio Vittorini) and Brazilian institution-building (Assis Chateaubriand, Giancarlo Palanti). Several additional ties are influence-based, where specific canonical architects informed key design decisions (e.g., MoMA’s 1939 building; Farnsworth House; Case Study House)."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Bo Bardi’s artistic and curatorial relationships include direct collaboration with theatre director Martim Gonçalves and a set of explicitly cited avant-garde reference figures (El Lissitzky, Franco Albini) shaping her exhibition design language."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "The provided Wikipedia text documents her role as a lecturer at the University of São Paulo and her efforts to secure a permanent position, but it does not name specific students, mentors, or departmental colleagues; therefore, academic ties are not expanded into person-to-person connections here."
+    }
+  ]
+}

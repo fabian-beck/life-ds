@@ -1,111 +1,93 @@
 {
   "dataset": "meta_story",
-  "created_on": "2025-12-30T08:41:58.254413+01:00",
+  "created_on": "2026-01-10T13:42:09.238435+01:00",
   "meta_story": {
     "id": "organic_shapes_in_architecture",
-    "title": "Architecture, Like Nature",
-    "tagline": "Curves, canopies, and living geometry",
-    "description": "Organic architecture is more than a taste for curves: it is an ambition to make buildings feel grown rather than assembled—shaped by gravity, light, climate, and the patterns of living systems. Across the modern era, a few architects pushed past the straight line and the static box, treating structure as something that could drape, branch, spiral, swell, or erode into place.\n\nThis collection follows four figures who made “organic shape” a central design method, not a decorative flourish. From Gaudí’s Barcelona experiments in catenary logic and vegetal ornament, to Wright’s landscape-bound spatial flow, to Frei Otto’s tensile membranes and soap-film research, and finally to Zaha Hadid’s digitally enabled fluidity, these lives trace how nature-inspired form moved from craft and intuition into rigorous structural science—and then into parametric, global practice.",
+    "title": "Organic Architecture’s Curved Line",
+    "tagline": "Nature, structure, and flowing space",
+    "description": "Organic shape in architecture is more than a taste for curves—it’s a way of thinking that treats buildings as living systems: grown from site, shaped by human movement, and often modeled on the logic of plants, bones, waves, and shells. Across the late 19th century and into the digital present, designers repeatedly returned to nature not as decoration but as a generator of form, structure, and experience.\n\nIn Europe’s Jugendstil and related modernisms, the “straight line” came to feel like an industrial imposition, while vines, waves, and sinuous surfaces promised a more human, more biological city. Later, architects and engineers pushed this impulse into new materials and structural experiments—shells, membranes, cable nets—where the most efficient geometry often resembles what nature already optimized.\n\nBy the late 20th and early 21st centuries, computation and fabrication widened the palette again, enabling fluid, continuous envelopes and complex spatial choreography at urban scale. The result is a long arc: from handcrafted, nature-derived ornament and geometry to lightweight structural biology and finally to digitally driven form-making that still borrows its credibility from the organic world.",
     "person_ids": [
       "antoni_gaud",
+      "otto_wagner",
+      "charles_rennie_mackintosh",
       "frank_lloyd_wright",
       "frei_otto",
-      "zaha_hadid",
-      "friedensreich_hundertwasser"
+      "friedensreich_hundertwasser",
+      "zaha_hadid"
     ],
-    "date_range_start": "1852",
+    "date_range_start": "1890",
     "date_range_end": "2016",
-    "lastUpdated": "2025-12-30T08:41:58.254413+01:00"
+    "lastUpdated": "2026-01-10T13:42:09.238435+01:00"
+  },
+  "generation_metadata": {
+    "hints": {
+      "hint": "include Jugendstil architects"
+    },
+    "model": "gpt-5.2",
+    "generated_at": "2026-01-10T13:42:09.238435+01:00"
   },
   "subtopics": [
     {
-      "id": "nature_as_geometry",
-      "title": "Nature as Geometry",
-      "description": "Organic shape begins as a disciplined reading of nature—curves as structure, growth as order—where form is inseparable from load, craft, and symbolism.",
+      "id": "jugendstil_natures_line",
+      "title": "Jugendstil’s Nature Line",
+      "description": "Around 1900, architects reintroduced growth-like curves and integrated ornament, treating buildings as total artworks where structure, surface, and craft could feel alive.",
       "person_ids": [
-        "antoni_gaud",
+        "otto_wagner",
+        "charles_rennie_mackintosh",
+        "antoni_gaud"
+      ]
+    },
+    {
+      "id": "organic_space_american_turn",
+      "title": "Organic Space, American Turn",
+      "description": "Organic form becomes an ethic of space—rooms, ramps, and landscapes composed as continuous experience rather than boxed enclosure.",
+      "person_ids": [
         "frank_lloyd_wright"
       ]
     },
     {
-      "id": "lightweight_living_structures",
-      "title": "Lightweight Living Structures",
-      "description": "Here, organic form is discovered through experiments—nets, membranes, and minimal surfaces—so that roofs behave like suspended landscapes.",
+      "id": "lightweight_structural_biology",
+      "title": "Lightweight Structural Biology",
+      "description": "Engineers and architects let physics “draw” the building: membranes, cable nets, and minimal surfaces generate shapes that echo bones, webs, and soap films.",
       "person_ids": [
         "frei_otto"
       ]
     },
     {
-      "id": "anti_straight_line_aesthetics",
-      "title": "Anti–Straight Line Aesthetics",
-      "description": "Organic architecture as cultural critique: irregularity, color, and planted surfaces used to challenge modernist rigidity and argue for a more humane built world.",
+      "id": "postmodern_to_parametric_flows",
+      "title": "From Rebellion to Flow",
+      "description": "Late-20th-century anti-orthogonal manifestos and 21st-century digital practice converge on fluid envelopes, uneven floors, and city-scale choreography.",
       "person_ids": [
-        "friedensreich_hundertwasser"
-      ]
-    },
-    {
-      "id": "digital_fluid_futures",
-      "title": "Digital Fluid Futures",
-      "description": "Fluidity becomes scalable: complex curvature, continuous skins, and landscape-like interiors executed through contemporary engineering and global fabrication.",
-      "person_ids": [
+        "friedensreich_hundertwasser",
         "zaha_hadid"
       ]
     }
   ],
   "chapters": [
     {
-      "id": "proto_organicism",
-      "title": "Proto-Organicism (1852-1926)",
-      "date_start": "1852",
+      "id": "secession_and_modernisme_seedtime",
+      "title": "Secession & Modernisme Seedtime (1890-1910)",
+      "date_start": "1890",
       "date_start_precision": "year",
-      "date_end": "1926",
+      "date_end": "1910",
       "date_end_precision": "year",
-      "bridge_statement": "Before “organic” was a slogan, a few designers treated nature as a construction manual—letting arches hang, stone bloom, and ornament behave like anatomy.",
+      "bridge_statement": "Industrial cities harden into grids—then designers answer with vines, waves, and total artworks that make modern life feel more human.",
       "person_events": [
         {
-          "person_id": "antoni_gaud",
-          "event_date": "1883",
+          "person_id": "otto_wagner",
+          "event_date": "1896",
           "event_date_precision": "year",
-          "event_title": "Built Casa Vicens",
-          "event_index": 5,
-          "theme_connection": "Casa Vicens marks an early, legible move toward craft-driven surface patterning and vegetal/ornamental logic—an initial platform for Gaudí’s later, more structurally organic work (anti–straight line aesthetics).",
-          "relevance_strength": "supporting"
+          "event_title": "Publishes Moderne Architektur",
+          "event_index": 11,
+          "theme_connection": "Moderne Architektur is a seminal text of European modernism that reframed architectural form as responsive to modern life and materials; it’s an irreplaceable theoretical milestone in the turn away from historicist rigidity that enabled later nature/flow-oriented modernisms (even if not purely ‘curvilinear’)."
         },
         {
-          "person_id": "antoni_gaud",
-          "event_date": "1883",
+          "person_id": "charles_rennie_mackintosh",
+          "event_date": "1897",
           "event_date_precision": "year",
-          "event_title": "Took over Sagrada Família",
-          "event_index": 6,
-          "theme_connection": "Taking over the Sagrada Família is the long-term project where Gaudí’s nature-as-geometry ambitions mature into structural systems and biomorphic form-making central to the collection’s arc.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "antoni_gaud",
-          "event_date": "1886",
-          "event_date_precision": "year",
-          "event_title": "Expanded work with Güell",
+          "event_title": "Glasgow School of Art rises on Renfrew Street",
           "event_index": 7,
-          "theme_connection": "The Güell patronage stream enabled major commissions where Gaudí could pursue landscape-integrated, materially expressive, non-rectilinear architecture at scale—key to organic form becoming a sustained method rather than isolated experiments.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "frank_lloyd_wright",
-          "event_date": "1888",
-          "event_date_precision": "year",
-          "event_title": "Trains under Louis Sullivan",
-          "event_index": 5,
-          "theme_connection": "Training under Sullivan is a formative step toward an architecture where form and ornament are integrated rather than applied—supporting Wright’s later organic spatial/structural thinking (nature as geometry, anti–straight line ethos).",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "frank_lloyd_wright",
-          "event_date": "1893",
-          "event_date_precision": "year",
-          "event_title": "Establishes independent practice",
-          "event_index": 7,
-          "theme_connection": "Establishing his own practice sets the conditions for Wright’s Prairie-era experimentation with continuous space and site-responsive planning—an enabling milestone for his organic method.",
-          "relevance_strength": "supporting"
+          "theme_connection": "The Glasgow School of Art is a landmark Gesamtkunstwerk where building, interiors, and crafted detail are unified—an essential Jugendstil-adjacent milestone showing the turn toward living, integrated environments (a key precursor strand to organic space, even if not primarily curvilinear)."
         },
         {
           "person_id": "antoni_gaud",
@@ -113,8 +95,7 @@
           "event_date_precision": "year",
           "event_title": "Developed Park Güell project",
           "event_index": 11,
-          "theme_connection": "Park Güell is a defining landscape-and-architecture synthesis where built form, topography, and structure read as ‘grown’—a core exemplar of organic architecture as environment-bound geometry.",
-          "relevance_strength": "essential"
+          "theme_connection": "Park Güell is a landmark synthesis of landscape, structure, and nature-derived geometry—where architecture is composed as terrain and movement, with flowing forms and inventive construction that became a canonical reference for organic architecture."
         },
         {
           "person_id": "antoni_gaud",
@@ -122,55 +103,37 @@
           "event_date_precision": "year",
           "event_title": "Created landmark urban houses",
           "event_index": 12,
-          "theme_connection": "Casa Batlló and Casa Milà crystallize Gaudí’s move to architecture modeled on natural morphologies—continuous surfaces, eroded/striated facades, and spatial flow—central to the collection’s anti–straight line and nature-as-geometry threads.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "frank_lloyd_wright",
-          "event_date": "1909",
-          "event_date_precision": "year",
-          "event_title": "Leaves with Mamah Cheney",
-          "event_index": 8,
-          "theme_connection": "Though the scandal is personal, the Europe trip’s key thematic payoff is the Wasmuth Portfolio: a vehicle that broadcast Wright’s spatial continuity and landscape-informed modernism, influencing later organic and fluid architectural trajectories.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "antoni_gaud",
-          "event_date": "1910",
-          "event_date_precision": "year",
-          "event_title": "Exhibited work in Paris",
-          "event_index": 13,
-          "theme_connection": "The Grand Palais exhibition amplifies Gaudí’s influence by circulating his model-based, curvilinear design language internationally, helping organic form register as a serious modern alternative.",
-          "relevance_strength": "supporting"
-        },
+          "theme_connection": "Casa Batlló and Casa Milà are globally recognized milestones in nature-modeled, curving urban architecture (bone-like structure, wave-like façades, continuous spatial effects), making them essential exemplars of Jugendstil/Modernisme’s ‘nature line’ evolving into structural and spatial organicism."
+        }
+      ]
+    },
+    {
+      "id": "craft_to_continuity",
+      "title": "Craft to Continuity (1911-1935)",
+      "date_start": "1911",
+      "date_start_precision": "year",
+      "date_end": "1935",
+      "date_end_precision": "year",
+      "bridge_statement": "Organic form shifts from surface motif to structural and spatial idea—curves stop being decoration and start becoming the building’s logic.",
+      "person_events": [
         {
           "person_id": "frank_lloyd_wright",
           "event_date": "1911",
           "event_date_precision": "year",
           "event_title": "Builds Taliesin in Wisconsin",
           "event_index": 9,
-          "theme_connection": "Taliesin is a canonical demonstration of architecture bound to landscape—buildings that seem to extend from their site and choreograph daily life as an ‘organic’ system (landscape integration and spatial flow).",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "frank_lloyd_wright",
-          "event_date": "1915",
-          "event_date_precision": "year",
-          "event_title": "Designs Imperial Hotel Tokyo",
-          "event_index": 11,
-          "theme_connection": "The Imperial Hotel showcases Wright’s ability to unify structure, ornament, and planning at monumental scale, reinforcing organic architecture as a comprehensive system rather than a stylistic preference.",
-          "relevance_strength": "supporting"
+          "theme_connection": "Taliesin is a landmark demonstration of Wright’s organic architecture as an ethic of site-grown form and continuous lived space—an enduring built laboratory where building, landscape, and movement are composed as one system."
         }
       ]
     },
     {
-      "id": "organic_modernism",
-      "title": "Organic Modernism (1927-1959)",
-      "date_start": "1927",
+      "id": "organic_ideals_in_mass_age",
+      "title": "Organic Ideals in the Mass Age (1936-1959)",
+      "date_start": "1936",
       "date_start_precision": "year",
       "date_end": "1959",
       "date_end_precision": "year",
-      "bridge_statement": "Modern architecture hardens into grids and glass—yet one countercurrent insists that space should flow like terrain and shelter should feel inevitable.",
+      "bridge_statement": "As standardization spreads, organic architecture argues back: a building can still belong to its site and choreograph movement like a landscape.",
       "person_events": [
         {
           "person_id": "frank_lloyd_wright",
@@ -178,17 +141,7 @@
           "event_date_precision": "year",
           "event_title": "Receives Guggenheim commission",
           "event_index": 14,
-          "theme_connection": "The Guggenheim commission leads to Wright’s most iconic late exploration of continuous, curving form and choreographed movement through space—an emblematic anti–straight line monument where geometry and circulation fuse into an “organic” spatial experience.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "frei_otto",
-          "event_date": "1945",
-          "event_date_precision": "year",
-          "event_title": "POW design work in Chartres",
-          "event_index": 2,
-          "theme_connection": "Otto’s POW camp design work under extreme material constraints directly foreshadows his lifelong pursuit of lightweight construction—an early real-world proving ground for building “as little as possible,” aligned with the collection’s lightweight living structures theme.",
-          "relevance_strength": "supporting"
+          "theme_connection": "The Guggenheim commission leads to one of the 20th century’s landmark curved, continuous-space buildings: a spiraling ramp that makes movement-through-space the generator of form. It is a widely recognized breakthrough in organic spatial choreography and anti-box enclosure at major urban scale."
         },
         {
           "person_id": "frei_otto",
@@ -196,46 +149,26 @@
           "event_date_precision": "year",
           "event_title": "Publishes \"Das hängende Dach\" and teaches abroad",
           "event_index": 5,
-          "theme_connection": "Publishing \"Das hängende Dach\" is a foundational contribution to tensile/membrane architecture, codifying tensioned surfaces as a rigorous structural science—core to the collection’s shift from nature-inspired form to experimentally derived minimal structures.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "frei_otto",
-          "event_date": "1957",
-          "event_date_precision": "year",
-          "event_title": "Founds lightweight lab and builds Sternwellenzelt",
-          "event_index": 6,
-          "theme_connection": "Founding the lightweight construction lab and realizing an early tent roof institutionalizes and demonstrates Otto’s experimental method (full-scale testing, membrane/cable-net behavior), directly advancing the lightweight-canopy strand of organic architecture.",
-          "relevance_strength": "essential"
+          "theme_connection": "Publishing \"Das hängende Dach\" (1954) is a foundational, widely cited study of tensioned surface and cable-net roof forms—letting physics generate efficient, nature-like minimal geometries. It directly advances the lightweight structural biology strand by codifying methods that enabled later membrane/cable-net architecture."
         }
       ]
     },
     {
-      "id": "experiment_and_protest",
-      "title": "Experiment and Protest (1960-2000)",
+      "id": "lightness_and_ecological_imagination",
+      "title": "Lightness & Ecological Imagination (1960-1989)",
       "date_start": "1960",
       "date_start_precision": "year",
-      "date_end": "2000",
+      "date_end": "1989",
       "date_end_precision": "year",
-      "bridge_statement": "Organic form splits into two engines—laboratory experimentation with structure, and street-level rebellion against sterile cities—both searching for a more ‘alive’ architecture.",
+      "bridge_statement": "New materials and environmental anxieties reward light touch—tensile roofs and irregular, planted buildings propose a softer pact with the city.",
       "person_events": [
-        {
-          "person_id": "frei_otto",
-          "event_date": "1961",
-          "event_date_precision": "year",
-          "event_title": "Launches biology and lightweight institutes",
-          "event_index": 7,
-          "theme_connection": "Co-founding “Biologie und Bauen” institutionalizes Otto’s nature-as-geometry approach, explicitly studying biological structures to derive pneumatic/lightweight building principles. This is a key bridge between organic form and rigorous structural research.",
-          "relevance_strength": "essential"
-        },
         {
           "person_id": "frei_otto",
           "event_date": "1967",
           "event_date_precision": "year",
           "event_title": "German Pavilion at Expo 67, Montreal",
           "event_index": 8,
-          "theme_connection": "The Expo 67 German Pavilion is a landmark built demonstration of tensile membranes and cable-net “light, flexible buildings.” It directly advances the lightweight living structures subtheme by showing roofs as suspended landscapes.",
-          "relevance_strength": "supporting"
+          "theme_connection": "Expo 67’s German Pavilion is a widely cited milestone of lightweight, nature-analogous form-finding: cable nets and membranes generate flowing, minimal-surface roofs that made “physics-drawn” architecture a public, influential reality."
         },
         {
           "person_id": "frei_otto",
@@ -243,44 +176,7 @@
           "event_date_precision": "year",
           "event_title": "Spans Munich Olympic site with tensile roofs",
           "event_index": 9,
-          "theme_connection": "The Munich Olympic tensile roofs are Otto’s most iconic proof that minimal-surface logic (hanging nets/soap-film models) can generate large-scale, nature-like form. This is central to the collection’s narrative of organic geometry becoming structural science.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "frei_otto",
-          "event_date": "1969",
-          "event_date_precision": "year",
-          "event_title": "Leads major research on wide‑span and natural structures",
-          "event_index": 10,
-          "theme_connection": "Leading SFB 64 formalizes and scales research into wide-span surface structures grounded in natural principles. It shows how organic form moved from experimental modeling into organized, reproducible engineering knowledge.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "friedensreich_hundertwasser",
-          "event_date": "1975",
-          "event_date_precision": "year",
-          "event_title": "Launches 'Tree Tenant' actions",
-          "event_index": 11,
-          "theme_connection": "The “Tree Tenant” actions and manifesto directly argue for nature inhabiting architecture (trees integrated into buildings), exemplifying organic architecture as cultural critique. This aligns tightly with the anti–straight line/humane built world subtheme.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "frei_otto",
-          "event_date": "1980",
-          "event_date_precision": "year",
-          "event_title": "Islamic lightweight roofs with Mahmoud Bodo Rasch",
-          "event_index": 12,
-          "theme_connection": "The retractable tents and shading systems translate lightweight membrane logic into climate-responsive canopies at large civic scale. This supports the theme by showing organic, “grown” roof behavior shaped by sun, heat, and use patterns.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "zaha_hadid",
-          "event_date": "1980",
-          "event_date_precision": "year",
-          "event_title": "Founds Zaha Hadid Architects",
-          "event_index": 6,
-          "theme_connection": "Founding Zaha Hadid Architects establishes the platform from which her fluid, landscape-like architectural language could later be engineered and globalized. It’s a necessary setup step toward the “digital fluid futures” arc, though not yet the parametric breakthrough itself.",
-          "relevance_strength": "supporting"
+          "theme_connection": "The Munich Olympic tensile roofs are a canonical breakthrough in cable-net/membrane architecture, using hanging-chain and soap-film form-finding to produce sweeping, biomorphic geometry—one of the era’s most influential demonstrations of structural biology becoming architectural form."
         },
         {
           "person_id": "friedensreich_hundertwasser",
@@ -288,73 +184,26 @@
           "event_date_precision": "year",
           "event_title": "Architectural turn and Hundertwasserhaus",
           "event_index": 12,
-          "theme_connection": "Hundertwasser’s architectural turn culminating in the Hundertwasserhaus is his defining built contribution: irregular forms, planted/vegetated surfaces, and anti-standardization aesthetics. It is central evidence for organic architecture as a deliberate challenge to modernist rigidity.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "zaha_hadid",
-          "event_date": "1983",
-          "event_date_precision": "year",
-          "event_title": "Wins The Peak competition",
-          "event_index": 7,
-          "theme_connection": "The Peak competition project popularizes Hadid’s architecture-as-landscape idea—buildings read as geological formations rather than boxes. Even unbuilt, it meaningfully advances the anti–straight line ethos that later feeds into fluid, continuous form.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "zaha_hadid",
-          "event_date": "1988",
-          "event_date_precision": "year",
-          "event_title": "Featured in MoMA Deconstructivism show",
-          "event_index": 8,
-          "theme_connection": "MoMA’s Deconstructivism exhibition is a major dissemination point that legitimizes and spreads Hadid’s anti-orthogonal formal agenda. It helps explain how non-rectilinear, dynamic form became culturally and professionally scalable.",
-          "relevance_strength": "supporting"
-        },
+          "theme_connection": "The Hundertwasserhaus concept and related architectural turn produced a highly visible built manifesto of anti-orthogonal, nature-inflected architecture (uneven floors, vegetated integration, expressive surfaces), helping carry organic/curved-line ideas into late-20th-century urban housing culture."
+        }
+      ]
+    },
+    {
+      "id": "digital_fluidity_global_icons",
+      "title": "Digital Fluidity, Global Icons (1990-2016)",
+      "date_start": "1990",
+      "date_start_precision": "year",
+      "date_end": "2016",
+      "date_end_precision": "year",
+      "bridge_statement": "Computation makes continuous surfaces buildable at scale, turning once-impossible curves into everyday geometry—and into a new kind of civic spectacle.",
+      "person_events": [
         {
           "person_id": "frei_otto",
           "event_date": "2000",
           "event_date_precision": "year",
           "event_title": "Japanese Pavilion at Expo 2000, Hannover",
           "event_index": 13,
-          "theme_connection": "The Expo 2000 Japanese Pavilion gridshell demonstrates continued experimentation with minimal material and flexible form-finding. It reinforces the lightweight living structures narrative and Otto’s influence on later generations (e.g., Shigeru Ban).",
-          "relevance_strength": "supporting"
-        }
-      ]
-    },
-    {
-      "id": "parametric_continuities",
-      "title": "Parametric Continuities (2001-2016)",
-      "date_start": "2001",
-      "date_start_precision": "year",
-      "date_end": "2016",
-      "date_end_precision": "year",
-      "bridge_statement": "Computation turns curves into infrastructure: what once demanded heroic craft now becomes repeatable, global—raising the stakes for what ‘organic’ should mean.",
-      "person_events": [
-        {
-          "person_id": "zaha_hadid",
-          "event_date": "2003",
-          "event_date_precision": "year",
-          "event_title": "Opens Contemporary Arts Center Cincinnati",
-          "event_index": 10,
-          "theme_connection": "The Contemporary Arts Center is an early built proof of Hadid’s transition from visionary drawings to realized, spatially fluid architecture. It supports the collection’s “Digital Fluid Futures” arc by demonstrating her approach to continuous movement through galleries and non-orthogonal geometries at building scale.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "zaha_hadid",
-          "event_date": "2004",
-          "event_date_precision": "year",
-          "event_title": "Awarded Pritzker Architecture Prize",
-          "event_index": 11,
-          "theme_connection": "The Pritzker Prize marks broad, field-defining recognition of Hadid’s liberation of architectural geometry, reinforcing her role in normalizing complex curvature and fluid form as a serious architectural method. It helps establish her influence within the meta-story’s shift toward globally scalable fluid architecture.",
-          "relevance_strength": "supporting"
-        },
-        {
-          "person_id": "frei_otto",
-          "event_date": "2010",
-          "event_date_precision": "year",
-          "event_title": "Advises on Stuttgart 21 and criticizes risks",
-          "event_index": 14,
-          "theme_connection": "Otto’s advisory role on the Lichtaugen skylight funnels applies his lightweight, free-formed shell and daylighting expertise to a major infrastructural project, showing the continued relevance of nature-derived structural form and environmental performance. His public criticism also underscores the engineering and risk-awareness behind seemingly “organic” forms.",
-          "relevance_strength": "supporting"
+          "theme_connection": "The Expo 2000 Japanese Pavilion gridshell is a landmark late-career demonstration of Otto’s lightweight, nature-derived form-finding logic—an efficient, flowing shell structure that made “structural biology” legible to a mass public and influenced subsequent grid-/shell experimentation."
         },
         {
           "person_id": "zaha_hadid",
@@ -362,8 +211,7 @@
           "event_date_precision": "year",
           "event_title": "MAXXI Museum and first Stirling Prize",
           "event_index": 12,
-          "theme_connection": "MAXXI is a signature built work where intertwining ribbons and flowing circulation crystallize Hadid’s mature continuous-surface language, directly exemplifying “Digital Fluid Futures.” The Stirling Prize recognition strengthens its status as a pivotal milestone in making complex, landscape-like interiors mainstream.",
-          "relevance_strength": "essential"
+          "theme_connection": "MAXXI is a signature built manifesto of digitally enabled flow: intertwining ‘ribbon’ galleries and continuous spatial choreography that helped define 21st-century fluid envelope/plan thinking at museum scale—central to the ‘rebellion to flow’ arc."
         },
         {
           "person_id": "zaha_hadid",
@@ -371,20 +219,10 @@
           "event_date_precision": "year",
           "event_title": "Damehood and London Aquatics Centre",
           "event_index": 13,
-          "theme_connection": "The London Aquatics Centre’s wave-like roof and large-span structural expression are a canonical example of digitally enabled, nature-evocative form executed through contemporary engineering and fabrication. (The damehood portion is secondary, but the building itself is central to the collection’s fluid, canopy-like geometry theme.)",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "zaha_hadid",
-          "event_date": "2016-02",
-          "event_date_precision": "month",
-          "event_title": "Receives RIBA Royal Gold Medal",
-          "event_index": 14,
-          "theme_connection": "The RIBA Royal Gold Medal is major institutional validation of Hadid’s lifetime impact on architectural form, reinforcing her role in shifting the discipline toward complex curvature and continuous spatial “flows.” While not a specific project, it documents the cultural consolidation of the organic/digital formal agenda.",
-          "relevance_strength": "supporting"
+          "theme_connection": "The London Aquatics Centre’s sweeping roof is a widely recognized landmark of parametric-era organic form—using a wave-like, continuous shell to shape movement and spectacle—making the curved-line ethos legible at mega-event, city-scale visibility."
         }
       ]
     }
   ],
-  "conclusion": "Across these careers, organic architecture evolves from nature-inspired craft into structural research and finally into digitally intensified fluidity. The shared legacy is a conviction that form can carry empathy—making buildings feel less imposed and more grown into the world."
+  "conclusion": "Organic shapes in architecture recur whenever designers try to reconnect building with life—through nature’s geometry, through efficient structures, or through spaces that move like rivers. From Jugendstil linework to tensile minimal surfaces and digital fluidity, the “organic” remains a durable promise: form that feels inevitable rather than imposed."
 }

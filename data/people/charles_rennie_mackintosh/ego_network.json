@@ -1,0 +1,414 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-01-10",
+  "ego": {
+    "name": "Charles Rennie Mackintosh",
+    "birth_year": 1868,
+    "death_year": 1928,
+    "primary_roles": [
+      "architect",
+      "designer",
+      "artist",
+      "watercolourist"
+    ],
+    "summary": "Charles Rennie Mackintosh (1868–1928) was a Scottish architect, designer, and artist associated with the Glasgow Style and European Modern Style. Trained through apprenticeship and study at the Glasgow School of Art, he produced a small but highly influential body of integrated architecture and interior work, often in collaboration with his wife, Margaret Macdonald. In later years he largely abandoned architecture for watercolour painting, living in England and southern France before dying in London.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+  },
+  "connections": [
+    {
+      "person_name": "William McIntosh",
+      "relationship_type": "family/father",
+      "relationship_description": "Mackintosh’s father, a superintendent and chief clerk of the City of Glasgow Police; he grew up as one of eleven children.",
+      "start_year": 1868,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Glasgow"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "The surname spelling shift from 'McIntosh' to 'Mackintosh' is noted as having been used by his father before him."
+    },
+    {
+      "person_name": "Margaret McIntosh",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mackintosh’s mother; her maiden name, Rennie, became his middle name and is often misused as part of his surname.",
+      "start_year": 1868,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Glasgow",
+        "identity and naming traditions (use of 'Rennie')"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "Wikipedia notes confusion around misuse of 'Rennie' as a surname; it was his middle name from his mother's maiden name."
+    },
+    {
+      "person_name": "John Hutchinson",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Architect under whom Mackintosh served his apprenticeship in Glasgow from 1884, alongside evening study at the Glasgow School of Art.",
+      "start_year": 1884,
+      "end_year": 1889,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "architectural apprenticeship training in Glasgow"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "Mackintosh simultaneously attended evening classes at the Glasgow School of Art."
+    },
+    {
+      "person_name": "Francis Henry Newbery",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Director of the Glasgow School of Art who introduced Mackintosh and Herbert MacNair to the Macdonald sisters and encouraged their shared direction.",
+      "start_year": 1884,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Glasgow School of Art education and networks",
+        "facilitated connections among 'The Four'"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://de.wikipedia.org/wiki/Francis_Henry_Newbery",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+      ],
+      "notes": "Newbery is described as recognizing similarities in their work and acting as the introducer."
+    },
+    {
+      "person_name": "James Herbert MacNair",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Friend, colleague, and key collaborator in the Glasgow Style; met through the Honeyman & Keppie milieu and Glasgow School of Art, and formed 'The Four' with Mackintosh and the Macdonald sisters.",
+      "start_year": 1888,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "evening classes and social circle at the Glasgow School of Art",
+        "collaborative work and exhibitions as 'The Four' / 'Glasgow Four'",
+        "shared association with Honeyman & Keppie environment"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Herbert_MacNair",
+        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
+      ],
+      "notes": "MacNair was later the least well-known of the Four; he married Frances Macdonald in 1899."
+    },
+    {
+      "person_name": "John Keppie",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Senior figure at Honeyman & Keppie who trained and employed Mackintosh, later bringing him in as a partner in 1901.",
+      "start_year": 1889,
+      "end_year": 1913,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "worked together at Honeyman and Keppie / Honeyman, Keppie & Mackintosh",
+        "major commissions including Glasgow School of Art project period"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/John_Keppie",
+        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
+      ],
+      "notes": "Keppie appears to have allowed Mackintosh to carry much of the design leadership in the 1890s; the partnership dissolved in 1913."
+    },
+    {
+      "person_name": "John Honeyman",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Senior partner at Honeyman & Keppie, the Glasgow practice where Mackintosh worked from 1889 and later became a partner.",
+      "start_year": 1889,
+      "end_year": 1913,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "worked at Honeyman and Keppie / Honeyman, Keppie & Mackintosh",
+        "office-based architectural and design practice in Glasgow"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/John_Honeyman_(architect)",
+        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
+      ],
+      "notes": "Honeyman officially retired in 1901, after which the firm evolved; Mackintosh resigned from the partnership in 1913."
+    },
+    {
+      "person_name": "Margaret Macdonald Mackintosh",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Wife and key creative collaborator; met through the Glasgow School of Art circle and married in 1900, shaping interiors and decorative schemes together.",
+      "start_year": 1892,
+      "end_year": 1928,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Glasgow School of Art circle and exhibitions",
+        "collaborative interior and decorative design",
+        "exhibited work at the Vienna Secession (1900)",
+        "later-life watercolour painting (often collaboratively)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+      ],
+      "notes": "Margaret is reported to have been deeply involved in his work; documentary evidence for specific architectural detailing is described as limited in the Mackintosh article."
+    },
+    {
+      "person_name": "Frances Macdonald MacNair",
+      "relationship_type": "family/in-law",
+      "relationship_description": "Margaret Macdonald’s sister and a fellow artist in ‘The Four’, sharing exhibitions and a closely linked Glasgow Style circle.",
+      "start_year": 1892,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Glasgow School of Art community",
+        "collaborative exhibitions as 'The Four'",
+        "Glasgow Style art and design milieu"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Frances_MacDonald",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+      ],
+      "notes": "Frances and Herbert MacNair married in 1899; the four remained close and their work overlapped."
+    },
+    {
+      "person_name": "Catherine Cranston",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Glasgow patron who commissioned tea-room interiors—especially the Willow Tearooms—giving Mackintosh high-visibility public design work.",
+      "start_year": 1896,
+      "end_year": 1917,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "designed and redecorated multiple tea rooms and interiors",
+        "Willow Tearooms commission and later extensions",
+        "public-facing Glasgow interior design projects"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Catherine_Cranston",
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
+      ],
+      "notes": "Cranston is widely remembered as a leading patron of Mackintosh and Margaret Macdonald in Glasgow."
+    },
+    {
+      "person_name": "Charles Macdonald",
+      "relationship_type": "family/in-law",
+      "relationship_description": "Brother-in-law (Margaret Macdonald's brother) for whom Mackintosh designed interior work at Dunglass.",
+      "start_year": 1900,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "interior design commission at Dunglass"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+      ],
+      "notes": "The Mackintosh page lists 'Interior designs for his brother-in-law, Charles Macdonald at Dunglass'."
+    },
+    {
+      "person_name": "Josef Hoffmann",
+      "relationship_type": "artistic/peer",
+      "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+      "start_year": 1900,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Vienna Secession exhibition context featuring Mackintosh and Macdonald work",
+        "cross-European modern design influence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Josef_Hoffmann"
+      ],
+      "notes": "Hoffmann's biography notes the Secession exhibition importance and highlights the Mackintoshes among international participants."
+    },
+    {
+      "person_name": "Koloman Moser",
+      "relationship_type": "artistic/peer",
+      "relationship_description": "Viennese artist/designer associated with the Vienna Secession and Wiener Werkstätte milieu; described as influenced by the Scottish duo (Mackintosh and Margaret Macdonald) shown in Secession contexts.",
+      "start_year": 1900,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Vienna Secession-era exchange of design ideas",
+        "European diffusion of Glasgow Style aesthetics"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://de.wikipedia.org/wiki/Koloman_Moser",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+      ],
+      "notes": "Moser’s biography explicitly notes influence from the Scottish pair within Secession exhibition culture."
+    },
+    {
+      "person_name": "Fritz Waerndorfer",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Viennese patron who commissioned Mackintosh to furnish a music salon in his Vienna villa, linked to Secession-era circles.",
+      "start_year": 1902,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Vienna villa music salon furnishing commission",
+        "connection to Viennese modern design circles"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Fritz_Waerndorfer",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh",
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "The commission is described as a major Viennese project; Margaret designed a frieze for the salon."
+    },
+    {
+      "person_name": "Wenman Joseph Bassett-Lowke",
+      "relationship_type": "professional/client",
+      "relationship_description": "English entrepreneur who commissioned Mackintosh for architectural remodelling and interior design at 78 Derngate, Northampton.",
+      "start_year": 1916,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "commission for 78 Derngate (Northampton) interior design and remodelling"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Bassett-Lowke"
+      ],
+      "notes": "The Mackintosh page identifies Bassett-Lowke as the founder of Bassett-Lowke and the client for 78 Derngate."
+    },
+    {
+      "person_name": "Jessie Newbery",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend who arranged treatment at Westminster Hospital in London after Mackintosh was diagnosed with tongue cancer.",
+      "start_year": 1927,
+      "end_year": 1928,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "arranged medical support and care logistics in London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://de.wikipedia.org/wiki/Francis_Henry_Newbery"
+      ],
+      "notes": "Jessie Newbery is also associated with the Glasgow School of Art milieu in related material."
+    },
+    {
+      "person_name": "Randolph Schwabe",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend who (with Birdie Schwabe) helped find a place for Mackintosh to convalesce on Willow Road, Hampstead after surgery.",
+      "start_year": 1927,
+      "end_year": 1928,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "secured convalescent lodging and support in Hampstead"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "Their assistance is described as part of a network of friends supporting him in late illness."
+    },
+    {
+      "person_name": "Birdie Schwabe",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend (partner of Randolph Schwabe) involved in providing convalescent accommodation and support for Mackintosh in Hampstead.",
+      "start_year": 1927,
+      "end_year": 1928,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "secured convalescent lodging and support in Hampstead"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "Named alongside Randolph Schwabe in the Mackintosh biography."
+    },
+    {
+      "person_name": "Margaret Morris",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend who visited Mackintosh during his illness and attempted rehabilitation assistance (voice exercises; later sign language instruction).",
+      "start_year": 1927,
+      "end_year": 1928,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "post-surgery support and attempted rehabilitation (voice/sign communication)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "Her support is described in the context of his post-surgery difficulties."
+    },
+    {
+      "person_name": "Desmond Chapman-Huston",
+      "relationship_type": "social/friend",
+      "relationship_description": "Friend who offered his home at 12 Porchester Square, Bayswater, to Mackintosh and Margaret during their final London period after a dispute forced them to move.",
+      "start_year": 1927,
+      "end_year": 1928,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "provided housing assistance in London during illness"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "notes": "The Mackintoshes had hosted him previously in Glasgow; his offer is described as returning hospitality."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "His closest ties were family-based—especially his marriage to Margaret Macdonald, a creative partnership at the center of his life and work."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "His career network ran from apprenticeship and the Honeyman & Keppie office to patrons who enabled landmark commissions in Glasgow and beyond."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Artistically, ‘The Four’ shaped the Glasgow Style, while exhibitions like the Vienna Secession positioned his work within wider European modern design."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "In later life, friends provided essential practical support—especially during illness and his final period in London."
+    }
+  ]
+}

@@ -1,0 +1,727 @@
+{
+  "dataset": "biographical_timeline",
+  "created_on": "2026-01-09",
+  "person": {
+    "name": "Otto_Wagner",
+    "birth_date": "1841-07-13",
+    "death_date": "1918-04-11",
+    "primary_roles": [
+      "architect",
+      "designer",
+      "urban planner"
+    ],
+    "tagline": "Architect of Viennese modernity",
+    "summary": "Otto Koloman Wagner was an Austrian architect, designer, and urban planner whose work in Vienna moved from historicism toward Secession-era modern design. As a leading teacher and prolific practitioner, he shaped major public infrastructure and landmark buildings while also developing influential ideas about modern architecture and the modern city.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Otto_Wagner",
+    "portrait": {
+      "image": "/portraits/otto_wagner_thumbnail.webp",
+      "thumbnail": "/portraits/otto_wagner_thumbnail.webp",
+      "medium": "/portraits/otto_wagner_medium.webp",
+      "full": "/portraits/otto_wagner_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Otto_Wagner",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Otto_Wagner_%281841%E2%80%931918%29.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "viennese_beginnings",
+      "headline": "Viennese Beginnings",
+      "bridge_statement": "A privileged start turns precarious, pushing a gifted boy toward discipline and draftsman’s rigor.",
+      "date_start": "1841-07-13",
+      "date_start_precision": "day",
+      "date_end": "1859",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Rudolf Simeon Wagner",
+        "Susanne Wagner (née Huber)"
+      ],
+      "location": "Austria"
+    },
+    {
+      "id": "training_for_the_city",
+      "headline": "Training for the City",
+      "bridge_statement": "New cities and demanding mentors sharpen his eye for what buildings must do, not just how they look.",
+      "date_start": "1860",
+      "date_start_precision": "year",
+      "date_end": "1863",
+      "date_end_precision": "year",
+      "age_start": 18,
+      "age_end": 22,
+      "involved_people": [
+        "August Sicard von Sicardsburg",
+        "Eduard van der Nüll",
+        "Ludwig von Förster"
+      ],
+      "location": "Central Europe"
+    },
+    {
+      "id": "respectability_under_strain",
+      "headline": "Respectability Under Strain",
+      "bridge_statement": "As commissions multiply, private choices tighten around him, testing how much order a life can hold.",
+      "date_start": "1864",
+      "date_start_precision": "year",
+      "date_end": "1882",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 41,
+      "involved_people": [
+        "Josefine Domhart",
+        "Susanne Wagner",
+        "Margarete Wagner",
+        "Sophia Paupie"
+      ],
+      "location": "Austria-Hungary"
+    },
+    {
+      "id": "inventing_modern_vienna",
+      "headline": "Inventing Modern Vienna",
+      "bridge_statement": "A restless mind finds its true scale in the metropolis, where infrastructure becomes a manifesto.",
+      "date_start": "1884",
+      "date_start_precision": "year",
+      "date_end": "1913",
+      "date_end_precision": "year",
+      "age_start": 43,
+      "age_end": 72,
+      "involved_people": [
+        "Louise Wagner",
+        "Marcel Kammerer"
+      ],
+      "location": "Austria-Hungary"
+    },
+    {
+      "id": "last_silence",
+      "headline": "Last Silence",
+      "bridge_statement": "When the household light goes out, the work remains—quietly insisting on the future.",
+      "date_start": "1915-10-26",
+      "date_start_precision": "day",
+      "date_end": "1918-04-11",
+      "date_end_precision": "day",
+      "age_start": 74,
+      "age_end": 76,
+      "involved_people": [
+        "Louise Wagner"
+      ],
+      "location": "Austria"
+    }
+  ],
+  "conclusion": "Otto Wagner turned architecture into an argument for modern life—where function, materials, and the city’s pulse mattered as much as beauty. His Vienna endures as proof that a single mind can redraw how an era builds, moves, and imagines itself.",
+  "events": [
+    {
+      "date": "1841-07-13",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth near Vienna",
+      "description": "Otto Koloman Wagner was born in [[Penzing|Penzing]] near Vienna to an affluent bourgeois family. His father, Rudolf Simeon Wagner, worked as a court notary, and his mother, Susanne (née Huber), managed the household’s socially ambitious family life.",
+      "locations": [
+        {
+          "name_historic": "Penzing",
+          "name_modern": "Penzing (Vienna), Austria",
+          "centroid": [
+            16.2698368,
+            48.2065531
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Rudolf Simeon Wagner",
+        "Susanne Wagner (née Huber)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "viennese_beginnings",
+      "annotations": {
+        "Penzing": {
+          "explanation": "A former independent village west of Vienna that was later incorporated into the city and is now Vienna’s 14th district (Penzing).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Penzing_(Vienna)"
+        }
+      }
+    },
+    {
+      "date": "1846",
+      "date_precision": "year",
+      "date_note": "His father died when Wagner was about five years old",
+      "age": 5,
+      "title": "Father dies young",
+      "description": "In 1846, Otto Wagner’s father died after a lung illness, leaving the family to adjust to reduced financial security and greater dependence on his mother.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "viennese_beginnings"
+    },
+    {
+      "date": "1850",
+      "date_precision": "year",
+      "date_end": "1859",
+      "date_end_precision": "year",
+      "age": 8,
+      "title": "Completes early schooling",
+      "description": "Around 1850, Wagner continued his education in Vienna and in Upper Austria, including attendance at the Benedictine [[Stiftsgymnasium|Stiftsgymnasium]] in Kremsmünster. He later studied at Vienna’s Polytechnic Institute and completed the [[Matura|Matura]], building a strong foundation in mathematics, physics, and technical drawing.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Kremsmünster",
+          "name_modern": "Kremsmünster, Austria",
+          "centroid": [
+            14.128766,
+            48.0533652
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Upper Austria",
+          "name_modern": "Upper Austria, Austria",
+          "centroid": [
+            14.0,
+            48.25
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "viennese_beginnings",
+      "annotations": {
+        "Stiftsgymnasium": {
+          "explanation": "A type of academically oriented secondary school (Gymnasium) attached to a monastery; in Kremsmünster it was run by the Benedictine abbey.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Kremsm%C3%BCnster_Abbey"
+        },
+        "Matura": {
+          "explanation": "The Austrian secondary-school leaving examination that qualifies students for university-level study, comparable to the German Abitur.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
+        }
+      }
+    },
+    {
+      "date": "1860",
+      "date_precision": "year",
+      "date_end": "1862",
+      "date_end_precision": "year",
+      "age": 18,
+      "title": "Architectural training in Berlin",
+      "description": "Around 1860, Wagner studied architecture at the Royal Building Academy in Berlin before continuing at the Academy of Fine Arts in Vienna, where he trained under August Sicard von Sicardsburg and Eduard van der Nüll. Alongside his academic coursework, he also undertook practical masonry training with a Viennese master builder.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "August Sicard von Sicardsburg",
+        "Eduard van der Nüll"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/August_Sicard_von_Sicardsburg",
+        "https://en.wikipedia.org/wiki/Eduard_van_der_N%C3%BCll"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Akademie_der_bildenden_Kuenste_DSC_2400w.jpg/960px-Akademie_der_bildenden_Kuenste_DSC_2400w.jpg",
+          "caption": "Academy of Fine Arts Vienna, Schillerplatz",
+          "source": "https://commons.wikimedia.org/wiki/File:Akademie_der_bildenden_Kuenste_DSC_2400w.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "training_for_the_city"
+    },
+    {
+      "date": "1862",
+      "date_precision": "year",
+      "date_end": "1863",
+      "date_end_precision": "year",
+      "age": 21,
+      "title": "Joins Förster’s atelier",
+      "description": "In 1862, at age 21, Otto Wagner entered the atelier of Ludwig von Förster in [[Vienna’s historicist milieu|Vienna’s historicist milieu]], working within a circle of established designers. In 1863 he gained notice by winning first prize in a design competition for a Kursalon planned for Vienna’s new Stadtpark, although his proposal was not the one executed.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ludwig von Förster"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://de.wikipedia.org/wiki/Ludwig_von_F%C3%B6rster"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "training_for_the_city",
+      "annotations": {
+        "Vienna’s historicist milieu": {
+          "explanation": "The mid-19th-century architectural scene in Vienna dominated by Historicism—revival styles (e.g., Neo-Renaissance, Neo-Gothic) promoted by leading architects and institutions before later modernist shifts.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Historicism_(art)"
+        }
+      }
+    },
+    {
+      "date": "1864",
+      "date_precision": "year",
+      "date_end": "1873",
+      "date_end_precision": "year",
+      "age": 22,
+      "title": "Builds early major commissions",
+      "description": "Working independently in the [[Historicism (art)|historicist]] style, Otto Wagner carried out early architectural commissions in [[Vienna|Vienna]], including the Harmonietheater and a coordinated ensemble of nearby housing. In the same period, he also sought commissions and entered major design competitions beyond Vienna, including plans connected to [[Budapest|Budapest]], which helped broaden his professional visibility.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Budapest",
+          "name_modern": "Budapest, Hungary",
+          "centroid": [
+            19.1460941,
+            47.4813896
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Otto_Wagner_Ensemble_Harmoniegasse_Harmonietheater.jpg/960px-Otto_Wagner_Ensemble_Harmoniegasse_Harmonietheater.jpg",
+          "caption": "Ehem. Harmonietheater (later Orpheum), Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_Ensemble_Harmoniegasse_Harmonietheater.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "respectability_under_strain",
+      "annotations": {
+        "Historicism (art)": {
+          "explanation": "A 19th-century architectural approach that revived and combined earlier historical styles (such as Gothic, Renaissance, or Baroque) rather than pursuing a new formal language.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Historicism_(art)"
+        }
+      }
+    },
+    {
+      "date": "1867",
+      "date_precision": "year",
+      "date_end": "1882",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "First marriage and family rupture",
+      "description": "In 1867, under pressure from his mother, Wagner married and began a family life that later broke down after her death in 1880, when the couple divorced amid personal upheaval; in 1882, he legally recognized his family situation by adopting two sons from his long-term relationship with Sophia Paupie.",
+      "locations": [],
+      "involved_people": [
+        "Josefine Domhart",
+        "Susanna Wagner",
+        "Margarete Wagner",
+        "Sophia Paupie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "respectability_under_strain",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Josefine Domhart",
+        "duration": "divorced 1880",
+        "children": 2,
+        "characterization": "strained"
+      }
+    },
+    {
+      "date": "1884",
+      "date_precision": "year",
+      "date_end": "1889",
+      "date_end_precision": "year",
+      "age": 43,
+      "title": "Relocates to Budapest",
+      "description": "In 1884, Wagner married Louise (Aloisa Josefa Anna) Stiffel and moved his household to Budapest. During this period he joined the Unitarian Church.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Budapest",
+          "name_modern": "Budapest, Hungary",
+          "centroid": [
+            19.1460941,
+            47.4813896
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Louise (Aloisa Josefa Anna) Stiffel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "inventing_modern_vienna",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Vienna region",
+        "to_location": "Budapest",
+        "characterization": "family relocation"
+      }
+    },
+    {
+      "date": "1886",
+      "date_precision": "year",
+      "date_end": "1913",
+      "date_end_precision": "year",
+      "date_note": "This span covers the building of Villa Wagner I (1886–1888), the sale of the first villa (1911), and construction of Villa Wagner II (1912–1913)",
+      "age": 45,
+      "title": "Builds his two villas",
+      "description": "In 1886, Wagner built a substantial family villa on Vienna’s western edge, later known as Villa Wagner I, as a private home reflecting his social and professional position. After selling it in 1911, he built the neighboring Villa Wagner II in a [[Vienna Secession|late Secession]] style, intending it as a residence for his wife; the move marked a shift in his household and living arrangements.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Louise Wagner"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Penzing_%28Wien%29_-_Otto-Wagner-Villa%2C_H%C3%BCttelbergstra%C3%9Fe_26_%281%29.JPG/960px-Penzing_%28Wien%29_-_Otto-Wagner-Villa%2C_H%C3%BCttelbergstra%C3%9Fe_26_%281%29.JPG",
+          "caption": "Otto-Wagner-Villa, Hüttelbergstraße 26, Penzing",
+          "source": "https://commons.wikimedia.org/wiki/File:Penzing_(Wien)_-_Otto-Wagner-Villa,_Hüttelbergstraße_26_(1).JPG"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "inventing_modern_vienna",
+      "annotations": {
+        "Vienna Secession": {
+          "explanation": "An Austrian Art Nouveau movement centered in Vienna (founded 1897) that promoted modern design and broke with historicist academic art; Wagner became one of its leading architectural figures.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Secession"
+        }
+      }
+    },
+    {
+      "date": "1893",
+      "date_precision": "year",
+      "date_end": "1894",
+      "date_end_precision": "year",
+      "age": 52,
+      "title": "Wins Vienna planning contest",
+      "description": "In 1893, Wagner won first prize in a competition for a general regulatory plan for Vienna, proposing a metropolitan-scale framework for the city’s future expansion. The following year, he was appointed full professor and head of the Special School of Architecture at the Academy of Fine Arts in Vienna, and the Austrian government engaged him as artistic adviser for the unified architectural design of Vienna’s [[Stadtbahn|Stadtbahn]] infrastructure.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "inventing_modern_vienna",
+      "annotations": {
+        "Stadtbahn": {
+          "explanation": "A metropolitan rail system built in Vienna in the late 19th century (today largely integrated into the Vienna U-Bahn and S-Bahn), for which Wagner designed many stations and related structures.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
+        }
+      }
+    },
+    {
+      "date": "1894",
+      "date_precision": "year",
+      "date_end": "1901",
+      "date_end_precision": "year",
+      "age": 53,
+      "title": "Designs Vienna Stadtbahn",
+      "description": "In 1894 in Vienna, Wagner was appointed artistic adviser for the [[Vienna Stadtbahn|Vienna Stadtbahn]], overseeing a unified architectural approach for stations, bridges, and associated structures while working under state commissions and engineering constraints. He coordinated closely with administrators and engineers to maintain a consistent design language across the network.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Otto_Wagner_Pavillon_-_Karlsplatz.jpg/960px-Otto_Wagner_Pavillon_-_Karlsplatz.jpg",
+          "caption": "Karlsplatz Stadtbahn Station, Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_Pavillon_-_Karlsplatz.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "inventing_modern_vienna",
+      "annotations": {
+        "Vienna Stadtbahn": {
+          "explanation": "A metropolitan railway system built in Vienna in the late 19th century (initially steam-operated), for which Wagner designed many of the system’s characteristic station buildings and related infrastructure.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
+        }
+      }
+    },
+    {
+      "date": "1896",
+      "date_precision": "year",
+      "age": 55,
+      "title": "Publishes Moderne Architektur",
+      "description": "In 1896, in Vienna, Wagner issued the book in the midst of his growing public profile as a designer and teacher, giving students and colleagues a single text to consult alongside his lectures and built work.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "inventing_modern_vienna",
+      "event_class": {
+        "type": "publication",
+        "title": "Moderne Architektur",
+        "publication_type": "book",
+        "significance": "programmatic",
+        "impact": "It articulated a contemporary architectural approach in direct dialogue with late-19th-century urban and technical change."
+      }
+    },
+    {
+      "date": "1897",
+      "date_precision": "year",
+      "date_end": "1899",
+      "date_end_precision": "year",
+      "age": 56,
+      "title": "Joins Vienna Secession",
+      "description": "In 1897, Wagner joined the [[Vienna Secession|Vienna Secession]] as one of its prominent architectural figures, aligning with artists and architects promoting a modern approach to art and design. Around the same time, he represented the Vienna Academy at the International Architects’ Congress in Brussels, and he continued work on major residential and commercial projects along Vienna’s Wienzeile near the Naschmarkt, presenting their street fronts as part of a consciously modern urban image.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Brussels",
+          "name_modern": "Brussels, Belgium",
+          "centroid": [
+            4.352493,
+            50.8467372
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Vienna_Secession"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Secession_Building_Vienna.jpg/960px-Secession_Building_Vienna.jpg",
+          "caption": "Secession Building, Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Secession_Building_Vienna.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "inventing_modern_vienna",
+      "annotations": {
+        "Vienna Secession": {
+          "explanation": "An Austrian modernist association founded in 1897 by artists who broke with the conservative Künstlerhaus to promote new art and design, closely linked to Art Nouveau in Vienna.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Secession"
+        }
+      }
+    },
+    {
+      "date": "1902",
+      "date_precision": "year",
+      "date_end": "1912",
+      "date_end_precision": "year",
+      "date_note": "This span covers the Steinhof planning and church (1902–1907) and the Postsparkasse building phases (1903–1906, 1910–1912)",
+      "age": 61,
+      "title": "Completes landmark public works",
+      "description": "In [[Vienna|Vienna]], Wagner completed major public commissions: he prepared the overall plan for the [[Steinhof Psychiatric Hospital|Steinhof psychiatric institution]] and designed the [[Kirche am Steinhof|Church of St. Leopold]] (Kirche am Steinhof), while also designing and building the [[Austrian Postal Savings Bank|Imperial-Royal Postal Savings Bank]] and coordinating its architecture, structure, and interior fittings within a large state administrative project. The work brought him into sustained contact with public authorities and building contractors and the day-to-day realities of large institutional construction.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Marcel Kammerer"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Church_of_St._Leopold,_Steinhof",
+        "https://en.wikipedia.org/wiki/Austrian_Postal_Savings_Bank_Building"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Otto_Wagner_Steinhofkirche.JPG/960px-Otto_Wagner_Steinhofkirche.JPG",
+          "caption": "Kirche am Steinhof, Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_Steinhofkirche.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "inventing_modern_vienna",
+      "annotations": {
+        "Vienna": {
+          "explanation": "Capital of Austria and the seat of the Austro-Hungarian imperial administration, where Wagner’s key public commissions were carried out.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna"
+        },
+        "Steinhof Psychiatric Hospital": {
+          "explanation": "A major psychiatric hospital complex in Vienna (now Klinik Hietzing) developed around 1900; Wagner designed its overall plan and prominent buildings.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Steinhof"
+        },
+        "Kirche am Steinhof": {
+          "explanation": "The hospital church at Steinhof, officially the Church of St. Leopold (1904–1907), one of Wagner’s best-known Modernist sacred designs.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Church_of_St._Leopold,_Steinhof"
+        },
+        "Austrian Postal Savings Bank": {
+          "explanation": "Vienna’s Imperial-Royal Postal Savings Bank building (Postsparkasse), designed by Wagner and built 1904–1912 as a landmark of early Modern architecture.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Austrian_Postal_Savings_Bank_Building"
+        }
+      }
+    },
+    {
+      "date": "1915-10-26",
+      "date_precision": "day",
+      "age": 74,
+      "title": "Wife Louise dies",
+      "description": "On 26 October 1915, Wagner’s wife Louise died after an illness with cancer, ending their long marriage and leaving him personally shaken.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Louise Wagner"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "last_silence"
+    },
+    {
+      "date": "1918-04-11",
+      "date_precision": "day",
+      "age": 76,
+      "title": "Death in Vienna",
+      "description": "Otto Wagner died in Vienna on 11 April 1918, aged 76.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna%2C_Austria-full_PNr%C2%B00793.jpg/960px-Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna%2C_Austria-full_PNr%C2%B00793.jpg",
+          "caption": "Grave of Otto Wagner, Hietzing Cemetery, Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna,_Austria-full_PNr°0793.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "last_silence"
+    }
+  ]
+}
