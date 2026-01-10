@@ -4,8 +4,10 @@
   import { _ } from "../stores/language";
   import { push, location } from "svelte-spa-router";
   import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
+  import { slide } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
+  import LandingMap from "./LandingMap.svelte";
 
   export let entries = [];
   export let englishEntries = []; // English registry entries for carousel portraits
@@ -19,6 +21,7 @@
   let searchQuery = "";
   let loadedImages = new Set();
   let activeMetaStoryFilter = null;
+  let showMap = false;
 
   function handleImageLoad(entryId) {
     loadedImages.add(entryId);
@@ -521,6 +524,33 @@
     </div>
   </div>
 
+  <div class="map-toggle-container">
+    <button
+      class="map-toggle-button"
+      class:active={showMap}
+      on:click={() => (showMap = !showMap)}
+      aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 19l-6-2.11V5l6 2.11M20.5 3c-.17 0-.34.03-.5.09L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5.17 0 .34-.03.5-.09L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/>
+      </svg>
+      <span>{showMap ? $_("landing.hide_map") : $_("landing.show_map")}</span>
+    </button>
+  </div>
+
+  {#if showMap}
+    <div class="landing-map-wrapper" transition:slide={{ duration: 300 }}>
+      <LandingMap
+        {filteredEntries}
+        {getStyle}
+        onNavigate={(detail) => {
+          const lang = $currentLanguage;
+          push(`/${lang}/story/${detail.personId}?event=${detail.eventIndex}`);
+        }}
+      />
+    </div>
+  {/if}
+
   <div class="landing-grid">
     {#if filteredEntries.length > 0}
       {#each filteredEntries as entry (entry.id)}
@@ -727,6 +757,59 @@
     margin: 0;
     font-size: 1rem;
     color: #cbd5f5;
+  }
+
+  .map-toggle-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1.5rem 0 1rem;
+  }
+
+  .map-toggle-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 0.5rem;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .map-toggle-button:hover {
+    background: rgba(15, 23, 42, 0.95);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+  }
+
+  .map-toggle-button.active {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.5);
+    color: #38bdf8;
+  }
+
+  .map-toggle-button svg {
+    flex-shrink: 0;
+  }
+
+  .landing-map-wrapper {
+    width: 100%;
+    height: 500px;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .landing-map-wrapper {
+      height: 350px;
+    }
   }
 
   .landing-grid {
