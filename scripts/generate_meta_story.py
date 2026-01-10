@@ -73,6 +73,13 @@ class TemporalChapter(BaseModel):
     )
 
 
+class SelectionHints(BaseModel):
+    """Hints to guide AI person selection and story structure."""
+    hint: str = Field(
+        description="Short guidance string for person selection (e.g., 'include also Jugendstil architects', 'focus on Vienna Secession period')"
+    )
+
+
 class MissingPersonSuggestion(BaseModel):
     """Suggestion for a person not in the registry who would strengthen this collection."""
     name: str = Field(description="Full name of the suggested person")
@@ -169,11 +176,25 @@ class MetaStory(BaseModel):
     lastUpdated: str = Field(description="ISO-8601 timestamp")
 
 
+class GenerationMetadata(BaseModel):
+    """Metadata about how the meta-story was generated."""
+    hints: Optional[SelectionHints] = Field(
+        default=None,
+        description="Hints used to guide person selection and story structure"
+    )
+    model: str = Field(description="OpenAI model used for generation")
+    generated_at: str = Field(description="ISO-8601 timestamp")
+
+
 class MetaStoryDataset(BaseModel):
     """Top-level dataset structure for meta-story JSON."""
     dataset: str = Field(default="meta_story")
     created_on: str = Field(description="ISO-8601 timestamp")
     meta_story: MetaStory
+    generation_metadata: Optional[GenerationMetadata] = Field(
+        default=None,
+        description="Metadata about generation process"
+    )
     subtopics: List[Subtopic]
     chapters: List[ChapterWithEvents]
     conclusion: str
@@ -212,6 +233,48 @@ def validate_person_exists(person_id: str, registry: Dict[str, Any]) -> bool:
     """Check if person_id exists in registry."""
     people = registry.get("people", [])
     return any(p.get("id") == person_id for p in people)
+
+
+def load_existing_hints(story_id: str) -> Optional[SelectionHints]:
+    """Load hints from an existing meta-story JSON file."""
+    meta_story_path = META_STORIES_DIR / f"{story_id}.json"
+    if not meta_story_path.exists():
+        return None
+
+    try:
+        with open(meta_story_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        metadata = data.get("generation_metadata", {})
+        hints_data = metadata.get("hints")
+
+        if hints_data:
+            return SelectionHints(**hints_data)
+        return None
+    except Exception:
+        return None
+
+
+def load_hints_from_file(hints_path: str) -> Optional[SelectionHints]:
+    """Load hints from a text or JSON file."""
+    try:
+        with open(hints_path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+
+        # Try parsing as JSON first
+        try:
+            hints_data = json.loads(content)
+            if isinstance(hints_data, dict) and "hint" in hints_data:
+                return SelectionHints(**hints_data)
+            else:
+                print(f"Error: JSON file must contain a 'hint' field")
+                return None
+        except json.JSONDecodeError:
+            # Treat as plain text hint
+            return SelectionHints(hint=content)
+    except Exception as e:
+        print(f"Error loading hints file: {e}")
+        return None
 
 
 def parse_event_date(event: Dict[str, Any]) -> Optional[int]:
@@ -279,6 +342,7 @@ def phase1_story_planning(
     client: OpenAI,
     model: str,
     manual_person_ids: Optional[List[str]] = None,
+    hints: Optional[SelectionHints] = None,
     verbose: bool = False
 ) -> Optional[MetaStoryPlan]:
     """
@@ -343,6 +407,14 @@ def phase1_story_planning(
             "locations": locations,  # NEW: Add locations for place-based selection
             "key_events": key_events  # NEW: Add event titles for thematic matching
         })
+
+    # Build hints section if provided
+    hints_section = ""
+    if hints:
+        hints_section = f"""
+
+IMPORTANT SELECTION HINT: {hints.hint}
+"""
 
     if manual_person_ids:
         # Manual mode: AI only creates structure, uses provided people
@@ -413,6 +485,7 @@ MISSING PEOPLE SUGGESTIONS:
 
 Use ALL provided person IDs (no more, no less).
 Provide a relevance_note for each person explaining their fit.
+{hints_section}
 """
     else:
         # Automatic mode: AI selects people + creates structure
@@ -520,6 +593,7 @@ MISSING PEOPLE SUGGESTIONS:
 - For each suggestion: provide name, reason (why they'd fit), and role
 - Focus on people who would fill gaps or add important perspectives
 - These are recommendations for future dataset expansion
+{hints_section}
 """
 
     try:
@@ -1036,7 +1110,9 @@ def calculate_date_range(chapters: List[ChapterWithEvents]) -> tuple:
 def build_meta_story_dataset(
     plan: MetaStoryPlan,
     chapters: List[ChapterWithEvents],
-    story_id: str
+    story_id: str,
+    hints: Optional[SelectionHints] = None,
+    model: str = DEFAULT_MODEL
 ) -> Dict[str, Any]:
     """Build final meta-story dataset JSON."""
     date_start, date_end = calculate_date_range(chapters)
@@ -1055,10 +1131,18 @@ def build_meta_story_dataset(
         lastUpdated=now
     )
 
+    # Build generation metadata
+    generation_metadata = GenerationMetadata(
+        hints=hints,
+        model=model,
+        generated_at=now
+    )
+
     dataset = MetaStoryDataset(
         dataset="meta_story",
         created_on=now,
         meta_story=meta_story,
+        generation_metadata=generation_metadata,
         subtopics=plan.subtopics,
         chapters=chapters,
         conclusion=plan.conclusion
@@ -1188,6 +1272,10 @@ def main():
         action="store_true",
         help="Skip AI event filtering (Phase 3) - include all collected events"
     )
+    parser.add_argument(
+        "--hints",
+        help="Selection hint string (e.g., 'include Jugendstil architects'), or 'none' to disable hint reuse"
+    )
 
     args = parser.parse_args()
 
@@ -1228,6 +1316,29 @@ def main():
         print("Use --force to overwrite")
         sys.exit(1)
 
+    # Handle hints - automatic reuse by default
+    hints = None
+    if args.hints:
+        if args.hints.lower() == "none":
+            # Explicitly disable hint reuse
+            if args.verbose:
+                print("Hints: Disabled (--hints none)")
+        else:
+            # Use the hint string directly
+            hints = SelectionHints(hint=args.hints)
+            if args.verbose:
+                print(f"Hints: {args.hints}")
+    else:
+        # Default: try to reuse existing hints
+        existing_hints = load_existing_hints(story_id)
+        if existing_hints:
+            hints = existing_hints
+            if args.verbose:
+                print(f"Hints: Reusing from existing meta-story")
+        else:
+            if args.verbose:
+                print("Hints: None (no existing hints found)")
+
     print(f"Generating meta-story: {args.topic_title}")
     print(f"Story ID: {story_id}")
 
@@ -1238,6 +1349,7 @@ def main():
         client=client,
         model=args.model,
         manual_person_ids=manual_person_ids,
+        hints=hints,
         verbose=args.verbose
     )
 
@@ -1295,7 +1407,7 @@ def main():
         )
 
     # Build dataset
-    dataset = build_meta_story_dataset(plan, chapters, story_id)
+    dataset = build_meta_story_dataset(plan, chapters, story_id, hints=hints, model=args.model)
 
     # Save files
     if not save_meta_story(story_id, dataset, verbose=args.verbose):
