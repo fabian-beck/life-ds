@@ -216,6 +216,53 @@
     return bounds;
   }
 
+  // Calculate dominant person color for a cluster (>50% threshold)
+  function getClusterDominantColor(clusterId, callback) {
+    const source = mapInstance.getSource("events");
+    if (!source) return callback("#64748b"); // Default gray
+
+    source.getClusterLeaves(clusterId, Infinity, 0, (err, features) => {
+      if (err || !features || features.length === 0) {
+        return callback("#64748b");
+      }
+
+      // Count person occurrences
+      const personCounts = {};
+      const personColors = {};
+
+      features.forEach(feature => {
+        const personId = feature.properties.personId;
+        const color = feature.properties.primaryColor;
+
+        personCounts[personId] = (personCounts[personId] || 0) + 1;
+        personColors[personId] = color;
+      });
+
+      // Find person with most events
+      let maxCount = 0;
+      let dominantPerson = null;
+
+      for (const [personId, count] of Object.entries(personCounts)) {
+        if (count > maxCount) {
+          maxCount = count;
+          dominantPerson = personId;
+        }
+      }
+
+      // Check if dominant person has >50%
+      const totalCount = features.length;
+      const percentage = maxCount / totalCount;
+
+      if (dominantPerson && percentage > 0.5) {
+        console.log(`[LandingMap] Cluster ${clusterId}: ${dominantPerson} (${(percentage * 100).toFixed(1)}%) - using color ${personColors[dominantPerson]}`);
+        callback(personColors[dominantPerson]);
+      } else {
+        console.log(`[LandingMap] Cluster ${clusterId}: mixed (max ${(percentage * 100).toFixed(1)}%) - using gray`);
+        callback("#64748b"); // Gray for mixed clusters
+      }
+    });
+  }
+
   async function setupMapLayers(geojsonData) {
     console.log('[LandingMap] setupMapLayers called with', geojsonData.features?.length || 0, 'features');
 
@@ -226,9 +273,9 @@
       clusterMaxZoom: 8,
       clusterRadius: 50,
       clusterProperties: {
-        // Collect unique person IDs in cluster
+        // Collect all person IDs in cluster (concatenated string)
         personIds: ["concat", ["get", "personId"]],
-        // Get first person's color (will be used if single person)
+        // Get first person's color as fallback
         sampleColor: ["coalesce", ["get", "primaryColor"], "#94a3b8"]
       }
     });
@@ -256,7 +303,7 @@
       }
     });
 
-    // Cluster circles - use person color if single person, gray if multiple
+    // Cluster circles - colored by dominant person (>50% threshold)
     mapInstance.addLayer({
       id: "clusters",
       type: "circle",
@@ -265,12 +312,10 @@
       paint: {
         "circle-color": [
           "case",
-          // Check if personIds array contains only one unique person
-          // This is a simplified check - MapLibre doesn't have array uniqueness
-          // So we use sampleColor for single-person clusters, gray for multi-person
-          ["==", ["length", ["get", "personIds"]], ["get", "point_count"]],
-          ["get", "sampleColor"], // Single person - use their color
-          "#64748b" // Multiple people - use gray
+          // Use feature-state color if available, otherwise fallback to gray
+          ["!=", ["feature-state", "dominantColor"], null],
+          ["feature-state", "dominantColor"],
+          "#64748b" // Default gray while calculating
         ],
         "circle-radius": [
           "step",
@@ -424,6 +469,32 @@
         };
       }
     });
+
+    // Update cluster colors based on dominant person (>50% threshold)
+    function updateClusterColors() {
+      const clusters = mapInstance.querySourceFeatures("events", {
+        filter: ["has", "point_count"],
+        sourceLayer: null
+      });
+
+      clusters.forEach(cluster => {
+        const clusterId = cluster.properties.cluster_id;
+
+        getClusterDominantColor(clusterId, (color) => {
+          mapInstance.setFeatureState(
+            { source: "events", id: clusterId },
+            { dominantColor: color }
+          );
+        });
+      });
+    }
+
+    // Initial color update
+    updateClusterColors();
+
+    // Update colors when map moves or zooms (clusters may change)
+    mapInstance.on("moveend", updateClusterColors);
+    mapInstance.on("zoomend", updateClusterColors);
   }
 
   async function initializeMap() {
