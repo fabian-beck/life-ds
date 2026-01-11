@@ -1,8 +1,6 @@
 <script>
   import {
-    mdiLinkVariant,
     mdiInformationOutline,
-    mdiWikipedia,
     mdiAccountOutline,
     mdiMagnifyPlusOutline,
     mdiLightbulbOnOutline,
@@ -17,7 +15,6 @@
     getDateNote,
     getThumbnailUrl,
     getValidImages,
-    sourceLabel,
     getSubcategory,
     getRelevantPeople,
     parseDescriptionSegments,
@@ -31,12 +28,10 @@
   export let formatters = {};
   export let visibleDateNote = null;
   export let visiblePersonInfo = null;
-  export let visibleSources = null;
   export let visibleAnnotation = null;
   export let onEnlargeImage = () => {};
   export let onToggleDateNote = () => {};
   export let onTogglePersonInfo = () => {};
-  export let onToggleSources = () => {};
   export let onToggleAnnotation = () => {};
   export let onOpenNetwork = () => {};
 
@@ -473,74 +468,6 @@
                 />
               {/each}
             </div>
-          </li>
-        </ul>
-      {/if}
-      {#if slide.sources?.length}
-        <ul class="details details-compact">
-          <li>
-            {#if slide.sources?.length}
-              <div class="sources-wrapper">
-                <span class="label" aria-label="Sources">
-                  <svg
-                    class="icon icon-inline"
-                    viewBox="0 0 24 24"
-                    role="presentation"
-                    aria-hidden="true"
-                  >
-                    <path d={mdiLinkVariant} />
-                  </svg>
-                </span>
-                <button
-                  type="button"
-                  class="sources-toggle-btn"
-                  on:click|stopPropagation={() => onToggleSources(slide.eventIndex)}
-                  aria-label={$_("story.show_sources")}
-                  aria-expanded={visibleSources === slide.eventIndex}
-                >
-                  {slide.sources.length === 1
-                    ? $_("story.source_one", { count: 1 })
-                    : $_("story.source_other", { count: slide.sources.length })}
-                  <svg
-                    class="icon icon-inline"
-                    viewBox="0 0 24 24"
-                    role="presentation"
-                    aria-hidden="true"
-                  >
-                    <path d={mdiInformationOutline} />
-                  </svg>
-                </button>
-                {#if visibleSources === slide.eventIndex}
-                  <div class="sources-popup">
-                    <ul class="sources-list">
-                      {#each slide.sources as source}
-                        {@const sourceInfo = sourceLabel(source)}
-                        <li>
-                          <a
-                            href={source}
-                            target="_blank"
-                            rel="noreferrer"
-                            class="source-link"
-                          >
-                            {#if sourceInfo.isWikipedia}
-                              <svg
-                                class="icon icon-inline wiki-icon"
-                                viewBox="0 0 24 24"
-                                role="presentation"
-                                aria-hidden="true"
-                              >
-                                <path d={mdiWikipedia} />
-                              </svg>
-                            {/if}
-                            {sourceInfo.label}
-                          </a>
-                        </li>
-                      {/each}
-                    </ul>
-                  </div>
-                {/if}
-              </div>
-            {/if}
           </li>
         </ul>
       {/if}
@@ -1114,14 +1041,6 @@
     align-items: baseline;
   }
 
-  .details.details-compact li {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-  }
-
   .details li > span:not(.label),
   .details li > div {
     flex: 1;
@@ -1144,103 +1063,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-
-  .sources-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .sources-toggle-btn {
-    appearance: none;
-    border: none;
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--story-secondary, #38bdf8);
-    padding: 0.35rem 0.65rem;
-    border-radius: 999px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease;
-    flex-shrink: 0;
-    pointer-events: auto;
-  }
-
-  .sources-toggle-btn:hover,
-  .sources-toggle-btn:focus {
-    background: rgba(255, 255, 255, 0.15);
-    color: var(--story-primary, #f8fafc);
-    transform: scale(1.05);
-    outline: none;
-  }
-
-  .sources-toggle-btn[aria-expanded="true"] {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--story-primary, #f8fafc);
-  }
-
-  .sources-popup {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 0;
-    right: 0;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    z-index: 10;
-    animation: fadeInTooltip 0.2s ease;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  .sources-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .sources-list li {
-    display: block;
-  }
-
-  .source-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    color: rgba(148, 163, 184, 0.85);
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 0.8rem;
-    transition: color 0.2s ease;
-    word-break: break-word;
-  }
-
-  .source-link:hover,
-  .source-link:focus {
-    color: var(--story-secondary, #94a3b8);
-    text-decoration: underline;
-  }
-
-  .wiki-icon {
-    opacity: 0.7;
-    flex-shrink: 0;
   }
 
   /* Tablet and desktop styles */

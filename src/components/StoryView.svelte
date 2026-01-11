@@ -47,7 +47,6 @@
   let currentImageGlobalIndex = -1;
   let visibleDateNote = null;
   let visiblePersonInfo = null;
-  let visibleSources = null;
   let visibleAnnotation = null;
   let showAIModal = false;
 
@@ -91,6 +90,17 @@
     }));
   $: totalSlides = eventSlides.length;
   $: conclusion = dataset?.conclusion ?? null;
+
+  // Collect all unique sources from events for the conclusion slide
+  $: allSources = (() => {
+    const sourcesSet = new Set();
+    events.forEach(event => {
+      if (Array.isArray(event.sources)) {
+        event.sources.forEach(source => sourcesSet.add(source));
+      }
+    });
+    return Array.from(sourcesSet);
+  })();
 
   // Compute related persons by role overlap
   $: relatedPersons = (() => {
@@ -142,7 +152,7 @@
       if (hasConclusion) {
         return [
           { type: "overview" },
-          { type: "conclusion", conclusion, relatedPersons }
+          { type: "conclusion", conclusion, relatedPersons, allSources }
         ];
       }
       return [{ type: "overview" }];
@@ -158,7 +168,7 @@
       ];
       // Add conclusion at the end if it exists
       if (hasConclusion) {
-        allSlides.push({ type: "conclusion", conclusion, relatedPersons });
+        allSlides.push({ type: "conclusion", conclusion, relatedPersons, allSources });
       }
       return allSlides;
     }
@@ -187,7 +197,7 @@
 
     // Add conclusion at the end if it exists
     if (hasConclusion) {
-      result.push({ type: "conclusion", conclusion, relatedPersons });
+      result.push({ type: "conclusion", conclusion, relatedPersons, allSources });
     }
 
     return result;
@@ -425,7 +435,6 @@
   $: if (activeIndex !== undefined && activeIndex !== previousActiveIndex) {
     visibleDateNote = null;
     visiblePersonInfo = null;
-    visibleSources = null;
     visibleAnnotation = null;
     // Close network modal when slide changes by updating URL
     if ($queryParams.network) {
@@ -834,10 +843,9 @@
   }
 
   function handleClickOutside(event) {
-    // Check if click is outside the date-wrapper, person-info-wrapper, sources-wrapper, or annotated-term
+    // Check if click is outside the date-wrapper, person-info-wrapper, or annotated-term
     const dateWrapper = event.target.closest(".date-wrapper");
     const personWrapper = event.target.closest(".person-info-wrapper");
-    const sourcesWrapper = event.target.closest(".sources-wrapper");
     const annotatedTerm = event.target.closest(".annotated-term");
     const annotationPopup = event.target.closest(".annotation-popup");
     const modal = event.target.closest(".network-modal");
@@ -846,9 +854,6 @@
     }
     if (!personWrapper && visiblePersonInfo !== null) {
       visiblePersonInfo = null;
-    }
-    if (!sourcesWrapper && visibleSources !== null) {
-      visibleSources = null;
     }
     if (!annotatedTerm && !annotationPopup && visibleAnnotation !== null) {
       visibleAnnotation = null;
@@ -863,10 +868,6 @@
 
   function togglePersonInfo(personKey) {
     visiblePersonInfo = visiblePersonInfo === personKey ? null : personKey;
-  }
-
-  function toggleSources(eventIndex) {
-    visibleSources = visibleSources === eventIndex ? null : eventIndex;
   }
 
   function openNetworkModal() {
@@ -1165,6 +1166,7 @@
               <ConclusionSlide
                 conclusion={slide.conclusion}
                 relatedPersons={slide.relatedPersons}
+                allSources={slide.allSources}
                 personStylesRegistry={personStylesRegistry}
               />
             {:else if slide.type !== "spacer"}
@@ -1175,12 +1177,10 @@
                 {formatters}
                 {visibleDateNote}
                 {visiblePersonInfo}
-                {visibleSources}
                 {visibleAnnotation}
                 onEnlargeImage={enlargeImage}
                 onToggleDateNote={toggleDateNote}
                 onTogglePersonInfo={togglePersonInfo}
-                onToggleSources={toggleSources}
                 onToggleAnnotation={toggleAnnotation}
                 onOpenNetwork={openNetworkModal}
               />
