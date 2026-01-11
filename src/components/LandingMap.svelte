@@ -6,6 +6,7 @@
   import { layers, namedFlavor } from "@protomaps/basemaps";
   import { normalizeAllLocations, normalizePrimaryLocation } from "../utils/storyHelpers";
   import { displayName } from "../utils/helpers";
+  import { arrangeOverlappingMarkers } from "../utils/mapHelpers";
 
   export let filteredEntries = [];
   export let getStyle = () => ({});
@@ -16,6 +17,7 @@
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ?? DEFAULT_PM_TILES_URL;
+  const MAX_CLUSTER_ZOOM = 12;
 
   let mapContainer;
   let mapInstance = null;
@@ -28,6 +30,7 @@
   let basemapError = null;
   let basemapStyleCache = null;
   let updateTimeout;
+  let connectionLinesData = { type: "FeatureCollection", features: [] };
 
   // Popup state (Svelte-based, not MapLibre GL)
   let popupData = null;
@@ -188,7 +191,14 @@
     }
 
     console.log('[LandingMap] Loaded', features.length, 'location features');
-    return { type: "FeatureCollection", features };
+
+    // Apply collision detection and circular arrangement
+    const { markers, connections } = arrangeOverlappingMarkers(features, MAX_CLUSTER_ZOOM, 200);
+    connectionLinesData = connections;
+
+    console.log('[LandingMap] Arranged markers:', markers.length, 'Connection lines:', connections.features.length);
+
+    return { type: "FeatureCollection", features: markers };
   }
 
   function calculateInitialBounds(geojsonData) {
@@ -213,7 +223,7 @@
       type: "geojson",
       data: geojsonData,
       cluster: true,
-      clusterMaxZoom: 10,
+      clusterMaxZoom: 8,
       clusterRadius: 50,
       clusterProperties: {
         // Collect unique person IDs in cluster
@@ -224,6 +234,27 @@
     });
 
     console.log('[LandingMap] Source added');
+
+    // Add source for connection lines (links arranged markers to original position)
+    mapInstance.addSource("marker-connections", {
+      type: "geojson",
+      data: connectionLinesData
+    });
+
+    // Add layer for connection lines (drawn BEFORE markers so markers appear on top)
+    // Only show when individual markers are visible (zoom > clusterMaxZoom)
+    mapInstance.addLayer({
+      id: "marker-connection-lines",
+      type: "line",
+      source: "marker-connections",
+      minzoom: 8, // Same as clusterMaxZoom - only show when clusters have resolved
+      paint: {
+        "line-color": ["get", "color"],
+        "line-width": 1,
+        "line-opacity": 0.3,
+        "line-dasharray": [2, 2]
+      }
+    });
 
     // Cluster circles - use person color if single person, gray if multiple
     mapInstance.addLayer({
@@ -315,13 +346,25 @@
       if (!features.length) return;
 
       const clusterId = features[0].properties.cluster_id;
+      const currentZoom = mapInstance.getZoom();
 
       mapInstance.getSource("events").getClusterExpansionZoom(clusterId, (err, zoom) => {
         if (err) return;
 
+        // Cap the maximum zoom level to prevent zooming in too far
+        // This is important because some markers may be at the same location
+        // and won't resolve even at high zoom levels
+        const targetZoom = Math.min(zoom, MAX_CLUSTER_ZOOM);
+
+        // If we're already at or very close to the max zoom, don't try to expand
+        // This prevents zooming when points are too close together to resolve
+        if (currentZoom >= MAX_CLUSTER_ZOOM - 0.5) {
+          return;
+        }
+
         mapInstance.easeTo({
           center: features[0].geometry.coordinates,
-          zoom: zoom,
+          zoom: targetZoom,
           duration: 500,
         });
       });
@@ -445,6 +488,13 @@
     if (source) {
       console.log('[LandingMap] Updating source with', geojsonData.features?.length || 0, 'features');
       source.setData(geojsonData);
+
+      // Update connection lines
+      const connectionSource = mapInstance.getSource("marker-connections");
+      if (connectionSource) {
+        connectionSource.setData(connectionLinesData);
+        console.log('[LandingMap] Updated connection lines:', connectionLinesData.features.length);
+      }
 
       const bounds = calculateInitialBounds(geojsonData);
       if (bounds) {
