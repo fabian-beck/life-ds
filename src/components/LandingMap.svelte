@@ -216,6 +216,45 @@
     return bounds;
   }
 
+  // Helper function to parse hex color to RGB
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  // Helper function to convert RGB to hex
+  function rgbToHex(r, g, b) {
+    return "#" + [r, g, b].map(x => {
+      const hex = Math.round(x).toString(16);
+      return hex.length === 1 ? "0" + hex : hex;
+    }).join('');
+  }
+
+  // Interpolate between person color and gray based on dominance percentage
+  function interpolateColor(personColor, percentage) {
+    const grayColor = "#64748b"; // Neutral gray for mixed clusters
+    const personRgb = hexToRgb(personColor);
+    const grayRgb = hexToRgb(grayColor);
+
+    if (!personRgb || !grayRgb) return grayColor;
+
+    // Map percentage from 0.5-1.0 range to 0-1 interpolation factor
+    // At 50%: factor = 0 (full gray)
+    // At 100%: factor = 1 (full person color)
+    const factor = (percentage - 0.5) / 0.5;
+
+    // Linear interpolation between gray and person color
+    const r = grayRgb.r + (personRgb.r - grayRgb.r) * factor;
+    const g = grayRgb.g + (personRgb.g - grayRgb.g) * factor;
+    const b = grayRgb.b + (personRgb.b - grayRgb.b) * factor;
+
+    return rgbToHex(r, g, b);
+  }
+
   // Calculate dominant person color for a cluster (>50% threshold)
   function getClusterDominantColor(clusterId, callback) {
     const source = mapInstance.getSource("events");
@@ -254,8 +293,9 @@
       const percentage = maxCount / totalCount;
 
       if (dominantPerson && percentage > 0.5) {
-        console.log(`[LandingMap] Cluster ${clusterId}: ${dominantPerson} (${(percentage * 100).toFixed(1)}%) - using color ${personColors[dominantPerson]}`);
-        callback(personColors[dominantPerson]);
+        const interpolatedColor = interpolateColor(personColors[dominantPerson], percentage);
+        console.log(`[LandingMap] Cluster ${clusterId}: ${dominantPerson} (${(percentage * 100).toFixed(1)}%) - color ${interpolatedColor}`);
+        callback(interpolatedColor);
       } else {
         console.log(`[LandingMap] Cluster ${clusterId}: mixed (max ${(percentage * 100).toFixed(1)}%) - using gray`);
         callback("#64748b"); // Gray for mixed clusters
