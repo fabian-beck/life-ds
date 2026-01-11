@@ -601,9 +601,56 @@
       },
       interactive: true,
       attributionControl: false,
+      pitchWithRotate: false,
+      dragRotate: false,
+      touchPitch: false,
+      touchZoomRotate: true,
+      bearingSnap: 0,
     });
 
-    mapInstance.addControl(new maplibregl.NavigationControl(), "top-right");
+    // Disable rotation completely, even with touch gestures (allows zoom only)
+    mapInstance.touchZoomRotate.disableRotation();
+
+    // Add navigation control without compass (rotation disabled)
+    mapInstance.addControl(
+      new maplibregl.NavigationControl({ showCompass: false }),
+      "top-right"
+    );
+
+    // Add custom zoom reset button
+    class ZoomResetControl {
+      onAdd(map) {
+        this._map = map;
+        this._container = document.createElement("div");
+        this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
+        this._container.innerHTML = `
+          <button type="button" class="maplibregl-ctrl-zoom-reset" title="Reset zoom">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 3C6.13 3 3 6.13 3 10s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+              <circle cx="10" cy="10" r="2"/>
+            </svg>
+          </button>
+        `;
+        this._container.querySelector("button").addEventListener("click", () => {
+          const bounds = calculateInitialBounds({ type: "FeatureCollection", features: mapInstance.getSource("events")?._data?.features || [] });
+          if (bounds) {
+            map.fitBounds(bounds, {
+              padding: 80,
+              maxZoom: 8,
+              duration: 800,
+            });
+          }
+        });
+        return this._container;
+      }
+
+      onRemove() {
+        this._container.parentNode.removeChild(this._container);
+        this._map = undefined;
+      }
+    }
+
+    mapInstance.addControl(new ZoomResetControl(), "top-right");
 
     mapInstance.on("load", () => {
       console.log('[LandingMap] Map loaded, setting up layers');
