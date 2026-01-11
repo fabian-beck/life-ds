@@ -1,6 +1,7 @@
 <script>
-  import { mdiClose, mdiRefresh, mdiChevronLeft, mdiChevronRight, mdiArrowRight } from "@mdi/js";
+  import { mdiRefresh, mdiChevronLeft, mdiChevronRight, mdiArrowRight } from "@mdi/js";
   import { onMount, onDestroy } from "svelte";
+  import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
   import { storyStyleVars } from "../utils/helpers.js";
 
@@ -362,22 +363,12 @@
           <path d={mdiRefresh} />
         </svg>
       </button>
-      <button
-        type="button"
-        class="control-btn close-btn"
+      <CloseButton
+        variant="dark"
+        size="large"
+        ariaLabel={$_("image.close")}
         on:click={closeViewer}
-        aria-label={$_("image.close")}
-        title={$_("image.close_short")}
-      >
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          role="presentation"
-          aria-hidden="true"
-        >
-          <path d={mdiClose} />
-        </svg>
-      </button>
+      />
     </div>
 
     <div

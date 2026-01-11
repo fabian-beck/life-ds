@@ -1,6 +1,7 @@
 <script>
-  import { mdiClose, mdiAccountMultipleOutline } from "@mdi/js";
+  import { mdiAccountMultipleOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
+  import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
   import { storyStyleVars } from "../utils/helpers.js";
   import {
@@ -371,21 +372,12 @@
         </svg>
         {$_("network.title", { name: personName })}
       </h3>
-      <button
-        type="button"
-        class="modal-close"
+      <CloseButton
+        variant="dark"
+        size="medium"
+        ariaLabel={$_("network.close")}
         on:click={onClose}
-        aria-label={$_("network.close")}
-      >
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          role="presentation"
-          aria-hidden="true"
-        >
-          <path d={mdiClose} />
-        </svg>
-      </button>
+      />
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -620,33 +612,6 @@
     height: 1.25rem;
     fill: currentColor;
     flex: 0 0 auto;
-  }
-
-  .modal-close {
-    appearance: none;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .modal-close:hover,
-  .modal-close:focus {
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: scale(1.05);
-    outline: none;
   }
 
   .modal-content {

@@ -4,7 +4,8 @@
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
-  import { mdiChevronLeft, mdiChevronRight, mdiClose } from '@mdi/js';
+  import CloseButton from "./CloseButton.svelte";
+  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   export let metaStoryData = null;
   export let personsRegistry = [];
@@ -367,42 +368,26 @@
           <span class="sticky-years">
             {metaStoryData.meta_story.date_range_start}–{metaStoryData.meta_story.date_range_end}
           </span>
-          <button
-            type="button"
-            class="close-meta-story"
+          <CloseButton
+            variant="light"
+            size="responsive"
+            ariaLabel={$_('meta_story.back_to_stories')}
             on:click={backToLanding}
-            aria-label={$_('meta_story.back_to_stories')}
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiClose} />
-            </svg>
-          </button>
+            class="close-meta-story"
+          />
         </div>
       </header>
     {/if}
 
     <!-- Header section -->
     <header class="meta-story-header">
-      <button
-        type="button"
-        class="close-button"
+      <CloseButton
+        variant="light"
+        size="medium"
+        position="absolute"
+        ariaLabel={$_('meta_story.back_to_stories')}
         on:click={backToLanding}
-        aria-label={$_('meta_story.back_to_stories')}
-      >
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          role="presentation"
-          aria-hidden="true"
-        >
-          <path d={mdiClose} />
-        </svg>
-      </button>
+      />
       <h1>{metaStoryData.meta_story.title}</h1>
       <p class="tagline">{metaStoryData.meta_story.tagline}</p>
       <p class="date-range">
@@ -556,79 +541,10 @@
     text-overflow: ellipsis;
   }
 
-  .close-meta-story {
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-    color: #38bdf8;
-    border-radius: 999px;
-    padding: clamp(0.3rem, 0.9vh, 0.45rem) clamp(0.7rem, 2.2vw, 0.95rem);
-    font-size: clamp(0.75rem, 1.2vh, 0.85rem);
-    font-weight: 600;
-    cursor: pointer;
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    gap: clamp(0.35rem, 0.9vh, 0.45rem);
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease,
-      color 0.2s ease;
-  }
-
-  .close-meta-story:hover,
-  .close-meta-story:focus {
-    border-color: rgba(56, 189, 248, 0.6);
-    background: rgba(255, 255, 255, 0.12);
-    outline: none;
-  }
-
-  .close-meta-story .icon {
-    width: 1.1em;
-    height: 1.1em;
-    fill: currentColor;
-    flex: 0 0 auto;
-  }
-
   /* Header */
   .meta-story-header {
     position: relative;
     margin-bottom: 3rem;
-  }
-
-  .close-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-    color: #38bdf8;
-    border-radius: 999px;
-    padding: 0.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .close-button:hover,
-  .close-button:focus {
-    border-color: rgba(56, 189, 248, 0.6);
-    background: rgba(255, 255, 255, 0.12);
-    transform: scale(1.05);
-    outline: none;
-  }
-
-  .close-button .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    fill: currentColor;
-    flex: 0 0 auto;
   }
 
   h1 {
@@ -838,12 +754,6 @@
 
     .sticky-compact-info .separator {
       display: none;
-    }
-
-    .close-meta-story {
-      padding: 0.2rem 0.4rem;
-      font-size: 0.6rem;
-      gap: 0.25rem;
     }
   }
 

@@ -1,4 +1,5 @@
 <script>
+  import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
 
   export let show = false;
@@ -23,26 +24,13 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <div class="modal-content" on:click|stopPropagation role="document">
-      <button
-        class="modal-close"
+      <CloseButton
+        variant="light"
+        size="small"
+        position="absolute"
+        ariaLabel={$_("landing.ai_modal_close")}
         on:click={onClose}
-        aria-label={$_("landing.ai_modal_close")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      />
       <h2>{$_("landing.ai_modal_title")}</h2>
       <div class="modal-body">
         <p>
@@ -91,27 +79,6 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    padding: 0.4rem;
-    border-radius: 0.5rem;
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-
-  .modal-close:hover {
-    background: rgba(148, 163, 184, 0.15);
-    color: #cbd5e1;
   }
 
   .modal-content h2 {

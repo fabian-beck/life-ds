@@ -1,7 +1,7 @@
 <script>
   import { tick, onMount, onDestroy } from "svelte";
-  import { mdiClose } from "@mdi/js";
   import { replace, location } from "svelte-spa-router";
+  import CloseButton from "./CloseButton.svelte";
   import { queryParams, buildUrlWithParams } from "../stores/queryParams";
   import ImageViewer from "./ImageViewer.svelte";
   import NetworkModal from "./NetworkModal.svelte";
@@ -1040,21 +1040,13 @@
         {/if}
         <span class="lifespan">{yearsLabel}</span>
       {/if}
-      <button
-        type="button"
-        class="close-story compact"
+      <CloseButton
+        variant="theme"
+        size="responsive"
+        ariaLabel={$_("story.close_story")}
         on:click={handleClose}
-        aria-label={$_("story.close_story")}
-      >
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          role="presentation"
-          aria-hidden="true"
-        >
-          <path d={mdiClose} />
-        </svg>
-      </button>
+        class="compact"
+      />
     </div>
   </header>
 
@@ -1541,25 +1533,6 @@
     text-overflow: ellipsis;
   }
 
-  .close-story {
-    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--story-primary, #e2e8f0);
-    border-radius: 999px;
-    padding: clamp(0.3rem, 0.9vh, 0.45rem) clamp(0.7rem, 2.2vw, 0.95rem);
-    font-size: clamp(0.75rem, 1.2vh, 0.85rem);
-    font-weight: 600;
-    cursor: pointer;
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    gap: clamp(0.35rem, 0.9vh, 0.45rem);
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease,
-      color 0.2s ease;
-  }
-
   /* Compact masthead for landscape mobile (short viewports)
      - Applies to rotated phones with limited vertical space
      - Makes header more compact and positioned on right side only */
@@ -1601,12 +1574,6 @@
       display: none;
     }
 
-    .close-story {
-      padding: 0.2rem 0.4rem;
-      font-size: 0.6rem;
-      gap: 0.25rem;
-    }
-
     .slide {
       padding: 0.15rem 1rem 2.5rem;
       gap: 0.25rem;
@@ -1628,24 +1595,6 @@
       padding-top: 0.5rem;
       padding-bottom: 6rem;
     }
-  }
-
-  .close-story:hover,
-  .close-story:focus {
-    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
-    background: rgba(255, 255, 255, 0.12);
-    outline: none;
-  }
-
-  .close-story.compact {
-    flex: 0 0 auto;
-  }
-
-  .icon {
-    width: 1.1em;
-    height: 1.1em;
-    fill: currentColor;
-    flex: 0 0 auto;
   }
 
   .slides-wrapper {
