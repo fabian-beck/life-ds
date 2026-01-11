@@ -4,7 +4,7 @@
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
-  import { normalizeAllLocations, normalizePrimaryLocation } from "../utils/storyHelpers";
+  import { normalizeAllLocations, normalizePrimaryLocation, formatSingleDate } from "../utils/storyHelpers";
   import { displayName } from "../utils/helpers";
   import { arrangeOverlappingMarkers } from "../utils/mapHelpers";
 
@@ -36,6 +36,8 @@
   // Popup state (Svelte-based, not MapLibre GL)
   let popupData = null;
   let popupPosition = { x: 0, y: 0 };
+  let popupElement = null;
+  let popupPlacement = { anchor: { x: 0.5, y: 1.0 } }; // Default: centered above trigger
 
   // Top persons display state
   let topPersons = []; // Array of {personId, personName, portraitUrl, primaryColor, count}
@@ -45,6 +47,13 @@
   $: personLookup = new Map(
     filteredEntries.map(entry => [entry.id, entry])
   );
+
+  // Date formatters for different precision levels (reactive to language changes)
+  $: dateFormatters = {
+    year: new Intl.DateTimeFormat($currentLanguage, { year: "numeric" }),
+    month: new Intl.DateTimeFormat($currentLanguage, { year: "numeric", month: "long" }),
+    day: new Intl.DateTimeFormat($currentLanguage, { year: "numeric", month: "long", day: "numeric" }),
+  };
 
   // Lazy load event data modules
   const datasetModules = import.meta.glob(
@@ -143,6 +152,7 @@
             eventIndex,
             eventTitle: event.title,
             eventDate: event.date || "",
+            datePrecision: event.date_precision || "day",
             locationName: primaryLocationObj?.name || "Unknown",
             primaryColor: personStyle?.primary || "#38BDF8",
             secondaryColor: personStyle?.secondary || "#9A7BFF",
@@ -553,26 +563,36 @@
       const feature = features[0];
       const props = feature.properties;
 
-      // Calculate screen position for popup
+      // Store coordinates for later positioning
       const coords = feature.geometry.coordinates;
-      const point = mapInstance.project(coords);
-      const rect = mapContainer.getBoundingClientRect();
 
-      popupPosition = {
-        x: rect.left + point.x,
-        y: rect.top + point.y,
-      };
+      // Get person data for portrait
+      const person = filteredEntries.find(entry => entry.id === props.personId);
+      const portraitUrl = person?.portrait?.thumbnail || person?.portrait?.image || null;
+
+      // Format date nicely based on precision
+      const formattedDate = props.eventDate
+        ? formatSingleDate(props.eventDate, props.datePrecision, dateFormatters)
+        : null;
 
       popupData = {
         personName: props.personName,
         eventTitle: props.eventTitle,
-        eventDate: props.eventDate || null,
+        eventDate: formattedDate,
         locationName: props.locationName || null,
         primaryColor: props.primaryColor,
         personId: props.personId,
         eventIndex: parseInt(props.eventIndex, 10),
         coordinates: coords,
+        portraitUrl: portraitUrl,
       };
+
+      // Position popup after it's rendered
+      requestAnimationFrame(() => {
+        if (popupElement && mapInstance && mapContainer) {
+          calculatePopupPosition(coords);
+        }
+      });
     });
 
     // Close popup on map click (but not on popup itself)
@@ -588,13 +608,8 @@
 
     // Update popup position on map move
     mapInstance.on("move", () => {
-      if (popupData) {
-        const point = mapInstance.project(popupData.coordinates);
-        const rect = mapContainer.getBoundingClientRect();
-        popupPosition = {
-          x: rect.left + point.x,
-          y: rect.top + point.y,
-        };
+      if (popupData && popupElement && mapInstance && mapContainer) {
+        calculatePopupPosition(popupData.coordinates);
       }
     });
 
@@ -630,6 +645,100 @@
     // Update top persons when map moves or zooms
     // Use moveend only (fires after both pan and zoom)
     mapInstance.on('moveend', updateTopPersons);
+
+    // Close popup when user starts interacting with map (scroll/zoom/pan)
+    mapInstance.on('movestart', () => {
+      if (popupData) {
+        closePopup();
+      }
+    });
+    mapInstance.on('zoomstart', () => {
+      if (popupData) {
+        closePopup();
+      }
+    });
+  }
+
+  // Smart popup positioning to prevent clipping (similar to MetaStoryTimeline approach)
+  function calculatePopupPosition(coordinates) {
+    if (!popupElement || !mapInstance || !mapContainer) return;
+
+    // Get marker position on screen
+    const point = mapInstance.project(coordinates);
+    const mapRect = mapContainer.getBoundingClientRect();
+
+    // Marker position in viewport coordinates
+    const markerX = mapRect.left + point.x;
+    const markerY = mapRect.top + point.y;
+
+    // Measure tooltip dimensions
+    const tooltipRect = popupElement.getBoundingClientRect();
+    const tooltipWidth = tooltipRect.width;
+    const tooltipHeight = tooltipRect.height;
+
+    // Viewport constraints (with padding)
+    const padding = 16;
+    const viewportLeft = padding;
+    const viewportTop = padding;
+    const viewportRight = window.innerWidth - padding;
+    const viewportBottom = window.innerHeight - padding;
+
+    // Space available around marker
+    const spaceAbove = markerY - viewportTop;
+    const spaceBelow = viewportBottom - markerY;
+
+    // Determine optimal placement
+    let anchorX = 0.5; // Default: centered horizontally
+    let anchorY = 1.0; // Default: positioned above marker (bottom of tooltip at marker)
+    let finalX = markerX;
+    let finalY = markerY;
+
+    // Vertical placement: prefer top, fall back to bottom
+    if (spaceAbove >= tooltipHeight + 15) {
+      // Position above marker
+      anchorY = 1.0;
+      finalY = markerY - 15; // 15px clearance from marker
+    } else if (spaceBelow >= tooltipHeight + 15) {
+      // Position below marker
+      anchorY = 0.0;
+      finalY = markerY + 15; // 15px clearance from marker
+    } else {
+      // Not enough space either way - prefer top but clamp
+      anchorY = 1.0;
+      finalY = Math.max(viewportTop + tooltipHeight, markerY - 15);
+    }
+
+    // Horizontal centering with boundary checks
+    const halfWidth = tooltipWidth / 2;
+
+    // Calculate what the final position would be if centered
+    let tentativeX = markerX;
+    let tentativeAnchorX = 0.5;
+
+    // Check if centering would cause left overflow
+    if (markerX - halfWidth < viewportLeft) {
+      // Too close to left edge - align left edge of popup to viewport padding
+      tentativeAnchorX = 0.0;
+      tentativeX = viewportLeft;
+    }
+    // Check if centering would cause right overflow
+    else if (markerX + halfWidth > viewportRight) {
+      // Too close to right edge - align right edge of popup to viewport padding
+      tentativeAnchorX = 1.0;
+      tentativeX = viewportRight;
+    }
+    // Enough space to center
+    else {
+      tentativeAnchorX = 0.5;
+      tentativeX = markerX;
+    }
+
+    anchorX = tentativeAnchorX;
+    finalX = tentativeX;
+
+    // Update placement state
+    popupPlacement = { anchor: { x: anchorX, y: anchorY } };
+    popupPosition = { x: finalX, y: finalY };
   }
 
   async function initializeMap() {
@@ -779,8 +888,18 @@
     }, 300);
   }
 
+  // Handle wheel events on the entire page to close popup
+  function handleWheel() {
+    if (popupData) {
+      closePopup();
+    }
+  }
+
   onMount(() => {
     initializeMap();
+
+    // Add wheel event listener to window for mouse wheel scrolling
+    window.addEventListener('wheel', handleWheel, { passive: true });
   });
 
   onDestroy(() => {
@@ -793,6 +912,9 @@
       pmtilesProtocol = null;
     }
     eventDataCache.clear();
+
+    // Clean up wheel event listener
+    window.removeEventListener('wheel', handleWheel);
   });
 </script>
 
@@ -850,34 +972,53 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
+    bind:this={popupElement}
     class="landing-map-popup"
-    style="--accent-color: {popupData.primaryColor}; left: {popupPosition.x}px; top: {popupPosition.y}px;"
+    style="
+      --accent-color: {popupData.primaryColor};
+      --anchor-x: {popupPlacement.anchor.x};
+      --anchor-y: {popupPlacement.anchor.y};
+      left: {popupPosition.x}px;
+      top: {popupPosition.y}px;
+    "
     on:click|stopPropagation
     role="dialog"
     aria-label="Event details"
   >
-    <button class="popup-close" on:click={closePopup} aria-label="Close popup">
-      ×
-    </button>
-    <div class="popup-header">
-      <h3 class="popup-person-name">{popupData.personName}</h3>
-    </div>
-    <div class="popup-body">
-      <p class="popup-event-title">{popupData.eventTitle}</p>
-      {#if popupData.eventDate}
-        <p class="popup-date">{popupData.eventDate}</p>
+    <div class="popup-content">
+      {#if popupData.portraitUrl}
+        <img
+          src={popupData.portraitUrl}
+          alt={popupData.personName}
+          class="popup-portrait"
+        />
+      {:else}
+        <div class="popup-portrait-placeholder" style="background: {popupData.primaryColor}">
+          {popupData.personName.charAt(0)}
+        </div>
       {/if}
-      {#if popupData.locationName}
-        <p class="popup-location">
-          <svg width="12" height="12" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-            />
-          </svg>
-          {popupData.locationName}
-        </p>
-      {/if}
+      <div class="popup-text">
+        <h3 class="popup-person-name">{popupData.personName}</h3>
+        <p class="popup-event-title">{popupData.eventTitle}</p>
+        {#if popupData.eventDate || popupData.locationName}
+          <div class="popup-metadata">
+            {#if popupData.eventDate}
+              <span class="popup-date">{popupData.eventDate}</span>
+            {/if}
+            {#if popupData.locationName}
+              <span class="popup-location">
+                <svg width="12" height="12" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                  />
+                </svg>
+                {popupData.locationName}
+              </span>
+            {/if}
+          </div>
+        {/if}
+      </div>
     </div>
     <button class="popup-cta" on:click={handlePopupNavigate}>
       {$_("landing.map_view_story")}
@@ -934,72 +1075,123 @@
     border: 1px solid var(--accent-color, #38bdf8);
     border-radius: 0.75rem;
     padding: 1rem;
-    min-width: 200px;
-    max-width: 280px;
+    width: 340px;
+    max-width: 85vw;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
-    transform: translate(-50%, -100%);
-    margin-top: -15px;
     pointer-events: auto;
+
+    /* Dynamic transform based on anchor point (similar to MetaStoryTimeline) */
+    transform: translate(
+      calc(-100% * var(--anchor-x, 0.5)),
+      calc(-100% * var(--anchor-y, 1.0))
+    );
+
+    /* Smooth appearance animation */
+    animation: fadeInPopup 0.2s ease;
   }
 
-  .popup-close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: none;
-    border: none;
-    color: #cbd5e1;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
-    width: 24px;
-    height: 24px;
+  @keyframes fadeInPopup {
+    from {
+      opacity: 0;
+      transform: translate(
+        calc(-100% * var(--anchor-x, 0.5)),
+        calc(-100% * var(--anchor-y, 1.0) - 10px)
+      );
+    }
+    to {
+      opacity: 1;
+      transform: translate(
+        calc(-100% * var(--anchor-x, 0.5)),
+        calc(-100% * var(--anchor-y, 1.0))
+      );
+    }
+  }
+
+  .popup-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .popup-portrait {
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    flex-shrink: 0;
+    mix-blend-mode: lighten;
+  }
+
+  .popup-portrait-placeholder {
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.2s ease;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: var(--accent-color, #38bdf8);
+    flex-shrink: 0;
   }
 
-  .popup-close:hover {
-    color: #38bdf8;
-  }
-
-  .popup-header {
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    padding-right: 1.5rem;
-    border-bottom: 1px solid rgba(226, 232, 240, 0.15);
+  .popup-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
   .popup-person-name {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--accent-color, #38bdf8);
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    line-height: 1.2;
   }
 
   .popup-event-title {
-    margin: 0 0 0.5rem;
-    font-size: 0.95rem;
-    color: #e2e8f0;
+    margin: 0;
+    font-size: 0.875rem;
+    color: #cbd5e1;
     font-weight: 500;
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    line-height: 1.3;
   }
 
-  .popup-date,
+  .popup-metadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .popup-date {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    white-space: nowrap;
+  }
+
   .popup-location {
-    margin: 0.25rem 0;
     font-size: 0.85rem;
     color: #94a3b8;
     display: flex;
     align-items: center;
     gap: 0.35rem;
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    text-align: right;
+    margin-left: auto;
   }
 
   .popup-cta {
     width: 100%;
-    margin-top: 0.75rem;
+    margin-top: 0;
     padding: 0.6rem;
     background: var(--accent-color, #38bdf8);
     color: #0f172a;
@@ -1007,13 +1199,23 @@
     border-radius: 0.5rem;
     font-weight: 600;
     font-size: 0.9rem;
+    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
   .popup-cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 56, 189, 248), 0.4);
+  }
+
+  .popup-cta:focus-visible {
+    outline: 2px solid var(--accent-color, #38bdf8);
+    outline-offset: 2px;
+  }
+
+  .popup-cta:active {
+    transform: translateY(0);
   }
 
   .top-persons-overlay {
@@ -1112,6 +1314,40 @@
 
   /* Responsive adjustments for mobile */
   @media (max-width: 640px) {
+    .landing-map-popup {
+      max-width: calc(100vw - 2rem);
+      min-width: 200px;
+      padding: 0.875rem;
+    }
+
+    .popup-portrait {
+      width: 60px;
+    }
+
+    .popup-portrait-placeholder {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+    }
+
+    .popup-person-name {
+      font-size: 0.9rem;
+    }
+
+    .popup-event-title {
+      font-size: 0.8rem;
+    }
+
+    .popup-date,
+    .popup-location {
+      font-size: 0.75rem;
+    }
+
+    .popup-cta {
+      padding: 0.55rem;
+      font-size: 0.85rem;
+    }
+
     .top-persons-overlay {
       bottom: 0.5rem;
       left: 0.5rem;
