@@ -37,6 +37,15 @@
   let popupData = null;
   let popupPosition = { x: 0, y: 0 };
 
+  // Top persons display state
+  let topPersons = []; // Array of {personId, personName, portraitUrl, primaryColor, count}
+  let showTopPersons = false; // Visibility toggle based on event count
+
+  // Map personId to full person data (including portrait info)
+  $: personLookup = new Map(
+    filteredEntries.map(entry => [entry.id, entry])
+  );
+
   // Lazy load event data modules
   const datasetModules = import.meta.glob(
     [
@@ -232,6 +241,85 @@
       const hex = Math.round(x).toString(16);
       return hex.length === 1 ? "0" + hex : hex;
     }).join('');
+  }
+
+  // Handle person card click to navigate to their story
+  function handlePersonCardClick(personId) {
+    // Find first event for this person in current viewport
+    const visibleFeatures = mapInstance.queryRenderedFeatures({
+      layers: ['unclustered-point']
+    }).filter(f => f.properties.personId === personId);
+
+    if (visibleFeatures.length > 0) {
+      const firstEvent = visibleFeatures[0].properties;
+      onNavigate({
+        personId: firstEvent.personId,
+        eventIndex: parseInt(firstEvent.eventIndex, 10)
+      });
+    }
+  }
+
+  // Update top persons display based on visible events
+  function updateTopPersons() {
+    console.log('[TopPersons] updateTopPersons called, mapReady:', mapReady, 'mapInstance:', !!mapInstance);
+    if (!mapReady || !mapInstance) return;
+
+    const source = mapInstance.getSource('events');
+    if (!source || !source._data) return;
+
+    // Get current map bounds
+    const bounds = mapInstance.getBounds();
+
+    // Query source features within bounds (includes ALL features, not just rendered)
+    const allFeatures = source._data.features || [];
+    const featuresInBounds = allFeatures.filter(feature => {
+      const [lng, lat] = feature.geometry.coordinates;
+      return bounds.contains([lng, lat]);
+    });
+
+    const totalVisible = featuresInBounds.length;
+    console.log('[TopPersons] Features in viewport:', totalVisible);
+
+    // Show portraits only when < 50 total events visible in viewport
+    showTopPersons = totalVisible > 0 && totalVisible < 50;
+    console.log('[TopPersons] showTopPersons:', showTopPersons);
+
+    // Count events per person from all features in bounds
+    const personCounts = new Map();
+
+    featuresInBounds.forEach(feature => {
+      const personId = feature.properties.personId;
+      personCounts.set(personId, (personCounts.get(personId) || 0) + 1);
+    });
+
+    console.log('[TopPersons] Person counts:', Object.fromEntries(personCounts));
+
+    if (showTopPersons) {
+      // Sort persons by event count (descending) and take top 3
+      const sorted = Array.from(personCounts.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
+      topPersons = sorted.map(([personId, count]) => {
+        const person = personLookup.get(personId);
+        const style = getStyle(personId);
+
+        console.log('[TopPersons] Processing person:', personId, 'person data:', person, 'style:', style);
+
+        return {
+          personId,
+          personName: person?.name?.replace(/_/g, ' ') || personId,
+          portraitUrl: person?.portrait?.thumbnail || person?.portrait?.image || null,
+          primaryColor: style?.primary || '#38BDF8',
+          count
+        };
+      });
+
+      console.log('[TopPersons] topPersons result:', topPersons);
+    } else {
+      topPersons = [];
+      console.log('[TopPersons] Cleared topPersons (not showing)');
+    }
   }
 
   // Interpolate between person color and gray based on dominance percentage
@@ -555,9 +643,16 @@
     // Initial color update
     updateClusterColors();
 
+    // Initial top persons update
+    updateTopPersons();
+
     // Update colors when map moves or zooms (clusters may change)
     mapInstance.on("moveend", updateClusterColors);
     mapInstance.on("zoomend", updateClusterColors);
+
+    // Update top persons when map moves or zooms
+    // Use moveend only (fires after both pan and zoom)
+    mapInstance.on('moveend', updateTopPersons);
   }
 
   async function initializeMap() {
@@ -752,6 +847,39 @@
     </div>
   {/if}
   <div bind:this={mapContainer} class="map"></div>
+
+  {#if showTopPersons && topPersons.length > 0}
+    <div class="top-persons-overlay">
+      {#each topPersons as person (person.personId)}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          class="person-card"
+          style="--person-color: {person.primaryColor}"
+          on:click={() => handlePersonCardClick(person.personId)}
+          role="button"
+          tabindex="0"
+          aria-label="View {person.personName}'s story"
+        >
+          {#if person.portraitUrl}
+            <img
+              src={person.portraitUrl}
+              alt={person.personName}
+              class="person-portrait"
+            />
+          {:else}
+            <div class="person-portrait-placeholder" style="background: {person.primaryColor}">
+              {person.personName.charAt(0)}
+            </div>
+          {/if}
+          <div class="person-info">
+            <div class="person-name">{person.personName}</div>
+            <div class="person-count">{person.count} {person.count === 1 ? 'event' : 'events'}</div>
+          </div>
+        </div>
+      {/each}
+    </div>
+  {/if}
 </div>
 
 {#if popupData}
@@ -925,5 +1053,123 @@
   .popup-cta:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+  }
+
+  .top-persons-overlay {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    pointer-events: none;
+  }
+
+  .person-card {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    backdrop-filter: none;
+    box-shadow: none;
+    animation: fadeIn 0.3s ease-out;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .person-card:hover {
+    transform: translateY(-2px);
+    opacity: 0.85;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .person-portrait {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--person-color, #38bdf8);
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .person-portrait-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .person-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .person-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow:
+      0 0 4px rgba(0, 0, 0, 1),
+      0 0 8px rgba(0, 0, 0, 0.8),
+      0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  .person-count {
+    font-size: 0.65rem;
+    color: #cbd5e1;
+    text-shadow:
+      0 0 4px rgba(0, 0, 0, 1),
+      0 0 8px rgba(0, 0, 0, 0.8),
+      0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Responsive adjustments for mobile */
+  @media (max-width: 640px) {
+    .top-persons-overlay {
+      bottom: 0.5rem;
+      left: 0.5rem;
+      max-width: calc(100% - 1rem);
+      gap: 0.4rem;
+    }
+
+    .person-portrait,
+    .person-portrait-placeholder {
+      width: 28px;
+      height: 28px;
+    }
+
+    .person-name {
+      font-size: 0.7rem;
+    }
+
+    .person-count {
+      font-size: 0.6rem;
+    }
   }
 </style>
