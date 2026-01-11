@@ -65,7 +65,7 @@ export function wouldOverlap(pointA, pointB, zoom, thresholdPixels = 15) {
  * @param {Array} features - GeoJSON features with Point geometries
  * @param {number} zoom - Target zoom level for collision detection (e.g., 12)
  * @param {number} separationPixels - Minimum separation in pixels (default: 15)
- * @returns {Object} { markers: Array, connections: GeoJSON } - Adjusted markers and connection lines
+ * @returns {Object} { markers: Array, connections: GeoJSON, dummies: GeoJSON } - Adjusted markers, connection lines, and dummy markers
  */
 export function arrangeOverlappingMarkers(
   features,
@@ -76,11 +76,13 @@ export function arrangeOverlappingMarkers(
     return {
       markers: [],
       connections: { type: "FeatureCollection", features: [] },
+      dummies: { type: "FeatureCollection", features: [] },
     };
   }
 
   const arranged = [];
   const connections = [];
+  const dummies = [];
   const processed = new Set();
 
   for (let i = 0; i < features.length; i++) {
@@ -116,6 +118,19 @@ export function arrangeOverlappingMarkers(
       const centerCoords = [lonA, latA];
       const radius = separationPixels;
       const angleStep = (2 * Math.PI) / group.length;
+
+      // Create a single dummy marker at the original (center) position
+      dummies.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: centerCoords,
+        },
+        properties: {
+          // Use a neutral gray color for dummies
+          color: "#64748b",
+        },
+      });
 
       group.forEach((idx, position) => {
         // Deep copy to avoid mutating original
@@ -161,5 +176,6 @@ export function arrangeOverlappingMarkers(
   return {
     markers: arranged,
     connections: { type: "FeatureCollection", features: connections },
+    dummies: { type: "FeatureCollection", features: dummies },
   };
 }

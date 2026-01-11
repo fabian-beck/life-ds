@@ -31,6 +31,7 @@
   let basemapStyleCache = null;
   let updateTimeout;
   let connectionLinesData = { type: "FeatureCollection", features: [] };
+  let dummyMarkersData = { type: "FeatureCollection", features: [] };
 
   // Popup state (Svelte-based, not MapLibre GL)
   let popupData = null;
@@ -193,10 +194,11 @@
     console.log('[LandingMap] Loaded', features.length, 'location features');
 
     // Apply collision detection and circular arrangement
-    const { markers, connections } = arrangeOverlappingMarkers(features, MAX_CLUSTER_ZOOM, 200);
+    const { markers, connections, dummies } = arrangeOverlappingMarkers(features, MAX_CLUSTER_ZOOM, 200);
     connectionLinesData = connections;
+    dummyMarkersData = dummies;
 
-    console.log('[LandingMap] Arranged markers:', markers.length, 'Connection lines:', connections.features.length);
+    console.log('[LandingMap] Arranged markers:', markers.length, 'Connection lines:', connections.features.length, 'Dummy markers:', dummies.features.length);
 
     return { type: "FeatureCollection", features: markers };
   }
@@ -328,13 +330,36 @@
       data: connectionLinesData
     });
 
-    // Add layer for connection lines (drawn BEFORE markers so markers appear on top)
-    // Only show when individual markers are visible (zoom > clusterMaxZoom)
+    // Add source for dummy markers (original positions)
+    mapInstance.addSource("dummy-markers", {
+      type: "geojson",
+      data: dummyMarkersData
+    });
+
+    // Add layer for dummy markers (small, non-interactive circles at original positions)
+    // Only show when clusters have fully resolved (one zoom level past clusterMaxZoom)
+    mapInstance.addLayer({
+      id: "dummy-marker-points",
+      type: "circle",
+      source: "dummy-markers",
+      minzoom: 9, // One level past clusterMaxZoom to ensure clusters are fully resolved
+      paint: {
+        "circle-color": ["get", "color"],
+        "circle-radius": 4,
+        "circle-opacity": 1.0,
+        "circle-stroke-width": 1,
+        "circle-stroke-color": "rgba(255, 255, 255, 0.8)",
+        "circle-stroke-opacity": 1.0
+      }
+    });
+
+    // Add layer for connection lines (drawn AFTER dummy markers but BEFORE regular markers)
+    // Only show when clusters have fully resolved (one zoom level past clusterMaxZoom)
     mapInstance.addLayer({
       id: "marker-connection-lines",
       type: "line",
       source: "marker-connections",
-      minzoom: 8, // Same as clusterMaxZoom - only show when clusters have resolved
+      minzoom: 9, // One level past clusterMaxZoom to ensure clusters are fully resolved
       paint: {
         "line-color": ["get", "color"],
         "line-width": 1,
@@ -605,6 +630,13 @@
       if (connectionSource) {
         connectionSource.setData(connectionLinesData);
         console.log('[LandingMap] Updated connection lines:', connectionLinesData.features.length);
+      }
+
+      // Update dummy markers
+      const dummySource = mapInstance.getSource("dummy-markers");
+      if (dummySource) {
+        dummySource.setData(dummyMarkersData);
+        console.log('[LandingMap] Updated dummy markers:', dummyMarkersData.features.length);
       }
 
       const bounds = calculateInitialBounds(geojsonData);
