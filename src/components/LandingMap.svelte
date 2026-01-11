@@ -248,18 +248,10 @@
 
   // Handle person card click to navigate to their story
   function handlePersonCardClick(personId) {
-    // Find first event for this person in current viewport
-    const visibleFeatures = mapInstance.queryRenderedFeatures({
-      layers: ['unclustered-point']
-    }).filter(f => f.properties.personId === personId);
-
-    if (visibleFeatures.length > 0) {
-      const firstEvent = visibleFeatures[0].properties;
-      onNavigate({
-        personId: firstEvent.personId,
-        eventIndex: parseInt(firstEvent.eventIndex, 10)
-      });
-    }
+    // Navigate to the person's story (no specific event)
+    onNavigate({
+      personId: personId
+    });
   }
 
   // Update top persons display based on visible events
@@ -976,6 +968,7 @@
     class="landing-map-popup"
     style="
       --accent-color: {popupData.primaryColor};
+      --accent-color-rgb: {hexToRgb(popupData.primaryColor)?.r}, {hexToRgb(popupData.primaryColor)?.g}, {hexToRgb(popupData.primaryColor)?.b};
       --anchor-x: {popupPlacement.anchor.x};
       --anchor-y: {popupPlacement.anchor.y};
       left: {popupPosition.x}px;
@@ -998,8 +991,17 @@
         </div>
       {/if}
       <div class="popup-text">
-        <h3 class="popup-person-name">{popupData.personName}</h3>
-        <p class="popup-event-title">{popupData.eventTitle}</p>
+        <div class="popup-header">
+          <div class="popup-person-name">{popupData.personName}</div>
+          <button
+            class="popup-action-compact"
+            on:click={handlePopupNavigate}
+            title={$_("landing.map_view_story")}
+          >
+            →
+          </button>
+        </div>
+        <h3 class="popup-event-title">{popupData.eventTitle}</h3>
         {#if popupData.eventDate || popupData.locationName}
           <div class="popup-metadata">
             {#if popupData.eventDate}
@@ -1020,9 +1022,6 @@
         {/if}
       </div>
     </div>
-    <button class="popup-cta" on:click={handlePopupNavigate}>
-      {$_("landing.map_view_story")}
-    </button>
   </div>
 {/if}
 
@@ -1145,21 +1144,31 @@
     gap: 0.4rem;
   }
 
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
   .popup-person-name {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--accent-color, #38bdf8);
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
     line-height: 1.2;
+    flex: 1;
+    min-width: 0;
   }
 
   .popup-event-title {
     margin: 0;
-    font-size: 0.875rem;
-    color: #cbd5e1;
-    font-weight: 500;
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-size: 1.05rem;
+    color: #e2e8f0;
+    font-weight: 600;
+    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
     line-height: 1.3;
   }
 
@@ -1189,33 +1198,40 @@
     margin-left: auto;
   }
 
-  .popup-cta {
-    width: 100%;
-    margin-top: 0;
-    padding: 0.6rem;
-    background: var(--accent-color, #38bdf8);
-    color: #0f172a;
-    border: none;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+  /* Compact action button (matching MetaStoryTimeline style) */
+  .popup-action-compact {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: rgba(var(--accent-color-rgb, 56, 189, 248), 0.15);
+    border: 1px solid rgba(var(--accent-color-rgb, 56, 189, 248), 0.4);
+    border-radius: 4px;
+    color: var(--accent-color, #38bdf8);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
   }
 
-  .popup-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 56, 189, 248), 0.4);
+  .popup-action-compact:hover {
+    background: rgba(var(--accent-color-rgb, 56, 189, 248), 0.3);
+    border-color: rgba(var(--accent-color-rgb, 56, 189, 248), 0.7);
+    transform: translateX(2px);
   }
 
-  .popup-cta:focus-visible {
+  .popup-action-compact:focus-visible {
     outline: 2px solid var(--accent-color, #38bdf8);
     outline-offset: 2px;
   }
 
-  .popup-cta:active {
-    transform: translateY(0);
+  .popup-action-compact:active {
+    transform: translateX(0);
   }
 
   .top-persons-overlay {
@@ -1331,21 +1347,16 @@
     }
 
     .popup-person-name {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
     }
 
     .popup-event-title {
-      font-size: 0.8rem;
+      font-size: 0.95rem;
     }
 
     .popup-date,
     .popup-location {
       font-size: 0.75rem;
-    }
-
-    .popup-cta {
-      padding: 0.55rem;
-      font-size: 0.85rem;
     }
 
     .top-persons-overlay {
