@@ -6,6 +6,7 @@
   import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
   import { slide } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
+  import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
   import LandingMap from "./LandingMap.svelte";
 
@@ -377,6 +378,7 @@
 
 <section class="landing">
   <div class="top-controls">
+    <AIGeneratedButton variant="large" onClick={toggleExplanation} />
     <select
       value={$currentLanguage}
       on:change={handleLanguageChange}
@@ -386,28 +388,6 @@
       <option value="en">English</option>
       <option value="de">Deutsch</option>
     </select>
-    <button
-      class="ai-disclaimer-button"
-      on:click={toggleExplanation}
-      aria-label={$_("landing.learn_about_ai")}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
-      <span>{$_("landing.ai_generated_label")}</span>
-    </button>
   </div>
 
   <div class="header-container">
@@ -663,7 +643,7 @@
     gap: 0.5rem;
     align-items: center;
     margin-bottom: 0;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .language-selector {
@@ -692,31 +672,6 @@
   .language-selector option {
     background: #0f172a;
     color: #e2e8f0;
-  }
-
-  .ai-disclaimer-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    background: rgba(251, 191, 36, 0.12);
-    border: 1px solid rgba(251, 191, 36, 0.3);
-    color: #fbbf24;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .ai-disclaimer-button:hover {
-    background: rgba(251, 191, 36, 0.18);
-    border-color: rgba(251, 191, 36, 0.45);
-  }
-
-  .ai-disclaimer-button svg {
-    flex-shrink: 0;
-    opacity: 0.9;
   }
 
   .header-container {
@@ -1294,11 +1249,6 @@
     .landing {
       padding: 4rem 3rem 5rem;
       gap: 3rem;
-    }
-
-    .ai-disclaimer-button {
-      top: 2.5rem;
-      right: 2.5rem;
     }
 
     .header-container {

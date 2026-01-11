@@ -5,6 +5,8 @@
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
   import CloseButton from "./CloseButton.svelte";
+  import AIGeneratedButton from "./AIGeneratedButton.svelte";
+  import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   export let metaStoryData = null;
@@ -208,6 +210,17 @@
   let stickyHeaderElement = null;
   let stickyHeaderHeight = 0;
 
+  // AI disclaimer modal state
+  let showAIModal = false;
+
+  function openAIModal() {
+    showAIModal = true;
+  }
+
+  function closeAIModal() {
+    showAIModal = false;
+  }
+
   // Handle sticky header visibility based on scroll position
   function handleHeaderVisibility() {
     const scrollY = window.scrollY;
@@ -217,8 +230,15 @@
   // Update sticky header height when it appears/changes
   $: if (stickyHeaderElement && showStickyHeader) {
     stickyHeaderHeight = stickyHeaderElement.offsetHeight;
+    // Update CSS custom property for AI button positioning
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--sticky-header-height', `${stickyHeaderHeight}px`);
+    }
   } else {
     stickyHeaderHeight = 0;
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--sticky-header-height', '0px');
+    }
   }
 
   // Update navigation button states based on current position
@@ -377,17 +397,26 @@
           />
         </div>
       </header>
+      <!-- AI button positioned below sticky header -->
+      <div class="sticky-ai-button" transition:fade={{ duration: 200 }}>
+        <AIGeneratedButton variant="small" onClick={openAIModal} />
+      </div>
     {/if}
 
     <!-- Header section -->
     <header class="meta-story-header">
-      <CloseButton
-        variant="light"
-        size="medium"
-        position="absolute"
-        ariaLabel={$_('meta_story.back_to_stories')}
-        on:click={backToLanding}
-      />
+      <div class="header-controls">
+        <div class="header-ai-button">
+          <AIGeneratedButton variant="large" onClick={openAIModal} />
+        </div>
+        <CloseButton
+          variant="light"
+          size="medium"
+          position="absolute"
+          ariaLabel={$_('meta_story.back_to_stories')}
+          on:click={backToLanding}
+        />
+      </div>
       <h1>{metaStoryData.meta_story.title}</h1>
       <p class="tagline">{metaStoryData.meta_story.tagline}</p>
       <p class="date-range">
@@ -464,6 +493,8 @@
   </div>
 {/if}
 
+<AIDisclaimerModal show={showAIModal} onClose={closeAIModal} />
+
 <style>
   /* Container */
   .meta-story-view {
@@ -493,6 +524,13 @@
       rgba(15, 23, 42, 0.58);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .sticky-ai-button {
+    position: fixed;
+    top: calc(var(--sticky-header-height, 3.5rem) + 0.25rem);
+    left: 0.25rem;
+    z-index: 100;
   }
 
   .sticky-compact-info {
@@ -545,6 +583,18 @@
   .meta-story-header {
     position: relative;
     margin-bottom: 3rem;
+  }
+
+  .header-controls {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .header-ai-button {
+    margin-right: auto;
   }
 
   h1 {
@@ -734,6 +784,14 @@
       background: rgba(15, 23, 42, 0.5);
       backdrop-filter: blur(8px);
       z-index: 10;
+      gap: 0.35rem;
+    }
+
+    .sticky-ai-button {
+      /* Reposition AI button for landscape mobile */
+      top: auto;
+      bottom: 0.5rem;
+      left: 0.5rem;
     }
 
     .sticky-compact-info {
