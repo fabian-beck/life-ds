@@ -218,7 +218,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
-    padding-top: clamp(0rem, 8vh, 10rem);
+    padding-top: clamp(0rem, 4vh, 5rem);
   }
 
   .conclusion-box {
@@ -272,7 +272,7 @@
 
   .related-headline {
     font-family: var(--story-heading-font, sans-serif);
-    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 600;
     line-height: 1.3;
     color: var(--story-primary, #f8fafc);
@@ -410,6 +410,7 @@
   .card-roles {
     font-size: 0.6875rem;
     opacity: 0.7;
+    text-transform: uppercase;
   }
 
   .references-section {
@@ -425,7 +426,7 @@
 
   .references-headline {
     font-family: var(--story-heading-font, sans-serif);
-    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 600;
     line-height: 1.3;
     color: var(--story-primary, #f8fafc);
@@ -518,7 +519,7 @@
     }
 
     .related-headline {
-      font-size: 0.8rem;
+      font-size: 0.95rem;
     }
 
     .related-persons-grid {
@@ -545,7 +546,7 @@
     }
 
     .references-headline {
-      font-size: 0.8rem;
+      font-size: 0.95rem;
     }
 
     .reference-link {
