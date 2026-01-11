@@ -804,6 +804,24 @@
     border: 1px solid rgba(148, 163, 184, 0.2);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     margin-bottom: 2rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    width: calc(100% + 3rem);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  @media (min-width: 768px) {
+    .landing-map-wrapper {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      border-radius: 1rem;
+      border-left: 1px solid rgba(148, 163, 184, 0.2);
+      border-right: 1px solid rgba(148, 163, 184, 0.2);
+      height: 500px;
+    }
   }
 
   @media (max-width: 768px) {
