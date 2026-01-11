@@ -155,7 +155,6 @@
   }
 
   async function loadAllEventLocations(entries) {
-    console.log('[LandingMap] loadAllEventLocations called with', entries.length, 'entries');
     const features = [];
     const BATCH_SIZE = 10;
 
@@ -188,8 +187,6 @@
               } catch (err) {
                 console.warn(`Failed to load events for ${entry.id}:`, err);
               }
-            } else {
-              console.warn(`[LandingMap] No loader found for ${entry.id}, path: ${path}`);
             }
           }
         })
@@ -198,14 +195,10 @@
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
 
-    console.log('[LandingMap] Loaded', features.length, 'location features');
-
     // Apply collision detection and circular arrangement
     const { markers, connections, dummies } = arrangeOverlappingMarkers(features, MAX_CLUSTER_ZOOM, 200);
     connectionLinesData = connections;
     dummyMarkersData = dummies;
-
-    console.log('[LandingMap] Arranged markers:', markers.length, 'Connection lines:', connections.features.length, 'Dummy markers:', dummies.features.length);
 
     return { type: "FeatureCollection", features: markers };
   }
@@ -261,7 +254,6 @@
 
   // Update top persons display based on visible events
   function updateTopPersons() {
-    console.log('[TopPersons] updateTopPersons called, mapReady:', mapReady, 'mapInstance:', !!mapInstance);
     if (!mapReady || !mapInstance) return;
 
     const source = mapInstance.getSource('events');
@@ -278,11 +270,9 @@
     });
 
     const totalVisible = featuresInBounds.length;
-    console.log('[TopPersons] Features in viewport:', totalVisible);
 
     // Show portraits only when < 50 total events visible in viewport
     showTopPersons = totalVisible > 0 && totalVisible < 50;
-    console.log('[TopPersons] showTopPersons:', showTopPersons);
 
     // Count events per person from all features in bounds
     const personCounts = new Map();
@@ -291,8 +281,6 @@
       const personId = feature.properties.personId;
       personCounts.set(personId, (personCounts.get(personId) || 0) + 1);
     });
-
-    console.log('[TopPersons] Person counts:', Object.fromEntries(personCounts));
 
     if (showTopPersons) {
       // Sort persons by event count (descending) and take top 3
@@ -304,8 +292,6 @@
         const person = personLookup.get(personId);
         const style = getStyle(personId);
 
-        console.log('[TopPersons] Processing person:', personId, 'person data:', person, 'style:', style);
-
         return {
           personId,
           personName: person?.name?.replace(/_/g, ' ') || personId,
@@ -314,11 +300,8 @@
           count
         };
       });
-
-      console.log('[TopPersons] topPersons result:', topPersons);
     } else {
       topPersons = [];
-      console.log('[TopPersons] Cleared topPersons (not showing)');
     }
   }
 
@@ -382,18 +365,14 @@
 
       if (dominantPerson && percentage > 0.5) {
         const interpolatedColor = interpolateColor(personColors[dominantPerson], percentage);
-        console.log(`[LandingMap] Cluster ${clusterId}: ${dominantPerson} (${(percentage * 100).toFixed(1)}%) - color ${interpolatedColor}`);
         callback(interpolatedColor);
       } else {
-        console.log(`[LandingMap] Cluster ${clusterId}: mixed (max ${(percentage * 100).toFixed(1)}%) - using gray`);
         callback("#64748b"); // Gray for mixed clusters
       }
     });
   }
 
   async function setupMapLayers(geojsonData) {
-    console.log('[LandingMap] setupMapLayers called with', geojsonData.features?.length || 0, 'features');
-
     mapInstance.addSource("events", {
       type: "geojson",
       data: geojsonData,
@@ -407,8 +386,6 @@
         sampleColor: ["coalesce", ["get", "primaryColor"], "#94a3b8"]
       }
     });
-
-    console.log('[LandingMap] Source added');
 
     // Add source for connection lines (links arranged markers to original position)
     mapInstance.addSource("marker-connections", {
@@ -656,9 +633,7 @@
   }
 
   async function initializeMap() {
-    console.log('[LandingMap] initializeMap called');
     if (mapInstance || !mapContainer) {
-      console.log('[LandingMap] Skipping init - mapInstance exists or no container');
       return;
     }
 
@@ -666,13 +641,10 @@
     const geojsonData = await loadAllEventLocations(filteredEntries);
     isLoading = false;
 
-    console.log('[LandingMap] GeoJSON data:', geojsonData);
-
     await resolvePmtilesUrl();
     const style = createBaseStyle();
 
     if (!style) {
-      console.error('[LandingMap] No basemap style created');
       return;
     }
 
@@ -682,7 +654,6 @@
     }
 
     const initialBounds = calculateInitialBounds(geojsonData);
-    console.log('[LandingMap] Initial bounds:', initialBounds);
 
     mapInstance = new maplibregl.Map({
       container: mapContainer,
@@ -746,14 +717,12 @@
     mapInstance.addControl(new ZoomResetControl(), "top-right");
 
     mapInstance.on("load", () => {
-      console.log('[LandingMap] Map loaded, setting up layers');
       mapReady = true;
       setupMapLayers(geojsonData);
     });
   }
 
   async function updateMapData(entries) {
-    console.log('[LandingMap] updateMapData called, mapReady:', mapReady, 'entries:', entries.length);
     if (!mapReady || !mapInstance) return;
 
     isLoading = true;
@@ -762,36 +731,28 @@
 
     const source = mapInstance.getSource("events");
     if (source) {
-      console.log('[LandingMap] Updating source with', geojsonData.features?.length || 0, 'features');
       source.setData(geojsonData);
 
       // Update connection lines
       const connectionSource = mapInstance.getSource("marker-connections");
       if (connectionSource) {
         connectionSource.setData(connectionLinesData);
-        console.log('[LandingMap] Updated connection lines:', connectionLinesData.features.length);
       }
 
       // Update dummy markers
       const dummySource = mapInstance.getSource("dummy-markers");
       if (dummySource) {
         dummySource.setData(dummyMarkersData);
-        console.log('[LandingMap] Updated dummy markers:', dummyMarkersData.features.length);
       }
 
       const bounds = calculateInitialBounds(geojsonData);
       if (bounds) {
-        console.log('[LandingMap] Fitting bounds:', bounds);
         mapInstance.fitBounds(bounds, {
           padding: 80,
           maxZoom: 8,
           duration: 800,
         });
-      } else {
-        console.warn('[LandingMap] No bounds calculated');
       }
-    } else {
-      console.error('[LandingMap] No events source found');
     }
   }
 

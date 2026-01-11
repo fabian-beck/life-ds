@@ -524,7 +524,7 @@
     </div>
   </div>
 
-  <div class="map-toggle-container">
+  <div class="map-toggle-container" class:map-active={showMap}>
     <button
       class="map-toggle-button"
       class:active={showMap}
@@ -653,7 +653,7 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 1rem 1.5rem 4rem;
     position: relative;
   }
@@ -762,7 +762,11 @@
   .map-toggle-container {
     display: flex;
     justify-content: flex-end;
-    margin: 1.5rem 0 1rem;
+    margin: 0.5rem 0 0;
+  }
+
+  .map-toggle-container.map-active {
+    margin-bottom: -1rem;
   }
 
   .map-toggle-button {
@@ -787,9 +791,12 @@
   }
 
   .map-toggle-button.active {
-    background: rgba(56, 189, 248, 0.15);
-    border-color: rgba(56, 189, 248, 0.5);
-    color: #38bdf8;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    color: #cbd5e1;
   }
 
   .map-toggle-button svg {
@@ -798,35 +805,40 @@
 
   .landing-map-wrapper {
     width: 100%;
-    height: 500px;
+    height: 550px;
     border-radius: 1rem;
     overflow: hidden;
     border: 1px solid rgba(148, 163, 184, 0.2);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    margin-bottom: 2rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
     margin-left: -1.5rem;
     margin-right: -1.5rem;
     width: calc(100% + 3rem);
     border-radius: 0;
     border-left: none;
     border-right: none;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
   }
 
   @media (min-width: 768px) {
     .landing-map-wrapper {
+      margin-top: 0;
       margin-left: 0;
       margin-right: 0;
       width: 100%;
       border-radius: 1rem;
+      border-top-right-radius: 0;
       border-left: 1px solid rgba(148, 163, 184, 0.2);
       border-right: 1px solid rgba(148, 163, 184, 0.2);
-      height: 500px;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+      height: 550px;
     }
   }
 
   @media (max-width: 768px) {
     .landing-map-wrapper {
-      height: 350px;
+      height: 400px;
     }
   }
 
