@@ -102,10 +102,8 @@
           if (typeof id !== "string") return true;
           const lower = id.toLowerCase();
 
-          if (layer.type === "symbol") return false;
-          if (lower.includes("label")) return false;
-          if (lower.includes("text")) return false;
-          if (lower.includes("name")) return false;
+          // Keep labels for major features (places, water)
+          // Remove boundary/border labels for cleaner look
           if (lower.includes("boundary")) return false;
           if (lower.includes("border")) return false;
 
