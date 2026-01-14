@@ -2049,23 +2049,10 @@ def build_phase1_prompt(
 
 def _validate_chronological_order(event_skeletons: List[EventSkeleton]) -> None:
     """
-    Validate that events are in strict chronological order and contain no "Other Events" categorization.
+    Validate that events are in strict chronological order.
 
-    Raises RuntimeError if:
-    - Events are not chronologically ordered
-    - Any event title contains "Other" or similar categorization terms
+    Raises RuntimeError if events are not chronologically ordered.
     """
-    # Check for "Other Events" or similar problematic categorizations
-    prohibited_terms = ["other events", "other", "miscellaneous", "additional events", "various events"]
-    for event in event_skeletons:
-        title_lower = event.title.lower()
-        for term in prohibited_terms:
-            if term in title_lower:
-                raise RuntimeError(
-                    f"Event title contains prohibited categorization term '{term}': '{event.title}'. "
-                    f"All events must be equally important biographical events without 'other' or 'miscellaneous' categories."
-                )
-
     # Validate chronological ordering
     for i in range(len(event_skeletons) - 1):
         current_event = event_skeletons[i]
@@ -2083,7 +2070,6 @@ def _validate_chronological_order(event_skeletons: List[EventSkeleton]) -> None:
             )
 
     print(f"  ✓ Chronological order validated ({len(event_skeletons)} events)")
-    print(f"  ✓ No 'Other Events' categorizations found")
 
 
 def call_openai_phase1(prompt: str, model: str) -> LifePlan:
@@ -2821,6 +2807,8 @@ def call_openai_chapter_generation(
         "Based on the established life events provided, create 3-6 compelling life chapters that tell this person's story.\n\n"
         "CHAPTER REQUIREMENTS:\n"
         "- Each chapter represents a distinct phase with a UNIFIED THEME or focus (e.g., education, war service, exile, creative peak, final years)\n"
+        "- ABSOLUTE PROHIBITION: NO chapter headline may contain 'Other', 'Miscellaneous', 'Additional', or 'Various' - these are generic categorizations, not meaningful life phases\n"
+        "- Every chapter must be equally important with a specific, concrete theme - there are no 'other' or secondary chapters\n"
         "- Chapters must be chronologically ordered and non-overlapping\n"
         "- Events within a chapter should feel related - avoid mixing disparate life phases (e.g., don't combine education + early career + major achievement)\n"
         "- Aim for 3-6 chapters total - too few lacks nuance, too many fragments the story\n"
@@ -2996,6 +2984,38 @@ def assign_events_to_chapters(
     return updated_events
 
 
+def _validate_chapter_headlines(chapters: List[LifeChapter]) -> None:
+    """
+    Validate that chapter headlines don't contain generic "Other" categorizations.
+
+    Raises RuntimeError if any chapter headline contains prohibited terms.
+    """
+    import re
+
+    # Patterns to detect generic "other" categorizations in chapter headlines
+    # Note: We check for "other" as a chapter-starting word to catch patterns like
+    # "Other Events", "Other Achievements", etc., while allowing "Mother of All Demos"
+    prohibited_patterns = [
+        r'^\s*other\s+',  # "other" at the start of the headline
+        r'\bother\s+events?\b',  # "other event" or "other events"
+        r'\bother\s+achievements?\b',  # "other achievement" or "other achievements"
+        r'\bmiscellaneous\b',
+        r'\badditional\s+events?\b',
+        r'\bvarious\s+events?\b'
+    ]
+
+    for chapter in chapters:
+        headline_lower = chapter.headline.lower()
+        for pattern in prohibited_patterns:
+            if re.search(pattern, headline_lower):
+                raise RuntimeError(
+                    f"Chapter headline contains prohibited categorization term: '{chapter.headline}'. "
+                    f"All chapters must represent meaningful life phases, not generic 'other' or 'miscellaneous' groupings."
+                )
+
+    print(f"  ✓ Chapter headlines validated ({len(chapters)} chapters)")
+
+
 def generate_chapters_for_events(
     merged_events: List[LifeEvent],
     person_name: str,
@@ -3016,6 +3036,9 @@ def generate_chapters_for_events(
 
     # Call AI to generate chapters
     chapter_output = call_openai_chapter_generation(prompt, model)
+
+    # Validate chapter headlines don't contain generic categorization terms
+    _validate_chapter_headlines(chapter_output.chapters)
 
     # Deduplicate involved_people in chapters (remove name variations)
     deduplicated_chapters = []
