@@ -1,0 +1,506 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-01-14",
+  "ego": {
+    "name": "Vannevar Bush",
+    "birth_year": 1890,
+    "death_year": 1974,
+    "primary_roles": [
+      "engineer",
+      "inventor",
+      "science administrator"
+    ],
+    "summary": "Vannevar Bush was an American engineer, inventor, and science administrator who became a central organizer of U.S. scientific research and development during World War II. He led the Office of Scientific Research and Development (OSRD), helped initiate and administrate early work on the Manhattan Project, shaped U.S. science policy, and influenced computing and information science through his analog computer work and the memex concept.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Vannevar_Bush"
+  },
+  "connections": [
+    {
+      "person_name": "Richard Perry Bush",
+      "relationship_type": "family/father",
+      "relationship_description": "Father; a Universalist minister who shaped Bush’s early home and education in Massachusetts.",
+      "start_year": 1890,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family upbringing in Massachusetts",
+        "shared connection to Tufts College tradition"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Bush was named after John Vannevar, a friend associated with his father."
+    },
+    {
+      "person_name": "Emma Linwood Paine",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother; part of Bush’s early family life in Everett and Chelsea, Massachusetts.",
+      "start_year": 1890,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family upbringing in Everett and Chelsea, Massachusetts"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Described as the daughter of a prominent Provincetown family."
+    },
+    {
+      "person_name": "Edith Bush",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Older sister; part of Bush's childhood household.",
+      "start_year": 1890,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "grew up together in Massachusetts"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Reba Bush",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Older sister; part of Bush's childhood household.",
+      "start_year": 1890,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "grew up together in Massachusetts"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Phoebe Clara Davis",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Wife; dated during Tufts years and married in August 1916. They had two sons.",
+      "start_year": 1911,
+      "end_year": 1974,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "courtship during Tufts years",
+        "marriage and family life",
+        "supported Bush through early career transitions"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Marriage occurred the same month Bush completed his doctorate (August 1916)."
+    },
+    {
+      "person_name": "Arthur Edwin Kennelly",
+      "relationship_type": "academic/advisor",
+      "relationship_description": "Doctoral adviser at MIT; an early supervision dispute became a formative professional conflict for Bush.",
+      "start_year": 1914,
+      "end_year": 1916,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "doctoral supervision",
+        "thesis preparation in electrical engineering"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "A notable early professional conflict during Bush's doctorate."
+    },
+    {
+      "person_name": "Richard Davis Bush",
+      "relationship_type": "family/child",
+      "relationship_description": "Son of Vannevar Bush and Phoebe Clara Davis.",
+      "start_year": 1916,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "family life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "John Hathaway Bush",
+      "relationship_type": "family/child",
+      "relationship_description": "Son of Vannevar Bush and Phoebe Clara Davis.",
+      "start_year": 1916,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "family life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Harold Power",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Owner associated with AMRAD who hired Bush to run the company's laboratory (while Bush was also at Tufts).",
+      "start_year": 1916,
+      "end_year": 1919,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "AMRAD laboratory leadership",
+        "early radio research and development work"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "AMRAD work overlapped with Bush’s Tufts employment and early WWI-era research period."
+    },
+    {
+      "person_name": "Dugald C. Jackson",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Senior MIT electrical engineering figure under whom Bush worked after joining MIT in 1919.",
+      "start_year": 1919,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "MIT Electrical Engineering department work",
+        "teaching and laboratory responsibilities"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Dugald_C._Jackson"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Laurence K. Marshall",
+      "relationship_type": "professional/industry_partner",
+      "relationship_description": "Industrial partner who helped turn Bush’s engineering ideas into businesses, including the company that became Raytheon.",
+      "start_year": 1922,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Spencer Thermostat Company formation",
+        "American Appliance Company and reorganization into Raytheon",
+        "commercialization of S-tube"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Raytheon"
+      ],
+      "notes": "Marshall raised early capital and was central to the strategic pivot toward radio power supplies."
+    },
+    {
+      "person_name": "William H. Timbie",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Fellow MIT professor; coauthored the introductory textbook Principles of Electrical Engineering (1922) with Bush.",
+      "start_year": 1922,
+      "end_year": 1922,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "coauthored engineering textbook",
+        "MIT teaching context"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Al Spencer",
+      "relationship_type": "professional/industry_partner",
+      "relationship_description": "AMRAD technician who invented the thermostatic switch commercialized via a company Bush helped organize (Spencer Thermostat Company).",
+      "start_year": 1922,
+      "end_year": 1931,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "commercialization of thermostatic switch",
+        "creation and scaling of Spencer Thermostat Company"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Bush developed the device’s business path after AMRAD management declined interest."
+    },
+    {
+      "person_name": "Richard S. Aldrich",
+      "relationship_type": "professional/industry_partner",
+      "relationship_description": "Helped provide backing (with Marshall) to create the Spencer Thermostat Company, employing Bush as a consultant.",
+      "start_year": 1922,
+      "end_year": 1931,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "company formation and financing",
+        "industrial commercialization of thermostatic switch"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "The venture later merged into Metals & Controls Corporation."
+    },
+    {
+      "person_name": "Herbert R. Stewart",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student whose integraph work at MIT fed into the thinking behind Bush’s later differential analyzer.",
+      "start_year": 1924,
+      "end_year": 1926,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "early analog computation device (integraph) development",
+        "MIT graduate research supervision"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Bush’s mentorship explicitly shaped Stewart’s device choice and direction."
+    },
+    {
+      "person_name": "Charles G. Smith",
+      "relationship_type": "professional/industry_partner",
+      "relationship_description": "Physicist whose S-tube invention was commercialized with Bush and Marshall, forming the core product of early Raytheon.",
+      "start_year": 1924,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "S-tube commercialization",
+        "Raytheon governance (directorship) and early product development"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Raytheon"
+      ],
+      "notes": "Smith is explicitly credited as inventor of the voltage-regulator tube."
+    },
+    {
+      "person_name": "Harold Hazen",
+      "relationship_type": "academic/student",
+      "relationship_description": "Graduate student who, under Bush's supervision, helped extend earlier integraph ideas and construct the differential analyzer (analog computer).",
+      "start_year": 1927,
+      "end_year": 1931,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "differential analyzer development at MIT",
+        "engineering research and prototyping"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Differential_analyser"
+      ],
+      "notes": "Often credited alongside Bush in the practical construction timeline (1928–1931)."
+    },
+    {
+      "person_name": "Norbert Wiener",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Mathematician who closely guided Bush on mathematical aspects of his circuit-theory textbook and wrote an appendix to Operational Circuit Analysis (1929).",
+      "start_year": 1928,
+      "end_year": 1929,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "textbook collaboration",
+        "mathematical consultation on operational calculus and circuit theory"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Bush explicitly credited Wiener for guiding him around 'many a mathematical pitfall'."
+    },
+    {
+      "person_name": "Edith Clarke",
+      "relationship_type": "professional/peer",
+      "relationship_description": "General Electric engineer who used Bush's differential analyzer to solve electric power transmission problems, representing notable industrial uptake of Bush's computational tools.",
+      "start_year": 1928,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "application of the differential analyzer to engineering calculations",
+        "knowledge transfer between MIT innovation and GE practice"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Interaction may have been indirect (via use of the machine) but is explicitly documented."
+    },
+    {
+      "person_name": "Karl Taylor Compton",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "MIT president who appointed Bush vice president and dean of engineering in 1932; after early clashes they built a solid working relationship.",
+      "start_year": 1930,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "MIT administration reform",
+        "oversight of faculty/consulting policies and institutional strategy"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Karl_Taylor_Compton"
+      ],
+      "notes": "They initially clashed over limiting faculty consulting, then cooperated closely."
+    },
+    {
+      "person_name": "Emanuel Goldberg",
+      "relationship_type": "professional/influence",
+      "relationship_description": "Earlier inventor whose microfilm indexing ideas were cited as a major influence on Bush’s memex concept.",
+      "start_year": 1930,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "conceptual influence on memex and information retrieval design",
+        "microfilm selector and indexing ideas"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Memex"
+      ],
+      "notes": "Influence is described as significant, though interaction was likely indirect (via prior work)."
+    },
+    {
+      "person_name": "Claude Shannon",
+      "relationship_type": "academic/student",
+      "relationship_description": "Graduate student connected to Bush's MIT lab and differential analyzer work; produced landmark thesis applying Boolean algebra to switching circuits, catalyzing digital circuit design theory.",
+      "start_year": 1936,
+      "end_year": 1938,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "work around Bush's differential analyzer lab context",
+        "development of switching circuit theory influenced by Bush's environment"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Claude_Shannon",
+        "https://en.wikipedia.org/wiki/A_Symbolic_Analysis_of_Relay_and_Switching_Circuits"
+      ],
+      "notes": "Shannon is described as one of Bush’s graduate students; Shannon also served as a research assistant operating the analyzer."
+    },
+    {
+      "person_name": "Cameron Forbes",
+      "relationship_type": "professional/rival",
+      "relationship_description": "Carnegie Institution board chairman who clashed with Bush over leadership and direction.",
+      "start_year": 1938,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Carnegie Institution governance and oversight",
+        "policy disputes over institute leadership"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Conflict is described as part of broader leadership tensions at CIW."
+    },
+    {
+      "person_name": "Harry H. Laughlin",
+      "relationship_type": "professional/adversary",
+      "relationship_description": "Carnegie-associated eugenics administrator whose program Bush moved to dismantle during institutional reforms.",
+      "start_year": 1938,
+      "end_year": 1944,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "institutional review of eugenics program",
+        "reorganization and closure of the Eugenics/Genetics Record Office"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Bush’s actions led to funding cuts and eventual closure (1944)."
+    },
+    {
+      "person_name": "Joseph Sweetman Ames",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Chairman of the National Advisory Committee for Aeronautics (NACA) who became ill; Bush, as vice chairman, acted in his place and soon became chairman.",
+      "start_year": 1938,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "NACA leadership transition",
+        "federal aeronautics research planning"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/National_Advisory_Committee_for_Aeronautics"
+      ],
+      "notes": "Ames’s illness catalyzed Bush’s expanded leadership role."
+    },
+    {
+      "person_name": "John Campbell Merriam",
+      "relationship_type": "professional/rival",
+      "relationship_description": "Bush's predecessor as Carnegie Institution president; continued to offer unwanted advice, contributing to leadership friction.",
+      "start_year": 1938,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "transition of leadership at Carnegie Institution",
+        "disputes over ongoing influence and policy"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Bush’s family circle—parents, two sisters, wife Phoebe Clara Davis, and two sons—formed a stable private backdrop to an unusually public career."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "At MIT, Bush’s network spans mentors and administrators, close collaborators, and students tied to analog computation and early digital circuit theory."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Bush bridged industry and national science governance: Raytheon’s early commercialization, Carnegie leadership, NACA, and influential ideas behind the memex."
+    }
+  ]
+}

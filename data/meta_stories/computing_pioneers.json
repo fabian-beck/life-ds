@@ -1,80 +1,89 @@
 {
   "dataset": "meta_story",
-  "created_on": "2026-01-04T21:36:40.311387+01:00",
+  "created_on": "2026-01-14T17:09:00.191171+01:00",
   "meta_story": {
     "id": "computing_pioneers",
     "title": "Computing Pioneers",
-    "tagline": "From engines to ecosystems",
-    "description": "Long before laptops and phones, “computing” was a bold idea: that calculation, logic, and even decision-making could be mechanized, formalized, and scaled. The pioneers of this story built the conceptual and physical machinery for that transformation—moving from hand calculation and mechanical plans to programmable digital machines, and then to software systems that made computers broadly usable.\n\nTheir breakthroughs arrived in distinct waves. First came a vision of programmable calculation—machines not just for arithmetic, but for general-purpose procedures. Next, wartime urgency and early laboratories forged the first practical architectures and programmable systems. Then software became the decisive frontier: compilers, programming methods, and early AI changed computers from rare instruments into general tools. Finally, computing escaped the lab and entered everyday life through commercial platforms and products—alongside voices warning that power without restraint can mislead as easily as it can enlighten.",
+    "tagline": "From engines to interactive worlds",
+    "description": "Modern computing was not born fully formed in a single lab; it emerged through a chain of bold redefinitions of what “calculation” could be. In the 19th century, programmable computation began as a speculative marriage of mathematics and machinery—plans for engines that could manipulate symbols, not just numbers. By the mid-20th century, wartime urgency and new mathematical logic turned those ideas into real electronic systems, while competing designs for memory, control, and programming crystallized into the basic architecture still recognizable today.\n\nAfter the hardware arrived, the harder problem became human: making computers usable, reliable, and ethically legible. Compiler builders and algorithm designers taught machines to translate human intention into efficient execution, while interactive computing researchers reimagined the computer as a partner in thought rather than a distant calculator. As software and networks expanded the computer’s reach, internal critics argued that capability is not wisdom—forcing the field to confront responsibility alongside innovation.",
     "person_ids": [
       "ada_lovelace",
       "charles_babbage",
-      "herman_hollerith",
       "alan_turing",
       "john_von_neumann",
       "konrad_zuse",
+      "herman_hollerith",
+      "vannevar_bush",
       "grace_hopper",
       "edsger_w_dijkstra",
       "frances_allen",
+      "douglas_engelbart",
       "joseph_weizenbaum",
       "heinz_nixdorf",
       "steve_jobs"
     ],
     "date_range_start": "1820",
     "date_range_end": "2011",
-    "lastUpdated": "2026-01-04T21:36:40.311387+01:00"
+    "lastUpdated": "2026-01-14T17:09:00.191171+01:00"
+  },
+  "generation_metadata": {
+    "hints": null,
+    "model": "gpt-5.2",
+    "generated_at": "2026-01-14T17:09:00.191171+01:00"
   },
   "subtopics": [
     {
-      "id": "blueprints_of_programmability",
-      "title": "Blueprints of Programmability",
-      "description": "Before electronics, the core leap was conceptual: computation as a general, programmable process rather than a one-off calculation.",
+      "id": "mechanizing_thought",
+      "title": "Mechanizing Thought",
+      "description": "The leap from arithmetic to programmable symbol-work began as a daring 19th-century blueprint: engines that could follow instructions, store state, and generalize beyond any single table of numbers.",
       "person_ids": [
         "charles_babbage",
         "ada_lovelace"
       ]
     },
     {
-      "id": "data_machines_and_early_industry",
-      "title": "Data Machines and Early Industry",
-      "description": "Information processing became an industrial activity—counting, sorting, and organizing society at scale, then turning that capacity into products and firms.",
+      "id": "data_and_architecture",
+      "title": "Data and Architecture",
+      "description": "Before “computers” were personal, they were systems—ways to process populations, equations, and decisions at scale, forcing new architectures for storage, control, and throughput.",
       "person_ids": [
         "herman_hollerith",
-        "heinz_nixdorf",
-        "steve_jobs"
-      ]
-    },
-    {
-      "id": "machines_of_war_and_the_stored_program",
-      "title": "War Machines to Stored Programs",
-      "description": "Crisis and research labs forced abstract ideas into working machines, while new architectures defined what a “computer” would be for the next century.",
-      "person_ids": [
-        "alan_turing",
+        "vannevar_bush",
         "konrad_zuse",
         "john_von_neumann"
       ]
     },
     {
-      "id": "software_makes_it_real",
-      "title": "Software Makes It Real",
-      "description": "Once hardware existed, software determined what it could become: languages, compilers, methods, and critiques that shaped reliability, speed, and responsibility.",
+      "id": "logic_wartime_and_universality",
+      "title": "Logic, War, Universality",
+      "description": "Formal models of computation collided with wartime cryptography and engineering reality, proving that universal computation was not just a theorem but a buildable machine idea.",
+      "person_ids": [
+        "alan_turing"
+      ]
+    },
+    {
+      "id": "software_interaction_and_conscience",
+      "title": "Software, Interaction, Conscience",
+      "description": "Once machines existed, pioneers fought the next battles: translating human intent into efficient code, designing humane interfaces, scaling computing into industry, and questioning what should not be automated.",
       "person_ids": [
         "grace_hopper",
         "edsger_w_dijkstra",
         "frances_allen",
-        "joseph_weizenbaum"
+        "douglas_engelbart",
+        "joseph_weizenbaum",
+        "heinz_nixdorf",
+        "steve_jobs"
       ]
     }
   ],
   "chapters": [
     {
-      "id": "engine_visions",
-      "title": "Mechanical Visions (1820-1871)",
+      "id": "engines_and_notes",
+      "title": "Engines and Notes (1820-1852)",
       "date_start": "1820",
       "date_start_precision": "year",
-      "date_end": "1871",
+      "date_end": "1852",
       "date_end_precision": "year",
-      "bridge_statement": "A programmable machine begins as a radical sketch: gears, tables, and the startling thought that instructions could be mechanized.",
+      "bridge_statement": "A programmable future is imagined on paper: gears, tables, and “notes” that quietly invent the idea of software before the machine exists.",
       "person_events": [
         {
           "person_id": "charles_babbage",
@@ -82,7 +91,7 @@
           "event_date_precision": "year",
           "event_title": "Conceived Difference Engine",
           "event_index": 7,
-          "theme_connection": "Conceiving the Difference Engine is a major step toward mechanized computation for error-free table making—an early, influential blueprint for automatic calculation central to the move from hand calculation to machines."
+          "theme_connection": "Conceiving the Difference Engine is a foundational milestone in mechanized calculation—one of the first serious designs for automated table-making that links industrial machinery to reliable computation."
         },
         {
           "person_id": "charles_babbage",
@@ -90,7 +99,7 @@
           "event_date_precision": "year",
           "event_title": "Designed Analytical Engine",
           "event_index": 13,
-          "theme_connection": "Designing the Analytical Engine is a foundational milestone: it introduced a general-purpose, programmable mechanical computer architecture (e.g., punched-card control, separation of operations/storage concepts), forming a core ‘blueprint of programmability’ for later computing."
+          "theme_connection": "Designing the Analytical Engine is the core 19th‑century blueprint for programmable, general-purpose computation (memory/store, mill/processor, and punched-card control), directly embodying the ‘mechanizing thought’ theme."
         },
         {
           "person_id": "ada_lovelace",
@@ -98,18 +107,18 @@
           "event_date_precision": "month",
           "event_title": "Publishes Notes on the Analytical Engine",
           "event_index": 11,
-          "theme_connection": "Her 1843 translation plus extensive Notes on the Analytical Engine is a landmark articulation of programmable computation, including a worked procedure (often cited as an early program) and the concept of a general-purpose machine manipulating symbols beyond arithmetic—core to “Blueprints of Programmability.”"
+          "theme_connection": "Her 1843 translation and especially the extended Notes (including the Bernoulli-number procedure in Note G) are a landmark articulation of programmable, general-purpose computation—an early ‘program’ and a conceptual leap from arithmetic to symbol-manipulating engines."
         }
       ]
     },
     {
-      "id": "information_at_scale",
-      "title": "Information at Scale (1880-1929)",
+      "id": "industrial_data_processing",
+      "title": "Industrial Data Processing (1880-1915)",
       "date_start": "1880",
       "date_start_precision": "year",
-      "date_end": "1929",
+      "date_end": "1915",
       "date_end_precision": "year",
-      "bridge_statement": "Governments and businesses drown in paper; computation shifts from cleverness to throughput, and data becomes a machine’s native language.",
+      "bridge_statement": "Information becomes an industrial problem, and automation moves from calculation to administration—counting, sorting, and governing at national scale.",
       "person_events": [
         {
           "person_id": "herman_hollerith",
@@ -117,7 +126,7 @@
           "event_date_precision": "day",
           "event_title": "Filed first tabulation patent",
           "event_index": 4,
-          "theme_connection": "Filing the “Art of Compiling Statistics” patent formalized mechanized statistical processing—an early, concrete blueprint for industrial data computation that underpins punched-card information processing."
+          "theme_connection": "The 1884 patent filing (“Art of Compiling Statistics”) is a concrete, landmark step in mechanizing large-scale data processing—formalizing punched-card tabulation as a repeatable machine method central to early information-processing architecture."
         },
         {
           "person_id": "herman_hollerith",
@@ -125,7 +134,7 @@
           "event_date_precision": "day",
           "event_title": "Received key US patent",
           "event_index": 7,
-          "theme_connection": "The grant of Patent 395,782 is a concrete, durable milestone that secured the core electromechanical punched-card tabulation method—foundational to large-scale data machines and the later business ecosystem."
+          "theme_connection": "Grant of U.S. Patent 395,782 is a durable artifact that codified the punched-card tabulating mechanism, a foundational milestone for mechanized data processing at scale (a direct precursor to the punched-card computing industry)."
         },
         {
           "person_id": "herman_hollerith",
@@ -133,26 +142,18 @@
           "event_date_precision": "day",
           "event_title": "Tabulated 1890 US Census",
           "event_index": 9,
-          "theme_connection": "Using Hollerith tabulators for the 1890 U.S. Census is the landmark proof of punched-card data processing at national scale—turning information handling into an industrial computing activity with lasting influence."
-        },
-        {
-          "person_id": "herman_hollerith",
-          "event_date": "1906",
-          "event_date_precision": "year",
-          "event_title": "Introduced control-panel tabulator",
-          "event_index": 13,
-          "theme_connection": "The control-panel tabulator advanced configurability—an early step toward “programmable” reconfiguration in data-processing machines, making tabulators adaptable across tasks and customers (a key move from one-off machines to systems)."
+          "theme_connection": "Using Hollerith tabulators for the 1890 U.S. Census is a landmark demonstration that mechanized, programmable-by-card data processing could transform national-scale statistics—an essential step in the ‘Data and Architecture’ arc."
         }
       ]
     },
     {
-      "id": "war_and_first_computers",
-      "title": "War and First Computers (1936-1945)",
-      "date_start": "1936",
+      "id": "machines_for_war_and_science",
+      "title": "Machines for War and Science (1930-1949)",
+      "date_start": "1930",
       "date_start_precision": "year",
-      "date_end": "1945",
+      "date_end": "1949",
       "date_end_precision": "year",
-      "bridge_statement": "Theory collides with necessity—codes to break, trajectories to compute, machines to build—compressing decades of progress into a few years.",
+      "bridge_statement": "Logic meets urgency: cryptography, ballistics, and engineering pressures turn computation into working machines—and into a new blueprint for how machines should store and run programs.",
       "person_events": [
         {
           "person_id": "alan_turing",
@@ -160,7 +161,7 @@
           "event_date_precision": "day",
           "event_title": "Completed Turing machine paper",
           "event_index": 6,
-          "theme_connection": "This paper introduces the Turing machine model and establishes the formal notion of algorithmic computation and its limits—an irreplaceable conceptual blueprint for programmability that underpins all later computer architecture and software theory."
+          "theme_connection": "\"On Computable Numbers\" introduced the Turing machine and formalized algorithmic computation, establishing universality and limits (e.g., the Entscheidungsproblem) as a foundational artifact for modern computer science."
         },
         {
           "person_id": "alan_turing",
@@ -168,7 +169,7 @@
           "event_date_precision": "year",
           "event_title": "Led Hut 8 naval cryptanalysis",
           "event_index": 9,
-          "theme_connection": "Leading Hut 8 and developing practical Enigma-breaking methods represents a wartime push that turned abstract computation into operational, large-scale mechanized information processing—one of the key bridges from theory to working ‘war machines’."
+          "theme_connection": "Leading Hut 8 and developing practical Enigma-breaking methods helped turn computation into an engineered wartime system, exemplifying the logic-war-engineering collision that accelerated real-world computing."
         },
         {
           "person_id": "konrad_zuse",
@@ -176,7 +177,7 @@
           "event_date_precision": "day",
           "event_title": "Unveils the Z3",
           "event_index": 7,
-          "theme_connection": "The Z3 is widely cited as the first functioning, fully automatic, freely programmable digital computer—an essential early realization of programmability in working hardware."
+          "theme_connection": "The Z3 is widely cited as the first functioning, fully automatic, freely programmable digital computer—an irreducible milestone in making programmable computation real hardware."
         },
         {
           "person_id": "grace_hopper",
@@ -184,7 +185,7 @@
           "event_date_precision": "year",
           "event_title": "Programs the Harvard Mark I",
           "event_index": 7,
-          "theme_connection": "Her Mark I programming work is a landmark early example of software making complex machines usable—helping establish programming practice and documentation as essential to turning hardware into operational computing systems."
+          "theme_connection": "Her Mark I programming work represents an early, concrete step in turning machines into usable systems via programming practice and documentation—part of the transition from hardware to executable procedures."
         },
         {
           "person_id": "alan_turing",
@@ -192,7 +193,7 @@
           "event_date_precision": "year",
           "event_title": "Designed the ACE computer",
           "event_index": 10,
-          "theme_connection": "Turing’s ACE design is a landmark stored-program computer architecture proposal with concrete engineering influence, helping define postwar computer design as fast, general-purpose programmable machinery."
+          "theme_connection": "The ACE design is a major stored-program architecture plan from a key pioneer, translating universal computation into a high-speed practical machine blueprint that influenced early computer engineering."
         },
         {
           "person_id": "john_von_neumann",
@@ -200,18 +201,26 @@
           "event_date_precision": "day",
           "event_title": "Shaped stored-program computing",
           "event_index": 13,
-          "theme_connection": "The EDVAC ‘First Draft’ report is a cornerstone articulation of the stored-program architecture that became the dominant computer model, making it a defining milestone in the transition to modern programmable digital computers."
+          "theme_connection": "The 1945 EDVAC “First Draft” crystallized the stored-program concept and spread it through engineering networks, becoming a defining architectural milestone for modern computer design."
+        },
+        {
+          "person_id": "vannevar_bush",
+          "event_date": "1945-07-01",
+          "event_date_precision": "day",
+          "event_title": "Publishes “As We May Think” in The Atlantic",
+          "event_index": 11,
+          "theme_connection": "“As We May Think” is a landmark conceptual publication that reframed computing toward knowledge work and associative information retrieval (memex), directly feeding the later arc of interactive computing and hypertext-like ideas."
         }
       ]
     },
     {
-      "id": "architecture_and_languages",
-      "title": "Architecture and Languages (1946-1965)",
-      "date_start": "1946",
+      "id": "software_rigor_and_interaction",
+      "title": "Software Rigor and Interaction (1950-1979)",
+      "date_start": "1950",
       "date_start_precision": "year",
-      "date_end": "1965",
+      "date_end": "1979",
       "date_end_precision": "year",
-      "bridge_statement": "With peace comes standardization: stored programs, higher-level languages, and the first serious attempts to make computers broadly usable.",
+      "bridge_statement": "Hardware stops being the bottleneck; languages, compilers, operating systems, and interactive tools redefine what it means to “use” a computer.",
       "person_events": [
         {
           "person_id": "alan_turing",
@@ -219,7 +228,7 @@
           "event_date_precision": "month",
           "event_title": "Published the Turing test paper",
           "event_index": 13,
-          "theme_connection": "“Computing Machinery and Intelligence” is a landmark publication that reframed machine intelligence in operational terms (the imitation game), helping launch AI as a software-era frontier of computing and shaping debates about what digital computers could do."
+          "theme_connection": "This landmark paper reframed computing around machine intelligence and interactive behavior (the imitation game), shaping how digital computers were understood beyond calculation and strongly influencing later AI and human–computer interaction debates."
         },
         {
           "person_id": "grace_hopper",
@@ -227,7 +236,7 @@
           "event_date_precision": "year",
           "event_title": "Builds A-0 Compiler Link-Loader",
           "event_index": 9,
-          "theme_connection": "The A-0 system is an early, influential step toward compilers/automatic programming—producing a working translator/link-loader that made programming more scalable and helped establish software as the decisive layer over hardware."
+          "theme_connection": "Hopper’s A-0 system is an early, concrete compiler/link-loader that demonstrated automatic translation from symbolic intent to machine code, a foundational breakthrough for high-level programming and software development at scale."
         },
         {
           "person_id": "heinz_nixdorf",
@@ -235,7 +244,7 @@
           "event_date_precision": "year",
           "event_title": "Delivers first German tube computer",
           "event_index": 5,
-          "theme_connection": "Delivering the ES as an early tube-based, punched-card data-processing machine is a concrete, industrial computing milestone—showing the transition to practical ‘data machines’ used for bookkeeping at scale."
+          "theme_connection": "Delivering the ES electronic tube-based calculator/computer is a concrete early system milestone for business data processing and national computing development, tying to “Data and Architecture” (real deployed electronic processing of punched-card data at scale)."
         },
         {
           "person_id": "edsger_w_dijkstra",
@@ -243,7 +252,7 @@
           "event_date_precision": "year",
           "event_title": "Solved shortest path problem",
           "event_index": 5,
-          "theme_connection": "Formulating what became Dijkstra’s algorithm is a foundational, widely used computing result (core to graph algorithms and network routing), representing a lasting theoretical artifact that shaped software and computer science practice."
+          "theme_connection": "Formulating what became Dijkstra’s algorithm is a lasting, foundational algorithmic breakthrough for efficient computation on graphs, central to software and network-era computing."
         },
         {
           "person_id": "frances_allen",
@@ -251,7 +260,7 @@
           "event_date_precision": "year",
           "event_title": "Leads Stretch–Harvest Optimizations",
           "event_index": 5,
-          "theme_connection": "Leading the Stretch–Harvest compiler optimization work is a concrete, early landmark in making high-performance systems practical via advanced optimizing compilation—core to the “Software Makes It Real” arc where compilers and optimization transform raw hardware into usable, efficient computing."
+          "theme_connection": "Leading compiler optimization work on IBM Stretch/Harvest is a landmark software contribution: it helped define modern optimizing compilation (program analysis/transformations) used to translate human intent into efficient machine execution, central to the ‘Software’ arc of the meta-story."
         },
         {
           "person_id": "edsger_w_dijkstra",
@@ -259,15 +268,23 @@
           "event_date_precision": "day",
           "event_title": "Completed first ALGOL 60 compiler",
           "event_index": 8,
-          "theme_connection": "Building the first ALGOL 60 compiler is a concrete, landmark software achievement that demonstrated high-level languages could be efficiently implemented, advancing the ‘Software Makes It Real’ wave of practical programming systems."
+          "theme_connection": "Producing the first ALGOL 60 compiler is a concrete, field-defining demonstration that high-level languages could be practically compiled, advancing the shift from machine-centric coding to human-oriented programming."
         },
         {
-          "person_id": "joseph_weizenbaum",
+          "person_id": "douglas_engelbart",
+          "event_date": "1962-10",
+          "event_date_precision": "month",
+          "event_title": "Published augmentation framework",
+          "event_index": 9,
+          "theme_connection": "The 1962 augmentation report is a foundational publication that reframed computers as tools for augmenting human intellect—an agenda-setting manifesto for interactive computing that directly anchors the ‘Interaction’ theme."
+        },
+        {
+          "person_id": "douglas_engelbart",
           "event_date": "1964",
           "event_date_precision": "year",
-          "event_title": "Develops list‑processing language SLIP",
-          "event_index": 8,
-          "theme_connection": "Designing SLIP and publishing on list processing directly advanced early software systems for symbolic computation, helping establish foundational data-structure and list-processing techniques central to higher-level programming and early AI."
+          "event_title": "Builds the first mouse prototype",
+          "event_index": 11,
+          "theme_connection": "Building the first mouse prototype is a concrete, widely recognized interface breakthrough that became essential to interactive computing and GUI-based ‘interactive worlds’."
         },
         {
           "person_id": "joseph_weizenbaum",
@@ -275,26 +292,7 @@
           "event_date_precision": "year",
           "event_title": "Creates ELIZA, pioneering chatbot",
           "event_index": 9,
-          "theme_connection": "Creating ELIZA is a widely recognized landmark in human–computer interaction and early natural-language processing, demonstrating how software could simulate conversational behavior and shaping both AI research and critiques of over-attribution of intelligence to machines."
-        }
-      ]
-    },
-    {
-      "id": "discipline_parallelism_and_ai_doubt",
-      "title": "Discipline, Parallelism, and AI Doubt (1966-1985)",
-      "date_start": "1966",
-      "date_start_precision": "year",
-      "date_end": "1985",
-      "date_end_precision": "year",
-      "bridge_statement": "As computers spread, the challenge shifts to control—correctness, performance, and the uneasy question of what should (and shouldn’t) be automated.",
-      "person_events": [
-        {
-          "person_id": "grace_hopper",
-          "event_date": "1967",
-          "event_date_precision": "year",
-          "event_title": "Directs Navy Programming Languages Group",
-          "event_index": 12,
-          "theme_connection": "As director of the Navy Programming Languages Group, Hopper drove COBOL validation and conformance tooling that institutionalized language standards—key to making software reliable and portable at scale, a landmark step in “software makes it real.”"
+          "theme_connection": "Creating ELIZA is a seminal, widely cited artifact in human–computer interaction and early NLP, demonstrating both interactive computing’s possibilities and the ease with which humans attribute understanding to machines."
         },
         {
           "person_id": "heinz_nixdorf",
@@ -302,7 +300,7 @@
           "event_date_precision": "year",
           "event_title": "Launches Nixdorf System 820",
           "event_index": 8,
-          "theme_connection": "Launching the freely programmable Nixdorf System 820 represents a concrete commercial computing product that helped bring programmable “small computers” into business practice—computing moving from lab to industry."
+          "theme_connection": "The System 820 as a freely programmable small computer with core memory and integrated I/O is a concrete architectural step toward practical, interactive/business computing beyond mainframes—an enduring shift in usable systems design."
         },
         {
           "person_id": "edsger_w_dijkstra",
@@ -310,7 +308,15 @@
           "event_date_precision": "year",
           "event_title": "Built THE multiprogramming system",
           "event_index": 10,
-          "theme_connection": "Leading the construction of the THE operating system produced a foundational demonstration of structured OS design (layering, synchronization concepts) that shaped how multiprogramming systems were built—core software-systems pioneering."
+          "theme_connection": "The THE operating system was a landmark in structuring multiprogramming OS design (notably via layered structure), influencing how reliable, comprehensible systems software could be built."
+        },
+        {
+          "person_id": "douglas_engelbart",
+          "event_date": "1968-12-09",
+          "event_date_precision": "day",
+          "event_title": "Presented Mother of All Demos",
+          "event_index": 12,
+          "theme_connection": "The 1968 ‘Mother of All Demos’ is a landmark public demonstration of interactive computing (hypertext, collaborative editing, video conferencing, pointing devices) that made the paradigm real and influential beyond a single lab."
         },
         {
           "person_id": "edsger_w_dijkstra",
@@ -318,7 +324,7 @@
           "event_date_precision": "year",
           "event_title": "Published A Discipline of Programming",
           "event_index": 13,
-          "theme_connection": "Publishing \"A Discipline of Programming\" crystallized the correctness-by-construction/structured programming program into an influential, durable text—pivotal in turning programming into a rigorous engineering discipline."
+          "theme_connection": "This book is a canonical, durable artifact that advanced the ‘software, interaction, conscience’ thread by formalizing disciplined reasoning about correctness and elevating programming methodology as central to making computing reliable and legible."
         },
         {
           "person_id": "joseph_weizenbaum",
@@ -326,15 +332,7 @@
           "event_date_precision": "year",
           "event_title": "Publishes \"Computer Power and Human Reason\"",
           "event_index": 13,
-          "theme_connection": "\"Computer Power and Human Reason\" is a landmark, durable critique that shaped responsible computing/AI discourse—an essential counterpoint in the narrative about software power and its limits."
-        },
-        {
-          "person_id": "steve_jobs",
-          "event_date": "1976-04-01",
-          "event_date_precision": "day",
-          "event_title": "Co-founded Apple",
-          "event_index": 4,
-          "theme_connection": "Co-founding Apple created one of the first companies to successfully productize and scale personal computing beyond hobbyists, helping push computing from lab/industry contexts into a mass-market platform era. It’s a landmark commercialization step that seeded an ecosystem of hardware and software around the personal computer."
+          "theme_connection": "A landmark, durable artifact in the “Software, Interaction, Conscience” arc: this influential book crystallized a foundational critique of AI and automation, shaping how computing confronts responsibility, limits of computation, and moral acceptability."
         },
         {
           "person_id": "steve_jobs",
@@ -342,15 +340,34 @@
           "event_date_precision": "month",
           "event_title": "Apple II and IPO boom",
           "event_index": 5,
-          "theme_connection": "The Apple II’s mass-market success helped define the personal-computer boom by making programmable computers broadly accessible to consumers and small businesses. This is a concrete, widely recognized inflection point in computing’s shift into everyday life and commercial ecosystems."
+          "theme_connection": "Apple II’s mass-market success is a landmark artifact that helped define personal computing as an industry and platform, advancing the spread of usable computers beyond labs and large institutions."
         },
+        {
+          "person_id": "steve_jobs",
+          "event_date": "1979",
+          "event_date_precision": "year",
+          "event_title": "Pursued GUI after Xerox",
+          "event_index": 6,
+          "theme_connection": "Jobs’ push to productize GUI/mouse interaction after Xerox PARC catalyzed a major shift toward humane, interactive computing, shaping mainstream interface paradigms through Lisa/Mac direction."
+        }
+      ]
+    },
+    {
+      "id": "personal_and_networked_computing",
+      "title": "Personal and Networked Computing (1980-2011)",
+      "date_start": "1980",
+      "date_start_precision": "year",
+      "date_end": "2011",
+      "date_end_precision": "year",
+      "bridge_statement": "Computing leaves specialist rooms and enters everyday life, while commercial ecosystems and public skepticism shape the technology’s social contract.",
+      "person_events": [
         {
           "person_id": "frances_allen",
           "event_date": "1980",
           "event_date_precision": "year",
           "event_title": "Leads IBM Parallel Computing",
           "event_index": 10,
-          "theme_connection": "Leading IBM’s PTRAN work introduced key compiler foundations (notably the program dependence graph) enabling automatic parallelization—an enduring, widely used advance in making software exploit modern architectures."
+          "theme_connection": "Leading IBM’s parallel computing work via PTRAN and introducing the program dependence graph is a landmark in compiler theory/practice, enabling advanced optimization and automatic parallelization—core to the ‘Software’ and ‘Data/Architecture’ strands of scaling computation."
         },
         {
           "person_id": "steve_jobs",
@@ -358,26 +375,15 @@
           "event_date_precision": "month",
           "event_title": "Launched Macintosh platform",
           "event_index": 7,
-          "theme_connection": "The Macintosh made GUI-based personal computing a mainstream, shipped platform and catalyzed desktop publishing—an important step in making computers broadly usable through software and interface design. As a concrete product launch with lasting impact on human-computer interaction and software ecosystems, it’s a major milestone."
-        }
-      ]
-    },
-    {
-      "id": "personal_and_platform_computing",
-      "title": "Personal and Platform Computing (1986-2011)",
-      "date_start": "1986",
-      "date_start_precision": "year",
-      "date_end": "2011",
-      "date_end_precision": "year",
-      "bridge_statement": "Computing becomes intimate and ubiquitous, reshaped by products, interfaces, and ecosystems that turn technical capability into daily habit.",
-      "person_events": [
+          "theme_connection": "The Macintosh launch made GUI-based, interactive personal computing a mass-market reality, reshaping human-computer interaction and catalyzing desktop publishing—an essential ‘interactive worlds’ milestone."
+        },
         {
           "person_id": "steve_jobs",
-          "event_date": "2001-05",
-          "event_date_precision": "month",
-          "event_title": "Created Apple’s digital ecosystem",
-          "event_index": 12,
-          "theme_connection": "Building Apple’s integrated iPod+iTunes+retail ecosystem is a landmark shift in making computing broadly usable via tightly coupled hardware, software, and services—an important ‘ecosystems’ chapter in computing’s commercialization and platform era."
+          "event_date": "1985",
+          "event_date_precision": "year",
+          "event_title": "Founded NeXT",
+          "event_index": 9,
+          "theme_connection": "NeXT produced a highly influential workstation/software platform (notably NeXTSTEP) that later became the foundation for modern macOS/iOS, a lasting systems-and-software artifact that shaped mainstream computing platforms."
         },
         {
           "person_id": "steve_jobs",
@@ -385,10 +391,10 @@
           "event_date_precision": "day",
           "event_title": "Unveiled the iPhone",
           "event_index": 14,
-          "theme_connection": "Unveiling the iPhone is a decisive, widely recognized milestone that redefined mass-market mobile computing and accelerated the modern app/platform ecosystem, expanding computing from PCs into everyday life."
+          "theme_connection": "The iPhone launch is a landmark in interactive, human-centered computing: it mainstreamed a touch-first mobile computer with a modern software platform, reshaping how people access networks, applications, and digital services and effectively redefining personal computing beyond the desktop."
         }
       ]
     }
   ],
-  "conclusion": "Computing pioneers didn’t simply invent machines; they invented a new kind of power—abstract, repeatable, and scalable—then fought to make it practical, reliable, and humane. The modern digital world is the compounded consequence of their designs, methods, businesses, and warnings."
+  "conclusion": "Computing pioneers repeatedly changed the definition of the possible: first by imagining programmability, then by building architectures and data systems, and finally by making machines usable, powerful, and debatable. Their shared legacy is not a single invention but a cascade—ideas that turned computation into a universal medium for modern life."
 }

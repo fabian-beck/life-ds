@@ -1,0 +1,844 @@
+{
+  "dataset": "Douglas Engelbart biographical timeline",
+  "created_on": "2026-01-14",
+  "person": {
+    "name": "Douglas_Engelbart",
+    "birth_date": "1925-01-30",
+    "death_date": "2013-07-02",
+    "primary_roles": [
+      "inventor",
+      "engineer",
+      "computer scientist"
+    ],
+    "tagline": "Inventor of the computer mouse",
+    "summary": "Douglas Engelbart was an American engineer and inventor who pursued interactive computing as a way to augment human intellect, most prominently through SRI’s Augmentation Research Center and its oN-Line System (NLS). His work introduced and unified ideas such as the mouse, hypertext, and collaborative on-screen editing that became foundations of human–computer interaction.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+    "portrait": {
+      "image": "/portraits/douglas_engelbart_thumbnail.webp",
+      "thumbnail": "/portraits/douglas_engelbart_thumbnail.webp",
+      "medium": "/portraits/douglas_engelbart_medium.webp",
+      "full": "/portraits/douglas_engelbart_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/0/00/SRI_Douglas_Engelbart_1968_%28cropped%29.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "depression_born_resolve",
+      "headline": "Hard Times, Early Loss",
+      "bridge_statement": "A steady childhood fractures early, and he learns to keep building anyway.",
+      "date_start": "1925-01-30",
+      "date_start_precision": "day",
+      "date_end": "1942",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 17,
+      "involved_people": [
+        "Carl Louis Engelbart",
+        "Gladys Charlotte Amelia Munson Engelbart"
+      ],
+      "location": "Pacific Northwest"
+    },
+    {
+      "id": "wartime_knowledge_spark",
+      "headline": "Wartime Spark",
+      "bridge_statement": "Far from campus, one essay quietly rewires his sense of what computers could be.",
+      "date_start": "1942",
+      "date_start_precision": "year",
+      "date_end": "1948",
+      "date_end_precision": "year",
+      "age_start": 17,
+      "age_end": 23,
+      "involved_people": null,
+      "location": "Pacific Basin"
+    },
+    {
+      "id": "berkeley_to_menlo_park",
+      "headline": "Choosing the Mission",
+      "bridge_statement": "Degrees, marriage, and a leap into research set his real work in motion.",
+      "date_start": "1951",
+      "date_start_precision": "year",
+      "date_end": "1957",
+      "date_end_precision": "year",
+      "age_start": 26,
+      "age_end": 32,
+      "involved_people": [
+        "Ballard Fish",
+        "Hewitt Crane"
+      ],
+      "location": "California"
+    },
+    {
+      "id": "augmentation_research_forge",
+      "headline": "Augmentation Research Forge",
+      "bridge_statement": "In Menlo Park, a private conviction hardens into a blueprint for a new kind of computing.",
+      "date_start": "1957",
+      "date_start_precision": "year",
+      "date_end": "1964",
+      "date_end_precision": "year",
+      "age_start": 32,
+      "age_end": 39,
+      "involved_people": [
+        "J. C. R. Licklider",
+        "Bill English"
+      ],
+      "location": "California"
+    },
+    {
+      "id": "the_demo_breaks_open",
+      "headline": "The Demo Breaks Open",
+      "bridge_statement": "A public moment arrives that will force bold ideas to meet real-world constraints.",
+      "date_start": "1968-12-09",
+      "date_start_precision": "day",
+      "date_end": "1986",
+      "date_end_precision": "year",
+      "age_start": 43,
+      "age_end": 61,
+      "involved_people": null,
+      "location": "California"
+    },
+    {
+      "id": "bootstrapping_a_legacy",
+      "headline": "Bootstrapping a Legacy",
+      "bridge_statement": "As the world catches up, he returns to the deeper mission that started it all.",
+      "date_start": "1988",
+      "date_start_precision": "year",
+      "date_end": "2013-07-02",
+      "date_end_precision": "day",
+      "age_start": 63,
+      "age_end": 88,
+      "involved_people": [
+        "Christina Engelbart",
+        "Bill Clinton"
+      ],
+      "location": "United States"
+    }
+  ],
+  "conclusion": "Douglas Engelbart proved that computers could be partners in thought, not just machines for calculation. By pushing tools that amplify collective intelligence, he helped set the trajectory of modern interactive computing—and challenged the world to aim higher.",
+  "events": [
+    {
+      "date": "1925-01-30",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth in Portland",
+      "description": "Douglas Carl Engelbart was born in Portland, Oregon, to Carl Louis Engelbart and Gladys Charlotte Amelia Munson Engelbart.",
+      "locations": [
+        {
+          "name_historic": "Portland, Oregon",
+          "name_modern": "Portland, Oregon, United States",
+          "centroid": [
+            -122.674194,
+            45.5202471
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Carl Louis Engelbart",
+        "Gladys Charlotte Amelia Munson Engelbart"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "depression_born_resolve"
+    },
+    {
+      "date": "1934",
+      "date_precision": "year",
+      "date_note": "The family moved to the countryside when he was about 8, and his father died about a year later",
+      "age": 9,
+      "title": "Loses his father",
+      "description": "After the family moved from Portland to the countryside along Johnson Creek, Douglas Engelbart’s father, Carl Louis Engelbart, died when Douglas was still a boy. The loss reshaped the household overnight, leaving his mother, Gladys Charlotte Amelia Munson Engelbart, to raise Douglas and his siblings through the pressures of the Great Depression.\n\nIn later years, Engelbart would be known for a stubborn optimism about what people could accomplish together—yet his early life also trained him to expect disruption, and to keep going anyway.",
+      "locations": [
+        {
+          "name_historic": "Portland",
+          "name_modern": "Portland, Oregon, United States",
+          "centroid": [
+            -122.6765,
+            45.5231
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Multnomah County",
+          "name_modern": "Multnomah County, Oregon, United States",
+          "centroid": [
+            -122.4167,
+            45.55
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Carl Louis Engelbart",
+        "Gladys Charlotte Amelia Munson Engelbart",
+        "Dorianne Engelbart",
+        "David Engelbart"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "depression_born_resolve",
+      "annotations": {
+        "Portland, Oregon": {
+          "explanation": "Oregon’s largest city; Engelbart was born and spent his early childhood there before his family moved to a more rural area nearby.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Portland,_Oregon"
+        }
+      }
+    },
+    {
+      "date": "1942",
+      "date_precision": "year",
+      "age": 17,
+      "title": "Finished high school",
+      "description": "In 1942, Engelbart graduated from Franklin High School in Portland, Oregon, and entered Oregon State University to study electrical engineering as World War II continued.",
+      "locations": [
+        {
+          "name_historic": "Portland",
+          "name_modern": "Portland, Oregon, United States",
+          "centroid": [
+            -122.674194,
+            45.5202471
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Corvallis",
+          "name_modern": "Corvallis, Oregon, United States",
+          "centroid": [
+            -123.2620435,
+            44.5645659
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Kidder_Hall%2C_Oregon_State_University.png/960px-Kidder_Hall%2C_Oregon_State_University.png",
+          "caption": "Kidder Hall, Oregon State University",
+          "source": "https://commons.wikimedia.org/wiki/File:Kidder_Hall,_Oregon_State_University.png"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "depression_born_resolve"
+    },
+    {
+      "date": "1944",
+      "date_precision": "year",
+      "date_end": "1946",
+      "date_end_precision": "year",
+      "date_note": "He served two years in the U.S. Navy during his undergraduate period; he read Vannevar Bush's essay while stationed in the Philippines",
+      "age": 19,
+      "title": "Served as Navy technician",
+      "description": "Midway through college, Engelbart served in the United States Navy as a radio and radar technician in the Philippines. While stationed on Leyte, he read [[As We May Think|“As We May Think”]], absorbing its call for new ways to organize and navigate human knowledge.",
+      "locations": [
+        {
+          "name_historic": "Leyte",
+          "name_modern": "Leyte, Philippines",
+          "centroid": [
+            124.892321,
+            10.7841157
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Philippines",
+          "name_modern": "Philippines",
+          "centroid": [
+            122.7312101,
+            12.7503486
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "wartime_knowledge_spark",
+      "annotations": {
+        "As We May Think": {
+          "explanation": "A 1945 essay by Vannevar Bush (published in The Atlantic) envisioning systems to help people store, link, and retrieve information—often cited as an early inspiration for hypertext.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/As_We_May_Think"
+        }
+      }
+    },
+    {
+      "date": "1948",
+      "date_precision": "year",
+      "age": 23,
+      "title": "Earns Oregon State engineering degree",
+      "description": "In 1948, Engelbart returned to Oregon State University in Corvallis and completed his bachelor’s degree in electrical engineering. While on campus he was a member of Sigma Phi Epsilon, a detail that hints at a life that wasn’t only circuits and study.\n\nAfter graduating, he was hired by the [[National Advisory Committee for Aeronautics|NACA]] at the Ames Research Center, where his days were spent on practical engineering work and his off-hours on the kind of wide-open activities—hiking and camping—that made room for bigger questions to form.",
+      "locations": [
+        {
+          "name_historic": "Corvallis",
+          "name_modern": "Corvallis, Oregon, USA",
+          "centroid": [
+            -123.2620435,
+            44.5645659
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "wartime_knowledge_spark",
+      "annotations": {
+        "Corvallis": {
+          "explanation": "A college town in Oregon and the home of Oregon State University, where Engelbart finished his undergraduate studies.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Corvallis,_Oregon"
+        },
+        "National Advisory Committee for Aeronautics": {
+          "explanation": "The U.S. federal agency that preceded NASA; it ran major aeronautics research centers, including Ames in California.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Advisory_Committee_for_Aeronautics"
+        }
+      }
+    },
+    {
+      "date": "1951-05-05",
+      "date_precision": "day",
+      "age": 26,
+      "title": "Marries Ballard Fish",
+      "description": "On May 5, 1951, Engelbart married Ballard Fish at Portola State Park in the Santa Cruz Mountains. They had met while he worked at NACA’s Ames Research Center, where she was finishing training to become an occupational therapist.\n\nThe timing matters: Engelbart was on the verge of leaving a stable job to return to school, and the marriage sits right at the hinge between “getting started” and choosing a far more ambitious path.",
+      "locations": [
+        {
+          "name_historic": "Los Altos",
+          "name_modern": "Los Altos, California, United States",
+          "centroid": [
+            -122.116578,
+            37.3790629
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ballard Fish"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Aerial_View_of_NASA_Ames_Research_Center_-_GPN-2000-001759.jpg/960px-Aerial_View_of_NASA_Ames_Research_Center_-_GPN-2000-001759.jpg",
+          "caption": "Aerial view of NASA Ames Research Center",
+          "source": "https://commons.wikimedia.org/wiki/File:Aerial_View_of_NASA_Ames_Research_Center_-_GPN-2000-001759.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "berkeley_to_menlo_park",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Ballard Fish",
+        "duration": "until her death"
+      },
+      "location_coordinates": [
+        {
+          "label": "Portola State Park",
+          "name": "Portola Redwoods State Park (formerly Portola State Park), California, United States",
+          "primary": true,
+          "centroid": [
+            -122.236,
+            37.279
+          ],
+          "source": "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+        }
+      ]
+    },
+    {
+      "date": "1951",
+      "date_precision": "year",
+      "date_end": "1955",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "Earns MS and PhD at Berkeley",
+      "description": "Soon after his 1951 marriage, Engelbart left Ames and entered graduate study in electrical engineering at the University of California, Berkeley, specializing in computers.\n\nHe completed a Master of Science degree in 1953 and then a PhD in 1955. The milestones read like ordinary academic progress, but they were also a way of arming himself for a much stranger goal: not just building better machines, but reshaping how people work with information, together, at a screen.",
+      "locations": [
+        {
+          "name_historic": "Berkeley",
+          "name_modern": "Berkeley, California, United States",
+          "centroid": [
+            -122.272863,
+            37.8708393
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "berkeley_to_menlo_park",
+      "annotations": {
+        "University of California, Berkeley": {
+          "explanation": "A major public research university in Berkeley, California; in the early 1950s it was one of the U.S. centers for emerging computer research.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_California,_Berkeley"
+        }
+      }
+    },
+    {
+      "date": "1956",
+      "date_precision": "year",
+      "date_end": "1957",
+      "date_end_precision": "year",
+      "age": 31,
+      "title": "Left startup for SRI",
+      "description": "In 1956, after a short period as an assistant professor at the University of California, Berkeley, Engelbart left academia, briefly tried to commercialize his storage-related work through a small firm called [[Digital Techniques|Digital Techniques]], and then abandoned the venture as he looked for a research environment better suited to long-term exploratory work, leading him toward [[SRI International|SRI]].",
+      "locations": [
+        {
+          "name_historic": "Berkeley",
+          "name_modern": "Berkeley, California, United States",
+          "centroid": [
+            -122.272863,
+            37.8708393
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+        "https://en.wikipedia.org/wiki/SRI_International"
+      ],
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "berkeley_to_menlo_park",
+      "annotations": {
+        "Digital Techniques": {
+          "explanation": "A short-lived company Engelbart founded after leaving UC Berkeley, before he moved into long-term research work at SRI."
+        },
+        "SRI International": {
+          "explanation": "A nonprofit research institute (then commonly called Stanford Research Institute) where Engelbart soon based his work after leaving academia.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/SRI_International"
+        }
+      }
+    },
+    {
+      "date": "1957",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Joins Stanford Research Institute",
+      "description": "In 1957, Engelbart joined Stanford Research Institute (SRI) in Menlo Park, California. He worked with Hewitt Crane on magnetic devices and electronics miniaturization—practical projects that paid the bills—while continuing to quietly develop his more radical ideas about interactive computing.\n\nCrane would become more than a colleague: the two became close friends, a personal foothold inside an institution where Engelbart’s long-term vision still had to fight for room.",
+      "locations": [
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Hewitt Crane"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
+        "https://en.wikipedia.org/wiki/Bill_English_(computer_engineer)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/SRI_International_HQ.jpg/960px-SRI_International_HQ.jpg",
+          "caption": "Headquarters of SRI International, Menlo Park",
+          "source": "https://commons.wikimedia.org/wiki/File:SRI_International_HQ.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "berkeley_to_menlo_park",
+      "annotations": {
+        "Stanford Research Institute": {
+          "explanation": "A major U.S. contract research organization (later renamed SRI International) affiliated with Stanford University in its early decades and known for Cold War-era technology research.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/SRI_International"
+        }
+      }
+    },
+    {
+      "date": "1962-10",
+      "date_precision": "month",
+      "age": 37,
+      "title": "Published augmentation framework",
+      "description": "In October 1962, while working at [[SRI International|SRI]] in [[Menlo Park|Menlo Park]], Engelbart circulated a programmatic report articulating his proposed direction for computer-supported intellectual work, drawing on early institutional backing and attention from U.S. military research funders such as the [[Air Force Office of Scientific Research|Air Force Office of Scientific Research]].",
+      "locations": [
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
+        "https://en.wikipedia.org/wiki/J._C._R._Licklider"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "augmentation_research_forge",
+      "annotations": {
+        "SRI International": {
+          "explanation": "A U.S. nonprofit research institute (founded as Stanford Research Institute) where Engelbart ran early work on interactive computing.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/SRI_International"
+        },
+        "Air Force Office of Scientific Research": {
+          "explanation": "The U.S. Air Force’s basic research funding office, which supported and coordinated scientific research programs through grants and contracts.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Air_Force_Office_of_Scientific_Research"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Augmenting Human Intellect: A Conceptual Framework",
+        "publication_type": "paper",
+        "significance": "programmatic manifesto",
+        "impact": "The report formalized a research agenda for interactive computing aimed at improving how people create, organize, and share knowledge."
+      }
+    },
+    {
+      "date": "1963",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Founded Augmentation Research Center",
+      "description": "In 1963, with new support from the U.S. [[ARPA|ARPA]], Douglas Engelbart formed the Augmentation Research Center (ARC) at [[SRI|SRI]] in Menlo Park and began assembling a dedicated team. He set organizing principles for the lab, including his “bootstrapping” strategy, and focused the group’s work on an integrated interactive system later called the oN-Line System (NLS).",
+      "locations": [
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "J. C. R. Licklider"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/J._C._R._Licklider",
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Douglas_Engelbart%27s_office.jpg/960px-Douglas_Engelbart%27s_office.jpg",
+          "caption": "Douglas Engelbart's old office at SRI International",
+          "source": "https://commons.wikimedia.org/wiki/File:Douglas_Engelbart's_office.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "augmentation_research_forge",
+      "annotations": {
+        "ARPA": {
+          "explanation": "The Advanced Research Projects Agency (later DARPA), a U.S. Department of Defense research agency that funded pioneering computing research in the 1960s.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/DARPA"
+        },
+        "SRI": {
+          "explanation": "Stanford Research Institute (now SRI International), a nonprofit research organization in the San Francisco Bay Area where Engelbart’s lab was established.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/SRI_International"
+        }
+      }
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "date_note": "The mouse was developed with Bill English sometime before 1965; the widely cited first version dates to the early-to-mid 1960s",
+      "age": 39,
+      "title": "Builds the first mouse prototype",
+      "description": "In the early 1960s at SRI’s Augmentation Research Center (ARC), Engelbart needed a faster way to select and manipulate on-screen objects inside an interactive system. Working with engineer Bill English, the team produced an early pointing device that translated hand motion into X–Y movement.\n\nEnglish built the first working prototype based on Engelbart’s notes, turning a concept into something you could actually hold and test—an approach that fit ARC’s broader style: ideas were only as good as the tools and practices you could build around them.",
+      "locations": [
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bill English"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bill_English_(computer_engineer)",
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Douglas_Engelbart%27s_prototype_mouse_-_Computer_History_Museum.jpg/960px-Douglas_Engelbart%27s_prototype_mouse_-_Computer_History_Museum.jpg",
+          "caption": "Douglas Engelbart's prototype mouse (Computer History Museum)",
+          "source": "https://commons.wikimedia.org/wiki/File:Douglas_Engelbart's_prototype_mouse_-_Computer_History_Museum.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "augmentation_research_forge",
+      "annotations": {
+        "Augmentation Research Center": {
+          "explanation": "A research group at Stanford Research Institute (SRI) led by Douglas Engelbart that developed interactive computing techniques later showcased in the 1968 “Mother of All Demos.”",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "Computer mouse (X–Y position indicator)",
+        "description": "A handheld pointing device using mechanical wheels to convert surface motion into X–Y cursor movement on a computer display.",
+        "impact": "It provided a practical way to select and manipulate on-screen objects during interactive computing."
+      }
+    },
+    {
+      "date": "1968-12-09",
+      "date_precision": "day",
+      "age": 43,
+      "title": "Presented Mother of All Demos",
+      "description": "On December 9, 1968, Engelbart delivered a 90-minute live demonstration of NLS at the ACM/IEEE Computer Society’s Fall Joint Computer Conference in San Francisco, with staff from SRI’s Augmentation Research Center coordinating remote links back to the institute’s computer.\n\nThe event would later be nicknamed “The Mother of All Demos,” because it showed an integrated vision of interactive computing—editing, linking, collaboration, and pointing—working together in real time. It was not a solo performance: the demo depended on a prepared system, careful choreography, and a team that could make fragile, cutting-edge infrastructure behave on cue.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, California, United States",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/SRI_Douglas_Engelbart_1968.jpg",
+          "caption": "Douglas Engelbart practices for the 1968 demo",
+          "source": "https://commons.wikimedia.org/wiki/File:SRI_Douglas_Engelbart_1968.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "the_demo_breaks_open",
+      "annotations": {
+        "NLS": {
+          "explanation": "The oN-Line System, Engelbart’s interactive computer system developed at SRI for networked collaborative work and document editing.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+        },
+        "Augmentation Research Center": {
+          "explanation": "A Stanford Research Institute lab led by Engelbart that pursued 'human augmentation' via interactive computing and built NLS.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+        }
+      }
+    },
+    {
+      "date": "1976",
+      "date_precision": "year",
+      "date_end": "1986",
+      "date_end_precision": "year",
+      "date_note": "ARC was transferred from SRI to Tymshare in 1976; Tymshare was acquired by McDonnell Douglas in 1984; Engelbart retired in 1986",
+      "age": 51,
+      "title": "ARC transfers to Tymshare",
+      "description": "In 1976, amid funding pressure and shifting priorities at SRI, Douglas Engelbart’s Augmentation Research Center and its NLS work were transferred to [[Tymshare]], where the system was offered commercially as Augment.\n\nThe move kept the technology alive, but it also changed the rules around it. Tymshare was later acquired by [[McDonnell Douglas]] in 1984, and Engelbart found himself with less room to pursue the broader, long-term agenda that had driven ARC from the beginning. He retired in 1986.",
+      "locations": [
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "the_demo_breaks_open",
+      "annotations": {
+        "SRI International": {
+          "explanation": "SRI (Stanford Research Institute, later renamed SRI International) was the nonprofit research organization in Menlo Park, California, where Engelbart’s Augmentation Research Center was based.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/SRI_International"
+        },
+        "NLS": {
+          "explanation": "The oN-Line System (NLS) was Engelbart’s interactive computing environment developed at SRI and later marketed by Tymshare under the name Augment.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/NLS_(computer_system)"
+        },
+        "Tymshare": {
+          "explanation": "A timesharing and software company that took over Engelbart’s group and commercialized NLS as ‘Augment.’",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tymshare"
+        },
+        "McDonnell Douglas": {
+          "explanation": "A U.S. aerospace manufacturing company that acquired Tymshare in 1984.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/McDonnell_Douglas"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Menlo Park",
+          "name": "Menlo Park, California, United States",
+          "primary": true,
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "source": "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+        },
+        {
+          "label": "Cupertino (Tymshare)",
+          "name": "Cupertino, California, United States",
+          "primary": false,
+          "centroid": [
+            -122.0321823,
+            37.3229978
+          ],
+          "source": "https://en.wikipedia.org/wiki/Tymshare"
+        }
+      ]
+    },
+    {
+      "date": "1988",
+      "date_precision": "year",
+      "age": 63,
+      "title": "Founds the Bootstrap Institute",
+      "description": "In 1988, Engelbart and his daughter Christina Engelbart founded the Bootstrap Institute to promote his ideas about improving collective problem-solving with better tools and methods.\n\nThe effort later became known as The Doug Engelbart Institute. It focused heavily on outreach and seminars, especially around Stanford, and it helped attract some DARPA funding to modernize the user interface of Augment—an attempt to keep the work evolving instead of fossilizing as a historical achievement.",
+      "locations": [
+        {
+          "name_historic": "Menlo Park",
+          "name_modern": "Menlo Park, California, United States",
+          "centroid": [
+            -122.177992,
+            37.4519671
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Stanford",
+          "name_modern": "Stanford, California, United States",
+          "centroid": [
+            -122.1703055,
+            37.4265407
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Christina Engelbart"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "bootstrapping_a_legacy",
+      "annotations": {
+        "Bootstrap Institute": {
+          "explanation": "Douglas Engelbart's nonprofit organization (later renamed the Doug Engelbart Institute) created to advance his work on improving group effectiveness through augmented tools and practices.",
+          "wikipedia_url": null
+        },
+        "Stanford University": {
+          "explanation": "A private research university in Stanford, California; Engelbart’s institute emphasized outreach and seminars there.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Stanford_University"
+        }
+      }
+    },
+    {
+      "date": "1997",
+      "date_precision": "year",
+      "date_end": "2000",
+      "date_end_precision": "year",
+      "date_note": "He received the ACM Turing Award in 1997 and the U.S. National Medal of Technology in 2000",
+      "age": 72,
+      "title": "Wins top computing honors",
+      "description": "In 1997, Engelbart received the ACM Turing Award for his contributions to interactive computing.\n\nIn December 2000, President Bill Clinton awarded him the United States National Medal of Technology, one of the country’s highest honors for technological achievement.",
+      "locations": [
+        {
+          "name_historic": "San Jose",
+          "name_modern": "San Jose, California, United States",
+          "centroid": [
+            -121.890591,
+            37.3361663
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Bill Clinton"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+        "https://en.wikipedia.org/wiki/Bill_Clinton"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Assignment-_TA_2006_8688_4%29_Technology_Administration_-_2004_National_Medal_of_Technology_Laureates_%2840_CFD_TA_2006_8688_4_DSC0030.JPG_-_DPLA_-_5efdd31210ab0f5450965e0d315d6036.JPG/960px-thumbnail.jpg",
+          "caption": "2004 National Medal of Technology Laureates",
+          "source": "https://commons.wikimedia.org/wiki/File:Assignment-_TA_2006_8688_4)_Technology_Administration_-_2004_National_Medal_of_Technology_Laureates_(40_CFD_TA_2006_8688_4_DSC0030.JPG_-_DPLA_-_5efdd31210ab0f5450965e0d315d6036.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "bootstrapping_a_legacy",
+      "annotations": {
+        "ACM Turing Award": {
+          "explanation": "The Association for Computing Machinery's highest honor, often described as the 'Nobel Prize of Computing.'",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_Award"
+        },
+        "National Medal of Technology and Innovation": {
+          "explanation": "A U.S. presidential award recognizing major technological achievements; it was previously named the National Medal of Technology.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Medal_of_Technology_and_Innovation"
+        }
+      }
+    },
+    {
+      "date": "2013-07-02",
+      "date_precision": "day",
+      "age": 88,
+      "title": "Died in California",
+      "description": "Douglas Engelbart died on 2 July 2013 in Atherton, California, at the age of 88; his immediate cause of death was kidney failure.",
+      "locations": [
+        {
+          "name_historic": "Atherton",
+          "name_modern": "Atherton, California, United States",
+          "centroid": [
+            -122.2058272,
+            37.453773
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "bootstrapping_a_legacy"
+    }
+  ]
+}
