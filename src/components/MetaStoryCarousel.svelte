@@ -15,15 +15,24 @@
   let isDragging = false;
   let startX = 0;
   let scrollLeft = 0;
+  let isPaused = false;
+  let resumeTimeout;
+  let resumeTimerActive = false;
+  let timerKey = 0;
+
+  const AUTOPLAY_INTERVAL = 5000;
+  const RESUME_DELAY = 10000;
 
   // Auto-advance every 5 seconds
   function startAutoplay() {
     stopAutoplay();
+    cancelResumeTimer();
+    isPaused = false;
     autoplayInterval = setInterval(() => {
       if (!isDragging) {
         nextSlide();
       }
-    }, 5000);
+    }, AUTOPLAY_INTERVAL);
   }
 
   function stopAutoplay() {
@@ -31,6 +40,26 @@
       clearInterval(autoplayInterval);
       autoplayInterval = null;
     }
+  }
+
+  function cancelResumeTimer() {
+    if (resumeTimeout) {
+      clearTimeout(resumeTimeout);
+      resumeTimeout = null;
+    }
+    resumeTimerActive = false;
+  }
+
+  function pauseWithResumeTimer() {
+    stopAutoplay();
+    cancelResumeTimer();
+    isPaused = true;
+    resumeTimerActive = true;
+    timerKey += 1;
+    resumeTimeout = setTimeout(() => {
+      resumeTimerActive = false;
+      startAutoplay();
+    }, RESUME_DELAY);
   }
 
   function nextSlide() {
@@ -41,10 +70,19 @@
     currentSlide = (currentSlide - 1 + metaStories.length) % metaStories.length;
   }
 
+  function handlePrevClick() {
+    prevSlide();
+    pauseWithResumeTimer();
+  }
+
+  function handleNextClick() {
+    nextSlide();
+    pauseWithResumeTimer();
+  }
+
   function goToSlide(index) {
     currentSlide = index;
-    stopAutoplay();
-    startAutoplay();
+    pauseWithResumeTimer();
   }
 
   function handleMouseDown(e) {
@@ -86,6 +124,21 @@
     const x = e.touches[0].pageX - carouselElement.offsetLeft;
     const walk = (x - startX) * 2;
     carouselElement.scrollLeft = scrollLeft - walk;
+  }
+
+  function handleMouseEnter() {
+    // Only pause if autoplay is running (not during resume timer)
+    if (!resumeTimerActive) {
+      isPaused = true;
+      stopAutoplay();
+    }
+  }
+
+  function handleMouseLeave() {
+    // Only resume if we paused due to hover (not during resume timer)
+    if (!resumeTimerActive && !isDragging) {
+      startAutoplay();
+    }
   }
 
   function getPersonsForMetaStory(metaStory) {
@@ -131,6 +184,7 @@
 
   onDestroy(() => {
     stopAutoplay();
+    cancelResumeTimer();
   });
 
   $: if (metaStories.length === 0) {
@@ -139,7 +193,12 @@
 </script>
 
 {#if metaStories.length > 0}
-  <section class="meta-story-carousel">
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <section
+    class="meta-story-carousel"
+    on:mouseenter={handleMouseEnter}
+    on:mouseleave={handleMouseLeave}
+  >
     <div class="carousel-container">
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
@@ -219,7 +278,7 @@
       {#if metaStories.length > 1}
         <button
           class="carousel-nav prev"
-          on:click={prevSlide}
+          on:click={handlePrevClick}
           aria-label={$_("landing.previous_slide")}
         >
           <svg
@@ -239,7 +298,7 @@
 
         <button
           class="carousel-nav next"
-          on:click={nextSlide}
+          on:click={handleNextClick}
           aria-label={$_("landing.next_slide")}
         >
           <svg
@@ -267,6 +326,57 @@
               aria-label={slideLabel}
             />
           {/each}
+        </div>
+      {/if}
+
+      {#if metaStories.length > 1}
+        <div class="playback-indicator" class:paused={isPaused} aria-hidden="true">
+          {#if resumeTimerActive}
+            {#key timerKey}
+              <svg
+                class="countdown-ring"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                style="--duration: {RESUME_DELAY}ms;"
+              >
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="14"
+                  fill="none"
+                  stroke="rgba(148, 163, 184, 0.6)"
+                  stroke-width="2"
+                  stroke-dasharray="88 88"
+                  transform="rotate(-90 16 16)"
+                />
+              </svg>
+            {/key}
+          {/if}
+          <div class="playback-icon">
+            {#if isPaused}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </svg>
+            {:else}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            {/if}
+          </div>
         </div>
       {/if}
     </div>
@@ -642,6 +752,55 @@
 
     .carousel-indicators {
       bottom: 1rem;
+    }
+  }
+
+  .playback-indicator {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    color: rgba(226, 232, 240, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .playback-indicator.paused {
+    background: rgba(0, 0, 0, 0.6);
+    color: rgba(226, 232, 240, 0.9);
+  }
+
+  .playback-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .countdown-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .countdown-ring circle {
+    animation: countdown-ring var(--duration, 10s) linear forwards;
+  }
+
+  @keyframes countdown-ring {
+    0% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 88;
     }
   }
 </style>
