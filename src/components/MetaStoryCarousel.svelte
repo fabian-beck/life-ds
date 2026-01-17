@@ -147,10 +147,8 @@
     if (sectionElement && e?.relatedTarget && sectionElement.contains(e.relatedTarget)) return;
     isHovered = true;
 
-    // Pause autoplay and cancel any pending resume timers
-    isPaused = true;
-    stopAutoplay();
-    cancelResumeTimer();
+    // Pause autoplay with resume timer as fallback to prevent stuck states
+    pauseWithResumeTimer();
   }
 
   function handleMouseLeave(e) {
