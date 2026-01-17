@@ -17,6 +17,8 @@
   let isHovered = false;
   let startX = 0;
   let scrollLeft = 0;
+  let touchStartX = 0;
+  let touchDeltaX = 0;
   let isPaused = false;
   let resumeTimeout;
   let resumeTimerActive = false;
@@ -114,29 +116,43 @@
     carouselElement.scrollLeft = scrollLeft - walk;
   }
 
+  const SWIPE_THRESHOLD = 50; // Minimum pixels to trigger a swipe
+
   function handleTouchStart(e) {
     isDragging = true;
     isPaused = true;
-    startX = e.touches[0].pageX - carouselElement.offsetLeft;
-    scrollLeft = carouselElement.scrollLeft;
+    touchStartX = e.touches[0].clientX;
+    touchDeltaX = 0;
     stopAutoplay();
     cancelResumeTimer();
   }
 
   function handleTouchEnd() {
+    if (!isDragging) return;
     isDragging = false;
-    // Touch devices don't have hover, so resume autoplay after touch ends
-    if (!isHovered) {
-      isPaused = false;
-      startAutoplay();
+
+    // Determine swipe direction based on delta
+    if (Math.abs(touchDeltaX) >= SWIPE_THRESHOLD) {
+      if (touchDeltaX > 0) {
+        // Swiped right -> go to previous slide
+        prevSlide();
+      } else {
+        // Swiped left -> go to next slide
+        nextSlide();
+      }
     }
+
+    // Reset touch tracking
+    touchStartX = 0;
+    touchDeltaX = 0;
+
+    // Touch devices don't have hover, so use resume timer after touch ends
+    pauseWithResumeTimer();
   }
 
   function handleTouchMove(e) {
     if (!isDragging) return;
-    const x = e.touches[0].pageX - carouselElement.offsetLeft;
-    const walk = (x - startX) * 2;
-    carouselElement.scrollLeft = scrollLeft - walk;
+    touchDeltaX = e.touches[0].clientX - touchStartX;
   }
 
   function handleMouseEnter(e) {
