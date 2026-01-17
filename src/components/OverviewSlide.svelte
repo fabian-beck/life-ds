@@ -1,5 +1,5 @@
 <script>
-  import { mdiMagnifyPlusOutline, mdiAccountMultipleOutline } from "@mdi/js";
+  import { mdiMagnifyPlusOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { getThumbnailUrl } from "../utils/storyHelpers.js";
 
@@ -9,9 +9,7 @@
   export let yearsLabel = "";
   export let rolesLabel = "";
   export let personSummary = "";
-  export let egoNetwork = null;
   export let onEnlargeImage = () => {};
-  export let onOpenNetwork = () => {};
 
   $: hasPersonSummary = Boolean(personSummary);
 
@@ -93,27 +91,6 @@
     {/if}
     {#if rolesLabel}
       <p class="overview-roles">{@html rolesLabel}</p>
-    {/if}
-    {#if egoNetwork?.connections && egoNetwork.connections.length > 0}
-      <button
-        type="button"
-        class="overview-network-btn"
-        on:click={onOpenNetwork}
-        aria-label={$_("story.show_network")}
-      >
-        <svg
-          class="icon icon-inline"
-          viewBox="0 0 24 24"
-          role="presentation"
-          aria-hidden="true"
-        >
-          <path d={mdiAccountMultipleOutline} />
-        </svg>
-        <span class="network-btn-text">
-          {egoNetwork.connections.length}
-          {egoNetwork.connections.length === 1 ? "connection" : "connections"}
-        </span>
-      </button>
     {/if}
     {#if hasPersonSummary}
       <p class="description">
@@ -243,67 +220,6 @@
     font-style: italic;
   }
 
-  .overview-network-btn {
-    appearance: none;
-    position: absolute;
-    top: 1rem;
-    right: 2vw;
-    margin: 0;
-    border: 1px solid var(--story-primary, rgba(148, 163, 184, 0.3));
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--story-primary, #e2e8f0);
-    padding: 0.5rem;
-    border-radius: 50%;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease;
-    z-index: 10;
-  }
-
-  .overview-network-btn .icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    fill: currentColor;
-  }
-
-  .network-btn-text {
-    display: none;
-  }
-
-  .overview-network-btn:hover,
-  .overview-network-btn:focus {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
-    transform: scale(1.05);
-    outline: none;
-  }
-
-  .overview-network-btn:active {
-    transform: scale(0.98);
-  }
-
-  .icon {
-    width: 1.1em;
-    height: 1.1em;
-    fill: currentColor;
-    flex: 0 0 auto;
-  }
-
-  .icon-inline {
-    width: 1em;
-    height: 1em;
-  }
-
   .enlarge-icon {
     position: absolute;
     bottom: 0.25rem;
@@ -378,25 +294,6 @@
 
     .overview-roles {
       font-size: 1rem;
-    }
-
-    .overview-network-btn {
-      position: static;
-      margin-top: 0.75rem;
-      padding: 0.4rem 0.85rem;
-      border-radius: 999px;
-      width: fit-content;
-      height: auto;
-      align-self: flex-start;
-    }
-
-    .overview-network-btn .icon {
-      width: 1rem;
-      height: 1rem;
-    }
-
-    .network-btn-text {
-      display: inline;
     }
 
     .overview-text .description {

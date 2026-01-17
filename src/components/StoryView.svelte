@@ -2,6 +2,7 @@
   import { tick, onMount, onDestroy } from "svelte";
   import { replace, location } from "svelte-spa-router";
   import CloseButton from "./CloseButton.svelte";
+  import { mdiAccountMultipleOutline } from "@mdi/js";
   import { queryParams, buildUrlWithParams } from "../stores/queryParams";
   import ImageViewer from "./ImageViewer.svelte";
   import NetworkModal from "./NetworkModal.svelte";
@@ -243,6 +244,7 @@
 
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
+  $: hasNetworkConnections = egoNetwork?.connections && egoNetwork.connections.length > 0;
 
   // Flattened collection of all images across the story with event metadata
   $: allImages = [
@@ -1041,13 +1043,32 @@
         {/if}
         <span class="lifespan">{yearsLabel}</span>
       {/if}
-      <CloseButton
-        variant="theme"
-        size="responsive"
-        ariaLabel={$_("story.close_story")}
-        on:click={handleClose}
-        class="compact"
-      />
+      <div class="header-actions">
+        {#if hasNetworkConnections}
+          <button
+            type="button"
+            class="header-network-btn"
+            on:click={openNetworkModal}
+            aria-label={$_("story.show_network")}
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiAccountMultipleOutline} />
+            </svg>
+          </button>
+        {/if}
+        <CloseButton
+          variant="theme"
+          size="responsive"
+          ariaLabel={$_("story.close_story")}
+          on:click={handleClose}
+          class="compact"
+        />
+      </div>
     </div>
   </header>
 
@@ -1123,9 +1144,7 @@
                 {yearsLabel}
                 {rolesLabel}
                 {personSummary}
-                {egoNetwork}
                 onEnlargeImage={enlargeImage}
-                onOpenNetwork={openNetworkModal}
               />
             {:else if slide.type === "chapter"}
               <ChapterSlide
@@ -1493,6 +1512,51 @@
     text-overflow: ellipsis;
   }
 
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .header-network-btn {
+    appearance: none;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--story-primary, #e2e8f0);
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .header-network-btn .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: currentColor;
+  }
+
+  .header-network-btn:hover,
+  .header-network-btn:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--story-primary, rgba(148, 163, 184, 0.6));
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  .header-network-btn:active {
+    transform: scale(0.95);
+  }
+
   /* Compact masthead for landscape mobile (short viewports)
      - Applies to rotated phones with limited vertical space
      - Makes header more compact and positioned on right side only */
@@ -1532,6 +1596,20 @@
 
     .compact-info .separator {
       display: none;
+    }
+
+    .header-actions {
+      gap: 0.25rem;
+    }
+
+    .header-network-btn {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .header-network-btn .icon {
+      width: 0.85rem;
+      height: 0.85rem;
     }
 
     .slide {
