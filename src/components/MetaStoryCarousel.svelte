@@ -12,7 +12,9 @@
   let currentSlide = 0;
   let autoplayInterval;
   let carouselElement;
+  let sectionElement;
   let isDragging = false;
+  let isHovered = false;
   let startX = 0;
   let scrollLeft = 0;
   let isPaused = false;
@@ -25,11 +27,14 @@
 
   // Auto-advance every 5 seconds
   function startAutoplay() {
+    if (isHovered || isDragging) {
+      return;
+    }
     stopAutoplay();
     cancelResumeTimer();
     isPaused = false;
     autoplayInterval = setInterval(() => {
-      if (!isDragging) {
+      if (!isDragging && !isHovered) {
         nextSlide();
       }
     }, AUTOPLAY_INTERVAL);
@@ -93,10 +98,12 @@
     stopAutoplay();
   }
 
-  function handleMouseUp() {
+  function handleMouseUp(fromDrag = false) {
+    if (!isDragging) return;
     isDragging = false;
     carouselElement.style.cursor = "grab";
-    startAutoplay();
+    // Only restart autoplay if this was from actual dragging, not from mouseleave
+    // The section's handleMouseLeave will handle resuming when mouse truly leaves
   }
 
   function handleMouseMove(e) {
@@ -109,14 +116,20 @@
 
   function handleTouchStart(e) {
     isDragging = true;
+    isPaused = true;
     startX = e.touches[0].pageX - carouselElement.offsetLeft;
     scrollLeft = carouselElement.scrollLeft;
     stopAutoplay();
+    cancelResumeTimer();
   }
 
   function handleTouchEnd() {
     isDragging = false;
-    startAutoplay();
+    // Touch devices don't have hover, so resume autoplay after touch ends
+    if (!isHovered) {
+      isPaused = false;
+      startAutoplay();
+    }
   }
 
   function handleTouchMove(e) {
@@ -126,17 +139,29 @@
     carouselElement.scrollLeft = scrollLeft - walk;
   }
 
-  function handleMouseEnter() {
-    // Only pause if autoplay is running (not during resume timer)
-    if (!resumeTimerActive) {
-      isPaused = true;
-      stopAutoplay();
-    }
+  function handleMouseEnter(e) {
+    if (isHovered) return;
+    // Don't treat touch events as hover to avoid stuck states on mobile
+    if (e.pointerType === 'touch') return;
+    // Ignore internal transitions within the carousel
+    if (sectionElement && e?.relatedTarget && sectionElement.contains(e.relatedTarget)) return;
+    isHovered = true;
+
+    // Pause autoplay and cancel any pending resume timers
+    isPaused = true;
+    stopAutoplay();
+    cancelResumeTimer();
   }
 
-  function handleMouseLeave() {
-    // Only resume if we paused due to hover (not during resume timer)
-    if (!resumeTimerActive && !isDragging) {
+  function handleMouseLeave(e) {
+    // Ignore internal transitions within the carousel
+    if (sectionElement && e?.relatedTarget && sectionElement.contains(e.relatedTarget)) return;
+    if (!isHovered) return;
+    isHovered = false;
+
+    // Only resume if we are not dragging
+    if (!isDragging) {
+      isPaused = false;
       startAutoplay();
     }
   }
@@ -189,15 +214,20 @@
 
   $: if (metaStories.length === 0) {
     stopAutoplay();
+  } else if (metaStories.length > 0 && !autoplayInterval && !isPaused && !isDragging && !isHovered) {
+    // Start autoplay when metaStories becomes populated and not interacting
+    startAutoplay();
   }
 </script>
 
 {#if metaStories.length > 0}
   <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <section
     class="meta-story-carousel"
-    on:mouseenter={handleMouseEnter}
-    on:mouseleave={handleMouseLeave}
+    bind:this={sectionElement}
+    on:mouseover={handleMouseEnter}
+    on:mouseout={handleMouseLeave}
   >
     <div class="carousel-container">
       <!-- svelte-ignore a11y-no-static-element-interactions -->
