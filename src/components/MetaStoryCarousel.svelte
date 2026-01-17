@@ -104,15 +104,18 @@
         return yearA - yearB;
       });
 
-    // If more than 6 people, show a random subset of 6
+    // If more than 6 people, randomly select 6 while maintaining temporal order
     if (personsForStory.length > 6) {
-      // Create a copy and shuffle using Fisher-Yates algorithm
-      const shuffled = [...personsForStory];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      // Randomly select 6 indices
+      const indices = [];
+      while (indices.length < 6) {
+        const randomIndex = Math.floor(Math.random() * personsForStory.length);
+        if (!indices.includes(randomIndex)) {
+          indices.push(randomIndex);
+        }
       }
-      return shuffled.slice(0, 6);
+      // Sort indices to maintain temporal order, then map to persons
+      return indices.sort((a, b) => a - b).map((i) => personsForStory[i]);
     }
 
     return personsForStory;
