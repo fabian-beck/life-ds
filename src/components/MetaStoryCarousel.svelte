@@ -390,9 +390,9 @@
     background: linear-gradient(
       to top,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 25%,
-      rgba(0, 0, 0, 0.9) 40%,
-      rgba(0, 0, 0, 0) 70%
+      rgba(0, 0, 0, 1) 60%,
+      rgba(0, 0, 0, 0) 90%,
+      rgba(0, 0, 0, 0) 0%
     );
   }
 
