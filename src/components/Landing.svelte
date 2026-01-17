@@ -428,7 +428,7 @@
         </select>
       </div>
     </header>
-    <div class="sticky-ai-button">
+    <div class="sticky-ai-button" transition:fade={{ duration: 200 }}>
       <AIGeneratedButton variant="small" onClick={toggleExplanation} />
     </div>
   {/if}
@@ -722,15 +722,7 @@
 
   .sticky-ai-button {
     position: fixed;
-    top: var(--landing-sticky-header-height, 2.5rem);
-    left: 0;
-    z-index: 140;
-    display: contents;
-  }
-
-  .sticky-ai-button :global(button) {
-    position: fixed;
-    top: var(--landing-sticky-header-height, 2.5rem);
+    top: calc(var(--landing-sticky-header-height, 2.5rem) - 0.35rem);
     left: -0.25rem;
     z-index: 140;
   }
