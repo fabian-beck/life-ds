@@ -528,9 +528,17 @@
 
   .sticky-ai-button {
     position: fixed;
-    top: calc(var(--sticky-header-height, 3.5rem) + 0.25rem);
-    left: 0.25rem;
+    top: var(--sticky-header-height, 3.5rem);
+    left: 0.75rem;
     z-index: 100;
+    display: contents;
+  }
+
+  .sticky-ai-button :global(button) {
+    position: fixed;
+    top: var(--sticky-header-height, 3.5rem);
+    left: -0.25rem;
+    z-index: 140;
   }
 
   .sticky-compact-info {

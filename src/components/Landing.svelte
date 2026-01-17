@@ -27,11 +27,26 @@
 
   // Sticky header state
   let showStickyHeader = false;
+  let stickyHeaderElement = null;
+  let stickyHeaderHeight = 0;
   const headerScrollThreshold = 200; // pixels scrolled before showing sticky header
 
   function handleScroll() {
     const scrollY = window.scrollY;
     showStickyHeader = scrollY > headerScrollThreshold;
+  }
+
+  // Update sticky header height when it appears/changes
+  $: if (stickyHeaderElement && showStickyHeader) {
+    stickyHeaderHeight = stickyHeaderElement.offsetHeight;
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--landing-sticky-header-height', `${stickyHeaderHeight}px`);
+    }
+  } else {
+    stickyHeaderHeight = 0;
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--landing-sticky-header-height', '0px');
+    }
   }
 
   onMount(() => {
@@ -397,10 +412,7 @@
 <section class="landing">
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
-    <header class="landing-sticky-header" transition:fade={{ duration: 200 }}>
-      <div class="sticky-left">
-        <AIGeneratedButton variant="small" onClick={toggleExplanation} />
-      </div>
+    <header class="landing-sticky-header" bind:this={stickyHeaderElement} transition:fade={{ duration: 200 }}>
       <div class="sticky-center">
         <span class="sticky-title">{$_("app.title")}</span>
       </div>
@@ -416,6 +428,9 @@
         </select>
       </div>
     </header>
+    <div class="sticky-ai-button">
+      <AIGeneratedButton variant="small" onClick={toggleExplanation} />
+    </div>
   {/if}
 
   <div class="top-controls">
@@ -705,14 +720,25 @@
     border-bottom: 1px solid rgba(148, 163, 184, 0.16);
   }
 
-  .sticky-left {
-    flex: 0 0 auto;
+  .sticky-ai-button {
+    position: fixed;
+    top: var(--landing-sticky-header-height, 2.5rem);
+    left: 0;
+    z-index: 140;
+    display: contents;
+  }
+
+  .sticky-ai-button :global(button) {
+    position: fixed;
+    top: var(--landing-sticky-header-height, 2.5rem);
+    left: -0.25rem;
+    z-index: 140;
   }
 
   .sticky-center {
     flex: 1 1 auto;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     min-width: 0;
   }
 

@@ -1072,10 +1072,11 @@
     </div>
   </header>
 
+  <div class="ai-label-wrapper">
+    <AIGeneratedButton variant="small" onClick={openAIModal} />
+  </div>
+
   <div class="slides-wrapper" class:map-enabled={hasMapData}>
-    <div class="ai-label-wrapper">
-      <AIGeneratedButton variant="small" onClick={openAIModal} />
-    </div>
     <main
       class="slides"
       class:initial-loading={!initialScrollDone && activeIndex > 0}
@@ -1264,14 +1265,22 @@
 
   .ai-label-wrapper {
     position: absolute;
-    top: 0.25rem;
-    left: 0.25rem;
+    top: var(--header-height, 2.5rem);
+    left: 0;
+    z-index: 100;
+    display: contents;
+  }
+
+  .ai-label-wrapper :global(button) {
+    position: absolute;
+    top: var(--header-height, 2.5rem);
+    left: -0.25rem;
     z-index: 100;
   }
 
   /* Adjust AI label position for landscape mobile */
   @media (max-height: 450px) {
-    .ai-label-wrapper {
+    .ai-label-wrapper :global(button) {
       top: auto;
       bottom: 0.5rem;
       left: 0.5rem;

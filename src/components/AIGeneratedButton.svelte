@@ -49,11 +49,6 @@
     opacity: 0.9;
   }
 
-  .ai-generated-button.small svg {
-    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 1))
-      drop-shadow(0 0 6px rgba(0, 0, 0, 0.8))
-      drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9));
-  }
 
   /* Large variant - with border and background (Landing page) */
   .ai-generated-button.large {
@@ -71,23 +66,28 @@
     border-color: rgba(251, 191, 36, 0.45);
   }
 
-  /* Small variant - with border and background (StoryView) */
+  /* Small variant - compact hanging tag (StoryView) */
   .ai-generated-button.small {
-    gap: 0.35rem;
-    padding: 0.4rem 0.5rem;
-    border-radius: 0.375rem;
-    background: rgba(251, 191, 36, 0.12);
-    border: 1px solid rgba(251, 191, 36, 0.3);
+    gap: 0.25rem;
+    padding: 0.2rem 0.4rem;
+    margin: 0;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-top: none;
     color: #fbbf24;
-    font-size: 0.7rem;
-    text-shadow:
-      0 0 8px rgba(0, 0, 0, 1),
-      0 0 12px rgba(0, 0, 0, 0.8),
-      0 1px 3px rgba(0, 0, 0, 0.9);
+    font-size: 0.6rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(12px);
+  }
+
+  .ai-generated-button.small svg {
+    width: 10px;
+    height: 10px;
   }
 
   .ai-generated-button.small:hover {
-    background: rgba(251, 191, 36, 0.18);
-    border-color: rgba(251, 191, 36, 0.45);
+    background: rgba(15, 23, 42, 0.65);
+    border-color: rgba(251, 191, 36, 0.3);
   }
 </style>
