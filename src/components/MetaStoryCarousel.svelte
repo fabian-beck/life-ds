@@ -182,9 +182,10 @@
 
             <div class="slide-content">
               <div class="slide-header">
-                <h2 class="slide-title">{metaStory.title}</h2>
-                <div class="tagline-and-date">
+                <div class="title-row">
+                  <h2 class="slide-title">{metaStory.title}</h2>
                   <p class="slide-tagline">{metaStory.tagline}</p>
+                  <span class="separator">·</span>
                   <span class="date-range"
                     >{metaStory.date_range_start}–{metaStory.date_range_end}</span
                   >
@@ -421,6 +422,23 @@
     gap: 0.35rem;
   }
 
+  .title-row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .separator {
+    color: #64748b;
+    font-weight: 400;
+    text-shadow:
+      0 3px 10px rgba(0, 0, 0, 1),
+      0 2px 6px rgba(0, 0, 0, 1),
+      0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
   .slide-title {
     font-size: 1.8rem;
     line-height: 1.2;
@@ -431,13 +449,6 @@
       0 4px 12px rgba(0, 0, 0, 1),
       0 2px 8px rgba(0, 0, 0, 1),
       0 1px 4px rgba(0, 0, 0, 0.9);
-  }
-
-  .tagline-and-date {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    flex-wrap: wrap;
   }
 
   .slide-tagline {
