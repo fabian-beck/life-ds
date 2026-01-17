@@ -377,29 +377,30 @@
   <div class="meta-story-view">
     <!-- Sticky header - appears when scrolling down -->
     {#if showStickyHeader}
-      <header
-        class="meta-sticky-header"
-        bind:this={stickyHeaderElement}
-        transition:fade={{ duration: 200 }}
-      >
-        <div class="sticky-compact-info">
-          <span class="sticky-name">{metaStoryData.meta_story.title}</span>
-          <span class="separator">·</span>
-          <span class="sticky-years">
-            {metaStoryData.meta_story.date_range_start}–{metaStoryData.meta_story.date_range_end}
-          </span>
-          <CloseButton
-            variant="light"
-            size="responsive"
-            ariaLabel={$_('meta_story.back_to_stories')}
-            on:click={backToLanding}
-            class="close-meta-story"
-          />
+      <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
+        <header
+          class="meta-sticky-header"
+          bind:this={stickyHeaderElement}
+        >
+          <div class="sticky-compact-info">
+            <span class="sticky-name">{metaStoryData.meta_story.title}</span>
+            <span class="separator">·</span>
+            <span class="sticky-years">
+              {metaStoryData.meta_story.date_range_start}–{metaStoryData.meta_story.date_range_end}
+            </span>
+            <CloseButton
+              variant="light"
+              size="responsive"
+              ariaLabel={$_('meta_story.back_to_stories')}
+              on:click={backToLanding}
+              class="close-meta-story"
+            />
+          </div>
+        </header>
+        <!-- AI button positioned below sticky header -->
+        <div class="sticky-ai-button">
+          <AIGeneratedButton variant="small" onClick={openAIModal} />
         </div>
-      </header>
-      <!-- AI button positioned below sticky header -->
-      <div class="sticky-ai-button" transition:fade={{ duration: 200 }}>
-        <AIGeneratedButton variant="small" onClick={openAIModal} />
       </div>
     {/if}
 
@@ -504,13 +505,22 @@
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
   }
 
-  /* Sticky header - appears when scrolling down, styled like StoryView masthead */
-  .meta-sticky-header {
+  /* Sticky header group - wrapper for synchronized fade transition */
+  .sticky-header-group {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 150; /* Above timeline chapter header (100) */
+    pointer-events: none;
+  }
+
+  .sticky-header-group > * {
+    pointer-events: auto;
+  }
+
+  /* Sticky header - appears when scrolling down, styled like StoryView masthead */
+  .meta-sticky-header {
     padding: 0.5rem 2vw;
     display: flex;
     flex-direction: row;
@@ -527,10 +537,9 @@
   }
 
   .sticky-ai-button {
-    position: fixed;
+    position: absolute;
     top: calc(var(--sticky-header-height, 3.5rem) - 0.35rem);
     left: -0.25rem;
-    z-index: 140;
   }
 
   .sticky-compact-info {
@@ -769,6 +778,11 @@
 
   /* Landscape mobile - compact sticky header on right side */
   @media (max-height: 450px) {
+    .sticky-header-group {
+      /* Extend to full height for landscape mobile so AI button can be at bottom */
+      bottom: 0;
+    }
+
     .meta-sticky-header {
       position: absolute;
       top: 0;

@@ -412,24 +412,26 @@
 <section class="landing">
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
-    <header class="landing-sticky-header" bind:this={stickyHeaderElement} transition:fade={{ duration: 200 }}>
-      <div class="sticky-center">
-        <span class="sticky-title">{$_("app.title")}</span>
+    <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
+      <header class="landing-sticky-header" bind:this={stickyHeaderElement}>
+        <div class="sticky-center">
+          <span class="sticky-title">{$_("app.title")}</span>
+        </div>
+        <div class="sticky-right">
+          <select
+            value={$currentLanguage}
+            on:change={handleLanguageChange}
+            aria-label={$_("app.select_language")}
+            class="language-selector sticky"
+          >
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </div>
+      </header>
+      <div class="sticky-ai-button">
+        <AIGeneratedButton variant="small" onClick={toggleExplanation} />
       </div>
-      <div class="sticky-right">
-        <select
-          value={$currentLanguage}
-          on:change={handleLanguageChange}
-          aria-label={$_("app.select_language")}
-          class="language-selector sticky"
-        >
-          <option value="en">English</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </div>
-    </header>
-    <div class="sticky-ai-button" transition:fade={{ duration: 200 }}>
-      <AIGeneratedButton variant="small" onClick={toggleExplanation} />
     </div>
   {/if}
 
@@ -696,13 +698,22 @@
     position: relative;
   }
 
-  /* Sticky header - consistent with MetaStoryView */
-  .landing-sticky-header {
+  /* Sticky header group - wrapper for synchronized fade transition */
+  .sticky-header-group {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 150;
+    pointer-events: none;
+  }
+
+  .sticky-header-group > * {
+    pointer-events: auto;
+  }
+
+  /* Sticky header - consistent with MetaStoryView */
+  .landing-sticky-header {
     padding: 0.5rem 1rem;
     display: flex;
     flex-direction: row;
@@ -721,10 +732,9 @@
   }
 
   .sticky-ai-button {
-    position: fixed;
+    position: absolute;
     top: calc(var(--landing-sticky-header-height, 2.5rem) - 0.35rem);
     left: -0.25rem;
-    z-index: 140;
   }
 
   .sticky-center {
