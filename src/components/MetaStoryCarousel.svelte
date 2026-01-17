@@ -285,15 +285,19 @@
 
             <div class="slide-content">
               <div class="slide-header">
-                <div class="title-row">
+                <button
+                  class="title-row"
+                  on:click={() => onExploreMetaStory(metaStory)}
+                  aria-label={$_("landing.explore_meta_story")}
+                >
                   <h2 class="slide-title">{metaStory.title}</h2>
                   <p class="slide-tagline">{metaStory.tagline}</p>
                   <span class="separator">·</span>
                   <span class="date-range"
                     >{metaStory.date_range_start}–{metaStory.date_range_end}</span
                   >
-                </div>
-                <div class="slide-meta">
+                </button>
+                <div class="slide-meta" on:click|stopPropagation>
                   <div class="button-container">
                     <button
                       class="person-count"
@@ -582,6 +586,24 @@
     align-items: baseline;
     gap: 0.4rem;
     flex-wrap: wrap;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: opacity 0.2s ease;
+  }
+
+  .title-row:hover {
+    opacity: 0.85;
+  }
+
+  .title-row:hover .slide-title {
+    text-decoration: underline;
+    text-decoration-color: rgba(226, 232, 240, 0.5);
+    text-underline-offset: 4px;
   }
 
   .separator {
