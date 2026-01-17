@@ -1,10 +1,11 @@
 <script>
+  import { onMount, onDestroy } from "svelte";
   import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { push, location } from "svelte-spa-router";
   import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
-  import { slide } from "svelte/transition";
+  import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
@@ -23,6 +24,23 @@
   let loadedImages = new Set();
   let activeMetaStoryFilter = null;
   let showMap = false;
+
+  // Sticky header state
+  let showStickyHeader = false;
+  const headerScrollThreshold = 200; // pixels scrolled before showing sticky header
+
+  function handleScroll() {
+    const scrollY = window.scrollY;
+    showStickyHeader = scrollY > headerScrollThreshold;
+  }
+
+  onMount(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  });
+
+  onDestroy(() => {
+    window.removeEventListener("scroll", handleScroll);
+  });
 
   function handleImageLoad(entryId) {
     loadedImages.add(entryId);
@@ -377,6 +395,29 @@
 </script>
 
 <section class="landing">
+  <!-- Sticky header - appears when scrolling down -->
+  {#if showStickyHeader}
+    <header class="landing-sticky-header" transition:fade={{ duration: 200 }}>
+      <div class="sticky-left">
+        <AIGeneratedButton variant="small" onClick={toggleExplanation} />
+      </div>
+      <div class="sticky-center">
+        <span class="sticky-title">{$_("app.title")}</span>
+      </div>
+      <div class="sticky-right">
+        <select
+          value={$currentLanguage}
+          on:change={handleLanguageChange}
+          aria-label={$_("app.select_language")}
+          class="language-selector sticky"
+        >
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+    </header>
+  {/if}
+
   <div class="top-controls">
     <AIGeneratedButton variant="large" onClick={toggleExplanation} />
     <select
@@ -636,6 +677,78 @@
     gap: 1rem;
     padding: 1rem 1.5rem 4rem;
     position: relative;
+  }
+
+  /* Sticky header - consistent with MetaStoryView */
+  .landing-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 150;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(0, 0, 0, 0.28) 100%
+      ),
+      rgba(15, 23, 42, 0.58);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .sticky-left {
+    flex: 0 0 auto;
+  }
+
+  .sticky-center {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .sticky-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sticky-right {
+    flex: 0 0 auto;
+  }
+
+  .language-selector.sticky {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(148, 163, 184, 0.25);
+  }
+
+  @media (min-width: 768px) {
+    .landing-sticky-header {
+      padding: 0.5rem 2rem;
+    }
+
+    .sticky-title {
+      font-size: 0.9rem;
+    }
+
+    .language-selector.sticky {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+    }
   }
 
   .top-controls {
