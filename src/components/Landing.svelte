@@ -545,32 +545,34 @@
     </div>
   </div>
 
-  <div class="map-toggle-container" class:map-active={showMap}>
-    <button
-      class="map-toggle-button"
-      class:active={showMap}
-      on:click={() => (showMap = !showMap)}
-      aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M15 19l-6-2.11V5l6 2.11M20.5 3c-.17 0-.34.03-.5.09L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5.17 0 .34-.03.5-.09L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/>
-      </svg>
-      <span>{showMap ? $_("landing.hide_map") : $_("landing.show_map")}</span>
-    </button>
-  </div>
-
-  {#if showMap}
-    <div class="landing-map-wrapper" transition:slide={{ duration: 300 }}>
-      <LandingMap
-        {filteredEntries}
-        {getStyle}
-        onNavigate={(detail) => {
-          const lang = $currentLanguage;
-          push(`/${lang}/story/${detail.personId}?event=${detail.eventIndex}`);
-        }}
-      />
+  <div class="map-section" class:map-active={showMap}>
+    <div class="map-toggle-container">
+      <button
+        class="map-toggle-button"
+        class:active={showMap}
+        on:click={() => (showMap = !showMap)}
+        aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-6-2.11V5l6 2.11M20.5 3c-.17 0-.34.03-.5.09L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5.17 0 .34-.03.5-.09L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/>
+        </svg>
+        <span>{showMap ? $_("landing.hide_map") : $_("landing.show_map")}</span>
+      </button>
     </div>
-  {/if}
+
+    {#if showMap}
+      <div class="landing-map-wrapper" transition:slide={{ duration: 300 }}>
+        <LandingMap
+          {filteredEntries}
+          {getStyle}
+          onNavigate={(detail) => {
+            const lang = $currentLanguage;
+            push(`/${lang}/story/${detail.personId}?event=${detail.eventIndex}`);
+          }}
+        />
+      </div>
+    {/if}
+  </div>
 
   <div class="landing-grid">
     {#if filteredEntries.length > 0}
@@ -827,14 +829,18 @@
     color: #cbd5f5;
   }
 
+  .map-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-section.map-active {
+    margin-bottom: 0.5rem;
+  }
+
   .map-toggle-container {
     display: flex;
     justify-content: flex-end;
-    margin: 0.5rem 0 0;
-  }
-
-  .map-toggle-container.map-active {
-    margin-bottom: -1rem;
   }
 
   .map-toggle-button {
@@ -865,6 +871,8 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     color: #cbd5e1;
+    position: relative;
+    z-index: 2;
   }
 
   .map-toggle-button svg {
@@ -872,41 +880,29 @@
   }
 
   .landing-map-wrapper {
-    width: 100%;
-    height: 550px;
-    border-radius: 1rem;
+    width: calc(100% + 3rem);
+    height: 400px;
     overflow: hidden;
     border: 1px solid rgba(148, 163, 184, 0.2);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    margin-top: 0;
-    margin-bottom: 1.5rem;
     margin-left: -1.5rem;
     margin-right: -1.5rem;
-    width: calc(100% + 3rem);
     border-radius: 0;
     border-left: none;
     border-right: none;
-    border-top: 1px solid rgba(148, 163, 184, 0.2);
   }
 
   @media (min-width: 768px) {
     .landing-map-wrapper {
-      margin-top: 0;
       margin-left: 0;
       margin-right: 0;
       width: 100%;
+      height: 550px;
       border-radius: 1rem;
       border-top-right-radius: 0;
       border-left: 1px solid rgba(148, 163, 184, 0.2);
       border-right: 1px solid rgba(148, 163, 184, 0.2);
-      border-top: 1px solid rgba(148, 163, 184, 0.2);
-      height: 550px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .landing-map-wrapper {
-      height: 400px;
+      border-top: none;
     }
   }
 
