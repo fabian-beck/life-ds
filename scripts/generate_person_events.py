@@ -760,6 +760,44 @@ def normalize_date_value(value: str, precision: str) -> tuple[Any, str]:
     return None, "unknown"
 
 
+def normalize_date_for_comparison(date_str: str, to_end: bool = False) -> str:
+    """
+    Normalize a partial date string for comparison.
+
+    Dates can have different precisions (year, month, day). When comparing
+    dates for chapter assignment, we need to expand partial dates to full
+    dates to ensure correct comparison.
+
+    Args:
+        date_str: Date like "1945", "1945-07", or "1945-07-01"
+        to_end: If True, pad to end of period; if False, pad to start
+
+    Returns:
+        Full date string in "YYYY-MM-DD" format
+
+    Examples:
+        normalize_date_for_comparison("1945", to_end=False) -> "1945-01-01"
+        normalize_date_for_comparison("1945", to_end=True) -> "1945-12-31"
+        normalize_date_for_comparison("1945-07", to_end=False) -> "1945-07-01"
+        normalize_date_for_comparison("1945-07", to_end=True) -> "1945-07-31"
+    """
+    if not date_str:
+        return "9999-12-31" if to_end else "0000-01-01"
+
+    parts = date_str.split("-")
+    if len(parts) == 1:  # Year only
+        return f"{parts[0]}-12-31" if to_end else f"{parts[0]}-01-01"
+    elif len(parts) == 2:  # Year-month
+        if to_end:
+            # Get last day of month
+            year, month = int(parts[0]), int(parts[1])
+            last_day = monthrange(year, month)[1]
+            return f"{parts[0]}-{parts[1]}-{last_day:02d}"
+        else:
+            return f"{parts[0]}-{parts[1]}-01"
+    return date_str  # Already full date
+
+
 def event_sort_key(event: Dict[str, Any]) -> str:
     date_value = event.get("date")
     precision = (event.get("date_precision") or "day").lower()
@@ -2937,24 +2975,29 @@ def assign_events_to_chapters(
     Assign each event to the appropriate chapter based on date.
 
     Events are assigned to the chapter whose date range contains the event date.
+    Uses normalized date comparison to handle different date precisions correctly
+    (e.g., "1945-07" vs "1945-07-01").
     """
-    # Sort chapters by start date
-    sorted_chapters = sorted(chapters, key=lambda c: c.date_start)
+    # Sort chapters by normalized start date
+    sorted_chapters = sorted(
+        chapters,
+        key=lambda c: normalize_date_for_comparison(c.date_start, to_end=False)
+    )
 
     updated_events = []
     for event in events:
-        event_date = event.date
+        # Normalize event date to start of period for comparison
+        event_date_normalized = normalize_date_for_comparison(event.date, to_end=False)
         assigned_chapter = None
 
         # Find the chapter that contains this event's date
         for chapter in sorted_chapters:
-            if chapter.date_start <= event_date:
-                if chapter.date_end >= event_date:
-                    assigned_chapter = chapter.id
-                    break
-                # If event is after this chapter's end, check next chapter
-                # but keep this as fallback if no better match
+            chapter_start = normalize_date_for_comparison(chapter.date_start, to_end=False)
+            chapter_end = normalize_date_for_comparison(chapter.date_end, to_end=True)
+
+            if chapter_start <= event_date_normalized <= chapter_end:
                 assigned_chapter = chapter.id
+                break
 
         # If no chapter found, assign to last chapter
         if not assigned_chapter and sorted_chapters:
