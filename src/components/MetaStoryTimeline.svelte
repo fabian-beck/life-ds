@@ -136,13 +136,70 @@
   // Define pixels per year scale
   const PIXELS_PER_YEAR = 15;
 
-  // Constants for theme grouping vertical spacing
+  // Constants for theme grouping vertical spacing (base values before density adjustment)
   const THEME_TITLE_HEIGHT = 32; // Compact theme title row with reduced spacing
   const PERSON_ROW_HEIGHT = 42; // Compact person rows with enough space for names
   const THEME_SPACING = 8; // Spacing between theme groups
+  const THEME_TITLE_GAP = 6; // Gap after theme title before first person
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
+
+  // ============================================
+  // ADAPTIVE DENSITY SYSTEM
+  // Condenses vertical spacing when content exceeds viewport
+  // ============================================
+
+  // Calculate available vertical height for persons layer
+  $: availableHeight = (() => {
+    // Fixed overhead: topPadding(100) + yearAxisMarginTop(3) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
+    const fixedOverhead = 100 + 3 + 28 + 10 + 20;
+    const stickyOffset = stickyHeaderHeight || 0;
+    // Use reactive viewportHeight state (updated on resize)
+    return viewportHeight - fixedOverhead - stickyOffset;
+  })();
+
+  // Calculate required height for persons content (unconstrained)
+  $: requiredContentHeight = (() => {
+    if (!themesWithPersons || themesWithPersons.length === 0) return 0;
+    let height = 0;
+    themesWithPersons.forEach((theme, i) => {
+      height += THEME_TITLE_HEIGHT + THEME_TITLE_GAP;
+      height += theme.persons.length * PERSON_ROW_HEIGHT;
+      if (i < themesWithPersons.length - 1) height += THEME_SPACING;
+    });
+    return height;
+  })();
+
+  // Compute density factor with adaptive minimum based on content crowdedness
+  $: densityFactor = (() => {
+    if (!themesWithPersons || requiredContentHeight <= 0) return 1.0;
+    if (requiredContentHeight <= availableHeight) return 1.0;
+
+    const rawFactor = availableHeight / requiredContentHeight;
+
+    // Adaptive minimum: more content = allow more aggressive condensing
+    const personCount = themesWithPersons.reduce((sum, t) => sum + t.persons.length, 0);
+
+    // Scale min from 0.6 (sparse) down to 0.4 (very crowded)
+    let adaptiveMin;
+    if (personCount <= 5) {
+      adaptiveMin = 0.6;  // Sparse: preserve readability
+    } else if (personCount <= 15) {
+      adaptiveMin = 0.5;  // Moderate: balanced condensing
+    } else {
+      adaptiveMin = 0.4;  // Crowded: aggressive to fit content
+    }
+
+    return Math.max(adaptiveMin, Math.min(1.0, rawFactor));
+  })();
+
+  // Effective dimensions based on density factor
+  $: effectiveThemeTitleHeight = Math.round(THEME_TITLE_HEIGHT * densityFactor);
+  $: effectivePersonRowHeight = Math.round(PERSON_ROW_HEIGHT * densityFactor);
+  $: effectiveThemeSpacing = Math.round(THEME_SPACING * densityFactor);
+  $: effectiveThemeTitleGap = Math.round(THEME_TITLE_GAP * densityFactor);
+  $: effectivePersonRowHeightCollapsed = Math.round(PERSON_ROW_HEIGHT_COLLAPSED * densityFactor);
 
   // Calculate scroll indicator position based on scroll progress
   $: scrollIndicatorLeftPx = scrollProgress * timelineWidthPx;
@@ -532,49 +589,48 @@
   // Heights for collapsed vs expanded states
   const PERSON_ROW_HEIGHT_COLLAPSED = 10; // Desktop collapsed height
 
-  // Calculate vertical offset for theme title
+  // Calculate vertical offset for theme title (uses effective heights for density adaptation)
   function calculateThemeTop(themeIndex, _visibleIds) {
     if (!themesWithPersons) return 0;
     const visibleSet = new Set(_visibleIds);
 
     let offset = 0;
     for (let i = 0; i < themeIndex; i++) {
-      offset += THEME_TITLE_HEIGHT;
+      offset += effectiveThemeTitleHeight;
 
       // Add height for each person in this theme (accounting for collapsed state)
       themesWithPersons[i].persons.forEach(personData => {
         const isVisible = visibleSet.has(personData.personId);
-        offset += isVisible ? PERSON_ROW_HEIGHT : PERSON_ROW_HEIGHT_COLLAPSED;
+        offset += isVisible ? effectivePersonRowHeight : effectivePersonRowHeightCollapsed;
       });
 
-      offset += THEME_SPACING;
+      offset += effectiveThemeSpacing;
     }
     return offset;
   }
 
-  // Calculate vertical offset for person within theme
+  // Calculate vertical offset for person within theme (uses effective heights for density adaptation)
   function calculatePersonTop(themeIndex, personIndex, _visibleIds) {
     if (!themesWithPersons) return 0;
     const visibleSet = new Set(_visibleIds);
 
     let offset = calculateThemeTop(themeIndex, _visibleIds);
-    offset += THEME_TITLE_HEIGHT;
+    offset += effectiveThemeTitleHeight;
 
-    // Add small gap after theme title before first person
-    const THEME_TITLE_GAP = 6;
-    offset += THEME_TITLE_GAP;
+    // Add gap after theme title before first person
+    offset += effectiveThemeTitleGap;
 
     // Add height for each person before this one in the same theme
     for (let i = 0; i < personIndex; i++) {
       const personData = themesWithPersons[themeIndex].persons[i];
       const isVisible = visibleSet.has(personData.personId);
-      offset += isVisible ? PERSON_ROW_HEIGHT : PERSON_ROW_HEIGHT_COLLAPSED;
+      offset += isVisible ? effectivePersonRowHeight : effectivePersonRowHeightCollapsed;
     }
 
     return offset;
   }
 
-  // Calculate total timeline height needed (always use full expanded height to prevent jumps)
+  // Calculate total timeline height needed (uses effective heights for density adaptation)
   $: _timelineHeightPx = (() => {
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
@@ -584,20 +640,19 @@
     const yearAxisMarginTop = 3;
     const personsLayerMarginTop = 10;
 
-    // Calculate persons layer height (always use expanded height to prevent layout shifts)
-    const THEME_TITLE_GAP = 6; // Gap after theme title before first person
+    // Calculate persons layer height using effective (density-adjusted) heights
     let personsLayerHeight = 0;
     themesWithPersons.forEach((theme, index) => {
-      personsLayerHeight += THEME_TITLE_HEIGHT;
-      personsLayerHeight += THEME_TITLE_GAP; // Gap after title
+      personsLayerHeight += effectiveThemeTitleHeight;
+      personsLayerHeight += effectiveThemeTitleGap; // Gap after title
 
-      // Always use expanded height for all persons to maintain consistent container height
+      // Use effective height for all persons
       theme.persons.forEach(() => {
-        personsLayerHeight += PERSON_ROW_HEIGHT;
+        personsLayerHeight += effectivePersonRowHeight;
       });
 
       if (index < themesWithPersons.length - 1) {
-        personsLayerHeight += THEME_SPACING;
+        personsLayerHeight += effectiveThemeSpacing;
       }
     });
 
@@ -711,6 +766,9 @@
 
   // Chapter header tracking
   let chapterHeaderWidth = 0;
+
+  // Viewport height tracking for density recalculation on resize
+  let viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
 
   // Cache for density map performance
   let cachedDensityMap = null;
@@ -1396,6 +1454,9 @@
     }
 
     function handleResize() {
+      // Update viewport height for density recalculation
+      viewportHeight = window.innerHeight;
+
       // Invalidate density map on viewport change
       cachedDensityMap = null;
 
@@ -1431,7 +1492,7 @@
   });
 </script>
 
-<div class="meta-timeline-container">
+<div class="meta-timeline-container" style="--density-factor: {densityFactor};">
   <!-- Fixed chapter header display - only shown when timeline is sticky -->
   {#if isSticky && currentChapterByIndicator}
     {#key currentChapterByIndicator.id}
@@ -1485,7 +1546,7 @@
       {#each themesWithPersons as theme, themeIndex}
         <!-- Theme title row (only if title exists) -->
         {#if theme.title}
-          <div class="theme-title-row" style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(themeIndex, visiblePersonIds)}px;">
+          <div class="theme-title-row" style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(themeIndex, visiblePersonIds)}px; height: {effectiveThemeTitleHeight}px;">
             <h4 class="theme-title">{theme.title}</h4>
           </div>
         {/if}
@@ -1493,14 +1554,16 @@
         <!-- Persons in this theme -->
         {#each theme.persons as personData, personIndex}
           {@const colors = getPersonColors(personData.personId)}
+          {@const isCollapsed = !visiblePersonIds.includes(personData.personId)}
           <div
             class="person-lifespan"
             class:alive={personData.isAlive}
-            class:collapsed={!visiblePersonIds.includes(personData.personId)}
+            class:collapsed={isCollapsed}
             style="
               left: {personData.leftPx}px;
               width: {personData.widthPx}px;
               top: {calculatePersonTop(themeIndex, personIndex, visiblePersonIds)}px;
+              height: {isCollapsed ? effectivePersonRowHeightCollapsed : effectivePersonRowHeight}px;
               --person-primary: {colors.primary};
               --person-secondary: {colors.secondary};
               --person-primary-rgb: {colors.primaryRgb};
@@ -1826,20 +1889,21 @@
   /* Theme title row */
   .theme-title-row {
     position: absolute;
-    height: 24px;
+    /* height is set inline via effectiveThemeTitleHeight */
     display: flex;
     align-items: center;
     background: rgba(15, 23, 42, 0.6);
     border-bottom: 1px solid rgba(56, 189, 248, 0.2);
     z-index: 5;
-    transition: top 0.3s ease-out;
+    transition: top 0.3s ease-out, height 0.3s ease-out;
   }
 
   .theme-title {
     position: sticky;
     left: 0;
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 0.85rem;
+    /* Scale font size based on density factor (min 70% of original) */
+    font-size: calc(0.85rem * max(0.7, var(--density-factor, 1)));
     font-weight: 600;
     color: #38bdf8;
     margin: 0;
@@ -1852,13 +1916,13 @@
   /* Individual person lifespan */
   .person-lifespan {
     position: absolute;
-    height: 30px;
+    /* height is set inline via effectivePersonRowHeight */
     transition: height 0.3s ease-out, top 0.3s ease-out;
   }
 
   /* Collapsed state - reduced height when not in viewport */
   .person-lifespan.collapsed {
-    height: 10px;
+    /* Height is controlled inline via effectivePersonRowHeightCollapsed */
   }
 
   /* Hide portraits when collapsed */
@@ -1892,9 +1956,9 @@
     transition: transform 0.3s ease-out;
   }
 
-  /* Restore height on hover for better UX */
+  /* Restore height on hover for better UX - use CSS variable for effective height */
   .person-lifespan.collapsed:hover {
-    height: 30px;
+    /* Height expansion on hover is handled by the component's inline style */
   }
 
   /* Person name wrapper - positioned above the line */
@@ -1913,7 +1977,8 @@
     position: sticky;
     left: 0;
     font-weight: 600;
-    font-size: 0.9rem;
+    /* Scale font size based on density factor (min 70% of original) */
+    font-size: calc(0.9rem * max(0.7, var(--density-factor, 1)));
     color: #e2e8f0;
     white-space: nowrap;
     padding: 0;
@@ -1923,14 +1988,15 @@
     line-height: 1;
   }
 
-  /* Portrait thumbnail container */
+  /* Portrait thumbnail container - scales with density */
   .person-portrait {
     position: absolute;
     left: -22px;
     top: 50%;
     transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
+    /* Scale portrait size based on density (min 70% of original) */
+    width: calc(44px * max(0.7, var(--density-factor, 1)));
+    height: calc(44px * max(0.7, var(--density-factor, 1)));
     border-radius: 50%;
     border: 2px solid rgba(var(--person-primary-rgb), 0.8);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -2002,7 +2068,8 @@
 
   .person-birth,
   .person-death {
-    font-size: 0.65rem;
+    /* Scale font size based on density factor (min 70% of original) */
+    font-size: calc(0.65rem * max(0.7, var(--density-factor, 1)));
     color: #94a3b8;
     font-weight: 500;
     white-space: nowrap;
