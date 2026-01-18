@@ -2174,14 +2174,14 @@
     }
 
     .person-portrait {
-      width: 48px;
-      height: 48px;
-      left: -20px;
+      width: 36px;
+      height: 36px;
+      /* Keep left: 0 and transform from desktop - portrait centered on birth year */
       border-width: 2px;
     }
 
     .person-line {
-      left: 28px;
+      /* No override needed - inherits desktop positioning */
       height: 3px;
     }
 
@@ -2189,32 +2189,18 @@
       height: 5px;
     }
 
-    .person-dates {
-      left: 28px;
-    }
-
     .portrait-image {
       scale: 1.25;
       object-position: center 35%;
     }
 
-    .person-name-wrapper {
-      left: 30px;
-      top: -8px;
-      height: 12px;
-    }
-
     .person-name-label {
-      font-size: 0.875rem;
-    }
-
-    .person-dates {
-      top: calc(50% + 2px);
+      font-size: 0.8rem;
     }
 
     .person-birth,
     .person-death {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
     }
 
     .theme-title-row {
