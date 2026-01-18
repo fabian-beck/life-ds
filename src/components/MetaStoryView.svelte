@@ -540,6 +540,7 @@
     position: absolute;
     top: calc(var(--sticky-header-height, 3.5rem) - 0.35rem);
     left: -0.25rem;
+    z-index: -1; /* Below sticky header */
   }
 
   .sticky-compact-info {

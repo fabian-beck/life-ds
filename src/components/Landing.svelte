@@ -735,6 +735,7 @@
     position: absolute;
     top: calc(var(--landing-sticky-header-height, 2.5rem) - 0.35rem);
     left: -0.25rem;
+    z-index: -1; /* Below sticky header */
   }
 
   .sticky-center {

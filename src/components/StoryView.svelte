@@ -1267,7 +1267,7 @@
     position: absolute;
     top: var(--header-height, 2.5rem);
     left: 0;
-    z-index: 100;
+    z-index: 2; /* Above slides (z-index: 1), below masthead (z-index: 3) */
     display: contents;
   }
 
@@ -1275,7 +1275,7 @@
     position: absolute;
     top: var(--header-height, 2.5rem);
     left: -0.25rem;
-    z-index: 100;
+    z-index: 2; /* Above slides (z-index: 1), below masthead (z-index: 3) */
   }
 
   /* Adjust AI label position for landscape mobile */
@@ -1459,7 +1459,7 @@
     border-bottom: 1px solid rgba(148, 163, 184, 0.16);
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 3;
   }
 
   .compact-info {
