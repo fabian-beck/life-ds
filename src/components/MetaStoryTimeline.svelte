@@ -1892,8 +1892,8 @@
     /* height is set inline via effectiveThemeTitleHeight */
     display: flex;
     align-items: center;
-    background: rgba(15, 23, 42, 0.6);
-    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    /* Shift left by portrait radius (22px scaled by density) */
+    margin-left: calc(-22px * max(0.7, var(--density-factor, 1)));
     z-index: 5;
     transition: top 0.3s ease-out, height 0.3s ease-out;
   }
@@ -1909,7 +1909,6 @@
     margin: 0;
     padding: 0;
     white-space: nowrap;
-    background: rgba(4, 10, 24, 0.95);
     line-height: 1;
   }
 
