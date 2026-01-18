@@ -141,6 +141,7 @@
   const PERSON_ROW_HEIGHT = 42; // Compact person rows with enough space for names
   const THEME_SPACING = 8; // Spacing between theme groups
   const THEME_TITLE_GAP = 6; // Gap after theme title before first person
+  const HEADER_RESERVE_HEIGHT = 60; // Reserved space for fixed chapter header
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
@@ -152,8 +153,8 @@
 
   // Calculate available vertical height for persons layer
   $: availableHeight = (() => {
-    // Fixed overhead: topPadding(100) + yearAxisMarginTop(3) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
-    const fixedOverhead = 100 + 3 + 28 + 10 + 20;
+    // Fixed overhead: HEADER_RESERVE_HEIGHT + yearAxisMarginTop(3) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
+    const fixedOverhead = HEADER_RESERVE_HEIGHT + 3 + 28 + 10 + 20;
     const stickyOffset = stickyHeaderHeight || 0;
     // Use reactive viewportHeight state (updated on resize)
     return viewportHeight - fixedOverhead - stickyOffset;
@@ -635,7 +636,7 @@
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
     // Fixed heights for top sections
-    const topPadding = 100; // .timeline-wrapper padding-top for fixed chapter header
+    const topPadding = HEADER_RESERVE_HEIGHT; // .timeline-wrapper padding-top for fixed chapter header
     const yearAxisHeight = 28; // .year-axis height
     const yearAxisMarginTop = 3;
     const personsLayerMarginTop = 10;
@@ -1492,7 +1493,7 @@
   });
 </script>
 
-<div class="meta-timeline-container" style="--density-factor: {densityFactor};">
+<div class="meta-timeline-container" style="--density-factor: {densityFactor}; --header-reserve: {HEADER_RESERVE_HEIGHT}px;">
   <!-- Fixed chapter header display - only shown when timeline is sticky -->
   {#if isSticky && currentChapterByIndicator}
     {#key currentChapterByIndicator.id}
@@ -1509,9 +1510,6 @@
               {parseInt(currentChapterByIndicator.date_start)}–{parseInt(currentChapterByIndicator.date_end)}
             </span>
           </div>
-          {#if currentChapterByIndicator.bridge_statement}
-            <p class="chapter-description">{currentChapterByIndicator.bridge_statement}</p>
-          {/if}
         </div>
       </div>
     {/key}
@@ -1637,7 +1635,7 @@
     </div>
 
     <!-- Scroll position indicator -->
-    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: 90px;">
+    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: {HEADER_RESERVE_HEIGHT - 10}px;">
       {#if currentIndicatorYear}
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
@@ -1729,7 +1727,7 @@
     position: relative;
     margin-left: 40px;
     height: 100%;
-    padding-top: 100px; /* Always reserve space for sticky header */
+    padding-top: var(--header-reserve, 60px); /* Reserve space for fixed chapter header */
   }
 
   /* Fixed chapter header - positioned at top, doesn't scroll */
