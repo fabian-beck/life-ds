@@ -2523,4 +2523,22 @@
     background: rgba(56, 189, 248, 0.6);
   }
 
+  /* Mobile landscape - adjust chapter header positioning */
+  @media (max-height: 450px) {
+    /* Keep header reserve for chapter header, but override the top position
+       since the main sticky header is on the right, not the top */
+    .fixed-chapter-header {
+      top: 0.75rem !important;
+      /* Ensure chapter header doesn't extend into right 40% where main header sits */
+      right: 42% !important;
+      left: 0.5rem !important;
+      transform: none !important;
+    }
+
+    /* Constrain chapter header width to fit the left portion */
+    .chapter-title-display {
+      max-width: 100%;
+    }
+  }
+
 </style>

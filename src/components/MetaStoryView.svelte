@@ -803,10 +803,18 @@
     }
 
     .sticky-ai-button {
-      /* Reposition AI button for landscape mobile */
-      top: auto;
-      bottom: 0.5rem;
-      left: 0.5rem;
+      /* Position directly below the ultra-compact header on the right */
+      position: absolute;
+      top: 1.4rem; /* Just below the compact header (~20px header height + small gap) */
+      right: 0;
+      left: auto;
+      bottom: auto;
+      z-index: 5;
+    }
+
+    /* Timeline should not reserve vertical space for header (header is on right) */
+    .timeline-sticky-wrapper {
+      top: 0 !important;
     }
 
     .sticky-compact-info {
