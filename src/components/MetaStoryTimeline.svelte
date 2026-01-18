@@ -1928,7 +1928,7 @@
   /* Hide portraits when collapsed */
   .person-lifespan.collapsed .person-portrait {
     opacity: 0;
-    transform: translateY(-50%) scale(0.6);
+    transform: translate(-50%, -50%) scale(0.6);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   }
 
@@ -1961,15 +1961,19 @@
     /* Height expansion on hover is handled by the component's inline style */
   }
 
-  /* Person name wrapper - positioned above the line */
+  /* Person name wrapper - bottom anchored to the lifespan line */
   .person-name-wrapper {
     position: absolute;
-    left: 26px;
+    /* Offset by half portrait width (portrait radius) + small gap to clear the portrait */
+    left: calc(22px * max(0.7, var(--density-factor, 1)) + 4px);
     right: 0;
-    top: -10px;
-    height: 14px;
+    /* Bottom of name sits just above the line (which is at 50%) with small margin */
+    top: calc(50% - 2px);
+    transform: translateY(-100%);
+    height: auto;
     overflow: visible;
     pointer-events: none;
+    z-index: 5; /* In front of the lifespan line */
   }
 
   /* Person name label - sticky horizontal positioning */
@@ -1988,12 +1992,12 @@
     line-height: 1;
   }
 
-  /* Portrait thumbnail container - scales with density */
+  /* Portrait thumbnail container - centered on birth year (left edge), scales with density */
   .person-portrait {
     position: absolute;
-    left: -22px;
+    left: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     /* Scale portrait size based on density (min 70% of original) */
     width: calc(44px * max(0.7, var(--density-factor, 1)));
     height: calc(44px * max(0.7, var(--density-factor, 1)));
@@ -2025,7 +2029,7 @@
   .person-portrait:hover {
     border-color: rgba(var(--person-primary-rgb), 1);
     box-shadow: 0 4px 12px rgba(var(--person-primary-rgb), 0.6);
-    transform: translateY(-50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   .person-lifespan.alive .person-portrait {
@@ -2036,10 +2040,10 @@
     border-color: rgba(var(--person-secondary-rgb), 1);
   }
 
-  /* Person lifespan line */
+  /* Person lifespan line - starts at left edge (birth year position) */
   .person-line {
     position: absolute;
-    left: 24px;
+    left: 0;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -2055,10 +2059,11 @@
     background: linear-gradient(90deg, rgba(var(--person-secondary-rgb), 0.6), rgba(var(--person-primary-rgb), 0.6));
   }
 
-  /* Person dates container */
+  /* Person dates container - offset to clear portrait */
   .person-dates {
     position: absolute;
-    left: 24px;
+    /* Offset by half portrait width (portrait radius) + small gap to clear the portrait */
+    left: calc(22px * max(0.7, var(--density-factor, 1)) + 4px);
     right: 0;
     top: calc(50% + 2px);
     display: flex;
