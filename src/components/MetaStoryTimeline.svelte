@@ -141,7 +141,7 @@
   const PERSON_ROW_HEIGHT = 42; // Compact person rows with enough space for names
   const THEME_SPACING = 8; // Spacing between theme groups
   const THEME_TITLE_GAP = 6; // Gap after theme title before first person
-  const HEADER_RESERVE_HEIGHT = 60; // Reserved space for fixed chapter header
+  const HEADER_RESERVE_HEIGHT = 48; // Reserved space for fixed chapter header
 
   // Calculate timeline width in pixels
   $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
@@ -1745,7 +1745,8 @@
     backdrop-filter: blur(12px);
     border: 1px solid rgba(56, 189, 248, 0.7);
     border-radius: 0.5rem;
-    padding: 0.6rem 1rem;
+    /* Density-adaptive padding: scales down when space is constrained */
+    padding: calc(0.4rem * max(0.8, var(--density-factor, 1))) calc(0.8rem * max(0.9, var(--density-factor, 1)));
     box-shadow:
       0 8px 24px rgba(0, 0, 0, 0.5),
       0 0 20px rgba(56, 189, 248, 0.2);
@@ -1764,13 +1765,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    margin-bottom: 0.35rem;
+    /* Density-adaptive gap: scales down when space is constrained */
+    gap: calc(0.5rem * max(0.85, var(--density-factor, 1)));
+    /* No margin-bottom for true vertical centering */
   }
 
   .chapter-title-text {
     font-family: var(--heading-font, 'Space Grotesk', sans-serif);
-    font-size: 0.95rem;
+    /* Density-adaptive font size: scales down when space is constrained */
+    font-size: calc(0.9rem * max(0.85, var(--density-factor, 1)));
     font-weight: 600;
     color: #38bdf8;
     margin: 0;
@@ -1779,11 +1782,13 @@
 
   .chapter-year-range {
     font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
-    font-size: 0.7rem;
+    /* Density-adaptive font size: scales down when space is constrained */
+    font-size: calc(0.65rem * max(0.85, var(--density-factor, 1)));
     font-weight: 500;
     color: rgba(148, 163, 184, 0.9);
     background: rgba(56, 189, 248, 0.1);
-    padding: 0.2rem 0.4rem;
+    /* Density-adaptive padding: scales down when space is constrained */
+    padding: calc(0.15rem * max(0.8, var(--density-factor, 1))) calc(0.35rem * max(0.9, var(--density-factor, 1)));
     border-radius: 0.25rem;
     white-space: nowrap;
   }
@@ -2528,16 +2533,30 @@
     /* Keep header reserve for chapter header, but override the top position
        since the main sticky header is on the right, not the top */
     .fixed-chapter-header {
-      top: 0.75rem !important;
+      top: 0.5rem !important;
       /* Ensure chapter header doesn't extend into right 40% where main header sits */
       right: 42% !important;
       left: 0.5rem !important;
       transform: none !important;
     }
 
-    /* Constrain chapter header width to fit the left portion */
+    /* Compact chapter header for landscape - reduced padding and fonts */
     .chapter-title-display {
       max-width: 100%;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .chapter-header-main {
+      gap: 0.4rem;
+    }
+
+    .chapter-title-text {
+      font-size: 0.8rem;
+    }
+
+    .chapter-year-range {
+      font-size: 0.6rem;
+      padding: 0.1rem 0.3rem;
     }
   }
 
