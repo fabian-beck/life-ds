@@ -15,6 +15,7 @@
   export let isLoading = false;
 
   // Scroll proxy variables
+  const MIN_PROXY_HEIGHT = 1500; // Minimum vertical scroll distance (px) to traverse any timeline
   let scrollProxyContainer;
   let timelineContainer;
   let proxyHeight = 0;
@@ -68,7 +69,8 @@
 
     const scrollWidth = actualTimelineContainer.scrollWidth;
     const clientWidth = actualTimelineContainer.clientWidth;
-    proxyHeight = Math.max(scrollWidth - clientWidth, 0);
+    const rawProxyHeight = Math.max(scrollWidth - clientWidth, 0);
+    proxyHeight = Math.max(rawProxyHeight, MIN_PROXY_HEIGHT);
   }
 
   // Handle vertical scroll and translate to horizontal timeline scroll
