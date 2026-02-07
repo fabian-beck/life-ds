@@ -136,6 +136,209 @@
   // Define pixels per year scale
   const PIXELS_PER_YEAR = 15;
 
+  // Gap compression constants
+  const GAP_THRESHOLD = 50;      // Minimum years to trigger compression
+  const GAP_PX_PER_YEAR = 1;     // Reduced scale inside compressed gaps (vs 15 for active)
+  const GAP_MIN_PX = 60;         // Minimum pixel width for any compressed gap
+  const BUFFER_YEARS = 5;        // Years of full-scale padding kept around each gap edge
+
+  // ============================================
+  // GAP COMPRESSION: Segment-based non-linear mapping
+  // Detects gaps >50 years where no persons are alive and compresses them
+  // ============================================
+
+  // Collect all person lifespan intervals for gap detection
+  function collectPersonIntervals() {
+    const intervals = [];
+
+    // Prefer subtopics as source of person IDs
+    if (subtopics && subtopics.length > 0 && personsRegistry) {
+      const personIds = new Set();
+      subtopics.forEach(subtopic => {
+        subtopic.person_ids?.forEach(id => personIds.add(id));
+      });
+
+      personIds.forEach(personId => {
+        const person = getPersonById(personId);
+        if (!person) return;
+        const birthYear = getYear(person.birthDate);
+        if (!birthYear) return;
+        const deathYear = getYear(person.deathDate) || timelineBounds.maxYear;
+        intervals.push({ start: birthYear, end: deathYear });
+      });
+    } else if (chapters && chapters.length > 0 && personsRegistry) {
+      // Fallback: extract from chapters
+      const personIds = new Set();
+      chapters.forEach(chapter => {
+        chapter.person_events?.forEach(event => {
+          personIds.add(event.person_id);
+        });
+      });
+
+      personIds.forEach(personId => {
+        const person = getPersonById(personId);
+        if (!person) return;
+        const birthYear = getYear(person.birthDate);
+        if (!birthYear) return;
+        const deathYear = getYear(person.deathDate) || timelineBounds.maxYear;
+        intervals.push({ start: birthYear, end: deathYear });
+      });
+    }
+
+    return intervals;
+  }
+
+  // Calculate compressed pixel width for a gap (1px/year, minimum 60px)
+  function gapPixelWidth(gapYears) {
+    return Math.max(GAP_MIN_PX, gapYears * GAP_PX_PER_YEAR);
+  }
+
+  // Build timeline segments: active ranges at full scale, gaps compressed
+  $: timelineSegments = (() => {
+    const { minYear, maxYear } = timelineBounds;
+    const intervals = collectPersonIntervals();
+
+    if (intervals.length === 0) {
+      // Single active segment spanning entire timeline
+      return [{
+        type: 'active',
+        yearStart: minYear,
+        yearEnd: maxYear,
+        pixelStart: 0,
+        pixelEnd: (maxYear - minYear) * PIXELS_PER_YEAR
+      }];
+    }
+
+    // Sort and merge overlapping intervals
+    intervals.sort((a, b) => a.start - b.start);
+    const merged = [{ ...intervals[0] }];
+
+    for (let i = 1; i < intervals.length; i++) {
+      const current = merged[merged.length - 1];
+      if (intervals[i].start <= current.end) {
+        current.end = Math.max(current.end, intervals[i].end);
+      } else {
+        merged.push({ ...intervals[i] });
+      }
+    }
+
+    // Expand each merged interval by BUFFER_YEARS on each side, clamped to timeline bounds
+    for (let i = 0; i < merged.length; i++) {
+      merged[i].start = Math.max(minYear, merged[i].start - BUFFER_YEARS);
+      merged[i].end = Math.min(maxYear, merged[i].end + BUFFER_YEARS);
+    }
+
+    // Re-merge in case buffers caused overlaps
+    const buffered = [{ ...merged[0] }];
+    for (let i = 1; i < merged.length; i++) {
+      const current = buffered[buffered.length - 1];
+      if (merged[i].start <= current.end) {
+        current.end = Math.max(current.end, merged[i].end);
+      } else {
+        buffered.push({ ...merged[i] });
+      }
+    }
+
+    // Build segments with cumulative pixel offsets
+    const segments = [];
+    let px = 0;
+
+    // Leading edge: minYear to first interval start (after buffer, usually 0)
+    if (minYear < buffered[0].start) {
+      const gapYears = buffered[0].start - minYear;
+      if (gapYears >= GAP_THRESHOLD) {
+        const w = gapPixelWidth(gapYears);
+        segments.push({ type: 'gap', yearStart: minYear, yearEnd: buffered[0].start, pixelStart: px, pixelEnd: px + w });
+        px += w;
+      } else {
+        const w = gapYears * PIXELS_PER_YEAR;
+        segments.push({ type: 'active', yearStart: minYear, yearEnd: buffered[0].start, pixelStart: px, pixelEnd: px + w });
+        px += w;
+      }
+    }
+
+    for (let i = 0; i < buffered.length; i++) {
+      // Active segment
+      const years = buffered[i].end - buffered[i].start;
+      const w = years * PIXELS_PER_YEAR;
+      segments.push({ type: 'active', yearStart: buffered[i].start, yearEnd: buffered[i].end, pixelStart: px, pixelEnd: px + w });
+      px += w;
+
+      // Gap to next interval
+      if (i < buffered.length - 1) {
+        const gapYears = buffered[i + 1].start - buffered[i].end;
+        if (gapYears >= GAP_THRESHOLD) {
+          const w = gapPixelWidth(gapYears);
+          segments.push({ type: 'gap', yearStart: buffered[i].end, yearEnd: buffered[i + 1].start, pixelStart: px, pixelEnd: px + w });
+          px += w;
+        } else {
+          // Small gap: treat as active at full scale
+          const gw = gapYears * PIXELS_PER_YEAR;
+          segments.push({ type: 'active', yearStart: buffered[i].end, yearEnd: buffered[i + 1].start, pixelStart: px, pixelEnd: px + gw });
+          px += gw;
+        }
+      }
+    }
+
+    // Trailing edge: last interval end to maxYear (after buffer, usually 0)
+    const lastEnd = buffered[buffered.length - 1].end;
+    if (maxYear > lastEnd) {
+      const gapYears = maxYear - lastEnd;
+      if (gapYears >= GAP_THRESHOLD) {
+        const w = gapPixelWidth(gapYears);
+        segments.push({ type: 'gap', yearStart: lastEnd, yearEnd: maxYear, pixelStart: px, pixelEnd: px + w });
+        px += w;
+      } else {
+        const w = gapYears * PIXELS_PER_YEAR;
+        segments.push({ type: 'active', yearStart: lastEnd, yearEnd: maxYear, pixelStart: px, pixelEnd: px + w });
+        px += w;
+      }
+    }
+
+    return segments;
+  })();
+
+  // Convert year to pixel position using segment-based mapping
+  function yearToPixel(year) {
+    if (!timelineSegments || timelineSegments.length === 0) {
+      return (year - timelineBounds.minYear) * PIXELS_PER_YEAR;
+    }
+
+    const clampedYear = Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
+
+    for (const seg of timelineSegments) {
+      if (clampedYear >= seg.yearStart && clampedYear <= seg.yearEnd) {
+        const yearSpan = seg.yearEnd - seg.yearStart;
+        if (yearSpan === 0) return seg.pixelStart;
+        const progress = (clampedYear - seg.yearStart) / yearSpan;
+        return seg.pixelStart + progress * (seg.pixelEnd - seg.pixelStart);
+      }
+    }
+
+    return timelineSegments[timelineSegments.length - 1].pixelEnd;
+  }
+
+  // Convert pixel position to year using segment-based mapping (inverse)
+  function pixelToYear(px) {
+    if (!timelineSegments || timelineSegments.length === 0) {
+      return timelineBounds.minYear + (px / PIXELS_PER_YEAR);
+    }
+
+    for (const seg of timelineSegments) {
+      if (px >= seg.pixelStart && px <= seg.pixelEnd) {
+        const pxSpan = seg.pixelEnd - seg.pixelStart;
+        if (pxSpan === 0) return seg.yearStart;
+        const progress = (px - seg.pixelStart) / pxSpan;
+        return seg.yearStart + progress * (seg.yearEnd - seg.yearStart);
+      }
+    }
+
+    if (px > timelineSegments[timelineSegments.length - 1].pixelEnd) {
+      return timelineBounds.maxYear;
+    }
+    return timelineBounds.minYear;
+  }
+
   // Constants for theme grouping vertical spacing (base values before density adjustment)
   const THEME_TITLE_HEIGHT = 32; // Compact theme title row with reduced spacing
   const PERSON_ROW_HEIGHT = 42; // Compact person rows with enough space for names
@@ -143,8 +346,13 @@
   const THEME_TITLE_GAP = 6; // Gap after theme title before first person
   const HEADER_RESERVE_HEIGHT = 48; // Reserved space for fixed chapter header
 
-  // Calculate timeline width in pixels
-  $: timelineWidthPx = totalSpan * PIXELS_PER_YEAR;
+  // Calculate timeline width in pixels (uses segment-based mapping when gaps exist)
+  $: timelineWidthPx = (() => {
+    if (timelineSegments && timelineSegments.length > 0) {
+      return timelineSegments[timelineSegments.length - 1].pixelEnd;
+    }
+    return totalSpan * PIXELS_PER_YEAR;
+  })();
 
   // ============================================
   // ADAPTIVE DENSITY SYSTEM
@@ -205,11 +413,10 @@
   // Calculate scroll indicator position based on scroll progress
   $: scrollIndicatorLeftPx = scrollProgress * timelineWidthPx;
 
-  // Calculate current year at scroll indicator position
+  // Calculate current year at scroll indicator position (uses segment-based inverse mapping)
   $: currentIndicatorYear = (() => {
     if (!timelineBounds) return null;
-    const yearsFromStart = (scrollIndicatorLeftPx / PIXELS_PER_YEAR);
-    const year = Math.round(timelineBounds.minYear + yearsFromStart);
+    const year = Math.round(pixelToYear(scrollIndicatorLeftPx));
     return Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
   })();
 
@@ -383,7 +590,15 @@
     } // End of isCalculatingPlacement check
   }
 
-  // Generate year markers for the axis
+  // Helper: check if a year falls inside a compressed gap segment
+  function isYearInGap(year) {
+    if (!timelineSegments) return false;
+    return timelineSegments.some(seg =>
+      seg.type === 'gap' && year > seg.yearStart && year < seg.yearEnd
+    );
+  }
+
+  // Generate year markers for the axis (skip markers inside compressed gaps)
   $: yearMarkers = (() => {
     const markers = [];
     const { minYear, maxYear } = timelineBounds;
@@ -394,11 +609,11 @@
     if (span > 200) interval = 50;
     if (span > 500) interval = 100;
 
-    // Generate markers at interval
+    // Generate markers at interval, skipping those inside compressed gaps
     const startYear = Math.ceil(minYear / interval) * interval;
     for (let year = startYear; year <= maxYear; year += interval) {
-      const offsetYears = year - minYear;
-      const leftPx = offsetYears * PIXELS_PER_YEAR;
+      if (isYearInGap(year)) continue;
+      const leftPx = yearToPixel(year);
       markers.push({ year, leftPx });
     }
 
@@ -412,8 +627,6 @@
     return chapters.map(chapter => {
       const startYear = parseInt(chapter.date_start);
       const endYear = parseInt(chapter.date_end);
-      const offsetYears = startYear - timelineBounds.minYear;
-      const span = endYear - startYear;
 
       // Remove date range from title (e.g., "Title (1815-1899)" -> "Title")
       const titleWithoutDates = chapter.title.replace(/\s*\(\d{4}-\d{4}\)\s*$/, '');
@@ -421,8 +634,8 @@
       return {
         ...chapter,
         title: titleWithoutDates,
-        leftPx: offsetYears * PIXELS_PER_YEAR,
-        widthPx: span * PIXELS_PER_YEAR
+        leftPx: yearToPixel(startYear),
+        widthPx: yearToPixel(endYear) - yearToPixel(startYear)
       };
     });
   })();
@@ -508,17 +721,15 @@
       const deathYear = getYear(person.deathDate);
       if (!birthYear) return null;
 
-      const startOffset = birthYear - timelineBounds.minYear;
       const endYear = deathYear || timelineBounds.maxYear;
-      const lifespan = endYear - birthYear;
 
       return {
         person,
         personId,
         birthYear,
         deathYear,
-        leftPx: startOffset * PIXELS_PER_YEAR,
-        widthPx: lifespan * PIXELS_PER_YEAR,
+        leftPx: yearToPixel(birthYear),
+        widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
         isAlive: !deathYear,
         portrait: person.portrait?.thumbnail || person.portrait?.image
       };
@@ -549,17 +760,15 @@
           const deathYear = getYear(person.deathDate);
           if (!birthYear) return null;
 
-          const startOffset = birthYear - timelineBounds.minYear;
           const endYear = deathYear || timelineBounds.maxYear;
-          const lifespan = endYear - birthYear;
 
           return {
             person,
             personId,
             birthYear,
             deathYear,
-            leftPx: startOffset * PIXELS_PER_YEAR,
-            widthPx: lifespan * PIXELS_PER_YEAR,
+            leftPx: yearToPixel(birthYear),
+            widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
             isAlive: !deathYear,
             portrait: person.portrait?.thumbnail || person.portrait?.image
           };
@@ -688,8 +897,7 @@
           return;
         }
 
-        const offsetYears = eventYear - timelineBounds.minYear;
-        const leftPx = offsetYears * PIXELS_PER_YEAR;
+        const leftPx = yearToPixel(eventYear);
 
         eventsByPerson.get(event.person_id).push({
           ...event,
@@ -744,14 +952,8 @@
   export function yearToScrollProgress(targetYear) {
     if (!timelineBounds || !targetYear || timelineWidthPx === 0) return null;
 
-    // Calculate pixel position of target year on timeline
-    const offsetYears = targetYear - timelineBounds.minYear;
-    const targetLeftPx = offsetYears * PIXELS_PER_YEAR;
-
-    // The scroll indicator is positioned at: scrollProgress * timelineWidthPx
-    // We want: scrollIndicatorLeftPx === targetLeftPx
-    // Therefore: scrollProgress * timelineWidthPx === targetLeftPx
-    // Solving: scrollProgress = targetLeftPx / timelineWidthPx
+    // Calculate pixel position using segment-based mapping
+    const targetLeftPx = yearToPixel(targetYear);
 
     const scrollProgress = targetLeftPx / timelineWidthPx;
 
@@ -1529,6 +1731,23 @@
       {/each}
     </div>
 
+    <!-- Gap indicators layer -->
+    {#if timelineSegments}
+      <div class="gaps-layer">
+        {#each timelineSegments.filter(seg => seg.type === 'gap') as gapSegment}
+          <div
+            class="gap-indicator"
+            style="left: {gapSegment.pixelStart}px; width: {gapSegment.pixelEnd - gapSegment.pixelStart}px;"
+            title="{gapSegment.yearStart}–{gapSegment.yearEnd} ({gapSegment.yearEnd - gapSegment.yearStart} years)"
+          >
+            <div class="gap-label">
+              {gapSegment.yearEnd - gapSegment.yearStart}y
+            </div>
+          </div>
+        {/each}
+      </div>
+    {/if}
+
     <!-- Year axis -->
     <div class="year-axis">
       {#each yearMarkers as marker}
@@ -1801,6 +2020,57 @@
     margin: 0;
     text-align: left;
     font-style: italic;
+  }
+
+  /* Gaps layer - visual indicators for compressed timeline gaps */
+  .gaps-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .gap-indicator {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(148, 163, 184, 0.06) 6px,
+      rgba(148, 163, 184, 0.06) 12px
+    );
+    border-left: 1px dashed rgba(148, 163, 184, 0.3);
+    border-right: 1px dashed rgba(148, 163, 184, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gap-label {
+    position: sticky;
+    top: 50%;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.6rem;
+    color: rgba(148, 163, 184, 0.8);
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    pointer-events: auto;
+    cursor: help;
+    letter-spacing: 0.02em;
+  }
+
+  .gap-label:hover {
+    color: #94a3b8;
+    border-color: rgba(148, 163, 184, 0.5);
   }
 
   /* Chapters layer */
