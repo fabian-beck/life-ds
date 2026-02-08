@@ -451,7 +451,11 @@ def phase1_story_planning(
     if hints:
         hints_section = f"""
 
-IMPORTANT SELECTION HINT: {hints.hint}
+=== MANDATORY SELECTION OVERRIDE ===
+The following hint OVERRIDES default selection criteria. If specific people are named,
+you MUST include them even if they seem only loosely connected to the topic.
+Hint: {hints.hint}
+===================================
 """
 
     if manual_person_ids:
@@ -459,7 +463,7 @@ IMPORTANT SELECTION HINT: {hints.hint}
         relevant_people = [p for p in people_summary if p["id"] in manual_person_ids]
 
         prompt = f"""Create a thematic collection structure for the topic "{topic_title}".
-
+{hints_section}
 You MUST use these specific people (already selected):
 {json.dumps(manual_person_ids, indent=2)}
 
@@ -523,12 +527,11 @@ MISSING PEOPLE SUGGESTIONS:
 
 Use ALL provided person IDs (no more, no less).
 Provide a relevance_note for each person explaining their fit.
-{hints_section}
 """
     else:
         # Automatic mode: AI selects people + creates structure
         prompt = f"""Create a thematic collection for the topic "{topic_title}" by selecting ALL people from the registry who clearly fit this topic.
-
+{hints_section}
 Available people:
 {json.dumps(people_summary, indent=2)}
 
@@ -605,11 +608,12 @@ BAD SUBTOPIC EXAMPLES:
 CHAPTERS (3-6):
 - Era-based with clear date ranges (year precision only)
 - Title format: "Era Name (YYYY-YYYY)" (e.g., "Early Foundations (1900-1920)")
-- CRITICAL: Chapters MUST be strictly chronological and COMPLETELY NON-OVERLAPPING
-  * NO OVERLAP ALLOWED: Each chapter's date_end MUST be BEFORE the next chapter's date_start
+- CRITICAL: Chapters MUST be strictly chronological and NON-OVERLAPPING
+  * Each chapter's date_end must be <= the next chapter's date_start (adjacent chapters MAY share a boundary year)
   * Chapters must be in chronological order from earliest to latest
+  * Example CORRECT: Chapter 1 (1900-1920), Chapter 2 (1920-1945), Chapter 3 (1946-1970) ← sharing 1920 is OK
   * Example CORRECT: Chapter 1 (1900-1920), Chapter 2 (1921-1945), Chapter 3 (1946-1970)
-  * Example WRONG: Chapter 1 (1900-1930), Chapter 2 (1920-1950) ← OVERLAP NOT ALLOWED
+  * Example WRONG: Chapter 1 (1900-1930), Chapter 2 (1920-1950) ← TRUE OVERLAP NOT ALLOWED
   * If an event could fit multiple chapters, assign it to the chapter where it has PRIMARY thematic importance
 - Bridge statement: narrative hook, not summary (1-2 sentences, max 30 words)
 - Each bridge should create anticipation for what happened during that era
@@ -631,7 +635,6 @@ MISSING PEOPLE SUGGESTIONS:
 - For each suggestion: provide name, reason (why they'd fit), and role
 - Focus on people who would fill gaps or add important perspectives
 - These are recommendations for future dataset expansion
-{hints_section}
 """
 
     try:
@@ -698,11 +701,11 @@ MISSING PEOPLE SUGGESTIONS:
                 current_end = int(current_chapter.date_end.split("-")[0])
                 next_start = int(next_chapter.date_start.split("-")[0])
 
-                if current_end >= next_start:
+                if current_end > next_start:
                     print(f"Error: Chapters overlap!")
                     print(f"  '{current_chapter.title}' ends in {current_end}")
                     print(f"  '{next_chapter.title}' starts in {next_start}")
-                    print(f"Chapters must be strictly non-overlapping (date_end < next date_start)")
+                    print(f"Chapters must be non-overlapping (date_end <= next date_start)")
                     return None
 
             if verbose:
@@ -710,7 +713,7 @@ MISSING PEOPLE SUGGESTIONS:
                 print(f"Created {len(plan.subtopics)} subtopics")
                 print(f"Designed {len(plan.chapters)} chapters")
                 print(f"Validated: All people assigned to exactly one subtopic")
-                print(f"Validated: All chapters are strictly non-overlapping")
+                print(f"Validated: All chapters are non-overlapping")
 
             return plan
         elif result.refusal:

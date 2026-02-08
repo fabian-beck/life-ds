@@ -647,10 +647,14 @@
     }
 
     // Find the chapter whose date range contains the current indicator year
-    const activeChapter = chaptersWithPositions.find(chapter => {
+    // Use exclusive end for all but the last chapter so that shared boundary years
+    // (e.g., chapter 1 ends 1808, chapter 2 starts 1808) resolve to the later chapter.
+    const lastIndex = chaptersWithPositions.length - 1;
+    const activeChapter = chaptersWithPositions.find((chapter, idx) => {
       const startYear = parseInt(chapter.date_start);
       const endYear = parseInt(chapter.date_end);
-      return currentIndicatorYear >= startYear && currentIndicatorYear <= endYear;
+      const endInclusive = idx === lastIndex;
+      return currentIndicatorYear >= startYear && (endInclusive ? currentIndicatorYear <= endYear : currentIndicatorYear < endYear);
     });
 
     return activeChapter || null;
