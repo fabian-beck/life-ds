@@ -1,0 +1,218 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-02-08",
+  "ego": {
+    "name": "Hans Erlwein",
+    "birth_year": 1872,
+    "death_year": 1914,
+    "primary_roles": [
+      "architect",
+      "municipal building official (Stadtbaurat)",
+      "teacher (honorary professor)"
+    ],
+    "summary": "Hans Erlwein (1872–1914) was a German architect and municipal building official. He served as Stadtbaurat of Dresden from 1905 until his death, overseeing a large program of public construction and frequently integrating contemporary artists into municipal projects as unified works of architecture and art.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Hans_Erlwein"
+  },
+  "connections": [
+    {
+      "person_name": "Johann Jakob Erlwein",
+      "relationship_type": "family/father",
+      "relationship_description": "Erlwein’s father, a hotelier in Bayerisch Gmain. Hans Erlwein’s full name was also Johann Jakob Erlwein, reflecting the shared family name.",
+      "start_year": 1872,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Bayerisch Gmain"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Elise Erlwein",
+      "relationship_type": "family/mother",
+      "relationship_description": "Erlwein's mother; named in the biography as Johann Jakob Erlwein's wife Elise.",
+      "start_year": 1872,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Bayerisch Gmain"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Georg Erlwein",
+      "relationship_type": "family/cousin",
+      "relationship_description": "Erlwein's cousin (veter), an electrical engineer and electrochemist.",
+      "start_year": 1872,
+      "end_year": 1914,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "extended-family connection within the Erlwein family"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Georg_Erlwein"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Gabriel von Seidl",
+      "relationship_type": "social/corps-network",
+      "relationship_description": "A prominent fellow member of Corps Germania München. The link is best understood as a shared corps network rather than a documented close personal relationship.",
+      "start_year": 1893,
+      "end_year": 1913,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "shared membership network in Corps Germania München",
+        "participation in corps-related social and alumni contexts"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Corps_Germania_M%C3%BCnchen"
+      ],
+      "notes": "The specific intensity of direct personal contact is not stated in the provided text; the tie is evidenced through shared corps membership."
+    },
+    {
+      "person_name": "Marie Hirsch",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Erlwein's wife; they married in 1899 and had a daughter together.",
+      "start_year": 1899,
+      "end_year": 1914,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and household life during Erlwein's municipal career in Bamberg and Dresden",
+        "raising their daughter"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://en.wikipedia.org/wiki/Hans_Erlwein"
+      ],
+      "notes": "The daughter's name is not provided in the supplied extract."
+    },
+    {
+      "person_name": "Georg Wrba",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Sculptor frequently integrated into Erlwein's municipal buildings in Dresden; cited as a younger visual artist Erlwein involved to create Gesamtkunstwerk-style civic architecture, including works at the Dresden slaughterhouse complex.",
+      "start_year": 1906,
+      "end_year": 1914,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "artistic-architectural integration for Dresden municipal buildings",
+        "collaboration linked to Städtischer Vieh- und Schlachthof (Erlwein-Schlachthof) and other Erlwein buildings"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Georg_Wrba"
+      ],
+      "notes": "Wrba's biography explicitly notes early works in 'Hans-Erlwein buildings' and lists a portrait of Hans Erlwein among his works."
+    },
+    {
+      "person_name": "Paul Rößler",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Painter and restorer named among the younger artists Erlwein brought into Dresden’s municipal building program for integrated decoration.",
+      "start_year": 1909,
+      "end_year": 1914,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "artistic contributions (painting/mosaic/glass) for Dresden public buildings associated with Erlwein's municipal construction program"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Paul_R%C3%B6%C3%9Fler"
+      ],
+      "notes": "The Erlwein article mentions Rößler as an example of younger artists integrated into municipal buildings; Rößler's article documents works in Dresden schools and churches from the same period."
+    },
+    {
+      "person_name": "Max Krenkel",
+      "relationship_type": "professional/foundation legacy",
+      "relationship_description": "Institutional link via the Krenkel Foundation (Krenkel-Stiftung), which funded housing projects later associated with Erlwein’s Dresden work; not a direct personal collaboration (Krenkel died in 1901).",
+      "start_year": 1910,
+      "end_year": 1911,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "foundation-funded housing development (Krenkel-Stiftung) implemented under Erlwein's design/leadership"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Max_Krenkel"
+      ],
+      "notes": "Krenkel died in 1901; the relationship is effectively through his endowment/foundation rather than direct personal collaboration."
+    },
+    {
+      "person_name": "Johann Peter Kaspar Meyer",
+      "relationship_type": "professional/foundation legacy",
+      "relationship_description": "Institutional link through the legacy of the Johann Meyer foundation and named housing projects in Dresden; not a direct personal relationship (Meyer died in 1887).",
+      "start_year": 1910,
+      "end_year": 1914,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "social-housing projects connected to the Johann Meyer foundation tradition in Dresden"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Johann_Meyer_(Kaufmann)"
+      ],
+      "notes": "Meyer died in 1887; the tie is through the institutional legacy of his foundation and named housing projects rather than direct contact."
+    },
+    {
+      "person_name": "Otto Gussmann",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Painter and professor who collaborated with Erlwein on architectural decoration; noted for interior decoration work in Dresden's 'Italienisches Dörfchen' in collaboration with Erlwein.",
+      "start_year": 1911,
+      "end_year": 1913,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "integrated architectural painting/decoration for the Italienisches Dörfchen (Dresden)",
+        "artist involvement in Erlwein-led municipal projects"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "https://de.wikipedia.org/wiki/Otto_Gussmann"
+      ],
+      "notes": null
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Erlwein’s personal life in the record is anchored by his parents (Johann Jakob and Elise), his wife Marie Hirsch (with whom he had a daughter), and his cousin Georg Erlwein."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "His professional circle includes institutional commission contexts in Dresden, including projects connected to named legacy foundations (e.g., Krenkel and Meyer)."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Erlwein repeatedly collaborated with contemporary artists to give municipal buildings a unified architectural and artistic character—especially Wrba, Gussmann, and Rößler."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Through Corps Germania München, Erlwein belonged to an elite associational network that extended beyond his formal municipal office."
+    }
+  ]
+}

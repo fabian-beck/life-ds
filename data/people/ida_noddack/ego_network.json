@@ -1,0 +1,438 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-02-08",
+  "ego": {
+    "name": "Ida Noddack",
+    "birth_year": 1896,
+    "death_year": 1978,
+    "primary_roles": [
+      "chemist",
+      "physicist"
+    ],
+    "summary": "German chemist and physicist best known for co-discovering rhenium with Walter Noddack and Otto Berg, and for an early (1934) published suggestion that neutron-bombarded heavy nuclei could break into large fragments—an idea later recognized as anticipating nuclear fission.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ida_Noddack"
+  },
+  "connections": [
+    {
+      "person_name": "Masataka Ogawa",
+      "relationship_type": "professional/predecessor_claimant",
+      "relationship_description": "Earlier claimant (1908) to element 43 ('Nipponium'); later investigations discussed in relation to the Noddacks’ claims and to rhenium/technetium priority disputes.",
+      "start_year": 1908,
+      "end_year": 1930,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Historical priority context for element 43 and element 75 claims"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://de.wikipedia.org/wiki/Ogawa_Masataka"
+      ],
+      "notes": "Included due to explicit discussion in the extract about re-evaluating prior claims."
+    },
+    {
+      "person_name": "Henry Moseley",
+      "relationship_type": "academic/intellectual_predecessor",
+      "relationship_description": "His 1913–1914 work relating X-ray frequencies to atomic number underpinned the spectrographic logic used in element searches (including the Noddacks’ approach to element 43/75) and predicted the existence of the missing element position for 75.",
+      "start_year": 1913,
+      "end_year": 1915,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Methodological foundation for X-ray/atomic-number identification used in later element searches"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)"
+      ],
+      "notes": "Influence is methodological (no direct interaction)."
+    },
+    {
+      "person_name": "D. Holde",
+      "relationship_type": "academic/doctoral_associated",
+      "relationship_description": "Named alongside Noddack on her 1921 dissertation reference; likely a supervisor, editor, or institutional co-author connected to her doctoral work.",
+      "start_year": 1918,
+      "end_year": 1921,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Doctoral dissertation work and publication"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "The provided extract lists 'Tacke, Ida, and D. Holde. 1921' for the dissertation."
+    },
+    {
+      "person_name": "Walter Noddack",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Husband and lifelong research partner; together (with Otto Berg) he co-published key work on rhenium and the disputed “masurium” claim.",
+      "start_year": 1920,
+      "end_year": 1960,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Met at Technische Hochschule Charlottenburg (Berlin)",
+        "Joint element-search program for elements 43 and 75 at PTR",
+        "Co-authored publications on rhenium",
+        "Joint Nobel Prize nominations and awards"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "notes": "Their partnership combined marriage and a long-term co-research arrangement."
+    },
+    {
+      "person_name": "Otto Berg",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Co-investigator with Ida and Walter Noddack in the 1920s element-search program and a credited co-discoverer of rhenium; co-author on the 1925 element report.",
+      "start_year": 1922,
+      "end_year": 1933,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Analytical and X-ray spectrographic work on mineral samples",
+        "Co-authored 1925 paper claiming rhenium and masurium",
+        "Work to isolate rhenium sample (notably by 1928)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)",
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "notes": "Berg later lost his Siemens job due to Nazi racial policies and fled to England (context for the era’s scientific networks)."
+    },
+    {
+      "person_name": "Walther Nernst",
+      "relationship_type": "professional/advocate",
+      "relationship_description": "Senior chemist who supported the Noddacks’ Nobel Prize nominations, reflecting high-level recognition of their element work.",
+      "start_year": 1932,
+      "end_year": 1933,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Nobel Prize nomination support",
+        "Professional recognition within chemistry"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "The extract lists Nernst among nominators for the Noddacks’ Nobel nominations."
+    },
+    {
+      "person_name": "Enrico Fermi",
+      "relationship_type": "professional/peer_criticized",
+      "relationship_description": "Her 1934 paper challenged Fermi’s interpretation of neutron-bombarded uranium as producing transuranic elements and raised the possibility of nucleus breakup.",
+      "start_year": 1934,
+      "end_year": 1934,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Scientific exchange via published papers on neutron-bombarded uranium",
+        "Public critique of experimental interpretation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Enrico_Fermi"
+      ],
+      "notes": "This was an influential but initially dismissed intervention in the transuranic/fission debate."
+    },
+    {
+      "person_name": "Otto Hahn",
+      "relationship_type": "professional/rival_critic",
+      "relationship_description": "One of the prominent German scientists who dismissed Noddack’s 1934 breakup suggestion as “ridiculous,” later central to the experimental path to fission.",
+      "start_year": 1934,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Public scientific controversy over interpretation of neutron-irradiated uranium",
+        "Hahn’s later work became part of the chain of evidence confirming fission"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://de.wikipedia.org/wiki/Otto_Hahn"
+      ],
+      "notes": "Relationship is primarily through public scientific criticism and later historical linkage."
+    },
+    {
+      "person_name": "Emilio Segrè",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Definitively isolated element 43 in 1937 (with Carlo Perrier), which was eventually named technetium—resolving the disputed status of Noddack’s earlier 'masurium' claim.",
+      "start_year": 1937,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Competing/confirmatory element-43 discovery narrative",
+        "Subsequent debate about detectability in the Noddacks’ 1925 methods"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Emilio_Segr%C3%A8"
+      ],
+      "notes": "Segrè’s result largely settled element-43 naming and priority discussions."
+    },
+    {
+      "person_name": "Carlo Perrier",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Co-discoverer with Segrè of technetium (element 43) in 1937, providing the definitive isolation that contrasted with the Noddacks’ earlier 'masurium' claim.",
+      "start_year": 1937,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Element-43 isolation and characterization relevant to the Noddacks’ earlier claim"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Emilio_Segr%C3%A8",
+        "https://de.wikipedia.org/wiki/Carlo_Perrier"
+      ],
+      "notes": "Connection is through scientific priority/validation rather than direct contact."
+    },
+    {
+      "person_name": "Fritz Strassmann",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Co-provided (with Hahn) the 1938 chemical evidence (barium among products) that helped establish nuclear fission; his work is part of the later validation pathway for Noddack’s 1934 breakup hypothesis.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Scientific linkage through fission discovery literature and subsequent historical interpretation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://de.wikipedia.org/wiki/Fritz_Stra%C3%9Fmann",
+        "https://de.wikipedia.org/wiki/Otto_Hahn"
+      ],
+      "notes": "No direct collaboration is indicated in the provided text."
+    },
+    {
+      "person_name": "Lise Meitner",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Interpreted the Hahn–Strassmann results with Frisch, helping establish fission—making Noddack’s earlier suggestion look newly prescient in hindsight.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Shared scientific topic: uranium neutron bombardment and fission interpretation",
+        "Later work provided a theoretical framework absent from Noddack’s 1934 proposal"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Lise_Meitner",
+        "https://de.wikipedia.org/wiki/Otto_Hahn"
+      ],
+      "notes": "Influence is largely retrospective: Noddack’s earlier idea is recognized as prescient in the fission story."
+    },
+    {
+      "person_name": "Otto Robert Frisch",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "With Meitner, helped formulate and name nuclear fission in 1938–1939, providing the framework that Noddack lacked in 1934.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Shared scientific topic: interpreting uranium irradiation results",
+        "Frisch’s work helped consolidate the concept of fission"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Robert_Frisch",
+        "https://en.wikipedia.org/wiki/Lise_Meitner"
+      ],
+      "notes": "Connection is indirect (via the development and acceptance of the fission interpretation)."
+    },
+    {
+      "person_name": "Irène Joliot-Curie",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Her 1938 experiments (with Frédéric Joliot-Curie and Pavle Savić) on neutron-bombarded uranium raised interpretational difficulties that preceded and contextualized later confirmation of fission; referenced in the narrative surrounding Noddack’s early suggestion.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Parallel/preceding experimental work on uranium neutron bombardment",
+        "Shared scientific context feeding into the fission discovery timeline"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "notes": "No direct interaction is stated; linkage is through the shared research problem and chronology."
+    },
+    {
+      "person_name": "Frédéric Joliot-Curie",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Co-conducted uranium-neutron work with Irène Joliot-Curie (and Savić) in the late 1930s; their results contributed to the experimental backdrop for resolving the transuranic-vs-fission question raised earlier by Noddack.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Parallel/preceding research on neutron interactions with heavy elements"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Joliot-Curie"
+      ],
+      "notes": "Connection is thematic and historical rather than collaborative."
+    },
+    {
+      "person_name": "Pavle Savić",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Collaborated with the Joliot-Curies on uranium-neutron research in 1938 that produced 'interpretational difficulties' later resolved within the fission framework; referenced in the context of delayed acceptance of Noddack’s 1934 idea.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Parallel/preceding experiments relevant to uranium irradiation interpretation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Pavle_Savi%C4%87"
+      ],
+      "notes": "Included because the provided text explicitly ties his work to the interpretive pathway toward fission."
+    },
+    {
+      "person_name": "B. T. Kenna",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Co-reported discovery (1961) of minute natural technetium in pitchblende associated with spontaneous uranium fission, contributing data used in later evaluations of whether technetium could have been detectable in ores analyzed by the Noddacks.",
+      "start_year": 1961,
+      "end_year": 1961,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Empirical findings relevant to technetium’s natural occurrence and detectability"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Connection is through later literature impacting interpretation of the Noddacks’ earlier work."
+    },
+    {
+      "person_name": "Paul K. Kuroda",
+      "relationship_type": "professional/critic",
+      "relationship_description": "Argued (per the provided extract) that technetium amounts in the ores the Noddacks studied would have been too low to detect by their methods, countering claims that they could have observed element 43.",
+      "start_year": 1961,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Quantitative argument about expected technetium concentrations in ores"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)"
+      ],
+      "notes": "Presented as a key skeptical quantitative constraint in the element-43 debate."
+    },
+    {
+      "person_name": "Pieter van Assche",
+      "relationship_type": "professional/analyst_supporter",
+      "relationship_description": "Published analysis arguing that, given ore compositions and detection limits, the Noddacks’ methods might have been capable of detecting trace element 43 (technetium), partially rehabilitating their 1925 claim.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Post hoc reanalysis of the Noddacks’ published data and detection limits"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "A later scholarly/technical reassessment rather than a contemporary relationship."
+    },
+    {
+      "person_name": "John T. Armstrong",
+      "relationship_type": "professional/analyst_supporter",
+      "relationship_description": "Simulated the original X-ray spectrum with a computer and reported that it was 'surprisingly close' to the Noddacks’ published spectrum, contributing to later debate about the 1925 element-43 evidence.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Computer simulation of historical X-ray spectrographic results"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "notes": "Armstrong is described as a NIST scientist in the provided extract."
+    },
+    {
+      "person_name": "Gunter Herrmann",
+      "relationship_type": "professional/critic",
+      "relationship_description": "Critiqued van Assche’s supportive arguments as ad hoc and forced, representing an opposing technical assessment in the continuing debate over the Noddacks’ element-43 claim.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Critical review of post hoc rehabilitations of the Noddacks’ element-43 claim"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Shown in the extract as affiliated with the University of Mainz."
+    },
+    {
+      "person_name": "Kenji Yoshihara",
+      "relationship_type": "professional/analyst",
+      "relationship_description": "Re-examined an original plate from Ogawa’s work and concluded Ogawa had separated element 75 (rhenium) rather than element 43, an argument that reframed historical priority around Noddack’s confirmed rhenium discovery.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Forensic/historical analysis of earlier element claims relevant to rhenium priority"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "The provided extract ties this analysis directly to disputes about Noddack-era element claims."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Her key documented personal tie is her marriage to Walter Noddack, which also functioned as her main research partnership. The provided text mentions her father’s varnish factory but not her parents’ names."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Her network centers on close collaboration (Walter Noddack, Otto Berg) and the high-impact disputes around element discovery and the 1934 fission suggestion, followed by later reassessments of the element-43 evidence."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Academic ties are mostly indirect: dissertation-era association (D. Holde) and the methodological lineage behind early 20th-century element searches."
+    }
+  ]
+}

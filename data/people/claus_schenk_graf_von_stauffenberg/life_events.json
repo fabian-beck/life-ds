@@ -1,0 +1,814 @@
+{
+  "dataset": "Biographical timeline outline",
+  "created_on": "2026-02-07",
+  "person": {
+    "name": "Claus_von_Stauffenberg",
+    "birth_date": "1907-11-15",
+    "death_date": "1944-07-20",
+    "primary_roles": [
+      "army officer",
+      "resistance fighter"
+    ],
+    "tagline": "Officer behind 20 July plot",
+    "summary": "German army officer who became a leading figure in the military resistance against National Socialism and carried out the failed 20 July 1944 bomb attempt on Adolf Hitler as part of the planned coup code-named Operation Valkyrie.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+    "portrait": {
+      "image": "/portraits/claus_schenk_graf_von_stauffenberg_thumbnail.webp",
+      "thumbnail": "/portraits/claus_schenk_graf_von_stauffenberg_thumbnail.webp",
+      "medium": "/portraits/claus_schenk_graf_von_stauffenberg_medium.webp",
+      "full": "/portraits/claus_schenk_graf_von_stauffenberg_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/VStauffenberg_vQuirnheim_crop.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "secret_germany_beginnings",
+      "headline": "Secret Germany",
+      "bridge_statement": "Before the uniforms and conspiracies, a boy absorbs grief, beauty, and a demanding ideal of Germany.",
+      "date_start": "1907-11-15",
+      "date_start_precision": "day",
+      "date_end": "1926-03-05",
+      "date_end_precision": "day",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Alfred Schenk Graf von Stauffenberg",
+        "Caroline Gräfin von Üxküll-Gyllenband",
+        "Konrad Maria Schenk Graf von Stauffenberg",
+        "Stefan George",
+        "Berthold Schenk Graf von Stauffenberg",
+        "Alexander Schenk Graf von Stauffenberg"
+      ],
+      "location": "Southwest Germany"
+    },
+    {
+      "id": "cavalry_oath",
+      "headline": "Cavalry Oath",
+      "bridge_statement": "He chooses service over spectatorship, stepping into a world where loyalty is tested by history.",
+      "date_start": "1926-04-01",
+      "date_start_precision": "day",
+      "date_end": "1933-09-26",
+      "date_end_precision": "day",
+      "age_start": 18,
+      "age_end": 25,
+      "involved_people": [
+        "Adolf Hitler",
+        "Paul von Hindenburg",
+        "Nina Freiin von Lerchenfeld"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "general_staff_forge",
+      "headline": "General Staff Forge",
+      "bridge_statement": "In Berlin, ambition sharpens into method, and friendships form that will later carry dangerous weight.",
+      "date_start": "1936-10-01",
+      "date_start_precision": "day",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age_start": 28,
+      "age_end": 30,
+      "involved_people": [
+        "Albrecht Mertz von Quirnheim",
+        "Eberhard Finckh"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "illusions_under_fire",
+      "headline": "Illusions Under Fire",
+      "bridge_statement": "War’s speed and brutality begin to strip away old certainties, leaving only hard questions.",
+      "date_start": "1939-09",
+      "date_start_precision": "month",
+      "date_end": "1942",
+      "date_end_precision": "year",
+      "age_start": 31,
+      "age_end": 34,
+      "involved_people": [
+        "Henning von Tresckow"
+      ],
+      "location": "Continental Europe"
+    },
+    {
+      "id": "tunisia_turning_point",
+      "headline": "Tunisia Turning Point",
+      "bridge_statement": "A single blast remakes his body, and the new limits only clarify what must be dared.",
+      "date_start": "1943-04-07",
+      "date_start_precision": "day",
+      "date_end": "1944-06",
+      "date_end_precision": "month",
+      "age_start": 35,
+      "age_end": 36,
+      "involved_people": null,
+      "location": "North Africa"
+    },
+    {
+      "id": "valkyrie_final_hour",
+      "headline": "Valkyrie Final Hour",
+      "bridge_statement": "With access, authority, and time running out, resolve condenses into one irreversible day.",
+      "date_start": "1944-07-01",
+      "date_start_precision": "day",
+      "date_end": "1944-07-20",
+      "date_end_precision": "day",
+      "age_start": 36,
+      "age_end": 36,
+      "involved_people": [
+        "Adolf Hitler",
+        "Friedrich Olbricht",
+        "Ludwig Beck",
+        "Carl Friedrich Goerdeler",
+        "Werner von Haeften",
+        "Friedrich Fromm",
+        "Albrecht Mertz von Quirnheim"
+      ],
+      "location": "Central Europe"
+    }
+  ],
+  "conclusion": "Claus von Stauffenberg’s life moved from cultivated aristocratic idealism to a soldier’s ruthless clarity, ending in a wager against tyranny. His legacy endures as disciplined, tragic courage—choosing responsibility over safety when his country’s honor was at stake, and paying for it in the night of 20/21 July 1944.",
+  "events": [
+    {
+      "date": "1907-11-15",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth at Jettingen Castle",
+      "description": "On 15 November 1907, Claus Philipp Maria Justinian Schenk Graf von Stauffenberg was born at Jettingen Castle in [[Kingdom of Bavaria|Bavaria]] into a Catholic aristocratic family. He was the youngest son of Alfred Schenk Graf von Stauffenberg and Caroline Gräfin von Üxküll-Gyllenband. His twin brother, Konrad Maria, died the next day, placing the family in immediate mourning.",
+      "locations": [
+        {
+          "name_historic": "Jettingen, Kingdom of Bavaria",
+          "name_modern": "Jettingen-Scheppach, Bavaria, Germany",
+          "centroid": [
+            10.4409763,
+            48.3954927
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Alfred Schenk Graf von Stauffenberg",
+        "Caroline Gräfin von Üxküll-Gyllenband",
+        "Konrad Maria Schenk Graf von Stauffenberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "secret_germany_beginnings",
+      "annotations": {
+        "Kingdom of Bavaria": {
+          "explanation": "A monarchy and federal state within the German Empire (1871–1918), ruled by the Wittelsbach dynasty; it encompassed the region where Stauffenberg was born in 1907.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Kingdom_of_Bavaria"
+        }
+      }
+    },
+    {
+      "date": "1913",
+      "date_precision": "year",
+      "age": 5,
+      "title": "Began schooling in Stuttgart",
+      "description": "In 1913, while the family was living in Stuttgart because of his father’s court service in Württemberg, he began his formal schooling there. In 1916 he transferred to the [[Eberhard-Ludwigs-Gymnasium|Eberhard-Ludwigs-Gymnasium]], following his older brothers. His upbringing combined religious instruction with literature, music, and theater, and he also pursued riding and played the cello.",
+      "locations": [
+        {
+          "name_historic": "Stuttgart",
+          "name_modern": "Stuttgart, Germany",
+          "centroid": [
+            9.1800132,
+            48.7784485
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/EBELU_20090517.JPG/960px-EBELU_20090517.JPG",
+          "caption": "Eberhard-Ludwigs-Gymnasium in Stuttgart",
+          "source": "https://commons.wikimedia.org/wiki/File:EBELU_20090517.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "secret_germany_beginnings",
+      "annotations": {
+        "Eberhard-Ludwigs-Gymnasium": {
+          "explanation": "A long-established academic secondary school (Gymnasium) in Stuttgart, historically attended by members of the Württemberg elite.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Eberhard-Ludwigs-Gymnasium"
+        }
+      }
+    },
+    {
+      "date": "1923",
+      "date_precision": "year",
+      "date_note": "Introduced to Stefan George in spring 1923",
+      "age": 15,
+      "title": "Entered Stefan George circle",
+      "description": "While still a Gymnasium student active in the [[Bund Deutscher Neupfadfinder|Bund Deutscher Neupfadfinder]], he was introduced to the poet Stefan George in 1923. Together with his brothers, he entered the poet’s close circle and adopted its ideal of a \"[[Secret Germany|Secret Germany]]\", reinforced through personal friendships and a disciplined cultural ethos.",
+      "locations": [],
+      "involved_people": [
+        "Stefan George",
+        "Berthold Schenk Graf von Stauffenberg",
+        "Alexander Schenk Graf von Stauffenberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Stefan_George"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Stefan_George_in_Hirts_Deutscher_Sammlung_Breslau.jpg/960px-Stefan_George_in_Hirts_Deutscher_Sammlung_Breslau.jpg",
+          "caption": "Stefan George in Hirts Deutscher Sammlung Breslau",
+          "source": "https://commons.wikimedia.org/wiki/File:Stefan_George_in_Hirts_Deutscher_Sammlung_Breslau.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "secret_germany_beginnings",
+      "annotations": {
+        "Bund Deutscher Neupfadfinder": {
+          "explanation": "A German youth movement/scouting association in the Weimar era (part of the broader Bündische Jugend), emphasizing self-education, outdoor life, and camaraderie.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/B%C3%BCndische_Jugend"
+        },
+        "Secret Germany": {
+          "explanation": "A term used in Stefan George’s circle for an imagined, aristocratic-spiritual ‘better Germany’ rooted in culture and moral renewal rather than party politics.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Secret_Germany"
+        }
+      }
+    },
+    {
+      "date": "1926-03-05",
+      "date_precision": "day",
+      "age": 18,
+      "title": "Passed Abitur examinations",
+      "description": "On 5 March 1926, Stauffenberg passed his [[Abitur|Abitur examinations]] after attending the Eberhard-Ludwigs-Gymnasium, completing his secondary schooling. Though interested in architecture and other arts, he opted for a professional military career, a choice consistent with his family’s long tradition of state and military service.",
+      "locations": [
+        {
+          "name_historic": "Stuttgart",
+          "name_modern": "Stuttgart, Germany",
+          "centroid": [
+            9.1800132,
+            48.7784485
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Abitur"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "secret_germany_beginnings",
+      "annotations": {
+        "Abitur": {
+          "explanation": "The German secondary-school leaving qualification that grants access to university and is typically earned by passing final examinations at a Gymnasium.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Abitur"
+        }
+      }
+    },
+    {
+      "date": "1926-04-01",
+      "date_precision": "day",
+      "age": 18,
+      "title": "Joined 17th Cavalry Regiment",
+      "description": "On 1 April 1926, Stauffenberg entered the [[Reichswehr|Reichswehr]] as a [[Fahnenjunker|Fahnenjunker]] in the 17th Bavarian Cavalry Regiment in Bamberg, beginning his first sustained experience of soldiering and officer-corps discipline. He later presented this step as a decision to serve the state and to take action rather than remain a spectator.",
+      "locations": [
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Germany",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Reichswehr"
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "cavalry_oath",
+      "annotations": {
+        "Reichswehr": {
+          "explanation": "The armed forces of the Weimar Republic (1919–1935), limited in size by the Treaty of Versailles and preceding the Nazi-era Wehrmacht.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reichswehr"
+        },
+        "Fahnenjunker": {
+          "explanation": "A German officer-cadet rank/title used for a trainee commissioned officer, typically entering service before formal commissioning.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fahnenjunker"
+        }
+      }
+    },
+    {
+      "date": "1927-10",
+      "date_precision": "month",
+      "date_end": "1930-01-01",
+      "date_end_precision": "day",
+      "age": 19,
+      "title": "Completed officer training",
+      "description": "In October 1927, Stauffenberg completed the mandatory officer-cadet course at the [[Reichswehr|Reichswehr]] infantry school in Dresden and then continued his training at the cavalry school in Hanover. He passed the final officer examination with distinction and was awarded an honorary sabre; on 1 January 1930 he received his officer patent and was commissioned as a lieutenant, returning to his regiment in Bamberg.",
+      "locations": [
+        {
+          "name_historic": "Dresden",
+          "name_modern": "Dresden, Germany",
+          "centroid": [
+            13.7381437,
+            51.0493286
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Hanover",
+          "name_modern": "Hanover, Germany",
+          "centroid": [
+            9.7385532,
+            52.3744779
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Germany",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Reichswehr"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "cavalry_oath",
+      "annotations": {
+        "Reichswehr": {
+          "explanation": "The German armed forces of the Weimar Republic (1919–1935), limited in size by the Treaty of Versailles and reorganized before being replaced by the Wehrmacht.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reichswehr"
+        }
+      }
+    },
+    {
+      "date": "1933-01-30",
+      "date_precision": "day",
+      "age": 25,
+      "title": "Reacted to Nazi takeover",
+      "description": "He welcomed [[Adolf Hitler|Adolf Hitler]]’s appointment as Reich Chancellor on 30 January 1933, sharing the hope for national renewal felt by many German officers amid the political upheaval. At the same time, he kept an inner distance from the Nazi movement and did not join the [[NSDAP|NSDAP]], remaining formally outside party politics as a serving officer while following developments closely.",
+      "locations": [
+        {
+          "name_historic": "Germany",
+          "name_modern": "Germany",
+          "centroid": [
+            10.4478313,
+            51.1638175
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Adolf Hitler",
+        "Paul von Hindenburg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Adolf_Hitler",
+        "https://en.wikipedia.org/wiki/Adolf_Hitler"
+      ],
+      "event_type_icon": "mdi-calendar",
+      "chapter": "cavalry_oath",
+      "annotations": {
+        "NSDAP": {
+          "explanation": "Abbreviation for the National Socialist German Workers' Party, the Nazi Party that came to power in Germany in 1933.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nazi_Party"
+        }
+      }
+    },
+    {
+      "date": "1933-09-26",
+      "date_precision": "day",
+      "age": 25,
+      "title": "Married Nina von Lerchenfeld",
+      "description": "On 26 September 1933, he married Nina Freiin von Lerchenfeld in Bamberg; the ceremony was held at the Jakobskirche.",
+      "locations": [
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Germany",
+          "centroid": [
+            10.9,
+            49.89
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Nina Freiin von Lerchenfeld"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/39-Wappen_Bamberg_Jakobskirche.jpg/960px-39-Wappen_Bamberg_Jakobskirche.jpg",
+          "caption": "St. Jakob (Jakobskirche), Bamberg",
+          "source": "https://commons.wikimedia.org/wiki/File:39-Wappen_Bamberg_Jakobskirche.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "cavalry_oath",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Nina Freiin von Lerchenfeld",
+        "duration": "until his death",
+        "children": 5,
+        "characterization": "aristocratic marriage"
+      }
+    },
+    {
+      "date": "1936-10-01",
+      "date_precision": "day",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age": 28,
+      "title": "Entered War Academy Berlin",
+      "description": "On 1 October 1936, he entered the [[Kriegsakademie|War Academy]] in Berlin for General Staff training, as German rearmament increased the demand for specially trained staff officers. The course focused on operational planning, logistics, and military organization, and he also received interpreter training in English. During this period in Berlin he developed professional ties with Albrecht Mertz von Quirnheim and Eberhard Finckh.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Albrecht Mertz von Quirnheim",
+        "Eberhard Finckh"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Albrecht_Mertz_von_Quirnheim"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Berlin_Kriegsakademie_Fassade_Unter_den_Linden.jpg/960px-Berlin_Kriegsakademie_Fassade_Unter_den_Linden.jpg",
+          "caption": "Berlin Prussian War Academy facade, Unter den Linden",
+          "source": "https://commons.wikimedia.org/wiki/File:Berlin_Kriegsakademie_Fassade_Unter_den_Linden.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "general_staff_forge",
+      "annotations": {
+        "Kriegsakademie": {
+          "explanation": "The German Army’s War Academy in Berlin, which provided advanced education for selected officers preparing for General Staff duties.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Preu%C3%9Fische_Kriegsakademie"
+        }
+      }
+    },
+    {
+      "date": "1937",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Published military study",
+      "description": "In 1937, during his staff-officer training, Stauffenberg authored a study for a prize competition run by the [[German Society for Defense Policy and Defense Science|German Society for Defense Policy and Defense Science]]. After winning, it was published in the military journal [[Wissen und Wehr|Wissen und Wehr]], helping establish his reputation within the army as an intellectually ambitious officer.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "general_staff_forge",
+      "annotations": {
+        "German Society for Defense Policy and Defense Science": {
+          "explanation": "A German defense-policy association that promoted military and strategic studies and ran essay competitions in the interwar period.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Deutsche_Gesellschaft_f%C3%BCr_Wehrpolitik_und_Wehrwissenschaften"
+        },
+        "Wissen und Wehr": {
+          "explanation": "A German military periodical whose title roughly means “Knowledge and Defense,” publishing articles on defense policy and military thought.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Wissen_und_Wehr"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Gedanken zur Abwehr feindlicher Fallschirmeinheiten im Heimatgebiet",
+        "publication_type": "article",
+        "publisher": "Wissen und Wehr",
+        "significance": "prizewinning",
+        "impact": "The publication reflected his standing among peers as an able staff-minded cavalry officer engaged with new forms of warfare."
+      },
+      "location_coordinates": [
+        {
+          "label": "Berlin",
+          "name": "Berlin, Germany",
+          "primary": true,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "source": "Claus von Stauffenberg article context: 1936–1938 General Staff training took place in Berlin."
+        }
+      ]
+    },
+    {
+      "date": "1939-09",
+      "date_precision": "month",
+      "date_end": "1940-06",
+      "date_end_precision": "month",
+      "age": 31,
+      "title": "Served in early war campaigns",
+      "description": "With the outbreak of the Second World War in September 1939, Stauffenberg served as a professional officer with the German Army during the opening campaigns of the conflict, gaining firsthand experience of modern mobile warfare and frontline conditions.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/World_War_II"
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "illusions_under_fire"
+    },
+    {
+      "date": "1942",
+      "date_precision": "year",
+      "age": 34,
+      "title": "Joined military resistance",
+      "description": "In 1942, as reports of atrocities and mounting losses spread through the [[Wehrmacht]], Stauffenberg moved from private misgivings to active opposition. He began building contacts with officers in the military resistance, including circles linked to Henning von Tresckow, and explored ways to help end Hitler’s dictatorship through decisive action.",
+      "locations": [],
+      "involved_people": [
+        "Henning von Tresckow"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Henning_von_Tresckow",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944"
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "illusions_under_fire",
+      "annotations": {
+        "Wehrmacht": {
+          "explanation": "The unified armed forces of Nazi Germany (1935–1945), encompassing the army, navy, and air force; distinct from the Nazi Party itself.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Wehrmacht"
+        }
+      }
+    },
+    {
+      "date": "1943-04-07",
+      "date_precision": "day",
+      "age": 35,
+      "title": "Severely wounded in Tunisia",
+      "description": "On 7 April 1943, during the Tunisia campaign in North Africa, he was severely wounded in an air attack, suffering life-altering injuries: the loss of his left eye, amputation of his right hand, and the loss of two fingers on his left hand. After prolonged medical treatment and recovery, he was left visibly marked and physically limited.",
+      "locations": [
+        {
+          "name_historic": "Tunisia",
+          "name_modern": "Tunisia",
+          "centroid": [
+            9.400138,
+            33.8439408
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "tunisia_turning_point"
+    },
+    {
+      "date": "1944-07-01",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Became staff chief, Reserve Army",
+      "description": "On 1 July 1944, Stauffenberg became Chief of Staff to the commander of the [[Replacement Army|Replacement Army]] under Friedrich Fromm, a post based in Berlin that placed him at the center of personnel and operational communications. From there he had regular access to Hitler’s military conferences and used his authority to align revised [[Operation Valkyrie|Valkyrie]] orders with trusted fellow conspirators, while maintaining his official duties and discreet coup preparations.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Adolf Hitler",
+        "Friedrich Olbricht",
+        "Ludwig Beck",
+        "Carl Friedrich Goerdeler",
+        "Friedrich Fromm"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Operation_Valkyrie",
+        "https://en.wikipedia.org/wiki/20_July_plot"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "valkyrie_final_hour",
+      "annotations": {
+        "Replacement Army": {
+          "explanation": "The Ersatzheer, responsible for training and supplying replacements and for internal security within Germany; its mobilization system was crucial to the 20 July conspirators’ plans.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ersatzheer"
+        },
+        "Operation Valkyrie": {
+          "explanation": "A set of emergency orders for mobilizing the Replacement Army, adapted by resistance officers as a mechanism to seize control of the German state after a coup.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Operation_Valkyrie"
+        }
+      }
+    },
+    {
+      "date": "1944-07-15",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Aborted Wolfsschanze attempt",
+      "description": "On 15 July 1944, Stauffenberg flew to a situation conference at Hitler’s headquarters in [[Wolfsschanze|Wolfsschanze]] and readied his explosives, but did not proceed with the assassination given the circumstances at the briefing. After returning to Berlin, elements of [[Operation Valkyrie|Operation Valkyrie]] were briefly initiated by the conspirators and then halted again as uncertainty spread.",
+      "locations": [
+        {
+          "name_historic": "Rastenburg",
+          "name_modern": "Kętrzyn, Poland",
+          "centroid": [
+            21.3752627,
+            54.0764176
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Adolf Hitler",
+        "Friedrich Olbricht"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Friedrich_Olbricht",
+        "https://de.wikipedia.org/wiki/Adolf_Hitler"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Bundesarchiv_Bild_146-1984-079-02%2C_F%C3%BChrerhauptquartier%2C_Stauffenberg%2C_Hitler%2C_Keitel.jpg/820px-Bundesarchiv_Bild_146-1984-079-02%2C_F%C3%BChrerhauptquartier%2C_Stauffenberg%2C_Hitler%2C_Keitel.jpg",
+          "caption": "Stauffenberg with Hitler and Keitel at Führer headquarters",
+          "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_146-1984-079-02,_Führerhauptquartier,_Stauffenberg,_Hitler,_Keitel.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "valkyrie_final_hour",
+      "annotations": {
+        "Wolfsschanze": {
+          "explanation": "Hitler’s main Führer Headquarters on the Eastern Front near Rastenburg in East Prussia, a key site for military briefings and security-controlled access.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Wolf%27s_Lair"
+        },
+        "Operation Valkyrie": {
+          "explanation": "A Reserve Army emergency plan that the conspirators intended to use as the legal-military framework to seize control in Germany after Hitler’s death.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Operation_Valkyrie"
+        }
+      }
+    },
+    {
+      "date": "1944-07-20",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Planted bomb at Wolfsschanze",
+      "description": "On 20 July 1944, Stauffenberg flew with his adjutant Werner von Haeften to Hitler’s headquarters near [[Rastenburg|Rastenburg in East Prussia]] carrying explosive charges concealed in a briefcase. Despite his severe injuries, he and von Haeften prepared the device, and Stauffenberg placed the briefcase in the conference room before leaving shortly before the blast.\n\nA mix of chance and small movements blunted the bomb’s effect: the briefing took place in a less solidly built room than usual, and the briefcase ended up in a position that shielded Hitler from the full force. The explosion killed and wounded several people present, but Hitler survived with relatively minor injuries.",
+      "locations": [
+        {
+          "name_historic": "Rastenburg, East Prussia",
+          "name_modern": "Kętrzyn, Poland",
+          "centroid": [
+            21.3752627,
+            54.0764176
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Werner von Haeften",
+        "Adolf Hitler"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Adolf_Hitler",
+        "https://de.wikipedia.org/wiki/Werner_von_Haeften"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Wolfsschanze_-_panoramio.jpg/960px-Wolfsschanze_-_panoramio.jpg",
+          "caption": "Wolfsschanze (Hitler’s headquarters)",
+          "source": "https://commons.wikimedia.org/wiki/File:Wolfsschanze_-_panoramio.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "valkyrie_final_hour",
+      "annotations": {
+        "Rastenburg": {
+          "explanation": "Historic German name for the town now called Kętrzyn in northeastern Poland; the Wolfsschanze area was located nearby.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/K%C4%99trzyn"
+        }
+      }
+    },
+    {
+      "date": "1944-07-20",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Tried to trigger Operation Valkyrie",
+      "description": "On 20 July 1944, Stauffenberg returned to Berlin convinced that Hitler had been killed and pressed for activation of the [[Operation Valkyrie|Valkyrie orders]] from the [[Bendlerblock|Bendlerblock]]. With fellow officers including Friedrich Olbricht and Albrecht Mertz von Quirnheim, he tried to use the [[Replacement Army|Replacement Army]] command system to seize key state institutions and arrest leading Nazi figures.\n\nAs conflicting reports spread that Hitler might have survived, Friedrich Fromm refused to commit himself to the coup and moved to reassert control. Delayed communications and growing loyalist resistance inside Berlin quickly destabilized the attempt.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Olbricht",
+        "Albrecht Mertz von Quirnheim",
+        "Adolf Hitler",
+        "Friedrich Fromm"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Operation_Valkyrie",
+        "https://de.wikipedia.org/wiki/Friedrich_Olbricht",
+        "https://de.wikipedia.org/wiki/Albrecht_Mertz_von_Quirnheim"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/12/Valkyrie_telex_declaring_Hitler%27s_death.jpg",
+          "caption": "Operation Valkyrie telex declaring Hitler’s death",
+          "source": "https://commons.wikimedia.org/wiki/File:Valkyrie_telex_declaring_Hitler's_death.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "valkyrie_final_hour",
+      "annotations": {
+        "Operation Valkyrie": {
+          "explanation": "A German Army contingency plan (issued as \"Valkyrie\" orders) that the 20 July conspirators attempted to trigger to mobilize the Reserve/Replacement Army and take control in Berlin after the assassination attempt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Operation_Valkyrie"
+        },
+        "Bendlerblock": {
+          "explanation": "A military administrative complex in Berlin that served as the conspirators’ headquarters for issuing orders during the 20 July 1944 coup attempt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bendlerblock"
+        },
+        "Replacement Army": {
+          "explanation": "The Wehrmacht’s Home/Reserve force responsible for training and supplying units, whose chain of command the plotters sought to use to implement Valkyrie in Germany.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Replacement_Army"
+        }
+      }
+    },
+    {
+      "date": "1944-07-20",
+      "date_precision": "day",
+      "date_note": "Execution occurred late on 20 July or shortly after midnight; contemporary records often give 20 July 1944",
+      "age": 36,
+      "title": "Executed at Bendlerblock",
+      "description": "After the coup attempt collapsed, he was arrested in the [[Bendlerblock|Bendlerblock]]. On the orders of Generaloberst Friedrich Fromm, he was shot by firing squad in the courtyard alongside Albrecht Mertz von Quirnheim, Friedrich Olbricht, and Werner von Haeften, late on 20 July 1944, in the first hours of 21 July.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Fromm",
+        "Albrecht Mertz von Quirnheim",
+        "Friedrich Olbricht",
+        "Werner von Haeften"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedrich_Fromm",
+        "https://de.wikipedia.org/wiki/Werner_von_Haeften",
+        "https://de.wikipedia.org/wiki/Friedrich_Olbricht"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Bendlerblock.jpg/960px-Bendlerblock.jpg",
+          "caption": "Bendlerblock courtyard, execution site",
+          "source": "https://commons.wikimedia.org/wiki/File:Bendlerblock.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "valkyrie_final_hour",
+      "annotations": {
+        "Bendlerblock": {
+          "explanation": "A military headquarters complex in Berlin (then including the Army High Command and Reserve Army offices) that served as the center of the 20 July 1944 coup attempt; Stauffenberg and others were executed in its courtyard.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bendlerblock"
+        }
+      }
+    }
+  ]
+}

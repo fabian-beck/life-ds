@@ -1,0 +1,424 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-02-07",
+  "ego": {
+    "name": "Claus Schenk Graf von Stauffenberg",
+    "birth_year": 1907,
+    "death_year": 1944,
+    "primary_roles": [
+      "army officer",
+      "resistance fighter"
+    ],
+    "summary": "German Wehrmacht officer and a leading figure of the military resistance against National Socialism. He carried out the failed 20 July 1944 bomb attempt on Adolf Hitler and played a central role in the planned coup (Operation Valkyrie).",
+    "wikipedia": "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+  },
+  "connections": [
+    {
+      "person_name": "Alfred Schenk Graf von Stauffenberg",
+      "relationship_type": "family/father",
+      "relationship_description": "Father; a senior Württemberg court official who supported and welcomed Claus von Stauffenberg's decision for a military career.",
+      "start_year": 1907,
+      "end_year": 1936,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "aristocratic household upbringing",
+        "career support toward Reichswehr service"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+      ],
+      "notes": "Father served King Wilhelm II of Württemberg as Oberhofmarschall."
+    },
+    {
+      "person_name": "Caroline Gräfin von Üxküll-Gyllenband",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mother; provided a culturally rich, tolerant household and strongly shaped the brothers’ education in literature, music, and theatre.",
+      "start_year": 1907,
+      "end_year": 1956,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "childhood education and cultural formation",
+        "family life in Stuttgart and summer stays in Lautlingen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+      ],
+      "notes": "She was Protestant while the children were raised Catholic."
+    },
+    {
+      "person_name": "Konrad Maria Schenk Graf von Stauffenberg",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Twin brother who died one day after birth, shaping the immediate family context at Claus's birth.",
+      "start_year": 1907,
+      "end_year": 1907,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "twin birth at Jettingen Castle"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "notes": "Relationship is biographical rather than interactive due to Konrad's immediate death."
+    },
+    {
+      "person_name": "Berthold Schenk Graf von Stauffenberg",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Older brother; together they entered the Stefan George circle and shared parts of the intellectual milieu that influenced Claus's worldview.",
+      "start_year": 1916,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "schooling milieu in Stuttgart",
+        "participation in the Stefan George circle and the 'Secret Germany' idea"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "notes": "Berthold later referenced Claus's views during Gestapo interrogation (as noted in the article)."
+    },
+    {
+      "person_name": "Alexander Schenk Graf von Stauffenberg",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Older brother; shared youth and early intellectual formation including contact with Stefan George and related cultural ideals.",
+      "start_year": 1916,
+      "end_year": 1944,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family upbringing",
+        "association with the Stefan George circle"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "notes": "The brothers are described as entering George's close circle together."
+    },
+    {
+      "person_name": "Stefan George",
+      "relationship_type": "artistic/mentor",
+      "relationship_description": "Poet and guiding influence; introduced in 1923, and the George Circle’s “Secret Germany” ideal shaped Stauffenberg’s cultural-ethical outlook.",
+      "start_year": 1923,
+      "end_year": 1933,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "George Circle participation",
+        "shared cultural-ethical ideals ('Secret Germany')",
+        "correspondence (including a 1933 letter mentioned in the article)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Stefan_George"
+      ],
+      "notes": "The article describes Stauffenberg's lifelong devotion to George's legacy."
+    },
+    {
+      "person_name": "Peter Sauerbruch",
+      "relationship_type": "social/friend",
+      "relationship_description": "Fellow officer in the 17th Bavarian Cavalry Regiment in Bamberg; Stauffenberg befriended him during early service as a young officer.",
+      "start_year": 1930,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "service in the 17th Bavarian Cavalry Regiment (Bamberg)",
+        "officer social life and camaraderie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+      ],
+      "notes": "Identified as the son of a famous surgeon in the article."
+    },
+    {
+      "person_name": "Paul von Hindenburg",
+      "relationship_type": "contextual/political_figure",
+      "relationship_description": "Reich President during the last Weimar years; a key political backdrop to Hitler’s rise that framed debates within the officer corps.",
+      "start_year": 1932,
+      "end_year": 1934,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "political context of 1932 presidential election",
+        "Hindenburg’s office as a framework for the transition to Hitler’s rule"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+      ],
+      "notes": "No direct personal interaction is evidenced in the provided extracts; relationship is political/structural."
+    },
+    {
+      "person_name": "Nina Freiin von Lerchenfeld",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Wife (married 1933); mother of his five children and the closest personal anchor in his adult life.",
+      "start_year": 1933,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and household/family life",
+        "correspondence during wartime (letters referenced in secondary discussion on his views)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://en.wikipedia.org/wiki/Claus_von_Stauffenberg"
+      ],
+      "notes": "The article lists her later civic engagement in/around Bamberg and her death in 2006."
+    },
+    {
+      "person_name": "Adolf Hitler",
+      "relationship_type": "professional/opponent",
+      "relationship_description": "Head of state and commander-in-chief against whom Stauffenberg’s resistance turned; Stauffenberg placed the bomb at the Wolf’s Lair on 20 July 1944 to kill Hitler and trigger a coup.",
+      "start_year": 1933,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Stauffenberg’s evolving stance toward the regime (initial approval in 1933, later resistance)",
+        "20 July 1944 assassination attempt at Wolfsschanze",
+        "planned coup under Operation Valkyrie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Unternehmen_Walk%C3%BCre",
+        "https://de.wikipedia.org/wiki/Adolf_Hitler"
+      ],
+      "notes": "Interaction is institutional and adversarial rather than personal; Stauffenberg had access to Hitler’s briefings as staff officer in 1944."
+    },
+    {
+      "person_name": "Berthold Maria Schenk Graf von Stauffenberg",
+      "relationship_type": "family/child",
+      "relationship_description": "Son; one of five children from the marriage to Nina von Lerchenfeld.",
+      "start_year": 1934,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "parent-child relationship"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+      ],
+      "notes": "The article notes he later became a Bundeswehr generalmajor."
+    },
+    {
+      "person_name": "Albrecht Mertz von Quirnheim",
+      "relationship_type": "professional/conspirator",
+      "relationship_description": "Close collaborator from General Staff training onward; one of Stauffenberg’s most trusted associates and executed with him after the failed coup.",
+      "start_year": 1936,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "General Staff training contacts (War Academy, Berlin)",
+        "drafting/issuing Valkyrie-related orders from the Bendlerblock",
+        "20 July 1944 coup attempt"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Unternehmen_Walk%C3%BCre",
+        "https://de.wikipedia.org/wiki/Albrecht_Mertz_von_Quirnheim"
+      ],
+      "notes": "The Stauffenberg article highlights his early professional ties to Mertz during War Academy training."
+    },
+    {
+      "person_name": "Eberhard Finckh",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Met during General Staff training in Berlin; later part of the wider military resistance network and involved in Paris actions connected to Valkyrie plans.",
+      "start_year": 1936,
+      "end_year": 1944,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "General Staff training at the War Academy (Berlin)",
+        "resistance-related coordination (Paris network referenced in 20 July account)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944"
+      ],
+      "notes": "The Stauffenberg article explicitly names Finckh as an early Berlin professional contact."
+    },
+    {
+      "person_name": "Erich Hoepner",
+      "relationship_type": "professional/superior",
+      "relationship_description": "Divisional superior when Stauffenberg served as a general staff officer (1b) in the 1st Light Division in 1938; Hoepner was his immediate commanding general.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "staff work in the 1st Light Division",
+        "logistics and supply planning (as 1b)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg"
+      ],
+      "notes": "Hoepner later became associated with anti-Hitler resistance circles (contextual in related article on 20 July plot)."
+    },
+    {
+      "person_name": "Henning von Tresckow",
+      "relationship_type": "professional/conspirator",
+      "relationship_description": "Co-leading figure of the military resistance; Stauffenberg became central alongside Tresckow from 1942 onward, and they jointly advanced assassination/coup planning.",
+      "start_year": 1942,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "coordination of anti-Hitler military resistance",
+        "adaptation and planning around Operation Valkyrie (as part of the resistance network)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Unternehmen_Walk%C3%BCre",
+        "https://de.wikipedia.org/wiki/Henning_von_Tresckow"
+      ],
+      "notes": "Related article describes Tresckow as central until Stauffenberg took a leading operational role in 1943/44."
+    },
+    {
+      "person_name": "Friedrich Olbricht",
+      "relationship_type": "professional/conspirator",
+      "relationship_description": "Key co-conspirator; worked with Stauffenberg in the Bendlerblock to trigger Operation Valkyrie and was executed alongside him after the coup failed.",
+      "start_year": 1943,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "planning and implementing coup preparations within the Ersatzheer",
+        "attempted activation of Operation Valkyrie on 20 July 1944",
+        "Bendlerblock coordination"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Unternehmen_Walk%C3%BCre",
+        "https://de.wikipedia.org/wiki/Friedrich_Olbricht"
+      ],
+      "notes": "Olbricht’s biography notes he brought Stauffenberg in as a key staff member for the coup plan."
+    },
+    {
+      "person_name": "Werner von Haeften",
+      "relationship_type": "professional/adjutant",
+      "relationship_description": "Stauffenberg’s adjutant and confidant during the 20 July attempt; accompanied him to the Wolf's Lair and returned to Berlin for Valkyrie implementation; executed with him.",
+      "start_year": 1943,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "staff work in the Bendlerblock",
+        "travel to Wolfsschanze on 20 July 1944",
+        "Valkyrie communications and logistics"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Werner_von_Haeften"
+      ],
+      "notes": "The 20 July article describes Haeften assisting Stauffenberg while arming the bomb due to Stauffenberg’s injuries."
+    },
+    {
+      "person_name": "Ludwig Beck",
+      "relationship_type": "professional/political_ally",
+      "relationship_description": "Senior figure of the anti-Hitler opposition; designated as head of state in coup plans, present in the Bendlerblock during the coup attempt, and died after its failure.",
+      "start_year": 1943,
+      "end_year": 1944,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "political-military resistance coordination",
+        "Bendlerblock presence during 20 July crisis"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Ludwig_Beck_(General)"
+      ],
+      "notes": "Beck was intended as 'Staatsoberhaupt' in planning described in the 20 July article."
+    },
+    {
+      "person_name": "Caesar von Hofacker",
+      "relationship_type": "family/extended_family",
+      "relationship_description": "Cousin; involved in coordinating resistance and liaison between Berlin and the Paris network connected to 20 July plans.",
+      "start_year": 1943,
+      "end_year": 1944,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "coordination between Berlin resistance circle and Paris actions related to Valkyrie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944"
+      ],
+      "notes": "The Stauffenberg article identifies Hofacker as a cousin; the 20 July article describes his Paris coordinating role."
+    },
+    {
+      "person_name": "Friedrich Fromm",
+      "relationship_type": "professional/superior",
+      "relationship_description": "Commander of the Replacement Army and Stauffenberg’s superior in 1944; refused the coup once Hitler’s survival was clear and ordered the executions.",
+      "start_year": 1944,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Ersatzheer staff work (Bendlerblock chain of command)",
+        "crisis interactions on 20 July 1944",
+        "stand court and execution order"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "https://de.wikipedia.org/wiki/Attentat_vom_20._Juli_1944",
+        "https://de.wikipedia.org/wiki/Unternehmen_Walk%C3%BCre",
+        "https://de.wikipedia.org/wiki/Friedrich_Fromm"
+      ],
+      "notes": "Fromm’s biography notes he had tolerated conspiratorial planning but chose self-protection once the plot appeared to fail."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Stauffenberg’s network includes a strongly documented core family: both parents, siblings (notably Berthold and Alexander), his wife Nina, and children. Family background and aristocratic-Catholic upbringing shaped his early career choices and cultural formation."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Professional ties cluster around Wehrmacht staff work and, in 1944, the Replacement Army and Bendlerblock. The network’s key line runs through co-conspirators (Olbricht, Quirnheim, Haeften), senior opposition figures (Beck), and decisive superiors (Fromm)."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "A small set of peer friendships (e.g., within the Bamberg cavalry milieu) hints at the officer-corps social fabric behind later trust networks."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "An important non-military strand is his long-lasting intellectual and aesthetic affiliation with the Stefan George circle. George’s mentorship and the 'Secret Germany' ideal provided a cultural-ethical framework that Stauffenberg and his brothers carried into adulthood."
+    }
+  ]
+}

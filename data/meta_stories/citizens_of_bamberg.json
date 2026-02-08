@@ -1,59 +1,79 @@
 {
   "dataset": "meta_story",
-  "created_on": "2025-12-28T07:45:39.920600+01:00",
+  "created_on": "2026-02-08T07:19:02.967535+01:00",
   "meta_story": {
     "id": "citizens_of_bamberg",
-    "title": "Bamberg’s Living Imprint",
-    "tagline": "Power, print, and the stage",
-    "description": "Bamberg’s history is often told through its skyline—cathedral towers, episcopal courts, and baroque streets—but it is equally a story of people whose lives briefly or enduringly anchored in the city. This collection follows three very different “citizenships”: imperial founders who made Bamberg a seat of sacred authority; working intellectuals who passed through and transformed its cultural institutions; and a native son who carried Bamberg’s influence into modern scientific medicine.\n\nTaken together, these figures reveal Bamberg as more than a picturesque Franconian town: it becomes a hinge-point where dynasty and devotion crystallized into institutions, and where later generations used the city as a platform for publishing, performance, and professional reinvention. Their overlapping timelines trace how a place can shape power, nurture art, and export expertise well beyond its walls.",
+    "title": "Citizens of Bamberg",
+    "tagline": "Saints, thinkers, builders, dissenters",
+    "description": "Bamberg’s identity was forged as much by power and piety as by paper, ink, and stone. Founded and endowed as an imperial project, the city became a stage where rulership, reform, and artistic patronage could be turned into durable institutions—cathedrals, dioceses, courts, and civic offices that anchored Franconia to the wider Holy Roman Empire.\n\nCenturies later, Bamberg’s streets and theatres drew a different kind of talent: writers and philosophers whose careers were shaped by the pressures of Napoleonic change and the rise of modern German public life. The city also produced and employed practical modernizers—municipal professionals and medical teachers—whose work translated lofty ideals into infrastructure and clinical method.\n\nEven figures only loosely tied to Bamberg can illuminate its “citizenship” in a broader sense: the way German history and science, from resistance to radiochemistry, pressed upon every city’s memory and institutions. Bamberg becomes a lens: a place where local lives meet national turning points.",
     "person_ids": [
       "henry_ii",
       "cunigunde_of_luxembourg",
-      "georg_wilhelm_friedrich_hegel",
       "e_t_a_hoffmann",
-      "johann_lukas_sch_nlein"
+      "georg_wilhelm_friedrich_hegel",
+      "hans_erlwein",
+      "johann_lukas_sch_nlein",
+      "ida_noddack",
+      "claus_schenk_graf_von_stauffenberg"
     ],
-    "date_range_start": "973",
-    "date_range_end": "2016",
-    "lastUpdated": "2025-12-28T07:45:39.920600+01:00"
+    "date_range_start": "1002",
+    "date_range_end": "1978",
+    "lastUpdated": "2026-02-08T07:19:02.967535+01:00"
+  },
+  "generation_metadata": {
+    "hints": {
+      "hint": "Include all people who have lived in Bamberg or directly influenced it; include also: Noddack, Stauffenberg"
+    },
+    "model": "gpt-5.2",
+    "generated_at": "2026-02-08T07:19:02.967535+01:00"
   },
   "subtopics": [
     {
-      "id": "imperial_founders_and_sacred_city",
+      "id": "imperial_founders_and_sacred_patronage",
       "title": "Imperial Founders, Sacred City",
-      "description": "Bamberg’s identity as an ecclesiastical and political center was deliberately built—through dynastic strategy, patronage, and institution-making at the highest level of the Empire.",
+      "description": "Bamberg begins as an imperial blueprint—authority expressed through a diocese, relic culture, and enduring institutions that bound city life to empire and church.",
       "person_ids": [
         "henry_ii",
         "cunigunde_of_luxembourg"
       ]
     },
     {
-      "id": "bamberg_as_a_cultural_workshop",
-      "title": "Bamberg as Cultural Workshop",
-      "description": "For early 19th-century artists and thinkers, Bamberg functioned as a practical laboratory: a place to edit, stage, and retool careers amid shifting German cultural life.",
+      "id": "napoleonic_aftershocks_and_romantic_bamberg",
+      "title": "Romantic Bamberg, Modern Pressures",
+      "description": "In the early 1800s, Bamberg becomes a working town for artists and intellectuals navigating censorship, theatre economies, and the birth of modern German public culture.",
       "person_ids": [
         "e_t_a_hoffmann",
         "georg_wilhelm_friedrich_hegel"
       ]
     },
     {
-      "id": "a_native_son_and_medical_modernity",
-      "title": "A Native Son’s Science",
-      "description": "Bamberg’s civic story also includes those born there who helped professionalize modern knowledge—carrying local origins into international institutions and methods.",
+      "id": "civic_professionals_and_urban_making",
+      "title": "Civic Experts, Built City",
+      "description": "Behind Bamberg’s appearance and public health stood professionals—city architects and medical innovators—who translated administration into streetscapes and clinical practice.",
       "person_ids": [
+        "hans_erlwein",
         "johann_lukas_sch_nlein"
+      ]
+    },
+    {
+      "id": "national_science_and_conscience",
+      "title": "Science and Conscience in Germany",
+      "description": "Bamberg’s story also lives in wider German currents: the scientific transformations of the 20th century and the moral reckoning of resistance—forces that reshaped civic identity everywhere.",
+      "person_ids": [
+        "ida_noddack",
+        "claus_schenk_graf_von_stauffenberg"
       ]
     }
   ],
   "chapters": [
     {
-      "id": "ottonian_creation",
-      "title": "Ottonian Creation (973-1040)",
-      "date_start": "973",
+      "id": "imperial_bamberg_is_founded",
+      "title": "Imperial Foundations (1002-1024)",
+      "date_start": "1002",
       "date_start_precision": "year",
-      "date_end": "1040",
+      "date_end": "1024",
       "date_end_precision": "year",
-      "bridge_statement": "Bamberg is not merely inherited; it is engineered—an imperial project where holiness, governance, and legacy are built into stone and statute.",
+      "bridge_statement": "A city is willed into being: politics, piety, and patronage fuse to create institutions meant to outlast their founders.",
       "person_events": [
         {
           "person_id": "henry_ii",
@@ -61,8 +81,7 @@
           "event_date_precision": "month",
           "event_title": "Founded Diocese of Bamberg",
           "event_index": 4,
-          "theme_connection": "Founding the Diocese of Bamberg is the core institutional act that makes Bamberg a deliberately constructed “sacred city,” crystallizing imperial power and ecclesiastical authority in place.",
-          "relevance_strength": "essential"
+          "theme_connection": "Founding the Diocese of Bamberg is the cornerstone act that turns Bamberg into an imperial-sacral blueprint: a new bishopric endowed with lands/privileges that anchored the city’s power, cathedral culture, and long-term institutional identity."
         },
         {
           "person_id": "cunigunde_of_luxembourg",
@@ -70,67 +89,94 @@
           "event_date_precision": "year",
           "event_title": "Supports foundation of Bamberg",
           "event_index": 5,
-          "theme_connection": "Cunigunde’s influence and patrimonial/dower contributions help explain the material endowment behind Bamberg’s episcopal foundation, reinforcing the ‘Imperial Founders, Sacred City’ subtheme.",
-          "relevance_strength": "supporting"
+          "theme_connection": "Her documented support and patrimonial/dower contributions to the 1007 foundation link the diocese’s endowment to the ruling couple’s resources, making her an essential co-agent in Bamberg’s creation as an imperial-ecclesiastical institution."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "synod_of_frankfurt_1007",
+          "title": "Frankfurt Synod",
+          "description": "Henry II secured approval at the 1007 Synod of Frankfurt to create the Diocese of Bamberg, enabling the foundation project he and Cunigunde backed.",
+          "date_start": "1007-11",
+          "date_start_precision": "month",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Synod_of_Frankfurt_(1007)"
         }
       ]
     },
     {
-      "id": "long_afterlife_of_a_founded_city",
-      "title": "Afterlives of a Foundation (1041-1769)",
-      "date_start": "1041",
+      "id": "saintly_memory_and_dynastic_afterlife",
+      "title": "Dynastic Afterlife (1025-1040)",
+      "date_start": "1025",
       "date_start_precision": "year",
-      "date_end": "1769",
+      "date_end": "1040",
       "date_end_precision": "year",
-      "bridge_statement": "Centuries pass, yet the institutions created by founders keep generating roles—courts, chapters, and cultural demand that later travelers will step into.",
-      "person_events": []
-    },
-    {
-      "id": "napoleonic_shadows_and_new_publics",
-      "title": "Napoleonic Shadows, New Publics (1770-1822)",
-      "date_start": "1770",
-      "date_start_precision": "year",
-      "date_end": "1822",
-      "date_end_precision": "year",
-      "bridge_statement": "As old orders wobble, Bamberg becomes a working city for culture—where theatre, publishing, and bureaucracy collide to produce modern voices.",
-      "person_events": [
+      "bridge_statement": "With the emperor gone, the project must survive on reputation, ritual, and the authority of a widowed empress turned sacred memory.",
+      "person_events": [],
+      "historical_context": [
         {
-          "person_id": "georg_wilhelm_friedrich_hegel",
-          "event_date": "1807",
-          "event_date_precision": "year",
-          "event_title": "Left Jena for Bamberg",
-          "event_index": 10,
-          "theme_connection": "Hegel’s move into Bamberg-connected journalism and publishing directly exemplifies “Bamberg as Cultural Workshop,” showing the city as a practical platform for intellectual work in print amid Napoleonic-era disruption.",
-          "relevance_strength": "essential"
+          "id": "canonization_henry_ii_1146",
+          "title": "Canonization",
+          "description": "Henry II’s 1146 canonization cemented his posthumous cult and status as Bamberg’s defining patron saint, shaping the later “afterlife” of his memory in the city.",
+          "date_start": "1146",
+          "date_start_precision": "year",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
         },
         {
-          "person_id": "e_t_a_hoffmann",
-          "event_date": "1808",
-          "event_date_precision": "year",
-          "event_title": "Bamberg theatre turn",
-          "event_index": 10,
-          "theme_connection": "Hoffmann’s intensive theatrical work in Bamberg (conducting, composing, criticism) directly anchors the “stage” strand, demonstrating Bamberg as a working laboratory where artists could retool careers and produce performance culture.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "johann_lukas_sch_nlein",
-          "event_date": "1817",
-          "event_date_precision": "year",
-          "event_title": "Qualifies and habilitates",
-          "event_index": 3,
-          "theme_connection": "Schönlein’s practical training at the general hospital in Bamberg links Bamberg to hands-on clinical formation that helped produce a physician who would later shape modern scientific medicine—supporting the ‘native son’s science / export of expertise’ thread through institutional training.",
-          "relevance_strength": "supporting"
+          "id": "canonization_cunigunde_1200",
+          "title": "Canonization",
+          "description": "Cunigunde’s canonization (c. 1200) formalized her veneration and reinforced Bamberg’s dynastic-sacral identity built around the imperial couple.",
+          "date_start": "1200",
+          "date_start_precision": "year",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg"
         }
       ]
     },
     {
-      "id": "citizenship_as_profession",
-      "title": "Citizenship as Profession (1823-1864)",
-      "date_start": "1823",
+      "id": "romantic_laboratory_of_the_arts_and_ideas",
+      "title": "Napoleonic Crossroads (1806-1816)",
+      "date_start": "1806",
       "date_start_precision": "year",
-      "date_end": "1864",
+      "date_end": "1816",
       "date_end_precision": "year",
-      "bridge_statement": "In the 19th century, belonging can mean training and method: Bamberg’s natives and residents turn civic life into expertise with European reach.",
+      "bridge_statement": "War and reorganization redraw Germany; Bamberg absorbs the shock and unexpectedly becomes a workshop for theatre, journalism, and philosophy.",
+      "person_events": [],
+      "historical_context": [
+        {
+          "id": "battle_of_jena_auerstedt_1806",
+          "title": "Jena-Auerstedt",
+          "description": "Napoleon’s 1806 victory shattered the old order around Jena, pushing Hegel into a precarious transition that soon led him to work in Bamberg as an editor and writer.",
+          "date_start": "1806-10-14",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Battle_of_Jena%E2%80%93Auerstedt"
+        },
+        {
+          "id": "bavaria_annexes_bamberg_1803",
+          "title": "Secularization",
+          "description": "The 1803 German mediatization/secularization dissolved the Prince-Bishopric of Bamberg and brought the city under Bavaria, reshaping the theatre-administrative world in which E. T. A. Hoffmann worked a few years later.",
+          "date_start": "1803",
+          "date_start_precision": "year",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_mediatization"
+        }
+      ]
+    },
+    {
+      "id": "modern_civic_state_and_public_works",
+      "title": "Civic Modernization (1820-1914)",
+      "date_start": "1820",
+      "date_start_precision": "year",
+      "date_end": "1914",
+      "date_end_precision": "year",
+      "bridge_statement": "The 19th century remakes everyday life through clinics, codes, and construction—quiet revolutions carried by experts and officials.",
       "person_events": [
         {
           "person_id": "johann_lukas_sch_nlein",
@@ -138,17 +184,7 @@
           "event_date_precision": "year",
           "event_title": "Identifies favus fungus",
           "event_index": 10,
-          "theme_connection": "This disease-entity/causation finding (linking favus to a specific fungus) is a concrete step in professionalizing modern scientific medicine—key to the subtopic “A Native Son’s Science,” showing Bamberg-origin expertise shaping international medical method.",
-          "relevance_strength": "essential"
-        },
-        {
-          "person_id": "johann_lukas_sch_nlein",
-          "event_date": "1839",
-          "event_date_precision": "year",
-          "event_title": "Publishes on skin fungus",
-          "event_index": 12,
-          "theme_connection": "The Berlin publication extends and disseminates his fungal-causation work, illustrating how his medical expertise was exported and stabilized through print—an outward imprint consistent with Bamberg’s influence beyond its walls.",
-          "relevance_strength": "supporting"
+          "theme_connection": "Identifying a specific fungus as the cause of favus is a landmark, widely cited step toward etiological/clinical modern medicine—an example of German scientific modernization that can anchor the collection’s “Science” thread beyond purely local biography."
         },
         {
           "person_id": "johann_lukas_sch_nlein",
@@ -156,21 +192,95 @@
           "event_date_precision": "year",
           "event_title": "Donates major library collection",
           "event_index": 17,
-          "theme_connection": "By directing part of his medical-historical holdings to Bamberg’s royal library, he materially strengthens Bamberg as a print/knowledge repository, linking his scientific legacy back into the city’s institutions.",
-          "relevance_strength": "supporting"
+          "theme_connection": "Directing a substantial part of the Schönleiniana to Bamberg’s royal library is a concrete, durable institutional enrichment (books/collections) that strengthens Bamberg as a knowledge-holding civic center—linking medical-historical scholarship to the city’s cultural infrastructure."
+        },
+        {
+          "person_id": "hans_erlwein",
+          "event_date": "1899",
+          "event_date_precision": "year",
+          "event_title": "Built Bamberg municipal works",
+          "event_index": 5,
+          "theme_connection": "Erlwein’s Bamberg municipal commissions (school, electricity works, cattle/slaughter facilities) are concrete infrastructure outputs that embody the “Civic Experts, Built City” subtopic—professional administration translated into durable public utilities and urban services."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "german_unification_1871",
+          "title": "Unification",
+          "description": "German unification in 1871 expanded state capacity and urban administration, providing the bureaucratic/institutional framework that underpinned later municipal building programs like those Hans Erlwein led.",
+          "date_start": "1871-01-18",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Unification_of_Germany"
         }
       ]
     },
     {
-      "id": "memory_and_canonization",
-      "title": "Memory and Canonization (1865-2016)",
-      "date_start": "1865",
+      "id": "twentieth_century_reckonings",
+      "title": "Science and Resistance (1914-1978)",
+      "date_start": "1914",
       "date_start_precision": "year",
-      "date_end": "2016",
+      "date_end": "1978",
       "date_end_precision": "year",
-      "bridge_statement": "Long after they leave—or die—Bamberg’s citizens remain active through remembrance: burial sites, repertoires, and scholarly canons that keep the city speaking.",
-      "person_events": []
+      "bridge_statement": "Two world wars and new science force moral choices; discoveries and dissent alike become part of how German cities remember themselves.",
+      "person_events": [
+        {
+          "person_id": "ida_noddack",
+          "event_date": "1925",
+          "event_date_precision": "year",
+          "event_title": "Reports rhenium; claims “masurium”",
+          "event_index": 6,
+          "theme_connection": "The 1925 report of element 75 (rhenium) is a landmark scientific contribution with durable impact (new element identification), fitting the “Science and Conscience in Germany” subtopic by showing German laboratory science shaping 20th‑century modernity."
+        },
+        {
+          "person_id": "ida_noddack",
+          "event_date": "1928",
+          "event_date_precision": "year",
+          "event_title": "Isolated rhenium sample",
+          "event_index": 8,
+          "theme_connection": "Isolating rhenium as a tangible sample is a concrete, lasting output that underwrote acceptance and use of the element—an irreplaceable step from claim to material proof in modern chemistry."
+        },
+        {
+          "person_id": "claus_schenk_graf_von_stauffenberg",
+          "event_date": "1942",
+          "event_date_precision": "year",
+          "event_title": "Joined military resistance",
+          "event_index": 11,
+          "theme_connection": "Joining the military resistance is a pivotal, history-shaping commitment central to the “Science and Conscience in Germany” subtopic, embodying moral reckoning and anti-Nazi dissent that became part of Germany’s civic memory—relevant even when Bamberg is used as a lens rather than the main stage."
+        },
+        {
+          "person_id": "claus_schenk_graf_von_stauffenberg",
+          "event_date": "1944-07-20",
+          "event_date_precision": "day",
+          "event_title": "Planted bomb at Wolfsschanze",
+          "event_index": 15,
+          "theme_connection": "Planting the bomb on 20 July 1944 is the central, landmark act of German military resistance against Hitler—an enduring national moral reference point that fits the collection’s “Science and Conscience” strand by showing how conscience and civic memory are shaped by decisive dissent."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "world_war_ii",
+          "title": "World War II",
+          "description": "The war shaped Claus von Stauffenberg’s military career and radicalized his move into resistance culminating in the 20 July plot.",
+          "date_start": "1939-09-01",
+          "date_start_precision": "day",
+          "date_end": "1945-09-02",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_II"
+        },
+        {
+          "id": "operation_valkyrie",
+          "title": "Valkyrie",
+          "description": "The 20 July 1944 assassination attempt and coup plan (Operation Valkyrie) was Stauffenberg’s decisive action, leading directly to his arrest and execution and later becoming central to German civic memory.",
+          "date_start": "1944-07-20",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/20_July_plot"
+        }
+      ]
     }
   ],
-  "conclusion": "“Citizens of Bamberg” is less a single social category than a spectrum of attachments: founders who institutionalized the city, itinerant intellectuals who used it as a workshop, and natives who carried its name outward. Together they show how a place accumulates power through both construction and circulation—of offices, ideas, and reputations."
+  "conclusion": "Bamberg’s “citizens” are not only those who were born within its walls, but also those who built its institutions, worked its stages and presses, and left marks on its civic fabric. From imperial founders to modern professionals—and even to figures of science and resistance—Bamberg reads like a small city with a long, European-scale echo."
 }
