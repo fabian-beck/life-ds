@@ -361,8 +361,8 @@
 
   // Calculate available vertical height for persons layer
   $: availableHeight = (() => {
-    // Fixed overhead: HEADER_RESERVE_HEIGHT + yearAxisMarginTop(3) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
-    const fixedOverhead = HEADER_RESERVE_HEIGHT + 3 + 28 + 10 + 20;
+    // Fixed overhead: HEADER_RESERVE_HEIGHT + yearAxisMarginTop(40) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
+    const fixedOverhead = HEADER_RESERVE_HEIGHT + 40 + 28 + 10 + 20;
     const stickyOffset = stickyHeaderHeight || 0;
     // Use reactive viewportHeight state (updated on resize)
     return viewportHeight - fixedOverhead - stickyOffset;
@@ -847,7 +847,7 @@
     // Fixed heights for top sections
     const topPadding = HEADER_RESERVE_HEIGHT; // .timeline-wrapper padding-top for fixed chapter header
     const yearAxisHeight = 28; // .year-axis height
-    const yearAxisMarginTop = 3;
+    const yearAxisMarginTop = 40; // Extra space for stacked historical context labels above axis
     const personsLayerMarginTop = 10;
 
     // Calculate persons layer height using effective (density-adjusted) heights
@@ -912,6 +912,47 @@
     });
 
     return eventsByPerson;
+  })();
+
+  // Extract historical context events from chapters, with pixel positions
+  $: historicalContextEvents = (() => {
+    if (!chapters || chapters.length === 0) return [];
+
+    const events = [];
+    chapters.forEach((chapter) => {
+      if (!chapter.historical_context) return;
+
+      // Collect events for this chapter, sorted by date
+      const chapterEvents = [];
+      chapter.historical_context.forEach((event) => {
+        const startYear = getYear(event.date_start);
+        if (!startYear) return;
+
+        const endYear = event.date_end ? getYear(event.date_end) : null;
+        const leftPx = yearToPixel(startYear);
+        const widthPx = endYear ? (yearToPixel(endYear) - leftPx) : 0;
+
+        chapterEvents.push({
+          ...event,
+          year: startYear,
+          endYear,
+          leftPx,
+          widthPx,
+          chapterTitle: chapter.title
+        });
+      });
+
+      chapterEvents.sort((a, b) => a.year - b.year);
+
+      // Assign stack index: 0 = closest to axis (bottom), 1 = above, etc.
+      chapterEvents.forEach((evt, idx) => {
+        evt.stackIndex = idx;
+      });
+
+      events.push(...chapterEvents);
+    });
+
+    return events;
   })();
 
   // Extract unique years with events for navigation, including timeline start and end
@@ -1605,6 +1646,63 @@
     }
   }
 
+  function showHistoricalTooltip(hEvent, clickEvent) {
+    if (indicatorHoverTimeout) {
+      clearTimeout(indicatorHoverTimeout);
+      indicatorHoverTimeout = null;
+    }
+
+    const eventConfig = {
+      events: [{
+        personId: null,
+        eventIndex: null,
+        event: {
+          title: hEvent.title,
+          year: hEvent.year,
+          event_index: undefined
+        },
+        personName: null,
+        colors: {
+          primary: '#94a3b8',
+          primaryRgb: '148, 163, 184',
+          secondary: '#94a3b8',
+          secondaryRgb: '148, 163, 184'
+        },
+        isHistorical: true,
+        description: hEvent.description,
+        wikipediaUrl: hEvent.wikipedia_url,
+        dateRange: hEvent.endYear ? `${hEvent.year}–${hEvent.endYear}` : `${hEvent.year}`
+      }],
+      clickTriggered: true
+    };
+
+    // Historical events: always place below, clamped to viewport edges
+    const triggerRect = clickEvent.target.getBoundingClientRect();
+    const CLEARANCE = 12;
+    const EDGE_MARGIN = 10;
+
+    // Position below the trigger element
+    const y = triggerRect.bottom + CLEARANCE;
+
+    // Use the actual CSS-computed tooltip width for clamping
+    // (CSS sets width: min(540px, calc(90vw - 80px)), not max-width)
+    const tooltipWidth = Math.min(540, window.innerWidth * 0.9 - 80);
+    const halfWidth = tooltipWidth / 2;
+    const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+    const minX = EDGE_MARGIN + halfWidth;
+    const maxX = window.innerWidth - EDGE_MARGIN - halfWidth;
+    const x = Math.max(minX, Math.min(triggerCenterX, maxX));
+
+    activeEventTooltip = {
+      ...eventConfig,
+      name: 'historical-bottom',
+      x,
+      y,
+      anchor: { x: 0.5, y: 0.0 },
+      year: hEvent.year
+    };
+  }
+
   function handleEventClick(personId, event) {
     // Navigate to the specific event in the person's story
     // Use event_index from the meta story data which references the actual event index in life_events.json
@@ -1756,6 +1854,39 @@
           <div class="year-label">{marker.year}</div>
         </div>
       {/each}
+
+      <!-- Historical context event markers (stacked per chapter) -->
+      {#each historicalContextEvents as hEvent}
+        {#if hEvent.widthPx > 0}
+          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+          <div
+            class="historical-event-marker range"
+            style="left: {hEvent.leftPx}px; width: {hEvent.widthPx}px; margin-bottom: {hEvent.stackIndex * 18}px;"
+            on:click={(e) => { e.stopPropagation(); showHistoricalTooltip(hEvent, e); }}
+            on:keydown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); showHistoricalTooltip(hEvent, e); } }}
+            role="button"
+            tabindex="0"
+            aria-label="{hEvent.title} ({hEvent.year}–{hEvent.endYear})"
+          >
+            <span class="historical-event-label">{hEvent.title}</span>
+            <div class="historical-event-bar"></div>
+          </div>
+        {:else}
+          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+          <div
+            class="historical-event-marker point"
+            style="left: {hEvent.leftPx}px; margin-bottom: {hEvent.stackIndex * 18}px;"
+            on:click={(e) => { e.stopPropagation(); showHistoricalTooltip(hEvent, e); }}
+            on:keydown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); showHistoricalTooltip(hEvent, e); } }}
+            role="button"
+            tabindex="0"
+            aria-label="{hEvent.title} ({hEvent.year})"
+          >
+            <span class="historical-event-label">{hEvent.title}</span>
+            <div class="historical-event-diamond"></div>
+          </div>
+        {/if}
+      {/each}
     </div>
 
     <!-- Person lifespans grouped by theme -->
@@ -1889,6 +2020,7 @@
       {#each activeEventTooltip.events as evt}
         <div
           class="event-item"
+          class:historical={evt.isHistorical}
           style="
             --item-primary: {evt.colors.primary};
             --item-primary-rgb: {evt.colors.primaryRgb};
@@ -1896,19 +2028,38 @@
         >
           <div class="event-item-header">
             <div class="event-item-header-content">
-              <div class="event-person-name">{evt.personName}</div>
-              <div class="event-item-title">{evt.event.title}</div>
+              {#if evt.isHistorical}
+                <div class="event-item-title">{evt.event.title}</div>
+                {#if evt.dateRange}
+                  <div class="event-date-range">{evt.dateRange}</div>
+                {/if}
+              {:else}
+                <div class="event-person-name">{evt.personName}</div>
+                <div class="event-item-title">{evt.event.title}</div>
+              {/if}
             </div>
-            <button
-              class="tooltip-action-compact"
-              on:click={() => handleEventClick(evt.personId, evt.event)}
-              title="Jump to event in person's story"
-            >
-              →
-            </button>
+            {#if evt.isHistorical && evt.wikipediaUrl}
+              <a
+                class="tooltip-action-compact"
+                href={evt.wikipediaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Wikipedia"
+              >W</a>
+            {:else if !evt.isHistorical}
+              <button
+                class="tooltip-action-compact"
+                on:click={() => handleEventClick(evt.personId, evt.event)}
+                title="Jump to event in person's story"
+              >
+                →
+              </button>
+            {/if}
           </div>
 
-          {#if evt.event.theme_connection}
+          {#if evt.isHistorical && evt.description}
+            <p class="event-item-description">{evt.description}</p>
+          {:else if evt.event.theme_connection}
             <p class="event-item-description">{evt.event.theme_connection}</p>
           {/if}
         </div>
@@ -2124,7 +2275,7 @@
   .year-axis {
     position: relative;
     height: 28px;
-    margin-top: 3px;
+    margin-top: 40px; /* Extra space above for stacked historical context labels */
     border-top: 2px solid rgba(56, 189, 248, 0.4);
     z-index: 5;
   }
@@ -2828,6 +2979,96 @@
       font-size: 0.6rem;
       padding: 0.1rem 0.3rem;
     }
+  }
+
+  /* Historical context markers — positioned above the blue year-axis line */
+  .historical-event-marker {
+    position: absolute;
+    z-index: 6;
+    cursor: pointer;
+  }
+
+  /* Point event: diamond + label above the axis line */
+  .historical-event-marker.point {
+    transform: translateX(-50%);
+    bottom: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 6px;
+  }
+
+  .historical-event-diamond {
+    width: 7px;
+    height: 7px;
+    background: rgba(148, 163, 184, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transform: rotate(45deg);
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .historical-event-marker.point:hover .historical-event-diamond {
+    background: rgba(148, 163, 184, 1);
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 6px rgba(148, 163, 184, 0.6);
+    transform: rotate(45deg) scale(1.3);
+  }
+
+  /* Range event: bar + label above the axis line */
+  .historical-event-marker.range {
+    bottom: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 6px;
+  }
+
+  .historical-event-bar {
+    width: 100%;
+    height: 3px;
+    background: rgba(148, 163, 184, 0.35);
+    border-radius: 1.5px;
+    transition: all 0.2s;
+  }
+
+  .historical-event-marker.range:hover .historical-event-bar {
+    background: rgba(148, 163, 184, 0.7);
+    height: 4px;
+  }
+
+  /* Keyword label — always visible, above the marker */
+  .historical-event-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(148, 163, 184, 0.8);
+    white-space: nowrap;
+    pointer-events: none;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .historical-event-marker:hover .historical-event-label {
+    color: rgba(148, 163, 184, 1);
+  }
+
+  /* Historical event tooltip styles */
+  .event-date-range {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 0.15rem;
+  }
+
+  /* Wikipedia link styled as tooltip action */
+  a.tooltip-action-compact {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  a.tooltip-action-compact:hover {
+    transform: none;
+    background: rgba(var(--item-primary-rgb), 0.4);
   }
 
 </style>

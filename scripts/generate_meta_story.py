@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Generate meta-story datasets using a three-phase approach:
+Generate meta-story datasets using a four-phase approach:
 1. Phase 1: Story planning and person selection (1 AI call)
 2. Phase 2: Event collection (programmatic, no AI)
 3. Phase 3: AI-powered event filtering for topic relevance (batched AI calls)
+4. Phase 4: Historical context landmarks (1 AI call)
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -157,10 +158,47 @@ class BatchEventRelevanceDecisions(BaseModel):
     )
 
 
+class HistoricalContextEvent(BaseModel):
+    """A well-known historical event that contextualizes the meta-story era."""
+    id: str = Field(description="Unique identifier (snake_case)")
+    title: str = Field(description="Short event name (1-5 words, e.g. 'World War II', 'Moon Landing')")
+    description: str = Field(description="One-sentence context note")
+    date_start: str = Field(description="ISO-8601 date (year, month, or day precision)")
+    date_start_precision: str = Field(description="'year', 'month', or 'day'")
+    date_end: Optional[str] = Field(
+        default=None,
+        description="ISO-8601 end date for time ranges (None for single events)"
+    )
+    date_end_precision: Optional[str] = Field(default=None)
+    wikipedia_url: Optional[str] = Field(
+        default=None,
+        description="Wikipedia article URL for this event (if known)"
+    )
+
+
+class ChapterHistoricalEvents(BaseModel):
+    """Historical context events for a single chapter."""
+    chapter_id: str = Field(description="Chapter ID this batch belongs to")
+    events: List[HistoricalContextEvent] = Field(
+        description="0-2 historical context events for this chapter"
+    )
+
+
+class HistoricalContextResponse(BaseModel):
+    """Phase 4 AI response: historical events for all chapters."""
+    chapter_events: List[ChapterHistoricalEvents] = Field(
+        description="Historical context events grouped by chapter"
+    )
+
+
 class ChapterWithEvents(TemporalChapter):
     """Chapter with mapped events from multiple people."""
     person_events: List[PersonEvent] = Field(
         description="Events from multiple people during this era"
+    )
+    historical_context: Optional[List[HistoricalContextEvent]] = Field(
+        default=None,
+        description="General historical events providing context for this era"
     )
 
 
@@ -653,12 +691,12 @@ MISSING PEOPLE SUGGESTIONS:
                 return None
 
             # Validate chapters are strictly non-overlapping and chronological
-            sorted_chapters = sorted(plan.chapters, key=lambda c: int(c.date_start))
+            sorted_chapters = sorted(plan.chapters, key=lambda c: int(c.date_start.split("-")[0]))
             for i in range(len(sorted_chapters) - 1):
                 current_chapter = sorted_chapters[i]
                 next_chapter = sorted_chapters[i + 1]
-                current_end = int(current_chapter.date_end)
-                next_start = int(next_chapter.date_start)
+                current_end = int(current_chapter.date_end.split("-")[0])
+                next_start = int(next_chapter.date_start.split("-")[0])
 
                 if current_end >= next_start:
                     print(f"Error: Chapters overlap!")
@@ -1093,6 +1131,200 @@ Events to review:
 
 
 # ============================================================================
+# PHASE 4: HISTORICAL CONTEXT ENRICHMENT
+# ============================================================================
+
+
+def phase4_historical_context(
+    plan: MetaStoryPlan,
+    chapters: List[ChapterWithEvents],
+    registry: Dict[str, Any],
+    client: OpenAI,
+    model: str,
+    max_events_per_chapter: int = 2,
+    verbose: bool = False
+) -> List[ChapterWithEvents]:
+    """
+    Phase 4: Add well-known historical context events to chapters.
+
+    Selects historical events that directly affected the specific people
+    in this story, not generic world history landmarks.
+
+    Args:
+        plan: Output from Phase 1
+        chapters: Output from Phase 3 (chapters with filtered person events)
+        registry: Persons registry (for name/role lookup)
+        client: OpenAI client
+        model: Model to use
+        max_events_per_chapter: Maximum historical events per chapter
+        verbose: Enable logging
+
+    Returns:
+        Same chapters list with historical_context populated
+    """
+    if verbose:
+        print(f"\n=== PHASE 4: Historical Context ===")
+
+    # Build people summary so AI knows who it's selecting context for
+    people_summary_parts = []
+    for person_ref in plan.selected_people:
+        person_id = person_ref.person_id
+        # Find person in registry for name/roles
+        person_info = None
+        for person in registry.get("people", []):
+            if person.get("id") == person_id:
+                person_info = person
+                break
+        if person_info:
+            name = person_info.get("name", person_id)
+            roles = ", ".join(person_info.get("primaryRoles", []))
+            birth = person_info.get("birthDate", "?")
+            death = person_info.get("deathDate", "")
+            lifespan = f"{birth} – {death}" if death else f"b. {birth}"
+            people_summary_parts.append(f"  - {name} ({roles}, {lifespan}): {person_ref.relevance_note}")
+
+    people_context = "\n".join(people_summary_parts)
+
+    # Build chapters context with person names on events
+    chapters_context_parts = []
+    # Build person_id -> name lookup
+    person_name_lookup = {}
+    for person in registry.get("people", []):
+        person_name_lookup[person.get("id", "")] = person.get("name", person.get("id", ""))
+
+    for chapter in chapters:
+        event_lines = []
+        for e in chapter.person_events:
+            pname = person_name_lookup.get(e.person_id, e.person_id)
+            event_lines.append(f"    - {pname}: {e.event_title}")
+        event_list = "\n".join(event_lines) if event_lines else "    (none)"
+
+        chapters_context_parts.append(
+            f"  Chapter: \"{chapter.title}\" (ID: {chapter.id})\n"
+            f"  Date range: {chapter.date_start} to {chapter.date_end}\n"
+            f"  Person events:\n{event_list}"
+        )
+
+    chapters_context = "\n\n".join(chapters_context_parts)
+
+    prompt = f"""META-STORY:
+  Title: {plan.title}
+  Tagline: {plan.tagline}
+
+PEOPLE IN THIS STORY:
+{people_context}
+
+CHAPTERS:
+
+{chapters_context}
+
+TASK: For each chapter, suggest 0-{max_events_per_chapter} well-known historical events that
+DIRECTLY AFFECTED the specific people in this story. Every event must have a clear, concrete
+connection to at least one person's life, work, or circumstances.
+
+SELECTION PRINCIPLE — RELEVANCE OVER FAME:
+- Do NOT pick generic "big history" events just because they happened during the time period
+- ONLY pick events that demonstrably shaped the lives or work of the people listed above
+- Ask yourself: "Did this event change what these specific people did, where they lived, or how they worked?"
+- If the answer is no, do NOT include it — even if it's a famous world event
+
+GOOD EXAMPLES (tailored to the people):
+- "World War II" for computing pioneers who worked on codebreaking or ballistics
+- "Fall of the Wall" for people who lived in or were affected by divided Germany
+- "Great Depression" for architects whose commissions dried up in the 1930s
+
+BAD EXAMPLES:
+- "Russian Revolution" when none of the people lived in or were affected by Russia
+- "Moon Landing" when the story is about 19th-century painters
+- "Spanish Flu" when none of the people were notably affected by it
+- "Industrial Revolution" — a gradual epoch, not a discrete event
+- "Age of Enlightenment" — too fuzzy, no clear start/end moment
+
+RULES:
+- Titles must be SHORT (1-3 words): "World War II", "Cold War", "Fall of the Wall"
+- Description: ONE sentence explaining how this event affected the people in this story specifically
+  * GOOD: "The war forced Turing into codebreaking work at Bletchley Park"
+  * BAD: "A global conflict that reshaped the 20th century"
+- These are background landmarks, NOT field-specific milestones or discoveries
+- AVOID FUZZY EPOCHS: Do not pick gradual processes or long eras that lack a discrete moment
+  * NO: "Industrial Revolution", "Age of Enlightenment", "Renaissance", "Digital Age"
+  * YES: "World War I", "Fall of the Wall", "Great Fire of London" — events with clear boundaries
+  * If a span exceeds ~15 years, it's probably an epoch, not an event
+- Do NOT repeat events already covered by the person events listed above
+- AVOID TEMPORAL OVERLAPS: events across all chapters must not overlap in time
+- Use date_end for eras/wars; leave null for single moments
+- Only include events you are certain about. Do not invent.
+- For wikipedia_url: provide the full URL if confident the article exists, else null
+- Many chapters may need ZERO events — only include one if it truly shaped these people's lives
+"""
+
+    try:
+        response = client.beta.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You select well-known historical events that DIRECTLY AFFECTED "
+                    "the specific people in a biographical story. Only pick events with a clear, "
+                    "concrete connection to the people's lives — never generic world history filler."
+                },
+                {"role": "user", "content": prompt}
+            ],
+            response_format=HistoricalContextResponse,
+        )
+
+        result = response.choices[0].message
+        if result.parsed:
+            context_response = result.parsed
+
+            # Build lookup from chapter_id to historical events
+            context_by_chapter = {}
+            for ch_events in context_response.chapter_events:
+                context_by_chapter[ch_events.chapter_id] = ch_events.events
+
+            # Apply historical context to chapters
+            total_events = 0
+            for chapter in chapters:
+                events = context_by_chapter.get(chapter.id, [])
+                chapter.historical_context = events
+                total_events += len(events)
+
+                if verbose:
+                    print(f"  Chapter '{chapter.title}': {len(events)} events")
+                    for evt in events:
+                        title = evt.title.encode('ascii', 'replace').decode('ascii')
+                        date_range = evt.date_start
+                        if evt.date_end:
+                            date_range += f" to {evt.date_end}"
+                        print(f"    {title} ({date_range})")
+
+            if verbose:
+                print(f"\n  Total historical context events: {total_events}")
+
+            return chapters
+
+        elif result.refusal:
+            print(f"Error: Model refused Phase 4: {result.refusal}")
+            return chapters
+        else:
+            print("Warning: Phase 4 returned no parsed result, skipping historical context")
+            return chapters
+
+    except APIStatusError as e:
+        message = ""
+        try:
+            error_body = e.response.json() if hasattr(e.response, 'json') else {}
+            message = error_body.get("error", {}).get("message", str(e))
+        except Exception:
+            message = str(e)
+        print(f"Error: Phase 4 API error: {e.status_code} {message}")
+        return chapters
+    except Exception as e:
+        print(f"Warning: Phase 4 failed: {e}")
+        return chapters
+
+
+# ============================================================================
 # FILE I/O
 # ============================================================================
 
@@ -1276,6 +1508,17 @@ def main():
         "--hints",
         help="Selection hint string (e.g., 'include Jugendstil architects'), or 'none' to disable hint reuse"
     )
+    parser.add_argument(
+        "--skip-historical-context",
+        action="store_true",
+        help="Skip Phase 4 (historical context enrichment)"
+    )
+    parser.add_argument(
+        "--max-context-events",
+        type=int,
+        default=2,
+        help="Maximum historical context events per chapter (default: 2)"
+    )
 
     args = parser.parse_args()
 
@@ -1406,6 +1649,21 @@ def main():
             batch_size=args.batch_size
         )
 
+    # Phase 4: Historical context enrichment
+    if args.skip_historical_context:
+        if args.verbose:
+            print("\n=== PHASE 4: Historical Context (SKIPPED) ===")
+    else:
+        chapters = phase4_historical_context(
+            plan=plan,
+            chapters=chapters,
+            registry=registry,
+            client=client,
+            model=args.model,
+            max_events_per_chapter=args.max_context_events,
+            verbose=args.verbose
+        )
+
     # Build dataset
     dataset = build_meta_story_dataset(plan, chapters, story_id, hints=hints, model=args.model)
 
@@ -1421,7 +1679,10 @@ def main():
     print(f"  People: {len(plan.selected_people)}")
     print(f"  Subtopics: {len(plan.subtopics)}")
     print(f"  Chapters: {len(chapters)}")
-    print(f"  Total events: {sum(len(c.person_events) for c in chapters)}")
+    print(f"  Total person events: {sum(len(c.person_events) for c in chapters)}")
+    total_context = sum(len(c.historical_context) for c in chapters if c.historical_context)
+    if total_context > 0:
+        print(f"  Total historical context events: {total_context}")
 
     # Display missing people suggestions
     if plan.missing_people_suggestions and len(plan.missing_people_suggestions) > 0:
