@@ -66,6 +66,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
         default="gpt-image-1",
         help="OpenAI model for portrait generation (default: gpt-image-1).",
     )
+    parser.add_argument(
+        "--skip-db",
+        action="store_true",
+        help="Skip fetching Deutsche Biographie data as additional source.",
+    )
     return parser.parse_args(argv)
 
 
@@ -107,6 +112,7 @@ def main(argv: Any = None) -> int:
                 person_id=person_id_override,
                 update_registry=update_registry,
                 model=dataset_model,
+                use_deutsche_biographie=not args.skip_db,
             )
             print(f"\n✓ Life events dataset written to {dataset_path}")
         else:

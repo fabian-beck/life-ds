@@ -42,7 +42,9 @@
       "Bash(node:*)",
       "Bash(del test-annotation-parse.js)",
       "Bash(find:*)",
-      "Bash(iconv:*)"
+      "Bash(iconv:*)",
+      "WebFetch(domain:www.deutsche-biographie.de)",
+      "WebFetch(domain:data.deutsche-biographie.de)"
     ],
     "deny": [],
     "ask": []

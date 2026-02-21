@@ -54,6 +54,18 @@ try:
 except ImportError:
     fetch_related_articles = None
 
+# Import Deutsche Biographie utilities
+try:
+    from utils.deutsche_biographie import (
+        ensure_deutsche_biographie_cache,
+        get_cached_deutsche_biographie,
+        format_for_prompt as format_db_for_prompt,
+    )
+except ImportError:
+    ensure_deutsche_biographie_cache = None
+    get_cached_deutsche_biographie = None
+    format_db_for_prompt = None
+
 # Constants
 DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -2031,6 +2043,7 @@ def build_phase1_prompt(
     summary_data: Dict[str, Any],
     subject: str,
     related_articles: Optional[List[Dict[str, Any]]] = None,
+    deutsche_biographie_text: Optional[str] = None,
 ) -> str:
     """
     Build Phase 1 prompt for generating event skeletons and chapters.
@@ -2058,6 +2071,10 @@ def build_phase1_prompt(
         combined += (
             f"Full extract (truncated to 12k characters if needed):\n{truncated}\n"
         )
+
+    # Include Deutsche Biographie data if available
+    if deutsche_biographie_text:
+        combined += f"\n\n{deutsche_biographie_text}\n"
 
     # Include related articles for broad context
     if related_articles and len(related_articles) > 0:
@@ -2332,6 +2349,7 @@ def build_phase2_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
+    deutsche_biographie_text: Optional[str] = None,
 ) -> str:
     """
     Build base Phase 2 prompt (common sections for all event types).
@@ -2499,6 +2517,10 @@ def build_phase2_prompt_base(
     prompt += format_icon_categories_for_prompt()
     prompt += "\n"
 
+    # Add Deutsche Biographie context if available
+    if deutsche_biographie_text:
+        prompt += "\n" + deutsche_biographie_text + "\n"
+
     # Add filtered related articles
     if filtered_related_articles and len(filtered_related_articles) > 0:
         prompt += "\n" + "="*60 + "\n"
@@ -2552,13 +2574,14 @@ def build_phase2_prompt_classified(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
+    deutsche_biographie_text: Optional[str] = None,
 ) -> str:
     """
     Generic Phase 2 prompt builder for classified events.
     Uses EVENT_CLASS_CONFIG to generate event-class-specific guidance.
     """
-    # Get base prompt (sections 0-5)
-    base = build_phase2_prompt_base(event_skeleton, person_name, [])
+    # Get base prompt (sections 0-5) — DB text included via base
+    base = build_phase2_prompt_base(event_skeleton, person_name, [], deutsche_biographie_text=deutsche_biographie_text)
 
     class_type = event_skeleton.event_class.type
     if class_type not in EVENT_CLASS_CONFIG:
@@ -2589,7 +2612,8 @@ def research_event_details(
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
     model: str,
-    retry_count: int = 2
+    retry_count: int = 2,
+    deutsche_biographie_text: Optional[str] = None,
 ) -> EventDetails:
     """
     Research details for a single event with retry logic.
@@ -2606,10 +2630,10 @@ def research_event_details(
     # Route to event-class-specific prompt builder (using centralized config)
     if event_skeleton.event_class:
         # All classified events use the generic builder with config
-        prompt = build_phase2_prompt_classified(event_skeleton, person_name, filtered_articles)
+        prompt = build_phase2_prompt_classified(event_skeleton, person_name, filtered_articles, deutsche_biographie_text=deutsche_biographie_text)
     else:
         # Standard event (no classification)
-        prompt = build_phase2_prompt_base(event_skeleton, person_name, filtered_articles)
+        prompt = build_phase2_prompt_base(event_skeleton, person_name, filtered_articles, deutsche_biographie_text=deutsche_biographie_text)
 
     # Call AI with retries
     for attempt in range(retry_count + 1):
@@ -2676,6 +2700,7 @@ def research_all_event_details(
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
     model: str,
+    deutsche_biographie_text: Optional[str] = None,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
     # Log classification routing info
@@ -2694,7 +2719,8 @@ def research_all_event_details(
         print(f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title} [{prompt_type}]")
 
         detail = research_event_details(
-            skeleton, person_name, all_related_articles, model
+            skeleton, person_name, all_related_articles, model,
+            deutsche_biographie_text=deutsche_biographie_text,
         )
         details.append(detail)
 
@@ -3673,6 +3699,7 @@ def generate_person_events(
     update_registry: bool = True,
     model: str = DEFAULT_MODEL,
     use_cache: bool = True,
+    use_deutsche_biographie: bool = True,
 ) -> Tuple[Path, str]:
     """
     Generate person life events dataset using two-phase approach.
@@ -3683,6 +3710,7 @@ def generate_person_events(
         update_registry: Whether to update persons.json registry
         model: OpenAI model to use
         use_cache: Whether to use cached Wikipedia materials
+        use_deutsche_biographie: Whether to fetch/use Deutsche Biographie data
 
     Returns:
         Tuple of (file_path, person_id)
@@ -3768,9 +3796,37 @@ def generate_person_events(
     else:
         print(f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache")
 
+    # Load Deutsche Biographie data (best-effort)
+    db_prompt_text = None
+    if use_deutsche_biographie and ensure_deutsche_biographie_cache is not None:
+        try:
+            # Extract birth/death years from Wikipedia for disambiguation
+            _db_birth_year = None
+            _db_death_year = None
+            _wiki_extract = page_data.get("extract", "")
+            _year_match = re.search(r"\((\d{4})\s*[-–]\s*(\d{4})\)", _wiki_extract[:500])
+            if _year_match:
+                _db_birth_year = int(_year_match.group(1))
+                _db_death_year = int(_year_match.group(2))
+
+            db_data = ensure_deutsche_biographie_cache(
+                person_id=identifier,
+                person_name=article_title,
+                birth_year=_db_birth_year,
+                death_year=_db_death_year,
+            )
+            if db_data and format_db_for_prompt is not None:
+                db_prompt_text = format_db_for_prompt(db_data)
+                if db_prompt_text:
+                    print(f"[Step 3b/10] Deutsche Biographie data included in prompts")
+        except Exception as e:
+            print(f"[Step 3b/10] Warning: Deutsche Biographie fetch failed ({e})")
+    elif not use_deutsche_biographie:
+        print(f"[Step 3b/10] Deutsche Biographie skipped by request")
+
     # PHASE 1: Generate event skeletons
     print(f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})...")
-    phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles)
+    phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles, deutsche_biographie_text=db_prompt_text)
     life_plan = call_openai_phase1(phase1_prompt, model)
     print(f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons")
 
@@ -3781,6 +3837,7 @@ def generate_person_events(
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
         model=model,
+        deutsche_biographie_text=db_prompt_text,
     )
     print(f"[Step 5/11] Researched details for {len(event_details_list)} events")
 

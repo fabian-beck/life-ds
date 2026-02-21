@@ -20,6 +20,7 @@ from utils.wikipedia_cache import (
     wikipedia_headers,
     _fetch_wikipedia_page_direct,
 )
+from utils.deutsche_biographie import ensure_deutsche_biographie_cache
 import requests
 
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
@@ -515,6 +516,15 @@ def cache_person(
                 print(f"  - Cached {len(related_articles)} related articles")
         except Exception as error:
             print(f"  - Warning: Failed to fetch related articles: {error}")
+
+    # Fetch Deutsche Biographie data (best-effort, non-blocking)
+    try:
+        ensure_deutsche_biographie_cache(
+            person_id=identifier,
+            person_name=canonical_title,
+        )
+    except Exception as error:
+        print(f"  - Warning: Deutsche Biographie fetch failed: {error}")
 
     return identifier
 
