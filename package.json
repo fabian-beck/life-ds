@@ -22,18 +22,18 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-svelte": "^2.46.1",
-    "lint-staged": "^15.5.2",
-    "prettier": "^3.7.4",
-    "prettier-plugin-svelte": "^3.4.0",
+    "lint-staged": "^16.2.7",
+    "prettier": "3.8.1",
+    "prettier-plugin-svelte": "3.5.0",
     "stylelint": "^16.26.1",
-    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard": "^39.0.1",
     "svelte": "^4.2.7",
     "svelte-eslint-parser": "^0.33.1",
     "vite": "^5.0.0"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
-    "@protomaps/basemaps": "^5.0.0",
+    "@protomaps/basemaps": "^5.7.0",
     "maplibre-gl": "^3.6.0",
     "pmtiles": "^3.0.5",
     "svelte-spa-router": "^4.0.1"
