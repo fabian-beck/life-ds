@@ -621,10 +621,6 @@
     });
   }
 
-  function handleClose() {
-    onClose();
-  }
-
   function enlargeImage(imageData, slide = null) {
     // Find this image in the flattened collection
     const globalIndex = allImages.findIndex((img) => {
@@ -1065,7 +1061,7 @@
           variant="theme"
           size="responsive"
           ariaLabel={$_("story.close_story")}
-          on:click={handleClose}
+          on:click={onClose}
           class="compact"
         />
       </div>
@@ -1697,26 +1693,11 @@
     animation: fadeIn 0.3s ease-out;
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
   .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
     padding-bottom: 16rem;
   }
 
-  .slide.chapter {
-    justify-content: flex-start;
-    padding-top: 1rem;
-    padding-bottom: 8rem;
-    position: relative;
-  }
-
+  .slide.chapter,
   .slide.conclusion {
     justify-content: flex-start;
     padding-top: 1rem;
