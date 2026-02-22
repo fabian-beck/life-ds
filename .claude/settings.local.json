@@ -44,7 +44,17 @@
       "Bash(find:*)",
       "Bash(iconv:*)",
       "WebFetch(domain:www.deutsche-biographie.de)",
-      "WebFetch(domain:data.deutsche-biographie.de)"
+      "WebFetch(domain:data.deutsche-biographie.de)",
+      "Bash(npm show:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:maplibre.org)",
+      "WebFetch(domain:unpkg.com)",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(npm pack:*)",
+      "Bash(npm install:*)",
+      "mcp__Claude_Preview__preview_start"
     ],
     "deny": [],
     "ask": []
