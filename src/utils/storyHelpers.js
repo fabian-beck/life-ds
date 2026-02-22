@@ -442,19 +442,28 @@ function escapeRegex(str) {
 }
 
 /**
- * Check if a word is too common to use for last-name-only matching.
+ * Minimum similarity score for a name match to be accepted.
+ */
+const MATCH_THRESHOLD = 0.6;
+
+/**
+ * Words too common to use for last-name-only matching.
  * Prevents false positives like "Church", "Grace", "Newton".
+ */
+const COMMON_WORDS = new Set([
+  'church', 'grace', 'hope', 'faith', 'love', 'king', 'queen',
+  'prince', 'lord', 'duke', 'white', 'black', 'green', 'brown',
+  'young', 'old', 'good', 'new', 'long', 'short', 'stone', 'wood',
+  'hill', 'field', 'well', 'strong', 'bright', 'rich', 'poor'
+]);
+
+/**
+ * Check if a word is too common to use for last-name-only matching.
  * @param {string} word - Word to check
  * @returns {boolean} True if common word
  */
 function isCommonWord(word) {
-  const commonWords = new Set([
-    'church', 'grace', 'hope', 'faith', 'love', 'king', 'queen',
-    'prince', 'lord', 'duke', 'white', 'black', 'green', 'brown',
-    'young', 'old', 'good', 'new', 'long', 'short', 'stone', 'wood',
-    'hill', 'field', 'well', 'strong', 'bright', 'rich', 'poor'
-  ]);
-  return commonWords.has(word.toLowerCase());
+  return COMMON_WORDS.has(word.toLowerCase());
 }
 
 /**
@@ -753,9 +762,6 @@ export function getRelevantPeople(event, egoNetwork) {
   const eventYear = event?.date ? parseInt(event.date.substring(0, 4)) : null;
   const connections = egoNetwork.connections;
 
-  // Minimum similarity threshold for a match
-  const MATCH_THRESHOLD = 0.6;
-
   // PHASE 1: Use involved_people field if present
   if (event.involved_people && Array.isArray(event.involved_people) && event.involved_people.length > 0) {
     // Normalize all involved people names
@@ -1040,9 +1046,6 @@ export function findPersonInNetwork(personName, egoNetwork) {
   const connections = egoNetwork.connections;
   const searchNormalized = normalizePersonName(personName);
   if (!searchNormalized) return null;
-
-  // Minimum similarity threshold for a match
-  const MATCH_THRESHOLD = 0.6;
 
   // Find best match by similarity score
   let bestMatch = null;
