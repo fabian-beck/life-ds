@@ -1,0 +1,400 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-02-22",
+  "ego": {
+    "name": "Hans Fallada",
+    "birth_year": 1893,
+    "death_year": 1947,
+    "primary_roles": [
+      "writer",
+      "novelist",
+      "journalist"
+    ],
+    "summary": "Hans Fallada (born Rudolf Wilhelm Friedrich Ditzen) was a German novelist and journalist associated with New Objectivity, known for socially realistic fiction such as \"Kleiner Mann – was nun?\" and the postwar Berlin resistance novel \"Jeder stirbt für sich allein\".",
+    "wikipedia": "https://de.wikipedia.org/wiki/Hans_Fallada"
+  },
+  "connections": [
+    {
+      "person_name": "Wilhelm Ditzen",
+      "relationship_type": "family/father",
+      "relationship_description": "Fallada’s father, a high-ranking jurist. Their tense relationship—shaped by expectations of a legal career—marked his youth.",
+      "start_year": 1893,
+      "end_year": 1937,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Greifswald, Berlin, and Leipzig",
+        "educational and career expectations shaping Fallada's youth"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Wilhelm_Ditzen"
+      ],
+      "notes": "Fallada was born as Rudolf Ditzen; his father was a Reichsgerichtsrat in Leipzig."
+    },
+    {
+      "person_name": "Elisabeth Ditzen",
+      "relationship_type": "family/mother",
+      "relationship_description": "Fallada’s mother. She remained part of the family decisions around his schooling and periods of crisis.",
+      "start_year": 1893,
+      "end_year": 1951,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "family life and caretaking during periods of illness and institutionalization",
+        "continued family ties through Anna Ditzen after divorce"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Wilhelm_Ditzen",
+        "https://de.wikipedia.org/wiki/Anna_Ditzen"
+      ],
+      "notes": "Her surname and detailed biography are not given in the provided excerpt; she is identified as Fallada's mother in multiple sources."
+    },
+    {
+      "person_name": "Hanns Dietrich von Necker",
+      "relationship_type": "social/friend",
+      "relationship_description": "School friend and classmate; together they planned a staged duel as a joint suicide attempt in 1911, resulting in von Necker's death and lifelong consequences for Fallada.",
+      "start_year": 1911,
+      "end_year": 1911,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "school friendship",
+        "planned suicide pact via staged duel (1911)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "Fallada survived with serious injuries and faced legal/psychiatric consequences."
+    },
+    {
+      "person_name": "Anne Marie Seyerlen",
+      "relationship_type": "social/romantic_partner",
+      "relationship_description": "Early romantic partner; Fallada dedicated his debut novel \"Der junge Goedeschal\" to her, and she influenced the idea of turning his youth into a novel before leaving him.",
+      "start_year": 1917,
+      "end_year": 1919,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "relationship during early writing years",
+        "inspiration and dedication connected to \"Der junge Goedeschal\""
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Der_junge_Goedeschal._Ein_Pubert%C3%A4tsroman",
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "The novel was written 1917–1919 and published by Rowohlt in 1920."
+    },
+    {
+      "person_name": "Ernst Rowohlt",
+      "relationship_type": "professional/publisher",
+      "relationship_description": "Key publisher and career enabler: published Fallada's debut and later supported him materially (including work in the publishing house) and encouraged relocation to Berlin; central to the success of \"Kleiner Mann – was nun?\".",
+      "start_year": 1920,
+      "end_year": 1943,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "publication of \"Der junge Goedeschal\" (Rowohlt Verlag)",
+        "publication and promotion of \"Kleiner Mann – was nun?\"",
+        "arranged part-time work to support writing"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Ernst_Rowohlt",
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Kleiner_Mann_%E2%80%93_was_nun%3F"
+      ],
+      "notes": "Rowohlt's firm benefited financially from Fallada's breakthrough bestseller."
+    },
+    {
+      "person_name": "Romain Rolland",
+      "relationship_type": "professional/translation_project",
+      "relationship_description": "Indirect professional connection: Rowohlt involved Fallada in a translation project related to Rolland’s works, which failed commercially.",
+      "start_year": 1920,
+      "end_year": 1921,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "translation/publishing project connected to Rolland's works via Rowohlt Verlag"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Romain_Rolland"
+      ],
+      "notes": "This is a professional connection via literary work rather than personal acquaintance."
+    },
+    {
+      "person_name": "Anna Margarete Ditzen",
+      "relationship_type": "family/spouse",
+      "relationship_description": "First wife (née Issel, nickname “Suse”). Their long, strained marriage overlapped with his major breakthrough years and shaped his domestic writing.",
+      "start_year": 1928,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and household moves (Neumünster, Berlin area, Carwitz)",
+        "family life and raising children",
+        "literary inspiration for \"Kleiner Mann – was nun?\""
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Kleiner_Mann_%E2%80%93_was_nun%3F"
+      ],
+      "notes": "After divorce they still lived on the Carwitz estate for a period; a drunken shooting incident in 1944 led to Fallada's institutional custody."
+    },
+    {
+      "person_name": "Ulrich Ditzen",
+      "relationship_type": "family/child",
+      "relationship_description": "Fallada's son (called Uli); later edited and published family correspondence connected to Fallada and Anna Ditzen.",
+      "start_year": 1930,
+      "end_year": 1947,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "parent-child relationship",
+        "later legacy work via publication of correspondence (posthumous to Fallada)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "Interaction frequency is approximate; Fallada often lived apart from his family in some periods."
+    },
+    {
+      "person_name": "George Grosz",
+      "relationship_type": "professional/illustrator",
+      "relationship_description": "Created the original cover/cover art for the first edition of \"Kleiner Mann – was nun?\"; the illustrations were controversial and later removed from subsequent editions.",
+      "start_year": 1932,
+      "end_year": 1932,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "book design and illustration for the first edition of \"Kleiner Mann – was nun?\""
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Kleiner_Mann_%E2%80%93_was_nun%3F"
+      ],
+      "notes": "The cover reportedly depicted Anna Ditzen as model for the character \"Lämmchen\"."
+    },
+    {
+      "person_name": "Ernst von Salomon",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Writer acquaintance; a conversation between Fallada and von Salomon was overheard and allegedly used by local tenants to denounce Fallada to the SA in 1933, leading to his brief arrest and departure from Berkenbrück.",
+      "start_year": 1933,
+      "end_year": 1933,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "meeting/conversation in Berkenbrück",
+        "indirect involvement in denunciation episode"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Ernst_von_Salomon"
+      ],
+      "notes": "The relationship is evidenced primarily through the reported overheard conversation."
+    },
+    {
+      "person_name": "Joseph Goebbels",
+      "relationship_type": "other/political_gatekeeper",
+      "relationship_description": "As Propaganda Minister, Goebbels was one of the regime’s cultural gatekeepers whose views could affect whether authors were protected or exposed.",
+      "start_year": 1937,
+      "end_year": 1945,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "regime evaluation and praise of Fallada's work (e.g., \"Wolf unter Wölfen\")",
+        "cultural-political context shaping publication conditions"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Joseph_Goebbels",
+        "https://de.wikipedia.org/wiki/Wolf_unter_W%C3%B6lfen"
+      ],
+      "notes": "This reflects institutional/political influence more than personal contact."
+    },
+    {
+      "person_name": "Alfred Rosenberg",
+      "relationship_type": "other/political_opponent",
+      "relationship_description": "Nazi ideologue whose office viewed Fallada critically and (per the article) had \"Wolf unter Wölfen\" banned, forcing Fallada away from contemporary critical topics toward lighter entertainment literature.",
+      "start_year": 1937,
+      "end_year": 1945,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "censorship conflict over \"Wolf unter Wölfen\"",
+        "political pressure shaping Fallada's choice of subjects"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Alfred_Rosenberg",
+        "https://de.wikipedia.org/wiki/Wolf_unter_W%C3%B6lfen"
+      ],
+      "notes": "Represents a key antagonistic institutional relationship in the Nazi cultural system."
+    },
+    {
+      "person_name": "Marianne Wintersteiner",
+      "relationship_type": "social/romantic_friendship",
+      "relationship_description": "A deep but explicitly platonic love relationship; a young refugee whom Fallada visited in a sanatorium; the bond lasted nearly to his death and included a notable gift of a manuscript.",
+      "start_year": 1938,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "sanatorium visits and correspondence-like closeness",
+        "gift exchange (manuscript \"Pechvogel und Glückskind\")"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "She later wrote autobiographical fiction connected to this relationship."
+    },
+    {
+      "person_name": "Achim Ditzen",
+      "relationship_type": "family/child",
+      "relationship_description": "Fallada's younger son (born 1940) from his marriage to Anna Ditzen.",
+      "start_year": 1940,
+      "end_year": 1947,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "parent-child relationship"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "Born during the Nazi period; family life was strained by addiction and instability."
+    },
+    {
+      "person_name": "Ursula Losch",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Second wife (“Ulla”); they married in 1945 and shared a volatile household shaped by addiction and declining health.",
+      "start_year": 1944,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "cohabitation and marriage in Feldberg and later Berlin",
+        "planned joint withdrawal treatments and clinic stays",
+        "postwar domestic life amid addiction crises"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "The article states she accidentally overdosed him with sleep medication in February 1947."
+    },
+    {
+      "person_name": "Johannes R. Becher",
+      "relationship_type": "professional/patron_editor",
+      "relationship_description": "Postwar literary-political supporter: secured Fallada work for the newspaper \"Tägliche Rundschau\" and housing among prominent writers; also intervened personally during Fallada's crisis and prevented a suicide attempt.",
+      "start_year": 1945,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "employment relationship with \"Tägliche Rundschau\"",
+        "housing support in the Majakowskiweg area",
+        "direct intervention during Fallada's 1946 crisis"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Johannes_R._Becher"
+      ],
+      "notes": "Becher is described as a key facilitator of Fallada's postwar Berlin situation."
+    },
+    {
+      "person_name": "Otto Hampel",
+      "relationship_type": "professional/source_subject",
+      "relationship_description": "Working-class resistor whose Gestapo case file was provided to Fallada after WWII and became a primary inspiration for the novel \"Jeder stirbt für sich allein\".",
+      "start_year": 1946,
+      "end_year": 1947,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "use of Gestapo file as narrative source material",
+        "literary transformation into the character Otto Quangel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_and_Elise_Hampel",
+        "https://de.wikipedia.org/wiki/Jeder_stirbt_f%C3%BCr_sich_allein",
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "Not a personal relationship; influence is documentary-to-literary."
+    },
+    {
+      "person_name": "Elise Hampel",
+      "relationship_type": "professional/source_subject",
+      "relationship_description": "Working-class resistor; together with Otto Hampel her case inspired Fallada's \"Jeder stirbt für sich allein\" after Fallada received access to the Gestapo file.",
+      "start_year": 1946,
+      "end_year": 1947,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "use of Gestapo file as narrative source material",
+        "literary transformation into the character Anna Quangel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_and_Elise_Hampel",
+        "https://de.wikipedia.org/wiki/Jeder_stirbt_f%C3%BCr_sich_allein",
+        "https://de.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "notes": "Their resistance actions (postcards) are central to Fallada's postwar Berlin novel."
+    },
+    {
+      "person_name": "Gottfried Benn",
+      "relationship_type": "professional/physician",
+      "relationship_description": "Physician and fellow writer whom Ursula Losch contacted seeking morphine during the couple's addiction crisis, indicating proximity to Fallada's postwar medical and literary network.",
+      "start_year": 1946,
+      "end_year": 1946,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "contact via request for morphine during addiction episode"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Gottfried_Benn"
+      ],
+      "notes": "The documented interaction is via Fallada's wife writing to Benn."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family relationships anchored Fallada’s life: a tense bond with his jurist father, enduring ties to his mother, and marriages to Anna Ditzen (“Suse”) and later Ursula Losch amid growing instability."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Professionally, Fallada depended on key enablers—especially publisher Ernst Rowohlt—and later postwar patrons such as Johannes R. Becher. His books also intersected with collaborators and sources, from George Grosz’s early cover art to the Hampels’ case file inspiring his Berlin resistance novel."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "His private world included formative friendships and intense, sometimes destructive bonds—from the fatal youth pact with Hanns Dietrich von Necker to later intimate attachments that ran alongside his marriages."
+    },
+    {
+      "relationship_type": "other",
+      "summary": "Under Nazism, Fallada’s publication life was shaped by political gatekeepers and cultural pressure. The regime could alternately tolerate, praise, or restrict him—forcing constant calculation."
+    }
+  ]
+}

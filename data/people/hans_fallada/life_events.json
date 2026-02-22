@@ -1,0 +1,752 @@
+{
+  "dataset": "wikipedia-hans-fallada-phase1",
+  "created_on": "2026-02-22",
+  "person": {
+    "name": "Hans_Fallada",
+    "birth_date": "1893-07-21",
+    "death_date": "1947-02-05",
+    "primary_roles": [
+      "writer",
+      "novelist",
+      "journalist"
+    ],
+    "tagline": "Novelist of the German everyday",
+    "summary": "Hans Fallada was a German writer associated with New Objectivity whose fiction portrayed social pressure, debt, and moral compromise in everyday life. Writing under a pseudonym, he achieved wide recognition with the Weimar-era novel \"Kleiner Mann – was nun?\" and continued working under the Nazi dictatorship, navigating censorship and political scrutiny. In the postwar months he wrote a major Berlin novel based on Gestapo files about a working-class act of resistance.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Hans_Fallada",
+    "portrait": {
+      "image": "/portraits/hans_fallada_thumbnail.webp",
+      "thumbnail": "/portraits/hans_fallada_thumbnail.webp",
+      "medium": "/portraits/hans_fallada_medium.webp",
+      "full": "/portraits/hans_fallada_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Hans_Fallada",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Hans_Fallada.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "restless_childhood",
+      "headline": "Restless Childhood",
+      "bridge_statement": "A bright boy keeps moving, collecting wounds no report card can explain.",
+      "date_start": "1893-07-21",
+      "date_start_precision": "day",
+      "date_end": "1911-10-16",
+      "date_end_precision": "day",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Wilhelm Ditzen",
+        "Elisabeth Ditzen"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "the_duel_fallout",
+      "headline": "The Duel",
+      "bridge_statement": "One impulsive pact turns despair into a lifelong sentence.",
+      "date_start": "1911-10-17",
+      "date_start_precision": "day",
+      "date_end": "1913-07",
+      "date_end_precision": "month",
+      "age_start": 18,
+      "age_end": 19,
+      "involved_people": [
+        "Hanns Dietrich von Necker"
+      ],
+      "location": "Northern Germany"
+    },
+    {
+      "id": "hard_labor_inner_storm",
+      "headline": "Hard Years",
+      "bridge_statement": "He tries honest work, but addiction keeps rewriting every plan.",
+      "date_start": "1913",
+      "date_start_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age_start": 20,
+      "age_end": 35,
+      "involved_people": [
+        "Anne Marie Seyerlen"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "breakthrough_under_the_reich",
+      "headline": "Breakthrough, Then Fear",
+      "bridge_statement": "Success arrives, then the air changes—every sentence suddenly carries risk.",
+      "date_start": "1929-04-05",
+      "date_start_precision": "day",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age_start": 35,
+      "age_end": 45,
+      "involved_people": [
+        "Anna Margarete Issel (\"Suse\")",
+        "Ernst Rowohlt",
+        "Marianne Portisch"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "last_books_last_days",
+      "headline": "Last Berlin",
+      "bridge_statement": "In collapse and aftermath, his writing hardens into something fierce.",
+      "date_start": "1944-09-04",
+      "date_start_precision": "day",
+      "date_end": "1947-02-05",
+      "date_end_precision": "day",
+      "age_start": 51,
+      "age_end": 53,
+      "involved_people": [
+        "Anna Ditzen",
+        "Ursula Boltzenthal (née Losch)",
+        "Otto Hampel",
+        "Elise Hampel"
+      ],
+      "location": "Germany"
+    }
+  ],
+  "conclusion": "Hans Fallada turned private catastrophe and public terror into novels that refused to look away from ordinary suffering. His life burned unevenly, but his compassion for people pressed by debt, fear, and compromise still speaks with force.",
+  "events": [
+    {
+      "date": "1893-07-21",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth in Greifswald",
+      "description": "Rudolf Wilhelm Friedrich Ditzen was born on 21 July 1893 in Greifswald to the jurist Wilhelm Ditzen and his wife Elisabeth Ditzen.",
+      "locations": [
+        {
+          "name_historic": "Greifswald",
+          "name_modern": "Greifswald, Germany",
+          "centroid": [
+            13.3815238,
+            54.095791
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Wilhelm Ditzen",
+        "Elisabeth Ditzen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://www.deutsche-biographie.de/sfz15552.html",
+        "https://de.wikipedia.org/wiki/Wilhelm_Ditzen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/HGW_Steinstrasse_58_Falladahaus.JPG/960px-HGW_Steinstrasse_58_Falladahaus.JPG",
+          "caption": "Steinstraße 58 Falladahaus in Greifswald",
+          "source": "https://commons.wikimedia.org/wiki/File:HGW_Steinstrasse_58_Falladahaus.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "restless_childhood"
+    },
+    {
+      "date": "1899",
+      "date_precision": "year",
+      "date_end": "1911",
+      "date_end_precision": "year",
+      "age": 6,
+      "title": "Moves, schools, isolation",
+      "description": "In 1899, as his father advanced in the judiciary, the Ditzen family moved first to Berlin and later to Leipzig. Rudolf attended several Gymnasien and increasingly clashed with his father’s expectation that he should become a jurist.\n\nAt school he was often treated as an outsider and withdrew socially, finding little real belonging even during a brief, unsatisfying involvement in the [[Wandervogel|Wandervogel youth movement]].",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3747329,
+            51.3406321
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Wilhelm Ditzen",
+        "Elisabeth Ditzen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Wilhelm_Ditzen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hans_Fallada_Leipzig.jpg/960px-Hans_Fallada_Leipzig.jpg",
+          "caption": "Hans Fallada Leipzig memorial plaque, Schenkendorfstraße 61",
+          "source": "https://commons.wikimedia.org/wiki/File:Hans_Fallada_Leipzig.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-home-move",
+      "chapter": "restless_childhood",
+      "annotations": {
+        "Wandervogel": {
+          "explanation": "A German youth movement that began around 1896, promoting hiking, folk culture, and independence from conventional bourgeois norms; it influenced many middle-class adolescents before World War I.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Wandervogel"
+        }
+      }
+    },
+    {
+      "date": "1911-10-17",
+      "date_precision": "day",
+      "age": 18,
+      "title": "Suicide duel catastrophe",
+      "description": "After a period of severe emotional crisis and an earlier-year sanatorium stay, Ditzen agreed with his school friend Hanns Dietrich von Necker to die in a staged duel. On 17 October 1911, von Necker was killed and Ditzen survived with serious injuries, leaving him facing legal proceedings and ongoing medical supervision.",
+      "locations": [],
+      "involved_people": [
+        "Hanns Dietrich von Necker"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "the_duel_fallout"
+    },
+    {
+      "date": "1912-02",
+      "date_precision": "month",
+      "date_end": "1913-07",
+      "date_end_precision": "month",
+      "age": 18,
+      "title": "Tannenfeld psychiatric confinement",
+      "description": "In February 1912, after being charged in connection with the fatal duel, Ditzen was committed as a patient to the [[Tannenfeld psychiatric and neurological institution|Tannenfeld psychiatric and neurological institution]] for observation and treatment while his criminal responsibility was assessed. The proceedings ended with the charge dropped on grounds of diminished responsibility, and he left school without a diploma.",
+      "locations": [
+        {
+          "name_historic": "Tannenfeld",
+          "name_modern": "Tannenfeld, Travenbrück, Schleswig-Holstein, Germany",
+          "centroid": [
+            12.2511805,
+            50.875333
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "event_type_icon": "mdi-gavel",
+      "chapter": "the_duel_fallout",
+      "annotations": {
+        "Tannenfeld psychiatric and neurological institution": {
+          "explanation": "A private psychiatric and neurological sanatorium in Tannenfeld (Holstein) where Rudolf Ditzen (later Hans Fallada) was confined for forensic observation after the 1911 duel incident.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hans_Fallada"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Tannenfeld",
+          "name": "Tannenfeld (Holstein), Travenbrück, Schleswig-Holstein, Germany",
+          "primary": true,
+          "centroid": [
+            10.333,
+            53.83
+          ],
+          "source": "Wikipedia (Tannenfeld is in Holstein/Schleswig-Holstein per provided Hans Fallada excerpt context)"
+        }
+      ]
+    },
+    {
+      "date": "1913",
+      "date_precision": "year",
+      "date_end": "1916",
+      "date_end_precision": "year",
+      "age": 20,
+      "title": "Apprenticeship in agriculture, seeking stability",
+      "description": "After leaving school without a diploma, Ditzen trained as a Landwirtschaftseleve in [[Posterstein]] in Thuringia, aiming for stability through practical farm work rather than university study. At the outbreak of World War I he volunteered, but was rejected as \"dauernd untauglich\" (permanently unfit).\n\nHis agricultural training still opened doors: by 1916 he worked with official agricultural institutions, including posts connected to Stettin and Berlin.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-tractor",
+      "chapter": "the_duel_fallout",
+      "annotations": {
+        "Posterstein": {
+          "explanation": "A municipality in Thuringia where Fallada (Rudolf Ditzen) completed his agricultural apprenticeship after leaving school.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Posterstein"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Posterstein",
+          "name": "Posterstein, Thuringia, Germany",
+          "primary": true,
+          "centroid": [
+            12.251,
+            50.875
+          ],
+          "source": "Wikipedia (Posterstein mentioned explicitly in provided Hans Fallada excerpt)"
+        },
+        {
+          "label": "Stettin",
+          "name": "Szczecin (Stettin), Poland",
+          "primary": false,
+          "centroid": [
+            14.5528,
+            53.4285
+          ],
+          "source": "Wikipedia (Stettin post in 1916 mentioned in provided Hans Fallada excerpt)"
+        },
+        {
+          "label": "Berlin",
+          "name": "Berlin, Germany",
+          "primary": false,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "source": "Wikipedia (Berlin agricultural institution mentioned in provided Hans Fallada excerpt)"
+        }
+      ]
+    },
+    {
+      "date": "1917",
+      "date_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age": 24,
+      "title": "Addiction and repeated treatment",
+      "description": "From 1917 onward, Fallada struggled with alcohol dependence and morphine addiction, repeatedly spending extended periods in withdrawal clinics and sanatoria. The cycle of relapse and treatment disrupted his ability to keep steady work and strained his family relationships. In early 1921 he was again hospitalized, this time in a provincial institution in Stralsund, while continuing early attempts at literary writing.",
+      "locations": [
+        {
+          "name_historic": "Stralsund",
+          "name_modern": "Stralsund, Germany",
+          "centroid": [
+            13.0820846,
+            54.3096314
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://www.deutsche-biographie.de/sfz15552.html",
+        "https://de.wikipedia.org/wiki/Der_junge_Goedeschal._Ein_Pubert%C3%A4tsroman"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "hard_labor_inner_storm"
+    },
+    {
+      "date": "1920",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Publishes first novel",
+      "description": "In 1920, he brought out his debut novel \"Der junge Goedeschal\" and, for the first time in print, adopted the pen name [[Hans Fallada|Hans Fallada]]. The book attracted little public attention and was a commercial disappointment for its publisher.\n\nAround the same time, Rowohlt also pursued an (unsuccessful) translation project involving works by Romain Rolland—another setback in an already precarious start.",
+      "locations": [],
+      "involved_people": [
+        "Anne Marie Seyerlen",
+        "Ernst Rowohlt",
+        "Romain Rolland"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Der_junge_Goedeschal._Ein_Pubert%C3%A4tsroman",
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "hard_labor_inner_storm",
+      "annotations": {
+        "Hans Fallada": {
+          "explanation": "The pen name Rudolf Ditzen began using for his literary career; he later became widely known under this name.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hans_Fallada"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Der junge Goedeschal. Ein Pubertätsroman",
+        "publication_type": "book",
+        "publisher": "Rowohlt Verlag",
+        "significance": "debut novel",
+        "impact": "The novel introduced him to the publishing world under the name Hans Fallada, though it drew only limited readership at the time."
+      }
+    },
+    {
+      "date": "1923",
+      "date_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age": 29,
+      "title": "Embezzlement, fraud, and prison terms",
+      "description": "To finance his morphine and alcohol use, Fallada committed embezzlement and related offenses. In 1923 he received a three-month prison sentence for Unterschlagung (embezzlement).\n\nA second conviction followed in 1926: he was sentenced to two and a half years for fraud, and he was released from prison in 1928—carrying a criminal record that narrowed his options long after the sentence ended.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Haftbefehl_Fallada.JPG/960px-Haftbefehl_Fallada.JPG",
+          "caption": "Haftbefehl für Fallada",
+          "source": "https://commons.wikimedia.org/wiki/File:Haftbefehl_Fallada.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-lock",
+      "chapter": "hard_labor_inner_storm"
+    },
+    {
+      "date": "1929-04-05",
+      "date_precision": "day",
+      "date_end": "1944-07-05",
+      "date_end_precision": "day",
+      "age": 35,
+      "title": "Marriage to Anna Issel",
+      "description": "After meeting Anna Issel (nicknamed \"Suse\") in October 1928 while subletting in her parents’ apartment in Hamburg-Eilbek, he married her in Hamburg on 5 April 1929.\n\nAfter the wedding they initially lived apart—she in Hamburg with her mother, he in Neumünster—before trying to form a more stable household.",
+      "locations": [
+        {
+          "name_historic": "Hamburg",
+          "name_modern": "Hamburg, Germany",
+          "centroid": [
+            10.000654,
+            53.550341
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Anna Ditzen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "breakthrough_under_the_reich",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Anna Margarete Issel",
+        "duration": "until divorce",
+        "children": 4,
+        "characterization": "strained"
+      },
+      "location_coordinates": [
+        {
+          "label": "Hamburg",
+          "name": "Hamburg, Germany",
+          "primary": true,
+          "centroid": [
+            10.000654,
+            53.550341
+          ],
+          "source": "Wikipedia (Hamburg-Eilbek and marriage location in provided excerpt)"
+        },
+        {
+          "label": "Neumünster",
+          "name": "Neumünster, Schleswig-Holstein, Germany",
+          "primary": false,
+          "centroid": [
+            9.991,
+            54.074
+          ],
+          "source": "Wikipedia (initial separate residence in provided excerpt)"
+        }
+      ]
+    },
+    {
+      "date": "1932",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Publishes Little Man, What Now?",
+      "description": "After moving to Berlin at the suggestion of his publisher [[Ernst Rowohlt|Ernst Rowohlt]], Fallada finished the novel against the backdrop of mass unemployment and insecurity in the last years of the [[Weimar Republic|Weimar Republic]]. In 1932 it appeared first as a newspaper serialization in the [[Vossische Zeitung|Vossische Zeitung]] and was then issued as a book, quickly drawing wide attention and strong sales.\n\nHis wife Anna Ditzen later became closely identified with the novel’s emotional core as the inspiration for the character \"Lämmchen\"; the first edition’s cover art by George Grosz also became part of the book’s early public image.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ernst Rowohlt",
+        "Anna Ditzen",
+        "George Grosz"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Kleiner_Mann_%E2%80%93_was_nun%3F",
+        "https://de.wikipedia.org/wiki/Ernst_Rowohlt"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Little_Man%2CWhat_Now%3F_%2810629213655%29.jpg/960px-Little_Man%2CWhat_Now%3F_%2810629213655%29.jpg",
+          "caption": "Little Man, What Now?",
+          "source": "https://commons.wikimedia.org/wiki/File:Little_Man,What_Now?_(10629213655).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "breakthrough_under_the_reich",
+      "annotations": {
+        "Ernst Rowohlt": {
+          "explanation": "German publisher and founder of Rowohlt Verlag, who became one of Fallada’s key early champions and helped shape his career.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Ernst_Rowohlt"
+        },
+        "Weimar Republic": {
+          "explanation": "Germany’s democratic state from 1919 to 1933, marked in its final years by severe economic crisis and political instability.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Weimar_Republic"
+        },
+        "Vossische Zeitung": {
+          "explanation": "A major Berlin liberal newspaper in which the novel was first published in serialized form in 1932.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vossische_Zeitung"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Kleiner Mann – was nun?",
+        "publication_type": "book",
+        "publisher": "Rowohlt Verlag",
+        "significance": "breakthrough",
+        "impact": "Its publication established him as a widely read novelist with a realist eye for economic hardship and intimate domestic life."
+      }
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Denounced and relocates",
+      "description": "In the first months of Nazi rule, Fallada was denounced to the [[SA|local SA]] in Berkenbrück and briefly detained after a private conversation was reported as politically suspect. He then gave up his house there and moved to Carwitz, seeking distance and safety from local hostility.",
+      "locations": [
+        {
+          "name_historic": "Berkenbrück",
+          "name_modern": "Berkenbrück, Brandenburg, Germany",
+          "centroid": [
+            14.1482449,
+            52.3518222
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Carwitz (near Feldberg)",
+          "name_modern": "Carwitz, Feldberger Seenlandschaft, Mecklenburg-Vorpommern, Germany",
+          "centroid": [
+            13.4384174,
+            53.3020462
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "breakthrough_under_the_reich",
+      "annotations": {
+        "SA": {
+          "explanation": "The Sturmabteilung (SA) was the Nazi Party’s paramilitary organization, used in the early years of Nazi rule for intimidation and street-level enforcement.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sturmabteilung"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Brandenburg",
+        "to_location": "Mecklenburg (Carwitz area)",
+        "characterization": "political pressure"
+      }
+    },
+    {
+      "date": "1937",
+      "date_precision": "year",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age": 43,
+      "title": "Wolf under Wölfen published",
+      "description": "While living in Carwitz, Fallada brought out the novel and found himself in a contradictory position: praised by some officials, blocked by others, never fully safe.\n\nAround the same period, he met the young émigré Marianne Portisch and developed a close, largely platonic attachment. He stayed in contact through visits during her medical treatment and by sharing manuscripts—while his marriage came under increasing strain.",
+      "locations": [
+        {
+          "name_historic": "Carwitz",
+          "name_modern": "Carwitz (Feldberger Seenlandschaft), Germany",
+          "centroid": [
+            13.4384174,
+            53.3020462
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Marianne Portisch",
+        "Anna Ditzen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Wolf_unter_W%C3%B6lfen",
+        "https://www.deutsche-biographie.de/sfz15552.html",
+        "https://de.wikipedia.org/wiki/Anna_Ditzen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fallada-Haus.jpg",
+          "caption": "Hans-Fallada-Haus in Carwitz",
+          "source": "https://commons.wikimedia.org/wiki/File:Fallada-Haus.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "breakthrough_under_the_reich",
+      "event_class": {
+        "type": "publication",
+        "title": "Wolf unter Wölfen",
+        "publication_type": "book",
+        "significance": "major novel",
+        "impact": "Its release placed him under heightened scrutiny as his work circulated within a tightly controlled literary system."
+      }
+    },
+    {
+      "date": "1944-09-04",
+      "date_precision": "day",
+      "date_end": "1944-12-13",
+      "date_end_precision": "day",
+      "age": 51,
+      "title": "Institutionalized after violence",
+      "description": "After the collapse of his first marriage and a drunken firearm incident that led to a charge of attempted manslaughter, Fallada was committed for observation to the psychiatric-penal ward of the state institution at [[Neustrelitz-Strelitz|Neustrelitz-Strelitz]]. During his confinement he wrote intensively, including the manuscript later published as \"Der Trinker\"; he was released in mid-December 1944 and returned to life marked by addiction and instability.",
+      "locations": [
+        {
+          "name_historic": "Neustrelitz-Strelitz",
+          "name_modern": "Neustrelitz, Mecklenburg-Vorpommern, Germany",
+          "centroid": [
+            13.0630004,
+            53.3617163
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Anna Ditzen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Der_Trinker_(Roman)",
+        "https://de.wikipedia.org/wiki/Anna_Ditzen"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "last_books_last_days",
+      "annotations": {
+        "Neustrelitz-Strelitz": {
+          "explanation": "Historic name for a state institution area at Neustrelitz in Mecklenburg; Fallada was confined there in 1944 for psychiatric observation under penal custody.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Der_Trinker_(Roman)"
+        }
+      }
+    },
+    {
+      "date": "1945-02-01",
+      "date_precision": "day",
+      "age": 51,
+      "title": "Marries Ursula Losch",
+      "description": "On 1 February 1945, Fallada married his second wife during the closing months of World War II, as he was living in the [[Feldberg (Mecklenburg)|Feldberg]] area. Both were struggling with morphine dependence, and they tried to keep a shared household going amid shortages and mounting psychological strain. The relationship was volatile from the outset, with illness and substance use shaping daily routines and conflicts.",
+      "locations": [
+        {
+          "name_historic": "Feldberg",
+          "name_modern": "Feldberger Seenlandschaft, Mecklenburg-Vorpommern, Germany",
+          "centroid": [
+            13.4229937,
+            53.3385781
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ursula Boltzenthal (née Losch)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "last_books_last_days",
+      "annotations": {
+        "Feldberg (Mecklenburg)": {
+          "explanation": "A small town in Mecklenburg (today part of Feldberger Seenlandschaft) where Fallada lived during the final phase of World War II.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Feldberger_Seenlandschaft"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Ursula Losch",
+        "duration": "until death",
+        "characterization": "turbulent"
+      }
+    },
+    {
+      "date": "1946",
+      "date_precision": "year",
+      "age": 52,
+      "title": "Writes resistance novel in Berlin",
+      "description": "In postwar Berlin, Fallada was given access to [[Gestapo|Gestapo]] case files on the working-class couple Otto and Elise Hampel, who had spread anti-regime messages. Drawing on the dossier, he wrote the novel in a concentrated burst over a few weeks in late 1946, working under fragile health amid the city’s ruins and the tense atmosphere of political reckoning and daily survival.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Otto Hampel",
+        "Elise Hampel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_and_Elise_Hampel",
+        "https://de.wikipedia.org/wiki/Jeder_stirbt_f%C3%BCr_sich_allein_(Roman)"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "last_books_last_days",
+      "annotations": {
+        "Gestapo": {
+          "explanation": "Nazi Germany’s secret state police, responsible for surveillance, repression, and maintaining extensive investigative case files.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Gestapo"
+        }
+      }
+    },
+    {
+      "date": "1947-02-05",
+      "date_precision": "day",
+      "date_note": "Some sources give the date of death as 1947-02-06",
+      "age": 53,
+      "title": "Death in Berlin",
+      "description": "Hans Fallada died in Berlin on 5 February 1947, aged 53, after a prolonged period of severe illness and declining health.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Jeder_stirbt_f%C3%BCr_sich_allein_(Roman)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/CarwitzAlterFriedhofGrabFallada.jpg/960px-CarwitzAlterFriedhofGrabFallada.jpg",
+          "caption": "Grave of Hans Fallada, Alter Friedhof Carwitz",
+          "source": "https://commons.wikimedia.org/wiki/File:CarwitzAlterFriedhofGrabFallada.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "last_books_last_days"
+    }
+  ]
+}
