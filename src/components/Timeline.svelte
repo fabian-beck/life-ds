@@ -40,10 +40,8 @@
 
   const dispatch = createEventDispatcher();
 
-  let isExpanded = initialExpanded;
   let visiblePersonInfo = null; // Track which person chip popup is visible
 
-  // Make isExpanded reactive to initialExpanded prop changes
   $: isExpanded = initialExpanded;
 
   // Toggle person info popup
