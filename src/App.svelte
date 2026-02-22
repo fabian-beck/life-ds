@@ -8,7 +8,8 @@
   import { currentLanguage, loadTranslations, _ } from "./stores/language";
   import { queryParams, buildUrlWithParams } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
-import { displayName } from "./utils/helpers.js";
+  import { displayName } from "./utils/helpers.js";
+  import { parseHexColor } from "./utils/storyHelpers.js";
 
   // Reload translations when language changes
   onMount(() => {
@@ -127,19 +128,12 @@ import { displayName } from "./utils/helpers.js";
   );
 
   function isHexColor(value) {
-    return typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value.trim());
+    return !!parseHexColor(value);
   }
 
   function hexToRgb(value) {
-    if (!isHexColor(value)) return null;
-    const hex = value.trim().replace("#", "");
-    const r = parseInt(hex.slice(0, 2), 16);
-    const g = parseInt(hex.slice(2, 4), 16);
-    const b = parseInt(hex.slice(4, 6), 16);
-    if ([r, g, b].some((component) => Number.isNaN(component))) {
-      return null;
-    }
-    return `${r}, ${g}, ${b}`;
+    const parsed = parseHexColor(value);
+    return parsed ? `${parsed.r}, ${parsed.g}, ${parsed.b}` : null;
   }
 
   function svgToDataUrl(svg) {

@@ -4,7 +4,7 @@
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
-  import { normalizeAllLocations, normalizePrimaryLocation, formatSingleDate } from "../utils/storyHelpers";
+  import { normalizeAllLocations, normalizePrimaryLocation, formatSingleDate, parseHexColor } from "../utils/storyHelpers";
   import { displayName } from "../utils/helpers";
   import { arrangeOverlappingMarkers } from "../utils/mapHelpers";
 
@@ -228,15 +228,8 @@
     return bounds;
   }
 
-  // Helper function to parse hex color to RGB
-  function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  }
+  // Alias parseHexColor for local readability
+  const hexToRgb = parseHexColor;
 
   // Helper function to convert RGB to hex
   function rgbToHex(r, g, b) {
