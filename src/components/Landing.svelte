@@ -448,7 +448,7 @@
     </select>
   </div>
 
-  <div class="header-container">
+  <div class="header-container" class:with-carousel={$currentLanguage === "en"}>
     <div class="landing-hero">
       <p class="eyebrow">{$_("app.title")}</p>
       <h1>{$_("app.tagline")}</h1>
@@ -1389,7 +1389,7 @@
       gap: 3rem;
     }
 
-    .header-container {
+    .header-container.with-carousel {
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 3rem;
