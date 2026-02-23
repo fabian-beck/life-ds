@@ -18,8 +18,8 @@ ICON_CATEGORIES = {
     "scholarship": "mdi-trophy",
     "thesis": "mdi-book-open-variant",
     "dissertation": "mdi-book-open-variant",
-    "lecture": "mdi-teach",
-    "professorship": "mdi-teach",
+    "lecture": "mdi-school-outline",
+    "professorship": "mdi-school-outline",
 
     # Professional & Career
     "appointment": "mdi-briefcase",
@@ -75,7 +75,7 @@ ICON_CATEGORIES = {
     "foundation": "mdi-hammer",
     "castle": "mdi-castle",
     "cathedral": "mdi-church",
-    "monument": "mdi-monument",
+    "monument": "mdi-pillar",
     "design": "mdi-drawing",
 
     # Travel & Movement
@@ -84,7 +84,7 @@ ICON_CATEGORIES = {
     "expedition": "mdi-compass",
     "exploration": "mdi-compass",
     "migration": "mdi-map-marker-multiple",
-    "relocation": "mdi-home-move",
+    "relocation": "mdi-home-switch-outline",
     "exile": "mdi-exit-to-app",
 
     # Scientific & Technical

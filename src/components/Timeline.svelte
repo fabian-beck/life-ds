@@ -14,7 +14,7 @@
   import { _ } from "../stores/language";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
-  import * as mdiIcons from "@mdi/js";
+  import { mdiIconMap } from "virtual:mdi-icon-map";
   import PersonChip from "./PersonChip.svelte";
   import { getSubcategory, getChapterPeople } from "../utils/storyHelpers.js";
 
@@ -66,21 +66,12 @@
     }
   }
 
-  // Helper function to resolve MDI icon path from icon name (e.g., "mdi-home" -> mdiHome)
+  // Helper function to resolve MDI icon path from icon name (e.g., "mdi-crown" -> SVG path).
+  // Uses a static lookup map generated from scripts/icon_categories.py — tree-shakeable.
+  // Unknown icon strings return null (graceful fallback).
   function resolveIconPath(iconName) {
     if (!iconName || typeof iconName !== 'string') return null;
-
-    // Convert mdi-icon-name to mdiIconName format
-    const camelCase = iconName
-      .replace(/^mdi-/, '') // Remove 'mdi-' prefix
-      .split('-')
-      .map((word, index) =>
-        index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
-      )
-      .join('');
-
-    const iconKey = 'mdi' + camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
-    return mdiIcons[iconKey] || null;
+    return mdiIconMap[iconName] ?? null;
   }
 
   // Helper function to get icon for event_class
