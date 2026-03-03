@@ -1,0 +1,859 @@
+{
+  "dataset": "Biographical timeline outline (Wikipedia-based)",
+  "created_on": "2026-03-03",
+  "person": {
+    "name": "Edward_Bernays",
+    "birth_date": "1891-11-22",
+    "death_date": "1995-03-09",
+    "primary_roles": [
+      "publicist",
+      "writer",
+      "consultant"
+    ],
+    "tagline": "Architect of modern public relations",
+    "summary": "Edward Bernays was an Austrian-born American publicist who helped define and popularize modern public relations through high-profile campaigns, government information work, and influential books on propaganda and public opinion.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Edward_Bernays",
+    "portrait": {
+      "image": "/portraits/edward_bernays_thumbnail.webp",
+      "thumbnail": "/portraits/edward_bernays_thumbnail.webp",
+      "medium": "/portraits/edward_bernays_medium.webp",
+      "full": "/portraits/edward_bernays_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Edward_Bernays",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/61/Edward_Bernays_cropped.png"
+    }
+  },
+  "chapters": [
+    {
+      "id": "vienna_to_new_york",
+      "headline": "Vienna Echoes",
+      "bridge_statement": "A family name carries weight, even before a boy can understand why it matters.",
+      "date_start": "1891-11-22",
+      "date_start_precision": "day",
+      "date_end": "1911",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 19,
+      "involved_people": [
+        "Anna Freud",
+        "Ely Bernays",
+        "Sigmund Freud",
+        "Martha Bernays"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "publicity_trial_by_fire",
+      "headline": "Publicity Trial",
+      "bridge_statement": "In the newsroom glare, controversy becomes a tool—and attention becomes a craft.",
+      "date_start": "1912",
+      "date_start_precision": "year",
+      "date_end": "1918",
+      "date_end_precision": "year",
+      "age_start": 20,
+      "age_end": 26,
+      "involved_people": [
+        "Fred Robinson",
+        "George Creel",
+        "Woodrow Wilson"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "counsel_to_the_unseen",
+      "headline": "Inventing Public Relations",
+      "bridge_statement": "When a word turns toxic, reinvention starts with what you choose to call the work.",
+      "date_start": "1919",
+      "date_start_precision": "year",
+      "date_end": "1923",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 31,
+      "involved_people": [
+        "George Creel",
+        "Woodrow Wilson",
+        "Doris Fleischman",
+        "Sigmund Freud"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "manufacturing_modern_appetites",
+      "headline": "Engineering Desire",
+      "bridge_statement": "The new decade rewards spectacle, then dares him to reshape everyday habits in plain sight.",
+      "date_start": "1924-03",
+      "date_start_precision": "month",
+      "date_end": "1930",
+      "date_end_precision": "year",
+      "age_start": 32,
+      "age_end": 38,
+      "involved_people": [
+        "Calvin Coolidge",
+        "George Washington Hill",
+        "Doris Fleischman",
+        "Doris Bernays",
+        "Anne Bernays"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "fairground_future",
+      "headline": "Worlds Fair Spotlight",
+      "bridge_statement": "With the country looking for reasons to believe, he turns optimism into a headline.",
+      "date_start": "1939",
+      "date_start_precision": "year",
+      "date_end": "1939",
+      "date_end_precision": "year",
+      "age_start": 47,
+      "age_end": 47,
+      "involved_people": null,
+      "location": "United States"
+    },
+    {
+      "id": "cold_war_afterimage",
+      "headline": "Cold War Sunset",
+      "bridge_statement": "In the late light of a long career, influence shifts from selling products to selling fear.",
+      "date_start": "1950",
+      "date_start_precision": "year",
+      "date_end": "1995-03-09",
+      "date_end_precision": "day",
+      "age_start": 58,
+      "age_end": 103,
+      "involved_people": [
+        "Jacobo Árbenz",
+        "Doris Fleischman"
+      ],
+      "location": "United States and Central America"
+    }
+  ],
+  "conclusion": "Edward Bernays turned public opinion into an instrument—part theater, part psychology, part power—and modern persuasion never recovered its innocence. From Lucky Strike’s staged symbols to United Fruit’s Guatemala campaign, his blueprint still shapes how nations, companies, and citizens are moved.",
+  "events": [
+    {
+      "date": "1891-11-22",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Born in Vienna, tied to Freud family",
+      "description": "Edward Louis Bernays was born in Vienna to a Jewish family with unusually close ties to Sigmund Freud. His mother was Anna Freud Bernays (1858–1955), Freud’s sister, and his father was Eli Bernays (1860–1921), the brother of Freud’s wife, Martha Bernays. Those “double-uncle” connections mattered later: even as Bernays built a distinctly American career, the Freud name and the language of psychology hovered at the edge of his origin story.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Anna Freud Bernays (Bernays's mother)",
+        "Eli Bernays (Bernays's father)",
+        "Sigmund Freud",
+        "Martha Bernays"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Sigmund_Freud"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "vienna_to_new_york"
+    },
+    {
+      "date": "1892",
+      "date_precision": "year",
+      "date_note": "The family moved to the United States when Bernays was an infant; sources commonly give 1892 for the move to New York City",
+      "age": 0,
+      "title": "Family settles in New York City",
+      "description": "In 1892, Bernays moved with his parents from Vienna to the United States, and the family settled in New York City. His father, Eli Bernays, worked as a grain exporter connected to the [[Manhattan Produce Exchange|Manhattan Produce Exchange]]. Bernays grew up in New York, where his schooling and early contacts would later feed directly into the city’s press, theater, and promotional worlds.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Eli Bernays",
+        "Anna Freud Bernays"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Manhattan_Produce_Exchange"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "vienna_to_new_york",
+      "annotations": {
+        "Manhattan Produce Exchange": {
+          "explanation": "A major New York commodity exchange (incorporated in 1868) that organized trading in produce and related goods, including grain, in the late 19th century.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Manhattan_Produce_Exchange"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Vienna, Austria-Hungary",
+        "to_location": "New York City, United States",
+        "characterization": "family relocation"
+      }
+    },
+    {
+      "date": "1912",
+      "date_precision": "year",
+      "age": 20,
+      "title": "Graduated from Cornell",
+      "description": "In 1912, Bernays graduated from [[Cornell University|Cornell University]] with a degree in agriculture. Although trained for agricultural work, he opted instead to pursue journalism and publicity, a choice that brought him into [[New York City|New York]]’s media and promotional circles at the start of his career.",
+      "locations": [
+        {
+          "name_historic": "Ithaca",
+          "name_modern": "Ithaca, New York, United States",
+          "centroid": [
+            -76.5483724,
+            42.4374175
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Cornell_University"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "publicity_trial_by_fire",
+      "annotations": {
+        "Cornell University": {
+          "explanation": "A private Ivy League research university in Ithaca, New York, founded in 1865; it includes one of the United States’ land-grant colleges.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Cornell_University"
+        },
+        "New York City": {
+          "explanation": "A major U.S. publishing, advertising, and entertainment hub where Bernays would find early opportunities in journalism and publicity.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/New_York_City"
+        }
+      }
+    },
+    {
+      "date": "1912",
+      "date_precision": "year",
+      "date_end": "1913",
+      "date_end_precision": "year",
+      "date_note": "His editorship and the 'Damaged Goods' promotion occurred soon after 1912; the activity spans this period in most accounts",
+      "age": 20,
+      "title": "Promoted Damaged Goods as sex education",
+      "description": "In 1912, after becoming co-editor of the Medical Review of Reviews and related health publications, Bernays worked with Fred Robinson on a public-health campaign to promote the controversial play [[Damaged Goods]]. The play’s subject matter (venereal disease and prostitution) made it difficult to sell as ordinary entertainment, so Bernays treated legitimacy as the product: he recruited endorsements, built a high-profile committee, and pushed the framing of the production as sex education rather than prurience.\n\nIn the same effort he and Robinson supported the production’s lead actor, Richard Bennett, and solicited prestigious names to give the committee social weight, including John D. Rockefeller Jr. as well as Franklin D. Roosevelt and Eleanor Roosevelt. The campaign became an early demonstration of a method Bernays would refine for decades: stage the “respectable” context first, and the headlines follow.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Fred Robinson",
+        "Richard Bennett",
+        "John D. Rockefeller Jr.",
+        "Franklin D. Roosevelt",
+        "Eleanor Roosevelt"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Damaged_Goods_(play)"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "publicity_trial_by_fire",
+      "annotations": {
+        "Damaged Goods": {
+          "explanation": "A 1901 French play by Eugène Brieux (often staged in English in the 1910s) that dealt explicitly with syphilis, prostitution, and the social consequences of venereal disease.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Damaged_Goods_(play)"
+        }
+      }
+    },
+    {
+      "date": "1917",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Joined the CPI propaganda effort",
+      "description": "After the United States entered World War I in 1917, Bernays was hired by the Committee on Public Information (CPI) and assigned to its Bureau of Latin-American Affairs. Working from New York, he helped craft messaging aimed at audiences in the United States and across Latin America. In later reflections he treated the experience as a lesson in large-scale persuasion—proof that public opinion could be organized, targeted, and managed like a strategic asset.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Creel",
+        "Woodrow Wilson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Creel",
+        "https://en.wikipedia.org/wiki/Woodrow_Wilson"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Liberty_Bonds_-_Personnel_-_Miscellaneous_Groups_-_GROUP_OF_WELL_KNOWN_OPERA_stars_who_sold_first_Liberty_Bonds_-_NARA_-_45492816.jpg/960px-Liberty_Bonds_-_Personnel_-_Miscellaneous_Groups_-_GROUP_OF_WELL_KNOWN_OPERA_stars_who_sold_first_Liberty_Bonds_-_NARA_-_45492816.jpg",
+          "caption": "Opera stars selling first Liberty Bonds, including E.L. Bernays",
+          "source": "https://commons.wikimedia.org/wiki/File:Liberty_Bonds_-_Personnel_-_Miscellaneous_Groups_-_GROUP_OF_WELL_KNOWN_OPERA_stars_who_sold_first_Liberty_Bonds_-_NARA_-_45492816.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-bullhorn",
+      "chapter": "publicity_trial_by_fire",
+      "annotations": {
+        "Committee on Public Information": {
+          "explanation": "A U.S. government wartime propaganda agency created in 1917 to influence public opinion at home and abroad during World War I.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Committee_on_Public_Information"
+        },
+        "Bureau of Latin-American Affairs": {
+          "explanation": "A division within the Committee on Public Information focused on shaping information and opinion related to Latin America during World War I.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Committee_on_Public_Information"
+        }
+      }
+    },
+    {
+      "date": "1919-01",
+      "date_precision": "month",
+      "age": 27,
+      "title": "Paris Peace Conference lessons in wording",
+      "description": "In January 1919, Bernays traveled to the Paris Peace Conference as part of a small publicity group linked to the U.S. Committee on Public Information. During the conference he used the word “propaganda” in a press release and drew sharp criticism in the U.S. press. The sting was practical: it taught him that the success of persuasion could hinge on the label attached to it—an insight that helped push him toward the safer, more professional-sounding language of “public relations.”",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Creel",
+        "Woodrow Wilson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Paris_Peace_Conference_(1919%E2%80%931920)",
+        "https://en.wikipedia.org/wiki/George_Creel"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "counsel_to_the_unseen",
+      "annotations": {
+        "Paris Peace Conference": {
+          "explanation": "Post–World War I diplomatic meetings (1919–1920) in Paris where the Allied powers set peace terms and drafted treaties, including the framework for the League of Nations.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Paris_Peace_Conference_(1919%E2%80%931920)"
+        },
+        "Committee on Public Information": {
+          "explanation": "U.S. government wartime public-information and persuasion agency (1917–1919), commonly known as the Creel Committee, created under President Woodrow Wilson.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Committee_on_Public_Information"
+        }
+      }
+    },
+    {
+      "date": "1919",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Opened PR counsel practice",
+      "description": "In 1919, back in New York, Bernays opened his own practice and began calling himself a “public relations counsel.” Doris Fleischman became a key early colleague, contributing writing and organizational work as the operation grew. He sought corporate and institutional clients through staged events, press placement, and closely managed messaging.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Doris Fleischman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Doris_Fleischman",
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "counsel_to_the_unseen"
+    },
+    {
+      "date": "1920",
+      "date_precision": "year",
+      "age": 28,
+      "title": "Brought Freud to U.S. readers",
+      "description": "In 1920, Bernays helped secure a U.S. edition of Sigmund Freud’s Introductory Lectures on Psychoanalysis, arranging for royalties to be forwarded to Freud in Vienna and discussing additional publicity ideas—such as public talks and newspaper columns—to broaden Freud’s American readership.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3725042,
+            48.2083537
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Sigmund Freud"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Sigmund_Freud"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Edward_Bernays_and_Doris_E._Fleischman_-_gros_plan.png",
+          "caption": "Doris E. Fleischman and Edward Bernays arriving in France, 1923",
+          "source": "https://commons.wikimedia.org/wiki/File:Edward_Bernays_and_Doris_E._Fleischman_-_gros_plan.png"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "counsel_to_the_unseen",
+      "event_class": {
+        "type": "publication",
+        "title": "Introductory Lectures on Psychoanalysis (U.S. publication arrangement)",
+        "publication_type": "book",
+        "significance": "U.S. release",
+        "impact": "Bernays helped coordinate American publication and royalty payments, widening access to Freud’s lectures in the United States."
+      }
+    },
+    {
+      "date": "1922",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Married Doris Fleischman",
+      "description": "In 1922, Bernays married Doris Fleischman at New York City Hall. The couple treated her decision to keep her maiden name as a public as well as personal statement, reflecting her involvement in the [[Lucy Stone League|Lucy Stone League]]. The marriage also formalized a partnership that already existed in practice: Fleischman’s writing and organizational work became central to how Bernays’s public relations operation functioned.\n\nLater, Fleischman would also use the name Doris Bernays—separate from the couple’s daughter Doris, born in 1929.",
+      "locations": [
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Doris Fleischman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Doris_Fleischman",
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Edward_Bernays_and_Doris_E._Fleischman.jpg",
+          "caption": "Edward Bernays and Doris E. Fleischman",
+          "source": "https://commons.wikimedia.org/wiki/File:Edward_Bernays_and_Doris_E._Fleischman.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "counsel_to_the_unseen",
+      "annotations": {
+        "Lucy Stone League": {
+          "explanation": "A New York–based feminist organization founded in 1921 that promoted married women’s right to keep and use their birth names.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Lucy_Stone_League"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Doris E. Fleischman",
+        "duration": "until her death",
+        "children": 2,
+        "characterization": "professional partnership"
+      }
+    },
+    {
+      "date": "1923",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Published Crystallizing Public Opinion",
+      "description": "In 1923, Bernays published Crystallizing Public Opinion in New York, one of his earliest attempts to define what his work was—and to argue that shaping public attitudes could be approached as an organized practice rather than a scatter of press agentry tricks. The book helped cement his preferred professional identity as a “public relations counsel,” someone who advised clients not just on what to say, but on how to arrange events and symbols so that certain interpretations felt natural to the public.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Doris Fleischman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Doris_Fleischman",
+        "https://en.wikipedia.org/wiki/Walter_Lippmann"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "counsel_to_the_unseen",
+      "event_class": {
+        "type": "publication",
+        "title": "Crystallizing Public Opinion",
+        "publication_type": "book",
+        "significance": "field-defining",
+        "impact": "He articulated public relations as an organized practice and offered methods for managing how organizations are perceived."
+      }
+    },
+    {
+      "date": "1924-03",
+      "date_precision": "month",
+      "date_note": "The widely reported 'pancake breakfast' staged to soften Coolidge’s image occurred during the 1924 election year; exact date varies by account",
+      "age": 32,
+      "title": "Coolidge’s White House pancake breakfast",
+      "description": "In March 1924, Bernays helped stage a vaudeville-style “pancake breakfast” for President Calvin Coolidge at the White House. By bringing entertainers into the scene and alerting the press, he aimed to generate warmer newspaper coverage during the 1924 campaign season. The point was simple: replace a reputation for stiffness with photographs and laughter that could travel farther than policy details.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Calvin Coolidge"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Calvin_Coolidge"
+      ],
+      "event_type_icon": "mdi-newspaper",
+      "chapter": "manufacturing_modern_appetites"
+    },
+    {
+      "date": "1927",
+      "date_precision": "year",
+      "age": 35,
+      "title": "Hired to market Lucky Strike to women",
+      "description": "In 1927, Bernays was hired by [[George Washington Hill|George Washington Hill]] at the [[American Tobacco Company|American Tobacco Company]] to promote [[Lucky Strike|Lucky Strike]]. A central problem was cultural, not logistical: public smoking by women was widely treated as taboo. Bernays approached it as a question of framing and visibility, developing publicity that linked cigarettes to modern style and slimness while using staged events and carefully managed press attention to make the “unthinkable” look newly ordinary.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Washington Hill"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington_Hill"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/LUCKY_STRIKE%2C_GIRL_IN_RED.jpg/960px-LUCKY_STRIKE%2C_GIRL_IN_RED.jpg",
+          "caption": "Lucky Strike \"Girl in Red\" (1936), Nickolas Muray",
+          "source": "https://commons.wikimedia.org/wiki/File:LUCKY_STRIKE,_GIRL_IN_RED.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "manufacturing_modern_appetites",
+      "annotations": {
+        "George Washington Hill": {
+          "explanation": "President of the American Tobacco Company (1925–1946) who hired Bernays to help market Lucky Strike, including efforts to reduce the taboo against women smoking in public.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/George_Washington_Hill"
+        },
+        "American Tobacco Company": {
+          "explanation": "A major U.S. tobacco corporation that owned the Lucky Strike brand; under Hill it pursued aggressive national marketing in the 1920s.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/American_Tobacco_Company"
+        },
+        "Lucky Strike": {
+          "explanation": "A leading cigarette brand of the American Tobacco Company that became a focus of Bernays’s late-1920s publicity work.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Lucky_Strike"
+        }
+      }
+    },
+    {
+      "date": "1928",
+      "date_precision": "year",
+      "age": 36,
+      "title": "Published Propaganda",
+      "description": "In 1928, Bernays published Propaganda in the United States, presenting a blunt theory of how mass opinion could be guided through organized messaging. The book helped define his reputation—not only as a practitioner who staged campaigns, but as someone willing to argue in print that persuasion was a normal tool of modern society.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "manufacturing_modern_appetites",
+      "event_class": {
+        "type": "publication",
+        "title": "Propaganda",
+        "publication_type": "book",
+        "significance": "controversial",
+        "impact": "He set out a direct theory of opinion management, describing how organized messaging could guide public attitudes."
+      }
+    },
+    {
+      "date": "1929-03-31",
+      "date_precision": "day",
+      "date_note": "Easter Sunday in 1929",
+      "age": 37,
+      "title": "Torches of Freedom in the Easter parade",
+      "description": "On 31 March 1929 in New York City, Bernays orchestrated the [[Torches of Freedom|Torches of Freedom]] publicity stunt to confront the social taboo on women smoking in public. He arranged for a group of women to light cigarettes at a strategically visible moment during the city’s Easter Sunday parade and alerted journalists so the act would be reported as a gesture of women’s emancipation.\n\nBehind the scenes, Bernays also leaned on psychoanalytic language—seeking interpretations that made a cigarette read as a symbol rather than just a product. The result was a headline-friendly performance that blurred activism and advertising in a single image.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Washington Hill",
+        "Abraham Arden Brill"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington_Hill"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "manufacturing_modern_appetites",
+      "annotations": {
+        "Torches of Freedom": {
+          "explanation": "A 1929 public-relations event staged during New York City’s Easter Sunday parade in which women were encouraged to smoke in public to challenge social norms, promoting Lucky Strike cigarettes.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Torches_of_Freedom"
+        }
+      }
+    },
+    {
+      "date": "1929",
+      "date_precision": "year",
+      "date_end": "1930",
+      "date_end_precision": "year",
+      "age": 37,
+      "title": "Two daughters, amid a growing practice",
+      "description": "In 1929, Bernays and Doris Fleischman became parents with the birth of their first daughter, Doris. Their second daughter, Anne, followed in 1930. The couple balanced early family life with the demands of a New York–based practice built on constant writing, planning, and press management—work that rarely stopped simply because the household had changed.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Doris Fleischman",
+        "Doris Bernays (daughter)",
+        "Anne Bernays"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Doris_Fleischman",
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "event_type_icon": "mdi-baby-carriage",
+      "chapter": "manufacturing_modern_appetites"
+    },
+    {
+      "date": "1939",
+      "date_precision": "year",
+      "age": 47,
+      "title": "Publicity director for the 1939 World’s Fair",
+      "description": "In 1939, Bernays served as publicity director for the [[New York World's Fair (1939)|1939 New York World's Fair]] in New York City. With the fair selling a vision of “The World of Tomorrow,” his job was to keep that optimism in the news—shaping promotional campaigns and coordinating press outreach so the exposition felt like a national event, not merely a local attraction.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/1939_New_York_World%27s_Fair"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "fairground_future",
+      "annotations": {
+        "New York World's Fair (1939)": {
+          "explanation": "A major international exposition held in Queens, New York, in 1939–1940, themed around “The World of Tomorrow,” and designed to draw large public and media attention.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/1939_New_York_World%27s_Fair"
+        }
+      }
+    },
+    {
+      "date": "1950",
+      "date_precision": "year",
+      "date_end": "1954",
+      "date_end_precision": "year",
+      "date_note": "Bernays’s United Fruit work is generally placed in the early 1950s, with the Guatemala crisis peaking in 1954",
+      "age": 58,
+      "title": "United Fruit campaign against Guatemala’s reforms",
+      "description": "In 1950, Bernays was retained by the [[United Fruit Company|United Fruit Company]] to shape U.S. opinion about Guatemala as agrarian reform threatened the company’s land holdings. He promoted messaging that cast the country’s reformist government as a Cold War political risk, targeting journalists and policymakers and pushing a storyline designed to travel easily in U.S. media.\n\nThis work is widely described as connected with the CIA-orchestrated overthrow of Guatemala’s democratically elected government in 1954, a legacy that continues to fuel ethical criticism of Bernays’s methods and their consequences.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Guatemala City",
+          "name_modern": "Guatemala City, Guatemala",
+          "centroid": [
+            -90.5132836,
+            14.6416142
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Jacobo Árbenz",
+        "Sam Zemurray"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacobo_%C3%81rbenz",
+        "https://en.wikipedia.org/wiki/United_Fruit_Company"
+      ],
+      "event_type_icon": "mdi-bullhorn",
+      "chapter": "cold_war_afterimage",
+      "annotations": {
+        "1954 Guatemalan coup d'état": {
+          "explanation": "The 1954 overthrow of Guatemala’s elected government, widely described as CIA-backed; often discussed as a key Cold War intervention in Central America.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/1954_Guatemalan_coup_d%27%C3%A9tat"
+        }
+      }
+    },
+    {
+      "date": "1962",
+      "date_precision": "year",
+      "date_end": "1963",
+      "date_end_precision": "year",
+      "date_note": "Bernays’s New York practice is commonly described as running through 1963; the move to Cambridge occurred in 1962",
+      "age": 70,
+      "title": "Moved to Cambridge",
+      "description": "In 1962, Bernays and his wife left New York and settled in Cambridge, Massachusetts, as he began easing back from his long-established New York–centered consulting routine while continuing some professional work from their new home.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1040018,
+            42.3656347
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Doris E. Fleischman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Doris_E._Fleischman"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "cold_war_afterimage",
+      "event_class": {
+        "type": "migration",
+        "from_location": "New York City, United States",
+        "to_location": "Cambridge, Massachusetts, United States",
+        "characterization": "later-life relocation"
+      }
+    },
+    {
+      "date": "1995-03-09",
+      "date_precision": "day",
+      "age": 103,
+      "title": "Death in Cambridge, Massachusetts",
+      "description": "Edward Bernays died on March 9, 1995, in Cambridge, Massachusetts, at the age of 103.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.109733,
+            42.373616
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "cold_war_afterimage"
+    }
+  ]
+}
