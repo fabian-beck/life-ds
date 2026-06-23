@@ -305,6 +305,26 @@ export function resolveEventIcon(event) {
 }
 
 /**
+ * Standard thumbnail widths allowed by Wikimedia for direct (hotlinked) requests.
+ * Non-standard widths are rejected with HTTP 400, so any requested width must be
+ * snapped to one of these. See https://www.mediawiki.org/wiki/Common_thumbnail_sizes
+ */
+const WIKIMEDIA_STANDARD_THUMB_WIDTHS = [
+  20, 40, 60, 120, 250, 330, 500, 960, 1280, 1920, 3840,
+];
+
+/**
+ * Snap a desired width up to the smallest allowed Wikimedia standard width
+ * (capped at the largest), so the request is accepted and quality is sufficient.
+ * @param {number} width - Desired width in pixels
+ * @returns {number} A standard Wikimedia thumbnail width
+ */
+function snapToWikimediaWidth(width) {
+  const sizes = WIKIMEDIA_STANDARD_THUMB_WIDTHS;
+  return sizes.find((size) => size >= width) ?? sizes[sizes.length - 1];
+}
+
+/**
  * Get optimized image URL based on desired width.
  * For portrait objects with multi-size WebP support, selects appropriate size.
  * For Wikimedia Commons URLs, uses their thumbnail service.
@@ -343,11 +363,15 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
 
   // Optimize Wikimedia Commons images
   if (imageUrl.includes("upload.wikimedia.org/wikipedia/commons/")) {
+    // Wikimedia rejects non-standard thumbnail widths on direct requests (HTTP 400),
+    // so snap to an allowed standard size.
+    const stdWidth = snapToWikimediaWidth(width);
+
     // Check if URL is already a thumbnail
     if (imageUrl.includes("/thumb/")) {
       // URL is already a thumbnail - just adjust the size
-      // Example: .../thumb/a/b/File.svg/800px-File.svg.png -> .../thumb/a/b/File.svg/400px-File.svg.png
-      return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${width}px-$1`);
+      // Example: .../thumb/a/b/File.svg/800px-File.svg.png -> .../thumb/a/b/File.svg/500px-File.svg.png
+      return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${stdWidth}px-$1`);
     }
 
     // Convert full URL to thumbnail URL
@@ -359,7 +383,7 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
       const thumbFilename = filename.toLowerCase().endsWith('.svg')
         ? `${filename}.png`
         : filename;
-      return `${base}/wikipedia/commons/thumb/${path}/${width}px-${thumbFilename}`;
+      return `${base}/wikipedia/commons/thumb/${path}/${stdWidth}px-${thumbFilename}`;
     }
   }
 
