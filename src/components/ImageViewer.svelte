@@ -4,6 +4,12 @@
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
   import { storyStyleVars } from "../utils/helpers.js";
+  import { getThumbnailUrl } from "../utils/storyHelpers.js";
+
+  // Width requested for the full-size lightbox view. getThumbnailUrl snaps this
+  // to an allowed Wikimedia standard width, avoiding HTTP 400 (and the resulting
+  // OpaqueResponseBlocking) for non-standard widths baked into the data.
+  const LIGHTBOX_WIDTH = 1280;
 
   export let image = null; // { url, caption, source, eventIndex, eventTitle, slideIndex, ... }
   export let onClose = () => {};
@@ -64,11 +70,11 @@
   $: if (image && allImages.length > 1) {
     if (currentIndex < allImages.length - 1) {
       const nextImg = new Image();
-      nextImg.src = allImages[currentIndex + 1].url;
+      nextImg.src = getThumbnailUrl(allImages[currentIndex + 1].url, LIGHTBOX_WIDTH);
     }
     if (currentIndex > 0) {
       const prevImg = new Image();
-      prevImg.src = allImages[currentIndex - 1].url;
+      prevImg.src = getThumbnailUrl(allImages[currentIndex - 1].url, LIGHTBOX_WIDTH);
     }
   }
 
@@ -398,7 +404,7 @@
         {/if}
         <img
           bind:this={imageElement}
-          src={image.url}
+          src={getThumbnailUrl(image.url, LIGHTBOX_WIDTH)}
           alt={image.caption || $_("image.enlarged_view")}
           draggable="false"
           on:load={handleImageLoad}
