@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Icon category mappings for event type visualization using Material Design Icons (MDI)."""
 
+from typing import Dict, List, Optional
+
 # Comprehensive icon category mappings for biographical events
 ICON_CATEGORIES = {
     # Life Milestones
@@ -143,6 +145,14 @@ def format_icon_categories_for_prompt() -> str:
     """
     lines = ["Available event type icons (MDI identifiers):"]
     lines.append("")
+    lines.append(
+        "Copy an identifier from the left of each line EXACTLY as written. The "
+        "words in parentheses are only hints about when an icon fits — they are "
+        "NOT icon names. Never invent an identifier and never turn a hint into "
+        'one (there is no "mdi-lecture"; the icon for a lecture is '
+        '"mdi-school-outline").'
+    )
+    lines.append("")
 
     # Group by category for readability
     categories = {
@@ -166,9 +176,14 @@ def format_icon_categories_for_prompt() -> str:
 
     for category_name, keywords in categories.items():
         lines.append(f"{category_name}:")
+        # Several keywords share one icon, so list each icon once with all of
+        # its hints instead of repeating the icon per keyword.
+        hints_by_icon: Dict[str, List[str]] = {}
         for keyword in keywords:
-            icon = ICON_CATEGORIES.get(keyword, "mdi-calendar")
-            lines.append(f"  - {keyword}: {icon}")
+            icon = ICON_CATEGORIES.get(keyword, ICON_CATEGORIES["default"])
+            hints_by_icon.setdefault(icon, []).append(keyword)
+        for icon, hints in hints_by_icon.items():
+            lines.append(f"  - {icon}  ({', '.join(hints)})")
         lines.append("")
 
     lines.append(f"Default (if uncertain): {ICON_CATEGORIES['default']}")
@@ -187,3 +202,64 @@ def get_icon_for_event_type(event_type: str) -> str:
         MDI icon identifier (e.g., "mdi-candle")
     """
     return ICON_CATEGORIES.get(event_type.lower(), ICON_CATEGORIES["default"])
+
+
+# Every icon this project may emit. Each one is a real @mdi/js export;
+# vite.config.js re-verifies that at build time and warns on any that is not.
+VALID_ICONS = frozenset(ICON_CATEGORIES.values())
+
+# Names from earlier versions of this file that are not real MDI icons, kept so
+# that data generated against the old vocabulary still normalizes cleanly.
+RETIRED_ICONS = {
+    "mdi-teach": "mdi-school-outline",
+    "mdi-home-move": "mdi-home-switch-outline",
+    "mdi-monument": "mdi-pillar",
+}
+
+
+def normalize_icon(raw: Optional[str]) -> str:
+    """
+    Rewrite a model-supplied icon name that is known to name no real icon.
+
+    The model is shown category keywords alongside their icons, and regularly
+    returns the keyword with an "mdi-" prefix ("mdi-lecture") instead of the
+    icon the keyword maps to ("mdi-school-outline"). Such names render nothing,
+    so resolve them here rather than writing them to disk.
+
+    Only names provably wrong are rewritten. MDI ships ~7,400 icons and this
+    module knows 68 of them, so an unrecognized "mdi-" name is far more likely
+    to be a real icon the model reached for beyond this vocabulary (mdi-airplane,
+    mdi-tractor) than a hallucination. Those are passed through untouched: the
+    UI renders any real icon, and vite.config.js warns at build time about names
+    that turn out not to exist. Downgrading them here would silently replace
+    working icons with generic calendars.
+
+    Args:
+        raw: Whatever the model produced, or None.
+
+    Returns:
+        An icon identifier. Guaranteed real only for names this module knows.
+    """
+    if not isinstance(raw, str):
+        return ICON_CATEGORIES["default"]
+
+    name = raw.strip().lower()
+    if not name:
+        return ICON_CATEGORIES["default"]
+
+    if name in VALID_ICONS:
+        return name
+    if name in RETIRED_ICONS:
+        return RETIRED_ICONS[name]
+
+    # "mdi-lecture" -> "lecture" -> "mdi-school-outline"; also accepts a bare
+    # keyword ("lecture"), which the model occasionally returns unprefixed.
+    keyword = name[4:] if name.startswith("mdi-") else name
+    if keyword in ICON_CATEGORIES:
+        return ICON_CATEGORIES[keyword]
+
+    # Unknown but icon-shaped: assume a real icon outside this vocabulary.
+    if name.startswith("mdi-"):
+        return name
+
+    return ICON_CATEGORIES["default"]

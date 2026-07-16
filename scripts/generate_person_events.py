@@ -26,7 +26,11 @@ from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
-from icon_categories import ICON_CATEGORIES, format_icon_categories_for_prompt
+from icon_categories import (
+    ICON_CATEGORIES,
+    format_icon_categories_for_prompt,
+    normalize_icon,
+)
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
@@ -2768,7 +2772,9 @@ def merge_event_skeleton_and_details(
         involved_people=details.involved_people,
         sources=details.sources if details.sources else [],
         images=None,  # Images assigned in Phase 3
-        event_type_icon=details.event_type_icon or "mdi-calendar",
+        # The model invents icon names that render nothing, so resolve whatever
+        # it returned to an icon that exists before it reaches disk.
+        event_type_icon=normalize_icon(details.event_type_icon),
         chapter=None,  # Chapter assigned in Chapter generation phase
         annotations=annotations,
         event_class=skeleton.event_class,  # From Phase 1, not Phase 2
