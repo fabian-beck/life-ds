@@ -307,8 +307,12 @@
   }
 
   function toggleExpanded() {
+    // The URL owns this state: the dispatch below makes StoryView rewrite the
+    // timeline param, which flows back through initialExpanded and re-runs the
+    // reactive assignment above with the same value. Setting it here first is
+    // deliberate, so the toggle paints without waiting for that round trip.
+    // eslint-disable-next-line svelte/no-reactive-reassign
     isExpanded = !isExpanded;
-    // Dispatch event to parent so it can update the URL
     dispatch("expandchange", { expanded: isExpanded });
   }
 </script>
