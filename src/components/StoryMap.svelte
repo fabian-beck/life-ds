@@ -937,7 +937,7 @@
     if (pmtilesProtocol && typeof maplibregl.removeProtocol === "function") {
       try {
         maplibregl.removeProtocol("pmtiles");
-      } catch (error) {
+      } catch {
         // ignore removal issues
       }
     }

@@ -100,12 +100,12 @@
     stopAutoplay();
   }
 
-  function handleMouseUp(fromDrag = false) {
+  function handleMouseUp() {
     if (!isDragging) return;
     isDragging = false;
     carouselElement.style.cursor = "grab";
-    // Only restart autoplay if this was from actual dragging, not from mouseleave
-    // The section's handleMouseLeave will handle resuming when mouse truly leaves
+    // Autoplay is not resumed here; the section's handleMouseLeave resumes it
+    // when the mouse truly leaves.
   }
 
   function handleMouseMove(e) {

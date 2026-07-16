@@ -297,7 +297,7 @@ export function resolveEventIcon(event) {
       if (rule.matches(event, text)) {
         return rule.icon;
       }
-    } catch (error) {
+    } catch {
       // ignore rule errors to avoid breaking icon rendering
     }
   }
@@ -436,7 +436,7 @@ export function sourceLabel(url) {
     }
 
     return { label: hostname.replace(/^www\./, ""), isWikipedia: false };
-  } catch (error) {
+  } catch {
     return { label: url, isWikipedia: false };
   }
 }
