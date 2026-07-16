@@ -171,6 +171,10 @@
     for (let i = 0; i < entries.length; i += BATCH_SIZE) {
       const batch = entries.slice(i, i + BATCH_SIZE);
 
+      // Batches are awaited in sequence on purpose: loading every person's
+      // events at once stalls the map, and the yield below keeps the frame
+      // responsive between batches.
+      // eslint-disable-next-line no-await-in-loop
       await Promise.all(
         batch.map(async (entry) => {
           if (eventDataCache.has(entry.id)) {
@@ -202,7 +206,10 @@
         })
       );
 
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((resolve) => {
+        setTimeout(resolve, 0);
+      });
     }
 
     // Apply collision detection and circular arrangement
@@ -367,7 +374,7 @@
     });
   }
 
-  async function setupMapLayers(geojsonData) {
+  function setupMapLayers(geojsonData) {
     mapInstance.addSource("events", {
       type: "geojson",
       data: geojsonData,
