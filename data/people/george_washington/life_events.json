@@ -1,0 +1,903 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-07-16",
+  "person": {
+    "name": "George_Washington",
+    "birth_date": "1732-02-22",
+    "death_date": "1799-12-14",
+    "primary_roles": [
+      "soldier",
+      "politician",
+      "president"
+    ],
+    "tagline": "First President of the United States",
+    "summary": "George Washington was a Virginia planter, commander of the Continental Army during the American Revolutionary War, and the first president of the United States. He helped secure American independence, presided over the Constitutional Convention, and established major precedents for the new federal presidency.",
+    "wikipedia": "https://de.wikipedia.org/wiki/George_Washington",
+    "portrait": {
+      "image": "/portraits/george_washington_thumbnail.webp",
+      "thumbnail": "/portraits/george_washington_thumbnail.webp",
+      "medium": "/portraits/george_washington_medium.webp",
+      "full": "/portraits/george_washington_full.webp",
+      "source": "https://de.wikipedia.org/wiki/George_Washington",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "frontier_lessons",
+      "headline": "Frontier Lessons",
+      "bridge_statement": "A Virginia childhood gave way to hard-won practical knowledge at the colony's unsettled edge.",
+      "date_start": "1732-02-22",
+      "date_start_precision": "day",
+      "date_end": "1752-05",
+      "date_end_precision": "month",
+      "age_start": 0,
+      "age_end": 20,
+      "involved_people": [
+        "Augustine Washington",
+        "Mary Ball Washington",
+        "George William Fairfax"
+      ],
+      "location": "Virginia"
+    },
+    {
+      "id": "forged_under_fire",
+      "headline": "Forged Under Fire",
+      "bridge_statement": "Surveyor's discipline now faced the brutal uncertainties of imperial war.",
+      "date_start": "1752-06",
+      "date_start_precision": "month",
+      "date_end": "1758-12",
+      "date_end_precision": "month",
+      "age_start": 20,
+      "age_end": 26,
+      "involved_people": [
+        "Lawrence Washington",
+        "Robert Dinwiddie",
+        "Jacques Legardeur de Saint-Pierre",
+        "Louis Coulon de Villiers",
+        "Tanacharison",
+        "James Mackay",
+        "Edward Braddock"
+      ],
+      "location": "Virginia and the western frontier"
+    },
+    {
+      "id": "mount_vernon_years",
+      "headline": "The Mount Vernon Years",
+      "bridge_statement": "After the frontier's trials, a new household offered roots, responsibility, and a wider stake in Virginia.",
+      "date_start": "1759-01-06",
+      "date_start_precision": "day",
+      "date_end": "1775-06-14",
+      "date_end_precision": "day",
+      "age_start": 26,
+      "age_end": 43,
+      "involved_people": [
+        "Martha Dandridge Custis"
+      ],
+      "location": "Virginia"
+    },
+    {
+      "id": "revolutionary_command",
+      "headline": "Revolutionary Command",
+      "bridge_statement": "When rebellion demanded endurance, Washington stepped into a command that would test a nation’s resolve.",
+      "date_start": "1775-06-15",
+      "date_start_precision": "day",
+      "date_end": "1783-12-23",
+      "date_end_precision": "day",
+      "age_start": 43,
+      "age_end": 51,
+      "involved_people": [
+        "John Hancock",
+        "Johann Rall",
+        "Charles Cornwallis",
+        "Nathanael Greene",
+        "John Sullivan",
+        "Hugh Mercer",
+        "Marquis de Lafayette",
+        "Jean-Baptiste Donatien de Vimeur, comte de Rochambeau"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "designing_the_republic",
+      "headline": "Designing the Republic",
+      "bridge_statement": "Victory had secured independence; preserving it required a stronger framework for self-government.",
+      "date_start": "1787-05-25",
+      "date_start_precision": "day",
+      "date_end": "1787-09-17",
+      "date_end_precision": "day",
+      "age_start": 55,
+      "age_end": 55,
+      "involved_people": [
+        "James Madison",
+        "Alexander Hamilton"
+      ],
+      "location": "United States"
+    },
+    {
+      "id": "the_presidential_standard",
+      "headline": "The Presidential Standard",
+      "bridge_statement": "The untested office now required restraint, authority, and a deliberate farewell.",
+      "date_start": "1789-04-30",
+      "date_start_precision": "day",
+      "date_end": "1799-12-14",
+      "date_end_precision": "day",
+      "age_start": 57,
+      "age_end": 67,
+      "involved_people": [
+        "Robert Livingston",
+        "Henry Lee III",
+        "Alexander Hamilton",
+        "James Madison",
+        "Martha Washington",
+        "James Craik",
+        "Elisha C. Dick",
+        "Gustavus Richard Brown"
+      ],
+      "location": "United States"
+    }
+  ],
+  "conclusion": "George Washington transformed frontier discipline into national leadership, winning independence and then defining the limits of republican power. His greatest precedent was surrendering authority—first as a general, then as president—to the nation he helped create.",
+  "events": [
+    {
+      "date": "1732-02-22",
+      "date_precision": "day",
+      "date_note": "February 11, 1731/32 in the Old Style calendar then used in Britain and its colonies",
+      "age": 0,
+      "title": "Birth at Wakefield",
+      "description": "George Washington was born at Wakefield, a plantation in Westmoreland County, Virginia, to Augustine Washington and Mary Ball Washington. He was the first child of their marriage, in a family of prosperous slaveholding planters.",
+      "locations": [
+        {
+          "name_historic": "Westmoreland County, Virginia",
+          "name_modern": "Westmoreland County, Virginia, United States",
+          "centroid": [
+            -76.775,
+            38.123
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Augustine Washington",
+        "Mary Ball Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Augustine_Washington",
+        "https://en.wikipedia.org/wiki/Mary_Ball_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/George_Washington_Birthplace%2C_Westmoreland_County%2C_Virginia.jpg/960px-George_Washington_Birthplace%2C_Westmoreland_County%2C_Virginia.jpg",
+          "caption": "George Washington Birthplace, Westmoreland County, Virginia",
+          "source": "https://commons.wikimedia.org/wiki/File:George_Washington_Birthplace,_Westmoreland_County,_Virginia.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "frontier_lessons"
+    },
+    {
+      "date": "1743-04",
+      "date_precision": "month",
+      "date_end": "1748",
+      "date_end_precision": "year",
+      "age": 11,
+      "title": "Father Dies, Learning Continues",
+      "description": "Augustine Washington died in April 1743, when George was eleven, leaving Mary Ball Washington to manage the household and estate. George received limited formal schooling in Virginia and pursued mathematics and other practical subjects through independent study.",
+      "locations": [
+        {
+          "name_historic": "Ferry Farm, Virginia",
+          "name_modern": "Fredericksburg, Virginia, United States",
+          "centroid": [
+            -77.4608,
+            38.3026
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Virginia",
+          "name_modern": "Virginia, United States",
+          "centroid": [
+            -78.6569,
+            37.4316
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Augustine Washington",
+        "Mary Ball Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Augustine_Washington",
+        "https://en.wikipedia.org/wiki/Mary_Ball_Washington"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "frontier_lessons"
+    },
+    {
+      "date": "1748",
+      "date_precision": "year",
+      "date_end": "1751",
+      "date_end_precision": "year",
+      "age": 16,
+      "title": "Surveys Shenandoah Frontier",
+      "description": "In 1748, Washington joined George William Fairfax on a surveying expedition through the Shenandoah Valley. He subsequently surveyed Fairfax lands on Virginia’s western frontier and acquired his first landholding near Bullskin Creek.",
+      "locations": [
+        {
+          "name_historic": "Shenandoah Valley, Virginia",
+          "name_modern": "Shenandoah Valley, Virginia, United States",
+          "centroid": [
+            -78.5,
+            38.5
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bullskin Creek, Virginia",
+          "name_modern": "Jefferson County, West Virginia, United States",
+          "centroid": [
+            -77.95,
+            39.28
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "George William Fairfax"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/George_Washington%2C_surveyor_by_Henry_Hintermeister.png",
+          "caption": "George Washington as a surveyor",
+          "source": "https://commons.wikimedia.org/wiki/File:George_Washington,_surveyor_by_Henry_Hintermeister.png"
+        }
+      ],
+      "event_type_icon": "mdi-compass",
+      "chapter": "frontier_lessons"
+    },
+    {
+      "date": "1752-06",
+      "date_precision": "month",
+      "age": 20,
+      "title": "Begins Managing Mount Vernon",
+      "description": "After the death of his half-brother Lawrence Washington, George Washington began managing Mount Vernon on the Potomac River. That same month, he successfully sought appointment as an adjutant in the Virginia militia, beginning his formal military career.",
+      "locations": [
+        {
+          "name_historic": "Mount Vernon, Virginia",
+          "name_modern": "Mount Vernon, Virginia, United States",
+          "centroid": [
+            -77.086,
+            38.707
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Lawrence Washington",
+        "Robert Dinwiddie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Lawrence_Washington_(soldier)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Mount_Vernon_Estate_Mansion_1.JPG/960px-Mount_Vernon_Estate_Mansion_1.JPG",
+          "caption": "Mount Vernon Estate mansion, eastern facade",
+          "source": "https://commons.wikimedia.org/wiki/File:Mount_Vernon_Estate_Mansion_1.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "forged_under_fire"
+    },
+    {
+      "date": "1753-10-31",
+      "date_precision": "day",
+      "date_end": "1754",
+      "date_end_precision": "year",
+      "age": 21,
+      "title": "Carries Ohio Ultimatum",
+      "description": "In late 1753, Lieutenant Governor Robert Dinwiddie sent Washington from Williamsburg through the Ohio Valley with a demand that French forces leave territory claimed by Virginia. At Fort Le Boeuf, French commander Jacques Legardeur de Saint-Pierre declined; Washington’s account of the mission was subsequently printed in colonial and British newspapers.",
+      "locations": [
+        {
+          "name_historic": "Williamsburg",
+          "name_modern": "Williamsburg, Virginia, United States",
+          "centroid": [
+            -76.7075,
+            37.2707
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Fort Le Boeuf",
+          "name_modern": "Waterford, Pennsylvania, United States",
+          "centroid": [
+            -80.2656,
+            41.9428
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Ohio Country",
+          "name_modern": "Ohio Valley, United States",
+          "centroid": [
+            -80.5,
+            40.5
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Robert Dinwiddie",
+        "Jacques Legardeur de Saint-Pierre"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington%27s_journey_to_the_Ohio_Country",
+        "https://en.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Fort_Le_Boeuf"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Gwstatue_waterford.jpg/960px-Gwstatue_waterford.jpg",
+          "caption": "George Washington statue at Fort Le Boeuf",
+          "source": "https://commons.wikimedia.org/wiki/File:Gwstatue_waterford.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "forged_under_fire",
+      "event_class": {
+        "type": "publication",
+        "title": "The Journal of Major Washington",
+        "publication_type": "article",
+        "significance": "first public notice",
+        "impact": "The published account brought Washington public attention in Virginia, Britain, and the American colonies."
+      }
+    },
+    {
+      "date": "1754-07-03",
+      "date_precision": "day",
+      "date_end": "1754-07-04",
+      "date_end_precision": "day",
+      "age": 22,
+      "title": "Surrenders Fort Necessity",
+      "description": "After the clash at [[Jumonville Glen|Jumonville Glen]], Washington built Fort Necessity in western Pennsylvania. On July 3, 1754, a larger French and Indigenous force attacked; he surrendered the fort and withdrew with his surviving militia the following day.",
+      "locations": [
+        {
+          "name_historic": "Great Meadows, Pennsylvania",
+          "name_modern": "Farmington, Pennsylvania, United States",
+          "centroid": [
+            -79.466,
+            39.81
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Louis Coulon de Villiers",
+        "Tanacharison",
+        "James Mackay"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Battle_of_Fort_Necessity",
+        "https://en.wikipedia.org/wiki/Fort_Necessity",
+        "https://en.wikipedia.org/wiki/Louis_Coulon_de_Villiers"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Acte_de_capitulation_du_Fort_Necessity_signe_par_George_Washington.jpg",
+          "caption": "Fort Necessity capitulation signed by George Washington",
+          "source": "https://commons.wikimedia.org/wiki/File:Acte_de_capitulation_du_Fort_Necessity_signe_par_George_Washington.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "forged_under_fire",
+      "annotations": {
+        "Jumonville Glen": {
+          "explanation": "The site of the May 1754 skirmish in which French officer Joseph Coulon de Jumonville was killed, helping precipitate the battle at Fort Necessity.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jumonville_Glen_skirmish"
+        }
+      }
+    },
+    {
+      "date": "1755",
+      "date_precision": "year",
+      "date_end": "1758-12",
+      "date_end_precision": "month",
+      "age": 23,
+      "title": "Commands Virginia Regiment",
+      "description": "In 1755, Washington served as an aide to General Edward Braddock during the disastrous expedition against [[Fort Duquesne|Fort Duquesne]], helping rally troops during the retreat. Appointed colonel of the Virginia Regiment later that year, he led frontier defense from Winchester amid shortages of supplies, disease, and recurrent conflict, before resigning his commission in 1758.",
+      "locations": [
+        {
+          "name_historic": "Fort Duquesne",
+          "name_modern": "Pittsburgh, Pennsylvania, United States",
+          "centroid": [
+            -80.007,
+            40.4417
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Winchester",
+          "name_modern": "Winchester, Virginia, United States",
+          "centroid": [
+            -78.1633,
+            39.1857
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Virginia frontier",
+          "name_modern": "Western Virginia, United States",
+          "centroid": [
+            -79.5,
+            38.7
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Edward Braddock"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Braddock_Expedition",
+        "https://en.wikipedia.org/wiki/Virginia_Regiment"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Plan_of_the_Battle_of_Braddock%27s_Defeat_at_the_beginning_of_action_July_9%2C_1755.jpg/960px-Plan_of_the_Battle_of_Braddock%27s_Defeat_at_the_beginning_of_action_July_9%2C_1755.jpg",
+          "caption": "Plan of Braddock’s Defeat, July 9, 1755",
+          "source": "https://commons.wikimedia.org/wiki/File:Plan_of_the_Battle_of_Braddock's_Defeat_at_the_beginning_of_action_July_9,_1755.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "forged_under_fire",
+      "annotations": {
+        "Fort Duquesne": {
+          "explanation": "A French fort at the forks of the Ohio River; its capture was the objective of Braddock's failed 1755 campaign.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fort_Duquesne"
+        }
+      }
+    },
+    {
+      "date": "1759-01-06",
+      "date_precision": "day",
+      "age": 26,
+      "title": "Marries Martha Custis",
+      "description": "On 6 January 1759, Washington married the widowed Martha Dandridge Custis at her estate in New Kent County, Virginia. The marriage joined him to one of the colony’s wealthiest families, and the couple soon made Mount Vernon their home.",
+      "locations": [
+        {
+          "name_historic": "New Kent County, Virginia",
+          "name_modern": "New Kent County, Virginia, United States",
+          "centroid": [
+            -77.058,
+            37.517
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Mount Vernon, Virginia",
+          "name_modern": "Mount Vernon, Virginia, United States",
+          "centroid": [
+            -77.086,
+            38.708
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Martha Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Martha_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Gilbert_Stuart_-_Martha_Washington_%28The_Athenaeum_Portrait%29_-_Google_Art_Project.jpg/960px-Gilbert_Stuart_-_Martha_Washington_%28The_Athenaeum_Portrait%29_-_Google_Art_Project.jpg",
+          "caption": "Gilbert Stuart portrait of Martha Washington",
+          "source": "https://commons.wikimedia.org/wiki/File:Gilbert_Stuart_-_Martha_Washington_(The_Athenaeum_Portrait)_-_Google_Art_Project.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "mount_vernon_years",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Martha Dandridge Custis",
+        "duration": "until death",
+        "children": 0,
+        "characterization": "enduring marriage"
+      }
+    },
+    {
+      "date": "1775-06-15",
+      "date_precision": "day",
+      "date_end": "1783",
+      "date_end_precision": "year",
+      "age": 43,
+      "title": "Commands Continental Army",
+      "description": "On 15 June 1775, the [[Second Continental Congress|Second Continental Congress]] appointed Washington commander in chief of the Continental Army after armed conflict with Britain had begun. He then traveled to Cambridge, Massachusetts, to assume command of the forces besieging British-held Boston.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "John Hancock"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Continental_Army",
+        "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Washington_taking_command_of_the_American_Army_at_Cambridge%2C_1775_-_NARA_-_532874.jpg/960px-Washington_taking_command_of_the_American_Army_at_Cambridge%2C_1775_-_NARA_-_532874.jpg",
+          "caption": "Washington taking command at Cambridge, 1775",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington_taking_command_of_the_American_Army_at_Cambridge,_1775_-_NARA_-_532874.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "revolutionary_command",
+      "annotations": {
+        "Second Continental Congress": {
+          "explanation": "The assembly of delegates from the Thirteen Colonies that directed the revolutionary war effort and acted as the colonies' national government during the conflict.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+        }
+      }
+    },
+    {
+      "date": "1776-12-26",
+      "date_precision": "day",
+      "date_end": "1777-01-03",
+      "date_end_precision": "day",
+      "age": 44,
+      "title": "Wins Trenton and Princeton",
+      "description": "After a difficult retreat across New Jersey, Washington led Continental troops across the Delaware River and defeated [[Hessians|Hessian auxiliary troops serving with the British Army]] at Trenton. He followed the victory with a successful attack at Princeton, then withdrew his army to winter quarters in northern New Jersey.",
+      "locations": [
+        {
+          "name_historic": "Trenton",
+          "name_modern": "Trenton, New Jersey, United States",
+          "centroid": [
+            -74.7429,
+            40.2171
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, United States",
+          "centroid": [
+            -74.6514,
+            40.3431
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "New Jersey",
+          "name_modern": "New Jersey, United States",
+          "centroid": [
+            -74.4057,
+            40.0583
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Johann Rall",
+        "Charles Cornwallis",
+        "Nathanael Greene",
+        "John Sullivan",
+        "Hugh Mercer"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Battle_of_Trenton",
+        "https://en.wikipedia.org/wiki/Battle_of_Princeton",
+        "https://en.wikipedia.org/wiki/George_Washington%27s_crossing_of_the_Delaware_River"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Washington_Crossing_the_Delaware_MET_DP215410.jpg/960px-Washington_Crossing_the_Delaware_MET_DP215410.jpg",
+          "caption": "Washington Crossing the Delaware",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington_Crossing_the_Delaware_MET_DP215410.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "revolutionary_command",
+      "annotations": {
+        "Hessians": {
+          "explanation": "German auxiliary soldiers, chiefly from Hesse-Kassel, hired by Britain to fight in the American Revolutionary War.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hessian_soldier"
+        }
+      }
+    },
+    {
+      "date": "1781-09-28",
+      "date_precision": "day",
+      "date_end": "1783-12-23",
+      "date_end_precision": "day",
+      "age": 49,
+      "title": "Wins Yorktown, Resigns Command",
+      "description": "Washington commanded American and French forces during the siege of Yorktown, Virginia, where the British army under Lord Cornwallis surrendered on October 19, 1781. After the peace settlement, Washington resigned his military commission before the [[Confederation Congress|Confederation Congress]] at Annapolis on December 23, 1783, and returned to Mount Vernon.",
+      "locations": [
+        {
+          "name_historic": "Yorktown",
+          "name_modern": "Yorktown, Virginia, United States",
+          "centroid": [
+            -76.5097,
+            37.2388
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Annapolis",
+          "name_modern": "Annapolis, Maryland, United States",
+          "centroid": [
+            -76.4922,
+            38.9784
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Mount Vernon",
+          "name_modern": "Mount Vernon, Virginia, United States",
+          "centroid": [
+            -77.0861,
+            38.7073
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Charles Cornwallis, 1st Marquess Cornwallis",
+        "Marquis de Lafayette",
+        "Jean-Baptiste Donatien de Vimeur, comte de Rochambeau"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Siege_of_Yorktown",
+        "https://en.wikipedia.org/wiki/George_Washington%27s_resignation_as_commander-in-chief",
+        "https://en.wikipedia.org/wiki/Charles_Cornwallis,_1st_Marquess_Cornwallis"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/General_George_Washington_Resigning_his_Commission.jpg/960px-General_George_Washington_Resigning_his_Commission.jpg",
+          "caption": "General George Washington resigning his commission",
+          "source": "https://commons.wikimedia.org/wiki/File:General_George_Washington_Resigning_his_Commission.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "revolutionary_command",
+      "annotations": {
+        "Confederation Congress": {
+          "explanation": "The governing body of the United States under the Articles of Confederation, which preceded the federal government created by the Constitution.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Congress_of_the_Confederation"
+        }
+      }
+    },
+    {
+      "date": "1787-05-25",
+      "date_precision": "day",
+      "date_end": "1787-09-17",
+      "date_end_precision": "day",
+      "age": 55,
+      "title": "Presides Over Constitutional Convention",
+      "description": "On May 25, 1787, Washington was unanimously chosen to preside over the Philadelphia Convention, convened to revise the [[Articles of Confederation|Articles of Confederation]]. He chaired its deliberations as delegates drafted and signed a proposed Constitution for the United States.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "James Madison",
+        "Alexander Hamilton"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Washington_Constitutional_Convention_1787.jpg",
+          "caption": "Washington at the Constitutional Convention, 1787",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington_Constitutional_Convention_1787.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "designing_the_republic",
+      "annotations": {
+        "Articles of Confederation": {
+          "explanation": "The United States' first national governing charter, in force from 1781 until it was replaced by the Constitution.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Articles_of_Confederation"
+        }
+      }
+    },
+    {
+      "date": "1789-04-30",
+      "date_precision": "day",
+      "date_end": "1797-03-04",
+      "date_end_precision": "day",
+      "age": 57,
+      "title": "Becomes First President",
+      "description": "Washington took the oath of office as the first president of the United States in New York City on April 30, 1789. [[Robert Livingston|Chancellor of New York Robert Livingston]] administered the oath, formally beginning operations of the federal executive branch under the Constitution.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Robert Livingston"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/First_inauguration_of_George_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/The_inauguration_of_Washington-_as_first_President_of_the_United_States%2C_April_30th_1789%3B_at_the_old_city_hall%2C_New_York_LCCN2002699702.jpg/960px-The_inauguration_of_Washington-_as_first_President_of_the_United_States%2C_April_30th_1789%3B_at_the_old_city_hall%2C_New_York_LCCN2002699702.jpg",
+          "caption": "Washington’s inauguration as first president, April 1789",
+          "source": "https://commons.wikimedia.org/wiki/File:The_inauguration_of_Washington-_as_first_President_of_the_United_States,_April_30th_1789;_at_the_old_city_hall,_New_York_LCCN2002699702.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-crown",
+      "chapter": "the_presidential_standard"
+    },
+    {
+      "date": "1794-08",
+      "date_precision": "month",
+      "date_end": "1794-11",
+      "date_end_precision": "month",
+      "age": 62,
+      "title": "Suppresses Whiskey Rebellion",
+      "description": "When armed resistance to the federal excise tax on distilled spirits escalated in western Pennsylvania, Washington invoked federal authority to call out state militias. He traveled with the force toward Pennsylvania before leaving further operations to Governor Henry Lee; the resistance dispersed without a major battle.",
+      "locations": [
+        {
+          "name_historic": "Western Pennsylvania",
+          "name_modern": "Western Pennsylvania, United States",
+          "centroid": [
+            -80.0,
+            40.4
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Carlisle",
+          "name_modern": "Carlisle, Pennsylvania, United States",
+          "centroid": [
+            -77.1881,
+            40.2015
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Henry Lee III",
+        "Alexander Hamilton"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Whiskey_Rebellion",
+        "https://en.wikipedia.org/wiki/George_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Washington_Reviewing_the_Western_Army_at_Fort_Cumberland%2C_Maryland_-_MET_63.201.2.jpg/960px-Washington_Reviewing_the_Western_Army_at_Fort_Cumberland%2C_Maryland_-_MET_63.201.2.jpg",
+          "caption": "Washington reviewing the Western Army at Fort Cumberland",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington_Reviewing_the_Western_Army_at_Fort_Cumberland,_Maryland_-_MET_63.201.2.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-flag-triangle",
+      "chapter": "the_presidential_standard"
+    },
+    {
+      "date": "1796-09-19",
+      "date_precision": "day",
+      "date_end": "1797-03-04",
+      "date_end_precision": "day",
+      "age": 64,
+      "title": "Issues Farewell Address",
+      "description": "On 19 September 1796, Washington had his valedictory letter published in Philadelphia, declaring that he would not seek a third term and urging national unity. Alexander Hamilton helped prepare the address, which was promptly reprinted in newspapers across the United States.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Alexander Hamilton"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington%27s_Farewell_Address"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "the_presidential_standard",
+      "event_class": {
+        "type": "publication",
+        "title": "George Washington's Farewell Address",
+        "publication_type": "essay",
+        "publisher": "Claypoole's American Daily Advertiser",
+        "significance": "presidential valediction",
+        "impact": "The address urged Americans to preserve the Union, avoid destructive partisanship, and exercise caution in foreign commitments."
+      }
+    },
+    {
+      "date": "1799-12-14",
+      "date_precision": "day",
+      "age": 67,
+      "title": "Dies at Mount Vernon",
+      "description": "Washington died at Mount Vernon, Virginia, on December 14, 1799, aged 67. After developing a severe throat illness following exposure to cold weather, he deteriorated rapidly despite medical treatment.",
+      "locations": [
+        {
+          "name_historic": "Mount Vernon, Virginia",
+          "name_modern": "Mount Vernon, Virginia, United States",
+          "centroid": [
+            -77.0861,
+            38.7073
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Martha Washington",
+        "James Craik",
+        "Elisha C. Dick",
+        "Gustavus Richard Brown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Martha_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Washington%27s_Tomb_at_Mount_Vernon_-_Mt._Vernon%2C_Virginia_-_Sarah_Stierch.jpg/960px-Washington%27s_Tomb_at_Mount_Vernon_-_Mt._Vernon%2C_Virginia_-_Sarah_Stierch.jpg",
+          "caption": "Washington’s Tomb at Mount Vernon",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington's_Tomb_at_Mount_Vernon_-_Mt._Vernon,_Virginia_-_Sarah_Stierch.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "the_presidential_standard"
+    }
+  ]
+}
