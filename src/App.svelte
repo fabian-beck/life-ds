@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  import { push, replace, location } from "svelte-spa-router";
+  import { push, replace } from "svelte-spa-router";
+  import { location } from "./stores/router.js";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import ExhibitionView from "./components/ExhibitionView.svelte";

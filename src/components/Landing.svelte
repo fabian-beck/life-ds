@@ -3,7 +3,8 @@
   import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { push, location } from "svelte-spa-router";
+  import { push } from "svelte-spa-router";
+  import { location } from "../stores/router.js";
   import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";

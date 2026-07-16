@@ -1,6 +1,7 @@
 <script>
   import { tick, onMount, onDestroy } from "svelte";
-  import { replace, location } from "svelte-spa-router";
+  import { replace } from "svelte-spa-router";
+  import { location } from "../stores/router.js";
   import CloseButton from "./CloseButton.svelte";
   import { mdiAccountMultipleOutline } from "@mdi/js";
   import { queryParams, buildUrlWithParams } from "../stores/queryParams";

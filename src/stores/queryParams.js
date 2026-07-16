@@ -1,5 +1,5 @@
 import { derived } from "svelte/store";
-import { querystring } from "svelte-spa-router";
+import { querystring } from "./router.js";
 
 /**
  * Derived store that parses query parameters from the current URL
