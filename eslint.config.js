@@ -86,7 +86,15 @@ export default [
     rules: {
       'svelte/require-each-key': 'warn',
       'svelte/infinite-reactive-loop': 'warn',
-      'svelte/no-reactive-reassign': 'warn'
+      'svelte/no-reactive-reassign': 'warn',
+      // Unsound in components: the rule reasons about one top-to-bottom pass
+      // through a function, but Svelte re-runs `$:` blocks and reorders them
+      // by dependency. State trackers assigned at the end of a reactive block
+      // and read by its own condition on the next run look dead to it, as does
+      // a const declared below the reactive statement that uses it. Acting on
+      // either would reintroduce the loops those trackers exist to stop.
+      // Still enabled for plain .js, where the analysis holds.
+      'no-useless-assignment': 'off'
     }
   }
 ];
