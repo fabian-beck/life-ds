@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate stylized portraits for all persons using OpenAI GPT-Image-1.5 API."""
+"""Generate stylized portraits for all persons using the OpenAI image API."""
 
 from __future__ import annotations
 
@@ -76,7 +76,7 @@ def get_persons_needing_portraits(
 def main(argv: Any = None) -> int:
     """Main entry point."""
     parser = argparse.ArgumentParser(
-        description="Generate stylized portraits for all persons using OpenAI GPT-Image-1.5 API."
+        description="Generate stylized portraits for all persons using the OpenAI image API."
     )
     parser.add_argument(
         "--force",
@@ -96,8 +96,8 @@ def main(argv: Any = None) -> int:
     )
     parser.add_argument(
         "--model",
-        default="gpt-image-1",
-        help="OpenAI model to use (default: gpt-image-1). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5"
+        default="gpt-image-2",
+        help="OpenAI model to use (default: gpt-image-2). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5, gpt-image-2"
     )
     parser.add_argument(
         "--persons",

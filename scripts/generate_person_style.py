@@ -583,7 +583,7 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--model",
         default=DEFAULT_MODEL,
         help=(
-            "OpenAI model to use (defaults to OPENAI_MODEL env or 'gpt-5'). "
+            f"OpenAI model to use (defaults to OPENAI_MODEL env or '{DEFAULT_MODEL}'). "
             "See https://platform.openai.com/docs/models for available options."
         ),
     )

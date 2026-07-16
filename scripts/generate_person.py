@@ -33,7 +33,7 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--model",
         help=(
             "OpenAI model to use for all generation steps (overrides defaults). "
-            "Must support structured outputs: gpt-4o-mini, gpt-4o-2024-08-06, or later."
+            "Must support structured outputs."
         ),
     )
     parser.add_argument(
@@ -63,8 +63,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--portrait-model",
-        default="gpt-image-1",
-        help="OpenAI model for portrait generation (default: gpt-image-1).",
+        default="gpt-image-2",
+        help="OpenAI model for portrait generation (default: gpt-image-2).",
     )
     parser.add_argument(
         "--skip-db",

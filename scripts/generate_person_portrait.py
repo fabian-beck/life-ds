@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate stylized portrait images for persons using OpenAI GPT-Image-1.5 API with multi-size WebP optimization."""
+"""Generate stylized portrait images for persons using the OpenAI image API with multi-size WebP optimization."""
 
 from __future__ import annotations
 
@@ -577,7 +577,7 @@ def generate_portrait(
     *,
     source_page_url: Optional[str] = None,
     master_style_path: Path = DEFAULT_MASTER_STYLE_PATH,
-    model: str = "gpt-image-1.5",
+    model: str = "gpt-image-2",
     dry_run: bool = False,
     force: bool = False,
 ) -> Dict[str, Any]:
@@ -590,7 +590,7 @@ def generate_portrait(
                            If None, will load from person's registry entry.
         source_page_url: Optional URL to source page for attribution (e.g., Openverse, Flickr page)
         master_style_path: Path to master style reference image
-        model: OpenAI model to use (default: gpt-image-1.5)
+        model: OpenAI model to use (default: gpt-image-2)
         dry_run: If True, skip API calls and file writes
         force: If True, regenerate even if portrait exists
 
@@ -762,7 +762,7 @@ def generate_portrait(
                 print(f"  Reference path: {temp_ref_path}")
 
                 # Models that support image editing with multiple images
-                if model in ["gpt-image-1", "gpt-image-1.5"]:
+                if model in ["gpt-image-2", "gpt-image-1.5", "gpt-image-1"]:
                     print(f"  Model supports multiple images - using dual-image approach")
                     # Light-drawing portrait prompt with explicit image role specification
                     enhanced_prompt = f"""You are given TWO reference images:
@@ -1010,7 +1010,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
 def parse_args(argv: Any) -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        description="Generate stylized portrait images using OpenAI GPT-Image-1.5 API."
+        description="Generate stylized portrait images using the OpenAI image API."
     )
     parser.add_argument(
         "person_id_or_name",
@@ -1034,8 +1034,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default="gpt-image-1",
-        help="OpenAI model to use (default: gpt-image-1). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5",
+        default="gpt-image-2",
+        help="OpenAI model to use (default: gpt-image-2). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5, gpt-image-2",
     )
 
     parser.add_argument(

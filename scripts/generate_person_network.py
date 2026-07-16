@@ -853,8 +853,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--model",
         default=DEFAULT_MODEL,
         help=(
-            "OpenAI model to use (default from OPENAI_MODEL env or 'gpt-4o-mini'). "
-            "Must support structured outputs: gpt-4o-mini, gpt-4o-2024-08-06, or later. "
+            f"OpenAI model to use (default from OPENAI_MODEL env or '{DEFAULT_MODEL}'). "
+            "Must support structured outputs. "
             "See https://platform.openai.com/docs/guides/structured-outputs for supported models."
         ),
     )
