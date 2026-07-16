@@ -196,7 +196,8 @@ life-ds/
 │   ├── generate_person_network.py   # Ego network only
 │   ├── generate_person_portrait.py  # Stylized portrait generation
 │   ├── generate_all_portraits.py    # Batch portrait generation
-│   ├── icon_categories.py           # MDI icon mappings
+│   ├── icon_categories.py           # MDI icon mappings + icon normalization
+│   ├── fix_event_icons.py           # Repair invalid event_type_icon values
 │   ├── translate_person.py          # Translate single person
 │   ├── translate_all_persons.py     # Batch translate all persons
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
@@ -854,11 +855,49 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 
 ## Performance Considerations
 
-- Lazy loading keeps initial bundle small (~150KB)
+- Entry chunk is ~425 kB (~115 kB gzipped), plus ~135 kB of CSS, as reported by
+  `npm run build`. Person data and the map components are separate chunks
+  fetched on demand.
+- **Never `import * as` from `@mdi/js`.** The package holds ~7,400 icons
+  (6.3 MB) and a wildcard import defeats tree-shaking — this once put 2.5 MB
+  of icon paths in the bundle. Use named imports, or `virtual:mdi-icon-map`
+  (see below) when the icon name is only known at runtime.
+- **Keep MapLibre out of the initial bundle.** MapLibre, pmtiles and
+  `@protomaps/basemaps` total ~1.1 MB. `LandingMap.svelte` and
+  `StoryMap.svelte` are the only modules that may import them, and both are
+  themselves imported dynamically (`{#await import("./StoryMap.svelte")}`).
+  A static import of either component from anywhere pulls all of it back into
+  the entry chunk. Each map component must import `maplibre-gl.css` itself
+  rather than relying on the other having been loaded.
 - PMTiles uses HTTP range requests (efficient tile loading)
 - CSS custom properties avoid style duplication
 - SVG patterns are inline (no external requests)
 - Images are lazy-loaded by browser
+
+### Event Icons
+
+`event_type_icon` values must name a real MDI icon or they render nothing.
+Two mechanisms keep that true, because the model reliably gets it wrong:
+
+- `normalize_icon()` (`scripts/icon_categories.py`) runs during generation and
+  rewrites names that are provably wrong. The model is shown category keywords
+  next to their icons and often returns the keyword prefixed with `mdi-`
+  (`mdi-lecture` instead of `mdi-school-outline`). Unrecognised `mdi-` names
+  are passed through, not defaulted: MDI has ~7,400 icons and
+  `ICON_CATEGORIES` names 68, so an unknown name is usually a real icon
+  outside the vocabulary (`mdi-airplane`), and defaulting it would replace a
+  working icon with a generic calendar.
+- The `virtual:mdi-icon-map` plugin (`vite.config.js`) builds the runtime
+  lookup from the union of `icon_categories.py` and the icons actually present
+  in `data/people`, since generated data drifts from the vocabulary. It
+  validates every name against real `@mdi/js` exports and **warns at build
+  time** about any that do not exist — that warning is the signal that data
+  needs repair.
+
+Repair existing data with `python scripts/fix_event_icons.py --dry-run` (then
+without the flag). It rewrites icon values in place and touches nothing else;
+`data/people/**/*.json` is prettier-ignored and uses CRLF, so never rewrite
+these files with `json.dump`.
 
 ## Browser Compatibility
 
