@@ -186,7 +186,7 @@
     // Remove duplicates from person_ids first
     const uniquePersonIds = [...new Set(metaStory.person_ids)];
 
-    let personsForStory = uniquePersonIds
+    const personsForStory = uniquePersonIds
       .map((id) => persons.find((p) => p.id === id))
       .filter(Boolean)
       .sort((a, b) => {

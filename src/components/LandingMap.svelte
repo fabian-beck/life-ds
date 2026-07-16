@@ -23,7 +23,7 @@
   let mapInstance = null;
   let mapReady = false;
   let isLoading = false;
-  let eventDataCache = new Map();
+  const eventDataCache = new Map();
   let pmtilesProtocol = null;
   let pmtilesUrl = PRIMARY_PM_TILES_URL;
   let basemapResolved = false;
