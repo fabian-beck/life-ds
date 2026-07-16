@@ -423,7 +423,7 @@
                 </svg>
               </span>
               <div class="people-list">
-                {#each otherPeople as person, idx}
+                {#each otherPeople as person, idx (person.person_name)}
                   {@const personKey = `${slide.eventIndex}-other-${idx}`}
                   {@const subcategory = getSubcategory(person.relationship_type)}
                   <PersonChip
@@ -454,7 +454,7 @@
               </svg>
             </span>
             <div class="people-list">
-              {#each relevantPeople as person, idx}
+              {#each relevantPeople as person, idx (person.person_name)}
                 {@const personKey = `${slide.eventIndex}-${idx}`}
                 {@const subcategory = getSubcategory(person.relationship_type)}
                 <PersonChip

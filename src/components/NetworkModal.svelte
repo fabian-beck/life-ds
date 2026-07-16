@@ -386,7 +386,7 @@
         if (a === "family") return -1;
         if (b === "family") return 1;
         return a.localeCompare(b);
-      }) as [type, people]}
+      }) as [type, people] (type)}
         {#if type === "family"}
           {@const familySubgroups = subdivideFamilyMembers(people)}
           <div class="person-group">
@@ -408,7 +408,7 @@
                 {#if familySubgroups.parents.length > 0}
                   <h5 class="subgroup-title">Parents</h5>
                   <div class="group-people">
-                    {#each familySubgroups.parents as person, idx}
+                    {#each familySubgroups.parents as person, idx (person.person_name)}
                       {@const personKey = `family-parents-${idx}`}
                       {@const subcategory = getSubcategory(
                         person.relationship_type
@@ -429,7 +429,7 @@
                 {#if familySubgroups.spouses.length > 0}
                   <h5 class="subgroup-title">Spouse/Partner</h5>
                   <div class="group-people">
-                    {#each familySubgroups.spouses as person, idx}
+                    {#each familySubgroups.spouses as person, idx (person.person_name)}
                       {@const personKey = `family-spouses-${idx}`}
                       {@const subcategory = getSubcategory(
                         person.relationship_type
@@ -450,7 +450,7 @@
                 {#if familySubgroups.children.length > 0}
                   <h5 class="subgroup-title">Children</h5>
                   <div class="group-people">
-                    {#each familySubgroups.children as person, idx}
+                    {#each familySubgroups.children as person, idx (person.person_name)}
                       {@const personKey = `family-children-${idx}`}
                       {@const subcategory = getSubcategory(
                         person.relationship_type
@@ -471,7 +471,7 @@
                 {#if familySubgroups.otherRelatives.length > 0}
                   <h5 class="subgroup-title">Other Relatives</h5>
                   <div class="group-people">
-                    {#each familySubgroups.otherRelatives as person, idx}
+                    {#each familySubgroups.otherRelatives as person, idx (person.person_name)}
                       {@const personKey = `family-other-${idx}`}
                       {@const subcategory = getSubcategory(
                         person.relationship_type
@@ -514,7 +514,7 @@
                     <h5 class="subgroup-title">{subgroup.label}</h5>
                   {/if}
                   <div class="group-people">
-                    {#each subgroup.people as person, idx}
+                    {#each subgroup.people as person, idx (person.person_name)}
                       {@const personKey = `${type}-${subgroup.subcategory || 'default'}-${idx}`}
                       {@const subcategory = getSubcategory(person.relationship_type)}
                       <PersonChip

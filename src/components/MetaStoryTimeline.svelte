@@ -1902,7 +1902,7 @@
         {/if}
 
         <!-- Persons in this theme -->
-        {#each theme.persons as personData, personIndex}
+        {#each theme.persons as personData, personIndex (personData.personId)}
           {@const colors = getPersonColors(personData.personId)}
           {@const isCollapsed = !visiblePersonIds.includes(personData.personId)}
           <div

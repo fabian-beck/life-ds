@@ -202,7 +202,7 @@
           <div class="featured-people-column">
             <h5 class="column-subtitle">Ancestors</h5>
             <div class="featured-people">
-              {#each ancestors as person, idx}
+              {#each ancestors as person, idx (person.person_name)}
                 {@const personKey = `ancestors-${idx}`}
                 {@const subcategory = getSubcategory(person.relationship_type)}
                 <PersonChip
@@ -220,7 +220,7 @@
           <div class="featured-people-column">
             <h5 class="column-subtitle">Siblings & Descendants</h5>
             <div class="featured-people">
-              {#each siblingsAndDescendants as person, idx}
+              {#each siblingsAndDescendants as person, idx (person.person_name)}
                 {@const personKey = `siblings-descendants-${idx}`}
                 {@const subcategory = getSubcategory(person.relationship_type)}
                 <PersonChip

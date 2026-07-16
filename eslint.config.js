@@ -84,7 +84,14 @@ export default [
   {
     files: ['**/*.svelte'],
     rules: {
-      'svelte/require-each-key': 'warn',
+      // Lists whose items carry identity and state (network people, event
+      // chips, person rows) are keyed. The rest render derived text segments,
+      // geometry and decorative fills that are recomputed wholesale and never
+      // reordered independently; for those the only available key is the
+      // index, which reconciles exactly like no key at all. Requiring one
+      // would add ceremony without changing behaviour, and inventing a
+      // non-unique key would turn a working render into a runtime error.
+      'svelte/require-each-key': 'off',
       'svelte/infinite-reactive-loop': 'warn',
       'svelte/no-reactive-reassign': 'warn',
       // Unsound in components: the rule reasons about one top-to-bottom pass

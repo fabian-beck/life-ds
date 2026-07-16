@@ -590,7 +590,7 @@
                               <path d={mdiAccountOutline} />
                             </svg>
                             <div class="chapter-people-list">
-                              {#each chapterPeople as person, personIdx}
+                              {#each chapterPeople as person, personIdx (person.person_name)}
                                 {@const personKey = `chapter-${group.chapter.id}-${personIdx}`}
                                 {@const subcategory = getSubcategory(person.relationship_type)}
                                 <PersonChip
