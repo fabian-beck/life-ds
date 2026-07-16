@@ -86,7 +86,6 @@ class ChapterChanges(BaseModel):
 
 class EventsChanges(BaseModel):
     """All proposed changes for life events"""
-    person_metadata: Optional[Dict[str, Any]] = None
     events: List[EventChanges] = Field(default_factory=list)
     chapters: List[ChapterChanges] = Field(default_factory=list)
     conclusion: Optional[str] = None
@@ -129,12 +128,28 @@ class CategorySummaryReview(BaseModel):
     suggested_improvement: Optional[str] = None
 
 
+class ConnectionMetadata(BaseModel):
+    """Mutable metadata fields of a network connection.
+
+    Fields are enumerated rather than left as an open mapping because OpenAI
+    structured outputs require additionalProperties: false, which an
+    arbitrary Dict[str, Any] cannot express.
+    """
+    start_year: Optional[int] = None
+    end_year: Optional[int] = None
+    strength: Optional[str] = None
+    interaction_frequency: Optional[str] = None
+    influence_direction: Optional[str] = None
+    shared_activities: Optional[List[str]] = None
+    notes: Optional[str] = None
+
+
 class ConnectionChanges(BaseModel):
     """Proposed changes for a network connection"""
     person_name: str
     new_relationship_description: Optional[str] = None
     new_relationship_type: Optional[str] = None
-    new_metadata: Optional[Dict[str, Any]] = None
+    new_metadata: Optional[ConnectionMetadata] = None
     confidence: int = Field(ge=1, le=5)
     rationale: str
 
@@ -147,9 +162,19 @@ class CategorySummaryChanges(BaseModel):
     rationale: str
 
 
+class EgoChanges(BaseModel):
+    """Proposed changes to the ego's own metadata"""
+    name: Optional[str] = None
+    birth_year: Optional[int] = None
+    death_year: Optional[int] = None
+    primary_roles: Optional[List[str]] = None
+    summary: Optional[str] = None
+    wikipedia: Optional[str] = None
+
+
 class NetworkChanges(BaseModel):
     """All proposed changes for ego network"""
-    ego: Optional[Dict[str, Any]] = None
+    ego: Optional[EgoChanges] = None
     connections: List[ConnectionChanges] = Field(default_factory=list)
     category_summaries: List[CategorySummaryChanges] = Field(default_factory=list)
 

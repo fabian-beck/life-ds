@@ -58,13 +58,6 @@ def apply_event_changes(
     applied = 0
     skipped = 0
 
-    # Apply person metadata changes
-    if changes.person_metadata:
-        for key, value in changes.person_metadata.items():
-            if key in updated_data.get("person_metadata", {}):
-                updated_data["person_metadata"][key] = value
-                applied += 1
-
     # Apply event changes
     for event_change in changes.events:
         if event_change.confidence < min_confidence:
@@ -162,7 +155,7 @@ def apply_network_changes(
 
     # Apply ego metadata changes
     if changes.ego:
-        for key, value in changes.ego.items():
+        for key, value in changes.ego.model_dump(exclude_none=True).items():
             if key in updated_data.get("ego", {}):
                 updated_data["ego"][key] = value
                 applied += 1
@@ -185,7 +178,9 @@ def apply_network_changes(
                     applied += 1
 
                 if conn_change.new_metadata:
-                    for key, value in conn_change.new_metadata.items():
+                    for key, value in conn_change.new_metadata.model_dump(
+                        exclude_none=True
+                    ).items():
                         if key in connection:
                             connection[key] = value
                             applied += 1

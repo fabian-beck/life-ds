@@ -88,7 +88,7 @@ def get_combined_review_prompt(
     Returns:
         Formatted prompt string
     """
-    person_name = events_data.get("person_metadata", {}).get("name", "Unknown")
+    person_name = events_data.get("person", {}).get("name", "Unknown")
     num_events = len(events_data.get("events", []))
     num_chapters = len(events_data.get("chapters", []))
     num_connections = len(network_data.get("connections", [])) if network_data else 0
@@ -229,10 +229,11 @@ def get_style_review_prompt(
     Returns:
         Formatted prompt string
     """
-    person_name = events_data.get("person_metadata", {}).get("name", "Unknown")
-    birth_year = events_data.get("person_metadata", {}).get("birthDate", "")[:4]
-    death_year = events_data.get("person_metadata", {}).get("deathDate", "")[:4]
-    primary_roles = events_data.get("person_metadata", {}).get("primaryRoles", [])
+    person = events_data.get("person", {})
+    person_name = person.get("name", "Unknown")
+    birth_year = (person.get("birth_date") or "")[:4]
+    death_year = (person.get("death_date") or "")[:4]
+    primary_roles = person.get("primary_roles") or []
 
     prompt = f"""You are reviewing visual identity/styling for {person_name} ({birth_year}-{death_year}).
 
@@ -281,7 +282,7 @@ REVIEW GUIDELINES:
 - Fonts should match linguistic/regional context when possible
 
 PERSON CONTEXT:
-{events_data.get("person_metadata", {}).get("summary", "")[:500]}...
+{(person.get("summary") or "")[:500]}...
 
 Please provide specific, actionable improvements. Only propose changes if there are clear issues or obvious enhancements.
 Most generated styles are already good - focus on genuine problems, not minor tweaks.

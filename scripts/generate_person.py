@@ -148,6 +148,9 @@ def main(argv: Any = None) -> int:
             print("\n⊘ Skipping ego network generation")
 
         # Step 4: Generate portrait (if not skipped)
+        # Unlike the steps above, portrait failures are non-fatal, so its
+        # outcome is tracked explicitly for the final summary.
+        portrait_ok = False
         if not args.skip_portrait:
             print("\n" + "=" * 60)
             print("STEP 4/5: Generating stylized portrait")
@@ -164,6 +167,7 @@ def main(argv: Any = None) -> int:
                     force=False,
                 )
                 if portrait_result["success"]:
+                    portrait_ok = True
                     if portrait_result.get("cached"):
                         print(f"\n⊘ {portrait_result['message']}")
                     else:
@@ -209,6 +213,7 @@ def main(argv: Any = None) -> int:
         total_steps = 3
         if not args.skip_portrait:
             total_steps += 1
+            steps_run += portrait_ok
         print(
             f"✓ Successfully generated {steps_run} of {total_steps} components for '{args.subject}'"
         )
