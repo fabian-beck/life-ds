@@ -92,7 +92,15 @@ export default [
       // would add ceremony without changing behaviour, and inventing a
       // non-unique key would turn a working render into a runtime error.
       'svelte/require-each-key': 'off',
-      'svelte/infinite-reactive-loop': 'warn',
+      // Reports "possibly" whenever a reactive block both reads and writes a
+      // value, typically across a setTimeout or a function call it cannot see
+      // into. Every occurrence here is a guarded state machine whose guard is
+      // what terminates it: Timeline's hasScrolledToActive scrolls once and
+      // sets the flag that stops the next run, StoryView's scroll requests are
+      // gated on scrollState, and the meta-story tooltip is gated on
+      // isCalculatingPlacement. A real infinite reactive loop would hang the
+      // browser rather than warn, and these paths run on every story view.
+      'svelte/infinite-reactive-loop': 'off',
       'svelte/no-reactive-reassign': 'warn',
       // Unsound in components: the rule reasons about one top-to-bottom pass
       // through a function, but Svelte re-runs `$:` blocks and reorders them
