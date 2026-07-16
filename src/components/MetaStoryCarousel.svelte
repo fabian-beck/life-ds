@@ -237,11 +237,18 @@
 {#if metaStories.length > 0}
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- Keyboard users get the same autoplay pause via focusin/focusout, which
+       bubble from the cards the way mouseover/mouseout do. on:focus/on:blur,
+       which the rule asks for, do not bubble and would never fire on this
+       non-focusable section. -->
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <section
     class="meta-story-carousel"
     bind:this={sectionElement}
     on:mouseover={handleMouseEnter}
     on:mouseout={handleMouseLeave}
+    on:focusin={handleMouseEnter}
+    on:focusout={handleMouseLeave}
   >
     <div class="carousel-container">
       <!-- svelte-ignore a11y-no-static-element-interactions -->

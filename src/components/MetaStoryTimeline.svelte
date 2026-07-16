@@ -2165,15 +2165,6 @@
     white-space: nowrap;
   }
 
-  .chapter-description {
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
-    font-size: 0.8rem;
-    line-height: 1.35;
-    color: #cbd5e1;
-    margin: 0;
-    text-align: left;
-    font-style: italic;
-  }
 
   /* Gaps layer - visual indicators for compressed timeline gaps */
   .gaps-layer {
@@ -2581,12 +2572,6 @@
       flex-shrink: 0;
     }
 
-    .chapter-description {
-      font-size: 0.75rem;
-      line-height: 1.4;
-      text-align: left;
-    }
-
     /* Adjust person elements for mobile */
     .person-lifespan {
       height: 24px;
@@ -2669,15 +2654,6 @@
       padding: 0.15rem 0.35rem;
     }
 
-    .chapter-description {
-      font-size: 0.7rem;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
 
   /* Event markers */
@@ -2768,13 +2744,6 @@
   .event-marker.essential:hover .event-dot,
   .event-marker.essential.indicator-hover .event-dot {
     box-shadow: 0 5px 15px rgba(var(--person-primary-rgb), 0.7);
-  }
-
-  /* Supporting events: standard size */
-  .event-marker.supporting .event-dot {
-    width: 14px;
-    height: 14px;
-    background: rgba(var(--person-primary-rgb), 0.8);
   }
 
   /* Event tooltip - now supports multiple placement modes */
