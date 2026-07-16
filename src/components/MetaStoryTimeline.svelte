@@ -1997,7 +1997,6 @@
 
 <!-- Event tooltip (single or grouped) - rendered outside timeline container for proper fixed positioning -->
 {#if activeEventTooltip}
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     class="event-tooltip"
     class:grouped={activeEventTooltip.events.length > 1}
@@ -2016,6 +2015,7 @@
     on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
     role="dialog"
     aria-label="Event details"
+    tabindex="-1"
   >
     <!-- Event list (always scrollable) -->
     <div class="tooltip-events">

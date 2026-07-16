@@ -379,7 +379,7 @@
               class:active={index === currentSlide}
               on:click={() => goToSlide(index)}
               aria-label={slideLabel}
-            />
+            ></button>
           {/each}
         </div>
       {/if}

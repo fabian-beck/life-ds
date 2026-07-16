@@ -966,7 +966,6 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- The only listener is a stopPropagation guard that keeps backdrop clicks
        from closing the popup; it adds no interaction of its own. -->
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     bind:this={popupElement}
     class="landing-map-popup"
@@ -981,6 +980,7 @@
     on:click|stopPropagation
     role="dialog"
     aria-label="Event details"
+    tabindex="-1"
   >
     <div class="popup-content">
       {#if popupData.portraitUrl}

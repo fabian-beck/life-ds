@@ -964,9 +964,9 @@
   class:blended-out={isChapterSlide}
   aria-hidden="true"
 >
-  <div class="map-gradient" />
+  <div class="map-gradient"></div>
   <div class="map-frame">
-    <div class="map-container" bind:this={mapContainer} />
+    <div class="map-container" bind:this={mapContainer}></div>
     {#if basemapError}
       <div class="map-error" role="note">{basemapError}</div>
     {/if}

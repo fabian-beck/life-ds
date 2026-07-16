@@ -109,7 +109,15 @@ export default [
       // a const declared below the reactive statement that uses it. Acting on
       // either would reintroduce the loops those trackers exist to stop.
       // Still enabled for plain .js, where the analysis holds.
-      'no-useless-assignment': 'off'
+      'no-useless-assignment': 'off',
+      // Presumes runes, which these components deliberately do not use. Most
+      // reports are locals that are never state at all: a `new Map()` built
+      // inside a function or a `$:` IIFE and thrown away. The few that are
+      // state (Landing's activeTags and loadedImages) already reassign with
+      // `new Set(...)` to publish a change, which is how reactivity works in
+      // non-runes mode and behaves the same under Svelte 5. SvelteSet/SvelteMap
+      // would only matter if these were read inside runes.
+      'svelte/prefer-svelte-reactivity': 'off'
     }
   }
 ];
