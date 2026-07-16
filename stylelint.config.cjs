@@ -46,5 +46,7 @@ module.exports = {
     "dist/**/*",
     "build/**/*",
     ".svelte-kit/**/*",
+    ".venv/**/*",
+    ".claude/**/*",
   ],
 };
