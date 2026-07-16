@@ -10,7 +10,10 @@
   import EventSlide from "./EventSlide.svelte";
   import ChapterSlide from "./ChapterSlide.svelte";
   import ConclusionSlide from "./ConclusionSlide.svelte";
-  import StoryMap from "./StoryMap.svelte";
+  // StoryMap is imported on demand where it is rendered: it pulls in MapLibre
+  // and its basemap dependencies (~1.1 MB), and only stories with location data
+  // ever show it. storyMapComponent stays null until the chunk resolves, which
+  // the existing null check in resetMapViewport() already accounts for.
   import Timeline from "./Timeline.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
@@ -1180,19 +1183,21 @@
       {/if}
     </main>
     {#if hasMapData}
-      <StoryMap
-        bind:this={storyMapComponent}
-        {activeCoordinates}
-        allActiveCoordinates={activeEventIndex >= 0
-          ? (eventSlides[activeEventIndex]?.allCoordinates ?? [])
-          : []}
-        {markerTrail}
-        {hasMapData}
-        {activeIndex}
-        {isChapterSlide}
-        {styleConfig}
-        migrationPath={activeMigrationPath}
-      />
+      {#await import("./StoryMap.svelte") then { default: StoryMap }}
+        <StoryMap
+          bind:this={storyMapComponent}
+          {activeCoordinates}
+          allActiveCoordinates={activeEventIndex >= 0
+            ? (eventSlides[activeEventIndex]?.allCoordinates ?? [])
+            : []}
+          {markerTrail}
+          {hasMapData}
+          {activeIndex}
+          {isChapterSlide}
+          {styleConfig}
+          migrationPath={activeMigrationPath}
+        />
+      {/await}
     {/if}
   </div>
   <Timeline

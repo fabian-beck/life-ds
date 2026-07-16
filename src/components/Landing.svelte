@@ -9,7 +9,8 @@
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
-  import LandingMap from "./LandingMap.svelte";
+  // LandingMap is imported on demand where it is rendered: it pulls in MapLibre
+  // and its basemap dependencies (~1.1 MB), and the map starts collapsed.
 
   export let entries = [];
   export let englishEntries = []; // English registry entries for carousel portraits
@@ -579,14 +580,16 @@
 
     {#if showMap}
       <div class="landing-map-wrapper" transition:slide={{ duration: 300 }}>
-        <LandingMap
-          {filteredEntries}
-          {getStyle}
-          onNavigate={(detail) => {
-            const lang = $currentLanguage;
-            push(`/${lang}/story/${detail.personId}?event=${detail.eventIndex}`);
-          }}
-        />
+        {#await import("./LandingMap.svelte") then { default: LandingMap }}
+          <LandingMap
+            {filteredEntries}
+            {getStyle}
+            onNavigate={(detail) => {
+              const lang = $currentLanguage;
+              push(`/${lang}/story/${detail.personId}?event=${detail.eventIndex}`);
+            }}
+          />
+        {/await}
       </div>
     {/if}
   </div>

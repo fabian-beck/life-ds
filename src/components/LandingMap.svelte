@@ -1,6 +1,9 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import { currentLanguage, _ } from "../stores/language";
+  // This component is loaded on demand, so it must pull in the MapLibre CSS
+  // itself rather than relying on StoryMap having been loaded first.
+  import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
