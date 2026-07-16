@@ -34,16 +34,20 @@ Each person has a unique `id` (snake_case, e.g., `alan_turing`) and exists in th
 
    ```json
    {
-     "alan_turing": {
-       "primary": "#5ED0FF",
-       "secondary": "#9A7BFF",
-       "background": "#040A18",
-       "background_pattern_svg": "<svg>...</svg>",
-       "heading_font": "Space Grotesk",
-       "body_font": "IBM Plex Sans"
+     "styles": {
+       "alan_turing": {
+         "primary": "#5ED0FF",
+         "secondary": "#9A7BFF",
+         "background": "#040A18",
+         "background_pattern_svg": "<svg>...</svg>",
+         "heading_font": "Space Grotesk",
+         "body_font": "IBM Plex Sans"
+       }
      }
    }
    ```
+
+   Note the top-level `styles` wrapper — entries are nested under it, not at the root.
 
 3. **`data/people/{person_id}/`** - Person-specific data folder:
    - `life_events.json` - Chronological life events with locations, images, categories, and optional chapter groupings
@@ -236,6 +240,30 @@ Fonts are loaded dynamically from Google Fonts when a person's story is viewed. 
 
 ## Data Generation
 
+### Python Environment
+
+The generation scripts run from a project-local virtual environment. The `openai`
+dependency must be >= 2.0.0 — the pre-1.0 SDK exposes a different client and the
+scripts will fail to import against it.
+
+```bash
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements.txt   # Windows
+# source .venv/bin/activate && pip install -r requirements.txt  # macOS/Linux
+```
+
+Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/generate_person.py "..."`.
+
+**Model configuration** (see `scripts/config.py`):
+
+- `OPENAI_MODEL` — text/reasoning model for all generation (default: `gpt-5.6-terra`)
+- `OPENAI_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels
+- Portrait scripts take `--model` separately (default: `gpt-image-2`)
+
+Image models that support the dual-image editing path are allowlisted in
+`generate_person_portrait.py`; a model outside that list silently falls back to
+text-only generation and will not preserve facial likeness.
+
 ### Python Scripts (require `OPENAI_API_KEY`)
 
 **Add a new person**:
@@ -328,7 +356,7 @@ This uses OpenAI image generation to transform the existing Wikimedia Commons po
 - Saves to `public/portraits/{person_id}.png`
 - Automatically updates `data/persons.json` with generated portrait path
 - Automatically syncs portrait data to `data/people/{person_id}/life_events.json` (main and all translations)
-- Cost: ~$0.05 per portrait
+- Cost: varies by model and image size; check current OpenAI image pricing
 
 **Prerequisites**:
 1. Create master style reference portrait at `public/master_style_portrait.png` (1024x1024 PNG)
@@ -338,7 +366,7 @@ This uses OpenAI image generation to transform the existing Wikimedia Commons po
 - `--force`: Regenerate even if portrait already exists
 - `--dry-run`: Test without API calls or file writes
 - `--master-style PATH`: Use custom master style image
-- `--model MODEL`: Specify OpenAI model (default: gpt-image-1.5)
+- `--model MODEL`: Specify OpenAI model (default: gpt-image-2)
 
 **Master Style Portrait**:
 The master style portrait defines the artistic style applied to all generated portraits. Create it once (manually or using AI tools), then all generated portraits will match its style through AI-powered style transfer.
@@ -377,7 +405,7 @@ The life events generation uses a **two-phase AI approach** for improved accurac
 - More reliable geocoding for historic places with changed names
 - Resilient error handling (individual event failures don't abort entire generation)
 
-**Performance**: ~60 seconds per person, ~$0.02 cost (cost may vary by model)
+**Performance**: ~60 seconds per person. Cost varies by model — check current OpenAI pricing for the configured `OPENAI_MODEL`.
 
 ### Wikipedia Caching
 
@@ -710,8 +738,8 @@ npm run preview      # Preview production build
 
 - Follow relationship type conventions (see schema above)
 - Strength: `weak`, `moderate`, `strong`
-- Interaction frequency: `rare`, `occasional`, `regular`, `frequent`
-- Influence direction: `alter_to_ego`, `ego_to_alter`, `bidirectional`
+- Interaction frequency: `rare`, `occasional`, `monthly`, `weekly`, `daily`, `yearly`
+- Influence direction: `alter_to_ego`, `ego_to_alter`, `bidirectional`, `unknown`
 
 **Visual style**: Edit `data/person_styles.json`
 
