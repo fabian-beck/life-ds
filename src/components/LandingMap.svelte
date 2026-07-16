@@ -920,7 +920,6 @@
     <div class="top-persons-overlay">
       {#each topPersons as person (person.personId)}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
           class="person-card"
           style="--person-color: {person.primaryColor}"
@@ -955,7 +954,9 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="popup-backdrop" on:click={closePopup}></div>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- The only listener is a stopPropagation guard that keeps backdrop clicks
+       from closing the popup; it adds no interaction of its own. -->
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     bind:this={popupElement}
     class="landing-map-popup"

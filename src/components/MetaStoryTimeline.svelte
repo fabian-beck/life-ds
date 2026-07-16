@@ -1862,7 +1862,6 @@
       <!-- Historical context event markers (stacked per chapter) -->
       {#each historicalContextEvents as hEvent}
         {#if hEvent.widthPx > 0}
-          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
           <div
             class="historical-event-marker range"
             style="left: {hEvent.leftPx}px; width: {hEvent.widthPx}px; margin-bottom: {hEvent.stackIndex * 18}px;"
@@ -1876,7 +1875,6 @@
             <div class="historical-event-bar"></div>
           </div>
         {:else}
-          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
           <div
             class="historical-event-marker point"
             style="left: {hEvent.leftPx}px; margin-bottom: {hEvent.stackIndex * 18}px;"
