@@ -1210,6 +1210,7 @@
                 {visibleDateNote}
                 {visiblePersonInfo}
                 {visibleAnnotation}
+                isActive={index === activeIndex}
                 onEnlargeImage={enlargeImage}
                 onToggleDateNote={toggleDateNote}
                 onTogglePersonInfo={togglePersonInfo}

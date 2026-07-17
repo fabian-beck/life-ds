@@ -29,6 +29,7 @@
   export let visibleDateNote = null;
   export let visiblePersonInfo = null;
   export let visibleAnnotation = null;
+  export let isActive = false;
   export let onEnlargeImage = () => {};
   export let onToggleDateNote = () => {};
   export let onTogglePersonInfo = () => {};
@@ -262,7 +263,7 @@
       <button
         type="button"
         class="image-thumbnail"
-        class:image-ready={loadedImageUrls.has(imgUrl)}
+        class:image-visible={isActive && loadedImageUrls.has(imgUrl)}
         class:image-failed={failedImageUrls.has(imgUrl)}
         on:click={() => onEnlargeImage(imgObj, slide)}
         aria-label={$_("story.enlarge_image")}
@@ -952,7 +953,7 @@
     display: block;
     filter: saturate(0.35) contrast(0.6) brightness(0.82);
     opacity: 0;
-    transition: opacity 280ms ease;
+    transition: opacity 360ms ease-in-out;
     mask-image: radial-gradient(
       ellipse 85% 85% at 85% 15%,
       rgba(0, 0, 0, 1) 50%,
@@ -971,7 +972,7 @@
     );
   }
 
-  .image-thumbnail.image-ready img {
+  .image-thumbnail.image-visible img {
     opacity: 1;
   }
 
@@ -1016,7 +1017,7 @@
     transition: opacity 0.2s ease;
   }
 
-  .image-thumbnail.image-ready .enlarge-icon {
+  .image-thumbnail.image-visible .enlarge-icon {
     opacity: 1;
   }
 
