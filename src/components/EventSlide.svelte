@@ -953,7 +953,7 @@
     display: block;
     filter: saturate(0.35) contrast(0.6) brightness(0.82);
     opacity: 0;
-    transition: opacity 360ms ease-in-out;
+    transition: opacity 180ms ease-out;
     mask-image: radial-gradient(
       ellipse 85% 85% at 85% 15%,
       rgba(0, 0, 0, 1) 50%,
@@ -974,6 +974,7 @@
 
   .image-thumbnail.image-visible img {
     opacity: 1;
+    transition: opacity 300ms ease-in 100ms;
   }
 
   .image-thumbnail.image-failed {
