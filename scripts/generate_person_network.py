@@ -495,8 +495,11 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     except APIStatusError as error:
         message = ""
         try:
-            message = error.response.get("error", {}).get("message", "")
-        except AttributeError:
+            # error.response is an httpx.Response, which has no .get(); the body
+            # has to be parsed first. Any failure here (non-JSON body, unexpected
+            # shape) just means falling back to the exception's own text.
+            message = error.response.json().get("error", {}).get("message", "")
+        except Exception:
             message = str(error)
         raise RuntimeError(
             "OpenAI API request failed. Verify the model name, account access, and billing status. "
