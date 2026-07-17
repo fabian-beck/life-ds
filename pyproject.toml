@@ -1,6 +1,8 @@
 [tool.black]
 line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311']
+# Python 3.10 is the floor: the scripts use PEP 604 unions (X | Y), which need
+# it, and 3.9 reached end of life in October 2025.
+target-version = ['py310', 'py311', 'py312', 'py313']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -9,7 +11,9 @@ extend-exclude = '''
 '''
 
 [tool.mypy]
-python_version = "3.12"
+# The lowest version supported, not the one in the venv: checking against the
+# floor is what catches syntax that would break on it.
+python_version = "3.10"
 # The scripts are built on Pydantic models. Without this plugin mypy does not
 # understand that `Field(None, ...)` supplies a default, and reports every such
 # field as a missing required argument at each construction site.
