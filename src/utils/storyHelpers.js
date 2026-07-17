@@ -334,10 +334,46 @@ function snapToWikimediaWidth(width) {
   return sizes.find((size) => size >= width) ?? sizes[sizes.length - 1];
 }
 
+const FLICKR_SIZE_SUFFIXES = [
+  [100, "t"],
+  [240, "m"],
+  [320, "n"],
+  [400, "w"],
+  [500, ""],
+  [640, "z"],
+  [800, "c"],
+  [1024, "b"],
+];
+
+/**
+ * Build a Flickr image URL at the nearest supported public size.
+ * Size suffixes larger than 1024px use per-size secrets, so they are not
+ * safe to derive from a URL stored in the dataset.
+ * @param {string} imageUrl - Flickr static image URL
+ * @param {number} width - Desired longest edge in pixels
+ * @returns {string} Optimized URL or the original when it cannot be derived
+ */
+function getFlickrThumbnailUrl(imageUrl, width) {
+  const match = imageUrl.match(
+    /^(https:\/\/live\.staticflickr\.com\/\d+\/\d+_[^_/.]+)(?:_([a-z0-9]+))?(\.(?:jpe?g|png|gif)(?:\?.*)?)$/i
+  );
+  if (!match) return imageUrl;
+
+  const existingSuffix = match[2]?.toLowerCase();
+  const publicSuffixes = ["s", "q", "t", "m", "n", "w", "z", "c", "b"];
+  if (existingSuffix && !publicSuffixes.includes(existingSuffix)) {
+    return imageUrl;
+  }
+
+  const suffix =
+    FLICKR_SIZE_SUFFIXES.find(([size]) => size >= width)?.[1] ?? "b";
+  return `${match[1]}${suffix ? `_${suffix}` : ""}${match[3]}`;
+}
+
 /**
  * Get optimized image URL based on desired width.
  * For portrait objects with multi-size WebP support, selects appropriate size.
- * For Wikimedia Commons URLs, uses their thumbnail service.
+ * For Wikimedia Commons and Flickr URLs, uses their thumbnail services.
  * For direct URLs, returns as-is.
  * @param {Object|string} imageOrPortrait - Portrait object or direct URL string
  * @param {number} width - Desired width in pixels
@@ -395,6 +431,10 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
         : filename;
       return `${base}/wikipedia/commons/thumb/${path}/${stdWidth}px-${thumbFilename}`;
     }
+  }
+
+  if (imageUrl.includes("live.staticflickr.com/")) {
+    return getFlickrThumbnailUrl(imageUrl, width);
   }
 
   return imageUrl;

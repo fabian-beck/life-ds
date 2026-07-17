@@ -146,8 +146,8 @@
               {#if person?.portrait?.image}
                 <figure class="person-thumb">
                   <img
-                    src={getThumbnailUrl(person.portrait.image, 120)}
-                    srcset={`${getThumbnailUrl(person.portrait.image, 120)} 1x, ${getThumbnailUrl(person.portrait.image, 240)} 2x`}
+                    src={getThumbnailUrl(person.portrait, 120)}
+                    srcset={`${getThumbnailUrl(person.portrait, 120)} 1x, ${getThumbnailUrl(person.portrait, 240)} 2x`}
                     alt=""
                     loading="lazy"
                     decoding="async"
