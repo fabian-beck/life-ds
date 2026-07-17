@@ -744,6 +744,21 @@
         ? event.deltaX
         : event.deltaY;
     if (!dominantDelta) return;
+
+    // Slides are overflow-y auto; when the hovered slide's content overflows
+    // and can still scroll in the wheel direction, let it scroll natively
+    // instead of converting the delta into horizontal slide navigation.
+    if (Math.abs(event.deltaY) >= Math.abs(event.deltaX)) {
+      const slide = event.target?.closest?.(".slide");
+      if (slide && slide.scrollHeight > slide.clientHeight + 1) {
+        const canScroll =
+          event.deltaY > 0
+            ? slide.scrollTop + slide.clientHeight < slide.scrollHeight - 1
+            : slide.scrollTop > 0;
+        if (canScroll) return;
+      }
+    }
+
     event.preventDefault();
 
     // Update state (was missing before!)
