@@ -6,6 +6,7 @@
   import { push } from "svelte-spa-router";
   import { location } from "../stores/router.js";
   import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
+  import { getThumbnailUrl } from "../utils/storyHelpers.js";
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
@@ -337,60 +338,6 @@
     return `${first}${last}`;
   }
 
-  /**
-   * Get optimized portrait URL based on desired width.
-   * For local portraits, uses pre-generated WebP sizes.
-   * For Wikimedia Commons, uses their thumbnail service.
-   */
-  function getPortraitUrl(portrait, targetWidth = 200) {
-    if (!portrait) return null;
-
-    // For local portraits with multi-size WebP support
-    if (portrait.thumbnail || portrait.medium || portrait.full) {
-      // Select appropriate size based on target width
-      if (targetWidth <= 200 && portrait.thumbnail) {
-        return portrait.thumbnail;
-      } else if (targetWidth <= 400 && portrait.medium) {
-        return portrait.medium;
-      } else if (portrait.full) {
-        return portrait.full;
-      }
-      // Fallback to any available size
-      return portrait.thumbnail || portrait.medium || portrait.full;
-    }
-
-    // Legacy: portrait.image is a string URL
-    const imageUrl = portrait.image || portrait;
-    if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
-
-    // Optimize Wikimedia Commons images
-    if (imageUrl.includes("upload.wikimedia.org/wikipedia/commons/")) {
-      // Check if URL is already a thumbnail
-      if (imageUrl.includes("/thumb/")) {
-        // URL is already a thumbnail - just adjust the size
-        // Example: .../thumb/a/b/File.svg/800px-File.svg.png -> .../thumb/a/b/File.svg/200px-File.svg.png
-        return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${targetWidth}px-$1`);
-      }
-
-      // Convert full URL to thumbnail URL
-      // Example: https://upload.wikimedia.org/wikipedia/commons/a/b/File.jpg
-      // becomes: https://upload.wikimedia.org/wikipedia/commons/thumb/a/b/File.jpg/200px-File.jpg
-      const parts = imageUrl.split("/wikipedia/commons/");
-      if (parts.length === 2) {
-        const [base, path] = parts;
-        const filename = path.split("/").pop();
-        // For SVG files, append .png to get the rasterized version
-        const thumbFilename = filename.toLowerCase().endsWith(".svg")
-          ? `${filename}.png`
-          : filename;
-        return `${base}/wikipedia/commons/thumb/${path}/${targetWidth}px-${thumbFilename}`;
-      }
-    }
-
-    // Return original URL for non-Wikimedia images
-    return imageUrl;
-  }
-
   function cardStyleVars(style) {
     if (!style || typeof style !== "object") return "";
     const segments = [];
@@ -661,8 +608,8 @@
           <figure class="person-thumb">
             {#if entry?.portrait}
               <img
-                src={getPortraitUrl(entry.portrait, 200)}
-                srcset={`${getPortraitUrl(entry.portrait, 200)} 1x, ${getPortraitUrl(entry.portrait, 400)} 2x`}
+                src={getThumbnailUrl(entry.portrait, 200)}
+                srcset={`${getThumbnailUrl(entry.portrait, 200)} 1x, ${getThumbnailUrl(entry.portrait, 400)} 2x`}
                 alt={loadedImages.has(entry.id)
                   ? (entry.portrait.alt ??
                     `Portrait of ${displayName(entry.name)}`)
