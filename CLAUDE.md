@@ -6,7 +6,7 @@
 
 A biographical visualization application that presents famous figures' life stories as full-screen, scroll-snapped slides with interactive timelines, maps, and social networks. Built with Svelte + Vite, designed mobile-first.
 
-**Tech Stack**: Svelte 4, Vite 5, MapLibre GL, Protomaps, svelte-spa-router
+**Tech Stack**: Svelte 5, Vite 8, MapLibre GL, Protomaps, svelte-spa-router 5
 
 ## Core Concepts
 
@@ -809,10 +809,26 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 
 ### Svelte Patterns
 
+**Components run in legacy (non-runes) mode.** The project is on Svelte 5, but
+`export let`, `$:` and `on:click` all still work there and no component has been
+converted. Adopting runes is a deliberate, separate decision — do not introduce
+`$state`/`$derived`/`$props` into a component piecemeal, because a component
+that uses any rune switches to runes mode wholesale and its `export let` and
+`$:` statements stop compiling.
+
 - Prefer reactive declarations (`$:`) over manual updates
 - Keep component files focused (< 500 lines)
 - Extract complex logic to functions outside component script
 - Use stores sparingly (most state is local)
+- `main.js` mounts with `mount(App, { target })`; `new App()` is not a thing in
+  Svelte 5.
+- Import `location` / `querystring` from `src/stores/router.js`, not from
+  `svelte-spa-router`. Version 5 exposes them as runes-backed getters on its
+  `router` object; that module bridges them back to stores with `toStore()` so
+  non-runes components (and the plain-JS `queryParams.js`) can subscribe with
+  `$location`. `push`/`replace` still come from `svelte-spa-router` directly.
+- ESLint's `svelte/prefer-svelte-reactivity` is off because it presumes runes;
+  plain `Map`/`Set` plus reassignment is correct in legacy mode.
 
 ### Python Scripts
 
