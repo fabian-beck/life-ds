@@ -939,6 +939,11 @@
   });
 
   onDestroy(() => {
+    if (updateTimeout) {
+      clearTimeout(updateTimeout);
+      updateTimeout = null;
+    }
+    mapReady = false;
     if (mapInstance) {
       mapInstance.remove();
       mapInstance = null;
