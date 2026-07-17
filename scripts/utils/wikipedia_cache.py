@@ -14,6 +14,15 @@ MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 MEDIAWIKI_API_DE = "https://de.wikipedia.org/w/api.php"
 WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
 WIKIPEDIA_SUMMARY_API_DE = "https://de.wikipedia.org/api/rest_v1/page/summary/"
+
+# How much longer the German article must be before it is preferred over the
+# English one. English is the base language of the datasets, and a few percent
+# of extra characters says nothing about which article is better sourced — for
+# Benjamin Franklin (+1.8%) and George Washington (+5%) it picked German for
+# American founding fathers, which also sends the related-article search after
+# German titles. A German article that is genuinely the richer one clears this
+# comfortably.
+DE_PREFERENCE_MARGIN = 1.2
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 DEFAULT_USER_AGENT = (
     "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
@@ -93,7 +102,10 @@ def _fetch_wikipedia_page_from_api(title: str, api_url: str) -> Dict[str, Any]:
 
 
 def _fetch_wikipedia_page_direct(title: str) -> Dict[str, Any]:
-    """Fetch Wikipedia page data, preferring German if longer or if English doesn't exist."""
+    """Fetch Wikipedia page data, preferring German only if decisively longer.
+
+    Falls back to German when no English article exists.
+    """
     en_page = None
     de_page = None
 
@@ -124,8 +136,8 @@ def _fetch_wikipedia_page_direct(title: str) -> Dict[str, Any]:
         en_extract = en_page.get("extract", "")
         de_extract = de_page.get("extract", "")
 
-        # Use German if it's longer than English
-        if len(de_extract) > len(en_extract):
+        # Use German only if it is decisively longer (see DE_PREFERENCE_MARGIN).
+        if len(de_extract) > len(en_extract) * DE_PREFERENCE_MARGIN:
             de_page["_source_language"] = "de"
             return de_page
         else:
@@ -148,7 +160,10 @@ def _fetch_wikipedia_summary_from_api(title: str, api_url: str) -> Dict[str, Any
 
 
 def _fetch_wikipedia_summary_direct(title: str) -> Dict[str, Any]:
-    """Fetch Wikipedia summary, preferring German if longer or if English doesn't exist."""
+    """Fetch Wikipedia summary, preferring German only if decisively longer.
+
+    Falls back to German when no English summary exists.
+    """
     en_summary = _fetch_wikipedia_summary_from_api(title, WIKIPEDIA_SUMMARY_API)
     de_summary = _fetch_wikipedia_summary_from_api(title, WIKIPEDIA_SUMMARY_API_DE)
 
@@ -167,8 +182,8 @@ def _fetch_wikipedia_summary_direct(title: str) -> Dict[str, Any]:
         en_extract = en_summary.get("extract", "")
         de_extract = de_summary.get("extract", "")
 
-        # Use German if it's longer than English
-        if len(de_extract) > len(en_extract):
+        # Use German only if it is decisively longer (see DE_PREFERENCE_MARGIN).
+        if len(de_extract) > len(en_extract) * DE_PREFERENCE_MARGIN:
             de_summary["_source_language"] = "de"
             return de_summary
         else:
