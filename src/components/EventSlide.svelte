@@ -128,7 +128,17 @@
   // Sizes the thumbnail container and mask from the image's aspect ratio and
   // the current viewport. Re-run on resize/rotation, not only on load.
   function applyImageLayout(img) {
-    const imageAspect = img.naturalWidth / img.naturalHeight;
+    // Clamp extreme aspect ratios so the container never becomes an elongated
+    // sliver. The <img> keeps object-fit: cover, so images more extreme than
+    // these bounds get cropped to fit the clamped container rather than
+    // stretching the thumbnail across the slide.
+    const MIN_LAYOUT_ASPECT = 0.5; // tallest allowed (1:2 portrait)
+    const MAX_LAYOUT_ASPECT = 2.0; // widest allowed (2:1 landscape)
+    const rawAspect = img.naturalWidth / img.naturalHeight;
+    const imageAspect = Math.max(
+      MIN_LAYOUT_ASPECT,
+      Math.min(MAX_LAYOUT_ASPECT, rawAspect)
+    );
 
     // Get ACTUAL viewport dimensions in pixels
     const viewportWidth = window.innerWidth;
@@ -980,7 +990,7 @@
     object-fit: cover;
     object-position: top right;
     display: block;
-    filter: saturate(0.35) contrast(0.6) brightness(0.82);
+    filter: saturate(0.35) contrast(0.72) brightness(0.82);
     opacity: 0;
     transition: opacity 180ms ease-out;
     mask-image: radial-gradient(
@@ -1045,6 +1055,11 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
+    /* Counteract the button's horizontal --image-edge-offset shift so the icon
+       stays anchored to the viewport edge instead of being pushed off-screen.
+       Only X is countered: the button's vertical shift moves it up (icon stays
+       visible), and countering Y would push the icon below the clipped edge. */
+    transform: translate(calc(-1 * var(--image-edge-offset)), 0);
   }
 
   .image-thumbnail.image-visible .enlarge-icon {
@@ -1325,7 +1340,7 @@
     }
 
     .image-thumbnail img {
-      filter: saturate(0.35) contrast(0.6) brightness(0.82);
+      filter: saturate(0.35) contrast(0.72) brightness(0.82);
       mask-image: radial-gradient(
         ellipse 75% 75% at 85% 15%,
         rgba(0, 0, 0, 1) 50%,
