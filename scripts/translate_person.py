@@ -89,7 +89,6 @@ class LifeChapter(BaseModel):
 
     id: str
     headline: str
-    bridge_statement: str
     date_start: str
     date_start_precision: str
     date_end: str

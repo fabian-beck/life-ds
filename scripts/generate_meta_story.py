@@ -73,9 +73,6 @@ class TemporalChapter(BaseModel):
     date_end_precision: str = Field(
         default="year", description="Always 'year' for chapters"
     )
-    bridge_statement: str = Field(
-        description="Narrative hook setting the era's context (1-2 sentences, max 30 words)"
-    )
 
 
 class SelectionHints(BaseModel):
@@ -554,8 +551,6 @@ CHAPTERS (3-6):
 - Era-based with clear date ranges (year precision only)
 - Title format: "Era Name (YYYY-YYYY)" (e.g., "Early Foundations (1900-1920)")
 - Chapters should be chronological and non-overlapping
-- Bridge statement: narrative hook, not summary (1-2 sentences, max 30 words)
-- Each bridge should create anticipation for what happened during that era
 - CRITICAL: Chapter date ranges should focus on periods of ACTIVE CONTRIBUTION to the topic
   * DO NOT start chapters with birth years unless early life directly relates to the topic
   * Base date ranges on when people actually made their contributions (publications, discoveries, work, influence)
@@ -664,8 +659,6 @@ CHAPTERS (3-6):
   * Example CORRECT: Chapter 1 (1900-1920), Chapter 2 (1921-1945), Chapter 3 (1946-1970)
   * Example WRONG: Chapter 1 (1900-1930), Chapter 2 (1920-1950) ← TRUE OVERLAP NOT ALLOWED
   * If an event could fit multiple chapters, assign it to the chapter where it has PRIMARY thematic importance
-- Bridge statement: narrative hook, not summary (1-2 sentences, max 30 words)
-- Each bridge should create anticipation for what happened during that era
 - Aim for roughly equal time spans when possible
 - CRITICAL: Chapter date ranges should focus on periods of ACTIVE CONTRIBUTION to the topic
   * DO NOT start chapters with birth years unless early life directly relates to the topic
@@ -948,7 +941,6 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
                     date_start_precision=chapter.date_start_precision,
                     date_end=chapter.date_end,
                     date_end_precision=chapter.date_end_precision,
-                    bridge_statement=chapter.bridge_statement,
                     person_events=[],
                 )
             )
@@ -1046,7 +1038,6 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
                 date_start_precision=chapter.date_start_precision,
                 date_end=chapter.date_end,
                 date_end_precision=chapter.date_end_precision,
-                bridge_statement=chapter.bridge_statement,
                 person_events=filtered_events,
             )
         )
@@ -1753,7 +1744,6 @@ def main():
                     date_start_precision=chapter.date_start_precision,
                     date_end=chapter.date_end,
                     date_end_precision=chapter.date_end_precision,
-                    bridge_statement=chapter.bridge_statement,
                     person_events=person_events,
                 )
             )

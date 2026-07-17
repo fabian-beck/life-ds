@@ -441,9 +441,6 @@ class LifeChapter(BaseModel):
     headline: str = Field(
         description="Catchy, story-like chapter headline (2-5 words). Make it engaging and evocative, like a book chapter title. Avoid using 'and' - prefer vivid, specific headlines."
     )
-    bridge_statement: str = Field(
-        description="Brief bridge into the chapter (1 sentence, max 20 words). Set the mood and create anticipation without spoiling events. Acts as a transition, not a summary."
-    )
     date_start: str = Field(
         description="ISO-8601 date when this chapter begins (YYYY-MM-DD, YYYY-MM, or YYYY)"
     )
@@ -3027,8 +3024,6 @@ def call_openai_chapter_generation(
         "'Building the Future' (3), 'Years of Struggle' (3), 'The Last Battle' (3), 'New Beginnings' (2).\n"
         "  BAD examples: 'Adoption, Valley Spark' (comma creates list), 'Return, Reinvention, Last Act' (multiple concepts), "
         "'Dropout, Zen Fire' (comma splits concepts), 'Early Life and Education' ('and' creates list).\n"
-        "- bridge_statement: BRIEF BRIDGE (1 sentence, max 20 words). Set the mood and create anticipation - DON'T spoil events or summarize. "
-        "This appears before the chapter events, so hint at what's coming without revealing outcomes. Acts as a transition into the chapter.\n"
         "- date_start, date_start_precision: When this chapter begins\n"
         "- date_end, date_end_precision: When this chapter ends\n"
         "- age_start, age_end: Subject's age at chapter start/end (null if not applicable)\n"
@@ -3047,7 +3042,6 @@ def call_openai_chapter_generation(
         "- Headlines should intrigue and invite the reader in - ONE clear concept, NO lists or comma-separated phrases\n"
         "- VARY headline length (mix 2-word, 3-word, 4-word, and 5-word titles) to create rhythm and avoid monotony\n"
         "- Each chapter should have thematic coherence - events should share a common thread or life phase\n"
-        "- Bridge statements should create anticipation, not spoil what's ahead - keep them SHORT (max 20 words)\n"
         "- Connect chapters so they flow as a continuous story, with each building on the previous\n"
         "- Use vivid, concrete language over abstract generalities\n"
         "- The conclusion should resonate and leave a lasting impression\n\n"
@@ -3256,7 +3250,6 @@ def generate_chapters_for_events(
             chapter = LifeChapter(
                 id=chapter.id,
                 headline=chapter.headline,
-                bridge_statement=chapter.bridge_statement,
                 date_start=chapter.date_start,
                 date_start_precision=chapter.date_start_precision,
                 date_end=chapter.date_end,

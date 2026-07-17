@@ -112,10 +112,6 @@ def apply_event_changes(
                 if chapter_change.new_headline:
                     chapter["headline"] = chapter_change.new_headline
                     applied += 1
-
-                if chapter_change.new_bridge_statement:
-                    chapter["bridge_statement"] = chapter_change.new_bridge_statement
-                    applied += 1
                 break
 
     # Apply conclusion changes

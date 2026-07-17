@@ -39,7 +39,6 @@ class ChapterReview(BaseModel):
 
     chapter_id: str
     headline_issue: Optional[str] = None
-    bridge_statement_issue: Optional[str] = None
     coherence_assessment: str
     pacing_feedback: str
 
@@ -87,7 +86,6 @@ class ChapterChanges(BaseModel):
 
     chapter_id: str
     new_headline: Optional[str] = None
-    new_bridge_statement: Optional[str] = None
     confidence: int = Field(ge=1, le=5)
     rationale: str
 

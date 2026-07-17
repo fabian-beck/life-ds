@@ -123,10 +123,6 @@
       </div>
     {/if}
 
-    {#if chapter.bridge_statement}
-      <p class="chapter-bridge">{chapter.bridge_statement}</p>
-    {/if}
-
     {#if involvedPeople.length > 0}
       <div class="chapter-people">
         {#each involvedPeople as person (person.personKey)}
@@ -243,20 +239,6 @@
     opacity: 0.8;
   }
 
-  .chapter-bridge {
-    font-family: var(--story-body-font, sans-serif);
-    font-size: clamp(0.9375rem, 2vw, 1.0625rem);
-    font-style: italic;
-    line-height: 1.6;
-    color: #e2e8f0;
-    margin: 0;
-    max-width: 36rem;
-    text-wrap: balance;
-    text-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.8),
-      0 1px 4px rgba(0, 0, 0, 0.9);
-  }
-
   .chapter-people {
     display: flex;
     flex-wrap: wrap;
@@ -278,10 +260,6 @@
     .chapter-metadata {
       font-size: 0.75rem;
       gap: 0.4rem 1rem;
-    }
-
-    .chapter-bridge {
-      font-size: clamp(0.875rem, 3vw, 0.9375rem);
     }
   }
 </style>

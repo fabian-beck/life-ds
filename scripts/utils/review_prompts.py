@@ -17,7 +17,6 @@ DISPLAY CONSTRAINTS:
   → ~200-400 words visible on mobile, ~400-800 on desktop
   → Warn if >1000 words (excessive scrolling)
 - Chapter headlines: Prominent colored labels, ~2-5 words, max ~50 chars
-- Chapter bridge statements: Max 20 words enforced
 - Person chips: Names truncated at 150px (~15-20 chars)
   → Full details shown in tooltip on click
 - Sources: Collapsed by default, expandable
@@ -152,7 +151,6 @@ REVIEW GUIDELINES:
 - Target 500-800 words for readability on mobile
 - First 200-300 words are most visible (before scroll)
 - Remove redundancies between title and opening sentence
-- Avoid repetition between events and chapter bridge statements
 - Use active voice and vivid language
 - Break into paragraphs for readability
 - **CRITICAL - Plain text only**: Descriptions must be plain text without markdown syntax (no **bold**, *italic*, `code`, ## headings, etc.)
@@ -173,9 +171,6 @@ REVIEW GUIDELINES:
 - Headlines: 2-5 words, evocative and story-like (NOT lists)
   - GOOD: "Breaking the Code", "The Thinking Machine", "Persecution"
   - BAD: "Wartime Work and Codebreaking", "Early Life, Education, and Career"
-- Bridge statements: Max 20 words, set mood without spoiling
-  - GOOD: "Before the war machines and encrypted messages, a young mind discovered mathematics as refuge."
-  - BAD: "This chapter covers Turing's work at Bletchley Park breaking German codes during World War II."
 - Events should fit thematically within their chapter
 
 **Metadata**:
@@ -317,13 +312,6 @@ EXAMPLES OF WELL-WRITTEN CONTENT:
 - Evocative, suggests action/achievement
 - Short and memorable
 - Not a list or summary
-
-**Good Chapter Bridge Statement**:
-"When war came, a mathematician's abstract ideas would save countless lives."
-- Sets emotional tone
-- Creates anticipation
-- Under 20 words
-- Doesn't spoil the events
 
 **Good Relationship Description**:
 "PhD supervisor who introduced Turing to the Entscheidungsproblem and remained a lifelong collaborator on computer design."

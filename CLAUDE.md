@@ -65,7 +65,6 @@ Events are the core narrative units displayed as slides. Events can optionally b
     {
       "id": "early_years",
       "headline": "The Making of a Mind",
-      "bridge_statement": "Before the codebreaking and computing breakthroughs, a young Turing grappled with loss, discovered mathematics as both refuge and calling.",
       "date_start": "1912",
       "date_start_precision": "year",
       "date_end": "1938",
@@ -114,7 +113,6 @@ Events are the core narrative units displayed as slides. Events can optionally b
 
 **Chapter Structure**:
 - `headline`: Catchy, story-like title (2-5 words, varied lengths) - ONE unified concept, NOT a list. Vivid and evocative like a book chapter. Avoid commas, "and", or punctuation that creates lists.
-- `bridge_statement`: Brief bridge into the chapter (1 sentence, max 20 words) - sets mood and creates anticipation without spoiling events. Acts as a transition, not a summary.
 - Each chapter should have thematic coherence - events share a common thread or life phase
 - Aim for 3-6 chapters total that flow together to create narrative momentum
 - `conclusion`: Crisp statement (1-2 sentences) capturing the person's legacy or life essence
@@ -538,7 +536,7 @@ python scripts/translate_all_persons.py --target-lang de --force  # Re-translate
 **What gets translated**:
 - Person summaries and roles
 - Event titles and descriptions
-- Chapter headlines and bridge statements
+- Chapter headlines
 - Image captions
 - Relationship descriptions
 - Social network notes and summaries
