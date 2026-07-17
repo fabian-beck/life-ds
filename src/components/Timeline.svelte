@@ -561,13 +561,14 @@
             >
               <div class="chapter-indicator-content">
                 {#if currentChapter}
-                  <span
-                    class="chapter-indicator-label"
-                    transition:fade={{ duration: 300 }}
-                    key={currentChapter.id}
-                  >
-                    {currentChapter.headline}
-                  </span>
+                  {#key currentChapter.id}
+                    <span
+                      class="chapter-indicator-label"
+                      transition:fade={{ duration: 300 }}
+                    >
+                      {currentChapter.headline}
+                    </span>
+                  {/key}
                 {:else if activeIndex === 0 && totalSlides > 0}
                   <span
                     class="chapter-indicator-label event-count-label"
