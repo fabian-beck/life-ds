@@ -311,7 +311,8 @@ def save_cache(
 
     # Save Commons images
     (cache_dir / "commons_images.json").write_text(
-        json.dumps(commons_images, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        json.dumps(commons_images, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
     )
 
 

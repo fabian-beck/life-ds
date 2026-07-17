@@ -19,13 +19,16 @@ from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
 from PIL import Image
 
-from config import DEFAULT_MODEL
-
 # Set UTF-8 encoding for Windows console with unbuffered output
 if sys.platform == "win32":
     import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', line_buffering=True)
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', line_buffering=True)
+
+    sys.stdout = io.TextIOWrapper(
+        sys.stdout.buffer, encoding="utf-8", line_buffering=True
+    )
+    sys.stderr = io.TextIOWrapper(
+        sys.stderr.buffer, encoding="utf-8", line_buffering=True
+    )
 
 
 # Constants
@@ -118,10 +121,10 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
         image_url = None
 
         # Openverse - use API instead of scraping (they block automated requests)
-        if 'openverse.org' in domain:
+        if "openverse.org" in domain:
             # URL format: https://openverse.org/image/{image_id}?...
             # API endpoint: https://api.openverse.org/v1/images/{image_id}/
-            image_id_match = re.search(r'/image/([a-f0-9-]+)', page_url)
+            image_id_match = re.search(r"/image/([a-f0-9-]+)", page_url)
             if image_id_match:
                 image_id = image_id_match.group(1)
                 api_url = f"https://api.openverse.org/v1/images/{image_id}/"
@@ -134,7 +137,7 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
                 api_data = api_response.json()
 
                 # Get the full-size image URL
-                image_url = api_data.get('url') or api_data.get('thumbnail')
+                image_url = api_data.get("url") or api_data.get("thumbnail")
 
                 if image_url:
                     return image_url, page_url
@@ -148,54 +151,60 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
             "Accept-Language": "en-US,en;q=0.5",
             "Accept-Encoding": "gzip, deflate",
             "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1"
+            "Upgrade-Insecure-Requests": "1",
         }
         response = requests.get(page_url, timeout=30, headers=headers)
         response.raise_for_status()
 
-        soup = BeautifulSoup(response.content, 'html.parser')
+        soup = BeautifulSoup(response.content, "html.parser")
 
         # Flickr
-        if 'flickr.com' in domain:
+        if "flickr.com" in domain:
             # Flickr has specific meta tags
-            og_image = soup.find('meta', property='og:image')
-            if og_image and og_image.get('content'):
-                image_url = og_image['content']
+            og_image = soup.find("meta", property="og:image")
+            if og_image and og_image.get("content"):
+                image_url = og_image["content"]
 
             # Alternative: look for the main photo
             if not image_url:
-                main_photo = soup.find('img', {'class': lambda x: x and 'main-photo' in x})
-                if main_photo and main_photo.get('src'):
-                    image_url = main_photo['src']
+                main_photo = soup.find(
+                    "img", {"class": lambda x: x and "main-photo" in x}
+                )
+                if main_photo and main_photo.get("src"):
+                    image_url = main_photo["src"]
 
         # Wikimedia Commons file pages
-        if 'commons.wikimedia.org' in domain and '/File:' in page_url:
+        if "commons.wikimedia.org" in domain and "/File:" in page_url:
             # Look for the full-size image link
-            fullsize_link = soup.find('a', {'class': 'internal'}, href=lambda x: x and '/wikipedia/commons/' in x and '/thumb/' not in x)
-            if fullsize_link and fullsize_link.get('href'):
-                href = fullsize_link['href']
-                if href.startswith('//'):
-                    image_url = 'https:' + href
-                elif href.startswith('/'):
-                    image_url = 'https://upload.wikimedia.org' + href
+            fullsize_link = soup.find(
+                "a",
+                {"class": "internal"},
+                href=lambda x: x and "/wikipedia/commons/" in x and "/thumb/" not in x,
+            )
+            if fullsize_link and fullsize_link.get("href"):
+                href = fullsize_link["href"]
+                if href.startswith("//"):
+                    image_url = "https:" + href
+                elif href.startswith("/"):
+                    image_url = "https://upload.wikimedia.org" + href
                 else:
                     image_url = href
 
         # Generic fallback: try Open Graph image or largest image on page
         if not image_url:
-            og_image = soup.find('meta', property='og:image')
-            if og_image and og_image.get('content'):
-                image_url = og_image['content']
+            og_image = soup.find("meta", property="og:image")
+            if og_image and og_image.get("content"):
+                image_url = og_image["content"]
             else:
                 # Find the largest image on the page
-                images = soup.find_all('img')
+                images = soup.find_all("img")
                 max_size = 0
                 best_img = None
                 for img in images:
-                    src = img.get('src', '')
+                    src = img.get("src", "")
                     # Skip tiny images, icons, tracking pixels
-                    width = img.get('width', 0)
-                    height = img.get('height', 0)
+                    width = img.get("width", 0)
+                    height = img.get("height", 0)
                     try:
                         width = int(width) if width else 0
                         height = int(height) if height else 0
@@ -211,9 +220,9 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
 
         # Make URL absolute if relative
         if image_url:
-            if image_url.startswith('//'):
-                image_url = 'https:' + image_url
-            elif image_url.startswith('/'):
+            if image_url.startswith("//"):
+                image_url = "https:" + image_url
+            elif image_url.startswith("/"):
                 image_url = f"{parsed_url.scheme}://{parsed_url.netloc}{image_url}"
 
             return image_url, page_url
@@ -239,12 +248,12 @@ def is_direct_image_url(url: str) -> bool:
     path = parsed.path.lower()
 
     # Check file extension
-    image_extensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp']
+    image_extensions = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp"]
     if any(path.endswith(ext) for ext in image_extensions):
         return True
 
     # Check for image hosting domains with direct links
-    if 'staticflickr.com' in parsed.netloc or 'upload.wikimedia.org' in parsed.netloc:
+    if "staticflickr.com" in parsed.netloc or "upload.wikimedia.org" in parsed.netloc:
         return True
 
     return False
@@ -296,7 +305,10 @@ def download_image(url: str, output_path: Path, max_retries: int = 3) -> bool:
                 print(f"  Retrying in {wait_time}s...", file=sys.stderr)
                 time.sleep(wait_time)
             else:
-                print(f"✗ Error downloading image after {max_retries} attempts: {e}", file=sys.stderr)
+                print(
+                    f"✗ Error downloading image after {max_retries} attempts: {e}",
+                    file=sys.stderr,
+                )
                 return False
 
     return False
@@ -400,8 +412,8 @@ def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]
     """
     sizes = {
         "thumbnail": 200,  # For landing page grid
-        "medium": 400,     # For story overview slide
-        "full": 1024,      # For image viewer
+        "medium": 400,  # For story overview slide
+        "full": 1024,  # For image viewer
     }
 
     result_paths = {}
@@ -431,13 +443,17 @@ def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]
 
             # WebP quality: 85 for full, 80 for smaller sizes (excellent quality, good compression)
             quality = 85 if size_key == "full" else 80
-            resized.save(output_path, "WEBP", quality=quality, method=6)  # method=6 = slowest but best compression
+            resized.save(
+                output_path, "WEBP", quality=quality, method=6
+            )  # method=6 = slowest but best compression
 
             # Store relative path for use in data files
             result_paths[size_key] = f"/portraits/{output_filename}"
 
             file_size_kb = output_path.stat().st_size / 1024
-            print(f"  ✓ Created {size_key} ({new_width}x{new_height}): {output_filename} ({file_size_kb:.1f}KB)")
+            print(
+                f"  ✓ Created {size_key} ({new_width}x{new_height}): {output_filename} ({file_size_kb:.1f}KB)"
+            )
 
     except Exception as e:
         print(f"  Warning: Failed to create WebP sizes: {e}", file=sys.stderr)
@@ -486,7 +502,9 @@ def update_person_registry(
 
     # Update with generated portrait (multi-size WebP)
     person["portrait"] = {
-        "image": portrait_paths.get("thumbnail", portrait_paths.get("full")),  # Default to thumbnail for landing page
+        "image": portrait_paths.get(
+            "thumbnail", portrait_paths.get("full")
+        ),  # Default to thumbnail for landing page
         "thumbnail": portrait_paths.get("thumbnail"),
         "medium": portrait_paths.get("medium"),
         "full": portrait_paths.get("full"),
@@ -535,7 +553,7 @@ def update_life_events_portrait(
                 json.dumps(life_events, indent=2, ensure_ascii=False) + "\n",
                 encoding="utf-8",
             )
-            print(f"  ✓ Updated life_events.json")
+            print("  ✓ Updated life_events.json")
         except Exception as e:
             print(f"  Warning: Failed to update life_events.json: {e}", file=sys.stderr)
 
@@ -552,7 +570,9 @@ def update_life_events_portrait(
         translated_life_events = lang_dir / "life_events.json"
         if translated_life_events.exists():
             try:
-                life_events = json.loads(translated_life_events.read_text(encoding="utf-8"))
+                life_events = json.loads(
+                    translated_life_events.read_text(encoding="utf-8")
+                )
 
                 if not life_events.get("person"):
                     life_events["person"] = {}
@@ -565,7 +585,10 @@ def update_life_events_portrait(
                 )
                 updated_translations.append(lang_dir.name)
             except Exception as e:
-                print(f"  Warning: Failed to update {lang_dir.name}/life_events.json: {e}", file=sys.stderr)
+                print(
+                    f"  Warning: Failed to update {lang_dir.name}/life_events.json: {e}",
+                    file=sys.stderr,
+                )
 
     if updated_translations:
         print(f"  ✓ Updated translations: {', '.join(updated_translations)}")
@@ -601,7 +624,9 @@ def generate_portrait(
 
     # Load person's color scheme
     colors = load_person_colors(person_id)
-    print(f"  Primary color: {colors['primary']}, Secondary color: {colors['secondary']}")
+    print(
+        f"  Primary color: {colors['primary']}, Secondary color: {colors['secondary']}"
+    )
 
     # If reference_image_url is None, load from registry
     if reference_image_url is None:
@@ -625,12 +650,15 @@ def generate_portrait(
         if reference_image_url and reference_image_url.startswith("/portraits/"):
             reference_image_url = portrait.get("originalImage")
             if reference_image_url:
-                print(f"  Using original image from registry (originalImage field)")
+                print("  Using original image from registry (originalImage field)")
 
         if not reference_image_url:
             error_msg = f"No reference portrait found for '{person_id}'"
             print(f"✗ Error: {error_msg}", file=sys.stderr)
-            print("  Run generate_person_events.py first to create portrait metadata", file=sys.stderr)
+            print(
+                "  Run generate_person_events.py first to create portrait metadata",
+                file=sys.stderr,
+            )
             return {
                 "id": person_id,
                 "success": False,
@@ -667,7 +695,9 @@ def generate_portrait(
     if not master_style_path.exists():
         error_msg = f"Master style portrait not found: {master_style_path}"
         print(f"✗ Error: {error_msg}", file=sys.stderr)
-        print("  Create a master style portrait first at public/master_style_portrait.png")
+        print(
+            "  Create a master style portrait first at public/master_style_portrait.png"
+        )
         return {
             "id": person_id,
             "success": False,
@@ -684,7 +714,7 @@ def generate_portrait(
     print(f"  ✓ Master style portrait found: {master_style_path}")
 
     # Download reference portrait to temp file
-    print(f"[Step 2/6] Downloading reference portrait from Wikimedia Commons...")
+    print("[Step 2/6] Downloading reference portrait from Wikimedia Commons...")
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_ref_path = Path(temp_dir) / f"{person_id}_ref.jpg"
         temp_ref_png = Path(temp_dir) / f"{person_id}_ref.png"
@@ -712,6 +742,7 @@ def generate_portrait(
             if temp_ref_path.suffix.lower() in [".jpg", ".jpeg"]:
                 try:
                     from PIL import Image
+
                     img = Image.open(temp_ref_path)
                     # Convert to RGBA (required by DALL-E 2 edit endpoint)
                     if img.mode != "RGBA":
@@ -728,7 +759,10 @@ def generate_portrait(
                     temp_ref_path = temp_ref_png
                     print(f"  ✓ Converted to PNG with alpha channel: {temp_ref_path}")
                 except ImportError:
-                    print("✗ Error: PIL/Pillow is required to convert JPEG to PNG", file=sys.stderr)
+                    print(
+                        "✗ Error: PIL/Pillow is required to convert JPEG to PNG",
+                        file=sys.stderr,
+                    )
                     print("  Install with: pip install Pillow", file=sys.stderr)
                     return {
                         "id": person_id,
@@ -763,7 +797,9 @@ def generate_portrait(
 
                 # Models that support image editing with multiple images
                 if model in ["gpt-image-2", "gpt-image-1.5", "gpt-image-1"]:
-                    print(f"  Model supports multiple images - using dual-image approach")
+                    print(
+                        "  Model supports multiple images - using dual-image approach"
+                    )
                     # Light-drawing portrait prompt with explicit image role specification
                     enhanced_prompt = f"""You are given TWO reference images:
 1. FIRST IMAGE: A style reference showing the artistic treatment to apply
@@ -812,7 +848,7 @@ REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIR
                     style_file = open(master_style_path, "rb")
                     ref_file = open(temp_ref_path, "rb")
                     try:
-                        print(f"  Calling OpenAI API with size=1024x1536, n=1")
+                        print("  Calling OpenAI API with size=1024x1536, n=1")
                         print(f"  Prompt length: {len(enhanced_prompt)} characters")
 
                         response = client.images.edit(
@@ -823,10 +859,12 @@ REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIR
                             n=1,
                         )
 
-                        print(f"  API call completed, processing response...")
+                        print("  API call completed, processing response...")
                         print(f"  Response type: {type(response)}")
-                        print(f"  Response has 'data' attribute: {hasattr(response, 'data')}")
-                        if hasattr(response, 'data'):
+                        print(
+                            f"  Response has 'data' attribute: {hasattr(response, 'data')}"
+                        )
+                        if hasattr(response, "data"):
                             print(f"  Response data length: {len(response.data)}")
                     finally:
                         # Ensure files are closed before temp directory cleanup
@@ -854,8 +892,14 @@ PRESERVE EXACTLY:
                         )
                 else:
                     # Use generate endpoint for DALL-E 3, etc.
-                    print(f"  Note: {model} doesn't support image editing, using text generation", file=sys.stderr)
-                    print(f"  This may not preserve facial likeness as accurately", file=sys.stderr)
+                    print(
+                        f"  Note: {model} doesn't support image editing, using text generation",
+                        file=sys.stderr,
+                    )
+                    print(
+                        "  This may not preserve facial likeness as accurately",
+                        file=sys.stderr,
+                    )
 
                     enhanced_prompt = """Sketchy portrait drawn by a torch light in the dark, glowing lines.
 Professional and dignified composition, portrait orientation, shoulders visible."""
@@ -871,40 +915,56 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                 generated_url = None
                 generated_b64 = None
 
-                print(f"  Extracting image data from response...")
+                print("  Extracting image data from response...")
 
-                if hasattr(response, 'data') and len(response.data) > 0:
+                if hasattr(response, "data") and len(response.data) > 0:
                     image_data = response.data[0]
                     print(f"  Image data type: {type(image_data)}")
                     print(f"  Image data attributes: {dir(image_data)}")
 
                     # Check for URL
-                    if hasattr(image_data, 'url') and image_data.url:
+                    if hasattr(image_data, "url") and image_data.url:
                         generated_url = image_data.url
-                        print(f"  Found URL in response")
+                        print("  Found URL in response")
                     # Check for base64 data
-                    elif hasattr(image_data, 'b64_json') and image_data.b64_json:
+                    elif hasattr(image_data, "b64_json") and image_data.b64_json:
                         generated_b64 = image_data.b64_json
-                        print(f"  Found base64 data in response")
+                        print("  Found base64 data in response")
                     # Check for revised_prompt (means generation succeeded)
-                    elif hasattr(image_data, 'revised_prompt'):
+                    elif hasattr(image_data, "revised_prompt"):
                         # Debug: print what we got
-                        print(f"  Warning: Image data has revised_prompt but no url or b64_json", file=sys.stderr)
-                        if hasattr(image_data, '__dict__'):
-                            print(f"  Image data dict: {image_data.__dict__}", file=sys.stderr)
+                        print(
+                            "  Warning: Image data has revised_prompt but no url or b64_json",
+                            file=sys.stderr,
+                        )
+                        if hasattr(image_data, "__dict__"):
+                            print(
+                                f"  Image data dict: {image_data.__dict__}",
+                                file=sys.stderr,
+                            )
                     else:
-                        print(f"  Warning: No url, b64_json, or revised_prompt found", file=sys.stderr)
+                        print(
+                            "  Warning: No url, b64_json, or revised_prompt found",
+                            file=sys.stderr,
+                        )
                 else:
-                    print(f"  Warning: Response has no data or empty data list", file=sys.stderr)
-                    if hasattr(response, '__dict__'):
+                    print(
+                        "  Warning: Response has no data or empty data list",
+                        file=sys.stderr,
+                    )
+                    if hasattr(response, "__dict__"):
                         print(f"  Response dict: {response.__dict__}", file=sys.stderr)
 
                 if not generated_url and not generated_b64:
                     raise ValueError("API returned no URL or base64 data")
 
-                print(f"  ✓ Portrait generated successfully")
+                print("  ✓ Portrait generated successfully")
                 if generated_url:
-                    print(f"  Generated URL: {generated_url[:80]}..." if len(generated_url) > 80 else f"  Generated URL: {generated_url}")
+                    print(
+                        f"  Generated URL: {generated_url[:80]}..."
+                        if len(generated_url) > 80
+                        else f"  Generated URL: {generated_url}"
+                    )
                 elif generated_b64:
                     print(f"  Generated base64 data: {len(generated_b64)} characters")
 
@@ -922,9 +982,13 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                 }
 
             except Exception as error:
-                print(f"✗ Unexpected error during API call: {type(error).__name__}", file=sys.stderr)
+                print(
+                    f"✗ Unexpected error during API call: {type(error).__name__}",
+                    file=sys.stderr,
+                )
                 print(f"✗ Error details: {str(error)}", file=sys.stderr)
                 import traceback
+
                 traceback.print_exc()
 
                 return {
@@ -934,7 +998,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                 }
 
         # Download or save generated image
-        print(f"[Step 4/6] Saving generated portrait...")
+        print("[Step 4/6] Saving generated portrait...")
 
         if dry_run:
             print("  (Dry run: skipping save)")
@@ -953,6 +1017,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             elif generated_b64:
                 # Decode and save base64 data
                 import base64
+
                 try:
                     image_bytes = base64.b64decode(generated_b64)
                     output_path.write_bytes(image_bytes)
@@ -966,7 +1031,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             print(f"  ✓ Portrait saved to: {output_path}")
 
         # Create optimized WebP sizes
-        print(f"[Step 5/6] Creating optimized WebP sizes...")
+        print("[Step 5/6] Creating optimized WebP sizes...")
 
         if dry_run:
             print("  (Dry run: skipping WebP creation)")
@@ -979,14 +1044,16 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             portrait_paths = create_webp_sizes(output_path, person_id)
 
         # Update registry and life_events.json
-        print(f"[Step 6/6] Updating persons registry and life events...")
+        print("[Step 6/6] Updating persons registry and life events...")
 
         if dry_run:
             print("  (Dry run: skipping registry update)")
         else:
             # Update persons.json with multi-size paths and source attribution
-            update_person_registry(person_id, portrait_paths, reference_image_url, source_page_url)
-            print(f"  ✓ Registry updated with portrait paths")
+            update_person_registry(
+                person_id, portrait_paths, reference_image_url, source_page_url
+            )
+            print("  ✓ Registry updated with portrait paths")
 
             # Get the portrait data that was just saved to the registry
             registry = load_person_registry()
@@ -995,9 +1062,12 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                 # Update life_events.json and translations with the same portrait data
                 update_life_events_portrait(person_id, person["portrait"])
             else:
-                print(f"  Warning: Could not retrieve portrait data from registry", file=sys.stderr)
+                print(
+                    "  Warning: Could not retrieve portrait data from registry",
+                    file=sys.stderr,
+                )
 
-        print(f"[Step 7/6] Portrait generation complete!")
+        print("[Step 7/6] Portrait generation complete!")
 
         return {
             "id": person_id,
@@ -1042,7 +1112,7 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--url",
         type=str,
         default=None,
-        help="Optional: Reference image URL to use instead of the one from the registry."
+        help="Optional: Reference image URL to use instead of the one from the registry.",
     )
     return parser.parse_args(argv)
 
@@ -1067,7 +1137,6 @@ def main(argv: Any = None) -> int:
         print("Force: Regenerate even if exists")
     print()
 
-
     try:
         # Determine reference image URL and source page URL
         reference_url = None
@@ -1082,15 +1151,22 @@ def main(argv: Any = None) -> int:
                 # Direct image URL
                 reference_url = args.url
                 source_page_url = None
-                print(f"  Detected direct image URL")
+                print("  Detected direct image URL")
             else:
                 # Web page - extract image
-                print(f"  Detected web page - extracting main image...")
-                extracted_image_url, extracted_source_url = extract_image_from_page(args.url)
+                print("  Detected web page - extracting main image...")
+                extracted_image_url, extracted_source_url = extract_image_from_page(
+                    args.url
+                )
 
                 if not extracted_image_url:
-                    print(f"✗ Error: Could not extract image from page: {args.url}", file=sys.stderr)
-                    print(f"  Please provide a direct image URL instead", file=sys.stderr)
+                    print(
+                        f"✗ Error: Could not extract image from page: {args.url}",
+                        file=sys.stderr,
+                    )
+                    print(
+                        "  Please provide a direct image URL instead", file=sys.stderr
+                    )
                     return 1
 
                 reference_url = extracted_image_url
@@ -1104,7 +1180,10 @@ def main(argv: Any = None) -> int:
             person = find_person_in_registry(registry, person_id)
 
             if not person:
-                print(f"✗ Error: Person '{person_id}' not found in registry", file=sys.stderr)
+                print(
+                    f"✗ Error: Person '{person_id}' not found in registry",
+                    file=sys.stderr,
+                )
                 print(f"  Registry path: {REGISTER_PATH}", file=sys.stderr)
                 return 1
 
@@ -1116,16 +1195,24 @@ def main(argv: Any = None) -> int:
             if reference_url and reference_url.startswith("/portraits/"):
                 reference_url = portrait.get("originalImage")
                 if reference_url:
-                    print(f"Using original image (stored in originalImage field)")
+                    print("Using original image (stored in originalImage field)")
 
             if not reference_url:
-                print(f"✗ Error: No reference portrait found for '{person_id}'", file=sys.stderr)
-                print("  Run generate_person_events.py first to create portrait", file=sys.stderr)
+                print(
+                    f"✗ Error: No reference portrait found for '{person_id}'",
+                    file=sys.stderr,
+                )
+                print(
+                    "  Run generate_person_events.py first to create portrait",
+                    file=sys.stderr,
+                )
                 return 1
 
             # Validate URL
             if not reference_url.startswith("http"):
-                print(f"✗ Error: Invalid portrait URL: {reference_url}", file=sys.stderr)
+                print(
+                    f"✗ Error: Invalid portrait URL: {reference_url}", file=sys.stderr
+                )
                 print("  Portrait should be a valid HTTP(S) URL", file=sys.stderr)
                 return 1
 
@@ -1148,7 +1235,7 @@ def main(argv: Any = None) -> int:
             if result.get("cached"):
                 print(f"⊘ {result['message']}")
             else:
-                print(f"✓ Portrait successfully generated!")
+                print("✓ Portrait successfully generated!")
                 print(f"  Person ID: {result['id']}")
                 print(f"  Local path: {result['local_path']}")
                 print(f"  View at: /story/{result['id']}")

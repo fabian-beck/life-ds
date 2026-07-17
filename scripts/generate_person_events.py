@@ -27,14 +27,12 @@ from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
 from icon_categories import (
-    ICON_CATEGORIES,
     format_icon_categories_for_prompt,
     normalize_icon,
 )
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
-    get_cached_commons_images,
     ensure_cache,
     get_cache_dir,
 )
@@ -46,11 +44,13 @@ from utils.wikipedia_cache import (
 # This ensures consistent configuration between AI calls and logging
 
 PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation (medium)
-PHASE2_REASONING_EFFORT = LOW_REASONING_EFFORT      # Event detail research (none)
-PHASE3_IMAGE_SEARCH_REASONING = LOW_REASONING_EFFORT  # Image search string generation (none)
-PHASE3_IMAGE_MATCH_REASONING = LOW_REASONING_EFFORT   # Image-to-event matching (none)
+PHASE2_REASONING_EFFORT = LOW_REASONING_EFFORT  # Event detail research (none)
+PHASE3_IMAGE_SEARCH_REASONING = (
+    LOW_REASONING_EFFORT  # Image search string generation (none)
+)
+PHASE3_IMAGE_MATCH_REASONING = LOW_REASONING_EFFORT  # Image-to-event matching (none)
 CHAPTER_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Chapter generation (medium)
-RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT    # Related article discovery (none)
+RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT  # Related article discovery (none)
 
 # Import from cache_wikipedia_materials for related articles functionality
 try:
@@ -98,8 +98,10 @@ _wikipedia_lang: Optional[str] = None
 # PYDANTIC MODELS
 # ============================================================================
 
+
 class ImageMetadata(BaseModel):
     """Metadata for an image associated with an event."""
+
     url: str = Field(description="The full URL of the image")
     caption: str = Field(
         description="A concise, factual description of what the image shows"
@@ -111,10 +113,10 @@ class ImageMetadata(BaseModel):
 
 class Annotation(BaseModel):
     """Explanation for an annotated term in event description."""
+
     explanation: str = Field(description="Clear, concise explanation (1-2 sentences)")
     wikipedia_url: Optional[str] = Field(
-        None,
-        description="Optional Wikipedia URL for further reading"
+        None, description="Optional Wikipedia URL for further reading"
     )
 
 
@@ -122,81 +124,76 @@ class Annotation(BaseModel):
 # EVENT CLASSIFICATION MODELS (Phase 2 - Optional)
 # ============================================================================
 
+
 class MarriagePartnershipClassification(BaseModel):
     """Classification for marriage/partnership events."""
+
     type: Literal["marriage_partnership"] = Field(
-        default="marriage_partnership",
-        description="Always 'marriage_partnership'"
+        default="marriage_partnership", description="Always 'marriage_partnership'"
     )
     subtype: Literal["marriage", "partnership"] = Field(
         description="Marriage (legal/ceremonial) or partnership (domestic/romantic)"
     )
     partner: str = Field(description="Full name of spouse/partner")
     duration: Optional[str] = Field(
-        None,
-        description="Duration if applicable (e.g., 'until death', '17 years')"
+        None, description="Duration if applicable (e.g., 'until death', '17 years')"
     )
     children: Optional[int] = Field(
-        None,
-        description="Number of children from this union, if mentioned"
+        None, description="Number of children from this union, if mentioned"
     )
     characterization: Optional[str] = Field(
         None,
-        description="Brief characterization (e.g., 'happy marriage', 'political alliance') - 1-4 words"
+        description="Brief characterization (e.g., 'happy marriage', 'political alliance') - 1-4 words",
     )
 
 
 class MigrationClassification(BaseModel):
     """Classification for migration events (emigration, immigration, relocation, exile, etc.)."""
+
     type: Literal["migration"] = Field(
-        default="migration",
-        description="Always 'migration'"
+        default="migration", description="Always 'migration'"
     )
     from_location: str = Field(description="Origin location (city/region/country)")
     to_location: str = Field(description="Destination location (city/region/country)")
     characterization: Optional[str] = Field(
         None,
-        description="Nature of move (e.g., 'political exile', 'career opportunity') - 1-4 words"
+        description="Nature of move (e.g., 'political exile', 'career opportunity') - 1-4 words",
     )
 
 
 class InventionClassification(BaseModel):
     """Classification for invention/innovation events."""
+
     type: Literal["invention"] = Field(
-        default="invention",
-        description="Always 'invention'"
+        default="invention", description="Always 'invention'"
     )
     title: str = Field(description="Name/title of invention")
-    description: str = Field(
-        description="Brief technical description (1-2 sentences)"
-    )
+    description: str = Field(description="Brief technical description (1-2 sentences)")
     impact: Optional[str] = Field(
-        None,
-        description="Historical/practical impact (1-2 sentences)"
+        None, description="Historical/practical impact (1-2 sentences)"
     )
 
 
 class PublicationClassification(BaseModel):
     """Classification for publication events (books, papers, articles, etc.)."""
+
     type: Literal["publication"] = Field(
-        default="publication",
-        description="Always 'publication'"
+        default="publication", description="Always 'publication'"
     )
     title: str = Field(description="Title of the work")
-    publication_type: Literal["book", "paper", "article", "manuscript", "thesis", "essay"] = Field(
-        description="Type of publication"
-    )
+    publication_type: Literal[
+        "book", "paper", "article", "manuscript", "thesis", "essay"
+    ] = Field(description="Type of publication")
     publisher: Optional[str] = Field(
         None,
-        description="Publisher or journal name (e.g., 'Nature', 'Cambridge University Press')"
+        description="Publisher or journal name (e.g., 'Nature', 'Cambridge University Press')",
     )
     significance: Optional[str] = Field(
         None,
-        description="Brief significance note (e.g., 'seminal work', 'controversial', 'bestseller') - 1-4 words"
+        description="Brief significance note (e.g., 'seminal work', 'controversial', 'bestseller') - 1-4 words",
     )
     impact: Optional[str] = Field(
-        None,
-        description="Historical/intellectual impact (1-2 sentences)"
+        None, description="Historical/intellectual impact (1-2 sentences)"
     )
 
 
@@ -206,7 +203,7 @@ EventClassification = Union[
     MarriagePartnershipClassification,
     MigrationClassification,
     InventionClassification,
-    PublicationClassification
+    PublicationClassification,
 ]
 
 
@@ -273,7 +270,16 @@ EVENT_CLASS_CONFIG = {
         "name": "MIGRATION",
         "display_name": "MIGRATION",
         "description": "Permanent or significant relocation (emigration, immigration, exile, refugee movement)",
-        "keywords": ["emigrated", "immigrated", "fled", "moved to", "settled in", "exile", "refuge", "relocated"],
+        "keywords": [
+            "emigrated",
+            "immigrated",
+            "fled",
+            "moved to",
+            "settled in",
+            "exile",
+            "refuge",
+            "relocated",
+        ],
         "detection_rules": [
             "Permanent or significant relocation to different country/region",
             "Words like: 'emigrated', 'immigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge', 'relocated'",
@@ -352,7 +358,16 @@ EVENT_CLASS_CONFIG = {
         "name": "PUBLICATION",
         "display_name": "PUBLICATION",
         "description": "Publishing books, papers, articles, manuscripts, theses, or essays",
-        "keywords": ["published", "wrote", "authored", "paper", "book", "article", "thesis", "manuscript"],
+        "keywords": [
+            "published",
+            "wrote",
+            "authored",
+            "paper",
+            "book",
+            "article",
+            "thesis",
+            "manuscript",
+        ],
         "detection_rules": [
             "Publication of written work (book, paper, article, manuscript, thesis, essay)",
             "Words like: 'published', 'wrote', 'authored', 'released', 'paper', 'book', 'article'",
@@ -393,21 +408,25 @@ EVENT_CLASS_CONFIG = {
 
 class Portrait(BaseModel):
     """Portrait information for the person."""
+
     image: Optional[str] = Field(None, description="URL of the portrait image")
     source: Optional[str] = Field(None, description="Source URL for the portrait")
 
 
 class Person(BaseModel):
     """Metadata about the person."""
+
     name: str = Field(description="Full name of the person")
     birth_date: Optional[str] = Field(None, description="Birth date in ISO-8601 format")
     death_date: Optional[str] = Field(None, description="Death date in ISO-8601 format")
     primary_roles: List[str] = Field(
         description="2-3 primary roles/professions. Use short, generic, lowercase single words or two-word phrases. "
-                    "Examples: 'mathematician', 'physicist', 'writer', 'composer', 'computer scientist', 'monarch', 'inventor'. "
-                    "Avoid specific titles, company names, or idiosyncratic descriptions."
+        "Examples: 'mathematician', 'physicist', 'writer', 'composer', 'computer scientist', 'monarch', 'inventor'. "
+        "Avoid specific titles, company names, or idiosyncratic descriptions."
     )
-    tagline: str = Field(description="Catchy, memorable phrase capturing the person's essence (3-7 words)")
+    tagline: str = Field(
+        description="Catchy, memorable phrase capturing the person's essence (3-7 words)"
+    )
     summary: str = Field(description="Brief biographical summary")
     wikipedia: Optional[str] = Field(None, description="Wikipedia URL")
     portrait: Optional[Portrait] = Field(None, description="Portrait information")
@@ -415,11 +434,13 @@ class Person(BaseModel):
 
 class LifeChapter(BaseModel):
     """A chapter grouping a sequence of life events."""
+
     id: str = Field(
         description="Unique identifier for the chapter (lowercase, snake_case)"
     )
     headline: str = Field(
-        description="Catchy, story-like chapter headline (2-5 words). Make it engaging and evocative, like a book chapter title. Avoid using 'and' - prefer vivid, specific headlines.")
+        description="Catchy, story-like chapter headline (2-5 words). Make it engaging and evocative, like a book chapter title. Avoid using 'and' - prefer vivid, specific headlines."
+    )
     bridge_statement: str = Field(
         description="Brief bridge into the chapter (1 sentence, max 20 words). Set the mood and create anticipation without spoiling events. Acts as a transition, not a summary."
     )
@@ -443,16 +464,17 @@ class LifeChapter(BaseModel):
     )
     involved_people: Optional[List[str]] = Field(
         None,
-        description="Names of key people involved during this life chapter (aggregated from events, exclude the main subject)"
+        description="Names of key people involved during this life chapter (aggregated from events, exclude the main subject)",
     )
     location: Optional[str] = Field(
         None,
-        description="Summary of the main geographic area for this chapter (e.g., 'England', 'United States', 'Central Europe') - not a list of places"
+        description="Summary of the main geographic area for this chapter (e.g., 'England', 'United States', 'Central Europe') - not a list of places",
     )
 
 
 class ChapterGenerationOutput(BaseModel):
     """Output model for chapter generation phase."""
+
     chapters: List[LifeChapter] = Field(
         description="List of life chapters grouping the events"
     )
@@ -463,8 +485,10 @@ class ChapterGenerationOutput(BaseModel):
 
 # Phase 1 Models
 
+
 class EventSkeleton(BaseModel):
     """Phase 1: Minimal event structure for planning the narrative."""
+
     date: str = Field(description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
     date_precision: str = Field(
         description="Precision level: 'day', 'month', or 'year'"
@@ -483,15 +507,18 @@ class EventSkeleton(BaseModel):
         description="Subject's age at the time of the event, null if not applicable",
     )
     title: str = Field(description="Brief title of the event (2-6 words)")
-    description: str = Field(description="Detailed description of the event (2-4 sentences)")
+    description: str = Field(
+        description="Detailed description of the event (2-4 sentences)"
+    )
     event_class: Optional[EventClassification] = Field(
         None,
-        description="Structured classification for specific event types (marriage_partnership, migration, invention). Omit for standard biographical events."
+        description="Structured classification for specific event types (marriage_partnership, migration, invention). Omit for standard biographical events.",
     )
 
 
 class LifePlan(BaseModel):
     """Phase 1 output: Person metadata and event skeletons."""
+
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
@@ -502,57 +529,58 @@ class LifePlan(BaseModel):
 
 # Phase 2 Models
 
+
 class LocationInfo(BaseModel):
     """Location information with historic and modern names."""
+
     name_historic: str = Field(
         description="Location name at time of event (e.g., 'Königsberg', 'Ceylon')"
     )
     name_modern: Optional[str] = Field(
         None,
-        description="Modern geographic name for geocoding (e.g., 'Kaliningrad, Russia')"
+        description="Modern geographic name for geocoding (e.g., 'Kaliningrad, Russia')",
     )
     centroid: Optional[List[float]] = Field(
-        None,
-        description="[longitude, latitude] coordinates, or null if not geocoded"
+        None, description="[longitude, latitude] coordinates, or null if not geocoded"
     )
     primary: bool = Field(
-        default=True,
-        description="True if this is the primary/main location"
+        default=True, description="True if this is the primary/main location"
     )
 
 
 class EventDetails(BaseModel):
     """Phase 2: Research details for a specific event (NO images - handled in Phase 3)."""
+
     description: Optional[str] = Field(
         None,
-        description="Event description with [[term|display]] markers for annotations. If no annotations, return the original description unchanged."
+        description="Event description with [[term|display]] markers for annotations. If no annotations, return the original description unchanged.",
     )
     locations: Optional[List[LocationInfo]] = Field(
         None,
-        description="Array of location objects. Can be empty or contain multiple locations."
+        description="Array of location objects. Can be empty or contain multiple locations.",
     )
     involved_people: Optional[List[str]] = Field(
         None,
-        description="Names of people directly involved in this event (exclude the main subject)"
+        description="Names of people directly involved in this event (exclude the main subject)",
     )
     sources: List[str] = Field(
         default_factory=list,
-        description="Array of Wikipedia URLs or references supporting this event"
+        description="Array of Wikipedia URLs or references supporting this event",
     )
     event_type_icon: Optional[str] = Field(
-        None,
-        description="MDI icon identifier (e.g., 'mdi-crown', 'mdi-book')"
+        None, description="MDI icon identifier (e.g., 'mdi-crown', 'mdi-book')"
     )
     annotations: Optional[Dict[str, Annotation]] = Field(
-        None,
-        description="Dictionary mapping term keys to their explanations"
+        None, description="Dictionary mapping term keys to their explanations"
     )
 
 
 # Final Model
 
+
 class LifeEvent(BaseModel):
     """Final merged event (skeleton + details)."""
+
     date: str = Field(description="ISO-8601 date string")
     date_precision: str = Field(description="Precision level")
     date_end: Optional[str] = None
@@ -563,32 +591,27 @@ class LifeEvent(BaseModel):
     description: str = Field(description="Detailed description")
     locations: List[Dict[str, Any]] = Field(
         default_factory=list,
-        description="Unified location array with name_historic/name_modern/centroid/primary"
+        description="Unified location array with name_historic/name_modern/centroid/primary",
     )
     involved_people: Optional[List[str]] = Field(
-        None,
-        description="People directly involved in this event"
+        None, description="People directly involved in this event"
     )
     sources: List[str] = Field(description="Array of Wikipedia URLs or references")
     images: Optional[List[ImageMetadata]] = None
-    event_type_icon: Optional[str] = Field(
-        None,
-        description="MDI icon identifier"
-    )
+    event_type_icon: Optional[str] = Field(None, description="MDI icon identifier")
     chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
     annotations: Optional[Dict[str, Annotation]] = Field(
-        None,
-        description="Dictionary mapping term keys to their explanations"
+        None, description="Dictionary mapping term keys to their explanations"
     )
     event_class: Optional[EventClassification] = Field(
-        None,
-        description="Structured classification for specific event types"
+        None, description="Structured classification for specific event types"
     )
 
 
 # ============================================================================
 # UTILITY FUNCTIONS (copied from generate_person_dataset.py)
 # ============================================================================
+
 
 def _fix_control_characters(text: str) -> str:
     """
@@ -605,11 +628,11 @@ def _fix_control_characters(text: str) -> str:
         return text
 
     replacements = {
-        '\x14': '\u2014',  # DC4 → em dash (—)
-        '\x19': '\u2019',  # EM → right single quotation mark (')
-        '\x1c': '\u201c',  # FS → left double quotation mark (")
-        '\x1d': '\u201d',  # GS → right double quotation mark (")
-        '\x13': '\u2013',  # DC3 → en dash (–)
+        "\x14": "\u2014",  # DC4 → em dash (—)
+        "\x19": "\u2019",  # EM → right single quotation mark (')
+        "\x1c": "\u201c",  # FS → left double quotation mark (")
+        "\x1d": "\u201d",  # GS → right double quotation mark (")
+        "\x13": "\u2013",  # DC3 → en dash (–)
     }
 
     for bad_char, good_char in replacements.items():
@@ -621,7 +644,7 @@ def _fix_control_characters(text: str) -> str:
 
 def _strip_wrapping_quotes(value: str) -> str:
     trimmed = value.strip()
-    quotes = "\"'""''"
+    quotes = "\"'" "''"
     while len(trimmed) >= 2 and trimmed[0] in quotes and trimmed[-1] in quotes:
         trimmed = trimmed[1:-1].strip()
     return trimmed
@@ -990,6 +1013,7 @@ def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
 # WIKIPEDIA DATA FETCHING (copied from generate_person_dataset.py)
 # ============================================================================
 
+
 def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
     """Extract Wikipedia article title and language code from a URL."""
     from urllib.parse import urlparse, unquote
@@ -1168,8 +1192,10 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
 
 # Pydantic models for Phase 3
 
+
 class ImageSearchStrings(BaseModel):
     """AI-generated search strings for finding images across all events."""
+
     search_strings: List[str] = Field(
         description="List of 20 search strings optimized for Wikimedia Commons"
     )
@@ -1177,37 +1203,48 @@ class ImageSearchStrings(BaseModel):
 
 class ImageEventAssignment(BaseModel):
     """Assignment of a single image to an event."""
-    image_id: int = Field(description="1-based index of the image from the candidate list")
-    event_index: int = Field(description="0-based index of the event to assign this image to")
+
+    image_id: int = Field(
+        description="1-based index of the image from the candidate list"
+    )
+    event_index: int = Field(
+        description="0-based index of the event to assign this image to"
+    )
     caption: str = Field(
-        description="Clean, concise caption for the image (5-15 words). Describe what the image shows.")
-    reason: str = Field(description="Brief explanation of why this image fits this event")
+        description="Clean, concise caption for the image (5-15 words). Describe what the image shows."
+    )
+    reason: str = Field(
+        description="Brief explanation of why this image fits this event"
+    )
 
 
 class PortraitSelection(BaseModel):
     """Selection of a portrait image for the person."""
+
     image_id: Optional[int] = Field(
         None,
-        description="1-based index of the best portrait image, or null if no good portrait found"
+        description="1-based index of the best portrait image, or null if no good portrait found",
     )
     reason: str = Field(description="Brief explanation of portrait selection")
 
 
 class ImageAssignmentResult(BaseModel):
     """Result of AI image-to-event matching."""
+
     portrait: Optional[PortraitSelection] = Field(
         None,
-        description="Selection of the best portrait image for the person's profile"
+        description="Selection of the best portrait image for the person's profile",
     )
     assignments: List[ImageEventAssignment] = Field(
         default_factory=list,
-        description="List of image-to-event assignments. Each image can only be assigned once."
+        description="List of image-to-event assignments. Each image can only be assigned once.",
     )
 
 
 # ============================================================================
 # IMAGE QUALITY SCORING FUNCTIONS
 # ============================================================================
+
 
 def parse_year_from_date_string(date_str: str) -> Optional[int]:
     """
@@ -1223,7 +1260,7 @@ def parse_year_from_date_string(date_str: str) -> Optional[int]:
         return None
 
     # Try to extract 4-digit year
-    year_match = re.search(r'\b(1\d{3}|20\d{2})\b', date_str)
+    year_match = re.search(r"\b(1\d{3}|20\d{2})\b", date_str)
     if year_match:
         return int(year_match.group(1))
 
@@ -1241,15 +1278,15 @@ def score_resolution(width: int, height: int) -> float:
 
     pixels = width * height
 
-    if pixels >= 4_000_000:    # 4+ MP
+    if pixels >= 4_000_000:  # 4+ MP
         return 10.0
     elif pixels >= 2_000_000:  # 2-4 MP
         return 8.0
     elif pixels >= 1_000_000:  # 1-2 MP
         return 6.0
-    elif pixels >= 500_000:    # 0.5-1 MP
+    elif pixels >= 500_000:  # 0.5-1 MP
         return 4.0
-    else:                       # <0.5 MP
+    else:  # <0.5 MP
         return 2.0
 
 
@@ -1277,9 +1314,7 @@ def score_file_efficiency(file_size: int, width: int, height: int) -> float:
 
 
 def score_temporal_relevance(
-    event_date: str,
-    image_date_original: str,
-    image_date_upload: str
+    event_date: str, image_date_original: str, image_date_upload: str
 ) -> float:
     """
     Score temporal relevance (0-10 points).
@@ -1300,20 +1335,20 @@ def score_temporal_relevance(
         if year_diff <= 5:
             score += 10.0  # Contemporary image
         elif year_diff <= 20:
-            score += 7.0   # Near-contemporary
+            score += 7.0  # Near-contemporary
         elif year_diff <= 50:
-            score += 4.0   # Same era
+            score += 4.0  # Same era
         elif year_diff <= 100:
-            score += 2.0   # Within lifetime
+            score += 2.0  # Within lifetime
 
     # Recent uploads bonus (better scans/digitization)
     if upload_year:
         if upload_year >= 2020:
-            score += 3.0   # Very recent upload
+            score += 3.0  # Very recent upload
         elif upload_year >= 2015:
-            score += 2.0   # Recent upload
+            score += 2.0  # Recent upload
         elif upload_year >= 2010:
-            score += 1.0   # Modern upload
+            score += 1.0  # Modern upload
 
     return min(score, 10.0)  # Cap at 10
 
@@ -1329,24 +1364,57 @@ def extract_keywords_from_text(text: str, min_length: int = 4) -> List[str]:
 
     # Common stopwords to filter out
     stopwords = {
-        'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-        'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were',
-        'been', 'be', 'have', 'has', 'had', 'do', 'does', 'did',
-        'will', 'would', 'could', 'should', 'may', 'might', 'must',
-        'can', 'this', 'that', 'these', 'those', 'a', 'an'
+        "the",
+        "and",
+        "or",
+        "but",
+        "in",
+        "on",
+        "at",
+        "to",
+        "for",
+        "of",
+        "with",
+        "by",
+        "from",
+        "as",
+        "is",
+        "was",
+        "are",
+        "were",
+        "been",
+        "be",
+        "have",
+        "has",
+        "had",
+        "do",
+        "does",
+        "did",
+        "will",
+        "would",
+        "could",
+        "should",
+        "may",
+        "might",
+        "must",
+        "can",
+        "this",
+        "that",
+        "these",
+        "those",
+        "a",
+        "an",
     }
 
     # Extract words, lowercase, filter by length and stopwords
-    words = re.findall(r'\b\w+\b', text.lower())
+    words = re.findall(r"\b\w+\b", text.lower())
     keywords = [w for w in words if len(w) >= min_length and w not in stopwords]
 
     return list(set(keywords))  # Unique keywords
 
 
 def score_categories(
-    categories: List[str],
-    person_name: str,
-    event_keywords: List[str]
+    categories: List[str], person_name: str, event_keywords: List[str]
 ) -> float:
     """
     Score category relevance (0-5 points).
@@ -1375,8 +1443,14 @@ def score_categories(
 
     # Penalty for modern/generic categories
     penalty_categories = [
-        'modern', 'statue', 'monument', 'memorial',
-        'plaque', 'street', 'postage', 'stamp'
+        "modern",
+        "statue",
+        "monument",
+        "memorial",
+        "plaque",
+        "street",
+        "postage",
+        "stamp",
     ]
     for penalty in penalty_categories:
         if any(penalty in cat for cat in categories_lower):
@@ -1399,20 +1473,22 @@ def score_filename(filename: str) -> float:
     filename_lower = filename.lower()
 
     # Penalize generic/auto-generated names
-    if re.match(r'^[a-f0-9]{32}', filename_lower):  # MD5 hash
+    if re.match(r"^[a-f0-9]{32}", filename_lower):  # MD5 hash
         score -= 2.0
-    elif re.match(r'^\d{8}_\d{6}', filename_lower):  # Timestamp only
+    elif re.match(r"^\d{8}_\d{6}", filename_lower):  # Timestamp only
         score -= 2.0
-    elif re.match(r'^img_\d+|dsc_\d+|image\d+', filename_lower):
+    elif re.match(r"^img_\d+|dsc_\d+|image\d+", filename_lower):
         score -= 1.0
 
     # Reward descriptive names (multiple words)
-    word_count = len(filename.split('_')) + len(filename.split()) + len(filename.split('-'))
+    word_count = (
+        len(filename.split("_")) + len(filename.split()) + len(filename.split("-"))
+    )
     if word_count >= 5:
         score += 2.0
 
     # Penalize likely screenshots/crops
-    if 'screenshot' in filename_lower or 'crop' in filename_lower:
+    if "screenshot" in filename_lower or "crop" in filename_lower:
         score -= 2.0
 
     return max(0.0, min(score, 5.0))  # Clamp to 0-5
@@ -1422,7 +1498,7 @@ def calculate_image_quality_score(
     image_metadata: Dict[str, Any],
     person_name: str = "",
     event_date: str = "",
-    event_text: str = ""
+    event_text: str = "",
 ) -> float:
     """
     Calculate overall image quality score (0-45 points).
@@ -1437,10 +1513,10 @@ def calculate_image_quality_score(
 
     Returns score (higher is better), or -1 if image fails hard filters.
     """
-    width = image_metadata.get('width', 0)
-    height = image_metadata.get('height', 0)
-    file_size = image_metadata.get('size', 0)
-    mime_type = image_metadata.get('mime', '')
+    width = image_metadata.get("width", 0)
+    height = image_metadata.get("height", 0)
+    file_size = image_metadata.get("size", 0)
+    mime_type = image_metadata.get("mime", "")
 
     # Hard filters (permissive thresholds based on user preference)
     MIN_WIDTH = 400
@@ -1448,7 +1524,7 @@ def calculate_image_quality_score(
     MIN_PIXELS = 120_000  # 400×300 minimum
     MIN_ASPECT_RATIO = 0.3
     MAX_ASPECT_RATIO = 3.0
-    MIN_FILE_SIZE = 10_000      # 10 KB
+    MIN_FILE_SIZE = 10_000  # 10 KB
     MAX_FILE_SIZE = 50_000_000  # 50 MB
 
     # Check hard filters
@@ -1466,29 +1542,27 @@ def calculate_image_quality_score(
         return -1.0  # File size out of range
 
     # Strongly prefer JPEG/PNG, but don't reject others (permissive)
-    if mime_type == 'image/svg+xml':
+    if mime_type == "image/svg+xml":
         return -1.0  # SVGs are usually logos/diagrams
 
     # Calculate quality scores
     score = 0.0
     score += score_resolution(width, height)
     score += score_file_efficiency(file_size, width, height)
-    score += score_filename(image_metadata.get('filename', ''))
+    score += score_filename(image_metadata.get("filename", ""))
 
     # Add event-specific scores if provided
     if event_date or event_text:
         score += score_temporal_relevance(
             event_date,
-            image_metadata.get('dateTimeOriginal', ''),
-            image_metadata.get('dateTimeUpload', '')
+            image_metadata.get("dateTimeOriginal", ""),
+            image_metadata.get("dateTimeUpload", ""),
         )
 
         if person_name and event_text:
             event_keywords = extract_keywords_from_text(event_text)
             score += score_categories(
-                image_metadata.get('categories', []),
-                person_name,
-                event_keywords
+                image_metadata.get("categories", []), person_name, event_keywords
             )
 
     return score
@@ -1499,7 +1573,7 @@ def filter_images_by_quality(
     person_name: str = "",
     event_date: str = "",
     event_text: str = "",
-    min_score: float = 10.0
+    min_score: float = 10.0,
 ) -> List[Dict[str, Any]]:
     """
     Filter images by quality score, keeping only those above threshold.
@@ -1518,27 +1592,21 @@ def filter_images_by_quality(
 
     for img in images:
         score = calculate_image_quality_score(
-            img,
-            person_name=person_name,
-            event_date=event_date,
-            event_text=event_text
+            img, person_name=person_name, event_date=event_date, event_text=event_text
         )
 
         if score >= min_score:
             # Attach score to image metadata for debugging/logging
-            img['quality_score'] = score
+            img["quality_score"] = score
             filtered.append(img)
 
     # Sort by quality score (descending)
-    filtered.sort(key=lambda x: x.get('quality_score', 0), reverse=True)
+    filtered.sort(key=lambda x: x.get("quality_score", 0), reverse=True)
 
     return filtered
 
 
-def search_wikimedia_commons(
-    query: str,
-    limit: int = 10
-) -> List[Dict[str, Any]]:
+def search_wikimedia_commons(query: str, limit: int = 10) -> List[Dict[str, Any]]:
     """
     Search Wikimedia Commons using MediaWiki API.
 
@@ -1562,10 +1630,7 @@ def search_wikimedia_commons(
 
     try:
         response = requests.get(
-            api_url,
-            params=params,
-            timeout=30,
-            headers=wikipedia_headers()
+            api_url, params=params, timeout=30, headers=wikipedia_headers()
         )
         response.raise_for_status()
         data = response.json()
@@ -1618,37 +1683,37 @@ def search_wikimedia_commons(
 
         # Extract categories
         categories_raw = page_data.get("categories", [])
-        categories = [cat.get("title", "").replace("Category:", "")
-                     for cat in categories_raw]
+        categories = [
+            cat.get("title", "").replace("Category:", "") for cat in categories_raw
+        ]
 
         # Build source URL
         source = f"https://commons.wikimedia.org/wiki/{page_data.get('title', '').replace(' ', '_')}"
 
-        images.append({
-            "url": url,
-            "filename": filename,
-            "caption": caption,
-            "source": source,
-            "creator": creator,
-            "license": license_name if license_name else None,
-            "licenseUrl": license_url if license_url else None,
-            # Quality metrics
-            "width": width,
-            "height": height,
-            "size": file_size,
-            "mime": mime_type,
-            "dateTimeOriginal": date_time_original,
-            "dateTimeUpload": date_time_upload,
-            "categories": categories,
-        })
+        images.append(
+            {
+                "url": url,
+                "filename": filename,
+                "caption": caption,
+                "source": source,
+                "creator": creator,
+                "license": license_name if license_name else None,
+                "licenseUrl": license_url if license_url else None,
+                # Quality metrics
+                "width": width,
+                "height": height,
+                "size": file_size,
+                "mime": mime_type,
+                "dateTimeOriginal": date_time_original,
+                "dateTimeUpload": date_time_upload,
+                "categories": categories,
+            }
+        )
 
     return images
 
 
-def search_openverse(
-    query: str,
-    limit: int = 10
-) -> List[Dict[str, Any]]:
+def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
     """
     Search Openverse API for CC-licensed images.
 
@@ -1664,17 +1729,10 @@ def search_openverse(
         "license_type": "commercial,modification",
     }
 
-    headers = {
-        "User-Agent": "life-ds-project/1.0 (biographical timeline generator)"
-    }
+    headers = {"User-Agent": "life-ds-project/1.0 (biographical timeline generator)"}
 
     try:
-        response = requests.get(
-            api_url,
-            params=params,
-            timeout=30,
-            headers=headers
-        )
+        response = requests.get(api_url, params=params, timeout=30, headers=headers)
         response.raise_for_status()
         data = response.json()
     except Exception as e:
@@ -1718,16 +1776,18 @@ def search_openverse(
             if license_version:
                 license_name += f" {license_version}"
 
-        images.append({
-            "url": url,
-            "filename": filename,
-            "caption": caption,
-            "source": source,
-            "provider": provider,
-            "creator": creator,
-            "license": license_name,
-            "licenseUrl": license_url if license_url else None,
-        })
+        images.append(
+            {
+                "url": url,
+                "filename": filename,
+                "caption": caption,
+                "source": source,
+                "provider": provider,
+                "creator": creator,
+                "license": license_name,
+                "licenseUrl": license_url if license_url else None,
+            }
+        )
 
     return images
 
@@ -1760,7 +1820,9 @@ def generate_image_search_strings(
     prompt += "SEARCH STRING RULES:\n"
     prompt += "  • Use 2-4 words MAXIMUM per search string\n"
     prompt += "  • At least 5 searches should include the person's name\n"
-    prompt += "  • Focus on: building names, artwork names, award names, institution names\n"
+    prompt += (
+        "  • Focus on: building names, artwork names, award names, institution names\n"
+    )
     prompt += "  • ALWAYS combine the person's name with generic terms (city names, professions, etc.)\n"
     prompt += "  • NO standalone city names, countries, or professions without the person's name\n"
     prompt += "  • NO adjectives, NO years, NO descriptive phrases\n"
@@ -1786,7 +1848,9 @@ def generate_image_search_strings(
     prompt += "  • 'ancient Sumerian city ruins Iraq Ur archaeological site' ❌ (too long)\n\n"
 
     prompt += "CRITICAL RULE: Never search for standalone generic terms (cities, countries, professions).\n"
-    prompt += "Always anchor generic terms to the person's name or specific named entities.\n"
+    prompt += (
+        "Always anchor generic terms to the person's name or specific named entities.\n"
+    )
 
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -1802,7 +1866,7 @@ def generate_image_search_strings(
             input=[
                 {
                     "role": "system",
-                    "content": "You are an expert at crafting search queries for Wikimedia Commons to find historically relevant images for biographical timelines."
+                    "content": "You are an expert at crafting search queries for Wikimedia Commons to find historically relevant images for biographical timelines.",
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -1820,8 +1884,7 @@ def generate_image_search_strings(
 
 
 def execute_batch_image_search(
-    search_strings: List[str],
-    images_per_query: int = 10
+    search_strings: List[str], images_per_query: int = 10
 ) -> List[Dict[str, Any]]:
     """
     Execute all search queries against Wikimedia Commons and Openverse.
@@ -1834,15 +1897,15 @@ def execute_batch_image_search(
     # Search Wikimedia Commons
     print("    [Source 1/2] Wikimedia Commons:")
     for query in search_strings:
-        safe_query = query.encode('ascii', 'replace').decode('ascii')
+        safe_query = query.encode("ascii", "replace").decode("ascii")
         print(f"      Searching: '{safe_query}'")
 
         try:
             results = search_wikimedia_commons(query, limit=images_per_query)
             for img in results:
-                if img['url'] not in seen_urls:
-                    seen_urls.add(img['url'])
-                    img['provider'] = 'wikimedia'
+                if img["url"] not in seen_urls:
+                    seen_urls.add(img["url"])
+                    img["provider"] = "wikimedia"
                     all_images.append(img)
         except Exception as e:
             print(f"        Warning: Search failed: {e}")
@@ -1853,14 +1916,14 @@ def execute_batch_image_search(
     # Search Openverse (aggregates Flickr, museums, etc.)
     print("    [Source 2/2] Openverse (Flickr, museums, etc.):")
     for query in search_strings:
-        safe_query = query.encode('ascii', 'replace').decode('ascii')
+        safe_query = query.encode("ascii", "replace").decode("ascii")
         print(f"      Searching: '{safe_query}'")
 
         try:
             results = search_openverse(query, limit=images_per_query)
             for img in results:
-                if img['url'] not in seen_urls:
-                    seen_urls.add(img['url'])
+                if img["url"] not in seen_urls:
+                    seen_urls.add(img["url"])
                     all_images.append(img)
         except Exception as e:
             print(f"        Warning: Search failed: {e}")
@@ -1946,12 +2009,16 @@ def match_images_to_events(
     prompt += "AVOID:\n"
     prompt += "  • Generic portraits for any event\n"
     prompt += "  • Modern commemorations for historical events\n"
-    prompt += "  • Loosely related images (e.g., city photo for event that happened there)\n"
+    prompt += (
+        "  • Loosely related images (e.g., city photo for event that happened there)\n"
+    )
     prompt += "  • Assigning same type of image (e.g., plaques) to multiple events\n\n"
 
     prompt += "CAPTION GUIDELINES:\n"
     prompt += "  • IMPORTANT: You CANNOT see the images - only filenames and metadata\n"
-    prompt += "  • Base captions ONLY on what the filename/metadata explicitly tells you\n"
+    prompt += (
+        "  • Base captions ONLY on what the filename/metadata explicitly tells you\n"
+    )
     prompt += "  • Do NOT assume or describe visual details you cannot verify\n"
     prompt += "  • Keep captions factual and minimal (5-12 words)\n"
     prompt += "  • Use the original source caption/title if it's descriptive enough\n"
@@ -1977,7 +2044,7 @@ def match_images_to_events(
                         "You are a meticulous image curator for biographical timelines. "
                         "Match images to life events only when there is a clear, direct connection. "
                         "Quality over quantity - it's better to leave events without images than to make poor matches."
-                    )
+                    ),
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -2028,7 +2095,7 @@ def match_images_to_events(
             used_images.add(img_idx)
             # Store the image with AI-generated caption
             img_with_caption = candidate_images[img_idx].copy()
-            img_with_caption['caption'] = assignment.caption
+            img_with_caption["caption"] = assignment.caption
             assignments[event_idx] = img_with_caption
 
         return assignments, portrait_image
@@ -2041,6 +2108,7 @@ def match_images_to_events(
 # ============================================================================
 # PHASE 1: EVENT SKELETON GENERATION
 # ============================================================================
+
 
 def build_phase1_prompt(
     page_data: Dict[str, Any],
@@ -2058,13 +2126,13 @@ def build_phase1_prompt(
     summary_text = summary_data.get("extract", "").strip()
     extract_text = page_data.get("extract", "").strip()
 
-    main_article_title = page_data.get('title', subject)
+    main_article_title = page_data.get("title", subject)
 
     combined = f"TARGET SUBJECT: {main_article_title}\n"
-    combined += f"="*60 + "\n"
+    combined += "=" * 60 + "\n"
     combined += f"You are creating a biographical timeline for {main_article_title}.\n"
     combined += f"Focus ONLY on events from {main_article_title}'s life.\n"
-    combined += f"="*60 + "\n\n"
+    combined += "=" * 60 + "\n\n"
     combined += f"MAIN ARTICLE\nPage title: {main_article_title}\nPage URL: {page_data.get('fullurl', '')}\n\n"
 
     if summary_text:
@@ -2219,13 +2287,18 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- The conclusion summarizes the person's life significance AFTER all events are told\n"
         "\n\nEVENT CLASSIFICATION (optional):\n"
         f"For each event skeleton, determine if it matches one of these {len(EVENT_CLASS_CONFIG)} specific biographical event types:\n"
-        + "".join([f"  {i+1}. {config['name']} - {config['description']}\n"
-                   for i, config in enumerate(EVENT_CLASS_CONFIG.values())]) +
-        "\n"
+        + "".join(
+            [
+                f"  {i+1}. {config['name']} - {config['description']}\n"
+                for i, config in enumerate(EVENT_CLASS_CONFIG.values())
+            ]
+        )
+        + "\n"
         "Detection guidelines:\n"
-        + "".join([config['phase1_guidance'] + "\n"
-                   for config in EVENT_CLASS_CONFIG.values()]) +
-        "For other events (births, deaths, education, awards): OMIT classification.\n"
+        + "".join(
+            [config["phase1_guidance"] + "\n" for config in EVENT_CLASS_CONFIG.values()]
+        )
+        + "For other events (births, deaths, education, awards): OMIT classification.\n"
         f"Only classify when event CLEARLY matches one of the {len(EVENT_CLASS_CONFIG)} types above.\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
@@ -2274,7 +2347,9 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         )
         raise RuntimeError(f"Phase 1 AI call failed: {error_msg}")
     elif response.status != "completed":
-        raise RuntimeError(f"Phase 1: Response has unexpected status: {response.status}")
+        raise RuntimeError(
+            f"Phase 1: Response has unexpected status: {response.status}"
+        )
 
     parsed = response.output_parsed
     if parsed is None:
@@ -2284,9 +2359,13 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     parsed.event_skeletons.sort(key=lambda e: e.date)
 
     # Log classifications from Phase 1 (using centralized config)
-    classified_count = sum(1 for skeleton in parsed.event_skeletons if skeleton.event_class)
+    classified_count = sum(
+        1 for skeleton in parsed.event_skeletons if skeleton.event_class
+    )
     if classified_count > 0:
-        print(f"  Phase 1: Classified {classified_count}/{len(parsed.event_skeletons)} events")
+        print(
+            f"  Phase 1: Classified {classified_count}/{len(parsed.event_skeletons)} events"
+        )
         for skeleton in parsed.event_skeletons:
             if skeleton.event_class:
                 class_type = skeleton.event_class.type
@@ -2307,10 +2386,11 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
 # PHASE 2: EVENT DETAIL RESEARCH
 # ============================================================================
 
+
 def filter_related_articles_for_event(
     event_skeleton: EventSkeleton,
     all_related_articles: List[Dict[str, Any]],
-    max_articles: int = 5
+    max_articles: int = 5,
 ) -> List[Dict[str, Any]]:
     """
     Score and filter related articles for a specific event.
@@ -2323,15 +2403,15 @@ def filter_related_articles_for_event(
     Returns top N articles by score.
     """
     event_text = f"{event_skeleton.title} {event_skeleton.description}".lower()
-    event_words = set(re.findall(r'\b\w{4,}\b', event_text))  # Words 4+ chars
+    event_words = set(re.findall(r"\b\w{4,}\b", event_text))  # Words 4+ chars
 
     scored_articles = []
     for article in all_related_articles:
         title = article.get("title", "").lower()
         summary = article.get("summary", "").lower()
 
-        title_words = set(re.findall(r'\b\w{4,}\b', title))
-        summary_words = set(re.findall(r'\b\w{4,}\b', summary))
+        title_words = set(re.findall(r"\b\w{4,}\b", title))
+        summary_words = set(re.findall(r"\b\w{4,}\b", summary))
 
         title_overlap = len(event_words & title_words)
         summary_overlap = len(event_words & summary_words)
@@ -2361,7 +2441,7 @@ def build_phase2_prompt_base(
     Used for standard events (no classification) and as foundation for class-specific prompts.
     Focus on specific details for THIS event only (NO images - Phase 3).
     """
-    prompt = f"Research details for this specific event:\n\n"
+    prompt = "Research details for this specific event:\n\n"
     prompt += f"Title: {event_skeleton.title}\n"
     prompt += f"Date: {event_skeleton.date}\n"
     prompt += f"Description: {event_skeleton.description}\n"
@@ -2372,9 +2452,9 @@ def build_phase2_prompt_base(
         class_type = event_skeleton.event_class.type
         prompt += f"Event Class: {class_type}\n"
 
-    prompt += "\n" + "="*60 + "\n"
+    prompt += "\n" + "=" * 60 + "\n"
     prompt += "TASK: Provide the following details for THIS specific event:\n"
-    prompt += "="*60 + "\n\n"
+    prompt += "=" * 60 + "\n\n"
 
     prompt += "0. DESCRIPTION (with annotation markers):\n"
     prompt += "   - Return the event description with [[term|display]] markers inserted for any annotations\n"
@@ -2383,7 +2463,9 @@ def build_phase2_prompt_base(
     prompt += "   - Example: If annotating 'Leopoldstadt', change 'Leopoldstadt district' to '[[Leopoldstadt|Leopoldstadt district]]'\n"
     prompt += "   \n"
     # Build dynamic list of classification types
-    class_types_str = "/".join([config["display_name"].lower() for config in EVENT_CLASS_CONFIG.values()])
+    class_types_str = "/".join(
+        [config["display_name"].lower() for config in EVENT_CLASS_CONFIG.values()]
+    )
     prompt += f"   - CRITICAL ANTI-REDUNDANCY RULE for CLASSIFIED events ({class_types_str}):\n"
     prompt += "     * If this event has a classification (see Event Class above), DO NOT describe technical details\n"
     prompt += "     * The classification already provides structured metadata - keep description narrative only\n"
@@ -2392,7 +2474,9 @@ def build_phase2_prompt_base(
     prompt += "     * Bad (classified event): 'Zuse built the Z1, an electrically driven mechanical binary calculating machine...'\n"
     prompt += "   \n"
     prompt += "   - DESCRIPTION QUALITY CHECKLIST (when refining descriptions):\n"
-    prompt += "     * ✓ Temporal: No forward references, stays in the chronological moment\n"
+    prompt += (
+        "     * ✓ Temporal: No forward references, stays in the chronological moment\n"
+    )
     prompt += "     * ✓ Tone: Event-focused narrative, not meta-commentary or interpretive analysis\n"
     prompt += "     * ✓ Personal: Includes human context where relevant, not purely professional\n"
     prompt += "     * ✓ Concise: Direct sentences, no verbose philosophical framing\n"
@@ -2417,12 +2501,16 @@ def build_phase2_prompt_base(
     prompt += "     * Conferences: host city only (not venue name)\n"
     prompt += "     * Battles/campaigns: battle location cities/regions\n"
     prompt += "   - If truly unknown or non-geographic, return empty array\n"
-    prompt += "   - For single-location events, provide one location with primary=true\n\n"
+    prompt += (
+        "   - For single-location events, provide one location with primary=true\n\n"
+    )
 
     prompt += "2. INVOLVED_PEOPLE:\n"
     prompt += "   - List people DIRECTLY involved in THIS specific event\n"
     prompt += f"   - EXCLUDE the main subject ({person_name})\n"
-    prompt += "   - Examples: collaborators, opponents, witnesses, family members present\n"
+    prompt += (
+        "   - Examples: collaborators, opponents, witnesses, family members present\n"
+    )
     prompt += "   - Leave null if no other people directly involved\n\n"
 
     prompt += "3. SOURCES:\n"
@@ -2436,7 +2524,9 @@ def build_phase2_prompt_base(
     prompt += "5. ANNOTATIONS (0-3 per event, MOST EVENTS HAVE 0):\n"
     prompt += "   - CRITICAL: Be extremely conservative - only annotate truly obscure terms that need explanation\n"
     prompt += "   - STRICT CRITERIA: Term must be BOTH obscure AND provide non-obvious context\n"
-    prompt += "   - ⚠️ UNIQUENESS RULE: Each term can be annotated AT MOST ONCE per event\n"
+    prompt += (
+        "   - ⚠️ UNIQUENESS RULE: Each term can be annotated AT MOST ONCE per event\n"
+    )
     prompt += "   - ⚠️ If a term appears multiple times in the description, only annotate the FIRST occurrence\n"
     prompt += "   \n"
     prompt += "   ⛔ CRITICAL PROHIBITION FOR CLASSIFIED EVENTS:\n"
@@ -2461,14 +2551,18 @@ def build_phase2_prompt_base(
     prompt += "     * ❌ Examples: Don't annotate 'Z3', 'S1 and S2' if you're creating an invention classification for them\n"
     prompt += "     * ❌ The classification provides full details - annotations would be redundant\n"
     prompt += "     * ANY major cities - these are well-known and need no explanation (Tokyo, Hamburg, Paris, Prague, London, Vienna, Berlin, Munich, New York, Rome, etc.)\n"
-    prompt += "     * ANY countries or continents (Japan, Germany, USA, Europe, Asia, etc.)\n"
+    prompt += (
+        "     * ANY countries or continents (Japan, Germany, USA, Europe, Asia, etc.)\n"
+    )
     prompt += "     * ANY common places (university, school, museum, gallery, studio, farmhouse, etc.)\n"
     prompt += "     * ANY well-known historical periods or events (WWII, Renaissance, Cold War, etc.)\n"
     prompt += "     * ANY basic artistic/cultural terms (exhibition, retrospective, painting, prize, award, etc.)\n"
     prompt += "     * ANY geographic features everyone knows (rivers, seas, mountains, islands, etc.)\n"
     prompt += "   - CRITICAL REDUNDANCY CHECK - Read the FULL event description before annotating:\n"
     prompt += "     * ❌ NEVER annotate if the description already provides the same or similar information\n"
-    prompt += "     * ❌ NEVER annotate if the surrounding context makes the term clear\n"
+    prompt += (
+        "     * ❌ NEVER annotate if the surrounding context makes the term clear\n"
+    )
     prompt += "     * ❌ BAD: Annotating 'Architectural Association School of Architecture' as 'prestigious architecture school' when description says 'hotbed of avant-garde experimentation' - context already explains it\n"
     prompt += "     * ❌ BAD: Annotating 'Kaufungen' as 'royal estate' when description says 'royal estate of Kaufungen'\n"
     prompt += "     * ❌ BAD: Annotating 'Hitler Youth' if description says 'Nazi youth organization'\n"
@@ -2492,7 +2586,9 @@ def build_phase2_prompt_base(
     prompt += "     * 'documenta' - specific art event most people don't know\n"
     prompt += "   - EXAMPLES of BAD annotations (NEVER annotate):\n"
     prompt += "     * ❌ 'William' - person name (use INVOLVED_PEOPLE instead)\n"
-    prompt += "     * ❌ '8th Baron King' - person title (use INVOLVED_PEOPLE instead)\n"
+    prompt += (
+        "     * ❌ '8th Baron King' - person title (use INVOLVED_PEOPLE instead)\n"
+    )
     prompt += "     * ❌ 'Lord Byron' - person name (use INVOLVED_PEOPLE instead)\n"
     prompt += "     * ❌ ANY other person name or title\n"
     prompt += "     * ❌ 'Architectural Association School of Architecture' - REDUNDANT if description says 'hotbed of avant-garde experimentation' (context is clear)\n"
@@ -2510,14 +2606,16 @@ def build_phase2_prompt_base(
     prompt += "     * Keep annotations SHORT - typically 1-4 words maximum\n"
     prompt += "     * Annotate the NOUN PHRASE that needs explanation, not the entire sentence\n"
     prompt += "   - Mark terms using [[term|display_text]] syntax\n"
-    prompt += "   - Explanations must ADD information not in description (no redundancy)\n"
+    prompt += (
+        "   - Explanations must ADD information not in description (no redundancy)\n"
+    )
     prompt += "   - Optional: Include wikipedia_url for further reading\n"
     prompt += "   - DEFAULT to 0 annotations - when in doubt, DO NOT annotate\n\n"
 
     # Add icon categories
-    prompt += "\n" + "="*60 + "\n"
+    prompt += "\n" + "=" * 60 + "\n"
     prompt += "AVAILABLE ICONS:\n"
-    prompt += "="*60 + "\n"
+    prompt += "=" * 60 + "\n"
     prompt += format_icon_categories_for_prompt()
     prompt += "\n"
 
@@ -2527,13 +2625,13 @@ def build_phase2_prompt_base(
 
     # Add filtered related articles
     if filtered_related_articles and len(filtered_related_articles) > 0:
-        prompt += "\n" + "="*60 + "\n"
+        prompt += "\n" + "=" * 60 + "\n"
         prompt += f"RELATED ARTICLES (filtered for this event, top {len(filtered_related_articles)}):\n"
-        prompt += "="*60 + "\n\n"
+        prompt += "=" * 60 + "\n\n"
         for idx, article in enumerate(filtered_related_articles, 1):
             prompt += f"\nARTICLE {idx}: {article.get('title', 'Unknown')}\n"
             prompt += f"URL: {article.get('url', '')}\n"
-            prompt += "-"*60 + "\n"
+            prompt += "-" * 60 + "\n"
 
             full_text = article.get("fullText", "")
             if full_text:
@@ -2548,19 +2646,21 @@ def build_phase2_prompt_base(
     return prompt
 
 
-def _add_related_articles_section(filtered_related_articles: List[Dict[str, Any]]) -> str:
+def _add_related_articles_section(
+    filtered_related_articles: List[Dict[str, Any]],
+) -> str:
     """Helper to add related articles section to Phase 2 prompts."""
     if not filtered_related_articles:
         return ""
 
-    prompt = "\n" + "="*60 + "\n"
+    prompt = "\n" + "=" * 60 + "\n"
     prompt += f"RELATED ARTICLES (filtered for this event, top {len(filtered_related_articles)}):\n"
-    prompt += "="*60 + "\n\n"
+    prompt += "=" * 60 + "\n\n"
 
     for idx, article in enumerate(filtered_related_articles, 1):
         prompt += f"\nARTICLE {idx}: {article.get('title', 'Unknown')}\n"
         prompt += f"URL: {article.get('url', '')}\n"
-        prompt += "-"*60 + "\n"
+        prompt += "-" * 60 + "\n"
 
         full_text = article.get("fullText", "")
         if full_text:
@@ -2585,7 +2685,12 @@ def build_phase2_prompt_classified(
     Uses EVENT_CLASS_CONFIG to generate event-class-specific guidance.
     """
     # Get base prompt (sections 0-5) — DB text included via base
-    base = build_phase2_prompt_base(event_skeleton, person_name, [], deutsche_biographie_text=deutsche_biographie_text)
+    base = build_phase2_prompt_base(
+        event_skeleton,
+        person_name,
+        [],
+        deutsche_biographie_text=deutsche_biographie_text,
+    )
 
     class_type = event_skeleton.event_class.type
     if class_type not in EVENT_CLASS_CONFIG:
@@ -2596,15 +2701,15 @@ def build_phase2_prompt_classified(
 
     # Build class-specific guidance section
     prompt = base + f"\n\n{config['display_name']} EVENT SPECIFIC GUIDANCE:\n"
-    prompt += "="*60 + "\n"
+    prompt += "=" * 60 + "\n"
     prompt += f"This event has been classified as {config['name']} in Phase 1.\n"
 
     # List what the classification already contains
-    fields_list = ", ".join(config['fields'].keys())
+    fields_list = ", ".join(config["fields"].keys())
     prompt += f"The classification already contains: {fields_list}.\n\n"
 
     prompt += "Your Phase 2 research should focus on:\n"
-    for focus_item in config['phase2_focus']:
+    for focus_item in config["phase2_focus"]:
         prompt += f"{focus_item}\n"
     prompt += "\n"
 
@@ -2634,10 +2739,20 @@ def research_event_details(
     # Route to event-class-specific prompt builder (using centralized config)
     if event_skeleton.event_class:
         # All classified events use the generic builder with config
-        prompt = build_phase2_prompt_classified(event_skeleton, person_name, filtered_articles, deutsche_biographie_text=deutsche_biographie_text)
+        prompt = build_phase2_prompt_classified(
+            event_skeleton,
+            person_name,
+            filtered_articles,
+            deutsche_biographie_text=deutsche_biographie_text,
+        )
     else:
         # Standard event (no classification)
-        prompt = build_phase2_prompt_base(event_skeleton, person_name, filtered_articles, deutsche_biographie_text=deutsche_biographie_text)
+        prompt = build_phase2_prompt_base(
+            event_skeleton,
+            person_name,
+            filtered_articles,
+            deutsche_biographie_text=deutsche_biographie_text,
+        )
 
     # Call AI with retries
     for attempt in range(retry_count + 1):
@@ -2676,10 +2791,13 @@ def research_event_details(
                 print(f"      {error_type}: {error_msg[:150]}")
                 time.sleep(2)
             else:
-                print(f"    ✗ Failed after {retry_count + 1} attempts, using fallback minimal details")
+                print(
+                    f"    ✗ Failed after {retry_count + 1} attempts, using fallback minimal details"
+                )
                 print(f"      {error_type}: {error_msg[:300]}")
                 # Print full traceback for debugging
                 import traceback
+
                 traceback_str = traceback.format_exc()
                 print(f"      Traceback (last 500 chars): ...{traceback_str[-500:]}")
                 # Fallback: minimal details
@@ -2687,15 +2805,12 @@ def research_event_details(
                     locations=None,
                     involved_people=None,
                     sources=[],
-                    event_type_icon="mdi-calendar"
+                    event_type_icon="mdi-calendar",
                 )
 
     # Should never reach here, but fallback just in case
     return EventDetails(
-        locations=None,
-        involved_people=None,
-        sources=[],
-        event_type_icon="mdi-calendar"
+        locations=None, involved_people=None, sources=[], event_type_icon="mdi-calendar"
     )
 
 
@@ -2709,21 +2824,28 @@ def research_all_event_details(
     """Research details for all events sequentially (NO images - Phase 3)."""
     # Log classification routing info
     classified_count = sum(1 for skeleton in event_skeletons if skeleton.event_class)
-    print(f"  Phase 2: Using class-specific prompts for {classified_count}/{len(event_skeletons)} classified events")
+    print(
+        f"  Phase 2: Using class-specific prompts for {classified_count}/{len(event_skeletons)} classified events"
+    )
 
     details = []
     for idx, skeleton in enumerate(event_skeletons, 1):
-        safe_title = skeleton.title.encode('ascii', 'replace').decode('ascii')
+        safe_title = skeleton.title.encode("ascii", "replace").decode("ascii")
 
         # Show which prompt type is being used
         prompt_type = "STANDARD"
         if skeleton.event_class:
             prompt_type = skeleton.event_class.type.upper()
 
-        print(f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title} [{prompt_type}]")
+        print(
+            f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title} [{prompt_type}]"
+        )
 
         detail = research_event_details(
-            skeleton, person_name, all_related_articles, model,
+            skeleton,
+            person_name,
+            all_related_articles,
+            model,
             deutsche_biographie_text=deutsche_biographie_text,
         )
         details.append(detail)
@@ -2735,9 +2857,9 @@ def research_all_event_details(
 # EVENT MERGING
 # ============================================================================
 
+
 def merge_event_skeleton_and_details(
-    skeleton: EventSkeleton,
-    details: EventDetails
+    skeleton: EventSkeleton, details: EventDetails
 ) -> LifeEvent:
     """Merge Phase 1 skeleton with Phase 2 details (NO images - Phase 3)."""
 
@@ -2745,12 +2867,14 @@ def merge_event_skeleton_and_details(
     locations = []
     if details.locations and len(details.locations) > 0:
         for loc in details.locations:
-            locations.append({
-                "name_historic": loc.name_historic,
-                "name_modern": loc.name_modern,
-                "centroid": loc.centroid,
-                "primary": loc.primary
-            })
+            locations.append(
+                {
+                    "name_historic": loc.name_historic,
+                    "name_modern": loc.name_modern,
+                    "centroid": loc.centroid,
+                    "primary": loc.primary,
+                }
+            )
 
     # Annotations come ONLY from Phase 2 (Phase 1 doesn't generate them)
     annotations = details.annotations
@@ -2782,8 +2906,7 @@ def merge_event_skeleton_and_details(
 
 
 def merge_all_events(
-    skeletons: List[EventSkeleton],
-    details_list: List[EventDetails]
+    skeletons: List[EventSkeleton], details_list: List[EventDetails]
 ) -> List[LifeEvent]:
     """Merge all skeletons with their details."""
     if len(skeletons) != len(details_list):
@@ -2798,6 +2921,7 @@ def merge_all_events(
 # ============================================================================
 # CHAPTER GENERATION PHASE
 # ============================================================================
+
 
 def build_chapter_generation_prompt(
     merged_events: List[LifeEvent],
@@ -2832,10 +2956,12 @@ def build_chapter_generation_prompt(
         prompt += f"  Description: {event.description}\n"
 
         if event.locations:
-            locations_str = ", ".join([
-                loc.get("name_modern") or loc.get("name_historic", "Unknown")
-                for loc in event.locations
-            ])
+            locations_str = ", ".join(
+                [
+                    loc.get("name_modern") or loc.get("name_historic", "Unknown")
+                    for loc in event.locations
+                ]
+            )
             prompt += f"  Locations: {locations_str}\n"
 
         if event.involved_people:
@@ -2850,9 +2976,7 @@ def build_chapter_generation_prompt(
 
 
 def call_openai_chapter_generation(
-    prompt: str,
-    model: str,
-    retry_count: int = 2
+    prompt: str, model: str, retry_count: int = 2
 ) -> ChapterGenerationOutput:
     """
     Call OpenAI to generate chapters based on established events.
@@ -2945,7 +3069,9 @@ def call_openai_chapter_generation(
                 print(f"    Retry {attempt + 1}/{retry_count}")
                 time.sleep(2)
             else:
-                print(f"    Warning: Chapter generation failed after {retry_count + 1} attempts")
+                print(
+                    f"    Warning: Chapter generation failed after {retry_count + 1} attempts"
+                )
                 raise RuntimeError(f"Chapter generation failed: {error}") from error
 
     raise RuntimeError("Chapter generation failed unexpectedly")
@@ -2967,9 +3093,9 @@ def deduplicate_person_names(names: List[str]) -> List[str]:
         # Remove common suffixes, lowercase, strip whitespace
         normalized = name.lower().strip()
         # Remove parentheticals like "(Lady Byron)"
-        normalized = re.sub(r'\s*\([^)]*\)\s*', ' ', normalized)
+        normalized = re.sub(r"\s*\([^)]*\)\s*", " ", normalized)
         # Normalize whitespace
-        normalized = ' '.join(normalized.split())
+        normalized = " ".join(normalized.split())
         return normalized
 
     # Group similar names
@@ -3000,8 +3126,7 @@ def deduplicate_person_names(names: List[str]) -> List[str]:
 
 
 def assign_events_to_chapters(
-    events: List[LifeEvent],
-    chapters: List[LifeChapter]
+    events: List[LifeEvent], chapters: List[LifeChapter]
 ) -> List[LifeEvent]:
     """
     Assign each event to the appropriate chapter based on date.
@@ -3013,7 +3138,7 @@ def assign_events_to_chapters(
     # Sort chapters by normalized start date
     sorted_chapters = sorted(
         chapters,
-        key=lambda c: normalize_date_for_comparison(c.date_start, to_end=False)
+        key=lambda c: normalize_date_for_comparison(c.date_start, to_end=False),
     )
 
     updated_events = []
@@ -3024,7 +3149,9 @@ def assign_events_to_chapters(
 
         # Find the chapter that contains this event's date
         for chapter in sorted_chapters:
-            chapter_start = normalize_date_for_comparison(chapter.date_start, to_end=False)
+            chapter_start = normalize_date_for_comparison(
+                chapter.date_start, to_end=False
+            )
             chapter_end = normalize_date_for_comparison(chapter.date_end, to_end=True)
 
             if chapter_start <= event_date_normalized <= chapter_end:
@@ -3071,12 +3198,12 @@ def _validate_chapter_headlines(chapters: List[LifeChapter]) -> None:
     # Note: We check for "other" as a chapter-starting word to catch patterns like
     # "Other Events", "Other Achievements", etc., while allowing "Mother of All Demos"
     prohibited_patterns = [
-        r'^\s*other\s+',  # "other" at the start of the headline
-        r'\bother\s+events?\b',  # "other event" or "other events"
-        r'\bother\s+achievements?\b',  # "other achievement" or "other achievements"
-        r'\bmiscellaneous\b',
-        r'\badditional\s+events?\b',
-        r'\bvarious\s+events?\b'
+        r"^\s*other\s+",  # "other" at the start of the headline
+        r"\bother\s+events?\b",  # "other event" or "other events"
+        r"\bother\s+achievements?\b",  # "other achievement" or "other achievements"
+        r"\bmiscellaneous\b",
+        r"\badditional\s+events?\b",
+        r"\bvarious\s+events?\b",
     ]
 
     for chapter in chapters:
@@ -3148,7 +3275,7 @@ def research_images_for_all_events(
     event_skeletons: List[EventSkeleton],
     event_details_list: List[EventDetails],
     person_name: str,
-    model: str
+    model: str,
 ) -> Tuple[List[LifeEvent], Optional[Dict[str, Any]]]:
     """
     Phase 3: Batch image discovery and AI-driven assignment.
@@ -3163,9 +3290,7 @@ def research_images_for_all_events(
         Tuple of (enriched_events, portrait_dict or None)
     """
     print("  [Phase 3a] Generating image search strings...")
-    search_strings = generate_image_search_strings(
-        event_skeletons, person_name, model
-    )
+    search_strings = generate_image_search_strings(event_skeletons, person_name, model)
     print(f"    Generated {len(search_strings)} search strings")
 
     print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
@@ -3182,7 +3307,7 @@ def research_images_for_all_events(
     filtered_images = filter_images_by_quality(
         candidate_images,
         person_name=person_name,
-        min_score=10.0  # Permissive threshold (out of 45 possible)
+        min_score=10.0,  # Permissive threshold (out of 45 possible)
     )
 
     if not filtered_images:
@@ -3190,23 +3315,29 @@ def research_images_for_all_events(
         return merged_events, None
 
     filtered_count = len(candidate_images) - len(filtered_images)
-    print(f"    Filtered out {filtered_count} low-quality images ({len(filtered_images)} remaining)")
+    print(
+        f"    Filtered out {filtered_count} low-quality images ({len(filtered_images)} remaining)"
+    )
 
     # Show quality score distribution
     if filtered_images:
-        scores = [img.get('quality_score', 0) for img in filtered_images]
+        scores = [img.get("quality_score", 0) for img in filtered_images]
         avg_score = sum(scores) / len(scores)
         max_score = max(scores)
         min_score = min(scores)
-        print(f"    Quality scores: avg={avg_score:.1f}, range={min_score:.1f}-{max_score:.1f}")
+        print(
+            f"    Quality scores: avg={avg_score:.1f}, range={min_score:.1f}-{max_score:.1f}"
+        )
 
-    print(f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events...")
+    print(
+        f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events..."
+    )
     assignments, portrait = match_images_to_events(
         filtered_images, event_skeletons, person_name, model
     )
     print(f"    Assigned images to {len(assignments)} events")
     if portrait:
-        print(f"    ✓ Portrait selected")
+        print("    ✓ Portrait selected")
 
     # Apply assignments to events
     enriched_events = []
@@ -3215,15 +3346,17 @@ def research_images_for_all_events(
 
         if idx in assignments:
             img = assignments[idx]
-            event_dict['images'] = [{
-                "url": img['url'],
-                "caption": img['caption'],
-                "source": img['source'],
-            }]
-            safe_title = event.title.encode('ascii', 'replace').decode('ascii')
+            event_dict["images"] = [
+                {
+                    "url": img["url"],
+                    "caption": img["caption"],
+                    "source": img["source"],
+                }
+            ]
+            safe_title = event.title.encode("ascii", "replace").decode("ascii")
             print(f"    ✓ Event {idx}: {safe_title}")
         else:
-            event_dict.pop('images', None)
+            event_dict.pop("images", None)
 
         enriched_events.append(LifeEvent(**event_dict))
 
@@ -3233,6 +3366,7 @@ def research_images_for_all_events(
 # ============================================================================
 # ENHANCED GEOCODING
 # ============================================================================
+
 
 def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
     """Enhanced geocoding for unified location structure."""
@@ -3274,10 +3408,9 @@ def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any]
             geocoded = geocode_location(name_to_geocode)
 
             if geocoded:
-                geocoded_locations.append({
-                    **loc,
-                    "centroid": [geocoded["lon"], geocoded["lat"]]
-                })
+                geocoded_locations.append(
+                    {**loc, "centroid": [geocoded["lon"], geocoded["lat"]]}
+                )
                 geocoded_count += 1
             else:
                 geocoded_locations.append(loc)
@@ -3292,6 +3425,7 @@ def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any]
 # ============================================================================
 # METADATA ENFORCEMENT (adapted from generate_person_dataset.py)
 # ============================================================================
+
 
 def _clean_all_strings(data: Any) -> Any:
     """
@@ -3472,8 +3606,14 @@ def enforce_metadata(
             if not isinstance(loc, dict):
                 continue
 
-            name_historic = loc.get("name_historic", "").strip() if loc.get("name_historic") else None
-            name_modern = loc.get("name_modern", "").strip() if loc.get("name_modern") else None
+            name_historic = (
+                loc.get("name_historic", "").strip()
+                if loc.get("name_historic")
+                else None
+            )
+            name_modern = (
+                loc.get("name_modern", "").strip() if loc.get("name_modern") else None
+            )
             centroid = loc.get("centroid")
 
             # Validate centroid if present
@@ -3488,12 +3628,14 @@ def enforce_metadata(
 
             # Include if has historic name
             if name_historic:
-                sanitized_locations.append({
-                    "name_historic": name_historic,
-                    "name_modern": name_modern,
-                    "centroid": valid_centroid,
-                    "primary": bool(loc.get("primary", False))
-                })
+                sanitized_locations.append(
+                    {
+                        "name_historic": name_historic,
+                        "name_modern": name_modern,
+                        "centroid": valid_centroid,
+                        "primary": bool(loc.get("primary", False)),
+                    }
+                )
 
         event["locations"] = sanitized_locations
 
@@ -3539,16 +3681,22 @@ def enforce_metadata(
             for term_key, annotation in raw_annotations.items():
                 if isinstance(annotation, dict):
                     explanation = annotation.get("explanation", "").strip()
-                    wikipedia_url = annotation.get("wikipedia_url", "").strip(
-                    ) if annotation.get("wikipedia_url") else None
+                    wikipedia_url = (
+                        annotation.get("wikipedia_url", "").strip()
+                        if annotation.get("wikipedia_url")
+                        else None
+                    )
 
                     # Only keep annotations with valid explanations
                     if explanation:
-                        sanitized_annotations[term_key] = {
-                            "explanation": explanation
-                        }
-                        if wikipedia_url and (wikipedia_url.startswith("http://") or wikipedia_url.startswith("https://")):
-                            sanitized_annotations[term_key]["wikipedia_url"] = wikipedia_url
+                        sanitized_annotations[term_key] = {"explanation": explanation}
+                        if wikipedia_url and (
+                            wikipedia_url.startswith("http://")
+                            or wikipedia_url.startswith("https://")
+                        ):
+                            sanitized_annotations[term_key][
+                                "wikipedia_url"
+                            ] = wikipedia_url
 
             if sanitized_annotations:
                 event["annotations"] = sanitized_annotations
@@ -3614,6 +3762,7 @@ def enforce_metadata(
 # ============================================================================
 # FILE I/O
 # ============================================================================
+
 
 def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
     """Write dataset to file."""
@@ -3698,6 +3847,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
 # MAIN ORCHESTRATION
 # ============================================================================
 
+
 def generate_person_events(
     subject: str,
     *,
@@ -3757,13 +3907,9 @@ def generate_person_events(
                         f"[Step 2/10] Using cached materials ({len(related_articles)} related articles)"
                     )
                 except json.JSONDecodeError:
-                    print(
-                        f"[Step 2/10] Using cached materials (no related articles)"
-                    )
+                    print("[Step 2/10] Using cached materials (no related articles)")
             else:
-                print(
-                    f"[Step 2/10] Using cached materials (no related articles)"
-                )
+                print("[Step 2/10] Using cached materials (no related articles)")
 
             page_data = cached_page
             summary_data = cached_summary
@@ -3776,7 +3922,9 @@ def generate_person_events(
 
     # Fetch related articles if not already loaded from cache
     if related_articles is None and fetch_related_articles is not None:
-        print(f"[Step 3/10] Fetching related articles (model: {model}, reasoning: {RELATED_ARTICLES_REASONING})...")
+        print(
+            f"[Step 3/10] Fetching related articles (model: {model}, reasoning: {RELATED_ARTICLES_REASONING})..."
+        )
         try:
             related_articles = fetch_related_articles(
                 article_title,
@@ -3800,7 +3948,9 @@ def generate_person_events(
             print(f"[Step 3/10] Warning: Failed to fetch related articles ({e})")
             related_articles = []
     else:
-        print(f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache")
+        print(
+            f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache"
+        )
 
     # Load Deutsche Biographie data (best-effort)
     db_prompt_text = None
@@ -3810,7 +3960,9 @@ def generate_person_events(
             _db_birth_year = None
             _db_death_year = None
             _wiki_extract = page_data.get("extract", "")
-            _year_match = re.search(r"\((\d{4})\s*[-–]\s*(\d{4})\)", _wiki_extract[:500])
+            _year_match = re.search(
+                r"\((\d{4})\s*[-–]\s*(\d{4})\)", _wiki_extract[:500]
+            )
             if _year_match:
                 _db_birth_year = int(_year_match.group(1))
                 _db_death_year = int(_year_match.group(2))
@@ -3824,20 +3976,30 @@ def generate_person_events(
             if db_data and format_db_for_prompt is not None:
                 db_prompt_text = format_db_for_prompt(db_data)
                 if db_prompt_text:
-                    print(f"[Step 3b/10] Deutsche Biographie data included in prompts")
+                    print("[Step 3b/10] Deutsche Biographie data included in prompts")
         except Exception as e:
             print(f"[Step 3b/10] Warning: Deutsche Biographie fetch failed ({e})")
     elif not use_deutsche_biographie:
-        print(f"[Step 3b/10] Deutsche Biographie skipped by request")
+        print("[Step 3b/10] Deutsche Biographie skipped by request")
 
     # PHASE 1: Generate event skeletons
-    print(f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})...")
-    phase1_prompt = build_phase1_prompt(page_data, summary_data, subject, related_articles, deutsche_biographie_text=db_prompt_text)
+    print(
+        f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})..."
+    )
+    phase1_prompt = build_phase1_prompt(
+        page_data,
+        summary_data,
+        subject,
+        related_articles,
+        deutsche_biographie_text=db_prompt_text,
+    )
     life_plan = call_openai_phase1(phase1_prompt, model)
     print(f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons")
 
     # PHASE 2: Research event details (NO images - Phase 3)
-    print(f"[Step 5/11] PHASE 2: Researching event details (model: {model}, reasoning: {PHASE2_REASONING_EFFORT})...")
+    print(
+        f"[Step 5/11] PHASE 2: Researching event details (model: {model}, reasoning: {PHASE2_REASONING_EFFORT})..."
+    )
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
         person_name=life_plan.person.name,
@@ -3852,7 +4014,9 @@ def generate_person_events(
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
 
     # CHAPTER GENERATION: Create chapters based on established events
-    print(f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {CHAPTER_REASONING_EFFORT})...")
+    print(
+        f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {CHAPTER_REASONING_EFFORT})..."
+    )
     chapters, events_with_chapters, conclusion = generate_chapters_for_events(
         merged_events=merged_events,
         person_name=life_plan.person.name,
@@ -3864,7 +4028,8 @@ def generate_person_events(
 
     # PHASE 3: Event-specific image discovery
     print(
-        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {PHASE3_IMAGE_SEARCH_REASONING}/{PHASE3_IMAGE_MATCH_REASONING})...")
+        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {PHASE3_IMAGE_SEARCH_REASONING}/{PHASE3_IMAGE_MATCH_REASONING})..."
+    )
     enriched_events, portrait = research_images_for_all_events(
         merged_events=events_with_chapters,
         event_skeletons=life_plan.event_skeletons,
@@ -3873,7 +4038,9 @@ def generate_person_events(
         model=model,
     )
     images_assigned = sum(1 for e in enriched_events if e.images)
-    print(f"[Step 8/11] Assigned images to {images_assigned} / {len(enriched_events)} events")
+    print(
+        f"[Step 8/11] Assigned images to {images_assigned} / {len(enriched_events)} events"
+    )
 
     # Build final payload
     person_data = life_plan.person.model_dump()
@@ -3889,10 +4056,14 @@ def generate_person_events(
                 if person.get("id") == identifier:
                     existing_portrait = person.get("portrait", {})
                     # Check if it's a generated portrait (local path starting with /portraits/)
-                    if existing_portrait and isinstance(existing_portrait.get("image"), str):
+                    if existing_portrait and isinstance(
+                        existing_portrait.get("image"), str
+                    ):
                         if existing_portrait["image"].startswith("/portraits/"):
                             existing_generated_portrait = existing_portrait
-                            print(f"  Found existing generated portrait in registry: {existing_portrait['image']}")
+                            print(
+                                f"  Found existing generated portrait in registry: {existing_portrait['image']}"
+                            )
                     break
 
         # If not in registry, check if portrait files exist on disk
@@ -3909,7 +4080,9 @@ def generate_person_events(
                     "caption": "Stylized portrait based on historical photograph",
                     "creator": "AI generated artwork",
                 }
-                print(f"  Found existing generated portrait files on disk: {thumbnail_path.name}")
+                print(
+                    f"  Found existing generated portrait files on disk: {thumbnail_path.name}"
+                )
     except Exception as e:
         print(f"  Warning: Could not check for existing portrait: {e}")
 
@@ -3920,9 +4093,13 @@ def generate_person_events(
             portrait_data = existing_generated_portrait.copy()
             portrait_data["originalImage"] = portrait["url"]
             # Update source to point to the Wikimedia Commons page
-            if "source" not in portrait_data or not portrait_data["source"].startswith("http"):
+            if "source" not in portrait_data or not portrait_data["source"].startswith(
+                "http"
+            ):
                 portrait_data["source"] = portrait["source"]
-            print(f"  Preserving generated portrait, updating originalImage to: {portrait['url']}")
+            print(
+                f"  Preserving generated portrait, updating originalImage to: {portrait['url']}"
+            )
         else:
             # No generated portrait, use AI-selected Wikimedia portrait
             portrait_data = {
@@ -3941,7 +4118,7 @@ def generate_person_events(
     elif existing_generated_portrait:
         # No AI portrait but we have a generated one - keep it
         person_data["portrait"] = existing_generated_portrait
-        print(f"  No AI portrait found, keeping existing generated portrait")
+        print("  No AI portrait found, keeping existing generated portrait")
 
     payload = {
         "dataset": life_plan.dataset,
@@ -3980,11 +4157,14 @@ def generate_person_events(
 # CLI
 # ============================================================================
 
+
 def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate life event datasets using two-phase AI approach."
     )
-    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'.")
+    parser.add_argument(
+        "subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'."
+    )
     parser.add_argument(
         "--url",
         help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",
@@ -4073,12 +4253,10 @@ def regenerate_images_only(
     print(f"[Step 2/4] PHASE 3: Discovering and assigning images (model: {model})...")
 
     print("  [Phase 3a] Generating image search strings...")
-    search_strings = generate_image_search_strings(
-        event_skeletons, person_name, model
-    )
+    search_strings = generate_image_search_strings(event_skeletons, person_name, model)
     print(f"    Generated {len(search_strings)} search strings")
     for ss in search_strings:
-        safe_ss = ss.encode('ascii', 'replace').decode('ascii')
+        safe_ss = ss.encode("ascii", "replace").decode("ascii")
         print(f"      • {safe_ss}")
 
     print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
@@ -4095,7 +4273,7 @@ def regenerate_images_only(
     filtered_images = filter_images_by_quality(
         candidate_images,
         person_name=person_name,
-        min_score=10.0  # Permissive threshold (out of 45 possible)
+        min_score=10.0,  # Permissive threshold (out of 45 possible)
     )
 
     if not filtered_images:
@@ -4103,23 +4281,29 @@ def regenerate_images_only(
         return events_path, person_id
 
     filtered_count = len(candidate_images) - len(filtered_images)
-    print(f"    Filtered out {filtered_count} low-quality images ({len(filtered_images)} remaining)")
+    print(
+        f"    Filtered out {filtered_count} low-quality images ({len(filtered_images)} remaining)"
+    )
 
     # Show quality score distribution
     if filtered_images:
-        scores = [img.get('quality_score', 0) for img in filtered_images]
+        scores = [img.get("quality_score", 0) for img in filtered_images]
         avg_score = sum(scores) / len(scores)
         max_score = max(scores)
         min_score = min(scores)
-        print(f"    Quality scores: avg={avg_score:.1f}, range={min_score:.1f}-{max_score:.1f}")
+        print(
+            f"    Quality scores: avg={avg_score:.1f}, range={min_score:.1f}-{max_score:.1f}"
+        )
 
-    print(f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events...")
+    print(
+        f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events..."
+    )
     assignments, portrait = match_images_to_events(
         filtered_images, event_skeletons, person_name, model
     )
     print(f"    Assigned images to {len(assignments)} events")
     if portrait:
-        print(f"    ✓ Portrait selected")
+        print("    ✓ Portrait selected")
 
     # Apply portrait to person data
     print("[Step 3/4] Updating events with new image assignments...")
@@ -4135,10 +4319,14 @@ def regenerate_images_only(
                 if person.get("id") == person_id:
                     existing_portrait = person.get("portrait", {})
                     # Check if it's a generated portrait (local path starting with /portraits/)
-                    if existing_portrait and isinstance(existing_portrait.get("image"), str):
+                    if existing_portrait and isinstance(
+                        existing_portrait.get("image"), str
+                    ):
                         if existing_portrait["image"].startswith("/portraits/"):
                             existing_generated_portrait = existing_portrait
-                            print(f"    Found existing generated portrait in registry: {existing_portrait['image']}")
+                            print(
+                                f"    Found existing generated portrait in registry: {existing_portrait['image']}"
+                            )
                     break
 
         # If not in registry, check if portrait files exist on disk
@@ -4155,7 +4343,9 @@ def regenerate_images_only(
                     "caption": "Stylized portrait based on historical photograph",
                     "creator": "AI generated artwork",
                 }
-                print(f"    Found existing generated portrait files on disk: {thumbnail_path.name}")
+                print(
+                    f"    Found existing generated portrait files on disk: {thumbnail_path.name}"
+                )
     except Exception as e:
         print(f"    Warning: Could not check for existing portrait: {e}")
 
@@ -4165,9 +4355,13 @@ def regenerate_images_only(
             portrait_data = existing_generated_portrait.copy()
             portrait_data["originalImage"] = portrait["url"]
             # Update source to point to the Wikimedia Commons page
-            if "source" not in portrait_data or not portrait_data["source"].startswith("http"):
+            if "source" not in portrait_data or not portrait_data["source"].startswith(
+                "http"
+            ):
                 portrait_data["source"] = portrait["source"]
-            print(f"    Preserving generated portrait, updating originalImage to: {portrait['url']}")
+            print(
+                f"    Preserving generated portrait, updating originalImage to: {portrait['url']}"
+            )
         else:
             # No generated portrait, use AI-selected Wikimedia portrait
             portrait_data = {
@@ -4186,7 +4380,7 @@ def regenerate_images_only(
     elif existing_generated_portrait:
         # No AI portrait but we have a generated one - keep it
         payload["person"]["portrait"] = existing_generated_portrait
-        print(f"    No AI portrait found, keeping existing generated portrait")
+        print("    No AI portrait found, keeping existing generated portrait")
     else:
         # AI found no suitable portrait and no generated portrait exists
         payload["person"].pop("portrait", None)
@@ -4197,32 +4391,34 @@ def regenerate_images_only(
         if idx in assignments:
             img = assignments[idx]
             image_data = {
-                "url": img['url'],
-                "caption": img['caption'],
-                "source": img['source'],
+                "url": img["url"],
+                "caption": img["caption"],
+                "source": img["source"],
             }
-            if img.get('creator'):
-                image_data['creator'] = img['creator']
-            if img.get('license'):
-                image_data['license'] = img['license']
-            if img.get('licenseUrl'):
-                image_data['licenseUrl'] = img['licenseUrl']
-            event['images'] = [image_data]
-            safe_title = event.get('title', '').encode('ascii', 'replace').decode('ascii')
+            if img.get("creator"):
+                image_data["creator"] = img["creator"]
+            if img.get("license"):
+                image_data["license"] = img["license"]
+            if img.get("licenseUrl"):
+                image_data["licenseUrl"] = img["licenseUrl"]
+            event["images"] = [image_data]
+            safe_title = (
+                event.get("title", "").encode("ascii", "replace").decode("ascii")
+            )
             print(f"    ✓ Event {idx}: {safe_title}")
         else:
             # Remove old images
-            event.pop('images', None)
+            event.pop("images", None)
 
-    payload['events'] = events
+    payload["events"] = events
 
     # Write updated file
-    print(f"[Step 4/4] Writing updated dataset...")
+    print("[Step 4/4] Writing updated dataset...")
     events_path.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
 
-    images_assigned = sum(1 for e in events if e.get('images'))
+    images_assigned = sum(1 for e in events if e.get("images"))
     print(f"\nDone! Assigned images to {images_assigned} / {len(events)} events")
 
     # Update persons.json registry with updated portrait (or removed portrait)

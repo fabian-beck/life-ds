@@ -89,7 +89,9 @@ def strip_namespace(tag: str) -> str:
     return tag.split("}", 1)[1] if "}" in tag else tag
 
 
-def normalise_bw_color(value: str | None, *, allow_none: bool = False, warn: bool = False) -> str | None:
+def normalise_bw_color(
+    value: str | None, *, allow_none: bool = False, warn: bool = False
+) -> str | None:
     if value is None:
         return None
     lowered = value.strip().lower()
@@ -197,7 +199,9 @@ def sanitise_pattern_svg(svg: str) -> str:
             value_text = element.attrib[attr]
             if lowered in {"fill", "stroke"}:
                 allow_none = lowered == "fill"
-                colour = normalise_bw_color(value_text, allow_none=allow_none, warn=True)
+                colour = normalise_bw_color(
+                    value_text, allow_none=allow_none, warn=True
+                )
                 if colour is None:
                     raise ValueError(
                         f"SVG {attr} must use only black (#000000), white (#FFFFFF), or none. Got: {value_text}"
@@ -538,17 +542,25 @@ def generate_style(
     else:
         print("[Step 1/5] No context found, proceeding with subject name only")
 
-    print(f"[Step 2/5] Building style generation prompt...")
+    print("[Step 2/5] Building style generation prompt...")
     prompt = build_prompt(subject, identifier, context)
 
-    print(f"[Step 3/5] Generating visual identity via {model} (reasoning: {DEFAULT_REASONING_EFFORT})...")
+    print(
+        f"[Step 3/5] Generating visual identity via {model} (reasoning: {DEFAULT_REASONING_EFFORT})..."
+    )
     payload = call_openai(prompt, model)
 
     print("[Step 4/5] Validating and normalizing style configuration...")
     style_config = normalise_payload(payload)
-    print(f"[Step 4/5] Colors: primary={style_config['primary']}, secondary={style_config['secondary']}, background={style_config['background']}")
-    print(f"[Step 4/5] Fonts: heading={style_config['heading_font']}, body={style_config['body_font']}")
-    print(f"[Step 4/5] Pattern SVG: {len(style_config['background_pattern_svg'])} chars")
+    print(
+        f"[Step 4/5] Colors: primary={style_config['primary']}, secondary={style_config['secondary']}, background={style_config['background']}"
+    )
+    print(
+        f"[Step 4/5] Fonts: heading={style_config['heading_font']}, body={style_config['body_font']}"
+    )
+    print(
+        f"[Step 4/5] Pattern SVG: {len(style_config['background_pattern_svg'])} chars"
+    )
     print(f"[Step 4/5] Separator SVG: {len(style_config['separator_glyph_svg'])} chars")
 
     if dry_run:
@@ -568,7 +580,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
         description="Generate a personalised dark-mode styling configuration using the OpenAI API."
     )
     parser.add_argument(
-        "subject", help="Name or description of the person, e.g. 'Ada Lovelace' or 'henry_II'."
+        "subject",
+        help="Name or description of the person, e.g. 'Ada Lovelace' or 'henry_II'.",
     )
     parser.add_argument(
         "--url",

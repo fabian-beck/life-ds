@@ -6,7 +6,10 @@ import sys
 from typing import Any
 
 # Import the individual generation functions
-from generate_person_events import generate_person_events as generate_dataset, DEFAULT_MODEL as DATASET_MODEL
+from generate_person_events import (
+    generate_person_events as generate_dataset,
+    DEFAULT_MODEL as DATASET_MODEL,
+)
 from generate_person_style import generate_style, DEFAULT_MODEL as STYLE_MODEL
 from generate_person_network import (
     generate_person_network,
@@ -21,7 +24,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate complete person dataset (life events, interface style, and ego network)."
     )
-    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'.")
+    parser.add_argument(
+        "subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'."
+    )
     parser.add_argument(
         "--url",
         help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",
@@ -83,6 +88,7 @@ def main(argv: Any = None) -> int:
     if args.url:
         subject_for_fetch = args.url
         from generate_person_events import slugify
+
         person_id_override = slugify(args.subject)
     else:
         subject_for_fetch = args.subject
@@ -157,11 +163,14 @@ def main(argv: Any = None) -> int:
             print("=" * 60 + "\n")
             try:
                 from pathlib import Path
+
                 portrait_result = generate_portrait(
                     person_id=person_id,
                     reference_image_url=None,  # Will use reference from registry
                     source_page_url=None,
-                    master_style_path=Path(__file__).resolve().parents[1] / "public" / "master_style_portrait.png",
+                    master_style_path=Path(__file__).resolve().parents[1]
+                    / "public"
+                    / "master_style_portrait.png",
                     model=args.portrait_model,
                     dry_run=False,
                     force=False,
@@ -171,9 +180,13 @@ def main(argv: Any = None) -> int:
                     if portrait_result.get("cached"):
                         print(f"\n⊘ {portrait_result['message']}")
                     else:
-                        print(f"\n✓ Portrait generated: {portrait_result.get('local_path')}")
+                        print(
+                            f"\n✓ Portrait generated: {portrait_result.get('local_path')}"
+                        )
                 else:
-                    print(f"\n⚠ Portrait generation failed: {portrait_result['message']}")
+                    print(
+                        f"\n⚠ Portrait generation failed: {portrait_result['message']}"
+                    )
                     print("  Continuing with other generation steps...")
             except Exception as e:
                 print(f"\n⚠ Portrait generation failed: {e}")
@@ -193,7 +206,7 @@ def main(argv: Any = None) -> int:
                 review_success = review_person_data(
                     person_id or args.subject,
                     skip_low_confidence=True,  # Auto-mode: only high-confidence
-                    verbose=False
+                    verbose=False,
                 )
                 if review_success:
                     print("\n✓ Review complete")

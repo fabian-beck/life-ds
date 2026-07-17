@@ -16,7 +16,6 @@ import json
 import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from urllib.parse import quote
 
 import requests
 
@@ -40,8 +39,10 @@ CACHE_FILENAME = "deutsche_biographie.json"
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _headers() -> Dict[str, str]:
     import os
+
     return {"User-Agent": os.getenv("WIKIPEDIA_USER_AGENT", DEFAULT_USER_AGENT)}
 
 
@@ -66,6 +67,7 @@ def _first(value: Any) -> Any:
 # ---------------------------------------------------------------------------
 # Solr API search
 # ---------------------------------------------------------------------------
+
 
 def _solr_query(query: str, rows: int = 5) -> List[Dict[str, Any]]:
     """Execute a Solr query and return the docs list."""
@@ -198,6 +200,7 @@ def search_person_by_gnd(gnd_id: str) -> Optional[Dict[str, Any]]:
 # Data extraction
 # ---------------------------------------------------------------------------
 
+
 def _extract_metadata(doc: Dict[str, Any]) -> Dict[str, Any]:
     """Extract CC0-licensed metadata fields from a Solr document."""
     metadata: Dict[str, Any] = {}
@@ -272,7 +275,9 @@ def _extract_metadata(doc: Dict[str, Any]) -> Dict[str, Any]:
     return metadata
 
 
-def _determine_license(doc: Dict[str, Any]) -> tuple[Optional[str], Optional[str], Optional[str]]:
+def _determine_license(
+    doc: Dict[str, Any],
+) -> tuple[Optional[str], Optional[str], Optional[str]]:
     """Determine article license and extract usable text.
 
     Returns (article_text, license, source):
@@ -300,6 +305,7 @@ def _determine_license(doc: Dict[str, Any]) -> tuple[Optional[str], Optional[str
 # ---------------------------------------------------------------------------
 # Main fetch function
 # ---------------------------------------------------------------------------
+
 
 def fetch_deutsche_biographie(
     person_name: str,
@@ -346,7 +352,9 @@ def fetch_deutsche_biographie(
     # Only include if from ADB context
     genealogy_text = None
     if doc.get("r_adb") and doc.get("a_ge"):
-        genealogy_text = doc["a_ge"] if isinstance(doc["a_ge"], str) else "\n".join(doc["a_ge"])
+        genealogy_text = (
+            doc["a_ge"] if isinstance(doc["a_ge"], str) else "\n".join(doc["a_ge"])
+        )
     # n_ge is NDB-licensed, so we skip it
 
     result: Dict[str, Any] = {
@@ -369,6 +377,7 @@ def fetch_deutsche_biographie(
 # ---------------------------------------------------------------------------
 # Caching
 # ---------------------------------------------------------------------------
+
 
 def get_cache_path(person_id: str) -> Path:
     """Get the cache file path for Deutsche Biographie data."""
@@ -418,7 +427,7 @@ def ensure_deutsche_biographie_cache(
     )
 
     if data is None:
-        print(f"    Not found in Deutsche Biographie")
+        print("    Not found in Deutsche Biographie")
         # Cache a "not found" marker to avoid repeated lookups
         marker = {"not_found": True, "searched_name": person_name}
         cache_deutsche_biographie(person_id, marker)
@@ -430,9 +439,13 @@ def ensure_deutsche_biographie_cache(
     text_len = len(data["article_text"]) if has_text else 0
 
     if has_text:
-        print(f"    Found: {data['name']} ({source}, {license_info}, {text_len} chars of article text)")
+        print(
+            f"    Found: {data['name']} ({source}, {license_info}, {text_len} chars of article text)"
+        )
     elif license_info == "CC-BY-NC-ND":
-        print(f"    Found: {data['name']} ({source}, {license_info} — article text excluded, metadata only)")
+        print(
+            f"    Found: {data['name']} ({source}, {license_info} — article text excluded, metadata only)"
+        )
     else:
         print(f"    Found: {data['name']} (metadata only, no article text available)")
 
@@ -443,6 +456,7 @@ def ensure_deutsche_biographie_cache(
 # ---------------------------------------------------------------------------
 # Prompt formatting
 # ---------------------------------------------------------------------------
+
 
 def format_for_prompt(data: Dict[str, Any]) -> Optional[str]:
     """Format Deutsche Biographie data for inclusion in an AI prompt.
@@ -513,7 +527,9 @@ def format_for_prompt(data: Dict[str, Any]) -> Optional[str]:
         lines.append(article_text)
     elif article_license == "CC-BY-NC-ND":
         lines.append("")
-        lines.append(f"NOTE: Biographical article exists ({article_source}) but is licensed as")
+        lines.append(
+            f"NOTE: Biographical article exists ({article_source}) but is licensed as"
+        )
         lines.append(f"{article_license} (no derivatives). Article text NOT included.")
         lines.append("Only CC0 metadata above is available for use.")
 

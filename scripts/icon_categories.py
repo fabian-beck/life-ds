@@ -11,7 +11,6 @@ ICON_CATEGORIES = {
     "marriage": "mdi-ring",
     "engagement": "mdi-heart",
     "divorce": "mdi-heart-broken",
-
     # Education & Academic
     "education_start": "mdi-school",
     "enrollment": "mdi-school",
@@ -22,21 +21,18 @@ ICON_CATEGORIES = {
     "dissertation": "mdi-book-open-variant",
     "lecture": "mdi-school-outline",
     "professorship": "mdi-school-outline",
-
     # Professional & Career
     "appointment": "mdi-briefcase",
     "employment": "mdi-briefcase",
     "promotion": "mdi-arrow-up-bold",
     "resignation": "mdi-exit-to-app",
     "retirement": "mdi-account-clock",
-
     # Awards & Recognition
     "award": "mdi-medal",
     "prize": "mdi-trophy",
     "honor": "mdi-star",
     "knighthood": "mdi-shield-crown",
     "fellowship": "mdi-account-group",
-
     # Publications & Creative Work
     "publication": "mdi-book",
     "paper": "mdi-file-document",
@@ -48,7 +44,6 @@ ICON_CATEGORIES = {
     "sculpture": "mdi-cube",
     "composition": "mdi-music-note",
     "performance": "mdi-microphone",
-
     # Political & Military
     "coronation": "mdi-crown",
     "enthronement": "mdi-crown",
@@ -62,7 +57,6 @@ ICON_CATEGORIES = {
     "peace": "mdi-peace",
     "conquest": "mdi-flag",
     "rebellion": "mdi-flag-triangle",
-
     # Religious & Spiritual
     "consecration": "mdi-church",
     "ordination": "mdi-church",
@@ -71,7 +65,6 @@ ICON_CATEGORIES = {
     "pilgrimage": "mdi-walk",
     "monastery": "mdi-church",
     "diocese": "mdi-church",
-
     # Construction & Architecture
     "building_construction": "mdi-office-building",
     "foundation": "mdi-hammer",
@@ -79,7 +72,6 @@ ICON_CATEGORIES = {
     "cathedral": "mdi-church",
     "monument": "mdi-pillar",
     "design": "mdi-drawing",
-
     # Travel & Movement
     "travel": "mdi-map-marker",
     "journey": "mdi-map-marker",
@@ -88,7 +80,6 @@ ICON_CATEGORIES = {
     "migration": "mdi-map-marker-multiple",
     "relocation": "mdi-home-switch-outline",
     "exile": "mdi-exit-to-app",
-
     # Scientific & Technical
     "discovery": "mdi-lightbulb-on-outline",
     "invention": "mdi-lightbulb-on-outline",
@@ -97,7 +88,6 @@ ICON_CATEGORIES = {
     "observation": "mdi-eye",
     "conference": "mdi-account-group",
     "symposium": "mdi-account-group",
-
     # Legal & Political Events
     "trial": "mdi-gavel",
     "court_case": "mdi-gavel",
@@ -106,31 +96,26 @@ ICON_CATEGORIES = {
     "pardon": "mdi-lock-open",
     "election": "mdi-vote",
     "legislation": "mdi-file-document-edit",
-
     # Social & Cultural
     "meeting": "mdi-account-group",
     "collaboration": "mdi-account-multiple",
     "correspondence": "mdi-email",
     "debate": "mdi-forum",
     "speech": "mdi-microphone",
-
     # Financial & Economic
     "inheritance": "mdi-cash",
     "bankruptcy": "mdi-currency-usd-off",
     "investment": "mdi-chart-line",
     "donation": "mdi-hand-coin",
-
     # Health & Medical
     "illness": "mdi-hospital",
     "recovery": "mdi-heart-pulse",
     "surgery": "mdi-hospital",
-
     # Communication & Media
     "broadcast": "mdi-radio",
     "interview": "mdi-microphone",
     "documentary": "mdi-video",
     "film": "mdi-movie",
-
     # Default fallback
     "default": "mdi-calendar",
 }
@@ -157,17 +142,91 @@ def format_icon_categories_for_prompt() -> str:
     # Group by category for readability
     categories = {
         "Life Milestones": ["birth", "death", "marriage", "engagement", "divorce"],
-        "Education & Academic": ["education_start", "enrollment", "graduation", "degree", "scholarship", "thesis", "dissertation", "lecture", "professorship"],
-        "Professional": ["appointment", "employment", "promotion", "resignation", "retirement"],
+        "Education & Academic": [
+            "education_start",
+            "enrollment",
+            "graduation",
+            "degree",
+            "scholarship",
+            "thesis",
+            "dissertation",
+            "lecture",
+            "professorship",
+        ],
+        "Professional": [
+            "appointment",
+            "employment",
+            "promotion",
+            "resignation",
+            "retirement",
+        ],
         "Awards": ["award", "prize", "honor", "knighthood", "fellowship"],
         "Publications": ["publication", "paper", "article", "book", "patent"],
-        "Creative Work": ["artwork", "painting", "sculpture", "composition", "performance"],
-        "Political & Military": ["coronation", "enthronement", "title_grant", "succession", "battle", "war", "military_service", "treaty", "alliance", "peace", "conquest", "rebellion"],
-        "Religious": ["consecration", "ordination", "religious_event", "canonization", "pilgrimage", "monastery", "diocese"],
-        "Construction": ["building_construction", "foundation", "castle", "cathedral", "monument", "design"],
-        "Travel": ["travel", "journey", "expedition", "exploration", "migration", "relocation", "exile"],
-        "Scientific": ["discovery", "invention", "experiment", "research", "observation", "conference", "symposium"],
-        "Legal": ["trial", "court_case", "arrest", "imprisonment", "pardon", "election", "legislation"],
+        "Creative Work": [
+            "artwork",
+            "painting",
+            "sculpture",
+            "composition",
+            "performance",
+        ],
+        "Political & Military": [
+            "coronation",
+            "enthronement",
+            "title_grant",
+            "succession",
+            "battle",
+            "war",
+            "military_service",
+            "treaty",
+            "alliance",
+            "peace",
+            "conquest",
+            "rebellion",
+        ],
+        "Religious": [
+            "consecration",
+            "ordination",
+            "religious_event",
+            "canonization",
+            "pilgrimage",
+            "monastery",
+            "diocese",
+        ],
+        "Construction": [
+            "building_construction",
+            "foundation",
+            "castle",
+            "cathedral",
+            "monument",
+            "design",
+        ],
+        "Travel": [
+            "travel",
+            "journey",
+            "expedition",
+            "exploration",
+            "migration",
+            "relocation",
+            "exile",
+        ],
+        "Scientific": [
+            "discovery",
+            "invention",
+            "experiment",
+            "research",
+            "observation",
+            "conference",
+            "symposium",
+        ],
+        "Legal": [
+            "trial",
+            "court_case",
+            "arrest",
+            "imprisonment",
+            "pardon",
+            "election",
+            "legislation",
+        ],
         "Social": ["meeting", "collaboration", "correspondence", "debate", "speech"],
         "Financial": ["inheritance", "bankruptcy", "investment", "donation"],
         "Health": ["illness", "recovery", "surgery"],

@@ -24,7 +24,10 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
     """
     # Check if register exists
     if not META_STORIES_REGISTER.exists():
-        print(f"Error: Register file not found at {META_STORIES_REGISTER}", file=sys.stderr)
+        print(
+            f"Error: Register file not found at {META_STORIES_REGISTER}",
+            file=sys.stderr,
+        )
         return False
 
     # Load register
@@ -82,7 +85,7 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
         print("Would perform the following actions:")
         print(f"1. Remove entry from register: {story_entry}")
         if files_to_delete:
-            print(f"2. Delete files:")
+            print("2. Delete files:")
             for file_path in files_to_delete:
                 print(f"   - {file_path.relative_to(DATA_DIR)}")
         if story_dir.exists():
@@ -128,7 +131,10 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
 def list_meta_stories() -> None:
     """List all meta-stories in the register."""
     if not META_STORIES_REGISTER.exists():
-        print(f"Error: Register file not found at {META_STORIES_REGISTER}", file=sys.stderr)
+        print(
+            f"Error: Register file not found at {META_STORIES_REGISTER}",
+            file=sys.stderr,
+        )
         return
 
     try:

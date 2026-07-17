@@ -7,15 +7,20 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from PIL import Image
 
 # Set UTF-8 encoding for Windows console with unbuffered output
 if sys.platform == "win32":
     import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', line_buffering=True)
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', line_buffering=True)
+
+    sys.stdout = io.TextIOWrapper(
+        sys.stdout.buffer, encoding="utf-8", line_buffering=True
+    )
+    sys.stderr = io.TextIOWrapper(
+        sys.stderr.buffer, encoding="utf-8", line_buffering=True
+    )
 
 
 # Constants
@@ -57,8 +62,8 @@ def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]
     """
     sizes = {
         "thumbnail": 200,  # For landing page grid
-        "medium": 400,     # For story overview slide
-        "full": 1024,      # For image viewer
+        "medium": 400,  # For story overview slide
+        "full": 1024,  # For image viewer
     }
 
     result_paths = {}
@@ -88,13 +93,17 @@ def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]
 
             # WebP quality: 85 for full, 80 for smaller sizes (excellent quality, good compression)
             quality = 85 if size_key == "full" else 80
-            resized.save(output_path, "WEBP", quality=quality, method=6)  # method=6 = slowest but best compression
+            resized.save(
+                output_path, "WEBP", quality=quality, method=6
+            )  # method=6 = slowest but best compression
 
             # Store relative path for use in data files
             result_paths[size_key] = f"/portraits/{output_filename}"
 
             file_size_kb = output_path.stat().st_size / 1024
-            print(f"    ✓ Created {size_key} ({new_width}x{new_height}): {output_filename} ({file_size_kb:.1f}KB)")
+            print(
+                f"    ✓ Created {size_key} ({new_width}x{new_height}): {output_filename} ({file_size_kb:.1f}KB)"
+            )
 
     except Exception as e:
         print(f"    ✗ Error creating WebP sizes: {e}", file=sys.stderr)
@@ -103,7 +112,9 @@ def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]
     return result_paths
 
 
-def update_person_portrait_paths(person: Dict[str, Any], portrait_paths: Dict[str, str]) -> None:
+def update_person_portrait_paths(
+    person: Dict[str, Any], portrait_paths: Dict[str, str]
+) -> None:
     """
     Update a person's portrait data with multi-size WebP paths.
 
@@ -115,23 +126,31 @@ def update_person_portrait_paths(person: Dict[str, Any], portrait_paths: Dict[st
         person["portrait"] = {}
 
     # Preserve existing data
-    original_image = person["portrait"].get("originalImage") or person["portrait"].get("image")
+    original_image = person["portrait"].get("originalImage") or person["portrait"].get(
+        "image"
+    )
     source = person["portrait"].get("source", "https://commons.wikimedia.org/")
-    caption = person["portrait"].get("caption", "Stylized portrait based on historical photograph")
+    caption = person["portrait"].get(
+        "caption", "Stylized portrait based on historical photograph"
+    )
     creator = person["portrait"].get("creator", "AI generated artwork")
     original_caption = person["portrait"].get("originalCaption")
 
     # Update with multi-size paths
-    person["portrait"].update({
-        "image": portrait_paths.get("thumbnail", portrait_paths.get("full")),  # Default to thumbnail
-        "thumbnail": portrait_paths.get("thumbnail"),
-        "medium": portrait_paths.get("medium"),
-        "full": portrait_paths.get("full"),
-        "source": source,
-        "caption": caption,
-        "creator": creator,
-        "originalImage": original_image,
-    })
+    person["portrait"].update(
+        {
+            "image": portrait_paths.get(
+                "thumbnail", portrait_paths.get("full")
+            ),  # Default to thumbnail
+            "thumbnail": portrait_paths.get("thumbnail"),
+            "medium": portrait_paths.get("medium"),
+            "full": portrait_paths.get("full"),
+            "source": source,
+            "caption": caption,
+            "creator": creator,
+            "originalImage": original_image,
+        }
+    )
 
     if original_caption:
         person["portrait"]["originalCaption"] = original_caption
@@ -166,9 +185,11 @@ def update_life_events_portrait(person_id: str, portrait_data: Dict[str, Any]) -
                 json.dumps(life_events, indent=2, ensure_ascii=False) + "\n",
                 encoding="utf-8",
             )
-            print(f"    ✓ Updated life_events.json")
+            print("    ✓ Updated life_events.json")
         except Exception as e:
-            print(f"    Warning: Failed to update life_events.json: {e}", file=sys.stderr)
+            print(
+                f"    Warning: Failed to update life_events.json: {e}", file=sys.stderr
+            )
 
     # Update translated life_events.json files
     updated_translations = []
@@ -179,7 +200,9 @@ def update_life_events_portrait(person_id: str, portrait_data: Dict[str, Any]) -
         translated_life_events = lang_dir / "life_events.json"
         if translated_life_events.exists():
             try:
-                life_events = json.loads(translated_life_events.read_text(encoding="utf-8"))
+                life_events = json.loads(
+                    translated_life_events.read_text(encoding="utf-8")
+                )
 
                 if not life_events.get("person"):
                     life_events["person"] = {}
@@ -192,7 +215,10 @@ def update_life_events_portrait(person_id: str, portrait_data: Dict[str, Any]) -
                 )
                 updated_translations.append(lang_dir.name)
             except Exception as e:
-                print(f"    Warning: Failed to update {lang_dir.name}/life_events.json: {e}", file=sys.stderr)
+                print(
+                    f"    Warning: Failed to update {lang_dir.name}/life_events.json: {e}",
+                    file=sys.stderr,
+                )
 
     if updated_translations:
         print(f"    ✓ Updated translations: {', '.join(updated_translations)}")
@@ -220,14 +246,14 @@ def convert_portrait(person_id: str, force: bool = False) -> bool:
     # Check if WebP files already exist
     thumbnail_webp = PORTRAITS_DIR / f"{person_id}_thumbnail.webp"
     if thumbnail_webp.exists() and not force:
-        print(f"    ⊘ WebP portraits already exist (use --force to regenerate)")
+        print("    ⊘ WebP portraits already exist (use --force to regenerate)")
         return True
 
     # Create WebP sizes
     portrait_paths = create_webp_sizes(source_png, person_id)
 
     if not portrait_paths:
-        print(f"    ✗ Failed to create WebP sizes")
+        print("    ✗ Failed to create WebP sizes")
         return False
 
     # Update registry
@@ -241,12 +267,12 @@ def convert_portrait(person_id: str, force: bool = False) -> bool:
             break
 
     if not person:
-        print(f"    Warning: Person not found in registry", file=sys.stderr)
+        print("    Warning: Person not found in registry", file=sys.stderr)
         return False
 
     update_person_portrait_paths(person, portrait_paths)
     save_person_registry(registry)
-    print(f"    ✓ Registry updated")
+    print("    ✓ Registry updated")
 
     # Update life_events.json
     update_life_events_portrait(person_id, person["portrait"])
@@ -302,7 +328,7 @@ def convert_all_portraits(force: bool = False) -> None:
 
     # Summary
     print("=" * 60)
-    print(f"Conversion complete!")
+    print("Conversion complete!")
     print(f"  ✓ Successfully converted: {success_count}")
     print(f"  ⊘ Skipped (already exist): {skip_count}")
     print(f"  ✗ Failed: {fail_count}")
@@ -344,7 +370,9 @@ def main() -> int:
                     success_count += 1
                 print()
 
-            print(f"✓ Successfully converted {success_count}/{len(args.person_ids)} portrait(s)")
+            print(
+                f"✓ Successfully converted {success_count}/{len(args.person_ids)} portrait(s)"
+            )
         else:
             # Convert all portraits
             convert_all_portraits(force=args.force)

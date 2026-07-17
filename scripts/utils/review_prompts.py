@@ -8,7 +8,6 @@ with focus on readability, accuracy, and UI optimization.
 import json
 from typing import Dict, Any, List
 
-
 # UI Context documentation embedded in prompts
 UI_CONTEXT = """
 DISPLAY CONSTRAINTS:
@@ -74,7 +73,7 @@ def get_combined_review_prompt(
     events_data: Dict[str, Any],
     network_data: Dict[str, Any],
     wikipedia_content: str,
-    related_articles: List[Dict[str, str]]
+    related_articles: List[Dict[str, str]],
 ) -> str:
     """
     Generate comprehensive prompt for combined life events and network review.
@@ -99,10 +98,16 @@ def get_combined_review_prompt(
         people = event.get("involved_people") or []
         involved_people.update(people)
 
-    related_articles_summary = "\n".join([
-        f"- {article.get('title', 'Unknown')}: {article.get('summary', '')[:200]}..."
-        for article in (related_articles or [])[:5]  # Show first 5 for context
-    ]) if related_articles else "No related articles cached"
+    related_articles_summary = (
+        "\n".join(
+            [
+                f"- {article.get('title', 'Unknown')}: {article.get('summary', '')[:200]}..."
+                for article in (related_articles or [])[:5]  # Show first 5 for context
+            ]
+        )
+        if related_articles
+        else "No related articles cached"
+    )
 
     prompt = f"""You are reviewing biographical data for {person_name} - both life events and social network - that will be displayed as full-screen slides and interactive chips in a mobile app.
 
@@ -216,8 +221,7 @@ Focus on changes that will noticeably improve the reader's experience on mobile 
 
 
 def get_style_review_prompt(
-    style_data: Dict[str, Any],
-    events_data: Dict[str, Any]
+    style_data: Dict[str, Any], events_data: Dict[str, Any]
 ) -> str:
     """
     Generate prompt for visual style review.

@@ -9,13 +9,9 @@ import json
 import os
 import shutil
 from datetime import datetime
-from typing import Dict, Any, List, Tuple
-from pathlib import Path
+from typing import Dict, Any, Tuple
 
-from .review_models import (
-    EventsChanges, NetworkChanges, StyleChanges,
-    ReviewStatistics
-)
+from .review_models import EventsChanges, NetworkChanges, StyleChanges
 
 
 def create_backup(file_path: str) -> str:
@@ -39,9 +35,7 @@ def create_backup(file_path: str) -> str:
 
 
 def apply_event_changes(
-    events_data: Dict[str, Any],
-    changes: EventsChanges,
-    min_confidence: int = 4
+    events_data: Dict[str, Any], changes: EventsChanges, min_confidence: int = 4
 ) -> Tuple[Dict[str, Any], int, int]:
     """
     Apply changes to life events data, preserving JSON structure.
@@ -81,10 +75,11 @@ def apply_event_changes(
         if event_change.new_annotations:
             # Convert Pydantic models to dicts
             event["annotations"] = {
-                term: {
-                    "explanation": ann.explanation,
-                    "wikipedia_url": ann.wikipedia_url
-                } if hasattr(ann, 'explanation') else ann
+                term: (
+                    {"explanation": ann.explanation, "wikipedia_url": ann.wikipedia_url}
+                    if hasattr(ann, "explanation")
+                    else ann
+                )
                 for term, ann in event_change.new_annotations.items()
             }
             applied += 1
@@ -96,7 +91,7 @@ def apply_event_changes(
         if event_change.new_locations is not None:
             # Convert Pydantic models to dicts
             event["location_coordinates"] = [
-                loc.dict() if hasattr(loc, 'dict') else loc
+                loc.dict() if hasattr(loc, "dict") else loc
                 for loc in event_change.new_locations
             ]
             applied += 1
@@ -134,9 +129,7 @@ def apply_event_changes(
 
 
 def apply_network_changes(
-    network_data: Dict[str, Any],
-    changes: NetworkChanges,
-    min_confidence: int = 4
+    network_data: Dict[str, Any], changes: NetworkChanges, min_confidence: int = 4
 ) -> Tuple[Dict[str, Any], int, int]:
     """
     Apply changes to ego network data, preserving JSON structure.
@@ -170,7 +163,9 @@ def apply_network_changes(
         for connection in updated_data.get("connections", []):
             if connection.get("person_name") == conn_change.person_name:
                 if conn_change.new_relationship_description:
-                    connection["relationship_description"] = conn_change.new_relationship_description
+                    connection["relationship_description"] = (
+                        conn_change.new_relationship_description
+                    )
                     applied += 1
 
                 if conn_change.new_relationship_type:
@@ -203,9 +198,7 @@ def apply_network_changes(
 
 
 def apply_style_changes(
-    style_data: Dict[str, Any],
-    changes: StyleChanges,
-    min_confidence: int = 4
+    style_data: Dict[str, Any], changes: StyleChanges, min_confidence: int = 4
 ) -> Tuple[Dict[str, Any], int, int]:
     """
     Apply changes to style data, preserving JSON structure.

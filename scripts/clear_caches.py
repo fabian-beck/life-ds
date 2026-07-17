@@ -6,10 +6,9 @@ import re
 import shutil
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 from typing import Any, Optional
-
 
 # Data directory
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -37,7 +36,7 @@ def parse_duration(duration_str: str) -> Optional[timedelta]:
         return None
 
     # Parse pattern like "30m", "1h", "2d", "1w"
-    pattern = r'^(\d+(?:\.\d+)?)\s*([a-z]+)$'
+    pattern = r"^(\d+(?:\.\d+)?)\s*([a-z]+)$"
     match = re.match(pattern, duration_str.strip().lower())
 
     if not match:
@@ -51,25 +50,25 @@ def parse_duration(duration_str: str) -> Optional[timedelta]:
 
     # Map units to timedelta kwargs
     unit_map = {
-        's': 'seconds',
-        'sec': 'seconds',
-        'second': 'seconds',
-        'seconds': 'seconds',
-        'm': 'minutes',
-        'min': 'minutes',
-        'minute': 'minutes',
-        'minutes': 'minutes',
-        'h': 'hours',
-        'hr': 'hours',
-        'hour': 'hours',
-        'hours': 'hours',
-        'd': 'days',
-        'day': 'days',
-        'days': 'days',
-        'w': 'weeks',
-        'wk': 'weeks',
-        'week': 'weeks',
-        'weeks': 'weeks',
+        "s": "seconds",
+        "sec": "seconds",
+        "second": "seconds",
+        "seconds": "seconds",
+        "m": "minutes",
+        "min": "minutes",
+        "minute": "minutes",
+        "minutes": "minutes",
+        "h": "hours",
+        "hr": "hours",
+        "hour": "hours",
+        "hours": "hours",
+        "d": "days",
+        "day": "days",
+        "days": "days",
+        "w": "weeks",
+        "wk": "weeks",
+        "week": "weeks",
+        "weeks": "weeks",
     }
 
     if unit not in unit_map:
@@ -89,7 +88,7 @@ def get_cache_age(cache_dir: Path) -> Optional[timedelta]:
 
     # Find the newest modification time among all files in cache
     newest_mtime = 0
-    for file_path in cache_dir.rglob('*'):
+    for file_path in cache_dir.rglob("*"):
         if file_path.is_file():
             mtime = file_path.stat().st_mtime
             if mtime > newest_mtime:
@@ -260,36 +259,34 @@ Examples:
     )
 
     parser.add_argument(
-        'person_ids',
-        nargs='*',
-        help='Optional list of specific person IDs to clear (e.g., alan_turing ada_lovelace)'
+        "person_ids",
+        nargs="*",
+        help="Optional list of specific person IDs to clear (e.g., alan_turing ada_lovelace)",
     )
 
     parser.add_argument(
-        '--max-age',
+        "--max-age",
         help=(
-            'Clear caches older than this duration. '
-            'Format: <number><unit> where unit is s/m/h/d/w '
+            "Clear caches older than this duration. "
+            "Format: <number><unit> where unit is s/m/h/d/w "
             '(e.g., "1h" = 1 hour, "2d" = 2 days, "1w" = 1 week)'
-        )
+        ),
     )
 
     parser.add_argument(
-        '--force',
-        action='store_true',
-        help='Force clear ALL caches regardless of age'
+        "--force", action="store_true", help="Force clear ALL caches regardless of age"
     )
 
     parser.add_argument(
-        '--dry-run',
-        action='store_true',
-        help='Show what would be deleted without actually deleting'
+        "--dry-run",
+        action="store_true",
+        help="Show what would be deleted without actually deleting",
     )
 
     parser.add_argument(
-        '--verbose',
-        action='store_true',
-        help='Show detailed information including cache ages'
+        "--verbose",
+        action="store_true",
+        help="Show detailed information including cache ages",
     )
 
     return parser.parse_args(argv)
@@ -300,7 +297,7 @@ def main(argv: Any = None) -> int:
     args = parse_args(argv)
 
     try:
-        cleared_count = clear_caches(
+        clear_caches(
             max_age=args.max_age,
             force=args.force,
             person_ids=args.person_ids if args.person_ids else None,

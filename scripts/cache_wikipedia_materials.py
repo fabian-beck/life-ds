@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional, Set
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
+from config import DEFAULT_MODEL, LOW_REASONING_EFFORT
 from utils.wikipedia_cache import (
     cache_exists,
     ensure_cache,
@@ -535,7 +535,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
         description="Pre-fetch and cache Wikipedia materials for a person."
     )
     parser.add_argument(
-        "subject", help="Person to cache materials for, e.g. 'Ada Lovelace' or 'henry_II'."
+        "subject",
+        help="Person to cache materials for, e.g. 'Ada Lovelace' or 'henry_II'.",
     )
     parser.add_argument(
         "--url",

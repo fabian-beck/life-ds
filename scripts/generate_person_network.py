@@ -42,6 +42,7 @@ DEFAULT_USER_AGENT = (
 # UTILITY FUNCTIONS
 # ============================================================================
 
+
 def _fix_control_characters(text: str) -> str:
     """
     Replace ASCII control characters with proper Unicode typographic characters.
@@ -57,11 +58,11 @@ def _fix_control_characters(text: str) -> str:
         return text
 
     replacements = {
-        '\x14': '\u2014',  # DC4 → em dash (—)
-        '\x19': '\u2019',  # EM → right single quotation mark (')
-        '\x1c': '\u201c',  # FS → left double quotation mark (")
-        '\x1d': '\u201d',  # GS → right double quotation mark (")
-        '\x13': '\u2013',  # DC3 → en dash (–)
+        "\x14": "\u2014",  # DC4 → em dash (—)
+        "\x19": "\u2019",  # EM → right single quotation mark (')
+        "\x1c": "\u201c",  # FS → left double quotation mark (")
+        "\x1d": "\u201d",  # GS → right double quotation mark (")
+        "\x13": "\u2013",  # DC3 → en dash (–)
     }
 
     for bad_char, good_char in replacements.items():
@@ -533,9 +534,9 @@ def _normalize_person_name(name: str) -> str:
         'Max (Miksa) von Neumann' -> 'max von neumann'
     """
     # Remove parenthetical content (e.g., "(as biographer/assessor)", "(Miksa)")
-    name = re.sub(r'\s*\([^)]*\)', '', name)
+    name = re.sub(r"\s*\([^)]*\)", "", name)
     # Normalize whitespace
-    name = ' '.join(name.split())
+    name = " ".join(name.split())
     # Lowercase for comparison
     return name.strip().lower()
 
@@ -557,14 +558,18 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
     seen_names: Dict[str, int] = {}  # normalized_name -> index in result
     result: List[Dict[str, Any]] = []
 
-    strength_priority = {'strong': 3, 'moderate': 2, 'weak': 1}
+    strength_priority = {"strong": 3, "moderate": 2, "weak": 1}
     frequency_priority = {
-        'daily': 6, 'weekly': 5, 'monthly': 4,
-        'yearly': 3, 'occasional': 2, 'rare': 1
+        "daily": 6,
+        "weekly": 5,
+        "monthly": 4,
+        "yearly": 3,
+        "occasional": 2,
+        "rare": 1,
     }
 
     for conn in connections:
-        person_name = conn.get('person_name', '')
+        person_name = conn.get("person_name", "")
         normalized = _normalize_person_name(person_name)
 
         if normalized in seen_names:
@@ -573,64 +578,71 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
             existing = result[idx]
 
             # Clean up the person_name (remove parenthetical notes)
-            existing['person_name'] = re.sub(r'\s*\([^)]*\)', '', person_name).strip()
+            existing["person_name"] = re.sub(r"\s*\([^)]*\)", "", person_name).strip()
 
             # Merge descriptions
-            desc1 = existing.get('relationship_description', '')
-            desc2 = conn.get('relationship_description', '')
+            desc1 = existing.get("relationship_description", "")
+            desc2 = conn.get("relationship_description", "")
             if desc2 and desc2 not in desc1:
-                existing['relationship_description'] = f"{desc1} {desc2}".strip()
+                existing["relationship_description"] = f"{desc1} {desc2}".strip()
 
             # Merge shared_activities (deduplicate)
-            activities = set(existing.get('shared_activities', []))
-            activities.update(conn.get('shared_activities', []))
-            existing['shared_activities'] = sorted(activities)
+            activities = set(existing.get("shared_activities", []))
+            activities.update(conn.get("shared_activities", []))
+            existing["shared_activities"] = sorted(activities)
 
             # Merge sources (deduplicate)
-            sources = set(existing.get('sources', []))
-            sources.update(conn.get('sources', []))
-            existing['sources'] = sorted(sources)
+            sources = set(existing.get("sources", []))
+            sources.update(conn.get("sources", []))
+            existing["sources"] = sorted(sources)
 
             # Merge notes
-            notes1 = existing.get('notes', '')
-            notes2 = conn.get('notes', '')
+            notes1 = existing.get("notes", "")
+            notes2 = conn.get("notes", "")
             if notes2 and notes2 not in notes1:
-                existing['notes'] = f"{notes1} {notes2}".strip() if notes1 else notes2
+                existing["notes"] = f"{notes1} {notes2}".strip() if notes1 else notes2
 
             # Use stronger relationship strength
-            str1 = strength_priority.get(existing.get('strength', '').lower(), 0)
-            str2 = strength_priority.get(conn.get('strength', '').lower(), 0)
+            str1 = strength_priority.get(existing.get("strength", "").lower(), 0)
+            str2 = strength_priority.get(conn.get("strength", "").lower(), 0)
             if str2 > str1:
-                existing['strength'] = conn['strength']
+                existing["strength"] = conn["strength"]
 
             # Use more frequent interaction
-            freq1 = frequency_priority.get(existing.get('interaction_frequency', '').lower(), 0)
-            freq2 = frequency_priority.get(conn.get('interaction_frequency', '').lower(), 0)
+            freq1 = frequency_priority.get(
+                existing.get("interaction_frequency", "").lower(), 0
+            )
+            freq2 = frequency_priority.get(
+                conn.get("interaction_frequency", "").lower(), 0
+            )
             if freq2 > freq1:
-                existing['interaction_frequency'] = conn['interaction_frequency']
+                existing["interaction_frequency"] = conn["interaction_frequency"]
 
             # Prefer bidirectional influence
-            if conn.get('influence_direction') == 'bidirectional':
-                existing['influence_direction'] = 'bidirectional'
-            elif existing.get('influence_direction') != 'bidirectional' and conn.get('influence_direction') == 'alter_to_ego':
-                existing['influence_direction'] = 'alter_to_ego'
+            if conn.get("influence_direction") == "bidirectional":
+                existing["influence_direction"] = "bidirectional"
+            elif (
+                existing.get("influence_direction") != "bidirectional"
+                and conn.get("influence_direction") == "alter_to_ego"
+            ):
+                existing["influence_direction"] = "alter_to_ego"
 
             # Use earliest start_year
-            start1 = existing.get('start_year')
-            start2 = conn.get('start_year')
+            start1 = existing.get("start_year")
+            start2 = conn.get("start_year")
             if start2 is not None and (start1 is None or start2 < start1):
-                existing['start_year'] = start2
+                existing["start_year"] = start2
 
             # Use latest end_year
-            end1 = existing.get('end_year')
-            end2 = conn.get('end_year')
+            end1 = existing.get("end_year")
+            end2 = conn.get("end_year")
             if end2 is not None and (end1 is None or end2 > end1):
-                existing['end_year'] = end2
+                existing["end_year"] = end2
 
         else:
             # First time seeing this person
             # Clean up the person_name (remove parenthetical notes)
-            conn['person_name'] = re.sub(r'\s*\([^)]*\)', '', person_name).strip()
+            conn["person_name"] = re.sub(r"\s*\([^)]*\)", "", person_name).strip()
             seen_names[normalized] = len(result)
             result.append(conn)
 
@@ -836,7 +848,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate person network datasets using Wikipedia and the OpenAI API."
     )
-    parser.add_argument("subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'.")
+    parser.add_argument(
+        "subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'."
+    )
     parser.add_argument(
         "--url",
         help="Wikipedia URL to use for disambiguation (e.g., 'https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor').",

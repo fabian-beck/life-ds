@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -12,7 +11,6 @@ from typing import Any, Dict, List
 from generate_person_portrait import (
     DEFAULT_MASTER_STYLE_PATH,
     PORTRAITS_DIR,
-    REGISTER_PATH,
     generate_portrait,
     load_person_registry,
 )
@@ -21,8 +19,7 @@ from generate_person_portrait import (
 
 
 def get_persons_needing_portraits(
-    registry: Dict[str, Any],
-    force: bool = False
+    registry: Dict[str, Any], force: bool = False
 ) -> List[str]:
     """
     Get list of person IDs that need portrait generation.
@@ -67,7 +64,7 @@ def get_persons_needing_portraits(
             else:
                 print(
                     f"⊘ Skipping {person_id}: No reference portrait URL available",
-                    file=sys.stderr
+                    file=sys.stderr,
                 )
 
     return persons_needing_portraits
@@ -81,27 +78,25 @@ def main(argv: Any = None) -> int:
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Regenerate all portraits even if they exist"
+        help="Regenerate all portraits even if they exist",
     )
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Test without API calls or file writes"
+        "--dry-run", action="store_true", help="Test without API calls or file writes"
     )
     parser.add_argument(
         "--master-style",
         type=Path,
         default=DEFAULT_MASTER_STYLE_PATH,
-        help=f"Path to master style portrait (default: {DEFAULT_MASTER_STYLE_PATH})"
+        help=f"Path to master style portrait (default: {DEFAULT_MASTER_STYLE_PATH})",
     )
     parser.add_argument(
         "--model",
         default="gpt-image-2",
-        help="OpenAI model to use (default: gpt-image-2). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5, gpt-image-2"
+        help="OpenAI model to use (default: gpt-image-2). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5, gpt-image-2",
     )
     parser.add_argument(
         "--persons",
-        help="Comma-separated list of specific person IDs to generate (e.g., 'alan_turing,ada_lovelace')"
+        help="Comma-separated list of specific person IDs to generate (e.g., 'alan_turing,ada_lovelace')",
     )
 
     args = parser.parse_args(argv)
@@ -158,12 +153,16 @@ def main(argv: Any = None) -> int:
                 break
 
         if not person:
-            print(f"✗ Error: Person '{person_id}' not found in registry", file=sys.stderr)
-            results.append({
-                "id": person_id,
-                "success": False,
-                "message": "Person not found in registry"
-            })
+            print(
+                f"✗ Error: Person '{person_id}' not found in registry", file=sys.stderr
+            )
+            results.append(
+                {
+                    "id": person_id,
+                    "success": False,
+                    "message": "Person not found in registry",
+                }
+            )
             continue
 
         # Get reference portrait URL
@@ -174,16 +173,14 @@ def main(argv: Any = None) -> int:
         if reference_url and reference_url.startswith("/portraits/"):
             reference_url = portrait.get("originalImage")
             if reference_url:
-                print(f"Using original Wikimedia portrait (stored in originalImage field)")
+                print(
+                    "Using original Wikimedia portrait (stored in originalImage field)"
+                )
 
         if not reference_url or not reference_url.startswith("http"):
             error_msg = f"No valid reference portrait URL for '{person_id}'"
             print(f"✗ Error: {error_msg}", file=sys.stderr)
-            results.append({
-                "id": person_id,
-                "success": False,
-                "message": error_msg
-            })
+            results.append({"id": person_id, "success": False, "message": error_msg})
             continue
 
         print(f"Reference portrait: {reference_url}")
@@ -196,7 +193,7 @@ def main(argv: Any = None) -> int:
             master_style_path=args.master_style,
             model=args.model,
             dry_run=args.dry_run,
-            force=args.force
+            force=args.force,
         )
 
         results.append(result)

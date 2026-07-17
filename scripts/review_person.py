@@ -9,35 +9,40 @@ storytelling quality.
 
 import argparse
 import json
-import os
 import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
 from openai import OpenAI, APIStatusError
 from pydantic import ValidationError
 
-# Add parent directory to path for imports
+# Add parent directory to path for imports. Everything below resolves through
+# it, so these imports have to follow the insert — hence the E402 waivers.
 sys.path.insert(0, str(Path(__file__).parent))
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
-from utils.review_models import (
-    CombinedReviewOutput, StyleReviewOutput,
-    EventsChanges, NetworkChanges
+from config import (  # noqa: E402
+    DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    LOW_REASONING_EFFORT,
 )
-from utils.review_prompts import (
+from utils.review_models import (  # noqa: E402
+    CombinedReviewOutput,
+    StyleReviewOutput,
+    EventsChanges,
+    NetworkChanges,
+)
+from utils.review_prompts import (  # noqa: E402
     get_combined_review_prompt,
-    get_style_review_prompt
+    get_style_review_prompt,
 )
-from utils.review_helpers import (
+from utils.review_helpers import (  # noqa: E402
     apply_event_changes,
     apply_network_changes,
-    apply_style_changes
+    apply_style_changes,
 )
-from utils.wikipedia_cache import (
+from utils.wikipedia_cache import (  # noqa: E402
     get_cached_wikipedia_page,
-    get_cache_dir
+    get_cache_dir,
 )
 
 
@@ -49,7 +54,7 @@ def get_cached_related_articles(person_id: str) -> Optional[List[Dict[str, str]]
     if not related_path.exists():
         return None
 
-    with open(related_path, 'r', encoding='utf-8') as f:
+    with open(related_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -70,7 +75,9 @@ def resolve_person_id(person_name_or_id: str) -> Optional[str]:
     Returns:
         Canonical person_id or None if not found
     """
-    person_name_or_id_normalized = person_name_or_id.lower().replace(" ", "_").replace("-", "_")
+    person_name_or_id_normalized = (
+        person_name_or_id.lower().replace(" ", "_").replace("-", "_")
+    )
 
     # Check if it's already a valid person_id
     person_dir = PEOPLE_DIR / person_name_or_id_normalized
@@ -79,13 +86,15 @@ def resolve_person_id(person_name_or_id: str) -> Optional[str]:
 
     # Try to find in persons.json by name
     try:
-        with open(PERSONS_REGISTER, 'r', encoding='utf-8') as f:
+        with open(PERSONS_REGISTER, "r", encoding="utf-8") as f:
             persons = json.load(f)
 
         for person in persons.get("people", []):
             if person.get("id") == person_name_or_id_normalized:
                 return person_name_or_id_normalized
-            if person.get("name", "").lower().replace("_", " ") == person_name_or_id.lower().replace("_", " "):
+            if person.get("name", "").lower().replace(
+                "_", " "
+            ) == person_name_or_id.lower().replace("_", " "):
                 return person.get("id")
     except Exception:
         pass
@@ -107,27 +116,26 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
         FileNotFoundError: If required files don't exist
     """
     person_dir = PEOPLE_DIR / person_id
-    cache_dir = get_cache_dir(person_id)
 
     # Load life events
     events_path = person_dir / "life_events.json"
     if not events_path.exists():
         raise FileNotFoundError(f"Life events not found: {events_path}")
 
-    with open(events_path, 'r', encoding='utf-8') as f:
+    with open(events_path, "r", encoding="utf-8") as f:
         events_data = json.load(f)
 
     # Load ego network
     network_path = person_dir / "ego_network.json"
     network_data = None
     if network_path.exists():
-        with open(network_path, 'r', encoding='utf-8') as f:
+        with open(network_path, "r", encoding="utf-8") as f:
             network_data = json.load(f)
 
     # Load style
     style_data = None
     if STYLES_REGISTER.exists():
-        with open(STYLES_REGISTER, 'r', encoding='utf-8') as f:
+        with open(STYLES_REGISTER, "r", encoding="utf-8") as f:
             styles = json.load(f)
             style_data = styles.get(person_id)
 
@@ -142,7 +150,7 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
         "style": style_data,
         "wikipedia_page": wikipedia_page,
         "related_articles": related_articles or [],
-        "person_id": person_id
+        "person_id": person_id,
     }
 
 
@@ -175,7 +183,7 @@ def review_combined(
     wikipedia_page: Dict[str, Any],
     related_articles: List[Dict[str, str]],
     model: str,
-    reasoning_effort: str
+    reasoning_effort: str,
 ) -> CombinedReviewOutput:
     """
     Review both life events and ego network together with AI.
@@ -191,7 +199,9 @@ def review_combined(
     Returns:
         CombinedReviewOutput with proposed changes for both
     """
-    print(f"  Reviewing life events and network (model: {model}, reasoning: {reasoning_effort})...")
+    print(
+        f"  Reviewing life events and network (model: {model}, reasoning: {reasoning_effort})..."
+    )
 
     client = OpenAI()
 
@@ -199,24 +209,23 @@ def review_combined(
     wiki_text = wikipedia_page.get("extract", "")
 
     # Build combined prompt
-    prompt = get_combined_review_prompt(events_data, network_data or {}, wiki_text, related_articles)
+    prompt = get_combined_review_prompt(
+        events_data, network_data or {}, wiki_text, related_articles
+    )
 
     try:
         # Call AI with structured output
         response = client.responses.parse(
             model=model,
             reasoning={"effort": reasoning_effort},
-            input=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            text_format=CombinedReviewOutput
+            input=[{"role": "user", "content": prompt}],
+            text_format=CombinedReviewOutput,
         )
 
         if response.status != "completed" or not response.output_parsed:
-            raise RuntimeError("Failed to parse structured output from model (Combined review)")
+            raise RuntimeError(
+                "Failed to parse structured output from model (Combined review)"
+            )
 
         review_output = response.output_parsed
         print(f"  * Review complete: {review_output.change_summary}")
@@ -235,7 +244,7 @@ def review_style(
     style_data: Dict[str, Any],
     events_data: Dict[str, Any],
     model: str,
-    reasoning_effort: str
+    reasoning_effort: str,
 ) -> StyleReviewOutput:
     """
     Review visual style with AI.
@@ -249,7 +258,9 @@ def review_style(
     Returns:
         StyleReviewOutput with proposed changes
     """
-    print(f"  Reviewing visual style (model: {model}, reasoning: {reasoning_effort})...")
+    print(
+        f"  Reviewing visual style (model: {model}, reasoning: {reasoning_effort})..."
+    )
 
     client = OpenAI()
 
@@ -260,11 +271,13 @@ def review_style(
             model=model,
             reasoning={"effort": reasoning_effort},
             input=[{"role": "user", "content": prompt}],
-            text_format=StyleReviewOutput
+            text_format=StyleReviewOutput,
         )
 
         if response.status != "completed" or not response.output_parsed:
-            raise RuntimeError("Failed to parse structured output from model (Style review)")
+            raise RuntimeError(
+                "Failed to parse structured output from model (Style review)"
+            )
 
         review_output = response.output_parsed
         print(f"  * Style review complete: {review_output.change_summary}")
@@ -286,7 +299,7 @@ def review_person_data(
     skip_low_confidence: bool = True,
     model: str = DEFAULT_MODEL,
     reasoning_effort: Optional[str] = None,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> bool:
     """
     Main review function for person data.
@@ -316,7 +329,7 @@ def review_person_data(
     print(f"[Step 1/6] Resolved person ID: {person_id}")
 
     # Load data
-    print(f"[Step 2/6] Loading person data...")
+    print("[Step 2/6] Loading person data...")
     try:
         person_data = load_person_data(person_id)
     except FileNotFoundError as e:
@@ -324,10 +337,10 @@ def review_person_data(
         return False
 
     # Validate
-    print(f"[Step 3/6] Validating data...")
+    print("[Step 3/6] Validating data...")
     errors = validate_data(person_data)
     if errors:
-        print(f"X Critical errors found:")
+        print("X Critical errors found:")
         for error in errors:
             print(f"  - {error}")
         print("\nPlease fix these errors before reviewing.")
@@ -336,8 +349,12 @@ def review_person_data(
     print("  * Validation passed")
 
     # Determine reasoning effort
-    combined_reasoning = reasoning_effort or DEFAULT_REASONING_EFFORT  # Use configured default for combined review
-    style_reasoning = reasoning_effort or LOW_REASONING_EFFORT  # Use low effort for style review
+    combined_reasoning = (
+        reasoning_effort or DEFAULT_REASONING_EFFORT
+    )  # Use configured default for combined review
+    style_reasoning = (
+        reasoning_effort or LOW_REASONING_EFFORT
+    )  # Use low effort for style review
 
     min_confidence = 4 if skip_low_confidence else 1
 
@@ -347,7 +364,7 @@ def review_person_data(
 
     # Phase 1: Combined Events + Network Review
     if aspect in ["all", "events", "network"]:
-        print(f"\n[Step 4/5] PHASE 1: Reviewing life events and network together...")
+        print("\n[Step 4/5] PHASE 1: Reviewing life events and network together...")
         try:
             combined_review = review_combined(
                 person_data["events"],
@@ -355,29 +372,28 @@ def review_person_data(
                 person_data["wikipedia_page"],
                 person_data["related_articles"],
                 model,
-                combined_reasoning
+                combined_reasoning,
             )
         except Exception as e:
             print(f"X Combined review failed: {e}")
             if verbose:
                 import traceback
+
                 traceback.print_exc()
             return False
 
     # Phase 2: Style
     if aspect in ["all", "style"] and person_data["style"]:
-        print(f"\n[Step 5/5] PHASE 2: Reviewing visual style...")
+        print("\n[Step 5/5] PHASE 2: Reviewing visual style...")
         try:
             style_review = review_style(
-                person_data["style"],
-                person_data["events"],
-                model,
-                style_reasoning
+                person_data["style"], person_data["events"], model, style_reasoning
             )
         except Exception as e:
             print(f"X Style review failed: {e}")
             if verbose:
                 import traceback
+
                 traceback.print_exc()
             return False
 
@@ -387,28 +403,30 @@ def review_person_data(
             overall_assessment="Not reviewed",
             events_changes=EventsChanges(),
             network_changes=NetworkChanges(),
-            change_summary="No changes"
+            change_summary="No changes",
         )
 
     if not style_review and person_data["style"]:
         from utils.review_models import StyleChanges
+
         style_review = StyleReviewOutput(
             overall_assessment="Not reviewed",
             color_palette_feedback="",
             pattern_feedback="",
             font_feedback="",
             proposed_changes=StyleChanges(confidence=1, rationale=""),
-            change_summary="No changes"
+            change_summary="No changes",
         )
     elif not style_review:
         from utils.review_models import StyleChanges
+
         style_review = StyleReviewOutput(
             overall_assessment="No style data",
             color_palette_feedback="",
             pattern_feedback="",
             font_feedback="",
             proposed_changes=StyleChanges(confidence=1, rationale=""),
-            change_summary="No changes"
+            change_summary="No changes",
         )
 
     # Apply changes
@@ -428,65 +446,65 @@ def review_person_data(
     if aspect in ["all", "events", "network"]:
         # Apply events changes from combined review
         updated_events, events_applied, events_skipped = apply_event_changes(
-            person_data["events"],
-            combined_review.events_changes,
-            min_confidence
+            person_data["events"], combined_review.events_changes, min_confidence
         )
         print(f"  Events: {events_applied} applied, {events_skipped} skipped")
 
         # Apply network changes from combined review
         if person_data["network"]:
             updated_network, network_applied, network_skipped = apply_network_changes(
-                person_data["network"],
-                combined_review.network_changes,
-                min_confidence
+                person_data["network"], combined_review.network_changes, min_confidence
             )
             print(f"  Network: {network_applied} applied, {network_skipped} skipped")
 
     if aspect in ["all", "style"] and person_data["style"]:
         updated_style, style_applied, style_skipped = apply_style_changes(
-            person_data["style"],
-            style_review.proposed_changes,
-            min_confidence
+            person_data["style"], style_review.proposed_changes, min_confidence
         )
         print(f"  Style: {style_applied} applied, {style_skipped} skipped")
 
     # Save or display
     if dry_run:
-        print("\n" + "="*60)
+        print("\n" + "=" * 60)
         print("DRY RUN - Changes summary:")
-        print("="*60)
-        print(f"  Events: {events_applied} changes would be applied, {events_skipped} skipped")
-        print(f"  Network: {network_applied} changes would be applied, {network_skipped} skipped")
-        print(f"  Style: {style_applied} changes would be applied, {style_skipped} skipped")
+        print("=" * 60)
+        print(
+            f"  Events: {events_applied} changes would be applied, {events_skipped} skipped"
+        )
+        print(
+            f"  Network: {network_applied} changes would be applied, {network_skipped} skipped"
+        )
+        print(
+            f"  Style: {style_applied} changes would be applied, {style_skipped} skipped"
+        )
         print("\n* Dry run complete. No files modified.")
         return True
 
     # Save files
-    print(f"\n[Phase 4] Saving changes...")
+    print("\n[Phase 4] Saving changes...")
 
     person_dir = PEOPLE_DIR / person_id
 
     if aspect in ["all", "events"]:
         events_path = person_dir / "life_events.json"
-        with open(events_path, 'w', encoding='utf-8') as f:
+        with open(events_path, "w", encoding="utf-8") as f:
             json.dump(updated_events, f, indent=2, ensure_ascii=False)
         print(f"  * Updated {events_path.name}")
 
     if aspect in ["all", "network"] and updated_network:
         network_path = person_dir / "ego_network.json"
-        with open(network_path, 'w', encoding='utf-8') as f:
+        with open(network_path, "w", encoding="utf-8") as f:
             json.dump(updated_network, f, indent=2, ensure_ascii=False)
         print(f"  * Updated {network_path.name}")
 
     if aspect in ["all", "style"] and updated_style:
         # Update style in styles register
-        with open(STYLES_REGISTER, 'r', encoding='utf-8') as f:
+        with open(STYLES_REGISTER, "r", encoding="utf-8") as f:
             styles = json.load(f)
 
         styles[person_id] = updated_style
 
-        with open(STYLES_REGISTER, 'w', encoding='utf-8') as f:
+        with open(STYLES_REGISTER, "w", encoding="utf-8") as f:
             json.dump(styles, f, indent=2, ensure_ascii=False)
         print(f"  * Updated {STYLES_REGISTER.name}")
 
@@ -511,51 +529,44 @@ Examples:
   python review_person.py "alan_turing" --aspect events
   python review_person.py "ada_lovelace" --dry-run
   python review_person.py "grace_hopper" --skip-low-confidence
-        """
+        """,
     )
 
-    parser.add_argument(
-        "person_name_or_id",
-        help="Person name or ID to review"
-    )
+    parser.add_argument("person_name_or_id", help="Person name or ID to review")
 
     parser.add_argument(
         "--aspect",
         choices=["all", "events", "network", "style"],
         default="all",
-        help="Which aspect to review (default: all)"
+        help="Which aspect to review (default: all)",
     )
 
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Show proposed changes without applying them"
+        help="Show proposed changes without applying them",
     )
 
     parser.add_argument(
         "--skip-low-confidence",
         action="store_true",
         default=True,
-        help="Only apply high-confidence changes (>= 4/5) [default: True]"
+        help="Only apply high-confidence changes (>= 4/5) [default: True]",
     )
 
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})"
+        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
     )
 
     parser.add_argument(
         "--reasoning-effort",
         choices=["low", "medium", "high"],
-        help="Override default reasoning effort levels"
+        help="Override default reasoning effort levels",
     )
 
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose logging"
-    )
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
 
     args = parser.parse_args()
 
@@ -566,7 +577,7 @@ Examples:
         skip_low_confidence=args.skip_low_confidence,
         model=args.model,
         reasoning_effort=args.reasoning_effort,
-        verbose=args.verbose
+        verbose=args.verbose,
     )
 
     sys.exit(0 if success else 1)
