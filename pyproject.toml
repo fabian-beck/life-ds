@@ -9,7 +9,11 @@ extend-exclude = '''
 '''
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.12"
+# The scripts are built on Pydantic models. Without this plugin mypy does not
+# understand that `Field(None, ...)` supplies a default, and reports every such
+# field as a missing required argument at each construction site.
+plugins = ["pydantic.mypy"]
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false
