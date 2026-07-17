@@ -36,22 +36,25 @@
     }
   }
 
-  // Load language-specific registry
+  // Load language-specific registry. The generation counter guards against
+  // rapid language switches: only the most recent request may write the result.
+  let registryLoadGeneration = 0;
   async function loadRegistry(language) {
+    const generation = ++registryLoadGeneration;
     try {
-      if (language === "en") {
-        const module = await import("../data/persons.json");
-        registry = module.default;
-      } else {
-        const module = await import(`../data/persons_${language}.json`);
-        registry = module.default;
-      }
+      const module =
+        language === "en"
+          ? await import("../data/persons.json")
+          : await import(`../data/persons_${language}.json`);
+      if (generation !== registryLoadGeneration) return;
+      registry = module.default;
     } catch (error) {
       console.warn(
         `Failed to load registry for ${language}, falling back to English:`,
         error
       );
       const fallback = await import("../data/persons.json");
+      if (generation !== registryLoadGeneration) return;
       registry = fallback.default;
     }
   }
@@ -415,7 +418,14 @@
   let dataLoading = false;
   let loadingStage = null; // Track which part is loading: 'initial', 'dataset', 'network', null
 
+  // Shared across person and meta story loading: navigating quickly between
+  // people (or between a person and a meta story) leaves earlier loads in
+  // flight, and without this guard the last one to *resolve* would win and
+  // overwrite the data of the story actually being viewed.
+  let dataLoadGeneration = 0;
+
   $: if (personId && $currentLanguage) {
+    const generation = ++dataLoadGeneration;
     dataLoading = true;
     loadingStage = "initial";
     dataset = null;
@@ -425,17 +435,20 @@
     loadingStage = "dataset";
     loadDataset(personId, $currentLanguage)
       .then((datasetResult) => {
+        if (generation !== dataLoadGeneration) return null;
         dataset = datasetResult;
         loadingStage = "network";
         // Load network data after dataset
         return loadEgoNetwork(personId, $currentLanguage);
       })
       .then((networkResult) => {
+        if (generation !== dataLoadGeneration) return;
         egoNetwork = networkResult;
         dataLoading = false;
         loadingStage = null;
       })
       .catch((error) => {
+        if (generation !== dataLoadGeneration) return;
         console.error("Failed to load data:", error);
         dataset = null;
         egoNetwork = null;
@@ -443,6 +456,7 @@
         loadingStage = null;
       });
   } else if (!personId) {
+    dataLoadGeneration += 1;
     dataset = null;
     egoNetwork = null;
     dataLoading = false;
@@ -451,6 +465,7 @@
 
   // Reactive meta story loading - load when metaStoryId changes
   $: if (metaStoryId) {
+    const generation = ++dataLoadGeneration;
     dataLoading = true;
     metaStoryData = null;
     dataset = null;
@@ -458,10 +473,12 @@
 
     loadMetaStoryData(metaStoryId)
       .then((result) => {
+        if (generation !== dataLoadGeneration) return;
         metaStoryData = result;
         dataLoading = false;
       })
       .catch((error) => {
+        if (generation !== dataLoadGeneration) return;
         console.error("Failed to load meta story:", error);
         metaStoryData = null;
         dataLoading = false;
