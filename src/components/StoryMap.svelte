@@ -460,6 +460,8 @@
   }
 
   let migrationPathMarkers = [];
+  let migrationAnimationFrameId = null;
+  let migrationArrowTimeout = null;
 
   function clearMigrationPath() {
     if (!mapInstance) return;
@@ -472,10 +474,14 @@
       mapInstance.removeSource("migration-route");
     }
 
-    // Cancel animations
-    if (window.migrationAnimations) {
-      window.migrationAnimations.forEach((id) => cancelAnimationFrame(id));
-      window.migrationAnimations = [];
+    // Cancel the pending arrow placement and the running animation loop
+    if (migrationArrowTimeout) {
+      clearTimeout(migrationArrowTimeout);
+      migrationArrowTimeout = null;
+    }
+    if (migrationAnimationFrameId !== null) {
+      cancelAnimationFrame(migrationAnimationFrameId);
+      migrationAnimationFrameId = null;
     }
 
     // Remove all arrow markers
@@ -608,9 +614,9 @@
     // Aim for one arrow roughly every 100-120 pixels, minimum 1, maximum 5
     const numArrows = Math.max(1, Math.min(5, Math.round(pixelDistance / 110)));
 
-    // Remove existing arrow markers
-    for (const marker of migrationPathMarkers) {
-      marker.remove();
+    // Remove existing arrow markers ({ marker, coords } entries)
+    for (const item of migrationPathMarkers) {
+      (item.marker || item).remove();
     }
     migrationPathMarkers = [];
 
@@ -651,7 +657,6 @@
     }
 
     // Animate arrows along the path
-    let animationFrameId;
     const startTime = Date.now();
 
     function animateArrows() {
@@ -703,14 +708,12 @@
         }
       });
 
-      animationFrameId = requestAnimationFrame(animateArrows);
+      // Reassign every frame so clearMigrationPath cancels the live frame,
+      // not the long-expired first one.
+      migrationAnimationFrameId = requestAnimationFrame(animateArrows);
     }
 
     animateArrows();
-
-    // Store animation ID for cleanup
-    if (!window.migrationAnimations) window.migrationAnimations = [];
-    window.migrationAnimations.push(animationFrameId);
   }
 
   function updateMigrationPath(path) {
@@ -769,8 +772,11 @@
     });
 
     // Defer arrow placement until after map animation completes (900ms + buffer)
-    // This ensures arrows are counted based on final viewport, not initial state
-    setTimeout(() => {
+    // This ensures arrows are counted based on final viewport, not initial state.
+    // The handle is cleared by clearMigrationPath so a slide change within the
+    // delay cannot resurrect arrows for a path that is no longer shown.
+    migrationArrowTimeout = setTimeout(() => {
+      migrationArrowTimeout = null;
       if (mapInstance && mapReady) {
         addMigrationArrows(from, to, curvedCoordinates);
       }
