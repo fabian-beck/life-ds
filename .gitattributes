@@ -1,2 +1,9 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Detect text files and store them LF-normalized in the repository.
+#
+# eol=lf additionally checks them out as LF on every platform, overriding a
+# user's core.autocrlf. Without it, a Windows checkout gets CRLF working files
+# while the repository holds LF, and prettier — configured with endOfLine: "lf"
+# — then rejects every line of every file it is pointed at.
+#
+# Binary files are still detected by text=auto and left untouched.
+* text=auto eol=lf
