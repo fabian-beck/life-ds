@@ -16,7 +16,7 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
@@ -282,7 +282,7 @@ def slugify(title: str) -> str:
 def load_persons_registry() -> Dict[str, Any]:
     """Load the persons.json registry."""
     with open(REGISTER_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return cast(Dict[str, Any], json.load(f))
 
 
 def load_person_life_events(person_id: str) -> Optional[Dict[str, Any]]:
@@ -291,7 +291,7 @@ def load_person_life_events(person_id: str) -> Optional[Dict[str, Any]]:
     if not events_path.exists():
         return None
     with open(events_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return cast(Optional[Dict[str, Any]], json.load(f))
 
 
 def validate_person_exists(person_id: str, registry: Dict[str, Any]) -> bool:
@@ -716,7 +716,7 @@ MISSING PEOPLE SUGGESTIONS:
             # Validate subtopic assignments
             selected_person_ids = {p.person_id for p in plan.selected_people}
             subtopic_person_ids = set()
-            person_assignment_count = {}
+            person_assignment_count: Dict[str, int] = {}
 
             for subtopic in plan.subtopics:
                 for person_id in subtopic.person_ids:
@@ -1055,7 +1055,7 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
             print(f"  Result: {len(filtered_events)} events included")
 
     # Validate: Each person must have at least one essential event across ALL chapters
-    person_event_counts = {}
+    person_event_counts: Dict[str, int] = {}
     for chapter_data in chapters_with_filtered_events:
         for event in chapter_data.person_events:
             person_event_counts[event.person_id] = (
@@ -1137,7 +1137,7 @@ def _filter_event_batch(
         )
 
     # Group events by person to track coverage
-    events_by_person = {}
+    events_by_person: Dict[str, List[Any]] = {}
     for event_review in events_for_review:
         person_name = event_review.person_name
         if person_name not in events_by_person:

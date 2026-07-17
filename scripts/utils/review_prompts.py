@@ -6,7 +6,7 @@ with focus on readability, accuracy, and UI optimization.
 """
 
 import json
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Set
 
 # UI Context documentation embedded in prompts
 UI_CONTEXT = """
@@ -93,7 +93,7 @@ def get_combined_review_prompt(
     num_connections = len(network_data.get("connections", [])) if network_data else 0
 
     # Extract involved_people from events for cross-reference
-    involved_people = set()
+    involved_people: Set[str] = set()
     for event in events_data.get("events", []):
         people = event.get("involved_people") or []
         involved_people.update(people)

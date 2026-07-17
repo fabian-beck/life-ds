@@ -8,7 +8,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple, cast
 from urllib.parse import unquote, urlparse
 
 import requests
@@ -270,7 +270,7 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
     page = next(iter(pages.values()))
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
-    return page
+    return cast(Dict[str, Any], page)
 
 
 def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
@@ -374,7 +374,10 @@ def load_existing_dataset(person_id: str) -> Optional[Dict[str, Any]]:
     dataset_path = person_dir / "life_events.json"
     if dataset_path.exists():
         try:
-            return json.loads(dataset_path.read_text(encoding="utf-8"))
+            return cast(
+                Optional[Dict[str, Any]],
+                json.loads(dataset_path.read_text(encoding="utf-8")),
+            )
         except json.JSONDecodeError:
             return None
     return None
@@ -707,7 +710,7 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
     """Update the persons register - ensure person exists and update lastUpdated timestamp."""
-    register = {"people": []}
+    register: Dict[str, Any] = {"people": []}
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
 

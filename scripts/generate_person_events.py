@@ -18,7 +18,7 @@ import time
 from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Set, Union, Literal
+from typing import Any, Dict, List, Optional, Tuple, Set, Union, Literal, cast
 from urllib.parse import quote
 
 import requests
@@ -1082,7 +1082,7 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
     page = next(iter(pages.values()))
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
-    return page
+    return cast(Dict[str, Any], page)
 
 
 def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
@@ -1183,7 +1183,7 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
     response = requests.get(url, timeout=30, headers=wikipedia_headers())
     if response.status_code != 200:
         return {}
-    return response.json()
+    return cast(Dict[str, Any], response.json())
 
 
 # ============================================================================
@@ -2695,7 +2695,10 @@ def build_phase2_prompt_classified(
         deutsche_biographie_text=deutsche_biographie_text,
     )
 
-    class_type = event_skeleton.event_class.type
+    # event_class is None for standard events. The only caller checks before
+    # routing here, so this is belt-and-braces — but an unclassified event has
+    # the same answer as an unrecognised class, so let it take that same path.
+    class_type = event_skeleton.event_class.type if event_skeleton.event_class else None
     if class_type not in EVENT_CLASS_CONFIG:
         # Fallback to base prompt if config not found
         return base + _add_related_articles_section(filtered_related_articles)
@@ -3102,8 +3105,8 @@ def deduplicate_person_names(names: List[str]) -> List[str]:
         return normalized
 
     # Group similar names
-    seen = {}
-    result = []
+    seen: Dict[str, str] = {}
+    result: List[str] = []
 
     for name in names:
         norm = normalize(name)
@@ -3812,7 +3815,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if primary_roles:
         entry["primaryRoles"] = primary_roles
 
-    register = {"people": []}
+    register: Dict[str, Any] = {"people": []}
     if REGISTER_PATH.exists():
         register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
     people = register.setdefault("people", [])

@@ -11,7 +11,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, cast
 from urllib.parse import urlparse
 
 import requests
@@ -355,7 +355,9 @@ def load_person_registry() -> Dict[str, Any]:
         raise FileNotFoundError(f"Persons registry not found: {REGISTER_PATH}")
 
     try:
-        return json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+        return cast(
+            Dict[str, Any], json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+        )
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON in persons registry: {e}") from e
 
@@ -375,7 +377,7 @@ def find_person_in_registry(
     people = registry.get("people", [])
     for person in people:
         if person.get("id") == person_id:
-            return person
+            return cast(Optional[Dict[str, Any]], person)
     return None
 
 
@@ -865,7 +867,9 @@ REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIR
                             f"  Response has 'data' attribute: {hasattr(response, 'data')}"
                         )
                         if hasattr(response, "data"):
-                            print(f"  Response data length: {len(response.data)}")
+                            # data is Optional; `or []` keeps a debug print from
+                            # being the thing that crashes the run.
+                            print(f"  Response data length: {len(response.data or [])}")
                     finally:
                         # Ensure files are closed before temp directory cleanup
                         style_file.close()
@@ -917,8 +921,12 @@ Professional and dignified composition, portrait orientation, shoulders visible.
 
                 print("  Extracting image data from response...")
 
-                if hasattr(response, "data") and len(response.data) > 0:
-                    image_data = response.data[0]
+                # ImagesResponse.data is Optional, and hasattr only says the
+                # attribute exists — len(None) would still raise. Truthiness
+                # covers both the missing and the empty case.
+                response_data = getattr(response, "data", None)
+                if response_data:
+                    image_data = response_data[0]
                     print(f"  Image data type: {type(image_data)}")
                     print(f"  Image data attributes: {dir(image_data)}")
 

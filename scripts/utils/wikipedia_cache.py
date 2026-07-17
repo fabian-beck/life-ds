@@ -5,7 +5,7 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 import requests
 
@@ -89,7 +89,7 @@ def _fetch_wikipedia_page_from_api(title: str, api_url: str) -> Dict[str, Any]:
     page = next(iter(pages.values()))
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
-    return page
+    return cast(Dict[str, Any], page)
 
 
 def _fetch_wikipedia_page_direct(title: str) -> Dict[str, Any]:
@@ -144,7 +144,7 @@ def _fetch_wikipedia_summary_from_api(title: str, api_url: str) -> Dict[str, Any
     response = requests.get(url, timeout=30, headers=wikipedia_headers())
     if response.status_code != 200:
         return {}
-    return response.json()
+    return cast(Dict[str, Any], response.json())
 
 
 def _fetch_wikipedia_summary_direct(title: str) -> Dict[str, Any]:

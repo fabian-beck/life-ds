@@ -7,7 +7,7 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel
@@ -211,19 +211,19 @@ def find_person_by_name_or_id(name_or_id: str) -> Optional[Dict[str, Any]]:
     # Try exact ID match first
     for person in people:
         if person.get("id") == name_or_id:
-            return person
+            return cast(Optional[Dict[str, Any]], person)
 
     # Try slugified name match
     slug = slugify(name_or_id)
     for person in people:
         if person.get("id") == slug:
-            return person
+            return cast(Optional[Dict[str, Any]], person)
 
     # Try name match (case-insensitive)
     search_lower = name_or_id.lower()
     for person in people:
         if person.get("name", "").lower().replace("_", " ") == search_lower:
-            return person
+            return cast(Optional[Dict[str, Any]], person)
 
     return None
 
@@ -235,7 +235,7 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
 
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            return cast(Optional[Dict[str, Any]], json.load(f))
     except json.JSONDecodeError as e:
         print(f"Error: Invalid JSON in {file_path}: {e}")
         return None

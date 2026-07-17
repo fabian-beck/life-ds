@@ -7,7 +7,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
 from PIL import Image
 
@@ -36,7 +36,9 @@ def load_person_registry() -> Dict[str, Any]:
         raise FileNotFoundError(f"Persons registry not found: {REGISTER_PATH}")
 
     try:
-        return json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+        return cast(
+            Dict[str, Any], json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+        )
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON in persons registry: {e}") from e
 

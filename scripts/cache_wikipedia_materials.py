@@ -5,7 +5,7 @@ import argparse
 import json
 import os
 import sys
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, cast
 
 from openai import OpenAI
 from pydantic import BaseModel, Field
@@ -94,7 +94,7 @@ def find_wikipedia_page(title: str) -> str:
             try:
                 page = _fetch_wikipedia_page_direct(candidate)
                 # Return the canonical title from the page
-                return page.get("title", candidate)
+                return cast(str, page.get("title", candidate))
             except ValueError as error:
                 errors.append(str(error))
 

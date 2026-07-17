@@ -15,7 +15,7 @@ when the license permits it (ADB).
 import json
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 import requests
 
@@ -75,7 +75,7 @@ def _solr_query(query: str, rows: int = 5) -> List[Dict[str, Any]]:
     resp = requests.get(SOLR_API, params=params, timeout=30, headers=_headers())
     resp.raise_for_status()
     data = resp.json()
-    return data.get("response", {}).get("docs", [])
+    return cast(List[Dict[str, Any]], data.get("response", {}).get("docs", []))
 
 
 def search_person(
@@ -400,7 +400,9 @@ def get_cached_deutsche_biographie(person_id: str) -> Optional[Dict[str, Any]]:
     if not path.exists():
         return None
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return cast(
+            Optional[Dict[str, Any]], json.loads(path.read_text(encoding="utf-8"))
+        )
     except (json.JSONDecodeError, OSError):
         return None
 

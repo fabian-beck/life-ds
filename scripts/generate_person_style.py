@@ -9,7 +9,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, TypeGuard, cast
 from xml.etree import ElementTree as ET
 
 from openai import APIStatusError, OpenAI
@@ -44,7 +44,13 @@ def slugify(value: str) -> str:
     return slug.strip("_") or "person"
 
 
-def is_hex_color(value: Any) -> bool:
+def is_hex_color(value: Any) -> TypeGuard[str]:
+    """True if value is a "#RRGGBB" string.
+
+    Declared as a TypeGuard because callers rely on it to narrow: they pull
+    values out of an untyped payload and reject anything this returns False
+    for, after which the value is known to be a str.
+    """
     if not isinstance(value, str):
         return False
     return bool(re.fullmatch(r"#[0-9a-fA-F]{6}", value.strip()))
@@ -452,7 +458,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     content = response.output_text
     if not content:
         raise RuntimeError("OpenAI API returned an empty response.")
-    return json.loads(content)
+    return cast(Dict[str, Any], json.loads(content))
 
 
 def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:

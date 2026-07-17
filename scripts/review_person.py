@@ -11,7 +11,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, cast
 
 from openai import OpenAI, APIStatusError
 from pydantic import ValidationError
@@ -55,7 +55,7 @@ def get_cached_related_articles(person_id: str) -> Optional[List[Dict[str, str]]
         return None
 
     with open(related_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return cast(Optional[List[Dict[str, str]]], json.load(f))
 
 
 # Constants
@@ -95,7 +95,7 @@ def resolve_person_id(person_name_or_id: str) -> Optional[str]:
             if person.get("name", "").lower().replace(
                 "_", " "
             ) == person_name_or_id.lower().replace("_", " "):
-                return person.get("id")
+                return cast(Optional[str], person.get("id"))
     except Exception:
         pass
 
