@@ -30,7 +30,8 @@ export const _ = derived([currentLanguage, translations], ([, $trans]) => {
   return (key, params = {}) => {
     let str = $trans[key] || key;
     Object.entries(params).forEach(([k, v]) => {
-      str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
+      // Function replacement so values containing "$&" etc. are inserted verbatim
+      str = str.replace(new RegExp(`\\{${k}\\}`, "g"), () => v);
     });
     return str;
   };

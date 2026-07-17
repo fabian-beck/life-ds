@@ -508,7 +508,7 @@ export function getSubcategory(relationshipType) {
  * @param {string} str - String to escape
  * @returns {string} Escaped string with hyphen normalization
  */
-function escapeRegex(str) {
+export function escapeRegex(str) {
   // First escape special regex characters
   let escaped = str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   // Replace all types of hyphens with a character class that matches any hyphen variant

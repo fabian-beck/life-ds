@@ -8,10 +8,14 @@ import { querystring } from "./router.js";
  */
 export const queryParams = derived(querystring, ($querystring) => {
   const params = new URLSearchParams($querystring || "");
-  const slideStr = params.get("slide");
-  const slideIndex = slideStr ? parseInt(slideStr, 10) : null;
-  const eventStr = params.get("event");
-  const eventIndex = eventStr ? parseInt(eventStr, 10) : null;
+  // Treat non-numeric values as absent so NaN never leaks into scroll math
+  const parseIndex = (value) => {
+    if (!value) return null;
+    const parsed = parseInt(value, 10);
+    return Number.isNaN(parsed) ? null : parsed;
+  };
+  const slideIndex = parseIndex(params.get("slide"));
+  const eventIndex = parseIndex(params.get("event"));
 
   return {
     timeline: params.get("timeline") === "1",

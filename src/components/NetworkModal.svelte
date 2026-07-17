@@ -7,6 +7,7 @@
   import {
     normalizePersonName,
     generateNameVariants,
+    escapeRegex,
   } from "../utils/storyHelpers.js";
 
   export let egoNetwork = null;
@@ -50,8 +51,9 @@
 
     // Match unique subcategories in the text
     for (const { subcategory, person } of uniqueSubcategories) {
-      // Create a word-boundary regex for the subcategory
-      const regex = new RegExp(`\\b${subcategory}\\b`, "gi");
+      // Create a word-boundary regex for the subcategory (escaped: values come
+      // from data and may contain regex metacharacters)
+      const regex = new RegExp(`\\b${escapeRegex(subcategory)}\\b`, "gi");
       let match;
 
       while ((match = regex.exec(text)) !== null) {
