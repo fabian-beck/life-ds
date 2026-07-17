@@ -29,7 +29,9 @@
     gap: 0.4rem;
     border-radius: 999px;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease,
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
       transform 0.2s ease;
     font-family: inherit;
     font-weight: 500;

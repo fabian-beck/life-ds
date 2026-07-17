@@ -52,7 +52,7 @@
   // Close popup when clicking outside or on scroll
   function handleContainerClick(event) {
     // Close popup if clicking outside a person chip
-    if (visiblePersonInfo && !event.target.closest('.person-info-wrapper')) {
+    if (visiblePersonInfo && !event.target.closest(".person-info-wrapper")) {
       visiblePersonInfo = null;
     }
   }
@@ -68,7 +68,7 @@
   // Uses a static lookup map generated from scripts/icon_categories.py — tree-shakeable.
   // Unknown icon strings return null (graceful fallback).
   function resolveIconPath(iconName) {
-    if (!iconName || typeof iconName !== 'string') return null;
+    if (!iconName || typeof iconName !== "string") return null;
     return mdiIconMap[iconName] ?? null;
   }
 
@@ -77,14 +77,14 @@
     if (!eventClass?.type) return null;
 
     switch (eventClass.type) {
-      case 'invention':
+      case "invention":
         return mdiLightbulbOnOutline;
-      case 'marriage_partnership':
+      case "marriage_partnership":
         return mdiRing;
-      case 'publication':
+      case "publication":
         return mdiBook;
-      case 'migration':
-        return resolveIconPath('mdi-map-marker-multiple');
+      case "migration":
+        return resolveIconPath("mdi-map-marker-multiple");
       default:
         return null;
     }
@@ -148,7 +148,10 @@
         // Find the chapter whose date range contains this event
         let assignedChapter = null;
         for (const chapter of chapters) {
-          if (event.date >= chapter.date_start && event.date <= chapter.date_end) {
+          if (
+            event.date >= chapter.date_start &&
+            event.date <= chapter.date_end
+          ) {
             assignedChapter = chapter.id;
             break;
           }
@@ -177,8 +180,8 @@
 
     // Convert to array and sort by chapter date (or event date for standalone groups)
     const result = Array.from(groups.values()).sort((a, b) => {
-      const dateA = a.chapter ? a.chapter.date_start : (a.sortDate || '9999');
-      const dateB = b.chapter ? b.chapter.date_start : (b.sortDate || '9999');
+      const dateA = a.chapter ? a.chapter.date_start : a.sortDate || "9999";
+      const dateB = b.chapter ? b.chapter.date_start : b.sortDate || "9999";
       return dateA.localeCompare(dateB);
     });
 
@@ -199,23 +202,23 @@
     for (let i = 1; i < slides.length; i++) {
       const slide = slides[i];
 
-      if (slide.type === 'chapter') {
+      if (slide.type === "chapter") {
         // Chapter slide gets a chapter dot
         items.push({
-          type: 'chapter',
+          type: "chapter",
           chapter: slide.chapter,
           slideIndex: i,
         });
-      } else if (slide.type === 'conclusion') {
+      } else if (slide.type === "conclusion") {
         // Conclusion slide gets a conclusion dot
         items.push({
-          type: 'conclusion',
+          type: "conclusion",
           slideIndex: i,
         });
       } else {
         // Event slide gets an event dot (event slides don't have type property)
         items.push({
-          type: 'event',
+          type: "event",
           index: eventCount,
           slideIndex: i,
         });
@@ -231,12 +234,15 @@
     // First check if we're on a chapter slide
     if (activeIndex > 0 && activeIndex < slides.length) {
       const currentSlide = slides[activeIndex];
-      if (currentSlide?.type === 'chapter' && currentSlide?.chapter) {
+      if (currentSlide?.type === "chapter" && currentSlide?.chapter) {
         return currentSlide.chapter;
       }
       // Check if we're on a conclusion slide
-      if (currentSlide?.type === 'conclusion') {
-        return { id: 'conclusion', headline: $_("conclusion.title").toUpperCase() };
+      if (currentSlide?.type === "conclusion") {
+        return {
+          id: "conclusion",
+          headline: $_("conclusion.title").toUpperCase(),
+        };
       }
     }
 
@@ -254,7 +260,6 @@
     const chapter = chapters.find((ch) => ch.id === currentEvent.chapter);
     return chapter || null;
   })();
-
 
   // Calculate horizontal offset for chapter indicator based on active slide position
   $: chapterIndicatorOffset = (() => {
@@ -394,7 +399,15 @@
                 type="button"
                 class="dot square"
                 class:active={activeIndex === 0}
-                style="transform: scale({activeIndex === 0 ? 1.6 : (activeEventIndex === 0 ? 1.3 : 1.0)}); z-index: {activeIndex === 0 ? 16 : (activeEventIndex === 0 ? 13 : 10)};"
+                style="transform: scale({activeIndex === 0
+                  ? 1.6
+                  : activeEventIndex === 0
+                    ? 1.3
+                    : 1.0}); z-index: {activeIndex === 0
+                  ? 16
+                  : activeEventIndex === 0
+                    ? 13
+                    : 10};"
                 on:click={() => onScrollToIndex(0)}
                 aria-label={$_("timeline.show_overview")}
                 aria-current={activeIndex === 0 ? "true" : undefined}
@@ -410,54 +423,108 @@
               </button>
             </div>
             {#each timelineItems as item}
-              {#if item.type === 'chapter'}
+              {#if item.type === "chapter"}
                 {@const chapterSlideIndex = item.slideIndex}
                 {@const distance = Math.abs(chapterSlideIndex - activeIndex)}
-                {@const scale = distance === 0 ? 1.6 : (distance === 1 ? 1.3 : (distance === 2 ? 1.15 : 1.0))}
-                {@const translate = distance === 0 ? 0 : (Math.abs(distance) === 1 ? (chapterSlideIndex - activeIndex) * 0.3 : (Math.abs(distance) === 2 ? (chapterSlideIndex - activeIndex) * 0.15 : 0))}
+                {@const scale =
+                  distance === 0
+                    ? 1.6
+                    : distance === 1
+                      ? 1.3
+                      : distance === 2
+                        ? 1.15
+                        : 1.0}
+                {@const translate =
+                  distance === 0
+                    ? 0
+                    : Math.abs(distance) === 1
+                      ? (chapterSlideIndex - activeIndex) * 0.3
+                      : Math.abs(distance) === 2
+                        ? (chapterSlideIndex - activeIndex) * 0.15
+                        : 0}
                 <div class="dot-wrapper">
                   <button
                     type="button"
                     class="dot chapter-dot"
                     class:active={activeIndex === item.slideIndex}
-                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(scale * 10)};"
+                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
+                      scale * 10
+                    )};"
                     on:click={() => onGoToSlide(item.slideIndex)}
-                    aria-label={$_("timeline.go_to_chapter", { chapter: item.chapter.headline })}
-                    aria-current={activeIndex === item.slideIndex ? "true" : undefined}
+                    aria-label={$_("timeline.go_to_chapter", {
+                      chapter: item.chapter.headline,
+                    })}
+                    aria-current={activeIndex === item.slideIndex
+                      ? "true"
+                      : undefined}
                   >
                     <span class="dot-inner-chapter"></span>
                   </button>
                 </div>
-              {:else if item.type === 'conclusion'}
+              {:else if item.type === "conclusion"}
                 {@const conclusionSlideIndex = item.slideIndex}
                 {@const distance = Math.abs(conclusionSlideIndex - activeIndex)}
-                {@const scale = distance === 0 ? 1.6 : (distance === 1 ? 1.3 : (distance === 2 ? 1.15 : 1.0))}
-                {@const translate = distance === 0 ? 0 : (Math.abs(distance) === 1 ? (conclusionSlideIndex - activeIndex) * 0.3 : (Math.abs(distance) === 2 ? (conclusionSlideIndex - activeIndex) * 0.15 : 0))}
+                {@const scale =
+                  distance === 0
+                    ? 1.6
+                    : distance === 1
+                      ? 1.3
+                      : distance === 2
+                        ? 1.15
+                        : 1.0}
+                {@const translate =
+                  distance === 0
+                    ? 0
+                    : Math.abs(distance) === 1
+                      ? (conclusionSlideIndex - activeIndex) * 0.3
+                      : Math.abs(distance) === 2
+                        ? (conclusionSlideIndex - activeIndex) * 0.15
+                        : 0}
                 <div class="dot-wrapper">
                   <button
                     type="button"
                     class="dot conclusion-dot square"
                     class:active={activeIndex === item.slideIndex}
-                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(scale * 10)};"
+                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
+                      scale * 10
+                    )};"
                     on:click={() => onGoToSlide(item.slideIndex)}
                     aria-label={$_("timeline.go_to_conclusion")}
-                    aria-current={activeIndex === item.slideIndex ? "true" : undefined}
+                    aria-current={activeIndex === item.slideIndex
+                      ? "true"
+                      : undefined}
                   >
                     <span class="dot-inner-conclusion"></span>
                   </button>
                 </div>
-              {:else if item.type === 'event'}
+              {:else if item.type === "event"}
                 {@const idx = item.index}
                 {@const eventSlideIndex = item.slideIndex}
                 {@const distance = Math.abs(eventSlideIndex - activeIndex)}
-                {@const scale = distance === 0 ? 1.6 : (distance === 1 ? 1.3 : (distance === 2 ? 1.15 : 1.0))}
-                {@const translate = distance === 0 ? 0 : (Math.abs(distance) === 1 ? (eventSlideIndex - activeIndex) * 0.3 : (Math.abs(distance) === 2 ? (eventSlideIndex - activeIndex) * 0.15 : 0))}
+                {@const scale =
+                  distance === 0
+                    ? 1.6
+                    : distance === 1
+                      ? 1.3
+                      : distance === 2
+                        ? 1.15
+                        : 1.0}
+                {@const translate =
+                  distance === 0
+                    ? 0
+                    : Math.abs(distance) === 1
+                      ? (eventSlideIndex - activeIndex) * 0.3
+                      : Math.abs(distance) === 2
+                        ? (eventSlideIndex - activeIndex) * 0.15
+                        : 0}
                 <div class="dot-wrapper">
                   <button
                     type="button"
                     class="dot"
                     class:active={idx === activeEventIndex}
-                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(scale * 10)};"
+                    style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
+                      scale * 10
+                    )};"
                     on:click={() => onGoToEvent(idx)}
                     aria-label={`Show event ${idx + 1} of ${totalSlides}`}
                     aria-current={idx === activeEventIndex ? "true" : undefined}
@@ -506,7 +573,10 @@
                     class="chapter-indicator-label event-count-label"
                     transition:fade={{ duration: 300 }}
                   >
-                    {$_(`timeline.event_${totalSlides === 1 ? 'one' : 'other'}`, { count: totalSlides })}
+                    {$_(
+                      `timeline.event_${totalSlides === 1 ? "one" : "other"}`,
+                      { count: totalSlides }
+                    )}
                   </span>
                 {/if}
                 <svg
@@ -521,20 +591,26 @@
             </button>
           {:else}
             <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-            <div class="expanded-timeline-container" on:click={handleContainerClick}>
+            <div
+              class="expanded-timeline-container"
+              on:click={handleContainerClick}
+            >
               <div
                 class="timeline-item home-item clickable"
                 class:active={activeIndex === 0}
                 role="button"
                 tabindex="0"
                 on:click={() => onScrollToIndex(0)}
-                on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onScrollToIndex(0)}
+                on:keydown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && onScrollToIndex(0)}
               >
                 <button
                   type="button"
                   class="dot square"
                   class:active={activeIndex === 0}
-                  style="transform: scale({activeIndex === 0 ? 1.4 : 1.0}); transition: transform 0.25s ease;"
+                  style="transform: scale({activeIndex === 0
+                    ? 1.4
+                    : 1.0}); transition: transform 0.25s ease;"
                   on:click|stopPropagation={() => onScrollToIndex(0)}
                   aria-label={$_("timeline.show_overview")}
                   aria-current={activeIndex === 0 ? "true" : undefined}
@@ -556,17 +632,27 @@
               {#each groupedEvents as group}
                 {#if group.chapter}
                   {@const chapterAge = group.chapter.age_start ?? 0}
-                  {@const chapterPeople = getChapterPeople(group.chapter, egoNetwork)}
+                  {@const chapterPeople = getChapterPeople(
+                    group.chapter,
+                    egoNetwork
+                  )}
                   {@const chapterLocation = group.chapter.location}
-                  {@const chapterSlideIndex = slides.findIndex(s => s.type === 'chapter' && s.chapter.id === group.chapter.id)}
+                  {@const chapterSlideIndex = slides.findIndex(
+                    (s) =>
+                      s.type === "chapter" && s.chapter.id === group.chapter.id
+                  )}
                   <div
                     class="chapter-header clickable"
                     class:active={activeIndex === chapterSlideIndex}
                     style="--event-age: {chapterAge};"
                     role="button"
                     tabindex="0"
-                    on:click={() => chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
-                    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
+                    on:click={() =>
+                      chapterSlideIndex >= 0 && onGoToSlide(chapterSlideIndex)}
+                    on:keydown={(e) =>
+                      (e.key === "Enter" || e.key === " ") &&
+                      chapterSlideIndex >= 0 &&
+                      onGoToSlide(chapterSlideIndex)}
                   >
                     {#if chapterAge > 0}
                       <span class="age-line chapter-age-line"></span>
@@ -587,7 +673,9 @@
                             <div class="chapter-people-list">
                               {#each chapterPeople as person, personIdx (person.person_name)}
                                 {@const personKey = `chapter-${group.chapter.id}-${personIdx}`}
-                                {@const subcategory = getSubcategory(person.relationship_type)}
+                                {@const subcategory = getSubcategory(
+                                  person.relationship_type
+                                )}
                                 <PersonChip
                                   {person}
                                   {personKey}
@@ -612,7 +700,9 @@
                             >
                               <path d={mdiMapMarkerOutline} />
                             </svg>
-                            <span class="chapter-meta-text">{chapterLocation}</span>
+                            <span class="chapter-meta-text"
+                              >{chapterLocation}</span
+                            >
                           </div>
                         {/if}
                       </div>
@@ -634,7 +724,8 @@
                     role="button"
                     tabindex="0"
                     on:click={() => onGoToEvent(idx)}
-                    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onGoToEvent(idx)}
+                    on:keydown={(e) =>
+                      (e.key === "Enter" || e.key === " ") && onGoToEvent(idx)}
                   >
                     <div class="event-box">
                       {#if eventAge > 0}
@@ -644,7 +735,9 @@
                         type="button"
                         class="dot"
                         class:active={idx === activeEventIndex}
-                        style="transform: scale({idx === activeEventIndex ? 1.4 : 1.0}); transition: transform 0.25s ease;"
+                        style="transform: scale({idx === activeEventIndex
+                          ? 1.4
+                          : 1.0}); transition: transform 0.25s ease;"
                         on:click|stopPropagation={() => onGoToEvent(idx)}
                         aria-label={`Show event ${idx + 1} of ${totalSlides}`}
                         aria-current={idx === activeEventIndex
@@ -673,7 +766,9 @@
                               {#if eventYear}
                                 <span class="metadata-separator">•</span>
                               {/if}
-                              <span class="age-label">{$_("story.age", { age: eventAge })}</span>
+                              <span class="age-label"
+                                >{$_("story.age", { age: eventAge })}</span
+                              >
                             {/if}
                           </span>
                         {/if}
@@ -685,7 +780,7 @@
               {/each}
 
               <!-- Add conclusion at the end of expanded timeline if it exists -->
-              {#if slides[slides.length - 1]?.type === 'conclusion'}
+              {#if slides[slides.length - 1]?.type === "conclusion"}
                 {@const conclusionSlideIndex = slides.length - 1}
                 <div
                   class="timeline-item home-item conclusion-item"
@@ -693,22 +788,32 @@
                   role="button"
                   tabindex="0"
                   on:click={() => onGoToSlide(conclusionSlideIndex)}
-                  on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onGoToSlide(conclusionSlideIndex)}
+                  on:keydown={(e) =>
+                    (e.key === "Enter" || e.key === " ") &&
+                    onGoToSlide(conclusionSlideIndex)}
                 >
                   <button
                     type="button"
                     class="dot square conclusion-dot"
                     class:active={activeIndex === conclusionSlideIndex}
-                    style="transform: scale({activeIndex === conclusionSlideIndex ? 1.4 : 1.0}); transition: transform 0.25s ease;"
-                    on:click|stopPropagation={() => onGoToSlide(conclusionSlideIndex)}
+                    style="transform: scale({activeIndex ===
+                    conclusionSlideIndex
+                      ? 1.4
+                      : 1.0}); transition: transform 0.25s ease;"
+                    on:click|stopPropagation={() =>
+                      onGoToSlide(conclusionSlideIndex)}
                     aria-label={$_("timeline.show_conclusion")}
-                    aria-current={activeIndex === conclusionSlideIndex ? "true" : undefined}
+                    aria-current={activeIndex === conclusionSlideIndex
+                      ? "true"
+                      : undefined}
                     tabindex="-1"
                   >
                     <span class="dot-inner-conclusion"></span>
                   </button>
                   <div class="timeline-content">
-                    <span class="event-title">{$_("conclusion.title").toUpperCase()}</span>
+                    <span class="event-title"
+                      >{$_("conclusion.title").toUpperCase()}</span
+                    >
                   </div>
                 </div>
               {/if}
@@ -949,7 +1054,6 @@
   .dot-wrapper {
     display: contents;
   }
-
 
   /* Chapter dots - smaller than event dots */
   .dot.chapter-dot {
@@ -1533,14 +1637,16 @@
   }
 
   /* When no chapter and not showing event count, make it a compact icon-only button */
-  .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
+  .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+    .chapter-indicator-content {
     padding: 0.6rem;
     border-radius: 50%;
     width: 3.25rem;
     height: 3.25rem;
   }
 
-  .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
+  .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+    .chapter-chevron {
     width: 1.5rem;
     height: 1.5rem;
   }
@@ -1638,13 +1744,15 @@
       height: 1rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+      .chapter-indicator-content {
       width: 3rem;
       height: 3rem;
       padding: 0.5rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+      .chapter-chevron {
       width: 1.4rem;
       height: 1.4rem;
     }
@@ -1673,13 +1781,15 @@
       height: 0.95rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+      .chapter-indicator-content {
       width: 2.75rem;
       height: 2.75rem;
       padding: 0.45rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+      .chapter-chevron {
       width: 1.1rem;
       height: 1.1rem;
     }
@@ -1724,13 +1834,15 @@
       height: 0.85rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-indicator-content {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+      .chapter-indicator-content {
       width: 2.25rem;
       height: 2.25rem;
       padding: 0.35rem;
     }
 
-    .chapter-indicator-box:not(.has-chapter):not(.show-event-count) .chapter-chevron {
+    .chapter-indicator-box:not(.has-chapter):not(.show-event-count)
+      .chapter-chevron {
       width: 1rem;
       height: 1rem;
     }

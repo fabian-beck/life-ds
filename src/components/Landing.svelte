@@ -41,13 +41,19 @@
   // Update sticky header height when it appears/changes
   $: if (stickyHeaderElement && showStickyHeader) {
     stickyHeaderHeight = stickyHeaderElement.offsetHeight;
-    if (typeof document !== 'undefined') {
-      document.documentElement.style.setProperty('--landing-sticky-header-height', `${stickyHeaderHeight}px`);
+    if (typeof document !== "undefined") {
+      document.documentElement.style.setProperty(
+        "--landing-sticky-header-height",
+        `${stickyHeaderHeight}px`
+      );
     }
   } else {
     stickyHeaderHeight = 0;
-    if (typeof document !== 'undefined') {
-      document.documentElement.style.setProperty('--landing-sticky-header-height', '0px');
+    if (typeof document !== "undefined") {
+      document.documentElement.style.setProperty(
+        "--landing-sticky-header-height",
+        "0px"
+      );
     }
   }
 
@@ -209,7 +215,9 @@
 
     // Apply meta story filter first (takes precedence)
     if (activeMetaStoryFilter) {
-      const metaStoryPersonIds = new Set(activeMetaStoryFilter.person_ids || []);
+      const metaStoryPersonIds = new Set(
+        activeMetaStoryFilter.person_ids || []
+      );
       result = result.filter((entry) => metaStoryPersonIds.has(entry.id));
     } else {
       // Apply tag filters only if no meta story filter is active
@@ -372,7 +380,7 @@
         const [base, path] = parts;
         const filename = path.split("/").pop();
         // For SVG files, append .png to get the rasterized version
-        const thumbFilename = filename.toLowerCase().endsWith('.svg')
+        const thumbFilename = filename.toLowerCase().endsWith(".svg")
           ? `${filename}.png`
           : filename;
         return `${base}/wikipedia/commons/thumb/${path}/${targetWidth}px-${thumbFilename}`;
@@ -572,8 +580,17 @@
         on:click={() => (showMap = !showMap)}
         aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 19l-6-2.11V5l6 2.11M20.5 3c-.17 0-.34.03-.5.09L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5.17 0 .34-.03.5-.09L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M15 19l-6-2.11V5l6 2.11M20.5 3c-.17 0-.34.03-.5.09L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5.17 0 .34-.03.5-.09L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"
+          />
         </svg>
         <span>{showMap ? $_("landing.hide_map") : $_("landing.show_map")}</span>
       </button>
@@ -587,7 +604,9 @@
             {getStyle}
             onNavigate={(detail) => {
               const lang = $currentLanguage;
-              push(`/${lang}/story/${detail.personId}?event=${detail.eventIndex}`);
+              push(
+                `/${lang}/story/${detail.personId}?event=${detail.eventIndex}`
+              );
             }}
           />
         {/await}

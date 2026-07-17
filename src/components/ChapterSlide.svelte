@@ -2,7 +2,11 @@
   import { mdiMapMarkerOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import { _ } from "../stores/language";
-  import { getSubcategory, getChapterPeople, formatSingleDate } from "../utils/storyHelpers.js";
+  import {
+    getSubcategory,
+    getChapterPeople,
+    formatSingleDate,
+  } from "../utils/storyHelpers.js";
 
   export let chapter = {};
   export let personStyle = null;
@@ -27,8 +31,8 @@
 
     // Date range - always use year precision for chapters
     // Extract year from date strings (e.g., "1912-06-23" -> "1912")
-    const startYear = start ? start.split('-')[0] : null;
-    const endYear = end ? end.split('-')[0] : null;
+    const startYear = start ? start.split("-")[0] : null;
+    const endYear = end ? end.split("-")[0] : null;
 
     const startLabel = formatSingleDate(startYear, "year", formatters);
     const endLabel = formatSingleDate(endYear, "year", formatters);
@@ -79,7 +83,8 @@
 <div
   class="content chapter-content"
   on:click={handleClickOutside}
-  on:keydown={(e) => e.key === 'Escape' && visiblePersonInfo && (visiblePersonInfo = null)}
+  on:keydown={(e) =>
+    e.key === "Escape" && visiblePersonInfo && (visiblePersonInfo = null)}
   role="presentation"
 >
   <div class="chapter-box">
@@ -109,11 +114,7 @@
         {/if}
         {#if chapter.location}
           <span class="chapter-location">
-            <svg
-              class="location-icon"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
+            <svg class="location-icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d={mdiMapMarkerOutline} />
             </svg>
             {chapter.location}
@@ -162,7 +163,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
-    padding-top: clamp(0.0rem, 8vh, 10rem);
+    padding-top: clamp(0rem, 8vh, 10rem);
   }
 
   .chapter-box {

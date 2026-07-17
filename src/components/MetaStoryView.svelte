@@ -7,7 +7,7 @@
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
-  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+  import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
   export let metaStoryData = null;
   export let personsRegistry = [];
@@ -47,9 +47,15 @@
       // Check if timelineContainer still exists (component might have been destroyed)
       if (!timelineContainer) return;
 
-      const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+      const actualTimelineContainer = timelineContainer.querySelector(
+        ".meta-timeline-container"
+      );
       if (actualTimelineContainer) {
-        actualTimelineContainer.addEventListener('scroll', handleTimelineScroll, { passive: true });
+        actualTimelineContainer.addEventListener(
+          "scroll",
+          handleTimelineScroll,
+          { passive: true }
+        );
         timelineScrollListenerAttached = true;
       }
     }, 100);
@@ -61,7 +67,9 @@
     }
 
     // Find the actual scrollable .meta-timeline-container inside MetaStoryTimeline
-    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    const actualTimelineContainer = timelineContainer.querySelector(
+      ".meta-timeline-container"
+    );
 
     if (!actualTimelineContainer) {
       return;
@@ -79,14 +87,20 @@
     handleHeaderVisibility();
 
     // Only skip if the last update came from horizontal scroll or navigation
-    if (isUpdatingScroll && (lastScrollOrigin === 'horizontal' || lastScrollOrigin === 'navigation')) return;
+    if (
+      isUpdatingScroll &&
+      (lastScrollOrigin === "horizontal" || lastScrollOrigin === "navigation")
+    )
+      return;
 
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       return;
     }
 
     // Find the actual scrollable container
-    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    const actualTimelineContainer = timelineContainer.querySelector(
+      ".meta-timeline-container"
+    );
     if (!actualTimelineContainer) return;
 
     const rect = scrollProxyContainer.getBoundingClientRect();
@@ -105,12 +119,14 @@
       scrollProgress = currentScrollProgress; // Update for scroll indicator
 
       // Apply to timeline horizontal scroll
-      const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+      const maxTimelineScroll =
+        actualTimelineContainer.scrollWidth -
+        actualTimelineContainer.clientWidth;
       const newScrollLeft = currentScrollProgress * maxTimelineScroll;
 
       // Update timeline scroll directly without debouncing
       isUpdatingScroll = true;
-      lastScrollOrigin = 'vertical'; // Track that this update came from vertical scroll
+      lastScrollOrigin = "vertical"; // Track that this update came from vertical scroll
       actualTimelineContainer.scrollLeft = newScrollLeft;
       lastTimelineScrollLeft = newScrollLeft; // Track expected position
 
@@ -122,8 +138,13 @@
       isScrollLockActive = false;
       // Update scroll progress based on actual timeline scroll when not in lock zone
       if (actualTimelineContainer) {
-        const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
-        scrollProgress = maxTimelineScroll > 0 ? actualTimelineContainer.scrollLeft / maxTimelineScroll : 0;
+        const maxTimelineScroll =
+          actualTimelineContainer.scrollWidth -
+          actualTimelineContainer.clientWidth;
+        scrollProgress =
+          maxTimelineScroll > 0
+            ? actualTimelineContainer.scrollLeft / maxTimelineScroll
+            : 0;
       }
     }
   }
@@ -131,13 +152,19 @@
   // Handle horizontal timeline scroll and sync to vertical scroll position
   function handleTimelineScroll() {
     // Only skip if the last update came from vertical scroll or navigation
-    if (isUpdatingScroll && (lastScrollOrigin === 'vertical' || lastScrollOrigin === 'navigation')) return;
+    if (
+      isUpdatingScroll &&
+      (lastScrollOrigin === "vertical" || lastScrollOrigin === "navigation")
+    )
+      return;
 
     if (!scrollProxyContainer || !timelineContainer || proxyHeight === 0) {
       return;
     }
 
-    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    const actualTimelineContainer = timelineContainer.querySelector(
+      ".meta-timeline-container"
+    );
     if (!actualTimelineContainer) return;
 
     const currentScrollLeft = actualTimelineContainer.scrollLeft;
@@ -155,25 +182,28 @@
     }
 
     // User is manually scrolling timeline, sync to vertical scroll immediately for smooth momentum
-    const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
-    const currentScrollProgress = maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
+    const maxTimelineScroll =
+      actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+    const currentScrollProgress =
+      maxTimelineScroll > 0 ? currentScrollLeft / maxTimelineScroll : 0;
     scrollProgress = currentScrollProgress; // Update for scroll indicator
 
     // Calculate target vertical scroll position
     const rect = scrollProxyContainer.getBoundingClientRect();
     const proxyContainerTop = rect.top + window.scrollY;
-    const targetScrollY = proxyContainerTop + (currentScrollProgress * proxyHeight);
+    const targetScrollY =
+      proxyContainerTop + currentScrollProgress * proxyHeight;
 
     // Set flag BEFORE scrolling to prevent any feedback
     isUpdatingScroll = true;
-    lastScrollOrigin = 'horizontal'; // Track that this update came from horizontal scroll
+    lastScrollOrigin = "horizontal"; // Track that this update came from horizontal scroll
     lastTimelineScrollLeft = currentScrollLeft; // Update tracked position
 
     // Use scrollTo with instant behavior to avoid animation delays
     window.scrollTo({
       top: targetScrollY,
       left: 0,
-      behavior: 'instant'
+      behavior: "instant",
     });
 
     // Reset flag after a brief delay to ensure scroll event has been processed
@@ -233,13 +263,19 @@
   $: if (stickyHeaderElement && showStickyHeader) {
     stickyHeaderHeight = stickyHeaderElement.offsetHeight;
     // Update CSS custom property for AI button positioning
-    if (typeof document !== 'undefined') {
-      document.documentElement.style.setProperty('--sticky-header-height', `${stickyHeaderHeight}px`);
+    if (typeof document !== "undefined") {
+      document.documentElement.style.setProperty(
+        "--sticky-header-height",
+        `${stickyHeaderHeight}px`
+      );
     }
   } else {
     stickyHeaderHeight = 0;
-    if (typeof document !== 'undefined') {
-      document.documentElement.style.setProperty('--sticky-header-height', '0px');
+    if (typeof document !== "undefined") {
+      document.documentElement.style.setProperty(
+        "--sticky-header-height",
+        "0px"
+      );
     }
   }
 
@@ -257,7 +293,8 @@
     const nextYear = metaTimelineComponent.getNextYear?.();
     if (nextYear === null) return;
 
-    const targetScrollProgress = metaTimelineComponent.yearToScrollProgress?.(nextYear);
+    const targetScrollProgress =
+      metaTimelineComponent.yearToScrollProgress?.(nextYear);
     if (targetScrollProgress === null) return;
 
     navigateToScrollProgress(targetScrollProgress);
@@ -269,7 +306,8 @@
     const prevYear = metaTimelineComponent.getPrevYear?.();
     if (prevYear === null) return;
 
-    const targetScrollProgress = metaTimelineComponent.yearToScrollProgress?.(prevYear);
+    const targetScrollProgress =
+      metaTimelineComponent.yearToScrollProgress?.(prevYear);
     if (targetScrollProgress === null) return;
 
     navigateToScrollProgress(targetScrollProgress);
@@ -285,21 +323,25 @@
     }
 
     // Find the actual timeline container
-    const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+    const actualTimelineContainer = timelineContainer.querySelector(
+      ".meta-timeline-container"
+    );
     if (!actualTimelineContainer) return;
 
     // Calculate target vertical scroll position
     const rect = scrollProxyContainer.getBoundingClientRect();
     const proxyContainerTop = rect.top + window.scrollY;
-    const targetScrollY = proxyContainerTop + (targetScrollProgress * proxyHeight);
+    const targetScrollY =
+      proxyContainerTop + targetScrollProgress * proxyHeight;
 
     // Calculate target horizontal scroll position for timeline
-    const maxTimelineScroll = actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
+    const maxTimelineScroll =
+      actualTimelineContainer.scrollWidth - actualTimelineContainer.clientWidth;
     const targetScrollLeft = targetScrollProgress * maxTimelineScroll;
 
     // Set flag to prevent feedback loops
     isUpdatingScroll = true;
-    lastScrollOrigin = 'navigation';
+    lastScrollOrigin = "navigation";
 
     // Update scroll progress and timeline horizontal scroll immediately for visual feedback
     scrollProgress = targetScrollProgress;
@@ -310,7 +352,7 @@
     window.scrollTo({
       top: targetScrollY,
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
 
     // Reset flag after smooth scroll completes (~500ms)
@@ -328,17 +370,19 @@
 
     // Don't intercept when typing in input fields
     const activeElement = document.activeElement;
-    if (activeElement?.tagName === 'INPUT' ||
-        activeElement?.tagName === 'TEXTAREA' ||
-        activeElement?.isContentEditable) {
+    if (
+      activeElement?.tagName === "INPUT" ||
+      activeElement?.tagName === "TEXTAREA" ||
+      activeElement?.isContentEditable
+    ) {
       return;
     }
 
-    if (event.key === 'ArrowLeft') {
+    if (event.key === "ArrowLeft") {
       event.preventDefault();
       event.stopPropagation();
       handlePrevYear();
-    } else if (event.key === 'ArrowRight') {
+    } else if (event.key === "ArrowRight") {
       event.preventDefault();
       event.stopPropagation();
       handleNextYear();
@@ -346,28 +390,40 @@
   }
 
   onMount(() => {
-    window.addEventListener('keydown', handleMetaTimelineKeydown);
-    window.addEventListener('scroll', handleVerticalScroll, { passive: true });
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("keydown", handleMetaTimelineKeydown);
+    window.addEventListener("scroll", handleVerticalScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
 
     // Timeline scroll listener is now attached reactively (see reactive statement above)
     // Wheel listener for preventing native horizontal scroll
     if (timelineContainer) {
-      timelineContainer.addEventListener('wheel', preventNativeHorizontalScroll, { passive: false });
+      timelineContainer.addEventListener(
+        "wheel",
+        preventNativeHorizontalScroll,
+        { passive: false }
+      );
     }
   });
 
   onDestroy(() => {
-    window.removeEventListener('keydown', handleMetaTimelineKeydown);
-    window.removeEventListener('scroll', handleVerticalScroll);
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("keydown", handleMetaTimelineKeydown);
+    window.removeEventListener("scroll", handleVerticalScroll);
+    window.removeEventListener("resize", handleResize);
 
     if (timelineContainer) {
-      const actualTimelineContainer = timelineContainer.querySelector('.meta-timeline-container');
+      const actualTimelineContainer = timelineContainer.querySelector(
+        ".meta-timeline-container"
+      );
       if (actualTimelineContainer && timelineScrollListenerAttached) {
-        actualTimelineContainer.removeEventListener('scroll', handleTimelineScroll);
+        actualTimelineContainer.removeEventListener(
+          "scroll",
+          handleTimelineScroll
+        );
       }
-      timelineContainer.removeEventListener('wheel', preventNativeHorizontalScroll);
+      timelineContainer.removeEventListener(
+        "wheel",
+        preventNativeHorizontalScroll
+      );
     }
   });
 </script>
@@ -380,20 +436,18 @@
     <!-- Sticky header - appears when scrolling down -->
     {#if showStickyHeader}
       <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
-        <header
-          class="meta-sticky-header"
-          bind:this={stickyHeaderElement}
-        >
+        <header class="meta-sticky-header" bind:this={stickyHeaderElement}>
           <div class="sticky-compact-info">
             <span class="sticky-name">{metaStoryData.meta_story.title}</span>
             <span class="separator">·</span>
             <span class="sticky-years">
-              {metaStoryData.meta_story.date_range_start}–{metaStoryData.meta_story.date_range_end}
+              {metaStoryData.meta_story.date_range_start}–{metaStoryData
+                .meta_story.date_range_end}
             </span>
             <CloseButton
               variant="light"
               size="responsive"
-              ariaLabel={$_('meta_story.back_to_stories')}
+              ariaLabel={$_("meta_story.back_to_stories")}
               on:click={backToLanding}
               class="close-meta-story"
             />
@@ -416,16 +470,16 @@
           variant="light"
           size="medium"
           position="absolute"
-          ariaLabel={$_('meta_story.back_to_stories')}
+          ariaLabel={$_("meta_story.back_to_stories")}
           on:click={backToLanding}
         />
       </div>
       <h1>{metaStoryData.meta_story.title}</h1>
       <p class="tagline">{metaStoryData.meta_story.tagline}</p>
       <p class="date-range">
-        {$_('meta_story.date_range', {
+        {$_("meta_story.date_range", {
           start: metaStoryData.meta_story.date_range_start,
-          end: metaStoryData.meta_story.date_range_end
+          end: metaStoryData.meta_story.date_range_end,
         })}
       </p>
       <p class="description">{metaStoryData.meta_story.description}</p>
@@ -434,24 +488,31 @@
     <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
     {#if metaStoryData.chapters?.length}
       <section class="chapters-section">
-        <h2>{$_('meta_story.chapters_heading')}</h2>
+        <h2>{$_("meta_story.chapters_heading")}</h2>
 
         <div
           class="scroll-proxy-container"
           bind:this={scrollProxyContainer}
-          style="height: {proxyHeight + (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
+          style="height: {proxyHeight +
+            (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
         >
-          <div class="timeline-sticky-wrapper" style="top: {stickyHeaderHeight}px;">
-            <div class="timeline-horizontal-container" bind:this={timelineContainer}>
+          <div
+            class="timeline-sticky-wrapper"
+            style="top: {stickyHeaderHeight}px;"
+          >
+            <div
+              class="timeline-horizontal-container"
+              bind:this={timelineContainer}
+            >
               <MetaStoryTimeline
                 bind:this={metaTimelineComponent}
                 metaStoryId={metaStoryData.meta_story.id}
                 chapters={metaStoryData.chapters}
-                personsRegistry={personsRegistry}
+                {personsRegistry}
                 subtopics={metaStoryData.subtopics}
-                scrollProgress={scrollProgress}
+                {scrollProgress}
                 isSticky={isScrollLockActive}
-                stickyHeaderHeight={stickyHeaderHeight}
+                {stickyHeaderHeight}
               />
             </div>
 
@@ -462,7 +523,7 @@
                 class="timeline-nav-btn prev"
                 on:click={handlePrevYear}
                 disabled={!canNavigatePrev}
-                aria-label={$_('meta_story.prev_year')}
+                aria-label={$_("meta_story.prev_year")}
               >
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
                   <path d={mdiChevronLeft} />
@@ -474,7 +535,7 @@
                 class="timeline-nav-btn next"
                 on:click={handleNextYear}
                 disabled={!canNavigateNext}
-                aria-label={$_('meta_story.next_year')}
+                aria-label={$_("meta_story.next_year")}
               >
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
                   <path d={mdiChevronRight} />
@@ -489,7 +550,7 @@
     <!-- Conclusion section -->
     {#if metaStoryData.conclusion}
       <section class="conclusion">
-        <h2>{$_('meta_story.conclusion_heading')}</h2>
+        <h2>{$_("meta_story.conclusion_heading")}</h2>
         <p>{metaStoryData.conclusion}</p>
       </section>
     {/if}
@@ -504,7 +565,7 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem 1rem;
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-family: var(--body-font, "IBM Plex Sans", sans-serif);
   }
 
   /* Sticky header group - wrapper for synchronized fade transition */
@@ -610,7 +671,7 @@
   }
 
   h1 {
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
@@ -637,7 +698,7 @@
   }
 
   h2 {
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     font-size: 1.875rem;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid rgba(56, 189, 248, 0.3);

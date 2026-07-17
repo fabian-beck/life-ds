@@ -5,7 +5,11 @@
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
   import { _ } from "../stores/language";
-  import { isCoordinate, parseHexColor, rgbaFromHex } from "../utils/storyHelpers.js";
+  import {
+    isCoordinate,
+    parseHexColor,
+    rgbaFromHex,
+  } from "../utils/storyHelpers.js";
 
   export let activeCoordinates = null;
   export let allActiveCoordinates = [];
@@ -45,7 +49,9 @@
 
   async function resolvePmtilesUrl() {
     if (basemapResolved) return pmtilesUrl;
-    const candidates = [...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean))];
+    const candidates = [
+      ...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean)),
+    ];
 
     // Use Promise.any to test URLs in parallel instead of sequential await
     const results = await Promise.allSettled(
@@ -57,7 +63,7 @@
     );
 
     // Find first successful result
-    const successfulResult = results.find(r => r.status === 'fulfilled');
+    const successfulResult = results.find((r) => r.status === "fulfilled");
     if (successfulResult) {
       pmtilesUrl = successfulResult.value;
       basemapError = null;
@@ -117,7 +123,10 @@
     return JSON.parse(JSON.stringify(basemapStyleCache));
   }
 
-  function createMarkerElement(color, { opacity = 1, size = 14, label = null, lat = null, primary = false } = {}) {
+  function createMarkerElement(
+    color,
+    { opacity = 1, size = 14, label = null, lat = null, primary = false } = {}
+  ) {
     const container = document.createElement("div");
     container.className = "story-map-marker-container";
 
@@ -223,7 +232,13 @@
     };
   }
 
-  function getOptimalPosition(label, lat, mapRect, allMarkerBounds, ownMarkerBounds) {
+  function getOptimalPosition(
+    label,
+    lat,
+    mapRect,
+    allMarkerBounds,
+    ownMarkerBounds
+  ) {
     // Try both positions and pick the one that:
     // 1. Doesn't clip the edge
     // 2. Doesn't overlap with other markers (excluding own marker)
@@ -244,21 +259,28 @@
     const altEdge = isNearMapEdge(altBounds, mapRect);
 
     // Check marker overlaps for both positions (exclude own marker)
-    const otherMarkers = allMarkerBounds.filter(m =>
-      !ownMarkerBounds ||
-      Math.abs(m.left - ownMarkerBounds.left) > 1 ||
-      Math.abs(m.top - ownMarkerBounds.top) > 1
+    const otherMarkers = allMarkerBounds.filter(
+      (m) =>
+        !ownMarkerBounds ||
+        Math.abs(m.left - ownMarkerBounds.left) > 1 ||
+        Math.abs(m.top - ownMarkerBounds.top) > 1
     );
 
-    const preferredOverlapsMarker = otherMarkers.some(m => rectsOverlap(preferredBounds, m, 4));
-    const altOverlapsMarker = otherMarkers.some(m => rectsOverlap(altBounds, m, 4));
+    const preferredOverlapsMarker = otherMarkers.some((m) =>
+      rectsOverlap(preferredBounds, m, 4)
+    );
+    const altOverlapsMarker = otherMarkers.some((m) =>
+      rectsOverlap(altBounds, m, 4)
+    );
 
     // Score each position (lower is better)
     let preferredScore = 0;
     let altScore = 0;
 
-    if (preferredPosition === "top" && preferredEdge.nearTop) preferredScore += 10;
-    if (preferredPosition === "bottom" && preferredEdge.nearBottom) preferredScore += 10;
+    if (preferredPosition === "top" && preferredEdge.nearTop)
+      preferredScore += 10;
+    if (preferredPosition === "bottom" && preferredEdge.nearBottom)
+      preferredScore += 10;
     if (preferredOverlapsMarker) preferredScore += 5;
 
     if (altPosition === "top" && altEdge.nearTop) altScore += 10;
@@ -269,12 +291,13 @@
   }
 
   function overlapsAnyMarker(labelBounds, allMarkerBounds, ownMarkerBounds) {
-    const otherMarkers = allMarkerBounds.filter(m =>
-      !ownMarkerBounds ||
-      Math.abs(m.left - ownMarkerBounds.left) > 1 ||
-      Math.abs(m.top - ownMarkerBounds.top) > 1
+    const otherMarkers = allMarkerBounds.filter(
+      (m) =>
+        !ownMarkerBounds ||
+        Math.abs(m.left - ownMarkerBounds.left) > 1 ||
+        Math.abs(m.top - ownMarkerBounds.top) > 1
     );
-    return otherMarkers.some(m => rectsOverlap(labelBounds, m, 4));
+    return otherMarkers.some((m) => rectsOverlap(labelBounds, m, 4));
   }
 
   function updateLabelPositions() {
@@ -314,7 +337,12 @@
 
     // Temporarily show labels for measurement
     labelData.forEach(({ label }) => {
-      label.classList.remove("story-map-label-top", "story-map-label-bottom", "story-map-label-visible", "story-map-label-hidden");
+      label.classList.remove(
+        "story-map-label-top",
+        "story-map-label-bottom",
+        "story-map-label-visible",
+        "story-map-label-hidden"
+      );
       label.classList.add("story-map-label-top"); // default for measurement
       label.style.visibility = "hidden";
       label.style.opacity = "1";
@@ -326,10 +354,19 @@
     // Second pass: assign optimal positions considering edges and markers (primary first)
     labelData.forEach((data) => {
       if (!isNaN(data.lat)) {
-        data.position = getOptimalPosition(data.label, data.lat, mapRect, allMarkerBounds, data.ownMarkerBounds);
+        data.position = getOptimalPosition(
+          data.label,
+          data.lat,
+          mapRect,
+          allMarkerBounds,
+          data.ownMarkerBounds
+        );
         data.alternatePosition = data.position === "top" ? "bottom" : "top";
       }
-      data.label.classList.remove("story-map-label-top", "story-map-label-bottom");
+      data.label.classList.remove(
+        "story-map-label-top",
+        "story-map-label-bottom"
+      );
       data.label.classList.add(`story-map-label-${data.position}`);
     });
 
@@ -340,17 +377,26 @@
     for (let i = 0; i < labelData.length; i++) {
       if (labelData[i].hidden) continue;
 
-      const currentBounds = getLabelBounds(labelData[i].label, labelData[i].position);
+      const currentBounds = getLabelBounds(
+        labelData[i].label,
+        labelData[i].position
+      );
 
       for (let j = i + 1; j < labelData.length; j++) {
         if (labelData[j].hidden) continue;
 
-        const otherBounds = getLabelBounds(labelData[j].label, labelData[j].position);
+        const otherBounds = getLabelBounds(
+          labelData[j].label,
+          labelData[j].position
+        );
 
         if (rectsOverlap(currentBounds, otherBounds)) {
           // Try flipping the later (non-primary) label to its alternate position
           const altPosition = labelData[j].alternatePosition;
-          labelData[j].label.classList.remove("story-map-label-top", "story-map-label-bottom");
+          labelData[j].label.classList.remove(
+            "story-map-label-top",
+            "story-map-label-bottom"
+          );
           labelData[j].label.classList.add(`story-map-label-${altPosition}`);
           labelData[j].position = altPosition;
 
@@ -360,15 +406,23 @@
 
           // Also check if new position clips the edge or overlaps markers
           const edgeCheck = isNearMapEdge(newBounds, mapRect);
-          const clipsEdge = (altPosition === "top" && edgeCheck.nearTop) ||
-                           (altPosition === "bottom" && edgeCheck.nearBottom);
-          const overlapsMarker = overlapsAnyMarker(newBounds, allMarkerBounds, labelData[j].ownMarkerBounds);
+          const clipsEdge =
+            (altPosition === "top" && edgeCheck.nearTop) ||
+            (altPosition === "bottom" && edgeCheck.nearBottom);
+          const overlapsMarker = overlapsAnyMarker(
+            newBounds,
+            allMarkerBounds,
+            labelData[j].ownMarkerBounds
+          );
 
           // Check against all previous labels
           let stillOverlaps = false;
           for (let k = 0; k <= i; k++) {
             if (labelData[k].hidden) continue;
-            const prevBounds = getLabelBounds(labelData[k].label, labelData[k].position);
+            const prevBounds = getLabelBounds(
+              labelData[k].label,
+              labelData[k].position
+            );
             if (rectsOverlap(newBounds, prevBounds)) {
               stillOverlaps = true;
               break;
@@ -411,16 +465,16 @@
     if (!mapInstance) return;
 
     // Remove layers first, then sources
-    if (mapInstance.getLayer('migration-path')) {
-      mapInstance.removeLayer('migration-path');
+    if (mapInstance.getLayer("migration-path")) {
+      mapInstance.removeLayer("migration-path");
     }
-    if (mapInstance.getSource('migration-route')) {
-      mapInstance.removeSource('migration-route');
+    if (mapInstance.getSource("migration-route")) {
+      mapInstance.removeSource("migration-route");
     }
 
     // Cancel animations
     if (window.migrationAnimations) {
-      window.migrationAnimations.forEach(id => cancelAnimationFrame(id));
+      window.migrationAnimations.forEach((id) => cancelAnimationFrame(id));
       window.migrationAnimations = [];
     }
 
@@ -491,7 +545,10 @@
 
     if (perpLength === 0) {
       // Points are identical, return straight line
-      return [[from.lon, from.lat], [to.lon, to.lat]];
+      return [
+        [from.lon, from.lat],
+        [to.lon, to.lat],
+      ];
     }
 
     // Normalize perpendicular vector
@@ -514,8 +571,8 @@
     }
 
     // Apply curve direction
-    const controlLon = midLon + (perpLon * arcHeight * curveDirection);
-    const controlLat = midLat + (perpLat * arcHeight * curveDirection);
+    const controlLon = midLon + perpLon * arcHeight * curveDirection;
+    const controlLat = midLat + perpLat * arcHeight * curveDirection;
 
     // Generate points along quadratic Bézier curve
     for (let i = 0; i <= numPoints; i++) {
@@ -523,12 +580,14 @@
       const oneMinusT = 1 - t;
 
       // Quadratic Bézier: B(t) = (1-t)²P₀ + 2(1-t)tP₁ + t²P₂
-      const lon = oneMinusT * oneMinusT * from.lon +
-                  2 * oneMinusT * t * controlLon +
-                  t * t * to.lon;
-      const lat = oneMinusT * oneMinusT * from.lat +
-                  2 * oneMinusT * t * controlLat +
-                  t * t * to.lat;
+      const lon =
+        oneMinusT * oneMinusT * from.lon +
+        2 * oneMinusT * t * controlLon +
+        t * t * to.lon;
+      const lat =
+        oneMinusT * oneMinusT * from.lat +
+        2 * oneMinusT * t * controlLat +
+        t * t * to.lat;
 
       coordinates.push([lon, lat]);
     }
@@ -541,7 +600,8 @@
     const fromPoint = mapInstance.project([from.lon, from.lat]);
     const toPoint = mapInstance.project([to.lon, to.lat]);
     const pixelDistance = Math.sqrt(
-      Math.pow(toPoint.x - fromPoint.x, 2) + Math.pow(toPoint.y - fromPoint.y, 2)
+      Math.pow(toPoint.x - fromPoint.x, 2) +
+        Math.pow(toPoint.y - fromPoint.y, 2)
     );
 
     // Dynamically calculate number of arrows based on pixel distance
@@ -599,7 +659,8 @@
 
       migrationPathMarkers.forEach(({ marker, coords }, i) => {
         const delay = (i / numArrows) * animationDuration;
-        const progress = ((elapsed - delay) % animationDuration) / animationDuration;
+        const progress =
+          ((elapsed - delay) % animationDuration) / animationDuration;
 
         if (progress >= 0) {
           // Calculate position along the curve with smooth interpolation
@@ -659,11 +720,15 @@
 
     if (!path || !path.from || !path.to) return;
 
-    const { from, to} = path;
+    const { from, to } = path;
 
     // Validate coordinates
-    if (!Number.isFinite(from.lon) || !Number.isFinite(from.lat) ||
-        !Number.isFinite(to.lon) || !Number.isFinite(to.lat)) {
+    if (
+      !Number.isFinite(from.lon) ||
+      !Number.isFinite(from.lat) ||
+      !Number.isFinite(to.lon) ||
+      !Number.isFinite(to.lat)
+    ) {
       return;
     }
 
@@ -672,35 +737,35 @@
 
     // Create GeoJSON for the migration path
     const lineGeoJSON = {
-      type: 'Feature',
+      type: "Feature",
       geometry: {
-        type: 'LineString',
-        coordinates: curvedCoordinates
+        type: "LineString",
+        coordinates: curvedCoordinates,
       },
-      properties: {}
+      properties: {},
     };
 
     // Add source
-    mapInstance.addSource('migration-route', {
-      type: 'geojson',
-      data: lineGeoJSON
+    mapInstance.addSource("migration-route", {
+      type: "geojson",
+      data: lineGeoJSON,
     });
 
     // Add line layer with more subtle styling
     mapInstance.addLayer({
-      id: 'migration-path',
-      type: 'line',
-      source: 'migration-route',
+      id: "migration-path",
+      type: "line",
+      source: "migration-route",
       layout: {
-        'line-join': 'round',
-        'line-cap': 'round'
+        "line-join": "round",
+        "line-cap": "round",
       },
       paint: {
-        'line-color': primaryMarkerColor,
-        'line-width': 2.5,
-        'line-opacity': 0.25,
-        'line-dasharray': [3, 2]
-      }
+        "line-color": primaryMarkerColor,
+        "line-width": 2.5,
+        "line-opacity": 0.25,
+        "line-dasharray": [3, 2],
+      },
     });
 
     // Defer arrow placement until after map animation completes (900ms + buffer)
@@ -727,9 +792,12 @@
     if (!mapInstance || !mapReady) return;
 
     const active = isCoordinate(activeCoord) ? activeCoord : null;
-    const allActive = Array.isArray(allActiveCoordinates) && allActiveCoordinates.length > 0
-      ? allActiveCoordinates.filter(isCoordinate)
-      : (active ? [active] : []);
+    const allActive =
+      Array.isArray(allActiveCoordinates) && allActiveCoordinates.length > 0
+        ? allActiveCoordinates.filter(isCoordinate)
+        : active
+          ? [active]
+          : [];
 
     const history = Array.isArray(historyCoords)
       ? historyCoords.filter(isCoordinate)
@@ -754,8 +822,9 @@
     }
 
     if (allActive.length > 0) {
-      const primaryIndex = allActive.findIndex(loc => loc.primary === true);
-      const primaryLoc = primaryIndex >= 0 ? allActive[primaryIndex] : allActive[0];
+      const primaryIndex = allActive.findIndex((loc) => loc.primary === true);
+      const primaryLoc =
+        primaryIndex >= 0 ? allActive[primaryIndex] : allActive[0];
 
       const secondaryLocs = allActive.filter((_loc, idx) =>
         primaryIndex >= 0 ? idx !== primaryIndex : idx > 0
@@ -786,7 +855,9 @@
         lat: primaryLoc.lat,
         primary: true,
       });
-      primaryElement.querySelector(".story-map-marker")?.classList.add("current");
+      primaryElement
+        .querySelector(".story-map-marker")
+        ?.classList.add("current");
       const primaryMarker = new maplibregl.Marker({
         element: primaryElement,
         anchor: "center",
@@ -796,13 +867,12 @@
       currentMarkers.push(primaryMarker);
     }
 
-    const positions = allActive.length > 0
-      ? [...allActive, ...history]
-      : history;
+    const positions =
+      allActive.length > 0 ? [...allActive, ...history] : history;
 
     // Additional validation to prevent NaN coordinates from reaching maplibre
     const validPositions = positions.filter(
-      coord => Number.isFinite(coord?.lon) && Number.isFinite(coord?.lat)
+      (coord) => Number.isFinite(coord?.lon) && Number.isFinite(coord?.lat)
     );
 
     if (validPositions.length === 0) {
@@ -845,9 +915,13 @@
     try {
       const ne = bounds.getNorthEast();
       const sw = bounds.getSouthWest();
-      if (!Number.isFinite(ne.lng) || !Number.isFinite(ne.lat) ||
-          !Number.isFinite(sw.lng) || !Number.isFinite(sw.lat)) {
-        console.warn('Invalid bounds detected, skipping fitBounds');
+      if (
+        !Number.isFinite(ne.lng) ||
+        !Number.isFinite(ne.lat) ||
+        !Number.isFinite(sw.lng) ||
+        !Number.isFinite(sw.lat)
+      ) {
+        console.warn("Invalid bounds detected, skipping fitBounds");
         return;
       }
 
@@ -882,7 +956,7 @@
         maxZoom: 5.5,
       });
     } catch (err) {
-      console.warn('fitBounds error:', err);
+      console.warn("fitBounds error:", err);
     }
   }
 

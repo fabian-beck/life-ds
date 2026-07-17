@@ -1,9 +1,9 @@
 <script>
-  import { onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
-  import { _ } from '../stores/language.js';
-  import { displayName } from '../utils/helpers.js';
-  import personStylesData from '../../data/person_styles.json';
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+  import { _ } from "../stores/language.js";
+  import { displayName } from "../utils/helpers.js";
+  import personStylesData from "../../data/person_styles.json";
 
   export let metaStoryId = null; // ID of the meta story (for navigation context)
   export let chapters = [];
@@ -18,7 +18,7 @@
 
   // Helper to get person data by ID
   function getPersonById(personId) {
-    return personsRegistry.find(p => p.id === personId);
+    return personsRegistry.find((p) => p.id === personId);
   }
 
   // Helper to get person style colors
@@ -26,10 +26,10 @@
     const style = personStyles[personId];
     if (!style) {
       return {
-        primary: '#38bdf8', // Default cyan
-        secondary: '#9a7bff', // Default purple
-        primaryRgb: '56, 189, 248',
-        secondaryRgb: '154, 123, 255'
+        primary: "#38bdf8", // Default cyan
+        secondary: "#9a7bff", // Default purple
+        primaryRgb: "56, 189, 248",
+        secondaryRgb: "154, 123, 255",
       };
     }
 
@@ -38,21 +38,21 @@
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result
         ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
-        : '255, 255, 255';
+        : "255, 255, 255";
     };
 
     return {
       primary: style.primary,
       secondary: style.secondary,
       primaryRgb: hexToRgb(style.primary),
-      secondaryRgb: hexToRgb(style.secondary)
+      secondaryRgb: hexToRgb(style.secondary),
     };
   }
 
   // Extract year from date string (YYYY-MM-DD or YYYY)
   function getYear(dateString) {
     if (!dateString) return null;
-    return parseInt(dateString.split('-')[0]);
+    return parseInt(dateString.split("-")[0]);
   }
 
   // Calculate timeline boundaries (min/max years from meta story persons' birth/death dates)
@@ -64,8 +64,8 @@
       }
 
       const personIds = new Set();
-      chapters.forEach(chapter => {
-        chapter.person_events?.forEach(event => {
+      chapters.forEach((chapter) => {
+        chapter.person_events?.forEach((event) => {
           personIds.add(event.person_id);
         });
       });
@@ -75,7 +75,7 @@
       }
 
       const years = [];
-      personIds.forEach(personId => {
+      personIds.forEach((personId) => {
         const person = getPersonById(personId);
         if (person) {
           const birthYear = getYear(person.birthDate);
@@ -91,14 +91,14 @@
 
       return {
         minYear: Math.min(...years),
-        maxYear: Math.max(...years)
+        maxYear: Math.max(...years),
       };
     }
 
     // Extract person IDs from subtopics
     const personIds = new Set();
-    subtopics.forEach(subtopic => {
-      subtopic.person_ids?.forEach(id => personIds.add(id));
+    subtopics.forEach((subtopic) => {
+      subtopic.person_ids?.forEach((id) => personIds.add(id));
     });
 
     if (personIds.size === 0) {
@@ -106,7 +106,7 @@
     }
 
     const years = [];
-    personIds.forEach(personId => {
+    personIds.forEach((personId) => {
       const person = getPersonById(personId);
       if (person) {
         const birthYear = getYear(person.birthDate);
@@ -122,7 +122,7 @@
 
     return {
       minYear: Math.min(...years),
-      maxYear: Math.max(...years)
+      maxYear: Math.max(...years),
     };
   })();
 
@@ -132,15 +132,14 @@
     return span > 0 ? span : 1; // Prevent division by zero
   })();
 
-
   // Define pixels per year scale
   const PIXELS_PER_YEAR = 15;
 
   // Gap compression constants
-  const GAP_THRESHOLD = 50;      // Minimum years to trigger compression
-  const GAP_PX_PER_YEAR = 1;     // Reduced scale inside compressed gaps (vs 15 for active)
-  const GAP_MIN_PX = 60;         // Minimum pixel width for any compressed gap
-  const BUFFER_YEARS = 5;        // Years of full-scale padding kept around each gap edge
+  const GAP_THRESHOLD = 50; // Minimum years to trigger compression
+  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 15 for active)
+  const GAP_MIN_PX = 60; // Minimum pixel width for any compressed gap
+  const BUFFER_YEARS = 5; // Years of full-scale padding kept around each gap edge
 
   // ============================================
   // GAP COMPRESSION: Segment-based non-linear mapping
@@ -154,11 +153,11 @@
     // Prefer subtopics as source of person IDs
     if (subtopics && subtopics.length > 0 && personsRegistry) {
       const personIds = new Set();
-      subtopics.forEach(subtopic => {
-        subtopic.person_ids?.forEach(id => personIds.add(id));
+      subtopics.forEach((subtopic) => {
+        subtopic.person_ids?.forEach((id) => personIds.add(id));
       });
 
-      personIds.forEach(personId => {
+      personIds.forEach((personId) => {
         const person = getPersonById(personId);
         if (!person) return;
         const birthYear = getYear(person.birthDate);
@@ -169,13 +168,13 @@
     } else if (chapters && chapters.length > 0 && personsRegistry) {
       // Fallback: extract from chapters
       const personIds = new Set();
-      chapters.forEach(chapter => {
-        chapter.person_events?.forEach(event => {
+      chapters.forEach((chapter) => {
+        chapter.person_events?.forEach((event) => {
           personIds.add(event.person_id);
         });
       });
 
-      personIds.forEach(personId => {
+      personIds.forEach((personId) => {
         const person = getPersonById(personId);
         if (!person) return;
         const birthYear = getYear(person.birthDate);
@@ -200,13 +199,15 @@
 
     if (intervals.length === 0) {
       // Single active segment spanning entire timeline
-      return [{
-        type: 'active',
-        yearStart: minYear,
-        yearEnd: maxYear,
-        pixelStart: 0,
-        pixelEnd: (maxYear - minYear) * PIXELS_PER_YEAR
-      }];
+      return [
+        {
+          type: "active",
+          yearStart: minYear,
+          yearEnd: maxYear,
+          pixelStart: 0,
+          pixelEnd: (maxYear - minYear) * PIXELS_PER_YEAR,
+        },
+      ];
     }
 
     // Sort and merge overlapping intervals
@@ -248,11 +249,23 @@
       const gapYears = buffered[0].start - minYear;
       if (gapYears >= GAP_THRESHOLD) {
         const w = gapPixelWidth(gapYears);
-        segments.push({ type: 'gap', yearStart: minYear, yearEnd: buffered[0].start, pixelStart: px, pixelEnd: px + w });
+        segments.push({
+          type: "gap",
+          yearStart: minYear,
+          yearEnd: buffered[0].start,
+          pixelStart: px,
+          pixelEnd: px + w,
+        });
         px += w;
       } else {
         const w = gapYears * PIXELS_PER_YEAR;
-        segments.push({ type: 'active', yearStart: minYear, yearEnd: buffered[0].start, pixelStart: px, pixelEnd: px + w });
+        segments.push({
+          type: "active",
+          yearStart: minYear,
+          yearEnd: buffered[0].start,
+          pixelStart: px,
+          pixelEnd: px + w,
+        });
         px += w;
       }
     }
@@ -261,7 +274,13 @@
       // Active segment
       const years = buffered[i].end - buffered[i].start;
       const w = years * PIXELS_PER_YEAR;
-      segments.push({ type: 'active', yearStart: buffered[i].start, yearEnd: buffered[i].end, pixelStart: px, pixelEnd: px + w });
+      segments.push({
+        type: "active",
+        yearStart: buffered[i].start,
+        yearEnd: buffered[i].end,
+        pixelStart: px,
+        pixelEnd: px + w,
+      });
       px += w;
 
       // Gap to next interval
@@ -269,12 +288,24 @@
         const gapYears = buffered[i + 1].start - buffered[i].end;
         if (gapYears >= GAP_THRESHOLD) {
           const w = gapPixelWidth(gapYears);
-          segments.push({ type: 'gap', yearStart: buffered[i].end, yearEnd: buffered[i + 1].start, pixelStart: px, pixelEnd: px + w });
+          segments.push({
+            type: "gap",
+            yearStart: buffered[i].end,
+            yearEnd: buffered[i + 1].start,
+            pixelStart: px,
+            pixelEnd: px + w,
+          });
           px += w;
         } else {
           // Small gap: treat as active at full scale
           const gw = gapYears * PIXELS_PER_YEAR;
-          segments.push({ type: 'active', yearStart: buffered[i].end, yearEnd: buffered[i + 1].start, pixelStart: px, pixelEnd: px + gw });
+          segments.push({
+            type: "active",
+            yearStart: buffered[i].end,
+            yearEnd: buffered[i + 1].start,
+            pixelStart: px,
+            pixelEnd: px + gw,
+          });
           px += gw;
         }
       }
@@ -286,11 +317,23 @@
       const gapYears = maxYear - lastEnd;
       if (gapYears >= GAP_THRESHOLD) {
         const w = gapPixelWidth(gapYears);
-        segments.push({ type: 'gap', yearStart: lastEnd, yearEnd: maxYear, pixelStart: px, pixelEnd: px + w });
+        segments.push({
+          type: "gap",
+          yearStart: lastEnd,
+          yearEnd: maxYear,
+          pixelStart: px,
+          pixelEnd: px + w,
+        });
         px += w;
       } else {
         const w = gapYears * PIXELS_PER_YEAR;
-        segments.push({ type: 'active', yearStart: lastEnd, yearEnd: maxYear, pixelStart: px, pixelEnd: px + w });
+        segments.push({
+          type: "active",
+          yearStart: lastEnd,
+          yearEnd: maxYear,
+          pixelStart: px,
+          pixelEnd: px + w,
+        });
         px += w;
       }
     }
@@ -304,7 +347,10 @@
       return (year - timelineBounds.minYear) * PIXELS_PER_YEAR;
     }
 
-    const clampedYear = Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
+    const clampedYear = Math.max(
+      timelineBounds.minYear,
+      Math.min(year, timelineBounds.maxYear)
+    );
 
     for (const seg of timelineSegments) {
       if (clampedYear >= seg.yearStart && clampedYear <= seg.yearEnd) {
@@ -321,7 +367,7 @@
   // Convert pixel position to year using segment-based mapping (inverse)
   function pixelToYear(px) {
     if (!timelineSegments || timelineSegments.length === 0) {
-      return timelineBounds.minYear + (px / PIXELS_PER_YEAR);
+      return timelineBounds.minYear + px / PIXELS_PER_YEAR;
     }
 
     for (const seg of timelineSegments) {
@@ -388,16 +434,19 @@
     const rawFactor = availableHeight / requiredContentHeight;
 
     // Adaptive minimum: more content = allow more aggressive condensing
-    const personCount = themesWithPersons.reduce((sum, t) => sum + t.persons.length, 0);
+    const personCount = themesWithPersons.reduce(
+      (sum, t) => sum + t.persons.length,
+      0
+    );
 
     // Scale min from 0.6 (sparse) down to 0.4 (very crowded)
     let adaptiveMin;
     if (personCount <= 5) {
-      adaptiveMin = 0.6;  // Sparse: preserve readability
+      adaptiveMin = 0.6; // Sparse: preserve readability
     } else if (personCount <= 15) {
-      adaptiveMin = 0.5;  // Moderate: balanced condensing
+      adaptiveMin = 0.5; // Moderate: balanced condensing
     } else {
-      adaptiveMin = 0.4;  // Crowded: aggressive to fit content
+      adaptiveMin = 0.4; // Crowded: aggressive to fit content
     }
 
     return Math.max(adaptiveMin, Math.min(1.0, rawFactor));
@@ -408,7 +457,9 @@
   $: effectivePersonRowHeight = Math.round(PERSON_ROW_HEIGHT * densityFactor);
   $: effectiveThemeSpacing = Math.round(THEME_SPACING * densityFactor);
   $: effectiveThemeTitleGap = Math.round(THEME_TITLE_GAP * densityFactor);
-  $: effectivePersonRowHeightCollapsed = Math.round(PERSON_ROW_HEIGHT_COLLAPSED * densityFactor);
+  $: effectivePersonRowHeightCollapsed = Math.round(
+    PERSON_ROW_HEIGHT_COLLAPSED * densityFactor
+  );
 
   // Calculate scroll indicator position based on scroll progress
   $: scrollIndicatorLeftPx = scrollProgress * timelineWidthPx;
@@ -417,26 +468,30 @@
   $: currentIndicatorYear = (() => {
     if (!timelineBounds) return null;
     const year = Math.round(pixelToYear(scrollIndicatorLeftPx));
-    return Math.max(timelineBounds.minYear, Math.min(year, timelineBounds.maxYear));
+    return Math.max(
+      timelineBounds.minYear,
+      Math.min(year, timelineBounds.maxYear)
+    );
   })();
 
   // Calculate visible viewport bounds in pixel coordinates
   $: viewportBounds = (() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return null;
     }
 
-    const container = document.querySelector('.meta-timeline-container');
+    const container = document.querySelector(".meta-timeline-container");
     if (!container) {
       return null;
     }
 
     const viewportWidthPx = container.clientWidth;
-    const scrollLeftPx = scrollProgress * Math.max(0, timelineWidthPx - viewportWidthPx);
+    const scrollLeftPx =
+      scrollProgress * Math.max(0, timelineWidthPx - viewportWidthPx);
 
     return {
       left: scrollLeftPx,
-      right: scrollLeftPx + viewportWidthPx
+      right: scrollLeftPx + viewportWidthPx,
     };
   })();
 
@@ -449,7 +504,8 @@
     // On initial load, if viewportBounds is not yet available, show persons at the start
     if (!viewportBounds) {
       const visible = [];
-      const INITIAL_VIEWPORT_WIDTH = typeof window !== 'undefined' ? window.innerWidth : 1200;
+      const INITIAL_VIEWPORT_WIDTH =
+        typeof window !== "undefined" ? window.innerWidth : 1200;
       const VISIBILITY_MARGIN = 100;
 
       themesWithPersons.forEach((theme) => {
@@ -458,10 +514,9 @@
           const personRight = personData.leftPx + personData.widthPx;
 
           // Check if person is visible in initial viewport (starting at 0)
-          const isVisible = (
-            personRight > (0 - VISIBILITY_MARGIN) &&
-            personLeft < (INITIAL_VIEWPORT_WIDTH + VISIBILITY_MARGIN)
-          );
+          const isVisible =
+            personRight > 0 - VISIBILITY_MARGIN &&
+            personLeft < INITIAL_VIEWPORT_WIDTH + VISIBILITY_MARGIN;
 
           if (isVisible) {
             visible.push(personData.personId);
@@ -481,10 +536,9 @@
         const personRight = personData.leftPx + personData.widthPx;
 
         // Check overlap with viewport (with margin)
-        const isVisible = (
-          personRight > (viewportBounds.left - VISIBILITY_MARGIN) &&
-          personLeft < (viewportBounds.right + VISIBILITY_MARGIN)
-        );
+        const isVisible =
+          personRight > viewportBounds.left - VISIBILITY_MARGIN &&
+          personLeft < viewportBounds.right + VISIBILITY_MARGIN;
 
         if (isVisible) {
           visible.push(personData.personId);
@@ -494,7 +548,6 @@
 
     return visible;
   })();
-
 
   // Detect when scroll indicator hovers over event markers
   $: {
@@ -506,95 +559,110 @@
       const eventsByPosition = new Map(); // leftPx -> [event objects]
 
       if (themesWithPersons && personEventsData && scrollIndicatorLeftPx > 0) {
-      themesWithPersons.forEach((theme, themeIndex) => {
-        theme.persons.forEach((personData, personIndex) => {
-          const events = personEventsData.get(personData.personId);
-          if (!events) return;
+        themesWithPersons.forEach((theme, themeIndex) => {
+          theme.persons.forEach((personData, personIndex) => {
+            const events = personEventsData.get(personData.personId);
+            if (!events) return;
 
-          events.forEach((event, eventIndex) => {
-            // Check if scroll indicator is near this event's position
-            if (Math.abs(event.leftPx - scrollIndicatorLeftPx) <= HOVER_THRESHOLD) {
-              // Group by position
-              if (!eventsByPosition.has(event.leftPx)) {
-                eventsByPosition.set(event.leftPx, []);
+            events.forEach((event, eventIndex) => {
+              // Check if scroll indicator is near this event's position
+              if (
+                Math.abs(event.leftPx - scrollIndicatorLeftPx) <=
+                HOVER_THRESHOLD
+              ) {
+                // Group by position
+                if (!eventsByPosition.has(event.leftPx)) {
+                  eventsByPosition.set(event.leftPx, []);
+                }
+
+                eventsByPosition.get(event.leftPx).push({
+                  personId: personData.personId,
+                  eventIndex,
+                  event,
+                  personName: displayName(personData.person.name),
+                  colors: getPersonColors(personData.personId),
+                  themeIndex,
+                  personIndex,
+                  personTopPx: calculatePersonTop(
+                    themeIndex,
+                    personIndex,
+                    visiblePersonIds
+                  ),
+                });
               }
-
-              eventsByPosition.get(event.leftPx).push({
-                personId: personData.personId,
-                eventIndex,
-                event,
-                personName: displayName(personData.person.name),
-                colors: getPersonColors(personData.personId),
-                themeIndex,
-                personIndex,
-                personTopPx: calculatePersonTop(themeIndex, personIndex, visiblePersonIds)
-              });
-            }
+            });
           });
         });
+      }
+
+      // Find the primary hovered cluster (closest to indicator)
+      let closestCluster = null;
+      let closestDistance = Infinity;
+
+      eventsByPosition.forEach((events, leftPx) => {
+        const distance = Math.abs(leftPx - scrollIndicatorLeftPx);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestCluster = { leftPx, events };
+        }
       });
-    }
 
-    // Find the primary hovered cluster (closest to indicator)
-    let closestCluster = null;
-    let closestDistance = Infinity;
-
-    eventsByPosition.forEach((events, leftPx) => {
-      const distance = Math.abs(leftPx - scrollIndicatorLeftPx);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestCluster = { leftPx, events };
+      // Update hovered events set (for visual feedback on markers)
+      const newHoveredEvents = new Set();
+      if (closestCluster) {
+        closestCluster.events.forEach((evt) => {
+          newHoveredEvents.add(`${evt.personId}-${evt.eventIndex}`);
+        });
       }
-    });
+      hoveredEventsByIndicator = newHoveredEvents;
 
-    // Update hovered events set (for visual feedback on markers)
-    const newHoveredEvents = new Set();
-    if (closestCluster) {
-      closestCluster.events.forEach(evt => {
-        newHoveredEvents.add(`${evt.personId}-${evt.eventIndex}`);
-      });
-    }
-    hoveredEventsByIndicator = newHoveredEvents;
+      // Show grouped tooltip after delay
+      if (
+        closestCluster &&
+        (!activeEventTooltip || !activeEventTooltip.clickTriggered)
+      ) {
+        // Check if we're already showing a tooltip for this exact cluster
+        const isShowingSameCluster =
+          activeEventTooltip &&
+          !activeEventTooltip.clickTriggered &&
+          activeEventTooltip.events &&
+          activeEventTooltip.events.length === closestCluster.events.length &&
+          activeEventTooltip.events.every(
+            (evt, idx) =>
+              evt.personId === closestCluster.events[idx].personId &&
+              evt.eventIndex === closestCluster.events[idx].eventIndex
+          );
 
-    // Show grouped tooltip after delay
-    if (closestCluster && (!activeEventTooltip || !activeEventTooltip.clickTriggered)) {
-      // Check if we're already showing a tooltip for this exact cluster
-      const isShowingSameCluster = activeEventTooltip &&
-        !activeEventTooltip.clickTriggered &&
-        activeEventTooltip.events &&
-        activeEventTooltip.events.length === closestCluster.events.length &&
-        activeEventTooltip.events.every((evt, idx) =>
-          evt.personId === closestCluster.events[idx].personId &&
-          evt.eventIndex === closestCluster.events[idx].eventIndex
-        );
+        if (!isShowingSameCluster) {
+          if (indicatorHoverTimeout) clearTimeout(indicatorHoverTimeout);
 
-      if (!isShowingSameCluster) {
-        if (indicatorHoverTimeout) clearTimeout(indicatorHoverTimeout);
-
-        indicatorHoverTimeout = setTimeout(() => {
-          // Double-check we're not in the middle of calculating placement
-          if (!isCalculatingPlacement && (!activeEventTooltip || !activeEventTooltip.clickTriggered)) {
-            showGroupedEventTooltip(closestCluster);
-          }
-        }, 600);
+          indicatorHoverTimeout = setTimeout(() => {
+            // Double-check we're not in the middle of calculating placement
+            if (
+              !isCalculatingPlacement &&
+              (!activeEventTooltip || !activeEventTooltip.clickTriggered)
+            ) {
+              showGroupedEventTooltip(closestCluster);
+            }
+          }, 600);
+        }
+      } else if (!closestCluster) {
+        if (indicatorHoverTimeout) {
+          clearTimeout(indicatorHoverTimeout);
+          indicatorHoverTimeout = null;
+        }
+        if (activeEventTooltip && !activeEventTooltip.clickTriggered) {
+          hideEventTooltip();
+        }
       }
-    } else if (!closestCluster) {
-      if (indicatorHoverTimeout) {
-        clearTimeout(indicatorHoverTimeout);
-        indicatorHoverTimeout = null;
-      }
-      if (activeEventTooltip && !activeEventTooltip.clickTriggered) {
-        hideEventTooltip();
-      }
-    }
     } // End of isCalculatingPlacement check
   }
 
   // Helper: check if a year falls inside a compressed gap segment
   function isYearInGap(year) {
     if (!timelineSegments) return false;
-    return timelineSegments.some(seg =>
-      seg.type === 'gap' && year > seg.yearStart && year < seg.yearEnd
+    return timelineSegments.some(
+      (seg) => seg.type === "gap" && year > seg.yearStart && year < seg.yearEnd
     );
   }
 
@@ -624,25 +692,32 @@
   $: chaptersWithPositions = (() => {
     if (!chapters || chapters.length === 0) return [];
 
-    return chapters.map(chapter => {
+    return chapters.map((chapter) => {
       const startYear = parseInt(chapter.date_start);
       const endYear = parseInt(chapter.date_end);
 
       // Remove date range from title (e.g., "Title (1815-1899)" -> "Title")
-      const titleWithoutDates = chapter.title.replace(/\s*\(\d{4}-\d{4}\)\s*$/, '');
+      const titleWithoutDates = chapter.title.replace(
+        /\s*\(\d{4}-\d{4}\)\s*$/,
+        ""
+      );
 
       return {
         ...chapter,
         title: titleWithoutDates,
         leftPx: yearToPixel(startYear),
-        widthPx: yearToPixel(endYear) - yearToPixel(startYear)
+        widthPx: yearToPixel(endYear) - yearToPixel(startYear),
       };
     });
   })();
 
   // Determine which chapter is currently active based on year indicator position
   $: currentChapterByIndicator = (() => {
-    if (!currentIndicatorYear || !chaptersWithPositions || chaptersWithPositions.length === 0) {
+    if (
+      !currentIndicatorYear ||
+      !chaptersWithPositions ||
+      chaptersWithPositions.length === 0
+    ) {
       return null;
     }
 
@@ -654,7 +729,12 @@
       const startYear = parseInt(chapter.date_start);
       const endYear = parseInt(chapter.date_end);
       const endInclusive = idx === lastIndex;
-      return currentIndicatorYear >= startYear && (endInclusive ? currentIndicatorYear <= endYear : currentIndicatorYear < endYear);
+      return (
+        currentIndicatorYear >= startYear &&
+        (endInclusive
+          ? currentIndicatorYear <= endYear
+          : currentIndicatorYear < endYear)
+      );
     });
 
     return activeChapter || null;
@@ -664,13 +744,18 @@
   // It should follow the scroll indicator but stay within viewport boundaries
   $: chapterHeaderStyle = (() => {
     // Calculate top position: base offset (0.75rem) + sticky header height
-    const topOffset = stickyHeaderHeight > 0 ? `${stickyHeaderHeight + 12}px` : '0.75rem';
+    const topOffset =
+      stickyHeaderHeight > 0 ? `${stickyHeaderHeight + 12}px` : "0.75rem";
 
-    if (!isSticky || !currentChapterByIndicator || typeof window === 'undefined') {
+    if (
+      !isSticky ||
+      !currentChapterByIndicator ||
+      typeof window === "undefined"
+    ) {
       return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
     }
 
-    const container = document.querySelector('.meta-timeline-container');
+    const container = document.querySelector(".meta-timeline-container");
     if (!container) {
       return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
     }
@@ -679,7 +764,7 @@
 
     // The indicator is at scrollIndicatorLeftPx relative to timeline-wrapper
     // We need its position relative to the viewport.
-    const wrapper = container.querySelector('.timeline-wrapper');
+    const wrapper = container.querySelector(".timeline-wrapper");
     if (!wrapper) {
       return `left: 0; transform: translateX(50vw) translateX(-50%); top: ${topOffset};`;
     }
@@ -711,93 +796,101 @@
     if (!chapters || chapters.length === 0 || !personsRegistry) return [];
 
     const personIds = new Set();
-    chapters.forEach(chapter => {
-      chapter.person_events?.forEach(event => {
+    chapters.forEach((chapter) => {
+      chapter.person_events?.forEach((event) => {
         personIds.add(event.person_id);
       });
     });
 
-    return Array.from(personIds).map(personId => {
-      const person = getPersonById(personId);
-      if (!person) return null;
+    return Array.from(personIds)
+      .map((personId) => {
+        const person = getPersonById(personId);
+        if (!person) return null;
 
-      const birthYear = getYear(person.birthDate);
-      const deathYear = getYear(person.deathDate);
-      if (!birthYear) return null;
+        const birthYear = getYear(person.birthDate);
+        const deathYear = getYear(person.deathDate);
+        if (!birthYear) return null;
 
-      const endYear = deathYear || timelineBounds.maxYear;
+        const endYear = deathYear || timelineBounds.maxYear;
 
-      return {
-        person,
-        personId,
-        birthYear,
-        deathYear,
-        leftPx: yearToPixel(birthYear),
-        widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
-        isAlive: !deathYear,
-        portrait: person.portrait?.thumbnail || person.portrait?.image
-      };
-    }).filter(p => p !== null);
+        return {
+          person,
+          personId,
+          birthYear,
+          deathYear,
+          leftPx: yearToPixel(birthYear),
+          widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
+          isAlive: !deathYear,
+          portrait: person.portrait?.thumbnail || person.portrait?.image,
+        };
+      })
+      .filter((p) => p !== null);
   }
 
   // Group persons by subtopic/theme, preserving theme order
   $: themesWithPersons = (() => {
     if (!subtopics || subtopics.length === 0 || !personsRegistry) {
       // Fallback: show all persons from chapters ungrouped
-      return [{
-        title: null,
-        themeId: null,
-        persons: extractPersonsFromChapters(),
-        leftPx: 0,
-        widthPx: 0
-      }];
+      return [
+        {
+          title: null,
+          themeId: null,
+          persons: extractPersonsFromChapters(),
+          leftPx: 0,
+          widthPx: 0,
+        },
+      ];
     }
 
     // Create theme groups from subtopics
-    return subtopics.map(subtopic => {
-      const persons = subtopic.person_ids
-        .map(personId => {
-          const person = getPersonById(personId);
-          if (!person) return null;
+    return subtopics
+      .map((subtopic) => {
+        const persons = subtopic.person_ids
+          .map((personId) => {
+            const person = getPersonById(personId);
+            if (!person) return null;
 
-          const birthYear = getYear(person.birthDate);
-          const deathYear = getYear(person.deathDate);
-          if (!birthYear) return null;
+            const birthYear = getYear(person.birthDate);
+            const deathYear = getYear(person.deathDate);
+            if (!birthYear) return null;
 
-          const endYear = deathYear || timelineBounds.maxYear;
+            const endYear = deathYear || timelineBounds.maxYear;
 
-          return {
-            person,
-            personId,
-            birthYear,
-            deathYear,
-            leftPx: yearToPixel(birthYear),
-            widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
-            isAlive: !deathYear,
-            portrait: person.portrait?.thumbnail || person.portrait?.image
-          };
-        })
-        .filter(p => p !== null)
-        .sort((a, b) => a.birthYear - b.birthYear);
+            return {
+              person,
+              personId,
+              birthYear,
+              deathYear,
+              leftPx: yearToPixel(birthYear),
+              widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
+              isAlive: !deathYear,
+              portrait: person.portrait?.thumbnail || person.portrait?.image,
+            };
+          })
+          .filter((p) => p !== null)
+          .sort((a, b) => a.birthYear - b.birthYear);
 
-      // Calculate theme title row bounds (leftmost to rightmost person)
-      let themeLeftPx = 0;
-      let themeWidthPx = 0;
-      if (persons.length > 0) {
-        const minLeft = Math.min(...persons.map(p => p.leftPx));
-        const maxRight = Math.max(...persons.map(p => p.leftPx + p.widthPx));
-        themeLeftPx = minLeft;
-        themeWidthPx = maxRight - minLeft;
-      }
+        // Calculate theme title row bounds (leftmost to rightmost person)
+        let themeLeftPx = 0;
+        let themeWidthPx = 0;
+        if (persons.length > 0) {
+          const minLeft = Math.min(...persons.map((p) => p.leftPx));
+          const maxRight = Math.max(
+            ...persons.map((p) => p.leftPx + p.widthPx)
+          );
+          themeLeftPx = minLeft;
+          themeWidthPx = maxRight - minLeft;
+        }
 
-      return {
-        title: subtopic.title,
-        themeId: subtopic.id,
-        persons: persons,
-        leftPx: themeLeftPx,
-        widthPx: themeWidthPx
-      };
-    }).filter(theme => theme.persons.length > 0);
+        return {
+          title: subtopic.title,
+          themeId: subtopic.id,
+          persons: persons,
+          leftPx: themeLeftPx,
+          widthPx: themeWidthPx,
+        };
+      })
+      .filter((theme) => theme.persons.length > 0);
   })();
 
   // Heights for collapsed vs expanded states
@@ -813,9 +906,11 @@
       offset += effectiveThemeTitleHeight;
 
       // Add height for each person in this theme (accounting for collapsed state)
-      themesWithPersons[i].persons.forEach(personData => {
+      themesWithPersons[i].persons.forEach((personData) => {
         const isVisible = visibleSet.has(personData.personId);
-        offset += isVisible ? effectivePersonRowHeight : effectivePersonRowHeightCollapsed;
+        offset += isVisible
+          ? effectivePersonRowHeight
+          : effectivePersonRowHeightCollapsed;
       });
 
       offset += effectiveThemeSpacing;
@@ -838,7 +933,9 @@
     for (let i = 0; i < personIndex; i++) {
       const personData = themesWithPersons[themeIndex].persons[i];
       const isVisible = visibleSet.has(personData.personId);
-      offset += isVisible ? effectivePersonRowHeight : effectivePersonRowHeightCollapsed;
+      offset += isVisible
+        ? effectivePersonRowHeight
+        : effectivePersonRowHeightCollapsed;
     }
 
     return offset;
@@ -873,7 +970,14 @@
     // Add some bottom padding
     const bottomPadding = 20;
 
-    return topPadding + yearAxisMarginTop + yearAxisHeight + personsLayerMarginTop + personsLayerHeight + bottomPadding;
+    return (
+      topPadding +
+      yearAxisMarginTop +
+      yearAxisHeight +
+      personsLayerMarginTop +
+      personsLayerHeight +
+      bottomPadding
+    );
   })();
 
   // Extract events for each person from chapters
@@ -910,7 +1014,7 @@
           year: eventYear,
           leftPx: leftPx,
           chapterTitle: chapter.title,
-          theme_connection: event.theme_connection
+          theme_connection: event.theme_connection,
         });
       });
     });
@@ -934,7 +1038,7 @@
 
         const endYear = event.date_end ? getYear(event.date_end) : null;
         const leftPx = yearToPixel(startYear);
-        const widthPx = endYear ? (yearToPixel(endYear) - leftPx) : 0;
+        const widthPx = endYear ? yearToPixel(endYear) - leftPx : 0;
 
         chapterEvents.push({
           ...event,
@@ -942,7 +1046,7 @@
           endYear,
           leftPx,
           widthPx,
-          chapterTitle: chapter.title
+          chapterTitle: chapter.title,
         });
       });
 
@@ -985,13 +1089,28 @@
 
   // Export navigation functions for parent component
   export function getNextYear() {
-    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined || !timelineBounds) return null;
-    return yearsWithEvents.find(y => y > currentIndicatorYear) || null;
+    if (
+      yearsWithEvents.length === 0 ||
+      currentIndicatorYear === null ||
+      currentIndicatorYear === undefined ||
+      !timelineBounds
+    )
+      return null;
+    return yearsWithEvents.find((y) => y > currentIndicatorYear) || null;
   }
 
   export function getPrevYear() {
-    if (yearsWithEvents.length === 0 || currentIndicatorYear === null || currentIndicatorYear === undefined || !timelineBounds) return null;
-    return [...yearsWithEvents].reverse().find(y => y < currentIndicatorYear) || null;
+    if (
+      yearsWithEvents.length === 0 ||
+      currentIndicatorYear === null ||
+      currentIndicatorYear === undefined ||
+      !timelineBounds
+    )
+      return null;
+    return (
+      [...yearsWithEvents].reverse().find((y) => y < currentIndicatorYear) ||
+      null
+    );
   }
 
   export function yearToScrollProgress(targetYear) {
@@ -1016,7 +1135,7 @@
   let chapterHeaderWidth = 0;
 
   // Viewport height tracking for density recalculation on resize
-  let viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+  let viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
 
   // Cache for density map performance
   let cachedDensityMap = null;
@@ -1030,7 +1149,9 @@
     const { events } = config;
 
     // Build HTML structure matching actual tooltip
-    const eventItems = events.map(evt => `
+    const eventItems = events
+      .map(
+        (evt) => `
       <div class="event-item" style="--item-primary: ${evt.colors.primary}; --item-primary-rgb: ${evt.colors.primaryRgb};">
         <div class="event-item-header">
           <div class="event-item-header-content">
@@ -1039,11 +1160,17 @@
           </div>
           <button class="tooltip-action-compact">→</button>
         </div>
-        ${evt.event.theme_connection ? `
+        ${
+          evt.event.theme_connection
+            ? `
           <p class="event-item-description">${evt.event.theme_connection}</p>
-        ` : ''}
+        `
+            : ""
+        }
       </div>
-    `).join('');
+    `
+      )
+      .join("");
 
     return `<div class="tooltip-events">${eventItems}</div>`;
   }
@@ -1051,9 +1178,9 @@
   // Measure actual tooltip dimensions at runtime (replaces static estimates)
   function measureTooltipDimensions(tooltipConfig) {
     // Create invisible clone of tooltip for measurement
-    const measurementElement = document.createElement('div');
+    const measurementElement = document.createElement("div");
     measurementElement.className = `event-tooltip ${
-      tooltipConfig.events.length > 1 ? 'grouped' : ''
+      tooltipConfig.events.length > 1 ? "grouped" : ""
     }`;
 
     // Apply max-width constraints to match actual tooltip CSS
@@ -1073,10 +1200,11 @@
     `;
 
     // Render tooltip content structure
-    measurementElement.innerHTML = renderTooltipContentForMeasurement(tooltipConfig);
+    measurementElement.innerHTML =
+      renderTooltipContentForMeasurement(tooltipConfig);
 
     // Prevent this measurement from triggering any events or observers
-    measurementElement.setAttribute('data-measuring', 'true');
+    measurementElement.setAttribute("data-measuring", "true");
 
     document.body.appendChild(measurementElement);
 
@@ -1084,8 +1212,8 @@
     const dimensions = {
       width: rect.width,
       height: rect.height,
-      safeWidth: rect.width + 8,  // Safety margin for borders/scrollbars
-      safeHeight: rect.height + 8
+      safeWidth: rect.width + 8, // Safety margin for borders/scrollbars
+      safeHeight: rect.height + 8,
     };
 
     document.body.removeChild(measurementElement);
@@ -1095,22 +1223,24 @@
 
   // Gather all boundary constraints for placement decisions
   function gatherBoundaryConstraints(triggerElement) {
-    const timelineContainer = document.querySelector('.meta-timeline-container');
+    const timelineContainer = document.querySelector(
+      ".meta-timeline-container"
+    );
 
     return {
       viewport: {
-        left: 40,  // Padding to avoid prev/next buttons
+        left: 40, // Padding to avoid prev/next buttons
         top: 0,
-        right: window.innerWidth - 40,  // Padding to avoid prev/next buttons
+        right: window.innerWidth - 40, // Padding to avoid prev/next buttons
         bottom: window.innerHeight,
-        width: window.innerWidth - 80,  // Account for both side paddings
-        height: window.innerHeight
+        width: window.innerWidth - 80, // Account for both side paddings
+        height: window.innerHeight,
       },
       container: timelineContainer
         ? timelineContainer.getBoundingClientRect()
         : null,
       trigger: triggerElement.getBoundingClientRect(),
-      scrollLeft: timelineContainer?.scrollLeft || 0
+      scrollLeft: timelineContainer?.scrollLeft || 0,
     };
   }
 
@@ -1120,15 +1250,18 @@
     const CLEARANCE = 12;
 
     // Calculate trigger center for proximity scoring
-    const triggerCenterX = trigger.left + (trigger.width / 2);
-    const triggerCenterY = trigger.top + (trigger.height / 2);
+    const triggerCenterX = trigger.left + trigger.width / 2;
+    const triggerCenterY = trigger.top + trigger.height / 2;
 
     // Clamp trigger X position to visible viewport bounds
     // This prevents tooltips from being positioned off-screen when timeline is scrolled
     const safeMargin = 10;
     const clampedTriggerLeft = Math.max(
       viewport.left + dimensions.safeWidth * 0.5 + safeMargin,
-      Math.min(trigger.left, viewport.right - dimensions.safeWidth * 0.5 - safeMargin)
+      Math.min(
+        trigger.left,
+        viewport.right - dimensions.safeWidth * 0.5 - safeMargin
+      )
     );
     const clampedTriggerRight = Math.max(
       viewport.left + dimensions.safeWidth + safeMargin,
@@ -1136,83 +1269,88 @@
     );
     const clampedTriggerCenterX = Math.max(
       viewport.left + dimensions.safeWidth * 0.5 + safeMargin,
-      Math.min(triggerCenterX, viewport.right - dimensions.safeWidth * 0.5 - safeMargin)
+      Math.min(
+        triggerCenterX,
+        viewport.right - dimensions.safeWidth * 0.5 - safeMargin
+      )
     );
 
     return [
       // Priority 1: Top-center (default preference)
       {
-        name: 'top-center',
+        name: "top-center",
         x: clampedTriggerCenterX,
         y: trigger.top - CLEARANCE,
         anchor: { x: 0.5, y: 1.0 },
-        priority: 1
+        priority: 1,
       },
 
       // Priority 2: Bottom-center (mobile-friendly)
       {
-        name: 'bottom-center',
+        name: "bottom-center",
         x: clampedTriggerCenterX,
         y: trigger.bottom + CLEARANCE,
         anchor: { x: 0.5, y: 0.0 },
-        priority: 2
+        priority: 2,
       },
 
       // Priority 3: Horizontal placements (for vertical constraints)
       {
-        name: 'left-middle',
+        name: "left-middle",
         x: clampedTriggerLeft - CLEARANCE,
         y: triggerCenterY,
         anchor: { x: 1.0, y: 0.5 },
-        priority: 3
+        priority: 3,
       },
 
       {
-        name: 'right-middle',
+        name: "right-middle",
         x: clampedTriggerRight + CLEARANCE,
         y: triggerCenterY,
         anchor: { x: 0.0, y: 0.5 },
-        priority: 3
+        priority: 3,
       },
 
       // Priority 4: Corner placements (last resort)
       {
-        name: 'top-left',
+        name: "top-left",
         x: clampedTriggerLeft,
         y: trigger.top - CLEARANCE,
         anchor: { x: 0.0, y: 1.0 },
-        priority: 4
+        priority: 4,
       },
 
       {
-        name: 'top-right',
+        name: "top-right",
         x: clampedTriggerRight,
         y: trigger.top - CLEARANCE,
         anchor: { x: 1.0, y: 1.0 },
-        priority: 4
+        priority: 4,
       },
 
       {
-        name: 'bottom-left',
+        name: "bottom-left",
         x: clampedTriggerLeft,
         y: trigger.bottom + CLEARANCE,
         anchor: { x: 0.0, y: 0.0 },
-        priority: 4
+        priority: 4,
       },
 
       {
-        name: 'bottom-right',
+        name: "bottom-right",
         x: clampedTriggerRight,
         y: trigger.bottom + CLEARANCE,
         anchor: { x: 1.0, y: 0.0 },
-        priority: 4
-      }
+        priority: 4,
+      },
     ];
   }
 
   // Analyze timeline density to prefer empty space (with caching for performance)
   function analyzeTimelineDensity(forceRefresh = false) {
-    const timelineContainer = document.querySelector('.meta-timeline-container');
+    const timelineContainer = document.querySelector(
+      ".meta-timeline-container"
+    );
     if (!timelineContainer) return null;
 
     const currentScroll = timelineContainer.scrollLeft;
@@ -1223,7 +1361,7 @@
       return cachedDensityMap;
     }
 
-    const personsLayer = timelineContainer.querySelector('.persons-layer');
+    const personsLayer = timelineContainer.querySelector(".persons-layer");
     if (!personsLayer) return null;
 
     const containerRect = timelineContainer.getBoundingClientRect();
@@ -1233,15 +1371,20 @@
     const gridWidth = Math.ceil(containerRect.width / CELL_SIZE);
     const gridHeight = Math.ceil(containerRect.height / CELL_SIZE);
 
-    const densityGrid = Array(gridHeight).fill(0).map(() =>
-      Array(gridWidth).fill(0)
-    );
+    const densityGrid = Array(gridHeight)
+      .fill(0)
+      .map(() => Array(gridWidth).fill(0));
 
     // Mark cells occupied by event markers (high density)
-    const allMarkers = Array.from(personsLayer.querySelectorAll('.event-marker'));
-    allMarkers.forEach(marker => {
+    const allMarkers = Array.from(
+      personsLayer.querySelectorAll(".event-marker")
+    );
+    allMarkers.forEach((marker) => {
       const rect = marker.getBoundingClientRect();
-      const cellX = Math.floor((rect.left - containerRect.left + timelineContainer.scrollLeft) / CELL_SIZE);
+      const cellX = Math.floor(
+        (rect.left - containerRect.left + timelineContainer.scrollLeft) /
+          CELL_SIZE
+      );
       const cellY = Math.floor((rect.top - containerRect.top) / CELL_SIZE);
 
       if (cellX >= 0 && cellX < gridWidth && cellY >= 0 && cellY < gridHeight) {
@@ -1250,11 +1393,19 @@
     });
 
     // Mark cells occupied by person lifespans (lower density)
-    const allLifespans = Array.from(personsLayer.querySelectorAll('.person-lifespan'));
-    allLifespans.forEach(lifespan => {
+    const allLifespans = Array.from(
+      personsLayer.querySelectorAll(".person-lifespan")
+    );
+    allLifespans.forEach((lifespan) => {
       const rect = lifespan.getBoundingClientRect();
-      const startCell = Math.floor((rect.left - containerRect.left + timelineContainer.scrollLeft) / CELL_SIZE);
-      const endCell = Math.floor((rect.right - containerRect.left + timelineContainer.scrollLeft) / CELL_SIZE);
+      const startCell = Math.floor(
+        (rect.left - containerRect.left + timelineContainer.scrollLeft) /
+          CELL_SIZE
+      );
+      const endCell = Math.floor(
+        (rect.right - containerRect.left + timelineContainer.scrollLeft) /
+          CELL_SIZE
+      );
       const cellY = Math.floor((rect.top - containerRect.top) / CELL_SIZE);
 
       for (let x = startCell; x <= endCell && x < gridWidth; x++) {
@@ -1267,7 +1418,7 @@
     cachedDensityMap = {
       grid: densityGrid,
       cellSize: CELL_SIZE,
-      containerRect: containerRect
+      containerRect: containerRect,
     };
     lastDensityMapScroll = currentScroll;
 
@@ -1282,17 +1433,25 @@
 
     // Calculate tooltip bounding box
     const tooltipRect = {
-      left: placement.x - (dimensions.safeWidth * placement.anchor.x),
-      top: placement.y - (dimensions.safeHeight * placement.anchor.y),
+      left: placement.x - dimensions.safeWidth * placement.anchor.x,
+      top: placement.y - dimensions.safeHeight * placement.anchor.y,
       width: dimensions.safeWidth,
-      height: dimensions.safeHeight
+      height: dimensions.safeHeight,
     };
 
     // Determine which cells the tooltip would overlap
-    const startCellX = Math.floor((tooltipRect.left - containerRect.left) / cellSize);
-    const endCellX = Math.floor((tooltipRect.left + tooltipRect.width - containerRect.left) / cellSize);
-    const startCellY = Math.floor((tooltipRect.top - containerRect.top) / cellSize);
-    const endCellY = Math.floor((tooltipRect.top + tooltipRect.height - containerRect.top) / cellSize);
+    const startCellX = Math.floor(
+      (tooltipRect.left - containerRect.left) / cellSize
+    );
+    const endCellX = Math.floor(
+      (tooltipRect.left + tooltipRect.width - containerRect.left) / cellSize
+    );
+    const startCellY = Math.floor(
+      (tooltipRect.top - containerRect.top) / cellSize
+    );
+    const endCellY = Math.floor(
+      (tooltipRect.top + tooltipRect.height - containerRect.top) / cellSize
+    );
 
     let totalDensity = 0;
     let cellCount = 0;
@@ -1316,10 +1475,10 @@
 
     // Calculate tooltip bounding box based on anchor point
     const tooltipRect = {
-      left: placement.x - (dimensions.safeWidth * placement.anchor.x),
-      top: placement.y - (dimensions.safeHeight * placement.anchor.y),
-      right: placement.x + (dimensions.safeWidth * (1 - placement.anchor.x)),
-      bottom: placement.y + (dimensions.safeHeight * (1 - placement.anchor.y))
+      left: placement.x - dimensions.safeWidth * placement.anchor.x,
+      top: placement.y - dimensions.safeHeight * placement.anchor.y,
+      right: placement.x + dimensions.safeWidth * (1 - placement.anchor.x),
+      bottom: placement.y + dimensions.safeHeight * (1 - placement.anchor.y),
     };
 
     let clipping = 0;
@@ -1351,55 +1510,76 @@
     }
 
     return {
-      clipping,        // Total pixels clipped (0 = no clipping)
-      violations,      // List of boundary violations
-      tooltipRect      // Final computed position
+      clipping, // Total pixels clipped (0 = no clipping)
+      violations, // List of boundary violations
+      tooltipRect, // Final computed position
     };
   }
 
   // Multi-factor scoring system to select optimal placement
-  function selectOptimalPlacement(candidates, dimensions, boundaries, densityMap) {
-    const scoredCandidates = candidates.map(candidate => {
+  function selectOptimalPlacement(
+    candidates,
+    dimensions,
+    boundaries,
+    densityMap
+  ) {
+    const scoredCandidates = candidates.map((candidate) => {
       let score = 0;
       const debugReasons = [];
 
       // Factor 1: Boundary compliance (CRITICAL - 100 points or disqualified)
-      const boundaryScore = calculateBoundaryScore(candidate, dimensions, boundaries);
+      const boundaryScore = calculateBoundaryScore(
+        candidate,
+        dimensions,
+        boundaries
+      );
       if (boundaryScore.clipping > 0) {
         score = -1000; // Disqualified
-        debugReasons.push(`CLIPPED: ${boundaryScore.violations.join(', ')}`);
+        debugReasons.push(`CLIPPED: ${boundaryScore.violations.join(", ")}`);
       } else {
         score += 100;
-        debugReasons.push('✓ No clipping');
+        debugReasons.push("✓ No clipping");
       }
 
       // Factor 2: Empty space preference (50 points max)
-      const densityScore = calculateDensityScore(candidate, dimensions, densityMap);
-      const emptySpacePoints = Math.max(0, 50 - (densityScore * 10));
+      const densityScore = calculateDensityScore(
+        candidate,
+        dimensions,
+        densityMap
+      );
+      const emptySpacePoints = Math.max(0, 50 - densityScore * 10);
       score += emptySpacePoints;
-      debugReasons.push(`Density: ${densityScore.toFixed(2)} → ${emptySpacePoints.toFixed(1)}pts`);
+      debugReasons.push(
+        `Density: ${densityScore.toFixed(2)} → ${emptySpacePoints.toFixed(1)}pts`
+      );
 
       // Factor 3: Proximity to trigger (30 points max)
-      const triggerCenterX = boundaries.trigger.left + (boundaries.trigger.width / 2);
-      const triggerCenterY = boundaries.trigger.top + (boundaries.trigger.height / 2);
+      const triggerCenterX =
+        boundaries.trigger.left + boundaries.trigger.width / 2;
+      const triggerCenterY =
+        boundaries.trigger.top + boundaries.trigger.height / 2;
       const distance = Math.sqrt(
         Math.pow(candidate.x - triggerCenterX, 2) +
-        Math.pow(candidate.y - triggerCenterY, 2)
+          Math.pow(candidate.y - triggerCenterY, 2)
       );
-      const proximityPoints = Math.max(0, 30 - (distance / 10));
+      const proximityPoints = Math.max(0, 30 - distance / 10);
       score += proximityPoints;
-      debugReasons.push(`Distance: ${distance.toFixed(0)}px → ${proximityPoints.toFixed(1)}pts`);
+      debugReasons.push(
+        `Distance: ${distance.toFixed(0)}px → ${proximityPoints.toFixed(1)}pts`
+      );
 
       // Factor 4: Priority bonus (20 points max)
       const priorityPoints = (5 - candidate.priority) * 5;
       score += priorityPoints;
-      debugReasons.push(`Priority: ${candidate.priority} → ${priorityPoints}pts`);
+      debugReasons.push(
+        `Priority: ${candidate.priority} → ${priorityPoints}pts`
+      );
 
       return {
         ...candidate,
         score,
         debugReasons,
-        boundaryScore: boundaryScore
+        boundaryScore: boundaryScore,
       };
     });
 
@@ -1422,24 +1602,21 @@
 
     // Strategy: Center horizontally, position at top of viewport with scroll
     const x = Math.min(
-      Math.max(
-        trigger.left + (trigger.width / 2),
-        dimensions.safeWidth / 2 + 10
-      ),
+      Math.max(trigger.left + trigger.width / 2, dimensions.safeWidth / 2 + 10),
       viewport.right - dimensions.safeWidth / 2 - 10
     );
 
     const y = viewport.top + 60; // 60px from top
 
     return {
-      name: 'fallback-top',
+      name: "fallback-top",
       x,
       y,
       anchor: { x: 0.5, y: 0.0 },
       priority: 5,
       score: -500, // Negative score indicates fallback
       isFallback: true,
-      debugReasons: ['All placements violated boundaries - using fallback']
+      debugReasons: ["All placements violated boundaries - using fallback"],
     };
   }
 
@@ -1459,29 +1636,29 @@
       if (dimensions.safeHeight > viewport.height * 0.7) {
         return {
           ...placement,
-          name: 'mobile-scroll-bottom',
+          name: "mobile-scroll-bottom",
           x: viewport.width / 2,
           y: viewport.top + 60,
           anchor: { x: 0.5, y: 0.0 },
           maxWidth,
           maxHeight: viewport.height * 0.7,
           enableInternalScroll: true,
-          mobileOverride: true
+          mobileOverride: true,
         };
       }
 
       // Otherwise, prefer bottom placement (thumb-friendly)
-      if (!placement.name.includes('bottom')) {
+      if (!placement.name.includes("bottom")) {
         return {
           ...placement,
-          name: 'mobile-bottom',
+          name: "mobile-bottom",
           y: Math.min(
             boundaries.trigger.bottom + 20,
             viewport.bottom - dimensions.safeHeight - 10
           ),
           anchor: { x: 0.5, y: 0.0 },
           maxWidth,
-          mobileOverride: true
+          mobileOverride: true,
         };
       }
     }
@@ -1522,7 +1699,7 @@
       return {
         ...placement,
         dimensions,
-        boundaries
+        boundaries,
       };
     } finally {
       // Reset flag after a small delay to let reactive statements settle
@@ -1544,14 +1721,16 @@
     const colors = getPersonColors(personId);
 
     const eventConfig = {
-      events: [{
-        personId,
-        eventIndex,
-        event,
-        personName: displayName(person.name),
-        colors
-      }],
-      clickTriggered: true
+      events: [
+        {
+          personId,
+          eventIndex,
+          event,
+          personName: displayName(person.name),
+          colors,
+        },
+      ],
+      clickTriggered: true,
     };
 
     // Use unified placement algorithm
@@ -1562,9 +1741,9 @@
       activeEventTooltip = {
         ...eventConfig,
         ...placement,
-        personId,      // Add for active state detection
-        eventIndex,    // Add for active state detection
-        year: event.year
+        personId, // Add for active state detection
+        eventIndex, // Add for active state detection
+        year: event.year,
       };
     }
   }
@@ -1575,31 +1754,37 @@
 
   // Show grouped tooltip for event cluster (used by scroll indicator)
   function showGroupedEventTooltip(cluster) {
-    const timelineContainer = document.querySelector('.meta-timeline-container');
+    const timelineContainer = document.querySelector(
+      ".meta-timeline-container"
+    );
     if (!timelineContainer) return;
 
-    const timelineWrapper = timelineContainer.querySelector('.timeline-wrapper');
+    const timelineWrapper =
+      timelineContainer.querySelector(".timeline-wrapper");
 
     // Find ALL actual DOM elements for events in this cluster
     // Strategy: Find all event markers at the cluster's X position
     const clusterEventElements = [];
 
     if (timelineWrapper) {
-      const allMarkers = Array.from(timelineWrapper.querySelectorAll('.event-marker'));
+      const allMarkers = Array.from(
+        timelineWrapper.querySelectorAll(".event-marker")
+      );
       const wrapperRect = timelineWrapper.getBoundingClientRect();
       const expectedX = wrapperRect.left + cluster.leftPx;
 
       // Find ALL markers at the cluster's X position (they're all part of the cluster)
-      allMarkers.forEach(marker => {
+      allMarkers.forEach((marker) => {
         const rect = marker.getBoundingClientRect();
         const markerCenterX = rect.left + rect.width / 2;
 
         // If this marker is at approximately the cluster's X position, include it
-        if (Math.abs(markerCenterX - expectedX) < 10) { // 10px tolerance
+        if (Math.abs(markerCenterX - expectedX) < 10) {
+          // 10px tolerance
           clusterEventElements.push({
             element: marker,
             rect: rect,
-            eventData: null // We don't need to match specific event data
+            eventData: null, // We don't need to match specific event data
           });
         }
       });
@@ -1607,18 +1792,21 @@
 
     // If we couldn't find the DOM elements, bail out
     if (clusterEventElements.length === 0) {
-      console.warn('Could not find DOM elements for event cluster at', cluster.leftPx);
+      console.warn(
+        "Could not find DOM elements for event cluster at",
+        cluster.leftPx
+      );
       return;
     }
 
     // Create a bounding box that encompasses ALL events in the cluster using actual DOM positions
     const virtualTrigger = {
       getBoundingClientRect: () => {
-        const rects = clusterEventElements.map(e => e.rect);
-        const minLeft = Math.min(...rects.map(r => r.left));
-        const minTop = Math.min(...rects.map(r => r.top));
-        const maxRight = Math.max(...rects.map(r => r.right));
-        const maxBottom = Math.max(...rects.map(r => r.bottom));
+        const rects = clusterEventElements.map((e) => e.rect);
+        const minLeft = Math.min(...rects.map((r) => r.left));
+        const minTop = Math.min(...rects.map((r) => r.top));
+        const maxRight = Math.max(...rects.map((r) => r.right));
+        const maxBottom = Math.max(...rects.map((r) => r.bottom));
 
         return {
           left: minLeft,
@@ -1626,26 +1814,25 @@
           right: maxRight,
           bottom: maxBottom,
           width: maxRight - minLeft,
-          height: maxBottom - minTop
+          height: maxBottom - minTop,
         };
-      }
+      },
     };
 
     const eventConfig = {
       events: cluster.events,
-      clickTriggered: false
+      clickTriggered: false,
     };
 
     // Use unified placement algorithm
     const placement = calculateTooltipPlacement(virtualTrigger, eventConfig);
-
 
     // Update reactive state (only if placement succeeded)
     if (placement) {
       activeEventTooltip = {
         ...eventConfig,
         ...placement,
-        year: cluster.events[0].event.year
+        year: cluster.events[0].event.year,
       };
     }
   }
@@ -1657,27 +1844,31 @@
     }
 
     const eventConfig = {
-      events: [{
-        personId: null,
-        eventIndex: null,
-        event: {
-          title: hEvent.title,
-          year: hEvent.year,
-          event_index: undefined
+      events: [
+        {
+          personId: null,
+          eventIndex: null,
+          event: {
+            title: hEvent.title,
+            year: hEvent.year,
+            event_index: undefined,
+          },
+          personName: null,
+          colors: {
+            primary: "#94a3b8",
+            primaryRgb: "148, 163, 184",
+            secondary: "#94a3b8",
+            secondaryRgb: "148, 163, 184",
+          },
+          isHistorical: true,
+          description: hEvent.description,
+          wikipediaUrl: hEvent.wikipedia_url,
+          dateRange: hEvent.endYear
+            ? `${hEvent.year}–${hEvent.endYear}`
+            : `${hEvent.year}`,
         },
-        personName: null,
-        colors: {
-          primary: '#94a3b8',
-          primaryRgb: '148, 163, 184',
-          secondary: '#94a3b8',
-          secondaryRgb: '148, 163, 184'
-        },
-        isHistorical: true,
-        description: hEvent.description,
-        wikipediaUrl: hEvent.wikipedia_url,
-        dateRange: hEvent.endYear ? `${hEvent.year}–${hEvent.endYear}` : `${hEvent.year}`
-      }],
-      clickTriggered: true
+      ],
+      clickTriggered: true,
     };
 
     // Historical events: always place below, clamped to viewport edges
@@ -1699,11 +1890,11 @@
 
     activeEventTooltip = {
       ...eventConfig,
-      name: 'historical-bottom',
+      name: "historical-bottom",
       x,
       y,
       anchor: { x: 0.5, y: 0.0 },
-      year: hEvent.year
+      year: hEvent.year,
     };
   }
 
@@ -1711,13 +1902,15 @@
     // Navigate to the specific event in the person's story
     // Use event_index from the meta story data which references the actual event index in life_events.json
     // Note: We use the 'event' query parameter because event index ≠ slide index when chapters exist
-    const targetEventIndex = event.event_index !== undefined ? event.event_index : 0;
+    const targetEventIndex =
+      event.event_index !== undefined ? event.event_index : 0;
 
     // Get current language from the URL
-    const currentLang = window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || 'en';
+    const currentLang =
+      window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || "en";
 
     // Include meta story context if available
-    const fromMetaParam = metaStoryId ? `&from_meta=${metaStoryId}` : '';
+    const fromMetaParam = metaStoryId ? `&from_meta=${metaStoryId}` : "";
 
     // Build URL with event query parameter and meta story context
     window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}${fromMetaParam}`;
@@ -1726,10 +1919,11 @@
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
     // Get current language from the URL
-    const currentLang = window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || 'en';
+    const currentLang =
+      window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || "en";
 
     // Include meta story context if available
-    const fromMetaParam = metaStoryId ? `?from_meta=${metaStoryId}` : '';
+    const fromMetaParam = metaStoryId ? `?from_meta=${metaStoryId}` : "";
 
     window.location.hash = `/${currentLang}/story/${personId}${fromMetaParam}`;
   }
@@ -1737,7 +1931,11 @@
   // Click-outside handler to close tooltip
   onMount(() => {
     function handleClickOutside(event) {
-      if (activeEventTooltip && tooltipElement && !tooltipElement.contains(event.target)) {
+      if (
+        activeEventTooltip &&
+        tooltipElement &&
+        !tooltipElement.contains(event.target)
+      ) {
         hideEventTooltip();
       }
     }
@@ -1749,9 +1947,13 @@
       }
 
       // Invalidate density map cache on significant scroll
-      const timelineContainer = document.querySelector('.meta-timeline-container');
+      const timelineContainer = document.querySelector(
+        ".meta-timeline-container"
+      );
       if (timelineContainer) {
-        const scrollDelta = Math.abs(timelineContainer.scrollLeft - lastDensityMapScroll);
+        const scrollDelta = Math.abs(
+          timelineContainer.scrollLeft - lastDensityMapScroll
+        );
         if (scrollDelta > 100) {
           cachedDensityMap = null;
         }
@@ -1771,19 +1973,21 @@
       }
     }
 
-    const timelineContainer = document.querySelector('.meta-timeline-container');
+    const timelineContainer = document.querySelector(
+      ".meta-timeline-container"
+    );
 
-    document.addEventListener('click', handleClickOutside);
-    window.addEventListener('resize', handleResize);
+    document.addEventListener("click", handleClickOutside);
+    window.addEventListener("resize", handleResize);
     if (timelineContainer) {
-      timelineContainer.addEventListener('scroll', handleScroll);
+      timelineContainer.addEventListener("scroll", handleScroll);
     }
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
-      window.removeEventListener('resize', handleResize);
+      document.removeEventListener("click", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
       if (timelineContainer) {
-        timelineContainer.removeEventListener('scroll', handleScroll);
+        timelineContainer.removeEventListener("scroll", handleScroll);
       }
 
       // Clear timeout on unmount
@@ -1797,7 +2001,10 @@
   });
 </script>
 
-<div class="meta-timeline-container" style="--density-factor: {densityFactor}; --header-reserve: {HEADER_RESERVE_HEIGHT}px;">
+<div
+  class="meta-timeline-container"
+  style="--density-factor: {densityFactor}; --header-reserve: {HEADER_RESERVE_HEIGHT}px;"
+>
   <!-- Fixed chapter header display - only shown when timeline is sticky -->
   {#if isSticky && currentChapterByIndicator}
     {#key currentChapterByIndicator.id}
@@ -1807,11 +2014,18 @@
         out:fade={{ duration: 200 }}
         style={chapterHeaderStyle}
       >
-        <div class="chapter-title-display" bind:clientWidth={chapterHeaderWidth}>
+        <div
+          class="chapter-title-display"
+          bind:clientWidth={chapterHeaderWidth}
+        >
           <div class="chapter-header-main">
-            <h3 class="chapter-title-text">{currentChapterByIndicator.title}</h3>
+            <h3 class="chapter-title-text">
+              {currentChapterByIndicator.title}
+            </h3>
             <span class="chapter-year-range">
-              {parseInt(currentChapterByIndicator.date_start)}–{parseInt(currentChapterByIndicator.date_end)}
+              {parseInt(currentChapterByIndicator.date_start)}–{parseInt(
+                currentChapterByIndicator.date_end
+              )}
             </span>
           </div>
         </div>
@@ -1827,7 +2041,8 @@
           class="chapter-box"
           class:light={i % 2 === 0}
           class:dark={i % 2 !== 0}
-          class:active={currentChapterByIndicator && currentChapterByIndicator.id === chapter.id}
+          class:active={currentChapterByIndicator &&
+            currentChapterByIndicator.id === chapter.id}
           style="left: {chapter.leftPx}px; width: {chapter.widthPx}px;"
         ></div>
       {/each}
@@ -1836,11 +2051,13 @@
     <!-- Gap indicators layer -->
     {#if timelineSegments}
       <div class="gaps-layer">
-        {#each timelineSegments.filter(seg => seg.type === 'gap') as gapSegment}
+        {#each timelineSegments.filter((seg) => seg.type === "gap") as gapSegment}
           <div
             class="gap-indicator"
-            style="left: {gapSegment.pixelStart}px; width: {gapSegment.pixelEnd - gapSegment.pixelStart}px;"
-            title="{gapSegment.yearStart}–{gapSegment.yearEnd} ({gapSegment.yearEnd - gapSegment.yearStart} years)"
+            style="left: {gapSegment.pixelStart}px; width: {gapSegment.pixelEnd -
+              gapSegment.pixelStart}px;"
+            title="{gapSegment.yearStart}–{gapSegment.yearEnd} ({gapSegment.yearEnd -
+              gapSegment.yearStart} years)"
           >
             <div class="gap-label">
               {gapSegment.yearEnd - gapSegment.yearStart}y
@@ -1864,9 +2081,18 @@
         {#if hEvent.widthPx > 0}
           <div
             class="historical-event-marker range"
-            style="left: {hEvent.leftPx}px; width: {hEvent.widthPx}px; margin-bottom: {hEvent.stackIndex * 18}px;"
-            on:click={(e) => { e.stopPropagation(); showHistoricalTooltip(hEvent, e); }}
-            on:keydown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); showHistoricalTooltip(hEvent, e); } }}
+            style="left: {hEvent.leftPx}px; width: {hEvent.widthPx}px; margin-bottom: {hEvent.stackIndex *
+              18}px;"
+            on:click={(e) => {
+              e.stopPropagation();
+              showHistoricalTooltip(hEvent, e);
+            }}
+            on:keydown={(e) => {
+              if (e.key === "Enter") {
+                e.stopPropagation();
+                showHistoricalTooltip(hEvent, e);
+              }
+            }}
             role="button"
             tabindex="0"
             aria-label="{hEvent.title} ({hEvent.year}–{hEvent.endYear})"
@@ -1877,9 +2103,18 @@
         {:else}
           <div
             class="historical-event-marker point"
-            style="left: {hEvent.leftPx}px; margin-bottom: {hEvent.stackIndex * 18}px;"
-            on:click={(e) => { e.stopPropagation(); showHistoricalTooltip(hEvent, e); }}
-            on:keydown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); showHistoricalTooltip(hEvent, e); } }}
+            style="left: {hEvent.leftPx}px; margin-bottom: {hEvent.stackIndex *
+              18}px;"
+            on:click={(e) => {
+              e.stopPropagation();
+              showHistoricalTooltip(hEvent, e);
+            }}
+            on:keydown={(e) => {
+              if (e.key === "Enter") {
+                e.stopPropagation();
+                showHistoricalTooltip(hEvent, e);
+              }
+            }}
             role="button"
             tabindex="0"
             aria-label="{hEvent.title} ({hEvent.year})"
@@ -1896,7 +2131,13 @@
       {#each themesWithPersons as theme, themeIndex}
         <!-- Theme title row (only if title exists) -->
         {#if theme.title}
-          <div class="theme-title-row" style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(themeIndex, visiblePersonIds)}px; height: {effectiveThemeTitleHeight}px;">
+          <div
+            class="theme-title-row"
+            style="left: {theme.leftPx}px; width: {theme.widthPx}px; top: {calculateThemeTop(
+              themeIndex,
+              visiblePersonIds
+            )}px; height: {effectiveThemeTitleHeight}px;"
+          >
             <h4 class="theme-title">{theme.title}</h4>
           </div>
         {/if}
@@ -1912,14 +2153,22 @@
             style="
               left: {personData.leftPx}px;
               width: {personData.widthPx}px;
-              top: {calculatePersonTop(themeIndex, personIndex, visiblePersonIds)}px;
-              height: {isCollapsed ? effectivePersonRowHeightCollapsed : effectivePersonRowHeight}px;
+              top: {calculatePersonTop(
+              themeIndex,
+              personIndex,
+              visiblePersonIds
+            )}px;
+              height: {isCollapsed
+              ? effectivePersonRowHeightCollapsed
+              : effectivePersonRowHeight}px;
               --person-primary: {colors.primary};
               --person-secondary: {colors.secondary};
               --person-primary-rgb: {colors.primaryRgb};
               --person-secondary-rgb: {colors.secondaryRgb};
             "
-            title="{displayName(personData.person.name)} ({personData.birthYear}–{personData.deathYear || 'present'})"
+            title="{displayName(
+              personData.person.name
+            )} ({personData.birthYear}–{personData.deathYear || 'present'})"
           >
             <div class="person-name-wrapper">
               <div class="person-name-label">
@@ -1930,7 +2179,8 @@
               <div
                 class="person-portrait"
                 on:click={() => handlePersonClick(personData.personId)}
-                on:keydown={(e) => e.key === 'Enter' && handlePersonClick(personData.personId)}
+                on:keydown={(e) =>
+                  e.key === "Enter" && handlePersonClick(personData.personId)}
                 role="button"
                 tabindex="0"
               >
@@ -1944,7 +2194,7 @@
             <div class="person-line"></div>
             <div class="person-dates">
               <span class="person-birth">{personData.birthYear}</span>
-              <span class="person-death">{personData.deathYear || '...'}</span>
+              <span class="person-death">{personData.deathYear || "..."}</span>
             </div>
 
             <!-- Event markers -->
@@ -1953,11 +2203,18 @@
               {#each events as event, eventIndex}
                 {@const relativeLeftPx = event.leftPx - personData.leftPx}
                 {@const eventKey = `${personData.personId}-${eventIndex}`}
-                {@const isHoveredByIndicator = hoveredEventsByIndicator.has(eventKey)}
-                {@const isActive = activeEventTooltip && (
-                  (activeEventTooltip.personId === personData.personId && activeEventTooltip.eventIndex === eventIndex) ||
-                  (activeEventTooltip.events && activeEventTooltip.events.some(evt => evt.personId === personData.personId && evt.eventIndex === eventIndex))
-                )}
+                {@const isHoveredByIndicator =
+                  hoveredEventsByIndicator.has(eventKey)}
+                {@const isActive =
+                  activeEventTooltip &&
+                  ((activeEventTooltip.personId === personData.personId &&
+                    activeEventTooltip.eventIndex === eventIndex) ||
+                    (activeEventTooltip.events &&
+                      activeEventTooltip.events.some(
+                        (evt) =>
+                          evt.personId === personData.personId &&
+                          evt.eventIndex === eventIndex
+                      )))}
                 <div
                   class="event-marker essential"
                   class:indicator-hover={isHoveredByIndicator}
@@ -1968,9 +2225,14 @@
                     showEventTooltip(personData.personId, eventIndex, event, e);
                   }}
                   on:keydown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       e.stopPropagation();
-                      showEventTooltip(personData.personId, eventIndex, event, e);
+                      showEventTooltip(
+                        personData.personId,
+                        eventIndex,
+                        event,
+                        e
+                      );
                     }
                   }}
                   role="button"
@@ -1987,7 +2249,11 @@
     </div>
 
     <!-- Scroll position indicator -->
-    <div class="scroll-indicator" style="left: {scrollIndicatorLeftPx}px; top: {HEADER_RESERVE_HEIGHT - 10}px;">
+    <div
+      class="scroll-indicator"
+      style="left: {scrollIndicatorLeftPx}px; top: {HEADER_RESERVE_HEIGHT -
+        10}px;"
+    >
       {#if currentIndicatorYear}
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
       {/if}
@@ -2007,12 +2273,18 @@
       top: {activeEventTooltip.y}px;
       --anchor-x: {activeEventTooltip.anchor.x};
       --anchor-y: {activeEventTooltip.anchor.y};
-      --tooltip-max-width: {activeEventTooltip.maxWidth ? `${activeEventTooltip.maxWidth}px` : 'min(540px, calc(90vw - 80px))'};
-      --tooltip-max-height: {activeEventTooltip.maxHeight ? `${activeEventTooltip.maxHeight}px` : 'none'};
-      --tooltip-overflow: {activeEventTooltip.enableInternalScroll ? 'auto' : 'visible'};
+      --tooltip-max-width: {activeEventTooltip.maxWidth
+      ? `${activeEventTooltip.maxWidth}px`
+      : 'min(540px, calc(90vw - 80px))'};
+      --tooltip-max-height: {activeEventTooltip.maxHeight
+      ? `${activeEventTooltip.maxHeight}px`
+      : 'none'};
+      --tooltip-overflow: {activeEventTooltip.enableInternalScroll
+      ? 'auto'
+      : 'visible'};
     "
     on:click={(e) => e.stopPropagation()}
-    on:keydown={(e) => e.key === 'Escape' && hideEventTooltip()}
+    on:keydown={(e) => e.key === "Escape" && hideEventTooltip()}
     role="dialog"
     aria-label="Event details"
     tabindex="-1"
@@ -2046,8 +2318,8 @@
                 href={evt.wikipediaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Wikipedia"
-              >W</a>
+                title="Wikipedia">W</a
+              >
             {:else if !evt.isHistorical}
               <button
                 class="tooltip-action-compact"
@@ -2069,7 +2341,6 @@
     </div>
   </div>
 {/if}
-
 
 <style>
   /* Container - full width and height scrollable panel */
@@ -2099,7 +2370,10 @@
     position: relative;
     margin-left: 40px;
     height: 100%;
-    padding-top: var(--header-reserve, 60px); /* Reserve space for fixed chapter header */
+    padding-top: var(
+      --header-reserve,
+      60px
+    ); /* Reserve space for fixed chapter header */
   }
 
   /* Fixed chapter header - positioned at top, doesn't scroll */
@@ -2118,7 +2392,8 @@
     border: 1px solid rgba(56, 189, 248, 0.7);
     border-radius: 0.5rem;
     /* Density-adaptive padding: scales down when space is constrained */
-    padding: calc(0.4rem * max(0.8, var(--density-factor, 1))) calc(0.8rem * max(0.9, var(--density-factor, 1)));
+    padding: calc(0.4rem * max(0.8, var(--density-factor, 1)))
+      calc(0.8rem * max(0.9, var(--density-factor, 1)));
     box-shadow:
       0 8px 24px rgba(0, 0, 0, 0.5),
       0 0 20px rgba(56, 189, 248, 0.2);
@@ -2143,7 +2418,7 @@
   }
 
   .chapter-title-text {
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     /* Density-adaptive font size: scales down when space is constrained */
     font-size: calc(0.9rem * max(0.85, var(--density-factor, 1)));
     font-weight: 600;
@@ -2153,18 +2428,18 @@
   }
 
   .chapter-year-range {
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-family: var(--body-font, "IBM Plex Sans", sans-serif);
     /* Density-adaptive font size: scales down when space is constrained */
     font-size: calc(0.65rem * max(0.85, var(--density-factor, 1)));
     font-weight: 500;
     color: rgba(148, 163, 184, 0.9);
     background: rgba(56, 189, 248, 0.1);
     /* Density-adaptive padding: scales down when space is constrained */
-    padding: calc(0.15rem * max(0.8, var(--density-factor, 1))) calc(0.35rem * max(0.9, var(--density-factor, 1)));
+    padding: calc(0.15rem * max(0.8, var(--density-factor, 1)))
+      calc(0.35rem * max(0.9, var(--density-factor, 1)));
     border-radius: 0.25rem;
     white-space: nowrap;
   }
-
 
   /* Gaps layer - visual indicators for compressed timeline gaps */
   .gaps-layer {
@@ -2252,7 +2527,8 @@
   }
 
   @keyframes chapter-glow {
-    0%, 100% {
+    0%,
+    100% {
       background: rgba(56, 189, 248, 0.08);
       box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.15);
       border-color: rgba(56, 189, 248, 0.3);
@@ -2312,13 +2588,15 @@
     /* Shift left by portrait radius (22px scaled by density) */
     margin-left: calc(-22px * max(0.7, var(--density-factor, 1)));
     z-index: 5;
-    transition: top 0.3s ease-out, height 0.3s ease-out;
+    transition:
+      top 0.3s ease-out,
+      height 0.3s ease-out;
   }
 
   .theme-title {
     position: sticky;
     left: 0;
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     /* Scale font size based on density factor (min 70% of original) */
     font-size: calc(0.85rem * max(0.7, var(--density-factor, 1)));
     font-weight: 600;
@@ -2333,7 +2611,9 @@
   .person-lifespan {
     position: absolute;
     /* height is set inline via effectivePersonRowHeight */
-    transition: height 0.3s ease-out, top 0.3s ease-out;
+    transition:
+      height 0.3s ease-out,
+      top 0.3s ease-out;
   }
 
   /* Collapsed state - reduced height when not in viewport */
@@ -2345,7 +2625,9 @@
   .person-lifespan.collapsed .person-portrait {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.6);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
   }
 
   /* Hide person names when collapsed */
@@ -2464,7 +2746,11 @@
     top: 50%;
     transform: translateY(-50%);
     height: 3px;
-    background: linear-gradient(90deg, rgba(var(--person-primary-rgb), 0.6), rgba(var(--person-secondary-rgb), 0.6));
+    background: linear-gradient(
+      90deg,
+      rgba(var(--person-primary-rgb), 0.6),
+      rgba(var(--person-secondary-rgb), 0.6)
+    );
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     transition: all 0.2s;
@@ -2472,7 +2758,11 @@
   }
 
   .person-lifespan.alive .person-line {
-    background: linear-gradient(90deg, rgba(var(--person-secondary-rgb), 0.6), rgba(var(--person-primary-rgb), 0.6));
+    background: linear-gradient(
+      90deg,
+      rgba(var(--person-secondary-rgb), 0.6),
+      rgba(var(--person-primary-rgb), 0.6)
+    );
   }
 
   /* Person dates container - offset to clear portrait */
@@ -2653,7 +2943,6 @@
       font-size: 0.65rem;
       padding: 0.15rem 0.35rem;
     }
-
   }
 
   /* Event markers */
@@ -2693,7 +2982,9 @@
     border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    transition: background 0.2s, border 0.2s;
+    transition:
+      background 0.2s,
+      border 0.2s;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -2716,7 +3007,8 @@
   }
 
   @keyframes pulse-active {
-    0%, 100% {
+    0%,
+    100% {
       box-shadow:
         0 0 0 3px rgba(56, 189, 248, 0.5),
         0 0 20px rgba(56, 189, 248, 0.9),
@@ -2756,7 +3048,7 @@
     padding: 0.75rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     z-index: 10000;
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-family: var(--body-font, "IBM Plex Sans", sans-serif);
 
     /* Mobile constraint overrides */
     width: var(--tooltip-max-width, min(540px, calc(90vw - 80px)));
@@ -2793,7 +3085,6 @@
       );
     }
   }
-
 
   /* Grouped tooltip - same width as single tooltip for consistency */
   .event-tooltip.grouped {
@@ -2840,7 +3131,7 @@
   }
 
   .event-person-name {
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     font-size: 0.75rem;
     font-weight: 700;
     color: var(--item-primary);
@@ -2852,7 +3143,7 @@
   }
 
   .event-item-title {
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     font-size: 0.85rem;
     font-weight: 600;
     color: #e2e8f0;
@@ -3041,5 +3332,4 @@
     transform: none;
     background: rgba(var(--item-primary-rgb), 0.4);
   }
-
 </style>

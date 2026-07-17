@@ -17,7 +17,7 @@
   <div
     class="modal-backdrop"
     on:click={handleBackdropClick}
-    on:keydown={(e) => e.key === 'Escape' && onClose()}
+    on:keydown={(e) => e.key === "Escape" && onClose()}
     role="dialog"
     aria-modal="true"
     tabindex="-1"

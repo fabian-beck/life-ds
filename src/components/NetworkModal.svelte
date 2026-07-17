@@ -24,7 +24,7 @@
    */
   function parseTextWithPeople(text, connections = []) {
     if (!text || !connections.length) {
-      return [{ type: 'text', content: text || '' }];
+      return [{ type: "text", content: text || "" }];
     }
 
     const allMatches = [];
@@ -51,7 +51,7 @@
     // Match unique subcategories in the text
     for (const { subcategory, person } of uniqueSubcategories) {
       // Create a word-boundary regex for the subcategory
-      const regex = new RegExp(`\\b${subcategory}\\b`, 'gi');
+      const regex = new RegExp(`\\b${subcategory}\\b`, "gi");
       let match;
 
       while ((match = regex.exec(text)) !== null) {
@@ -61,7 +61,7 @@
           person,
           matchedText: match[0],
           priority: 5, // Lower priority than full names
-          type: 'subcategory',
+          type: "subcategory",
         });
       }
     }
@@ -79,13 +79,14 @@
     for (const conn of connections) {
       const normalized = normalizePersonName(conn.person_name);
       const variants = generateNameVariants(conn.person_name);
-      const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+      const hasAmbiguousLastName =
+        normalized && lastNameCounts.get(normalized.lastName) > 1;
 
       let bestMatch = null;
 
       for (const variant of variants) {
         // Skip last-name-only matches if ambiguous
-        if (hasAmbiguousLastName && variant.type === 'last') {
+        if (hasAmbiguousLastName && variant.type === "last") {
           continue;
         }
 
@@ -102,12 +103,15 @@
             person: conn,
             matchedText: match[0],
             priority: variant.priority,
-            type: 'person',
+            type: "person",
           };
 
-          if (!bestMatch ||
-              candidate.priority < bestMatch.priority ||
-              (candidate.priority === bestMatch.priority && candidate.matchedText.length > bestMatch.matchedText.length)) {
+          if (
+            !bestMatch ||
+            candidate.priority < bestMatch.priority ||
+            (candidate.priority === bestMatch.priority &&
+              candidate.matchedText.length > bestMatch.matchedText.length)
+          ) {
             bestMatch = candidate;
           }
         }
@@ -142,13 +146,13 @@
     for (const match of filteredMatches) {
       if (match.start > currentPos) {
         segments.push({
-          type: 'text',
+          type: "text",
           content: text.slice(currentPos, match.start),
         });
       }
 
       segments.push({
-        type: 'person',
+        type: "person",
         content: match.matchedText,
         person: match.person,
       });
@@ -158,7 +162,7 @@
 
     if (currentPos < text.length) {
       segments.push({
-        type: 'text',
+        type: "text",
         content: text.slice(currentPos),
       });
     }
@@ -209,7 +213,9 @@
 
     // If no repeated subcategories, return ungrouped
     if (repeatedSubcategories.size === 0) {
-      return [{ subcategory: null, label: null, people: sortByStrength(connections) }];
+      return [
+        { subcategory: null, label: null, people: sortByStrength(connections) },
+      ];
     }
 
     // Group by subcategory
@@ -247,7 +253,7 @@
     if (ungrouped.length > 0) {
       groupsArray.push({
         subcategory: null,
-        label: 'Other',
+        label: "Other",
         people: sortByStrength(ungrouped),
         accumulatedStrength: Infinity, // Ensures it's always last
       });
@@ -270,11 +276,11 @@
   }
 
   function capitalizeSubcategory(subcategory) {
-    if (!subcategory) return '';
+    if (!subcategory) return "";
     return subcategory
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   }
 
   function subdivideFamilyMembers(familyConnections) {
@@ -399,8 +405,15 @@
             <div class="group-layout">
               <div class="group-description">
                 {#if summaryMap[type]}
-                  {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
-                  <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
+                  {@const summarySegments = parseTextWithPeople(
+                    summaryMap[type],
+                    people
+                  )}
+                  <p class="category-summary">
+                    {#each summarySegments as segment}{#if segment.type === "text"}{segment.content}{:else}<strong
+                          class="person-mention">{segment.content}</strong
+                        >{/if}{/each}
+                  </p>
                 {/if}
               </div>
 
@@ -503,8 +516,15 @@
             <div class="group-layout">
               <div class="group-description">
                 {#if summaryMap[type]}
-                  {@const summarySegments = parseTextWithPeople(summaryMap[type], people)}
-                  <p class="category-summary">{#each summarySegments as segment}{#if segment.type === 'text'}{segment.content}{:else}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
+                  {@const summarySegments = parseTextWithPeople(
+                    summaryMap[type],
+                    people
+                  )}
+                  <p class="category-summary">
+                    {#each summarySegments as segment}{#if segment.type === "text"}{segment.content}{:else}<strong
+                          class="person-mention">{segment.content}</strong
+                        >{/if}{/each}
+                  </p>
                 {/if}
               </div>
 
@@ -515,8 +535,10 @@
                   {/if}
                   <div class="group-people">
                     {#each subgroup.people as person, idx (person.person_name)}
-                      {@const personKey = `${type}-${subgroup.subcategory || 'default'}-${idx}`}
-                      {@const subcategory = getSubcategory(person.relationship_type)}
+                      {@const personKey = `${type}-${subgroup.subcategory || "default"}-${idx}`}
+                      {@const subcategory = getSubcategory(
+                        person.relationship_type
+                      )}
                       <PersonChip
                         {person}
                         {personKey}

@@ -1,5 +1,10 @@
 <script>
-  import { mdiRefresh, mdiChevronLeft, mdiChevronRight, mdiArrowRight } from "@mdi/js";
+  import {
+    mdiRefresh,
+    mdiChevronLeft,
+    mdiChevronRight,
+    mdiArrowRight,
+  } from "@mdi/js";
   import { onMount, onDestroy } from "svelte";
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
@@ -70,11 +75,17 @@
   $: if (image && allImages.length > 1) {
     if (currentIndex < allImages.length - 1) {
       const nextImg = new Image();
-      nextImg.src = getThumbnailUrl(allImages[currentIndex + 1].url, LIGHTBOX_WIDTH);
+      nextImg.src = getThumbnailUrl(
+        allImages[currentIndex + 1].url,
+        LIGHTBOX_WIDTH
+      );
     }
     if (currentIndex > 0) {
       const prevImg = new Image();
-      prevImg.src = getThumbnailUrl(allImages[currentIndex - 1].url, LIGHTBOX_WIDTH);
+      prevImg.src = getThumbnailUrl(
+        allImages[currentIndex - 1].url,
+        LIGHTBOX_WIDTH
+      );
     }
   }
 
@@ -87,10 +98,12 @@
     try {
       const hostname = new URL(url).hostname.toLowerCase();
       if (hostname.includes("flickr.com")) return "Flickr";
-      if (hostname.includes("commons.wikimedia.org")) return "Wikimedia Commons";
+      if (hostname.includes("commons.wikimedia.org"))
+        return "Wikimedia Commons";
       if (hostname.includes("wikimedia.org")) return "Wikimedia";
       if (hostname.includes("wikipedia.org")) return "Wikipedia";
-      if (hostname.includes("met.museum") || hostname.includes("metmuseum.org")) return "The Met";
+      if (hostname.includes("met.museum") || hostname.includes("metmuseum.org"))
+        return "The Met";
       if (hostname.includes("smithsonian")) return "Smithsonian";
       if (hostname.includes("loc.gov")) return "Library of Congress";
       if (hostname.includes("europeana.eu")) return "Europeana";
@@ -235,7 +248,11 @@
         const velocity = deltaTime > 0 ? Math.abs(deltaX) / deltaTime : 0;
 
         // Horizontal swipe with sufficient velocity and distance
-        if (velocity > 0.3 && Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (
+          velocity > 0.3 &&
+          Math.abs(deltaX) > 50 &&
+          Math.abs(deltaX) > Math.abs(deltaY)
+        ) {
           if (deltaX > 0 && canGoNext) {
             goToNextImage();
           } else if (deltaX < 0 && canGoPrev) {
@@ -440,9 +457,13 @@
             type="button"
             class="jump-to-event-btn"
             on:click={jumpToEvent}
-            aria-label={isFromOverview ? $_("image.go_to_overview") : $_("image.go_to_event")}
+            aria-label={isFromOverview
+              ? $_("image.go_to_overview")
+              : $_("image.go_to_event")}
           >
-            {isFromOverview ? $_("image.go_to_overview") : $_("image.go_to_event")}
+            {isFromOverview
+              ? $_("image.go_to_overview")
+              : $_("image.go_to_event")}
             <svg class="icon icon-small" viewBox="0 0 24 24" aria-hidden="true">
               <path d={mdiArrowRight} />
             </svg>
@@ -474,7 +495,9 @@
           {/if}
           <p class="caption-meta">
             {#if hasMultipleImages}
-              <span class="image-counter">{currentIndex + 1} / {allImages.length}</span>
+              <span class="image-counter"
+                >{currentIndex + 1} / {allImages.length}</span
+              >
             {/if}
             {#if image.creator || image.license || image.source}
               {#if hasMultipleImages}
@@ -491,21 +514,24 @@
                     target="_blank"
                     rel="noreferrer"
                     on:click|stopPropagation
-                    class="attribution-license"
-                  >{image.license}</a>
+                    class="attribution-license">{image.license}</a
+                  >
                 {:else}
                   <span class="attribution-license">{image.license}</span>
                 {/if}
               {/if}
               {#if image.originalImage || image.source}
-                {#if image.creator || image.license}<span class="meta-separator">·</span>{/if}
+                {#if image.creator || image.license}<span class="meta-separator"
+                    >·</span
+                  >{/if}
                 <a
                   href={image.originalImage || image.source}
                   target="_blank"
                   rel="noreferrer"
                   on:click|stopPropagation
                   class="attribution-source"
-                >{getSourceName(image.originalImage || image.source)}</a>
+                  >{getSourceName(image.originalImage || image.source)}</a
+                >
               {/if}
             {/if}
           </p>

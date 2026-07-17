@@ -276,7 +276,10 @@
       <button
         type="button"
         class="tooltip-network-btn"
-        on:click|stopPropagation={() => { onToggle(personKey); onOpenNetwork(); }}
+        on:click|stopPropagation={() => {
+          onToggle(personKey);
+          onOpenNetwork();
+        }}
         aria-label={$_("story.show_network")}
       >
         <svg
@@ -314,7 +317,9 @@
     overflow: visible;
     height: 2rem;
     box-sizing: border-box;
-    filter: drop-shadow(0 0 2px var(--story-secondary, rgba(56, 189, 248, 0.15)));
+    filter: drop-shadow(
+      0 0 2px var(--story-secondary, rgba(56, 189, 248, 0.15))
+    );
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,

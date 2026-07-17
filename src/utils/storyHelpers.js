@@ -148,7 +148,11 @@ export function formatDate(event, formatters) {
   if (labelOverride) {
     return labelOverride;
   }
-  const startLabel = formatSingleDate(event.date, event.date_precision, formatters);
+  const startLabel = formatSingleDate(
+    event.date,
+    event.date_precision,
+    formatters
+  );
   const endLabel = formatSingleDate(
     event.date_end,
     event.date_end_precision ?? event.date_precision,
@@ -204,7 +208,8 @@ export function normalizePrimaryLocation(event) {
   }
 
   // Find primary location, or use first with coordinates
-  const primary = event.locations.find(loc => loc?.primary === true) || event.locations[0];
+  const primary =
+    event.locations.find((loc) => loc?.primary === true) || event.locations[0];
 
   if (!Array.isArray(primary?.centroid) || primary.centroid.length !== 2) {
     return null;
@@ -227,14 +232,19 @@ export function normalizeAllLocations(event) {
   }
 
   return event.locations
-    .filter(loc => Array.isArray(loc?.centroid) && loc.centroid.length === 2)
-    .map(loc => {
+    .filter((loc) => Array.isArray(loc?.centroid) && loc.centroid.length === 2)
+    .map((loc) => {
       const [lng, lat] = loc.centroid.map(Number);
       return Number.isFinite(lng) && Number.isFinite(lat)
-        ? { lon: lng, lat: lat, name: loc.name_historic, primary: loc.primary === true }
+        ? {
+            lon: lng,
+            lat: lat,
+            name: loc.name_historic,
+            primary: loc.primary === true,
+          }
         : null;
     })
-    .filter(coord => coord !== null);
+    .filter((coord) => coord !== null);
 }
 
 /**
@@ -335,7 +345,7 @@ function snapToWikimediaWidth(width) {
  */
 export function getThumbnailUrl(imageOrPortrait, width = 400) {
   // Handle portrait objects with multi-size WebP support
-  if (imageOrPortrait && typeof imageOrPortrait === 'object') {
+  if (imageOrPortrait && typeof imageOrPortrait === "object") {
     const portrait = imageOrPortrait;
 
     // Select appropriate size based on target width
@@ -380,7 +390,7 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
       const [base, path] = parts;
       const filename = path.split("/").pop();
       // For SVG files, append .png to get the rasterized version
-      const thumbFilename = filename.toLowerCase().endsWith('.svg')
+      const thumbFilename = filename.toLowerCase().endsWith(".svg")
         ? `${filename}.png`
         : filename;
       return `${base}/wikipedia/commons/thumb/${path}/${stdWidth}px-${thumbFilename}`;
@@ -447,7 +457,9 @@ export function sourceLabel(url) {
  * @returns {string|null} Subcategory or null
  */
 export function getSubcategory(relationshipType) {
-  return relationshipType?.includes("/") ? relationshipType.split("/")[1] : null;
+  return relationshipType?.includes("/")
+    ? relationshipType.split("/")[1]
+    : null;
 }
 
 /**
@@ -458,10 +470,13 @@ export function getSubcategory(relationshipType) {
  */
 function escapeRegex(str) {
   // First escape special regex characters
-  let escaped = str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  let escaped = str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   // Replace all types of hyphens with a character class that matches any hyphen variant
   // This handles: regular hyphen (-), non-breaking hyphen (‑), en-dash (–), em-dash (—), minus sign (−)
-  escaped = escaped.replace(/[-\u2010\u2011\u2012\u2013\u2014\u2212]/g, '[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212]');
+  escaped = escaped.replace(
+    /[-\u2010\u2011\u2012\u2013\u2014\u2212]/g,
+    "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212]"
+  );
   return escaped;
 }
 
@@ -475,10 +490,35 @@ const MATCH_THRESHOLD = 0.6;
  * Prevents false positives like "Church", "Grace", "Newton".
  */
 const COMMON_WORDS = new Set([
-  'church', 'grace', 'hope', 'faith', 'love', 'king', 'queen',
-  'prince', 'lord', 'duke', 'white', 'black', 'green', 'brown',
-  'young', 'old', 'good', 'new', 'long', 'short', 'stone', 'wood',
-  'hill', 'field', 'well', 'strong', 'bright', 'rich', 'poor'
+  "church",
+  "grace",
+  "hope",
+  "faith",
+  "love",
+  "king",
+  "queen",
+  "prince",
+  "lord",
+  "duke",
+  "white",
+  "black",
+  "green",
+  "brown",
+  "young",
+  "old",
+  "good",
+  "new",
+  "long",
+  "short",
+  "stone",
+  "wood",
+  "hill",
+  "field",
+  "well",
+  "strong",
+  "bright",
+  "rich",
+  "poor",
 ]);
 
 /**
@@ -511,38 +551,49 @@ function isWithinYearRange(eventYear, startYear, endYear) {
  * @returns {Object|null} Normalized name components
  */
 export function normalizePersonName(name) {
-  if (!name || typeof name !== 'string') return null;
+  if (!name || typeof name !== "string") return null;
 
   let normalized = name.trim();
 
   // Normalize all hyphen variants to standard ASCII hyphen
   // This handles: non-breaking hyphen (‑), en-dash (–), em-dash (—), hyphen (‐), minus sign (−)
-  normalized = normalized.replace(/[\u2010\u2011\u2012\u2013\u2014\u2212]/g, '-');
+  normalized = normalized.replace(
+    /[\u2010\u2011\u2012\u2013\u2014\u2212]/g,
+    "-"
+  );
 
   // Extract maiden name if present: "Ingrid Otto (née Smolla)" → maidenName = "Smolla"
   // Also handles: "née", "born", "geborene", "geb."
   let maidenName = null;
-  const maidenMatch = normalized.match(/\(\s*(?:née|nee|born|geborene|geb\.?)\s+([^)]+)\)/i);
+  const maidenMatch = normalized.match(
+    /\(\s*(?:née|nee|born|geborene|geb\.?)\s+([^)]+)\)/i
+  );
   if (maidenMatch) {
     maidenName = maidenMatch[1].trim();
   }
 
   // Remove parenthetical clarifications: "Ethel Sara Turing (née Stoney)" → "Ethel Sara Turing"
-  normalized = normalized.replace(/\s*\([^)]*\)/g, '');
+  normalized = normalized.replace(/\s*\([^)]*\)/g, "");
 
   // Remove bracketed clarifications: "D. G. [David Gawen] Champernowne" → "D. G. Champernowne"
-  normalized = normalized.replace(/\s*\[[^\]]*\]/g, '');
+  normalized = normalized.replace(/\s*\[[^\]]*\]/g, "");
 
   // Remove comma-separated titles: "Henry II, Holy Roman Emperor" → "Henry II"
   // This handles titles that come after a comma
-  normalized = normalized.replace(/,\s*(Holy Roman Emperor|Holy Roman Empress|King|Queen|Emperor|Empress|Duke|Duchess|Count|Countess|Prince|Princess|Bishop|Archbishop|Pope|Saint|Dr\.|Prof\.).*$/i, '');
+  normalized = normalized.replace(
+    /,\s*(Holy Roman Emperor|Holy Roman Empress|King|Queen|Emperor|Empress|Duke|Duchess|Count|Countess|Prince|Princess|Bishop|Archbishop|Pope|Saint|Dr\.|Prof\.).*$/i,
+    ""
+  );
 
   // Remove suffixes like Jr., Sr. but NOT Roman numerals (II, III, IV, V, etc.) as they're part of regnal names
-  normalized = normalized.replace(/\s+(Jr|Sr)\.?$/i, '');
+  normalized = normalized.replace(/\s+(Jr|Sr)\.?$/i, "");
 
   // Remove titles with geographic qualifiers: "Count of Luxembourg", "Duke of Bavaria", "Bishop of Metz"
   // Pattern: (Title) of (Place) - these are descriptive, not part of the actual name
-  normalized = normalized.replace(/,?\s*(Count|Duke|Duchess|Bishop|Archbishop|King|Queen|Prince|Princess|Emperor|Empress|Lord|Lady|Earl|Baron|Baroness|Margrave|Landgrave|Elector)\s+of\s+[\w\s-]+$/i, '');
+  normalized = normalized.replace(
+    /,?\s*(Count|Duke|Duchess|Bishop|Archbishop|King|Queen|Prince|Princess|Emperor|Empress|Lord|Lady|Earl|Baron|Baroness|Margrave|Landgrave|Elector)\s+of\s+[\w\s-]+$/i,
+    ""
+  );
 
   // Also handle "of Place" at the end for names like "Cunigunde of Luxembourg" → keep as is but don't use place as last name
   // We'll handle this by detecting the "of Place" pattern
@@ -555,12 +606,12 @@ export function normalizePersonName(name) {
   }
 
   // Split into tokens
-  const tokens = normalized.split(/\s+/).filter(t => t.length > 0);
+  const tokens = normalized.split(/\s+/).filter((t) => t.length > 0);
   if (tokens.length === 0) return null;
 
   // Handle "von", "de", "van" etc. as part of last name (but NOT "of" which is geographic)
-  const particleIndex = tokens.findIndex(t =>
-    ['von', 'van', 'de', 'del', 'della', 'di'].includes(t.toLowerCase())
+  const particleIndex = tokens.findIndex((t) =>
+    ["von", "van", "de", "del", "della", "di"].includes(t.toLowerCase())
   );
 
   let lastName, firstNames;
@@ -569,27 +620,27 @@ export function normalizePersonName(name) {
     // For names like "Cunigunde of Luxembourg", use the first part as the name
     // Don't use the geographic part as the last name
     const nameBeforeOf = ofPlaceMatch[1];
-    const nameTokens = nameBeforeOf.split(/\s+/).filter(t => t.length > 0);
+    const nameTokens = nameBeforeOf.split(/\s+/).filter((t) => t.length > 0);
     if (nameTokens.length === 0) return null;
     lastName = nameTokens[nameTokens.length - 1];
     firstNames = nameTokens.slice(0, -1);
   } else if (particleIndex > -1 && particleIndex < tokens.length - 1) {
     // Include particle in last name
-    lastName = tokens.slice(particleIndex).join(' ');
+    lastName = tokens.slice(particleIndex).join(" ");
     firstNames = tokens.slice(0, particleIndex);
   } else {
     lastName = tokens[tokens.length - 1];
     firstNames = tokens.slice(0, -1);
   }
 
-  const firstName = firstNames.length > 0 ? firstNames[0] : '';
+  const firstName = firstNames.length > 0 ? firstNames[0] : "";
 
   return {
     fullName: normalized,
     firstName: firstName,
     lastName: lastName,
     maidenName: maidenName,
-    tokens: tokens.map(t => t.toLowerCase()),
+    tokens: tokens.map((t) => t.toLowerCase()),
     originalName: name,
     isGeographicName: isGeographicName,
   };
@@ -609,8 +660,8 @@ export function generateNameVariants(name) {
   // Variant 1: Full name (highest priority)
   variants.push({
     text: normalized.fullName,
-    regex: new RegExp(`\\b${escapeRegex(normalized.fullName)}\\b`, 'gi'),
-    type: 'full',
+    regex: new RegExp(`\\b${escapeRegex(normalized.fullName)}\\b`, "gi"),
+    type: "full",
     priority: 1,
   });
 
@@ -618,25 +669,32 @@ export function generateNameVariants(name) {
   // Only if last name is distinctive (>4 chars, not a common word)
   // Skip for geographic names where the "last name" is really the only name (e.g., "Cunigunde" from "Cunigunde of Luxembourg")
   // For geographic names, the lastName IS the firstName, so skip last-name-only variant
-  if (normalized.lastName.length > 4 &&
-      !isCommonWord(normalized.lastName) &&
-      !normalized.isGeographicName &&
-      normalized.firstName) {  // Must have a distinct first name
+  if (
+    normalized.lastName.length > 4 &&
+    !isCommonWord(normalized.lastName) &&
+    !normalized.isGeographicName &&
+    normalized.firstName
+  ) {
+    // Must have a distinct first name
     variants.push({
       text: normalized.lastName,
-      regex: new RegExp(`\\b${escapeRegex(normalized.lastName)}\\b`, 'gi'),
-      type: 'last',
+      regex: new RegExp(`\\b${escapeRegex(normalized.lastName)}\\b`, "gi"),
+      type: "last",
       priority: 2,
     });
   }
 
   // Variant 3: First + Last (in case middle names/initials differ)
-  if (normalized.firstName && normalized.tokens.length > 2 && !normalized.isGeographicName) {
+  if (
+    normalized.firstName &&
+    normalized.tokens.length > 2 &&
+    !normalized.isGeographicName
+  ) {
     const firstLast = `${normalized.firstName} ${normalized.lastName}`;
     variants.push({
       text: firstLast,
-      regex: new RegExp(`\\b${escapeRegex(firstLast)}\\b`, 'gi'),
-      type: 'first_last',
+      regex: new RegExp(`\\b${escapeRegex(firstLast)}\\b`, "gi"),
+      type: "first_last",
       priority: 1,
     });
   }
@@ -644,13 +702,15 @@ export function generateNameVariants(name) {
   // Variant 4: First name only (lowest priority, for rulers/single-name persons)
   // Only if first name is distinctive enough (>4 chars, not too common)
   // This helps match "Henry" in text when the person is "Henry II"
-  if (normalized.firstName &&
-      normalized.firstName.length > 4 &&
-      !isCommonWord(normalized.firstName)) {
+  if (
+    normalized.firstName &&
+    normalized.firstName.length > 4 &&
+    !isCommonWord(normalized.firstName)
+  ) {
     variants.push({
       text: normalized.firstName,
-      regex: new RegExp(`\\b${escapeRegex(normalized.firstName)}\\b`, 'gi'),
-      type: 'first',
+      regex: new RegExp(`\\b${escapeRegex(normalized.firstName)}\\b`, "gi"),
+      type: "first",
       priority: 3,
     });
   }
@@ -661,8 +721,8 @@ export function generateNameVariants(name) {
     const firstMaiden = `${normalized.firstName} ${normalized.maidenName}`;
     variants.push({
       text: firstMaiden,
-      regex: new RegExp(`\\b${escapeRegex(firstMaiden)}\\b`, 'gi'),
-      type: 'maiden',
+      regex: new RegExp(`\\b${escapeRegex(firstMaiden)}\\b`, "gi"),
+      type: "maiden",
       priority: 1,
     });
   }
@@ -692,36 +752,49 @@ function calculateNameSimilarity(name1, name2) {
   const romanNumeralPattern = /^(I{1,3}|IV|V|VI{0,3}|IX|X|XI{0,3}|XIV|XV)$/i;
 
   // Check first name match
-  const firstName1 = name1.firstName?.toLowerCase() || '';
-  const firstName2 = name2.firstName?.toLowerCase() || '';
+  const firstName1 = name1.firstName?.toLowerCase() || "";
+  const firstName2 = name2.firstName?.toLowerCase() || "";
   const firstNamesMatch = firstName1 && firstName2 && firstName1 === firstName2;
 
   // Check last name match - but ignore if last name is a Roman numeral
-  const lastName1 = name1.lastName?.toLowerCase() || '';
-  const lastName2 = name2.lastName?.toLowerCase() || '';
+  const lastName1 = name1.lastName?.toLowerCase() || "";
+  const lastName2 = name2.lastName?.toLowerCase() || "";
   const lastName1IsNumeral = romanNumeralPattern.test(lastName1);
   const lastName2IsNumeral = romanNumeralPattern.test(lastName2);
 
   // Only count last name match if neither is a Roman numeral
-  const lastNamesMatch = lastName1 && lastName2 &&
-    !lastName1IsNumeral && !lastName2IsNumeral &&
+  const lastNamesMatch =
+    lastName1 &&
+    lastName2 &&
+    !lastName1IsNumeral &&
+    !lastName2IsNumeral &&
     lastName1 === lastName2;
 
   // Check if last names are contained in each other (handles partial matches)
   // Also skip if either is a Roman numeral
-  const lastNameContained = lastName1 && lastName2 &&
-    !lastName1IsNumeral && !lastName2IsNumeral && (
-    lastName1.includes(lastName2) || lastName2.includes(lastName1)
-  );
+  const lastNameContained =
+    lastName1 &&
+    lastName2 &&
+    !lastName1IsNumeral &&
+    !lastName2IsNumeral &&
+    (lastName1.includes(lastName2) || lastName2.includes(lastName1));
 
   // Check for Roman numeral in either name (important for rulers)
-  const hasRomanNumeral1 = name1.tokens?.some(t => romanNumeralPattern.test(t));
-  const hasRomanNumeral2 = name2.tokens?.some(t => romanNumeralPattern.test(t));
+  const hasRomanNumeral1 = name1.tokens?.some((t) =>
+    romanNumeralPattern.test(t)
+  );
+  const hasRomanNumeral2 = name2.tokens?.some((t) =>
+    romanNumeralPattern.test(t)
+  );
 
   // If both have Roman numerals, they MUST match AND first names must also match
   if (hasRomanNumeral1 && hasRomanNumeral2) {
-    const numeral1 = name1.tokens.find(t => romanNumeralPattern.test(t))?.toUpperCase();
-    const numeral2 = name2.tokens.find(t => romanNumeralPattern.test(t))?.toUpperCase();
+    const numeral1 = name1.tokens
+      .find((t) => romanNumeralPattern.test(t))
+      ?.toUpperCase();
+    const numeral2 = name2.tokens
+      .find((t) => romanNumeralPattern.test(t))
+      ?.toUpperCase();
     if (numeral1 !== numeral2) {
       return 0; // Different rulers (e.g., Henry II vs Henry V), no match
     }
@@ -741,7 +814,11 @@ function calculateNameSimilarity(name1, name2) {
   // Last name match (only for real surnames, not Roman numerals)
   if (lastNamesMatch) {
     score += 0.4;
-  } else if (lastNameContained && lastName1.length > 3 && lastName2.length > 3) {
+  } else if (
+    lastNameContained &&
+    lastName1.length > 3 &&
+    lastName2.length > 3
+  ) {
     // Partial last name match (for married names, etc.)
     score += 0.2;
   }
@@ -787,19 +864,25 @@ export function getRelevantPeople(event, egoNetwork) {
   const connections = egoNetwork.connections;
 
   // PHASE 1: Use involved_people field if present
-  if (event.involved_people && Array.isArray(event.involved_people) && event.involved_people.length > 0) {
+  if (
+    event.involved_people &&
+    Array.isArray(event.involved_people) &&
+    event.involved_people.length > 0
+  ) {
     // Normalize all involved people names
     const involvedNormalized = event.involved_people
-      .map(name => normalizePersonName(name))
+      .map((name) => normalizePersonName(name))
       .filter(Boolean);
 
-    const matched = connections.filter(conn => {
+    const matched = connections.filter((conn) => {
       const connNormalized = normalizePersonName(conn.person_name);
       if (!connNormalized) return false;
 
       // Find the best similarity score against any involved person
       const bestScore = Math.max(
-        ...involvedNormalized.map(involved => calculateNameSimilarity(involved, connNormalized))
+        ...involvedNormalized.map((involved) =>
+          calculateNameSimilarity(involved, connNormalized)
+        )
       );
 
       if (bestScore < MATCH_THRESHOLD) return false;
@@ -812,7 +895,8 @@ export function getRelevantPeople(event, egoNetwork) {
   }
 
   // PHASE 2: Fallback to smart text matching
-  const eventText = `${event?.title ?? ""} ${event?.description ?? ""}`.toLowerCase();
+  const eventText =
+    `${event?.title ?? ""} ${event?.description ?? ""}`.toLowerCase();
 
   // Check if multiple people share the same last name (ambiguity detection)
   const lastNameCounts = new Map();
@@ -825,17 +909,18 @@ export function getRelevantPeople(event, egoNetwork) {
   }
 
   const matchedConnections = connections
-    .map(connection => {
+    .map((connection) => {
       const normalized = normalizePersonName(connection.person_name);
       const variants = generateNameVariants(connection.person_name);
 
       // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
-      const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+      const hasAmbiguousLastName =
+        normalized && lastNameCounts.get(normalized.lastName) > 1;
 
       // Try to find best match
       for (const variant of variants) {
         // Skip last-name-only matches if ambiguous
-        if (hasAmbiguousLastName && variant.type === 'last') {
+        if (hasAmbiguousLastName && variant.type === "last") {
           continue;
         }
 
@@ -849,7 +934,7 @@ export function getRelevantPeople(event, egoNetwork) {
       }
       return null;
     })
-    .filter(match => {
+    .filter((match) => {
       if (!match) return false;
 
       // Year range check
@@ -862,10 +947,13 @@ export function getRelevantPeople(event, egoNetwork) {
 
       // Then by relationship strength
       const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
-      return (strengthOrder[a.connection.strength] || 3) - (strengthOrder[b.connection.strength] || 3);
+      return (
+        (strengthOrder[a.connection.strength] || 3) -
+        (strengthOrder[b.connection.strength] || 3)
+      );
     })
     .slice(0, 5)
-    .map(match => match.connection);
+    .map((match) => match.connection);
 
   return matchedConnections;
 }
@@ -878,7 +966,11 @@ export function getRelevantPeople(event, egoNetwork) {
  * @param {Array} relevantPeople - Array of connection objects
  * @returns {Array} Segments: {type: 'text'|'annotation'|'person', ...}
  */
-export function parseDescriptionSegments(description, annotations = {}, relevantPeople = []) {
+export function parseDescriptionSegments(
+  description,
+  annotations = {},
+  relevantPeople = []
+) {
   if (!description) return [];
 
   // Step 1: Parse annotations first (they take priority)
@@ -900,7 +992,7 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
       annotationRanges.push({
         start: match.index,
         end: annotationPattern.lastIndex,
-        type: 'annotation',
+        type: "annotation",
         termKey,
         displayText,
         annotation,
@@ -911,7 +1003,7 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
       annotationRanges.push({
         start: match.index,
         end: annotationPattern.lastIndex,
-        type: 'unresolved-annotation',
+        type: "unresolved-annotation",
         displayText,
       });
     }
@@ -936,14 +1028,15 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
     const variants = generateNameVariants(person.person_name);
 
     // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
-    const hasAmbiguousLastName = normalized && lastNameCounts.get(normalized.lastName) > 1;
+    const hasAmbiguousLastName =
+      normalized && lastNameCounts.get(normalized.lastName) > 1;
 
     // Find the best match for this person (we only want one)
     let bestMatch = null;
 
     for (const variant of variants) {
       // Skip last-name-only matches if ambiguous
-      if (hasAmbiguousLastName && variant.type === 'last') {
+      if (hasAmbiguousLastName && variant.type === "last") {
         continue;
       }
 
@@ -956,14 +1049,16 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
 
         // Check if this overlaps with an annotation
         const overlapsAnnotation = annotationRanges.some(
-          ann => (start >= ann.start && start < ann.end) || (end > ann.start && end <= ann.end)
+          (ann) =>
+            (start >= ann.start && start < ann.end) ||
+            (end > ann.start && end <= ann.end)
         );
 
         if (!overlapsAnnotation) {
           const candidate = {
             start,
             end,
-            type: 'person',
+            type: "person",
             person,
             matchedText: match[0],
             priority: variant.priority,
@@ -972,9 +1067,12 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
           // Keep this match if it's better than the current best
           // Better = lower priority number (full name beats last name)
           // If same priority, prefer longer match
-          if (!bestMatch ||
-              candidate.priority < bestMatch.priority ||
-              (candidate.priority === bestMatch.priority && candidate.matchedText.length > bestMatch.matchedText.length)) {
+          if (
+            !bestMatch ||
+            candidate.priority < bestMatch.priority ||
+            (candidate.priority === bestMatch.priority &&
+              candidate.matchedText.length > bestMatch.matchedText.length)
+          ) {
             bestMatch = candidate;
           }
         }
@@ -991,8 +1089,8 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
   const allRanges = [...annotationRanges, ...personMatches].sort((a, b) => {
     if (a.start !== b.start) return a.start - b.start;
     // If same start, annotations win
-    if (a.type === 'annotation') return -1;
-    if (b.type === 'annotation') return 1;
+    if (a.type === "annotation") return -1;
+    if (b.type === "annotation") return 1;
     return 0;
   });
 
@@ -1016,28 +1114,28 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
     // Add text before this range
     if (range.start > currentPos) {
       segments.push({
-        type: 'text',
+        type: "text",
         content: description.slice(currentPos, range.start),
       });
     }
 
     // Add the range itself
-    if (range.type === 'annotation') {
+    if (range.type === "annotation") {
       segments.push({
-        type: 'annotation',
+        type: "annotation",
         termKey: range.termKey,
         displayText: range.displayText,
         annotation: range.annotation,
       });
-    } else if (range.type === 'unresolved-annotation') {
+    } else if (range.type === "unresolved-annotation") {
       // Unresolved annotation: just add the display text as plain text
       segments.push({
-        type: 'text',
+        type: "text",
         content: range.displayText,
       });
-    } else if (range.type === 'person') {
+    } else if (range.type === "person") {
       segments.push({
-        type: 'person',
+        type: "person",
         content: range.matchedText,
         person: range.person,
       });
@@ -1049,7 +1147,7 @@ export function parseDescriptionSegments(description, annotations = {}, relevant
   // Add remaining text
   if (currentPos < description.length) {
     segments.push({
-      type: 'text',
+      type: "text",
       content: description.slice(currentPos),
     });
   }
@@ -1106,7 +1204,7 @@ export function getChapterPeople(chapter, egoNetwork) {
   const matchedPeople = chapter.involved_people
     .map((name, idx) => {
       const networkPerson = findPersonInNetwork(name, egoNetwork);
-      if (networkPerson && networkPerson.strength === 'strong') {
+      if (networkPerson && networkPerson.strength === "strong") {
         return {
           ...networkPerson,
           _originalName: name,
@@ -1156,8 +1254,9 @@ export function getMigrationPath(event) {
 
   // For migration events, assume first location is "from" and last is "to"
   // (or use primary flag to determine destination)
-  const toLocation = locations.find(loc => loc.primary) || locations[locations.length - 1];
-  const fromLocation = locations.find(loc => !loc.primary) || locations[0];
+  const toLocation =
+    locations.find((loc) => loc.primary) || locations[locations.length - 1];
+  const fromLocation = locations.find((loc) => !loc.primary) || locations[0];
 
   if (!fromLocation || !toLocation || fromLocation === toLocation) {
     return null;

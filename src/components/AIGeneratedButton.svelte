@@ -49,7 +49,6 @@
     opacity: 0.9;
   }
 
-
   /* Large variant - with border and background (Landing page) */
   .ai-generated-button.large {
     gap: 0.4rem;

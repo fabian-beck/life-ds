@@ -41,7 +41,13 @@
 <a
   {href}
   class="person-card"
-  style="--card-primary: {personStyle?.primary || '#f8fafc'}; --card-secondary: {personStyle?.secondary || '#38bdf8'}; --card-heading-font: {personStyle?.headingFont ? `'${personStyle.headingFont}', sans-serif` : 'inherit'}; --card-body-font: {personStyle?.bodyFont ? `'${personStyle.bodyFont}', sans-serif` : 'inherit'};"
+  style="--card-primary: {personStyle?.primary ||
+    '#f8fafc'}; --card-secondary: {personStyle?.secondary ||
+    '#38bdf8'}; --card-heading-font: {personStyle?.headingFont
+    ? `'${personStyle.headingFont}', sans-serif`
+    : 'inherit'}; --card-body-font: {personStyle?.bodyFont
+    ? `'${personStyle.bodyFont}', sans-serif`
+    : 'inherit'};"
   aria-label="View {displayName(person?.name)}'s story"
   on:click={handleClick}
 >

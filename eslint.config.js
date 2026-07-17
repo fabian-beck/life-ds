@@ -1,27 +1,27 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import svelte from 'eslint-plugin-svelte';
-import prettier from 'eslint-config-prettier/flat';
+import js from "@eslint/js";
+import globals from "globals";
+import svelte from "eslint-plugin-svelte";
+import prettier from "eslint-config-prettier/flat";
 
 export default [
   {
     // Flat config resolves ignores per linted file rather than from the cwd,
     // so nested checkouts must be excluded explicitly.
     ignores: [
-      'node_modules/',
-      'dist/',
-      'build/',
-      '.svelte-kit/',
-      '.claude/',
-      '.venv/',
-      'data/people/**/_cache/',
-      '*.config.js',
-      '*.config.cjs',
-      'pmtiles.exe',
-      '*.log',
-      '*.tmp',
-      'temp_*.json'
-    ]
+      "node_modules/",
+      "dist/",
+      "build/",
+      ".svelte-kit/",
+      ".claude/",
+      ".venv/",
+      "data/people/**/_cache/",
+      "*.config.js",
+      "*.config.cjs",
+      "pmtiles.exe",
+      "*.log",
+      "*.tmp",
+      "temp_*.json",
+    ],
   },
   js.configs.recommended,
   ...svelte.configs.recommended,
@@ -30,59 +30,62 @@ export default [
   {
     languageOptions: {
       ecmaVersion: 2022,
-      sourceType: 'module',
+      sourceType: "module",
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     rules: {
-      'no-console': 'off',
-      'no-debugger': 'warn',
+      "no-console": "off",
+      "no-debugger": "warn",
       // ESLint 9 flipped the caughtErrors default from 'none' to 'all', which
       // newly flags unused catch bindings. Warn rather than error until those
       // are cleaned up.
-      'no-unused-vars': ['warn', {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        caughtErrorsIgnorePattern: '^_'
-      }],
-      'no-undef': 'error',
-      'no-var': 'error',
-      'prefer-const': 'error',
-      'prefer-arrow-callback': 'warn',
-      'eqeqeq': ['error', 'always', { null: 'ignore' }],
-      'no-eval': 'error',
-      'no-implied-eval': 'error',
-      'no-new-func': 'error',
-      'no-return-await': 'warn',
-      'require-await': 'warn',
-      'no-await-in-loop': 'warn',
-      'no-promise-executor-return': 'warn',
-      'no-template-curly-in-string': 'warn',
-      'no-unreachable-loop': 'warn'
-    }
+      "no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+      "no-undef": "error",
+      "no-var": "error",
+      "prefer-const": "error",
+      "prefer-arrow-callback": "warn",
+      eqeqeq: ["error", "always", { null: "ignore" }],
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "no-new-func": "error",
+      "no-return-await": "warn",
+      "require-await": "warn",
+      "no-await-in-loop": "warn",
+      "no-promise-executor-return": "warn",
+      "no-template-curly-in-string": "warn",
+      "no-unreachable-loop": "warn",
+    },
   },
   {
-    files: ['**/*.svelte'],
+    files: ["**/*.svelte"],
     rules: {
       // Static site with trusted content
-      'svelte/no-at-html-tags': 'off',
-      'svelte/no-unused-svelte-ignore': 'warn',
-      'svelte/valid-compile': 'warn',
-      'no-inner-declarations': 'off'
-    }
+      "svelte/no-at-html-tags": "off",
+      "svelte/no-unused-svelte-ignore": "warn",
+      "svelte/valid-compile": "warn",
+      "no-inner-declarations": "off",
+    },
   },
   // Rules newly enabled as errors by ESLint 10 and eslint-plugin-svelte 3.
   // Downgraded to warnings so the toolchain upgrade did not turn ~97
   // pre-existing findings into build failures; each is worth fixing on its own.
   {
     rules: {
-      'no-useless-assignment': 'warn'
-    }
+      "no-useless-assignment": "warn",
+    },
   },
   {
-    files: ['**/*.svelte'],
+    files: ["**/*.svelte"],
     rules: {
       // Lists whose items carry identity and state (network people, event
       // chips, person rows) are keyed. The rest render derived text segments,
@@ -91,7 +94,7 @@ export default [
       // index, which reconciles exactly like no key at all. Requiring one
       // would add ceremony without changing behaviour, and inventing a
       // non-unique key would turn a working render into a runtime error.
-      'svelte/require-each-key': 'off',
+      "svelte/require-each-key": "off",
       // Reports "possibly" whenever a reactive block both reads and writes a
       // value, typically across a setTimeout or a function call it cannot see
       // into. Every occurrence here is a guarded state machine whose guard is
@@ -100,8 +103,8 @@ export default [
       // gated on scrollState, and the meta-story tooltip is gated on
       // isCalculatingPlacement. A real infinite reactive loop would hang the
       // browser rather than warn, and these paths run on every story view.
-      'svelte/infinite-reactive-loop': 'off',
-      'svelte/no-reactive-reassign': 'warn',
+      "svelte/infinite-reactive-loop": "off",
+      "svelte/no-reactive-reassign": "warn",
       // Unsound in components: the rule reasons about one top-to-bottom pass
       // through a function, but Svelte re-runs `$:` blocks and reorders them
       // by dependency. State trackers assigned at the end of a reactive block
@@ -109,7 +112,7 @@ export default [
       // a const declared below the reactive statement that uses it. Acting on
       // either would reintroduce the loops those trackers exist to stop.
       // Still enabled for plain .js, where the analysis holds.
-      'no-useless-assignment': 'off',
+      "no-useless-assignment": "off",
       // Presumes runes, which these components deliberately do not use. Most
       // reports are locals that are never state at all: a `new Map()` built
       // inside a function or a `$:` IIFE and thrown away. The few that are
@@ -117,7 +120,7 @@ export default [
       // `new Set(...)` to publish a change, which is how reactivity works in
       // non-runes mode and behaves the same under Svelte 5. SvelteSet/SvelteMap
       // would only matter if these were read inside runes.
-      'svelte/prefer-svelte-reactivity': 'off'
-    }
-  }
+      "svelte/prefer-svelte-reactivity": "off",
+    },
+  },
 ];

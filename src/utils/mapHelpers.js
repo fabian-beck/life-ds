@@ -17,8 +17,7 @@ export function lonLatToPixels(lon, lat, zoom) {
 
   const x = scale * ((lon * Math.PI) / 180 + Math.PI);
   const y =
-    scale *
-    (Math.PI - Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360)));
+    scale * (Math.PI - Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360)));
 
   return { x, y };
 }
@@ -156,10 +155,7 @@ export function arrangeOverlappingMarkers(
           type: "Feature",
           geometry: {
             type: "LineString",
-            coordinates: [
-              centerCoords,
-              [newCoords.lon, newCoords.lat],
-            ],
+            coordinates: [centerCoords, [newCoords.lon, newCoords.lat]],
           },
           properties: {
             color: feature.properties.primaryColor || "#94a3b8",

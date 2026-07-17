@@ -158,9 +158,14 @@
   function handleMouseEnter(e) {
     if (isHovered) return;
     // Don't treat touch events as hover to avoid stuck states on mobile
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === "touch") return;
     // Ignore internal transitions within the carousel
-    if (sectionElement && e?.relatedTarget && sectionElement.contains(e.relatedTarget)) return;
+    if (
+      sectionElement &&
+      e?.relatedTarget &&
+      sectionElement.contains(e.relatedTarget)
+    )
+      return;
     isHovered = true;
 
     // Pause autoplay with resume timer as fallback to prevent stuck states
@@ -169,7 +174,12 @@
 
   function handleMouseLeave(e) {
     // Ignore internal transitions within the carousel
-    if (sectionElement && e?.relatedTarget && sectionElement.contains(e.relatedTarget)) return;
+    if (
+      sectionElement &&
+      e?.relatedTarget &&
+      sectionElement.contains(e.relatedTarget)
+    )
+      return;
     if (!isHovered) return;
     isHovered = false;
 
@@ -191,8 +201,12 @@
       .filter(Boolean)
       .sort((a, b) => {
         // Parse birth years from birthDate (format: YYYY-MM-DD or YYYY)
-        const yearA = a.birthDate ? parseInt(a.birthDate.split("-")[0]) : Infinity;
-        const yearB = b.birthDate ? parseInt(b.birthDate.split("-")[0]) : Infinity;
+        const yearA = a.birthDate
+          ? parseInt(a.birthDate.split("-")[0])
+          : Infinity;
+        const yearB = b.birthDate
+          ? parseInt(b.birthDate.split("-")[0])
+          : Infinity;
         return yearA - yearB;
       });
 
@@ -213,7 +227,6 @@
     return personsForStory;
   }
 
-
   // Start autoplay on mount
   import { onMount, onDestroy } from "svelte";
 
@@ -228,7 +241,13 @@
 
   $: if (metaStories.length === 0) {
     stopAutoplay();
-  } else if (metaStories.length > 0 && !autoplayInterval && !isPaused && !isDragging && !isHovered) {
+  } else if (
+    metaStories.length > 0 &&
+    !autoplayInterval &&
+    !isPaused &&
+    !isDragging &&
+    !isHovered
+  ) {
     // Start autoplay when metaStories becomes populated and not interacting
     startAutoplay();
   }
@@ -373,7 +392,9 @@
 
         <div class="carousel-indicators">
           {#each metaStories as _metaStoryItem, index}
-            {@const slideLabel = $_("landing.go_to_slide", { number: index + 1 })}
+            {@const slideLabel = $_("landing.go_to_slide", {
+              number: index + 1,
+            })}
             <button
               class="indicator"
               class:active={index === currentSlide}
@@ -385,7 +406,11 @@
       {/if}
 
       {#if metaStories.length > 1}
-        <div class="playback-indicator" class:paused={isPaused} aria-hidden="true">
+        <div
+          class="playback-indicator"
+          class:paused={isPaused}
+          aria-hidden="true"
+        >
           {#if resumeTimerActive}
             {#key timerKey}
               <svg
@@ -843,7 +868,9 @@
     z-index: 10;
     backdrop-filter: blur(4px);
     pointer-events: none;
-    transition: background 0.2s ease, color 0.2s ease;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
   }
 
   .playback-indicator.paused {

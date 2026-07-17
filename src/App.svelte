@@ -66,14 +66,19 @@
       const detailedStories = await Promise.all(
         metaStoryRegistry.map(async (story) => {
           try {
-            const detailModule = await import(`../data/meta_stories/${story.id}.json`);
+            const detailModule = await import(
+              `../data/meta_stories/${story.id}.json`
+            );
             const detailData = detailModule.default;
             return {
               ...story,
-              person_ids: detailData.meta_story?.person_ids || []
+              person_ids: detailData.meta_story?.person_ids || [],
             };
           } catch (error) {
-            console.warn(`Failed to load details for meta story ${story.id}:`, error);
+            console.warn(
+              `Failed to load details for meta story ${story.id}:`,
+              error
+            );
             return story;
           }
         })
@@ -120,9 +125,7 @@
   );
 
   const metaStoryDetailModules = import.meta.glob(
-    [
-      "../data/meta_stories/*.json",
-    ],
+    ["../data/meta_stories/*.json"],
     {
       import: "default",
     }
@@ -371,7 +374,12 @@
   $: metaMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?meta\/([^/]+)/);
   // Also match landing page with language prefix: /en, /de, etc.
   $: landingMatch = currentPath.match(/^\/([a-z]{2})(?:\/|$)/);
-  $: langFromUrl = storyMatch?.[1] || exhibitionMatch?.[1] || metaMatch?.[1] || landingMatch?.[1] || null;
+  $: langFromUrl =
+    storyMatch?.[1] ||
+    exhibitionMatch?.[1] ||
+    metaMatch?.[1] ||
+    landingMatch?.[1] ||
+    null;
   $: personId = storyMatch
     ? decodeURIComponent(storyMatch[2])
     : exhibitionMatch

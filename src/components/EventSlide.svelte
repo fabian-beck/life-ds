@@ -51,7 +51,7 @@
 
   // Create a reactive map of which annotations should be visible
   $: annotationVisibilityMap = descriptionSegments.reduce((map, segment) => {
-    if (segment.type === 'annotation') {
+    if (segment.type === "annotation") {
       const compositeKey = `${slide.eventIndex}-${segment.termKey}`;
       map[segment.termKey] = visibleAnnotation === compositeKey;
     }
@@ -67,13 +67,13 @@
     if (!eventClass?.type) return null;
 
     switch (eventClass.type) {
-      case 'invention':
+      case "invention":
         return mdiLightbulbOnOutline;
-      case 'marriage_partnership':
+      case "marriage_partnership":
         return mdiRing;
-      case 'publication':
+      case "publication":
         return mdiBook;
-      case 'migration':
+      case "migration":
         return mdiMapMarkerMultiple;
       default:
         return mdiStar;
@@ -81,13 +81,13 @@
   }
 
   function getEventClassLabel(eventClass) {
-    if (!eventClass?.type) return '';
+    if (!eventClass?.type) return "";
 
     switch (eventClass.type) {
-      case 'invention':
-        return eventClass.title || 'Invention';
-      case 'marriage_partnership':
-        return eventClass.subtype === 'marriage' ? 'Marriage' : 'Partnership';
+      case "invention":
+        return eventClass.title || "Invention";
+      case "marriage_partnership":
+        return eventClass.subtype === "marriage" ? "Marriage" : "Partnership";
       default:
         return eventClass.type;
     }
@@ -112,15 +112,15 @@
 
     if (imageAspect < 0.8) {
       // Portrait images - allow taller bounds
-      baseMaxWidth = 55;  // vw
+      baseMaxWidth = 55; // vw
       baseMaxHeight = 75; // vh
     } else if (imageAspect > 1.25) {
       // Landscape images - allow wider bounds
-      baseMaxWidth = 75;  // vw
+      baseMaxWidth = 75; // vw
       baseMaxHeight = 55; // vh
     } else {
       // Square/near-square images - balanced bounds
-      baseMaxWidth = 58;  // vw
+      baseMaxWidth = 58; // vw
       baseMaxHeight = 58; // vh
     }
 
@@ -134,7 +134,9 @@
     // When one is portrait and one is landscape, they differ significantly.
 
     // Measure how much image aspect differs from viewport aspect
-    const aspectRatioDifference = Math.abs(Math.log(imageAspect / viewportAspect));
+    const aspectRatioDifference = Math.abs(
+      Math.log(imageAspect / viewportAspect)
+    );
 
     // Convert difference to a correction factor:
     // - Small difference (good match) → factor close to 1.0 or above
@@ -161,11 +163,13 @@
     if (imageAspect > effectiveViewportAspect) {
       // Wide image - width hits max first
       containerWidth = adjustedMaxWidth;
-      containerHeight = (adjustedMaxWidth / imageAspect) * (viewportWidth / viewportHeight);
+      containerHeight =
+        (adjustedMaxWidth / imageAspect) * (viewportWidth / viewportHeight);
     } else {
       // Tall image - height hits max first
       containerHeight = adjustedMaxHeight;
-      containerWidth = (adjustedMaxHeight * imageAspect) * (viewportHeight / viewportWidth);
+      containerWidth =
+        adjustedMaxHeight * imageAspect * (viewportHeight / viewportWidth);
     }
 
     // Apply container dimensions
@@ -200,10 +204,12 @@
 {#if validImages.length > 0}
   <div class="event-images">
     {#each validImages as imageData}
-      {@const imgUrl = typeof imageData === "string" ? imageData : imageData.url}
-      {@const imgObj = typeof imageData === "string"
-        ? { url: imageData, caption: null, source: null }
-        : imageData}
+      {@const imgUrl =
+        typeof imageData === "string" ? imageData : imageData.url}
+      {@const imgObj =
+        typeof imageData === "string"
+          ? { url: imageData, caption: null, source: null }
+          : imageData}
       <button
         type="button"
         class="image-thumbnail"
@@ -270,7 +276,7 @@
       {/if}
     </div>
     <h2>{slide.title}</h2>
-    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== 'invention' && slide.event_class?.type !== 'marriage_partnership' && slide.event_class?.type !== 'publication'}
+    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== "invention" && slide.event_class?.type !== "marriage_partnership" && slide.event_class?.type !== "publication"}
       <div class="event-class-badge">
         <svg
           class="icon icon-inline"
@@ -286,8 +292,11 @@
   </div>
   <div class="event-body">
     <div class="event-description">
-      {#if slide.event_class?.type === 'marriage_partnership'}
-        {@const partnerPerson = findPersonInNetwork(slide.event_class.partner, egoNetwork)}
+      {#if slide.event_class?.type === "marriage_partnership"}
+        {@const partnerPerson = findPersonInNetwork(
+          slide.event_class.partner,
+          egoNetwork
+        )}
         <div class="marriage-pretext">
           <div class="marriage-meta-line">
             <svg
@@ -298,23 +307,36 @@
             >
               <path d={mdiRing} />
             </svg>
-            <span class="marriage-inline-label">{slide.event_class.subtype === 'marriage' ? 'Marriage' : 'Partnership'}</span>
+            <span class="marriage-inline-label"
+              >{slide.event_class.subtype === "marriage"
+                ? "Marriage"
+                : "Partnership"}</span
+            >
             {#if slide.event_class.characterization}
               <span class="marriage-separator">·</span>
-              <span class="marriage-characterization-inline">{slide.event_class.characterization}</span>
+              <span class="marriage-characterization-inline"
+                >{slide.event_class.characterization}</span
+              >
             {/if}
             {#if slide.event_class.children}
               <span class="marriage-separator">·</span>
-              <span class="marriage-children-inline">{slide.event_class.children} {slide.event_class.children === 1 ? 'child' : 'children'}</span>
+              <span class="marriage-children-inline"
+                >{slide.event_class.children}
+                {slide.event_class.children === 1 ? "child" : "children"}</span
+              >
             {/if}
             {#if slide.event_class.duration}
               <span class="marriage-separator">·</span>
-              <span class="marriage-duration-inline">{slide.event_class.duration}</span>
+              <span class="marriage-duration-inline"
+                >{slide.event_class.duration}</span
+              >
             {/if}
           </div>
           {#if partnerPerson}
             {@const personKey = `${slide.eventIndex}-partner`}
-            {@const subcategory = getSubcategory(partnerPerson.relationship_type)}
+            {@const subcategory = getSubcategory(
+              partnerPerson.relationship_type
+            )}
             <div class="marriage-partner-chips">
               <PersonChip
                 person={partnerPerson}
@@ -329,30 +351,44 @@
           {/if}
         </div>
       {/if}
-      <p
-        class="description"
-      >{#each descriptionSegments as segment}{#if segment.type === 'text'}{segment.content}{:else if segment.type === 'annotation'}<span
+      <p class="description">
+        {#each descriptionSegments as segment}{#if segment.type === "text"}{segment.content}{:else if segment.type === "annotation"}<span
               role="button"
               tabindex="0"
               class="annotated-term"
               data-term-key={segment.termKey}
-              on:click|stopPropagation={() => handleAnnotationClick(segment.termKey, segment)}
-              on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && handleAnnotationClick(segment.termKey, segment)}
+              on:click|stopPropagation={() =>
+                handleAnnotationClick(segment.termKey, segment)}
+              on:keydown={(e) =>
+                (e.key === "Enter" || e.key === " ") &&
+                handleAnnotationClick(segment.termKey, segment)}
               aria-expanded={annotationVisibilityMap[segment.termKey]}
-              aria-label={$_('story.show_explanation')}
-            >{segment.displayText}<span class="annotation-indicator" aria-hidden="true">?</span></span>{:else if segment.type === 'person'}<strong class="person-mention">{segment.content}</strong>{/if}{/each}</p>
-      {#each descriptionSegments.filter(s => s.type === 'annotation' && annotationVisibilityMap[s.termKey]) as segment (segment.termKey)}
+              aria-label={$_("story.show_explanation")}
+              >{segment.displayText}<span
+                class="annotation-indicator"
+                aria-hidden="true">?</span
+              ></span
+            >{:else if segment.type === "person"}<strong class="person-mention"
+              >{segment.content}</strong
+            >{/if}{/each}
+      </p>
+      {#each descriptionSegments.filter((s) => s.type === "annotation" && annotationVisibilityMap[s.termKey]) as segment (segment.termKey)}
         <div class="annotation-popup-container">
           <div class="annotation-popup">
             <span class="annotation-term-label">{segment.displayText}:</span>
             {segment.annotation.explanation}
             {#if segment.annotation.wikipedia_url}
-              <a href={segment.annotation.wikipedia_url} target="_blank" rel="noreferrer" class="annotation-link">{$_('story.read_more')}</a>
+              <a
+                href={segment.annotation.wikipedia_url}
+                target="_blank"
+                rel="noreferrer"
+                class="annotation-link">{$_("story.read_more")}</a
+              >
             {/if}
           </div>
         </div>
       {/each}
-      {#if slide.event_class?.type === 'invention'}
+      {#if slide.event_class?.type === "invention"}
         <div class="invention-info-box">
           <div class="invention-header">
             <svg
@@ -370,12 +406,16 @@
           {/if}
           {#if slide.event_class.impact}
             <div class="invention-impact">
-              <span class="impact-label">Impact:</span><span class="impact-text"> {slide.event_class.impact}</span>
+              <span class="impact-label">Impact:</span><span
+                class="impact-text"
+              >
+                {slide.event_class.impact}</span
+              >
             </div>
           {/if}
         </div>
       {/if}
-      {#if slide.event_class?.type === 'publication'}
+      {#if slide.event_class?.type === "publication"}
         <div class="publication-info-box">
           <div class="publication-header">
             <svg
@@ -389,25 +429,38 @@
             <h3 class="publication-title">{slide.event_class.title}</h3>
           </div>
           <div class="publication-meta">
-            <span class="publication-type-badge">{slide.event_class.publication_type || 'Publication'}</span>
+            <span class="publication-type-badge"
+              >{slide.event_class.publication_type || "Publication"}</span
+            >
             {#if slide.event_class.significance}
               <span class="publication-separator">·</span>
-              <span class="publication-significance">{slide.event_class.significance}</span>
+              <span class="publication-significance"
+                >{slide.event_class.significance}</span
+              >
             {/if}
           </div>
           {#if slide.event_class.impact}
             <div class="publication-impact">
-              <span class="impact-label">Impact:</span><span class="impact-text"> {slide.event_class.impact}</span>
+              <span class="impact-label">Impact:</span><span
+                class="impact-text"
+              >
+                {slide.event_class.impact}</span
+              >
             </div>
           {/if}
         </div>
       {/if}
     </div>
     <div class="event-details">
-      {#if slide.event_class?.type === 'marriage_partnership' && relevantPeople.length > 0}
-        {@const partnerPerson = findPersonInNetwork(slide.event_class.partner, egoNetwork)}
+      {#if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
+        {@const partnerPerson = findPersonInNetwork(
+          slide.event_class.partner,
+          egoNetwork
+        )}
         {@const otherPeople = partnerPerson
-          ? relevantPeople.filter(p => p.person_name !== partnerPerson.person_name)
+          ? relevantPeople.filter(
+              (p) => p.person_name !== partnerPerson.person_name
+            )
           : relevantPeople}
         {#if otherPeople.length > 0}
           <ul class="details">
@@ -425,7 +478,9 @@
               <div class="people-list">
                 {#each otherPeople as person, idx (person.person_name)}
                   {@const personKey = `${slide.eventIndex}-other-${idx}`}
-                  {@const subcategory = getSubcategory(person.relationship_type)}
+                  {@const subcategory = getSubcategory(
+                    person.relationship_type
+                  )}
                   <PersonChip
                     {person}
                     {personKey}
@@ -491,7 +546,7 @@
   .event-content {
     display: flex;
     flex-direction: column;
-    padding-top: clamp(0.0rem, 8vh, 10rem);
+    padding-top: clamp(0rem, 8vh, 10rem);
   }
 
   .event-header {

@@ -7,7 +7,12 @@
   import maplibregl from "maplibre-gl";
   import { Protocol } from "pmtiles";
   import { layers, namedFlavor } from "@protomaps/basemaps";
-  import { normalizeAllLocations, normalizePrimaryLocation, formatSingleDate, parseHexColor } from "../utils/storyHelpers";
+  import {
+    normalizeAllLocations,
+    normalizePrimaryLocation,
+    formatSingleDate,
+    parseHexColor,
+  } from "../utils/storyHelpers";
   import { displayName } from "../utils/helpers";
   import { arrangeOverlappingMarkers } from "../utils/mapHelpers";
 
@@ -19,7 +24,8 @@
   const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ?? DEFAULT_PM_TILES_URL;
+    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
+    DEFAULT_PM_TILES_URL;
   const MAX_CLUSTER_ZOOM = 12;
 
   let mapContainer;
@@ -47,15 +53,20 @@
   let showTopPersons = false; // Visibility toggle based on event count
 
   // Map personId to full person data (including portrait info)
-  $: personLookup = new Map(
-    filteredEntries.map(entry => [entry.id, entry])
-  );
+  $: personLookup = new Map(filteredEntries.map((entry) => [entry.id, entry]));
 
   // Date formatters for different precision levels (reactive to language changes)
   $: dateFormatters = {
     year: new Intl.DateTimeFormat($currentLanguage, { year: "numeric" }),
-    month: new Intl.DateTimeFormat($currentLanguage, { year: "numeric", month: "long" }),
-    day: new Intl.DateTimeFormat($currentLanguage, { year: "numeric", month: "long", day: "numeric" }),
+    month: new Intl.DateTimeFormat($currentLanguage, {
+      year: "numeric",
+      month: "long",
+    }),
+    day: new Intl.DateTimeFormat($currentLanguage, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
   };
 
   // Lazy load event data modules
@@ -144,11 +155,15 @@
       if (primaryLocation) {
         // Find the primary location object to get the name
         const locations = normalizeAllLocations(event);
-        const primaryLocationObj = locations.find(loc => loc.primary) || locations[0];
+        const primaryLocationObj =
+          locations.find((loc) => loc.primary) || locations[0];
 
         features.push({
           type: "Feature",
-          geometry: { type: "Point", coordinates: [primaryLocation.lon, primaryLocation.lat] },
+          geometry: {
+            type: "Point",
+            coordinates: [primaryLocation.lon, primaryLocation.lat],
+          },
           properties: {
             personId: personEntry.id,
             personName: displayName(personEntry.name),
@@ -192,7 +207,10 @@
 
             let loader = datasetModules[path];
             if (!loader && lang !== "en") {
-              loader = datasetModules[`../../data/people/${entry.id}/life_events.json`];
+              loader =
+                datasetModules[
+                  `../../data/people/${entry.id}/life_events.json`
+                ];
             }
 
             if (loader) {
@@ -216,7 +234,11 @@
     }
 
     // Apply collision detection and circular arrangement
-    const { markers, connections, dummies } = arrangeOverlappingMarkers(features, MAX_CLUSTER_ZOOM, 200);
+    const { markers, connections, dummies } = arrangeOverlappingMarkers(
+      features,
+      MAX_CLUSTER_ZOOM,
+      200
+    );
     connectionLinesData = connections;
     dummyMarkersData = dummies;
 
@@ -243,17 +265,22 @@
 
   // Helper function to convert RGB to hex
   function rgbToHex(r, g, b) {
-    return "#" + [r, g, b].map(x => {
-      const hex = Math.round(x).toString(16);
-      return hex.length === 1 ? "0" + hex : hex;
-    }).join('');
+    return (
+      "#" +
+      [r, g, b]
+        .map((x) => {
+          const hex = Math.round(x).toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        })
+        .join("")
+    );
   }
 
   // Handle person card click to navigate to their story
   function handlePersonCardClick(personId) {
     // Navigate to the person's story (no specific event)
     onNavigate({
-      personId: personId
+      personId: personId,
     });
   }
 
@@ -261,7 +288,7 @@
   function updateTopPersons() {
     if (!mapReady || !mapInstance) return;
 
-    const source = mapInstance.getSource('events');
+    const source = mapInstance.getSource("events");
     if (!source || !source._data) return;
 
     // Get current map bounds
@@ -269,7 +296,7 @@
 
     // Query source features within bounds (includes ALL features, not just rendered)
     const allFeatures = source._data.features || [];
-    const featuresInBounds = allFeatures.filter(feature => {
+    const featuresInBounds = allFeatures.filter((feature) => {
       const [lng, lat] = feature.geometry.coordinates;
       return bounds.contains([lng, lat]);
     });
@@ -282,7 +309,7 @@
     // Count events per person from all features in bounds
     const personCounts = new Map();
 
-    featuresInBounds.forEach(feature => {
+    featuresInBounds.forEach((feature) => {
       const personId = feature.properties.personId;
       personCounts.set(personId, (personCounts.get(personId) || 0) + 1);
     });
@@ -299,10 +326,11 @@
 
         return {
           personId,
-          personName: person?.name?.replace(/_/g, ' ') || personId,
-          portraitUrl: person?.portrait?.thumbnail || person?.portrait?.image || null,
-          primaryColor: style?.primary || '#38BDF8',
-          count
+          personName: person?.name?.replace(/_/g, " ") || personId,
+          portraitUrl:
+            person?.portrait?.thumbnail || person?.portrait?.image || null,
+          primaryColor: style?.primary || "#38BDF8",
+          count,
         };
       });
     } else {
@@ -345,7 +373,7 @@
       const personCounts = {};
       const personColors = {};
 
-      features.forEach(feature => {
+      features.forEach((feature) => {
         const personId = feature.properties.personId;
         const color = feature.properties.primaryColor;
 
@@ -369,7 +397,10 @@
       const percentage = maxCount / totalCount;
 
       if (dominantPerson && percentage > 0.5) {
-        const interpolatedColor = interpolateColor(personColors[dominantPerson], percentage);
+        const interpolatedColor = interpolateColor(
+          personColors[dominantPerson],
+          percentage
+        );
         callback(interpolatedColor);
       } else {
         callback("#64748b"); // Gray for mixed clusters
@@ -388,20 +419,20 @@
         // Collect all person IDs in cluster (concatenated string)
         personIds: ["concat", ["get", "personId"]],
         // Get first person's color as fallback
-        sampleColor: ["coalesce", ["get", "primaryColor"], "#94a3b8"]
-      }
+        sampleColor: ["coalesce", ["get", "primaryColor"], "#94a3b8"],
+      },
     });
 
     // Add source for connection lines (links arranged markers to original position)
     mapInstance.addSource("marker-connections", {
       type: "geojson",
-      data: connectionLinesData
+      data: connectionLinesData,
     });
 
     // Add source for dummy markers (original positions)
     mapInstance.addSource("dummy-markers", {
       type: "geojson",
-      data: dummyMarkersData
+      data: dummyMarkersData,
     });
 
     // Add layer for dummy markers (small, non-interactive circles at original positions)
@@ -417,8 +448,8 @@
         "circle-opacity": 1.0,
         "circle-stroke-width": 1,
         "circle-stroke-color": "rgba(255, 255, 255, 0.8)",
-        "circle-stroke-opacity": 1.0
-      }
+        "circle-stroke-opacity": 1.0,
+      },
     });
 
     // Add layer for connection lines (drawn AFTER dummy markers but BEFORE regular markers)
@@ -432,8 +463,8 @@
         "line-color": ["get", "color"],
         "line-width": 1,
         "line-opacity": 0.3,
-        "line-dasharray": [2, 2]
-      }
+        "line-dasharray": [2, 2],
+      },
     });
 
     // Cluster circles - colored by dominant person (>50% threshold)
@@ -448,7 +479,7 @@
           // Use feature-state color if available, otherwise fallback to gray
           ["!=", ["feature-state", "dominantColor"], null],
           ["feature-state", "dominantColor"],
-          "#64748b" // Default gray while calculating
+          "#64748b", // Default gray while calculating
         ],
         "circle-radius": [
           "step",
@@ -526,26 +557,28 @@
       const clusterId = features[0].properties.cluster_id;
       const currentZoom = mapInstance.getZoom();
 
-      mapInstance.getSource("events").getClusterExpansionZoom(clusterId, (err, zoom) => {
-        if (err) return;
+      mapInstance
+        .getSource("events")
+        .getClusterExpansionZoom(clusterId, (err, zoom) => {
+          if (err) return;
 
-        // Cap the maximum zoom level to prevent zooming in too far
-        // This is important because some markers may be at the same location
-        // and won't resolve even at high zoom levels
-        const targetZoom = Math.min(zoom, MAX_CLUSTER_ZOOM);
+          // Cap the maximum zoom level to prevent zooming in too far
+          // This is important because some markers may be at the same location
+          // and won't resolve even at high zoom levels
+          const targetZoom = Math.min(zoom, MAX_CLUSTER_ZOOM);
 
-        // If we're already at or very close to the max zoom, don't try to expand
-        // This prevents zooming when points are too close together to resolve
-        if (currentZoom >= MAX_CLUSTER_ZOOM - 0.5) {
-          return;
-        }
+          // If we're already at or very close to the max zoom, don't try to expand
+          // This prevents zooming when points are too close together to resolve
+          if (currentZoom >= MAX_CLUSTER_ZOOM - 0.5) {
+            return;
+          }
 
-        mapInstance.easeTo({
-          center: features[0].geometry.coordinates,
-          zoom: targetZoom,
-          duration: 500,
+          mapInstance.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom: targetZoom,
+            duration: 500,
+          });
         });
-      });
     });
 
     mapInstance.on("click", "unclustered-point", (e) => {
@@ -562,8 +595,11 @@
       const coords = feature.geometry.coordinates;
 
       // Get person data for portrait
-      const person = filteredEntries.find(entry => entry.id === props.personId);
-      const portraitUrl = person?.portrait?.thumbnail || person?.portrait?.image || null;
+      const person = filteredEntries.find(
+        (entry) => entry.id === props.personId
+      );
+      const portraitUrl =
+        person?.portrait?.thumbnail || person?.portrait?.image || null;
 
       // Format date nicely based on precision
       const formattedDate = props.eventDate
@@ -612,10 +648,10 @@
     function updateClusterColors() {
       const clusters = mapInstance.querySourceFeatures("events", {
         filter: ["has", "point_count"],
-        sourceLayer: null
+        sourceLayer: null,
       });
 
-      clusters.forEach(cluster => {
+      clusters.forEach((cluster) => {
         const clusterId = cluster.properties.cluster_id;
 
         getClusterDominantColor(clusterId, (color) => {
@@ -639,15 +675,15 @@
 
     // Update top persons when map moves or zooms
     // Use moveend only (fires after both pan and zoom)
-    mapInstance.on('moveend', updateTopPersons);
+    mapInstance.on("moveend", updateTopPersons);
 
     // Close popup when user starts interacting with map (scroll/zoom/pan)
-    mapInstance.on('movestart', () => {
+    mapInstance.on("movestart", () => {
       if (popupData) {
         closePopup();
       }
     });
-    mapInstance.on('zoomstart', () => {
+    mapInstance.on("zoomstart", () => {
       if (popupData) {
         closePopup();
       }
@@ -799,16 +835,21 @@
             </svg>
           </button>
         `;
-        this._container.querySelector("button").addEventListener("click", () => {
-          const bounds = calculateInitialBounds({ type: "FeatureCollection", features: mapInstance.getSource("events")?._data?.features || [] });
-          if (bounds) {
-            map.fitBounds(bounds, {
-              padding: 80,
-              maxZoom: 8,
-              duration: 800,
+        this._container
+          .querySelector("button")
+          .addEventListener("click", () => {
+            const bounds = calculateInitialBounds({
+              type: "FeatureCollection",
+              features: mapInstance.getSource("events")?._data?.features || [],
             });
-          }
-        });
+            if (bounds) {
+              map.fitBounds(bounds, {
+                padding: 80,
+                maxZoom: 8,
+                duration: 800,
+              });
+            }
+          });
         return this._container;
       }
 
@@ -894,7 +935,7 @@
     initializeMap();
 
     // Add wheel event listener to window for mouse wheel scrolling
-    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: true });
   });
 
   onDestroy(() => {
@@ -909,7 +950,7 @@
     eventDataCache.clear();
 
     // Clean up wheel event listener
-    window.removeEventListener('wheel', handleWheel);
+    window.removeEventListener("wheel", handleWheel);
   });
 </script>
 
@@ -945,13 +986,19 @@
               class="person-portrait"
             />
           {:else}
-            <div class="person-portrait-placeholder" style="background: {person.primaryColor}">
+            <div
+              class="person-portrait-placeholder"
+              style="background: {person.primaryColor}"
+            >
               {person.personName.charAt(0)}
             </div>
           {/if}
           <div class="person-info">
             <div class="person-name">{person.personName}</div>
-            <div class="person-count">{person.count} {person.count === 1 ? 'event' : 'events'}</div>
+            <div class="person-count">
+              {person.count}
+              {person.count === 1 ? "event" : "events"}
+            </div>
           </div>
         </div>
       {/each}
@@ -971,7 +1018,9 @@
     class="landing-map-popup"
     style="
       --accent-color: {popupData.primaryColor};
-      --accent-color-rgb: {hexToRgb(popupData.primaryColor)?.r}, {hexToRgb(popupData.primaryColor)?.g}, {hexToRgb(popupData.primaryColor)?.b};
+      --accent-color-rgb: {hexToRgb(popupData.primaryColor)?.r}, {hexToRgb(
+      popupData.primaryColor
+    )?.g}, {hexToRgb(popupData.primaryColor)?.b};
       --anchor-x: {popupPlacement.anchor.x};
       --anchor-y: {popupPlacement.anchor.y};
       left: {popupPosition.x}px;
@@ -990,7 +1039,10 @@
           class="popup-portrait"
         />
       {:else}
-        <div class="popup-portrait-placeholder" style="background: {popupData.primaryColor}">
+        <div
+          class="popup-portrait-placeholder"
+          style="background: {popupData.primaryColor}"
+        >
           {popupData.personName.charAt(0)}
         </div>
       {/if}
@@ -1087,7 +1139,7 @@
     /* Dynamic transform based on anchor point (similar to MetaStoryTimeline) */
     transform: translate(
       calc(-100% * var(--anchor-x, 0.5)),
-      calc(-100% * var(--anchor-y, 1.0))
+      calc(-100% * var(--anchor-y, 1))
     );
 
     /* Smooth appearance animation */
@@ -1099,14 +1151,14 @@
       opacity: 0;
       transform: translate(
         calc(-100% * var(--anchor-x, 0.5)),
-        calc(-100% * var(--anchor-y, 1.0) - 10px)
+        calc(-100% * var(--anchor-y, 1) - 10px)
       );
     }
     to {
       opacity: 1;
       transform: translate(
         calc(-100% * var(--anchor-x, 0.5)),
-        calc(-100% * var(--anchor-y, 1.0))
+        calc(-100% * var(--anchor-y, 1))
       );
     }
   }
@@ -1161,7 +1213,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--accent-color, #38bdf8);
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     line-height: 1.2;
     flex: 1;
     min-width: 0;
@@ -1172,7 +1224,7 @@
     font-size: 1.05rem;
     color: #e2e8f0;
     font-weight: 600;
-    font-family: var(--heading-font, 'Space Grotesk', sans-serif);
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
     line-height: 1.3;
   }
 
@@ -1187,7 +1239,7 @@
   .popup-date {
     font-size: 0.85rem;
     color: #94a3b8;
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-family: var(--body-font, "IBM Plex Sans", sans-serif);
     white-space: nowrap;
   }
 
@@ -1197,7 +1249,7 @@
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    font-family: var(--body-font, 'IBM Plex Sans', sans-serif);
+    font-family: var(--body-font, "IBM Plex Sans", sans-serif);
     text-align: right;
     margin-left: auto;
   }
@@ -1262,7 +1314,9 @@
     animation: fadeIn 0.3s ease-out;
     pointer-events: auto;
     cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .person-card:hover {

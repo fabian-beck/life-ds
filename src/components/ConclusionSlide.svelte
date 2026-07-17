@@ -73,23 +73,26 @@
       const hostname = urlObj.hostname;
 
       // Handle Wikipedia URLs specially
-      if (hostname.includes('wikipedia.org')) {
+      if (hostname.includes("wikipedia.org")) {
         // Extract article title from path
-        const pathParts = urlObj.pathname.split('/');
-        const wikiIndex = pathParts.indexOf('wiki');
+        const pathParts = urlObj.pathname.split("/");
+        const wikiIndex = pathParts.indexOf("wiki");
         if (wikiIndex !== -1 && pathParts[wikiIndex + 1]) {
-          const articleTitle = decodeURIComponent(pathParts[wikiIndex + 1]).replace(/_/g, ' ');
+          const articleTitle = decodeURIComponent(
+            pathParts[wikiIndex + 1]
+          ).replace(/_/g, " ");
           return articleTitle;
         }
-        return 'Wikipedia';
+        return "Wikipedia";
       }
 
       // For other URLs, show hostname + path excerpt
-      const path = urlObj.pathname.length > 30
-        ? urlObj.pathname.substring(0, 30) + '...'
-        : urlObj.pathname;
+      const path =
+        urlObj.pathname.length > 30
+          ? urlObj.pathname.substring(0, 30) + "..."
+          : urlObj.pathname;
 
-      return hostname + (path !== '/' ? path : '');
+      return hostname + (path !== "/" ? path : "");
     } catch {
       return url;
     }
@@ -97,11 +100,11 @@
 
   // Check if URL is Wikipedia
   function isWikipedia(url) {
-    return url && url.includes('wikipedia.org');
+    return url && url.includes("wikipedia.org");
   }
 
   // Process sources for display
-  $: processedSources = (allSources || []).map(url => ({
+  $: processedSources = (allSources || []).map((url) => ({
     url,
     label: getSourceLabel(url),
     isWikipedia: isWikipedia(url),
@@ -131,7 +134,13 @@
             <a
               href="#/story/{person.id}"
               class="related-person-card"
-              style="--card-primary: {relatedPersonStyle?.primary || '#f8fafc'}; --card-secondary: {relatedPersonStyle?.secondary || '#38bdf8'}; --card-heading-font: {relatedPersonStyle?.headingFont ? `'${relatedPersonStyle.headingFont}', sans-serif` : 'var(--story-heading-font, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont ? `'${relatedPersonStyle.bodyFont}', sans-serif` : 'var(--story-body-font, sans-serif)'};"
+              style="--card-primary: {relatedPersonStyle?.primary ||
+                '#f8fafc'}; --card-secondary: {relatedPersonStyle?.secondary ||
+                '#38bdf8'}; --card-heading-font: {relatedPersonStyle?.headingFont
+                ? `'${relatedPersonStyle.headingFont}', sans-serif`
+                : 'var(--story-heading-font, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont
+                ? `'${relatedPersonStyle.bodyFont}', sans-serif`
+                : 'var(--story-body-font, sans-serif)'};"
               aria-label={`Open life story for ${displayName(person.name)}`}
             >
               {#if person?.portrait?.image}
@@ -190,7 +199,11 @@
                 {/if}
                 {source.label}
                 {#if source.langName}
-                  <span class="language-note">{$_("conclusion.language_note", { language: source.langName })}</span>
+                  <span class="language-note"
+                    >{$_("conclusion.language_note", {
+                      language: source.langName,
+                    })}</span
+                  >
                 {/if}
               </a>
             </li>
@@ -373,7 +386,10 @@
   }
 
   .card-name {
-    font-family: var(--card-heading-font, var(--story-heading-font, sans-serif));
+    font-family: var(
+      --card-heading-font,
+      var(--story-heading-font, sans-serif)
+    );
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.2;

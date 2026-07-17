@@ -53,9 +53,7 @@ export function storyStyleVars(style) {
     );
   }
   if (style.bodyFont) {
-    segments.push(
-      `--story-body-font: "${style.bodyFont}", Inter, sans-serif`
-    );
+    segments.push(`--story-body-font: "${style.bodyFont}", Inter, sans-serif`);
   }
   return segments.join("; ");
 }

@@ -60,7 +60,9 @@
   $: showNetworkModal = $queryParams.network;
 
   // Timeline expanded state - check if timeline parameter is in URL
-  $: hasTimelineParam = new URLSearchParams($location.split("?")[1] || "").has("timeline");
+  $: hasTimelineParam = new URLSearchParams($location.split("?")[1] || "").has(
+    "timeline"
+  );
   // Default to collapsed unless explicitly set via URL parameter
   $: initialTimelineExpanded = hasTimelineParam ? $queryParams.timeline : false;
 
@@ -100,9 +102,9 @@
   // Collect all unique sources from events for the conclusion slide
   $: allSources = (() => {
     const sourcesSet = new Set();
-    events.forEach(event => {
+    events.forEach((event) => {
       if (Array.isArray(event.sources)) {
-        event.sources.forEach(source => sourcesSet.add(source));
+        event.sources.forEach((source) => sourcesSet.add(source));
       }
     });
     return Array.from(sourcesSet);
@@ -129,17 +131,23 @@
     return personsRegistry.people
       .filter((p) => p.id !== currentPersonEntry.id) // Exclude self
       .map((p) => {
-        const personRoles = new Set((p.primaryRoles || []).map((r) => r.toLowerCase()));
+        const personRoles = new Set(
+          (p.primaryRoles || []).map((r) => r.toLowerCase())
+        );
         const overlap = [...currentRoles].filter((r) => personRoles.has(r));
 
         // Check if person is in ego network
         const inNetwork = egoNetwork?.connections?.some((c) =>
-          c.person_name?.toLowerCase().includes(displayName(p.name).toLowerCase())
-        ) ? 1 : 0;
+          c.person_name
+            ?.toLowerCase()
+            .includes(displayName(p.name).toLowerCase())
+        )
+          ? 1
+          : 0;
 
         // Weight: (roleOverlapCount × 3) + (inEgoNetwork × 3)
         const overlapCount = overlap.length;
-        const score = (overlapCount * 3) + (inNetwork * 3);
+        const score = overlapCount * 3 + inNetwork * 3;
 
         return { person: p, overlapCount, score, sharedRoles: overlap };
       })
@@ -151,14 +159,15 @@
   // Build slides array with chapter slides inserted before first event of each chapter
   $: slides = (() => {
     // Check if we should add a conclusion slide
-    const hasConclusion = conclusion || (relatedPersons && relatedPersons.length > 0);
+    const hasConclusion =
+      conclusion || (relatedPersons && relatedPersons.length > 0);
 
     if (totalSlides === 0) {
       // If no events but there's a conclusion, show overview + conclusion
       if (hasConclusion) {
         return [
           { type: "overview" },
-          { type: "conclusion", conclusion, relatedPersons, allSources }
+          { type: "conclusion", conclusion, relatedPersons, allSources },
         ];
       }
       return [{ type: "overview" }];
@@ -170,11 +179,16 @@
     if (!hasChapters) {
       const allSlides = [
         { type: "overview" },
-        ...eventSlides.map(event => ({ ...event, type: "event" }))
+        ...eventSlides.map((event) => ({ ...event, type: "event" })),
       ];
       // Add conclusion at the end if it exists
       if (hasConclusion) {
-        allSlides.push({ type: "conclusion", conclusion, relatedPersons, allSources });
+        allSlides.push({
+          type: "conclusion",
+          conclusion,
+          relatedPersons,
+          allSources,
+        });
       }
       return allSlides;
     }
@@ -203,7 +217,12 @@
 
     // Add conclusion at the end if it exists
     if (hasConclusion) {
-      result.push({ type: "conclusion", conclusion, relatedPersons, allSources });
+      result.push({
+        type: "conclusion",
+        conclusion,
+        relatedPersons,
+        allSources,
+      });
     }
 
     return result;
@@ -248,7 +267,8 @@
 
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
-  $: hasNetworkConnections = egoNetwork?.connections && egoNetwork.connections.length > 0;
+  $: hasNetworkConnections =
+    egoNetwork?.connections && egoNetwork.connections.length > 0;
 
   // Flattened collection of all images across the story with event metadata
   $: allImages = [
@@ -274,7 +294,8 @@
       getValidImages(slide.images).map((img) => {
         const imgObj = typeof img === "string" ? { url: img } : img;
         // Find the actual slide index for this event
-        const actualSlideIndex = eventIndexToSlideIndex.get(slide.eventIndex) ?? -1;
+        const actualSlideIndex =
+          eventIndexToSlideIndex.get(slide.eventIndex) ?? -1;
         return {
           url: imgObj.url,
           caption: imgObj.caption || null,
@@ -308,7 +329,9 @@
     eventIndexToSlideIndex &&
     eventIndexToSlideIndex.size > 0
   ) {
-    const targetSlideIndex = eventIndexToSlideIndex.get(Number(targetEventIndex));
+    const targetSlideIndex = eventIndexToSlideIndex.get(
+      Number(targetEventIndex)
+    );
 
     if (targetSlideIndex !== undefined && targetSlideIndex >= 0) {
       // Mark as processed
@@ -376,7 +399,12 @@
     if (slideType === "chapter" || slideType === "conclusion") return true;
 
     // Also fade map for invention and publication events
-    if (slideType === "event" && (slide?.event_class?.type === "invention" || slide?.event_class?.type === "publication")) return true;
+    if (
+      slideType === "event" &&
+      (slide?.event_class?.type === "invention" ||
+        slide?.event_class?.type === "publication")
+    )
+      return true;
 
     return false;
   })();
@@ -509,7 +537,11 @@
     const { scrollLeft, clientWidth } = slidesContainer;
     if (!clientWidth) return;
 
-    const clampedIndex = clamp(Math.round(scrollLeft / clientWidth), 0, totalPanels - 1);
+    const clampedIndex = clamp(
+      Math.round(scrollLeft / clientWidth),
+      0,
+      totalPanels - 1
+    );
     if (activeIndex !== clampedIndex) {
       activeIndex = clampedIndex;
     }
@@ -521,7 +553,6 @@
       mastheadHeight = mastheadElement.offsetHeight;
     }
   }
-
 
   async function requestScrollTo(targetIndex, options = {}) {
     const {
@@ -636,7 +667,9 @@
 
     currentImageGlobalIndex = globalIndex >= 0 ? globalIndex : 0;
     enlargedImage =
-      globalIndex >= 0 ? allImages[globalIndex] : { ...imageData, slideIndex: activeIndex };
+      globalIndex >= 0
+        ? allImages[globalIndex]
+        : { ...imageData, slideIndex: activeIndex };
   }
 
   function closeEnlargedImage() {
@@ -842,7 +875,8 @@
 
   function toggleAnnotation(eventIndex, termKey) {
     const compositeKey = `${eventIndex}-${termKey}`;
-    visibleAnnotation = visibleAnnotation === compositeKey ? null : compositeKey;
+    visibleAnnotation =
+      visibleAnnotation === compositeKey ? null : compositeKey;
   }
 
   function handleClickOutside(event) {
@@ -930,7 +964,8 @@
           // This is crucial for correct scroll positioning, especially on first load
           return new Promise((resolve) => {
             const checkSlides = () => {
-              const renderedSlides = slidesContainer.querySelectorAll('section.slide').length;
+              const renderedSlides =
+                slidesContainer.querySelectorAll("section.slide").length;
               if (renderedSlides >= totalPanels) {
                 // All slides are rendered, wait one more frame for layout
                 requestAnimationFrame(() => resolve());
@@ -957,7 +992,10 @@
       activeIndex === 0 &&
       // Don't mark as done if we're waiting to process an event parameter
       // or if we just processed one (lastProcessedEventIndex will be set)
-      !(targetEventIndex !== null && targetEventIndex !== lastProcessedEventIndex) &&
+      !(
+        targetEventIndex !== null &&
+        targetEventIndex !== lastProcessedEventIndex
+      ) &&
       lastProcessedEventIndex === null
     ) {
       // No initial scroll needed (starting at index 0)
@@ -1123,7 +1161,7 @@
           </div>
         </section>
       {:else if totalPanels > 0}
-        {#each slides as slide, index (slide.type === 'chapter' ? `chapter-${index}` : slide.type === 'conclusion' ? 'conclusion' : slide.eventIndex)}
+        {#each slides as slide, index (slide.type === "chapter" ? `chapter-${index}` : slide.type === "conclusion" ? "conclusion" : slide.eventIndex)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
@@ -1161,7 +1199,7 @@
                 conclusion={slide.conclusion}
                 relatedPersons={slide.relatedPersons}
                 allSources={slide.allSources}
-                personStylesRegistry={personStylesRegistry}
+                {personStylesRegistry}
               />
             {:else if slide.type !== "spacer"}
               <EventSlide
@@ -1634,7 +1672,8 @@
       margin-bottom: 0;
     }
 
-    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
+    .slides-wrapper.map-enabled
+      .slide:not(.overview):not(.chapter):not(.conclusion) {
       padding-bottom: 12rem;
     }
 
@@ -1699,7 +1738,8 @@
     animation: fadeIn 0.3s ease-out;
   }
 
-  .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
+  .slides-wrapper.map-enabled
+    .slide:not(.overview):not(.chapter):not(.conclusion) {
     padding-bottom: 16rem;
   }
 
@@ -1842,7 +1882,8 @@
       gap: 1.75rem;
     }
 
-    .slides-wrapper.map-enabled .slide:not(.overview):not(.chapter):not(.conclusion) {
+    .slides-wrapper.map-enabled
+      .slide:not(.overview):not(.chapter):not(.conclusion) {
       padding-bottom: 18rem;
     }
 
