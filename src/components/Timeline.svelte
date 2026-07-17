@@ -145,12 +145,20 @@
         groups.get(chapterId).events.push(eventWithIndex);
       } else {
         // For events without a chapter, assign them to the appropriate chapter based on date
-        // Find the chapter whose date range contains this event
+        // Compare at year granularity: chapter bounds are usually year-precision
+        // ("1938") while events may carry full dates ("1938-05-01"), and a raw
+        // string comparison would push end-year events out of their chapter.
         let assignedChapter = null;
+        const eventYear = parseInt(event.date?.substring(0, 4), 10);
         for (const chapter of chapters) {
+          const startYear = parseInt(chapter.date_start?.substring(0, 4), 10);
+          const endYear = parseInt(chapter.date_end?.substring(0, 4), 10);
           if (
-            event.date >= chapter.date_start &&
-            event.date <= chapter.date_end
+            Number.isFinite(eventYear) &&
+            Number.isFinite(startYear) &&
+            Number.isFinite(endYear) &&
+            eventYear >= startYear &&
+            eventYear <= endYear
           ) {
             assignedChapter = chapter.id;
             break;
