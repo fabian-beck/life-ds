@@ -502,7 +502,7 @@
     personId &&
     !dataLoading
   ) {
-    push("/");
+    push(`/${$currentLanguage}`);
   }
 
   // Extract from_meta parameter to preserve meta story context
