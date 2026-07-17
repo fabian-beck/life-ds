@@ -9,6 +9,7 @@
     mdiBook,
     mdiMapMarkerMultiple,
   } from "@mdi/js";
+  import { onDestroy } from "svelte";
   import { _ } from "../stores/language";
   import {
     formatDate,
@@ -124,14 +125,9 @@
     failedImageUrls = new Set(failedImageUrls).add(imageUrl);
   }
 
-  function handleThumbnailLoad(event, imageUrl) {
-    const img = event.target;
-    if (!img || !img.naturalWidth || !img.naturalHeight) {
-      handleThumbnailError(imageUrl);
-      return;
-    }
-    const currentLoadGeneration = imageLoadGeneration;
-
+  // Sizes the thumbnail container and mask from the image's aspect ratio and
+  // the current viewport. Re-run on resize/rotation, not only on load.
+  function applyImageLayout(img) {
     const imageAspect = img.naturalWidth / img.naturalHeight;
 
     // Get ACTUAL viewport dimensions in pixels
@@ -242,6 +238,17 @@
 
     img.style.maskImage = maskImage;
     img.style.webkitMaskImage = maskImage;
+  }
+
+  function handleThumbnailLoad(event, imageUrl) {
+    const img = event.target;
+    if (!img || !img.naturalWidth || !img.naturalHeight) {
+      handleThumbnailError(imageUrl);
+      return;
+    }
+    const currentLoadGeneration = imageLoadGeneration;
+
+    applyImageLayout(img);
 
     requestAnimationFrame(() => {
       if (currentLoadGeneration === imageLoadGeneration) {
@@ -249,10 +256,32 @@
       }
     });
   }
+
+  let imagesContainer = null;
+  let imageResizeTimeout = null;
+
+  function handleWindowResize() {
+    if (imageResizeTimeout) clearTimeout(imageResizeTimeout);
+    imageResizeTimeout = setTimeout(() => {
+      imageResizeTimeout = null;
+      if (!imagesContainer) return;
+      for (const img of imagesContainer.querySelectorAll("img")) {
+        if (img.naturalWidth && img.naturalHeight) {
+          applyImageLayout(img);
+        }
+      }
+    }, 150);
+  }
+
+  onDestroy(() => {
+    if (imageResizeTimeout) clearTimeout(imageResizeTimeout);
+  });
 </script>
 
+<svelte:window on:resize={handleWindowResize} />
+
 {#if validImages.length > 0}
-  <div class="event-images">
+  <div class="event-images" bind:this={imagesContainer}>
     {#each validImages as imageData}
       {@const imgUrl =
         typeof imageData === "string" ? imageData : imageData.url}
