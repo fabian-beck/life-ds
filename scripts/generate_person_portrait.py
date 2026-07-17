@@ -12,12 +12,12 @@ import tempfile
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple, cast
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import requests
 from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
-from PIL import Image
+from PIL import Image, ImageOps
 
 # Set UTF-8 encoding for Windows console with unbuffered output
 if sys.platform == "win32":
@@ -38,6 +38,7 @@ STYLES_PATH = DATA_DIR / "person_styles.json"
 PUBLIC_DIR = Path(__file__).resolve().parents[1] / "public"
 PORTRAITS_DIR = PUBLIC_DIR / "portraits"
 DEFAULT_MASTER_STYLE_PATH = PUBLIC_DIR / "master_style_portrait.png"
+REFERENCE_IMAGE_MAX_DIMENSIONS = (1024, 1536)
 
 # Style transfer prompt for consistent artistic treatment
 STYLE_TRANSFER_PROMPT = """Apply the artistic style, color treatment, lighting technique, and rendering approach of the first reference image to the second reference image.
@@ -71,37 +72,62 @@ def slugify(value: str) -> str:
     return slug.strip("_") or "person"
 
 
-def normalize_wikimedia_url(url: str) -> str:
+def get_wikimedia_thumbnail_url(
+    url: str,
+    max_dimensions: Tuple[int, int] = REFERENCE_IMAGE_MAX_DIMENSIONS,
+) -> str:
     """
-    Convert Wikimedia thumbnail URLs to full-size image URLs.
-
-    Wikimedia thumbnail URLs with specific dimensions (e.g., /thumb/.../NNNpx-...)
-    often get rate-limited. This function converts them to the original full-size URL.
+    Request a suitably sized image URL from the Wikimedia Commons API.
 
     Args:
         url: Wikimedia Commons URL (thumbnail or original)
 
     Returns:
-        Full-size image URL without thumbnail parameters
+        A Wikimedia thumbnail URL, or the original URL if lookup is unavailable.
     """
-    # Pattern: https://upload.wikimedia.org/wikipedia/commons/thumb/X/XX/Filename.jpg/NNNpx-Filename.jpg
-    # Target:  https://upload.wikimedia.org/wikipedia/commons/X/XX/Filename.jpg
+    parsed = urlparse(url)
+    if (
+        parsed.netloc.lower() != "upload.wikimedia.org"
+        or "/wikipedia/commons/" not in parsed.path
+    ):
+        return url
 
-    if "/thumb/" in url:
-        parts = url.split("/thumb/")
-        if len(parts) == 2:
-            # Extract the path after /thumb/ up to the last /
-            # e.g., "5/57/Henry_II%2C_Holy_Roman_Emperor.jpg/956px-Henry_II%2C_Holy_Roman_Emperor.jpg"
-            path_after_thumb = parts[1]
-            # Split by / and take all parts except the last one (which has the size prefix)
-            path_components = path_after_thumb.split("/")
-            if len(path_components) >= 2:
-                # Reconstruct: base_url + /wikipedia/commons/ + path components without last one
-                original_path = "/".join(path_components[:-1])
-                base_url = parts[0].replace("/thumb", "")
-                return f"{base_url}/{original_path}"
+    path_parts = parsed.path.rstrip("/").split("/")
+    filename = path_parts[-2] if "/thumb/" in parsed.path else path_parts[-1]
+    filename = unquote(filename)
 
-    # If not a thumbnail URL or pattern doesn't match, return as-is
+    try:
+        response = requests.get(
+            "https://commons.wikimedia.org/w/api.php",
+            params={
+                "action": "query",
+                "format": "json",
+                "prop": "imageinfo",
+                "iiprop": "url",
+                "iiurlwidth": max_dimensions[0],
+                "iiurlheight": max_dimensions[1],
+                "titles": f"File:{filename}",
+            },
+            headers={
+                "User-Agent": (
+                    "life-ds-portrait-generator/1.0 "
+                    "(+https://github.com/fabian-beck/life-ds)"
+                )
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        pages = response.json().get("query", {}).get("pages", {})
+        for page in pages.values():
+            image_info = page.get("imageinfo") or []
+            if image_info and image_info[0].get("thumburl"):
+                return str(image_info[0]["thumburl"])
+    except (requests.RequestException, ValueError, TypeError) as error:
+        print(
+            f"  Warning: Wikimedia thumbnail lookup failed: {error}",
+            file=sys.stderr,
+        )
+
     return url
 
 
@@ -271,11 +297,10 @@ def download_image(url: str, output_path: Path, max_retries: int = 3) -> bool:
     Returns:
         True if successful, False otherwise
     """
-    # Normalize Wikimedia URLs to avoid thumbnail rate limiting
-    normalized_url = normalize_wikimedia_url(url)
-    if normalized_url != url:
-        print(f"  Normalized thumbnail URL to original: {normalized_url}")
-        url = normalized_url
+    thumbnail_url = get_wikimedia_thumbnail_url(url)
+    if thumbnail_url != url:
+        print(f"  Using Wikimedia thumbnail: {thumbnail_url}")
+        url = thumbnail_url
 
     # Set User-Agent header for Wikimedia Commons compatibility
     headers = {
@@ -347,6 +372,29 @@ def validate_image(image_path: Path) -> bool:
         return False
 
     return True
+
+
+def prepare_reference_image(
+    source_path: Path,
+    output_path: Path,
+    max_dimensions: Tuple[int, int] = REFERENCE_IMAGE_MAX_DIMENSIONS,
+) -> Tuple[Tuple[int, int], Tuple[int, int]]:
+    """Create an RGBA PNG reference capped at the generated portrait dimensions."""
+    with Image.open(source_path) as source:
+        original_size = source.size
+        prepared = ImageOps.exif_transpose(source)
+        prepared.thumbnail(
+            max_dimensions,
+            Image.Resampling.LANCZOS,
+            reducing_gap=3.0,
+        )
+        if prepared.mode != "RGBA":
+            prepared = prepared.convert("RGBA")
+
+        prepared.save(output_path, "PNG", optimize=True)
+        prepared_size = prepared.size
+
+    return original_size, prepared_size
 
 
 def load_person_registry() -> Dict[str, Any]:
@@ -494,7 +542,9 @@ def update_person_registry(
 
     # Preserve original portrait data
     original_portrait = person.get("portrait", {})
-    original_caption = original_portrait.get("caption")
+    original_caption = original_portrait.get(
+        "originalCaption"
+    ) or original_portrait.get("caption")
 
     # Determine source URL: use provided source page, or fall back to original source
     if source_page_url:
@@ -511,7 +561,7 @@ def update_person_registry(
         "medium": portrait_paths.get("medium"),
         "full": portrait_paths.get("full"),
         "source": source_url,
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
         "originalImage": original_image_url,
     }
@@ -731,52 +781,38 @@ def generate_portrait(
                     "message": f"Failed to download reference image: {reference_image_url}",
                 }
 
-            if not validate_image(temp_ref_path):
-                return {
-                    "id": person_id,
-                    "success": False,
-                    "message": f"Invalid reference image: {temp_ref_path}",
-                }
-
             print(f"  ✓ Reference portrait downloaded: {temp_ref_path}")
 
-            # Convert to PNG with alpha channel (DALL-E 2 edit endpoint requires RGBA)
+            # Cap full-resolution scans at the generated portrait dimensions,
+            # then convert to RGBA PNG for the image-editing endpoint.
             if temp_ref_path.suffix.lower() in [".jpg", ".jpeg"]:
                 try:
-                    from PIL import Image
-
-                    img = Image.open(temp_ref_path)
-                    # Convert to RGBA (required by DALL-E 2 edit endpoint)
-                    if img.mode != "RGBA":
-                        # Convert to RGBA, adding opaque alpha channel
-                        rgba_img = Image.new("RGBA", img.size)
-                        if img.mode == "RGB":
-                            rgba_img = img.convert("RGBA")
-                        else:
-                            # Convert any other mode to RGB first, then to RGBA
-                            rgb_img = img.convert("RGB")
-                            rgba_img = rgb_img.convert("RGBA")
-                        img = rgba_img
-                    img.save(temp_ref_png, "PNG")
-                    temp_ref_path = temp_ref_png
-                    print(f"  ✓ Converted to PNG with alpha channel: {temp_ref_path}")
-                except ImportError:
-                    print(
-                        "✗ Error: PIL/Pillow is required to convert JPEG to PNG",
-                        file=sys.stderr,
+                    original_size, prepared_size = prepare_reference_image(
+                        temp_ref_path,
+                        temp_ref_png,
                     )
-                    print("  Install with: pip install Pillow", file=sys.stderr)
-                    return {
-                        "id": person_id,
-                        "success": False,
-                        "message": "PIL/Pillow not installed",
-                    }
+                    temp_ref_path = temp_ref_png
+                    file_size_mb = temp_ref_path.stat().st_size / (1024 * 1024)
+                    print(
+                        "  ✓ Prepared reference image: "
+                        f"{original_size[0]}x{original_size[1]} → "
+                        f"{prepared_size[0]}x{prepared_size[1]} "
+                        f"({file_size_mb:.2f} MB)"
+                    )
+                    if not validate_image(temp_ref_path):
+                        return {
+                            "id": person_id,
+                            "success": False,
+                            "message": (
+                                "Prepared reference image exceeds API requirements"
+                            ),
+                        }
                 except Exception as e:
-                    print(f"✗ Error converting image to PNG: {e}", file=sys.stderr)
+                    print(f"✗ Error preparing reference image: {e}", file=sys.stderr)
                     return {
                         "id": person_id,
                         "success": False,
-                        "message": f"Image conversion failed: {e}",
+                        "message": f"Image preparation failed: {e}",
                     }
 
         # Call OpenAI API
