@@ -96,9 +96,40 @@
   $: eventClassIcon = getEventClassIcon(slide.event_class);
   $: eventClassLabel = getEventClassLabel(slide.event_class);
 
-  function handleThumbnailLoad(event) {
+  let imageLoadStateKey = "";
+  let imageLoadGeneration = 0;
+  let loadedImageUrls = new Set();
+  let failedImageUrls = new Set();
+
+  $: {
+    const nextImageLoadStateKey = validImages
+      .map((imageData) =>
+        typeof imageData === "string" ? imageData : imageData.url
+      )
+      .join("|");
+    if (nextImageLoadStateKey !== imageLoadStateKey) {
+      imageLoadStateKey = nextImageLoadStateKey;
+      imageLoadGeneration += 1;
+      loadedImageUrls = new Set();
+      failedImageUrls = new Set();
+    }
+  }
+
+  function markImageLoaded(imageUrl) {
+    loadedImageUrls = new Set(loadedImageUrls).add(imageUrl);
+  }
+
+  function handleThumbnailError(imageUrl) {
+    failedImageUrls = new Set(failedImageUrls).add(imageUrl);
+  }
+
+  function handleThumbnailLoad(event, imageUrl) {
     const img = event.target;
-    if (!img || !img.naturalWidth || !img.naturalHeight) return;
+    if (!img || !img.naturalWidth || !img.naturalHeight) {
+      handleThumbnailError(imageUrl);
+      return;
+    }
+    const currentLoadGeneration = imageLoadGeneration;
 
     const imageAspect = img.naturalWidth / img.naturalHeight;
 
@@ -176,6 +207,18 @@
     img.parentElement.style.width = `${containerWidth}vw`;
     img.parentElement.style.height = `${containerHeight}vh`;
 
+    // Shift the image's visual center away from the gradient's faded left and
+    // bottom edges. The offset scales with its rendered shorter edge so it
+    // remains proportional for portrait, landscape, and square images.
+    const shortEdgePx = Math.min(
+      (containerWidth / 100) * viewportWidth,
+      (containerHeight / 100) * viewportHeight
+    );
+    img.parentElement.style.setProperty(
+      "--image-edge-offset",
+      `${shortEdgePx * 0.2}px`
+    );
+
     // Calculate mask ellipse based on aspect ratio
     let horizontalRadius, verticalRadius;
 
@@ -198,6 +241,12 @@
 
     img.style.maskImage = maskImage;
     img.style.webkitMaskImage = maskImage;
+
+    requestAnimationFrame(() => {
+      if (currentLoadGeneration === imageLoadGeneration) {
+        markImageLoaded(imageUrl);
+      }
+    });
   }
 </script>
 
@@ -213,16 +262,24 @@
       <button
         type="button"
         class="image-thumbnail"
+        class:image-ready={loadedImageUrls.has(imgUrl)}
+        class:image-failed={failedImageUrls.has(imgUrl)}
         on:click={() => onEnlargeImage(imgObj, slide)}
         aria-label={$_("story.enlarge_image")}
       >
+        {#if !loadedImageUrls.has(imgUrl) && !failedImageUrls.has(imgUrl)}
+          <span class="image-loading" aria-hidden="true">
+            <span class="spinner"></span>
+          </span>
+        {/if}
         <img
           src={getThumbnailUrl(imgUrl, 400)}
           srcset={`${getThumbnailUrl(imgUrl, 400)} 1x, ${getThumbnailUrl(imgUrl, 800)} 2x`}
           alt=""
           loading="lazy"
           decoding="async"
-          on:load={handleThumbnailLoad}
+          on:load={(event) => handleThumbnailLoad(event, imgUrl)}
+          on:error={() => handleThumbnailError(imgUrl)}
         />
         <span class="enlarge-icon">
           <svg
@@ -860,6 +917,7 @@
   }
 
   .image-thumbnail {
+    --image-edge-offset: 0px;
     appearance: none;
     border: none;
     padding: 0;
@@ -876,6 +934,10 @@
     overflow: hidden;
     background: transparent;
     box-shadow: none;
+    transform: translate(
+      var(--image-edge-offset),
+      calc(-1 * var(--image-edge-offset))
+    );
   }
 
   .image-thumbnail:focus {
@@ -889,6 +951,8 @@
     object-position: top right;
     display: block;
     filter: saturate(0.35) contrast(0.6) brightness(0.82);
+    opacity: 0;
+    transition: opacity 280ms ease;
     mask-image: radial-gradient(
       ellipse 85% 85% at 85% 15%,
       rgba(0, 0, 0, 1) 50%,
@@ -907,6 +971,35 @@
     );
   }
 
+  .image-thumbnail.image-ready img {
+    opacity: 1;
+  }
+
+  .image-thumbnail.image-failed {
+    display: none;
+  }
+
+  .image-loading {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .spinner {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(248, 250, 252, 0.2);
+    border-top-color: var(--story-secondary, #38bdf8);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
   .enlarge-icon {
     position: absolute;
     bottom: 0.25rem;
@@ -919,14 +1012,24 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.2s ease;
+  }
+
+  .image-thumbnail.image-ready .enlarge-icon {
+    opacity: 1;
   }
 
   .enlarge-icon .icon {
     width: 1rem;
     height: 1rem;
     fill: var(--story-primary, #f8fafc);
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .date {
