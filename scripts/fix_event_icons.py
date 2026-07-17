@@ -11,8 +11,9 @@ normalize_icon() in icon_categories.py now runs during generation, so new data
 cannot pick up these values. This script repairs data written before that.
 
 Values are rewritten in place with a targeted text substitution rather than a
-JSON round-trip: these files are excluded from prettier and use CRLF endings,
-which json.dump would silently rewrite across every line.
+JSON round-trip: these files are excluded from prettier and formatted as they
+were generated, and json.dump would reflow every line of all 47 of them for the
+sake of a handful of strings.
 
 Usage:
     python scripts/fix_event_icons.py --dry-run
@@ -96,7 +97,8 @@ def process(path: Path, dry_run: bool) -> Dict[str, int]:
             raise RuntimeError(f"{path}: {icon!r} survived normalization")
 
     if not dry_run:
-        # newline="" keeps the CRLF endings already in the text as-is.
+        # newline="" writes the text through untranslated. Without it, Python
+        # would turn every \n into \r\n on Windows and rewrite the whole file.
         with open(path, "w", encoding="utf-8", newline="") as handle:
             handle.write(updated)
 

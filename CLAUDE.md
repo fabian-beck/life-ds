@@ -911,9 +911,12 @@ Two mechanisms keep that true, because the model reliably gets it wrong:
   needs repair.
 
 Repair existing data with `python scripts/fix_event_icons.py --dry-run` (then
-without the flag). It rewrites icon values in place and touches nothing else;
-`data/people/**/*.json` is prettier-ignored and uses CRLF, so never rewrite
-these files with `json.dump`.
+without the flag). It rewrites icon values in place and touches nothing else.
+`data/people/**/*.json` is prettier-ignored and formatted as it was generated,
+so never rewrite these files with `json.dump` — it would reflow every line of
+all 47 of them to change a handful of strings. Open them with `newline=""` when
+writing, or Python turns each `\n` into `\r\n` on Windows and does the same
+damage by a different route.
 
 ## Browser Compatibility
 
