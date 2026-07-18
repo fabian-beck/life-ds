@@ -12,6 +12,8 @@
   export let containerSelector = null; // Optional: restrict positioning to container (e.g., ".modal-content")
   export let subcategory = null; // Optional: subcategory to display instead of full relationship_type
   export let styleConfig = null; // Optional: style configuration for separator
+  export let stacked = false; // Optional: vertical layout with role label below name
+  export let showRole = true; // Optional: hide the role line (e.g. when a surrounding box label already names it)
 
   let buttonElement;
   let tooltipElement;
@@ -202,6 +204,7 @@
   <button
     type="button"
     class="person-chip {person.strength ? `strength-${person.strength}` : ''}"
+    class:stacked
     bind:this={buttonElement}
     on:click|stopPropagation={handleClick}
     aria-label={$_("person.show_info", { name: person.person_name })}
@@ -209,12 +212,14 @@
   >
     <span class="person-name" class:long-name={isLongName}>{truncatedName}</span
     >
-    {#if subcategory}
-      <span class="person-role">{displayName(subcategory)}</span>
-    {:else}
-      <span class="person-role"
-        >{displayName(person.relationship_type) || ""}</span
-      >
+    {#if showRole}
+      {#if subcategory}
+        <span class="person-role">{displayName(subcategory)}</span>
+      {:else}
+        <span class="person-role"
+          >{displayName(person.relationship_type) || ""}</span
+        >
+      {/if}
     {/if}
   </button>
 </div>
@@ -348,6 +353,34 @@
     border-style: solid;
     border-color: rgba(148, 163, 184, 0.6);
     padding: calc(0.4rem - 1.5px) calc(0.75rem - 1.5px);
+  }
+
+  .person-chip.stacked {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
+    height: auto;
+    min-height: 2.2rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: 0.6rem;
+    text-align: center;
+  }
+
+  .person-chip.stacked.strength-strong {
+    padding: calc(0.3rem - 1.5px) calc(0.55rem - 1.5px);
+  }
+
+  .person-chip.stacked .person-role {
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* line-height 1 clips descenders (g, y) under overflow: hidden, and a
+     little side padding keeps glyph overhangs from being cut at the edges */
+  .person-chip.stacked .person-name {
+    line-height: 1.25;
+    max-width: 160px;
+    padding: 0 0.15em;
   }
 
   .person-chip:hover,

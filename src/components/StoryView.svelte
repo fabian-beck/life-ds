@@ -1294,6 +1294,7 @@
   <NetworkModal
     {egoNetwork}
     {personName}
+    {portrait}
     {styleConfig}
     onClose={closeNetworkModal}
   />

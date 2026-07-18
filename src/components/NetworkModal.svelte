@@ -1,5 +1,6 @@
 <script>
-  import { mdiAccountMultipleOutline } from "@mdi/js";
+  import { afterUpdate, onMount } from "svelte";
+  import { mdiAccount, mdiAccountMultipleOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
@@ -12,6 +13,7 @@
 
   export let egoNetwork = null;
   export let personName = "";
+  export let portrait = null;
   export let styleConfig = null;
   export let onClose = () => {};
 
@@ -255,7 +257,8 @@
     if (ungrouped.length > 0) {
       groupsArray.push({
         subcategory: null,
-        label: "Other",
+        label: null,
+        isOther: true, // Labeled "Other" (translated) in the template
         people: sortByStrength(ungrouped),
         accumulatedStrength: Infinity, // Ensures it's always last
       });
@@ -285,34 +288,218 @@
       .join(" ");
   }
 
-  function subdivideFamilyMembers(familyConnections) {
-    const parents = [];
-    const spouses = [];
-    const children = [];
-    const otherRelatives = [];
+  // Family layout: three generation layers, each holding "boxes" of people
+  // who belong together (couples, siblings, in-laws, ...). Keys are matched
+  // against normalized relationship subcategories (see
+  // normalizeFamilySubcategory); anything unmatched lands in "Other Relatives".
+  const SPOUSE_KEYS = new Set([
+    "spouse",
+    "partner",
+    "husband",
+    "wife",
+    "consort",
+    "fiance",
+    "fiancee",
+    "fiancé",
+    "fiancée",
+  ]);
 
-    const parentTypes = ["mother", "father", "parent"];
-    const spouseTypes = ["spouse", "partner", "husband", "wife"];
-    const childTypes = ["son", "daughter", "child"];
+  const FAMILY_GENERATIONS = [
+    {
+      layer: "grandparents",
+      boxes: [
+        {
+          id: "grandparents",
+          labelKey: "network.family.grandparents",
+          keys: ["grandfather", "grandmother", "grandparent", "grandparents"],
+        },
+      ],
+    },
+    {
+      // Ordered so "parents" comes last: when boxes stack on narrow
+      // viewports, the box next to the generation link is on the bloodline.
+      layer: "older",
+      boxes: [
+        {
+          id: "aunts_uncles",
+          labelKey: "network.family.aunts_uncles",
+          keys: ["aunt", "uncle", "godfather", "godmother", "godparent"],
+        },
+        {
+          id: "in_laws_older",
+          labelKey: "network.family.in_laws",
+          keys: ["father-in-law", "mother-in-law", "parent-in-law"],
+        },
+        {
+          id: "parents",
+          labelKey: "network.family.parents",
+          keys: ["father", "mother", "parent", "parents"],
+        },
+      ],
+    },
+    {
+      layer: "ego",
+      boxes: [
+        {
+          id: "siblings",
+          labelKey: "network.family.siblings",
+          keys: ["sibling", "siblings", "brother", "sister", "twin"],
+        },
+        {
+          id: "in_laws_ego",
+          labelKey: "network.family.in_laws",
+          keys: ["brother-in-law", "sister-in-law", "sibling-in-law"],
+        },
+        {
+          id: "cousins",
+          labelKey: "network.family.cousins",
+          keys: ["cousin", "cousins"],
+        },
+      ],
+    },
+    {
+      layer: "younger",
+      boxes: [
+        {
+          id: "children",
+          labelKey: "network.family.children",
+          keys: ["child", "children", "son", "daughter"],
+        },
+        {
+          id: "in_laws_younger",
+          labelKey: "network.family.in_laws",
+          keys: ["son-in-law", "daughter-in-law", "child-in-law"],
+        },
+        {
+          id: "grandchildren",
+          labelKey: "network.family.grandchildren",
+          keys: ["grandchild", "grandchildren", "grandson", "granddaughter"],
+        },
+        {
+          id: "nieces_nephews",
+          labelKey: "network.family.nieces_nephews",
+          keys: ["niece", "nephew"],
+        },
+      ],
+    },
+  ];
 
-    familyConnections.forEach((connection) => {
-      const subcategory = getSubcategory(connection.relationship_type);
-      if (subcategory && parentTypes.includes(subcategory)) {
-        parents.push(connection);
-      } else if (subcategory && spouseTypes.includes(subcategory)) {
-        spouses.push(connection);
-      } else if (subcategory && childTypes.includes(subcategory)) {
-        children.push(connection);
-      } else {
-        otherRelatives.push(connection);
+  /**
+   * Normalize a family relationship subcategory to a canonical key:
+   * lowercased, hyphenated, with step/half/biological/etc. prefixes and
+   * "-by-marriage" suffixes stripped (e.g. "biological_father" -> "father",
+   * "aunt-by-marriage" -> "aunt", "half_sibling" -> "sibling").
+   */
+  function normalizeFamilySubcategory(relationshipType) {
+    const subcategory = getSubcategory(relationshipType);
+    if (!subcategory) return null;
+    return subcategory
+      .toLowerCase()
+      .replace(/[\s_]+/g, "-")
+      .replace(/-by-marriage$/, "")
+      .replace(/^(step|half|adoptive|adopted|biological|foster)-?/, "");
+  }
+
+  /**
+   * Group family connections into three generation rows (older / ego /
+   * younger) of boxes, plus a trailing list of unclassifiable relatives.
+   * The ego row always exists and leads with the ego + spouses box.
+   */
+  function buildFamilyGenerations(familyConnections) {
+    const keyToBox = new Map();
+    for (const generation of FAMILY_GENERATIONS) {
+      for (const box of generation.boxes) {
+        for (const key of box.keys) {
+          keyToBox.set(key, box.id);
+        }
       }
+    }
+
+    const membersByBox = new Map();
+    const spouses = [];
+    const other = [];
+
+    for (const connection of familyConnections) {
+      const key = normalizeFamilySubcategory(connection.relationship_type);
+      if (key && SPOUSE_KEYS.has(key)) {
+        spouses.push(connection);
+        continue;
+      }
+      const boxId = key ? keyToBox.get(key) : null;
+      if (boxId) {
+        if (!membersByBox.has(boxId)) {
+          membersByBox.set(boxId, []);
+        }
+        membersByBox.get(boxId).push(connection);
+      } else {
+        other.push(connection);
+      }
+    }
+
+    const rows = FAMILY_GENERATIONS.map((generation) => ({
+      layer: generation.layer,
+      boxes: generation.boxes
+        .filter((box) => membersByBox.has(box.id))
+        .map((box) => ({
+          id: box.id,
+          labelKey: box.labelKey,
+          people: sortByStrength(membersByBox.get(box.id)),
+        })),
+    }));
+
+    const grandRow = rows.find((row) => row.layer === "grandparents");
+    const olderRow = rows.find((row) => row.layer === "older");
+    const egoRow = rows.find((row) => row.layer === "ego");
+    const youngerRow = rows.find((row) => row.layer === "younger");
+
+    // The parents -> ego line starts at the parents' generation's last box
+    // (parents when present — see box ordering above), falling back to the
+    // grandparents when no parents' generation exists
+    const egoSourceRow =
+      olderRow.boxes.length > 0
+        ? olderRow
+        : grandRow.boxes.length > 0
+          ? grandRow
+          : null;
+
+    // Ego box (ego + spouses/partners) closes the middle row so that, when
+    // boxes stack, it sits directly above the link to the younger generation.
+    egoRow.boxes.push({
+      id: "ego",
+      labelKey: spouses.length > 0 ? "network.family.spouse_partner" : null,
+      isEgo: true,
+      linkUp: egoSourceRow !== null,
+      people: sortByStrength(spouses),
     });
 
+    if (egoSourceRow) {
+      egoSourceRow.boxes[egoSourceRow.boxes.length - 1].linkSource = true;
+      // Siblings descend from the same parents: box-to-box link upward
+      const siblingsBox = egoRow.boxes.find((box) => box.id === "siblings");
+      if (siblingsBox) {
+        siblingsBox.linkUpBox = true;
+      }
+    }
+
+    // Grandparents sit a layer above the parents' generation, linked by a
+    // downward box-to-box stub (when no parents' generation exists, the
+    // parents -> ego line already covers the connection)
+    if (grandRow.boxes.length > 0 && olderRow.boxes.length > 0) {
+      grandRow.boxes[grandRow.boxes.length - 1].linkDownBox = true;
+    }
+
+    // The couple -> descendants line ends at the descendants box; no link
+    // when the younger generation holds just nieces/nephews or children-in-law
+    const descendantsBox =
+      youngerRow.boxes.find((box) => box.id === "children") ??
+      youngerRow.boxes.find((box) => box.id === "grandchildren");
+    if (descendantsBox) {
+      descendantsBox.linkTarget = true;
+    }
+
     return {
-      parents: sortByStrength(parents),
-      spouses: sortByStrength(spouses),
-      children: sortByStrength(children),
-      otherRelatives: sortByStrength(otherRelatives),
+      rows: rows.filter((row) => row.boxes.length > 0),
+      other: sortByStrength(other),
     };
   }
 
@@ -331,6 +518,133 @@
     }
     return relationshipType.split("/")[1];
   }
+
+  let familyGenerationsEl = null;
+
+  /**
+   * Draw one vertical link at viewport x from topY to bottomY. Segments
+   * crossing boxes other than the excluded endpoints are made transparent so
+   * the line passes "behind" them.
+   */
+  function drawVerticalLink(line, containerRect, x, topY, bottomY, excluded) {
+    const height = bottomY - topY;
+    if (height <= 0) {
+      line.style.display = "none";
+      return;
+    }
+
+    const intervals = [];
+    for (const box of familyGenerationsEl.querySelectorAll(".family-box")) {
+      if (excluded.includes(box)) continue;
+      const rect = box.getBoundingClientRect();
+      if (rect.left > x || rect.right < x) continue;
+      const start = Math.max(0, rect.top - topY);
+      const end = Math.min(height, rect.bottom - topY);
+      if (end > start) intervals.push([start, end]);
+    }
+    intervals.sort((a, b) => a[0] - b[0]);
+
+    const color = "rgba(226, 232, 240, 0.35)";
+    const stops = [];
+    let pos = 0;
+    for (const [start, end] of intervals) {
+      if (start > pos) {
+        stops.push(`${color} ${pos}px`, `${color} ${start}px`);
+      }
+      stops.push(
+        `transparent ${Math.max(pos, start)}px`,
+        `transparent ${end}px`
+      );
+      pos = Math.max(pos, end);
+    }
+    stops.push(`${color} ${pos}px`, `${color} ${height}px`);
+
+    line.style.display = "block";
+    line.style.left = `${x - containerRect.left}px`;
+    line.style.top = `${topY - containerRect.top}px`;
+    line.style.height = `${height}px`;
+    line.style.background = `linear-gradient(to bottom, ${stops.join(", ")})`;
+  }
+
+  /**
+   * Position the parents -> ego and couple -> descendants lines. Their
+   * lengths depend on layout (wrapped rows may put other boxes in between),
+   * so they are measured from the rendered boxes: the upper line is anchored
+   * on the ego chip, the lower one on the descendants box.
+   */
+  function updateFamilyLinks() {
+    if (!familyGenerationsEl) return;
+    const containerRect = familyGenerationsEl.getBoundingClientRect();
+    const egoBox = familyGenerationsEl.querySelector(".family-box.ego-box");
+
+    const egoLine = familyGenerationsEl.querySelector(
+      '.family-link-line[data-link="ego"]'
+    );
+    if (egoLine) {
+      const chip = familyGenerationsEl.querySelector(".ego-chip.link-up");
+      const sourceBox = familyGenerationsEl.querySelector(
+        ".family-box.link-source"
+      );
+      if (chip && sourceBox) {
+        const chipRect = chip.getBoundingClientRect();
+        const sourceRect = sourceBox.getBoundingClientRect();
+        drawVerticalLink(
+          egoLine,
+          containerRect,
+          chipRect.left + chipRect.width / 2,
+          sourceRect.bottom,
+          chipRect.top,
+          [sourceBox, egoBox]
+        );
+      } else {
+        egoLine.style.display = "none";
+      }
+    }
+
+    const childLine = familyGenerationsEl.querySelector(
+      '.family-link-line[data-link="children"]'
+    );
+    if (childLine) {
+      const targetBox = familyGenerationsEl.querySelector(
+        ".family-box.link-target"
+      );
+      if (targetBox && egoBox) {
+        const targetRect = targetBox.getBoundingClientRect();
+        const egoRect = egoBox.getBoundingClientRect();
+        drawVerticalLink(
+          childLine,
+          containerRect,
+          targetRect.left + targetRect.width / 2,
+          egoRect.bottom,
+          targetRect.top,
+          [egoBox, targetBox]
+        );
+      } else {
+        childLine.style.display = "none";
+      }
+    }
+  }
+
+  let resizeObserver = null;
+  let observedEl = null;
+
+  onMount(() => {
+    resizeObserver = new ResizeObserver(() => updateFamilyLinks());
+    window.addEventListener("resize", updateFamilyLinks);
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateFamilyLinks);
+    };
+  });
+
+  afterUpdate(() => {
+    if (familyGenerationsEl !== observedEl) {
+      if (observedEl) resizeObserver?.unobserve(observedEl);
+      if (familyGenerationsEl) resizeObserver?.observe(familyGenerationsEl);
+      observedEl = familyGenerationsEl;
+    }
+    updateFamilyLinks();
+  });
 
   function togglePersonInfo(personKey) {
     if (visiblePersonInfo === personKey) {
@@ -396,7 +710,7 @@
         return a.localeCompare(b);
       }) as [type, people] (type)}
         {#if type === "family"}
-          {@const familySubgroups = subdivideFamilyMembers(people)}
+          {@const familyGenerations = buildFamilyGenerations(people)}
           <div class="person-group">
             <h4 class="group-title">
               {type}
@@ -420,89 +734,110 @@
               </div>
 
               <div class="group-connections">
-                {#if familySubgroups.parents.length > 0}
-                  <h5 class="subgroup-title">Parents</h5>
-                  <div class="group-people">
-                    {#each familySubgroups.parents as person, idx (person.person_name)}
-                      {@const personKey = `family-parents-${idx}`}
-                      {@const subcategory = getSubcategory(
-                        person.relationship_type
-                      )}
-                      <PersonChip
-                        {person}
-                        {personKey}
-                        {visiblePersonInfo}
-                        {subcategory}
-                        {styleConfig}
-                        onToggle={togglePersonInfo}
-                        containerSelector=".modal-content"
-                      />
-                    {/each}
-                  </div>
-                {/if}
+                <div class="family-generations" bind:this={familyGenerationsEl}>
+                  <div class="family-link-line" data-link="ego"></div>
+                  <div class="family-link-line" data-link="children"></div>
+                  {#each familyGenerations.rows as row (row.layer)}
+                    <div class="generation-row">
+                      {#each row.boxes as box (box.id)}
+                        <div
+                          class="family-box"
+                          class:ego-box={box.isEgo}
+                          class:link-up-box={box.linkUpBox}
+                          class:link-down-box={box.linkDownBox}
+                          class:link-source={box.linkSource}
+                          class:link-target={box.linkTarget}
+                        >
+                          {#if box.labelKey}
+                            <span class="family-box-label"
+                              >{$_(
+                                box.people.length === 1
+                                  ? `${box.labelKey}_one`
+                                  : `${box.labelKey}_other`
+                              )}</span
+                            >
+                          {:else}
+                            <!-- blank line keeps box heights aligned -->
+                            <span class="family-box-label">&nbsp;</span>
+                          {/if}
+                          <div class="family-box-people">
+                            {#if box.isEgo}
+                              <div
+                                class="ego-chip"
+                                class:link-up={box.linkUp}
+                                title={personName}
+                              >
+                                {#if portrait?.thumbnail || portrait?.image}
+                                  <span class="ego-portrait-clip">
+                                    <img
+                                      class="ego-portrait"
+                                      src={portrait.thumbnail ||
+                                        portrait.image}
+                                      alt={personName}
+                                    />
+                                  </span>
+                                {:else}
+                                  <svg
+                                    class="ego-icon"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-label={personName}
+                                  >
+                                    <path d={mdiAccount} />
+                                  </svg>
+                                {/if}
+                              </div>
+                            {/if}
+                            {#each box.people as person, idx (person.person_name)}
+                              <PersonChip
+                                {person}
+                                personKey={`family-${box.id}-${idx}`}
+                                {visiblePersonInfo}
+                                subcategory={getSubcategory(
+                                  person.relationship_type
+                                )}
+                                {styleConfig}
+                                stacked
+                                onToggle={togglePersonInfo}
+                                containerSelector=".modal-content"
+                              />
+                            {/each}
+                          </div>
+                        </div>
+                      {/each}
+                    </div>
+                  {/each}
 
-                {#if familySubgroups.spouses.length > 0}
-                  <h5 class="subgroup-title">Spouse/Partner</h5>
-                  <div class="group-people">
-                    {#each familySubgroups.spouses as person, idx (person.person_name)}
-                      {@const personKey = `family-spouses-${idx}`}
-                      {@const subcategory = getSubcategory(
-                        person.relationship_type
-                      )}
-                      <PersonChip
-                        {person}
-                        {personKey}
-                        {visiblePersonInfo}
-                        {subcategory}
-                        {styleConfig}
-                        onToggle={togglePersonInfo}
-                        containerSelector=".modal-content"
-                      />
-                    {/each}
-                  </div>
-                {/if}
-
-                {#if familySubgroups.children.length > 0}
-                  <h5 class="subgroup-title">Children</h5>
-                  <div class="group-people">
-                    {#each familySubgroups.children as person, idx (person.person_name)}
-                      {@const personKey = `family-children-${idx}`}
-                      {@const subcategory = getSubcategory(
-                        person.relationship_type
-                      )}
-                      <PersonChip
-                        {person}
-                        {personKey}
-                        {visiblePersonInfo}
-                        {subcategory}
-                        {styleConfig}
-                        onToggle={togglePersonInfo}
-                        containerSelector=".modal-content"
-                      />
-                    {/each}
-                  </div>
-                {/if}
-
-                {#if familySubgroups.otherRelatives.length > 0}
-                  <h5 class="subgroup-title">Other Relatives</h5>
-                  <div class="group-people">
-                    {#each familySubgroups.otherRelatives as person, idx (person.person_name)}
-                      {@const personKey = `family-other-${idx}`}
-                      {@const subcategory = getSubcategory(
-                        person.relationship_type
-                      )}
-                      <PersonChip
-                        {person}
-                        {personKey}
-                        {visiblePersonInfo}
-                        {subcategory}
-                        {styleConfig}
-                        onToggle={togglePersonInfo}
-                        containerSelector=".modal-content"
-                      />
-                    {/each}
-                  </div>
-                {/if}
+                  {#if familyGenerations.other.length > 0}
+                    <div class="generation-row other-row">
+                      <div class="family-box other-box">
+                        <span class="family-box-label"
+                          >{$_(
+                            familyGenerations.other.length === 1
+                              ? "network.family.other_one"
+                              : "network.family.other_other"
+                          )}</span
+                        >
+                        <div class="family-box-people">
+                          {#each familyGenerations.other as person, idx (person.person_name)}
+                            <PersonChip
+                              {person}
+                              personKey={`family-other-${idx}`}
+                              {visiblePersonInfo}
+                              subcategory={getSubcategory(
+                                person.relationship_type
+                              )}
+                              {styleConfig}
+                              stacked
+                              onToggle={togglePersonInfo}
+                              containerSelector=".modal-content"
+                            />
+                          {/each}
+                        </div>
+                      </div>
+                    </div>
+                  {/if}
+                </div>
               </div>
             </div>
           </div>
@@ -531,28 +866,35 @@
               </div>
 
               <div class="group-connections">
-                {#each subgroups as subgroup}
-                  {#if subgroup.label}
-                    <h5 class="subgroup-title">{subgroup.label}</h5>
-                  {/if}
-                  <div class="group-people">
-                    {#each subgroup.people as person, idx (person.person_name)}
-                      {@const personKey = `${type}-${subgroup.subcategory || "default"}-${idx}`}
-                      {@const subcategory = getSubcategory(
-                        person.relationship_type
-                      )}
-                      <PersonChip
-                        {person}
-                        {personKey}
-                        {visiblePersonInfo}
-                        {subcategory}
-                        {styleConfig}
-                        onToggle={togglePersonInfo}
-                        containerSelector=".modal-content"
-                      />
-                    {/each}
-                  </div>
-                {/each}
+                <div class="generation-row">
+                  {#each subgroups as subgroup (subgroup.subcategory ?? "other")}
+                    {@const boxLabel =
+                      subgroup.label ??
+                      (subgroup.isOther ? $_("network.other") : null)}
+                    <div class="family-box" class:other-box={subgroup.isOther}>
+                      {#if boxLabel}
+                        <span class="family-box-label">{boxLabel}</span>
+                      {/if}
+                      <div class="family-box-people">
+                        {#each subgroup.people as person, idx (person.person_name)}
+                          <PersonChip
+                            {person}
+                            personKey={`${type}-${subgroup.subcategory || "default"}-${idx}`}
+                            {visiblePersonInfo}
+                            subcategory={getSubcategory(
+                              person.relationship_type
+                            )}
+                            {styleConfig}
+                            stacked
+                            showRole={!subgroup.subcategory}
+                            onToggle={togglePersonInfo}
+                            containerSelector=".modal-content"
+                          />
+                        {/each}
+                      </div>
+                    </div>
+                  {/each}
+                </div>
               </div>
             </div>
           </div>
@@ -699,52 +1041,161 @@
     font-weight: 600;
   }
 
-  .subgroup-title {
-    margin: 0.25rem 0 0.15rem 0;
-    font-size: 0.75rem;
-    text-transform: capitalize;
-    color: rgba(226, 232, 240, 0.85);
-    font-weight: 500;
-    font-family: var(--story-body-font, Inter, sans-serif);
-    letter-spacing: 0.01em;
-    text-align: center;
+  /* Family generation layout: three stacked layers of grouped boxes.
+     The row/box classes are shared with the other relationship categories. */
+  .family-generations {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    gap: 1.1rem;
   }
 
-  .subgroup-title::before,
-  .subgroup-title::after {
-    content: "";
-    display: block;
-    width: 2rem;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(226, 232, 240, 0.3),
-      transparent
-    );
+  /* Parents -> ego and couple -> descendants lines;
+     positioned and colored by updateFamilyLinks() */
+  .family-link-line {
+    position: absolute;
+    z-index: -1;
+    display: none;
+    width: 1px;
+    pointer-events: none;
   }
 
-  .subgroup-title::before {
-    background: linear-gradient(to left, rgba(226, 232, 240, 0.3), transparent);
-  }
-
-  .subgroup-title::after {
-    background: linear-gradient(
-      to right,
-      rgba(226, 232, 240, 0.3),
-      transparent
-    );
-  }
-
-  .group-people {
+  .generation-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
     justify-content: center;
+    align-items: stretch;
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .family-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.6rem 0.6rem;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 0.75rem;
+    background: rgba(148, 163, 184, 0.06);
+    min-width: 0;
+  }
+
+  .family-box.ego-box {
+    border-color: rgba(148, 163, 184, 0.55);
+    background: rgba(148, 163, 184, 0.1);
+    border-color: color-mix(
+      in srgb,
+      var(--story-secondary, #38bdf8) 55%,
+      transparent
+    );
+    background: color-mix(
+      in srgb,
+      var(--story-secondary, #38bdf8) 8%,
+      transparent
+    );
+  }
+
+  /* Box-to-box link upward (e.g. siblings to their shared parents) */
+  .family-box.link-up-box::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: 100%;
+    left: 50%;
+    width: 1px;
+    height: 1.1rem;
+    background: linear-gradient(
+      to top,
+      rgba(226, 232, 240, 0.45),
+      rgba(226, 232, 240, 0.15)
+    );
+  }
+
+  /* Box-to-box link downward (e.g. grandparents to the parents' generation) */
+  .family-box.link-down-box::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 100%;
+    left: 50%;
+    width: 1px;
+    height: 1.1rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(226, 232, 240, 0.45),
+      rgba(226, 232, 240, 0.15)
+    );
+  }
+
+  .family-box.other-box {
+    border-style: dashed;
+  }
+
+  .family-box-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(226, 232, 240, 0.75);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    line-height: 1;
+  }
+
+  .family-box-people {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  /* Ego chip: non-interactive portrait marker for the central person,
+     styled like the meta timeline portraits */
+  .ego-chip {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    border: 2px solid rgba(226, 232, 240, 0.65);
+    border-color: color-mix(
+      in srgb,
+      var(--story-primary, #f8fafc) 80%,
+      transparent
+    );
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+  }
+
+  /* Clips the zoomed portrait without clipping the .link-up line above */
+  .ego-portrait-clip {
+    position: absolute;
+    inset: 0;
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .ego-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    scale: 1.25;
+  }
+
+  .ego-icon {
+    width: 1.3rem;
+    height: 1.3rem;
+    fill: var(--story-primary, #f8fafc);
   }
 
   /* Person name highlighting */
@@ -769,10 +1220,10 @@
       padding: 1.25rem 1.5rem;
     }
 
-    /* Two-column layout for wider screens */
+    /* Two-column layout for wider screens: description 30%, connections 60% */
     .group-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 3fr 6fr;
       gap: 1.5rem;
       align-items: start;
     }
