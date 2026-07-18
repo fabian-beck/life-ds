@@ -39,6 +39,7 @@
   let basemapError = null;
   let basemapStyleCache = null;
   let updateTimeout;
+  let currentEventLocations = { type: "FeatureCollection", features: [] };
   let connectionLinesData = { type: "FeatureCollection", features: [] };
   let dummyMarkersData = { type: "FeatureCollection", features: [] };
 
@@ -260,6 +261,17 @@
     }
 
     return bounds;
+  }
+
+  function resetMapView(map) {
+    const bounds = calculateInitialBounds(currentEventLocations);
+    if (!bounds) return;
+
+    map.fitBounds(bounds, {
+      padding: 80,
+      maxZoom: 8,
+      duration: 800,
+    });
   }
 
   // Alias parseHexColor for local readability
@@ -782,6 +794,7 @@
     isLoading = true;
     const geojsonData = await loadAllEventLocations(filteredEntries);
     isLoading = false;
+    currentEventLocations = geojsonData;
 
     await resolvePmtilesUrl();
     const style = createBaseStyle();
@@ -839,19 +852,7 @@
         `;
         this._container
           .querySelector("button")
-          .addEventListener("click", () => {
-            const bounds = calculateInitialBounds({
-              type: "FeatureCollection",
-              features: mapInstance.getSource("events")?._data?.features || [],
-            });
-            if (bounds) {
-              map.fitBounds(bounds, {
-                padding: 80,
-                maxZoom: 8,
-                duration: 800,
-              });
-            }
-          });
+          .addEventListener("click", () => resetMapView(map));
         return this._container;
       }
 
@@ -875,6 +876,7 @@
     isLoading = true;
     const geojsonData = await loadAllEventLocations(entries);
     isLoading = false;
+    currentEventLocations = geojsonData;
 
     const source = mapInstance.getSource("events");
     if (source) {
@@ -1098,6 +1100,20 @@
   .map {
     width: 100%;
     height: 100%;
+  }
+
+  :global(.maplibregl-ctrl-zoom-reset) {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    padding: 0;
+    place-items: center;
+  }
+
+  :global(.maplibregl-ctrl-zoom-reset svg) {
+    display: block;
+    width: 20px;
+    height: 20px;
   }
 
   .loading-overlay,
