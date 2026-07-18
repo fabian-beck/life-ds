@@ -1172,13 +1172,13 @@
   .filters-section {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.625rem;
   }
 
   .filters-right {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.625rem;
   }
 
   .search-box {
@@ -1191,14 +1191,14 @@
 
   .search-icon {
     position: absolute;
-    left: 1rem;
+    left: 0.75rem;
     color: #94a3b8;
     pointer-events: none;
   }
 
   .search-input {
     width: 100%;
-    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    padding: 0.5rem 0.75rem 0.5rem 2.25rem;
     border-radius: 0.5rem;
     background: rgba(30, 41, 59, 0.6);
     border: 1px solid rgba(148, 163, 184, 0.25);
@@ -1221,8 +1221,8 @@
 
   .clear-search {
     position: absolute;
-    right: 0.75rem;
-    padding: 0.35rem;
+    right: 0.4rem;
+    padding: 0.3rem;
     border-radius: 0.25rem;
     background: transparent;
     border: none;
@@ -1243,30 +1243,30 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.4rem;
   }
 
   .tag-filters-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    min-height: 2rem;
+    gap: 0.6rem;
+    min-height: 1.8rem;
   }
 
   .filter-label {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #cbd5e1;
     flex-shrink: 0;
   }
 
   .clear-filters {
-    padding: 0.35rem 0.75rem;
-    border-radius: 0.375rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 0.35rem;
     background: rgba(148, 163, 184, 0.12);
     border: 1px solid rgba(148, 163, 184, 0.25);
     color: #94a3b8;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1281,9 +1281,9 @@
   .tag-chip {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.85rem;
-    border-radius: 0.5rem;
+    gap: 0.3rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: 0.375rem;
     background: rgba(15, 23, 42, 0.8);
     border: 1px solid rgba(148, 163, 184, 0.25);
     color: #cbd5e1;
@@ -1316,12 +1316,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.35rem;
-    height: 1.35rem;
-    padding: 0 0.35rem;
-    border-radius: 0.35rem;
+    min-width: 1.05rem;
+    height: 1.05rem;
+    padding: 0 0.25rem;
+    border-radius: 0.28rem;
     background: rgba(148, 163, 184, 0.2);
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     font-weight: 600;
     color: #cbd5e1;
   }
@@ -1375,15 +1375,14 @@
     }
 
     .filters-section {
-      display: flex;
-      flex-direction: row;
-      gap: 2rem;
+      display: grid;
+      grid-template-columns: minmax(13rem, 16rem) minmax(0, 1fr);
+      gap: 0.75rem;
       align-items: flex-start;
     }
 
     .search-box {
-      flex-shrink: 0;
-      max-width: 400px;
+      max-width: none;
     }
 
     .filters-right {
