@@ -185,6 +185,7 @@
   async function loadAllEventLocations(entries) {
     const features = [];
     const BATCH_SIZE = 10;
+    const lang = $currentLanguage;
 
     for (let i = 0; i < entries.length; i += BATCH_SIZE) {
       const batch = entries.slice(i, i + BATCH_SIZE);
@@ -195,11 +196,12 @@
       // eslint-disable-next-line no-await-in-loop
       await Promise.all(
         batch.map(async (entry) => {
-          if (eventDataCache.has(entry.id)) {
-            const events = eventDataCache.get(entry.id);
+          const cacheKey = `${lang}:${entry.id}`;
+
+          if (eventDataCache.has(cacheKey)) {
+            const events = eventDataCache.get(cacheKey);
             features.push(...extractFeatures(entry, events));
           } else {
-            const lang = $currentLanguage;
             const path =
               lang === "en"
                 ? `../../data/people/${entry.id}/life_events.json`
@@ -217,7 +219,7 @@
               try {
                 const data = await loader();
                 const events = data?.events || [];
-                eventDataCache.set(entry.id, events);
+                eventDataCache.set(cacheKey, events);
                 features.push(...extractFeatures(entry, events));
               } catch (err) {
                 console.warn(`Failed to load events for ${entry.id}:`, err);
