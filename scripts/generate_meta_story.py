@@ -1626,6 +1626,16 @@ def main():
         default=2,
         help="Maximum historical context events per chapter (default: 2)",
     )
+    parser.add_argument(
+        "--skip-translate",
+        action="store_true",
+        help="Skip automatic translation after generation",
+    )
+    parser.add_argument(
+        "--translate-langs",
+        default="de",
+        help="Comma-separated language codes to translate to after generation (default: de)",
+    )
 
     args = parser.parse_args()
 
@@ -1783,6 +1793,29 @@ def main():
 
     if not update_meta_stories_registry(story_id, dataset, verbose=args.verbose):
         sys.exit(1)
+
+    # Translate the meta story so language versions stay in sync with English.
+    # Translation failures are non-fatal: the English reference is complete and
+    # `translate_all_persons.py --check` will report the gap.
+    if not args.skip_translate:
+        from translate_meta_story import translate_meta_story_data
+
+        for lang in [code.strip() for code in args.translate_langs.split(",") if code.strip()]:
+            print(f"\nTranslating meta-story to '{lang}'...")
+            try:
+                if translate_meta_story_data(
+                    story_id,
+                    lang,
+                    client,
+                    model=args.model,
+                    force=True,
+                    verbose=args.verbose,
+                ):
+                    print(f"  Translation to '{lang}' complete")
+                else:
+                    print(f"  WARNING: translation to '{lang}' failed")
+            except Exception as e:
+                print(f"  WARNING: translation to '{lang}' failed: {e}")
 
     print("\nSUCCESS: Meta-story created!")
     print(f"  ID: {story_id}")

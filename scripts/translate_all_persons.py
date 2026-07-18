@@ -1,20 +1,94 @@
 #!/usr/bin/env python3
-"""Batch translate all persons in the registry to a target language."""
+"""Batch translate all persons (and meta stories) to a target language.
+
+English is the reference version. By default this script (re)translates only
+documents that are missing or stale — i.e. whose stored source fingerprint no
+longer matches the current English text. Use --force to re-translate
+everything, and --check to print a parity report without calling any API.
+"""
 
 import argparse
 import json
 import os
 import sys
 
-from openai import OpenAI
-
 from config import DEFAULT_MODEL
-from translate_person import translate_person_data, REGISTER_PATH, LANGUAGE_NAMES
+from translate_person import (
+    LANGUAGE_NAMES,
+    REGISTER_PATH,
+    check_person_translation,
+    translate_person_data,
+)
+from translate_meta_story import (
+    check_meta_story_translation,
+    list_meta_story_ids,
+    translate_meta_story_data,
+)
+
+STATUS_ICONS = {
+    "current": "✓",
+    "stale": "↻",
+    "missing": "✗",
+    "no-source": "-",
+}
+
+
+def load_person_list():
+    if not REGISTER_PATH.exists():
+        print(f"Error: Registry not found: {REGISTER_PATH}")
+        sys.exit(1)
+    with open(REGISTER_PATH, "r", encoding="utf-8") as f:
+        registry = json.load(f)
+    people = registry.get("people", [])
+    if not people:
+        print("Error: No persons found in registry")
+        sys.exit(1)
+    return people
+
+
+def run_check(persons, target_lang, include_meta=True):
+    """Print a parity report (no API calls). Returns True if fully current."""
+    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
+    print(f"Translation status for {lang_name} ({target_lang})")
+    print("(✓ current, ↻ stale, ✗ missing)\n")
+
+    counts = {"current": 0, "stale": 0, "missing": 0, "no-source": 0}
+    print(f"{'PERSON':<40} {'EVENTS':<8} {'NETWORK':<8} {'REGISTRY':<8}")
+    for person in persons:
+        person_id = person["id"]
+        status = check_person_translation(person_id, target_lang)
+        for value in status.values():
+            counts[value] = counts.get(value, 0) + 1
+        print(
+            f"{person_id:<40} "
+            f"{STATUS_ICONS.get(status['life_events'], '?'):<8} "
+            f"{STATUS_ICONS.get(status['ego_network'], '?'):<8} "
+            f"{STATUS_ICONS.get(status['registry'], '?'):<8}"
+        )
+
+    if include_meta:
+        print(f"\n{'META STORY':<40} {'DETAIL':<8} {'REGISTRY':<8}")
+        for story_id in list_meta_story_ids():
+            status = check_meta_story_translation(story_id, target_lang)
+            for value in status.values():
+                counts[value] = counts.get(value, 0) + 1
+            print(
+                f"{story_id:<40} "
+                f"{STATUS_ICONS.get(status['detail'], '?'):<8} "
+                f"{STATUS_ICONS.get(status['registry'], '?'):<8}"
+            )
+
+    total = sum(counts.values())
+    print(
+        f"\nSummary: {counts['current']}/{total} current, "
+        f"{counts['stale']} stale, {counts['missing']} missing"
+    )
+    return counts["stale"] == 0 and counts["missing"] == 0
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Translate all persons in the registry to a target language"
+        description="Translate all persons (and meta stories) to a target language"
     )
     parser.add_argument(
         "--target-lang",
@@ -22,9 +96,14 @@ def main():
         help="Target language code (e.g., 'de', 'fr', 'es')",
     )
     parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Only report translation status (no API calls, no changes)",
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
-        help="Re-translate even if translation already exists",
+        help="Re-translate everything, even translations that are current",
     )
     parser.add_argument(
         "--model",
@@ -36,32 +115,15 @@ def main():
         help="Comma-separated list of person IDs to translate (default: all)",
     )
     parser.add_argument(
-        "--skip-registry",
+        "--skip-meta",
         action="store_true",
-        help="Skip updating the language-specific registry file",
+        help="Skip translating meta stories",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
 
     args = parser.parse_args()
 
-    # Validate OpenAI API key
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        print("Error: OPENAI_API_KEY environment variable not set")
-        sys.exit(1)
-
-    # Load registry
-    if not REGISTER_PATH.exists():
-        print(f"Error: Registry not found: {REGISTER_PATH}")
-        sys.exit(1)
-
-    with open(REGISTER_PATH, "r", encoding="utf-8") as f:
-        registry = json.load(f)
-
-    all_persons = registry.get("people", [])
-    if not all_persons:
-        print("Error: No persons found in registry")
-        sys.exit(1)
+    all_persons = load_person_list()
 
     # Filter persons if specified
     if args.persons:
@@ -78,7 +140,21 @@ def main():
         print("Error: No persons to translate")
         sys.exit(1)
 
-    # Initialize OpenAI client
+    include_meta = not args.skip_meta and not args.persons
+
+    # Check-only mode requires no API key and changes nothing
+    if args.check:
+        all_current = run_check(persons_to_translate, args.target_lang, include_meta)
+        sys.exit(0 if all_current else 1)
+
+    # Validate OpenAI API key
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        print("Error: OPENAI_API_KEY environment variable not set")
+        sys.exit(1)
+
+    from openai import OpenAI
+
     client = OpenAI(api_key=api_key)
 
     lang_name = LANGUAGE_NAMES.get(args.target_lang, args.target_lang)
@@ -102,6 +178,13 @@ def main():
         print(f"[{i}/{total}] {person_name} ({person_id})")
 
         try:
+            before = check_person_translation(person_id, args.target_lang)
+            if not args.force and all(v == "current" for v in before.values()):
+                skipped.append(person_id)
+                print("  → Skipped (translation current)")
+                print()
+                continue
+
             results = translate_person_data(
                 person_id=person_id,
                 target_lang=args.target_lang,
@@ -111,28 +194,16 @@ def main():
                 verbose=args.verbose,
             )
 
-            # Check if anything was translated
-            if any(results.values()):
+            after = check_person_translation(person_id, args.target_lang)
+            if any(results.values()) and all(
+                v in ("current", "no-source") for v in after.values()
+            ):
                 successful.append(person_id)
                 success_items = [k for k, v in results.items() if v]
                 print(f"  ✓ Translated: {', '.join(success_items)}")
             else:
-                # Could be skipped or failed
-                from pathlib import Path
-
-                target_dir = (
-                    Path(__file__).resolve().parents[1]
-                    / "data"
-                    / "people"
-                    / person_id
-                    / args.target_lang
-                )
-                if not args.force and target_dir.exists():
-                    skipped.append(person_id)
-                    print("  → Skipped (already exists)")
-                else:
-                    failed.append(person_id)
-                    print("  ✗ Failed")
+                failed.append(person_id)
+                print("  ✗ Failed (translation incomplete)")
 
         except KeyboardInterrupt:
             print("\n\nTranslation interrupted by user")
@@ -143,36 +214,62 @@ def main():
 
         print()
 
+    # Translate meta stories
+    meta_successful = []
+    meta_failed = []
+    if include_meta:
+        story_ids = list_meta_story_ids()
+        print(f"Translating {len(story_ids)} meta story(ies) to {lang_name}...")
+        for story_id in story_ids:
+            print(f"  {story_id}")
+            try:
+                before = check_meta_story_translation(story_id, args.target_lang)
+                if not args.force and all(v == "current" for v in before.values()):
+                    print("  → Skipped (translation current)")
+                    continue
+                if translate_meta_story_data(
+                    story_id,
+                    args.target_lang,
+                    client,
+                    model=args.model,
+                    force=args.force,
+                    verbose=args.verbose,
+                ):
+                    meta_successful.append(story_id)
+                    print("  ✓ Translated")
+                else:
+                    meta_failed.append(story_id)
+                    print("  ✗ Failed")
+            except Exception as e:
+                print(f"  ✗ Error: {e}")
+                meta_failed.append(story_id)
+        print()
+
     # Print summary
     print("=" * 60)
     print("TRANSLATION SUMMARY")
     print("=" * 60)
-    print(f"Total:      {total}")
-    print(f"Successful: {len(successful)}")
-    print(f"Skipped:    {len(skipped)}")
-    print(f"Failed:     {len(failed)}")
+    print(f"Persons:      {total}")
+    print(f"  Successful: {len(successful)}")
+    print(f"  Skipped:    {len(skipped)} (already current)")
+    print(f"  Failed:     {len(failed)}")
+    if include_meta:
+        print(f"Meta stories translated: {len(meta_successful)}, failed: {len(meta_failed)}")
     print()
-
-    if successful:
-        print(f"✓ Successfully translated {len(successful)} person(s):")
-        for pid in successful:
-            print(f"  - {pid}")
-        print()
-
-    if skipped:
-        print(f"→ Skipped {len(skipped)} person(s) (already translated):")
-        for pid in skipped:
-            print(f"  - {pid}")
-        print()
 
     if failed:
         print(f"✗ Failed to translate {len(failed)} person(s):")
         for pid in failed:
             print(f"  - {pid}")
         print()
+    if meta_failed:
+        print(f"✗ Failed to translate {len(meta_failed)} meta story(ies):")
+        for sid in meta_failed:
+            print(f"  - {sid}")
+        print()
 
     # Exit with appropriate code
-    if failed:
+    if failed or meta_failed:
         sys.exit(1)
     else:
         sys.exit(0)

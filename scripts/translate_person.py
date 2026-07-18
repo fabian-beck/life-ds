@@ -1,7 +1,35 @@
 #!/usr/bin/env python3
-"""Translate person data (life events, ego networks, and registry entries) to a target language using OpenAI API."""
+"""Translate person data (life events, ego networks, and registry entries) to a target language.
+
+Translation architecture
+------------------------
+
+English is always the reference version. Translated files are *derived* from the
+English data: the translation never regenerates or restructures anything.
+
+1. EXTRACT: only the translatable text fields are pulled out of the English
+   document into a compact payload (``extract_*_translatables``).
+2. TRANSLATE: the payload (not the whole document) is sent to the model with
+   structured outputs, so dates, coordinates, URLs, IDs, icons, and every other
+   technical field can never be altered by the model.
+3. MERGE: the translated payload is overlaid onto a deep copy of the English
+   document (``apply_*_translations``). List lengths are validated, so the
+   translated file is guaranteed to have the same events, chapters, images,
+   and connections — in the same order — as the English source.
+
+Every translated file carries a ``translation`` provenance block containing a
+fingerprint of the English source text it was derived from. When the English
+data changes, the fingerprint no longer matches and the translation is
+reported as stale (see ``translate_all_persons.py --check``).
+
+Person names are localized through a single shared name glossary per person,
+so the same person is named identically across life events, ego network, and
+registry (cross-references in the UI rely on exact name matches).
+"""
 
 import argparse
+import copy
+import hashlib
 import json
 import os
 import sys
@@ -34,154 +62,650 @@ LANGUAGE_NAMES = {
     "ko": "Korean",
 }
 
-
-# Pydantic models for translation (matching existing data schemas)
-
-
-class ImageMetadata(BaseModel):
-    """Metadata for an image associated with an event."""
-
-    url: str
-    caption: str
-    source: str
+# Extra style guidance per target language
+LANGUAGE_STYLE_NOTES = {
+    "de": (
+        "Use the informal 'Du' form if the reader is ever addressed. "
+        "Use natural, idiomatic German with correct typography (e.g. „quotes“ "
+        "where quoting), but keep Markdown and [[term|display]] markers intact."
+    ),
+}
 
 
-class Annotation(BaseModel):
-    """Explanation for an annotated term in event description."""
+# ---------------------------------------------------------------------------
+# Pydantic models for the translation payloads (structured outputs).
+# These mirror the extraction payloads exactly. They intentionally contain
+# ONLY translatable text — never technical fields.
+# ---------------------------------------------------------------------------
 
+
+class TrLocation(BaseModel):
+    name_historic: Optional[str] = None
+    name_modern: Optional[str] = None
+
+
+class TrImage(BaseModel):
+    caption: Optional[str] = None
+
+
+class TrAnnotation(BaseModel):
+    term: str
     explanation: str
-    wikipedia_url: Optional[str] = None
 
 
-class LocationCoordinate(BaseModel):
-    """Geographic coordinates for a location."""
-
-    label: str
-    name: str
-    primary: bool
-    centroid: List[float]
-    source: str
-    bbox: Optional[List[float]] = None
-
-
-class LifeEvent(BaseModel):
-    """A significant life event."""
-
-    date: str
-    date_precision: str
-    date_end: Optional[str] = None
-    date_end_precision: Optional[str] = None
-    date_note: Optional[str] = None
-    age: Optional[int] = None
+class TrEvent(BaseModel):
     title: str
     description: str
-    locations: Optional[List[str]] = None
-    sources: Optional[List[str]] = None
-    images: Optional[List[ImageMetadata]] = None
-    location_coordinates: Optional[List[LocationCoordinate]] = None
-    chapter: Optional[str] = None
-    categories: Optional[List[str]] = None
-    annotations: Optional[Dict[str, Annotation]] = None
+    date_note: Optional[str] = None
+    locations: List[TrLocation]
+    images: List[TrImage]
+    annotations: List[TrAnnotation]
 
 
-class LifeChapter(BaseModel):
-    """A chapter grouping a sequence of life events."""
-
-    id: str
+class TrChapter(BaseModel):
     headline: str
-    date_start: str
-    date_start_precision: str
-    date_end: str
-    date_end_precision: str
-    age_start: Optional[int] = None
-    age_end: Optional[int] = None
+    location: Optional[str] = None
 
 
-class Portrait(BaseModel):
-    """Portrait information for the person."""
-
-    image: Optional[str] = None
-    source: Optional[str] = None
-
-
-class Person(BaseModel):
-    """Metadata about the person."""
-
-    name: str
-    birth_date: Optional[str] = None
-    death_date: Optional[str] = None
-    primary_roles: List[str]
+class TrPersonMeta(BaseModel):
+    tagline: Optional[str] = None
     summary: str
-    wikipedia: Optional[str] = None
-    portrait: Optional[Portrait] = None
+    primary_roles: List[str]
 
 
-class LifeDataset(BaseModel):
-    """Complete structured dataset for a person's life events."""
-
-    dataset: str
-    created_on: str
-    person: Person
-    chapters: Optional[List[LifeChapter]] = None
-    events: List[LifeEvent]
+class LifeEventsTranslation(BaseModel):
+    person: TrPersonMeta
+    chapters: List[TrChapter]
+    conclusion: Optional[str] = None
+    events: List[TrEvent]
 
 
-class EgoConnection(BaseModel):
-    """A connection in the ego network."""
-
-    person_name: str
-    relationship_type: str
+class TrConnection(BaseModel):
     relationship_description: str
-    start_year: Optional[int] = None
-    end_year: Optional[int] = None
-    strength: Optional[str] = None
-    interaction_frequency: Optional[str] = None
-    influence_direction: Optional[str] = None
-    shared_activities: Optional[List[str]] = None
-    sources: Optional[List[str]] = None
     notes: Optional[str] = None
+    shared_activities: List[str]
 
 
-class EgoPerson(BaseModel):
-    """Central person in ego network."""
+class TrCategorySummary(BaseModel):
+    summary: str
 
-    name: str
-    birth_year: Optional[int] = None
-    death_year: Optional[int] = None
+
+class EgoNetworkTranslation(BaseModel):
+    ego_summary: str
+    ego_primary_roles: List[str]
+    connections: List[TrConnection]
+    category_summaries: List[TrCategorySummary]
+    network_summary: Optional[str] = None
+
+
+class RegistryEntryTranslation(BaseModel):
+    tagline: Optional[str] = None
+    summary: str
     primary_roles: List[str]
-    summary: str
-    wikipedia: Optional[str] = None
 
 
-class CategorySummary(BaseModel):
-    """Summary for a relationship category."""
-
-    relationship_type: str
-    summary: str
+class NameMapping(BaseModel):
+    original: str
+    localized: str
 
 
-class EgoNetwork(BaseModel):
-    """Complete ego network dataset."""
-
-    dataset: str
-    created_on: str
-    ego: EgoPerson
-    connections: List[EgoConnection]
-    category_summaries: Optional[List[CategorySummary]] = None
+class NameGlossary(BaseModel):
+    mappings: List[NameMapping]
 
 
-class PersonRegistryEntry(BaseModel):
-    """Person entry in the registry."""
+class TrPersonEvent(BaseModel):
+    event_title: str
+    theme_connection: str
 
-    id: str
-    name: str
-    summary: str
-    portrait: Optional[Portrait] = None
-    primaryRoles: List[str]
-    birthDate: Optional[str] = None
-    deathDate: Optional[str] = None
-    created: str
-    lastUpdated: str
+
+class TrMetaChapter(BaseModel):
+    title: str
+    historical_context: Optional[str] = None
+    person_events: List[TrPersonEvent]
+
+
+class TrSubtopic(BaseModel):
+    title: str
+    description: str
+
+
+class MetaStoryTranslation(BaseModel):
+    title: str
+    tagline: str
+    description: str
+    subtopics: List[TrSubtopic]
+    chapters: List[TrMetaChapter]
+    conclusion: Optional[str] = None
+
+
+# ---------------------------------------------------------------------------
+# Extraction: English document -> translatable payload (plain dicts)
+# ---------------------------------------------------------------------------
+
+
+def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract only the translatable text fields from a life events dataset."""
+    person = data.get("person", {}) or {}
+    payload: Dict[str, Any] = {
+        "person": {
+            "tagline": person.get("tagline"),
+            "summary": person.get("summary", ""),
+            "primary_roles": list(person.get("primary_roles", []) or []),
+        },
+        "chapters": [
+            {
+                "headline": chapter.get("headline", ""),
+                "location": chapter.get("location"),
+            }
+            for chapter in (data.get("chapters") or [])
+        ],
+        "conclusion": data.get("conclusion"),
+        "events": [],
+    }
+    for event in data.get("events", []):
+        payload["events"].append(
+            {
+                "title": event.get("title", ""),
+                "description": event.get("description", ""),
+                "date_note": event.get("date_note"),
+                "locations": [
+                    {
+                        "name_historic": loc.get("name_historic"),
+                        "name_modern": loc.get("name_modern"),
+                    }
+                    for loc in (event.get("locations") or [])
+                    if isinstance(loc, dict)
+                ],
+                "images": [
+                    {"caption": img.get("caption")}
+                    for img in (event.get("images") or [])
+                ],
+                "annotations": [
+                    {"term": term, "explanation": ann.get("explanation", "")}
+                    for term, ann in (event.get("annotations") or {}).items()
+                ],
+            }
+        )
+    return payload
+
+
+def extract_ego_network_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract only the translatable text fields from an ego network dataset."""
+    ego = data.get("ego", {}) or {}
+    return {
+        "ego_summary": ego.get("summary", ""),
+        "ego_primary_roles": list(ego.get("primary_roles", []) or []),
+        "connections": [
+            {
+                "relationship_description": conn.get("relationship_description", ""),
+                "notes": conn.get("notes"),
+                "shared_activities": list(conn.get("shared_activities") or []),
+            }
+            for conn in data.get("connections", [])
+        ],
+        "category_summaries": [
+            {"summary": cat.get("summary", "")}
+            for cat in (data.get("category_summaries") or [])
+        ],
+        "network_summary": data.get("network_summary"),
+    }
+
+
+def extract_registry_entry_translatables(entry: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract only the translatable text fields from a registry entry."""
+    return {
+        "tagline": entry.get("tagline"),
+        "summary": entry.get("summary", ""),
+        "primary_roles": list(entry.get("primaryRoles", []) or []),
+    }
+
+
+def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract only the translatable text fields from a meta story dataset."""
+    meta = data.get("meta_story", {}) or {}
+    return {
+        "title": meta.get("title", ""),
+        "tagline": meta.get("tagline", ""),
+        "description": meta.get("description", ""),
+        "subtopics": [
+            {
+                "title": sub.get("title", ""),
+                "description": sub.get("description", ""),
+            }
+            for sub in (data.get("subtopics") or [])
+        ],
+        "chapters": [
+            {
+                "title": chapter.get("title", ""),
+                "historical_context": chapter.get("historical_context"),
+                "person_events": [
+                    {
+                        "event_title": pe.get("event_title", ""),
+                        "theme_connection": pe.get("theme_connection", ""),
+                    }
+                    for pe in (chapter.get("person_events") or [])
+                ],
+            }
+            for chapter in (data.get("chapters") or [])
+        ],
+        "conclusion": data.get("conclusion"),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Fingerprints and provenance
+# ---------------------------------------------------------------------------
+
+
+def compute_fingerprint(payload: Dict[str, Any]) -> str:
+    """Stable fingerprint of the translatable source text.
+
+    Computed over the extraction payload of the ENGLISH source, so any change
+    to translatable English text invalidates existing translations, while
+    changes to purely technical fields (coordinates, icons) do not.
+    """
+    canonical = json.dumps(
+        payload, sort_keys=True, ensure_ascii=False, separators=(",", ":")
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+
+
+def make_translation_block(
+    fingerprint: Optional[str], target_lang: str, translator: str
+) -> Dict[str, Any]:
+    return {
+        "source_lang": "en",
+        "target_lang": target_lang,
+        "source_fingerprint": fingerprint,
+        "translated_on": datetime.now().astimezone().isoformat(),
+        "translator": translator,
+    }
+
+
+def translation_status(
+    source_data: Optional[Dict[str, Any]],
+    target_data: Optional[Dict[str, Any]],
+    extract_fn: Any,
+) -> str:
+    """Return 'missing', 'stale', or 'current' for a translated document."""
+    if source_data is None:
+        return "no-source"
+    if target_data is None:
+        return "missing"
+    block = target_data.get("translation")
+    if not isinstance(block, dict):
+        return "stale"
+    fingerprint = block.get("source_fingerprint")
+    if not fingerprint:
+        return "stale"
+    if fingerprint != compute_fingerprint(extract_fn(source_data)):
+        return "stale"
+    return "current"
+
+
+# ---------------------------------------------------------------------------
+# Merge: translated payload + English document -> translated document
+# ---------------------------------------------------------------------------
+
+
+class TranslationMergeError(ValueError):
+    """Raised when a translated payload does not align with the source."""
+
+
+def _require_same_length(kind: str, source: List[Any], translated: List[Any]) -> None:
+    if len(source) != len(translated):
+        raise TranslationMergeError(
+            f"{kind}: expected {len(source)} translated item(s), got {len(translated)}"
+        )
+
+
+def _set_if_source_has(target: Dict[str, Any], key: str, value: Optional[str]) -> None:
+    """Overwrite target[key] only if the source document had that field."""
+    if key in target and value is not None:
+        target[key] = value
+
+
+def apply_life_events_translations(
+    source_data: Dict[str, Any],
+    translated: Dict[str, Any],
+    name_glossary: Dict[str, str],
+) -> Dict[str, Any]:
+    """Overlay a translated payload onto a deep copy of the English dataset."""
+    result = copy.deepcopy(source_data)
+
+    person = result.get("person", {})
+    tr_person = translated.get("person", {})
+    _set_if_source_has(person, "tagline", tr_person.get("tagline"))
+    _set_if_source_has(person, "summary", tr_person.get("summary"))
+    src_roles = person.get("primary_roles") or []
+    tr_roles = tr_person.get("primary_roles") or []
+    _require_same_length("person.primary_roles", src_roles, tr_roles)
+    if "primary_roles" in person:
+        person["primary_roles"] = tr_roles
+    if person.get("name"):
+        person["name"] = localize_name(person["name"], name_glossary)
+
+    src_chapters = result.get("chapters") or []
+    tr_chapters = translated.get("chapters") or []
+    _require_same_length("chapters", src_chapters, tr_chapters)
+    for chapter, tr_chapter in zip(src_chapters, tr_chapters):
+        _set_if_source_has(chapter, "headline", tr_chapter.get("headline"))
+        _set_if_source_has(chapter, "location", tr_chapter.get("location"))
+        if chapter.get("involved_people"):
+            chapter["involved_people"] = [
+                localize_name(name, name_glossary)
+                for name in chapter["involved_people"]
+            ]
+
+    _set_if_source_has(result, "conclusion", translated.get("conclusion"))
+
+    src_events = result.get("events") or []
+    tr_events = translated.get("events") or []
+    _require_same_length("events", src_events, tr_events)
+    for event, tr_event in zip(src_events, tr_events):
+        _set_if_source_has(event, "title", tr_event.get("title"))
+        _set_if_source_has(event, "description", tr_event.get("description"))
+        _set_if_source_has(event, "date_note", tr_event.get("date_note"))
+
+        src_locations = [
+            loc for loc in (event.get("locations") or []) if isinstance(loc, dict)
+        ]
+        tr_locations = tr_event.get("locations") or []
+        _require_same_length("event.locations", src_locations, tr_locations)
+        for loc, tr_loc in zip(src_locations, tr_locations):
+            _set_if_source_has(loc, "name_historic", tr_loc.get("name_historic"))
+            _set_if_source_has(loc, "name_modern", tr_loc.get("name_modern"))
+
+        src_images = event.get("images") or []
+        tr_images = tr_event.get("images") or []
+        _require_same_length("event.images", src_images, tr_images)
+        for img, tr_img in zip(src_images, tr_images):
+            _set_if_source_has(img, "caption", tr_img.get("caption"))
+
+        annotations = event.get("annotations")
+        if annotations:
+            translated_by_term = {
+                item.get("term"): item.get("explanation")
+                for item in (tr_event.get("annotations") or [])
+            }
+            for term, ann in annotations.items():
+                explanation = translated_by_term.get(term)
+                if explanation:
+                    ann["explanation"] = explanation
+
+        if event.get("involved_people"):
+            event["involved_people"] = [
+                localize_name(name, name_glossary)
+                for name in event["involved_people"]
+            ]
+
+    return result
+
+
+def apply_ego_network_translations(
+    source_data: Dict[str, Any],
+    translated: Dict[str, Any],
+    name_glossary: Dict[str, str],
+) -> Dict[str, Any]:
+    """Overlay a translated payload onto a deep copy of the English network."""
+    result = copy.deepcopy(source_data)
+
+    ego = result.get("ego", {})
+    _set_if_source_has(ego, "summary", translated.get("ego_summary"))
+    src_roles = ego.get("primary_roles") or []
+    tr_roles = translated.get("ego_primary_roles") or []
+    _require_same_length("ego.primary_roles", src_roles, tr_roles)
+    if "primary_roles" in ego:
+        ego["primary_roles"] = tr_roles
+    if ego.get("name"):
+        ego["name"] = localize_name(ego["name"], name_glossary)
+
+    src_connections = result.get("connections") or []
+    tr_connections = translated.get("connections") or []
+    _require_same_length("connections", src_connections, tr_connections)
+    for conn, tr_conn in zip(src_connections, tr_connections):
+        _set_if_source_has(
+            conn, "relationship_description", tr_conn.get("relationship_description")
+        )
+        _set_if_source_has(conn, "notes", tr_conn.get("notes"))
+        src_activities = conn.get("shared_activities") or []
+        tr_activities = tr_conn.get("shared_activities") or []
+        _require_same_length(
+            "connection.shared_activities", src_activities, tr_activities
+        )
+        if "shared_activities" in conn:
+            conn["shared_activities"] = tr_activities
+        if conn.get("person_name"):
+            conn["person_name"] = localize_name(conn["person_name"], name_glossary)
+
+    src_categories = result.get("category_summaries") or []
+    tr_categories = translated.get("category_summaries") or []
+    _require_same_length("category_summaries", src_categories, tr_categories)
+    for cat, tr_cat in zip(src_categories, tr_categories):
+        _set_if_source_has(cat, "summary", tr_cat.get("summary"))
+
+    _set_if_source_has(result, "network_summary", translated.get("network_summary"))
+
+    return result
+
+
+def apply_registry_entry_translations(
+    entry: Dict[str, Any],
+    translated: Dict[str, Any],
+    name_glossary: Dict[str, str],
+) -> Dict[str, Any]:
+    """Overlay a translated payload onto a deep copy of the registry entry."""
+    result = copy.deepcopy(entry)
+    _set_if_source_has(result, "tagline", translated.get("tagline"))
+    _set_if_source_has(result, "summary", translated.get("summary"))
+    src_roles = result.get("primaryRoles") or []
+    tr_roles = translated.get("primary_roles") or []
+    _require_same_length("primaryRoles", src_roles, tr_roles)
+    if "primaryRoles" in result:
+        result["primaryRoles"] = tr_roles
+    if result.get("name"):
+        result["name"] = localize_name(result["name"], name_glossary)
+    result["lastUpdated"] = datetime.now().astimezone().isoformat()
+    return result
+
+
+def apply_meta_story_translations(
+    source_data: Dict[str, Any],
+    translated: Dict[str, Any],
+    target_lang: str,
+) -> Dict[str, Any]:
+    """Overlay a translated payload onto a deep copy of the meta story.
+
+    Where a person's translated life events exist, event titles referenced by
+    the meta story are copied verbatim from that person's translated dataset
+    (matched by ``event_index``), so meta story chapters and the actual story
+    slides always show identical titles.
+    """
+    result = copy.deepcopy(source_data)
+
+    meta = result.get("meta_story", {})
+    _set_if_source_has(meta, "title", translated.get("title"))
+    _set_if_source_has(meta, "tagline", translated.get("tagline"))
+    _set_if_source_has(meta, "description", translated.get("description"))
+
+    src_subtopics = result.get("subtopics") or []
+    tr_subtopics = translated.get("subtopics") or []
+    _require_same_length("subtopics", src_subtopics, tr_subtopics)
+    for sub, tr_sub in zip(src_subtopics, tr_subtopics):
+        _set_if_source_has(sub, "title", tr_sub.get("title"))
+        _set_if_source_has(sub, "description", tr_sub.get("description"))
+
+    # Cache of translated life events per person for event title lookups
+    translated_events_cache: Dict[str, Optional[List[Dict[str, Any]]]] = {}
+
+    def translated_event_title(person_id: str, event_index: Any) -> Optional[str]:
+        if not isinstance(event_index, int):
+            return None
+        if person_id not in translated_events_cache:
+            path = PEOPLE_DIR / person_id / target_lang / "life_events.json"
+            data = load_json_file(path)
+            translated_events_cache[person_id] = (
+                data.get("events") if isinstance(data, dict) else None
+            )
+        events = translated_events_cache[person_id]
+        if events and 0 <= event_index < len(events):
+            title = events[event_index].get("title")
+            return title if isinstance(title, str) else None
+        return None
+
+    src_chapters = result.get("chapters") or []
+    tr_chapters = translated.get("chapters") or []
+    _require_same_length("chapters", src_chapters, tr_chapters)
+    for chapter, tr_chapter in zip(src_chapters, tr_chapters):
+        _set_if_source_has(chapter, "title", tr_chapter.get("title"))
+        _set_if_source_has(
+            chapter, "historical_context", tr_chapter.get("historical_context")
+        )
+        src_events = chapter.get("person_events") or []
+        tr_events = tr_chapter.get("person_events") or []
+        _require_same_length("chapter.person_events", src_events, tr_events)
+        for pe, tr_pe in zip(src_events, tr_events):
+            # Prefer the title from the person's translated life events
+            from_dataset = translated_event_title(
+                pe.get("person_id", ""), pe.get("event_index")
+            )
+            _set_if_source_has(
+                pe, "event_title", from_dataset or tr_pe.get("event_title")
+            )
+            _set_if_source_has(pe, "theme_connection", tr_pe.get("theme_connection"))
+
+    _set_if_source_has(result, "conclusion", translated.get("conclusion"))
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Name glossary
+# ---------------------------------------------------------------------------
+
+
+def localize_name(name: str, glossary: Dict[str, str]) -> str:
+    """Apply the name glossary to a person name.
+
+    Handles both display form ("Henry II") and underscore form ("Henry_II"),
+    which is used by the ``name`` fields in registry and person blocks.
+    """
+    if not glossary or not name:
+        return name
+    if name in glossary:
+        return glossary[name]
+    spaced = name.replace("_", " ")
+    if spaced != name and spaced in glossary:
+        return glossary[spaced].replace(" ", "_")
+    return name
+
+
+def collect_person_names(
+    life_events: Optional[Dict[str, Any]],
+    ego_network: Optional[Dict[str, Any]],
+    registry_entry: Optional[Dict[str, Any]],
+) -> List[str]:
+    """Collect all person names appearing in the datasets (display form)."""
+    names: List[str] = []
+
+    def add(name: Any) -> None:
+        if isinstance(name, str) and name.strip():
+            display = name.replace("_", " ").strip()
+            if display not in names:
+                names.append(display)
+
+    if registry_entry:
+        add(registry_entry.get("name"))
+    if life_events:
+        add((life_events.get("person") or {}).get("name"))
+        for chapter in life_events.get("chapters") or []:
+            for name in chapter.get("involved_people") or []:
+                add(name)
+        for event in life_events.get("events") or []:
+            for name in event.get("involved_people") or []:
+                add(name)
+    if ego_network:
+        add((ego_network.get("ego") or {}).get("name"))
+        for conn in ego_network.get("connections") or []:
+            add(conn.get("person_name"))
+    return names
+
+
+def build_name_glossary(
+    names: List[str],
+    context_summary: str,
+    target_lang: str,
+    client: OpenAI,
+    model: str,
+    verbose: bool = False,
+) -> Dict[str, str]:
+    """Ask the model once which person names have standard localized versions.
+
+    Returns a mapping of original display name -> localized display name,
+    containing only names that actually change. Used deterministically across
+    all documents of a person so naming stays consistent everywhere.
+    """
+    if not names:
+        return {}
+    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
+
+    prompt = f"""You will localize person names for a biographical app being translated to {lang_name}.
+
+CONTEXT (who the biography is about):
+{context_summary}
+
+RULES:
+- Keep names in their original form by DEFAULT. Return the name unchanged unless there is a standard, widely used {lang_name} version.
+- Translate ONLY names of historical figures with a well-established {lang_name} exonym (e.g., for German: "Henry II" -> "Heinrich II.", "Charles V" -> "Karl V.", "Queen Elizabeth I" -> "Königin Elisabeth I.").
+- NEVER translate modern names (e.g., "Alan Turing", "Grace Hopper", "Steve Jobs" stay unchanged).
+- Keep epithets/parentheticals consistent with the {lang_name} convention.
+- Return a mapping for EVERY name in the list below, with "localized" equal to "original" when unchanged.
+
+NAMES:
+{json.dumps(names, ensure_ascii=False, indent=2)}
+"""
+
+    if verbose:
+        print(f"  Building name glossary for {len(names)} name(s)...")
+
+    try:
+        response = client.beta.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": f"You are an expert on {lang_name} naming conventions for historical figures.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            response_format=NameGlossary,
+        )
+        parsed = response.choices[0].message.parsed
+        if not parsed:
+            return {}
+        glossary = {
+            m.original: m.localized
+            for m in parsed.mappings
+            if m.original and m.localized and m.original != m.localized
+        }
+        if verbose and glossary:
+            for original, localized in glossary.items():
+                print(f"    {original} -> {localized}")
+        return glossary
+    except Exception as e:
+        print(f"  Warning: name glossary failed ({e}); keeping names unchanged")
+        return {}
+
+
+def format_glossary_for_prompt(glossary: Dict[str, str]) -> str:
+    if not glossary:
+        return "(none — keep every person name exactly as written)"
+    return "\n".join(f'- "{k}" -> "{v}"' for k, v in glossary.items())
+
+
+# ---------------------------------------------------------------------------
+# Utility functions
+# ---------------------------------------------------------------------------
 
 
 def slugify(name: str) -> str:
@@ -241,15 +765,97 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
 
 
 def save_json_file(data: Dict[str, Any], file_path: Path, indent: int = 2) -> bool:
-    """Save data to a JSON file."""
+    """Save data to a JSON file (LF newlines, UTF-8, same style as generation)."""
     try:
         file_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
             json.dump(data, f, indent=indent, ensure_ascii=False)
+            f.write("\n")
         return True
     except Exception as e:
         print(f"Error: Failed to save {file_path}: {e}")
         return False
+
+
+# ---------------------------------------------------------------------------
+# Model calls
+# ---------------------------------------------------------------------------
+
+
+def _call_translation_model(
+    payload: Dict[str, Any],
+    response_format: Any,
+    document_kind: str,
+    extra_rules: str,
+    target_lang: str,
+    glossary: Dict[str, str],
+    client: OpenAI,
+    model: str,
+    verbose: bool = False,
+) -> Optional[Any]:
+    """Send a translation payload to the model and parse the structured result."""
+    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
+    style_note = LANGUAGE_STYLE_NOTES.get(target_lang, "")
+
+    prompt = f"""Translate the following {document_kind} text fields to {lang_name}.
+
+The input is a JSON payload containing ONLY translatable text extracted from a
+larger document. Return the same structure with every text field translated.
+
+GENERAL RULES:
+1. Keep every array EXACTLY the same length and order as the input — item N of
+   the output must be the translation of item N of the input.
+2. Translate faithfully and idiomatically; do not summarize, extend, or omit.
+3. Preserve Markdown formatting exactly (links, emphasis, line breaks).
+4. Descriptions may contain [[term|display]] annotation markers:
+   - Keep the marker syntax and the term (before the |) EXACTLY as-is.
+   - Translate ONLY the display text (after the |).
+   - Annotation "term" keys in the payload must be returned UNCHANGED.
+5. PLACE NAMES: use the standard {lang_name} version where one exists
+   (e.g., for German: "Munich" -> "München", "Zurich, Switzerland" -> "Zürich, Schweiz").
+6. PERSON NAMES: apply this glossary consistently wherever a name appears in
+   any text; keep all other person names unchanged:
+{format_glossary_for_prompt(glossary)}
+{extra_rules}
+{style_note}
+
+PAYLOAD:
+{json.dumps(payload, ensure_ascii=False, indent=2)}
+"""
+
+    if verbose:
+        print(f"  Translating {document_kind} to {lang_name}...")
+
+    try:
+        response = client.beta.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        f"You are a professional translator specializing in "
+                        f"biographical content. Translate to {lang_name} while "
+                        f"preserving structure, markers, and formatting."
+                    ),
+                },
+                {"role": "user", "content": prompt},
+            ],
+            response_format=response_format,
+        )
+        result = response.choices[0].message
+        if result.parsed:
+            return result.parsed
+        if result.refusal:
+            print(f"  Error: Model refused to translate: {result.refusal}")
+        else:
+            print("  Error: No parsed result returned")
+        return None
+    except APIStatusError as e:
+        print(f"  Error: OpenAI API error: {e}")
+        return None
+    except Exception as e:
+        print(f"  Error: Translation failed: {e}")
+        return None
 
 
 def translate_life_events(
@@ -257,76 +863,40 @@ def translate_life_events(
     target_lang: str,
     client: OpenAI,
     model: str,
+    glossary: Dict[str, str],
     verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
-    """Translate life events dataset to target language."""
-    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
-
-    prompt = """Translate this biographical life events document to {lang_name}.
-
-TRANSLATION RULES:
-1. Translate all text content: titles, descriptions, chapter headlines, image captions, summary, roles, annotation explanations
-2. PERSON NAMES - Keep in original form UNLESS:
-   - The translated version is very common in {lang_name} (e.g., Henry II → Heinrich II in German)
-   - The English version is not the original (e.g., non-English historical figures whose names were anglicized)
-3. PLACE NAMES - Translate where it makes sense:
-   - Use native/localized versions when they exist (e.g., "London" → "Londres" in French, "Munich" → "München" in German)
-   - Translate geographic descriptors (e.g., "England" → "Inglaterra" in Spanish)
-   - Keep specific street names and addresses mostly intact but translate generic terms (e.g., "Street", "Avenue")
-4. ANNOTATION MARKERS - CRITICAL:
-   - Descriptions may contain [[term|display]] markers for annotations
-   - KEEP the marker syntax [[term|display]] EXACTLY as-is
-   - Translate ONLY the display text (after the |)
-   - Translate the explanation in the annotations object
-   - Do NOT translate the term keys (before the |)
-   - Example: "worked on [[Entscheidungsproblem|decision problem]]" → "arbeitete am [[Entscheidungsproblem|Entscheidungsproblem]]"
-5. Preserve ALL non-text fields EXACTLY as they are:
-   - ALL dates (date, date_precision, date_end, date_end_precision, birth_date, death_date, created_on)
-   - ALL coordinates (location_coordinates, centroid, bbox)
-   - ALL URLs (sources, images.url, images.source, wikipedia, annotations.*.wikipedia_url)
-   - ALL IDs (chapter IDs in events[].chapter, dataset, annotation term keys)
-   - ALL technical fields (age, date_note if it's technical)
-6. Maintain the exact JSON structure
-7. Use natural, fluent {lang_name}
-
-Here is the JSON document to translate:
-
-{json.dumps(source_data, indent=2, ensure_ascii=False)}
-
-Return ONLY the complete translated JSON document with the same structure."""
-
-    if verbose:
-        print(f"  Translating life events to {lang_name}...")
-
+    """Translate a life events dataset; returns the full derived document."""
+    payload = extract_life_events_translatables(source_data)
+    parsed = _call_translation_model(
+        payload=payload,
+        response_format=LifeEventsTranslation,
+        document_kind="biographical life events",
+        extra_rules=(
+            "7. Chapter headlines are short, evocative book-chapter titles — "
+            "keep them punchy (2-5 words).\n"
+            "8. Event titles are crisp headlines (2-6 words); use sentence-style "
+            "phrasing natural for the target language."
+        ),
+        target_lang=target_lang,
+        glossary=glossary,
+        client=client,
+        model=model,
+        verbose=verbose,
+    )
+    if parsed is None:
+        return None
     try:
-        response = client.beta.chat.completions.parse(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"You are a professional translator specializing in biographical content. Translate accurately to {lang_name} while preserving all technical data and structure.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            response_format=LifeDataset,
+        result = apply_life_events_translations(
+            source_data, parsed.model_dump(), glossary
         )
-
-        result = response.choices[0].message
-        if result.parsed:
-            return result.parsed.model_dump(exclude_none=False)
-        elif result.refusal:
-            print(f"  Error: Model refused to translate: {result.refusal}")
-            return None
-        else:
-            print("  Error: No parsed result returned")
-            return None
-
-    except APIStatusError as e:
-        print(f"  Error: OpenAI API error: {e}")
+    except TranslationMergeError as e:
+        print(f"  Error: translation does not align with source: {e}")
         return None
-    except Exception as e:
-        print(f"  Error: Translation failed: {e}")
-        return None
+    result["translation"] = make_translation_block(
+        compute_fingerprint(payload), target_lang, f"openai:{model}"
+    )
+    return result
 
 
 def translate_ego_network(
@@ -334,76 +904,38 @@ def translate_ego_network(
     target_lang: str,
     client: OpenAI,
     model: str,
+    glossary: Dict[str, str],
     verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
-    """Translate ego network dataset to target language."""
-    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
-
-    prompt = """Translate this social network document to {lang_name}.
-
-TRANSLATION RULES:
-1. Translate: relationship_description, shared_activities, notes, category summaries, ego.summary, ego.primary_roles
-2. PERSON NAMES - Apply consistent rules:
-   - Keep in original form by default
-   - ONLY translate if the person is very well-known and has a standard {lang_name} name version
-   - Examples for German: Henry II → Heinrich II (German emperor), Queen Elizabeth → Königin Elisabeth
-   - Keep modern English names as-is (e.g., Max Newman, Joan Clarke, Alan Turing)
-   - Apply THE SAME rule to ALL occurrences of the same person throughout the document
-   - BE CONSISTENT: if you translate a name once, translate it everywhere; if you keep it once, keep it everywhere
-3. RELATIONSHIP TYPES - Translate the MAIN CATEGORY only:
-   - Relationship types have the format "category/subcategory" (e.g., "professional/mentor", "family/father")
-   - Translate the CATEGORY (part before the slash) to {lang_name}
-   - Keep the SUBCATEGORY (part after the slash) in English
-   - Examples for German: "professional/mentor" → "beruflich/mentor", "family/father" → "familie/father"
-   - For category_summaries, also translate the relationship_type field using the same rule
-4. Preserve ALL non-text fields EXACTLY:
-   - ALL dates (birth_year, death_year, start_year, end_year, created_on)
-   - ALL URLs (wikipedia, sources)
-   - Strength values (weak, moderate, strong) - keep in English
-   - Interaction frequencies (rare, occasional, regular, frequent) - keep in English
-   - Influence directions (alter_to_ego, ego_to_alter, bidirectional) - keep in English
-   - Dataset name - keep in English
-5. Maintain the exact JSON structure
-6. Use natural, fluent {lang_name}
-
-Here is the JSON document to translate:
-
-{json.dumps(source_data, indent=2, ensure_ascii=False)}
-
-Return ONLY the complete translated JSON document with the same structure."""
-
-    if verbose:
-        print(f"  Translating ego network to {lang_name}...")
-
+    """Translate an ego network dataset; returns the full derived document."""
+    payload = extract_ego_network_translatables(source_data)
+    parsed = _call_translation_model(
+        payload=payload,
+        response_format=EgoNetworkTranslation,
+        document_kind="social network",
+        extra_rules=(
+            "7. shared_activities are short activity tags — translate them "
+            "concisely (1-4 words each)."
+        ),
+        target_lang=target_lang,
+        glossary=glossary,
+        client=client,
+        model=model,
+        verbose=verbose,
+    )
+    if parsed is None:
+        return None
     try:
-        response = client.beta.chat.completions.parse(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"You are a professional translator specializing in social network and relationship data. Translate accurately to {lang_name} while preserving all technical classifications.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            response_format=EgoNetwork,
+        result = apply_ego_network_translations(
+            source_data, parsed.model_dump(), glossary
         )
-
-        result = response.choices[0].message
-        if result.parsed:
-            return result.parsed.model_dump(exclude_none=False)
-        elif result.refusal:
-            print(f"  Error: Model refused to translate: {result.refusal}")
-            return None
-        else:
-            print("  Error: No parsed result returned")
-            return None
-
-    except APIStatusError as e:
-        print(f"  Error: OpenAI API error: {e}")
+    except TranslationMergeError as e:
+        print(f"  Error: translation does not align with source: {e}")
         return None
-    except Exception as e:
-        print(f"  Error: Translation failed: {e}")
-        return None
+    result["translation"] = make_translation_block(
+        compute_fingerprint(payload), target_lang, f"openai:{model}"
+    )
+    return result
 
 
 def translate_registry_entry(
@@ -411,73 +943,94 @@ def translate_registry_entry(
     target_lang: str,
     client: OpenAI,
     model: str,
+    glossary: Dict[str, str],
     verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
-    """Translate person registry entry to target language."""
-    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
-
-    prompt = """Translate this person registry entry to {lang_name}.
-
-TRANSLATION RULES:
-1. Translate: summary, primaryRoles
-2. PERSON NAME - Keep in original form UNLESS:
-   - The person is very well-known and has a standard {lang_name} name version
-   - Examples for German: Henry II → Heinrich II (German emperor)
-   - Keep modern English names as-is (e.g., Alan Turing, Ada Lovelace)
-3. Preserve ALL non-text fields EXACTLY:
-   - id (must be identical)
-   - portrait URLs (image, source)
-   - dates (birthDate, deathDate, created)
-4. Update lastUpdated to current timestamp
-5. Use natural, fluent {lang_name}
-
-Here is the JSON entry to translate:
-
-{json.dumps(source_entry, indent=2, ensure_ascii=False)}
-
-Return ONLY the complete translated JSON entry with the same structure."""
-
-    if verbose:
-        print(f"  Translating registry entry to {lang_name}...")
-
+    """Translate a registry entry; returns the full derived entry."""
+    payload = extract_registry_entry_translatables(source_entry)
+    parsed = _call_translation_model(
+        payload=payload,
+        response_format=RegistryEntryTranslation,
+        document_kind="person registry entry",
+        extra_rules=(
+            "7. The tagline is a short epithet shown on the landing page — "
+            "keep it evocative and brief."
+        ),
+        target_lang=target_lang,
+        glossary=glossary,
+        client=client,
+        model=model,
+        verbose=verbose,
+    )
+    if parsed is None:
+        return None
     try:
-        response = client.beta.chat.completions.parse(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"You are a professional translator specializing in biographical data. Translate accurately to {lang_name} while preserving all identifiers and URLs.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            response_format=PersonRegistryEntry,
+        result = apply_registry_entry_translations(
+            source_entry, parsed.model_dump(), glossary
         )
-
-        result = response.choices[0].message
-        if result.parsed:
-            translated = result.parsed.model_dump(exclude_none=False)
-            # Ensure lastUpdated is current
-            translated["lastUpdated"] = datetime.now().astimezone().isoformat()
-            return translated
-        elif result.refusal:
-            print(f"  Error: Model refused to translate: {result.refusal}")
-            return None
-        else:
-            print("  Error: No parsed result returned")
-            return None
-
-    except APIStatusError as e:
-        print(f"  Error: OpenAI API error: {e}")
+    except TranslationMergeError as e:
+        print(f"  Error: translation does not align with source: {e}")
         return None
-    except Exception as e:
-        print(f"  Error: Translation failed: {e}")
+    result["translation"] = make_translation_block(
+        compute_fingerprint(payload), target_lang, f"openai:{model}"
+    )
+    return result
+
+
+def translate_meta_story(
+    source_data: Dict[str, Any],
+    target_lang: str,
+    client: OpenAI,
+    model: str,
+    verbose: bool = False,
+) -> Optional[Dict[str, Any]]:
+    """Translate a meta story dataset; returns the full derived document."""
+    payload = extract_meta_story_translatables(source_data)
+    parsed = _call_translation_model(
+        payload=payload,
+        response_format=MetaStoryTranslation,
+        document_kind="thematic story collection (meta story)",
+        extra_rules=(
+            "7. Chapter titles may end with a date range in parentheses, e.g. "
+            '"Programmability Imagined (1820-1852)" — translate the words and '
+            "keep the parenthesized range exactly as-is.\n"
+            "8. event_title entries reference event slides — translate them as "
+            "crisp headlines (2-6 words)."
+        ),
+        target_lang=target_lang,
+        glossary={},
+        client=client,
+        model=model,
+        verbose=verbose,
+    )
+    if parsed is None:
         return None
+    try:
+        result = apply_meta_story_translations(
+            source_data, parsed.model_dump(), target_lang
+        )
+    except TranslationMergeError as e:
+        print(f"  Error: translation does not align with source: {e}")
+        return None
+    result["translation"] = make_translation_block(
+        compute_fingerprint(payload), target_lang, f"openai:{model}"
+    )
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Registry helpers
+# ---------------------------------------------------------------------------
 
 
 def update_language_registry(
     person_entry: Dict[str, Any], target_lang: str, verbose: bool = False
 ) -> bool:
-    """Update or create the language-specific registry file."""
+    """Update or create the language-specific registry file.
+
+    Entries are kept in the same order as the English registry so both
+    registries stay aligned.
+    """
     registry_path = DATA_DIR / f"persons_{target_lang}.json"
 
     # Load existing registry or create new one
@@ -503,8 +1056,54 @@ def update_language_registry(
         if verbose:
             print(f"  Added {person_id} to {registry_path.name}")
 
+    # Keep the language registry ordered like the English registry
+    english = load_json_file(REGISTER_PATH) or {}
+    order = {p["id"]: i for i, p in enumerate(english.get("people", []))}
+    registry["people"].sort(key=lambda p: order.get(p.get("id"), len(order)))
+
     # Save registry
     return save_json_file(registry, registry_path)
+
+
+# ---------------------------------------------------------------------------
+# Status checks (no API required)
+# ---------------------------------------------------------------------------
+
+
+def check_person_translation(person_id: str, target_lang: str) -> Dict[str, str]:
+    """Report the translation status of a person without calling any API.
+
+    Returns a dict with keys 'life_events', 'ego_network', 'registry', each
+    'missing', 'stale', 'current', or 'no-source'.
+    """
+    person_dir = PEOPLE_DIR / person_id
+    result = {}
+
+    result["life_events"] = translation_status(
+        load_json_file(person_dir / "life_events.json"),
+        load_json_file(person_dir / target_lang / "life_events.json"),
+        extract_life_events_translatables,
+    )
+    result["ego_network"] = translation_status(
+        load_json_file(person_dir / "ego_network.json"),
+        load_json_file(person_dir / target_lang / "ego_network.json"),
+        extract_ego_network_translatables,
+    )
+
+    source_entry = find_person_by_name_or_id(person_id)
+    registry = load_json_file(DATA_DIR / f"persons_{target_lang}.json") or {}
+    target_entry = next(
+        (p for p in registry.get("people", []) if p.get("id") == person_id), None
+    )
+    result["registry"] = translation_status(
+        source_entry, target_entry, extract_registry_entry_translatables
+    )
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Orchestration
+# ---------------------------------------------------------------------------
 
 
 def translate_person_data(
@@ -516,11 +1115,14 @@ def translate_person_data(
     verbose: bool = False,
 ) -> Dict[str, bool]:
     """
-    Translate a person's data to target language.
+    Translate a person's data to target language, derived from the English data.
+
+    Without ``force``, only missing or stale documents are (re)translated;
+    documents whose fingerprint matches the current English source are skipped.
 
     Returns:
         Dict with keys: 'life_events', 'ego_network', 'registry'
-        Values are True if successful, False otherwise
+        Values are True if (re)translated successfully, False otherwise
     """
     results = {"life_events": False, "ego_network": False, "registry": False}
 
@@ -529,70 +1131,78 @@ def translate_person_data(
         print(f"Error: Person directory not found: {person_dir}")
         return results
 
-    # Define paths
-    target_dir = person_dir / target_lang
-    life_events_source = person_dir / "life_events.json"
-    life_events_target = target_dir / "life_events.json"
-    ego_network_source = person_dir / "ego_network.json"
-    ego_network_target = target_dir / "ego_network.json"
-
-    # Check if translation already exists
-    if not force and target_dir.exists() and life_events_target.exists():
+    status = check_person_translation(person_id, target_lang)
+    if not force and all(value == "current" for value in status.values()):
         if verbose:
-            print(
-                f"  Translation already exists for {person_id} (use --force to overwrite)"
-            )
+            print(f"  Translation up to date for {person_id} (use --force to redo)")
         return results
 
-    # Create target directory
-    target_dir.mkdir(parents=True, exist_ok=True)
+    # Load sources
+    life_events_source = load_json_file(person_dir / "life_events.json")
+    ego_network_source = load_json_file(person_dir / "ego_network.json")
+    registry_entry = find_person_by_name_or_id(person_id)
+
+    # Build the shared name glossary once for consistent naming everywhere
+    context_summary = ""
+    if registry_entry:
+        context_summary = registry_entry.get("summary", "")
+    elif life_events_source:
+        context_summary = (life_events_source.get("person") or {}).get("summary", "")
+    glossary = build_name_glossary(
+        collect_person_names(life_events_source, ego_network_source, registry_entry),
+        context_summary,
+        target_lang,
+        client,
+        model,
+        verbose,
+    )
+
+    target_dir = person_dir / target_lang
 
     # Translate life events
-    if life_events_source.exists():
-        source_data = load_json_file(life_events_source)
-        if source_data:
-            translated = translate_life_events(
-                source_data, target_lang, client, model, verbose
-            )
-            if translated:
-                if save_json_file(translated, life_events_target):
-                    results["life_events"] = True
-                    if verbose:
-                        print(f"  ✓ Life events translated: {life_events_target}")
-    else:
+    if life_events_source is None:
         if verbose:
-            print(f"  ⚠ Life events not found: {life_events_source}")
+            print(f"  ⚠ Life events not found for {person_id}")
+    elif force or status["life_events"] != "current":
+        translated = translate_life_events(
+            life_events_source, target_lang, client, model, glossary, verbose
+        )
+        if translated and save_json_file(translated, target_dir / "life_events.json"):
+            results["life_events"] = True
+            if verbose:
+                print(f"  ✓ Life events translated: {target_dir / 'life_events.json'}")
+    elif verbose:
+        print("  → Life events translation is current")
 
     # Translate ego network
-    if ego_network_source.exists():
-        source_data = load_json_file(ego_network_source)
-        if source_data:
-            translated = translate_ego_network(
-                source_data, target_lang, client, model, verbose
-            )
-            if translated:
-                if save_json_file(translated, ego_network_target):
-                    results["ego_network"] = True
-                    if verbose:
-                        print(f"  ✓ Ego network translated: {ego_network_target}")
-    else:
+    if ego_network_source is None:
         if verbose:
-            print(f"  ⚠ Ego network not found: {ego_network_source}")
+            print(f"  ⚠ Ego network not found for {person_id}")
+    elif force or status["ego_network"] != "current":
+        translated = translate_ego_network(
+            ego_network_source, target_lang, client, model, glossary, verbose
+        )
+        if translated and save_json_file(translated, target_dir / "ego_network.json"):
+            results["ego_network"] = True
+            if verbose:
+                print(f"  ✓ Ego network translated: {target_dir / 'ego_network.json'}")
+    elif verbose:
+        print("  → Ego network translation is current")
 
     # Translate registry entry
-    person_entry = find_person_by_name_or_id(person_id)
-    if person_entry:
-        translated = translate_registry_entry(
-            person_entry, target_lang, client, model, verbose
-        )
-        if translated:
-            if update_language_registry(translated, target_lang, verbose):
-                results["registry"] = True
-                if verbose:
-                    print("  ✓ Registry entry updated")
-    else:
+    if registry_entry is None:
         if verbose:
             print("  ⚠ Person not found in registry")
+    elif force or status["registry"] != "current":
+        translated = translate_registry_entry(
+            registry_entry, target_lang, client, model, glossary, verbose
+        )
+        if translated and update_language_registry(translated, target_lang, verbose):
+            results["registry"] = True
+            if verbose:
+                print("  ✓ Registry entry updated")
+    elif verbose:
+        print("  → Registry translation is current")
 
     return results
 
@@ -611,7 +1221,9 @@ def main():
         help="Target language code (e.g., 'de', 'fr', 'es')",
     )
     parser.add_argument(
-        "--force", action="store_true", help="Overwrite existing translation"
+        "--force",
+        action="store_true",
+        help="Re-translate even if the translation is current",
     )
     parser.add_argument(
         "--model",
@@ -655,19 +1267,19 @@ def main():
     )
 
     # Report results
+    status = check_person_translation(person_id, args.target_lang)
     print("\nTranslation Results:")
-    print(f"  Life Events: {'✓' if results['life_events'] else '✗'}")
-    print(f"  Ego Network: {'✓' if results['ego_network'] else '✗'}")
-    print(f"  Registry:    {'✓' if results['registry'] else '✗'}")
+    for key, label in (
+        ("life_events", "Life Events"),
+        ("ego_network", "Ego Network"),
+        ("registry", "Registry"),
+    ):
+        marker = "✓" if results[key] else ("→" if status[key] == "current" else "✗")
+        print(f"  {label}: {marker} ({status[key]})")
 
-    success = any(results.values())
-    if success:
-        print(f"\n✓ Translation completed for {person_name}")
+    if all(value == "current" for value in status.values()):
+        print(f"\n✓ Translation complete and current for {person_name}")
         sys.exit(0)
     else:
-        print(f"\n✗ Translation failed for {person_name}")
+        print(f"\n✗ Translation incomplete for {person_name}")
         sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
