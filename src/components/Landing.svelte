@@ -286,6 +286,11 @@
     return result;
   })();
 
+  $: resultCountText = `${filteredEntries.length} ${filteredEntries.length === 1 ? $_("landing.result_one") : $_("landing.result_other")}`;
+  $: isSearching = searchQuery.trim().length > 0;
+  $: isFiltering =
+    isSearching || activeTags.size > 0 || activeMetaStoryFilter !== null;
+
   function formatLifespan(entry) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
     if (entry.lifespan) {
@@ -366,7 +371,7 @@
   }
 </script>
 
-<section class="landing">
+<section class="landing" class:filtering={isFiltering}>
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
     <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
@@ -409,6 +414,7 @@
     <div class="landing-hero">
       <p class="eyebrow">{$_("app.title")}</p>
       <h1>{$_("app.tagline")}</h1>
+      <p class="hero-intro">{$_("landing.intro_text")}</p>
     </div>
     {#if $currentLanguage === "en"}
       {#key $currentLanguage}
@@ -423,7 +429,7 @@
     {/if}
   </div>
 
-  <div class="filters-section">
+  <div class="filters-section" class:searching={isSearching}>
     <div class="search-box">
       <svg
         class="search-icon"
@@ -445,6 +451,7 @@
         class="search-input"
         placeholder={$_("landing.search_placeholder")}
         bind:value={searchQuery}
+        aria-label={$_("landing.search_label")}
       />
       {#if searchQuery}
         <button
@@ -483,6 +490,7 @@
               on:click={() => {
                 activeMetaStoryFilter = null;
               }}
+              aria-label={$_("landing.clear_all")}
             >
               {$_("landing.clear_all")}
             </button>
@@ -510,6 +518,7 @@
               on:click={() => {
                 activeTags = new Set();
               }}
+              aria-label={$_("landing.clear_all")}
             >
               {$_("landing.clear_all")}
             </button>
@@ -526,6 +535,8 @@
         class:active={showMap}
         on:click={() => (showMap = !showMap)}
         aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
+        aria-expanded={showMap}
+        aria-controls="event-map-panel"
       >
         <svg
           width="20"
@@ -544,7 +555,11 @@
     </div>
 
     {#if showMap}
-      <div class="landing-map-wrapper" transition:slide={{ duration: 300 }}>
+      <div
+        id="event-map-panel"
+        class="landing-map-wrapper"
+        transition:slide={{ duration: 300 }}
+      >
         {#await import("./LandingMap.svelte") then { default: LandingMap }}
           <LandingMap
             {filteredEntries}
@@ -559,6 +574,10 @@
         {/await}
       </div>
     {/if}
+  </div>
+
+  <div class="results-summary" role="status" aria-live="polite">
+    {resultCountText}
   </div>
 
   <div class="landing-grid">
@@ -643,6 +662,9 @@
             {#if entry.tagline}
               <p class="card-tagline">{entry.tagline}</p>
             {/if}
+            <span class="card-cta" aria-hidden="true"
+              >{$_("landing.view_story")}</span
+            >
           </div>
         </button>
       {/each}
@@ -828,6 +850,12 @@
     color: #cbd5f5;
   }
 
+  .landing-hero .hero-intro {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    max-width: 58ch;
+  }
+
   .map-section {
     display: flex;
     flex-direction: column;
@@ -920,6 +948,13 @@
       margin-right: -1.5rem;
       width: calc(100% + 3rem);
     }
+  }
+
+  .results-summary {
+    margin-top: -0.25rem;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    font-weight: 600;
   }
 
   .landing-empty {
@@ -1161,6 +1196,27 @@
     font-family: var(--card-body-font, Inter, sans-serif);
   }
 
+  .card-cta {
+    margin-top: auto;
+    align-self: flex-start;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--card-secondary, #38bdf8);
+  }
+
+  .person-card:hover .card-cta,
+  .person-card:focus-visible .card-cta {
+    color: var(--card-secondary, #bae6fd);
+  }
+
+  .person-card:focus-visible {
+    outline: 3px solid var(--card-secondary, #38bdf8);
+    outline-offset: 3px;
+  }
+
   .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -1329,6 +1385,11 @@
   .tag-chip.active .tag-count {
     background: rgba(56, 189, 248, 0.3);
     color: #e0f2fe;
+  }
+
+  .landing.filtering .header-container,
+  .filters-section.searching .filters-right {
+    display: none;
   }
 
   @media (max-width: 580px) {
