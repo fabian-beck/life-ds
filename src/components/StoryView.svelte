@@ -478,6 +478,7 @@
         slide: activeIndex,
         timeline: $queryParams.timeline,
         network: false,
+        from_meta: $queryParams.from_meta,
       });
       replace(newUrl);
     }
@@ -936,6 +937,7 @@
       slide: activeIndex,
       timeline: $queryParams.timeline,
       network: show,
+      from_meta: $queryParams.from_meta,
     });
     replace(newUrl);
   }
@@ -957,6 +959,7 @@
       slide: activeIndex,
       timeline: expanded,
       network: $queryParams.network,
+      from_meta: $queryParams.from_meta,
     });
 
     // Always use replace() - modal state should not create history entries
