@@ -287,6 +287,9 @@
   })();
 
   $: resultCountText = `${filteredEntries.length} ${filteredEntries.length === 1 ? $_("landing.result_one") : $_("landing.result_other")}`;
+  $: isSearching = searchQuery.trim().length > 0;
+  $: isFiltering =
+    isSearching || activeTags.size > 0 || activeMetaStoryFilter !== null;
 
   function formatLifespan(entry) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
@@ -368,7 +371,7 @@
   }
 </script>
 
-<section class="landing">
+<section class="landing" class:filtering={isFiltering}>
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
     <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
@@ -426,7 +429,7 @@
     {/if}
   </div>
 
-  <div class="filters-section">
+  <div class="filters-section" class:searching={isSearching}>
     <div class="search-box">
       <svg
         class="search-icon"
@@ -1382,6 +1385,13 @@
   .tag-chip.active .tag-count {
     background: rgba(56, 189, 248, 0.3);
     color: #e0f2fe;
+  }
+
+  @media (max-width: 767px) {
+    .landing.filtering .header-container,
+    .filters-section.searching .filters-right {
+      display: none;
+    }
   }
 
   @media (max-width: 580px) {
