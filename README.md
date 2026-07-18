@@ -12,6 +12,23 @@ npm run dev -- --open
 - `npm run build` generates a production bundle in `dist/`.
 - `npm run preview` serves the production build locally.
 
+## Interface Tests
+
+The Playwright smoke test covers the landing page, search, a representative
+story overview, chapter and event navigation, and the network modal in desktop
+and mobile Chromium profiles.
+
+```powershell
+# Required once per machine
+npx playwright install chromium
+
+npm run test:interface
+npm run test:interface:report
+```
+
+The HTML report includes screenshots and viewport audits. Generated reports and
+test artifacts are ignored by Git.
+
 ## Routing
 
 The application supports URL-based routing, allowing you to:
