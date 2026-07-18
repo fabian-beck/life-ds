@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-life-events",
-  "created_on": "2025-11-20",
+  "dataset": "Biographical timeline outline",
+  "created_on": "2025-12-20",
   "person": {
     "name": "Erich_Kästner",
     "birth_date": "1899-02-23",
@@ -12,8 +12,9 @@
       "Satiriker",
       "Kinderbuchautor"
     ],
+    "tagline": "Satirist of modern German life",
     "summary": "Emil Erich Kästner war ein deutscher Schriftsteller, Dichter, Drehbuchautor und Satiriker, der vor allem für seine geistreichen, sozialkritischen Gedichte und für Kinderbuchklassiker wie Emil und die Detektive, Das doppelte Lottchen und Das fliegende Klassenzimmer bekannt ist. Als zentrale Figur der neusachlichen Literatur der Weimarer Republik blieb er im nationalsozialistischen Deutschland, wo seine Bücher verboten und verbrannt wurden, während er weiterhin einige Werke im Ausland veröffentlichte und Drehbücher unter Pseudonym schrieb. Nach 1945 ließ er sich in München nieder, arbeitete als Herausgeber, Kabarettautor, Hörfunkautor und Kinderbuchautor und erhielt 1960 für seine Autobiografie Als ich ein kleiner Junge war den Hans-Christian-Andersen-Preis.",
-    "wikipedia": "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+    "wikipedia": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner",
     "portrait": {
       "image": "/portraits/erich_k_stner_thumbnail.webp",
       "source": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner",
@@ -25,598 +26,672 @@
       "full": "/portraits/erich_k_stner_full.webp"
     }
   },
-  "chapters": null,
+  "chapters": [
+    {
+      "id": "dresden_roots",
+      "headline": "Dresden Roots",
+      "date_start": "1899-02-23",
+      "date_start_precision": "day",
+      "date_end": "1918",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 19,
+      "involved_people": [
+        "Ida Kästner"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "leipzig_self_invention",
+      "headline": "Leipzig Self Invention",
+      "date_start": "1919-10",
+      "date_start_precision": "month",
+      "date_end": "1925",
+      "date_end_precision": "year",
+      "age_start": 20,
+      "age_end": 26,
+      "involved_people": null,
+      "location": "Germany"
+    },
+    {
+      "id": "berlin_breakthrough",
+      "headline": "Berlin Breakthrough",
+      "date_start": "1927",
+      "date_start_precision": "year",
+      "date_end": "1931",
+      "date_end_precision": "year",
+      "age_start": 28,
+      "age_end": 32,
+      "involved_people": [
+        "Walter Trier",
+        "Edith Jacobsohn"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "inner_exile_years",
+      "headline": "Inner Exile Years",
+      "date_start": "1933-05-10",
+      "date_start_precision": "day",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "age_start": 34,
+      "age_end": 46,
+      "involved_people": [
+        "Joseph Goebbels",
+        "Josef von Báky"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "munich_after_the_ruins",
+      "headline": "Munich After the Ruins",
+      "date_start": "1945-10",
+      "date_start_precision": "month",
+      "date_end": "1974-07-29",
+      "date_end_precision": "day",
+      "age_start": 46,
+      "age_end": 75,
+      "involved_people": null,
+      "location": "West Germany"
+    }
+  ],
+  "conclusion": "Erich Kästner turned a life marked by empire, collapse, dictatorship, and renewal into clear-eyed satire and enduring stories for the young. His legacy is a moral voice that stayed readable—sharp, humane, and stubbornly awake to power.",
   "events": [
     {
       "date": "1899-02-23",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 0,
       "title": "Geburt in Dresden",
       "description": "Emil Erich Kästner wurde in Dresden, Sachsen, als einziges Kind des Sattlermeisters Emil Richard Kästner und dessen Frau Ida Amalia (geb. Augustin) geboren. Er wuchs in der Königsbrücker Straße in der Äußeren Neustadt auf, einem städtischen Umfeld, das später in seinen autobiografischen Schriften prominent und nostalgisch wiederkehrt.",
       "locations": [
-        "Dresden"
+        {
+          "name_historic": "Dresden",
+          "name_modern": "Dresden, Germany",
+          "centroid": [
+            13.7372621,
+            51.0504088
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ida Kästner"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Geburtshaus_von_Erich_K%C3%A4stner_in_Dresden_-_Bild_003.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Dresden_photochrom2.jpg/960px-Dresden_photochrom2.jpg",
           "caption": "Geburtshaus von Erich Kästner in der Dresdner Äußeren Neustadt.",
-          "source": "https://commons.wikimedia.org/wiki/File:Geburtshaus_von_Erich_K%C3%A4stner_in_Dresden_-_Bild_003.jpg"
+          "source": "https://commons.wikimedia.org/wiki/File:Dresden_photochrom2.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Dresden, Saxony, Germany",
-          "name": "Dresden",
-          "primary": true,
-          "centroid": [
-            13.7381437,
-            51.0493286
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.5793237,
-            50.974937,
-            13.9660626,
-            51.1777202
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1913",
-      "date_precision": "year",
-      "date_end": "1916",
-      "date_end_precision": "year",
-      "date_note": null,
-      "age": 14,
-      "title": "Besuch des Lehrerseminars",
-      "description": "Kästner trat in Dresden in ein Lehrerseminar ein und begann damit die berufliche Ausbildung zum Volksschullehrer im Staatsdienst. Dort blieb er bis 1916, als er kurz vor den Abschlussprüfungen abbrach – ein früher Bruch mit der konventionellen Laufbahn, die man von einem kleinbürgerlichen Sohn erwartete.",
-      "locations": [
-        "Dresden"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Dresden, Saxony, Germany",
-          "name": "Dresden",
-          "primary": true,
-          "centroid": [
-            13.7381437,
-            51.0493286
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.5793237,
-            50.974937,
-            13.9660626,
-            51.1777202
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-candle",
+      "chapter": "dresden_roots"
     },
     {
       "date": "1917",
       "date_precision": "year",
       "date_end": "1918",
       "date_end_precision": "year",
-      "date_note": null,
       "age": 18,
       "title": "Eingezogen in die Sächsische Armee",
       "description": "Während des Ersten Weltkriegs wurde Kästner in die Königlich Sächsische Armee eingezogen und in Dresden bei einer schweren Artillerieeinheit ausgebildet. Zwar wurde er nie an die Front geschickt, doch die brutale militärische Schinderei führte zu einer lebenslangen Herzkrankheit und prägte nachhaltig den Antimilitarismus, der seine späteren Schriften durchzieht.",
       "locations": [
-        "Dresden"
+        {
+          "name_historic": "Cologne",
+          "name_modern": "Cologne, Germany",
+          "centroid": [
+            6.959974,
+            50.938361
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg",
-          "caption": "Flagge Deutschlands, stellvertretend für das Land, dessen Armee Kästner im Ersten Weltkrieg eingezogen wurde.",
-          "source": "https://en.wikipedia.org/wiki/File:Flag_of_Germany.svg"
+      "event_type_icon": "mdi-shield",
+      "chapter": "dresden_roots",
+      "annotations": {
+        "German Army": {
+          "explanation": "The army of the German Empire during World War I, which relied heavily on conscription and maintained strict discipline and training regimes.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Army_(German_Empire)"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Dresden, Saxony, Germany",
-          "name": "Dresden",
-          "primary": true,
-          "centroid": [
-            13.7381437,
-            51.0493286
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.5793237,
-            50.974937,
-            13.9660626,
-            51.1777202
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      }
     },
     {
-      "date": "1919-09",
+      "date": "1919-10",
       "date_precision": "month",
-      "date_end": "1927",
-      "date_end_precision": "year",
-      "date_note": "Der Artikel nennt „im Herbst 1919“ für seine Immatrikulation; Monat als September angenähert",
+      "date_note": "He completed school qualifications after World War I and began university studies in the autumn term",
       "age": 20,
-      "title": "Beginn des Studiums in Leipzig",
-      "description": "Im Herbst 1919 immatrikulierte sich Kästner an der Universität Leipzig für die Fächer Geschichte, Philosophie, Germanistik und Theaterwissenschaft. In den folgenden Jahren führten ihn seine Studien auch nach Rostock und Berlin und legten die akademischen und intellektuellen Grundlagen für seine spätere Arbeit als Kritiker, Satiriker und Autor.",
+      "title": "Abitur and Leipzig studies",
+      "description": "After demobilization at the end of [[World War I|the First World War]], Kästner completed his [[Abitur|Abitur]] (secondary-school leaving examination qualifying for university study) with distinction and, in October 1919, began studying at the [[University of Leipzig|University of Leipzig]]. He followed a broad humanities program—history, philosophy, German studies, and journalism—and supported himself with various jobs while building early literary and social contacts that later fed into collaborations and character models.",
       "locations": [
-        "Leipzig"
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3747329,
+            51.3406321
+          ],
+          "primary": true
+        }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/University_of_Leipzig"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Erich-K%C3%A4stner-Schule_%28Leipzig%29.jpg",
-          "caption": "Erich-Kästner-Schule in Leipzig-Gohlis, benannt zu Ehren des späteren Wirkens des Autors in der Stadt, in der er studierte.",
-          "source": "https://commons.wikimedia.org/wiki/File:Erich-K%C3%A4stner-Schule_(Leipzig).jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/%2820210528%29_Leipzig_University_05.jpg/960px-%2820210528%29_Leipzig_University_05.jpg",
+          "caption": "Leipzig University (modern campus photo)",
+          "source": "https://commons.wikimedia.org/wiki/File:(20210528)_Leipzig_University_05.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Leipzig, Saxony, Germany",
-          "name": "Leipzig",
-          "primary": true,
-          "centroid": [
-            12.3747329,
-            51.3406321
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.2366519,
-            51.2381704,
-            12.5425373,
-            51.4481145
-          ]
+      "event_type_icon": "mdi-school",
+      "chapter": "leipzig_self_invention",
+      "annotations": {
+        "World War I": {
+          "explanation": "The global conflict of 1914–1918; Kästner was conscripted near the end of the war and returned to civilian life afterward, which frames the timing of his final school exams and university start.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_I"
+        },
+        "Abitur": {
+          "explanation": "The German secondary-school graduation credential that grants eligibility for university admission (typically after Gymnasium).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Abitur"
+        },
+        "University of Leipzig": {
+          "explanation": "A major German university founded in 1409; Kästner enrolled there in 1919 for humanities studies after completing his Abitur.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Leipzig_University"
         }
-      ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1923",
-      "date_precision": "year",
-      "date_end": "1927",
-      "date_end_precision": "year",
-      "date_note": null,
-      "age": 24,
-      "title": "Tätigkeit für die Neue Leipziger Zeitung",
-      "description": "Während er sein Universitätsstudium abschloss, verdiente Kästner seinen Lebensunterhalt als Journalist und Kritiker für die Neue Leipziger Zeitung. Zwischen 1923 und 1927 schrieb er Rezensionen und Artikel, mit denen er seinen Ruf für scharfe, sozialkritische Beobachtungen begründete, doch sein zunehmend kritischer Ton und die Veröffentlichung eines erotischen Gedichts führten später zu seiner Entlassung.",
-      "locations": [
-        "Leipzig"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Leipzig, Saxony, Germany",
-          "name": "Leipzig",
-          "primary": true,
-          "centroid": [
-            12.3747329,
-            51.3406321
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.2366519,
-            51.2381704,
-            12.5425373,
-            51.4481145
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      }
     },
     {
       "date": "1925",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 26,
       "title": "Promotion",
       "description": "Kästner wurde von der Universität Leipzig mit einer Promotion über Friedrich den Großen und die deutsche Literatur ausgezeichnet. Der Doktorgrad markierte den Abschluss seiner formalen akademischen Ausbildung und stärkte seine Autorität als Literaturwissenschaftler und Kritiker im kulturellen Leben der Weimarer Republik.",
       "locations": [
-        "Leipzig"
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.373075,
+            51.339695
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Leipzig, Saxony, Germany",
-          "name": "Leipzig",
-          "primary": true,
-          "centroid": [
-            12.3747329,
-            51.3406321
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.2366519,
-            51.2381704,
-            12.5425373,
-            51.4481145
-          ]
+      "event_type_icon": "mdi-certificate",
+      "chapter": "leipzig_self_invention",
+      "annotations": {
+        "Leipzig": {
+          "explanation": "A major German publishing and book-trade center, whose universities and press scene made it an important hub for writers and journalists in the early 20th century.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Leipzig"
+        },
+        "Weimar Republic": {
+          "explanation": "Germany's democratic state from 1918 to 1933, marked by intense cultural experimentation and political instability—an environment that shaped Kästner's early career.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Weimar_Republic"
         }
-      ],
-      "chapter": null,
-      "categories": null
+      }
     },
     {
       "date": "1927",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 28,
       "title": "Übersiedlung nach Berlin",
       "description": "Nachdem Kästner 1927 wegen seiner kritischen Rezensionen und der Veröffentlichung des erotischen Gedichts „Abendlied des Kammervirtuosen“ aus der Neuen Leipziger Zeitung entlassen worden war, zog er nach Berlin. Er schrieb weiterhin für das Blatt unter dem Pseudonym „Berthold Bürger“ und wurde bald zu einem produktiven Mitarbeiter großer Berliner Zeitungen und Zeitschriften, wodurch er sich in die lebendige literarische Kultur der Hauptstadt integrierte.",
       "locations": [
-        "Berlin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3747329,
+            51.3406321
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
-      ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1928-10",
-      "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": "Der Artikel nennt „im Herbst 1928“ für die Veröffentlichung von Emil und die Detektive; Monat als Oktober angenähert",
-      "age": 29,
-      "title": "Veröffentlichung von Emil und die Detektive",
-      "description": "Im Herbst 1928 veröffentlichte Kästner sein bekanntestes Kinderbuch „Emil und die Detektive“, illustriert von Walter Trier. Der in der Gegenwart Berlins statt in einer Märchenwelt spielende und weitgehend frei von offener Moralisierung gehaltene Roman wurde eine Sensation, verkaufte sich in Deutschland rund zwei Millionen Mal und wurde schließlich in Dutzende Sprachen übersetzt, wodurch er das Genre der Kinder-Detektivgeschichten prägte.",
-      "locations": [
-        "Berlin"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg",
-          "caption": "Titelseite einer Ausgabe von 1931 von Erich Kästners Kinderroman „Emil und die Detektive“.",
-          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-airplane",
+      "chapter": "berlin_breakthrough",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Saxony (Leipzig), Germany",
+        "to_location": "Berlin, Germany",
+        "characterization": "career shift"
+      }
     },
     {
       "date": "1928",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 29,
       "title": "Erstes Gedichtbuch erscheint",
       "description": "Kästners erster Gedichtband „Herz auf Taille“ erschien 1928. Sein klare, ironische und sozial beobachtende Stil verkörperte die Neue Sachlichkeit und trug wesentlich dazu bei, ihn als eine führende Figur der zeitgenössischen deutschen Lyrik zu etablieren, bekannt für seine „Gebrauchslyrik“ – Lyrik für den Alltagsgebrauch.",
       "locations": [
-        "Berlin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Erich_K%C3%A4stner-_Gesang_zwischen_den_St%C3%BChlen%2C_1932.png",
-          "caption": "Schutzumschlag, gestaltet von Erich Ohser, für Kästners Gedichtband „Gesang zwischen den Stühlen“ von 1932, der seinen Erfolg als Lyriker widerspiegelt.",
-          "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner-_Gesang_zwischen_den_St%C3%BChlen,_1932.png"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://de.wikipedia.org/wiki/Herz_auf_Taille"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "berlin_breakthrough",
+      "annotations": {
+        "Weimar Republic": {
+          "explanation": "Germany’s democratic state from 1918 to 1933, marked by intense cultural experimentation and political instability in which Kästner’s early career developed.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Weimar_Republic"
+        },
+        "Neue Sachlichkeit": {
+          "explanation": "A German arts-and-literature movement of the 1920s that favored unsentimental realism and social critique over expressionist subjectivity.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/New_Objectivity"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Herz auf Taille",
+        "publication_type": "book",
+        "significance": "debut volume",
+        "impact": "The collection launched Kästner’s reputation for witty, socially attuned modern verse and opened wider publishing opportunities."
+      }
+    },
+    {
+      "date": "1929-10",
+      "date_precision": "month",
+      "date_note": "The novel appeared in mid-October 1929",
+      "age": 30,
+      "title": "Published \"Emil and the Detectives\"",
+      "description": "With \"Emil und die Detektive\", Kästner broke through as a children’s author in late 1929, as the book was released in [[Berlin|Berlin]] and quickly attracted wide attention for bringing a contemporary big-city setting into children’s fiction. Its strong sales and rapid critical reception helped establish him as a nationally known writer and began an enduring working relationship with his illustrator and publisher.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Walter Trier",
+        "Edith Jacobsohn"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Walter_Trier",
+        "https://de.wikipedia.org/wiki/Edith_Jacobsohn",
+        "https://en.wikipedia.org/wiki/Emil_and_the_Detectives"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Erich_K%C3%A4stner_Emil_und_die_Detektive_1931_Titel.jpg",
+          "caption": "\"Emil und die Detektive\" 1931 title/edition",
+          "source": "https://commons.wikimedia.org/wiki/File:Erich_Kästner_Emil_und_die_Detektive_1931_Titel.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "berlin_breakthrough",
+      "annotations": {
+        "Berlin": {
+          "explanation": "Germany’s capital and major publishing center in the Weimar Republic; the book’s early success there helped drive national recognition.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Berlin"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Emil und die Detektive",
+        "publication_type": "book",
+        "significance": "bestseller",
+        "impact": "It became one of the most influential German children’s novels of the 20th century, widely translated and adapted."
+      }
     },
     {
       "date": "1931",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 32,
       "title": "Veröffentlichung des Romans Fabian",
       "description": "Kästners einziger großer Roman für Erwachsene, „Fabian. Die Geschichte eines Moralisten“, erschien 1931. Das Buch folgt einem arbeitslosen Literaturwissenschaftler durch den raschen sozialen und moralischen Verfall des späten Weimarer Berlins und verwendet filmische Techniken wie schnelle Schnitte und Montage, um die Umbrüche der Zeit zu schildern.",
       "locations": [
-        "Berlin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
+      "sources": [
+        "https://en.wikipedia.org/wiki/Fabian_(novel)",
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Fabian_1931.jpg/960px-Fabian_1931.jpg",
+          "caption": "Book cover of Erich Kästner’s novel \"Fabian\"",
+          "source": "https://commons.wikimedia.org/wiki/File:Fabian_1931.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "berlin_breakthrough",
+      "annotations": {
+        "Weimar Republic": {
+          "explanation": "Germany’s democratic state from 1918 to 1933, marked in its final years by severe economic hardship and political instability that shaped much contemporary literature.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Weimar_Republic"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Fabian – Die Geschichte eines Moralisten",
+        "publication_type": "book",
+        "significance": "social satire",
+        "impact": "The novel became a key literary document of Weimar Berlin’s disintegration and of Kästner’s anti-authoritarian sensibility."
+      }
     },
     {
       "date": "1933-05-10",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 34,
       "title": "Bücherverbrennung in Berlin",
       "description": "Am 10. Mai 1933, nach der Machtübernahme der Nationalsozialisten, wurden Kästners Werke in Berlin im Rahmen der von der NS-Führung organisierten Bücherverbrennungen als „wider den deutschen Geist“ öffentlich verbrannt. Kästner, der sich gegen das Exil entschieden hatte, wurde Zeuge des Geschehens und mehrfach von der Gestapo verhört; später schrieb er über diese Erfahrung und ihren Einfluss auf seine Haltung als innerer Kritiker des Regimes.",
       "locations": [
-        "Berlin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1942",
-      "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 43,
-      "title": "Schreibt das Drehbuch zu Münchhausen",
-      "description": "1942 erhielt Kästner unter dem NS-Regime eine Sondergenehmigung, das Drehbuch für den Ufa-Prunkfilm „Münchhausen“ zum fünfundzwanzigjährigen Bestehen des Studios zu verfassen. Unter dem Pseudonym „Berthold Bürger“ schrieb er ein fantastisches Drehbuch, das es ihm ermöglichte, trotz seiner offiziellen Ausschließung aus der Reichsschrifttumskammer weiterhin für den Film zu arbeiten.",
-      "locations": [
-        "Potsdam-Babelsberg"
+      "involved_people": [
+        "Joseph Goebbels"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+        "https://de.wikipedia.org/wiki/B%C3%BCcherverbrennung_1933_in_Deutschland",
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://de.wikipedia.org/wiki/Joseph_Goebbels"
       ],
-      "images": null,
-      "location_coordinates": [
+      "images": [
         {
-          "label": "Babelsberg, Rudolf-Breitscheid-Straße, Babelsberg Nord, Potsdam, Brandenburg, 14482, Germany",
-          "name": "Potsdam-Babelsberg",
-          "primary": true,
-          "centroid": [
-            13.0929636,
-            52.3914035
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.0879636,
-            52.3864035,
-            13.0979636,
-            52.3964035
-          ]
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bundesarchiv_Bild_102-14597%2C_Berlin%2C_Opernplatz%2C_B%C3%BCcherverbrennung.jpg/960px-Bundesarchiv_Bild_102-14597%2C_Berlin%2C_Opernplatz%2C_B%C3%BCcherverbrennung.jpg",
+          "caption": "Berlin Opernplatz book burning photograph (1933)",
+          "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-14597,_Berlin,_Opernplatz,_Bücherverbrennung.jpg"
         }
       ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-book",
+      "chapter": "inner_exile_years"
     },
     {
-      "date": "1945-05",
+      "date": "1933-06",
       "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": "Er befand sich 1945 in Mayrhofen, als der Krieg endete; Monat als Mai angenähert, um die Kapitulation Deutschlands abzubilden",
-      "age": 46,
-      "title": "Kriegsende in Mayrhofen",
-      "description": "In den letzten Monaten des Zweiten Weltkriegs reisten Kästner und andere unter dem Vorwand, Drehorte für den nichtexistenten Film „Das falsche Gesicht“ zu suchen, nach Mayrhofen in Tirol, um dem drohenden sowjetischen Angriff auf Berlin und Bedrohungen durch die SS zu entkommen. Er befand sich in Mayrhofen, als der Krieg endete, und hielt diese Zeit später in seinem Tagebuch fest, das als „Notabene 45“ und in einer vollständigeren Fassung als „Das blaue Buch“ veröffentlicht wurde.",
+      "date_end": "1945-05",
+      "date_end_precision": "month",
+      "date_note": "He remained in Germany throughout the Third Reich, publishing only under strict constraints",
+      "age": 34,
+      "title": "Wrote under pseudonyms",
+      "description": "With official publication blocked after the Nazi takeover, Kästner remained in [[Berlin|Berlin]] and continued working through indirect channels, including pseudonymous writing and film-related work that could pass censorship. He navigated an unstable existence marked by professional restrictions, intimidation, and the constant risk of further reprisals, a stance later discussed as “[[inner emigration|inner emigration]].”",
       "locations": [
-        "Mayrhofen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Mayrhofen, Bezirk Schwaz, Tyrol, Austria",
-          "name": "Mayrhofen",
-          "primary": true,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
-            11.8638664,
-            47.1672188
+            13.3951309,
+            52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            11.7494423,
-            47.0100817,
-            11.9805019,
-            47.1920365
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
+      "sources": [
+        "https://en.wikipedia.org/wiki/Gestapo",
+        "https://de.wikipedia.org/wiki/Joseph_Goebbels"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "inner_exile_years",
+      "annotations": {
+        "inner emigration": {
+          "explanation": "A term for writers and intellectuals who remained in Nazi Germany but withdrew from public political opposition, often adapting their work to survive under censorship.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Inner_emigration"
+        }
+      }
+    },
+    {
+      "date": "1943",
+      "date_precision": "year",
+      "age": 44,
+      "title": "Screenplay for \"Münchhausen\"",
+      "description": "In 1943, Kästner wrote the screenplay for the lavish fantasy film \"Münchhausen\", produced as a major entertainment project in wartime Germany. Because he lacked official permission to publish under his own name, the script was credited under a pseudonym rather than openly acknowledging his authorship, reflecting the moral compromises required to keep working while remaining in the [[Third Reich|Reich]].",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Josef von Báky",
+        "Joseph Goebbels"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/M%C3%BCnchhausen_(1943_film)",
+        "https://de.wikipedia.org/wiki/Joseph_Goebbels"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/M%C3%BCnchhausen_Doku_Bild.jpg/960px-M%C3%BCnchhausen_Doku_Bild.jpg",
+          "caption": "\"Münchhausen\" documentary-drama poster",
+          "source": "https://commons.wikimedia.org/wiki/File:Münchhausen_Doku_Bild.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "inner_exile_years",
+      "annotations": {
+        "Third Reich": {
+          "explanation": "Common English term for Nazi Germany under Adolf Hitler (1933–1945), when cultural work such as film and publishing was tightly controlled by the regime.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nazi_Germany"
+        }
+      }
+    },
+    {
+      "date": "1945-10",
+      "date_precision": "month",
+      "date_end": "1948",
+      "date_end_precision": "year",
+      "date_note": "Postwar cultural work overlapped across editing and cabaret activity during these years",
+      "age": 46,
+      "title": "Rebuilt postwar cultural voice",
+      "description": "In Munich, Kästner became a prominent editor and commentator in the re-emerging German press, including senior work on the cultural pages of the American-licensed newspaper [[Die Neue Zeitung|\"Die Neue Zeitung\"]]. He also helped develop new postwar cabaret and song programs with close collaborators, bringing satire into the public reckoning with recent history. These efforts positioned him as both entertainer and moral critic in the early Federal Republic era.",
+      "locations": [
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.5753822,
+            48.1371079
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Die_Neue_Zeitung",
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "munich_after_the_ruins",
+      "annotations": {
+        "Die Neue Zeitung": {
+          "explanation": "A Munich-based newspaper launched in October 1945 in the American Occupation Zone, published under U.S. Information Control Division oversight as part of postwar media re-education.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Die_Neue_Zeitung"
+        }
+      }
+    },
+    {
+      "date": "1945",
+      "date_precision": "year",
+      "age": 46,
+      "title": "Moved to Munich after war",
+      "description": "After the collapse of Nazi rule in 1945, Kästner left Berlin and settled in Munich, seeking a setting in which he could resume open literary and journalistic work in the immediate postwar period. The move marked his shift from coping under dictatorship to taking part more visibly in the rebuilding of cultural life, and Munich remained his main base for the rest of his career.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.5753822,
+            48.1371079
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Die_Neue_Zeitung"
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "inner_exile_years",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Berlin, Germany",
+        "to_location": "Munich, Germany",
+        "characterization": "postwar resettlement"
+      }
+    },
+    {
+      "date": "1949",
+      "date_precision": "year",
+      "age": 50,
+      "title": "Published \"Das doppelte Lottchen\"",
+      "description": "In 1949, Kästner released the children’s novel \"Das doppelte Lottchen\" in the context of West Germany’s early postwar cultural rebuilding, adding a widely read new title to his work after the disruptions and restrictions he had faced under Nazi rule. The book’s warm humor and emotional directness helped renew his standing with young readers and publishers, and it later became the basis for multiple film adaptations during his lifetime.",
+      "locations": [
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.5753822,
+            48.1371079
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Das_doppelte_Lottchen",
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Book_cover_of_%22Das_doppelte_Lottchen%22.jpg/960px-Book_cover_of_%22Das_doppelte_Lottchen%22.jpg",
+          "caption": "Book cover of \"Das doppelte Lottchen\"",
+          "source": "https://commons.wikimedia.org/wiki/File:Book_cover_of_\"Das_doppelte_Lottchen\".jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "munich_after_the_ruins",
+      "event_class": {
+        "type": "publication",
+        "title": "Das doppelte Lottchen",
+        "publication_type": "book",
+        "significance": "postwar classic",
+        "impact": "The novel renewed Kästner’s mass readership after 1945 and became one of the best-known German children’s stories internationally."
+      }
     },
     {
       "date": "1960",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 61,
       "title": "Auszeichnung mit dem Hans-Christian-Andersen-Preis",
       "description": "1960 erhielt Kästner den internationalen Hans-Christian-Andersen-Preis für Literatur, die höchste Auszeichnung für einen Kinderbuchautor. Gewürdigt wurden sein Gesamtwerk für Kinder und im Besonderen seine autobiografische Schrift „Als ich ein kleiner Junge war“ (When I Was a Little Boy). Die Auszeichnung bestätigte seinen Rang als einer der führenden Kinderbuchautoren des 20. Jahrhunderts.",
-      "locations": [
-        "Copenhagen"
-      ],
+      "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
+        "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "https://en.wikipedia.org/wiki/Hans_Christian_Andersen_Award"
       ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Copenhagen, Copenhagen Municipality, Capital Region of Denmark, 1357, Denmark",
-          "name": "Copenhagen",
-          "primary": true,
-          "centroid": [
-            12.5700724,
-            55.6867243
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.4100724,
-            55.5267243,
-            12.7300724,
-            55.8467243
-          ]
+      "event_type_icon": "mdi-medal",
+      "chapter": "munich_after_the_ruins",
+      "annotations": {
+        "Hans Christian Andersen Award": {
+          "explanation": "An international prize administered by the International Board on Books for Young People (IBBY) that honors an author or illustrator’s lasting contribution to children’s literature.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hans_Christian_Andersen_Award"
         }
-      ],
-      "chapter": null,
-      "categories": null
+      }
     },
     {
       "date": "1974-07-29",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 75,
       "title": "Tod in München",
       "description": "Erich Kästner starb am 29. Juli 1974 im Alter von 75 Jahren in München nach Jahren gesundheitlichen Niedergangs und zunehmenden Alkoholismus. Er wurde auf dem Bogenhausener Friedhof in München beigesetzt und beschloss damit ein Leben, das das Kaiserreich, die Weimarer Republik, den Nationalsozialismus und die Bundesrepublik umspannte.",
       "locations": [
-        "Munich"
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.576124,
+            48.137154
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Erich_K%C3%A4stner"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Grab_Luiselotte_Enderle.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Grab_Erich_K%C3%A4stner_2014_%28retuschiert%29.jpg/960px-Grab_Erich_K%C3%A4stner_2014_%28retuschiert%29.jpg",
           "caption": "Grab von Erich Kästner und seiner Lebensgefährtin Luiselotte Enderle auf dem Bogenhausener Friedhof in München.",
-          "source": "https://commons.wikimedia.org/wiki/File:Grab_Luiselotte_Enderle.jpg"
+          "source": "https://commons.wikimedia.org/wiki/File:Grab_Erich_Kästner_2014_(retuschiert).jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Munich, Bavaria, Germany",
-          "name": "Munich",
-          "primary": true,
-          "centroid": [
-            11.5753822,
-            48.1371079
-          ],
-          "source": "nominatim",
-          "bbox": [
-            11.360777,
-            48.0616244,
-            11.7229099,
-            48.2481162
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-cross",
+      "chapter": "munich_after_the_ruins"
     }
-  ]
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": null,
+    "translated_on": "2026-07-18T14:30:15.005295+00:00",
+    "translator": "migration",
+    "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date.",
+    "matched_events": 9,
+    "total_events": 16
+  }
 }

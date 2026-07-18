@@ -1,6 +1,6 @@
 {
-  "dataset": "wiki-bio-events",
-  "created_on": "2025-11-19",
+  "dataset": "wikipedia-biographical-timeline",
+  "created_on": "2025-12-14",
   "person": {
     "name": "E._T._A._Hoffmann",
     "birth_date": "1776-01-24",
@@ -12,8 +12,9 @@
       "Musikkritiker",
       "Künstler"
     ],
+    "tagline": "Romantic master of the uncanny",
     "summary": "Ernst Theodor Amadeus Hoffmann (geboren als Ernst Theodor Wilhelm Hoffmann; 24. Januar 1776 – 25. Juni 1822) war ein deutscher romantischer Schriftsteller von Fantasie- und Schauerliteratur sowie Jurist, Komponist, Musikkritiker und Zeichner. Seine Erzählungen, darunter „Nussknacker und Mausekönig“, „Der Sandmann“ und „Der goldne Topf“, gehörten zum Kern der deutschen Romantik und inspirierten später Werke wie Tschaikowskys Ballett Der Nussknacker und Offenbachs Oper Hoffmanns Erzählungen.",
-    "wikipedia": "https://en.wikipedia.org/wiki/E._T._A._Hoffmann",
+    "wikipedia": "https://de.wikipedia.org/wiki/E._T._A._Hoffmann",
     "portrait": {
       "image": "/portraits/e_t_a_hoffmann_thumbnail.webp",
       "source": "https://de.wikipedia.org/wiki/E._T._A._Hoffmann",
@@ -25,734 +26,606 @@
       "full": "/portraits/e_t_a_hoffmann_full.webp"
     }
   },
-  "chapters": null,
+  "chapters": [
+    {
+      "id": "königsberg_fault_lines",
+      "headline": "Königsberg Fault Lines",
+      "date_start": "1776-01-24",
+      "date_start_precision": "day",
+      "date_end": "1795",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 19,
+      "involved_people": [
+        "Christoph Ludwig Hoffmann (father)",
+        "Lovisa Albertina Doerffer (mother)",
+        "Johann Ludwig Hoffmann (brother)",
+        "Theodor Gottlieb von Hippel (der Jüngere)"
+      ],
+      "location": "East Prussia"
+    },
+    {
+      "id": "prussian_road_apprentice",
+      "headline": "Prussian Road Apprentice",
+      "date_start": "1796",
+      "date_start_precision": "year",
+      "date_end": "1800-03",
+      "date_end_precision": "month",
+      "age_start": 20,
+      "age_end": 24,
+      "involved_people": [
+        "Wilhelmine (“Minna”) Doerffer"
+      ],
+      "location": "Prussia"
+    },
+    {
+      "id": "borderlands_scandal_exile",
+      "headline": "Borderlands Scandal Exile",
+      "date_start": "1800-03",
+      "date_start_precision": "month",
+      "date_end": "1806",
+      "date_end_precision": "year",
+      "age_start": 24,
+      "age_end": 30,
+      "involved_people": [
+        "Marianne Thekla Michalina Rorer",
+        "Minna Doerffer"
+      ],
+      "location": "Polish-Prussian borderlands"
+    },
+    {
+      "id": "theatre_alchemy_bamberg",
+      "headline": "Theatre Alchemy Bamberg",
+      "date_start": "1808",
+      "date_start_precision": "year",
+      "date_end": "1810",
+      "date_end_precision": "year",
+      "age_start": 32,
+      "age_end": 34,
+      "involved_people": null,
+      "location": "Southern Germany"
+    },
+    {
+      "id": "berlin_double_life_final_battle",
+      "headline": "Berlin Double Life",
+      "date_start": "1814",
+      "date_start_precision": "year",
+      "date_end": "1822-06-25",
+      "date_end_precision": "day",
+      "age_start": 38,
+      "age_end": 46,
+      "involved_people": [
+        "Theodor Gottlieb von Hippel (der Jüngere)",
+        "Julius Eduard Hitzig",
+        "Adelbert von Chamisso",
+        "Ludwig Tieck"
+      ],
+      "location": "Germany"
+    }
+  ],
+  "conclusion": "E. T. A. Hoffmann turned the pressure between bureaucracy and art into a new kind of literature—where satire bites, music haunts, and the everyday cracks open to reveal the monstrous. His life ended in a censorship fight, but his legacy endures in the modern imagination he helped invent: restless, comic, terrified, and free.",
   "events": [
     {
       "date": "1776-01-24",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 0,
       "title": "Geburt in Königsberg",
       "description": "Ernst Theodor Wilhelm Hoffmann (später bekannt als Ernst Theodor Amadeus Hoffmann) wurde am 24. Januar 1776 in Königsberg in Preußen in eine Juristenfamilie geboren. Er war das jüngste von drei Kindern des Advokaten, Dichters und Amateurmusikers Christoph Ludwig Hoffmann und dessen Frau Lovisa Albertina Doerffer.",
       "locations": [
-        "Königsberg, Königreich Preußen (heute Kaliningrad, Russland)"
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.5105838,
+            54.710128
+          ],
+          "primary": true
+        }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
       ],
-      "images": null,
-      "location_coordinates": [
+      "images": [
         {
-          "label": "Kaliningrad, Northwestern Federal District, Russia",
-          "name": "Königsberg, Kingdom of Prussia (now Kaliningrad, Russia)",
-          "primary": true,
-          "centroid": [
-            20.4565666,
-            54.7046485
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.293279,
-            54.6306222,
-            20.653798,
-            54.7786843
-          ]
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Coat_of_Arms_of_K%C3%B6nigsberg.svg/800px-Coat_of_Arms_of_K%C3%B6nigsberg.svg.png",
+          "caption": "Coats of arms of Königsberg",
+          "source": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Königsberg.svg"
         }
       ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-candle",
+      "chapter": "königsberg_fault_lines",
+      "annotations": {
+        "East Prussia": {
+          "explanation": "A historical province of the Kingdom of Prussia on the southeastern Baltic coast; Königsberg was its capital, and the area is now divided mainly between Russia (Kaliningrad Oblast) and Poland.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/East_Prussia"
+        }
+      }
     },
     {
       "date": "1778",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 2,
       "title": "Trennung der Eltern und Erziehung bei mütterlichen Verwandten",
       "description": "Um 1778 trennten sich Hoffmanns Eltern. Sein Vater zog mit Hoffmanns älterem Bruder nach Insterburg, während seine Mutter in Königsberg blieb, wo Hoffmann von seinen unverheirateten mütterlichen Tanten Johanna Sophie und Charlotte Wilhelmine Doerffer sowie deren Bruder Otto Wilhelm Doerffer in einem streng pietistischen Haushalt erzogen wurde, den er später als ihm wenig zusagend schilderte.",
       "locations": [
-        "Königsberg, Königreich Preußen (heute Kaliningrad, Russland)",
-        "Insterburg, Königreich Preußen (heute Tschernjachowsk, Russland)"
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.5105838,
+            54.710128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Christoph Ludwig Hoffmann (father)",
+        "Lovisa Albertina Doerffer (mother)",
+        "Johann Ludwig Hoffmann (brother)"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
       ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Kaliningrad, Northwestern Federal District, Russia",
-          "name": "Königsberg, Kingdom of Prussia (now Kaliningrad, Russia)",
-          "primary": true,
-          "centroid": [
-            20.4565666,
-            54.7046485
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.293279,
-            54.6306222,
-            20.653798,
-            54.7786843
-          ]
-        },
-        {
-          "label": "Chernyakhovsk, Chernyakhovsky District, Kaliningrad, Northwestern Federal District, Russia",
-          "name": "Insterburg, Kingdom of Prussia (now Chernyakhovsk, Russia)",
-          "primary": false,
-          "centroid": [
-            21.8099822,
-            54.635533
-          ],
-          "source": "nominatim",
-          "bbox": [
-            21.7043279,
-            54.5784372,
-            21.9019308,
-            54.6704952
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "königsberg_fault_lines"
     },
     {
-      "date": "1781",
+      "date": "1782",
       "date_precision": "year",
-      "date_end": "1792",
+      "date_end": "1786",
       "date_end_precision": "year",
-      "date_note": null,
-      "age": 5,
-      "title": "Schulbildung an der Burgschule in Königsberg",
-      "description": "Zwischen 1781 und 1792 besuchte Hoffmann die lutherische Burgschule in Königsberg, wo er im klassischen Lehrplan gute Fortschritte machte. In diesen Jahren entwickelte er ein bemerkenswertes Talent als Pianist und beschäftigte sich mit Zeichnen und frühen literarischen Versuchen, darunter einem Teil eines unvollendeten Romans mit dem Titel „Der Geheimnisvolle“.",
+      "age": 6,
+      "title": "Burgschule and Hippel friendship",
+      "description": "He entered the Burgschule in Königsberg, receiving a solid general education while developing intense interests in music and drawing. During his school years he formed a lasting friendship with Theodor Gottlieb von Hippel, who would remain an important correspondent and later an influential supporter. The relationship helped anchor Hoffmann amid repeated moves and career shocks.",
       "locations": [
-        "Königsberg, Königreich Preußen (heute Kaliningrad, Russland)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Kaliningrad, Northwestern Federal District, Russia",
-          "name": "Königsberg, Kingdom of Prussia (now Kaliningrad, Russia)",
-          "primary": true,
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
           "centroid": [
-            20.4565666,
-            54.7046485
+            20.5105838,
+            54.710128
           ],
-          "source": "nominatim",
-          "bbox": [
-            20.293279,
-            54.6306222,
-            20.653798,
-            54.7786843
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
+      "involved_people": [
+        "Theodor Gottlieb von Hippel (der Jüngere)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Theodor_Gottlieb_von_Hippel_der_J%C3%BCngere"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "königsberg_fault_lines"
     },
     {
       "date": "1792",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": "Year when he is noted as attending some of Kant's lectures",
+      "date_end": "1795",
+      "date_end_precision": "year",
       "age": 16,
       "title": "Beginn des Universitätsstudiums und Besuch von Immanuel Kants Vorlesungen",
       "description": "Im Jahr 1792 besuchte Hoffmann zusammen mit seinem engen Freund Theodor Gottlieb von Hippel dem Jüngeren einige Vorlesungen Immanuel Kants an der Universität Königsberg. Die Begegnung mit der kantischen Philosophie und dem geistigen Milieu Königsbergs war Teil seiner frühen Ausbildung und trug dazu bei, die kritischen und spekulativen Neigungen zu formen, die später in seinem literarischen Werk hervortraten.",
       "locations": [
-        "Universität Königsberg, Königsberg, Königreich Preußen (heute Kaliningrad, Russland)"
+        {
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.5105838,
+            54.710128
+          ],
+          "primary": true
+        }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
       ],
-      "images": null,
-      "location_coordinates": [
+      "images": [
         {
-          "label": "Institute of Economics and Management, Baltic Federal University named after Immanuel Kant, 23, улица Горького, Ленинградский район, Kaliningrad, Northwestern Federal District, 236029, Russia",
-          "name": "University of Königsberg, Königsberg, Kingdom of Prussia (now Kaliningrad, Russia)",
-          "primary": true,
-          "centroid": [
-            20.5091486,
-            54.7261476
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.5089819,
-            54.725854,
-            20.5093152,
-            54.7264411
-          ]
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Albertina_K%C3%B6nigsberg_%28kol._Postkarte%29.jpg",
+          "caption": "Albertus University in Königsberg (postcard)",
+          "source": "https://commons.wikimedia.org/wiki/File:Albertina_Königsberg_(kol._Postkarte).jpg"
         }
       ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1796-02",
-      "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 20,
-      "title": "Versetzung nach Glogau nach Skandal um Verliebtheit in Dora Hatt",
-      "description": "Bis 1794 hatte Hoffmann sich in Dora Hatt verliebt, eine verheiratete Frau, seine Musikschülerin und zehn Jahre älter als er. Nachdem ihre Familie gegen seine Avancen protestiert hatte, wurde im Februar 1796 eine Vereinbarung getroffen, mit seinem zögerlichen Einverständnis, ihm eine Stelle in Glogau in Preußisch-Schlesien zu verschaffen, wodurch er faktisch aus der Situation entfernt und auf eine juristische Laufbahn in der Provinz ausgerichtet wurde.",
-      "locations": [
-        "Königsberg, Königreich Preußen (heute Kaliningrad, Russland)",
-        "Glogau, Preußisch-Schlesien (heute Głogów, Polen)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Kaliningrad, Northwestern Federal District, Russia",
-          "name": "Königsberg, Kingdom of Prussia (now Kaliningrad, Russia)",
-          "primary": true,
-          "centroid": [
-            20.4565666,
-            54.7046485
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.293279,
-            54.6306222,
-            20.653798,
-            54.7786843
-          ]
-        },
-        {
-          "label": "Głogów, Głogów County, Lower Silesian Voivodeship, 67-200, Poland",
-          "name": "Glogau, Prussian Silesia (now Głogów, Poland)",
-          "primary": false,
-          "centroid": [
-            16.0935567,
-            51.6636791
-          ],
-          "source": "nominatim",
-          "bbox": [
-            15.9347418,
-            51.632066,
-            16.1522714,
-            51.7083047
-          ]
+      "event_type_icon": "mdi-school",
+      "chapter": "königsberg_fault_lines",
+      "annotations": {
+        "Albertus University": {
+          "explanation": "The historical University of Königsberg (founded 1544), a major Prussian center of higher education where Hoffmann studied law.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_K%C3%B6nigsberg"
         }
-      ],
-      "chapter": null,
-      "categories": null
+      }
     },
     {
       "date": "1796",
       "date_precision": "year",
-      "date_end": "1800",
+      "date_end": "1798",
       "date_end_precision": "year",
-      "date_note": null,
       "age": 20,
       "title": "Frühe juristische Provinzkarriere und erste Versuche als Komponist",
       "description": "Ab 1796 arbeitete Hoffmann als Referendar für seinen Onkel und Vormund Johann Ludwig Doerffer in Glogau. Nach weiteren juristischen Prüfungen besuchte er Dresden, wo ihn die Gemälde Correggios und Raphaels tief beeindruckten. 1798 zog er mit seinem Onkel nach Berlin, seiner ersten Erfahrung mit einer Großstadt, und versuchte dort, sich als Komponist zu etablieren, indem er die Operette „Die Maske“ schrieb, die er in der Hoffnung auf Förderung an Königin Luise von Preußen sandte.",
       "locations": [
-        "Glogau, Preußisch-Schlesien (heute Głogów, Polen)",
-        "Dresden, Kurfürstentum/Königreich Sachsen, Heiliges Römisches Reich",
-        "Berlin, Königreich Preußen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Głogów, Głogów County, Lower Silesian Voivodeship, 67-200, Poland",
-          "name": "Glogau, Prussian Silesia (now Głogów, Poland)",
-          "primary": true,
+          "name_historic": "Königsberg",
+          "name_modern": "Kaliningrad, Russia",
+          "centroid": [
+            20.5105838,
+            54.710128
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Glogau",
+          "name_modern": "Głogów, Poland",
           "centroid": [
             16.0935567,
             51.6636791
           ],
-          "source": "nominatim",
-          "bbox": [
-            15.9347418,
-            51.632066,
-            16.1522714,
-            51.7083047
-          ]
-        },
-        {
-          "label": "Dresden, Saxony, Germany",
-          "name": "Dresden, Electorate/Kingdom of Saxony, Holy Roman Empire",
-          "primary": false,
-          "centroid": [
-            13.7381437,
-            51.0493286
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.5793237,
-            50.974937,
-            13.9660626,
-            51.1777202
-          ]
-        },
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin, Kingdom of Prussia",
-          "primary": false,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1800-06",
-      "date_precision": "month",
-      "date_end": "1803",
-      "date_end_precision": "year",
-      "date_note": null,
-      "age": 24,
-      "title": "Dienst in preußischen Provinzen und wachsende künstlerische Ambitionen",
-      "description": "Von Juni 1800 bis 1803 diente Hoffmann in verschiedenen preußischen Provinzposten in Großpolen und Masowien, darunter in Posen. Zum ersten Mal fern elterlicher Aufsicht lebend, erwarb er sich nach zeitgenössischen Maßstäben den Ruf eines „liederlichen“ Lebenswandels, setzte jedoch zugleich seine Tätigkeit als Zeichner, Komponist und Schriftsteller fort und entwickelte seine künstlerischen Ambitionen parallel zu seinen juristischen Pflichten weiter.",
-      "locations": [
-        "Posen, Südpreußen (heute Poznań, Polen)",
-        "Großpolen und Masowien, preußische Provinzen"
+      "involved_people": [
+        "Wilhelmine (“Minna”) Doerffer"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
       ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Poznań, Poznań County, Greater Poland Voivodeship, Poland",
-          "name": "Posen, South Prussia (now Poznań, Poland)",
-          "primary": true,
-          "centroid": [
-            16.9197326,
-            52.4006632
-          ],
-          "source": "nominatim",
-          "bbox": [
-            16.7315878,
-            52.2919238,
-            17.0717065,
-            52.5093282
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "prussian_road_apprentice"
     },
     {
-      "date": "1802-08",
-      "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 26,
-      "title": "Heirat mit Mischa (Maria Thekla Michalina Rorer) und Umzug nach Płock",
-      "description": "Im Jahr 1802 heiratete Hoffmann in Posen Mischa (Maria oder Marianna Thekla Michalina Rorer, geborene Trzcińska). Kurz darauf wurde er nach Płock in Neuostpreußen versetzt, einen Schritt, den er als Verbannung empfand. Dort begegnete er beruflicher Frustration und Isolation, indem er seine schriftstellerische und kompositorische Tätigkeit intensivierte – Erfahrungen, die später die Melancholie und Ironie in seiner Prosa prägten.",
-      "locations": [
-        "Posen, Südpreußen (heute Poznań, Polen)",
-        "Płock, Neuostpreußen (heute Polen)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Poznań, Poznań County, Greater Poland Voivodeship, Poland",
-          "name": "Posen, South Prussia (now Poznań, Poland)",
-          "primary": true,
-          "centroid": [
-            16.9197326,
-            52.4006632
-          ],
-          "source": "nominatim",
-          "bbox": [
-            16.7315878,
-            52.2919238,
-            17.0717065,
-            52.5093282
-          ]
-        },
-        {
-          "label": "Płock, Masovian Voivodeship, Poland",
-          "name": "Płock, New East Prussia (now Poland)",
-          "primary": false,
-          "centroid": [
-            19.7136301,
-            52.5353471
-          ],
-          "source": "nominatim",
-          "bbox": [
-            19.6240821,
-            52.4737428,
-            19.8058573,
-            52.5970876
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1803-10-01",
+      "date": "1798-06-20",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 27,
-      "title": "Beginn des Tagebuchs und erste literarische Anerkennung mit „Der Preis“",
-      "description": "Am 1. Oktober 1803 begann Hoffmann während seiner schweren Jahre in Płock ein persönliches Tagebuch zu führen. Um diese Zeit veröffentlichte er einen Aufsatz über das Theater in Kotzebues Zeitschrift „Die Freimüthige“ und nahm mit seinem Stück „Der Preis“ an einem Dramaturgenwettbewerb derselben Zeitschrift teil, das von einem Stückeschreib-Wettbewerb handelt. Obwohl kein Beitrag den Preis erhielt, wurde Hoffmanns Werk besonders gelobt und markierte einen seiner ersten öffentlichen literarischen Erfolge.",
-      "locations": [
-        "Płock, Neuostpreußen (heute Polen)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Płock, Masovian Voivodeship, Poland",
-          "name": "Płock, New East Prussia (now Poland)",
-          "primary": true,
-          "centroid": [
-            19.7136301,
-            52.5353471
-          ],
-          "source": "nominatim",
-          "bbox": [
-            19.6240821,
-            52.4737428,
-            19.8058573,
-            52.5970876
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1804",
-      "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 28,
-      "title": "Ernennung zu einem Posten in Warschau",
-      "description": "Anfang 1804 erhielt Hoffmann einen neuen Verwaltungsposten in Warschau, das damals unter preußischer Herrschaft stand. Auf der Reise kam er durch seine Heimatstadt Königsberg, wo er eine der Töchter Dora Hatts zum letzten Mal traf; in seine Geburtsstadt sollte er nie zurückkehren. Die Anstellung in Warschau leitete jene Zeit ein, die er später als die glücklichste seines Lebens betrachtete, eingebunden in ein lebendiges polnisches und deutsches Kulturmilieu.",
-      "locations": [
-        "Warschau, preußische Verwaltung (heute Warschau, Polen)",
-        "Königsberg, Königreich Preußen (heute Kaliningrad, Russland)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Warsaw, Masovian Voivodeship, Poland",
-          "name": "Warsaw, Prussian administration (now Warsaw, Poland)",
-          "primary": true,
-          "centroid": [
-            21.0711489,
-            52.2333742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.8516882,
-            52.0978497,
-            21.2711512,
-            52.3681531
-          ]
-        },
-        {
-          "label": "Kaliningrad, Northwestern Federal District, Russia",
-          "name": "Königsberg, Kingdom of Prussia (now Kaliningrad, Russia)",
-          "primary": false,
-          "centroid": [
-            20.4565666,
-            54.7046485
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.293279,
-            54.6306222,
-            20.653798,
-            54.7786843
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1806-11-28",
-      "date_precision": "day",
-      "date_end": "1807-06",
+      "date_end": "1800-03",
       "date_end_precision": "month",
-      "date_note": null,
-      "age": 30,
-      "title": "Napoleonische Besetzung Warschaus und Verlust des preußischen Amtes",
-      "description": "Am 28. November 1806, während des Vierten Koalitionskrieges, nahmen Napoleons Truppen Warschau ein, wodurch Hoffmann und andere preußische Beamte ihre Stellen verloren. Die Bürokraten teilten die Kasse unter sich auf und flohen; Anfang 1807 kehrten Hoffmanns Frau und die kleine Tochter nach Posen zurück, während er in Warschau blieb, schwer erkrankte und dann, nachdem er sich geweigert hatte, dem französischen Regime den Treueid zu leisten, gezwungen wurde, das Herzogtum Warschau zu verlassen. Bis Juni 1807 hatte er seine Familie in Posen besucht und war nach Berlin zurückgekehrt, entschlossen, nun eine Laufbahn als Künstler und Schriftsteller zu verfolgen.",
+      "age": 22,
+      "title": "Berlin legal training begins",
+      "description": "Hoffmann passed his second state examination with distinction and moved to Berlin for further legal preparation at the [[Kammergericht|Kammergericht]]. The capital exposed him to a richer theatrical and musical world, and he began serious attempts at composition while immersing himself in the arts. He completed the assessor examination in 1800, formally qualifying for higher judicial appointments.",
       "locations": [
-        "Warschau, Herzogtum Warschau (heute Warschau, Polen)",
-        "Posen, Südpreußen (heute Poznań, Polen)",
-        "Berlin, Königreich Preußen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Warsaw, Masovian Voivodeship, Poland",
-          "name": "Warsaw, Duchy of Warsaw (now Warsaw, Poland)",
-          "primary": true,
-          "centroid": [
-            21.0711489,
-            52.2333742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            20.8516882,
-            52.0978497,
-            21.2711512,
-            52.3681531
-          ]
-        },
-        {
-          "label": "Poznań, Poznań County, Greater Poland Voivodeship, Poland",
-          "name": "Posen, South Prussia (now Poznań, Poland)",
-          "primary": false,
-          "centroid": [
-            16.9197326,
-            52.4006632
-          ],
-          "source": "nominatim",
-          "bbox": [
-            16.7315878,
-            52.2919238,
-            17.0717065,
-            52.5093282
-          ]
-        },
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin, Kingdom of Prussia",
-          "primary": false,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1808-09-01",
-      "date_precision": "day",
-      "date_end": "1813-04-21",
-      "date_end_precision": "day",
-      "date_note": null,
-      "age": 32,
-      "title": "Bamberger Jahre: Theaterarbeit, Musikkritik und erste bedeutende Prosa",
-      "description": "Am 1. September 1808 traf Hoffmann mit seiner Frau in Bamberg ein, um als Theaterdirektor zu arbeiten. Obwohl Intrigen ihn diese Position bald kosteten, blieb er in Bamberg und wirkte dort als Bühnenarbeiter, Ausstatter, Dramatiker und privater Musiklehrer. Er wurde ein angesehener Musikkritiker für die „Allgemeine musikalische Zeitung“, verfasste einflussreiche Aufsätze über Beethoven und führte in ihren Spalten seine Alter-Ego-Figur Kapellmeister Johannes Kreisler ein. 1809 erschien seine Erzählung „Ritter Gluck“, eine Geschichte über eine mögliche Begegnung mit dem längst verstorbenen Komponisten Gluck, die seinen literarischen Durchbruch markierte. Um diese Zeit nahm er das Pseudonym E. T. A. Hoffmann an und erklärte, dass das „A“ Wolfgang Amadeus Mozart ehre.",
-      "locations": [
-        "Bamberg, Kurfürstentum/Königreich Bayern, Heiliges Römisches Reich/Königreich Bayern"
-      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/85/E._T._A._Hoffmann_-_Kapellmeister_Kreisler.jpg",
-          "caption": "Illustration des Kapellmeisters Johannes Kreisler, Hoffmanns fiktivem Alter Ego, der zuerst in seinen Musikkritiken und Erzählungen auftrat.",
-          "source": "https://commons.wikimedia.org/wiki/File:E._T._A._Hoffmann_-_Kapellmeister_Kreisler.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/141019_Berlin_Kammergericht.jpg",
+          "caption": "The Kammergericht Berlin (Higher Regional Court)",
+          "source": "https://commons.wikimedia.org/wiki/File:141019_Berlin_Kammergericht.jpg"
         }
       ],
-      "location_coordinates": [
+      "event_type_icon": "mdi-school",
+      "chapter": "prussian_road_apprentice",
+      "annotations": {
+        "Kammergericht": {
+          "explanation": "The supreme court of the Electorate/Kingdom of Prussia, based in Berlin; it also served as a key institution for training and advancement of Prussian jurists.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Kammergericht"
+        }
+      }
+    },
+    {
+      "date": "1800-03",
+      "date_precision": "month",
+      "date_end": "1802-03",
+      "date_end_precision": "month",
+      "age": 24,
+      "title": "Posted to Posen",
+      "description": "Assigned as a court assessor to [[Posen|Posen]], Hoffmann experienced professional independence away from family oversight for the first time. Social isolation and the routines of provincial administration intensified habits—especially heavy drinking—that would follow him throughout his life. At the same time he continued composing and participating in local musical culture, with early works performed in public.",
+      "locations": [
         {
-          "label": "Bamberg, Bavaria, Germany",
-          "name": "Bamberg, Electorate/Kingdom of Bavaria, Holy Roman Empire/Kingdom of Bavaria",
-          "primary": true,
+          "name_historic": "Posen",
+          "name_modern": "Poznań, Poland",
+          "centroid": [
+            16.9197326,
+            52.4006632
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Posen_1905.png",
+          "caption": "Historical map of Provinz Posen (1905)",
+          "source": "https://commons.wikimedia.org/wiki/File:Posen_1905.png"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "prussian_road_apprentice",
+      "annotations": {
+        "Posen": {
+          "explanation": "Historic German name for the city now known as Poznań, which was part of the Kingdom of Prussia around 1800 (South Prussia).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pozna%C5%84"
+        }
+      }
+    },
+    {
+      "date": "1802-02",
+      "date_precision": "month",
+      "date_end": "1804-03",
+      "date_end_precision": "month",
+      "age": 26,
+      "title": "Caricature scandal and demotion",
+      "description": "During carnival season in [[Posen|Posen]], satirical caricatures of high-ranking figures circulated at a masquerade, and authorities suspected Hoffmann’s involvement because of his known drawing talent. Although he received a formal promotion, he was effectively punished by transfer to the smaller town of Płock. He recorded boredom and dissatisfaction there, while continuing to compose and to dream of a more artistic life.",
+      "locations": [
+        {
+          "name_historic": "Posen",
+          "name_modern": "Poznań, Poland",
+          "centroid": [
+            16.9197326,
+            52.4006632
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Płock",
+          "name_modern": "Płock, Poland",
+          "centroid": [
+            19.7008606,
+            52.5464521
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "borderlands_scandal_exile",
+      "annotations": {
+        "Posen": {
+          "explanation": "Historical German name for the city now known as Poznań, which was part of Prussia in Hoffmann's time.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pozna%C5%84"
+        }
+      }
+    },
+    {
+      "date": "1802-07-26",
+      "date_precision": "day",
+      "age": 26,
+      "title": "Married Marianne Rorer",
+      "description": "Hoffmann broke his engagement to Minna Doerffer and married Marianne Thekla Michalina Rorer (\"Mischa\"), a woman from a prominent local family. The marriage, made amid career uncertainty and emotional volatility, would endure despite long separations and financial strain. It also anchored him socially in the Polish-Prussian borderlands where he was then serving.",
+      "locations": [],
+      "involved_people": [
+        "Marianne Thekla Michalina Rorer",
+        "Minna Doerffer"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "borderlands_scandal_exile"
+    },
+    {
+      "date": "1804-03",
+      "date_precision": "month",
+      "date_end": "1806",
+      "date_end_precision": "year",
+      "age": 28,
+      "title": "Warschau music and collapse",
+      "description": "Hoffmann secured a transfer to Warsaw, where he threw himself into composition and gained a local reputation as an accomplished musician. His civil service work remained competent, but the Napoleonic wars destabilized the Prussian administration. When French forces overturned Prussian control, his position and prospects in the city were shattered, forcing a search for new livelihoods.",
+      "locations": [
+        {
+          "name_historic": "Warsaw",
+          "name_modern": "Warsaw, Poland",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann",
+        "https://en.wikipedia.org/wiki/Warsaw"
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "borderlands_scandal_exile"
+    },
+    {
+      "date": "1808",
+      "date_precision": "year",
+      "date_end": "1810",
+      "date_end_precision": "year",
+      "age": 32,
+      "title": "Bamberg theatre turn",
+      "description": "After periods of instability following the loss of his post, Hoffmann shifted toward a more overtly artistic career and worked in the theatrical world at Bamberg. He conducted, composed, and wrote criticism, while deepening an interest in psychological and medical writings through new friendships. Around this time he began publishing the kind of fantastical prose that would define his reputation.",
+      "locations": [
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Bavaria, Germany",
           "centroid": [
             10.8868478,
             49.8916044
           ],
-          "source": "nominatim",
-          "bbox": [
-            10.8265043,
-            49.8426463,
-            10.9607049,
-            49.9286327
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
-    },
-    {
-      "date": "1813-04-21",
-      "date_precision": "day",
-      "date_end": "1814",
-      "date_end_precision": "year",
-      "date_note": null,
-      "age": 37,
-      "title": "Umzug nach Dresden und Leipzig als Operndirektor im Krieg",
-      "description": "Am 21. April 1813 nahm Hoffmann Joseph Secondas Angebot an, als musikalischer Direktor für dessen Operntruppe zu arbeiten, und verließ Bamberg in das kriegszerrüttete Sachsen. Am 25. April traf er in Dresden ein und hatte dann aufgrund der militärischen Operationen im Zuge des Sechsten Koalitionskrieges Schwierigkeiten, nach Leipzig zu reisen. Im Mai war seine Familie in Dresden eingeschlossen, als die Brücken zerstört und anschließend Kämpfe ausgetragen wurden; später erlebten sie den Beschuss und die Schlacht von Dresden mit. Hoffmann setzte seine Arbeit mit Secondas Orchester fort und pendelte, soweit es die militärische Lage zuließ, zwischen Dresden und Leipzig.",
-      "locations": [
-        "Dresden, Königreich Sachsen",
-        "Leipzig, Königreich Sachsen"
-      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
       ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Dresden, Saxony, Germany",
-          "name": "Dresden, Kingdom of Saxony",
-          "primary": true,
-          "centroid": [
-            13.7381437,
-            51.0493286
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.5793237,
-            50.974937,
-            13.9660626,
-            51.1777202
-          ]
-        },
-        {
-          "label": "Leipzig, Saxony, Germany",
-          "name": "Leipzig, Kingdom of Saxony",
-          "primary": false,
-          "centroid": [
-            12.3747329,
-            51.3406321
-          ],
-          "source": "nominatim",
-          "bbox": [
-            12.2366519,
-            51.2381704,
-            12.5425373,
-            51.4481145
-          ]
-        }
-      ],
-      "chapter": null,
-      "categories": null
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "theatre_alchemy_bamberg"
     },
     {
-      "date": "1817",
+      "date": "1814",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 41,
-      "title": "Veröffentlichung der „Nachtstücke“ festigt seinen Ruf",
-      "description": "1817 veröffentlichte Hoffmann die zweibändige Sammlung „Nachtstücke“, die einige seiner einflussreichsten unheimlichen und fantastischen Erzählungen enthielt, darunter „Der Sandmann“. Das in Berlin bei der Realschulbuchhandlung erschienene Werk trug entscheidend dazu bei, seinen Rang als führenden Autor der deutschen Romantik und als Meister der Schauerliteratur zu sichern.",
+      "age": 38,
+      "title": "Returned to Berlin judiciary",
+      "description": "Hoffmann returned to Berlin and re-entered the Prussian legal system, gaining a post at the [[Kammergericht|Kammergericht]] through supportive connections from earlier years. He now lived at the intersection of official duties and intense literary production, writing at night and socializing in Berlin’s artistic circles. The city became the main stage for his mature work as both jurist and author.",
       "locations": [
-        "Berlin, Königreich Preußen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Hoffmann._E._T._A._%281817%29.JPG",
-          "caption": "Erstausgabe von E. T. A. Hoffmanns zweibändiger Sammlung „Nachtstücke“ (1817), erschienen in Berlin.",
-          "source": "https://commons.wikimedia.org/wiki/File:Hoffmann._E._T._A._(1817).JPG"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin, Kingdom of Prussia",
-          "primary": true,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "berlin_double_life_final_battle",
+      "annotations": {
+        "Kammergericht": {
+          "explanation": "The highest court of the Kingdom of Prussia at the time, based in Berlin, where senior judicial appointments were made and appellate cases were heard.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Kammergericht"
+        }
+      }
     },
     {
-      "date": "1822-06-25",
-      "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 46,
-      "title": "Tod in Berlin",
-      "description": "E. T. A. Hoffmann starb am 25. Juni 1822 im Alter von 46 Jahren in Berlin nach einer langen Krankheit, die ihn zunehmend lähmte. Zum Zeitpunkt seines Todes war er sowohl ein hoher Jurist im preußischen Justizsystem als auch einer der gefeiertsten Autoren der Romantik, bekannt für seine unheimlichen Erzählungen und seine innovative Verbindung von Musik, Recht und Fantasie.",
+      "date": "1816",
+      "date_precision": "year",
+      "age": 40,
+      "title": "Stage success with Undine",
+      "description": "Hoffmann achieved a major public triumph when his opera [[Undine (opera)|Undine]] was staged in Berlin, marking his most significant success as a composer and man of the theatre. In the same period he consolidated his fame as a storyteller with works that fused the everyday with the uncanny and grotesque. His output helped define the Romantic-era conversation about music, imagination, and the dark edges of modern life.",
       "locations": [
-        "Berlin, Königreich Preußen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
-      ],
-      "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Grave_of_ETA_Hoffmann.jpg",
-          "caption": "Grab von E. T. A. Hoffmann in Berlin, markiert durch einen schlichten Grabstein.",
-          "source": "https://commons.wikimedia.org/wiki/File:Grave_of_ETA_Hoffmann.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin, Kingdom of Prussia",
-          "primary": true,
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
           "centroid": [
             13.3951309,
             52.5173885
           ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
+          "primary": true
         }
       ],
-      "chapter": null,
-      "categories": null
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Undine_(opera)",
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Schachtdeckel_Stadt-Bamberg_2013-06-21_Undine-ETA-Hoffmann.jpg",
+          "caption": "Bamberg manhole cover with Undine and E.T.A. Hoffmann",
+          "source": "https://commons.wikimedia.org/wiki/File:Schachtdeckel_Stadt-Bamberg_2013-06-21_Undine-ETA-Hoffmann.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microphone",
+      "chapter": "berlin_double_life_final_battle",
+      "annotations": {
+        "Undine (opera)": {
+          "explanation": "A Romantic opera in three acts by E. T. A. Hoffmann (libretto by Friedrich de la Motte Fouqué), first performed in Berlin in 1816.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Undine_(opera)"
+        }
+      }
+    },
+    {
+      "date": "1819",
+      "date_precision": "year",
+      "date_end": "1821",
+      "date_end_precision": "year",
+      "age": 43,
+      "title": "Serapion circle and major collections",
+      "description": "In 1819, Hoffmann gathered a close literary circle in Berlin—later associated with the [[Serapion Brethren|“Serapion Brethren”]]—that shaped the discussion of his work and his aesthetic ideals. He published major collections that showcased his range from satire and fantasy to psychological horror, strengthening his standing as a leading German prose writer of the era. His dual identity as incisive music critic and innovative narrator became especially influential in these years.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Julius Eduard Hitzig",
+        "Adelbert von Chamisso",
+        "Ludwig Tieck"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann",
+        "https://en.wikipedia.org/wiki/The_Serapion_Brethren"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Serapionsbr%C3%BCder.jpg",
+          "caption": "First edition of Hoffmann's Serapion Brothers",
+          "source": "https://commons.wikimedia.org/wiki/File:Serapionsbrüder.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "berlin_double_life_final_battle",
+      "annotations": {
+        "Serapion Brethren": {
+          "explanation": "Hoffmann’s Berlin-based circle of friends and writers who met for readings and discussions; Hoffmann later framed their meetings in his story cycle \"Die Serapionsbrüder\" (1819–1821).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/The_Serapion_Brethren"
+        }
+      }
+    },
+    {
+      "date": "1822-01",
+      "date_precision": "month",
+      "date_end": "1822-06-25",
+      "date_end_precision": "day",
+      "age": 46,
+      "title": "Censorship conflict and death",
+      "description": "A political-legal scandal erupted when his satire (notably the novella [[Meister Floh|Meister Floh]]) touched sensitive targets within the Prussian bureaucracy, drawing official intervention and forcing alterations to a work in progress. As the dispute unfolded, Hoffmann’s health deteriorated severely, leaving him increasingly immobilized while friends helped manage practical affairs. He died in Berlin in 1822, ending a career marked by continual tension between state service and artistic freedom.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Julius Eduard Hitzig"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/E._T._A._Hoffmann",
+        "https://de.wikipedia.org/wiki/Julius_Eduard_Hitzig"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/35/E._T._A._Hoffmann_-_Hoffmann_k%C3%A4mpft_gegen_die_B%C3%BCrokratie_1821.jpg",
+          "caption": "Hoffmann fights the Prussian bureaucracy (1821 illustration)",
+          "source": "https://commons.wikimedia.org/wiki/File:E._T._A._Hoffmann_-_Hoffmann_kämpft_gegen_die_Bürokratie_1821.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "berlin_double_life_final_battle",
+      "annotations": {
+        "Meister Floh": {
+          "explanation": "Hoffmann’s late satirical novella (\"Master Flea\"), parts of which were censored after it was read as a veiled attack on Prussian police officials during the \"demagogue persecution\" era.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Meister_Floh"
+        }
+      }
     }
-  ]
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": null,
+    "translated_on": "2026-07-18T14:30:15.002446+00:00",
+    "translator": "migration",
+    "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date.",
+    "matched_events": 4,
+    "total_events": 15
+  }
 }

@@ -1,94 +1,170 @@
 {
   "people": [
     {
-      "id": "henry_ii",
-      "name": "Heinrich II.",
-      "summary": "Heinrich II. (6. Mai 973 – 13. Juli 1024), auch bekannt als der heilige Heinrich, war Herzog von Bayern, König der Römer, König von Italien und römisch-deutscher Kaiser. Als letzter Herrscher der ottonischen Dynastie festigte er die königliche Macht nördlich der Alpen, stützte sich stark auf die Kirche und die bischöfliche Verwaltung, förderte die Klosterreform, gründete das Bistum Bamberg und führte große Kriege gegen Bolesław I. von Polen und Rivalen in Italien. Tief religiös und kinderlos, wurde er 1146 heiliggesprochen.",
+      "id": "albert_einstein",
+      "name": "Albert_Einstein",
+      "tagline": "Architect of Relativity",
+      "summary": "Albert Einstein war ein in Deutschland geborener theoretischer Physiker, der die Theorien der speziellen und der allgemeinen Relativität entwickelte und bahnbrechende Beiträge zur Quantentheorie und zur statistischen Physik leistete. Seine Annus-mirabilis-Arbeiten von 1905 revolutionierten die moderne Physik, und seine Masse-Energie-Äquivalenzbeziehung E = mc² wurde zum Ikon. Für seine Erklärung des photoelektrischen Effekts erhielt er 1921 den Nobelpreis für Physik; er hatte akademische Positionen in Zürich, Prag, Berlin und Princeton inne. Als jüdischer Flüchtling aus dem nationalsozialistischen Deutschland wurde er zu einem prominenten öffentlichen Intellektuellen, der sich zu Pazifismus, Zionismus, Bürgerrechten und den Gefahren von Atomwaffen äußerte.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/Henry_II%2C_Holy_Roman_Emperor.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Henry_II,_Holy_Roman_Emperor.jpg"
+        "image": "/portraits/albert_einstein_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Albert_Einstein_1921_by_F_Schmutzer.jpg",
+        "thumbnail": "/portraits/albert_einstein_thumbnail.webp",
+        "medium": "/portraits/albert_einstein_medium.webp",
+        "full": "/portraits/albert_einstein_full.webp"
       },
+      "birthDate": "1879-03-14",
+      "deathDate": "1955-04-18",
       "primaryRoles": [
-        "Herzog von Bayern",
-        "König von Deutschland (König der Römer)",
-        "Römisch-deutscher Kaiser"
+        "Physiker",
+        "Theoretiker",
+        "öffentlicher Intellektueller"
       ],
-      "birthDate": "973-05-06",
-      "deathDate": "1024-07-13",
-      "created": "2025-11-07T18:22:43+01:00",
-      "lastUpdated": "2025-11-29T10:48:23.123180+01:00"
-    },
-    {
-      "id": "erich_k_stner",
-      "name": "Erich_Kästner",
-      "summary": "Emil Erich Kästner war ein deutscher Schriftsteller, Dichter, Drehbuchautor und Satiriker, der vor allem für seine geistreichen, gesellschaftsbeobachtenden Gedichte und für Kinderbuchklassiker wie „Emil und die Detektive“, „Das doppelte Lottchen“ und „Das fliegende Klassenzimmer“ bekannt ist. Als Schlüsselfigur der neusachlichen Literatur der Weimarer Republik blieb er im nationalsozialistischen Deutschland, wo seine Bücher verboten und verbrannt wurden, während er weiterhin einige Werke im Ausland veröffentlichte und unter Pseudonym Drehbücher schrieb. Nach 1945 ließ er sich in München nieder, arbeitete als Herausgeber, Kabarettautor, Hörfunkautor und Kinderbuchautor und erhielt 1960 den Hans-Christian-Andersen-Preis für seine Autobiografie „Als ich ein kleiner Junge war“.",
-      "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Erich_K%C3%A4stner_1961_%28cropped%29.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_1961_(cropped).jpg"
-      },
-      "primaryRoles": [
-        "Schriftsteller",
-        "Dichter",
-        "Drehbuchautor"
-      ],
-      "birthDate": "1899-02-23",
-      "deathDate": "1974-07-29",
-      "created": "2025-11-20T05:22:05+01:00",
-      "lastUpdated": "2025-11-29T20:04:37.834667+01:00"
-    },
-    {
-      "id": "friedensreich_hundertwasser",
-      "name": "Friedensreich_Hundertwasser",
-      "summary": "Friedrich Stowasser, besser bekannt als Friedensreich Regentag Dunkelbunt Hundertwasser, war ein österreichischer bildender Künstler und Architekt, der für leuchtende Farben, biomorphe Formen und ökologisches Engagement bekannt war. Er lehnte gerade Linien und Standardisierung ab und ließ sich später im äußersten Norden Neuseelands nieder, wo er einen Großteil seines Lebens lebte und arbeitete.",
-      "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
-        "source": null
-      },
-      "primaryRoles": [
-        "Bildender Künstler",
-        "Architekt",
-        "Umweltschützer"
-      ],
-      "birthDate": "1928-12-15",
-      "deathDate": "2000-02-19",
-      "created": "2025-11-09T10:47:25+01:00",
-      "lastUpdated": "2025-11-29T20:06:58.875685+01:00"
+      "created": "2025-11-21T16:07:51.972160+01:00",
+      "lastUpdated": "2025-12-09T21:34:33.927123+01:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": null,
+        "translated_on": "2026-07-18T14:30:15.012641+00:00",
+        "translator": "migration",
+        "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date."
+      }
     },
     {
       "id": "e_t_a_hoffmann",
       "name": "E._T._A._Hoffmann",
+      "tagline": "Romantic master of the uncanny",
       "summary": "Ernst Theodor Amadeus Hoffmann (geboren als Ernst Theodor Wilhelm Hoffmann; 24. Januar 1776 – 25. Juni 1822) war ein deutscher romantischer Schriftsteller von Fantastik und Schauerliteratur sowie Jurist, Komponist, Musikkritiker und Zeichner. Seine Erzählungen, darunter „Nussknacker und Mausekönig“, „Der Sandmann“ und „Der goldne Topf“, waren zentral für die deutsche Romantik und inspirierten später Werke wie Tschaikowskys Ballett Der Nussknacker und Offenbachs Oper Hoffmanns Erzählungen.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Ernst_Theodor_Amadeus_Hoffmann.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Ernst_Theodor_Amadeus_Hoffmann.jpg"
+        "image": "/portraits/e_t_a_hoffmann_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/E._T._A._Hoffmann",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5a/E._T._A._Hoffmann%2C_autorretrato.jpg",
+        "thumbnail": "/portraits/e_t_a_hoffmann_thumbnail.webp",
+        "medium": "/portraits/e_t_a_hoffmann_medium.webp",
+        "full": "/portraits/e_t_a_hoffmann_full.webp"
       },
       "primaryRoles": [
         "Schriftsteller",
         "Jurist",
         "Komponist"
       ],
+      "created": "2025-11-19T17:34:03+01:00",
+      "lastUpdated": "2025-12-14T07:20:23.880373+01:00",
       "birthDate": "1776-01-24",
       "deathDate": "1822-06-25",
-      "created": "2025-11-19T17:34:03+01:00",
-      "lastUpdated": "2025-11-29T20:14:01.550502+01:00"
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": null,
+        "translated_on": "2026-07-18T14:30:15.012689+00:00",
+        "translator": "migration",
+        "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date."
+      }
     },
     {
-      "id": "albert_einstein",
-      "name": "Albert_Einstein",
-      "summary": "Albert Einstein war ein in Deutschland geborener theoretischer Physiker, der die Theorien der speziellen und der allgemeinen Relativität entwickelte und bahnbrechende Beiträge zur Quantentheorie und zur statistischen Physik leistete. Seine Annus-mirabilis-Arbeiten von 1905 revolutionierten die moderne Physik, und seine Masse-Energie-Äquivalenzbeziehung E = mc² wurde zum Ikon. Für seine Erklärung des photoelektrischen Effekts erhielt er 1921 den Nobelpreis für Physik; er hatte akademische Positionen in Zürich, Prag, Berlin und Princeton inne. Als jüdischer Flüchtling aus dem nationalsozialistischen Deutschland wurde er zu einem prominenten öffentlichen Intellektuellen, der sich zu Pazifismus, Zionismus, Bürgerrechten und den Gefahren von Atomwaffen äußerte.",
+      "id": "erich_k_stner",
+      "name": "Erich_Kästner",
+      "tagline": "Satirist of modern German life",
+      "summary": "Emil Erich Kästner war ein deutscher Schriftsteller, Dichter, Drehbuchautor und Satiriker, der vor allem für seine geistreichen, gesellschaftsbeobachtenden Gedichte und für Kinderbuchklassiker wie „Emil und die Detektive“, „Das doppelte Lottchen“ und „Das fliegende Klassenzimmer“ bekannt ist. Als Schlüsselfigur der neusachlichen Literatur der Weimarer Republik blieb er im nationalsozialistischen Deutschland, wo seine Bücher verboten und verbrannt wurden, während er weiterhin einige Werke im Ausland veröffentlichte und unter Pseudonym Drehbücher schrieb. Nach 1945 ließ er sich in München nieder, arbeitete als Herausgeber, Kabarettautor, Hörfunkautor und Kinderbuchautor und erhielt 1960 den Hans-Christian-Andersen-Preis für seine Autobiografie „Als ich ein kleiner Junge war“.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/5/50/Albert_Einstein_%28Nobel%29.png",
-        "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_(Nobel).png"
+        "image": "/portraits/erich_k_stner_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/52/Erich_K%C3%A4stner_1961.jpg",
+        "thumbnail": "/portraits/erich_k_stner_thumbnail.webp",
+        "medium": "/portraits/erich_k_stner_medium.webp",
+        "full": "/portraits/erich_k_stner_full.webp"
       },
       "primaryRoles": [
-        "Physiker",
-        "Theoretiker",
-        "öffentlicher Intellektueller"
+        "Schriftsteller",
+        "Dichter",
+        "Drehbuchautor"
       ],
-      "birthDate": "1879-03-14",
-      "deathDate": "1955-04-18",
-      "created": "2025-11-21T16:07:51.972160+01:00",
-      "lastUpdated": "2025-11-29T20:20:18.151727+01:00"
+      "created": "2025-11-20T05:22:05+01:00",
+      "lastUpdated": "2025-12-20T16:58:30.385613+01:00",
+      "birthDate": "1899-02-23",
+      "deathDate": "1974-07-29",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": null,
+        "translated_on": "2026-07-18T14:30:15.012708+00:00",
+        "translator": "migration",
+        "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date."
+      }
+    },
+    {
+      "id": "friedensreich_hundertwasser",
+      "name": "Friedensreich_Hundertwasser",
+      "tagline": "Rebel of nature-filled architecture",
+      "summary": "Friedrich Stowasser, besser bekannt als Friedensreich Regentag Dunkelbunt Hundertwasser, war ein österreichischer bildender Künstler und Architekt, der für leuchtende Farben, biomorphe Formen und ökologisches Engagement bekannt war. Er lehnte gerade Linien und Standardisierung ab und ließ sich später im äußersten Norden Neuseelands nieder, wo er einen Großteil seines Lebens lebte und arbeitete.",
+      "portrait": {
+        "image": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
+        "thumbnail": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "medium": "/portraits/friedensreich_hundertwasser_medium.webp",
+        "full": "/portraits/friedensreich_hundertwasser_full.webp"
+      },
+      "primaryRoles": [
+        "Bildender Künstler",
+        "Architekt",
+        "Umweltschützer"
+      ],
+      "created": "2025-11-09T10:47:25+01:00",
+      "lastUpdated": "2025-12-14T07:36:07.176994+01:00",
+      "birthDate": "1928-12-15",
+      "deathDate": "2000-02-19",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": null,
+        "translated_on": "2026-07-18T14:30:15.012723+00:00",
+        "translator": "migration",
+        "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date."
+      }
+    },
+    {
+      "id": "henry_ii",
+      "name": "Heinrich II.",
+      "tagline": "Last Ottonian emperor and reformer",
+      "summary": "Heinrich II. (6. Mai 973 – 13. Juli 1024), auch bekannt als der heilige Heinrich, war Herzog von Bayern, König der Römer, König von Italien und römisch-deutscher Kaiser. Als letzter Herrscher der ottonischen Dynastie festigte er die königliche Macht nördlich der Alpen, stützte sich stark auf die Kirche und die bischöfliche Verwaltung, förderte die Klosterreform, gründete das Bistum Bamberg und führte große Kriege gegen Bolesław I. von Polen und Rivalen in Italien. Tief religiös und kinderlos, wurde er 1146 heiliggesprochen.",
+      "portrait": {
+        "image": "/portraits/henry_ii_thumbnail.webp",
+        "thumbnail": "/portraits/henry_ii_thumbnail.webp",
+        "medium": "/portraits/henry_ii_medium.webp",
+        "full": "/portraits/henry_ii_full.webp",
+        "source": "https://commons.wikimedia.org/wiki/File:Henry_II,_Holy_Roman_Emperor.jpg",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Henry_II%2C_Holy_Roman_Emperor.jpg/956px-Henry_II%2C_Holy_Roman_Emperor.jpg",
+        "originalCaption": "Henry II, Holy Roman Emperor."
+      },
+      "primaryRoles": [
+        "Herzog von Bayern",
+        "König von Deutschland (König der Römer)",
+        "Römisch-deutscher Kaiser"
+      ],
+      "created": "2025-11-07T18:22:43+01:00",
+      "lastUpdated": "2025-12-26T09:27:41.534875+01:00",
+      "birthDate": "973-05-06",
+      "deathDate": "1024-07-13",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": null,
+        "translated_on": "2026-07-18T14:30:15.012741+00:00",
+        "translator": "migration",
+        "note": "Rebased from a legacy translation of an older English dataset; text may be outdated or partially English. Re-run translation to bring it fully up to date."
+      }
     }
   ]
 }
