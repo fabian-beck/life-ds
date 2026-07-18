@@ -36,46 +36,86 @@
     }
   }
 
-  // Load language-specific registry. The generation counter guards against
-  // rapid language switches: only the most recent request may write the result.
+  // Load language-specific registry. The English registry is always the
+  // reference: localized entries are merged over it per person, so people
+  // without a translation still appear (with English text) and the person
+  // list is identical in every language. The generation counter guards
+  // against rapid language switches: only the most recent request may write
+  // the result.
   let registryLoadGeneration = 0;
   async function loadRegistry(language) {
     const generation = ++registryLoadGeneration;
     try {
-      const module =
-        language === "en"
-          ? await import("../data/persons.json")
-          : await import(`../data/persons_${language}.json`);
+      const englishModule = await import("../data/persons.json");
+      let merged = englishModule.default;
+      if (language !== "en") {
+        try {
+          const localizedModule = await import(
+            `../data/persons_${language}.json`
+          );
+          const localizedById = new Map(
+            (localizedModule.default?.people ?? []).map((person) => [
+              person.id,
+              person,
+            ])
+          );
+          merged = {
+            ...merged,
+            people: (merged.people ?? []).map(
+              (person) => localizedById.get(person.id) ?? person
+            ),
+          };
+        } catch (error) {
+          console.warn(
+            `No registry for ${language}, falling back to English:`,
+            error
+          );
+        }
+      }
       if (generation !== registryLoadGeneration) return;
-      registry = module.default;
+      registry = merged;
     } catch (error) {
-      console.warn(
-        `Failed to load registry for ${language}, falling back to English:`,
-        error
-      );
-      const fallback = await import("../data/persons.json");
-      if (generation !== registryLoadGeneration) return;
-      registry = fallback.default;
+      console.warn(`Failed to load registry for ${language}:`, error);
     }
   }
 
-  // Load meta stories with detailed data
-  async function loadMetaStories() {
+  // Load meta stories with detailed data. Like the persons registry, the
+  // English meta story registry is the reference and localized entries are
+  // merged over it per story. The generation counter guards against rapid
+  // language switches.
+  let metaStoriesLoadGeneration = 0;
+  async function loadMetaStories(language = "en") {
+    const generation = ++metaStoriesLoadGeneration;
     try {
       const registryModule = await import("../data/meta_stories.json");
-      const metaStoryRegistry = registryModule.default?.meta_stories || [];
+      let metaStoryRegistry = registryModule.default?.meta_stories || [];
+      if (language !== "en") {
+        try {
+          const localizedModule = await import(
+            `../data/meta_stories_${language}.json`
+          );
+          const localizedById = new Map(
+            (localizedModule.default?.meta_stories ?? []).map((story) => [
+              story.id,
+              story,
+            ])
+          );
+          metaStoryRegistry = metaStoryRegistry.map(
+            (story) => localizedById.get(story.id) ?? story
+          );
+        } catch {
+          // No localized meta story registry yet — English fallback
+        }
+      }
 
       // Load detailed data for each meta story
       const detailedStories = await Promise.all(
         metaStoryRegistry.map(async (story) => {
           try {
-            const detailModule = await import(
-              `../data/meta_stories/${story.id}.json`
-            );
-            const detailData = detailModule.default;
+            const detailData = await loadMetaStoryData(story.id, language);
             return {
               ...story,
-              person_ids: detailData.meta_story?.person_ids || [],
+              person_ids: detailData?.meta_story?.person_ids || [],
             };
           } catch (error) {
             console.warn(
@@ -87,19 +127,21 @@
         })
       );
 
+      if (generation !== metaStoriesLoadGeneration) return;
       metaStories = detailedStories;
     } catch (error) {
       console.warn("Failed to load meta stories:", error);
+      if (generation !== metaStoriesLoadGeneration) return;
       metaStories = [];
     }
   }
 
-  // Reload registry when language changes and load meta stories on mount
+  // Reload registry and meta stories when language changes
   onMount(() => {
     loadEnglishRegistry(); // Load English registry once for carousel
-    loadMetaStories();
     const unsubscribe = currentLanguage.subscribe((lang) => {
       loadRegistry(lang);
+      loadMetaStories(lang);
     });
     return unsubscribe;
   });
@@ -128,7 +170,11 @@
   );
 
   const metaStoryDetailModules = import.meta.glob(
-    ["../data/meta_stories/*.json"],
+    [
+      "../data/meta_stories/*.json",
+      "../data/meta_stories/de/*.json",
+      "../data/meta_stories/fr/*.json",
+    ],
     {
       import: "default",
     }
@@ -323,9 +369,22 @@
     }
   }
 
-  async function loadMetaStoryData(metaStoryId) {
-    const path = `../data/meta_stories/${metaStoryId}.json`;
-    const loader = metaStoryDetailModules[path];
+  async function loadMetaStoryData(metaStoryId, language = "en") {
+    let path =
+      language === "en"
+        ? `../data/meta_stories/${metaStoryId}.json`
+        : `../data/meta_stories/${language}/${metaStoryId}.json`;
+
+    let loader = metaStoryDetailModules[path];
+
+    // Fallback to English if translation doesn't exist
+    if (!loader && language !== "en") {
+      console.warn(
+        `Meta story translation not found for ${metaStoryId} in ${language}, falling back to English`
+      );
+      path = `../data/meta_stories/${metaStoryId}.json`;
+      loader = metaStoryDetailModules[path];
+    }
 
     if (!loader) {
       console.warn(`Meta story not found: ${metaStoryId}`);
@@ -463,15 +522,15 @@
     loadingStage = null;
   }
 
-  // Reactive meta story loading - load when metaStoryId changes
-  $: if (metaStoryId) {
+  // Reactive meta story loading - load when metaStoryId OR language changes
+  $: if (metaStoryId && $currentLanguage) {
     const generation = ++dataLoadGeneration;
     dataLoading = true;
     metaStoryData = null;
     dataset = null;
     egoNetwork = null;
 
-    loadMetaStoryData(metaStoryId)
+    loadMetaStoryData(metaStoryId, $currentLanguage)
       .then((result) => {
         if (generation !== dataLoadGeneration) return;
         metaStoryData = result;

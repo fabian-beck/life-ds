@@ -38,6 +38,36 @@
   let basemapResolved = false;
   let basemapError = null;
   let basemapStyleCache = null;
+  let basemapStyleLang = null;
+
+  // Swap basemap label language in place when the UI language changes.
+  // Only the text-field of existing label layers is touched, so the data
+  // layers and their event handlers set up in setupMapLayers stay intact.
+  function applyBasemapLanguage(lang) {
+    if (!mapInstance || basemapStyleLang === lang) return;
+    basemapStyleLang = lang;
+    basemapStyleCache = null;
+    const labelLayers = layers("protomaps", namedFlavor("dark"), {
+      lang,
+      labelsOnly: true,
+      landOnly: false,
+    });
+    for (const layer of labelLayers) {
+      if (
+        layer?.type === "symbol" &&
+        layer.layout?.["text-field"] &&
+        mapInstance.getLayer(layer.id)
+      ) {
+        mapInstance.setLayoutProperty(
+          layer.id,
+          "text-field",
+          layer.layout["text-field"]
+        );
+      }
+    }
+  }
+
+  $: if (mapReady) applyBasemapLanguage($currentLanguage);
   let updateTimeout;
   let currentEventLocations = { type: "FeatureCollection", features: [] };
   let connectionLinesData = { type: "FeatureCollection", features: [] };
@@ -111,8 +141,10 @@
     if (basemapError) return null;
     if (
       !basemapStyleCache ||
-      !basemapStyleCache.sources?.protomaps?.url?.includes(pmtilesUrl)
+      !basemapStyleCache.sources?.protomaps?.url?.includes(pmtilesUrl) ||
+      basemapStyleLang !== $currentLanguage
     ) {
+      basemapStyleLang = $currentLanguage;
       basemapStyleCache = {
         version: 8,
         glyphs:
@@ -127,7 +159,7 @@
           },
         },
         layers: layers("protomaps", namedFlavor("dark"), {
-          lang: "en",
+          lang: $currentLanguage,
           labelsOnly: false,
           landOnly: false,
         }).filter((layer) => {
