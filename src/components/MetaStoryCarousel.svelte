@@ -296,8 +296,9 @@
                   >
                     {#if person?.portrait}
                       <img
-                        src={getThumbnailUrl(person.portrait, 600)}
-                        srcset={`${getThumbnailUrl(person.portrait, 600)} 1x, ${getThumbnailUrl(person.portrait, 1200)} 2x`}
+                        src={getThumbnailUrl(person.portrait, 300)}
+                        srcset={`${getThumbnailUrl(person.portrait, 300)} 266w, ${getThumbnailUrl(person.portrait, 600)} 682w`}
+                        sizes="170px"
                         alt={person.portrait.alt ??
                           `Portrait of ${displayName(person.name)}`}
                         loading="lazy"
@@ -552,18 +553,26 @@
     z-index: 1;
   }
 
+  /* The resting 92% squeeze is done via layout, not transform: Chrome
+     resamples transform-scaled images with low-quality compositor filtering,
+     which aliases the downscaled portraits. Transforms only run on hover. */
   .portrait-column img {
-    width: 100%;
+    width: 92%;
+    margin-inline: 4%;
     height: 100%;
     object-fit: cover;
     object-position: center top;
     display: block;
-    transition: transform 0.3s ease;
-    transform: scaleX(0.92);
+    transition:
+      transform 0.3s ease,
+      width 0.3s ease,
+      margin 0.3s ease;
   }
 
   .portrait-column:hover img {
-    transform: scaleX(1) scale(1.02);
+    width: 100%;
+    margin-inline: 0;
+    transform: scale(1.02);
   }
 
   .slide-content {
