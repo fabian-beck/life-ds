@@ -96,18 +96,15 @@ test("landing, search, story navigation, and network modal", async ({
   });
   await expect(adaCard).toBeVisible();
   await expect(page.getByRole("status")).toContainText("1");
+  await expect(page.locator(".header-container")).toBeHidden();
+  await expect(page.locator(".filters-right")).toBeHidden();
 
   if (testInfo.project.name === "mobile-chromium") {
-    await expect(page.locator(".header-container")).toBeHidden();
-    await expect(page.locator(".filters-right")).toBeHidden();
-
     const resultIsInViewport = await adaCard.evaluate((element) => {
       const rect = element.getBoundingClientRect();
       return rect.top >= 0 && rect.top < window.innerHeight;
     });
     expect(resultIsInViewport).toBe(true);
-  } else {
-    await expect(page.locator(".header-container")).toBeVisible();
   }
 
   await capture(page, testInfo, "02-filtered-landing");

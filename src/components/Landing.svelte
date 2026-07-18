@@ -1387,11 +1387,9 @@
     color: #e0f2fe;
   }
 
-  @media (max-width: 767px) {
-    .landing.filtering .header-container,
-    .filters-section.searching .filters-right {
-      display: none;
-    }
+  .landing.filtering .header-container,
+  .filters-section.searching .filters-right {
+    display: none;
   }
 
   @media (max-width: 580px) {
