@@ -119,28 +119,32 @@
         "name": "Albert Einstein",
         "type": "main",
         "portrait": "/portraits/albert_einstein_thumbnail.webp",
-        "roles": ["physicist", "scientist"]
+        "roles": ["physicist", "scientist"],
+        "birth_year": 1879
       },
       {
         "id": "marie_curie",
         "name": "Marie Curie",
         "type": "main",
         "portrait": "/portraits/marie_curie_thumbnail.webp",
-        "roles": ["physicist", "chemist"]
+        "roles": ["physicist", "chemist"],
+        "birth_year": 1867
       },
       {
         "id": "john_von_neumann",
         "name": "John von Neumann",
         "type": "main",
         "portrait": "/portraits/john_von_neumann_thumbnail.webp",
-        "roles": ["mathematician", "physicist"]
+        "roles": ["mathematician", "physicist"],
+        "birth_year": 1903
       },
       {
         "id": "sec:david_hilbert",
         "name": "David Hilbert",
         "type": "secondary",
         "portrait": null,
-        "roles": []
+        "roles": [],
+        "birth_year": null
       }
     ],
     "links": [

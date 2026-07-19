@@ -4,7 +4,6 @@
     forceSimulation,
     forceManyBody,
     forceLink,
-    forceCenter,
     forceCollide,
     forceX,
     forceY,
@@ -155,6 +154,40 @@
     Array.isArray(network.links) &&
     network.links.length > 0;
 
+  // Temporal layout: assign each node a target x from its birth year so the
+  // graph reads left→right in chronological order. Main nodes map their birth
+  // year across the frame; secondary (bridging) nodes, which have no birth year,
+  // sit at the mean x of the main people they connect.
+  function computeTargets(w) {
+    const years = simNodes
+      .filter((n) => n.type === "main" && n.birth_year)
+      .map((n) => n.birth_year);
+    const left = insetX;
+    const right = w - insetX;
+    const minY = years.length ? Math.min(...years) : 0;
+    const maxY = years.length ? Math.max(...years) : 0;
+    const scaleX = (y) =>
+      maxY === minY
+        ? w / 2
+        : left + ((y - minY) / (maxY - minY)) * (right - left);
+
+    for (const n of simNodes) {
+      n.tx = n.type === "main" && n.birth_year ? scaleX(n.birth_year) : null;
+    }
+    const byId = new Map(simNodes.map((n) => [n.id, n]));
+    for (const n of simNodes) {
+      if (n.tx != null) continue;
+      const xs = [];
+      for (const l of simLinks) {
+        const otherId =
+          l.source === n.id ? l.target : l.target === n.id ? l.source : null;
+        const other = otherId && byId.get(otherId);
+        if (other && other.tx != null) xs.push(other.tx);
+      }
+      n.tx = xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : w / 2;
+    }
+  }
+
   function buildSimulation() {
     if (!hasNetwork || !width) return;
 
@@ -173,6 +206,13 @@
       kind: l.kind,
     }));
 
+    // Seed positions in temporal order so the layout settles left→right.
+    computeTargets(width);
+    for (const n of simNodes) {
+      n.x = n.tx;
+      n.y = height / 2 + (Math.random() - 0.5) * height * 0.5;
+    }
+
     if (simulation) simulation.stop();
 
     simulation = forceSimulation(simNodes)
@@ -187,9 +227,10 @@
         "charge",
         forceManyBody().strength((d) => (d.type === "main" ? -520 : -160))
       )
-      .force("center", forceCenter(width / 2, height / 2))
-      .force("x", forceX(width / 2).strength(0.05))
-      .force("y", forceY(height / 2).strength(0.07))
+      // Weak temporal pull: drags each node toward its birth-year x (left→right).
+      // d3 ignores this for manually placed (pinned) nodes whose fx is set.
+      .force("x", forceX((d) => d.tx).strength(0.14))
+      .force("y", forceY(height / 2).strength(0.06))
       .force(
         "collide",
         forceCollide().radius((d) =>
@@ -230,6 +271,7 @@
   let dragId = null;
   let dragStart = null;
   let dragMoved = false;
+  let dragWasPinned = false; // pin state before this gesture began
 
   function svgPoint(evt) {
     const rect = container.getBoundingClientRect();
@@ -240,6 +282,7 @@
     dragId = node.id;
     dragStart = svgPoint(evt);
     dragMoved = false;
+    dragWasPinned = node.fx != null;
     node.fx = node.x;
     node.fy = node.y;
     reheat();
@@ -261,15 +304,31 @@
     if (dragId == null) return;
     const node = simNodes.find((n) => n.id === dragId);
     if (node) {
-      node.fx = null;
-      node.fy = null;
-    }
-    // A tap (no drag) pins/unpins the node so its panel stays on touch devices.
-    if (!dragMoved) {
-      selectedId = selectedId === dragId ? null : dragId;
+      if (dragMoved) {
+        // A real drag pins the node: it keeps its manual position and the
+        // temporal force no longer moves it (fx/fy stay set).
+        node.pinned = true;
+      } else {
+        // A tap only selects; restore the pre-gesture pin state so tapping a
+        // free node doesn't accidentally pin it.
+        if (!dragWasPinned) {
+          node.fx = null;
+          node.fy = null;
+        }
+        selectedId = selectedId === dragId ? null : dragId;
+      }
     }
     dragId = null;
     cool();
+  }
+
+  // Double-click / double-tap releases a pinned node back to the temporal layout.
+  function onNodeDblClick(node) {
+    node.fx = null;
+    node.fy = null;
+    node.pinned = false;
+    reheat();
+    setTimeout(cool, 600);
   }
 
   // Clicking empty canvas clears any pinned selection (node taps stopPropagation).
@@ -292,10 +351,10 @@
   function handleResize() {
     if (!container) return;
     width = container.clientWidth;
-    // Recenter the existing layout instead of rebuilding (keeps positions).
+    // Recompute temporal targets for the new width (keeps positions/pins).
     if (simulation && width) {
-      simulation.force("center", forceCenter(width / 2, height / 2));
-      simulation.force("x", forceX(width / 2).strength(0.05));
+      computeTargets(width);
+      simulation.force("y", forceY(height / 2).strength(0.06));
       simulation.alphaTarget(0.1).restart();
       setTimeout(cool, 400);
     }
@@ -370,10 +429,12 @@
             class:secondary={node.type === "secondary"}
             class:dim
             class:selected={node.id === selectedId}
+            class:pinned={node.pinned}
             transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
             on:pointerdown={(e) => onPointerDown(e, node)}
             on:pointerenter={() => (hoveredId = node.id)}
             on:pointerleave={() => (hoveredId = null)}
+            on:dblclick={() => onNodeDblClick(node)}
             role="listitem"
           >
             <title
@@ -420,6 +481,11 @@
               <text class="label secondary-label" y={SECONDARY_R + 13}>
                 {displayName(node.name)}
               </text>
+            {/if}
+
+            {#if node.pinned}
+              {@const pr = node.type === "main" ? MAIN_R : SECONDARY_R}
+              <circle class="pin-dot" cx={pr * 0.72} cy={-pr * 0.72} r="3.5" />
             {/if}
           </g>
         {/each}
@@ -528,6 +594,13 @@
 
   .node.selected .halo {
     filter: drop-shadow(0 0 9px rgba(56, 189, 248, 0.6));
+  }
+
+  /* Marker on a manually placed (pinned) node. */
+  .pin-dot {
+    fill: #fbbf24;
+    stroke: rgba(2, 6, 23, 0.85);
+    stroke-width: 1.5;
   }
 
   .label {

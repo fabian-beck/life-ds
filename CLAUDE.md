@@ -200,7 +200,11 @@ direction is missing it falls back to the other side and labels it "as recalled
 by {name}". Top-level `relationship_type`/`strength` (the richest direction)
 drive stroke width. Links are drawn behind nodes and read neutral until a node
 is hovered/tapped, then that node's ties light up in the accent color while
-other nodes are darkened (kept opaque so links never shine through).
+other nodes are darkened (kept opaque so links never shine through). A weak
+`forceX` pulls each node toward an x derived from its `birth_year`, so the graph
+reads left→right chronologically; secondary nodes (no birth year) sit at the
+mean x of the main people they bridge. Dragging a node pins it (its manual
+position overrides the temporal force; double-click releases it).
 
 - **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
   portraits ringed in each person's `person_styles.json` primary color. A

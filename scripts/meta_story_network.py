@@ -138,6 +138,13 @@ def _portrait_for(person: Dict[str, Any]) -> Optional[str]:
     return portrait.get("thumbnail") or portrait.get("image")
 
 
+def _birth_year(person: Dict[str, Any]) -> Optional[int]:
+    """Extract the birth year from a registry person's ``birthDate``."""
+    date = person.get("birthDate") or ""
+    match = re.match(r"\s*(-?\d{1,4})", str(date))
+    return int(match.group(1)) if match else None
+
+
 def _link_richness(link: Dict[str, Any]) -> Tuple[int, int]:
     """Sort key for choosing the better of two reciprocal links."""
     strength_rank = {"strong": 3, "moderate": 2, "weak": 1}.get(
@@ -250,6 +257,7 @@ def build_social_network(
                 "type": "main",
                 "portrait": _portrait_for(person),
                 "roles": (person.get("primaryRoles") or [])[:2],
+                "birth_year": _birth_year(person),
             }
         )
 
@@ -279,6 +287,7 @@ def build_social_network(
                 "type": "secondary",
                 "portrait": None,
                 "roles": [],
+                "birth_year": None,
             }
         )
         for main_id, link_info in entry["refs"].items():
