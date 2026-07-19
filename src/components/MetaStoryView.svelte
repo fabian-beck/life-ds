@@ -547,6 +547,17 @@
       </section>
     {/if}
 
+    <!-- Social network section - follows the timeline -->
+    {#if metaStoryData.social_network?.links?.length}
+      <section class="network-section">
+        <h2>{$_("meta_story.network_heading")}</h2>
+        <p class="network-intro">{$_("meta_story.network_subtitle")}</p>
+        {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
+          <MetaStoryNetwork network={metaStoryData.social_network} />
+        {/await}
+      </section>
+    {/if}
+
     <!-- Conclusion section -->
     {#if metaStoryData.conclusion}
       <section class="conclusion">
@@ -743,6 +754,18 @@
 
   .timeline-horizontal-container {
     scrollbar-width: none;
+  }
+
+  /* Social network */
+  .network-section {
+    margin-bottom: 3rem;
+  }
+
+  .network-intro {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    max-width: 62ch;
   }
 
   /* Conclusion */

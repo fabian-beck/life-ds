@@ -208,5 +208,91 @@
       ]
     }
   ],
-  "conclusion": "Organic shapes in architecture recur whenever designers try to reconnect building with life—through nature’s geometry, through efficient structures, or through spaces that move like rivers. From Jugendstil linework to tensile minimal surfaces and digital fluidity, the “organic” remains a durable promise: form that feels inevitable rather than imposed."
+  "conclusion": "Organic shapes in architecture recur whenever designers try to reconnect building with life—through nature’s geometry, through efficient structures, or through spaces that move like rivers. From Jugendstil linework to tensile minimal surfaces and digital fluidity, the “organic” remains a durable promise: form that feels inevitable rather than imposed.",
+  "social_network": {
+    "nodes": [
+      {
+        "id": "antoni_gaud",
+        "name": "Antoni Gaudí",
+        "type": "main",
+        "portrait": "/portraits/antoni_gaud_thumbnail.webp",
+        "roles": ["architect", "designer"]
+      },
+      {
+        "id": "otto_wagner",
+        "name": "Otto Wagner",
+        "type": "main",
+        "portrait": "/portraits/otto_wagner_thumbnail.webp",
+        "roles": ["architect", "designer"]
+      },
+      {
+        "id": "charles_rennie_mackintosh",
+        "name": "Charles Rennie Mackintosh",
+        "type": "main",
+        "portrait": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
+        "roles": ["architect", "designer"]
+      },
+      {
+        "id": "frank_lloyd_wright",
+        "name": "Frank Lloyd Wright",
+        "type": "main",
+        "portrait": "/portraits/frank_lloyd_wright_thumbnail.webp",
+        "roles": ["architect", "designer"]
+      },
+      {
+        "id": "frei_otto",
+        "name": "Frei Otto",
+        "type": "main",
+        "portrait": "/portraits/frei_otto_thumbnail.webp",
+        "roles": ["architect", "engineer"]
+      },
+      {
+        "id": "friedensreich_hundertwasser",
+        "name": "Friedensreich Hundertwasser",
+        "type": "main",
+        "portrait": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "roles": ["artist", "architect"]
+      },
+      {
+        "id": "zaha_hadid",
+        "name": "Zaha Hadid",
+        "type": "main",
+        "portrait": "/portraits/zaha_hadid_thumbnail.webp",
+        "roles": ["architect", "designer"]
+      },
+      {
+        "id": "sec:josef_hoffmann",
+        "name": "Josef Hoffmann",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      }
+    ],
+    "links": [
+      {
+        "source": "frank_lloyd_wright",
+        "target": "frei_otto",
+        "relationship_type": "professional/mentor",
+        "relationship_description": "Iconic American architect whom Frei Otto visited at Taliesin during his 1950 US scholarship, gaining exposure to Wright’s organic architecture and experimental structures.",
+        "strength": "moderate",
+        "kind": "main"
+      },
+      {
+        "source": "otto_wagner",
+        "target": "sec:josef_hoffmann",
+        "relationship_type": "academic/student",
+        "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
+        "strength": "moderate",
+        "kind": "secondary"
+      },
+      {
+        "source": "charles_rennie_mackintosh",
+        "target": "sec:josef_hoffmann",
+        "relationship_type": "artistic/peer",
+        "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+        "strength": "weak",
+        "kind": "secondary"
+      }
+    ]
+  }
 }

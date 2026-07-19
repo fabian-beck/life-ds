@@ -32,37 +32,25 @@
       "id": "imperial_founders_and_sacred_patronage",
       "title": "Kaiserliche Gründer, heilige Stadt",
       "description": "Bamberg beginnt als kaiserlicher Bauplan – Autorität, ausgedrückt durch ein Bistum, Reliquienkultur und dauerhafte Institutionen, die das Stadtleben an Reich und Kirche banden.",
-      "person_ids": [
-        "henry_ii",
-        "cunigunde_of_luxembourg"
-      ]
+      "person_ids": ["henry_ii", "cunigunde_of_luxembourg"]
     },
     {
       "id": "napoleonic_aftershocks_and_romantic_bamberg",
       "title": "Romantisches Bamberg, moderner Druck",
       "description": "Im frühen 19. Jahrhundert wird Bamberg zur Arbeitsstadt für Künstler und Intellektuelle, die sich zwischen Zensur, Theaterökonomie und der Geburt der modernen deutschen Öffentlichkeit bewegen.",
-      "person_ids": [
-        "e_t_a_hoffmann",
-        "georg_wilhelm_friedrich_hegel"
-      ]
+      "person_ids": ["e_t_a_hoffmann", "georg_wilhelm_friedrich_hegel"]
     },
     {
       "id": "civic_professionals_and_urban_making",
       "title": "Städtische Experten, gebaute Stadt",
       "description": "Hinter Bambergs Erscheinungsbild und öffentlicher Gesundheit standen Fachleute – Stadtbaumeister und medizinische Erneuerer, die Verwaltung in Straßenbilder und klinische Praxis übersetzten.",
-      "person_ids": [
-        "hans_erlwein",
-        "johann_lukas_sch_nlein"
-      ]
+      "person_ids": ["hans_erlwein", "johann_lukas_sch_nlein"]
     },
     {
       "id": "national_science_and_conscience",
       "title": "Wissenschaft und Gewissen in Deutschland",
       "description": "Bambergs Geschichte lebt auch in größeren deutschen Strömungen: den wissenschaftlichen Umbrüchen des 20. Jahrhunderts und der moralischen Auseinandersetzung des Widerstands – Kräfte, die die bürgerliche Identität überall neu formten.",
-      "person_ids": [
-        "ida_noddack",
-        "claus_schenk_graf_von_stauffenberg"
-      ]
+      "person_ids": ["ida_noddack", "claus_schenk_graf_von_stauffenberg"]
     }
   ],
   "chapters": [
@@ -284,5 +272,213 @@
     "source_fingerprint": "58a7519318775dce",
     "translated_on": "2026-07-19T05:03:41.551805+00:00",
     "translator": "manual"
+  },
+  "social_network": {
+    "nodes": [
+      {
+        "id": "henry_ii",
+        "name": "Henry II",
+        "type": "main",
+        "portrait": "/portraits/henry_ii_thumbnail.webp",
+        "roles": ["monarch", "emperor"]
+      },
+      {
+        "id": "cunigunde_of_luxembourg",
+        "name": "Cunigunde of Luxembourg",
+        "type": "main",
+        "portrait": "/portraits/cunigunde_of_luxembourg_thumbnail.webp",
+        "roles": ["empress", "regent"]
+      },
+      {
+        "id": "e_t_a_hoffmann",
+        "name": "E. T. A. Hoffmann",
+        "type": "main",
+        "portrait": "/portraits/e_t_a_hoffmann_thumbnail.webp",
+        "roles": ["writer", "jurist"]
+      },
+      {
+        "id": "georg_wilhelm_friedrich_hegel",
+        "name": "Georg Wilhelm Friedrich Hegel",
+        "type": "main",
+        "portrait": "/portraits/georg_wilhelm_friedrich_hegel_thumbnail.webp",
+        "roles": ["philosopher", "writer"]
+      },
+      {
+        "id": "hans_erlwein",
+        "name": "Hans Erlwein",
+        "type": "main",
+        "portrait": "/portraits/hans_erlwein_thumbnail.webp",
+        "roles": ["architect", "civil servant"]
+      },
+      {
+        "id": "johann_lukas_sch_nlein",
+        "name": "Johann Lukas Schönlein",
+        "type": "main",
+        "portrait": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
+        "roles": ["physician", "pathologist"]
+      },
+      {
+        "id": "ida_noddack",
+        "name": "Ida Noddack",
+        "type": "main",
+        "portrait": "/portraits/ida_noddack_thumbnail.webp",
+        "roles": ["chemist", "physicist"]
+      },
+      {
+        "id": "claus_schenk_graf_von_stauffenberg",
+        "name": "Claus von Stauffenberg",
+        "type": "main",
+        "portrait": "/portraits/claus_schenk_graf_von_stauffenberg_thumbnail.webp",
+        "roles": ["army officer", "resistance fighter"]
+      },
+      {
+        "id": "sec:gisela_of_burgundy",
+        "name": "Gisela of Burgundy",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      },
+      {
+        "id": "sec:willigis",
+        "name": "Willigis",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      },
+      {
+        "id": "sec:pope_benedict_viii",
+        "name": "Pope Benedict VIII",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      },
+      {
+        "id": "sec:hedwig",
+        "name": "Hedwig",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      },
+      {
+        "id": "sec:otto_iii",
+        "name": "Otto III",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      },
+      {
+        "id": "sec:conrad_ii",
+        "name": "Conrad II",
+        "type": "secondary",
+        "portrait": null,
+        "roles": []
+      }
+    ],
+    "links": [
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "henry_ii",
+        "relationship_type": "family/spouse",
+        "relationship_description": "Wife and co-ruler in imperial representation; crowned queen (1002) and empress (1014) alongside Henry, acted as his closest adviser and was active in councils and ecclesiastical patronage; served as interim regent after his death.",
+        "strength": "strong",
+        "kind": "main"
+      },
+      {
+        "source": "henry_ii",
+        "target": "sec:gisela_of_burgundy",
+        "relationship_type": "family/mother",
+        "relationship_description": "Mother; part of Henry II's dynastic network connecting the Ottonians to Burgundian aristocratic lineages.",
+        "strength": "strong",
+        "kind": "secondary"
+      },
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "sec:gisela_of_burgundy",
+        "relationship_type": "family/mother_in_law",
+        "relationship_description": "Mother of Henry II and thus Cunigunde’s mother-in-law, linking her to the royal houses of Burgundy and further expanding her web of high-born kin.",
+        "strength": "moderate",
+        "kind": "secondary"
+      },
+      {
+        "source": "henry_ii",
+        "target": "sec:willigis",
+        "relationship_type": "religious/archbishop_ally",
+        "relationship_description": "Archbishop of Mainz who crowned Henry II and Cunigunde in Mainz (1002) and played a central role in early legitimization ceremonies for the new reign.",
+        "strength": "moderate",
+        "kind": "secondary"
+      },
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "sec:willigis",
+        "relationship_type": "professional/archbishop_ally",
+        "relationship_description": "Powerful archbishop of Mainz and imperial archchancellor who crowned Henry II at Mainz and Cunigunde as queen at Paderborn, lending crucial ecclesiastical legitimacy to their rule.",
+        "strength": "strong",
+        "kind": "secondary"
+      },
+      {
+        "source": "henry_ii",
+        "target": "sec:pope_benedict_viii",
+        "relationship_type": "religious/ally",
+        "relationship_description": "Key papal ally; crowned Henry II as Holy Roman Emperor in 1014 and cooperated with him in church reform, including synodal action at Pavia (1022) and a high-profile meeting at Bamberg (1020).",
+        "strength": "strong",
+        "kind": "secondary"
+      },
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "sec:pope_benedict_viii",
+        "relationship_type": "professional/papal_ally",
+        "relationship_description": "Pope who allied with Henry II and Cunigunde, crowned them emperor and empress in Rome, and cooperated with them in ecclesiastical reform.",
+        "strength": "moderate",
+        "kind": "secondary"
+      },
+      {
+        "source": "henry_ii",
+        "target": "sec:hedwig",
+        "relationship_type": "family/in-law",
+        "relationship_description": "Mother-in-law of Henry II (named Hedwig in Cunigunde's biography); part of Cunigunde's parental household background referenced in genealogical discussions.",
+        "strength": "weak",
+        "kind": "secondary"
+      },
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "sec:hedwig",
+        "relationship_type": "family/mother",
+        "relationship_description": "Mother; a noblewoman known as Hedwig whose precise parentage is debated but who bore eleven children including Cunigunde.",
+        "strength": "strong",
+        "kind": "secondary"
+      },
+      {
+        "source": "henry_ii",
+        "target": "sec:otto_iii",
+        "relationship_type": "professional/predecessor",
+        "relationship_description": "Cousin and predecessor whose death in 1002 triggered the German royal election that brought Henry II to the throne; Otto III's reign formed the immediate political context for Henry's succession.",
+        "strength": "moderate",
+        "kind": "secondary"
+      },
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "sec:otto_iii",
+        "relationship_type": "professional/overlord_predecessor",
+        "relationship_description": "Henry II’s cousin and predecessor as emperor; his death without heirs in 1002 opened the contested succession in which Henry and Cunigunde rose to the kingship.",
+        "strength": "weak",
+        "kind": "secondary"
+      },
+      {
+        "source": "henry_ii",
+        "target": "sec:conrad_ii",
+        "relationship_type": "professional/successor",
+        "relationship_description": "Elected to succeed Henry II in 1024; received the imperial insignia after Cunigunde’s regency and became the next emperor, marking the dynastic transition after Henry’s childless death.",
+        "strength": "weak",
+        "kind": "secondary"
+      },
+      {
+        "source": "cunigunde_of_luxembourg",
+        "target": "sec:conrad_ii",
+        "relationship_type": "professional/successor",
+        "relationship_description": "Salian count elected king after Henry II’s death; Cunigunde maintained stability during the interregnum and ceremonially handed him the imperial regalia, facilitating a peaceful succession.",
+        "strength": "moderate",
+        "kind": "secondary"
+      }
+    ]
   }
 }

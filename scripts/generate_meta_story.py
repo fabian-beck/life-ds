@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Generate meta-story datasets using a four-phase approach:
+Generate meta-story datasets using a five-phase approach:
 1. Phase 1: Story planning and person selection (1 AI call)
 2. Phase 2: Event collection (programmatic, no AI)
 3. Phase 3: AI-powered event filtering for topic relevance (batched AI calls)
 4. Phase 4: Historical context landmarks (1 AI call)
+5. Phase 5: Social network derived from ego networks (programmatic, no AI)
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -22,6 +23,7 @@ from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL
+from meta_story_network import build_social_network
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -1463,6 +1465,7 @@ def build_meta_story_dataset(
     plan: MetaStoryPlan,
     chapters: List[ChapterWithEvents],
     story_id: str,
+    registry: Dict[str, Any],
     hints: Optional[SelectionHints] = None,
     model: str = DEFAULT_MODEL,
 ) -> Dict[str, Any]:
@@ -1496,7 +1499,13 @@ def build_meta_story_dataset(
         conclusion=plan.conclusion,
     )
 
-    return dataset.model_dump(exclude_none=False)
+    result = dataset.model_dump(exclude_none=False)
+
+    # Phase 5: Social network — derived deterministically from the selected
+    # people's ego networks (main people + bridging secondary people).
+    result["social_network"] = build_social_network(person_ids, registry)
+
+    return result
 
 
 def save_meta_story(
@@ -1784,7 +1793,7 @@ def main():
 
     # Build dataset
     dataset = build_meta_story_dataset(
-        plan, chapters, story_id, hints=hints, model=args.model
+        plan, chapters, story_id, registry, hints=hints, model=args.model
     )
 
     # Save files
@@ -1800,7 +1809,9 @@ def main():
     if not args.skip_translate:
         from translate_meta_story import translate_meta_story_data
 
-        for lang in [code.strip() for code in args.translate_langs.split(",") if code.strip()]:
+        for lang in [
+            code.strip() for code in args.translate_langs.split(",") if code.strip()
+        ]:
             print(f"\nTranslating meta-story to '{lang}'...")
             try:
                 if translate_meta_story_data(
