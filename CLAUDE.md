@@ -196,8 +196,10 @@ life-ds/
 │   ├── generate_all_portraits.py    # Batch portrait generation
 │   ├── icon_categories.py           # MDI icon mappings + icon normalization
 │   ├── fix_event_icons.py           # Repair invalid event_type_icon values
-│   ├── translate_person.py          # Translate single person
-│   ├── translate_all_persons.py     # Batch translate all persons
+│   ├── translate_person.py          # Translation core + translate single person
+│   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
+│   ├── translate_meta_story.py      # Translate meta stories
+│   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
 │   ├── clear_caches.py              # Clear old cached data
 │   ├── remove_person.py             # Delete person
@@ -469,67 +471,97 @@ python scripts/generate_person.py "Albert Einstein" --skip-db
 
 ### Overview
 
-Person data can be translated to different languages using AI-powered translation scripts. English ("en") is always the base language, and translations are stored in language-specific subdirectories.
+English ("en") is always the **reference version**. Translations are *derived* from the English data with an extract–translate–merge architecture (see `scripts/translate_person.py`):
+
+1. **Extract**: only translatable text fields are pulled from the English document into a compact payload.
+2. **Translate**: the payload (never the whole document) goes to the model via structured outputs, so dates, coordinates, URLs, IDs, icons, `event_index` references, and structure can never drift.
+3. **Merge**: the translated payload is overlaid onto a deep copy of the English document. List lengths are validated, so a translated file is guaranteed to have the same events, chapters, images, and connections — in the same order — as the English source.
+
+Every translated file carries a `translation` provenance block with a **fingerprint of the English source text** it was derived from. When the English text changes, the fingerprint no longer matches and the translation is reported (and re-translated) as **stale**. Person names are localized via a per-person **name glossary** applied identically across life events, ego network, and registry, because UI cross-references match on exact names. `relationship_type` values stay untouched — the UI localizes them from locale files.
 
 ### Directory Structure for Translations
 
-**Before Translation**:
+**Person data (e.g., German)**:
 ```
 data/people/{person_id}/
-├── life_events.json        # English (base)
-├── ego_network.json        # English (base)
-└── _cache/
-```
-
-**After Translation (e.g., German)**:
-```
-data/people/{person_id}/
-├── life_events.json        # English (base)
-├── ego_network.json        # English (base)
-├── de/                     # German translations
+├── life_events.json        # English (reference)
+├── ego_network.json        # English (reference)
+├── de/                     # German, derived from English
 │   ├── life_events.json
 │   └── ego_network.json
 └── _cache/
 ```
 
-**Language-Specific Registries**:
-- `data/persons.json` - English (base)
-- `data/persons_de.json` - German translations
-- `data/persons_fr.json` - French translations
-- etc.
+**Meta stories**:
+- `data/meta_stories/{id}.json` - English detail (reference)
+- `data/meta_stories/de/{id}.json` - German detail
+- `data/meta_stories.json` / `data/meta_stories_de.json` - registries
 
-### Translation Scripts (require `OPENAI_API_KEY`)
+**Language-Specific Registries**:
+- `data/persons.json` - English (reference)
+- `data/persons_de.json` - German (all persons, same ids/order/fields; entries carry a `translation` block)
+
+### Translation Scripts (require `OPENAI_API_KEY`, except `--check`)
+
+**Check parity (no API key needed)**:
+
+```bash
+python scripts/translate_all_persons.py --target-lang de --check
+```
+
+Prints per-person and per-meta-story status (✓ current, ↻ stale, ✗ missing) and exits non-zero if anything is stale or missing.
 
 **Translate a single person**:
 
 ```bash
 python scripts/translate_person.py "Alan Turing" --target-lang de
-python scripts/translate_person.py "ada_lovelace" --target-lang de
 ```
 
-**Translate all persons**:
+**Translate everything (persons + meta stories)**:
 
 ```bash
-python scripts/translate_all_persons.py --target-lang de
-python scripts/translate_all_persons.py --target-lang de --force  # Re-translate existing
+python scripts/translate_all_persons.py --target-lang de          # only missing/stale
+python scripts/translate_all_persons.py --target-lang de --force  # re-translate all
 ```
+
+**Translate meta stories only**:
+
+```bash
+python scripts/translate_meta_story.py computing_pioneers --target-lang de
+python scripts/translate_meta_story.py --all --target-lang de
+```
+
+Meta story `event_title`s are copied verbatim from the person's translated life events (matched by `event_index`) whenever that translation exists, so meta story chapters and story slides always show identical titles.
+
+**Migrate legacy translation files** (deterministic, no API):
+
+```bash
+python scripts/migrate_translations.py --lang de [--dry-run]
+```
+
+Rebases old-schema translated files onto the current English structure, carries over matched translated text, and flags them as stale for retranslation.
 
 **CLI Options**:
 
 `translate_person.py`:
 - `person_name_or_id` (positional): Person name or ID
 - `--target-lang` (required): ISO language code (e.g., 'de', 'fr', 'es')
-- `--force`: Overwrite existing translation
+- `--force`: Re-translate even if the translation is current
 - `--model`: Override default OpenAI model
 - `--verbose`: Enable detailed logging
 
 `translate_all_persons.py`:
 - `--target-lang` (required): ISO language code
-- `--force`: Re-translate even if exists
+- `--check`: Report status only (no API calls, no changes)
+- `--force`: Re-translate even current translations
 - `--model`: Override default OpenAI model
 - `--persons`: Comma-separated list to translate only specific persons
-- `--skip-registry`: Skip updating persons_{lang}.json
+- `--skip-meta`: Skip meta stories
 - `--verbose`: Enable verbose output
+
+### German Is Generated Alongside English
+
+`generate_person.py` and `generate_meta_story.py` automatically translate to German as their final step (after review, so translations reflect the reviewed English text). Control this with `--translate-langs de,fr,...` or `--skip-translate`. Translation failures are non-fatal — the English reference stays complete and `--check` reports the gap. If you edit or re-review English data outside the pipeline, run `translate_all_persons.py --target-lang de` afterwards; fingerprint-based staleness detection ensures only affected documents are re-translated.
 
 ### Translation Rules
 
@@ -541,14 +573,17 @@ python scripts/translate_all_persons.py --target-lang de --force  # Re-translate
 - Relationship descriptions
 - Social network notes and summaries
 
-**What is preserved**:
+**What is preserved** (guaranteed by the merge — the model never sees these fields):
 - All dates (dates, timestamps)
-- All coordinates (location_coordinates, centroid, bbox)
-- All URLs (sources, wikipedia, images)
-- All IDs (person_id, chapter IDs)
-- Relationship types (e.g., `professional/mentor`)
+- All coordinates (locations, centroid, bbox)
+- All URLs (sources, wikipedia, images, annotation wikipedia_urls)
+- All IDs (person_id, chapter IDs, annotation term keys, event_index)
+- `event_type_icon`, `event_class`, `involved_people` list structure
+- Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files
 - Strength values (`weak`, `moderate`, `strong`)
 - Technical classifications
+
+**Annotation markers**: descriptions may contain `[[term|display]]` markers. The term (before the `|`) is an ID and stays in English; only the display text and the annotation's `explanation` are translated.
 
 **Proper name handling**:
 - Names are kept in original form by default
@@ -579,11 +614,11 @@ Common language codes:
 
 ### Translation Workflow
 
-1. Scripts use OpenAI API with structured outputs (Pydantic models)
-2. Each file type (life_events.json, ego_network.json, registry entry) uses specialized translation prompts
-3. Translated files maintain exact JSON structure
-4. Non-text fields are preserved exactly
-5. Language-specific registry (`persons_{lang}.json`) is created/updated automatically
+1. A name glossary is built once per person (single AI call) and applied deterministically everywhere a name appears
+2. Each document's translatable payload is translated with structured outputs (Pydantic models)
+3. The payload is merged onto a deep copy of the English document; misaligned outputs (wrong list lengths) are rejected
+4. A `translation` block (`source_lang`, `target_lang`, `source_fingerprint`, `translated_on`, `translator`) is stamped into the file
+5. Language-specific registries (`persons_{lang}.json`, `meta_stories_{lang}.json`) are created/updated automatically, kept in English registry order
 
 ### Language Switching in the Application
 
@@ -647,7 +682,11 @@ Features:
    }
    ```
 
-4. **Dynamic registry loading**: Loads `data/persons_{lang}.json` based on selected language
+4. **Registry merging**: `data/persons_{lang}.json` entries are merged **per person over the English registry**, so the person list is identical in every language and untranslated people fall back to English text individually (never a shorter list).
+
+5. **Language-aware meta stories**: the meta story registry (`meta_stories_{lang}.json`) is merged over the English one the same way; detail files load from `data/meta_stories/{lang}/{id}.json` with English fallback, and reload on language switch.
+
+6. **Basemap labels**: the landing map renders place labels in the current UI language and swaps label layers in place on switch.
 
 **All Components** have been updated with translation calls:
 - [Landing.svelte](src/components/Landing.svelte): Search, filters, AI disclaimer modal
@@ -667,10 +706,12 @@ Features:
    - Add option to dropdown in [App.svelte:381-384](src/App.svelte#L381-L384)
 
 3. **Update glob patterns** (if needed):
-   - Add `../data/people/*/{lang}/life_events.json` to glob in [App.svelte:50-56](src/App.svelte#L50-L56)
+   - Add `../data/people/*/{lang}/life_events.json` (and the matching `ego_network.json` pattern) to the globs in App.svelte and LandingMap.svelte
+   - Add `../data/meta_stories/{lang}/*.json` to the meta story glob in App.svelte
 
-4. **Translate person data**:
+4. **Translate person data and meta stories**:
    - Run `python scripts/translate_all_persons.py --target-lang {lang}`
+   - Verify with `python scripts/translate_all_persons.py --target-lang {lang} --check`
 
 #### Translation File Format
 
