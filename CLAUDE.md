@@ -165,6 +165,66 @@ Social connections with rich relationship metadata:
 - `romantic/{type}` (e.g., `romantic/fiancé`)
 - `adversarial/{type}` (e.g., `adversarial/legal-opponent`)
 
+### Meta Story Social Network
+
+Each meta story JSON carries a `social_network` block, rendered as a d3-force
+graph in `MetaStoryView.svelte` (component: `MetaStoryNetwork.svelte`, lazily
+imported so `d3-force` stays out of the entry bundle). It follows the timeline
+section and visualizes how the story's people connected:
+
+```json
+"social_network": {
+  "nodes": [
+    { "id": "alan_turing", "name": "Alan Turing", "type": "main",
+      "portrait": "/portraits/alan_turing_thumbnail.webp",
+      "roles": ["mathematician", "computer scientist"] },
+    { "id": "sec:max_newman", "name": "Max Newman", "type": "secondary",
+      "portrait": null, "roles": [] }
+  ],
+  "links": [
+    { "source": "alan_turing", "target": "john_von_neumann",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "…", "strength": "moderate", "kind": "main",
+      "endpoints": {
+        "alan_turing": { "relationship_type": "…", "relationship_description": "…", "strength": "…" },
+        "john_von_neumann": { "relationship_type": "…", "relationship_description": "…", "strength": "…" }
+      } }
+  ]
+}
+```
+
+Each link's `endpoints` map holds **each person's own ego-network view of the
+other** (a bridge link has only the main person's entry). The UI uses this to
+explain a focused node's ties **from that person's perspective**; when a
+direction is missing it falls back to the other side and labels it "as recalled
+by {name}". Top-level `relationship_type`/`strength` (the richest direction)
+drive stroke width. Links are drawn behind nodes and read neutral until a node
+is hovered/tapped, then that node's ties light up in the accent color while
+other nodes are darkened (kept opaque so links never shine through). A weak
+`forceX` pulls each node toward an x derived from its `birth_year`, so the graph
+reads left→right chronologically; secondary nodes (no birth year) sit at the
+mean x of the main people they bridge. Dragging a node pins it (its manual
+position overrides the temporal force; double-click releases it).
+
+- **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
+  portraits ringed in each person's `person_styles.json` primary color. A
+  **main link** joins two main people when one appears in the other's
+  `ego_network.json`.
+- **Secondary nodes** (`type: "secondary"`, id prefixed `sec:`) are bridging
+  people — not in the story, but present in the ego networks of **two or more**
+  main people. They are drawn clearly smaller and capped at
+  `MAX_SECONDARY_NODES` (14) so the graph stays readable.
+- Derivation is **deterministic, no AI** (`scripts/meta_story_network.py`),
+  run as Phase 5 of `generate_meta_story.py`. It is **not** part of the
+  translation payload (`extract_meta_story_translatables`), so the same network
+  is copied verbatim into translated files: node labels are person names (kept
+  in the original language) and `relationship_type` is localized by the UI;
+  only `relationship_description` tooltips fall back to English.
+- Adding/removing people or regenerating ego networks changes the derived
+  network. Rebuild every meta story (including translated copies) with
+  `python scripts/backfill_meta_story_networks.py` (no API key needed), then
+  `npx prettier --write "data/meta_stories/**/*.json"`.
+
 ## Project Structure
 
 ```
@@ -177,6 +237,7 @@ life-ds/
 │       ├── StoryView.svelte  # Main story viewer (timeline/map)
 │       ├── Timeline.svelte   # Event timeline component
 │       ├── NetworkModal.svelte # Social network visualization
+│       ├── MetaStoryNetwork.svelte # d3-force network for meta stories
 │       ├── PersonChip.svelte # Person card component
 │       └── ImageViewer.svelte # Lightbox for event images
 ├── data/
@@ -199,6 +260,9 @@ life-ds/
 │   ├── translate_person.py          # Translation core + translate single person
 │   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
 │   ├── translate_meta_story.py      # Translate meta stories
+│   ├── generate_meta_story.py       # Meta story workflow (5 phases)
+│   ├── meta_story_network.py        # Derive meta story social network from ego networks
+│   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
 │   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
 │   ├── clear_caches.py              # Clear old cached data

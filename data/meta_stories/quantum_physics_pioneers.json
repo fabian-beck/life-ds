@@ -111,5 +111,88 @@
       ]
     }
   ],
-  "conclusion": "Quantum physics was born from both confrontation and construction: confronting experimental surprises that broke classical intuition, then constructing a formal language strong enough to carry the new world. Einstein, Curie, and von Neumann together show how modern physics advances—by discovery, by redefinition, and by the mathematics that makes the revolution durable."
+  "conclusion": "Quantum physics was born from both confrontation and construction: confronting experimental surprises that broke classical intuition, then constructing a formal language strong enough to carry the new world. Einstein, Curie, and von Neumann together show how modern physics advances—by discovery, by redefinition, and by the mathematics that makes the revolution durable.",
+  "social_network": {
+    "nodes": [
+      {
+        "id": "albert_einstein",
+        "name": "Albert Einstein",
+        "type": "main",
+        "portrait": "/portraits/albert_einstein_thumbnail.webp",
+        "roles": ["physicist", "scientist"],
+        "birth_year": 1879
+      },
+      {
+        "id": "marie_curie",
+        "name": "Marie Curie",
+        "type": "main",
+        "portrait": "/portraits/marie_curie_thumbnail.webp",
+        "roles": ["physicist", "chemist"],
+        "birth_year": 1867
+      },
+      {
+        "id": "john_von_neumann",
+        "name": "John von Neumann",
+        "type": "main",
+        "portrait": "/portraits/john_von_neumann_thumbnail.webp",
+        "roles": ["mathematician", "physicist"],
+        "birth_year": 1903
+      },
+      {
+        "id": "sec:david_hilbert",
+        "name": "David Hilbert",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "albert_einstein",
+        "target": "john_von_neumann",
+        "kind": "main",
+        "relationship_type": "academic/colleague",
+        "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
+        "strength": "moderate",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/colleague",
+            "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "albert_einstein",
+        "target": "sec:david_hilbert",
+        "kind": "secondary",
+        "relationship_type": "professional/rival",
+        "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+        "strength": "moderate",
+        "endpoints": {
+          "albert_einstein": {
+            "relationship_type": "professional/rival",
+            "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "sec:david_hilbert",
+        "kind": "secondary",
+        "relationship_type": "academic/mentor",
+        "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
+        "strength": "strong",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/mentor",
+            "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
+            "strength": "strong"
+          }
+        }
+      }
+    ]
+  }
 }

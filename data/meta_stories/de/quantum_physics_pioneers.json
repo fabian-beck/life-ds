@@ -6,11 +6,7 @@
     "title": "Pioniere der Quantenphysik",
     "tagline": "Von den Quanten zum modernen Formalismus",
     "description": "Die Quantenphysik kam nicht als einzelne Entdeckung in die Welt – sie kristallisierte sich in einer Kette begrifflicher Erschütterungen heraus: die verstörende Diskretheit der Energie, die seltsame Buchführung von Strahlung und Atomen und schließlich der Bedarf an einer strengen mathematischen Sprache, die die Theorie davor bewahrte, sich in Paradoxien aufzulösen.\n\nDiese Sammlung folgt einem engen Bogen durch drei Figuren des Registers, die diese Transformation unmittelbar prägten. Einstein zwang das Quant gewissermaßen in die Existenz, indem er das Licht selbst als gequantelt behandelte – und blieb zugleich ein scharfer Kritiker der Quantenunbestimmtheit. Curie erschloss das experimentelle und begriffliche Terrain der Radioaktivität und zeigte, dass das Atom keine unteilbare Einheit, sondern ein dynamisches, energetisches System ist – eine wesentliche Voraussetzung der Quantentheorie des Atoms. Von Neumann gab der Quantenmechanik schließlich eines ihrer dauerhaftesten Fundamente: einen präzisen Formalismus, der die Theorie berechenbar, verallgemeinerbar und philosophisch unausweichlich machte.\n\nZusammen zeigen sie die Quantenphysik als doppelte Revolution – der Regeln der Natur und der Art, wie Wissenschaft beweist, modelliert und dem vertraut, was sie zu wissen beansprucht.",
-    "person_ids": [
-      "albert_einstein",
-      "marie_curie",
-      "john_von_neumann"
-    ],
+    "person_ids": ["albert_einstein", "marie_curie", "john_von_neumann"],
     "date_range_start": "1867",
     "date_range_end": "1957",
     "lastUpdated": "2025-12-30T08:39:42.202076+01:00"
@@ -20,18 +16,13 @@
       "id": "forcing_the_quantum_question",
       "title": "Die Quantenfrage erzwingen",
       "description": "Bevor es „Quantenmechanik“ gab, verlangten Anomalien von Licht und Materie nach neuen Regeln; diese Figuren machten die Diskretheit wissenschaftlich unausweichlich.",
-      "person_ids": [
-        "albert_einstein",
-        "marie_curie"
-      ]
+      "person_ids": ["albert_einstein", "marie_curie"]
     },
     {
       "id": "making_quantum_precise",
       "title": "Das Quantum präzise machen",
       "description": "Als die neue Physik da war, brauchte sie ein hartes mathematisches Rückgrat – Definitionen, Strukturen und Beweise, die Vorhersage und Debatte tragen konnten.",
-      "person_ids": [
-        "john_von_neumann"
-      ]
+      "person_ids": ["john_von_neumann"]
     }
   ],
   "chapters": [
@@ -127,5 +118,88 @@
     "source_fingerprint": "3906a2148e5c8fc9",
     "translated_on": "2026-07-19T05:02:50.542144+00:00",
     "translator": "manual"
+  },
+  "social_network": {
+    "nodes": [
+      {
+        "id": "albert_einstein",
+        "name": "Albert Einstein",
+        "type": "main",
+        "portrait": "/portraits/albert_einstein_thumbnail.webp",
+        "roles": ["physicist", "scientist"],
+        "birth_year": 1879
+      },
+      {
+        "id": "marie_curie",
+        "name": "Marie Curie",
+        "type": "main",
+        "portrait": "/portraits/marie_curie_thumbnail.webp",
+        "roles": ["physicist", "chemist"],
+        "birth_year": 1867
+      },
+      {
+        "id": "john_von_neumann",
+        "name": "John von Neumann",
+        "type": "main",
+        "portrait": "/portraits/john_von_neumann_thumbnail.webp",
+        "roles": ["mathematician", "physicist"],
+        "birth_year": 1903
+      },
+      {
+        "id": "sec:david_hilbert",
+        "name": "David Hilbert",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "albert_einstein",
+        "target": "john_von_neumann",
+        "kind": "main",
+        "relationship_type": "academic/colleague",
+        "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
+        "strength": "moderate",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/colleague",
+            "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "albert_einstein",
+        "target": "sec:david_hilbert",
+        "kind": "secondary",
+        "relationship_type": "professional/rival",
+        "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+        "strength": "moderate",
+        "endpoints": {
+          "albert_einstein": {
+            "relationship_type": "professional/rival",
+            "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "sec:david_hilbert",
+        "kind": "secondary",
+        "relationship_type": "academic/mentor",
+        "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
+        "strength": "strong",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/mentor",
+            "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
+            "strength": "strong"
+          }
+        }
+      }
+    ]
   }
 }

@@ -474,5 +474,378 @@
       ]
     }
   ],
-  "conclusion": "Computing’s defining leaps came from a relay of complementary inventions: ways to represent instructions, to store and process information at scale, to program reliably, and to place capability in human hands. The pioneers’ legacy is not a single machine but an expanding contract between people and systems—one that keeps demanding both ingenuity and restraint."
+  "conclusion": "Computing’s defining leaps came from a relay of complementary inventions: ways to represent instructions, to store and process information at scale, to program reliably, and to place capability in human hands. The pioneers’ legacy is not a single machine but an expanding contract between people and systems—one that keeps demanding both ingenuity and restraint.",
+  "social_network": {
+    "nodes": [
+      {
+        "id": "ada_lovelace",
+        "name": "Ada Lovelace",
+        "type": "main",
+        "portrait": "/portraits/ada_lovelace_thumbnail.webp",
+        "roles": ["mathematician", "writer"],
+        "birth_year": 1815
+      },
+      {
+        "id": "charles_babbage",
+        "name": "Charles Babbage",
+        "type": "main",
+        "portrait": "/portraits/charles_babbage_thumbnail.webp",
+        "roles": ["mathematician", "inventor"],
+        "birth_year": 1791
+      },
+      {
+        "id": "herman_hollerith",
+        "name": "Herman Hollerith",
+        "type": "main",
+        "portrait": "/portraits/herman_hollerith_thumbnail.webp",
+        "roles": ["inventor", "statistician"],
+        "birth_year": 1860
+      },
+      {
+        "id": "alan_turing",
+        "name": "Alan Turing",
+        "type": "main",
+        "portrait": "/portraits/alan_turing_thumbnail.webp",
+        "roles": ["mathematician", "computer scientist"],
+        "birth_year": 1912
+      },
+      {
+        "id": "john_von_neumann",
+        "name": "John von Neumann",
+        "type": "main",
+        "portrait": "/portraits/john_von_neumann_thumbnail.webp",
+        "roles": ["mathematician", "physicist"],
+        "birth_year": 1903
+      },
+      {
+        "id": "konrad_zuse",
+        "name": "Konrad Zuse",
+        "type": "main",
+        "portrait": "/portraits/konrad_zuse_thumbnail.webp",
+        "roles": ["inventor", "computer scientist"],
+        "birth_year": 1910
+      },
+      {
+        "id": "vannevar_bush",
+        "name": "Vannevar Bush",
+        "type": "main",
+        "portrait": "/portraits/vannevar_bush_thumbnail.webp",
+        "roles": ["engineer", "inventor"],
+        "birth_year": 1890
+      },
+      {
+        "id": "grace_hopper",
+        "name": "Grace Hopper",
+        "type": "main",
+        "portrait": "/portraits/grace_hopper_thumbnail.webp",
+        "roles": ["computer scientist", "mathematician"],
+        "birth_year": 1906
+      },
+      {
+        "id": "edsger_w_dijkstra",
+        "name": "Edsger W. Dijkstra",
+        "type": "main",
+        "portrait": "/portraits/edsger_w_dijkstra_thumbnail.webp",
+        "roles": ["computer scientist", "mathematician"],
+        "birth_year": 1930
+      },
+      {
+        "id": "frances_allen",
+        "name": "Frances Allen",
+        "type": "main",
+        "portrait": "/portraits/frances_allen_thumbnail.webp",
+        "roles": ["computer scientist", "mathematician"],
+        "birth_year": 1932
+      },
+      {
+        "id": "douglas_engelbart",
+        "name": "Douglas Engelbart",
+        "type": "main",
+        "portrait": "/portraits/douglas_engelbart_thumbnail.webp",
+        "roles": ["inventor", "engineer"],
+        "birth_year": 1925
+      },
+      {
+        "id": "joseph_weizenbaum",
+        "name": "Joseph Weizenbaum",
+        "type": "main",
+        "portrait": "/portraits/joseph_weizenbaum_thumbnail.webp",
+        "roles": ["computer scientist", "professor"],
+        "birth_year": 1923
+      },
+      {
+        "id": "hedy_lamarr",
+        "name": "Hedy Lamarr",
+        "type": "main",
+        "portrait": "/portraits/hedy_lamarr_thumbnail.webp",
+        "roles": ["actress", "inventor"],
+        "birth_year": 1914
+      },
+      {
+        "id": "heinz_nixdorf",
+        "name": "Heinz Nixdorf",
+        "type": "main",
+        "portrait": "/portraits/heinz_nixdorf_thumbnail.webp",
+        "roles": ["entrepreneur", "computer scientist"],
+        "birth_year": 1925
+      },
+      {
+        "id": "steve_jobs",
+        "name": "Steve Jobs",
+        "type": "main",
+        "portrait": "/portraits/steve_jobs_thumbnail.webp",
+        "roles": ["entrepreneur", "inventor"],
+        "birth_year": 1955
+      },
+      {
+        "id": "sec:norbert_wiener",
+        "name": "Norbert Wiener",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:mary_somerville",
+        "name": "Mary Somerville",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:j_presper_eckert",
+        "name": "J. Presper Eckert",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:john_mauchly",
+        "name": "John Mauchly",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "ada_lovelace",
+        "target": "charles_babbage",
+        "kind": "main",
+        "relationship_type": "social/intellectual_collaborator",
+        "relationship_description": "Mathematician and writer who became a long-term friend and collaborator after meeting Babbage at his 1833 soirée; produced influential notes on the Analytical Engine via translation and commentary on Menabrea's paper.",
+        "strength": "strong",
+        "endpoints": {
+          "ada_lovelace": {
+            "relationship_type": "professional/collaborator",
+            "relationship_description": "English polymath and originator of the Difference Engine and Analytical Engine, with whom Ada had a long intellectual collaboration and friendship.",
+            "strength": "strong"
+          },
+          "charles_babbage": {
+            "relationship_type": "social/intellectual_collaborator",
+            "relationship_description": "Mathematician and writer who became a long-term friend and collaborator after meeting Babbage at his 1833 soirée; produced influential notes on the Analytical Engine via translation and commentary on Menabrea's paper.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "alan_turing",
+        "target": "john_von_neumann",
+        "kind": "main",
+        "relationship_type": "academic/colleague",
+        "relationship_description": "Leading mathematician and polymath who recognised the central concept of the modern computer in Turing’s 1936 paper and invited him to be his postdoctoral assistant at Princeton; however, Turing chose to return to the UK.",
+        "strength": "moderate",
+        "endpoints": {
+          "alan_turing": {
+            "relationship_type": "academic/colleague",
+            "relationship_description": "Leading mathematician and polymath who recognised the central concept of the modern computer in Turing’s 1936 paper and invited him to be his postdoctoral assistant at Princeton; however, Turing chose to return to the UK.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "alan_turing",
+        "target": "konrad_zuse",
+        "kind": "main",
+        "relationship_type": "professional/colleague",
+        "relationship_description": "British mathematician and computer scientist; he and Zuse both participated in a 1947 colloquium in Göttingen with several German researchers, discussing early computing concepts.",
+        "strength": "weak",
+        "endpoints": {
+          "konrad_zuse": {
+            "relationship_type": "professional/colleague",
+            "relationship_description": "British mathematician and computer scientist; he and Zuse both participated in a 1947 colloquium in Göttingen with several German researchers, discussing early computing concepts.",
+            "strength": "weak"
+          }
+        }
+      },
+      {
+        "source": "charles_babbage",
+        "target": "konrad_zuse",
+        "kind": "main",
+        "relationship_type": "other/intellectual_influence",
+        "relationship_description": "19th‑century English mathematician and inventor of the Analytical Engine, which Zuse later acknowledged as anticipating his own work and called Babbage the ‘real father of the computer’.",
+        "strength": "moderate",
+        "endpoints": {
+          "konrad_zuse": {
+            "relationship_type": "other/intellectual_influence",
+            "relationship_description": "19th‑century English mathematician and inventor of the Analytical Engine, which Zuse later acknowledged as anticipating his own work and called Babbage the ‘real father of the computer’.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "douglas_engelbart",
+        "target": "vannevar_bush",
+        "kind": "main",
+        "relationship_type": "academic/inspiration",
+        "relationship_description": "Bush's essay “As We May Think” strongly influenced Engelbart's vision of interactive, knowledge-augmenting computing while Engelbart was in the U.S. Navy.",
+        "strength": "strong",
+        "endpoints": {
+          "douglas_engelbart": {
+            "relationship_type": "academic/inspiration",
+            "relationship_description": "Bush's essay “As We May Think” strongly influenced Engelbart's vision of interactive, knowledge-augmenting computing while Engelbart was in the U.S. Navy.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "sec:norbert_wiener",
+        "kind": "secondary",
+        "relationship_type": "academic/colleague",
+        "relationship_description": "MIT mathematician and originator of cybernetics whose work on communication and control intersected conceptually with von Neumann’s ideas on computation and automata.",
+        "strength": "weak",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/colleague",
+            "relationship_description": "MIT mathematician and originator of cybernetics whose work on communication and control intersected conceptually with von Neumann’s ideas on computation and automata.",
+            "strength": "weak"
+          }
+        }
+      },
+      {
+        "source": "vannevar_bush",
+        "target": "sec:norbert_wiener",
+        "kind": "secondary",
+        "relationship_type": "academic/collaborator",
+        "relationship_description": "Mathematician who closely guided Bush on mathematical aspects of his circuit-theory textbook and wrote an appendix to Operational Circuit Analysis (1929).",
+        "strength": "strong",
+        "endpoints": {
+          "vannevar_bush": {
+            "relationship_type": "academic/collaborator",
+            "relationship_description": "Mathematician who closely guided Bush on mathematical aspects of his circuit-theory textbook and wrote an appendix to Operational Circuit Analysis (1929).",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "joseph_weizenbaum",
+        "target": "sec:norbert_wiener",
+        "kind": "secondary",
+        "relationship_type": "professional/intellectual_predecessor",
+        "relationship_description": "Pioneer of cybernetics whose earlier ethical warnings about automation and warfare anticipated themes that Weizenbaum later developed and popularized.",
+        "strength": "weak",
+        "endpoints": {
+          "joseph_weizenbaum": {
+            "relationship_type": "professional/intellectual_predecessor",
+            "relationship_description": "Pioneer of cybernetics whose earlier ethical warnings about automation and warfare anticipated themes that Weizenbaum later developed and popularized.",
+            "strength": "weak"
+          }
+        }
+      },
+      {
+        "source": "ada_lovelace",
+        "target": "sec:mary_somerville",
+        "kind": "secondary",
+        "relationship_type": "social/friend",
+        "relationship_description": "Beyond formal tutoring, Somerville became a close friend and intellectual companion, sharing scientific interests and social networks with Ada.",
+        "strength": "strong",
+        "endpoints": {
+          "ada_lovelace": {
+            "relationship_type": "social/friend",
+            "relationship_description": "Beyond formal tutoring, Somerville became a close friend and intellectual companion, sharing scientific interests and social networks with Ada.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "charles_babbage",
+        "target": "sec:mary_somerville",
+        "kind": "secondary",
+        "relationship_type": "social/scientific_contact",
+        "relationship_description": "Prominent scientific author and network connector; attended Babbage's soirées and introduced Ada Lovelace into Babbage's circle (as Lovelace's tutor and mutual friend).",
+        "strength": "moderate",
+        "endpoints": {
+          "charles_babbage": {
+            "relationship_type": "social/scientific_contact",
+            "relationship_description": "Prominent scientific author and network connector; attended Babbage's soirées and introduced Ada Lovelace into Babbage's circle (as Lovelace's tutor and mutual friend).",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "sec:j_presper_eckert",
+        "kind": "secondary",
+        "relationship_type": "professional/colleague",
+        "relationship_description": "Electrical engineer and co-inventor of ENIAC; interacted with von Neumann when the latter advised on its logical redesign and the shift toward stored-program concepts.",
+        "strength": "moderate",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "professional/colleague",
+            "relationship_description": "Electrical engineer and co-inventor of ENIAC; interacted with von Neumann when the latter advised on its logical redesign and the shift toward stored-program concepts.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "grace_hopper",
+        "target": "sec:j_presper_eckert",
+        "kind": "secondary",
+        "relationship_type": "colleague",
+        "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation where Hopper worked as a senior mathematician on UNIVAC I.",
+        "strength": "moderate",
+        "endpoints": {
+          "grace_hopper": {
+            "relationship_type": "colleague",
+            "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation where Hopper worked as a senior mathematician on UNIVAC I.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "sec:john_mauchly",
+        "kind": "secondary",
+        "relationship_type": "professional/colleague",
+        "relationship_description": "Co-designer of ENIAC who interacted with von Neumann during the transition from hard-wired to stored-program computing.",
+        "strength": "moderate",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "professional/colleague",
+            "relationship_description": "Co-designer of ENIAC who interacted with von Neumann during the transition from hard-wired to stored-program computing.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "grace_hopper",
+        "target": "sec:john_mauchly",
+        "kind": "secondary",
+        "relationship_type": "colleague",
+        "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation, employer of Hopper on the UNIVAC I project and early compiler work.",
+        "strength": "moderate",
+        "endpoints": {
+          "grace_hopper": {
+            "relationship_type": "colleague",
+            "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation, employer of Hopper on the UNIVAC I project and early compiler work.",
+            "strength": "moderate"
+          }
+        }
+      }
+    ]
+  }
 }
