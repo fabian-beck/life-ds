@@ -416,17 +416,15 @@
       <h1>{$_("app.tagline")}</h1>
       <p class="hero-intro">{$_("landing.intro_text")}</p>
     </div>
-    {#if $currentLanguage === "en"}
-      {#key $currentLanguage}
-        <MetaStoryCarousel
-          {metaStories}
-          persons={englishEntries}
-          onSelectPerson={handleSelect}
-          onFilterByMetaStory={handleFilterByMetaStory}
-          onExploreMetaStory={handleExploreMetaStory}
-        />
-      {/key}
-    {/if}
+    {#key $currentLanguage}
+      <MetaStoryCarousel
+        {metaStories}
+        persons={englishEntries}
+        onSelectPerson={handleSelect}
+        onFilterByMetaStory={handleFilterByMetaStory}
+        onExploreMetaStory={handleExploreMetaStory}
+      />
+    {/key}
   </div>
 
   <div class="filters-section" class:searching={isSearching}>
