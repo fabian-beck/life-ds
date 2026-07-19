@@ -448,6 +448,24 @@
     });
   }
 
+  let labelUpdateFrame = null;
+
+  // Labels are made visible by updateLabelPositions(), which normally runs on
+  // the map's `moveend`. When a slide change recreates the markers but the
+  // viewport does not move (e.g. consecutive events at the same location), no
+  // `moveend` fires, so the freshly created labels would stay at opacity 0.
+  // Schedule a direct update in that case, on the next frame so MapLibre has
+  // positioned the new markers before we measure them.
+  function scheduleLabelUpdate() {
+    if (labelUpdateFrame !== null) {
+      cancelAnimationFrame(labelUpdateFrame);
+    }
+    labelUpdateFrame = requestAnimationFrame(() => {
+      labelUpdateFrame = null;
+      updateLabelPositions();
+    });
+  }
+
   function clearMarkers() {
     for (const marker of currentMarkers) {
       marker.remove();
@@ -784,6 +802,10 @@
   }
 
   function teardownMapInstance() {
+    if (labelUpdateFrame !== null) {
+      cancelAnimationFrame(labelUpdateFrame);
+      labelUpdateFrame = null;
+    }
     clearMarkers();
     clearMigrationPath();
     if (mapInstance) {
@@ -894,6 +916,9 @@
       .join("|");
 
     if (viewportKey === lastViewportKey) {
+      // Viewport unchanged: no map move will fire `moveend`, so reveal the
+      // freshly recreated labels ourselves.
+      scheduleLabelUpdate();
       return;
     }
     lastViewportKey = viewportKey;
