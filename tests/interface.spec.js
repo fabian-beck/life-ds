@@ -142,3 +142,31 @@ test("landing, search, story navigation, and network modal", async ({
 
   expect(pageErrors).toEqual([]);
 });
+
+test("German role filters merge masculine and feminine forms", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await page
+    .getByRole("combobox", { name: "Select language" })
+    .selectOption("de");
+  await expect(page).toHaveURL(/\/de$/);
+
+  const roleFilter = page.getByRole("button", {
+    name: /^Informatiker:in 10$/,
+  });
+  await expect(roleFilter).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /^Informatikerin(?: |$)/ })
+  ).toHaveCount(0);
+
+  await roleFilter.click();
+
+  await expect(page.getByRole("status")).toContainText("10");
+  await expect(
+    page.getByRole("button", { name: "Open life story for Ada Lovelace" })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Open life story for Alan Turing" })
+  ).toBeVisible();
+});

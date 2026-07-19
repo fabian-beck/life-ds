@@ -28,6 +28,8 @@
   let loadedImages = new Set();
   let activeMetaStoryFilter = null;
   let showMap = false;
+  let filtersSectionElement = null;
+  let wasFiltering = false;
 
   // Sticky header state
   let showStickyHeader = false;
@@ -107,6 +109,31 @@
     return tag.trim().toLowerCase();
   }
 
+  function getFilterTag(role, language, knownRoles) {
+    const normalized = normalizeTag(role);
+
+    if (language !== "de") {
+      return { normalized, display: role };
+    }
+
+    // Merge a German masculine/feminine pair only when both forms actually
+    // occur in the data. This avoids treating unrelated words ending in
+    // "in" as gendered role names.
+    if (normalized.endsWith("in")) {
+      const masculine = normalized.slice(0, -2);
+      if (knownRoles.has(masculine)) {
+        return {
+          normalized: masculine,
+          display: `${knownRoles.get(masculine)}:in`,
+        };
+      }
+    } else if (knownRoles.has(`${normalized}in`)) {
+      return { normalized, display: `${role}:in` };
+    }
+
+    return { normalized, display: role };
+  }
+
   function toggleTag(normalizedTag) {
     if (activeTags.has(normalizedTag)) {
       activeTags.delete(normalizedTag);
@@ -116,20 +143,35 @@
     activeTags = new Set(activeTags); // Trigger reactivity
   }
 
-  // Compute tag frequencies from entries (with case-insensitive grouping)
+  $: knownRoles = new Map(
+    entries.flatMap((entry) =>
+      Array.isArray(entry.primaryRoles)
+        ? entry.primaryRoles
+            .filter((role) => role && typeof role === "string")
+            .map((role) => [normalizeTag(role), role])
+        : []
+    )
+  );
+
+  // Compute tag frequencies from entries (with case-insensitive grouping and
+  // merged masculine/feminine role names in German).
   $: tagFrequencies = (() => {
     const frequencies = new Map(); // normalized tag -> {display: string, count: number}
     entries.forEach((entry) => {
       if (Array.isArray(entry.primaryRoles)) {
+        const entryTags = new Map();
         entry.primaryRoles.forEach((role) => {
           if (role && typeof role === "string") {
-            const normalized = normalizeTag(role);
-            const existing = frequencies.get(normalized);
-            if (existing) {
-              existing.count += 1;
-            } else {
-              frequencies.set(normalized, { display: role, count: 1 });
-            }
+            const tag = getFilterTag(role, $currentLanguage, knownRoles);
+            entryTags.set(tag.normalized, tag.display);
+          }
+        });
+        entryTags.forEach((display, normalized) => {
+          const existing = frequencies.get(normalized);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            frequencies.set(normalized, { display, count: 1 });
           }
         });
       }
@@ -226,9 +268,10 @@
       if (activeTags.size > 0) {
         result = result.filter((entry) => {
           if (!Array.isArray(entry.primaryRoles)) return false;
-          return entry.primaryRoles.some((role) =>
-            activeTags.has(normalizeTag(role))
-          );
+          return entry.primaryRoles.some((role) => {
+            const tag = getFilterTag(role, $currentLanguage, knownRoles);
+            return activeTags.has(tag.normalized);
+          });
         });
       }
 
@@ -291,6 +334,26 @@
   $: isSearching = searchQuery.trim().length > 0;
   $: isFiltering =
     isSearching || activeTags.size > 0 || activeMetaStoryFilter !== null;
+
+  // When search or filtering becomes active, scroll down to the filters section
+  // (the meta-story carousel and title stay in place, just above the fold).
+  $: if (isFiltering && !wasFiltering) {
+    wasFiltering = true;
+    scrollToFilters();
+  } else if (!isFiltering && wasFiltering) {
+    wasFiltering = false;
+  }
+
+  function scrollToFilters() {
+    if (typeof window === "undefined") return;
+    // Wait for the DOM to reflect the active-filter state before scrolling.
+    requestAnimationFrame(() => {
+      filtersSectionElement?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
 
   function formatLifespan(entry) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
@@ -372,7 +435,7 @@
   }
 </script>
 
-<section class="landing" class:filtering={isFiltering}>
+<section class="landing">
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
     <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
@@ -432,7 +495,11 @@
     {/key}
   </div>
 
-  <div class="filters-section" class:searching={isSearching}>
+  <div
+    class="filters-section"
+    class:searching={isSearching}
+    bind:this={filtersSectionElement}
+  >
     <div class="search-box">
       <svg
         class="search-icon"
@@ -1241,6 +1308,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
+    /* Leave room for the sticky header when scrolled into view via search/filter */
+    scroll-margin-top: calc(var(--landing-sticky-header-height, 0px) + 1rem);
   }
 
   .filters-right {
@@ -1399,7 +1468,6 @@
     color: #e0f2fe;
   }
 
-  .landing.filtering .header-container,
   .filters-section.searching .filters-right {
     display: none;
   }

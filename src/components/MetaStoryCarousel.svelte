@@ -190,6 +190,26 @@
     }
   }
 
+  // Shrink the title when it is long or contains a very long single word so it
+  // neither overflows the slide (clipped word) nor grows tall enough to cover
+  // the portraits behind it. The returned scale multiplies the base font size
+  // via the --title-scale CSS custom property.
+  const TITLE_TOTAL_LIMIT = 22; // chars that fit comfortably at full size
+  const TITLE_WORD_LIMIT = 11; // longest single word that fits at full size
+  const TITLE_MIN_SCALE = 0.62; // keep the title readable
+
+  function getTitleScale(title) {
+    if (!title) return 1;
+    const words = title.split(/\s+/).filter(Boolean);
+    const longestWord = words.reduce((max, w) => Math.max(max, w.length), 0);
+    const totalLength = title.length;
+    const lengthScale =
+      totalLength > TITLE_TOTAL_LIMIT ? TITLE_TOTAL_LIMIT / totalLength : 1;
+    const wordScale =
+      longestWord > TITLE_WORD_LIMIT ? TITLE_WORD_LIMIT / longestWord : 1;
+    return Math.max(Math.min(lengthScale, wordScale), TITLE_MIN_SCALE);
+  }
+
   function getPersonsForMetaStory(metaStory) {
     if (!metaStory?.person_ids) return [];
 
@@ -317,7 +337,12 @@
                   on:click={() => onExploreMetaStory(metaStory)}
                   aria-label={$_("landing.explore_meta_story")}
                 >
-                  <h2 class="slide-title">{metaStory.title}</h2>
+                  <h2
+                    class="slide-title"
+                    style="--title-scale: {getTitleScale(metaStory.title)}"
+                  >
+                    {metaStory.title}
+                  </h2>
                   <p class="slide-tagline">{metaStory.tagline}</p>
                   <span class="separator">·</span>
                   <span class="date-range"
@@ -657,9 +682,11 @@
   }
 
   .slide-title {
-    font-size: 1.8rem;
+    font-size: calc(1.8rem * var(--title-scale, 1));
     line-height: 1.2;
     margin: 0;
+    overflow-wrap: break-word;
+    max-width: 100%;
     color: #e2e8f0;
     font-weight: 700;
     text-shadow:
@@ -837,7 +864,7 @@
     }
 
     .slide-title {
-      font-size: 2.4rem;
+      font-size: calc(2.4rem * var(--title-scale, 1));
     }
 
     .slide-tagline {
