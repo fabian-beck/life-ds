@@ -278,11 +278,13 @@
     if (simulation) simulation.alphaTarget(0);
   }
 
-  // --- Dragging + tap-to-pin (native pointer events) -----------------------
+  // --- Dragging + tap-to-select (native pointer events) --------------------
+  // A pure tap must NOT disturb the layout: we don't touch fx/fy or reheat the
+  // simulation until the pointer actually moves past the drag threshold. So
+  // selecting a node leaves every node exactly where it was.
   let dragId = null;
   let dragStart = null;
   let dragMoved = false;
-  let dragWasPinned = false; // pin state before this gesture began
 
   function svgPoint(evt) {
     const rect = container.getBoundingClientRect();
@@ -293,10 +295,6 @@
     dragId = node.id;
     dragStart = svgPoint(evt);
     dragMoved = false;
-    dragWasPinned = node.fx != null;
-    node.fx = node.x;
-    node.fy = node.y;
-    reheat();
     evt.target.setPointerCapture?.(evt.pointerId);
     evt.stopPropagation();
   }
@@ -305,11 +303,21 @@
     const node = simNodes.find((n) => n.id === dragId);
     if (!node) return;
     const p = svgPoint(evt);
-    if (dragStart && Math.hypot(p.x - dragStart.x, p.y - dragStart.y) > 4) {
+    if (
+      !dragMoved &&
+      dragStart &&
+      Math.hypot(p.x - dragStart.x, p.y - dragStart.y) > 4
+    ) {
+      // Drag begins here: grab the node at its current spot and heat the sim.
       dragMoved = true;
+      node.fx = node.x;
+      node.fy = node.y;
+      reheat();
     }
-    node.fx = p.x;
-    node.fy = p.y;
+    if (dragMoved) {
+      node.fx = p.x;
+      node.fy = p.y;
+    }
   }
   function onPointerUp() {
     if (dragId == null) return;
@@ -319,18 +327,13 @@
         // A real drag pins the node: it keeps its manual position and the
         // temporal force no longer moves it (fx/fy stay set).
         node.pinned = true;
+        cool();
       } else {
-        // A tap only selects; restore the pre-gesture pin state so tapping a
-        // free node doesn't accidentally pin it.
-        if (!dragWasPinned) {
-          node.fx = null;
-          node.fy = null;
-        }
+        // A pure tap only toggles selection — nothing was moved or reheated.
         selectedId = selectedId === dragId ? null : dragId;
       }
     }
     dragId = null;
-    cool();
   }
 
   // Double-click / double-tap releases a pinned node back to the temporal layout.
