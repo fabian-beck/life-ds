@@ -1269,15 +1269,12 @@
     {eventSlides}
     {slides}
     {chapters}
-    {egoNetwork}
-    {styleConfig}
     initialExpanded={initialTimelineExpanded}
     onPrevSlide={prevSlide}
     onNextSlide={nextSlide}
     onGoToEvent={goToEvent}
     onGoToSlide={goToSlide}
     onScrollToIndex={scrollToIndexExternal}
-    onOpenNetwork={openNetworkModal}
     on:expandchange={handleTimelineExpandChange}
   />
 </div>
