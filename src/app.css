@@ -69,6 +69,18 @@ a {
 }
 
 /*
+ * The dark MapLibre basemap already sits near the floor of the contrast
+ * filter, so the global overlay pushes it to barely readable. Lift the map
+ * canvas well above the overlay's darkening — with reduced contrast so labels
+ * and coastlines don't crush — keeping maps legible in high-contrast mode.
+ * Only the canvas is targeted, so DOM markers and popups are untouched. This
+ * out-specifies StoryMap's own `.map-container .maplibregl-canvas` filter.
+ */
+html.high-contrast .maplibregl-canvas {
+  filter: contrast(1.05) brightness(1.9) saturate(1.1);
+}
+
+/*
  * Fallback for browsers without backdrop-filter support: deepen the page
  * backdrop and lift text to a pure white so contrast still increases.
  */
