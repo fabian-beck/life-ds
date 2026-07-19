@@ -14,8 +14,19 @@
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
   export let network = null;
+  export let currentLanguage = "en";
+  export let metaStoryId = null;
 
   const personStyles = personStylesData.styles;
+
+  // Jump to a main person's own story, preserving meta-story context (mirrors
+  // the navigation used by the meta timeline).
+  function goToStory(personId) {
+    const fromMeta = metaStoryId ? `?from_meta=${metaStoryId}` : "";
+    window.location.hash = `/${currentLanguage}/story/${encodeURIComponent(
+      personId
+    )}${fromMeta}`;
+  }
 
   const SECONDARY_COLOR = "#94a3b8";
   const LINK_IDLE = "#64748b"; // links when nothing is focused
@@ -368,204 +379,241 @@
 />
 
 {#if hasNetwork}
-  <div
-    class="network-frame"
-    bind:this={container}
-    bind:clientWidth={width}
-    style="height: {height}px;"
-  >
-    <svg
-      class="network-svg"
-      viewBox={`0 0 ${width} ${height}`}
-      role="img"
-      aria-label={$_("meta_story.network_aria")}
-      on:pointerdown={clearSelection}
+  <div class="mnet">
+    <div
+      class="network-frame"
+      bind:this={container}
+      bind:clientWidth={width}
+      style="height: {height}px;"
     >
-      <defs>
-        {#each simNodes as node (node.id)}
-          {#if node.type === "main" && node.portrait}
-            <clipPath id={clipId(node.id)}>
-              <circle cx="0" cy="0" r={MAIN_R} />
-            </clipPath>
-          {/if}
-        {/each}
-      </defs>
+      <svg
+        class="network-svg"
+        viewBox={`0 0 ${width} ${height}`}
+        role="img"
+        aria-label={$_("meta_story.network_aria")}
+        on:pointerdown={clearSelection}
+      >
+        <defs>
+          {#each simNodes as node (node.id)}
+            {#if node.type === "main" && node.portrait}
+              <clipPath id={clipId(node.id)}>
+                <circle cx="0" cy="0" r={MAIN_R} />
+              </clipPath>
+            {/if}
+          {/each}
+        </defs>
 
-      <!-- Links -->
-      <g class="links" stroke-linecap="round">
-        {#each simLinks as link (`${link.source}-${link.target}`)}
-          {@const s = posById.get(link.source)}
-          {@const t = posById.get(link.target)}
-          {#if s && t}
-            <line
-              x1={s.x}
-              y1={s.y}
-              x2={t.x}
-              y2={t.y}
-              stroke={linkStroke(link, activeId)}
-              stroke-width={linkWidth(link)}
-              stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
-              opacity={linkOpacity(link, activeId)}
+        <!-- Links -->
+        <g class="links" stroke-linecap="round">
+          {#each simLinks as link (`${link.source}-${link.target}`)}
+            {@const s = posById.get(link.source)}
+            {@const t = posById.get(link.target)}
+            {#if s && t}
+              <line
+                x1={s.x}
+                y1={s.y}
+                x2={t.x}
+                y2={t.y}
+                stroke={linkStroke(link, activeId)}
+                stroke-width={linkWidth(link)}
+                stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
+                opacity={linkOpacity(link, activeId)}
+              >
+                <title
+                  >{humanizeRelationship(
+                    link.relationship_type
+                  )}{link.relationship_description
+                    ? " — " + link.relationship_description
+                    : ""}</title
+                >
+              </line>
+            {/if}
+          {/each}
+        </g>
+
+        <!-- Nodes -->
+        <g class="nodes">
+          {#each simNodes as node (node.id)}
+            {@const dim = activeId != null && !neighborIds.has(node.id)}
+            <g
+              class="node"
+              class:main={node.type === "main"}
+              class:secondary={node.type === "secondary"}
+              class:dim
+              class:selected={node.id === selectedId}
+              class:pinned={node.pinned}
+              transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
+              on:pointerdown={(e) => onPointerDown(e, node)}
+              on:pointerenter={() => (hoveredId = node.id)}
+              on:pointerleave={() => (hoveredId = null)}
+              on:dblclick={() => onNodeDblClick(node)}
+              role="listitem"
             >
               <title
-                >{humanizeRelationship(
-                  link.relationship_type
-                )}{link.relationship_description
-                  ? " — " + link.relationship_description
+                >{node.name}{node.roles && node.roles.length
+                  ? " — " + node.roles.join(", ")
                   : ""}</title
               >
-            </line>
-          {/if}
-        {/each}
-      </g>
 
-      <!-- Nodes -->
-      <g class="nodes">
-        {#each simNodes as node (node.id)}
-          {@const dim = activeId != null && !neighborIds.has(node.id)}
-          <g
-            class="node"
-            class:main={node.type === "main"}
-            class:secondary={node.type === "secondary"}
-            class:dim
-            class:selected={node.id === selectedId}
-            class:pinned={node.pinned}
-            transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
-            on:pointerdown={(e) => onPointerDown(e, node)}
-            on:pointerenter={() => (hoveredId = node.id)}
-            on:pointerleave={() => (hoveredId = null)}
-            on:dblclick={() => onNodeDblClick(node)}
-            role="listitem"
-          >
-            <title
-              >{node.name}{node.roles && node.roles.length
-                ? " — " + node.roles.join(", ")
-                : ""}</title
-            >
-
-            {#if node.type === "main"}
-              <circle
-                class="halo"
-                r={MAIN_R + 3}
-                fill="none"
-                stroke={primaryColor(node.id)}
-                stroke-width={node.id === selectedId ? 4.5 : 3}
-              />
-              {#if node.portrait}
-                <image
-                  href={node.portrait}
-                  x={-MAIN_R}
-                  y={-MAIN_R}
-                  width={MAIN_R * 2}
-                  height={MAIN_R * 2}
-                  clip-path={`url(#${clipId(node.id)})`}
-                  preserveAspectRatio="xMidYMid slice"
+              {#if node.type === "main"}
+                <circle
+                  class="halo"
+                  r={MAIN_R + 3}
+                  fill="none"
+                  stroke={primaryColor(node.id)}
+                  stroke-width={node.id === selectedId ? 4.5 : 3}
                 />
+                {#if node.portrait}
+                  <image
+                    href={node.portrait}
+                    x={-MAIN_R}
+                    y={-MAIN_R}
+                    width={MAIN_R * 2}
+                    height={MAIN_R * 2}
+                    clip-path={`url(#${clipId(node.id)})`}
+                    preserveAspectRatio="xMidYMid slice"
+                  />
+                {:else}
+                  <circle
+                    r={MAIN_R}
+                    fill={primaryColor(node.id)}
+                    opacity="0.35"
+                  />
+                {/if}
+                <text class="label main-label" y={MAIN_R + 16}>
+                  {displayName(node.name)}
+                </text>
               {:else}
                 <circle
-                  r={MAIN_R}
-                  fill={primaryColor(node.id)}
-                  opacity="0.35"
+                  r={SECONDARY_R}
+                  fill="#1e293b"
+                  stroke={SECONDARY_COLOR}
+                  stroke-width="1.5"
+                />
+                <text class="label secondary-label" y={SECONDARY_R + 13}>
+                  {displayName(node.name)}
+                </text>
+              {/if}
+
+              {#if node.pinned}
+                {@const pr = node.type === "main" ? MAIN_R : SECONDARY_R}
+                <circle
+                  class="pin-dot"
+                  cx={pr * 0.72}
+                  cy={-pr * 0.72}
+                  r="3.5"
                 />
               {/if}
-              <text class="label main-label" y={MAIN_R + 16}>
-                {displayName(node.name)}
-              </text>
-            {:else}
-              <circle
-                r={SECONDARY_R}
-                fill="#1e293b"
-                stroke={SECONDARY_COLOR}
-                stroke-width="1.5"
-              />
-              <text class="label secondary-label" y={SECONDARY_R + 13}>
-                {displayName(node.name)}
-              </text>
-            {/if}
-
-            {#if node.pinned}
-              {@const pr = node.type === "main" ? MAIN_R : SECONDARY_R}
-              <circle class="pin-dot" cx={pr * 0.72} cy={-pr * 0.72} r="3.5" />
-            {/if}
-          </g>
-        {/each}
-      </g>
-    </svg>
-
-    <!-- Legend -->
-    <div class="legend">
-      <span class="legend-item">
-        <span class="legend-dot main-dot"></span>
-        {$_("meta_story.network_main")}
-      </span>
-      <span class="legend-item">
-        <span class="legend-dot secondary-dot"></span>
-        {$_("meta_story.network_secondary")}
-      </span>
-    </div>
-  </div>
-
-  <!-- Explanation panel: a node's ties, described from that person's view -->
-  <div class="network-explain" aria-live="polite">
-    {#if activeNode}
-      <div class="explain-head">
-        <span class="explain-name">{displayName(activeNode.name)}</span>
-        {#if activeNode.roles && activeNode.roles.length}
-          <span class="explain-roles">{activeNode.roles.join(", ")}</span>
-        {/if}
-      </div>
-      {#if activeConnections.length}
-        <ul class="explain-list">
-          {#each activeConnections as c (c.otherId)}
-            <li
-              class="explain-item"
-              class:is-secondary={c.otherType === "secondary"}
-            >
-              <div class="explain-item-head">
-                <span class="explain-other">{c.otherName}</span>
-                {#if c.relationship}
-                  <span class="explain-rel">{c.relationship}</span>
-                {/if}
-              </div>
-              {#if c.description}
-                <p class="explain-desc">
-                  {c.description}
-                  {#if c.recalledBy}
-                    <span class="explain-recalled"
-                      >{$_("meta_story.network_recalled_by", {
-                        name: c.recalledBy,
-                      })}</span
-                    >
-                  {/if}
-                </p>
-              {/if}
-            </li>
+            </g>
           {/each}
-        </ul>
+        </g>
+      </svg>
+
+      <!-- Legend -->
+      <div class="legend">
+        <span class="legend-item">
+          <span class="legend-dot main-dot"></span>
+          {$_("meta_story.network_main")}
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot secondary-dot"></span>
+          {$_("meta_story.network_secondary")}
+        </span>
+      </div>
+    </div>
+
+    <!-- Explanation panel: a node's ties, described from that person's view -->
+    <div
+      class="network-explain"
+      class:has-active={!!activeNode}
+      aria-live="polite"
+    >
+      {#if activeNode}
+        <div class="explain-head">
+          <div class="explain-head-text">
+            <span class="explain-name">{displayName(activeNode.name)}</span>
+            {#if activeNode.roles && activeNode.roles.length}
+              <span class="explain-roles">{activeNode.roles.join(", ")}</span>
+            {/if}
+          </div>
+          {#if activeNode.type === "main"}
+            <button
+              type="button"
+              class="explain-jump"
+              on:click={() => goToStory(activeNode.id)}
+            >
+              {$_("meta_story.network_view_story")}
+            </button>
+          {/if}
+        </div>
+        {#if activeConnections.length}
+          <ul class="explain-list">
+            {#each activeConnections as c (c.otherId)}
+              <li
+                class="explain-item"
+                class:is-secondary={c.otherType === "secondary"}
+              >
+                <div class="explain-item-head">
+                  {#if c.otherType === "main"}
+                    <button
+                      type="button"
+                      class="explain-other-link"
+                      on:click={() => goToStory(c.otherId)}
+                    >
+                      {c.otherName}
+                    </button>
+                  {:else}
+                    <span class="explain-other">{c.otherName}</span>
+                  {/if}
+                  {#if c.relationship}
+                    <span class="explain-rel">{c.relationship}</span>
+                  {/if}
+                </div>
+                {#if c.description}
+                  <p class="explain-desc">
+                    {c.description}
+                    {#if c.recalledBy}
+                      <span class="explain-recalled"
+                        >{$_("meta_story.network_recalled_by", {
+                          name: c.recalledBy,
+                        })}</span
+                      >
+                    {/if}
+                  </p>
+                {/if}
+              </li>
+            {/each}
+          </ul>
+        {:else}
+          <p class="explain-empty">{$_("meta_story.network_no_connections")}</p>
+        {/if}
       {:else}
-        <p class="explain-empty">{$_("meta_story.network_no_connections")}</p>
+        <p class="explain-hint">{$_("meta_story.network_hint")}</p>
       {/if}
-    {:else}
-      <p class="explain-hint">{$_("meta_story.network_hint")}</p>
-    {/if}
+    </div>
   </div>
 {/if}
 
 <style>
+  /* Positioned wrapper so the details panel can overlay the graph on mobile. */
+  .mnet {
+    position: relative;
+  }
+
   .network-frame {
     position: relative;
     width: 100%;
-    border-radius: 16px;
-    background:
-      radial-gradient(
-        circle at 50% 35%,
-        rgba(56, 189, 248, 0.06),
-        transparent 60%
-      ),
-      rgba(15, 23, 42, 0.35);
-    border: 1px solid rgba(148, 163, 184, 0.16);
+    /* Embedded look: no card border, just a soft glow so it blends into the
+       story page rather than reading as a separate widget. */
+    background: radial-gradient(
+      circle at 50% 30%,
+      rgba(56, 189, 248, 0.05),
+      transparent 65%
+    );
     overflow: hidden;
-    touch-action: none;
+    /* Allow vertical page scrolling to pass through the graph area on touch;
+       nodes opt back out (touch-action: none) so dragging still works. */
+    touch-action: pan-y;
   }
 
   .network-svg {
@@ -577,6 +625,7 @@
   .node {
     cursor: grab;
     transition: filter 0.18s ease;
+    touch-action: none;
   }
   .node:active {
     cursor: grabbing;
@@ -684,11 +733,20 @@
   .explain-head {
     display: flex;
     align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 0.75rem;
     flex-wrap: wrap;
-    gap: 0.5rem;
     margin-bottom: 0.6rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  }
+
+  .explain-head-text {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-width: 0;
   }
 
   .explain-name {
@@ -696,6 +754,50 @@
     font-size: 1.05rem;
     font-weight: 700;
     color: #e2e8f0;
+  }
+
+  /* "Open story" action for a focused main person. */
+  .explain-jump {
+    flex: 0 0 auto;
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(56, 189, 248, 0.12);
+    color: #7dd3fc;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .explain-jump:hover,
+  .explain-jump:focus-visible {
+    background: rgba(56, 189, 248, 0.22);
+    border-color: rgba(56, 189, 248, 0.8);
+    outline: none;
+  }
+
+  /* A connection that is itself a main person links to their story. */
+  .explain-other-link {
+    border: none;
+    background: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: rgba(125, 211, 252, 0.45);
+    text-underline-offset: 2px;
+  }
+  .explain-other-link:hover,
+  .explain-other-link:focus-visible {
+    text-decoration-color: #7dd3fc;
+    outline: none;
   }
 
   .explain-roles {
@@ -775,6 +877,31 @@
     .legend {
       font-size: 0.68rem;
       gap: 0.6rem;
+    }
+
+    /* On mobile the details slide up as a bottom sheet over the lower part of
+       the graph, so the network and the selection details share one screen. */
+    .network-explain {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      max-height: 60%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 14px 14px 0 0;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: 0 -10px 24px rgba(2, 6, 23, 0.5);
+    }
+    /* Keep the whole graph visible until something is selected. */
+    .network-explain:not(.has-active) {
+      display: none;
+    }
+    .explain-list {
+      max-height: none;
     }
   }
 </style>
