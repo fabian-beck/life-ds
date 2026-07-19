@@ -5,7 +5,6 @@
     mdiHome,
     mdiChevronUp,
     mdiChevronDown,
-    mdiAccountOutline,
     mdiMapMarkerOutline,
     mdiLightbulbOnOutline,
     mdiRing,
@@ -15,8 +14,6 @@
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import { mdiIconMap } from "virtual:mdi-icon-map";
-  import PersonChip from "./PersonChip.svelte";
-  import { getSubcategory, getChapterPeople } from "../utils/storyHelpers.js";
 
   export let activeIndex = 0;
   export let totalSlides = 0;
@@ -28,41 +25,16 @@
   export let eventSlides = []; // Array of event objects with titles and event_type_icon
   export let slides = []; // Array of all slides including chapter slides
   export let chapters = []; // Array of chapter objects with headlines
-  export let egoNetwork = null; // Ego network data for person lookups
-  export let styleConfig = null; // Style configuration for person chips
   export let onPrevSlide = () => {};
   export let onNextSlide = () => {};
   export let onGoToEvent = () => {};
   export let onGoToSlide = () => {}; // Navigate to specific slide index (for chapter slides)
   export let onScrollToIndex = () => {};
-  export let onOpenNetwork = null; // Callback to open network modal
   export let initialExpanded = false; // NEW: Initial expanded state from URL
 
   const dispatch = createEventDispatcher();
 
-  let visiblePersonInfo = null; // Track which person chip popup is visible
-
   $: isExpanded = initialExpanded;
-
-  // Toggle person info popup
-  function handleTogglePersonInfo(personKey) {
-    visiblePersonInfo = visiblePersonInfo === personKey ? null : personKey;
-  }
-
-  // Close popup when clicking outside or on scroll
-  function handleContainerClick(event) {
-    // Close popup if clicking outside a person chip
-    if (visiblePersonInfo && !event.target.closest(".person-info-wrapper")) {
-      visiblePersonInfo = null;
-    }
-  }
-
-  // Close popup when scrolling
-  function handleContainerScroll() {
-    if (visiblePersonInfo) {
-      visiblePersonInfo = null;
-    }
-  }
 
   // Helper function to resolve MDI icon path from icon name (e.g., "mdi-crown" -> SVG path).
   // Uses a static lookup map generated from scripts/icon_categories.py — tree-shakeable.
@@ -399,7 +371,6 @@
           class:expanded={isExpanded}
           bind:this={expandedContainerElement}
           on:wheel|stopPropagation
-          on:scroll={handleContainerScroll}
         >
           {#if !isExpanded}
             <div class="dot-wrapper home-dot">
@@ -599,11 +570,7 @@
               </div>
             </button>
           {:else}
-            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-            <div
-              class="expanded-timeline-container"
-              on:click={handleContainerClick}
-            >
+            <div class="expanded-timeline-container">
               <div
                 class="timeline-item home-item clickable"
                 class:active={activeIndex === 0}
@@ -641,10 +608,6 @@
               {#each groupedEvents as group}
                 {#if group.chapter}
                   {@const chapterAge = group.chapter.age_start ?? 0}
-                  {@const chapterPeople = getChapterPeople(
-                    group.chapter,
-                    egoNetwork
-                  )}
                   {@const chapterLocation = group.chapter.location}
                   {@const chapterSlideIndex = slides.findIndex(
                     (s) =>
@@ -667,53 +630,20 @@
                       <span class="age-line chapter-age-line"></span>
                     {/if}
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
-                    {#if chapterPeople.length > 0 || chapterLocation}
+                    {#if chapterLocation}
                       <div class="chapter-meta">
-                        {#if chapterPeople.length > 0}
-                          <div class="chapter-meta-item chapter-people">
-                            <svg
-                              class="chapter-meta-icon"
-                              viewBox="0 0 24 24"
-                              role="presentation"
-                              aria-hidden="true"
-                            >
-                              <path d={mdiAccountOutline} />
-                            </svg>
-                            <div class="chapter-people-list">
-                              {#each chapterPeople as person, personIdx (person.person_name)}
-                                {@const personKey = `chapter-${group.chapter.id}-${personIdx}`}
-                                {@const subcategory = getSubcategory(
-                                  person.relationship_type
-                                )}
-                                <PersonChip
-                                  {person}
-                                  {personKey}
-                                  {visiblePersonInfo}
-                                  {subcategory}
-                                  {styleConfig}
-                                  onToggle={handleTogglePersonInfo}
-                                  {onOpenNetwork}
-                                  containerSelector=".expanded-timeline-container"
-                                />
-                              {/each}
-                            </div>
-                          </div>
-                        {/if}
-                        {#if chapterLocation}
-                          <div class="chapter-meta-item">
-                            <svg
-                              class="chapter-meta-icon"
-                              viewBox="0 0 24 24"
-                              role="presentation"
-                              aria-hidden="true"
-                            >
-                              <path d={mdiMapMarkerOutline} />
-                            </svg>
-                            <span class="chapter-meta-text"
-                              >{chapterLocation}</span
-                            >
-                          </div>
-                        {/if}
+                        <div class="chapter-meta-item">
+                          <svg
+                            class="chapter-meta-icon"
+                            viewBox="0 0 24 24"
+                            role="presentation"
+                            aria-hidden="true"
+                          >
+                            <path d={mdiMapMarkerOutline} />
+                          </svg>
+                          <span class="chapter-meta-text">{chapterLocation}</span
+                          >
+                        </div>
                       </div>
                     {/if}
                   </div>
@@ -1475,26 +1405,6 @@
 
   .chapter-meta-text {
     font-family: var(--story-body-font, Inter, sans-serif);
-  }
-
-  .chapter-people {
-    align-items: center;
-  }
-
-  .chapter-people .chapter-meta-icon {
-    margin-top: 0;
-  }
-
-  .chapter-people-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    align-items: center;
-  }
-
-  /* PersonChip styling within chapter headers */
-  .chapter-people-list :global(.person-info-wrapper) {
-    display: inline-flex;
   }
 
   @container (max-width: 600px) {
