@@ -106,6 +106,31 @@
     return tag.trim().toLowerCase();
   }
 
+  function getFilterTag(role, language, knownRoles) {
+    const normalized = normalizeTag(role);
+
+    if (language !== "de") {
+      return { normalized, display: role };
+    }
+
+    // Merge a German masculine/feminine pair only when both forms actually
+    // occur in the data. This avoids treating unrelated words ending in
+    // "in" as gendered role names.
+    if (normalized.endsWith("in")) {
+      const masculine = normalized.slice(0, -2);
+      if (knownRoles.has(masculine)) {
+        return {
+          normalized: masculine,
+          display: `${knownRoles.get(masculine)}:in`,
+        };
+      }
+    } else if (knownRoles.has(`${normalized}in`)) {
+      return { normalized, display: `${role}:in` };
+    }
+
+    return { normalized, display: role };
+  }
+
   function toggleTag(normalizedTag) {
     if (activeTags.has(normalizedTag)) {
       activeTags.delete(normalizedTag);
@@ -115,20 +140,35 @@
     activeTags = new Set(activeTags); // Trigger reactivity
   }
 
-  // Compute tag frequencies from entries (with case-insensitive grouping)
+  $: knownRoles = new Map(
+    entries.flatMap((entry) =>
+      Array.isArray(entry.primaryRoles)
+        ? entry.primaryRoles
+            .filter((role) => role && typeof role === "string")
+            .map((role) => [normalizeTag(role), role])
+        : []
+    )
+  );
+
+  // Compute tag frequencies from entries (with case-insensitive grouping and
+  // merged masculine/feminine role names in German).
   $: tagFrequencies = (() => {
     const frequencies = new Map(); // normalized tag -> {display: string, count: number}
     entries.forEach((entry) => {
       if (Array.isArray(entry.primaryRoles)) {
+        const entryTags = new Map();
         entry.primaryRoles.forEach((role) => {
           if (role && typeof role === "string") {
-            const normalized = normalizeTag(role);
-            const existing = frequencies.get(normalized);
-            if (existing) {
-              existing.count += 1;
-            } else {
-              frequencies.set(normalized, { display: role, count: 1 });
-            }
+            const tag = getFilterTag(role, $currentLanguage, knownRoles);
+            entryTags.set(tag.normalized, tag.display);
+          }
+        });
+        entryTags.forEach((display, normalized) => {
+          const existing = frequencies.get(normalized);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            frequencies.set(normalized, { display, count: 1 });
           }
         });
       }
@@ -225,9 +265,10 @@
       if (activeTags.size > 0) {
         result = result.filter((entry) => {
           if (!Array.isArray(entry.primaryRoles)) return false;
-          return entry.primaryRoles.some((role) =>
-            activeTags.has(normalizeTag(role))
-          );
+          return entry.primaryRoles.some((role) => {
+            const tag = getFilterTag(role, $currentLanguage, knownRoles);
+            return activeTags.has(tag.normalized);
+          });
         });
       }
 
