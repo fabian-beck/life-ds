@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy, tick } from "svelte";
   import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
@@ -344,15 +344,20 @@
     wasFiltering = false;
   }
 
-  function scrollToFilters() {
-    if (typeof window === "undefined") return;
-    // Wait for the DOM to reflect the active-filter state before scrolling.
-    requestAnimationFrame(() => {
-      filtersSectionElement?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    });
+  async function scrollToFilters() {
+    if (typeof window === "undefined" || !filtersSectionElement) return;
+    // The sticky header appears once we scroll past its threshold and would
+    // otherwise cover the top of the filters section. Render it first so we can
+    // measure its height and reserve room for it in the scroll target.
+    showStickyHeader = true;
+    await tick();
+    const headerOffset = stickyHeaderElement?.offsetHeight ?? 0;
+    const targetTop =
+      filtersSectionElement.getBoundingClientRect().top +
+      window.scrollY -
+      headerOffset -
+      16;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
   }
 
   function formatLifespan(entry) {
@@ -1308,8 +1313,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
-    /* Leave room for the sticky header when scrolled into view via search/filter */
-    scroll-margin-top: calc(var(--landing-sticky-header-height, 0px) + 1rem);
   }
 
   .filters-right {
