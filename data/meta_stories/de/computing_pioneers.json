@@ -1,0 +1,493 @@
+{
+  "dataset": "meta_story",
+  "created_on": "2026-02-08T06:48:02.686240+01:00",
+  "meta_story": {
+    "id": "computing_pioneers",
+    "title": "Computerpioniere",
+    "tagline": "Von Rechenmaschinen zu interaktiven Welten",
+    "description": "Die Computerpioniere verwandelten das Rechnen von einem mühsamen menschlichen Handwerk in eine universelle Maschinentätigkeit – zunächst in Zahnrädern und Lochkarten erdacht, dann in Kriegslaboren bewiesen und schließlich zu der Software und den Benutzeroberflächen skaliert, die den Alltag prägen. Ihre Durchbrüche waren nicht nur schnellere Arithmetik; es waren neue Wege, Information darzustellen, überhaupt zu definieren, was „Berechnung“ bedeutet, und Maschinen für gewöhnliche Menschen benutzbar zu machen.\n\nDie Geschichte führt von der frühesten Vision der Programmierbarkeit zur Konvergenz von Logik, Elektronik und Kryptoanalyse in der Mitte des 20. Jahrhunderts, aus der die moderne Computerarchitektur hervorging. Sie folgt dann der Verschiebung vom Bau von Hardware zum Bau von Ideen – Compiler, Algorithmen und Mensch-Computer-Interaktion – begleitet vom wachsenden Bewusstsein, dass die Macht des Computers soziale und ethische Fragen aufwirft. Als die Personal Computer eintreffen, sind die einst theoretischen Konzepte der Pioniere zur Massenerfahrung geworden: Software als Infrastruktur, Benutzeroberflächen als Kultur und Netzwerke als neuer öffentlicher Raum.",
+    "person_ids": [
+      "ada_lovelace",
+      "charles_babbage",
+      "herman_hollerith",
+      "alan_turing",
+      "john_von_neumann",
+      "konrad_zuse",
+      "vannevar_bush",
+      "grace_hopper",
+      "edsger_w_dijkstra",
+      "frances_allen",
+      "douglas_engelbart",
+      "joseph_weizenbaum",
+      "hedy_lamarr",
+      "heinz_nixdorf",
+      "steve_jobs"
+    ],
+    "date_range_start": "1820",
+    "date_range_end": "2011",
+    "lastUpdated": "2026-02-08T06:48:02.686240+01:00"
+  },
+  "generation_metadata": {
+    "hints": null,
+    "model": "gpt-5.2",
+    "generated_at": "2026-02-08T06:48:02.686240+01:00"
+  },
+  "subtopics": [
+    {
+      "id": "mechanical_and_datafoundations",
+      "title": "Maschinen und Daten",
+      "description": "Vor der Elektronik schritt das Rechnen durch mechanische Konstruktion und Datenverarbeitungssysteme voran – der Beweis, dass Information von Maschinen kodiert, verarbeitet und skaliert werden kann.",
+      "person_ids": [
+        "charles_babbage",
+        "ada_lovelace",
+        "herman_hollerith"
+      ]
+    },
+    {
+      "id": "war_and_architecture",
+      "title": "Krieg, Logik, Architektur",
+      "description": "Der Schmelztiegel der Jahrhundertmitte verband mathematische Logik, kryptoanalytische Dringlichkeit und Ingenieurspragmatismus und brachte die konzeptionellen und architektonischen Vorlagen moderner Computer hervor.",
+      "person_ids": [
+        "alan_turing",
+        "john_von_neumann",
+        "konrad_zuse",
+        "vannevar_bush"
+      ]
+    },
+    {
+      "id": "software_as_a_science",
+      "title": "Software wird Ingenieurskunst",
+      "description": "Als die Hardware reifte, wanderten die harten Probleme nach oben: Compiler, Korrektheit, Nebenläufigkeit und Performance – das Programmieren wurde zu einem Fach mit eigener Strenge und eigenen Werkzeugen.",
+      "person_ids": [
+        "grace_hopper",
+        "edsger_w_dijkstra",
+        "frances_allen"
+      ]
+    },
+    {
+      "id": "interactive_networked_and_contested",
+      "title": "Interaktiv, vernetzt, umkämpft",
+      "description": "Das Rechnen entkam dem Labor: Benutzeroberflächen wurden Kulturgüter, Konnektivität wurde Infrastruktur, und die KI entfachte neue Debatten darüber, was Maschinen tun sollten – und was nicht.",
+      "person_ids": [
+        "douglas_engelbart",
+        "joseph_weizenbaum",
+        "hedy_lamarr",
+        "heinz_nixdorf",
+        "steve_jobs"
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "programmability_imagined",
+      "title": "Programmierbarkeit erdacht (1820-1852)",
+      "date_start": "1820",
+      "date_start_precision": "year",
+      "date_end": "1852",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1822",
+          "event_date_precision": "year",
+          "event_title": "Difference Engine erdacht",
+          "event_index": 7,
+          "theme_connection": "Die Konzeption der Difference Engine ist ein großer Schritt im Bogen ‚Maschinen und Daten': ein eigens gebauter mechanischer Rechner, der menschliche Fehler in Tabellenwerken beseitigen sollte – der Beweis, dass Rechnen mechanisiert und skaliert werden kann."
+        },
+        {
+          "person_id": "charles_babbage",
+          "event_date": "1837",
+          "event_date_precision": "year",
+          "event_title": "Analytical Engine entworfen",
+          "event_index": 13,
+          "theme_connection": "Der Entwurf der Analytical Engine ist ein grundlegender Architektur-Meilenstein: das Konzept einer universellen, programmierbaren Maschine (Speicher/Mühle, Steuerung über Lochkarten), das moderne Computer vorwegnimmt und die Erzählung der Programmierbarkeit verankert."
+        },
+        {
+          "person_id": "ada_lovelace",
+          "event_date": "1843-08",
+          "event_date_precision": "month",
+          "event_title": "Veröffentlicht die Notes zur Analytical Engine",
+          "event_index": 11,
+          "theme_connection": "Ihre Notes zur Analytical Engine von 1843 (besonders Note G) verdichteten die Idee einer programmierbaren Universalmaschine und lieferten ein explizites algorithmisches Verfahren – eine frühe, dauerhafte Formulierung von Software- und Programmkonzepten, verbunden mit Babbages Architektur."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "great_fire_of_parliament",
+          "title": "Parlamentsbrand",
+          "description": "Der Brand von 1834 zerstörte die Houses of Parliament und weckte das Interesse an verlässlichem Rechnen im großen Maßstab für Wiederaufbau und Verwaltung – ein Umfeld, das Babbage half, für staatliche Unterstützung seiner Maschinen zu werben.",
+          "date_start": "1834-10-16",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Burning_of_Parliament"
+        },
+        {
+          "id": "great_exhibition_1851",
+          "title": "Weltausstellung",
+          "description": "Die Ausstellung im Crystal Palace von 1851 steigerte die öffentliche Faszination für Maschinen und Automatisierung und verstärkte das Klima, in dem Babbages und Lovelaces Ideen zum mechanischen Rechnen zirkulierten.",
+          "date_start": "1851-05",
+          "date_start_precision": "month",
+          "date_end": "1851-10",
+          "date_end_precision": "month",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Great_Exhibition"
+        }
+      ]
+    },
+    {
+      "id": "data_industrialized",
+      "title": "Daten werden industrialisiert (1880-1911)",
+      "date_start": "1880",
+      "date_start_precision": "year",
+      "date_end": "1911",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "herman_hollerith",
+          "event_date": "1884-09-23",
+          "event_date_precision": "day",
+          "event_title": "Erstes Tabellierpatent eingereicht",
+          "event_index": 4,
+          "theme_connection": "Die Patentanmeldung „Art of Compiling Statistics“ verdichtete das Konzept der Lochkartentabellierung zu einer konkreten, übertragbaren Methode – ein früher, grundlegender Schritt zur Mechanisierung der Datenverarbeitung im großen Maßstab."
+        },
+        {
+          "person_id": "herman_hollerith",
+          "event_date": "1886",
+          "event_date_precision": "year",
+          "event_title": "Lochkartenlayout eingeführt",
+          "event_index": 6,
+          "theme_connection": "Die Einführung der Lochpositions-Kodierung mit elektrischer Abtastung etablierte eine dauerhafte Informationsdarstellung und ein maschinenlesbares Datenmedium – zentral für den Bogen ‚Maschinen und Daten' der Computergeschichte."
+        },
+        {
+          "person_id": "herman_hollerith",
+          "event_date": "1890-06-02",
+          "event_date_precision": "day",
+          "event_title": "US-Volkszählung 1890 tabelliert",
+          "event_index": 9,
+          "theme_connection": "Der Einsatz von Holleriths Tabelliermaschinen für die US-Volkszählung 1890 ist ein wegweisender Beweis skalierbarer maschineller Datenverarbeitung – Lochkarten als praktische Infrastruktur zur Kodierung und Berechnung nationaler Statistik."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "us_census_1890",
+          "title": "Volkszählung 1890",
+          "description": "Umfang und Dringlichkeit der US-Volkszählung von 1890 schufen die unmittelbare institutionelle Nachfrage, durch die Holleriths Lochkarten-Tabelliermaschinen im nationalen Maßstab eingeführt und bewährt werden konnten.",
+          "date_start": "1890-06-01",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/1890_United_States_census"
+        }
+      ]
+    },
+    {
+      "id": "computability_and_wartime_machines",
+      "title": "Berechenbarkeit und Kriegsmaschinen (1936-1945)",
+      "date_start": "1936",
+      "date_start_precision": "year",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "alan_turing",
+          "event_date": "1936-05-28",
+          "event_date_precision": "day",
+          "event_title": "Turingmaschinen-Arbeit vollendet",
+          "event_index": 6,
+          "theme_connection": "Diese Arbeit definiert das Modell der Turingmaschine und formalisiert die Berechenbarkeit; sie legt das theoretische Fundament dafür, was „Berechnung“ bedeutet, und bestimmt grundlegende Grenzen – ein unersetzlicher Meilenstein der gesamten Computergeschichte."
+        },
+        {
+          "person_id": "alan_turing",
+          "event_date": "1940",
+          "event_date_precision": "year",
+          "event_title": "Leitete die Marine-Kryptoanalyse in Hut 8",
+          "event_index": 9,
+          "theme_connection": "Die Leitung von Hut 8 und die Weiterentwicklung der Enigma-Entzifferung stehen beispielhaft für den kriegsgetriebenen Schmelztiegel, in dem Logik, Dringlichkeit und Ingenieurskunst Berechnung und Informationsverarbeitung zu einer einsatzfähigen Fähigkeit mit großer historischer Wirkung skalierten."
+        },
+        {
+          "person_id": "konrad_zuse",
+          "event_date": "1941-05-12",
+          "event_date_precision": "day",
+          "event_title": "Stellt die Z3 vor",
+          "event_index": 7,
+          "theme_connection": "Die Z3 gilt weithin als erster funktionierender, vollautomatischer, frei programmierbarer Digitalrechner – ein wesentlicher Meilenstein von ‚Maschinen zu Daten', der Programmierbarkeit in funktionierender Hardware noch vor der Elektronik bewies."
+        },
+        {
+          "person_id": "hedy_lamarr",
+          "event_date": "1941",
+          "event_date_precision": "year",
+          "event_title": "Erfindet das Frequenzsprungverfahren",
+          "event_index": 8,
+          "theme_connection": "Das (mit Antheil entwickelte) Frequenzsprung-Spreizspektrumkonzept ist eine konkrete, wegweisende Kommunikationsinnovation, die späterer sicherer und drahtloser Vernetzung zugrunde liegt – ein wichtiger Vorläufer der vernetzten Infrastruktur des Computerzeitalters."
+        },
+        {
+          "person_id": "alan_turing",
+          "event_date": "1945",
+          "event_date_precision": "year",
+          "event_title": "Entwarf den ACE-Computer",
+          "event_index": 10,
+          "theme_connection": "Der ACE-Entwurf ist ein wegweisender Architekturvorschlag für speicherprogrammierte Computer, der Theorie in praktisches Hochgeschwindigkeits-Maschinendesign übersetzte und die Entwicklungslinien des Computerbaus der Nachkriegszeit beeinflusste."
+        },
+        {
+          "person_id": "john_von_neumann",
+          "event_date": "1945-06-30",
+          "event_date_precision": "day",
+          "event_title": "Prägte das speicherprogrammierte Rechnen",
+          "event_index": 13,
+          "theme_connection": "Der EDVAC-Bericht („First Draft“) ist ein Gründungsdokument der modernen Computerarchitektur: Er verdichtete das speicherprogrammierte Design und verbreitete die Vorlage, die die frühe Computerentwicklung weltweit prägte."
+        },
+        {
+          "person_id": "vannevar_bush",
+          "event_date": "1945-07-01",
+          "event_date_precision": "day",
+          "event_title": "Veröffentlicht „As We May Think“ im Atlantic",
+          "event_index": 11,
+          "theme_connection": "„As We May Think“ und das Memex-Konzept sind ein Meilenstein der Informationsdarstellung und menschenzentrierten Wissenserschließung und nehmen die Hypertext- und HCI-Themen der nutzbaren Information im großen Maßstab direkt vorweg."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "world_war_ii",
+          "title": "Zweiter Weltkrieg",
+          "description": "Der Krieg brachte Turing unmittelbar zur Codeknackerei nach Bletchley Park, trieb Zuses Arbeit im Deutschland der Kriegszeit an und motivierte Lamarrs störsichere Funkidee für die Alliierten.",
+          "date_start": "1939-09-01",
+          "date_start_precision": "day",
+          "date_end": "1945-09-02",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_II"
+        }
+      ]
+    },
+    {
+      "id": "stored_program_and_automatic_programming",
+      "title": "Speicherprogramme und automatisches Programmieren (1946-1959)",
+      "date_start": "1946",
+      "date_start_precision": "year",
+      "date_end": "1959",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "alan_turing",
+          "event_date": "1950-10",
+          "event_date_precision": "month",
+          "event_title": "Turing-Test-Arbeit veröffentlicht",
+          "event_index": 13,
+          "theme_connection": "„Computing Machinery and Intelligence“ (1950) ist eine wegweisende Formulierung maschineller Intelligenz und führt das Imitationsspiel (den Turing-Test) ein – prägend dafür, wie Berechnung, KI und Mensch-Maschine-Interaktion gerahmt und debattiert werden."
+        },
+        {
+          "person_id": "grace_hopper",
+          "event_date": "1952",
+          "event_date_precision": "year",
+          "event_title": "Baut den A-0 Compiler-Link-Loader",
+          "event_index": 9,
+          "theme_connection": "Das A-0-System (1952) ist ein früher einsatzfähiger Compiler/Link-Loader, der symbolisches Programmieren und Wiederverwendung praktikabel machte – ein Schlüsselschritt, um Software über den rohen Maschinencode hinaus zur Ingenieursdisziplin zu machen."
+        },
+        {
+          "person_id": "heinz_nixdorf",
+          "event_date": "1954",
+          "event_date_precision": "year",
+          "event_title": "Liefert den ersten deutschen Röhrenrechner",
+          "event_index": 5,
+          "theme_connection": "Die Auslieferung des röhrenbasierten Lochkarten-Elektronenrechners ES (der als erster deutscher Röhrenrechner gilt) treibt den Bogen ‚Maschinen und Daten' unmittelbar voran, indem sie skalierbare elektronische Datenverarbeitung bewies, bevor sich das moderne Universalrechnen verbreitete."
+        },
+        {
+          "person_id": "edsger_w_dijkstra",
+          "event_date": "1956",
+          "event_date_precision": "year",
+          "event_title": "Kürzeste-Wege-Problem gelöst",
+          "event_index": 5,
+          "theme_connection": "Die Formulierung von Dijkstras Kürzeste-Wege-Algorithmus (1956) ist ein grundlegender, vielgenutzter algorithmischer Durchbruch, der zur Kerninfrastruktur für Routing und Optimierung wurde und die Reifung der Informatik zur theoriegeleiteten Disziplin trug."
+        },
+        {
+          "person_id": "grace_hopper",
+          "event_date": "1959-04",
+          "event_date_precision": "month",
+          "event_title": "Berät CODASYL zu COBOL",
+          "event_index": 11,
+          "theme_connection": "Ihre CODASYL-Beratung zu COBOL (1959) ist zentral für die Standardisierung höherer Geschäftsprogrammierung und half, Software zu einer massenhaften, interoperablen Infrastruktur statt maschinenspezifischem Handwerk zu machen."
+        },
+        {
+          "person_id": "frances_allen",
+          "event_date": "1959",
+          "event_date_precision": "year",
+          "event_title": "Leitet die Stretch-Harvest-Optimierungen",
+          "event_index": 5,
+          "theme_connection": "Die Leitung der Compiler-Optimierungen für IBM Stretch/Harvest ist ein wegweisender Beitrag dazu, Software-Performance zur Ingenieursdisziplin zu machen – Grundlagenarbeit zu optimierenden Compilern und Codeanalyse im Umfeld des frühen Hochleistungs- und Kryptoanalyse-Rechnens."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "korean_war",
+          "title": "Koreakrieg",
+          "description": "Der militärische Rechenbedarf des Koreakriegs beschleunigte in den USA Finanzierung und Beschaffung früher Computer und Programmiersysteme und prägte den institutionellen Kontext, in dem sich Hoppers Systeme und Architekturen im Stil von Neumanns verbreiteten.",
+          "date_start": "1950-06-25",
+          "date_start_precision": "day",
+          "date_end": "1953-07-27",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Korean_War"
+        }
+      ]
+    },
+    {
+      "id": "software_discipline_and_interaction",
+      "title": "Softwaredisziplin und Interaktion (1960-1979)",
+      "date_start": "1960",
+      "date_start_precision": "year",
+      "date_end": "1979",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "edsger_w_dijkstra",
+          "event_date": "1960-08-24",
+          "event_date_precision": "day",
+          "event_title": "Ersten ALGOL-60-Compiler vollendet",
+          "event_index": 8,
+          "theme_connection": "Der Bau des ersten ALGOL-60-Compilers war der wegweisende Beweis, dass sich höhere Programmiersprachen wirksam implementieren lassen, und beschleunigte den Übergang vom hardwarezentrierten Rechnen zur Software- und Compiler-Ingenieurskunst."
+        },
+        {
+          "person_id": "douglas_engelbart",
+          "event_date": "1962-10",
+          "event_date_precision": "month",
+          "event_title": "Augmentation-Rahmenwerk veröffentlicht",
+          "event_index": 9,
+          "theme_connection": "Der Augmentation-Bericht von 1962 ist eine bahnbrechende Formulierung des interaktiven Rechnens als ‚Erweiterung des Intellekts' und setzte die konzeptionelle Agenda, die sich später in Hypertext, kollaborativen Werkzeugen und moderner HCI materialisierte."
+        },
+        {
+          "person_id": "douglas_engelbart",
+          "event_date": "1964",
+          "event_date_precision": "year",
+          "event_title": "Baut den ersten Maus-Prototyp",
+          "event_index": 11,
+          "theme_connection": "Der erste Maus-Prototyp ist ein bahnbrechendes Eingabegerät, das interaktives grafisch-manipulatives Rechnen praktikabel machte und die alltägliche Mensch-Computer-Interaktion formte."
+        },
+        {
+          "person_id": "joseph_weizenbaum",
+          "event_date": "1964",
+          "event_date_precision": "year",
+          "event_title": "Erschafft ELIZA, den wegweisenden Chatbot",
+          "event_index": 9,
+          "theme_connection": "ELIZA ist ein wegweisender früher Chatbot, der die natürlichsprachliche Mensch-Maschine-Interaktion konkret machte und dauerhafte Debatten über KI, Anthropomorphismus und das ‚Verstehen' von Computern entfachte – zentral für den umkämpft-interaktiven Bogen."
+        },
+        {
+          "person_id": "grace_hopper",
+          "event_date": "1967",
+          "event_date_precision": "year",
+          "event_title": "Leitet die Navy Programming Languages Group",
+          "event_index": 12,
+          "theme_connection": "Als Direktorin der Navy Programming Languages Group trieb Hopper die COBOL-Standardisierung durch Validierungssoftware und Konformitätstests voran – Programmiersprachen wurden zu durchsetzbarer, interoperabler Infrastruktur (Software wird Ingenieurskunst im großen Maßstab)."
+        },
+        {
+          "person_id": "edsger_w_dijkstra",
+          "event_date": "1968",
+          "event_date_precision": "year",
+          "event_title": "Baute das THE-Multiprogrammiersystem",
+          "event_index": 10,
+          "theme_connection": "Das THE-Multiprogrammiersystem wurde zur grundlegenden Demonstration strukturierten Betriebssystementwurfs (Schichtenmodell) und praktischer Mehrprogrammverarbeitung – zentral für moderne Betriebssystemarchitektur und das Denken über Nebenläufigkeit."
+        },
+        {
+          "person_id": "douglas_engelbart",
+          "event_date": "1968-12-09",
+          "event_date_precision": "day",
+          "event_title": "Präsentierte die Mother of All Demos",
+          "event_index": 12,
+          "theme_connection": "Die ‚Mother of All Demos' war eine wegweisende öffentliche Vorführung interaktiven, vernetzten Rechnens (NLS: Hypertext, Fenster, gemeinsames Editieren, Videoverbindungen) und machte die Zukunft von HCI und kollaborativen Systemen greifbar."
+        },
+        {
+          "person_id": "edsger_w_dijkstra",
+          "event_date": "1976",
+          "event_date_precision": "year",
+          "event_title": "A Discipline of Programming veröffentlicht",
+          "event_index": 13,
+          "theme_connection": "A Discipline of Programming verdichtete die Methodik des Beweisens und Herleitens korrekter Programme und half, das Programmieren als strenge Ingenieursdisziplin statt als improvisiertes Codieren zu definieren."
+        },
+        {
+          "person_id": "joseph_weizenbaum",
+          "event_date": "1976",
+          "event_date_precision": "year",
+          "event_title": "Veröffentlicht „Die Macht der Computer und die Ohnmacht der Vernunft“",
+          "event_index": 13,
+          "theme_connection": "Dieses Buch ist ein Meilenstein der „umkämpften“ Phase des Computerzeitalters: Es verdichtet eine rigorose KI-Kritik und plädiert für Grenzen der Automatisierung und verantwortungsvollen Einsatz – ein bleibender, vielzitierter Beitrag zu Ethik und gesellschaftlicher Bedeutung des Rechnens."
+        },
+        {
+          "person_id": "steve_jobs",
+          "event_date": "1977-04",
+          "event_date_precision": "month",
+          "event_title": "Apple II und Börsenboom",
+          "event_index": 5,
+          "theme_connection": "Der Apple II ist ein kanonischer Personal Computer für den Massenmarkt, der das Rechnen zur verbreiteten Konsumerfahrung machte – ein Anker des Umbruchs ‚interaktives, benutzbares Rechnen entkommt dem Labor' und Katalysator der PC-Software- und Ökosystem-Ära."
+        },
+        {
+          "person_id": "steve_jobs",
+          "event_date": "1979",
+          "event_date_precision": "year",
+          "event_title": "Verfolgte die GUI nach Xerox",
+          "event_index": 6,
+          "theme_connection": "Jobs' Einsatz, die GUI- und Mausinteraktion im Stil von PARC zum Produkt zu machen, gab die Richtung für Lisa/Mac vor und brachte grafische, menschenfreundliche Oberflächen in den Mainstream – ein Wendepunkt dafür, Computer breit benutzbar und kulturell zentral zu machen."
+        }
+      ],
+      "historical_context": []
+    },
+    {
+      "id": "personal_and_networked_age",
+      "title": "Das persönliche und vernetzte Zeitalter (1980-2011)",
+      "date_start": "1980",
+      "date_start_precision": "year",
+      "date_end": "2011",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "frances_allen",
+          "event_date": "1980",
+          "event_date_precision": "year",
+          "event_title": "Leitet IBMs Parallelrechnen",
+          "event_index": 10,
+          "theme_connection": "Die Leitung von IBMs Arbeiten zum Parallelrechnen (einschließlich PTRAN) und die Einführung des Programmabhängigkeitsgraphen sind wegweisende Beiträge, die Compileroptimierung und automatische Parallelisierung praktikabel machten – zentral für ‚Software wird Ingenieurskunst' und die Skalierung der Leistung über einzelne CPUs hinaus."
+        },
+        {
+          "person_id": "steve_jobs",
+          "event_date": "1984-01",
+          "event_date_precision": "month",
+          "event_title": "Startete die Macintosh-Plattform",
+          "event_index": 7,
+          "theme_connection": "Der Macintosh-Start ist ein Meilenstein darin, GUI-getriebenes persönliches Rechnen zur Massenerfahrung zu machen; er verschob das Rechnen in die alltägliche interaktive Kultur und katalysierte Ökosysteme wie das Desktop-Publishing – zentral für ‚Interaktiv, vernetzt, umkämpft'."
+        },
+        {
+          "person_id": "steve_jobs",
+          "event_date": "1985",
+          "event_date_precision": "year",
+          "event_title": "Gründete NeXT",
+          "event_index": 9,
+          "theme_connection": "Die Gründung von NeXT brachte eine folgenreiche Computerplattform hervor, deren Betriebssystem und Entwicklungsumgebung zur technischen Grundlage des modernen macOS/iOS wurden – prägend für Mainstream-Softwareinfrastruktur und Entwicklerwerkzeuge über einen einzelnen Produktzyklus hinaus."
+        },
+        {
+          "person_id": "steve_jobs",
+          "event_date": "2007-01-09",
+          "event_date_precision": "day",
+          "event_title": "Stellte das iPhone vor",
+          "event_index": 14,
+          "theme_connection": "Die iPhone-Vorstellung war ein Meilenstein des mobilen Massenrechnens: Sie verschmolz ein universelles Betriebssystem, berührungsbasierte Mensch-Computer-Interaktion und ein Internet-zuerst-Gerät zu einer Plattform, die das alltägliche Rechnen und die App-zentrierte Softwareinfrastruktur umgestaltete."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "antitrust_us_v_microsoft",
+          "title": "USA gegen Microsoft",
+          "description": "Das US-Kartellverfahren von 1998 formte die Plattformlandschaft der PC-Software um, in der Apple (und Jobs nach seiner Rückkehr) konkurrierte, während es Mac OS neu positionierte und später auf Geräte expandierte.",
+          "date_start": "1998-05-18",
+          "date_start_precision": "day",
+          "date_end": "2001-11-02",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_v._Microsoft_Corp."
+        }
+      ]
+    }
+  ],
+  "conclusion": "Die entscheidenden Sprünge des Computerzeitalters kamen aus einer Stafette einander ergänzender Erfindungen: Wege, Anweisungen darzustellen, Information im großen Maßstab zu speichern und zu verarbeiten, verlässlich zu programmieren und Fähigkeiten in menschliche Hände zu legen. Das Vermächtnis der Pioniere ist keine einzelne Maschine, sondern ein wachsender Vertrag zwischen Menschen und Systemen – einer, der weiterhin Erfindungsgeist und Zurückhaltung zugleich verlangt.",
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "1dd48dc9b0f9a964",
+    "translated_on": "2026-07-19T05:05:11.168968+00:00",
+    "translator": "manual"
+  }
+}

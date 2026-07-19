@@ -158,9 +158,14 @@ class TrPersonEvent(BaseModel):
     theme_connection: str
 
 
+class TrContextEvent(BaseModel):
+    title: str
+    description: str
+
+
 class TrMetaChapter(BaseModel):
     title: str
-    historical_context: Optional[str] = None
+    historical_context: List[TrContextEvent]
     person_events: List[TrPersonEvent]
 
 
@@ -277,7 +282,13 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         "chapters": [
             {
                 "title": chapter.get("title", ""),
-                "historical_context": chapter.get("historical_context"),
+                "historical_context": [
+                    {
+                        "title": ctx.get("title", ""),
+                        "description": ctx.get("description", ""),
+                    }
+                    for ctx in (chapter.get("historical_context") or [])
+                ],
                 "person_events": [
                     {
                         "event_title": pe.get("event_title", ""),
@@ -558,9 +569,12 @@ def apply_meta_story_translations(
     _require_same_length("chapters", src_chapters, tr_chapters)
     for chapter, tr_chapter in zip(src_chapters, tr_chapters):
         _set_if_source_has(chapter, "title", tr_chapter.get("title"))
-        _set_if_source_has(
-            chapter, "historical_context", tr_chapter.get("historical_context")
-        )
+        src_contexts = chapter.get("historical_context") or []
+        tr_contexts = tr_chapter.get("historical_context") or []
+        _require_same_length("chapter.historical_context", src_contexts, tr_contexts)
+        for ctx, tr_ctx in zip(src_contexts, tr_contexts):
+            _set_if_source_has(ctx, "title", tr_ctx.get("title"))
+            _set_if_source_has(ctx, "description", tr_ctx.get("description"))
         src_events = chapter.get("person_events") or []
         tr_events = tr_chapter.get("person_events") or []
         _require_same_length("chapter.person_events", src_events, tr_events)
