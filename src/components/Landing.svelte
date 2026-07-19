@@ -1414,8 +1414,8 @@
 
   @media (min-width: 768px) {
     .landing {
-      padding: 4rem 3rem 5rem;
-      gap: 3rem;
+      padding: 2.5rem 3rem 5rem;
+      gap: 1.5rem;
     }
 
     .header-container {
@@ -1423,6 +1423,7 @@
       grid-template-columns: 1fr 2fr;
       gap: 3rem;
       align-items: start;
+      margin-bottom: 1rem;
     }
 
     .landing-hero {
