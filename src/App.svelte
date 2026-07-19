@@ -7,6 +7,7 @@
   import ExhibitionView from "./components/ExhibitionView.svelte";
   import MetaStoryView from "./components/MetaStoryView.svelte";
   import { currentLanguage, loadTranslations, _ } from "./stores/language";
+  import { highContrast } from "./stores/contrast.js";
   import { queryParams, buildUrlWithParams } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
   import { displayName } from "./utils/helpers.js";
@@ -646,6 +647,11 @@
     />
   {/if}
 </div>
+
+{#if $highContrast}
+  <!-- Global contrast boost; see .contrast-overlay in app.css. -->
+  <div class="contrast-overlay" aria-hidden="true"></div>
+{/if}
 
 <style>
   :global(body) {
