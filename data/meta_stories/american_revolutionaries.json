@@ -1,0 +1,262 @@
+{
+  "dataset": "meta_story",
+  "created_on": "2026-07-19T11:39:18.184161+02:00",
+  "meta_story": {
+    "id": "american_revolutionaries",
+    "title": "Making American Independence",
+    "tagline": "War, words, and a republic",
+    "description": "The American Revolution was both a war against imperial rule and an argument over what independence should mean. In camps, legislative chambers, Paris salons, private letters, and the new government’s offices, revolutionaries translated resistance into institutions. Military survival required civilian commitment; victory required foreign diplomacy; and political liberty required durable arrangements for representation, credit, executive power, and public trust.\n\nGeorge Washington gave the rebellion a disciplined center of command and later a precedent for republican executive authority. Benjamin Franklin turned a lifetime of print culture, civic experiment, and diplomacy toward winning France’s indispensable support. Abigail Adams’s letters reveal the Revolution as a lived struggle within homes and families, while pressing its leaders to remember those excluded from their grand language of rights. Alexander Hamilton carried the wartime demand for national coordination into the constitutional and fiscal architecture of the early republic.",
+    "person_ids": [
+      "george_washington",
+      "benjamin_franklin",
+      "abigail_adams",
+      "alexander_hamilton"
+    ],
+    "date_range_start": "1757",
+    "date_range_end": "1818",
+    "lastUpdated": "2026-07-19T11:39:18.184161+02:00"
+  },
+  "generation_metadata": {
+    "hints": {
+      "hint": "Focus on the struggle for independence and the contested work of building the early United States; balance military command, diplomacy, political advocacy, correspondence, constitutional design, and public finance."
+    },
+    "model": "gpt-5.6-terra",
+    "generated_at": "2026-07-19T11:39:18.184161+02:00"
+  },
+  "subtopics": [
+    {
+      "id": "winning_independence",
+      "title": "Winning Independence",
+      "description": "Independence needed both a military force able to endure defeat and a diplomatic revolution capable of turning foreign power to the American cause. Washington and Franklin supplied those complementary pillars: command at home and alliance abroad.",
+      "person_ids": ["george_washington", "benjamin_franklin"]
+    },
+    {
+      "id": "contesting_the_republic",
+      "title": "Contesting the Republic",
+      "description": "The Revolution continued after the fighting—in letters that tested its promises and in institutions designed to make union workable. Adams made private experience a source of public critique, while Hamilton pressed for a vigorous constitutional and financial state.",
+      "person_ids": ["abigail_adams", "alexander_hamilton"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "imperial_crisis",
+      "title": "Imperial Crisis (1757-1775)",
+      "date_start": "1757",
+      "date_start_precision": "year",
+      "date_end": "1775",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "george_washington",
+          "event_date": "1775-06-15",
+          "event_date_precision": "day",
+          "event_title": "Commands Continental Army",
+          "event_index": 8,
+          "theme_connection": "Washington's assumption of command created the Continental Army's unified national military leadership at the outset of the war. His command was indispensable to sustaining the armed struggle that made independence possible."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "stamp_act",
+          "title": "Stamp Act",
+          "description": "The tax crisis drew Franklin into lobbying in London and helped move Washington toward organized colonial resistance.",
+          "date_start": "1765-03-22",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Stamp_Act_1765"
+        }
+      ]
+    },
+    {
+      "id": "war_for_independence",
+      "title": "War for Independence (1775-1783)",
+      "date_start": "1775",
+      "date_start_precision": "year",
+      "date_end": "1783",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "george_washington",
+          "event_date": "1775-06-15",
+          "event_date_precision": "day",
+          "event_title": "Commands Continental Army",
+          "event_index": 8,
+          "theme_connection": "Washington’s assumption of command gave the rebellion a unified, durable military center capable of organizing the Continental Army through a long war. That command structure was indispensable to converting resistance into an army able to pursue independence."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1776-12-26",
+          "event_date_precision": "day",
+          "event_title": "Wins Trenton and Princeton",
+          "event_index": 9,
+          "theme_connection": "The Trenton and Princeton victories revived the Continental cause after its 1776 collapse in New Jersey, preserving both military capacity and civilian confidence in independence. They were landmark demonstrations of Washington’s strategy of survival and calculated counterattack."
+        },
+        {
+          "person_id": "benjamin_franklin",
+          "event_date": "1776-10",
+          "event_date_precision": "month",
+          "event_title": "Wins French Aid for Independence",
+          "event_index": 12,
+          "theme_connection": "Franklin’s diplomacy helped secure French material support and the 1778 alliance, bringing the crucial foreign power into the war against Britain. This was an indispensable diplomatic pillar of American victory, later completed through the Treaty of Paris negotiations."
+        },
+        {
+          "person_id": "abigail_adams",
+          "event_date": "1776-03-31",
+          "event_date_precision": "day",
+          "event_title": "Urges Women's Recognition",
+          "event_index": 7,
+          "theme_connection": "Adams’s “Remember the Ladies” letter is a lasting, iconic articulation of the Revolution’s contradiction between universal rights language and women’s political exclusion. It makes private correspondence a consequential critique of what the new republic should mean."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1781-09-28",
+          "event_date_precision": "day",
+          "event_title": "Wins Yorktown, Resigns Command",
+          "event_index": 10,
+          "theme_connection": "Washington’s Franco-American command at Yorktown produced the decisive surrender that effectively ended major fighting, while his resignation of his commission established a powerful republican precedent for civilian supremacy over the military."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "declaration_of_independence",
+          "title": "Declaration of Independence",
+          "description": "Franklin helped draft and signed the Declaration, while its adoption gave Washington's army the cause of an independent United States.",
+          "date_start": "1776-07-04",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+        }
+      ]
+    },
+    {
+      "id": "forging_the_constitution",
+      "title": "Forging the Constitution (1783-1789)",
+      "date_start": "1783",
+      "date_start_precision": "year",
+      "date_end": "1789",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1786-09-11",
+          "event_date_precision": "day",
+          "event_title": "Calls for Constitutional Convention",
+          "event_index": 9,
+          "theme_connection": "Hamilton drafted the Annapolis Convention report calling for a Philadelphia convention, a decisive institutional intervention that led directly to the Convention framing a new federal Constitution."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1787-05-25",
+          "event_date_precision": "day",
+          "event_title": "Presides Over Constitutional Convention",
+          "event_index": 11,
+          "theme_connection": "Washington’s unanimous presidency of the Convention gave its deliberations crucial authority and helped produce the Constitution, the durable institutional framework that replaced the Confederation and made a workable republic possible."
+        },
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1787-05",
+          "event_date_precision": "month",
+          "event_title": "Makes the Case for Constitution",
+          "event_index": 10,
+          "theme_connection": "Hamilton’s defense of stronger national authority and his Federalist essays supplied a foundational public argument for ratification, helping secure the Constitution that structured the new republic."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1789-04-30",
+          "event_date_precision": "day",
+          "event_title": "Becomes First President",
+          "event_index": 12,
+          "theme_connection": "By taking office as the first president, Washington put the Constitution’s new executive branch into operation and established an indispensable precedent for republican executive authority."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "shays_rebellion",
+          "title": "Shays' Rebellion",
+          "description": "The uprising strengthened Hamilton's call for a convention and helped persuade Washington to return to national public service and preside over it.",
+          "date_start": "1786-08-29",
+          "date_start_precision": "day",
+          "date_end": "1787-01-25",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Shays%27_Rebellion"
+        }
+      ]
+    },
+    {
+      "id": "governing_the_republic",
+      "title": "Governing the Republic (1789-1804)",
+      "date_start": "1789",
+      "date_start_precision": "year",
+      "date_end": "1804",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "george_washington",
+          "event_date": "1789-04-30",
+          "event_date_precision": "day",
+          "event_title": "Becomes First President",
+          "event_index": 12,
+          "theme_connection": "Washington’s inauguration established the federal executive in operation under the new Constitution. As the first president, his conduct set an indispensable republican precedent for a powerful but constitutionally bounded national executive."
+        },
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1789-09-11",
+          "event_date_precision": "day",
+          "event_title": "Leads the Treasury Department",
+          "event_index": 11,
+          "theme_connection": "As first secretary of the treasury, Hamilton organized the Treasury and launched the program of debt assumption, revenue collection, and public credit that gave the new Union durable fiscal capacity. This was a foundational institutional achievement of the early republic."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1794-08",
+          "event_date_precision": "month",
+          "event_title": "Suppresses Whiskey Rebellion",
+          "event_index": 13,
+          "theme_connection": "Washington’s mobilization against the Whiskey Rebellion was the first major enforcement of federal law, demonstrating that the new republic possessed the practical authority to uphold its laws against armed resistance. It made federal sovereignty a functioning reality rather than a constitutional promise."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1796-09-19",
+          "event_date_precision": "day",
+          "event_title": "Issues Farewell Address",
+          "event_index": 14,
+          "theme_connection": "The published Farewell Address became a durable statement of republican political principles, especially national union, constitutional government, and restraint in foreign entanglements. Washington’s voluntary departure also reinforced the precedent that executive power would not become personal rule."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "jay_treaty",
+          "title": "Jay Treaty",
+          "description": "Washington's administration pursued and defended the treaty with Hamilton's support, intensifying the partisan conflict surrounding their foreign policy.",
+          "date_start": "1794-11-19",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jay_Treaty"
+        }
+      ]
+    },
+    {
+      "id": "revolution_remembered",
+      "title": "Revolution Remembered (1804-1818)",
+      "date_start": "1804",
+      "date_start_precision": "year",
+      "date_end": "1818",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "abigail_adams",
+          "event_date": "1812",
+          "event_date_precision": "year",
+          "event_title": "Supports Jefferson Reconciliation",
+          "event_index": 14,
+          "theme_connection": "By helping preserve the personal connection between the Adams and Jefferson families, Abigail Adams contributed to the 1812 reconciliation of two estranged revolutionary leaders. Their renewed correspondence became an enduring record of how the founding generation remembered and debated the republic it had created."
+        }
+      ],
+      "historical_context": []
+    }
+  ],
+  "conclusion": "American independence was not secured at Yorktown alone. It depended on an intertwined practice of command, persuasion, international alliance, household endurance, constitutional compromise, and financial state-building—work that made a republic possible while leaving its promises of equality fiercely unfinished."
+}

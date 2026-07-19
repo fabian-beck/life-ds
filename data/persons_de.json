@@ -1,6 +1,38 @@
 {
   "people": [
     {
+      "id": "abigail_adams",
+      "name": "Abigail_Adams",
+      "summary": "Abigail Adams war Schriftstellerin, Haushaltsvorsteherin und politische Vertraute, deren umfangreiche Korrespondenz mit John Adams das Familienleben und öffentliche Angelegenheiten während der Amerikanischen Revolution und der frühen Republik dokumentiert. Als Ehefrau des ersten US-Vizepräsidenten und zweiten Präsidenten zog sie sechs Kinder groß, lebte während diplomatischer Entsendungen in Europa und führte später den Haushalt der Familie Adams in Quincy.",
+      "tagline": "Stimme der revolutionären Heimatfront",
+      "portrait": {
+        "image": "/portraits/abigail_adams_thumbnail.webp",
+        "thumbnail": "/portraits/abigail_adams_thumbnail.webp",
+        "medium": "/portraits/abigail_adams_medium.webp",
+        "full": "/portraits/abigail_adams_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Abigail_Adams_by_Gilbert_Stuart.jpg"
+      },
+      "birthDate": "1744-11-22",
+      "deathDate": "1818-10-28",
+      "primaryRoles": [
+        "Schriftstellerin",
+        "politische Beraterin",
+        "First Lady"
+      ],
+      "created": "2026-07-19T11:26:08.490578+02:00",
+      "lastUpdated": "2026-07-19T11:29:42.276334+02:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "d6db2a765d388731",
+        "translated_on": "2026-07-19T11:29:42.276334+02:00",
+        "translator": "openai:gpt-5.6-terra"
+      }
+    },
+    {
       "id": "ada_lovelace",
       "name": "Ada_Lovelace",
       "tagline": "Visionäre Pionierin des Computers",
@@ -94,6 +126,38 @@
         "source_fingerprint": "c6f1a171d57db7c3",
         "translated_on": "2026-07-18T14:37:51.190009+00:00",
         "translator": "manual"
+      }
+    },
+    {
+      "id": "alexander_hamilton",
+      "name": "Alexander_Hamilton",
+      "summary": "Alexander Hamilton war ein in der Karibik geborener amerikanischer Staatsmann, Offizier im Unabhängigkeitskrieg, Rechtsanwalt und Gründervater. Als erster US-Finanzminister schuf er wesentliche Elemente des frühen föderalen Finanzsystems und wurde zu einem führenden Verfechter einer starken nationalen Regierung.",
+      "tagline": "Architekt der amerikanischen Staatsfinanzen",
+      "portrait": {
+        "image": "/portraits/alexander_hamilton_thumbnail.webp",
+        "thumbnail": "/portraits/alexander_hamilton_thumbnail.webp",
+        "medium": "/portraits/alexander_hamilton_medium.webp",
+        "full": "/portraits/alexander_hamilton_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Alexander_Hamilton_%28NPG%29.jpg"
+      },
+      "birthDate": "1755-01-11",
+      "deathDate": "1804-07-12",
+      "primaryRoles": [
+        "Staatsmann",
+        "Soldat",
+        "Rechtsanwalt"
+      ],
+      "created": "2026-07-19T11:33:52.015587+02:00",
+      "lastUpdated": "2026-07-19T11:37:49.691616+02:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "06f6d60cf175485f",
+        "translated_on": "2026-07-19T11:37:49.691616+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {

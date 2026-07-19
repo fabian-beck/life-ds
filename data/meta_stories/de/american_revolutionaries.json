@@ -1,0 +1,269 @@
+{
+  "dataset": "meta_story",
+  "created_on": "2026-07-19T11:39:18.184161+02:00",
+  "meta_story": {
+    "id": "american_revolutionaries",
+    "title": "Die amerikanische Unabhängigkeit erringen",
+    "tagline": "Krieg, Worte und eine Republik",
+    "description": "Die Amerikanische Revolution war zugleich ein Krieg gegen imperiale Herrschaft und eine Auseinandersetzung darüber, was Unabhängigkeit bedeuten sollte. In Lagern, Gesetzgebungskammern, Pariser Salons, privaten Briefen und den Amtsstuben der neuen Regierung verwandelten Revolutionäre Widerstand in Institutionen. Das militärische Überleben erforderte ziviles Engagement; der Sieg erforderte auswärtige Diplomatie; und politische Freiheit erforderte dauerhafte Regelungen für Repräsentation, Kreditwesen, Exekutivgewalt und öffentliches Vertrauen.\n\nGeorge Washington gab der Rebellion ein diszipliniertes Zentrum der Führung und schuf später einen Präzedenzfall für republikanische Exekutivgewalt. Benjamin Franklin richtete ein Leben voller Druckkultur, bürgerschaftlicher Experimente und Diplomatie darauf aus, Frankreichs unverzichtbare Unterstützung zu gewinnen. Abigail Adams’ Briefe zeigen die Revolution als gelebten Kampf in Häusern und Familien und drängen zugleich ihre Führer, sich jener zu erinnern, die von ihrer großen Sprache der Rechte ausgeschlossen waren. Alexander Hamilton überführte die kriegsbedingte Forderung nach nationaler Koordination in die verfassungsmäßige und finanzielle Architektur der frühen Republik.",
+    "person_ids": [
+      "george_washington",
+      "benjamin_franklin",
+      "abigail_adams",
+      "alexander_hamilton"
+    ],
+    "date_range_start": "1757",
+    "date_range_end": "1818",
+    "lastUpdated": "2026-07-19T11:39:18.184161+02:00"
+  },
+  "generation_metadata": {
+    "hints": {
+      "hint": "Focus on the struggle for independence and the contested work of building the early United States; balance military command, diplomacy, political advocacy, correspondence, constitutional design, and public finance."
+    },
+    "model": "gpt-5.6-terra",
+    "generated_at": "2026-07-19T11:39:18.184161+02:00"
+  },
+  "subtopics": [
+    {
+      "id": "winning_independence",
+      "title": "Die Unabhängigkeit erringen",
+      "description": "Die Unabhängigkeit benötigte sowohl eine militärische Streitmacht, die Niederlagen überstehen konnte, als auch eine diplomatische Revolution, die ausländische Macht für die amerikanische Sache zu gewinnen vermochte. Washington und Franklin stellten diese einander ergänzenden Pfeiler bereit: Führung im Inland und Bündnis im Ausland.",
+      "person_ids": ["george_washington", "benjamin_franklin"]
+    },
+    {
+      "id": "contesting_the_republic",
+      "title": "Die Republik umkämpfen",
+      "description": "Die Revolution setzte sich nach den Kämpfen fort – in Briefen, die ihre Versprechen auf die Probe stellten, und in Institutionen, die die Union funktionsfähig machen sollten. Adams machte private Erfahrung zu einer Quelle öffentlicher Kritik, während Hamilton auf einen tatkräftigen Verfassungs- und Finanzstaat drängte.",
+      "person_ids": ["abigail_adams", "alexander_hamilton"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "imperial_crisis",
+      "title": "Imperiale Krise (1757-1775)",
+      "date_start": "1757",
+      "date_start_precision": "year",
+      "date_end": "1775",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "george_washington",
+          "event_date": "1775-06-15",
+          "event_date_precision": "day",
+          "event_title": "Übernimmt die Kontinentalarmee",
+          "event_index": 8,
+          "theme_connection": "Washingtons Übernahme des Kommandos schuf zu Beginn des Krieges die einheitliche nationale militärische Führung der Kontinentalarmee. Sein Kommando war unerlässlich, um den bewaffneten Kampf aufrechtzuerhalten, der die Unabhängigkeit möglich machte."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "stamp_act",
+          "title": "Stempelgesetz",
+          "description": "Die Steuerkrise zog Franklin in die Lobbyarbeit in London hinein und brachte Washington der organisierten kolonialen Gegenwehr näher.",
+          "date_start": "1765-03-22",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Stamp_Act_1765"
+        }
+      ]
+    },
+    {
+      "id": "war_for_independence",
+      "title": "Unabhängigkeitskrieg (1775-1783)",
+      "date_start": "1775",
+      "date_start_precision": "year",
+      "date_end": "1783",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "george_washington",
+          "event_date": "1775-06-15",
+          "event_date_precision": "day",
+          "event_title": "Übernimmt die Kontinentalarmee",
+          "event_index": 8,
+          "theme_connection": "Washingtons Übernahme des Kommandos gab der Rebellion ein einheitliches, dauerhaftes militärisches Zentrum, das fähig war, die Kontinentalarmee durch einen langen Krieg zu organisieren. Diese Kommandostruktur war unerlässlich, um den Widerstand in eine Armee zu verwandeln, die die Unabhängigkeit verfolgen konnte."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1776-12-26",
+          "event_date_precision": "day",
+          "event_title": "Siegt bei Trenton und Princeton",
+          "event_index": 9,
+          "theme_connection": "Die Siege bei Trenton und Princeton belebten die kontinentale Sache nach ihrem Zusammenbruch von 1776 in New Jersey wieder und bewahrten sowohl die militärische Handlungsfähigkeit als auch das Vertrauen der Zivilbevölkerung in die Unabhängigkeit. Sie waren wegweisende Demonstrationen von Washingtons Strategie des Überlebens und des kalkulierten Gegenangriffs."
+        },
+        {
+          "person_id": "benjamin_franklin",
+          "event_date": "1776-10",
+          "event_date_precision": "month",
+          "event_title": "Gewinnt französische Hilfe für die Unabhängigkeit",
+          "event_index": 12,
+          "theme_connection": "Franklins Diplomatie trug dazu bei, französische materielle Unterstützung und das Bündnis von 1778 zu sichern und damit die entscheidende ausländische Macht in den Krieg gegen Großbritannien zu führen. Dies war ein unverzichtbarer diplomatischer Pfeiler des amerikanischen Sieges, der später durch die Verhandlungen zum Vertrag von Paris vollendet wurde."
+        },
+        {
+          "person_id": "abigail_adams",
+          "event_date": "1776-03-31",
+          "event_date_precision": "day",
+          "event_title": "Fordert Anerkennung für Frauen",
+          "event_index": 7,
+          "theme_connection": "Adams’ Brief „Remember the Ladies“ ist eine bleibende, ikonische Formulierung des Widerspruchs der Revolution zwischen der Sprache universeller Rechte und dem politischen Ausschluss von Frauen. Er macht private Korrespondenz zu einer folgenreichen Kritik daran, was die neue Republik bedeuten sollte."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1781-09-28",
+          "event_date_precision": "day",
+          "event_title": "Siegt bei Yorktown, legt Kommando nieder",
+          "event_index": 10,
+          "theme_connection": "Washingtons französisch-amerikanisches Kommando bei Yorktown erzwang die entscheidende Kapitulation, die die großen Kampfhandlungen faktisch beendete, während seine Niederlegung seines Offizierspatents einen mächtigen republikanischen Präzedenzfall für den Vorrang der Zivilgewalt über das Militär schuf."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "declaration_of_independence",
+          "title": "Unabhängigkeitserklärung",
+          "description": "Franklin half beim Entwurf und unterzeichnete die Erklärung, während ihre Annahme Washingtons Armee die Sache eines unabhängigen Vereinigten Staaten gab.",
+          "date_start": "1776-07-04",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+        }
+      ]
+    },
+    {
+      "id": "forging_the_constitution",
+      "title": "Die Verfassung gestalten (1783-1789)",
+      "date_start": "1783",
+      "date_start_precision": "year",
+      "date_end": "1789",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1786-09-11",
+          "event_date_precision": "day",
+          "event_title": "Fordert Verfassungskonvent",
+          "event_index": 9,
+          "theme_connection": "Hamilton verfasste den Bericht der Annapolis-Konferenz, der zu einem Konvent in Philadelphia aufrief – ein entscheidender institutioneller Eingriff, der unmittelbar zu dem Konvent führte, der eine neue Bundesverfassung ausarbeitete."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1787-05-25",
+          "event_date_precision": "day",
+          "event_title": "Leitet den Verfassungskonvent",
+          "event_index": 11,
+          "theme_connection": "Washingtons einstimmiger Vorsitz über den Konvent verlieh dessen Beratungen entscheidende Autorität und trug dazu bei, die Verfassung hervorzubringen, den dauerhaften institutionellen Rahmen, der die Konföderation ersetzte und eine funktionsfähige Republik möglich machte."
+        },
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1787-05",
+          "event_date_precision": "month",
+          "event_title": "Plädiert für die Verfassung",
+          "event_index": 10,
+          "theme_connection": "Hamiltons Verteidigung einer stärkeren nationalen Gewalt und seine Federalist-Aufsätze lieferten ein grundlegendes öffentliches Argument für die Ratifizierung und halfen, die Verfassung zu sichern, die die neue Republik strukturierte."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1789-04-30",
+          "event_date_precision": "day",
+          "event_title": "Wird erster Präsident",
+          "event_index": 12,
+          "theme_connection": "Indem Washington als erster Präsident sein Amt antrat, setzte er den neuen Exekutivzweig der Verfassung in Kraft und schuf einen unverzichtbaren Präzedenzfall für republikanische Exekutivgewalt."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "shays_rebellion",
+          "title": "Shays’ Rebellion",
+          "description": "Der Aufstand verstärkte Hamiltons Ruf nach einem Konvent und half, Washington zu überzeugen, in den nationalen öffentlichen Dienst zurückzukehren und den Vorsitz zu übernehmen.",
+          "date_start": "1786-08-29",
+          "date_start_precision": "day",
+          "date_end": "1787-01-25",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Shays%27_Rebellion"
+        }
+      ]
+    },
+    {
+      "id": "governing_the_republic",
+      "title": "Die Republik regieren (1789-1804)",
+      "date_start": "1789",
+      "date_start_precision": "year",
+      "date_end": "1804",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "george_washington",
+          "event_date": "1789-04-30",
+          "event_date_precision": "day",
+          "event_title": "Wird erster Präsident",
+          "event_index": 12,
+          "theme_connection": "Washingtons Amtseinführung setzte die föderale Exekutive unter der neuen Verfassung in Tätigkeit. Als erster Präsident schuf sein Handeln einen unverzichtbaren republikanischen Präzedenzfall für eine mächtige, aber verfassungsmäßig begrenzte nationale Exekutive."
+        },
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1789-09-11",
+          "event_date_precision": "day",
+          "event_title": "Leitet das Finanzministerium",
+          "event_index": 11,
+          "theme_connection": "Als erster Finanzminister organisierte Hamilton das Finanzministerium und leitete das Programm der Schuldenübernahme, Einnahmenerhebung und öffentlichen Kreditwürdigkeit ein, das der neuen Union dauerhafte finanzielle Handlungsfähigkeit verlieh. Dies war eine grundlegende institutionelle Leistung der frühen Republik."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1794-08",
+          "event_date_precision": "month",
+          "event_title": "Schlägt die Whiskey-Rebellion nieder",
+          "event_index": 13,
+          "theme_connection": "Washingtons Mobilisierung gegen die Whiskey-Rebellion war die erste große Durchsetzung von Bundesrecht und zeigte, dass die neue Republik die tatsächliche Autorität besaß, ihre Gesetze gegen bewaffneten Widerstand durchzusetzen. Sie machte die Bundessouveränität zu einer funktionierenden Realität statt zu einem Verfassungsversprechen."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1796-09-19",
+          "event_date_precision": "day",
+          "event_title": "Veröffentlicht Abschiedsrede",
+          "event_index": 14,
+          "theme_connection": "Die veröffentlichte Abschiedsadresse wurde zu einer dauerhaften Darlegung republikanischer politischer Grundsätze, insbesondere der nationalen Union, der verfassungsmäßigen Regierung und der Zurückhaltung bei auswärtigen Verstrickungen. Washingtons freiwilliger Rückzug bekräftigte zudem den Präzedenzfall, dass Exekutivgewalt nicht zu persönlicher Herrschaft werden würde."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "jay_treaty",
+          "title": "Jay-Vertrag",
+          "description": "Washingtons Regierung verfolgte und verteidigte den Vertrag mit Hamiltons Unterstützung und verschärfte damit den parteipolitischen Konflikt um ihre Außenpolitik.",
+          "date_start": "1794-11-19",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jay_Treaty"
+        }
+      ]
+    },
+    {
+      "id": "revolution_remembered",
+      "title": "Die Revolution in Erinnerung (1804-1818)",
+      "date_start": "1804",
+      "date_start_precision": "year",
+      "date_end": "1818",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "abigail_adams",
+          "event_date": "1812",
+          "event_date_precision": "year",
+          "event_title": "Unterstützt Versöhnung mit Jefferson",
+          "event_index": 14,
+          "theme_connection": "Indem Abigail Adams half, die persönliche Verbindung zwischen den Familien Adams und Jefferson zu bewahren, trug sie zur Versöhnung zweier entfremdeter Revolutionsführer im Jahr 1812 bei. Ihre erneuerte Korrespondenz wurde zu einem bleibenden Zeugnis dafür, wie die Gründergeneration die von ihr geschaffene Republik erinnerte und diskutierte."
+        }
+      ],
+      "historical_context": []
+    }
+  ],
+  "conclusion": "Die amerikanische Unabhängigkeit wurde nicht allein bei Yorktown gesichert. Sie beruhte auf einem verflochtenen Zusammenspiel von Führung, Überzeugungsarbeit, internationalem Bündnis, Durchhaltevermögen der Haushalte, Verfassungskompromiss und dem Aufbau eines Finanzstaats – Arbeit, die eine Republik möglich machte, während ihre Gleichheitsversprechen zutiefst unvollendet blieben.",
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "c1d9fe1bc750802d",
+    "translated_on": "2026-07-19T11:46:29.622610+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}
