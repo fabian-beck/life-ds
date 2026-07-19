@@ -27,6 +27,8 @@
   let loadedImages = new Set();
   let activeMetaStoryFilter = null;
   let showMap = false;
+  let filtersSectionElement = null;
+  let wasFiltering = false;
 
   // Sticky header state
   let showStickyHeader = false;
@@ -291,6 +293,26 @@
   $: isFiltering =
     isSearching || activeTags.size > 0 || activeMetaStoryFilter !== null;
 
+  // When search or filtering becomes active, scroll down to the filters section
+  // (the meta-story carousel and title stay in place, just above the fold).
+  $: if (isFiltering && !wasFiltering) {
+    wasFiltering = true;
+    scrollToFilters();
+  } else if (!isFiltering && wasFiltering) {
+    wasFiltering = false;
+  }
+
+  function scrollToFilters() {
+    if (typeof window === "undefined") return;
+    // Wait for the DOM to reflect the active-filter state before scrolling.
+    requestAnimationFrame(() => {
+      filtersSectionElement?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
+
   function formatLifespan(entry) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
     if (entry.lifespan) {
@@ -371,7 +393,7 @@
   }
 </script>
 
-<section class="landing" class:filtering={isFiltering}>
+<section class="landing">
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
     <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
@@ -427,7 +449,11 @@
     {/key}
   </div>
 
-  <div class="filters-section" class:searching={isSearching}>
+  <div
+    class="filters-section"
+    class:searching={isSearching}
+    bind:this={filtersSectionElement}
+  >
     <div class="search-box">
       <svg
         class="search-icon"
@@ -1227,6 +1253,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
+    /* Leave room for the sticky header when scrolled into view via search/filter */
+    scroll-margin-top: calc(var(--landing-sticky-header-height, 0px) + 1rem);
   }
 
   .filters-right {
@@ -1385,7 +1413,6 @@
     color: #e0f2fe;
   }
 
-  .landing.filtering .header-container,
   .filters-section.searching .filters-right {
     display: none;
   }
