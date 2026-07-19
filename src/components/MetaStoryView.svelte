@@ -553,7 +553,11 @@
         <h2>{$_("meta_story.network_heading")}</h2>
         <p class="network-intro">{$_("meta_story.network_subtitle")}</p>
         {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
-          <MetaStoryNetwork network={metaStoryData.social_network} />
+          <MetaStoryNetwork
+            network={metaStoryData.social_network}
+            {currentLanguage}
+            metaStoryId={metaStoryData.meta_story.id}
+          />
         {/await}
       </section>
     {/if}
