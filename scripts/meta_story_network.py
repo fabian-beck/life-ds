@@ -179,8 +179,9 @@ def build_social_network(
                 return pid
         return None
 
-    # Main ↔ main links, keyed by the unordered pair.
-    main_links: Dict[Tuple[str, str], Dict[str, Any]] = {}
+    # Main ↔ main links, keyed by the unordered pair. Each value maps a
+    # main person's id to that person's ego-network view of the other.
+    main_links: Dict[Tuple[str, str], Dict[str, Dict[str, Any]]] = {}
     # Secondary candidates: key -> aggregated info.
     secondary: Dict[str, Dict[str, Any]] = {}
 
@@ -203,12 +204,12 @@ def build_social_network(
             other_main = match_main(conn_norm, exclude=pid)
             if other_main:
                 pair = tuple(sorted((pid, other_main)))
-                candidate = {"source": pair[0], "target": pair[1], **link_info}
-                existing = main_links.get(pair)
-                if existing is None or _link_richness(candidate) > _link_richness(
-                    existing
-                ):
-                    main_links[pair] = candidate
+                # Store each direction separately so the UI can describe the tie
+                # from either person's own perspective.
+                endpoints = main_links.setdefault(pair, {})
+                prev = endpoints.get(pid)
+                if prev is None or _link_richness(link_info) > _link_richness(prev):
+                    endpoints[pid] = link_info
                 continue
 
             # Not a main person → potential bridging (secondary) node.
@@ -254,8 +255,21 @@ def build_social_network(
 
     links: List[Dict[str, Any]] = []
     for pair in sorted(main_links.keys()):
-        link = main_links[pair]
-        links.append({**link, "kind": "main"})
+        endpoints = main_links[pair]
+        # Top-level fields (used for stroke width / native tooltip) come from the
+        # richest available direction; `endpoints` carries both perspectives.
+        primary = max(endpoints.values(), key=_link_richness)
+        links.append(
+            {
+                "source": pair[0],
+                "target": pair[1],
+                "kind": "main",
+                "relationship_type": primary["relationship_type"],
+                "relationship_description": primary["relationship_description"],
+                "strength": primary["strength"],
+                "endpoints": endpoints,
+            }
+        )
 
     for key, entry in bridging:
         nodes.append(
@@ -272,8 +286,12 @@ def build_social_network(
                 {
                     "source": main_id,
                     "target": key,
-                    **link_info,
                     "kind": "secondary",
+                    "relationship_type": link_info["relationship_type"],
+                    "relationship_description": link_info["relationship_description"],
+                    "strength": link_info["strength"],
+                    # Only the main person's perspective exists for a bridge.
+                    "endpoints": {main_id: link_info},
                 }
             )
 

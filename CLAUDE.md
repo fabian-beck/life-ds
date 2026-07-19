@@ -184,10 +184,23 @@ section and visualizes how the story's people connected:
   "links": [
     { "source": "alan_turing", "target": "john_von_neumann",
       "relationship_type": "academic/colleague",
-      "relationship_description": "…", "strength": "moderate", "kind": "main" }
+      "relationship_description": "…", "strength": "moderate", "kind": "main",
+      "endpoints": {
+        "alan_turing": { "relationship_type": "…", "relationship_description": "…", "strength": "…" },
+        "john_von_neumann": { "relationship_type": "…", "relationship_description": "…", "strength": "…" }
+      } }
   ]
 }
 ```
+
+Each link's `endpoints` map holds **each person's own ego-network view of the
+other** (a bridge link has only the main person's entry). The UI uses this to
+explain a focused node's ties **from that person's perspective**; when a
+direction is missing it falls back to the other side and labels it "as recalled
+by {name}". Top-level `relationship_type`/`strength` (the richest direction)
+drive stroke width. Links are drawn behind nodes and read neutral until a node
+is hovered/tapped, then that node's ties light up in the accent color while
+other nodes are darkened (kept opaque so links never shine through).
 
 - **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
   portraits ringed in each person's `person_styles.json` primary color. A

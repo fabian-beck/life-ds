@@ -378,106 +378,202 @@
       {
         "source": "cunigunde_of_luxembourg",
         "target": "henry_ii",
+        "kind": "main",
         "relationship_type": "family/spouse",
         "relationship_description": "Wife and co-ruler in imperial representation; crowned queen (1002) and empress (1014) alongside Henry, acted as his closest adviser and was active in councils and ecclesiastical patronage; served as interim regent after his death.",
         "strength": "strong",
-        "kind": "main"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "family/spouse",
+            "relationship_description": "Wife and co-ruler in imperial representation; crowned queen (1002) and empress (1014) alongside Henry, acted as his closest adviser and was active in councils and ecclesiastical patronage; served as interim regent after his death.",
+            "strength": "strong"
+          },
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "family/spouse",
+            "relationship_description": "Husband and closest political partner; their childless marriage underpinned her status as consors regni and co-ruler in the German kingdom and the empire.",
+            "strength": "strong"
+          }
+        }
       },
       {
         "source": "henry_ii",
         "target": "sec:gisela_of_burgundy",
+        "kind": "secondary",
         "relationship_type": "family/mother",
         "relationship_description": "Mother; part of Henry II's dynastic network connecting the Ottonians to Burgundian aristocratic lineages.",
         "strength": "strong",
-        "kind": "secondary"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "family/mother",
+            "relationship_description": "Mother; part of Henry II's dynastic network connecting the Ottonians to Burgundian aristocratic lineages.",
+            "strength": "strong"
+          }
+        }
       },
       {
         "source": "cunigunde_of_luxembourg",
         "target": "sec:gisela_of_burgundy",
+        "kind": "secondary",
         "relationship_type": "family/mother_in_law",
         "relationship_description": "Mother of Henry II and thus Cunigunde’s mother-in-law, linking her to the royal houses of Burgundy and further expanding her web of high-born kin.",
         "strength": "moderate",
-        "kind": "secondary"
+        "endpoints": {
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "family/mother_in_law",
+            "relationship_description": "Mother of Henry II and thus Cunigunde’s mother-in-law, linking her to the royal houses of Burgundy and further expanding her web of high-born kin.",
+            "strength": "moderate"
+          }
+        }
       },
       {
         "source": "henry_ii",
         "target": "sec:willigis",
+        "kind": "secondary",
         "relationship_type": "religious/archbishop_ally",
         "relationship_description": "Archbishop of Mainz who crowned Henry II and Cunigunde in Mainz (1002) and played a central role in early legitimization ceremonies for the new reign.",
         "strength": "moderate",
-        "kind": "secondary"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "religious/archbishop_ally",
+            "relationship_description": "Archbishop of Mainz who crowned Henry II and Cunigunde in Mainz (1002) and played a central role in early legitimization ceremonies for the new reign.",
+            "strength": "moderate"
+          }
+        }
       },
       {
         "source": "cunigunde_of_luxembourg",
         "target": "sec:willigis",
+        "kind": "secondary",
         "relationship_type": "professional/archbishop_ally",
         "relationship_description": "Powerful archbishop of Mainz and imperial archchancellor who crowned Henry II at Mainz and Cunigunde as queen at Paderborn, lending crucial ecclesiastical legitimacy to their rule.",
         "strength": "strong",
-        "kind": "secondary"
+        "endpoints": {
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "professional/archbishop_ally",
+            "relationship_description": "Powerful archbishop of Mainz and imperial archchancellor who crowned Henry II at Mainz and Cunigunde as queen at Paderborn, lending crucial ecclesiastical legitimacy to their rule.",
+            "strength": "strong"
+          }
+        }
       },
       {
         "source": "henry_ii",
         "target": "sec:pope_benedict_viii",
+        "kind": "secondary",
         "relationship_type": "religious/ally",
         "relationship_description": "Key papal ally; crowned Henry II as Holy Roman Emperor in 1014 and cooperated with him in church reform, including synodal action at Pavia (1022) and a high-profile meeting at Bamberg (1020).",
         "strength": "strong",
-        "kind": "secondary"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "religious/ally",
+            "relationship_description": "Key papal ally; crowned Henry II as Holy Roman Emperor in 1014 and cooperated with him in church reform, including synodal action at Pavia (1022) and a high-profile meeting at Bamberg (1020).",
+            "strength": "strong"
+          }
+        }
       },
       {
         "source": "cunigunde_of_luxembourg",
         "target": "sec:pope_benedict_viii",
+        "kind": "secondary",
         "relationship_type": "professional/papal_ally",
         "relationship_description": "Pope who allied with Henry II and Cunigunde, crowned them emperor and empress in Rome, and cooperated with them in ecclesiastical reform.",
         "strength": "moderate",
-        "kind": "secondary"
+        "endpoints": {
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "professional/papal_ally",
+            "relationship_description": "Pope who allied with Henry II and Cunigunde, crowned them emperor and empress in Rome, and cooperated with them in ecclesiastical reform.",
+            "strength": "moderate"
+          }
+        }
       },
       {
         "source": "henry_ii",
         "target": "sec:hedwig",
+        "kind": "secondary",
         "relationship_type": "family/in-law",
         "relationship_description": "Mother-in-law of Henry II (named Hedwig in Cunigunde's biography); part of Cunigunde's parental household background referenced in genealogical discussions.",
         "strength": "weak",
-        "kind": "secondary"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "family/in-law",
+            "relationship_description": "Mother-in-law of Henry II (named Hedwig in Cunigunde's biography); part of Cunigunde's parental household background referenced in genealogical discussions.",
+            "strength": "weak"
+          }
+        }
       },
       {
         "source": "cunigunde_of_luxembourg",
         "target": "sec:hedwig",
+        "kind": "secondary",
         "relationship_type": "family/mother",
         "relationship_description": "Mother; a noblewoman known as Hedwig whose precise parentage is debated but who bore eleven children including Cunigunde.",
         "strength": "strong",
-        "kind": "secondary"
+        "endpoints": {
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "family/mother",
+            "relationship_description": "Mother; a noblewoman known as Hedwig whose precise parentage is debated but who bore eleven children including Cunigunde.",
+            "strength": "strong"
+          }
+        }
       },
       {
         "source": "henry_ii",
         "target": "sec:otto_iii",
+        "kind": "secondary",
         "relationship_type": "professional/predecessor",
         "relationship_description": "Cousin and predecessor whose death in 1002 triggered the German royal election that brought Henry II to the throne; Otto III's reign formed the immediate political context for Henry's succession.",
         "strength": "moderate",
-        "kind": "secondary"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "professional/predecessor",
+            "relationship_description": "Cousin and predecessor whose death in 1002 triggered the German royal election that brought Henry II to the throne; Otto III's reign formed the immediate political context for Henry's succession.",
+            "strength": "moderate"
+          }
+        }
       },
       {
         "source": "cunigunde_of_luxembourg",
         "target": "sec:otto_iii",
+        "kind": "secondary",
         "relationship_type": "professional/overlord_predecessor",
         "relationship_description": "Henry II’s cousin and predecessor as emperor; his death without heirs in 1002 opened the contested succession in which Henry and Cunigunde rose to the kingship.",
         "strength": "weak",
-        "kind": "secondary"
+        "endpoints": {
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "professional/overlord_predecessor",
+            "relationship_description": "Henry II’s cousin and predecessor as emperor; his death without heirs in 1002 opened the contested succession in which Henry and Cunigunde rose to the kingship.",
+            "strength": "weak"
+          }
+        }
       },
       {
         "source": "henry_ii",
         "target": "sec:conrad_ii",
+        "kind": "secondary",
         "relationship_type": "professional/successor",
         "relationship_description": "Elected to succeed Henry II in 1024; received the imperial insignia after Cunigunde’s regency and became the next emperor, marking the dynastic transition after Henry’s childless death.",
         "strength": "weak",
-        "kind": "secondary"
+        "endpoints": {
+          "henry_ii": {
+            "relationship_type": "professional/successor",
+            "relationship_description": "Elected to succeed Henry II in 1024; received the imperial insignia after Cunigunde’s regency and became the next emperor, marking the dynastic transition after Henry’s childless death.",
+            "strength": "weak"
+          }
+        }
       },
       {
         "source": "cunigunde_of_luxembourg",
         "target": "sec:conrad_ii",
+        "kind": "secondary",
         "relationship_type": "professional/successor",
         "relationship_description": "Salian count elected king after Henry II’s death; Cunigunde maintained stability during the interregnum and ceremonially handed him the imperial regalia, facilitating a peaceful succession.",
         "strength": "moderate",
-        "kind": "secondary"
+        "endpoints": {
+          "cunigunde_of_luxembourg": {
+            "relationship_type": "professional/successor",
+            "relationship_description": "Salian count elected king after Henry II’s death; Cunigunde maintained stability during the interregnum and ceremonially handed him the imperial regalia, facilitating a peaceful succession.",
+            "strength": "moderate"
+          }
+        }
       }
     ]
   }

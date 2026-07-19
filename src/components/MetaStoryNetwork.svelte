@@ -18,33 +18,43 @@
 
   const personStyles = personStylesData.styles;
 
-  // Relationship-category palette (matches the accent-driven meta story look).
-  const CATEGORY_COLORS = {
-    family: "#f472b6",
-    professional: "#38bdf8",
-    friendship: "#34d399",
-    intellectual: "#a78bfa",
-    romantic: "#fb7185",
-    adversarial: "#f87171",
-    social: "#38bdf8",
-    academic: "#a78bfa",
-    other: "#94a3b8",
-  };
   const SECONDARY_COLOR = "#94a3b8";
-
-  function categoryOf(relationshipType) {
-    if (!relationshipType) return "other";
-    const cat = relationshipType.split("/")[0].toLowerCase();
-    return CATEGORY_COLORS[cat] ? cat : "other";
-  }
-
-  function categoryColor(relationshipType) {
-    return CATEGORY_COLORS[categoryOf(relationshipType)];
-  }
+  const LINK_IDLE = "#64748b"; // links when nothing is focused
+  const LINK_ACTIVE = "#38bdf8"; // a focused node's own ties (meta accent)
+  const LINK_MUTED = "#475569"; // other ties while a node is focused
 
   // Person primary color from the shared style registry (matches the timeline).
   function primaryColor(personId) {
     return personStyles[personId]?.primary || "#38bdf8";
+  }
+
+  // Links carry no colour meaning on their own: they read as neutral until a
+  // node is focused, then that node's ties light up in the accent colour while
+  // the rest recede. Relationship meaning is conveyed by the explanation panel.
+  function linkFocused(link, aId) {
+    if (aId == null) return null;
+    return link.source === aId || link.target === aId;
+  }
+  function linkStroke(link, aId) {
+    const f = linkFocused(link, aId);
+    if (f === null) return LINK_IDLE;
+    return f ? LINK_ACTIVE : LINK_MUTED;
+  }
+  function linkOpacity(link, aId) {
+    const f = linkFocused(link, aId);
+    const sec = link.kind === "secondary";
+    if (f === null) return sec ? 0.5 : 0.75;
+    if (f) return sec ? 0.75 : 0.95;
+    return 0.12;
+  }
+  // Main links encode tie strength through width; secondary ties stay thin.
+  function linkWidth(link) {
+    if (link.kind === "secondary") return 1.5;
+    return link.strength === "strong"
+      ? 3.5
+      : link.strength === "weak"
+        ? 1.5
+        : 2.5;
   }
 
   // Humanize a relationship_type for tooltips: "professional/mentor" → "Professional · Mentor".
@@ -79,15 +89,64 @@
   let simNodes = [];
   let simLinks = [];
   let simBuilt = false;
-  let hoveredId = null;
+  let hoveredId = null; // transient (pointer over a node)
+  let selectedId = null; // pinned by tap/click (persists, mobile-friendly)
+
+  // The node whose ties are highlighted and explained: hover wins, else pin.
+  $: activeId = hoveredId ?? selectedId;
 
   // Rendered node positions resolved by id (kept in sync with the simulation on
   // every tick). Links read positions from here rather than from d3's mutated
   // link.source/target objects, so endpoints always match the drawn nodes.
   $: posById = new Map(simNodes.map((n) => [n.id, n]));
 
-  // IDs of nodes adjacent to the hovered node (for highlight/dimming).
-  let neighborIds = new Set();
+  // IDs of nodes adjacent to the active node (for highlight/dimming).
+  $: neighborIds = (() => {
+    const set = new Set();
+    if (activeId == null) return set;
+    set.add(activeId);
+    for (const l of simLinks) {
+      if (l.source === activeId) set.add(l.target);
+      if (l.target === activeId) set.add(l.source);
+    }
+    return set;
+  })();
+
+  // Connections of the active node, described from that person's perspective.
+  $: activeNode = activeId ? posById.get(activeId) : null;
+  $: activeConnections = activeId ? buildConnections(activeId) : [];
+
+  function buildConnections(id) {
+    const strengthRank = { strong: 3, moderate: 2, weak: 1 };
+    const out = [];
+    for (const l of simLinks) {
+      if (l.source !== id && l.target !== id) continue;
+      const otherId = l.source === id ? l.target : l.source;
+      const other = posById.get(otherId);
+      if (!other) continue;
+      const selfView = l.endpoints?.[id];
+      const view = selfView || l.endpoints?.[otherId] || l;
+      out.push({
+        otherId,
+        otherName: displayName(other.name),
+        otherType: other.type,
+        relationship: humanizeRelationship(view.relationship_type),
+        description: view.relationship_description || "",
+        // Whether the description is in the active person's own words, or
+        // recalled from the other person's side of the relationship.
+        recalledBy: selfView ? null : displayName(other.name),
+        rank: strengthRank[l.strength] || 0,
+      });
+    }
+    // Main ties first, then stronger ties, then alphabetical.
+    out.sort(
+      (a, b) =>
+        (a.otherType === "main" ? 0 : 1) - (b.otherType === "main" ? 0 : 1) ||
+        b.rank - a.rank ||
+        a.otherName.localeCompare(b.otherName)
+    );
+    return out;
+  }
 
   $: hasNetwork =
     network &&
@@ -167,8 +226,10 @@
     if (simulation) simulation.alphaTarget(0);
   }
 
-  // --- Dragging (native pointer events) ------------------------------------
+  // --- Dragging + tap-to-pin (native pointer events) -----------------------
   let dragId = null;
+  let dragStart = null;
+  let dragMoved = false;
 
   function svgPoint(evt) {
     const rect = container.getBoundingClientRect();
@@ -177,6 +238,8 @@
 
   function onPointerDown(evt, node) {
     dragId = node.id;
+    dragStart = svgPoint(evt);
+    dragMoved = false;
     node.fx = node.x;
     node.fy = node.y;
     reheat();
@@ -188,6 +251,9 @@
     const node = simNodes.find((n) => n.id === dragId);
     if (!node) return;
     const p = svgPoint(evt);
+    if (dragStart && Math.hypot(p.x - dragStart.x, p.y - dragStart.y) > 4) {
+      dragMoved = true;
+    }
     node.fx = p.x;
     node.fy = p.y;
   }
@@ -198,27 +264,17 @@
       node.fx = null;
       node.fy = null;
     }
+    // A tap (no drag) pins/unpins the node so its panel stays on touch devices.
+    if (!dragMoved) {
+      selectedId = selectedId === dragId ? null : dragId;
+    }
     dragId = null;
     cool();
   }
 
-  // --- Hover highlight ------------------------------------------------------
-  function setHovered(id) {
-    hoveredId = id;
-    const next = new Set();
-    if (id != null) {
-      next.add(id);
-      for (const l of simLinks) {
-        if (l.source === id) next.add(l.target);
-        if (l.target === id) next.add(l.source);
-      }
-    }
-    neighborIds = next;
-  }
-
-  function isLinkActive(l) {
-    if (hoveredId == null) return true;
-    return l.source === hoveredId || l.target === hoveredId;
+  // Clicking empty canvas clears any pinned selection (node taps stopPropagation).
+  function clearSelection() {
+    selectedId = null;
   }
 
   function clipId(nodeId) {
@@ -264,6 +320,7 @@
       viewBox={`0 0 ${width} ${height}`}
       role="img"
       aria-label={$_("meta_story.network_aria")}
+      on:pointerdown={clearSelection}
     >
       <defs>
         {#each simNodes as node (node.id)}
@@ -286,14 +343,10 @@
               y1={s.y}
               x2={t.x}
               y2={t.y}
-              stroke={categoryColor(link.relationship_type)}
-              stroke-width={link.kind === "secondary" ? 1.5 : 3}
+              stroke={linkStroke(link, activeId)}
+              stroke-width={linkWidth(link)}
               stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
-              opacity={isLinkActive(link)
-                ? link.kind === "secondary"
-                  ? 0.6
-                  : 0.9
-                : 0.1}
+              opacity={linkOpacity(link, activeId)}
             >
               <title
                 >{humanizeRelationship(
@@ -310,16 +363,17 @@
       <!-- Nodes -->
       <g class="nodes">
         {#each simNodes as node (node.id)}
-          {@const dim = hoveredId != null && !neighborIds.has(node.id)}
+          {@const dim = activeId != null && !neighborIds.has(node.id)}
           <g
             class="node"
             class:main={node.type === "main"}
             class:secondary={node.type === "secondary"}
+            class:dim
+            class:selected={node.id === selectedId}
             transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
-            opacity={dim ? 0.25 : 1}
             on:pointerdown={(e) => onPointerDown(e, node)}
-            on:pointerenter={() => setHovered(node.id)}
-            on:pointerleave={() => setHovered(null)}
+            on:pointerenter={() => (hoveredId = node.id)}
+            on:pointerleave={() => (hoveredId = null)}
             role="listitem"
           >
             <title
@@ -334,7 +388,7 @@
                 r={MAIN_R + 3}
                 fill="none"
                 stroke={primaryColor(node.id)}
-                stroke-width="3"
+                stroke-width={node.id === selectedId ? 4.5 : 3}
               />
               {#if node.portrait}
                 <image
@@ -359,8 +413,7 @@
             {:else}
               <circle
                 r={SECONDARY_R}
-                fill={SECONDARY_COLOR}
-                fill-opacity="0.22"
+                fill="#1e293b"
                 stroke={SECONDARY_COLOR}
                 stroke-width="1.5"
               />
@@ -384,6 +437,51 @@
         {$_("meta_story.network_secondary")}
       </span>
     </div>
+  </div>
+
+  <!-- Explanation panel: a node's ties, described from that person's view -->
+  <div class="network-explain" aria-live="polite">
+    {#if activeNode}
+      <div class="explain-head">
+        <span class="explain-name">{displayName(activeNode.name)}</span>
+        {#if activeNode.roles && activeNode.roles.length}
+          <span class="explain-roles">{activeNode.roles.join(", ")}</span>
+        {/if}
+      </div>
+      {#if activeConnections.length}
+        <ul class="explain-list">
+          {#each activeConnections as c (c.otherId)}
+            <li
+              class="explain-item"
+              class:is-secondary={c.otherType === "secondary"}
+            >
+              <div class="explain-item-head">
+                <span class="explain-other">{c.otherName}</span>
+                {#if c.relationship}
+                  <span class="explain-rel">{c.relationship}</span>
+                {/if}
+              </div>
+              {#if c.description}
+                <p class="explain-desc">
+                  {c.description}
+                  {#if c.recalledBy}
+                    <span class="explain-recalled"
+                      >{$_("meta_story.network_recalled_by", {
+                        name: c.recalledBy,
+                      })}</span
+                    >
+                  {/if}
+                </p>
+              {/if}
+            </li>
+          {/each}
+        </ul>
+      {:else}
+        <p class="explain-empty">{$_("meta_story.network_no_connections")}</p>
+      {/if}
+    {:else}
+      <p class="explain-hint">{$_("meta_story.network_hint")}</p>
+    {/if}
   </div>
 {/if}
 
@@ -412,13 +510,24 @@
 
   .node {
     cursor: grab;
+    transition: filter 0.18s ease;
   }
   .node:active {
     cursor: grabbing;
   }
 
+  /* Blend out non-focused nodes by DARKENING them (kept fully opaque) so the
+     links that sit behind them do not shine through. */
+  .node.dim {
+    filter: brightness(0.32) saturate(0.5);
+  }
+
   .halo {
     filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.35));
+  }
+
+  .node.selected .halo {
+    filter: drop-shadow(0 0 9px rgba(56, 189, 248, 0.6));
   }
 
   .label {
@@ -480,6 +589,107 @@
   .secondary-dot {
     background: rgba(148, 163, 184, 0.25);
     border: 1.5px solid #94a3b8;
+  }
+
+  /* Explanation panel */
+  .network-explain {
+    margin-top: 0.85rem;
+    padding: 0.85rem 1rem;
+    min-height: 4.5rem;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .explain-hint {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .explain-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  }
+
+  .explain-name {
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .explain-roles {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: capitalize;
+  }
+
+  .explain-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 15rem;
+    overflow-y: auto;
+  }
+
+  .explain-item {
+    border-left: 2px solid rgba(56, 189, 248, 0.6);
+    padding-left: 0.6rem;
+  }
+
+  .explain-item.is-secondary {
+    border-left-color: rgba(148, 163, 184, 0.55);
+  }
+
+  .explain-item-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .explain-other {
+    font-weight: 600;
+    color: #f1f5f9;
+    font-size: 0.92rem;
+  }
+
+  .explain-rel {
+    font-size: 0.75rem;
+    color: #7dd3fc;
+    letter-spacing: 0.01em;
+  }
+
+  .explain-item.is-secondary .explain-rel {
+    color: #cbd5e1;
+  }
+
+  .explain-desc {
+    margin: 0.15rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+  }
+
+  .explain-recalled {
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  .explain-empty {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.88rem;
   }
 
   @media (max-width: 640px) {

@@ -279,26 +279,47 @@
       {
         "source": "frank_lloyd_wright",
         "target": "frei_otto",
+        "kind": "main",
         "relationship_type": "professional/mentor",
         "relationship_description": "Iconic American architect whom Frei Otto visited at Taliesin during his 1950 US scholarship, gaining exposure to Wright’s organic architecture and experimental structures.",
         "strength": "moderate",
-        "kind": "main"
+        "endpoints": {
+          "frei_otto": {
+            "relationship_type": "professional/mentor",
+            "relationship_description": "Iconic American architect whom Frei Otto visited at Taliesin during his 1950 US scholarship, gaining exposure to Wright’s organic architecture and experimental structures.",
+            "strength": "moderate"
+          }
+        }
       },
       {
         "source": "otto_wagner",
         "target": "sec:josef_hoffmann",
+        "kind": "secondary",
         "relationship_type": "academic/student",
         "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
         "strength": "moderate",
-        "kind": "secondary"
+        "endpoints": {
+          "otto_wagner": {
+            "relationship_type": "academic/student",
+            "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
+            "strength": "moderate"
+          }
+        }
       },
       {
         "source": "charles_rennie_mackintosh",
         "target": "sec:josef_hoffmann",
+        "kind": "secondary",
         "relationship_type": "artistic/peer",
         "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
         "strength": "weak",
-        "kind": "secondary"
+        "endpoints": {
+          "charles_rennie_mackintosh": {
+            "relationship_type": "artistic/peer",
+            "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+            "strength": "weak"
+          }
+        }
       }
     ]
   }
