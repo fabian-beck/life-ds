@@ -1218,6 +1218,15 @@ def translate_person_data(
     elif verbose:
         print("  → Registry translation is current")
 
+    # Refresh copied event titles in translated meta stories without
+    # retranslating or regenerating those stories.
+    try:
+        from sync_meta_story_events import sync_meta_story_events
+
+        sync_meta_story_events(person_id, verbose=verbose)
+    except Exception as error:
+        print(f"  Warning: Could not sync translated meta-story events: {error}")
+
     return results
 
 
