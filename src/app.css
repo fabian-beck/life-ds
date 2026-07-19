@@ -69,15 +69,34 @@ a {
 }
 
 /*
- * The dark MapLibre basemap already sits near the floor of the contrast
- * filter, so the global overlay pushes it to barely readable. Lift the map
- * canvas well above the overlay's darkening — with reduced contrast so labels
- * and coastlines don't crush — keeping maps legible in high-contrast mode.
- * Only the canvas is targeted, so DOM markers and popups are untouched. This
- * out-specifies StoryMap's own `.map-container .maplibregl-canvas` filter.
+ * Maps in high-contrast mode.
+ *
+ * The dark MapLibre basemap sits near the floor of the contrast filter, so it
+ * reads as barely legible. Both levers below use real CSS (filter / opacity),
+ * not the backdrop-filter overlay — so they work on iOS Safari, where
+ * `backdrop-filter: contrast()` is a no-op and the overlay does nothing. That
+ * keeps event-slide maps readable on mobile as well as desktop.
+ *
+ * 1. Lift the map canvas with a self-sufficient brightness/contrast that reads
+ *    well with or without the overlay compounding on top. Only the canvas is
+ *    targeted, so DOM markers and popups are untouched. This out-specifies
+ *    StoryMap's own `.map-container .maplibregl-canvas` filter.
  */
 html.high-contrast .maplibregl-canvas {
-  filter: contrast(1.05) brightness(1.9) saturate(1.1);
+  filter: contrast(1.12) brightness(1.55) saturate(1.15);
+}
+
+/*
+ * 2. The story background is faded over the map to blend it into the slide;
+ *    on mobile the overlay never lightens that fade, so the brightened basemap
+ *    stays muddy. Thin the fade in high-contrast mode so the map shows through.
+ */
+html.high-contrast .map-frame::before {
+  opacity: 0.5;
+}
+
+html.high-contrast .map-gradient {
+  opacity: 0.7;
 }
 
 /*
