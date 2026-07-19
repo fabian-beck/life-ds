@@ -1,0 +1,909 @@
+{
+  "dataset": "Biographical timeline: Georg Wilhelm Friedrich Hegel",
+  "created_on": "2025-12-20",
+  "person": {
+    "name": "Georg_Wilhelm_Friedrich_Hegel",
+    "birth_date": "1770-08-27",
+    "death_date": "1831-11-14",
+    "primary_roles": [
+      "Philosoph",
+      "Schriftsteller",
+      "Hochschullehrer"
+    ],
+    "tagline": "Systembildner des Deutschen Idealismus",
+    "summary": "Georg Wilhelm Friedrich Hegel war ein deutscher Philosoph und die abschließende Gestalt des Deutschen Idealismus, bekannt für ein ehrgeiziges System, das Logik, Natur, Geist, Geschichte, Kunst, Religion und Politik umspannte. Seine Universitätslaufbahn entwickelte sich von frühen theologischen Studien und Hauslehrertätigkeiten über Professuren in Jena, Heidelberg und Berlin, wo ihn seine Vorlesungen und Hauptwerke als zentralen Denker der modernen Philosophie etablierten.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+    "portrait": {
+      "image": "/portraits/georg_wilhelm_friedrich_hegel_thumbnail.webp",
+      "source": "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/bf/1831_Schlesinger_Philosoph_Georg_Friedrich_Wilhelm_Hegel_anagoria.JPG",
+      "thumbnail": "/portraits/georg_wilhelm_friedrich_hegel_thumbnail.webp",
+      "medium": "/portraits/georg_wilhelm_friedrich_hegel_medium.webp",
+      "full": "/portraits/georg_wilhelm_friedrich_hegel_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "swabian_cradle",
+      "headline": "Schwäbische Wiege",
+      "date_start": "1770-08-27",
+      "date_start_precision": "day",
+      "date_end": "1788-09",
+      "date_end_precision": "month",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": null,
+      "location": "Südwestdeutschland"
+    },
+    {
+      "id": "tubingen_rebellion",
+      "headline": "Tübinger Aufbruch",
+      "date_start": "1788-10",
+      "date_start_precision": "month",
+      "date_end": "1793-06",
+      "date_end_precision": "month",
+      "age_start": 18,
+      "age_end": 22,
+      "involved_people": [
+        "Friedrich Hölderlin",
+        "Friedrich Wilhelm Joseph Schelling"
+      ],
+      "location": "Südwestdeutschland"
+    },
+    {
+      "id": "tutor_under_revolution",
+      "headline": "Hauslehrer in Revolution",
+      "date_start": "1793-07",
+      "date_start_precision": "month",
+      "date_end": "1800-12",
+      "date_end_precision": "month",
+      "age_start": 22,
+      "age_end": 30,
+      "involved_people": [
+        "Friedrich Hölderlin"
+      ],
+      "location": "deutschsprachiges Mitteleuropa"
+    },
+    {
+      "id": "jena_under_cannonlight",
+      "headline": "Jena im Kanonendonner",
+      "date_start": "1801-01",
+      "date_start_precision": "month",
+      "date_end": "1808-06",
+      "date_end_precision": "month",
+      "age_start": 30,
+      "age_end": 37,
+      "involved_people": [
+        "Friedrich Wilhelm Joseph Schelling",
+        "Johann Gottlieb Fichte",
+        "Johann Wolfgang von Goethe",
+        "Napoleon Bonaparte"
+      ],
+      "location": "Mitteldeutschland"
+    },
+    {
+      "id": "nuremberg_disciplined_system",
+      "headline": "Nürnbergs diszipliniertes System",
+      "date_start": "1808-07",
+      "date_start_precision": "month",
+      "date_end": "1816-06",
+      "date_end_precision": "month",
+      "age_start": 37,
+      "age_end": 45,
+      "involved_people": [
+        "Marie Helena Susanna von Tucher"
+      ],
+      "location": "Süddeutschland"
+    },
+    {
+      "id": "prussian_summit",
+      "headline": "Preußischer Gipfel",
+      "date_start": "1816-07",
+      "date_start_precision": "month",
+      "date_end": "1831-11-14",
+      "date_end_precision": "day",
+      "age_start": 45,
+      "age_end": 61,
+      "involved_people": [
+        "Karl vom Stein zum Altenstein"
+      ],
+      "location": "Preußen"
+    }
+  ],
+  "conclusion": "Hegels Leben zeichnet einen stetigen Aufstieg von schwäbischer Disziplin zu preußischer Eminenz nach, angetrieben von der Überzeugung, dass die Vernunft in der Geschichte lebt. Indem er persönliche Umbrüche und politische Brüche in philosophische Form überführte, hinterließ er ein System, das noch immer herausfordert, wie die Moderne Freiheit, Institutionen und sich selbst versteht – und das nach seinem Tod seine Anhänger in rivalisierende Lager spaltete, die darüber stritten, was seine „Vernunft“ gebot.",
+  "events": [
+    {
+      "date": "1770-08-27",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Stuttgart",
+      "description": "Georg Wilhelm Friedrich Hegel wurde in Stuttgart in eine [[pietism|pietistische]] bürgerliche Familie hineingeboren. Sein Vater arbeitete in der württembergischen Verwaltung, seine Mutter stammte aus einer wohlhabenden Juristenfamilie. Das religiöse und bürgerliche Milieu seiner Kindheit blieb ein dauerhafter Bezugspunkt für seine späteren Überlegungen zu Ethik, Religion und dem modernen Staat.",
+      "locations": [
+        {
+          "name_historic": "Stuttgart",
+          "name_modern": "Stuttgart, Deutschland",
+          "centroid": [
+            9.1800132,
+            48.7784485
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "swabian_cradle",
+      "annotations": {
+        "pietism": {
+          "explanation": "Eine lutherische Erweckungsbewegung, die persönliche Frömmigkeit, Bibelstudium und praktisches Christentum betonte; im Württemberg des 18. Jahrhunderts war sie besonders einflussreich.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pietism"
+        }
+      }
+    },
+    {
+      "date": "1788-10",
+      "date_precision": "month",
+      "date_note": "Der Beginn des Wintersemesters in Tübingen wird konventionell auf den Herbst datiert",
+      "age": 18,
+      "title": "Eintritt ins Tübinger Stift",
+      "description": "Im Oktober 1788 trat Hegel in das [[Tübinger Stift|Tübinger Stift]] ein und studierte an der Universität Tübingen evangelische Theologie und Philosophie. In Tübingen schloss er eine intensive intellektuelle Freundschaft mit Friedrich Hölderlin und Friedrich Wilhelm Joseph Schelling; sie teilten ihre Begeisterung für die antike Kultur und politische Reformen – ein früher Kreis, der sein Bekenntnis zu Vernunft, Freiheit und einem historischen Verständnis von Institutionen prägte.",
+      "locations": [
+        {
+          "name_historic": "Tübingen",
+          "name_modern": "Tübingen, Baden-Württemberg, Deutschland",
+          "centroid": [
+            9.053596,
+            48.5203263
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Hölderlin",
+        "Friedrich Wilhelm Joseph Schelling"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_H%C3%B6lderlin",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Evangelisches_Stift_T%C3%BCbingen_Juni_2017.jpg/960px-Evangelisches_Stift_T%C3%BCbingen_Juni_2017.jpg",
+          "caption": "Das Tübinger Stift, Tübingen",
+          "source": "https://commons.wikimedia.org/wiki/File:Evangelisches_Stift_Tübingen_Juni_2017.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "tubingen_rebellion",
+      "annotations": {
+        "Tübinger Stift": {
+          "explanation": "Ein mit der Universität Tübingen verbundenes evangelisches Seminar (theologische Hochschule), das für die Ausbildung des künftigen württembergischen Klerus und seine einflussreiche Studentenkultur im späten 18. Jahrhundert bekannt war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/T%C3%BCbinger_Stift"
+        }
+      }
+    },
+    {
+      "date": "1790-09",
+      "date_precision": "month",
+      "date_end": "1793",
+      "date_end_precision": "year",
+      "date_note": "Der Magistergrad wird für September 1790 angegeben, das theologische Lizentiat für 1793",
+      "age": 20,
+      "title": "Theologiestudium abgeschlossen",
+      "description": "Während seiner Jahre am [[Tübinger Stift|Tübinger Stift]] erwarb Hegel wichtige Abschlüsse: den Magister in Philosophie und später das theologische Lizentiat. Obwohl er für den geistlichen Dienst ausgebildet wurde, wandte er sich zunehmend gegen die starre Orthodoxie seiner Lehrer und richtete seine Ambitionen auf die Philosophie. Schon seine studentischen Schriften und Debatten zeigen die Anfänge eines historisch orientierten Zugangs zu Religion und Gesellschaft.",
+      "locations": [
+        {
+          "name_historic": "Tübingen",
+          "name_modern": "Tübingen, Baden-Württemberg, Deutschland",
+          "centroid": [
+            9.053596,
+            48.5203263
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Hölderlin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://en.wikipedia.org/wiki/T%C3%BCbinger_Stift",
+        "https://de.wikipedia.org/wiki/Friedrich_H%C3%B6lderlin"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "tubingen_rebellion",
+      "annotations": {
+        "Tübinger Stift": {
+          "explanation": "Ein evangelisches theologisches Seminar in Tübingen (Teil der Universität Tübingen), bekannt für die Ausbildung von Geistlichen und seine einflussreiche studentische Gelehrtenkultur im späten 18. Jahrhundert.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/T%C3%BCbinger_Stift"
+        }
+      }
+    },
+    {
+      "date": "1793",
+      "date_precision": "year",
+      "age": 23,
+      "title": "Hauslehrer in Bern",
+      "description": "Nach dem Verlassen der Universität nahm Hegel eine Stelle als Hauslehrer in Bern an und arbeitete für einen patrizischen Haushalt. Die Stellung bot ihm Zugang zu umfangreichen Bibliotheken und Zeit für selbstständige Studien, wodurch er sich eingehender mit politischer Theorie, Geschichte und Moralphilosophie beschäftigte. Auch verfolgte er die Ereignisse im revolutionären Frankreich aufmerksam und überdachte die Bedeutung von Freiheit und politischer Moderne.",
+      "locations": [
+        {
+          "name_historic": "Tübingen",
+          "name_modern": "Tübingen, Deutschland",
+          "centroid": [
+            9.053596,
+            48.5203263
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Bern",
+          "name_modern": "Bern, Schweiz",
+          "centroid": [
+            7.4521749,
+            46.9484742
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Bern_Altstadt_von_Rosengarten_20211007.jpg/960px-Bern_Altstadt_von_Rosengarten_20211007.jpg",
+          "caption": "Altstadt von Bern, Schweiz",
+          "source": "https://commons.wikimedia.org/wiki/File:Bern_Altstadt_von_Rosengarten_20211007.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "tubingen_rebellion",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Württemberg (German lands)",
+        "to_location": "Bern (Swiss Confederation)",
+        "characterization": "employment move"
+      }
+    },
+    {
+      "date": "1797",
+      "date_precision": "year",
+      "date_note": "Hegel kam Anfang 1797 nach Frankfurt, vermittelt durch Hölderlin",
+      "age": 26,
+      "title": "Hauslehrerstelle in Frankfurt",
+      "description": "1797 zog Hegel von Bern nach Frankfurt am Main, um eine weitere Stelle als Hauslehrer anzutreten – eine Anstellung, die Friedrich Hölderlin ihm zu verschaffen half. Im Haushalt des Kaufmanns Johann Noe Gogel lebte er näher am Rhythmus einer Handelsstadt und erweiterte seine Lektüre weiterhin über die Seminartheologie hinaus, indem er erprobte, wie sich modernes gesellschaftliches Leben und politischer Wandel weltlicher begreifen ließen.\n\nDer Umzug hielt ihn auch mit den in Tübingen geknüpften intellektuellen Freundschaften verbunden, während er nach einem Weg suchte, aus der privaten Anstellung in eine akademische Laufbahn zurückzukehren.",
+      "locations": [
+        {
+          "name_historic": "Bern",
+          "name_modern": "Bern, Schweiz",
+          "centroid": [
+            7.4521749,
+            46.9484742
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Frankfurt am Main",
+          "name_modern": "Frankfurt am Main, Deutschland",
+          "centroid": [
+            8.6820917,
+            50.1106444
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Hölderlin",
+        "Johann Noe Gogel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://en.wikipedia.org/wiki/Friedrich_H%C3%B6lderlin"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Skyline_Frankfurt_am_Main.jpg/960px-Skyline_Frankfurt_am_Main.jpg",
+          "caption": "Skyline von Frankfurt am Main",
+          "source": "https://commons.wikimedia.org/wiki/File:Skyline_Frankfurt_am_Main.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "tutor_under_revolution",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Bern region",
+        "to_location": "Frankfurt am Main",
+        "characterization": "employment move"
+      }
+    },
+    {
+      "date": "1801-01",
+      "date_precision": "month",
+      "date_note": "Hegel erreichte Jena im Januar 1801",
+      "age": 30,
+      "title": "Vorlesungsbeginn in Jena",
+      "description": "Im Januar 1801 zog Hegel, nachdem er nach dem Tod seines Vaters eine bescheidene Erbschaft erhalten hatte, von Frankfurt nach Jena, um in einer von der nachkantischen Philosophie geprägten Stadt eine akademische Laufbahn einzuschlagen. Er habilitierte sich als [[Privatdozent]] und begann zu lesen, womit er sich in der umkämpften Landschaft positionierte, die von Gestalten wie Johann Gottlieb Fichte und Friedrich Wilhelm Joseph Schelling bestimmt wurde.\n\nDer Umzug leitete seinen langen Wandel vom privaten Gelehrten und Hauslehrer zum öffentlichen akademischen Denker ein – er erprobte Ideen in Vorlesungen und Polemiken, während er sich um eine feste institutionelle Stellung bemühte.",
+      "locations": [
+        {
+          "name_historic": "Frankfurt am Main",
+          "name_modern": "Frankfurt am Main, Deutschland",
+          "centroid": [
+            8.6820917,
+            50.1106444
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Thüringen, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Wilhelm Joseph Schelling",
+        "Johann Gottlieb Fichte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://en.wikipedia.org/wiki/Jena",
+        "https://en.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Universit%C3%A4ts_Hauptgeb%C3%A4ude._Jena.jpg/960px-Universit%C3%A4ts_Hauptgeb%C3%A4ude._Jena.jpg",
+          "caption": "Hauptgebäude der Universität, Jena",
+          "source": "https://commons.wikimedia.org/wiki/File:Universitäts_Hauptgebäude._Jena.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "jena_under_cannonlight",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Frankfurt am Main",
+        "to_location": "Jena",
+        "characterization": "career shift"
+      },
+      "annotations": {
+        "Privatdozent": {
+          "explanation": "Ein Hochschullehrer, der nach seiner Qualifikation das Recht zu lehren besitzt, aber in der Regel keinen besoldeten Lehrstuhl innehat; an deutschen Universitäten verbreitet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      }
+    },
+    {
+      "date": "1801",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Differenzschrift zu Fichte und Schelling",
+      "description": "1801 veröffentlichte Hegel in Jenas hart umkämpfter philosophischer Szene Differenz des Fichteschen und Schellingschen Systems der Philosophie. Das Buch war ein strategischer Eintritt: Es positionierte ihn innerhalb der zentralen Auseinandersetzungen des [[German idealism|Deutschen Idealismus]] und signalisierte zugleich, dass er die führenden Systeme beurteilen, statt sich bloß einem Lager anschließen wollte.\n\nDie Veröffentlichung verschaffte ihm Sichtbarkeit in den Jenaer Debatten und begründete ein Muster, das sich in seiner Laufbahn wiederholen sollte: die Positionen anderer Denker durchzuarbeiten, um einen eigenen Standpunkt herauszuarbeiten.",
+      "locations": [
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Johann Gottlieb Fichte",
+        "Friedrich Wilhelm Joseph Schelling"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling",
+        "https://de.wikipedia.org/wiki/Johann_Gottlieb_Fichte"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "tutor_under_revolution",
+      "annotations": {
+        "Jena": {
+          "explanation": "Eine bedeutende Universitätsstadt im Herzogtum Sachsen-Weimar-Eisenach, die um 1800 ein Schlüsselzentrum der frühen deutschen idealistischen Philosophie und verwandter intellektueller Netzwerke war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jena"
+        },
+        "German idealism": {
+          "explanation": "Eine deutsche philosophische Bewegung des späten 18. und frühen 19. Jahrhunderts (nach Kant), die besonders mit Denkern wie Fichte, Schelling und Hegel verbunden wird und sich auf die Rolle von Geist und Bewusstsein bei der Konstitution von Erfahrung und Erkenntnis konzentrierte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_idealism"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "The Difference Between Fichte’s and Schelling’s Systems of Philosophy",
+        "publication_type": "essay",
+        "significance": "first major work",
+        "impact": "The publication introduced Hegel as an independent voice in post-Kantian philosophy and set the stage for his later systematic development."
+      }
+    },
+    {
+      "date": "1802",
+      "date_precision": "year",
+      "date_end": "1803",
+      "date_end_precision": "year",
+      "age": 32,
+      "title": "Kritisches Journal herausgegeben",
+      "description": "1802 gaben Hegel und Schelling, die beide in [[Jena|Jena]] ansässig waren, gemeinsam das [[Kritisches Journal der Philosophie|Kritische Journal der Philosophie]] heraus und griffen damit durch programmatische Rezensionen und Aufsätze zu Themen wie Religion, Erkenntnis und Naturrecht in die aktuellen Debatten der deutschen Philosophie ein. Die Zusammenarbeit steigerte Hegels öffentliche Bekanntheit in zeitgenössischen Kontroversen und schärfte seinen polemischen, kritischen Stil, während er methodische Grundsätze klärte, die später in sein reifes System einflossen.",
+      "locations": [
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Wilhelm Joseph Schelling"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling",
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "jena_under_cannonlight",
+      "annotations": {
+        "Jena": {
+          "explanation": "Eine kleine Universitätsstadt in Thüringen, die um 1800 zu einem bedeutenden Zentrum des Deutschen Idealismus wurde; sowohl Hegel als auch Schelling arbeiteten dort, als die Zeitschrift erschien.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jena"
+        },
+        "Kritisches Journal der Philosophie": {
+          "explanation": "Eine kurzlebige philosophische Zeitschrift (1802–1803), herausgegeben von Schelling und Hegel, die mit der Jenaer Periode des Deutschen Idealismus verbunden war und dazu diente, zeitgenössische philosophische Debatten zu prägen und zu kritisieren.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Kritisches_Journal_der_Philosophie"
+        }
+      }
+    },
+    {
+      "date": "1805-02",
+      "date_precision": "month",
+      "age": 34,
+      "title": "Außerordentlicher Professor",
+      "description": "Unterstützt von führenden Persönlichkeiten, darunter Goethe und Schelling, wurde Hegel im Februar 1805 in Jena zum außerordentlichen Professor ernannt. Die Stelle würdigte sein wachsendes wissenschaftliches Ansehen und erweiterte seine Lehrverpflichtungen; in diesen Jahren verfeinerte er Arbeiten, die in seiner ersten großen buchlangen Darstellung der Entwicklung des Bewusstseins gipfeln sollten.",
+      "locations": [
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Thüringen, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Johann Wolfgang von Goethe",
+        "Friedrich Wilhelm Joseph Schelling"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "jena_under_cannonlight"
+    },
+    {
+      "date": "1807",
+      "date_precision": "year",
+      "date_note": "Während der Krise von 1806 geschrieben und im folgenden Jahr veröffentlicht",
+      "age": 36,
+      "title": "Phänomenologie in Jenas Krise",
+      "description": "1807 veröffentlichte Hegel die Phänomenologie des Geistes, ein Buch, das unter den Erschütterungen von Napoleons Sieg über Preußen in der [[Battle of Jena–Auerstedt|Schlacht bei Jena und Auerstedt]] im Oktober 1806 vollendet wurde. Die Unruhe um Jena wurde Teil der Legende des Werks: Philosophie, vollendet, während die Geschichte – ganz buchstäblich – an den Fenstern vorbeidonnerte.\n\nDie Krise war nicht nur politisch. In dieser Zeit führte Hegels Beziehung mit Christina Charlotte Burkhardt zur Geburt seines ersten Sohnes Ludwig Fischer, eine private Verwicklung neben dem öffentlichen Drama. Das Erscheinen des Buches markierte seinen Übergang vom unsicheren Dozenten zu einer bedeutenden öffentlichen Gestalt der deutschen Philosophie und wurde für Leser und Kritiker zum wichtigsten Zugang zu seinem sich entwickelnden System.",
+      "locations": [
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Napoleon Bonaparte",
+        "Friedrich Immanuel Niethammer",
+        "Christina Charlotte Burkhardt (geb. Fischer)",
+        "Ludwig Fischer"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Phenomenology_of_Spirit",
+        "https://de.wikipedia.org/wiki/Schlacht_bei_Jena_und_Auerstedt",
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "jena_under_cannonlight",
+      "annotations": {
+        "Jena": {
+          "explanation": "Eine Universitätsstadt in Thüringen, in der Hegel 1806–1807 lebte und arbeitete, während französische und preußische Truppen während des Vierten Koalitionskriegs in der Nähe kämpften.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jena"
+        },
+        "Battle of Jena–Auerstedt": {
+          "explanation": "Die Doppelschlacht vom 14. Oktober 1806, in der Napoleons Truppen Preußen entscheidend besiegten, was zur französischen Besetzung und zu Umwälzungen in der Region um Jena führte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Battle_of_Jena%E2%80%93Auerstedt"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Phänomenologie des Geistes (Phenomenology of Spirit)",
+        "publication_type": "book",
+        "significance": "major work",
+        "impact": "It introduced Hegel’s account of the historical development of consciousness and became foundational for his later systematic philosophy."
+      }
+    },
+    {
+      "date": "1807",
+      "date_precision": "year",
+      "date_end": "1808",
+      "date_end_precision": "year",
+      "age": 37,
+      "title": "Von Jena nach Bamberg",
+      "description": "1807 verließ Hegel angesichts der Störungen des intellektuellen und akademischen Lebens in Jena nach den Napoleonischen Kriegen seine Stelle in Jena und suchte fern vom universitären Umfeld nach verlässlicherer Arbeit. Er nahm eine mit Journalismus und Verlagswesen verbundene Beschäftigung in Bamberg auf, die ihn in engeren Kontakt mit öffentlichen Angelegenheiten brachte und ihm praktische Berufserfahrung verschaffte. Der Umzug markierte einen Wechsel von einer unsicheren akademischen Existenz zu stabileren Positionen.",
+      "locations": [
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Thüringen, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Bayern, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Hegels_Wohnhaus_%28_Pfahlpl%C3%A4tzchen_1%29_1807-1808_in_Bamberg._Hier_vollendete_er_sein_erstes_Hauptwerk_%E2%80%9EDie_Ph%C3%A4nomenologie_des_Geistes%E2%80%9C_%282023%29.jpg/960px-Hegels_Wohnhaus_%28_Pfahlpl%C3%A4tzchen_1%29_1807-1808_in_Bamberg._Hier_vollendete_er_sein_erstes_Hauptwerk_%E2%80%9EDie_Ph%C3%A4nomenologie_des_Geistes%E2%80%9C_%282023%29.jpg",
+          "caption": "Hegels Wohnhaus am Pfahlplätzchen 1, Bamberg",
+          "source": "https://commons.wikimedia.org/wiki/File:Hegels_Wohnhaus_(_Pfahlplätzchen_1)_1807-1808_in_Bamberg._Hier_vollendete_er_sein_erstes_Hauptwerk_„Die_Phänomenologie_des_Geistes“_(2023).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "jena_under_cannonlight",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Jena",
+        "to_location": "Bamberg",
+        "characterization": "postwar relocation"
+      }
+    },
+    {
+      "date": "1808",
+      "date_precision": "year",
+      "age": 37,
+      "title": "Leitung eines Nürnberger Gymnasiums",
+      "description": "1808 übernahm Hegel das Rektorat eines Nürnberger [[Gymnasium (school)|Gymnasiums]] und tauschte das unstete Universitätsleben Jenas gegen die Routine und Autorität der Schulverwaltung. Die Stelle übertrug ihm Verantwortung für Lehrplan und Unterricht – und bot ihm damit eine verlässlichere Grundlage zum Schreiben.\n\nDem biografischen Bericht zufolge half Friedrich Immanuel Niethammer bei der Vermittlung dieses Wechsels; eine Erinnerung daran, dass Hegels „System“ nicht nur in der Einsamkeit, sondern auch durch praktische Netzwerke und rechtzeitige Unterstützung entstand.",
+      "locations": [
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Nürnberg",
+          "name_modern": "Nürnberg, Deutschland",
+          "centroid": [
+            11.077298,
+            49.453872
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://en.wikipedia.org/wiki/G._W._F._Hegel#Life"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Hans-Sachs-Gymnasium_N%C3%BCrnberg%2C_Eingangsportal_IMG_2620_edit.jpg/960px-Hans-Sachs-Gymnasium_N%C3%BCrnberg%2C_Eingangsportal_IMG_2620_edit.jpg",
+          "caption": "Eingangsportal des Hans-Sachs-Gymnasiums, Nürnberg",
+          "source": "https://commons.wikimedia.org/wiki/File:Hans-Sachs-Gymnasium_Nürnberg,_Eingangsportal_IMG_2620_edit.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "jena_under_cannonlight",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Bamberg",
+        "to_location": "Nuremberg",
+        "characterization": "educational appointment"
+      },
+      "annotations": {
+        "Gymnasium (school)": {
+          "explanation": "Im deutschen System eine weiterführende Schule, die Schülerinnen und Schüler auf die Universität vorbereitet (keine Sporthalle).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Gymnasium_(Germany)"
+        }
+      }
+    },
+    {
+      "date": "1811",
+      "date_precision": "year",
+      "date_note": "Heiratsjahr; das Hochzeitsdatum wird im vorliegenden Auszug nicht genannt",
+      "age": 41,
+      "title": "Heirat mit Marie Helena Susanna von Tucher",
+      "description": "1811 heiratete Hegel, inzwischen in Nürnberg etabliert, Marie Helena Susanna von Tucher und verband sich damit mit einer angesehenen örtlichen Patrizierfamilie. Die Ehe fiel in seine diszipliniertesten Jahre des Schreibens, in denen Verwaltungsroutine und philosophischer Ehrgeiz Hand in Hand gingen.\n\nSpäter hatten sie zwei Söhne, Karl und Immanuel, und Hegels Familienleben wurde zu einem stabilen Gegengewicht zu der zunehmend öffentlichen Rolle, die sein Werk zu beanspruchen begann.",
+      "locations": [
+        {
+          "name_historic": "Nuremberg",
+          "name_modern": "Nürnberg, Deutschland",
+          "centroid": [
+            11.077298,
+            49.453872
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Marie Helena Susanna von Tucher"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Karl_von_Hegel"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "nuremberg_disciplined_system",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Marie Helena Susanna von Tucher",
+        "duration": "until his death",
+        "characterization": "family life"
+      }
+    },
+    {
+      "date": "1812",
+      "date_precision": "year",
+      "date_end": "1816",
+      "date_end_precision": "year",
+      "date_note": "Die Wissenschaft der Logik erschien in diesen Jahren in mehreren Bänden",
+      "age": 42,
+      "title": "Wissenschaft der Logik veröffentlicht",
+      "description": "In Nürnberg veröffentlichte Hegel 1812 den ersten Band seines großen logischen Werks, während er als Rektor des Aegidiengymnasiums der Stadt amtierte und seinen weiterreichenden philosophischen Ruf festigte; weitere Bände folgten 1813 und 1816.",
+      "locations": [
+        {
+          "name_historic": "Nuremberg",
+          "name_modern": "Nürnberg, Deutschland",
+          "centroid": [
+            11.077298,
+            49.453872
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Science_of_Logic",
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "nuremberg_disciplined_system",
+      "event_class": {
+        "type": "publication",
+        "title": "Wissenschaft der Logik (Science of Logic)",
+        "publication_type": "book",
+        "significance": "system foundation",
+        "impact": "It provided the conceptual core of Hegel’s system and shaped the later structure of his philosophy of nature and spirit."
+      }
+    },
+    {
+      "date": "1816",
+      "date_precision": "year",
+      "age": 46,
+      "title": "Professor in Heidelberg",
+      "description": "1816 kehrte Hegel nach mehreren Jahren im höheren Schulwesen durch die Übernahme einer Professur in Heidelberg an die Universität zurück – ein Schritt, der ihn wieder in der akademischen Welt etablierte und ihn für einen späteren Wechsel auf eine einflussreichere preußische Stelle positionierte.",
+      "locations": [
+        {
+          "name_historic": "Nürnberg",
+          "name_modern": "Nürnberg, Deutschland",
+          "centroid": [
+            11.077298,
+            49.453872
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Heidelberg",
+          "name_modern": "Heidelberg, Deutschland",
+          "centroid": [
+            8.694724,
+            49.4093582
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_von_Hegel"
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "nuremberg_disciplined_system",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Nuremberg",
+        "to_location": "Heidelberg",
+        "characterization": "university appointment"
+      }
+    },
+    {
+      "date": "1817",
+      "date_precision": "year",
+      "age": 47,
+      "title": "Enzyklopädie veröffentlicht",
+      "description": "1817 veröffentlichte Hegel während seiner Heidelberger Zeit die erste Auflage der Enzyklopädie der philosophischen Wissenschaften. Sie war als kompakter Leitfaden für Studierende konzipiert – ein gegliederter Abriss, der in den Hörsaal mitgenommen, mündlich entfaltet und im Laufe der Zeit überarbeitet werden sollte.\n\nDas Buch fungierte auch als sichtbarer Bauplan seines Anspruchs: nicht einzelne Abhandlungen, sondern eine einheitliche Architektur, die Logik, Natur und Geist verbindet. In dieser Form – knapp, systematisch und lehrbar – ließ sich seine Philosophie leichter Vorlesung für Vorlesung an ein wachsendes akademisches Publikum vermitteln.",
+      "locations": [
+        {
+          "name_historic": "Heidelberg",
+          "name_modern": "Heidelberg, Deutschland",
+          "centroid": [
+            8.694724,
+            49.4093582
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://en.wikipedia.org/wiki/Encyclopedia_of_the_Philosophical_Sciences"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "prussian_summit",
+      "event_class": {
+        "type": "publication",
+        "title": "Enzyklopädie der philosophischen Wissenschaften (Encyclopaedia of the Philosophical Sciences)",
+        "publication_type": "book",
+        "significance": "system outline",
+        "impact": "It provided the authoritative outline for Hegel’s system and became the backbone of his teaching and later revisions."
+      }
+    },
+    {
+      "date": "1818",
+      "date_precision": "year",
+      "age": 48,
+      "title": "Lehrstuhl in Berlin",
+      "description": "1818 nahm Hegel einen führenden philosophischen Lehrstuhl an der [[University of Berlin|Universität Berlin]] an und zog nach Berlin, wo er rasch zum bedeutendsten akademischen Philosophen Preußens wurde. Seine Vorlesungen fanden breite Beachtung und boten die Grundlage für seine reifen Darstellungen von Geschichte, Religion, Kunst und politischem Leben innerhalb eines einheitlichen philosophischen Rahmens. Berlin wurde während seines letzten Jahrzehnts zur Hauptbühne seines Einflusses.",
+      "locations": [
+        {
+          "name_historic": "Heidelberg",
+          "name_modern": "Heidelberg, Deutschland",
+          "centroid": [
+            8.694724,
+            49.4093582
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Karl vom Stein zum Altenstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_vom_Stein_zum_Altenstein"
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "prussian_summit",
+      "annotations": {
+        "University of Berlin": {
+          "explanation": "Die 1810 gegründete preußische Universität (später in Humboldt-Universität zu Berlin umbenannt), die im 19. Jahrhundert zu einem führenden Zentrum deutscher Wissenschaft und Philosophie wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Humboldt_University_of_Berlin"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Heidelberg",
+        "to_location": "Berlin",
+        "characterization": "prestigious appointment"
+      }
+    },
+    {
+      "date": "1821",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Philosophie des Rechts veröffentlicht",
+      "description": "1821 veröffentlichte Hegel, während er als Professor in [[Berlin|Berlin]] tätig war, das Werk über sein übliches Verlagsnetzwerk; es erregte rasch Aufmerksamkeit in preußischen intellektuellen und amtlichen Kreisen und wurde zum Brennpunkt von Debatten darüber, ob seine Darstellung rationaler Freiheit eine Verteidigung zeitgenössischer Institutionen oder ein Maßstab war, an dem sie kritisiert werden konnten.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Elements_of_the_Philosophy_of_Right",
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Grundlinien_der_Philosophie_des_Rechts_2.jpg",
+          "caption": "Grundlinien der Philosophie des Rechts (Titelseite)",
+          "source": "https://commons.wikimedia.org/wiki/File:Grundlinien_der_Philosophie_des_Rechts_2.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "prussian_summit",
+      "annotations": {
+        "Berlin": {
+          "explanation": "Damals die Hauptstadt des Königreichs Preußen, wo Hegel an der Universität Berlin lehrte und sein Werk sowohl in akademischen als auch in staatlichen Kreisen aufmerksam gelesen wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Berlin"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Grundlinien der Philosophie des Rechts (Elements of the Philosophy of Right)",
+        "publication_type": "book",
+        "significance": "political philosophy",
+        "impact": "The work defined Hegel’s mature account of modern ethical and political institutions and became central to debates in philosophy and jurisprudence."
+      }
+    },
+    {
+      "date": "1831-11-14",
+      "date_precision": "day",
+      "age": 61,
+      "title": "Tod in Berlin 1831",
+      "description": "Hegel starb am 14. November 1831 in Berlin, auf dem Höhepunkt seines institutionellen Ansehens. Sein Tod beendete abrupt eine Phase außerordentlich produktiver Lehrtätigkeit, während Berlin in jenem Jahr von einem Choleraausbruch betroffen war (die für ihn angegebene genaue Ursache wird in biografischen Darstellungen erörtert).\n\nEr hinterließ bedeutende veröffentlichte Werke und einen umfangreichen Bestand an Vorlesungsmaterial. In den Jahren nach seinem Tod trugen Studierende und Herausgeber dazu bei, die Lektüre dieser Vorlesungen zu prägen – ein Grund, weshalb „Hegel“ rasch nicht nur eine Person, sondern eine umstrittene Tradition wurde.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Georg_Wilhelm_Friedrich_Hegel_-_Dorotheenst%C3%A4dtischer_Friedhof_-_Berlin%2C_Germany_-_DSC00376.JPG/960px-Georg_Wilhelm_Friedrich_Hegel_-_Dorotheenst%C3%A4dtischer_Friedhof_-_Berlin%2C_Germany_-_DSC00376.JPG",
+          "caption": "Grab von Georg Wilhelm Friedrich Hegel, Berlin",
+          "source": "https://commons.wikimedia.org/wiki/File:Georg_Wilhelm_Friedrich_Hegel_-_Dorotheenstädtischer_Friedhof_-_Berlin,_Germany_-_DSC00376.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "prussian_summit"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "dd7cf3033c1584d3",
+    "translated_on": "2026-07-19T07:43:13.091828+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

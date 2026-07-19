@@ -1,0 +1,734 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-07-17",
+  "person": {
+    "name": "Benjamin_Franklin",
+    "birth_date": "1706-01-17",
+    "death_date": "1790-04-17",
+    "primary_roles": [
+      "Staatsmann",
+      "Erfinder",
+      "Drucker"
+    ],
+    "tagline": "Drucker, Wissenschaftler und Gründungsdiplomat",
+    "summary": "Benjamin Franklin war ein amerikanischer Drucker, Schriftsteller, Wissenschaftler, Erfinder, Organisator des bürgerschaftlichen Lebens und Staatsmann. Er prägte das öffentliche Leben der Kolonien mit, sicherte während der Amerikanischen Revolution französische Unterstützung und wirkte an der Gründung der Vereinigten Staaten mit.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+    "portrait": {
+      "image": "/portraits/benjamin_franklin_thumbnail.webp",
+      "thumbnail": "/portraits/benjamin_franklin_thumbnail.webp",
+      "medium": "/portraits/benjamin_franklin_medium.webp",
+      "full": "/portraits/benjamin_franklin_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
+      "originalCaption": "Portrait of Benjamin Franklin by Joseph Siffrein Duplessis"
+    }
+  },
+  "chapters": [
+    {
+      "id": "ink_finds_its_voice",
+      "headline": "Tinte findet ihre Stimme",
+      "date_start": "1706-01-17",
+      "date_start_precision": "day",
+      "date_end": "1726",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 20,
+      "involved_people": [
+        "Josiah Franklin",
+        "Abiah Folger",
+        "James Franklin"
+      ],
+      "location": "Nordöstliche Vereinigte Staaten"
+    },
+    {
+      "id": "philadelphias_civic_engine",
+      "headline": "Philadelphias Bürgerkraft",
+      "date_start": "1727",
+      "date_start_precision": "year",
+      "date_end": "1753",
+      "date_end_precision": "year",
+      "age_start": 21,
+      "age_end": 47,
+      "involved_people": [
+        "Deborah Read",
+        "John Rogers",
+        "Francis Folger Franklin"
+      ],
+      "location": "Philadelphia und die amerikanischen Kolonien"
+    },
+    {
+      "id": "empires_unquiet_agent",
+      "headline": "Unruhiger Agent des Empire",
+      "date_start": "1757",
+      "date_start_precision": "year",
+      "date_end": "1775",
+      "date_end_precision": "year",
+      "age_start": 51,
+      "age_end": 69,
+      "involved_people": null,
+      "location": "Großbritannien und die amerikanischen Kolonien"
+    },
+    {
+      "id": "a_republic_abroad",
+      "headline": "Eine Republik im Ausland",
+      "date_start": "1776",
+      "date_start_precision": "year",
+      "date_end": "1785-09",
+      "date_end_precision": "month",
+      "age_start": 70,
+      "age_end": 79,
+      "involved_people": [
+        "John Adams",
+        "Thomas Jefferson",
+        "Roger Sherman",
+        "Robert R. Livingston",
+        "Silas Deane",
+        "Arthur Lee",
+        "John Jay"
+      ],
+      "location": "Frankreich und die Vereinigten Staaten"
+    },
+    {
+      "id": "constitutional_twilight",
+      "headline": "Verfassungsdämmerung",
+      "date_start": "1785-10",
+      "date_start_precision": "month",
+      "date_end": "1790-04-17",
+      "date_end_precision": "day",
+      "age_start": 79,
+      "age_end": 84,
+      "involved_people": [
+        "George Washington",
+        "James Wilson",
+        "Gouverneur Morris",
+        "Deborah Read"
+      ],
+      "location": "Vereinigte Staaten"
+    }
+  ],
+  "conclusion": "Benjamin Franklin verwandelte das Handwerk eines Druckers in ein Leben voller bürgerschaftlicher Erfindungsgabe, wissenschaftlicher Neugier und revolutionärer Staatskunst. Sein unermüdlicher Pragmatismus half dabei, die Vereinigten Staaten zu entwerfen – und sie dann mit zu sichern.",
+  "events": [
+    {
+      "date": "1706-01-17",
+      "date_precision": "day",
+      "date_note": "Datum nach neuem Stil; nach dem Kalender alten Stils der 6. Januar 1705",
+      "age": 0,
+      "title": "In einen großen Bostoner Haushalt geboren",
+      "description": "Benjamin Franklin wurde in Boston in der Province of Massachusetts Bay als Sohn von Josiah Franklin, einem Kerzen- und Seifenmacher, und Abiah Folger geboren. Er war ihr achtes gemeinsames Kind und das fünfzehnte von Josiah Franklins siebzehn Kindern.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Josiah Franklin",
+        "Abiah Folger"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Josiah_Franklin",
+        "https://en.wikipedia.org/wiki/Abiah_Folger"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "ink_finds_its_voice"
+    },
+    {
+      "date": "1718",
+      "date_precision": "year",
+      "date_end": "1722",
+      "date_end_precision": "year",
+      "age": 12,
+      "title": "Lehre bei Bruder James Franklin",
+      "description": "In Boston wurde Franklin nach nur zwei Jahren formaler Schulbildung bei seinem älteren Bruder James, einem Drucker, in die Lehre gegeben. Heimlich schrieb er die beliebten „[[Silence Dogood letters|Silence-Dogood]]“-Briefe für James’ New-England Courant und leitete die Zeitung kurzzeitig während James’ Haft.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "James Franklin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/James_Franklin_(printer)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Silence_Dogwood_Essay_in_the_New_England_Courant%2C_April_16%2C_1722.jpg",
+          "caption": "Silence-Dogood-Essay im New-England Courant, 1722",
+          "source": "https://commons.wikimedia.org/wiki/File:Silence_Dogwood_Essay_in_the_New_England_Courant,_April_16,_1722.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "ink_finds_its_voice",
+      "annotations": {
+        "Silence Dogood letters": {
+          "explanation": "Eine Reihe satirischer Briefe, die unter dem Namen einer fiktiven Witwe veröffentlicht wurden und die Bostoner Gesellschaft sowie die Obrigkeit kritisierten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Silence_Dogood"
+        }
+      }
+    },
+    {
+      "date": "1723",
+      "date_precision": "year",
+      "date_end": "1726",
+      "date_end_precision": "year",
+      "age": 17,
+      "title": "Verlässt Boston für Druckarbeit in Philadelphia",
+      "description": "Mit siebzehn Jahren verließ Franklin heimlich seine einengende Lehre bei seinem Bruder James Franklin und suchte Arbeit bei den Druckern Philadelphias.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "James Franklin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/James_Franklin_(printer)"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "ink_finds_its_voice",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Massachusetts Bay",
+        "to_location": "Pennsylvania",
+        "characterization": "printing career"
+      }
+    },
+    {
+      "date": "1727",
+      "date_precision": "year",
+      "date_end": "1731",
+      "date_end_precision": "year",
+      "age": 21,
+      "title": "Gründet die Junto zur Bürgerverbesserung",
+      "description": "1727 gründete Franklin die [[Junto|Junto]], einen Diskussionsklub in Philadelphia für Handwerker und Gewerbetreibende, der sich der Selbstverbesserung und bürgerschaftlichen Projekten widmete. Die Mitglieder tauschten Bücher aus und erörterten praktische Fragen, die ihre Gemeinschaft betrafen.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Junto_(club)",
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "philadelphias_civic_engine",
+      "annotations": {
+        "Junto": {
+          "explanation": "Ein von Franklin gegründeter Klub zur gegenseitigen Weiterbildung, dessen Mitglieder moralische, praktische und bürgerschaftliche Fragen erörterten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Junto_(club)"
+        }
+      }
+    },
+    {
+      "date": "1729",
+      "date_precision": "year",
+      "date_end": "1732",
+      "date_end_precision": "year",
+      "age": 23,
+      "title": "Baut eine erfolgreiche Druckerkarriere in Philadelphia auf",
+      "description": "In Philadelphia übernahm Franklin 1729 die Pennsylvania Gazette und nutzte sie, um bürgerschaftliche Projekte und lokale Verbesserungen zu fördern. 1732 begann er, unter dem Namen Richard Saunders, Poor Richard’s Almanack herauszugeben.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/The_Pennsylvania_Gazette",
+        "https://en.wikipedia.org/wiki/Poor_Richard%27s_Almanack"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Franklin_the_printer.jpg/960px-Franklin_the_printer.jpg",
+          "caption": "Benjamin Franklin bei der Arbeit an einer Druckerpresse",
+          "source": "https://commons.wikimedia.org/wiki/File:Franklin_the_printer.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "philadelphias_civic_engine",
+      "event_class": {
+        "type": "publication",
+        "title": "Poor Richard's Almanack",
+        "publication_type": "book",
+        "significance": "popular almanac",
+        "impact": "Issued annually, it combined practical information, humor, and aphorisms for a broad colonial readership."
+      }
+    },
+    {
+      "date": "1730-09-01",
+      "date_precision": "day",
+      "age": 24,
+      "title": "Beginnt eine Ehe nach Common Law mit Deborah",
+      "description": "In Philadelphia hielten Franklin und Deborah Read eine Zeremonie ab und begannen, als Mann und Frau zusammenzuleben. Da das Schicksal ihres ersten Ehemanns, John Rogers, nie geklärt worden war, konnte sie keine rechtlich sichere erneute Ehe eingehen.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Deborah Read",
+        "John Rogers"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Deborah_Read"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "philadelphias_civic_engine",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "partnership",
+        "partner": "Deborah Read",
+        "duration": "until her death in 1774",
+        "children": 2,
+        "characterization": "common-law union"
+      }
+    },
+    {
+      "date": "1736",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Trauert um den Tod seines Sohnes Francis",
+      "description": "Franklins vierjähriger Sohn Francis Folger Franklin starb in Philadelphia an den [[smallpox|Pocken]]. Franklin hatte die Inokulation des Jungen veranlasst, doch die Krankheit brach aus, bevor das Verfahren durchgeführt werden konnte.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Francis Folger Franklin",
+        "Deborah Read Franklin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Smallpox"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "philadelphias_civic_engine",
+      "annotations": {
+        "smallpox": {
+          "explanation": "Vor der Impfung bestand die Vorbeugung häufig in der Variolation: der absichtlichen Exposition gegenüber Pockenmaterial, in der Hoffnung, einen milderen Krankheitsverlauf und spätere Immunität hervorzurufen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Smallpox"
+        }
+      }
+    },
+    {
+      "date": "1751",
+      "date_precision": "year",
+      "date_end": "1753",
+      "date_end_precision": "year",
+      "age": 45,
+      "title": "Erweitert Philadelphias Bürger- und Postwesen",
+      "description": "In Philadelphia half Franklin bei der Gründung der Academy and College of Philadelphia, die 1751 eröffnet wurde, und amtierte als ihr erster Präsident. 1753 ernannten ihn die britischen Behörden zum stellvertretenden Generalpostmeister für die Kolonien und beauftragten ihn mit der Verbesserung der kolonienübergreifenden Postrouten.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/University_of_Pennsylvania",
+        "https://en.wikipedia.org/wiki/United_States_Postal_Service"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "philadelphias_civic_engine"
+    },
+    {
+      "date": "1752",
+      "date_precision": "year",
+      "date_note": "Das genaue Datum von Franklins Drachenexperiment ist ungewiss",
+      "age": 46,
+      "title": "Erforscht Blitze und wirbt für Schutzmaßnahmen",
+      "description": "In Philadelphia setzte Franklin 1752 während eines Gewitters seine elektrischen Untersuchungen fort und trat für den Schutz von Gebäuden vor Blitzeinschlägen ein.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Kite_experiment",
+        "https://en.wikipedia.org/wiki/Lightning_rod"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Benjamin_Franklin_Lightning_Experiment_1752.jpg/960px-Benjamin_Franklin_Lightning_Experiment_1752.jpg",
+          "caption": "Franklins Experiment zu Blitz und Elektrizität, Juni 1752",
+          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_Lightning_Experiment_1752.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightning-bolt",
+      "chapter": "philadelphias_civic_engine",
+      "event_class": {
+        "type": "invention",
+        "title": "Lightning rod",
+        "description": "An iron rod mounted above a building and connected to earth conducted electrical charges away from vulnerable structures.",
+        "impact": "It offered a practical method for reducing fire and structural damage caused by lightning."
+      }
+    },
+    {
+      "date": "1757",
+      "date_precision": "year",
+      "date_end": "1775",
+      "date_end_precision": "year",
+      "age": 51,
+      "title": "Vertritt die Kolonien in London",
+      "description": "1757 verließ Franklin Philadelphia, um in London als Vertreter Pennsylvanias zu dienen, wo er britischen Beamten die Beschwerden der Kolonien vortrug. Später half er, den Widerstand gegen den [[Stamp Act|Stamp Act von 1765]] zu organisieren, und seine Aussage vor dem Parlament wurde Teil der Kampagne für dessen Aufhebung.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Stamp_Act_1765"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Benjamin_Franklin_House%2C_36_Craven_Street%2C_London.jpg/960px-Benjamin_Franklin_House%2C_36_Craven_Street%2C_London.jpg",
+          "caption": "Benjamin Franklin House, 36 Craven Street, London",
+          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_House,_36_Craven_Street,_London.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "empires_unquiet_agent",
+      "annotations": {
+        "Stamp Act": {
+          "explanation": "Ein britisches Gesetz von 1765, das direkte Steuern auf Druckerzeugnisse in den amerikanischen Kolonien erhob und weitverbreiteten kolonialen Widerstand auslöste.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Stamp_Act_1765"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Pennsylvania",
+        "to_location": "Great Britain",
+        "characterization": "colonial agency"
+      }
+    },
+    {
+      "date": "1775",
+      "date_precision": "year",
+      "age": 69,
+      "title": "Kehrt aus Großbritannien ins revolutionäre Philadelphia zurück",
+      "description": "Nach mehr als einem Jahrzehnt in Großbritannien kehrte Franklin zurück, als der Konflikt mit Großbritannien eskalierte. Er nahm seinen Sitz im Zweiten Kontinentalkongress ein und half, die revolutionäre Sache zu organisieren.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "empires_unquiet_agent",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Great Britain",
+        "to_location": "Pennsylvania",
+        "characterization": "revolutionary return"
+      }
+    },
+    {
+      "date": "1776-07-04",
+      "date_precision": "day",
+      "age": 70,
+      "title": "Unterzeichnet die Unabhängigkeitserklärung",
+      "description": "Franklin gehörte dem Fünferausschuss an, der für den Kontinentalkongress die [[Declaration of Independence|Unabhängigkeitserklärung]] ausarbeitete. Er unterstützte ihre Verabschiedung am 4. Juli 1776 und unterzeichnete das ausgefertigte Dokument am 2. August in Philadelphia.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Adams",
+        "Thomas Jefferson",
+        "Roger Sherman",
+        "Robert R. Livingston"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",
+        "https://en.wikipedia.org/wiki/Committee_of_Five"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Declaration_of_Independence_%281819%29%2C_by_John_Trumbull.jpg/960px-Declaration_of_Independence_%281819%29%2C_by_John_Trumbull.jpg",
+          "caption": "Trumbulls Gemälde des Ausschusses zur Ausarbeitung der Unabhängigkeitserklärung",
+          "source": "https://commons.wikimedia.org/wiki/File:Declaration_of_Independence_(1819),_by_John_Trumbull.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-file-document-edit",
+      "chapter": "a_republic_abroad",
+      "annotations": {
+        "Declaration of Independence": {
+          "explanation": "Die förmliche Erklärung der Dreizehn Kolonien, mit der sie ihre Loslösung von Großbritannien erklärten und die 1776 vom Kontinentalkongress verabschiedet wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+        }
+      }
+    },
+    {
+      "date": "1776-10",
+      "date_precision": "month",
+      "date_end": "1785",
+      "date_end_precision": "year",
+      "age": 70,
+      "title": "Gewinnt französische Hilfe für die Unabhängigkeit",
+      "description": "Im Oktober 1776 reiste Franklin als einer der amerikanischen Kommissare ab, die französische Unterstützung für den Unabhängigkeitskrieg suchten. Gemeinsam mit Silas Deane und Arthur Lee half er, französische Hilfe und das Bündnis von 1778 zu sichern; später nahm er an den Verhandlungen teil, die 1783 zum Vertrag von Paris führten.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.3522,
+            48.8566
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Silas Deane",
+        "Arthur Lee",
+        "John Adams",
+        "John Jay"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Silas_Deane",
+        "https://en.wikipedia.org/wiki/Arthur_Lee_(diplomat)",
+        "https://en.wikipedia.org/wiki/John_Jay"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "a_republic_abroad",
+      "event_class": {
+        "type": "migration",
+        "from_location": "United States",
+        "to_location": "France",
+        "characterization": "diplomatic mission"
+      }
+    },
+    {
+      "date": "1785-10",
+      "date_precision": "month",
+      "date_end": "1788",
+      "date_end_precision": "year",
+      "age": 79,
+      "title": "Leitet Pennsylvania und die Abolition Society",
+      "description": "Nach seiner Rückkehr aus Frankreich wurde Franklin nach der republikanischen Verfassung des Bundesstaats zum Präsidenten von Pennsylvania gewählt. Im Oktober 1785 wurde er zudem Präsident der [[Pennsylvania Society for Promoting the Abolition of Slavery|Pennsylvania Society for Promoting the Abolition of Slavery]].",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Pennsylvania_Constitution_of_1776",
+        "https://en.wikipedia.org/wiki/Pennsylvania_Abolition_Society"
+      ],
+      "event_type_icon": "mdi-vote",
+      "chapter": "constitutional_twilight",
+      "annotations": {
+        "Pennsylvania Society for Promoting the Abolition of Slavery": {
+          "explanation": "Eine frühe amerikanische abolitionistische Organisation, die 1775 in Philadelphia gegründet wurde, gegen die Sklaverei kämpfte und freien Schwarzen Menschen Unterstützung bot.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pennsylvania_Abolition_Society"
+        }
+      }
+    },
+    {
+      "date": "1787-09-17",
+      "date_precision": "day",
+      "age": 81,
+      "title": "Unterzeichnet die neue Verfassung der Vereinigten Staaten",
+      "description": "Trotz Gebrechlichkeit und schlechter Gesundheit nahm Franklin am [[Constitutional Convention|Verfassungskonvent]] in Philadelphia teil. Am 17. September 1787 drängte er die Delegierten, die fertiggestellte Verfassung als die bestmögliche erreichbare Vereinbarung anzunehmen, und unterzeichnete sie mit der Delegation Pennsylvanias.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Washington",
+        "James Wilson",
+        "Gouverneur Morris"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Scene_at_the_Signing_of_the_Constitution_of_the_United_States.jpg/960px-Scene_at_the_Signing_of_the_Constitution_of_the_United_States.jpg",
+          "caption": "Szene bei der Unterzeichnung der Verfassung der Vereinigten Staaten",
+          "source": "https://commons.wikimedia.org/wiki/File:Scene_at_the_Signing_of_the_Constitution_of_the_United_States.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-file-document-edit",
+      "chapter": "constitutional_twilight",
+      "annotations": {
+        "Constitutional Convention": {
+          "explanation": "Die Versammlung von Delegierten im Jahr 1787, die in Philadelphia die Verfassung der Vereinigten Staaten ausarbeitete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        }
+      }
+    },
+    {
+      "date": "1790-04-17",
+      "date_precision": "day",
+      "age": 84,
+      "title": "Stirbt zu Hause in Philadelphia",
+      "description": "Franklin starb am 17. April 1790 im Alter von 84 Jahren nach einer Phase nachlassender Gesundheit in Philadelphia. Er wurde neben Deborah Read auf dem Friedhof der Christ Church beigesetzt.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Deborah Read"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Deborah_Read"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Benjamin_Franklin_grave_%282011%29.JPG/960px-Benjamin_Franklin_grave_%282011%29.JPG",
+          "caption": "Das Grab von Benjamin und Deborah Franklin in Philadelphia",
+          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_grave_(2011).JPG"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "constitutional_twilight"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "0c6564706aeb799f",
+    "translated_on": "2026-07-19T07:36:14.420145+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

@@ -1,0 +1,414 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2025-12-20",
+  "ego": {
+    "name": "Georg Wilhelm Friedrich Hegel",
+    "birth_year": 1770,
+    "death_year": 1831,
+    "primary_roles": [
+      "Philosoph",
+      "Schriftsteller",
+      "Akademiker"
+    ],
+    "summary": "Georg Wilhelm Friedrich Hegel war ein deutscher Philosoph und die Vollendergestalt des deutschen Idealismus, bekannt für ein ehrgeiziges System, das Logik, Natur, Geist, Geschichte, Kunst, Religion und Politik umfasste. Seine Universitätslaufbahn entwickelte sich von frühen theologischen Studien und Tätigkeiten als Hauslehrer über Professuren in Jena, Heidelberg und Berlin, wo ihn seine Vorlesungen und Hauptwerke als zentralen Denker der modernen Philosophie etablierten.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+  },
+  "connections": [
+    {
+      "person_name": "Georg Ludwig Hegel",
+      "relationship_type": "family/father",
+      "relationship_description": "Hegels Vater; württembergischer Verwaltungsbeamter (Rentkammersekretär) in Stuttgart. Sein Tod im Jahr 1799 hinterließ Hegel ein bescheidenes Erbe, das den Umzug nach Jena und einen direkteren akademischen Werdegang ermöglichte.",
+      "start_year": 1770,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "familiäres Aufwachsen in Stuttgart",
+        "Erbe ermöglichte akademischen Umzug nach Jena"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Ausdrücklich im Abschnitt „Schul- und Studienzeit (Stuttgart)“ des bereitgestellten Auszugs erwähnt."
+    },
+    {
+      "person_name": "Maria Magdalena Louisa Hegel (geb. Fromm)",
+      "relationship_type": "family/mother",
+      "relationship_description": "Hegels Mutter, aus einer wohlhabenden Stuttgarter Juristenfamilie; Teil des pietistischen häuslichen Milieus, das seine frühe Bildung und Prägung beeinflusste. Sie starb, als Hegel jung war.",
+      "start_year": 1770,
+      "end_year": 1783,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "familiäres Aufwachsen in Stuttgart",
+        "frühe Bildung und häusliche Kultur"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Im Auszug namentlich genannt; ihr Tod wird durch die Daten nahegelegt."
+    },
+    {
+      "person_name": "Christiane Luise Hegel",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Hegels jüngere Schwester (1773–1832), Teil des engsten Stuttgarter Familienkreises und später mit Erbschaftsregelungen verbunden, die Hegels Kinder betrafen.",
+      "start_year": 1773,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "familiäre Korrespondenz und Verpflichtungen",
+        "Erbschaftsregelungen für Hegels Kinder"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Christiane_Luise_Hegel"
+      ],
+      "notes": "Die Verbindung gründet auf dem Hegel-Artikel, der sie als Geschwister nennt; Einzelheiten werden in ihrer Biografie näher ausgeführt."
+    },
+    {
+      "person_name": "Georg Ludwig Hegel (1776–1812)",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Hegels jüngerer Bruder, der mit ihm in Stuttgart als Teil der unmittelbaren Familie aufwuchs.",
+      "start_year": 1776,
+      "end_year": 1812,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsamer Kinderhaushalt in Stuttgart"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Im bereitgestellten Auszug als Bruder genannt."
+    },
+    {
+      "person_name": "Friedrich Hölderlin",
+      "relationship_type": "social/friend",
+      "relationship_description": "Enger Freund und ehemaliger Zimmergenosse aus dem Tübinger Stift. Führte einen intensiven intellektuellen Austausch mit Hegel; half ihm später, eine Hauslehrerstelle in Frankfurt zu erhalten.",
+      "start_year": 1788,
+      "end_year": 1800,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsames Studium am Tübinger Stift",
+        "politische und philosophische Diskussionen",
+        "berufliche Unterstützung: Vermittlung einer Frankfurter Hauslehrerstelle"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_H%C3%B6lderlin"
+      ],
+      "notes": "Der Auszug betont den intellektuellen Austausch und Hölderlins Rolle beim Umzug nach Frankfurt."
+    },
+    {
+      "person_name": "Friedrich Wilhelm Joseph Schelling",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Tübinger Freund (einer der „Tübinger Drei“) und späterer Jenaer Kollege. Hegel stellte sich 1801 mit Schelling gegen Fichte und gab mit ihm das Kritisches Journal der Philosophie (1802–1803) heraus; Schelling unterstützte Hegels Ernennung zum außerordentlichen Professor im Jahr 1805.",
+      "start_year": 1788,
+      "end_year": 1803,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsames Studium am Tübinger Stift",
+        "Mitherausgabe des Kritisches Journal der Philosophie (1802–1803)",
+        "philosophische Zusammenarbeit und Debatte in Jena",
+        "Unterstützung für Hegels akademische Berufung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_Joseph_Schelling"
+      ],
+      "notes": "Der Auszug verweist ausdrücklich auf die gemeinsame Herausgeberschaft und die Unterstützung bei der Berufung."
+    },
+    {
+      "person_name": "Karl Friedrich von Steiger",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Oberhaupt des Berner Patrizierhaushalts, in dem Hegel ab 1793 als Hauslehrer tätig war; die Bibliothek und das politische Umfeld der Familie prägten Hegels Lektüre politischer Theorie und sozialen Denkens.",
+      "start_year": 1793,
+      "end_year": 1796,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Hausunterricht für die Steiger-Kinder",
+        "Zugang zur Hausbibliothek und zum politisch-sozialen Umfeld in Bern"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Im Auszug als Berner Arbeitgeber genannt."
+    },
+    {
+      "person_name": "Johann Noe Gogel",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Frankfurter Weinhändler, dessen Haushalt Hegel ab 1797 als Hauslehrer beschäftigte; der Umzug erweiterte Hegels Blick auf die moderne Handelsgesellschaft.",
+      "start_year": 1797,
+      "end_year": 1800,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Hausunterricht in einem Frankfurter Haushalt",
+        "fortgesetztes Studium der politischen Ökonomie und der zeitgenössischen Politik"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Im Auszug ausdrücklich erwähnt."
+    },
+    {
+      "person_name": "Johann Gottlieb Fichte",
+      "relationship_type": "academic/rival",
+      "relationship_description": "Bedeutender zeitgenössischer Philosoph, dessen System Hegel 1801 öffentlich mit Schellings System kontrastierte, wobei er sich in den Jenaer Debatten weitgehend gemeinsam mit Schelling gegen Fichte positionierte.",
+      "start_year": 1801,
+      "end_year": 1803,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "philosophische Kontroverse und Gegenüberstellung (Aufsatz von 1801)",
+        "Teilnahme an nachkantischen Debatten in Jena"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Johann_Gottlieb_Fichte"
+      ],
+      "notes": "Die Beziehung ist vor allem intellektueller und polemischer, nicht persönlicher Natur."
+    },
+    {
+      "person_name": "Johann Wolfgang von Goethe",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Bedeutende Kulturpersönlichkeit, die Hegels Ernennung zum außerordentlichen Professor in Jena im Februar 1805 (gemeinsam mit Schelling) unterstützte.",
+      "start_year": 1805,
+      "end_year": 1805,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "akademische Förderung/Empfehlung für die Jenaer Berufung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe"
+      ],
+      "notes": "Der Auszug nennt Goethe als einen der wichtigsten Unterstützer der Berufung von 1805."
+    },
+    {
+      "person_name": "Christina Charlotte Burkhardt (geb. Fischer)",
+      "relationship_type": "social/romantic_partner",
+      "relationship_description": "Witwe, mit der Hegel in Jena eine außereheliche Beziehung hatte; Mutter seines ersten unehelichen Sohnes Ludwig Fischer. Hegel zog ein Heiratsversprechen zurück, als er Jena verließ, und erfuhr während seines Aufenthalts in Bamberg von der Geburt des Kindes.",
+      "start_year": 1806,
+      "end_year": 1807,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Beziehung in Jena während der Krise von 1806–1807",
+        "Elternschaft von Ludwig Fischer"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Im Auszug im Zusammenhang mit dem Bamberger Übergang von 1807 und der Geburt des Kindes beschrieben."
+    },
+    {
+      "person_name": "Friedrich Immanuel Niethammer",
+      "relationship_type": "social/friend",
+      "relationship_description": "Freund und Briefpartner, der Hegel während der Jenaer Krise von 1806 unterstützte und ihm half, die Stelle in Nürnberg zu erhalten.",
+      "start_year": 1806,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Korrespondenz während der Jenaer Krise (1806)",
+        "berufliche Unterstützung und Vermittlung (Berufung nach Nürnberg)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Friedrich_Immanuel_Niethammer"
+      ],
+      "notes": "Niethammer wird im Auszug als Freund (Briefverweis) und als Vermittler für Nürnberg genannt."
+    },
+    {
+      "person_name": "Napoleon Bonaparte",
+      "relationship_type": "social/encounter",
+      "relationship_description": "Hegel erlebte 1806 Napoleons Einzug in Jena und deutete ihn als weltgeschichtliches Zeichen, das mit seiner Geschichtsphilosophie verbunden war.",
+      "start_year": 1806,
+      "end_year": 1806,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Erleben von Napoleons Einzug in Jena (1806)",
+        "historische Deutung im Zusammenhang mit Hegels Geschichtsphilosophie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Napoleon_Bonaparte"
+      ],
+      "notes": "Der Auszug stellt die Begegnung als intellektuell prägend und symbolisch bedeutsam dar."
+    },
+    {
+      "person_name": "Ludwig Fischer",
+      "relationship_type": "family/child",
+      "relationship_description": "Hegels erster (unehelicher) Sohn (geboren am 5. Februar 1807 in Jena), aus seiner Beziehung mit Christina Charlotte Burkhardt (geb. Fischer); später in den Haushalt Hegel aufgenommen.",
+      "start_year": 1807,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "familiäre Verantwortung und spätere Aufnahme in den Haushalt (1817)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Der Auszug nennt Geburtsdatum, Mutter, frühe Betreuung und spätere Aufnahme in die Familie."
+    },
+    {
+      "person_name": "Johanna Frommann",
+      "relationship_type": "social/caregiver",
+      "relationship_description": "Betreuerin, die Hegels unehelichen Sohn Ludwig Fischer während dessen früher Kindheit in Jena aufzog; sie war die Schwester des Verlegers Carl Friedrich Ernst Frommann.",
+      "start_year": 1807,
+      "end_year": 1817,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Kinderbetreuung für Ludwig Fischer in Jena"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel"
+      ],
+      "notes": "Im Auszug als frühe Betreuerin von Ludwig Fischer erwähnt."
+    },
+    {
+      "person_name": "Marie Helena Susanna von Tucher",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Hegels Ehefrau (aus der Nürnberger Patrizierfamilie Tucher). Ihre Ehe begründete Hegels spätere Familie und seinen Haushalt, einschließlich der schließlich erfolgten Aufnahme seines unehelichen Sohnes in die Familie im Jahr 1817.",
+      "start_year": 1811,
+      "end_year": 1831,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Haushalts- und Familienleben während Hegels Nürnberger/Heidelberger/Berliner Jahren"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_von_Hegel"
+      ],
+      "notes": "Die Ehefrau wird über die Biografie des Sohnes und Hegels familiären Kontext erwähnt; der Auszug nennt eindeutig die spätere Aufnahme Ludwig Fischers in die „Familie Hegel“ im Jahr 1817."
+    },
+    {
+      "person_name": "Eduard Gans",
+      "relationship_type": "academic/student",
+      "relationship_description": "Berliner Student und später einflussreicher hegelscher Dozent, der zur Verbreitung von Hegels rechtsphilosophischem Denken beitrug.",
+      "start_year": 1820,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "universitäres Lehrverhältnis in Berlin",
+        "Entwicklung und Verbreitung hegelscher Rechts- und Staatsphilosophie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Eduard_Gans"
+      ],
+      "notes": "Gans erscheint im Hegel-Artikel als Beispiel für die „rechten/Althegelianer“."
+    },
+    {
+      "person_name": "Heinrich Gustav Hotho",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student und späterer Herausgeber von Hegels Vorlesungen, insbesondere der Vorlesungen über die Ästhetik (veröffentlicht 1835–1838), die teilweise auf seinen eigenen Vorlesungsmitschriften und anderen Transkripten beruhten.",
+      "start_year": 1820,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Teilnahme an Hegels Berliner Vorlesungen",
+        "postume Herausgabe von Hegels Ästhetikvorlesungen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Heinrich_Gustav_Hotho"
+      ],
+      "notes": "Hotho ist durch herausgegebene Vorlesungsveröffentlichungen ein wichtiger Vermittler von Hegels Rezeption."
+    },
+    {
+      "person_name": "Karl Rosenkranz",
+      "relationship_type": "academic/student",
+      "relationship_description": "Student und später einer von Hegels wichtigsten Biografen und Herausgebern; der Auszug hält fest, dass Rosenkranz Hegels Lehrmaterialien aus der Nürnberger Zeit anhand von Studentenmitschriften zur Philosophische Propädeutik zusammenstellte.",
+      "start_year": 1825,
+      "end_year": 1831,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Hegelforschung nach Hegels Tod",
+        "Herausgabe/Zusammenstellung von Hegels pädagogischen Materialien (Propädeutik)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_Rosenkranz"
+      ],
+      "notes": "Die Beziehung ist durch Rosenkranz’ editorische Arbeit weitgehend postum, beruht jedoch darauf, dass er Hegels Student war."
+    },
+    {
+      "person_name": "Karl Marx",
+      "relationship_type": "academic/influencee",
+      "relationship_description": "Späterer Denker, der stark von Hegels Werken und dem Berliner hegelschen Milieu (einschließlich der Vorlesungen Eduard Gans’) beeinflusst wurde.",
+      "start_year": 1836,
+      "end_year": 1883,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "intellektueller Einfluss durch Hegels Werke und die Berliner Vorlesungstradition",
+        "Entwicklung der junghegelianischen Kritik und des späteren Marxismus"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "https://de.wikipedia.org/wiki/Karl_Marx",
+        "https://de.wikipedia.org/wiki/Eduard_Gans"
+      ],
+      "notes": "Kein persönlicher Kontakt; der Einfluss ist textuell und institutionell (Berliner intellektuelles Milieu)."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Ein pietistischer Stuttgarter Familienhintergrund (Eltern und Geschwister) erweitert sich durch die Heirat zu einem späteren Nürnberger Haushalt – verkompliziert durch einen unehelichen Sohn, der später in die Familie aufgenommen wurde."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Von prägenden Weggefährten (Schelling, Hölderlin) und einem wichtigen Rivalen (Fichte) bis zu Berliner Studenten/Herausgebern (Gans, Hotho, Rosenkranz), die Hegels Rezeption prägten."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Frühe Hauslehrerstellen finanzierten die Arbeit; spätere Förderung und Vermittlung (z. B. durch Goethe, Niethammer) erleichterten entscheidende berufliche Übergänge."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Freundschaften und Briefpartner gaben ihm Halt, während eine folgenschwere Jenaer Beziehung und eine eindrückliche historische Beobachtung – Napoleon im Jahr 1806 – bleibende Spuren hinterließen."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "711ae8adc3f8feb7",
+    "translated_on": "2026-07-19T07:43:38.061576+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

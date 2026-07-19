@@ -1,0 +1,445 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-02-08",
+  "ego": {
+    "name": "Ida Noddack",
+    "birth_year": 1896,
+    "death_year": 1978,
+    "primary_roles": [
+      "Chemikerin",
+      "Physikerin"
+    ],
+    "summary": "Deutsche Chemikerin und Physikerin, die vor allem dafür bekannt ist, gemeinsam mit Walter Noddack und Otto Berg Rhenium entdeckt zu haben, sowie für einen 1934 veröffentlichten frühen Vorschlag, dass mit Neutronen beschossene schwere Atomkerne in große Fragmente zerbrechen könnten – eine Idee, die später als Vorwegnahme der Kernspaltung anerkannt wurde.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ida_Noddack"
+  },
+  "connections": [
+    {
+      "person_name": "Masataka Ogawa",
+      "relationship_type": "professional/predecessor_claimant",
+      "relationship_description": "Früherer Anspruchsteller (1908) auf Element 43 („Nipponium“); spätere Untersuchungen wurden im Zusammenhang mit den Ansprüchen der Noddacks sowie mit Prioritätsstreitigkeiten um Rhenium/Technetium erörtert.",
+      "start_year": 1908,
+      "end_year": 1930,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Historischer Prioritätskontext für Ansprüche auf Element 43 und Element 75"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://de.wikipedia.org/wiki/Ogawa_Masataka"
+      ],
+      "notes": "Aufgenommen aufgrund der ausdrücklichen Erörterung im Auszug über die Neubewertung früherer Ansprüche."
+    },
+    {
+      "person_name": "Henry Moseley",
+      "relationship_type": "academic/intellectual_predecessor",
+      "relationship_description": "Seine Arbeiten von 1913–1914, die Röntgenfrequenzen mit der Ordnungszahl in Beziehung setzten, bildeten die Grundlage für die spektrografische Logik bei der Elementsuche (einschließlich des Ansatzes der Noddacks für Element 43/75) und sagten die Existenz der fehlenden Elementposition für 75 voraus.",
+      "start_year": 1913,
+      "end_year": 1915,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Methodische Grundlage für die in späteren Elementsuchen verwendete Identifizierung mittels Röntgenstrahlung/Ordnungszahl"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)"
+      ],
+      "notes": "Der Einfluss ist methodischer Art (keine direkte Interaktion)."
+    },
+    {
+      "person_name": "D. Holde",
+      "relationship_type": "academic/doctoral_associated",
+      "relationship_description": "Neben Noddack in der Referenz zu ihrer Dissertation von 1921 genannt; wahrscheinlich ein Betreuer, Herausgeber oder institutioneller Mitautor mit Bezug zu ihrer Doktorarbeit.",
+      "start_year": 1918,
+      "end_year": 1921,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Arbeit an und Veröffentlichung der Doktorarbeit"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Der bereitgestellte Auszug führt für die Dissertation „Tacke, Ida, und D. Holde. 1921“ auf."
+    },
+    {
+      "person_name": "Walter Noddack",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Ehemann und lebenslanger Forschungspartner; gemeinsam (mit Otto Berg) veröffentlichte er zentrale Arbeiten über Rhenium und den umstrittenen Anspruch auf „Masurium“.",
+      "start_year": 1920,
+      "end_year": 1960,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kennengelernt an der Technischen Hochschule Charlottenburg (Berlin)",
+        "Gemeinsames Programm zur Elementsuche nach den Elementen 43 und 75 an der PTR",
+        "Gemeinsam verfasste Veröffentlichungen über Rhenium",
+        "Gemeinsame Nominierungen für den Nobelpreis und Auszeichnungen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "notes": "Ihre Partnerschaft verband Ehe und eine langfristige Forschungsgemeinschaft."
+    },
+    {
+      "person_name": "Otto Berg",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Mitforscher von Ida und Walter Noddack im Programm zur Elementsuche der 1920er Jahre und anerkannter Mitentdecker des Rheniums; Mitautor des Elementberichts von 1925.",
+      "start_year": 1922,
+      "end_year": 1933,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Analytische und röntgenspektrografische Arbeit an Mineralproben",
+        "Mitverfasster Aufsatz von 1925 mit dem Anspruch auf Rhenium und Masurium",
+        "Arbeit zur Isolierung einer Rheniumprobe (insbesondere bis 1928)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)",
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "notes": "Berg verlor später aufgrund der nationalsozialistischen Rassenpolitik seine Stelle bei Siemens und floh nach England (Kontext für die wissenschaftlichen Netzwerke der Epoche)."
+    },
+    {
+      "person_name": "Walther Nernst",
+      "relationship_type": "professional/advocate",
+      "relationship_description": "Leitender Chemiker, der die Nobelpreisnominierungen der Noddacks unterstützte, was die hochrangige Anerkennung ihrer Elementarbeiten widerspiegelt.",
+      "start_year": 1932,
+      "end_year": 1933,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Unterstützung bei Nobelpreisnominierungen",
+        "Berufliche Anerkennung innerhalb der Chemie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Der Auszug führt Nernst unter den Nominierenden für die Nobelpreisnominierungen der Noddacks auf."
+    },
+    {
+      "person_name": "Enrico Fermi",
+      "relationship_type": "professional/peer_criticized",
+      "relationship_description": "Ihr Aufsatz von 1934 stellte Fermis Interpretation des mit Neutronen beschossenen Urans als Erzeugung transuraner Elemente infrage und brachte die Möglichkeit eines Zerbrechens des Atomkerns zur Sprache.",
+      "start_year": 1934,
+      "end_year": 1934,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Wissenschaftlicher Austausch durch veröffentlichte Aufsätze über mit Neutronen beschossenes Uran",
+        "Öffentliche Kritik an der experimentellen Interpretation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Enrico_Fermi"
+      ],
+      "notes": "Dies war ein einflussreicher, aber zunächst zurückgewiesener Beitrag zur Debatte über Transurane und Kernspaltung."
+    },
+    {
+      "person_name": "Otto Hahn",
+      "relationship_type": "professional/rival_critic",
+      "relationship_description": "Einer der prominenten deutschen Wissenschaftler, die Noddacks Vorschlag von 1934 eines Zerbrechens des Kerns als „lächerlich“ abtaten; später stand er im Zentrum des experimentellen Weges zur Kernspaltung.",
+      "start_year": 1934,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Öffentliche wissenschaftliche Kontroverse über die Interpretation neutronenbestrahlten Urans",
+        "Hahns spätere Arbeit wurde Teil der Beweiskette zur Bestätigung der Kernspaltung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://de.wikipedia.org/wiki/Otto_Hahn"
+      ],
+      "notes": "Die Beziehung besteht hauptsächlich in öffentlicher wissenschaftlicher Kritik und einer späteren historischen Verknüpfung."
+    },
+    {
+      "person_name": "Emilio Segrè",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Isolierte 1937 endgültig Element 43 (mit Carlo Perrier), das schließlich Technetium genannt wurde – und klärte damit den umstrittenen Status von Noddacks früherem Anspruch auf „Masurium“.",
+      "start_year": 1937,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Konkurrierende/bestätigende Darstellung der Entdeckung von Element 43",
+        "Spätere Debatte über die Nachweisbarkeit mit den Methoden der Noddacks von 1925"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Emilio_Segr%C3%A8"
+      ],
+      "notes": "Segrès Ergebnis klärte weitgehend die Diskussionen über Benennung und Priorität bei Element 43."
+    },
+    {
+      "person_name": "Carlo Perrier",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Mitentdecker des Technetiums (Element 43) mit Segrè im Jahr 1937; die endgültige Isolierung stand im Gegensatz zu Noddacks früherem Anspruch auf „Masurium“.",
+      "start_year": 1937,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Isolierung und Charakterisierung von Element 43 mit Bezug zum früheren Anspruch der Noddacks"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Emilio_Segr%C3%A8",
+        "https://de.wikipedia.org/wiki/Carlo_Perrier"
+      ],
+      "notes": "Die Verbindung besteht durch wissenschaftliche Priorität/Validierung und nicht durch direkten Kontakt."
+    },
+    {
+      "person_name": "Fritz Strassmann",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Erbrachte gemeinsam mit Hahn 1938 den chemischen Nachweis (Barium unter den Produkten), der zur Etablierung der Kernspaltung beitrug; seine Arbeit ist Teil des späteren Validierungswegs für Noddacks Hypothese des Kernzerbrechens von 1934.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Wissenschaftliche Verbindung durch Literatur zur Entdeckung der Kernspaltung und spätere historische Interpretation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://de.wikipedia.org/wiki/Fritz_Stra%C3%9Fmann",
+        "https://de.wikipedia.org/wiki/Otto_Hahn"
+      ],
+      "notes": "Im bereitgestellten Text ist keine direkte Zusammenarbeit angegeben."
+    },
+    {
+      "person_name": "Lise Meitner",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Interpretierte die Ergebnisse von Hahn–Strassmann gemeinsam mit Frisch und trug zur Etablierung der Kernspaltung bei – wodurch Noddacks früherer Vorschlag rückblickend als bemerkenswert vorausschauend erschien.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Gemeinsames wissenschaftliches Thema: Neutronenbeschuss von Uran und Interpretation der Kernspaltung",
+        "Spätere Arbeit lieferte einen theoretischen Rahmen, der in Noddacks Vorschlag von 1934 fehlte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Lise_Meitner",
+        "https://de.wikipedia.org/wiki/Otto_Hahn"
+      ],
+      "notes": "Der Einfluss ist weitgehend rückblickend: Noddacks frühere Idee gilt in der Geschichte der Kernspaltung als vorausschauend."
+    },
+    {
+      "person_name": "Otto Robert Frisch",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Half 1938–1939 gemeinsam mit Meitner, die Kernspaltung zu formulieren und zu benennen, und lieferte damit den Rahmen, der Noddack 1934 fehlte.",
+      "start_year": 1938,
+      "end_year": 1939,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Gemeinsames wissenschaftliches Thema: Interpretation der Ergebnisse der Uranbestrahlung",
+        "Frischs Arbeit trug zur Festigung des Konzepts der Kernspaltung bei"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Robert_Frisch",
+        "https://en.wikipedia.org/wiki/Lise_Meitner"
+      ],
+      "notes": "Die Verbindung ist indirekt (über die Entwicklung und Akzeptanz der Spaltungsinterpretation)."
+    },
+    {
+      "person_name": "Irène Joliot-Curie",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Ihre Experimente von 1938 (mit Frédéric Joliot-Curie und Pavle Savić) zu mit Neutronen beschossenem Uran warfen Interpretationsprobleme auf, die der späteren Bestätigung der Kernspaltung vorausgingen und sie kontextualisierten; sie werden in der Darstellung zu Noddacks frühem Vorschlag erwähnt.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Parallele/vorangehende experimentelle Arbeit zum Neutronenbeschuss von Uran",
+        "Gemeinsamer wissenschaftlicher Kontext, der in die Zeitleiste der Entdeckung der Kernspaltung einfloss"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "notes": "Es wird keine direkte Interaktion angegeben; die Verbindung besteht über das gemeinsame Forschungsproblem und die Chronologie."
+    },
+    {
+      "person_name": "Frédéric Joliot-Curie",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Führte Ende der 1930er Jahre gemeinsam mit Irène Joliot-Curie (und Savić) Arbeiten zu Uran und Neutronen durch; ihre Ergebnisse trugen zum experimentellen Hintergrund für die Klärung der von Noddack früher aufgeworfenen Frage Transurane versus Kernspaltung bei.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Parallele/vorangehende Forschung zu Neutronenwechselwirkungen mit schweren Elementen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Joliot-Curie"
+      ],
+      "notes": "Die Verbindung ist thematisch und historisch, nicht kollaborativ."
+    },
+    {
+      "person_name": "Pavle Savić",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Arbeitete 1938 mit den Joliot-Curies an Uran-Neutronen-Forschung, die „Interpretationsprobleme“ hervorbrachte, welche später im Rahmen der Kernspaltung gelöst wurden; dies wird im Kontext der verzögerten Anerkennung von Noddacks Idee von 1934 erwähnt.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Parallele/vorangehende Experimente mit Relevanz für die Interpretation der Uranbestrahlung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Pavle_Savi%C4%87"
+      ],
+      "notes": "Aufgenommen, weil der bereitgestellte Text seine Arbeit ausdrücklich mit dem interpretativen Weg zur Kernspaltung verknüpft."
+    },
+    {
+      "person_name": "B. T. Kenna",
+      "relationship_type": "professional/field_peer",
+      "relationship_description": "Berichtete 1961 gemeinsam über den Nachweis winziger natürlicher Technetiummengen in Pechblende, die mit spontaner Uranspaltung verbunden waren, und lieferte damit Daten für spätere Bewertungen, ob Technetium in den von den Noddacks analysierten Erzen nachweisbar gewesen sein könnte.",
+      "start_year": 1961,
+      "end_year": 1961,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Empirische Befunde zur natürlichen Häufigkeit und Nachweisbarkeit von Technetium"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Die Verbindung besteht durch spätere Literatur, die die Interpretation der früheren Arbeit der Noddacks beeinflusste."
+    },
+    {
+      "person_name": "Paul K. Kuroda",
+      "relationship_type": "professional/critic",
+      "relationship_description": "Argumentierte (laut bereitgestelltem Auszug), dass die Technetiummengen in den von den Noddacks untersuchten Erzen für einen Nachweis mit ihren Methoden zu gering gewesen wären, und entgegnete damit der Behauptung, sie hätten Element 43 beobachten können.",
+      "start_year": 1961,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Quantitatives Argument zu erwarteten Technetiumkonzentrationen in Erzen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)"
+      ],
+      "notes": "Dargestellt als eine zentrale skeptische quantitative Einschränkung in der Debatte um Element 43."
+    },
+    {
+      "person_name": "Pieter van Assche",
+      "relationship_type": "professional/analyst_supporter",
+      "relationship_description": "Veröffentlichte eine Analyse, die argumentierte, dass die Methoden der Noddacks angesichts der Erzzusammensetzungen und Nachweisgrenzen möglicherweise in der Lage gewesen wären, Spuren von Element 43 (Technetium) nachzuweisen, wodurch ihr Anspruch von 1925 teilweise rehabilitiert wurde.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Nachträgliche Neuanalyse der veröffentlichten Daten und Nachweisgrenzen der Noddacks"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Eine spätere wissenschaftliche/technische Neubewertung und keine zeitgenössische Beziehung."
+    },
+    {
+      "person_name": "John T. Armstrong",
+      "relationship_type": "professional/analyst_supporter",
+      "relationship_description": "Simulierte das ursprüngliche Röntgenspektrum mit einem Computer und berichtete, es sei den von den Noddacks veröffentlichten Spektrum „überraschend ähnlich“, was zur späteren Debatte über die Belege für Element 43 von 1925 beitrug.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Computersimulation historischer röntgenspektrografischer Ergebnisse"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "notes": "Armstrong wird im bereitgestellten Auszug als Wissenschaftler am NIST beschrieben."
+    },
+    {
+      "person_name": "Gunter Herrmann",
+      "relationship_type": "professional/critic",
+      "relationship_description": "Kritisierte van Assches unterstützende Argumente als ad hoc und gezwungen und vertrat damit eine gegensätzliche technische Bewertung in der fortdauernden Debatte über den Anspruch der Noddacks auf Element 43.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Kritische Prüfung nachträglicher Rehabilitierungen des Anspruchs der Noddacks auf Element 43"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Im Auszug wird er als Angehöriger der Universität Mainz gezeigt."
+    },
+    {
+      "person_name": "Kenji Yoshihara",
+      "relationship_type": "professional/analyst",
+      "relationship_description": "Untersuchte eine Originalplatte aus Ogawas Arbeit erneut und kam zu dem Schluss, dass Ogawa Element 75 (Rhenium) statt Element 43 abgetrennt hatte – ein Argument, das die historische Priorität im Zusammenhang mit Noddacks bestätigter Rheniumentdeckung neu einordnete.",
+      "start_year": 2000,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Forensische/historische Analyse früherer Elementansprüche mit Relevanz für die Rheniumpriorität"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "notes": "Der bereitgestellte Auszug verknüpft diese Analyse unmittelbar mit Streitigkeiten über Elementansprüche aus der Noddack-Ära."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Ihre wichtigste dokumentierte persönliche Verbindung ist ihre Ehe mit Walter Noddack, die zugleich ihre wichtigste Forschungspartnerschaft darstellte. Der bereitgestellte Text erwähnt die Lackfabrik ihres Vaters, jedoch nicht die Namen ihrer Eltern."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Ihr Netzwerk konzentriert sich auf die enge Zusammenarbeit (Walter Noddack, Otto Berg) sowie die weitreichenden Kontroversen um die Elemententdeckung und den Vorschlag zur Kernspaltung von 1934, gefolgt von späteren Neubewertungen der Belege für Element 43."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Akademische Verbindungen sind meist indirekt: eine Verbindung aus der Dissertationszeit (D. Holde) und die methodische Traditionslinie hinter der Elementsuche des frühen 20. Jahrhunderts."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "a4a068c714079b64",
+    "translated_on": "2026-07-19T07:41:35.089625+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

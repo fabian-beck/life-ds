@@ -1,0 +1,247 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2025-12-14",
+  "ego": {
+    "name": "Levi Strauss",
+    "birth_year": 1829,
+    "death_year": 1902,
+    "primary_roles": [
+      "Geschäftsmann",
+      "Industrieller",
+      "Unternehmer"
+    ],
+    "summary": "In Deutschland geborener amerikanischer Kaufmann und Industrieller, der ein führendes Textilwarenunternehmen in San Francisco (Levi Strauss & Co.) aufbaute und gemeinsam mit dem Schneider Jacob W. Davis genietete Arbeitshosen patentieren ließ, aus denen die modernen Blue Jeans hervorgingen.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Levi_Strauss"
+  },
+  "connections": [
+    {
+      "person_name": "Hirsch Strauß",
+      "relationship_type": "family/father",
+      "relationship_description": "Vater von Levi Strauss; ein reisender Hausierer, der an Tuberkulose starb, als Levi 16 Jahre alt war, was zu den finanziellen Schwierigkeiten der Familie und ihrer späteren Auswanderung beitrug.",
+      "start_year": 1829,
+      "end_year": 1845,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Buttenheim"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "Das Todesjahr wird daraus abgeleitet, dass Levi 16 Jahre alt war, als sein Vater starb."
+    },
+    {
+      "person_name": "Rebecca Strauss",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mutter von Levi Strauss; wanderte 1847 mit Levi und den jüngeren Kindern in die Vereinigten Staaten aus, um sich ihren älteren Söhnen in New York anzuschließen.",
+      "start_year": 1829,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Auswanderung aus Bayern in die Vereinigten Staaten (New York)",
+        "Frühe Ansiedlung in New York"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "Ihr Todesjahr wird im bereitgestellten Text nicht angegeben."
+    },
+    {
+      "person_name": "Louis Strauss",
+      "relationship_type": "family/brother",
+      "relationship_description": "Bruder von Levi Strauss; arbeitete im Textilhandel der Familie und half später gemeinsam mit Levi und ihrem Schwager bei der Gründung des Unternehmens in San Francisco.",
+      "start_year": 1829,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Textil- und Handelsarbeit der Familie in New York (kontextbezogen)",
+        "Mitgründung des Textilwarenunternehmens in San Francisco (1853)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "Der deutsche Artikel nennt Louis ausdrücklich als Levis Bruder, der an der Gründung von 1853 beteiligt war."
+    },
+    {
+      "person_name": "Fanny Stern (née Strauss)",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Schwester von Levi Strauss; Levi lebte später in seinem Leben in San Francisco im Haushalt ihrer Familie.",
+      "start_year": 1829,
+      "end_year": 1902,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gemeinsamer Haushalt in San Francisco (späte Lebensjahre)",
+        "Leben in der erweiterten Familie mit ihren Kindern (Levis Neffen)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Der deutsche Artikel besagt, dass Levi in einem Haus starb, in dem er mit der Familie seiner Schwester Fanny lebte."
+    },
+    {
+      "person_name": "Jonas Strauss",
+      "relationship_type": "family/brother",
+      "relationship_description": "Einer von Levi Strauss’ älteren Brüdern in New York, Teil des Textilhandels der Familie, dem Levi nach seiner Auswanderung beitrat.",
+      "start_year": 1847,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Textil- und Handelsunternehmen der Familie in New York"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Levi_Strauss",
+        "https://de.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "notes": "Der deutsche Artikel erwähnt zwei ältere Brüder in New York, nennt sie jedoch nicht; der englische Artikel über Levi Strauss nennt Jonas."
+    },
+    {
+      "person_name": "Jacob Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Neffe (Sohn von David Stern und Fanny Stern, geborene Strauss); gehörte zu den Neffen, die Levi Strauss & Co. erbten, nachdem Levi kinderlos gestorben war.",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Familienbeziehung als Onkel und Neffe",
+        "Unternehmensnachfolge (Eigentum/Kontrolle ging nach 1902 an die Neffen über)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Der Artikel über David Stern führt Jacob Stern als leitenden Angestellten bei der Gründung der Kapitalgesellschaft und als Teil der Eigentümerschaft nach 1902 auf."
+    },
+    {
+      "person_name": "Sigmund Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Neffe; gehörte zu den Neffen, die das Unternehmen nach dem Tod von Levi Strauss erbten, und wirkte während der Ära der Familie Stern an der Unternehmensführung mit.",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Familienbeziehung als Onkel und Neffe",
+        "Unternehmensnachfolge und spätere Rolle als leitender Angestellter (bei der Gründung der Kapitalgesellschaft 1890 erwähnt)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Der deutsche Artikel besagt, dass Levi das Unternehmen vier Neffen hinterließ; der Artikel über die Familie Stern nennt Sigmund als einen von ihnen."
+    },
+    {
+      "person_name": "Louis Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Neffe; einer der vier Neffen, die Levi Strauss & Co. nach Levis Tod erbten und später in der Unternehmensführung tätig waren (etwa als Schatzmeister bei der Gründung der Kapitalgesellschaft laut zugehörigem Artikel).",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Familienbeziehung als Onkel und Neffe",
+        "Unternehmensnachfolge und Unternehmensfunktionen während der Ära der Familie Stern"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Nicht mit Levis Bruder Louis Strauss zu verwechseln."
+    },
+    {
+      "person_name": "Abraham Stern",
+      "relationship_type": "business/nephew-successor",
+      "relationship_description": "Neffe; einer der vier Neffen, die das Unternehmen von Levi Strauss erbten, mit späterer formeller Funktion im Unternehmen (etwa als Sekretär bei der Gründung der Kapitalgesellschaft laut zugehörigem Artikel).",
+      "start_year": 1850,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Familienbeziehung als Onkel und Neffe",
+        "Unternehmensnachfolge nach dem Tod von Levi Strauss (1902)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Der deutsche Artikel nennt vier Neffen als Erben; der Artikel über die Familie Stern identifiziert Abraham als einen der vier überlebenden Söhne, die das Unternehmen übernahmen."
+    },
+    {
+      "person_name": "David Stern (businessman)",
+      "relationship_type": "business/co-founder",
+      "relationship_description": "Schwager und Geschäftspartner; gründete gemeinsam das Textilwarenunternehmen in San Francisco, aus dem Levi Strauss & Co. hervorging, wobei Stern in den ersten Jahren als Geschäftsführer fungierte.",
+      "start_year": 1853,
+      "end_year": 1875,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Mitgründung und Betrieb des Textilwarenunternehmens in San Francisco",
+        "Leitungs- und Vertriebsaufgaben im frühen Unternehmensbetrieb"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "notes": "Auch eine familiäre Verbindung: Er heiratete Levis Schwester Fanny."
+    },
+    {
+      "person_name": "Jacob W. Davis",
+      "relationship_type": "innovation/co-inventor",
+      "relationship_description": "Schneider und wichtiger Mitarbeiter; schlug vor, Arbeitshosen mit Metallnieten zu verstärken, wandte sich zur Finanzierung an Strauss und erhielt gemeinsam mit ihm das Patent von 1873, das die genieteten Jeans („waist overalls“) begründete.",
+      "start_year": 1870,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Stofflieferbeziehung (Davis kaufte Segeltuch/Denim von Levi Strauss & Co.)",
+        "Finanzierung und Einreichung der Patentanmeldung für die Nieten (1872)",
+        "Inhaberschaft des Patents für genietete Taschenöffnungen (erteilt 1873)",
+        "Ausweitung der Produktion genieteter Arbeitskleidung durch Strauss’ Unternehmen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis",
+        "https://de.wikipedia.org/wiki/Jacob_Davis_(Schneider)"
+      ],
+      "notes": "Der deutsche Artikel datiert Davis’ Nietenidee auf Dezember 1870 und das Patent auf den 20. Mai 1873."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Levi Strauss’ Familiennetzwerk ist zentral für seine Lebensgeschichte: Der frühe Tod seines Vaters und die Entscheidung seiner Mutter auszuwandern prägten seinen Lebensweg, während Geschwister und die erweiterte Familie seinen Haushalt in San Francisco verankerten. Obwohl er nie heiratete und keine Kinder hatte, pflegte er enge Beziehungen zu Geschwistern und Neffen."
+    },
+    {
+      "relationship_type": "business",
+      "summary": "Strauss’ Geschäftsbeziehungen waren eng mit Verwandtschaftsverhältnissen verflochten: Er gründete das Unternehmen in San Francisco gemeinsam mit seinem Bruder und seinem Schwager und übertrug das Unternehmen später an vier Neffen. Diese Bindungen sicherten die Kontinuität von Eigentümerschaft und Führung über seinen Tod hinaus."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "Die folgenreichste Innovationsbeziehung in Strauss’ Netzwerk war seine Partnerschaft mit dem Schneider Jacob W. Davis, der die Idee der Nietenverstärkung entwickelte und Strauss um finanzielle Unterstützung bat. Ihre Zusammenarbeit führte zum Patent von 1873 und ermöglichte die Ausweitung langlebiger Arbeitskleidung zu einem Massenmarktprodukt."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "f4392caa43660067",
+    "translated_on": "2026-07-19T07:46:39.408616+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

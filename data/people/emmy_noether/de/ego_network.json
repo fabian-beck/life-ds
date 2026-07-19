@@ -1,0 +1,505 @@
+{
+  "dataset": "wikipedia-ego-network",
+  "created_on": "2025-11-22",
+  "ego": {
+    "name": "Emmy Noether",
+    "birth_year": 1882,
+    "death_year": 1935,
+    "primary_roles": [
+      "Mathematikerin"
+    ],
+    "summary": "Amalie Emmy Noether (1882–1935) war eine deutsche Mathematikerin, die die abstrakte Algebra grundlegend veränderte und Noethers Theoreme formulierte, welche Symmetrien und Erhaltungssätze in der Physik verbinden. Zunächst in Erlangen und dann in Göttingen tätig, entwickelte sie grundlegende Theorien zu Ringen, Körpern und Algebren, betreute eine Generation von Algebraikern und lehrte im Exil vor NS-Deutschland am Bryn Mawr College, während sie am Institute for Advanced Study forschte.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether"
+  },
+  "connections": [
+    {
+      "person_name": "Max Noether",
+      "relationship_type": "family/father",
+      "relationship_description": "Vater; ein algebraischer Geometer, der in Erlangen lehrte und Emmy Noethers mathematisches Umfeld und frühe Karriere stark prägte.",
+      "start_year": 1882,
+      "end_year": 1921,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "Mathematische Diskussionen zu Hause",
+        "Lehre an der Universität Erlangen–Nürnberg",
+        "Betreuung von Emmys früher Lehre und Forschung",
+        "Gemeinsame Betreuung von Emmys ersten Doktoranden"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Max_Noether"
+      ],
+      "notes": "Emmy vertrat ihn in Vorlesungen, wenn er krank war, und ihre ersten Doktoranden wurden trotz ihrer maßgeblichen Rolle offiziell unter seiner Betreuung geführt."
+    },
+    {
+      "person_name": "Ida Amalia Kaufmann (Ida Amalia Noether)",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mutter; stammte aus einer wohlhabenden jüdischen Kaufmannsfamilie und prägte Emmys familiären Hintergrund und unterstützte sie bis zu ihrem Tod 1915.",
+      "start_year": 1882,
+      "end_year": 1915,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Erlangen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Ihr plötzlicher Tod im Mai 1915, kurz nach Emmys Umzug nach Göttingen, war ein schwerer persönlicher Schlag."
+    },
+    {
+      "person_name": "Alfred Noether",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Jüngerer Bruder; Chemiker, der in Erlangen promovierte und relativ jung starb.",
+      "start_year": 1883,
+      "end_year": 1912,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Erlangen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Es sind kaum direkte berufliche Kontakte überliefert; sein früher Tod und sein anderes Fachgebiet begrenzten einen langfristigen Kontakt."
+    },
+    {
+      "person_name": "Fritz Noether",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Jüngerer Bruder; angewandter Mathematiker, dessen Karriere und Verfolgung durch die Nazis Parallelen zu Emmys eigener Laufbahn aufwiesen.",
+      "start_year": 1884,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "Gemeinsame mathematische Interessen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Fritz_Noether"
+      ],
+      "notes": "Er studierte Mathematik und emigrierte später in die UdSSR, wo er 1941 hingerichtet wurde; beide Geschwister waren bedeutende jüdische Mathematiker, die durch den Faschismus vertrieben wurden."
+    },
+    {
+      "person_name": "Gustav Robert Noether",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Jüngster Bruder; chronisch krank und mit einem kurzen, wenig dokumentierten Leben.",
+      "start_year": 1889,
+      "end_year": 1928,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Erlangen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Emmys Biografie erwähnt seine chronische Krankheit und seinen frühen Tod, enthält jedoch nur wenige Einzelheiten zu ihrem Umgang miteinander."
+    },
+    {
+      "person_name": "Paul Gordan",
+      "relationship_type": "academic/advisor",
+      "relationship_description": "Doktorvater in Erlangen, der ihre Dissertation von 1907 über Invarianten betreute und sie in die klassische Invariantentheorie einführte.",
+      "start_year": 1904,
+      "end_year": 1910,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Doktorandenbetreuung",
+        "Forschung zur Invariantentheorie",
+        "Seminare an der Universität Erlangen–Nürnberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Paul_Gordan"
+      ],
+      "notes": "Eine führende Figur der rechnerischen Invariantenschule; Emmy bezeichnete ihre eigene Dissertation später als „Mist“, nachdem sie zu abstrakteren, von Hilbert beeinflussten Methoden übergegangen war."
+    },
+    {
+      "person_name": "Ernst Fischer",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Erlanger Professor, dessen Lehre und Diskussionen Noethers Hinwendung zu Hilberts abstrakten Methoden stark beeinflussten.",
+      "start_year": 1911,
+      "end_year": 1915,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Lehre in Erlangen",
+        "Mathematische Diskussionen nach Vorlesungen",
+        "Korrespondenz per Postkarten über laufende Ideen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Von Zeitgenossen als wichtiger Einfluss beschrieben; sie teilten eine lebhafte Begeisterung für Mathematik und diskutierten noch lange nach Vorlesungsende über die Vorträge."
+    },
+    {
+      "person_name": "David Hilbert",
+      "relationship_type": "academic/patron",
+      "relationship_description": "Führender Göttinger Mathematiker, der Noether nach Göttingen einlud, sie vor Diskriminierung schützte und ihren Übergang zur abstrakten Algebra und zu Noethers Theorem konzeptionell mitgestaltete.",
+      "start_year": 1915,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Anwerbung Noethers nach Göttingen",
+        "Gemeinsame Seminare und Forschungsumfeld",
+        "Politische Fürsprache für ihre Habilitation",
+        "Gemeinsame Entwicklung abstrakt-algebraischer Sichtweisen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "notes": "Hilbert verteidigte ihre Berufung bekanntlich mit der Bemerkung, eine Fakultät sei „keine Badeanstalt“; ihre Arbeit baute auf seinen Methoden in der Invarianten- und Ringtheorie auf und erweiterte sie."
+    },
+    {
+      "person_name": "Felix Klein",
+      "relationship_type": "academic/patron",
+      "relationship_description": "Älterer Göttinger Geometer, der Noether ebenfalls nach Göttingen einlud und ihre Arbeit von 1918, die Noethers Theorem enthielt, offiziell vorstellte.",
+      "start_year": 1915,
+      "end_year": 1925,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Berufung nach Göttingen",
+        "Seminare in Göttingen",
+        "Präsentation von „Invariante Variationsprobleme“ vor der Königlichen Gesellschaft der Wissenschaften",
+        "Fürsprache für ihre Habilitation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "notes": "Da Emmy kein Mitglied der Gesellschaft war, trug Klein 1918 ihre wegweisende Arbeit über Noethers Theorem in ihrem Namen vor."
+    },
+    {
+      "person_name": "Hermann Weyl",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Bedeutender Mathematiker in Göttingen, der Noethers Arbeit würdigte und dazu beitrug, ihren Einfluss auf Algebra und Physik einzuordnen.",
+      "start_year": 1915,
+      "end_year": 1933,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kontakte im Göttinger Lehrkörper",
+        "Unterstützende Kommentare zu ihrer Forschung und Lehre",
+        "Gemeinsame Studierende und Seminare"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Hermann_Weyl"
+      ],
+      "notes": "In seinen Erinnerungen betonte er ihre Bedeutung und bezeichnete sie als die bedeutendste Frau in der Geschichte der Mathematik."
+    },
+    {
+      "person_name": "Albert Einstein",
+      "relationship_type": "academic/advocate",
+      "relationship_description": "Theoretischer Physiker, der zwar kein enger Mitarbeiter war, Noethers Genie jedoch öffentlich pries und sie nach ihrer Entlassung aus Göttingen verteidigte.",
+      "start_year": 1918,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Konzeptionelle Verbindung zwischen Noethers Theorem und der Physik",
+        "Öffentliche Würdigung ihres Vermächtnisses"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "Er nannte sie „das bedeutendste schöpferische mathematische Genie, das hervorgebracht wurde, seit die höhere Bildung von Frauen begann“; ihr Theorem wurde zentral für die moderne theoretische Physik."
+    },
+    {
+      "person_name": "Werner Schmeidler",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Schützling, mit dem Noether 1920 eine frühe Arbeit über Ideale gemeinsam verfasste und der dazu beitrug, ihr Programm der abstrakten Algebra zu begründen.",
+      "start_year": 1920,
+      "end_year": 1921,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Gemeinsames Verfassen einer Arbeit zur Idealtheorie",
+        "Teilnahme an Göttinger Algebra-Seminaren"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Ihre gemeinsame Arbeit führte Links- und Rechtsideale in einem Ring ein; während sie ihn förderte, nahm sie die führende konzeptionelle Rolle ein."
+    },
+    {
+      "person_name": "Pawel Alexandrow",
+      "relationship_type": "social/friend",
+      "relationship_description": "Russischer Topologe, der während wiederholter Besuche in Göttingen ein enger Freund Noethers wurde und mit ihr mathematischen und persönlichen Austausch pflegte.",
+      "start_year": 1923,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Vorlesungen in Göttingen",
+        "Gesellige Zusammenkünfte und Diskussionen",
+        "Gegenseitige berufliche Unterstützung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Pavel_Alexandrov"
+      ],
+      "notes": "Er nannte sie respektvoll „der Noether“ und berichtete, dass der Widerstand gegen ihre Berufung sowohl Sexismus als auch Einwände gegen ihre Politik und jüdische Herkunft umfasste."
+    },
+    {
+      "person_name": "Pawel Urysohn",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "Russischer Topologe, der zusammen mit Alexandrow Anfang der 1920er Jahre Göttingen besuchte und dort mit Noether in der lebendigen mathematischen Gemeinschaft verkehrte.",
+      "start_year": 1923,
+      "end_year": 1924,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Teilnahme an Göttinger Forschungskreisen",
+        "Informelle mathematische Diskussionen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Pavel_Urysohn"
+      ],
+      "notes": "Er wird als einer der ersten russischen Besucher in Göttingen genannt; eine direkte Zusammenarbeit mit Noether ist nicht dokumentiert, doch sie bewegten sich im selben Umfeld."
+    },
+    {
+      "person_name": "Bartel Leendert van der Waerden",
+      "relationship_type": "academic/student",
+      "relationship_description": "Niederländischer Mathematiker, der Noethers Göttinger Kreis beitrat, ihre Methoden aufnahm und sie in seinem einflussreichen Lehrbuch „Moderne Algebra“ systematisierte.",
+      "start_year": 1924,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Göttinger Algebra-Seminare",
+        "Entwicklung der abstrakten Algebra",
+        "Verwendung von Noethers Ideen in „Moderne Algebra“"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden"
+      ],
+      "notes": "Er beschrieb ihre Originalität als „absolut unvergleichlich“; der zweite Band seines Lehrbuchs basiert weitgehend auf ihren Vorlesungen und Ergebnissen und würdigt sie in späteren Auflagen."
+    },
+    {
+      "person_name": "Emil Artin",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Führender Algebraiker, der ab 1927 eng mit Noether zu nichtkommutativen Algebren arbeitete und Algebra-Seminare mit ihr teilte.",
+      "start_year": 1927,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gemeinsame Göttinger–Hamburger Algebra-Kreise",
+        "Forschung zu nichtkommutativen Algebren",
+        "Einfluss auf van der Waerdens Lehrbuch"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emil_Artin",
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Ihre Interaktionen trugen dazu bei, die Darstellungstheorie von Gruppen mit Modulen und Idealen zu vereinheitlichen; van der Waerden nannte sowohl Artin als auch Noether als grundlegend für sein Buch."
+    },
+    {
+      "person_name": "Helmut Hasse",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Zahlentheoretiker und Algebraiker, der mit Noether zu nichtkommutativen Algebren und klassenkörpertheoriebezogenen Strukturen zusammenarbeitete.",
+      "start_year": 1927,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Forschungsdiskussionen zu nichtkommutativen Algebren",
+        "Gemeinsame Studierende und Seminare",
+        "Entwicklung algebraisch-zahlentheoretischer Methoden"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Er wird häufig zusammen mit Artin und Brauer als Teil des Netzwerks genannt, mit dem Noether Darstellungstheorie und Idealtheorie vereinheitlichte."
+    },
+    {
+      "person_name": "Richard Brauer",
+      "relationship_type": "academic/collaborator",
+      "relationship_description": "Algebraiker, der zusammen mit Noether und anderen Ende der 1920er Jahre die Theorie nichtkommutativer Algebren und die Darstellungstheorie voranbrachte.",
+      "start_year": 1927,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gemeinsame Seminare zu Algebren und Darstellungstheorie",
+        "Austausch von Ideen zu Gruppendarstellungen und Algebren"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "notes": "Teil des engen Forschungskreises (Artin–Brauer–Hasse–Noether), der Idealtheorie und Gruppendarstellungen verband."
+    },
+    {
+      "person_name": "Marion Edwards Park",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Präsidentin des Bryn Mawr College, die nach Noethers Entlassung aus Göttingen half, sie nach Bryn Mawr zu holen, und ihre Stelle dort unterstützte.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Aushandlung von Noethers Berufung nach Bryn Mawr",
+        "Unterstützung geflüchteter Wissenschaftler",
+        "Institutionelle Unterstützung ihrer Lehre"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Marion_Edwards_Park"
+      ],
+      "notes": "Park koordinierte sich mit anderen Hochschulen, um geflüchtete Wissenschaftler zu beschäftigen; ihre Unterstützung ermöglichte Noether, ihre Forschung und Betreuung in den USA fortzusetzen."
+    },
+    {
+      "person_name": "Marie Johanna Weiss",
+      "relationship_type": "academic/student",
+      "relationship_description": "Amerikanische Mathematikerin, die Anfang der 1930er Jahre als Doktorandin/Postdoktorandin bei Noether in Bryn Mawr studierte.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Graduiertenseminare am Bryn Mawr College",
+        "Betreuung und Förderung algebraischer Forschung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Marie_Johanna_Weiss"
+      ],
+      "notes": "Weiss gehörte zu den fortgeschrittenen Mathematikerinnen, die Noether im Exil unterrichtete; später wurde sie durch Arbeiten zur Gruppentheorie und als Autorin eines Algebra-Lehrbuchs bekannt."
+    },
+    {
+      "person_name": "Olga Taussky-Todd",
+      "relationship_type": "academic/student",
+      "relationship_description": "Österreichisch-amerikanische Algebraikerin, die Noethers Vorlesungen in Bryn Mawr besuchte und von ihrem Zugang zur Algebra beeinflusst wurde.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Fortgeschrittene Algebra-Seminare in Bryn Mawr",
+        "Diskussionen über Ideale und Matrizen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Olga_Taussky-Todd"
+      ],
+      "notes": "Taussky-Todd, die bereits in algebraischer Zahlentheorie ausgebildet war, zählt Noether zu den wichtigsten Einflüssen auf ihre späteren wegweisenden Arbeiten zur Matrizentheorie."
+    },
+    {
+      "person_name": "Oswald Veblen",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Princeton-Mathematiker, der Noethers Zugang zum Institute for Advanced Study während ihrer Zeit in den Vereinigten Staaten ermöglichte.",
+      "start_year": 1933,
+      "end_year": 1935,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Forschungsaufenthalte am Institute for Advanced Study",
+        "Seminare, die die Gemeinschaften von Bryn Mawr und IAS verbanden"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://de.wikipedia.org/wiki/Oswald_Veblen"
+      ],
+      "notes": "Während sie in Bryn Mawr lehrte, hielt sie zugleich Vorlesungen und forschte sie am IAS in Princeton, wo Veblen eine führende Persönlichkeit war."
+    },
+    {
+      "person_name": "Pawel S. Alexandrow (als Biograf)",
+      "relationship_type": "academic/biographer",
+      "relationship_description": "Über die Freundschaft hinaus prägte Alexandrow Noethers posthumen Ruf durch Memoiren und Erinnerungen an ihre Arbeit und Kämpfe in Göttingen.",
+      "start_year": 1935,
+      "end_year": 1982,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Biografische Schriften über Noether",
+        "Öffentliches Gedenken an ihre Rolle in Göttingen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Pavel_Alexandrov"
+      ],
+      "notes": "Er betonte sowohl ihre mathematische Tiefe als auch den Sexismus und Antisemitismus, denen sie begegnete, und half damit, ihren Platz in historischen Darstellungen zu sichern."
+    },
+    {
+      "person_name": "Norbert Wiener",
+      "relationship_type": "academic/commentator",
+      "relationship_description": "Amerikanischer Mathematiker, der Noether zusammen mit anderen wie Weyl und Einstein öffentlich als die bedeutendste Frau in der Geschichte der Mathematik würdigte.",
+      "start_year": 1935,
+      "end_year": 1935,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Posthume Würdigungen von Noethers Beiträgen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Norbert_Wiener"
+      ],
+      "notes": "Obwohl sie nicht direkt zusammenarbeiteten, trug Wieners Lob zur Anerkennung ihres Status innerhalb der mathematischen Gemeinschaft bei."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Familiäre Bindungen – insbesondere zu ihrem Vater, dem algebraischen Geometer Max Noether – prägten Emmy Noethers frühe Ausbildung und erste akademische Möglichkeiten in Erlangen. Ihre Brüder verfolgten in unterschiedlichem Maße wissenschaftliche Laufbahnen, doch chronische Krankheit, frühe Todesfälle und politische Verfolgung begrenzten eine dauerhafte berufliche Zusammenarbeit."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Noethers akademisches Netzwerk war dicht geknüpft und prägend: Sie wurde von Persönlichkeiten wie Paul Gordan, Ernst Fischer, Hilbert und Klein gefördert und betreute und beeinflusste ihrerseits eine Generation von Algebraikern und Topologen, darunter van der Waerden, Artin, Hasse, Brauer und viele andere in Erlangen, Göttingen und Bryn Mawr."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Institutionelle Förderer wie Marion Edwards Park am Bryn Mawr und Oswald Veblen am Institute for Advanced Study ermöglichten Noether, nach ihrer Entlassung durch die Nazis weiterhin zu forschen und zu lehren. Diese Beziehungen verdeutlichen die Rolle administrativer und struktureller Unterstützung bei der Sicherung ihrer Karriere im Exil."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Enge Freundschaften, insbesondere mit Pawel Alexandrow und einem Kreis Göttinger Kollegen, boten Noether persönliche Unterstützung und einen informellen Rahmen für intensive mathematische Diskussionen. Solche sozialen Verbindungen waren mit ihrem Forschungsleben verflochten und prägten später biografische Darstellungen, die ihr Vermächtnis festigten."
+    },
+    {
+      "relationship_type": "other",
+      "summary": "Über ihre direkten Mitarbeiter hinaus würdigten prominente Wissenschaftler wie Albert Einstein, Hermann Weyl und Norbert Wiener Noethers Leistungen öffentlich, insbesondere ihre Theoreme in der Physik und ihre Innovationen in der abstrakten Algebra. Ihre Fürsprache und Kommentare verstärkten die Anerkennung ihrer Arbeit während und nach ihrem Leben erheblich."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "0b20e40224c742cf",
+    "translated_on": "2026-07-19T07:47:15.723859+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

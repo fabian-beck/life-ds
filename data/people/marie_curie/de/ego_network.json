@@ -1,0 +1,460 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2025-12-20",
+  "ego": {
+    "name": "Marie Curie",
+    "birth_year": 1867,
+    "death_year": 1934,
+    "primary_roles": [
+      "Physikerin",
+      "Chemikerin",
+      "Pionierin der Radioaktivitätsforschung"
+    ],
+    "summary": "Marie Curie (geborene Maria Salomea Skłodowska) war eine in Polen geborene Physikerin und Chemikerin, die in Frankreich arbeitete und die wissenschaftliche Erforschung der Radioaktivität begründete. Sie prägte den Begriff „radioaktiv“, entdeckte gemeinsam mit Pierre Curie Polonium und Radium und erhielt Nobelpreise sowohl für Physik (1903) als auch für Chemie (1911). Später leitete sie bedeutende Forschungseinrichtungen und förderte während des Ersten Weltkriegs die Radiologie.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Marie_Curie"
+  },
+  "connections": [
+    {
+      "person_name": "Władysław Skłodowski",
+      "relationship_type": "family/father",
+      "relationship_description": "Vater; Mathematik- und Physiklehrer, der ihre frühe Ausbildung unterstützte und später wieder mit ihr in Warschau lebte, als sie ihre Laborarbeit begann.",
+      "start_year": 1867,
+      "end_year": 1902,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Kindheitsausbildung in Warschau",
+        "Schwerpunkt des Haushalts auf Wissenschaft und Lernen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "notes": "Der wissenschaftliche Hintergrund und die Lehrtätigkeit ihres Vaters werden wiederholt als prägend für Maria/Marie angeführt."
+    },
+    {
+      "person_name": "Bronisława Skłodowska",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mutter; Pädagogin und Schulleiterin, die ein Mädcheninternat führte und Curies frühe Schulbildung prägte, bevor sie an Tuberkulose starb.",
+      "start_year": 1867,
+      "end_year": 1878,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Frühe Schulbildung (Umfeld einer Mädchenschule)",
+        "Familienleben in Warschau"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "notes": "Curie besuchte eine von ihrer Mutter geleitete Mädchenschule; ihr Tod war eine große frühe Belastung."
+    },
+    {
+      "person_name": "Bronisława Dłuska",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Ältere Schwester („Bronia“); unterstützte Maries Umzug nach Paris, nahm sie anfangs bei sich auf und blieb ein wichtiger lebenslanger familiärer Rückhalt.",
+      "start_year": 1867,
+      "end_year": 1934,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Konspirative Kurse der Fliegenden Universität in Warschau",
+        "Zusammenleben in Paris zu Beginn des Sorbonne-Studiums",
+        "Familiäre Unterstützung und praktische Hilfe bei Übergängen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "notes": "Ihre gegenseitige Unterstützung umfasste einen langfristigen Plan, einander die Ausbildung zu finanzieren."
+    },
+    {
+      "person_name": "Jadwiga Szczawińska-Dawidowa",
+      "relationship_type": "academic/organizer",
+      "relationship_description": "Organisator der konspirativen Kurse der „Fliegenden Universität“, die Curie mit ihrer Schwester in Warschau besuchte, als Frauen von einem regulären Universitätsstudium ausgeschlossen waren.",
+      "start_year": 1884,
+      "end_year": 1886,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Untergrund-Hochschulbildung in Warschau",
+        "Intellektuelles Netzwerk zur Förderung der Frauenbildung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Die Erfahrung an der Fliegenden Universität bestärkte Curies Plan, im Ausland zu studieren."
+    },
+    {
+      "person_name": "Józef Boguski",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Cousin, der Curies erste ernsthafte praktische experimentelle Arbeit ermöglichte, indem er sie mit dem Laboratorium des Warschauer Museums für Industrie und Landwirtschaft in Verbindung brachte.",
+      "start_year": 1890,
+      "end_year": 1891,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Frühe chemisch-physikalische Experimente im Laboratorium des Warschauer Museums",
+        "Laborpraxis vor Paris"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Er wird als Leiter des Laboratoriums des Warschauer Museums beschrieben, in dem sie erstmals selbstständig Experimente durchführte."
+    },
+    {
+      "person_name": "Kazimierz Dłuski",
+      "relationship_type": "family/brother-in-law",
+      "relationship_description": "Ehemann ihrer Schwester Bronisława; nahm Marie bei sich auf, als sie nach Paris kam, um ihr Sorbonne-Studium zu beginnen.",
+      "start_year": 1891,
+      "end_year": 1930,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Frühe Unterstützung im Pariser Haushalt und bei organisatorischen Fragen",
+        "Kontakte zur polnischen Exilgemeinschaft"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Kazimierz_D%C5%82uski"
+      ],
+      "notes": "Curie lebte zunächst bei den Dłuskis nahe dem Gare du Nord."
+    },
+    {
+      "person_name": "Paul Appell",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Mathematiker, der Curie während ihres frühen Sorbonne-Studiums unterrichtete.",
+      "start_year": 1891,
+      "end_year": 1894,
+      "strength": "weak",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Mathematikunterricht an der Sorbonne"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Er wird unter ihren Lehrern während ihrer ersten Pariser Jahre aufgeführt."
+    },
+    {
+      "person_name": "Gabriel Lippmann",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Sorbonne-Professor und früher Mentor; Curie arbeitete in seinem Laboratorium, und er half dabei, ihre Ergebnisse in französischen wissenschaftlichen Institutionen vorzustellen.",
+      "start_year": 1893,
+      "end_year": 1898,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Betreuung im Laboratorium an der Sorbonne",
+        "Vorstellung von Curies Ergebnissen bei der Académie des sciences (1898)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Gabriel_Lippmann"
+      ],
+      "notes": "Ein wichtiger Mentor und institutioneller Wegbereiter zu Beginn ihrer Pariser Karriere."
+    },
+    {
+      "person_name": "Pierre Curie",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Ehemann und zentraler wissenschaftlicher Partner; arbeitete mit ihr zur Radioaktivitätsforschung sowie zur Entdeckung von Polonium und Radium zusammen; von der Heirat 1895 bis zu seinem Tod 1906.",
+      "start_year": 1894,
+      "end_year": 1906,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gemeinsame Laborarbeit zur Radioaktivität",
+        "Gemeinsame Entdeckung von Polonium und Radium (1898)",
+        "Gemeinsamer Erhalt des Nobelpreises für Physik 1903"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://de.wikipedia.org/wiki/Pierre_Curie",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Nach Pierres Unfalltod übernahm Marie Verpflichtungen im Zusammenhang mit seiner Lehrtätigkeit und erhielt später einen für ihn geschaffenen Lehrstuhl."
+    },
+    {
+      "person_name": "Józef Wierusz-Kowalski",
+      "relationship_type": "professional/connector",
+      "relationship_description": "Physiker, der Curie 1894 Pierre Curie vorstellte – eine entscheidende Verbindung, die sowohl zur Zusammenarbeit als auch zur Ehe führte.",
+      "start_year": 1894,
+      "end_year": 1906,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Berufliche Vorstellungen in Pariser Wissenschaftskreisen",
+        "Netzwerkvermittlung zwischen polnischen und französischen Wissenschaftlern"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/J%C3%B3zef_Wierusz-Kowalski"
+      ],
+      "notes": "Curie berichtete von ihrem Bedarf an Laborraum; Wierusz-Kowalski vermittelte den Kontakt zu Pierre Curie."
+    },
+    {
+      "person_name": "Marcel Brillouin",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Physiker, dessen Vorlesungen Curie besuchte, während sie ihr Studium fortsetzte und sich auf die Agrégation vorbereitete.",
+      "start_year": 1896,
+      "end_year": 1897,
+      "strength": "weak",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Fortgeschrittene Physikvorlesungen in Paris"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Teil des breiteren Pariser Physikumfelds, das Curie zur Vertiefung ihrer Ausbildung nutzte."
+    },
+    {
+      "person_name": "Irène Joliot-Curie",
+      "relationship_type": "family/child",
+      "relationship_description": "Älteste Tochter; half während der Radiologiearbeit im Ersten Weltkrieg und wurde später eine führende Radiochemikerin und Physikerin.",
+      "start_year": 1897,
+      "end_year": 1934,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Wissenschaftliche Ausbildung in Curies Kreisen (z. B. „Die Kooperative“)",
+        "Unterstützung bei der Radiologiearbeit im Ersten Weltkrieg (wie in Irènes Biografie beschrieben)",
+        "Forschungsumfeld des Radiuminstituts"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "notes": "Irène erhielt später gemeinsam mit Frédéric Joliot-Curie den Nobelpreis für Chemie 1935."
+    },
+    {
+      "person_name": "Henri Becquerel",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Seine Entdeckung der Uranstrahlung von 1896 prägte Curies Forschungsrichtung; er teilte den Nobelpreis für Physik 1903 mit Marie und Pierre Curie.",
+      "start_year": 1897,
+      "end_year": 1908,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Wissenschaftliche Entwicklungslinie von Becquerels Entdeckung zu Curies Messungen",
+        "Gemeinsame Anerkennung durch den Nobelpreis für Physik (1903)",
+        "Mitteilungen an die Académie des sciences"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Henri_Becquerel"
+      ],
+      "notes": "In Curies Darstellung waren die „Becquerel-Strahlen“ der Ausgangspunkt ihres Dissertationsthemas."
+    },
+    {
+      "person_name": "Gustave Bémont",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Unterstützte die Curies Ende 1898 bei der Herstellung hochradioaktiver Proben während der Radiumisolierung.",
+      "start_year": 1898,
+      "end_year": 1899,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Laborpräparation radioaktiver Fraktionen aus Pechblende",
+        "Arbeit zur Identifizierung und Charakterisierung von Radium"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://de.wikipedia.org/wiki/Pierre_Curie"
+      ],
+      "notes": "Er wird in Berichten über die Herstellung einer Probe erwähnt, die bei der Radiumarbeit weit aktiver als Uran war."
+    },
+    {
+      "person_name": "Eugène-Anatole Demarçay",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Führte Spektroskopie durch, die 1898 die Bestätigung von Radium als neuem Element durch die Identifizierung charakteristischer Spektrallinien unterstützte.",
+      "start_year": 1898,
+      "end_year": 1903,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Spektroskopische Analyse von Laborproben der Curies",
+        "Unabhängige Bestätigung eines neuen Elements (Radium)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Eug%C3%A8ne-Anatole_Demar%C3%A7ay"
+      ],
+      "notes": "Ein externer Spezialist, dessen Messungen die Evidenz für Radium verstärkten."
+    },
+    {
+      "person_name": "André-Louis Debierne",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Arbeitete im wissenschaftlichen Umfeld der Curies; kooperierte mit Pierre Curie (und im Kontext von Maries Forschungsprogramm) bei Radioaktivitätsstudien und blieb später als Kollege/Freund der Curies verbunden.",
+      "start_year": 1899,
+      "end_year": 1906,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Zusammenarbeit in der Radioaktivitätsforschung in Paris",
+        "Gemeinsamer Labor- und Publikationskontext zur induzierten Radioaktivität"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Andr%C3%A9-Louis_Debierne",
+        "https://de.wikipedia.org/wiki/Pierre_Curie"
+      ],
+      "notes": "Debiernes Artikel erwähnt ausdrücklich die Freundschaft mit Pierre und Marie Curie sowie Phasen der Zusammenarbeit."
+    },
+    {
+      "person_name": "Georges Sagnac",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Kollege im frühen Forschungsumfeld der Radioaktivität; arbeitete mit Pierre Curie zu den physikalischen Wirkungen der Radioaktivität, während Marie sich auf die chemische Isolierung konzentrierte.",
+      "start_year": 1899,
+      "end_year": 1902,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Forschungsumfeld zu den physikalischen Wirkungen der Radioaktivität",
+        "Überschneidende Kooperationen im Umfeld der Laborarbeit der Curies"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://de.wikipedia.org/wiki/Pierre_Curie"
+      ],
+      "notes": "Erwähnt als Teil der Gruppe (mit Debierne), die 1899 mit Pierre zusammenarbeitete."
+    },
+    {
+      "person_name": "Hertha Ayrton",
+      "relationship_type": "social/friend",
+      "relationship_description": "Enge Freundin und Unterstützerin; half Irène auch, indem sie ihr Mathematikunterricht gab.",
+      "start_year": 1903,
+      "end_year": 1923,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Freundschaft und emotionale Unterstützung",
+        "Unterstützung der Ausbildung von Irène Curie (Mathematikunterricht)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hertha_Ayrton",
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "notes": "Ayrtons Biografie bezeichnet sie ausdrücklich als enge Freundin von Marie Curie und erwähnt, dass sie Irène Mathematik unterrichtete."
+    },
+    {
+      "person_name": "Ève Curie",
+      "relationship_type": "family/child",
+      "relationship_description": "Jüngere Tochter; gehörte nach Pierres Tod zu Curies unmittelbarer Familie, wobei Marie beide Töchter großzog.",
+      "start_year": 1904,
+      "end_year": 1934,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben nach dem Tod von Pierre Curie",
+        "Kontext häuslicher Bildung im Umfeld von Curies wissenschaftlichem Kreis"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Pierre_Curie",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Der deutsche Artikel über Pierre Curie nennt die beiden Töchter Irène und Ève."
+    },
+    {
+      "person_name": "Ellen Gleditsch",
+      "relationship_type": "academic/assistant",
+      "relationship_description": "Radiochemikerin, die als Curies Assistentin in Paris arbeitete (im Kontext des Curie-Laboratoriums/Curie-Instituts), zur Radiumreinigung beitrug und später eine führende Professorin in Norwegen wurde.",
+      "start_year": 1907,
+      "end_year": 1912,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Laborarbeit in Curies Gruppe (fraktionierte Kristallisation, Radiochemie)",
+        "Ausbildung und Forschungszusammenarbeit in Paris"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ellen_Gleditsch",
+        "https://de.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "notes": "Gleditsch kehrte später zurück, um Curie auf Reisen zu unterstützen, was auf eine dauerhafte berufliche Verbindung über die Assistententätigkeit hinaus hindeutet."
+    },
+    {
+      "person_name": "Paul Langevin",
+      "relationship_type": "social/romantic_partner",
+      "relationship_description": "Physiker; hatte eine Affäre mit Curie, die 1911 öffentlich wurde und heftige Presseangriffe sowie Kontroversen auslöste (die „Langevin-Affäre“).",
+      "start_year": 1910,
+      "end_year": 1911,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Persönliche Beziehung mit Berührungspunkten zum akademischen und öffentlichen Leben",
+        "Medienskandal und öffentliche Kontroverse in Frankreich"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Marie_Curie",
+        "https://de.wikipedia.org/wiki/Paul_Langevin"
+      ],
+      "notes": "Die deutsche Marie-Curie-Seite beschreibt öffentliche Angriffe, als die Beziehung bekannt wurde."
+    },
+    {
+      "person_name": "Frédéric Joliot-Curie",
+      "relationship_type": "family/child_in_law",
+      "relationship_description": "Schwiegersohn (Ehemann von Irène), der als Assistent von Marie Curie am Radiuminstitut begann und durch Heirat sowie die gemeinsame radiochemische Arbeitskultur in die wissenschaftliche Tradition der Curies eintrat.",
+      "start_year": 1925,
+      "end_year": 1934,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Beschäftigungsverbindung am Radiuminstitut (Assistententätigkeit)",
+        "Familien- und Laborumfeld im Kontext von Irènes Forschungslaufbahn"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Joliot-Curie",
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "notes": "Seine Biografie besagt, dass er 1925 Marie Curies Assistent wurde und Irène bald darauf heiratete (1926)."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Ihre Familie prägte sowohl ihr Überleben als auch ihren Ehrgeiz: Eltern aus dem Bildungswesen, eine Schwester, die Paris ermöglichte, eine Ehe mit Pierre Curie, die zu einer wissenschaftlichen Partnerschaft wurde, und Töchter – insbesondere Irène –, die die Curie-Tradition fortführten."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Curies akademischer Weg führte von Warschaus Untergrundbildung an die Sorbonne und dann weiter über die Assistenten und Auszubildenden, die sie in ihren Laborinstitutionen betreute."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Ihre Arbeit beruhte auf einem dichten Netz von Mitarbeitenden und Bestätigenden – von Pierre Curie und Becquerel bis zu Spezialisten, die bei der Probenvorbereitung, der Aktivitätsmessung und der Bestätigung neuer Elemente halfen –, das fragile Evidenz in anerkannte Wissenschaft verwandelte."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Soziale Bindungen brachten sowohl Unterstützung als auch Skandale mit sich: Freundinnen wie Hertha Ayrton boten Solidarität, während die Langevin-Affäre von 1911 Curie feindseligen öffentlichen Angriffen aussetzte."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "035ceb28544da4ac",
+    "translated_on": "2026-07-19T07:39:32.432856+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

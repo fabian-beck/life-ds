@@ -1,0 +1,743 @@
+{
+  "dataset": "biographical_timeline_skeletons",
+  "created_on": "2025-12-20",
+  "person": {
+    "name": "Antoni_Gaudí",
+    "birth_date": "1852-06-25",
+    "death_date": "1926-06-10",
+    "primary_roles": [
+      "Architekt",
+      "Designer"
+    ],
+    "tagline": "Architekt eines naturinspirierten Modernismus",
+    "summary": "Antoni Gaudí i Cornet war ein katalanischer Architekt und Designer sowie die führende Gestalt des katalanischen Modernisme. Er arbeitete überwiegend in Barcelona und entwickelte einen höchst persönlichen Stil, der in Naturformen, Handwerkstraditionen und einer zunehmend intensiven katholischen Spiritualität wurzelte. Am bekanntesten ist er dafür, die Sagrada Família zu seinem Lebensprojekt gemacht zu haben.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+    "portrait": {
+      "image": "/portraits/antoni_gaud_thumbnail.webp",
+      "source": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/7/72/Antoni_Gaudi_1878.jpg",
+      "thumbnail": "/portraits/antoni_gaud_thumbnail.webp",
+      "medium": "/portraits/antoni_gaud_medium.webp",
+      "full": "/portraits/antoni_gaud_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "forged_in_catalonia",
+      "headline": "In Katalonien geformt",
+      "date_start": "1852-06-25",
+      "date_start_precision": "day",
+      "date_end": "1878",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 26,
+      "involved_people": [
+        "Francesc Gaudí i Serra",
+        "Antònia Cornet i Bertran"
+      ],
+      "location": "Katalonien"
+    },
+    {
+      "id": "a_genius_enters_barcelona",
+      "headline": "Ein Genie kommt nach Barcelona",
+      "date_start": "1878",
+      "date_start_precision": "year",
+      "date_end": "1899",
+      "date_end_precision": "year",
+      "age_start": 26,
+      "age_end": 47,
+      "involved_people": [
+        "Elies Rogent",
+        "Eusebi Güell",
+        "Francisco de Paula del Villar y Lozano",
+        "Manuel Vicens i Montaner"
+      ],
+      "location": "Katalonien"
+    },
+    {
+      "id": "stone_becomes_living_form",
+      "headline": "Stein wird lebendige Form",
+      "date_start": "1900",
+      "date_start_precision": "year",
+      "date_end": "1914",
+      "date_end_precision": "year",
+      "age_start": 48,
+      "age_end": 62,
+      "involved_people": [
+        "Eusebi Güell",
+        "Josep Maria Jujol"
+      ],
+      "location": "Katalonien"
+    },
+    {
+      "id": "cathedral_of_a_single_will",
+      "headline": "Kathedrale eines Willens",
+      "date_start": "1915",
+      "date_start_precision": "year",
+      "date_end": "1926-06-10",
+      "date_end_precision": "day",
+      "age_start": 63,
+      "age_end": 73,
+      "involved_people": [
+        "Domènec Sugrañes i Gras",
+        "Josep Maria Jujol",
+        "Llorenç Matamala i Piñol"
+      ],
+      "location": "Katalonien"
+    }
+  ],
+  "conclusion": "Antoni Gaudí verwandelte Handwerk in Prophezeiung und prägte Barcelona mit Bauwerken, die eher gewachsen als gebaut wirken. Seine unvollendete Sagrada Família steht als sein wahrhaftigstes Vermächtnis – ein fortdauernder Glaube an Form, Arbeit und Vorstellungskraft.",
+  "events": [
+    {
+      "date": "1852-06-25",
+      "date_precision": "day",
+      "date_note": "Die Quellen sind sich uneinig, ob er in Reus oder Riudoms geboren wurde; am nächsten Tag wurde er in Reus getauft",
+      "age": 0,
+      "title": "Geburt im Baix Camp",
+      "description": "Antoni Plàcid Guillem Gaudí i Cornet wurde im [[Baix Camp|Baix Camp]] als Sohn des Kupferschmieds Francesc Gaudí i Serra und Antònia Cornet i Bertran geboren. Sein Geburtsort ist zwischen den benachbarten Städten Reus und Riudoms umstritten; die Kontroverse besteht aufgrund fehlender Unterlagen fort. Am folgenden Tag wurde er in der Kirche Sant Pere in Reus getauft.",
+      "locations": [
+        {
+          "name_historic": "Baix Camp",
+          "name_modern": "Baix Camp, Katalonien, Spanien",
+          "centroid": [
+            1.035543,
+            41.1442539
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Reus",
+          "name_modern": "Reus, Katalonien, Spanien",
+          "centroid": [
+            1.1076133,
+            41.1555564
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Riudoms",
+          "name_modern": "Riudoms, Katalonien, Spanien",
+          "centroid": [
+            1.0519702,
+            41.1390915
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Francesc Gaudí i Serra",
+        "Antònia Cornet i Bertran"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Reus",
+        "https://en.wikipedia.org/wiki/Riudoms"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "forged_in_catalonia",
+      "annotations": {
+        "Baix Camp": {
+          "explanation": "Eine Comarca (Verwaltungsregion auf Kreisebene) in Katalonien, zu der Orte wie Reus und Riudoms gehören, wo Gaudís Geburtsort traditionell verortet wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Baix_Camp"
+        }
+      }
+    },
+    {
+      "date": "1868",
+      "date_precision": "year",
+      "age": 16,
+      "title": "Zum Studium nach Barcelona",
+      "description": "1868 zog Gaudí als Jugendlicher aus der Gegend von Reus/Riudoms nach Barcelona, um seine Ausbildung fortzusetzen; dazu gehörte auch eine Zeit, in der er am Convent del Carme Pädagogik studierte. Der Wechsel brachte ihn in jene Stadt, die zur Hauptbühne seiner Karriere werden sollte und in der er ebenso viel in Werkstätten und an Zeichentischen wie in Unterrichtsräumen lernte.\n\nIn diesen Studienjahren erprobte er auch Ideen, die weit über die Architektur hinausgingen. Gemeinsam mit seinen Kommilitonen Eduard Toda i Güell und Josep Ribera i Sans interessierte er sich für den utopischen Sozialismus und entwarf sogar einen nicht verwirklichten Plan, das Kloster Poblet als utopisches Phalanstère wiederherzustellen – ein jugendliches Experiment, sich vorzustellen, wie Gebäude das Alltagsleben neu ordnen könnten.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Reus",
+          "name_modern": "Reus, Spanien",
+          "centroid": [
+            1.1076133,
+            41.1555564
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Riudoms",
+          "name_modern": "Riudoms, Spanien",
+          "centroid": [
+            1.0519702,
+            41.1390915
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "forged_in_catalonia",
+      "annotations": {
+        "phalanstère": {
+          "explanation": "Eine von dem französischen utopischen Sozialisten Charles Fourier vorgeschlagene Anlage für gemeinschaftliches Wohnen – gedacht, um die Gesellschaft durch gemeinsame Arbeit und häusliches Leben umzugestalten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Phalanst%C3%A8re"
+        }
+      },
+      "involved_people": [
+        "Eduard Toda i Güell",
+        "Josep Ribera i Sans"
+      ]
+    },
+    {
+      "date": "1875",
+      "date_precision": "year",
+      "date_end": "1878",
+      "date_end_precision": "year",
+      "age": 22,
+      "title": "Wehrdienst abgeleistet",
+      "description": "Zwischen 1875 und 1878 leistete Gaudí seinen Wehrdienst bei einem Infanterieregiment in Barcelona ab und diente als Militärverwalter. Die meiste Zeit war er krankgeschrieben, was ihm ermöglichte, sein Architekturstudium fortzusetzen, statt im Feldzug zu dienen.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "forged_in_catalonia"
+    },
+    {
+      "date": "1878",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Architekturdiplom erworben",
+      "description": "1878 schloss Gaudí sein Studium an der Höheren Architekturschule von Barcelona ab und verdiente sich währenddessen als Zeichner für Architekten und Bauunternehmer seinen Lebensunterhalt. Der Direktor der Schule, Elies Rogent, wurde später mit der berühmten Bemerkung verbunden, das Diplom sei entweder einem Narren oder einem Genie verliehen worden.\n\nIm selben Jahr verhalf ihm seine auf der Pariser Weltausstellung 1878 gezeigte Arbeit dazu, einflussreichen künftigen Förderern vorgestellt zu werden – vor allem Eusebi Güell – und verwandelte das Portfolio eines Studenten in den Beginn eines karriereprägenden Netzwerks von Mäzenen.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.173403,
+            41.385064
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.352222,
+            48.856613
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Elies Rogent",
+        "Eusebi Güell",
+        "Joan Martorell i Montells"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Elies_Rogent",
+        "https://en.wikipedia.org/wiki/Eusebi_G%C3%BCell"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "forged_in_catalonia",
+      "annotations": {
+        "Paris World's Fair": {
+          "explanation": "Die Exposition Universelle von 1878, eine bedeutende internationale Ausstellung in Paris, die Industrie und Kunst präsentierte und Künstlern sowie Designern als Ort der Vernetzung diente.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Exposition_Universelle_(1878)"
+        }
+      }
+    },
+    {
+      "date": "1878",
+      "date_precision": "year",
+      "date_end": "1879",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "Frühe öffentliche Aufträge",
+      "description": "In seinen ersten Jahren als diplomierter Architekt erhielt Gaudí sichtbare öffentliche Aufträge in Barcelona, darunter dekorative Laternenmasten für die [[Plaça Reial|Plaça Reial]] und weitere kleinere Projekte. Diese Aufträge zeigten seine Fähigkeit, Zweckmäßigkeit mit eindrucksvollem ornamentalen Design zu verbinden, und halfen ihm, sich in der konkurrenzstarken Architekturszene der Stadt Anerkennung zu verschaffen.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Pla%C3%A7a_Reial"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Barcelona_-_Pla%C3%A7a_Reial_-_View_SE_on_Lampposts_1879_by_Antonio_Gaud%C3%AD_%28Student_work%2C_first_official_commission%29.jpg/960px-Barcelona_-_Pla%C3%A7a_Reial_-_View_SE_on_Lampposts_1879_by_Antonio_Gaud%C3%AD_%28Student_work%2C_first_official_commission%29.jpg",
+          "caption": "Laternenmasten auf der Plaça Reial (1879), Gaudís erster offizieller Auftrag",
+          "source": "https://commons.wikimedia.org/wiki/File:Barcelona_-_Plaça_Reial_-_View_SE_on_Lampposts_1879_by_Antonio_Gaudí_(Student_work,_first_official_commission).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "forged_in_catalonia",
+      "annotations": {
+        "Plaça Reial": {
+          "explanation": "Ein zentraler Platz im Gotischen Viertel Barcelonas, der im 19. Jahrhundert umgestaltet wurde; Gaudís erster bedeutender öffentlicher Auftrag war der Entwurf seiner Straßenlaternen (1878–1879).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pla%C3%A7a_Reial"
+        }
+      }
+    },
+    {
+      "date": "1883",
+      "date_precision": "year",
+      "date_end": "1885",
+      "date_end_precision": "year",
+      "age": 31,
+      "title": "Casa Vicens gebaut",
+      "description": "In Barcelona realisierte Gaudí die [[Casa Vicens|Casa Vicens]], die weithin als sein erster bedeutender Auftrag für ein Privathaus und als Durchbruch seiner frühen Karriere gilt. Das Projekt zeigte seine sich herausbildende Verbindung historistischer Bezüge, lokaler Handwerkstraditionen sowie kräftiger Farben und Oberflächenmuster; sein Erfolg half ihm, zunehmend ambitionierte private Auftraggeber zu gewinnen.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Manuel Vicens i Montaner"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Casa_Vicens",
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Casa_Vicens_2014_ext_001.jpg/960px-Casa_Vicens_2014_ext_001.jpg",
+          "caption": "Casa Vicens, erstes von Antoni Gaudí entworfenes Gebäude",
+          "source": "https://commons.wikimedia.org/wiki/File:Casa_Vicens_2014_ext_001.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "a_genius_enters_barcelona",
+      "annotations": {
+        "Casa Vicens": {
+          "explanation": "Ein von Gaudí entworfenes Privathaus, das der Börsenmakler Manuel Vicens in Auftrag gab; es gilt allgemein als eines seiner frühesten bedeutenden Werke in Barcelona.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Casa_Vicens"
+        }
+      }
+    },
+    {
+      "date": "1883",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Sagrada Família übernommen",
+      "description": "1883 wurde Gaudí damit beauftragt, das noch in den Anfängen stehende Projekt der [[Basílica i Temple Expiatori de la Sagrada Família|Sagrada Família]] in Barcelona zu übernehmen, nachdem der ursprüngliche Architekt, [[Francisco de Paula del Villar y Lozano|Francisco de Paula del Villar]], nach Streitigkeiten mit den Bauherren zurückgetreten war. Gaudí gab Villars ursprünglichen neugotischen Plan auf und konzipierte die Kirche auf weitaus ehrgeizigere und persönlichere Weise neu – eine Verpflichtung, die den Rest seiner Karriere bestimmen sollte.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Francisco de Paula del Villar y Lozano"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Francisco_de_Paula_del_Villar_y_Lozano",
+        "https://en.wikipedia.org/wiki/Sagrada_Fam%C3%ADlia",
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Sagrada_Fam%C3%ADlia_2010.JPG/960px-Sagrada_Fam%C3%ADlia_2010.JPG",
+          "caption": "Basílica i Temple Expiatori de la Sagrada Família, Barcelona",
+          "source": "https://commons.wikimedia.org/wiki/File:Sagrada_Família_2010.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-church",
+      "chapter": "a_genius_enters_barcelona",
+      "annotations": {
+        "Basílica i Temple Expiatori de la Sagrada Família": {
+          "explanation": "Der vollständige offizielle Name der Sagrada Família, einer katholischen Sühnebasilika in Barcelona, die historisch durch private Spenden finanziert wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sagrada_Fam%C3%ADlia"
+        },
+        "Francisco de Paula del Villar y Lozano": {
+          "explanation": "Der Architekt, der ursprünglich für das Projekt der Sagrada Família verantwortlich war und 1883 zurücktrat, woraufhin Gaudí zu seinem Nachfolger ernannt wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Francisco_de_Paula_del_Villar_y_Lozano"
+        }
+      }
+    },
+    {
+      "date": "1886",
+      "date_precision": "year",
+      "date_end": "1900",
+      "date_end_precision": "year",
+      "age": 34,
+      "title": "Zusammenarbeit mit Güell vertieft",
+      "description": "Nach ihrer Begegnung auf der Pariser Ausstellung von 1878 entwickelte Gaudí eine lange Zusammenarbeit mit dem Industriellen und Mäzen Eusebi Güell. Ab etwa 1886 brachte ihm diese Beziehung im Barcelona [[Modernisme|des modernistischen Stils]] eine Reihe von Aufträgen ein – insbesondere den Palau Güell (begonnen 1886) und später den Parc Güell –, bei denen er strukturelle und dekorative Experimente vorantreiben konnte.\n\nÜber Güells Kreis fand er auch hochrangige Auftraggeber außerhalb Barcelonas, darunter Antonio López y López, 1. Marqués de Comillas, für den er El Capricho in Comillas entwarf. Güells fortwährende Förderung trug dazu bei, Gaudís Stellung zu festigen, und unterstützte die Entstehung seiner höchst persönlichen Architektursprache.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Eusebi Güell",
+        "Antonio López y López, 1. Marqués de Comillas"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Eusebi_G%C3%BCell"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Palau_G%C3%BCell%2C_Barcelona_113.jpg/960px-Palau_G%C3%BCell%2C_Barcelona_113.jpg",
+          "caption": "Palau Güell (Güell-Palast) von Antoni Gaudí, Barcelona",
+          "source": "https://commons.wikimedia.org/wiki/File:Palau_Güell,_Barcelona_113.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "a_genius_enters_barcelona",
+      "annotations": {
+        "Modernisme": {
+          "explanation": "Katalanische Jugendstilbewegung (spätes 19. bis frühes 20. Jahrhundert), die eng mit Barcelona verbunden ist und Handwerk, Ornamentik sowie neue architektonische Formen betonte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Modernisme"
+        },
+        "Park Güell": {
+          "explanation": "Ein bedeutender, von Gaudí gestalteter Parkkomplex in Barcelona, der ursprünglich als Gartenstadt-Wohnprojekt für Güell konzipiert war; später wurde er zu einem öffentlichen Park.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Park_G%C3%BCell"
+        }
+      }
+    },
+    {
+      "date": "1894",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Fastenbedingte Erkrankung",
+      "description": "Gaudís katholische Frömmigkeit und sein strenger Vegetarismus trugen zu extremen Fastenpraktiken bei. 1894 führte eine Phase intensiven Fastens zu einer lebensbedrohlichen Erkrankung, die den körperlichen Preis seiner zunehmenden asketischen Disziplin offenbarte und das immer entbehrungsreichere persönliche Leben vorausahnen ließ, das seine spätere Arbeit begleiten sollte.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "a_genius_enters_barcelona",
+      "location_coordinates": [
+        {
+          "label": "Barcelona",
+          "name": "Barcelona, Spain",
+          "primary": true,
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "source": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+        }
+      ]
+    },
+    {
+      "date": "1899",
+      "date_precision": "year",
+      "age": 47,
+      "title": "Katholischen Künstlerkreisen beigetreten",
+      "description": "1899 trat Gaudí dem Cercle Artístic de Sant Lluc bei, einer katholischen Künstlervereinigung in Barcelona, die mit bedeutenden religiösen und kulturellen Persönlichkeiten Kataloniens verbunden war. In diesem Umfeld kam er mit einflussreichen katholischen Denkern wie Bischof Josep Torras i Bages in Kontakt. Die Entscheidung entsprach der Richtung seines Lebens: einer sich vertiefenden Spiritualität, die zunehmend seine Prioritäten, sein gesellschaftliches Umfeld und die Symbolik seiner Werke prägte.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Cercle_Art%C3%ADstic_de_Sant_Lluc"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Cercle_Art%C3%ADstic_de_Sant_Lluc_cartell_any_1899_circol_de_Sant_lluc_Alexandre_de_riquer.jpg/890px-Cercle_Art%C3%ADstic_de_Sant_Lluc_cartell_any_1899_circol_de_Sant_lluc_Alexandre_de_riquer.jpg",
+          "caption": "Ausstellungsplakat des Cercle Artístic de Sant Lluc von 1899",
+          "source": "https://commons.wikimedia.org/wiki/File:Cercle_Artístic_de_Sant_Lluc_cartell_any_1899_circol_de_Sant_lluc_Alexandre_de_riquer.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "a_genius_enters_barcelona",
+      "annotations": {
+        "Cercle Artístic de Sant Lluc": {
+          "explanation": "Ein 1893 gegründeter Künstlerverein in Barcelona mit stark katholischer, moralisierender Ausrichtung, der um die Wende zum 20. Jahrhundert im katalanischen Kulturleben einflussreich war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Cercle_Art%C3%ADstic_de_Sant_Lluc"
+        }
+      },
+      "involved_people": [
+        "Josep Torras i Bages"
+      ]
+    },
+    {
+      "date": "1900",
+      "date_precision": "year",
+      "age": 48,
+      "title": "Preis für Casa Calvet gewonnen",
+      "description": "1900 erhielt Gaudí den Preis des [[Barcelona City Council|Stadtrats von Barcelona]] für das beste Gebäude des Jahres, die Casa Calvet. Die Auszeichnung markierte einen Höhepunkt breiter bürgerlicher Anerkennung zu einer Zeit, als sein Stil kühner und weniger konventionell wurde, und festigte seine Stellung als führender Architekt der modernistischen Epoche Barcelonas.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Casa_Calvet",
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Casa_Calvet_-_004.jpg/960px-Casa_Calvet_-_004.jpg",
+          "caption": "Casa Calvet, katalanischer Modernisme (Antonio Gaudí, 1900)",
+          "source": "https://commons.wikimedia.org/wiki/File:Casa_Calvet_-_004.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "stone_becomes_living_form",
+      "annotations": {
+        "Barcelona City Council": {
+          "explanation": "Die Stadtverwaltung von Barcelona (Ajuntament de Barcelona), die jährlich städtische Preise zur Würdigung bemerkenswerter Neubauten in der Stadt verlieh.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Barcelona_City_Council"
+        }
+      }
+    },
+    {
+      "date": "1900",
+      "date_precision": "year",
+      "date_end": "1914",
+      "date_end_precision": "year",
+      "age": 48,
+      "title": "Projekt Park Güell entwickelt",
+      "description": "1900 begann Gaudí mit dem Entwurf des Park Güell in Barcelona als gehobene Wohnsiedlung, die von Eusebi Güell gefördert wurde. Obwohl die Urbanisierung kommerziell scheiterte, entwickelte sich der Ort zu einer seiner einflussreichsten Synthesen von Landschaft und Architektur, in der sich strukturelle Erfindungsgabe mit Mosaik- und Handwerksarbeit verband. Er zeigte, wie Gaudí statt eines freistehenden Monuments eine immersive Umgebung schaffen konnte – Wege, Terrassen und Ornamentik als ein einziges System.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.1734,
+            41.3851
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Eusebi Güell"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Eusebi_G%C3%BCell",
+        "https://en.wikipedia.org/wiki/Josep_Maria_Jujol"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Barcelona_Parc_G%C3%BCell_el_drac.jpg/960px-Barcelona_Parc_G%C3%BCell_el_drac.jpg",
+          "caption": "Brunnen „el drac“ im Park Güell, Barcelona",
+          "source": "https://commons.wikimedia.org/wiki/File:Barcelona_Parc_Güell_el_drac.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "stone_becomes_living_form",
+      "annotations": {
+        "Park Güell": {
+          "explanation": "Ein öffentlicher Park in Barcelona, der ursprünglich als private Wohnanlage im Stil einer Gartenstadt (Park-Güell-Anwesen) geplant war, von Eusebi Güell in Auftrag gegeben und von Antoni Gaudí entworfen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Park_G%C3%BCell"
+        }
+      }
+    },
+    {
+      "date": "1904",
+      "date_precision": "year",
+      "date_end": "1912",
+      "date_end_precision": "year",
+      "date_note": "Dieser Zeitraum umfasst seine beiden emblematischen Wohnhausprojekte in Barcelona: Casa Batlló (Umbau) und Casa Milà (Neubau)",
+      "age": 52,
+      "title": "Markante Stadthäuser geschaffen",
+      "description": "In diesen Jahren schuf Gaudí zwei seiner ikonischsten Werke in Barcelona: den Umbau der Casa Batlló sowie den Entwurf und Bau der Casa Milà. Beide Projekte führten seine Hinwendung zu einer an Naturformen orientierten Architektur weiter, mit skulpturalen Fassaden sowie kühnen konstruktiven und räumlichen Lösungen.\n\nEtwa zur selben Zeit ließ er sich in einem Haus im Park Güell nieder, wo er den Alltag mit nahen Familienangehörigen teilte – insbesondere mit seinem Vater Francesc Gaudí i Serra und seiner Nichte Rosa Egea Gaudí – und sich auf einen Werkstattkreis vertrauenswürdiger Mitarbeiter stützte, während seine Projekte immer anspruchsvoller wurden.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Josep Maria Jujol",
+        "Eusebi Güell",
+        "Francesc Gaudí i Serra",
+        "Rosa Egea Gaudí",
+        "Francesc Berenguer (Assistent)",
+        "Joan Rubió i Bellver"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Josep_Maria_Jujol",
+        "https://en.wikipedia.org/wiki/Eusebi_G%C3%BCell"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Casa_Batll%C3%B3%2C_Barcelona_58.jpg/960px-Casa_Batll%C3%B3%2C_Barcelona_58.jpg",
+          "caption": "Casa Batlló von Architekt Antoni Gaudí, Barcelona",
+          "source": "https://commons.wikimedia.org/wiki/File:Casa_Batlló,_Barcelona_58.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "stone_becomes_living_form"
+    },
+    {
+      "date": "1910",
+      "date_precision": "year",
+      "age": 58,
+      "title": "Werke in Paris ausgestellt",
+      "description": "1910 präsentierte eine große Ausstellung im Grand Palais in Paris Gaudís Werk anhand von Zeichnungen, Plänen und Gipsmodellen. Sie zog breitere internationale Aufmerksamkeit und starke Pressereaktionen auf sich, die seinen Ruf über Spanien hinaus festigten und seine Abkehr vom etablierten Modernisme hin zu einer eigenständigen persönlichen Ausdrucksweise unterstrichen.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Grand_Palais"
+      ],
+      "event_type_icon": "mdi-palette",
+      "chapter": "stone_becomes_living_form"
+    },
+    {
+      "date": "1915",
+      "date_precision": "year",
+      "date_end": "1925",
+      "date_end_precision": "year",
+      "age": 63,
+      "title": "Ganz der Sagrada Família gewidmet",
+      "description": "Ab 1915 widmete Gaudí sein Berufsleben ausschließlich der Sagrada Família und lenkte die Entwurfsentscheidungen durch Modelle und Problemlösungen vor Ort statt durch konventionelle ausgearbeitete Pläne. Seine Werkstattpraxis betonte spezialisierte Handwerke und eine disziplinierte Beherrschung von Form, Struktur und Symbolik.\n\nAuch sein Alltag wurde enger: 1925 zog er in den Werkstattkomplex der Sagrada Família, und in dieser intensiv religiösen Zeit besuchte er sogar einen Kurs für gregorianischen Choral, den der Benediktinermönch Gregori M. Sunyol in Barcelona gab.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Domènec Sugrañes i Gras",
+        "Josep Maria Jujol",
+        "Llorenç Matamala i Piñol",
+        "Gregori M. Sunyol"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Dom%C3%A8nec_Sugra%C3%B1es_i_Gras"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Sagrada_Fam%C3%ADlia._Projecte_Gaud%C3%AD_entorn_Sagrada_Fam%C3%ADlia.jpg/960px-Sagrada_Fam%C3%ADlia._Projecte_Gaud%C3%AD_entorn_Sagrada_Fam%C3%ADlia.jpg",
+          "caption": "Städtebauliche Studie der Sagrada Família von Gaudí (1916)",
+          "source": "https://commons.wikimedia.org/wiki/File:Sagrada_Família._Projecte_Gaudí_entorn_Sagrada_Família.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-church",
+      "chapter": "cathedral_of_a_single_will",
+      "annotations": {
+        "Sagrada Família": {
+          "explanation": "Große unvollendete römisch-katholische Basilika in Barcelona (Temple Expiatori de la Sagrada Família), die zu Gaudís Hauptprojekt wurde und an deren Ort er seine Werkstatt betrieb.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sagrada_Fam%C3%ADlia"
+        }
+      }
+    },
+    {
+      "date": "1926-06-07",
+      "date_precision": "day",
+      "date_end": "1926-06-10",
+      "date_end_precision": "day",
+      "age": 73,
+      "title": "Straßenbahnunfall und Tod",
+      "description": "Gaudí wurde in Barcelona von einer Straßenbahn erfasst und schwer verletzt. Nach mehreren Tagen im Krankenhaus starb er am 10. Juni 1926, kurz vor seinem 74. Geburtstag. Mit seinem Tod endeten die unmittelbare leitende Hand hinter der Sagrada Família und die reife Phase seiner architektonischen Experimente.",
+      "locations": [
+        {
+          "name_historic": "Barcelona",
+          "name_modern": "Barcelona, Spanien",
+          "centroid": [
+            2.177073,
+            41.3825802
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Antoni_Gaud%C3%AD_rep_als_mariners_del_creuer_Ministre_Zenteno.jpg",
+          "caption": "Antoni Gaudí empfängt Seeleute, Ilustració Catalana (1907)",
+          "source": "https://commons.wikimedia.org/wiki/File:Antoni_Gaudí_rep_als_mariners_del_creuer_Ministre_Zenteno.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "cathedral_of_a_single_will"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "8dda48894c4ab5b4",
+    "translated_on": "2026-07-19T07:35:27.318435+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

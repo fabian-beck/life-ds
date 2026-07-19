@@ -1,0 +1,758 @@
+{
+  "dataset": "wiki_bio_timelines",
+  "created_on": "2025-12-05",
+  "person": {
+    "name": "Umberto_Eco",
+    "birth_date": "1932-01-05",
+    "death_date": "2016-02-19",
+    "primary_roles": [
+      "Philosoph",
+      "Schriftsteller"
+    ],
+    "summary": "Umberto Eco war ein italienischer Mediävist, Philosoph und Semiotiker, der als Autor des Romans „Der Name der Rose“ sowie als führender Theoretiker der Semiotik, der Massenmedien und der zeitgenössischen Kultur internationale Bekanntheit erlangte. Ausgebildet in mittelalterlicher Philosophie entwickelte er einflussreiche Ideen zum „offenen Kunstwerk“, zur interpretativen Semiotik und zum Faschismus, während er an bedeutenden italienischen Universitäten lehrte und viel gelesene Romane und Essays schrieb.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Umberto_Eco",
+    "portrait": {
+      "image": "/portraits/umberto_eco_thumbnail.webp",
+      "source": "https://en.wikipedia.org/wiki/Umberto_Eco",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/64/Italiaanse_schrijver_Umberto_Eco%2C_portret.jpg",
+      "thumbnail": "/portraits/umberto_eco_thumbnail.webp",
+      "medium": "/portraits/umberto_eco_medium.webp",
+      "full": "/portraits/umberto_eco_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "early_life_and_education",
+      "headline": "Kindheit im Krieg, prägende Studien",
+      "date_start": "1932-01-05",
+      "date_start_precision": "day",
+      "date_end": "1958",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 26
+    },
+    {
+      "id": "scholar_of_aesthetics_and_semiotics",
+      "headline": "Von Ästhetik zur Semiotik",
+      "date_start": "1959",
+      "date_start_precision": "year",
+      "date_end": "1978",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 46
+    },
+    {
+      "id": "novelist_and_global_public_intellectual",
+      "headline": "Romancier und öffentlicher Intellektueller",
+      "date_start": "1979",
+      "date_start_precision": "year",
+      "date_end": "2000",
+      "date_end_precision": "year",
+      "age_start": 47,
+      "age_end": 68
+    },
+    {
+      "id": "late_works_and_ongoing_engagement",
+      "headline": "Späte Werke und Bürgerengagement",
+      "date_start": "2001",
+      "date_start_precision": "year",
+      "date_end": "2016-02-19",
+      "date_end_precision": "day",
+      "age_start": 69,
+      "age_end": 84
+    }
+  ],
+  "events": [
+    {
+      "date": "1932-01-05",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Alessandria, Piemont",
+      "description": "Umberto Eco wurde am 5. Januar 1932 in Alessandria, einer Provinzstadt in der norditalienischen Region Piemont, als Sohn von Giulio Eco, einem Buchhalter und Kriegsveteranen, und dessen Ehefrau Giovanna Bisio geboren. Das Aufwachsen in einer großen Großfamilie während des Aufstiegs des italienischen Faschismus brachte ihn früh mit autoritärer Politik und katholischer Populärkultur in Berührung, die er später in seinen Essays und Romanen analysieren sollte.",
+      "locations": [
+        {
+          "name_historic": "Alessandria",
+          "name_modern": "Alessandria, Piemont, Italien",
+          "centroid": [
+            8.615,
+            44.912
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Giulio Eco",
+        "Giovanna Bisio"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1942",
+      "date_precision": "year",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "age": 10,
+      "title": "Kindheit unter Faschismus und Krieg",
+      "description": "Als Kind während des Zweiten Weltkriegs nahm Eco zunächst die faschistische Ideologie auf – mit zehn Jahren gewann er für einen Mussolini preisenden Aufsatz einen Provinzpreis – und erlebte dann ihren Zusammenbruch. Als sein Vater an die Front einberufen wurde, suchten Eco und seine Mutter Zuflucht in einem piemontesischen Bergdorf, das 1945 befreit wurde. Dort kam er mit amerikanischen Comics, Geschichten über den europäischen Widerstand und ersten Berichten über den Holocaust in Berührung – Erfahrungen, die später seine antifaschistischen Überlegungen in Werken wie „Ur-Fascism“ prägten.",
+      "locations": [
+        {
+          "name_historic": "Alessandria",
+          "name_modern": "Alessandria, Italien",
+          "centroid": [
+            8.6153,
+            44.9135
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Piedmont",
+          "name_modern": "Piemont, Italien",
+          "centroid": [
+            7.7081,
+            45.0522
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Giulio Eco",
+        "Giovanna Bisio"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Ur-Fascism",
+        "https://en.wikipedia.org/wiki/Italian_campaign_(World_War_II)"
+      ],
+      "event_type_icon": "mdi-calendar",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1954",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Laurea über Thomas von Aquin",
+      "description": "Eco schloss sein Universitätsstudium an der [[University of Turin|Universität Turin]] ab und erwarb 1954 unter der Betreuung von Luigi Pareyson einen Laurea-Abschluss in Philosophie. Seine Dissertation über die Ästhetik des mittelalterlichen Theologen [[Thomas Aquinas|Thomas von Aquin]] begründete seinen Ruf als Mediävist und eröffnete seine wissenschaftliche Beschäftigung mit Fragen der Schönheit, des Symbolismus und der Interpretation, die in seinem akademischen und belletristischen Werk immer wieder auftauchen sollten.",
+      "locations": [
+        {
+          "name_historic": "Turin",
+          "name_modern": "Turin, Italien",
+          "centroid": [
+            7.6869,
+            45.0703
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Luigi Pareyson",
+        "Thomas von Aquin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/University_of_Turin"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "early_life_and_education",
+      "annotations": {
+        "University of Turin": {
+          "explanation": "Eine der ältesten Universitäten Italiens, 1404 in Turin gegründet und bekannt für ihre starken Traditionen in Philosophie, Recht und Geisteswissenschaften, an der Eco studierte und seinen Abschluss machte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Turin"
+        },
+        "Thomas Aquinas": {
+          "explanation": "Ein Dominikanermönch und Theologe des 13. Jahrhunderts, dessen Verbindung christlicher Lehre mit aristotelischer Philosophie grundlegend für das mittelalterliche und spätere katholische Denken wurde, einschließlich der Ästhetik.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Thomas_Aquinas"
+        }
+      }
+    },
+    {
+      "date": "1954",
+      "date_precision": "year",
+      "date_end": "1958",
+      "date_end_precision": "year",
+      "age": 22,
+      "title": "Beginnt Arbeit bei RAI in Mailand",
+      "description": "Nach seinem Abschluss wandte sich Eco dem Kulturjournalismus und dem Rundfunk zu, indem er beim italienischen Staatssender RAI in Mailand tätig wurde, wo er Kulturprogramme produzierte. Diese Zeit ließ ihn tief in die Mechanismen der Massenmedien und der populären Kommunikation eintauchen und schärfte seine kritische Sicht auf Fernsehen, Werbung und Massenkultur, die später Essays wie „Phänomenologie des Mike Bongiorno“ und die Sammlung „Apocalittici e integrati“ prägen sollte.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1956",
+      "date_precision": "year",
+      "age": 24,
+      "title": "Veröffentlicht erstes Buch zur mittelalterlichen Ästhetik",
+      "description": "1956 veröffentlichte Eco sein erstes Buch, in dem er seine Dissertation zur mittelalterlichen Ästhetik ausbaute und sich als vielversprechender junger Forscher des mittelalterlichen Denkens etablierte. Das Erscheinen des Buches verhalf ihm zu einer Assistenzdozentur an der Universität Turin und markierte seinen formellen Einstieg in eine akademische Laufbahn, die sich bald von den Mediävistik zu Semiotik und Literaturtheorie erweitern sollte.",
+      "locations": [
+        {
+          "name_historic": "Turin",
+          "name_modern": "Turin, Italien",
+          "centroid": [
+            7.6869,
+            45.0703
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/University_of_Turin"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "early_life_and_education"
+    },
+    {
+      "date": "1959",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Wird Reihenherausgeber bei Bompiani",
+      "description": "1959 lud der Mailänder Verleger Valentino Bompiani Eco ein, die Reihe „Idee nuove“ (Neue Ideen) zu herauszugeben, nachdem ihm dessen unter dem Pseudonym Daedalus verfasstes verspieltes Pamphlet „Filosofi in libertà“ aufgefallen war. Bei Bompiani wurde Eco zu einem wichtigen Vermittler zeitgenössischer Theorie und Kultur in Italien; er arbeitete eng mit Autoren zusammen und festigte seine Rolle als öffentlicher Intellektueller, der akademische Forschung und ein breiteres Lesepublikum verband.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Valentino Bompiani"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "scholar_of_aesthetics_and_semiotics"
+    },
+    {
+      "date": "1962",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Veröffentlicht „Opera aperta“",
+      "description": "Eco veröffentlichte 1962 „Opera aperta“ („Das offene Kunstwerk“) und argumentierte darin, dass literarische und künstlerische Texte als offene Bedeutungsfelder und nicht als geschlossene Systeme fungieren. Ausgehend von [[semiotics|Semiotik]] und zeitgenössischer Ästhetik wurde das Buch zu einem einflussreichen Plädoyer für interpretative Vielfalt und rückte Eco ins Zentrum internationaler Debatten über Leserreaktionen, Strukturalismus sowie das Wesen moderner Kunst und Literatur.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/The_Open_Work"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "scholar_of_aesthetics_and_semiotics",
+      "annotations": {
+        "semiotics": {
+          "explanation": "Ein Fachgebiet, das Zeichen und Zeichenprozesse untersucht und sich darauf konzentriert, wie Bedeutung in Sprache, Bildern und anderen symbolischen Systemen erzeugt und vermittelt wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Semiotics"
+        }
+      }
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Veröffentlicht „Apocalittici e integrati“",
+      "description": "1964 brachte Eco „Apocalittici e integrati“ („Die Apokalyptiker und die Integrierten“) heraus und erweiterte darin seine Überlegungen zu Massenkultur, Comics, Fernsehen und populärer Musik. Das Buch stellte Kulturpessimisten jenen gegenüber, die den Massenmedien versöhnlicher gegenüberstanden, und festigte seinen Ruf als differenzierter Analytiker alltäglicher Kulturformen – nicht nur als Spezialist für hochmittelalterliche Forschung.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Apocalittici_e_integrati"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "scholar_of_aesthetics_and_semiotics"
+    },
+    {
+      "date": "1965",
+      "date_precision": "year",
+      "date_end": "1969",
+      "date_end_precision": "year",
+      "age": 33,
+      "title": "Professor für visuelle Kommunikation in Florenz",
+      "description": "Von 1965 bis 1969 hatte Eco den Lehrstuhl für visuelle Kommunikation an der Universität Florenz inne, wo er die [[semiotics|Semiotik]] von Bildern und Massenmedien erforschte. In dieser Zeit hielt er seinen berühmten Vortrag „Für einen semiologischen Guerillakrieg“ und prägte die Idee der „semiologischen Guerilla“ als Strategie, mit der das Publikum Botschaften der Leitmedien widerstehen und sie unterlaufen könne; später wurde der Vortrag in seiner Essaysammlung „Im Wald der Fiktionen“ erneut abgedruckt.",
+      "locations": [
+        {
+          "name_historic": "Florence",
+          "name_modern": "Florenz, Italien",
+          "centroid": [
+            11.2558,
+            43.7696
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Faith_in_Fakes"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "scholar_of_aesthetics_and_semiotics",
+      "annotations": {
+        "semiotics": {
+          "explanation": "Semiotik ist die systematische Untersuchung von Zeichen und Symbolen – etwa Wörtern, Bildern und Gesten – sowie der Frage, wie sie in der Kommunikation Bedeutung erzeugen und vermitteln.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Semiotics"
+        }
+      }
+    },
+    {
+      "date": "1969",
+      "date_precision": "year",
+      "date_end": "1975",
+      "date_end_precision": "year",
+      "age": 37,
+      "title": "Entwickelt interpretative Semiotik",
+      "description": "1969 wurde Eco Professor für Semiotik am Polytechnikum Mailand und verbrachte ein Jahr als Gastprofessor an der New York University; anschließend folgten Berufungen an die Universität Bologna und die Northwestern University. Seine „interpretative Semiotik“ entwickelte er in Werken wie „La struttura assente“ (1968) und, am systematischsten, in „A Theory of Semiotics“ (1975), das dazu beitrug, die Semiotik als wichtiges geisteswissenschaftliches Fachgebiet zu etablieren.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Bologna",
+          "name_modern": "Bologna, Italien",
+          "centroid": [
+            11.3426,
+            44.4949
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Evanston",
+          "name_modern": "Evanston, Illinois, Vereinigte Staaten",
+          "centroid": [
+            -87.6887,
+            42.0451
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/A_Theory_of_Semiotics"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "scholar_of_aesthetics_and_semiotics"
+    },
+    {
+      "date": "1975",
+      "date_precision": "year",
+      "age": 43,
+      "title": "Professor für Semiotik in Bologna",
+      "description": "Nach der Veröffentlichung von „A Theory of Semiotics“ im Jahr 1975 wurde Eco zum Professor für Semiotik an der Universität Bologna, einer der ältesten Universitäten Europas, berufen. Bald machte er Bologna zu einem führenden Zentrum der semiotischen Forschung, betreute Studierende und zog internationale Wissenschaftler an, während er seine redaktionelle Tätigkeit bei Bompiani aufgab, um sich auf die akademische Arbeit zu konzentrieren.",
+      "locations": [
+        {
+          "name_historic": "Bologna",
+          "name_modern": "Bologna, Italien",
+          "centroid": [
+            11.3426,
+            44.4949
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/University_of_Bologna",
+        "https://en.wikipedia.org/wiki/A_Theory_of_Semiotics"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "scholar_of_aesthetics_and_semiotics"
+    },
+    {
+      "date": "1980",
+      "date_precision": "year",
+      "age": 48,
+      "title": "Veröffentlicht „Der Name der Rose“",
+      "description": "Eco schöpfte aus seiner Fachkenntnis als [[medievalist|Mediävist]] und Semiotiker, um 1980 seinen ersten Roman „Der Name der Rose“ zu veröffentlichen. Das Buch, ein komplexer historischer Kriminalroman, der in einem Kloster des 14. Jahrhunderts spielt, verband Detektivliteratur mit theologischen Debatten, textuellen Labyrinthen und Reflexionen über Interpretation, wurde rasch ein internationaler Bestseller und machte ihn zu einem weltweit bekannten Romancier.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://de.wikipedia.org/wiki/Der_Name_der_Rose"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "novelist_and_global_public_intellectual",
+      "annotations": {
+        "medievalist": {
+          "explanation": "Ein Wissenschaftler, der sich auf die Erforschung des Mittelalters spezialisiert, typischerweise mit Schwerpunkt auf dessen Geschichte, Literatur, Philosophie und Kultur.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Medieval_studies"
+        }
+      }
+    },
+    {
+      "date": "1985",
+      "date_precision": "year",
+      "date_end": "2016-01-27",
+      "date_end_precision": "day",
+      "age": 53,
+      "title": "Beginnt Kolumne „La Bustina di Minerva“",
+      "description": "1985 begann Eco, für die italienische Zeitschrift L'Espresso die zweimal monatlich erscheinende Zeitungskolumne „La Bustina di Minerva“ zu schreiben, die er über drei Jahrzehnte hinweg bis zu seinem letzten Beitrag im Januar 2016 fortführte. In diesen kurzen Essays kommentierte er geistreich Politik, Sprache, Medien und den Alltag und bekräftigte damit seine Rolle als viel gelesener Kulturkritiker in Italien und darüber hinaus.",
+      "locations": [
+        {
+          "name_historic": "Rome",
+          "name_modern": "Rom, Italien",
+          "centroid": [
+            12.4964,
+            41.9028
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/L%27Espresso"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "novelist_and_global_public_intellectual"
+    },
+    {
+      "date": "1988",
+      "date_precision": "year",
+      "age": 56,
+      "title": "Veröffentlicht „Das Foucaultsche Pendel“",
+      "description": "1988 veröffentlichte Eco seinen zweiten bedeutenden Roman „Das Foucaultsche Pendel“, eine dichte, ironische Erzählung über drei Lektoren, die eine ausgefeilte Verschwörung um die Tempelritter und okkulte Traditionen konstruieren. Das Buch persiflierte und analysierte zugleich modernes Verschwörungsdenken und steigerte seinen Ruf als Romancier, der semiotische Theorie, Esoterik und zeitgenössische Themen zu fesselnder Literatur verweben konnte.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Foucault%27s_Pendulum"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "novelist_and_global_public_intellectual"
+    },
+    {
+      "date": "1988",
+      "date_precision": "year",
+      "date_end": "1994",
+      "date_end_precision": "year",
+      "age": 56,
+      "title": "Gründet Medien- und Geisteswissenschaftsinstitutionen",
+      "description": "Ab 1988 wirkte Eco am Aufbau des Fachbereichs Medienwissenschaften an der [[University of the Republic of San Marino|Universität der Republik San Marino]] und 1992 des [[Institute of Communication Disciplines|Instituts für Kommunikationswissenschaften]] sowie später der Höheren Schule für Geisteswissenschaften an der Universität Bologna mit. Zudem rief er das interkulturelle Programm „[[Anthropology of the West|Anthropologie des Westens]]“ ins Leben, das europäische und nichtwestliche Wissenschaftler bei Veranstaltungen von Bologna bis Guangzhou zusammenführte und sein Engagement für vergleichende, transkulturelle Forschung widerspiegelte.",
+      "locations": [
+        {
+          "name_historic": "San Marino",
+          "name_modern": "San Marino, San Marino",
+          "centroid": [
+            12.4578,
+            43.9355
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bologna",
+          "name_modern": "Bologna, Italien",
+          "centroid": [
+            11.3426,
+            44.4949
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Guangzhou",
+          "name_modern": "Guangzhou, China",
+          "centroid": [
+            113.2644,
+            23.1291
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/University_of_Bologna"
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "novelist_and_global_public_intellectual",
+      "annotations": {
+        "University of the Republic of San Marino": {
+          "explanation": "Eine kleine staatliche Universität, die 1985 in der Republik San Marino gegründet wurde und an der Eco bei der Entwicklung von Studienprogrammen für Medien und Kommunikation mitwirkte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_the_Republic_of_San_Marino"
+        },
+        "Institute of Communication Disciplines": {
+          "explanation": "Ein akademisches Institut (Istituto di Discipline della Comunicazione) innerhalb der Universität Bologna, das Anfang der 1990er Jahre mit dem Schwerpunkt Semiotik, Medien und Kommunikationstheorie gegründet wurde und an dem Eco eine führende Rolle spielte."
+        },
+        "Anthropology of the West": {
+          "explanation": "Eine von Eco geförderte interkulturelle Forschungs- und Lehrinitiative, die die westliche Kultur aus der Perspektive nichtwestlicher Wissenschaftler und der vergleichenden Anthropologie untersuchte."
+        }
+      }
+    },
+    {
+      "date": "1990",
+      "date_precision": "year",
+      "age": 58,
+      "title": "Veröffentlicht „Die Grenzen der Interpretation“",
+      "description": "Um 1990 veröffentlichte Eco „Die Grenzen der Interpretation“, eine Sammlung, in der er der Frage nachging, wie weit interpretative Freiheit gehen kann, bevor sie zur Fehlinterpretation wird. Das Werk griff in Debatten über Dekonstruktion und rezeptionsästhetische Kritik ein, plädierte für eine verantwortungsvolle Interpretation, die in textuellen und kulturellen Beschränkungen verankert ist, und wurde zu einem zentralen Bezugspunkt der Literaturtheorie des späten 20. Jahrhunderts.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/Kant_and_the_Platypus"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "novelist_and_global_public_intellectual"
+    },
+    {
+      "date": "1994",
+      "date_precision": "year",
+      "age": 62,
+      "title": "Veröffentlicht „Die Insel des vorigen Tages“",
+      "description": "Ecos dritter Roman „Die Insel des vorigen Tages“ erschien 1994 und erzählt die barocke Geschichte eines italienischen Adeligen des 17. Jahrhunderts, der nahe der internationalen Datumsgrenze strandet, während Europa darum ringt, den Längengrad zu bestimmen. Das Buch zeigte seine Faszination für die frühneuzeitliche Wissenschaft, die Metaphysik von Zeit und Raum sowie das Wechselspiel zwischen Fiktion, Dokumenten und philosophischer Spekulation.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "https://en.wikipedia.org/wiki/The_Island_of_the_Day_Before"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "novelist_and_global_public_intellectual"
+    },
+    {
+      "date": "1995",
+      "date_precision": "year",
+      "age": 63,
+      "title": "Verfasst Essay „Ur-Fascism“",
+      "description": "1995 veröffentlichte Eco den viel zitierten Essay „Ur-Fascism“ („Ewiger Faschismus“), in dem er seine Kindheitserinnerungen an Mussolinis Regime mit historischer Analyse zu vierzehn Merkmalen eines allgemeinen Faschismus verband. Der Essay warnte davor, dass faschistische Tendenzen in neuen Gestalten wieder auftreten können, wenn einige dieser Merkmale zusammenkommen, und wird seither wiederholt in Diskussionen über zeitgenössische autoritäre Bewegungen angeführt.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ur-Fascism"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "late_works_and_ongoing_engagement"
+    },
+    {
+      "date": "2004",
+      "date_precision": "year",
+      "age": 72,
+      "title": "Veröffentlicht illustrierten Roman über Erinnerung",
+      "description": "2004 veröffentlichte Eco den illustrierten Roman „Die geheimnisvolle Flamme der Königin Loana“, der von einem Antiquar handelt, der sein autobiografisches Gedächtnis verliert, sich aber an Literatur, Comics und Populärkultur erinnert. Das Buch griff stark auf die Kindheit seiner eigenen Generation unter dem Faschismus zurück und verband Bilder und Text, um zu erkunden, wie persönliches und kollektives Gedächtnis aus kulturellen Artefakten konstruiert werden.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://de.wikipedia.org/wiki/Die_geheimnisvolle_Flamme_der_K%C3%B6nigin_Loana"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Oliver_Mark_-_Umberto_Eco%2C_Milan_2011.jpg",
+          "caption": "Umberto Eco in Mailand, 2011 fotografiert, der Stadt, in der sein illustrierter Roman „Die geheimnisvolle Flamme der Königin Loana“ 2004 erstmals veröffentlicht wurde.",
+          "source": "https://commons.wikimedia.org/wiki/File:Oliver_Mark_-_Umberto_Eco,_Milan_2011.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "late_works_and_ongoing_engagement"
+    },
+    {
+      "date": "2015-01",
+      "date_precision": "month",
+      "age": 83,
+      "title": "Veröffentlicht letzten Roman „Numero Zero“",
+      "description": "Im Januar 2015 erschien Ecos siebter und letzter Roman „Numero Zero“, eine Satire auf Boulevardjournalismus und verschwörungsdurchsetzte italienische Politik, die im Jahr 1992 spielt. Erzählt von einem gescheiterten Journalisten, der für eine Zeitung engagiert wird, die niemals erscheinen soll, griff das Buch Themen wie Medienmanipulation, erfundene Geschichten und Italiens „[[Years of Lead|bleierne Jahre]]“ wieder auf und bestätigte Ecos anhaltende Beschäftigung mit der zeitgenössischen Öffentlichkeit in seinen späten Lebensjahren.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Numero_Zero"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Frankfurter_Buchmesse_2011_Umberto_Eco.jpg",
+          "caption": "Umberto Eco auf der Frankfurter Buchmesse 2011, einer internationalen Verlagsveranstaltung ähnlich denen, auf denen sein Roman „Numero Zero“ später beworben wurde.",
+          "source": "https://commons.wikimedia.org/wiki/File:Frankfurter_Buchmesse_2011_Umberto_Eco.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "late_works_and_ongoing_engagement",
+      "annotations": {
+        "Years of Lead": {
+          "explanation": "Eine Periode gesellschaftspolitischer Unruhen in Italien von den späten 1960er Jahren bis in die 1980er Jahre, geprägt von weitverbreitetem Terrorismus, politischer Gewalt und extremistischen Anschlägen sowohl links- als auch rechtsextremer Gruppen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Years_of_Lead_(Italy)"
+        }
+      }
+    },
+    {
+      "date": "2016-02-19",
+      "date_precision": "day",
+      "age": 84,
+      "title": "Tod in Mailand",
+      "description": "Umberto Eco starb am 19. Februar 2016 im Alter von 84 Jahren in Mailand, während er an der Universität Bologna den Titel eines [[Emeritus professor|emeritierten Professors]] innehatte. Sein Tod markierte das Ende einer Laufbahn, die mittelalterliche Philosophie, [[Semiotics|Semiotik]], Massenmedienkritik und international gefeierte Belletristik umfasste und ein umfangreiches Werk hinterließ, das Wissenschaftler und allgemeine Leser gleichermaßen weiterhin beeinflusst.",
+      "locations": [
+        {
+          "name_historic": "Milan",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.46
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bologna",
+          "name_modern": "Bologna, Italien",
+          "centroid": [
+            11.3426,
+            44.4949
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Umberto_Eco"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "late_works_and_ongoing_engagement",
+      "annotations": {
+        "Emeritus professor": {
+          "explanation": "Ein emeritierter Professor ist ein pensionierter Professor, der seinen Titel als Auszeichnung behält und der Universität häufig weiterhin informell verbunden bleibt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Emeritus"
+        },
+        "Semiotics": {
+          "explanation": "Semiotik ist die wissenschaftliche Untersuchung von Zeichen und Symbolen sowie der Frage, wie durch sie Bedeutung erzeugt und vermittelt wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Semiotics"
+        }
+      }
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "dd4a0a8aa5368029",
+    "translated_on": "2026-07-19T07:42:26.521845+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

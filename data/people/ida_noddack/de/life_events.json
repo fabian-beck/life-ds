@@ -1,0 +1,638 @@
+{
+  "dataset": "wikipedia_timeline_ida_noddack_phase1",
+  "created_on": "2026-02-08",
+  "person": {
+    "name": "Ida_Noddack",
+    "birth_date": "1896-02-25",
+    "death_date": "1978-09-24",
+    "primary_roles": [
+      "Chemikerin",
+      "Physikerin"
+    ],
+    "tagline": "Frühe Stimme der Kernspaltung",
+    "summary": "Deutsche Chemikerin und Physikerin, die in enger Zusammenarbeit mit Walter Noddack und Otto Berg die Entdeckung des Rheniums meldete und später öffentlich die Deutungen von mit Neutronen bombardiertem Uran infrage stellte, indem sie vorschlug, dass schwere Kerne in große Bruchstücke zerfallen könnten.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ida_Noddack",
+    "portrait": {
+      "image": "/portraits/ida_noddack_thumbnail.webp",
+      "thumbnail": "/portraits/ida_noddack_thumbnail.webp",
+      "medium": "/portraits/ida_noddack_medium.webp",
+      "full": "/portraits/ida_noddack_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Ida_Noddack",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Ida_Noddack-Tacke.png"
+    }
+  },
+  "chapters": [
+    {
+      "id": "from_varnish_to_metals",
+      "headline": "Vom Lack zu Metallen",
+      "date_start": "1896-02-25",
+      "date_start_precision": "day",
+      "date_end": "1918",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 22,
+      "involved_people": null,
+      "location": "Deutschland"
+    },
+    {
+      "id": "factory_bench_discipline",
+      "headline": "Disziplin an der Werkbank",
+      "date_start": "1918",
+      "date_start_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 25,
+      "involved_people": null,
+      "location": "Deutschland"
+    },
+    {
+      "id": "hunting_rhenium",
+      "headline": "Jagd auf Rhenium",
+      "date_start": "1922",
+      "date_start_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age_start": 26,
+      "age_end": 32,
+      "involved_people": [
+        "Walter Noddack",
+        "Otto Berg"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "fame_under_fire",
+      "headline": "Ruhm unter Beschuss",
+      "date_start": "1931",
+      "date_start_precision": "year",
+      "date_end": "1937",
+      "date_end_precision": "year",
+      "age_start": 35,
+      "age_end": 41,
+      "involved_people": [
+        "Walter Noddack",
+        "Enrico Fermi"
+      ],
+      "location": "Europa"
+    },
+    {
+      "id": "the_long_laboratory_marriage",
+      "headline": "Die lange Laborehe",
+      "date_start": "1938",
+      "date_start_precision": "year",
+      "date_end": "1960-12-07",
+      "date_end_precision": "day",
+      "age_start": 42,
+      "age_end": 64,
+      "involved_people": [
+        "Walter Noddack"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "last_quiet_years",
+      "headline": "Letzte stille Jahre",
+      "date_start": "1960-12-08",
+      "date_start_precision": "day",
+      "date_end": "1978-09-24",
+      "date_end_precision": "day",
+      "age_start": 64,
+      "age_end": 82,
+      "involved_people": null,
+      "location": "Deutschland"
+    }
+  ],
+  "conclusion": "Ida Noddack baute ihr wissenschaftliches Leben auf akribischer Analyse und intellektuellem Mut auf – und führte es von der Industriechemie über die Suche nach Elementen zu öffentlicher Anerkennung und entschlossenem Widerspruch. Als Mitentdeckerin des Rheniums und frühe Stimme, die auf die Kernspaltung hinwies, hinterließ sie ein Vermächtnis, das von sorgfältiger Beweisführung und dem Mut geprägt ist, auszusprechen, was andere noch nicht zu hören bereit waren.",
+  "events": [
+    {
+      "date": "1896-02-25",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geboren in Lackhausen (Niederrhein)",
+      "description": "Ida Tacke wurde am 25. Februar 1896 in Lackhausen in der nördlichen Rheinregion geboren. Sie wuchs in einer Familie auf, die durch die Lackfabrik ihres Vaters mit dem Kleinindustriegewerbe verbunden war, wodurch praktische Chemie und Werkstoffe zum Alltag gehörten.",
+      "locations": [
+        {
+          "name_historic": "Lackhausen",
+          "name_modern": "Wesel, Nordrhein-Westfalen, Deutschland",
+          "centroid": [
+            6.617087,
+            51.6576909
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "from_varnish_to_metals"
+    },
+    {
+      "date": "1915",
+      "date_precision": "year",
+      "age": 19,
+      "title": "Eintritt in die Technische Hochschule Charlottenburg",
+      "description": "1915 schrieb sich Noddack an der [[Technische Hochschule Charlottenburg|Technischen Hochschule Charlottenburg]] in Berlin ein. Frauen waren erst kurz zuvor zum Studium an den Berliner Hochschulen zugelassen worden, und sie wählte die Schule wegen ihres langen, anspruchsvollen Chemiestudiengangs.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/1895_technische_hochschule_charlottenburg.jpg/960px-1895_technische_hochschule_charlottenburg.jpg",
+          "caption": "Technische Universität Berlin, Berlin-Charlottenburg (1895)",
+          "source": "https://commons.wikimedia.org/wiki/File:1895_technische_hochschule_charlottenburg.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "from_varnish_to_metals",
+      "annotations": {
+        "Technische Hochschule Charlottenburg": {
+          "explanation": "Die frühere Bezeichnung der späteren Technischen Universität Berlin, einer bedeutenden deutschen Hochschule für Ingenieur- und Naturwissenschaften.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Technische_Universit%C3%A4t_Berlin"
+        }
+      }
+    },
+    {
+      "date": "1918",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Abschluss in chemischer Technik",
+      "description": "1918 schloss sie ihr Studium als Diplom-Ingenieurin für chemische und metallurgische Technik ab. Ihre Forschungsarbeit befasste sich mit höheren [[aliphatic|aliphatischen]] Fettsäureanhydriden.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "from_varnish_to_metals",
+      "annotations": {
+        "aliphatic": {
+          "explanation": "In der organischen Chemie sind aliphatische Verbindungen nichtaromatische Kohlenwasserstoffe (geradkettige, verzweigte oder nichtaromatische cyclische), eine breite Stoffklasse, zu der viele Fettsäurederivate gehören.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Aliphatic_compound"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Berlin",
+          "name": "Berlin, Germany",
+          "primary": true,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "source": "https://en.wikipedia.org/wiki/Ida_Noddack"
+        }
+      ]
+    },
+    {
+      "date": "1918",
+      "date_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "date_note": "Das Enddatum entspricht ungefähr dem Zeitraum bis zur Veröffentlichung ihrer Doktorarbeit",
+      "age": 22,
+      "title": "Arbeit im AEG-Labor",
+      "description": "1918, nach Abschluss ihres Studiums, nahm Noddack eine Stelle im chemischen Laboratorium des Turbinenwerks von [[AEG|AEG]] in Berlin an und führte in einem großen industriellen Fertigungsbetrieb analytische Arbeiten durch. Das von Peter Behrens entworfene Turbinenhallengebäude selbst war bereits weltberühmt – eine tägliche Erinnerung daran, dass Chemie zugleich anspruchsvoll und monumental sein konnte.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/AEG"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/AEG-Turbinenfabrik-2.jpg/960px-AEG-Turbinenfabrik-2.jpg",
+          "caption": "Turbinenhalle der AEG-Turbinenfabrik, Berlin-Moabit",
+          "source": "https://commons.wikimedia.org/wiki/File:AEG-Turbinenfabrik-2.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "from_varnish_to_metals",
+      "annotations": {
+        "AEG": {
+          "explanation": "Die Allgemeine Elektricitäts-Gesellschaft (AEG), ein bedeutendes deutsches Unternehmen der Elektrotechnik und Fertigung mit großen Industrieanlagen in Berlin.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/AEG"
+        }
+      }
+    },
+    {
+      "date": "1921",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Doktorarbeit veröffentlicht",
+      "description": "1921 veröffentlichte sie in Deutschland ihre Doktorarbeit, womit sie ihre universitäre Ausbildung formal abschloss und in die professionelle chemische Forschung eintrat.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "factory_bench_discipline",
+      "event_class": {
+        "type": "publication",
+        "title": "Über Anhydride höherer aliphatischer Fettesäuren",
+        "publication_type": "thesis",
+        "significance": "doctoral thesis"
+      }
+    },
+    {
+      "date": "1922",
+      "date_precision": "year",
+      "date_end": "1925",
+      "date_end_precision": "year",
+      "date_note": "Der Hauptartikel verortet die Elementsuche an der Physikalisch-Technischen Reichsanstalt in der Zeit vor der Veröffentlichung von 1925",
+      "age": 26,
+      "title": "Beginn der Elementsuche",
+      "description": "1922 schloss sie sich während ihrer Arbeit an der [[Physikalisch-Technische Reichsanstalt|Physikalisch-Technischen Reichsanstalt (PTR)]] Walter Noddack und Otto Berg bei einer koordinierten Suche nach den damals unbekannten Elementen 43 und 75 an und untersuchte Mineralproben auf Hinweise für neue Elemente.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Walter Noddack",
+        "Otto Berg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack",
+        "https://en.wikipedia.org/wiki/Otto_Berg_(scientist)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Physikalisch-Technische_Reichsanstalt.jpg/960px-Physikalisch-Technische_Reichsanstalt.jpg",
+          "caption": "Hauptgebäude der Physikalisch-Technischen Reichsanstalt",
+          "source": "https://commons.wikimedia.org/wiki/File:Physikalisch-Technische_Reichsanstalt.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "hunting_rhenium",
+      "annotations": {
+        "Physikalisch-Technische Reichsanstalt": {
+          "explanation": "Deutschlands nationales Institut für Wissenschaft und Messwesen (Metrologie), damals mit Sitz in Berlin, an dem präzise physikalische und chemische Forschung betrieben wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Physikalisch-Technische_Bundesanstalt"
+        }
+      }
+    },
+    {
+      "date": "1925",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Rhenium berichtet; „Masurium“ beansprucht",
+      "description": "1925 berichteten Noddack und ihre Mitautoren über Hinweise auf Element 75 – für das sie den Namen Rhenium vorschlugen – und beanspruchten zudem den Nachweis von Element 43, für das sie den Namen [[masurium|Masurium]] vorschlugen. Sie verteidigten ihre Methoden, während andere Chemiker infrage stellten, ob Element 43 tatsächlich nachgewiesen worden war.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Walter Noddack",
+        "Otto Berg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Walter_Noddack",
+        "https://en.wikipedia.org/wiki/Rhenium"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "hunting_rhenium",
+      "annotations": {
+        "masurium": {
+          "explanation": "Eine 1925 von den Noddacks und Otto Berg für das damals unbestätigte Element 43 (heute Technetium) vorgeschlagene Bezeichnung; der Name bezog sich auf Masuren in Ostpreußen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Masurium"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Zwei neue Elemente der Mangangruppe, Chemischer Teil",
+        "publication_type": "paper",
+        "significance": "element claim",
+        "impact": "The paper presented the group’s chemical case for two missing periodic-table elements and set off attempts to replicate and verify their results."
+      }
+    },
+    {
+      "date": "1926",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Heirat mit Walter Noddack",
+      "description": "1926 heiratete sie Walter Noddack nach mehreren Jahren enger wissenschaftlicher Zusammenarbeit, begründete einen gemeinsamen Haushalt und setzte zugleich ihre gemeinsame Forschungspartnerschaft fort.",
+      "locations": [],
+      "involved_people": [
+        "Walter Noddack"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "hunting_rhenium",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Walter Noddack",
+        "duration": "until his death",
+        "characterization": "work partnership"
+      }
+    },
+    {
+      "date": "1928",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Rheniumprobe isoliert",
+      "description": "1928 intensivierten Ida Noddack und ihre Mitarbeiter ihre Bemühungen, Rhenium durch die Verarbeitung großer Mengen [[molybdenite|Molybdänit]] zu isolieren. Durch mühevolle Trennverfahren und wiederholte Prüfungen wollten sie unter kritischer Beobachtung zeigen, dass das Element als greifbare Probe gewonnen werden konnte und nicht nur als Berechnung auf dem Papier existierte.",
+      "locations": [],
+      "involved_people": [
+        "Walter Noddack",
+        "Otto Berg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Rhenium"
+      ],
+      "event_type_icon": "mdi-test-tube",
+      "chapter": "hunting_rhenium",
+      "annotations": {
+        "molybdenite": {
+          "explanation": "Ein Molybdänsulfidmineral (MoS₂), das Spuren von Rhenium enthalten kann und daher ein wichtiges Ausgangsmaterial für die Rheniumgewinnung ist.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Molybdenite"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Berlin",
+          "name": "Berlin, Germany",
+          "primary": true,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "source": "Logical inference from PTR/Berlin work context in https://en.wikipedia.org/wiki/Walter_Noddack and timeline PTR event"
+        }
+      ]
+    },
+    {
+      "date": "1931",
+      "date_precision": "year",
+      "age": 35,
+      "title": "Liebig-Medaille erhalten",
+      "description": "1931 erhielt Ida Noddack von der [[Liebig Medal|Liebig-Medaille]] der [[German Chemical Society|Deutschen Chemischen Gesellschaft]] für ihre analytischen Beiträge zu den Rhenium- und „Masurium“-Untersuchungen eine Auszeichnung, die ihre Stellung in der deutschen Chemie bestätigte.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Liebig-Denkm%C3%BCnze.jpg/960px-Liebig-Denkm%C3%BCnze.jpg",
+          "caption": "Abbildung der Liebig-Denkmünze (Liebig-Medaille)",
+          "source": "https://commons.wikimedia.org/wiki/File:Liebig-Denkmünze.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "fame_under_fire",
+      "annotations": {
+        "Liebig Medal": {
+          "explanation": "Eine Auszeichnung der Gesellschaft Deutscher Chemiker (GDCh), benannt nach dem Chemiker Justus von Liebig, zur Würdigung herausragender Leistungen in der Chemie.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Liebig_Medal"
+        },
+        "German Chemical Society": {
+          "explanation": "Deutschlands wichtigste Fachgesellschaft für Chemikerinnen und Chemiker (heute die Gesellschaft Deutscher Chemiker, GDCh), die bedeutende nationale Auszeichnungen in der Chemie verleiht.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Gesellschaft_Deutscher_Chemiker"
+        }
+      }
+    },
+    {
+      "date": "1932",
+      "date_precision": "year",
+      "date_end": "1937",
+      "date_end_precision": "year",
+      "date_note": "Die Nominierungen erfolgten in mehreren einzelnen Jahren; sie werden hier als ein zusammenhängender Zeitraum dargestellt",
+      "age": 36,
+      "title": "Dreimal für den Nobelpreis nominiert",
+      "description": "In Deutschland wurden Ida Noddack und Walter Noddack Anfang der 1930er Jahre dreimal für den Nobelpreis für Chemie nominiert. Als die Beschäftigungsbestimmungen für verheiratete Frauen verschärft wurden – insbesondere nach 1933 im [[Nazi Germany|nationalsozialistischen Deutschland]] –, wirkte sie teilweise in der informellen Rolle einer „unbezahlten Mitarbeiterin“ weiter an ihrer Forschung mit.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Walter Noddack"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "fame_under_fire",
+      "annotations": {
+        "Nazi Germany": {
+          "explanation": "Der deutsche Staat unter nationalsozialistischer Herrschaft (1933–1945); die kurz nach 1933 eingeführten Maßnahmen schränkten zunehmend viele Gruppen, darunter verheiratete Frauen, in Teilen des öffentlichen Dienstes ein.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nazi_Germany"
+        }
+      }
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "age": 37,
+      "title": "„Das Rhenium“ veröffentlicht",
+      "description": "1933 veröffentlichten Ida Noddack und Walter Noddack ihre Monografie über Rhenium als Fortsetzung ihrer früheren Arbeiten zu diesem Element, um Chemikerinnen, Chemikern, Physikerinnen und Physikern einen einheitlichen Bezugspunkt für die entstehende Fachliteratur zu geben.",
+      "locations": [],
+      "involved_people": [
+        "Walter Noddack"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "fame_under_fire",
+      "event_class": {
+        "type": "publication",
+        "title": "Das Rhenium",
+        "publication_type": "book",
+        "significance": "reference work"
+      }
+    },
+    {
+      "date": "1934",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Kritik „Über das Element 93“ veröffentlicht",
+      "description": "1934 beschoss Enrico Fermi Uran mit Neutronen und vertrat die Auffassung, die beobachtete neue Radioaktivität sei ein Hinweis auf ein [[transuranic element|transuranes]] Element. Ida Noddack reagierte rasch in ihrer Arbeit „Über das Element 93“ und stellte die Logik dieser Schlussfolgerung infrage.\n\nIhre Kritik lautete nicht, dass Fermis Ergebnisse bloße Einbildung seien, sondern dass seine chemischen Ausschlussverfahren unvollständig waren: Sie argumentierte, es reiche nicht aus, nur die schwersten benachbarten Elemente auszuschließen, weil sich leichtere Produkte in der Chemie verbergen könnten. Dann brachte sie noch eine weitere Möglichkeit vor – kurz, beinahe kühn –, dass der Kern selbst in mehrere große Bruchstücke zerfallen und dabei Isotope bekannter Elemente statt eines neuen Elements unmittelbar jenseits des Urans entstehen könnten.\n\nHeute wird dieser Satz als früher öffentlicher Hinweis auf das gelesen, was später [[nuclear fission|Kernspaltung]] genannt wurde. Damals blieb er ohne die Art experimenteller Beweise oder theoretischer Grundlage, die ihre Fachkollegen verlangten. Die Idee wurde weithin ignoriert und verspottet; mehrere deutsche Wissenschaftler, darunter [[Otto Hahn|Otto Hahn]], wiesen sie als „lächerlich“ zurück.",
+      "locations": [],
+      "involved_people": [
+        "Enrico Fermi",
+        "Otto Hahn"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "https://en.wikipedia.org/wiki/Enrico_Fermi"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "fame_under_fire",
+      "annotations": {
+        "transuranic element": {
+          "explanation": "Ein chemisches Element mit einer Ordnungszahl größer als Uran (92). Frühe Neutronenexperimente schienen gelegentlich solche Elemente hervorzubringen, bevor die Kernspaltung verstanden wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Transuranium_element"
+        },
+        "nuclear fission": {
+          "explanation": "Eine Kernreaktion, bei der ein schwerer Atomkern in leichtere Kerne zerfällt und dabei Energie sowie zusätzliche Neutronen freisetzt; 1938–1939 formal nachgewiesen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nuclear_fission"
+        },
+        "Otto Hahn": {
+          "explanation": "Deutscher Radiochemiker; später zentral für die experimentelle Kette, die zur Etablierung der Kernspaltung führte, und einer derjenigen, die Noddacks Vorschlag von 1934 zurückwiesen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Otto_Hahn"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Über das Element 93",
+        "publication_type": "paper",
+        "publisher": "Angewandte Chemie",
+        "significance": "controversial",
+        "impact": "The paper publicly pressed for alternative chemical interpretations of neutron-irradiation products and proposed a fragmentation possibility for heavy nuclei."
+      }
+    },
+    {
+      "date": "1934",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Scheele-Medaille und Patent",
+      "description": "1934 erhielten Ida Noddack und Walter Noddack die [[Scheele Medal|Scheele-Medaille der Schwedischen Chemischen Gesellschaft]]. Im selben Jahr sicherten sie sich außerdem ein deutsches Patent im Zusammenhang mit ihren Arbeiten zu Rhenium, das ihre Laborforschung mit einem geschützten industriellen Verfahren verband.",
+      "locations": [
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Schweden",
+          "centroid": [
+            18.0710935,
+            59.3251172
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Walter Noddack"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Framsida_av_medalj_med_Karl_Vilhelm_Scheele_i_profil%2C_1827_-_Skoklosters_slott_-_99515.tif/lossy-page1-800px-Framsida_av_medalj_med_Karl_Vilhelm_Scheele_i_profil%2C_1827_-_Skoklosters_slott_-_99515.tif.jpg",
+          "caption": "Vorderseite einer Medaille mit Karl Vilhelm Scheele im Profil",
+          "source": "https://commons.wikimedia.org/wiki/File:Framsida_av_medalj_med_Karl_Vilhelm_Scheele_i_profil,_1827_-_Skoklosters_slott_-_99515.tif"
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "fame_under_fire",
+      "annotations": {
+        "Scheele Medal": {
+          "explanation": "Eine Auszeichnung der Schwedischen Chemischen Gesellschaft, benannt nach dem Chemiker Carl Wilhelm Scheele, die für bedeutende Beiträge zur Chemie verliehen wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Scheele_Award"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "Rhenium concentrate process",
+        "description": "A patented chemical process for producing a rhenium-rich concentrate from mineral sources through targeted separation and concentration steps.",
+        "impact": "It formalized a practical route to enriched rhenium material for further laboratory and industrial handling."
+      }
+    },
+    {
+      "date": "1960-12-07",
+      "date_precision": "day",
+      "age": 64,
+      "title": "Durch Walters Tod verwitwet",
+      "description": "[[Walter Noddack|Walter Noddack]] starb am 7. Dezember 1960, womit seine lange häusliche und wissenschaftliche Partnerschaft mit Ida Noddack endete.",
+      "locations": [],
+      "involved_people": [
+        "Walter Noddack"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "the_long_laboratory_marriage"
+    },
+    {
+      "date": "1978-09-24",
+      "date_precision": "day",
+      "age": 82,
+      "title": "Tod in Deutschland",
+      "description": "Ida Noddack starb am 24. September 1978 im Alter von 82 Jahren in [[Bad Neuenahr|Bad Neuenahr]] (Westdeutschland).",
+      "locations": [
+        {
+          "name_historic": "Bad Neuenahr",
+          "name_modern": "Bad Neuenahr-Ahrweiler, Deutschland",
+          "centroid": [
+            7.1186671,
+            50.5444551
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Noddack"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "last_quiet_years",
+      "annotations": {
+        "Bad Neuenahr": {
+          "explanation": "Ein Kurort (heute Teil von Bad Neuenahr-Ahrweiler) in Rheinland-Pfalz, damals in Westdeutschland, der als Noddacks Sterbeort angegeben wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bad_Neuenahr-Ahrweiler"
+        }
+      }
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "e8dc0f668b7703db",
+    "translated_on": "2026-07-19T07:41:09.100439+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

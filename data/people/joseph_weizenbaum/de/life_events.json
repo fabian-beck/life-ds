@@ -1,0 +1,651 @@
+{
+  "dataset": "global-biographies",
+  "created_on": "2025-12-05",
+  "person": {
+    "name": "Joseph_Weizenbaum",
+    "birth_date": "1923-01-08",
+    "death_date": "2008-03-05",
+    "primary_roles": [
+      "Informatiker",
+      "Professor"
+    ],
+    "summary": "Joseph Weizenbaum war ein deutsch-amerikanischer Informatiker und ein prominenter Kritiker eines unreflektierten Glaubens an Computer und künstliche Intelligenz. Nach seiner Emigration aus NS-Deutschland in die Vereinigten Staaten im Jahr 1936 studierte er Mathematik, arbeitete als Systemingenieur bei General Electric und kam 1963 ans MIT, wo er an der Entwicklung früher Listenverarbeitungssprachen mitwirkte und zum ARPANET beitrug. Sein Programm ELIZA aus den 1960er Jahren wurde zu einem Meilenstein der Verarbeitung natürlicher Sprache und veranlasste ihn, die sozialen und ethischen Implikationen der KI zu hinterfragen – Themen, die er in seinem einflussreichen Buch „Computer Power and Human Reason“ von 1976 behandelte. In seinen späteren Jahren wurde er zu einem führenden öffentlichen Intellektuellen für Technologie und Verantwortung und kehrte 1996 schließlich nach Berlin zurück, wo er bis zu seinem Tod 2008 aktiv blieb.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Joseph_Weizenbaum",
+    "portrait": {
+      "image": "/portraits/joseph_weizenbaum_thumbnail.webp",
+      "source": "https://de.wikipedia.org/wiki/Joseph_Weizenbaum",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
+      "thumbnail": "/portraits/joseph_weizenbaum_thumbnail.webp",
+      "medium": "/portraits/joseph_weizenbaum_medium.webp",
+      "full": "/portraits/joseph_weizenbaum_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "early_years_and_emigration",
+      "headline": "Frühe Jahre und erzwungene Emigration",
+      "date_start": "1923-01-08",
+      "date_start_precision": "day",
+      "date_end": "1950",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 27
+    },
+    {
+      "id": "industry_and_mit_researcher",
+      "headline": "Ingenieur in der Industrie und MIT-Forscher",
+      "date_start": "1950",
+      "date_start_precision": "year",
+      "date_end": "1980",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 57
+    },
+    {
+      "id": "public_intellectual_and_technology_critic",
+      "headline": "Öffentlicher Intellektueller und Technologiekritiker",
+      "date_start": "1980",
+      "date_start_precision": "year",
+      "date_end": "2008-03-05",
+      "date_end_precision": "day",
+      "age_start": 57,
+      "age_end": 85
+    }
+  ],
+  "events": [
+    {
+      "date": "1923-01-08",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Berlin",
+      "description": "Joseph Weizenbaum wurde am 8. Januar 1923 in Berlin als Sohn von Jechiel und Henriette Weizenbaum in eine jüdische Familie geboren. Sein Vater war Kürschnermeister, und Joseph wuchs mit Geschwistern auf, darunter sein Bruder Heinrich, der später unter dem Namen Henry F. Sherwood Informatiker wurde. Dieses städtische, bürgerliche Aufwachsen im Deutschland der Zwischenkriegszeit bildete den Hintergrund für seine späteren Erfahrungen von Verfolgung und Exil.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Jechiel Weizenbaum",
+        "Henriette Weizenbaum",
+        "Heinrich Weizenbaum",
+        "Henry F. Sherwood"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "early_years_and_emigration"
+    },
+    {
+      "date": "1936",
+      "date_precision": "year",
+      "age": 13,
+      "title": "Aus deutscher Schule verdrängt",
+      "description": "Als sich die antisemitische Politik unter dem NS-Regime verschärfte, wurde Weizenbaum Mitte der 1930er Jahre von seinem Berliner [[Realgymnasium|Realgymnasium]] verwiesen und auf eine jüdische Knabenschule geschickt. Diese Ausschlüsse vom regulären Bildungswesen prägten ihm sowohl die Fragilität der Bürgerrechte als auch die Gefahren autoritärer Systeme ein, die später seine ethischen Bedenken gegenüber mächtigen Technologien beeinflussten.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/History_of_the_Jews_in_Berlin"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_years_and_emigration",
+      "annotations": {
+        "Realgymnasium": {
+          "explanation": "Eine Art deutscher weiterführender Schule im frühen 20. Jahrhundert, die moderne Sprachen, Mathematik und Naturwissenschaften betonte und Schüler auf den Hochschulzugang vorbereitete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Realgymnasium"
+        }
+      }
+    },
+    {
+      "date": "1936",
+      "date_precision": "year",
+      "age": 13,
+      "title": "Emigration in die Vereinigten Staaten",
+      "description": "1936 floh die Familie Weizenbaum vor der zunehmenden Verfolgung in Deutschland und reiste von Bremen aus mit dem Schiff in die Vereinigten Staaten. Als jüdische Flüchtlinge in Amerika mussten Joseph sich als Jugendlicher an eine neue Sprache und Kultur anpassen – eine Erfahrung, die seine spätere Sensibilität für Fragen der Zugehörigkeit, Ausgrenzung und moralischen Verantwortung in modernen Gesellschaften prägte.",
+      "locations": [
+        {
+          "name_historic": "Bremen",
+          "name_modern": "Bremen, Deutschland",
+          "centroid": [
+            8.8071646,
+            53.0758196
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Detroit",
+          "name_modern": "Detroit, Michigan, Vereinigte Staaten",
+          "centroid": [
+            -83.0457538,
+            42.331427
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Jecheskiel Weizenbaum",
+        "Hanna Weizenbaum",
+        "Lilli Weizenbaum"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "early_years_and_emigration"
+    },
+    {
+      "date": "1941",
+      "date_precision": "year",
+      "date_end": "1942",
+      "date_end_precision": "year",
+      "age": 18,
+      "title": "Beginn des Mathematikstudiums in Detroit",
+      "description": "Um 1941 schrieb sich Weizenbaum an der [[Wayne State University|Wayne State University]] in Detroit für ein Mathematikstudium ein und begann damit seine Hochschulausbildung in seiner neuen Heimat. Seine Lehrveranstaltungen zu formalen Methoden und computerbezogener Mathematik legten die intellektuellen Grundlagen für seine spätere Arbeit in der Informatik, auch wenn der Zweite Weltkrieg sein Studium bald unterbrach.",
+      "locations": [
+        {
+          "name_historic": "Detroit",
+          "name_modern": "Detroit, Michigan, Vereinigte Staaten",
+          "centroid": [
+            -83.0458,
+            42.3314
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/Wayne_State_University"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "early_years_and_emigration",
+      "annotations": {
+        "Wayne State University": {
+          "explanation": "Eine große öffentliche Forschungsuniversität in Detroit, Michigan, die 1868 gegründet wurde und an der Weizenbaum vor der kriegsbedingten Unterbrechung sein formales Mathematikstudium begann.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Wayne_State_University"
+        }
+      }
+    },
+    {
+      "date": "1942",
+      "date_precision": "year",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "age": 19,
+      "title": "Kriegsdienst bei den U.S. Army Air Forces",
+      "description": "1942 unterbrach Weizenbaum sein Studium, um während des Zweiten Weltkriegs in der meteorologischen Abteilung der [[United States Army Air Forces|United States Army Air Forces]] zu dienen. Die Arbeit mit Wetterdaten im militärischen Kontext machte ihn mit technischen Systemen und großangelegter Informationsverarbeitung vertraut – Erfahrungen, die später mit seinen kritischen Überlegungen zum Einsatz von Wissenschaft und Technologie im Krieg zusammenfielen.",
+      "locations": [
+        {
+          "name_historic": "United States",
+          "name_modern": "Vereinigte Staaten",
+          "centroid": [
+            -100.445882,
+            39.7837304
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/United_States_Army_Air_Forces"
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "early_years_and_emigration",
+      "annotations": {
+        "United States Army Air Forces": {
+          "explanation": "Die United States Army Air Forces (USAAF) waren während des Zweiten Weltkriegs der Bereich der US-Armee für Luftkriegführung. Sie waren für die Organisation, Ausbildung und Ausrüstung amerikanischer Lufteinheiten zuständig, bevor 1947 die unabhängige U.S. Air Force gegründet wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Army_Air_Forces"
+        }
+      }
+    },
+    {
+      "date": "1946",
+      "date_precision": "year",
+      "date_end": "1950",
+      "date_end_precision": "year",
+      "age": 23,
+      "title": "Mathematikabschluss und Assistentenstelle",
+      "description": "Nach dem Krieg kehrte Weizenbaum 1946 an die Wayne State University zurück, schloss sein Studium ab und erwarb 1950 einen Masterabschluss in Mathematik. Anschließend wurde er wissenschaftlicher Assistent an der mathematischen Fakultät und wirkte an der Konzeption, dem Bau und dem Betrieb eines großen Großrechners mit. Diese frühe praktische Erfahrung mit Rechenanlagen lenkte seine Laufbahn entscheidend in Richtung Informatik.",
+      "locations": [
+        {
+          "name_historic": "Detroit",
+          "name_modern": "Detroit, Michigan, Vereinigte Staaten",
+          "centroid": [
+            -83.0458,
+            42.3314
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/Wayne_State_University"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "early_years_and_emigration"
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "date_end": "1963",
+      "date_end_precision": "year",
+      "age": 29,
+      "title": "Systemingenieur bei General Electric",
+      "description": "Von 1952 bis 1963 arbeitete Weizenbaum als Systemingenieur im Computer Development Laboratory von General Electric. Dort wirkte er an Hard- und Softwareentwürfen mit und half bei der Konzeption eines der ersten computergestützten Bankensysteme, eines frühen Beispiels für Automatisierung im Finanzsektor. Diese Erfahrung vermittelte ihm intime Kenntnisse darüber, wie große Unternehmen Rechenleistung einsetzen – eine Perspektive, die später seine Skepsis gegenüber unreflektiertem technologischem „Fortschritt“ nährte.",
+      "locations": [
+        {
+          "name_historic": "Schenectady, New York",
+          "name_modern": "Schenectady, New York, Vereinigte Staaten",
+          "centroid": [
+            -73.9396,
+            42.8142
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/Computer_Power_and_Human_Reason"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "industry_and_mit_researcher"
+    },
+    {
+      "date": "1963",
+      "date_precision": "year",
+      "age": 40,
+      "title": "Berufung an das MIT",
+      "description": "1963 wurde Weizenbaum in die Fakultät des Massachusetts Institute of Technology berufen, zunächst als Associate Professor und später, ab 1970, als Professor für Informatik. Am MIT unterrichtete er Generationen von Studierenden, betreute Forschung zu Programmiersprachen und Systemen und wurde Teil einer führenden Gemeinschaft, die die theoretische und praktische Informatik in den Vereinigten Staaten prägte.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.109733,
+            42.373616
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology_School_of_Engineering"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "industry_and_mit_researcher"
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "date_end": "1969",
+      "date_end_precision": "year",
+      "age": 41,
+      "title": "Entwicklung der Listenverarbeitungssprache SLIP",
+      "description": "Mitte der 1960er Jahre entwarf Weizenbaum am [[MIT|MIT]] das Listenverarbeitungssystem [[SLIP|SLIP]] und veröffentlichte einflussreiche Artikel über Datenstrukturen und Listenprozessoren in führenden Fachzeitschriften wie [[Communications of the ACM|Communications of the ACM]] und [[IEEE Transactions on Electronic Computers|IEEE Transactions on Electronic Computers]]. Diese Arbeit zur symbolischen Verarbeitung und zu Sprachmitteln wurde zu einer technischen Grundlage für spätere Experimente mit Programmen zur Verarbeitung natürlicher Sprache, darunter ELIZA.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.110556,
+            42.373611
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/ELIZA"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/79/ELIZA_conversation.png",
+          "caption": "Beispiel einer textbasierten Unterhaltung mit Joseph Weizenbaums ELIZA-Programm, das später auf seiner früheren Arbeit mit dem SLIP-Listenverarbeitungssystem aufbaute.",
+          "source": "https://commons.wikimedia.org/wiki/File:ELIZA_conversation.png"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "industry_and_mit_researcher",
+      "annotations": {
+        "MIT": {
+          "explanation": "Das Massachusetts Institute of Technology, eine führende Forschungsuniversität in Cambridge, Massachusetts, die für ihre Pionierarbeit in der Informatik und künstlichen Intelligenz bekannt ist.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology"
+        },
+        "SLIP": {
+          "explanation": "Eine von Joseph Weizenbaum entwickelte Listenverarbeitungssprache und ein entsprechendes System (Symmetric List Processor), die bestehende Programmiersprachen wie MAD um flexible symbolische Fähigkeiten und Listenverarbeitung erweiterte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/SLIP_(programming_language)"
+        },
+        "Communications of the ACM": {
+          "explanation": "Eine führende begutachtete Fachzeitschrift der Association for Computing Machinery, die einflussreiche Forschungs- und Übersichtsartikel in der Informatik veröffentlicht.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Communications_of_the_ACM"
+        },
+        "IEEE Transactions on Electronic Computers": {
+          "explanation": "Eine frühe begutachtete Fachzeitschrift des Institute of Electrical and Electronics Engineers, die der Forschung zum elektronischen Rechnen gewidmet war; später wurde sie durch andere IEEE-Informatikzeitschriften abgelöst.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/IEEE_Transactions_on_Electronic_Computers"
+        }
+      }
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "date_end": "1967",
+      "date_end_precision": "year",
+      "age": 41,
+      "title": "ELIZA: wegweisender Chatbot",
+      "description": "Etwa zwischen 1964 und 1967 entwickelte Weizenbaum [[ELIZA (computer program)|ELIZA]], ein frühes Programm zur Verarbeitung natürlicher Sprache, das die Kommunikation zwischen Mensch und Maschine untersuchen sollte. ELIZA lief auf den Großrechnern des MIT und verwendete Musterabgleich-Skripte wie die berühmte Routine „DOCTOR“, um einen klientenzentrierten Psychotherapeuten zu simulieren; viele Nutzer erlebten es, als sei es ein echter Gesprächspartner. Die beunruhigende Erkenntnis, dass Menschen diesem einfachen Programm intime Gefühle anvertrauten – obwohl er stets betonte, dass es über kein Verständnis verfüge –, wurde zu einem Wendepunkt in seinem Denken über künstliche Intelligenz und den „[[ELIZA effect|ELIZA-Effekt]]“.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.1056,
+            42.3736
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/ELIZA",
+        "https://en.wikipedia.org/wiki/Computer_Power_and_Human_Reason"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Computer_Power_and_Human_Reason_by_Joseph_Weizenbaum.jpg",
+          "caption": "Umschlag von Joseph Weizenbaums Buch „Computer Power and Human Reason“ aus dem Jahr 1976, in dem er später über die Implikationen seines ELIZA-Programms und die menschlichen Reaktionen darauf nachdachte.",
+          "source": "https://commons.wikimedia.org/wiki/File:Computer_Power_and_Human_Reason_by_Joseph_Weizenbaum.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "industry_and_mit_researcher",
+      "annotations": {
+        "ELIZA (computer program)": {
+          "explanation": "ELIZA ist eines der frühesten Computerprogramme zur Verarbeitung natürlicher Sprache. Es wurde von Joseph Weizenbaum am MIT zwischen 1964 und 1967 entwickelt, um durch Musterabgleich Gespräche zu simulieren.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ELIZA"
+        },
+        "ELIZA effect": {
+          "explanation": "Der ELIZA-Effekt bezeichnet die Neigung von Menschen, Computerprogrammen, die lediglich Symbole ohne echtes Verständnis verarbeiten, unbewusst Verstehen oder menschenähnliche Eigenschaften zuzuschreiben.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ELIZA_effect"
+        }
+      }
+    },
+    {
+      "date": "1965",
+      "date_precision": "year",
+      "date_end": "1969",
+      "date_end_precision": "year",
+      "age": 42,
+      "title": "Beitrag zur ARPANET-Entwicklung",
+      "description": "In der zweiten Hälfte der 1960er Jahre beteiligte sich Weizenbaum an frühen Arbeiten zum [[ARPANET|ARPANET]], dem vom US-Verteidigungsministerium finanzierten Netzwerk, das zu einem unmittelbaren Vorläufer des Internets wurde. Am [[MIT|MIT]] arbeitete er mit anderen Forschern an der Integration von [[time‑sharing|Time-Sharing]]-Systemen und Netzwerkprotokollen und erhielt so einen Logenplatz bei der Beobachtung, wie vernetzte Computer die Kommunikation verändern würden – Einsichten, die seine späteren Warnungen vor den gesellschaftlichen Folgen allgegenwärtiger Computernetzwerke bestärkten.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.109733,
+            42.3736158
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/ARPANET",
+        "https://en.wikipedia.org/wiki/Time-sharing"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Home_of_the_Brain_%281989-91%29._Virtual_Reality_Installation_by_Monika_Fleischmann_and_Wolfgang_Strauss.jpg",
+          "caption": "Die Virtual-Reality-Installation „Home of the Brain“ (1989–91), in der Joseph Weizenbaum später unter bedeutenden Denkern des digitalen Zeitalters erschien und die seine dauerhafte Verbindung zu Reflexionen über Computernetzwerke und Medientheorie veranschaulicht.",
+          "source": "https://commons.wikimedia.org/wiki/File:Home_of_the_Brain_(1989-91)._Virtual_Reality_Installation_by_Monika_Fleischmann_and_Wolfgang_Strauss.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "industry_and_mit_researcher",
+      "annotations": {
+        "ARPANET": {
+          "explanation": "Ein wegweisendes, vom US-Verteidigungsministerium finanziertes paketvermittelndes Computernetzwerk, das 1969 gestartet wurde und die technische sowie organisatorische Grundlage für das spätere globale Internet bildete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ARPANET"
+        },
+        "MIT": {
+          "explanation": "Das Massachusetts Institute of Technology, eine führende Forschungsuniversität in Cambridge, Massachusetts, die besonders einflussreich für die frühe Entwicklung der Informatik und Vernetzung war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology"
+        },
+        "time‑sharing": {
+          "explanation": "Eine Betriebsart großer Computer, bei der mehrere Nutzer durch die schnelle Aufteilung der Rechenzeit gleichzeitig mit dem System interagieren können; sie war grundlegend für frühe interaktive und vernetzte Computersysteme.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Time-sharing"
+        }
+      }
+    },
+    {
+      "date": "1965",
+      "date_precision": "year",
+      "date_end": "1975",
+      "date_end_precision": "year",
+      "age": 42,
+      "title": "Ablehnung der Waffenforschung im Vietnamkrieg",
+      "description": "Während seiner Zeit am MIT im Zeitalter des Vietnamkriegs weigerte sich Weizenbaum konsequent, an der Entwicklung von Waffen und militärischen Systemen mitzuwirken, obwohl solche Projekte dem Institut erhebliche Mittel einbrachten. Stattdessen nutzte er seine Position, um Studierende und Kollegen über die ethischen Dimensionen der Informatikarbeit aufzuklären, sprach sich öffentlich gegen den Krieg aus und nahm an Demonstrationen teil. Damit richtete er seine beruflichen Entscheidungen an einer umfassenderen moralischen Kritik an der Militarisierung von Wissenschaft und Technologie aus.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.109733,
+            42.3736158
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/ELIZA"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
+          "caption": "Joseph Weizenbaum, Professor für Informatik am MIT, später in seinem Leben in Berlin; in den 1960er Jahren war er am MIT, als er die Beteiligung an waffenbezogener Forschung ablehnte.",
+          "source": "https://commons.wikimedia.org/wiki/File:Joseph_Weizenbaum.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "industry_and_mit_researcher"
+    },
+    {
+      "date": "1972",
+      "date_precision": "year",
+      "age": 49,
+      "title": "Formulierung des Weizenbaum-Tests",
+      "description": "Um 1972 formulierte Weizenbaum eine Reihe von Fragen zum gesellschaftlichen Wert und zur moralischen Vertretbarkeit von Anwendungen künstlicher Intelligenz, die später als „Weizenbaum-Test“ bezeichnet wurden. Er argumentierte, Computersysteme sollten nicht allein deshalb eingesetzt werden, weil sie technisch machbar seien, sondern im Hinblick auf ihre Auswirkungen auf Menschenwürde, Verantwortung und soziale Strukturen geprüft werden – eine Haltung, die spätere Debatten über KI-Ethik vorwegnahm.",
+      "locations": [
+        {
+          "name_historic": "Cambridge, Massachusetts",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.109733,
+            42.3736158
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computer_Power_and_Human_Reason",
+        "https://en.wikipedia.org/wiki/ELIZA"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Hans_Uszkoreit%2C_Joseph_Weizenbaum_%28238430262%29.jpg",
+          "caption": "Joseph Weizenbaum (rechts) im Gespräch mit dem Computerlinguisten Hans Uszkoreit bei einer Veranstaltung über Sprache und künstliche Intelligenz.",
+          "source": "https://commons.wikimedia.org/wiki/File:Hans_Uszkoreit,_Joseph_Weizenbaum_(238430262).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "public_intellectual_and_technology_critic"
+    },
+    {
+      "date": "1976",
+      "date_precision": "year",
+      "age": 53,
+      "title": "Veröffentlichung von „Computer Power and Human Reason“",
+      "description": "1976 veröffentlichte Weizenbaum sein einflussreichstes Buch „Computer Power and Human Reason: From Judgment to Calculation“. Ausgehend von seinen Erfahrungen mit [[ELIZA|ELIZA]] und kritischen Überlegungen zur KI-Forschung vertrat er die Ansicht, dass selbst hochleistungsfähigen Computern wesentliche menschliche Eigenschaften wie Weisheit und Empathie fehlten und ihnen daher niemals Entscheidungen anvertraut werden sollten, die moralisches Urteilsvermögen erfordern. Das Buch löste in der Gemeinschaft der künstlichen Intelligenz intensive Debatten aus und etablierte ihn als führenden Kritiker technologischer Hybris.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.109733,
+            42.3736158
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Computer_Power_and_Human_Reason",
+        "https://en.wikipedia.org/wiki/ELIZA"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "public_intellectual_and_technology_critic",
+      "annotations": {
+        "ELIZA": {
+          "explanation": "ELIZA ist ein frühes Computerprogramm zur Verarbeitung natürlicher Sprache, das Joseph Weizenbaum in den 1960er Jahren entwickelte und das Gespräche mit Nutzern simulierte. Später wurde es zu einem zentralen Fallbeispiel in Debatten darüber, ob Computer Sprache wirklich „verstehen“ können.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ELIZA"
+        }
+      }
+    },
+    {
+      "date": "1996",
+      "date_precision": "year",
+      "age": 73,
+      "title": "Rückkehr nach Berlin",
+      "description": "1996 zog Weizenbaum nach Jahrzehnten in den Vereinigten Staaten zurück nach Berlin und ließ sich im Stadtteil Mitte nieder, nahe bei einer seiner Töchter und unweit des früheren Wohnhauses seiner Familie. Von dort aus führte er ein aktives öffentliches Leben, arbeitete mit deutschen und europäischen Informatikern zusammen, hielt Gastvorträge – etwa an der Universität Bremen – und wirkte in Beratungsgremien mit, während er zugleich Zeugnis ablegte von der Stadt, die ihn vor dem Krieg als jüdisches Kind vertrieben hatte.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bremen",
+          "name_modern": "Bremen, Deutschland",
+          "centroid": [
+            8.807,
+            53.0793
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum"
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "public_intellectual_and_technology_critic"
+    },
+    {
+      "date": "2001",
+      "date_precision": "year",
+      "age": 78,
+      "title": "Großes Bundesverdienstkreuz",
+      "description": "2001 wurde Weizenbaum das [[Federal Cross of Merit|Große Bundesverdienstkreuz]] des [[Order of Merit of the Federal Republic of Germany|Verdienstordens der Bundesrepublik Deutschland]] verliehen. Die Auszeichnung würdigte sowohl seine wegweisenden Beiträge zur Informatik als auch sein beharrliches Eintreten für einen kritischen, humanen Umgang mit Technologie und markierte eine symbolische Versöhnung zwischen dem deutschen Staat und einem ehemaligen jüdischen Flüchtling, der zu einem seiner prominentesten Intellektuellen geworden war.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/Order_of_Merit_of_the_Federal_Republic_of_Germany"
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "public_intellectual_and_technology_critic",
+      "annotations": {
+        "Federal Cross of Merit": {
+          "explanation": "Gebräuchliche englische Bezeichnung für Deutschlands nationale Verdienst-Auszeichnung, die formal zum Verdienstorden der Bundesrepublik Deutschland gehört und für herausragende Verdienste um die Nation im politischen, wirtschaftlichen, sozialen oder geistigen Leben verliehen wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Order_of_Merit_of_the_Federal_Republic_of_Germany"
+        },
+        "Order of Merit of the Federal Republic of Germany": {
+          "explanation": "Deutschlands einziger allgemeiner Bundesverdienstorden, der 1951 gestiftet wurde und in mehreren Stufen verliehen wird, darunter das hochrangige Große Bundesverdienstkreuz.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Order_of_Merit_of_the_Federal_Republic_of_Germany"
+        }
+      }
+    },
+    {
+      "date": "2008-03-05",
+      "date_precision": "day",
+      "age": 85,
+      "title": "Tod und Beisetzung in Berlin",
+      "description": "Joseph Weizenbaum starb am 5. März 2008 im Alter von 85 Jahren in Berlin, nachdem er einen Schlaganfall erlitten hatte und 2007 zuvor Krebs diagnostiziert worden war. Er wurde auf dem Jüdischen Friedhof Berlin-Weißensee beigesetzt. Mit seinem Tod endete ein Leben, das Exil, den Aufstieg des digitalen Rechnens und das Entstehen künstlicher Intelligenz umspannt hatte und ein bleibendes Vermächtnis technischer Innovation, verbunden mit kompromissloser ethischer Kritik, hinterließ.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Weißensee",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.466,
+            52.553
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "https://en.wikipedia.org/wiki/Jewish_Cemetery,_Berlin-Weissensee"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "public_intellectual_and_technology_critic"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "66473e780ac0d2a4",
+    "translated_on": "2026-07-19T07:44:26.555799+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

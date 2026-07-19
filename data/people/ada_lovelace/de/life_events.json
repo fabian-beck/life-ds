@@ -1,0 +1,691 @@
+{
+  "dataset": "wikipedia-biography-timeline",
+  "created_on": "2025-12-09",
+  "person": {
+    "name": "Ada_Lovelace",
+    "birth_date": "1815-12-10",
+    "death_date": "1852-11-27",
+    "primary_roles": [
+      "Mathematikerin",
+      "Schriftstellerin",
+      "Informatikerin"
+    ],
+    "tagline": "Visionäre Pionierin der Informatik",
+    "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) war eine englische Mathematikerin und Schriftstellerin, die vor allem für ihre Arbeit an Charles Babbages vorgeschlagener Analytical Engine bekannt ist. Von ihrer Mutter intensiv in Mathematik und Naturwissenschaften ausgebildet, um der vermeintlichen „poetischen Verrücktheit“ ihres Vaters Lord Byron entgegenzuwirken, verband sie strenge Analyse mit einer fantasievollen, philosophischen Perspektive, die sie „poetische Wissenschaft“ nannte. 1842–1843 übersetzte sie Luigi Menabreas Artikel über die Analytical Engine und fügte umfangreiche Anmerkungen hinzu, die einen detaillierten Algorithmus zur Berechnung von Bernoulli-Zahlen und eine weitreichende Vision von Maschinen enthielten, die Symbole manipulieren, um Musik, Grafiken und mehr zu schaffen. Obwohl sie häufig krank war und durch die viktorianische Gesellschaft eingeschränkt wurde, pflegte sie ein aktives Netzwerk mit führenden Wissenschaftlern und versuchte, Mathematik sogar auf das Glücksspiel anzuwenden, bevor sie mit 36 Jahren an Gebärmutterkrebs starb.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+    "portrait": {
+      "image": "/portraits/ada_lovelace_thumbnail.webp",
+      "source": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
+      "thumbnail": "/portraits/ada_lovelace_thumbnail.webp",
+      "medium": "/portraits/ada_lovelace_medium.webp",
+      "full": "/portraits/ada_lovelace_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "byron_legacy_and_formative_years",
+      "headline": "Byrons Erbe und Jugendjahre",
+      "date_start": "1815-12-10",
+      "date_start_precision": "day",
+      "date_end": "1832",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 17,
+      "involved_people": [
+        "Lord Byron",
+        "Anne Isabella Milbanke (Lady Byron)",
+        "Lady Byron"
+      ],
+      "location": "England"
+    },
+    {
+      "id": "society_marriage_and_motherhood",
+      "headline": "Ehe, Gesellschaft, Mutterschaft",
+      "date_start": "1833-06-05",
+      "date_start_precision": "day",
+      "date_end": "1839-12",
+      "date_end_precision": "month",
+      "age_start": 17,
+      "age_end": 23,
+      "involved_people": [
+        "Charles Babbage",
+        "Lady Byron",
+        "Mary Somerville",
+        "William King-Noel, 1. Earl of Lovelace",
+        "Byron King-Noel, Viscount Ockham",
+        "Anne Isabella Noel Blunt, 15. Baroness Wentworth",
+        "Ralph Gordon King-Noel, 2. Earl of Lovelace"
+      ],
+      "location": "Vereinigtes Königreich"
+    },
+    {
+      "id": "intellectual_maturity_and_analytical_engine",
+      "headline": "Reife am Analytical Engine",
+      "date_start": "1840",
+      "date_start_precision": "year",
+      "date_end": "1844",
+      "date_end_precision": "year",
+      "age_start": 24,
+      "age_end": 29,
+      "involved_people": [
+        "Augustus De Morgan",
+        "Charles Babbage",
+        "Lady Byron",
+        "Mary Somerville",
+        "Charles Wheatstone",
+        "Luigi Federico Menabrea"
+      ],
+      "location": "Westeuropa"
+    },
+    {
+      "id": "risk_passion_and_applied_calculation",
+      "headline": "Risikofreude und Berechnung",
+      "date_start": "1845",
+      "date_start_precision": "year",
+      "date_end": "1852-11-27",
+      "date_end_precision": "day",
+      "age_start": 29,
+      "age_end": 36,
+      "involved_people": [
+        "William King-Noel, 1. Earl of Lovelace",
+        "Lady Byron",
+        "Lord Byron"
+      ],
+      "location": "England"
+    }
+  ],
+  "events": [
+    {
+      "date": "1815-12-10",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in die Familie Byron",
+      "description": "Ada Lovelace wurde am 10. Dezember 1815 als Augusta Ada Byron geboren, als einziges eheliches Kind des Dichters Lord Byron und seiner Frau Anne Isabella Milbanke (Lady Byron). Ihre Geburt erfüllte Byrons Hoffnung auf einen „glorreichen Jungen“ nur teilweise, und seine Enttäuschung über eine Tochter prägte sein kurzes Eheleben. Von Anfang an war Adas Dasein mit literarischem Ruhm und Skandal verknüpft, wodurch sie an der Schnittstelle aristokratischer Privilegien und intensiver öffentlicher Beobachtung stand.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Lord Byron",
+        "Anne Isabella Milbanke (Lady Byron)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lord_Byron",
+        "https://en.wikipedia.org/wiki/Lady_Byron",
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Ada_Lovelace_child_portrait_Somerville_College.jpg",
+          "caption": "Kindheitsporträt von Ada Byron, der späteren Ada Lovelace",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_child_portrait_Somerville_College.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "byron_legacy_and_formative_years",
+      "annotations": {
+        "Lord Byron": {
+          "explanation": "Der berühmte romantische Dichter George Gordon Byron, Adas Vater.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Lord_Byron"
+        }
+      }
+    },
+    {
+      "date": "1816-01-16",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Trennung der Eltern und strenge Erziehung",
+      "description": "Als Ada fünf Wochen alt war, verließ Lady Byron Lord Byron und brachte das Kind zu ihren Eltern; damit begann eine erbitterte Trennung, die Byron bald lebenslang aus England vertrieb. Das englische Recht begünstigte weiterhin Väter, doch Byron entschied sich dagegen, das Sorgerecht zu beanspruchen, und Ada wuchs auf, ohne ihn zu kennen. Aus Sorge, ihre Tochter könne Byrons vermeintliche Unbeständigkeit erben, überwachte Lady Byron eine strenge Ausbildung in Mathematik, Logik und diszipliniertem Lernen, die Adas intellektuellen Werdegang prägte.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Lady Byron",
+        "Lord Byron"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lady_Byron",
+        "https://en.wikipedia.org/wiki/Lord_Byron"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Ada_Lovelace_blue_plaque%2C_Mallory_Park_01.jpg",
+          "caption": "Kirkby Hall, Mallory Park, Ada Lovelaces Elternhaus",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_blue_plaque,_Mallory_Park_01.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "byron_legacy_and_formative_years"
+    },
+    {
+      "date": "1824-04-19",
+      "date_precision": "day",
+      "age": 8,
+      "title": "Tod Lord Byrons",
+      "description": "Im April 1824 starb Lord Byron in Griechenland, als er den griechischen Unabhängigkeitskrieg unterstützte; Ada war damals acht Jahre alt. Seit ihrer frühen Kindheit hatte sie ihn nie getroffen und sein Porträt wurde ihr erst an ihrem zwanzigsten Geburtstag gezeigt, doch sein Ruhm und der Skandal um sein Privatleben überschatteten ihre Kindheit. Sein Tod verankerte ihn in ihrer Vorstellung als ferne, romantische Gestalt; später würde sie ihre Söhne Byron und Gordon nennen und darum bitten, neben ihm bestattet zu werden.",
+      "locations": [
+        {
+          "name_historic": "Missolonghi",
+          "name_modern": "Mesolongi, Griechenland",
+          "centroid": [
+            21.4294,
+            38.3714
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Lord Byron"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lord_Byron"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Byron_1813_by_Phillips.jpg",
+          "caption": "Porträt von Lord Byron, britischer Dichter (1788–1824)",
+          "source": "https://commons.wikimedia.org/wiki/File:Byron_1813_by_Phillips.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "byron_legacy_and_formative_years",
+      "annotations": {
+        "Greek_War_of_Independence": {
+          "explanation": "Ein Krieg (1821–1830), in dem griechische Revolutionäre für die Unabhängigkeit vom Osmanischen Reich kämpften.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Greek_War_of_Independence"
+        }
+      }
+    },
+    {
+      "date": "1828-02",
+      "date_precision": "month",
+      "date_note": "Monat ungefähr, basierend auf ihrer Beschreibung, das Projekt im Februar 1828 im Alter von zwölf Jahren begonnen zu haben",
+      "age": 12,
+      "title": "„Flyology“ und der Traum vom Fliegen",
+      "description": "Mit etwa zwölf Jahren begann Ada ein aufwendiges Projekt, um fliegen zu lernen, das sie scherzhaft „Flyology“ nannte. Sie studierte die Anatomie von Vögeln, experimentierte mit Materialien wie Papier, Öltuch, Draht und Federn, um Flügel zu entwerfen, und plante Ausrüstung wie einen Kompass zur Navigation über Land. Das Projekt offenbarte eine methodische, ingenieurwissenschaftliche Denkweise – die Beobachtung, Berechnung und Vorstellungskraft verband –, welche ihren späteren Umgang mit Maschinen vorwegnahm.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lady_Byron"
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "byron_legacy_and_formative_years"
+    },
+    {
+      "date": "1829-06",
+      "date_precision": "month",
+      "date_end": "1831",
+      "date_end_precision": "year",
+      "date_note": "Das Anfangsdatum bezieht sich auf ihre Masererkrankung im Juni 1829; das Enddatum markiert ihre berichtete Fähigkeit, bis 1831 mit Krücken zu gehen",
+      "age": 13,
+      "title": "Schwere Krankheit und lange Genesung",
+      "description": "Im Juni 1829 erkrankte Ada an Masern und blieb zeitweise gelähmt; fast ein Jahr lang war sie ans Bett gefesselt und konnte 1831 nur mithilfe von Krücken gehen. Chronische Kopfschmerzen und andere Leiden quälten sie seit ihrer Kindheit, doch während ihrer gesamten Genesungszeit verfolgte sie Studien in Mathematik und den aufkommenden Technologien ihrer Zeit. Diese Zeit erzwungener Untätigkeit vertiefte ihr Engagement für intellektuelle Arbeit als wichtigstes Ventil.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Lady Byron"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lady_Byron",
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "byron_legacy_and_formative_years"
+    },
+    {
+      "date": "1833-06-05",
+      "date_precision": "day",
+      "age": 17,
+      "title": "Erste Begegnung mit Charles Babbage",
+      "description": "Am 5. Juni 1833 besuchten Ada und ihre Mutter eine von Charles Babbages berühmten Samstagabend-[[scientific soirée|Soiréen]], zu der ihre Freundin und Adas Lehrerin Mary Somerville sie eingeführt hatte. Dort führte Babbage einen kleinen Teil seiner Differenzmaschine vor und begeisterte die mathematisch begabte Jugendliche. Diese Begegnung begründete eine langjährige intellektuelle Freundschaft zwischen Ada und Babbage und verschaffte ihr den ersten unmittelbaren Einblick in die Idee programmierbarer Rechenmaschinen.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Charles Babbage",
+        "Lady Byron",
+        "Mary Somerville"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es",
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Mary_Somerville"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Charles-babbage.jpg",
+          "caption": "Porträt von Charles Babbage, Pionier der Rechentechnik",
+          "source": "https://commons.wikimedia.org/wiki/File:Charles-babbage.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "society_marriage_and_motherhood",
+      "annotations": {
+        "scientific soirée": {
+          "explanation": "Eine halbformelle gesellschaftliche Zusammenkunft in elitären Kreisen des 19. Jahrhunderts, bei der Gäste wissenschaftliche Vorführungen besprachen und beobachteten und die Salonkunst mit der aufkommenden wissenschaftlichen Praxis verband.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
+        }
+      }
+    },
+    {
+      "date": "1835-07-08",
+      "date_precision": "day",
+      "age": 19,
+      "title": "Heirat mit William King",
+      "description": "Am 8. Juli 1835 heiratete Ada William, den [[Baron King|8. Baron King]], wurde Lady King und trat in die höheren Ränge der britischen Aristokratie ein. Das Paar teilte seine Zeit zwischen Landsitzen in Surrey und Schottland sowie einem Haus in London auf, und Ada gewann die gesellschaftliche Stellung, die ihr später half, sich in wissenschaftlichen und literarischen Kreisen zu bewegen. Trotz Phasen schlechter Gesundheit nach Geburten suchte sie innerhalb der Grenzen ihrer neuen häuslichen Rolle weiterhin nach fortgeschrittenem Mathematikunterricht.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1277653,
+            51.5074456
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Surrey",
+          "name_modern": "Surrey, Vereinigtes Königreich",
+          "centroid": [
+            -0.3414524,
+            51.2715316
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Scotland",
+          "name_modern": "Schottland, Vereinigtes Königreich",
+          "centroid": [
+            -4.1140518,
+            56.7861112
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "William King-Noel, 1. Earl of Lovelace"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Ada_Countess_of_Lovelace_computer_pioneer_1815-1852_green_plaque_-_5_Station_Parade_Uxbridge_Road_Ealing_W5_3LD.jpg",
+          "caption": "Grüne Gedenktafel zur Hochzeit Ada Lovelaces im Jahr 1835",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Countess_of_Lovelace_computer_pioneer_1815-1852_green_plaque_-_5_Station_Parade_Uxbridge_Road_Ealing_W5_3LD.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "society_marriage_and_motherhood",
+      "annotations": {
+        "Baron King": {
+          "explanation": "Ein erblicher Titel in der Peerage of Great Britain, den William King innehatte, bevor er später zum Earl of Lovelace ernannt wurde; als 8. Baron King saß er im House of Lords und gehörte zur Grundbesitzaristokratie.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Baron_King"
+        }
+      }
+    },
+    {
+      "date": "1836-01",
+      "date_precision": "month",
+      "date_end": "1839",
+      "date_end_precision": "year",
+      "date_note": "Umfasst die Geburten ihrer drei Kinder zwischen 1836 und 1839",
+      "age": 20,
+      "title": "Mutterschaft und fortgesetzte Studien",
+      "description": "Zwischen 1836 und 1839 brachte Ada drei Kinder zur Welt – Byron, Anne (Lady Anne Blunt) und Ralph Gordon –, während sie unter schweren Krankheitsphasen litt, darunter eine langwierige Genesung nach der Geburt ihrer Tochter. Selbst inmitten von Schwangerschaften und Umzügen zwischen Familiensitzen setzte sie ihre mathematische Lektüre und Korrespondenz fort und hielt Verbindungen zu Persönlichkeiten wie Mary Somerville aufrecht. Das Ausbalancieren aristokratischer Pflichten, der Mutterschaft und privater Studien schärfte ihr Bewusstsein für die gesellschaftlichen Grenzen, die der wissenschaftlichen Arbeit von Frauen gesetzt waren.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Ockham",
+          "name_modern": "Ockham, Surrey, Vereinigtes Königreich",
+          "centroid": [
+            -0.418,
+            51.278
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "East Horsley",
+          "name_modern": "East Horsley, Surrey, Vereinigtes Königreich",
+          "centroid": [
+            -0.431,
+            51.28
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "William King-Noel, 1. Earl of Lovelace",
+        "Byron King-Noel, Viscount Ockham",
+        "Anne Isabella Noel Blunt, 15. Baroness Wentworth",
+        "Ralph Gordon King-Noel, 2. Earl of Lovelace",
+        "Mary Somerville"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Anne_Blunt,_15th_Baroness_Wentworth",
+        "https://en.wikipedia.org/wiki/Mary_Somerville"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "society_marriage_and_motherhood",
+      "annotations": {
+        "Anne_Blunt": {
+          "explanation": "Adas Tochter Anne Isabella, später Anne Isabella Noel Blunt, 15. Baroness Wentworth, bekannt für ihre Zucht arabischer Pferde und ihre Reisen im Nahen Osten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Anne_Blunt,_15th_Baroness_Wentworth"
+        }
+      }
+    },
+    {
+      "date": "1838",
+      "date_precision": "year",
+      "date_note": "Jahr, in dem ihr Ehemann zum Earl of Lovelace ernannt wurde und Ada zur Countess wurde",
+      "age": 22,
+      "title": "Zur Countess of Lovelace erhoben",
+      "description": "1838 wurde [[William King-Noel, 1st Earl of Lovelace|William King]] zum Viscount Ockham und 1. Earl of Lovelace erhoben; die Titel wurden teilweise gewählt, um Adas Abstammung von den erloschenen Baronen Lovelace widerzuspiegeln. Ada wurde dadurch zur Countess of Lovelace und erhielt den Namen, unter dem sie heute am besten bekannt ist. Der Status festigte ihre Position an der Schnittstelle von Hofleben und wissenschaftlicher Gesellschaft und verschaffte ihr größeren Zugang zu führenden Denkern, die sie befragen konnte und von denen sie lernen konnte.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "William King-Noel, 1. Earl of Lovelace"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace",
+        "https://en.wikipedia.org/wiki/Ralph_King-Milbanke,_2nd_Earl_of_Lovelace"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Ockham_Park_1850.jpg",
+          "caption": "Ockham Park, Sitz von William King-Noel und Ada",
+          "source": "https://commons.wikimedia.org/wiki/File:Ockham_Park_1850.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-seal",
+      "chapter": "society_marriage_and_motherhood",
+      "annotations": {
+        "William King-Noel, 1st Earl of Lovelace": {
+          "explanation": "William King-Noel, 1. Earl of Lovelace, war ein britischer Peer und Wissenschaftler, der 1838 zum Viscount Ockham und 1. Earl of Lovelace ernannt wurde und seiner Frau Ada dadurch den Höflichkeitstitel Countess of Lovelace verlieh.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
+        }
+      }
+    },
+    {
+      "date": "1840",
+      "date_precision": "year",
+      "date_note": "Jahr, in dem sie bei Augustus De Morgan und anderen ein ernsthaftes fortgeschrittenes Studium begann",
+      "age": 24,
+      "title": "Fortgeschrittene mathematische Ausbildung",
+      "description": "Um 1840 nahm Ada ein systematisches fortgeschrittenes Mathematikstudium auf und arbeitete sich unter Anleitung des bedeutenden Logikers Augustus De Morgan durch [[calculus|Infinitesimalrechnung]] und [[higher analysis|höhere Analysis]]. Sie befasste sich mit Themen wie Funktionalgleichungen und abstraktem algebraischem Denken, die damals hochmodern waren. Diese Ausbildung gab ihr die technische Grundlage, Charles Babbages Entwürfe für die Analytical Engine nicht nur begeistert nachzuvollziehen, sondern auch fundiert zu kritisieren und weiterzuentwickeln.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Augustus De Morgan",
+        "Charles Babbage",
+        "Lady Byron",
+        "Mary Somerville"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Augustus_De_Morgan",
+        "https://en.wikipedia.org/wiki/Lady_Byron"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "intellectual_maturity_and_analytical_engine",
+      "annotations": {
+        "calculus": {
+          "explanation": "Ein Teilgebiet der Mathematik, das stetige Veränderungen untersucht und Begriffe wie Grenzwerte, Ableitungen und Integrale verwendet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Calculus"
+        },
+        "higher analysis": {
+          "explanation": "Ein Begriff des 19. Jahrhunderts für fortgeschrittene mathematische Analysis über die elementare Infinitesimalrechnung hinaus, einschließlich Themen wie unendlichen Reihen und komplexen Funktionen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Mathematical_analysis"
+        }
+      }
+    },
+    {
+      "date": "1842-09",
+      "date_precision": "month",
+      "date_note": "Ungefähres Datum im Jahr 1842, als sie gebeten wurde, Menabreas Aufsatz über die Analytical Engine zu übersetzen",
+      "age": 26,
+      "title": "Übersetzung von Menabrea begonnen",
+      "description": "1842 bat Charles Wheatstone Ada, aus dem Französischen einen Artikel des italienischen Ingenieurs Luigi Federico Menabrea zu übersetzen, der Babbages [[Analytical Engine|Analytical Engine]] beschrieb. Sie stimmte unter der Bedingung zu, dass sie eigene umfangreiche Anmerkungen hinzufügen dürfe, wobei sie auf jahrelange Korrespondenz und Gespräche mit Babbage über dessen sich entwickelnde Entwürfe zurückgriff. Das Projekt bot ihr als Frau eine seltene Gelegenheit, unter ihrem eigenen Namen ernsthafte technische Arbeit in einer angesehenen wissenschaftlichen Publikation zu veröffentlichen.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Turin",
+          "name_modern": "Turin, Italien",
+          "centroid": [
+            7.6869,
+            45.0703
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Charles Wheatstone",
+        "Luigi Federico Menabrea",
+        "Charles Babbage"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea",
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "intellectual_maturity_and_analytical_engine",
+      "annotations": {
+        "Analytical Engine": {
+          "explanation": "Ein vorgeschlagener mechanischer Universalcomputer des 19. Jahrhunderts, der von Charles Babbage entworfen wurde und über ein gespeichertes Programm sowie viele Kernelemente moderner Computerarchitektur verfügte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Engine"
+        }
+      }
+    },
+    {
+      "date": "1843-08",
+      "date_precision": "month",
+      "date_note": "Monat ungefähr; ihre Übersetzung und Anmerkungen erschienen 1843 in Taylor’s Scientific Memoirs",
+      "age": 27,
+      "title": "Anmerkungen zur Analytical Engine veröffentlicht",
+      "description": "1843 erschien Adas englische Übersetzung von [[Sketch of the Analytical Engine Invented by Charles Babbage, Esq.|Menabreas Artikel]], begleitet von ihren eigenen Anmerkungen, die dreimal so lang waren wie der Originaltext, in Taylor’s Scientific Memoirs. In Anmerkung G skizzierte sie ein detailliertes Verfahren, mit dem die Maschine [[Bernoulli numbers|Bernoulli-Zahlen]] berechnen sollte, das häufig als erstes veröffentlichtes Computerprogramm bezeichnet wird. Noch radikaler argumentierte sie, die Maschine könne Symbole nach Regeln manipulieren und somit Musik komponieren oder Grafiken erzeugen; damit nahm sie moderne Vorstellungen vom Universalrechner und von der Zusammenarbeit zwischen Mensch und Technologie vorweg.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Luigi Federico Menabrea",
+        "Charles Babbage"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea",
+        "https://en.wikipedia.org/wiki/Analytical_Engine"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/05/Houghton_AC85.Su662.Zz843m.jpg",
+          "caption": "Veröffentlichung von 1843 mit Ada Lovelaces übersetztem Artikel",
+          "source": "https://commons.wikimedia.org/wiki/File:Houghton_AC85.Su662.Zz843m.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "intellectual_maturity_and_analytical_engine",
+      "annotations": {
+        "Sketch of the Analytical Engine Invented by Charles Babbage, Esq.": {
+          "explanation": "Eine französischsprachige Abhandlung von Luigi Federico Menabrea aus dem Jahr 1842, die Charles Babbages Entwurf für die Analytical Engine zusammenfasste und von Ada Lovelace ins Englische übersetzt sowie ausführlich kommentiert wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Engine#Sketch_of_the_Analytical_Engine"
+        },
+        "Bernoulli numbers": {
+          "explanation": "Eine Folge rationaler Zahlen, die in der Zahlentheorie und Analysis vorkommt und in Formeln für Summen von Potenzen ganzer Zahlen sowie in Reihenentwicklungen verwendet wird, was sie zu einem klassischen Testfall für komplexe Berechnungen macht.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bernoulli_number"
+        }
+      }
+    },
+    {
+      "date": "1845",
+      "date_precision": "year",
+      "date_end": "1851",
+      "date_end_precision": "year",
+      "date_note": "Umfasst eine Reihe persönlicher Verstrickungen und ihr mathematisches Wettsystem, das 1851 seinen Höhepunkt erreichte",
+      "age": 29,
+      "title": "Skandale, Glücksspiel und angewandte Mathematik",
+      "description": "Mitte der 1840er Jahre wurde Adas Leben von Gerüchten über außereheliche Flirts und, bedeutsamer noch, von einer intensiven Beteiligung an Pferderennwetten bestimmt. Fasziniert von Wahrscheinlichkeit und Berechnung gründete sie ein Wettsyndikat und versuchte 1851, ein mathematisches Modell zu entwickeln, um auf der Rennbahn hohe Gewinne zu erzielen. Das Vorhaben scheiterte katastrophal, hinterließ ihr Schulden und zwang sie zu schmerzhaften Geständnissen gegenüber ihrem Ehemann, zeigt jedoch ihren Drang, mathematisches Denken auf komplexe, unsichere reale Systeme anzuwenden.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "William King-Noel, 1. Earl of Lovelace"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lady_Byron"
+      ],
+      "event_type_icon": "mdi-currency-usd-off",
+      "chapter": "risk_passion_and_applied_calculation"
+    },
+    {
+      "date": "1852-11-27",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Letzte Krankheit und Tod",
+      "description": "Ada Lovelace starb am 27. November 1852 im Alter von sechsunddreißig Jahren nach einer schmerzhaften Erkrankung an Gebärmutterkrebs, die durch Aderlässe und andere damalige Behandlungen verschlimmert wurde. Während ihrer letzten Monate wurde sie eng von ihrer Mutter betreut, zu der sie oft ein angespanntes Verhältnis gehabt hatte, und erlebte eine ausgeprägte religiöse Hinwendung. Ihrem eigenen Wunsch entsprechend wurde sie in der Kirche St. Maria Magdalena in Hucknall, Nottinghamshire, in einem Grab neben dem Vater bestattet, den sie zu Lebzeiten nie gekannt hatte.",
+      "locations": [
+        {
+          "name_historic": "Hucknall",
+          "name_modern": "Hucknall, Nottinghamshire, England, Vereinigtes Königreich",
+          "centroid": [
+            -1.21,
+            53.04
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "London",
+          "name_modern": "London, England, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Lady Byron",
+        "Lord Byron"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lady_Byron",
+        "https://en.wikipedia.org/wiki/Lord_Byron"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Ada_Lovelace_in_1852.jpg",
+          "caption": "Ada Lovelace am Klavier im Jahr 1852",
+          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_in_1852.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "risk_passion_and_applied_calculation"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "0a6e0dd2ef543ad6",
+    "translated_on": "2026-07-19T07:32:58.222113+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

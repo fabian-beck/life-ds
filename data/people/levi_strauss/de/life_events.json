@@ -1,0 +1,636 @@
+{
+  "dataset": "levi_strauss_timeline_phase1",
+  "created_on": "2025-12-14",
+  "person": {
+    "name": "Levi_Strauss",
+    "birth_date": "1829-02-26",
+    "death_date": "1902-09-26",
+    "primary_roles": [
+      "Geschäftsmann",
+      "Industrieller",
+      "Unternehmer"
+    ],
+    "tagline": "Miterfinder der Nietenjeans",
+    "summary": "Levi Strauss war ein in Deutschland geborener amerikanischer Geschäftsmann, der ein führendes Kurzwarenunternehmen in San Francisco aufbaute und zusammen mit dem Schneider Jacob Davis nietenverstärkte Arbeitshosen patentieren ließ, aus denen die modernen Blue Jeans hervorgingen. Sein Unternehmen, das während der Goldrausch-Ära gegründet wurde, entwickelte sich von einem Handelsbetrieb zu einem bedeutenden Hersteller strapazierfähiger Arbeitskleidung.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Levi_Strauss",
+    "portrait": {
+      "image": "/portraits/levi_strauss_thumbnail.webp",
+      "source": "https://de.wikipedia.org/wiki/Levi_Strauss",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Levi_Strauss.gif",
+      "thumbnail": "/portraits/levi_strauss_thumbnail.webp",
+      "medium": "/portraits/levi_strauss_medium.webp",
+      "full": "/portraits/levi_strauss_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "buttenheim_beginnings",
+      "headline": "Anfänge in Buttenheim",
+      "date_start": "1829-02-26",
+      "date_start_precision": "day",
+      "date_end": "1846",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 17,
+      "involved_people": [
+        "Hirsch Strauß"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "new_york_reinvention",
+      "headline": "Neuanfang in New York",
+      "date_start": "1847",
+      "date_start_precision": "year",
+      "date_end": "1852",
+      "date_end_precision": "year",
+      "age_start": 18,
+      "age_end": 23,
+      "involved_people": [
+        "Rebecca Strauss"
+      ],
+      "location": "Nordosten der Vereinigten Staaten"
+    },
+    {
+      "id": "gold_rush_merchant",
+      "headline": "Händler im Goldrausch",
+      "date_start": "1853",
+      "date_start_precision": "year",
+      "date_end": "1870-11",
+      "date_end_precision": "month",
+      "age_start": 24,
+      "age_end": 41,
+      "involved_people": [
+        "David Stern"
+      ],
+      "location": "Westen der Vereinigten Staaten"
+    },
+    {
+      "id": "rivets_change_everything",
+      "headline": "Nieten verändern alles",
+      "date_start": "1870-12",
+      "date_start_precision": "month",
+      "date_end": "1873",
+      "date_end_precision": "year",
+      "age_start": 41,
+      "age_end": 44,
+      "involved_people": [
+        "Jacob W. Davis"
+      ],
+      "location": "Vereinigte Staaten"
+    },
+    {
+      "id": "denim_empire_legacy",
+      "headline": "Vermächtnis eines Denim-Imperiums",
+      "date_start": "1874",
+      "date_start_precision": "year",
+      "date_end": "1902-09-26",
+      "date_end_precision": "day",
+      "age_start": 45,
+      "age_end": 73,
+      "involved_people": [
+        "Fanny Strauss"
+      ],
+      "location": "Westen der Vereinigten Staaten"
+    }
+  ],
+  "conclusion": "Levi Strauss verwandelte den Blick eines eingewanderten Händlers für Bedürfnisse in ein globales Symbol für Arbeit, Zähigkeit und alltägliche Möglichkeiten. Sein Vermächtnis erinnert daran, dass die Geschichte manchmal an einem ganz einfachen Versprechen eine Wendung nimmt: Kleidung, die nicht eher schlappmacht als die Person, die sie trägt.",
+  "events": [
+    {
+      "date": "1829-02-26",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Bayern",
+      "description": "Er wurde als Löb Strauß als Sohn jüdischer Eltern im bayerischen Dorf Buttenheim geboren. Seine frühe Lebenszeit spielte sich in einem kleinstädtischen Umfeld ab, das vom Familienhandel und den Einschränkungen geprägt war, denen jüdische Gemeinschaften im Deutschland des 19. Jahrhunderts ausgesetzt waren.",
+      "locations": [
+        {
+          "name_historic": "Buttenheim",
+          "name_modern": "Buttenheim, Bayern, Deutschland",
+          "centroid": [
+            11.0287518,
+            49.8027526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Levi-Strauss-Haus_Buttenheim_1.jpg",
+          "caption": "Geburtshaus von Levi Strauss in Buttenheim (heute Museum)",
+          "source": "https://commons.wikimedia.org/wiki/File:Levi-Strauss-Haus_Buttenheim_1.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "buttenheim_beginnings"
+    },
+    {
+      "date": "1845",
+      "date_precision": "year",
+      "date_note": "Der Hauptartikel besagt, dass sein Vater starb, als Levi 16 Jahre alt war; das genaue Datum wird nicht genannt",
+      "age": 16,
+      "title": "Vater stirbt an Tuberkulose",
+      "description": "Als Strauss sechzehn war, starb sein Vater Hirsch Strauß, ein reisender Hausierer, an Tuberkulose. Der Verlust stürzte die große Familie in finanzielle Not und ebnete den Weg für die Auswanderung als Überlebensstrategie.",
+      "locations": [],
+      "involved_people": [
+        "Hirsch Strauß"
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-cross",
+      "chapter": "buttenheim_beginnings"
+    },
+    {
+      "date": "1847",
+      "date_precision": "year",
+      "age": 18,
+      "title": "Wandert in die Vereinigten Staaten aus",
+      "description": "Strauss verließ 1847 gemeinsam mit seiner Mutter Rebecca und seinen jüngeren Geschwistern Deutschland und wanderte in die Vereinigten Staaten aus. Sie schlossen sich zwei älteren Brüdern an, die bereits in New York City lebten, wo die Familie durch den Textilhandel Stabilität suchte.",
+      "locations": [
+        {
+          "name_historic": "Deutschland",
+          "name_modern": "Deutschland",
+          "centroid": [
+            10.4478313,
+            51.1638175
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, Vereinigte Staaten",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Rebecca Strauss"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Castle_Garden_Landing_for_Emigrants%2C_Barge_Office%2C_Battery_MET_DR175.jpg",
+          "caption": "Castle Garden, Anlegestelle für Auswanderer, Battery, New York",
+          "source": "https://commons.wikimedia.org/wiki/File:Castle_Garden_Landing_for_Emigrants,_Barge_Office,_Battery_MET_DR175.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "new_york_reinvention"
+    },
+    {
+      "date": "1847",
+      "date_precision": "year",
+      "date_end": "1852",
+      "date_end_precision": "year",
+      "date_note": "Der Artikel vermerkt, dass er nach seiner Ankunft den Namen Levi Strauss annahm und in das Geschäft seiner Brüder eintrat; genaue Jahre werden nicht genannt",
+      "age": 18,
+      "title": "Tritt in den Textilhandel der Brüder ein",
+      "description": "In New York nahm er den Namen Levi Strauss an und begann im Textil- und Handelsgeschäft seiner Brüder zu arbeiten. Dabei sammelte er praktische Erfahrung im Einkauf und Großhandel von Kurzwaren sowie im Umgang mit Kunden aus der Arbeiterklasse – Fähigkeiten, die sich später während der Expansion nach Westen als nützlich erwiesen.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.0060152,
+            40.7127281
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "new_york_reinvention"
+    },
+    {
+      "date": "1850",
+      "date_precision": "year",
+      "date_note": "Der Artikel beschreibt den Verkauf von „Duck-Hosen“ und ihre spätere Herausnahme aus dem Sortiment, ohne genaue Jahresangaben",
+      "age": null,
+      "title": "Verkauft schwere Canvas-Arbeitshosen",
+      "description": "Als Großhändler vermarktete Strauss robuste Hosen aus „Duck“-Canvas an Arbeiter – ein früher Versuch, die Nachfrage nach haltbarer Kleidung in Bergbauregionen während des [[California Gold Rush|kalifornischen Goldrauschs]] zu decken. Er erfuhr aus erster Hand, dass Taschennähte unter starker Beanspruchung oft rissen, und nahm das Produkt später aus dem Sortiment, da es sich als nicht ausreichend rentabel erwies.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Kalifornien",
+          "name_modern": "Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -118.755997,
+            36.7014631
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/California_gold_rush"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "new_york_reinvention",
+      "annotations": {
+        "California Gold Rush": {
+          "explanation": "Die Massenmigration nach Kalifornien von 1848 bis 1855 infolge der Entdeckung von Gold, die eine enorme Nachfrage nach Vorräten und haltbarer Arbeitskleidung für Bergleute schuf.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/California_gold_rush"
+        }
+      }
+    },
+    {
+      "date": "1853",
+      "date_precision": "year",
+      "age": 24,
+      "title": "Zieht nach San Francisco",
+      "description": "Inmitten der Wirtschaft des [[California Gold Rush|kalifornischen Goldrauschs]] zog Strauss nach San Francisco, um in der rasch wachsenden Stadt Chancen zu nutzen. Der Umzug brachte ihn in die Nähe von Bergleuten und den Versorgungsnetzwerken, auf die Händler angewiesen waren.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/California_gold_rush"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Buttenheim_Luftbild-20230625-RM-153626.jpg",
+          "caption": "Buttenheim in Oberfranken, Luftaufnahme",
+          "source": "https://commons.wikimedia.org/wiki/File:Buttenheim_Luftbild-20230625-RM-153626.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "gold_rush_merchant",
+      "annotations": {
+        "California Gold Rush": {
+          "explanation": "Eine durch die Entdeckung von Gold ausgelöste Massenmigration und ein Wirtschaftsboom in Kalifornien (1848–1855), die Städte wie San Francisco rasch wachsen ließen und eine enorme Nachfrage nach Ausrüstung für Bergbau und Handel schufen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/California_gold_rush"
+        }
+      }
+    },
+    {
+      "date": "1853",
+      "date_precision": "year",
+      "date_note": "Die Partner werden anhand des Hauptartikels und verwandter Artikel zusammengefasst; der Hauptartikel nennt ausdrücklich einen Bruder und einen Schwager als Mitbegründer in San Francisco",
+      "age": 24,
+      "title": "Gründet Handelshaus in San Francisco",
+      "description": "Strauss gründete ein Handelshaus in San Francisco mit, das einen schnell wachsenden Grenzmarkt mit Gütern des täglichen Bedarfs versorgte, darunter Textilien und [[haberdashery|Kurzwaren]]. Das Unternehmen – später als Levi Strauss & Co. bekannt – begann als Groß- und Einzelhandelsbetrieb für Bergleute, Arbeiter und Händler.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "David Stern"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)",
+        "https://en.wikipedia.org/wiki/California_gold_rush"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/18/93183878_929cff4ef0_b.jpg",
+          "caption": "Sutter’s Mill, Coloma, Kalifornien",
+          "source": "https://www.flickr.com/photos/75683070@N00/93183878"
+        }
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "gold_rush_merchant",
+      "annotations": {
+        "haberdashery": {
+          "explanation": "Handel mit kleinen Herrenbekleidungsartikeln und Kurzwaren wie Hüten, Handschuhen, Knöpfen, Bändern und ähnlichem Zubehör – sowie die entsprechenden Waren selbst.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Haberdashery"
+        }
+      }
+    },
+    {
+      "date": "1860",
+      "date_precision": "year",
+      "date_note": "Dieses Datum stammt aus dem verwandten Artikel über David Stern; der Hauptartikel bestätigt, dass das Unternehmen 1853 gegründet wurde, nennt jedoch keine Details zur Umbenennung",
+      "age": 31,
+      "title": "Firma wird Levi Strauss & Co.",
+      "description": "Bis 1860 firmierte das Unternehmen in San Francisco unter dem Namen Levi Strauss & Co., was Strauss’ wachsende zentrale Rolle in der Firma widerspiegelte. Die Markenidentität half, seine Stellung in einer wettbewerbsintensiven Versorgungswirtschaft der Goldrausch-Ära zu festigen.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "David Stern"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "gold_rush_merchant"
+    },
+    {
+      "date": "1870-12",
+      "date_precision": "month",
+      "age": 41,
+      "title": "Erfährt von Jacob Davis’ Nietenidee",
+      "description": "Ende 1870 entwickelte der Schneider Jacob Davis eine Methode, Taschenecken und den Ansatz des Hosenschlitzes mit Metallnieten zu verstärken, wobei er Materialien verwendete, die mit Pferdegeschirr in Verbindung standen. Davis, der Stoff von Strauss’ Firma kaufte, sollte bald Strauss um finanzielle Unterstützung bitten, um die Innovation zu schützen und im großen Maßstab umzusetzen.",
+      "locations": [
+        {
+          "name_historic": "Reno",
+          "name_modern": "Reno, Nevada, Vereinigte Staaten",
+          "centroid": [
+            -119.812658,
+            39.5261788
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Jacob W. Davis"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Closeup_of_copper_rivet_on_jeans.jpg",
+          "caption": "Nahaufnahme einer Kupferniete an Blue Jeans",
+          "source": "https://commons.wikimedia.org/wiki/File:Closeup_of_copper_rivet_on_jeans.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "rivets_change_everything"
+    },
+    {
+      "date": "1872",
+      "date_precision": "year",
+      "age": 43,
+      "title": "Unterstützt Patentantrag",
+      "description": "1872 wandte sich [[Jacob W. Davis|Davis]] an Strauss, um Unterstützung bei der Finanzierung eines Patentantrags für nietenverstärkte Arbeitshosen zu erhalten, da Davis nicht das Geld hatte, ihn selbst einzureichen. Strauss stimmte zu, da er sowohl den praktischen Nutzen für Arbeiter als auch das kommerzielle Potenzial einer groß angelegten Produktion erkannte.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Reno",
+          "name_modern": "Reno, Nevada, Vereinigte Staaten",
+          "centroid": [
+            -119.812658,
+            39.5261788
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Jacob W. Davis"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "rivets_change_everything",
+      "annotations": {
+        "Jacob W. Davis": {
+          "explanation": "Ein Schneider und Erfinder, dem die Entwicklung nietenverstärkter Arbeitshosen (früher Blue Jeans) zugeschrieben wird und der mit Levi Strauss zusammenarbeitete, um sie zu patentieren und in Massenproduktion herzustellen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+        }
+      }
+    },
+    {
+      "date": "1873-05-20",
+      "date_precision": "day",
+      "age": 44,
+      "title": "Erhält Patent auf Nietenhosen",
+      "description": "Strauss und Davis erhielten ein US-Patent auf Verbesserungen bei der Befestigung von Taschenöffnungen, das die Massenproduktion nietenverstärkter Arbeitshosen ermöglichte. Die patentierten „Taillenoveralls“ hoben ihr Produkt rasch von dem der Konkurrenz ab und wurden zur unverkennbaren Grundlage der Blue Jeans.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "centroid": [
+            -77.0365427,
+            38.8950368
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Reno",
+          "name_modern": "Reno, Nevada, Vereinigte Staaten",
+          "centroid": [
+            -119.812658,
+            39.5261788
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Jacob W. Davis"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis",
+        "https://en.wikipedia.org/wiki/Patent"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Copy_of_Figure_from_Patent.jpg",
+          "caption": "Abbildung aus dem Jacob Davis und Levi Strauss erteilten Patent",
+          "source": "https://commons.wikimedia.org/wiki/File:Copy_of_Figure_from_Patent.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "rivets_change_everything"
+    },
+    {
+      "date": "1873",
+      "date_precision": "year",
+      "age": 44,
+      "title": "Nietenoveralls erleben Boom",
+      "description": "Nach dem Patent stieg die Nachfrage sprunghaft an: Bis zum Jahresende wurden sehr große Mengen [[riveted waist overalls|nietenverstärkter Taillenoveralls]] verkauft, und die Produktion weitete sich auf mehrere Fabriken aus. Strauss’ Rolle wandelte sich von der Stofflieferung zur Leitung eines integrierten Fertigungs- und Vertriebsbetriebs, der von der Nachfrage der Arbeiter nach Haltbarkeit angetrieben wurde.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Reno",
+          "name_modern": "Reno, Nevada, Vereinigte Staaten",
+          "centroid": [
+            -119.812658,
+            39.5261788
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Jacob W. Davis"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/65535/53745883086_7043cf5c24.jpg",
+          "caption": "Kupfernieten-Blue-Jeans, nach 1873",
+          "source": "https://www.flickr.com/photos/30484128@N03/53745883086"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "rivets_change_everything",
+      "annotations": {
+        "riveted waist overalls": {
+          "explanation": "Frühe Arbeitshosen (Vorläufer moderner Jeans), die an Belastungspunkten mit Metallnieten verstärkt waren; das Produkt, das durch das Strauss-Davis-Patent von 1873 geschützt wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+        }
+      }
+    },
+    {
+      "date": "1883",
+      "date_precision": "year",
+      "date_note": "Der Hauptartikel besagt, dass es „zehn Jahre später“ 535 Beschäftigte gab, und bezieht sich damit auf den Boom von 1873",
+      "age": 54,
+      "title": "Firma erreicht große Belegschaft",
+      "description": "Ein Jahrzehnt nach dem Durchbruch der nietenverstärkten Kleidung beschäftigte das Unternehmen Hunderte von Arbeitern, was eine Expansion im industriellen Maßstab widerspiegelte. Die Firma hatte sich von einem Kurzwarenladen an der Grenze zu einem bedeutenden Produktionsbetrieb mit wachsender Belegschaft und steigender Fertigungskapazität entwickelt.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jacob_W._Davis"
+      ],
+      "event_type_icon": "mdi-chart-line",
+      "chapter": "denim_empire_legacy"
+    },
+    {
+      "date": "1890",
+      "date_precision": "year",
+      "date_note": "Dieses Detail zur Gründung der Kapitalgesellschaft stammt aus dem verwandten Artikel über David Stern; es ist hier enthalten, weil es Strauss’ Rolle als Präsident zu seinen Lebzeiten betrifft",
+      "age": 61,
+      "title": "Leitet Kapitalgesellschaft",
+      "description": "Bis 1890 war Levi Strauss & Co. als Kapitalgesellschaft organisiert, mit Strauss als Präsidenten, wodurch die Führung eines gereiften und wachsenden Unternehmens formalisiert wurde. Der Wandel spiegelte das anhaltende Wachstum der Firma und den Bedarf an strukturierter Leitung in einem zunehmend wettbewerbsintensiven Bekleidungsmarkt wider.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/David_Stern_(businessman)",
+        "https://en.wikipedia.org/wiki/Abraham_Haas"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "denim_empire_legacy"
+    },
+    {
+      "date": "1902-09-26",
+      "date_precision": "day",
+      "age": 73,
+      "title": "Stirbt in San Francisco",
+      "description": "Strauss starb im Alter von 73 Jahren unerwartet in seinem [[San Francisco|Haus in San Francisco]], wo er mit der Familie seiner Schwester Fanny lebte. Da er keine Kinder hatte, hinterließ er das Unternehmen seinen Neffen und sicherte so die Kontinuität des Eigentums innerhalb der Großfamilie.",
+      "locations": [
+        {
+          "name_historic": "San Francisco",
+          "name_modern": "San Francisco, Kalifornien, Vereinigte Staaten",
+          "centroid": [
+            -122.4075201,
+            37.7879363
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Fanny Strauss"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Levi_Strauss"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/3606/3396593248_a1ecd9e8d4_b.jpg",
+          "caption": "Grab von Levi Strauss",
+          "source": "https://www.flickr.com/photos/26216388@N02/3396593248"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "denim_empire_legacy"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "86727ced31862b2a",
+    "translated_on": "2026-07-19T07:46:22.893232+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

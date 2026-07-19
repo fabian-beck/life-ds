@@ -1,0 +1,861 @@
+{
+  "dataset": "biographical_timeline_wikipedia",
+  "created_on": "2025-12-27",
+  "person": {
+    "name": "Johann_Lukas_Schönlein",
+    "birth_date": "1793-11-30",
+    "death_date": "1864-01-23",
+    "primary_roles": [
+      "Arzt",
+      "Pathologe",
+      "Professor"
+    ],
+    "tagline": "Wegbereiter der modernen klinischen Methode",
+    "summary": "Johann Lukas Schönlein war ein deutscher Arzt und Hochschullehrer, der dazu beitrug, die deutsche Medizin zu einem naturwissenschaftlichen, klinikbasierten Ansatz zu führen. Er lehrte in Würzburg, Zürich und Berlin und diente als Arzt am preußischen Hof.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+    "portrait": {
+      "image": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
+      "thumbnail": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
+      "medium": "/portraits/johann_lukas_sch_nlein_medium.webp",
+      "full": "/portraits/johann_lukas_sch_nlein_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/48/Johann_Lucas_Sch%C3%B6nlein_%281793-1864%29.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "craftsman_roots",
+      "headline": "Handwerkliche Wurzeln",
+      "date_start": "1793-11-30",
+      "date_start_precision": "day",
+      "date_end": "1816",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 22,
+      "involved_people": [
+        "Andreas Röschlaub",
+        "Friedrich Tiedemann",
+        "Ignaz Döllinger",
+        "Philipp Franz von Walther"
+      ],
+      "location": "Bayern"
+    },
+    {
+      "id": "juliusspital_bedside_revolution",
+      "headline": "Revolution am Juliusspital",
+      "date_start": "1817",
+      "date_start_precision": "year",
+      "date_end": "1832",
+      "date_end_precision": "year",
+      "age_start": 23,
+      "age_end": 38,
+      "involved_people": [
+        "Nicolaus Anton Friedreich"
+      ],
+      "location": "Bayern"
+    },
+    {
+      "id": "zurich_exile_clinic",
+      "headline": "Zürcher Exilklinik",
+      "date_start": "1833",
+      "date_start_precision": "year",
+      "date_end": "1837",
+      "date_end_precision": "year",
+      "age_start": 39,
+      "age_end": 43,
+      "involved_people": null,
+      "location": "Schweiz"
+    },
+    {
+      "id": "prussian_court_physician",
+      "headline": "Preußischer Leibarzt",
+      "date_start": "1839",
+      "date_start_precision": "year",
+      "date_end": "1856",
+      "date_end_precision": "year",
+      "age_start": 45,
+      "age_end": 62,
+      "involved_people": [
+        "Friedrich Wilhelm IV. von Preußen",
+        "Philipp Schönlein"
+      ],
+      "location": "Preußen"
+    },
+    {
+      "id": "quiet_legacy_in_bamberg",
+      "headline": "Stilles Vermächtnis in Bamberg",
+      "date_start": "1859",
+      "date_start_precision": "year",
+      "date_end": "1864-01-23",
+      "date_end_precision": "day",
+      "age_start": 65,
+      "age_end": 70,
+      "involved_people": [
+        "Friedrich Wilhelm IV. von Preußen"
+      ],
+      "location": "Bayern"
+    }
+  ],
+  "conclusion": "Johann Lukas Schönlein trug dazu bei, die Medizin zu modernem klinischem Denken zu führen – indem er Krankheiten präzise benannte, nach greifbaren Ursachen suchte und am Krankenbett lehrte. Selbst im Rückzug ordnete er Wissen wie eine letzte Diagnose: geordnet, dauerhaft und dazu bestimmt, der nächsten Generation zu dienen.",
+  "events": [
+    {
+      "date": "1793-11-30",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Bamberg",
+      "description": "Johann Lukas Schönlein wurde am 30. November 1793 in Bamberg als Sohn eines Seilers geboren und wuchs in einem Handwerkerhaushalt auf, bevor er das örtliche Gymnasium besuchte.",
+      "locations": [
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "craftsman_roots"
+    },
+    {
+      "date": "1811",
+      "date_precision": "year",
+      "date_end": "1816",
+      "date_end_precision": "year",
+      "age": 17,
+      "title": "Beginn des Medizinstudiums",
+      "description": "1811 begann Schönlein in Landshut ein Studium der Naturwissenschaften und Medizin und besuchte Vorlesungen bei Andreas Röschlaub, Friedrich Tiedemann und Philipp Franz von Walther. Ab 1813 setzte er sein Studium in Würzburg fort, wo er bei dem Anatomen und Physiologen Ignaz Döllinger studierte und einer geheimen Studentenverbindung beitrat. In diesen Jahren nahm er den zusätzlichen Namen „Lukas/Lucas“ an und stellte sich damit in eine Namenstradition von Ärzteheiligen.",
+      "locations": [
+        {
+          "name_historic": "Landshut",
+          "name_modern": "Landshut, Bayern, Deutschland",
+          "centroid": [
+            12.1516551,
+            48.536217
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Andreas Röschlaub",
+        "Friedrich Tiedemann",
+        "Philipp Franz von Walther",
+        "Ignaz Döllinger"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Andreas_R%C3%B6schlaub",
+        "https://de.wikipedia.org/wiki/Friedrich_Tiedemann",
+        "https://de.wikipedia.org/wiki/Ignaz_D%C3%B6llinger"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "craftsman_roots"
+    },
+    {
+      "date": "1816",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Promotion abgeschlossen",
+      "description": "In [[Würzburg|Würzburg]] schloss er unter der Betreuung von Ignaz Döllinger seine Doktorarbeit mit dem Titel „Von der Hirnmetamorphose“ über die vergleichende embryologische Entwicklung des Gehirns bei Säugetieren und Menschen ab.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ignaz Döllinger"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Ignaz_D%C3%B6llinger"
+      ],
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "craftsman_roots",
+      "annotations": {
+        "Würzburg": {
+          "explanation": "Eine fränkische Universitätsstadt in Bayern; im frühen 19. Jahrhundert war sie ein wichtiges Zentrum der medizinischen und anatomischen Lehre in Süddeutschland.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/W%C3%BCrzburg"
+        }
+      }
+    },
+    {
+      "date": "1817",
+      "date_precision": "year",
+      "age": 23,
+      "title": "Qualifikation und Habilitation",
+      "description": "Nach praktischer Ausbildung am Allgemeinen Krankenhaus in Bamberg und weiterer klinischer Erfahrung in Jena, Göttingen und München bestand er die Würzburger [[Proberelation|„Proberelation“]] (das Äquivalent eines Staatsexamens). 1817 schloss er zudem seine [[habilitation|Habilitation]] an der Universität Würzburg in pathologischer Anatomie ab und trat als Dozent in einem neu entstehenden Fachgebiet ins akademische Leben ein.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Bayern, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Jena",
+          "name_modern": "Jena, Thüringen, Deutschland",
+          "centroid": [
+            11.5879359,
+            50.9281717
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Niedersachsen, Deutschland",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "München",
+          "name_modern": "München, Bayern, Deutschland",
+          "centroid": [
+            11.5753822,
+            48.1371079
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Proberelation": {
+          "explanation": "Eine historische medizinische Qualifikationsprüfung in Würzburg (Probebericht/mündliche Prüfung), die ungefähr als medizinisches Staatsexamen vor der Zulassung zur Praxis oder dem akademischen Aufstieg fungierte."
+        },
+        "habilitation": {
+          "explanation": "Eine postdoktorale Hochschulqualifikation im deutschsprachigen Europa, die zur selbstständigen Lehre (venia legendi) befähigt und traditionell für eine Laufbahn als Dozent oder Professor erforderlich ist.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
+        }
+      }
+    },
+    {
+      "date": "1817",
+      "date_precision": "year",
+      "age": 23,
+      "title": "Vorlesungen im Juliusspital-Pavillon",
+      "description": "1817 begann Schönlein in Würzburg als [[Privatdozent|Privatdozent]] pathologische Anatomie zu lehren. Seinen Unterricht hielt er in einem Gartenpavillon des Juliusspitals und knüpfte ihn an die seit Langem etablierten anatomischen und chirurgischen Demonstrationen des Krankenhauses an.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/W%C3%BCrzburg%2C_Juliusspital%2C_Gartenpavillon%2C_8.jpeg/960px-W%C3%BCrzburg%2C_Juliusspital%2C_Gartenpavillon%2C_8.jpeg",
+          "caption": "Gartenpavillon des Juliusspitals, Würzburg",
+          "source": "https://commons.wikimedia.org/wiki/File:Würzburg,_Juliusspital,_Gartenpavillon,_8.jpeg"
+        }
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Privatdozent": {
+          "explanation": "Ein deutscher akademischer Titel für einen selbstständigen Hochschuldozenten mit Lehrbefugnis (venia legendi), der jedoch in der Regel nicht von der Universität bezahlt wird und durch Studentengebühren finanziert ist.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      }
+    },
+    {
+      "date": "1819",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Übernimmt die klinische Lehre",
+      "description": "1819 wurde Schönlein in [[Würzburg|Würzburg]] zum außerordentlichen Professor für innere Medizin (spezielle Therapie) ernannt und anstelle des erkrankten Nicolaus Anton Friedreich mit der klinischen Lehre betraut. Er übernahm zudem kommissarisch die Leitung der medizinischen Klinik des [[Juliusspital|Juliusspitals]], beaufsichtigte eine große Station und setzte den Unterricht am Krankenbett fort.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Nicolaus Anton Friedreich"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Juliusspital"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Würzburg": {
+          "explanation": "Eine Universitäts- und Bischofsstadt in Franken (Bayern), in der Schönlein an der Universität Würzburg und den angeschlossenen Kliniken tätig war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/W%C3%BCrzburg"
+        },
+        "Juliusspital": {
+          "explanation": "Ein bedeutendes karitatives Krankenhaus und eine Stiftung in Würzburg, die ein Lehrkrankenhaus beziehungsweise eine medizinische Klinik für den klinischen Unterricht umfasste.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Juliusspital"
+        }
+      }
+    },
+    {
+      "date": "1824",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Zum Ordinarius ernannt",
+      "description": "1824 wurde Schönlein in Würzburg zum ordentlichen Professor für spezielle Pathologie und Therapie ernannt und weitete seine Lehrtätigkeit auf die kontinuierliche Betreuung klinischer Studierender im Krankenhaus aus.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "juliusspital_bedside_revolution"
+    },
+    {
+      "date": "1826-06-21",
+      "date_precision": "day",
+      "age": 32,
+      "title": "Leitet die Juliusspital-Klinik",
+      "description": "Am 21. Juni 1826 wurde Schönlein, nachdem leitende Mitarbeiter ausgeschieden waren, zum Leiter der medizinischen Klinik und der medizinisch-klinischen Einrichtungen des [[Juliusspital|Juliusspitals]] in Würzburg ernannt. Dort betonte er einen systematischen Unterricht am Krankenbett, der sich zunehmend auf körperliche Untersuchung und klinische Beobachtung stützte; zudem war er 1826–1827 Dekan der medizinischen Fakultät der Universität.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Bayern, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Juliusspital"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Juliusspital-Wuerzburg.jpg/960px-Juliusspital-Wuerzburg.jpg",
+          "caption": "Juliusspital in Würzburg (Juliuspromenade)",
+          "source": "https://commons.wikimedia.org/wiki/File:Juliusspital-Wuerzburg.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Juliusspital": {
+          "explanation": "Ein historisches Krankenhaus und eine karitative Stiftung in Würzburg (im 16. Jahrhundert gegründet), die bedeutende klinische und Lehrinstitutionen betrieb, die mit der örtlichen medizinischen Ausbildung verbunden waren.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Juliusspital"
+        }
+      }
+    },
+    {
+      "date": "1832",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Entlassen und Flucht aus Würzburg",
+      "description": "Während der politischen Repression nach dem [[Hambach Festival|Hambacher Fest]] wurde Schönlein im Zuge von Untersuchungen gegen mutmaßliche „Demagogen“ von seinen akademischen Ämtern in Würzburg entfernt. Unter dem Druck der bayerischen Behörden ging er fort, statt eine ihm zugewiesene staatliche Arztstelle in Passau anzunehmen.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Passau",
+          "name_modern": "Passau, Deutschland",
+          "centroid": [
+            13.4609744,
+            48.5748229
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Hambach_Festival"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "juliusspital_bedside_revolution",
+      "annotations": {
+        "Hambach Festival": {
+          "explanation": "Eine große pro-demokratische und deutschnationale Demonstration von 1832 am Hambacher Schloss, die in mehreren deutschen Staaten, darunter Bayern, eine verschärfte Repression auslöste.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hambach_Festival"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Bavaria (Würzburg)",
+        "to_location": "Switzerland (Zürich)",
+        "characterization": "political exile"
+      }
+    },
+    {
+      "date": "1833",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Berufung nach Zürich",
+      "description": "1833 nahm Schönlein einen Ruf an die neu gegründete [[University of Zürich|Universität Zürich]] als Professor für klinische Medizin und Direktor des angeschlossenen Krankenhauses an. Neben seiner Lehrtätigkeit wirkte er auch an der Planung des neuen Kantonsspitals mit und übernahm Aufgaben in der Fakultät, darunter das Dekanat.",
+      "locations": [
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/University_of_Zurich"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Z%C3%BCrich_Switzerland-University-of-Zurich-Main-Building-01.jpg/960px-Z%C3%BCrich_Switzerland-University-of-Zurich-Main-Building-01.jpg",
+          "caption": "Hauptgebäude der Universität Zürich",
+          "source": "https://commons.wikimedia.org/wiki/File:Zürich_Switzerland-University-of-Zurich-Main-Building-01.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "zurich_exile_clinic",
+      "annotations": {
+        "University of Zürich": {
+          "explanation": "Eine 1833 vom Kanton Zürich gegründete öffentliche Schweizer Universität, die zu den ersten europäischen Universitäten gehörte, die von einem demokratischen Staat statt von einem Monarchen oder einer kirchlichen Autorität ins Leben gerufen wurden.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Zurich"
+        }
+      }
+    },
+    {
+      "date": "1837",
+      "date_precision": "year",
+      "age": 43,
+      "title": "Identifiziert den Favus-Pilz",
+      "description": "1837 berichtete Schönlein, dass [[favus|Favus (Erbgrind)]] mit einem spezifischen krankheitserregenden Hautpilz verbunden sei, der später als Achorion schoenleinii (heute Trichophyton schoenleinii) bezeichnet wurde. Dies spiegelte seine Betonung wider, in der klinischen Praxis klar abgegrenzte Krankheitsentitäten mit materiellen Ursachen zu identifizieren.",
+      "locations": [
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Trichophyton_schoenleinii",
+        "https://en.wikipedia.org/wiki/Favus"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/An_American_text-book_of_the_diseases_of_children_%281895%29_%2814595747510%29.jpg/960px-An_American_text-book_of_the_diseases_of_children_%281895%29_%2814595747510%29.jpg",
+          "caption": "Trichophyton schoenleinii in einem Haarfollikel (Buchillustration)",
+          "source": "https://commons.wikimedia.org/wiki/File:An_American_text-book_of_the_diseases_of_children_(1895)_(14595747510).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "zurich_exile_clinic",
+      "annotations": {
+        "favus": {
+          "explanation": "Eine chronische Pilzinfektion der Kopfhaut und Haut (eine Form der Tinea), die charakteristisch gelbe, schalenförmige Krusten, sogenannte Scutula, bildet und zu Haarausfall führen kann.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Favus"
+        }
+      }
+    },
+    {
+      "date": "1839",
+      "date_precision": "year",
+      "age": 45,
+      "title": "Umzug nach Berlin",
+      "description": "1839 zog Schönlein nach einem Ruf an die [[University of Berlin|Universität Berlin]] in die preußische Hauptstadt, um klinische und Lehrverpflichtungen zu übernehmen. Er arbeitete an der [[Charité|Charité]] und führte zugleich eine private Arztpraxis weiter.",
+      "locations": [
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Charit%C3%A9"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/20240815_Campus_Charit%C3%A9_Mitte.jpg/960px-20240815_Campus_Charit%C3%A9_Mitte.jpg",
+          "caption": "Campus Charité Mitte (Blick über den Humboldthafen)",
+          "source": "https://commons.wikimedia.org/wiki/File:20240815_Campus_Charité_Mitte.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "prussian_court_physician",
+      "annotations": {
+        "University of Berlin": {
+          "explanation": "Die preußische Staatsuniversität in Berlin (heute Humboldt-Universität zu Berlin), ein führendes Zentrum deutscher Forschung und medizinischer Lehre im 19. Jahrhundert.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Humboldt_University_of_Berlin"
+        },
+        "Charité": {
+          "explanation": "Berlins großes Lehrkrankenhaus, eng mit der Universität Berlin verbunden und eine der einflussreichsten medizinischen Einrichtungen Europas.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Charit%C3%A9"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Switzerland (Zürich)",
+        "to_location": "Prussia (Berlin)",
+        "characterization": "career appointment"
+      }
+    },
+    {
+      "date": "1839",
+      "date_precision": "year",
+      "date_note": "Das in der Quelle angegebene Veröffentlichungsjahr; der genaue Titel wird dort nicht genannt",
+      "age": 45,
+      "title": "Veröffentlicht über Hautpilz",
+      "description": "1839 veröffentlichte Schönlein während seiner Tätigkeit in [[Berlin|Berlin]] einen auf seinen Krankenhauserfahrungen und mikroskopischen Untersuchungen beruhenden Bericht, der dazu beitrug, einen Pilzerreger als zentral für eine klar definierte Hauterkrankung zu fassen.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Favus"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "prussian_court_physician",
+      "annotations": {
+        "Berlin": {
+          "explanation": "Ende der 1830er Jahre war Schönlein als Professor der Medizin und Direktor an der Charité in Berlin tätig, die das klinische Material für seine medizinischen Veröffentlichungen lieferte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Berlin"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Publication on the favus fungus (Achorion schoenleinii)",
+        "publication_type": "paper",
+        "significance": "clinical mycology",
+        "impact": "The work documented a specific fungal agent in a defined skin disease and circulated his findings to the medical community."
+      }
+    },
+    {
+      "date": "1842",
+      "date_precision": "year",
+      "age": 48,
+      "title": "Wird königlicher Leibarzt",
+      "description": "1842 wurde Schönlein zum persönlichen Arzt (einem [[Leibarzt|Leibarzt]]) von König Friedrich Wilhelm IV. von Preußen ernannt. Diese Rolle brachte ihn in regelmäßigen Kontakt mit dem preußischen Hof, während er seine klinische und Lehrtätigkeit in Berlin fortsetzte.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Wilhelm IV. von Preußen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://de.wikipedia.org/wiki/Friedrich_Wilhelm_IV."
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Friedrich_Wilhelm_IV_of_Prussia_%281847%29.jpg",
+          "caption": "Fotografie von Friedrich Wilhelm IV. von Preußen (1847)",
+          "source": "https://commons.wikimedia.org/wiki/File:Friedrich_Wilhelm_IV_of_Prussia_(1847).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "prussian_court_physician",
+      "annotations": {
+        "Leibarzt": {
+          "explanation": "Ein deutscher Hoftitel für den persönlichen Arzt eines Herrschers (wörtlich „Arzt des Leibes“), der in der Regel mit dem Dienst im königlichen Haushalt verbunden war.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Leibarzt"
+        }
+      }
+    },
+    {
+      "date": "1844",
+      "date_precision": "year",
+      "age": 50,
+      "title": "Wahl in die Leopoldina",
+      "description": "1844 wurde Schönlein während seiner Berliner Zeit in die [[Leopoldina|Leopoldina]] gewählt, was seine wachsende Anerkennung in deutschen wissenschaftlichen und medizinischen Kreisen widerspiegelte.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/German_Academy_of_Sciences_Leopoldina"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/2017-01-28_Leopoldina_Halle_a.d.Saale.jpg/960px-2017-01-28_Leopoldina_Halle_a.d.Saale.jpg",
+          "caption": "Hauptgebäude der Leopoldina in Halle (Saale)",
+          "source": "https://commons.wikimedia.org/wiki/File:2017-01-28_Leopoldina_Halle_a.d.Saale.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-star",
+      "chapter": "prussian_court_physician",
+      "annotations": {
+        "Leopoldina": {
+          "explanation": "Die Deutsche Akademie der Naturforscher Leopoldina (gegründet 1652), eine der ältesten ununterbrochen bestehenden wissenschaftlichen Akademien der Welt; die Wahl war eine bedeutende wissenschaftliche Auszeichnung.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Academy_of_Sciences_Leopoldina"
+        }
+      }
+    },
+    {
+      "date": "1856",
+      "date_precision": "year",
+      "age": 62,
+      "title": "Sohn stirbt auf Expedition",
+      "description": "1856 starb Schönleins Sohn Philipp Schönlein (geboren 1834) während einer Forschungsreise nach Kap Palmas in Westafrika (im heutigen Liberia). Der Verlust traf die Familie, während Johann Lukas Schönlein in Berlin lebte und arbeitete.",
+      "locations": [
+        {
+          "name_historic": "Kap Palmas",
+          "name_modern": "Kap Palmas, Liberia",
+          "centroid": [
+            -7.7285881,
+            4.3653077
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Philipp Schönlein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "prussian_court_physician"
+    },
+    {
+      "date": "1859",
+      "date_precision": "year",
+      "age": 65,
+      "title": "Rückzug und Heimkehr",
+      "description": "Nach Jahren einer von einer Schilddrüsenvergrößerung geprägten Krankheit zog er sich nach der Abdankung von [[Frederick William IV|des Königs]] von seinem Amt zurück und widmete sich dem Privatleben. Einen Großteil seiner Zeit verbrachte er damit, seine umfangreichen Sammlungen zu ordnen und mit ihnen zu arbeiten.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Friedrich Wilhelm IV. von Preußen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "https://en.wikipedia.org/wiki/Frederick_William_IV_of_Prussia"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "quiet_legacy_in_bamberg",
+      "annotations": {
+        "Frederick William IV": {
+          "explanation": "König von Preußen (Regierungszeit 1840–1861); seine Amtsunfähigkeit 1858–1859 und die anschließende Regentschaft/Abdankung beendeten Schönleins Tätigkeit als Hofarzt in Berlin.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Frederick_William_IV_of_Prussia"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Prussia (Berlin)",
+        "to_location": "Bavaria (Bamberg)",
+        "characterization": "retirement return"
+      }
+    },
+    {
+      "date": "1862",
+      "date_precision": "year",
+      "age": 68,
+      "title": "Stiftet bedeutende Bibliothekssammlung",
+      "description": "1862 schenkte Schönlein seine große epidemiologische und medizinhistorische Büchersammlung, die „[[Schönleiniana|Schönleiniana]]“, der Universität Würzburg; einen weiteren umfangreichen Teil seiner seuchenhistorischen Bestände übergab er der Königlichen Bibliothek in Bamberg, die er seit seiner Schulzeit genutzt hatte.",
+      "locations": [
+        {
+          "name_historic": "Würzburg",
+          "name_modern": "Würzburg, Deutschland",
+          "centroid": [
+            9.9434769,
+            49.7780356
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "event_type_icon": "mdi-hand-coin",
+      "chapter": "quiet_legacy_in_bamberg",
+      "annotations": {
+        "Schönleiniana": {
+          "explanation": "Bezeichnung für Johann Lukas Schönleins persönliche Bibliothek beziehungsweise Sammlung medizinischer und epidemiologischer Werke, die er 1862 der Universität Würzburg schenkte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+        }
+      }
+    },
+    {
+      "date": "1864-01-23",
+      "date_precision": "day",
+      "age": 70,
+      "title": "Tod in Bamberg",
+      "description": "Schönlein starb am 23. Januar 1864 im Alter von 70 Jahren in seiner Villa in Bamberg.",
+      "locations": [
+        {
+          "name_historic": "Bamberg",
+          "name_modern": "Bamberg, Bayern, Deutschland",
+          "centroid": [
+            10.8868478,
+            49.8916044
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Bamberg%2C_Sch%C3%B6nleinsplatz%2C_Denkmal_f%C3%BCr_Johann_Lukas_von_Sch%C3%B6nlein_20170722_001.jpg/960px-Bamberg%2C_Sch%C3%B6nleinsplatz%2C_Denkmal_f%C3%BCr_Johann_Lukas_von_Sch%C3%B6nlein_20170722_001.jpg",
+          "caption": "Denkmal für Johann Lukas von Schönlein, Schönleinsplatz, Bamberg",
+          "source": "https://commons.wikimedia.org/wiki/File:Bamberg,_Schönleinsplatz,_Denkmal_für_Johann_Lukas_von_Schönlein_20170722_001.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "quiet_legacy_in_bamberg"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "44fba6514fe60be9",
+    "translated_on": "2026-07-19T07:42:11.608973+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}
