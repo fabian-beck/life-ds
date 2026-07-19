@@ -54,22 +54,26 @@ a {
  * never intercepts clicks. A real element is used rather than a pseudo-element
  * on the root, because a root pseudo-element does not establish a backdrop for
  * `backdrop-filter` to sample.
+ *
+ * The `brightness()` lift accompanies `contrast()` because contrast alone
+ * pivots around mid-gray and drives dark grays toward black; brightening
+ * afterwards keeps those tones legible and raises overall lightness.
  */
 .contrast-overlay {
   position: fixed;
   inset: 0;
   z-index: 2147483647;
   pointer-events: none;
-  backdrop-filter: contrast(1.4);
-  -webkit-backdrop-filter: contrast(1.4);
+  backdrop-filter: contrast(1.3) brightness(1.18);
+  -webkit-backdrop-filter: contrast(1.3) brightness(1.18);
 }
 
 /*
- * Fallback for browsers without backdrop-filter support: darken the page
+ * Fallback for browsers without backdrop-filter support: deepen the page
  * backdrop and lift text to a pure white so contrast still increases.
  */
 @supports not (
-  (backdrop-filter: contrast(1.4)) or (-webkit-backdrop-filter: contrast(1.4))
+  (backdrop-filter: contrast(1.3)) or (-webkit-backdrop-filter: contrast(1.3))
 ) {
   html.high-contrast body::before {
     background:
