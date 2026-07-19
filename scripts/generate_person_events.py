@@ -4140,7 +4140,30 @@ def generate_person_events(
 
     # Write to file
     print(f"[Step 11/11] Writing dataset for '{identifier}'...")
+    existing_path = PEOPLE_DIR / identifier / "life_events.json"
+    old_payload = None
+    if existing_path.exists():
+        try:
+            old_payload = json.loads(existing_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            pass
     file_path = write_dataset(payload, identifier)
+
+    # Preserve curated meta-story selections when event indexes or text change.
+    try:
+        from sync_meta_story_events import sync_meta_story_events
+
+        sync_report = sync_meta_story_events(
+            identifier, old_person_data=old_payload, new_person_data=payload
+        )
+        if sync_report["stories"]:
+            print(
+                f"Incrementally updated {sync_report['stories']} meta story/stories "
+                f"({sync_report['updated']} references changed, "
+                f"{sync_report['removed']} removed)"
+            )
+    except Exception as error:
+        print(f"Warning: Could not sync meta-story events ({error})")
 
     if update_registry:
         print("Updating persons register...")
