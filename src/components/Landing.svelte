@@ -10,6 +10,7 @@
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
+  import HighContrastToggle from "./HighContrastToggle.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
   // LandingMap is imported on demand where it is rendered: it pulls in MapLibre
   // and its basemap dependencies (~1.1 MB), and the map starts collapsed.
@@ -452,6 +453,7 @@
             <option value="en">English</option>
             <option value="de">Deutsch</option>
           </select>
+          <HighContrastToggle variant="sticky" />
         </div>
       </header>
       <div class="sticky-ai-button">
@@ -462,15 +464,18 @@
 
   <div class="top-controls">
     <AIGeneratedButton variant="large" onClick={toggleExplanation} />
-    <select
-      value={$currentLanguage}
-      on:change={handleLanguageChange}
-      aria-label={$_("app.select_language")}
-      class="language-selector"
-    >
-      <option value="en">English</option>
-      <option value="de">Deutsch</option>
-    </select>
+    <div class="top-controls-right">
+      <select
+        value={$currentLanguage}
+        on:change={handleLanguageChange}
+        aria-label={$_("app.select_language")}
+        class="language-selector"
+      >
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+      <HighContrastToggle />
+    </div>
   </div>
 
   <div class="header-container">
@@ -815,6 +820,9 @@
 
   .sticky-right {
     flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .language-selector.sticky {
@@ -845,6 +853,12 @@
     align-items: center;
     margin-bottom: 0;
     justify-content: space-between;
+  }
+
+  .top-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .language-selector {

@@ -41,3 +41,44 @@ body::before {
 a {
   color: inherit;
 }
+
+/*
+ * High-contrast mode.
+ *
+ * A single fixed, non-interactive overlay (rendered by App.svelte while the
+ * mode is on) applies a `contrast()` filter to everything painted behind it.
+ * Using `backdrop-filter` (rather than a `filter` on a layout ancestor) keeps
+ * the boost truly global while leaving layout untouched — the app relies on
+ * `position: fixed` in many places, and a filtered ancestor would re-anchor
+ * those elements and break the UI. The overlay is `pointer-events: none`, so it
+ * never intercepts clicks. A real element is used rather than a pseudo-element
+ * on the root, because a root pseudo-element does not establish a backdrop for
+ * `backdrop-filter` to sample.
+ */
+.contrast-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  backdrop-filter: contrast(1.4);
+  -webkit-backdrop-filter: contrast(1.4);
+}
+
+/*
+ * Fallback for browsers without backdrop-filter support: darken the page
+ * backdrop and lift text to a pure white so contrast still increases.
+ */
+@supports not (
+  (backdrop-filter: contrast(1.4)) or (-webkit-backdrop-filter: contrast(1.4))
+) {
+  html.high-contrast body::before {
+    background:
+      radial-gradient(circle at top, rgb(56 189 248 / 30%), transparent 55%),
+      linear-gradient(180deg, #0b1120 0%, #000000 100%);
+  }
+
+  html.high-contrast,
+  html.high-contrast body {
+    color: #ffffff;
+  }
+}
