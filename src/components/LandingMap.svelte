@@ -1134,7 +1134,7 @@
     height: 100%;
   }
 
-  :global(.maplibregl-ctrl-zoom-reset) {
+  :global(.maplibregl-ctrl-group button.maplibregl-ctrl-zoom-reset) {
     display: grid;
     width: 29px;
     height: 29px;
