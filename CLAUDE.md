@@ -194,13 +194,9 @@ section and visualizes how the story's people connected:
 ```
 
 Each link's `endpoints` map holds **each person's own ego-network view of the
-other** (a bridge link has only the main person's entry). The UI uses this to
-explain a focused node's ties **from that person's perspective**; when a
-direction is missing it falls back to the other side and labels it "as recalled
-by {name}". Top-level `relationship_type`/`strength` (the richest direction)
-drive stroke width. Links are drawn behind nodes and read neutral until a node
-is hovered/tapped, then that node's ties light up in the accent color while
-other nodes are darkened (kept opaque so links never shine through). A weak
+other** (a bridge link has only the main person's entry). Top-level
+`relationship_type`/`strength` (the richest direction) drive stroke width and
+the tie explanations shown in the narration cards. A weak
 `forceX` pulls each node toward an x derived from its `birth_year`, so the graph
 reads left→right chronologically; secondary nodes (no birth year) sit at the
 mean x of the main people they bridge. The final layout is **fully static** —
@@ -208,12 +204,27 @@ it is computed **in the background** by advancing the simulation to full
 convergence in per-frame batches (via `requestAnimationFrame`, so the main
 thread never blocks and the layout isn't rushed) behind a "Building the
 network…" placeholder, then revealed once settled (~0.5s); nodes are not
-draggable, so the graph never moves after that. Tapping/clicking a node opens a
-details panel (a bottom sheet over the graph on mobile, so both share the
-screen) that explains its ties and links to each main person's own story; the
-graph area uses `touch-action: pan-y` so vertical page scrolling stays smooth
-on touch. The component takes `currentLanguage` and `metaStoryId` props to
-build those story links.
+draggable, so the graph never moves after that.
+
+The network is presented as a **scrollytelling section**: the graph pins
+(`position: sticky`, below the app's sticky header) while blurred,
+slightly-transparent narration cards scroll up over it. The first card is a
+short intro; each following card highlights one **cluster ("circle")** of the
+network — its members stay lit while everything else darkens (kept opaque so
+links never shine through) — and explains the cluster's ties
+(relationship label + description, main↔main ties first, capped with a
+"+n more" note) with chips linking to each main person's own story. Clusters
+are derived client-side in `src/utils/networkClusters.js` by deterministic
+greedy-modularity community detection (tie strength weighted, main↔main links
+boosted ×3 so e.g. spouses sharing a court are not split), ordered roughly by
+the mean birth year of their main members. Unconnected nodes simply don't
+appear in any card. The active card is tracked with an `IntersectionObserver`
+whose callback recomputes the active step from card geometry (so jump-scrolls
+can't leave a stale highlight). Hovering/tapping a node still transiently
+highlights that node's ties (overriding the cluster highlight; there is no
+details panel anymore), and the graph area uses `touch-action: pan-y` so
+vertical page scrolling stays smooth on touch. The component takes
+`currentLanguage` and `metaStoryId` props to build the story links.
 
 - **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
   portraits ringed in each person's `person_styles.json` primary color. A

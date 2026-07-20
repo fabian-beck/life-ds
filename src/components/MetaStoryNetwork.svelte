@@ -10,6 +10,7 @@
   } from "d3-force";
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
+  import { computeClusters } from "../utils/networkClusters.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -33,8 +34,11 @@
 
   const SECONDARY_COLOR = "#94a3b8";
   const LINK_IDLE = "#64748b"; // links when nothing is focused
-  const LINK_ACTIVE = "#38bdf8"; // a focused node's own ties (meta accent)
-  const LINK_MUTED = "#475569"; // other ties while a node is focused
+  const LINK_ACTIVE = "#38bdf8"; // focused ties (meta accent)
+  const LINK_MUTED = "#475569"; // other ties while something is focused
+
+  // How many ties a cluster card spells out before summarizing the rest.
+  const MAX_CARD_TIES = 4;
 
   // Person primary color from the shared style registry (matches the timeline).
   function primaryColor(personId) {
@@ -42,22 +46,28 @@
   }
 
   // Links carry no colour meaning on their own: they read as neutral until a
-  // node is focused, then that node's ties light up in the accent colour while
-  // the rest recede. Relationship meaning is conveyed by the explanation panel.
-  function linkFocused(link, aId) {
-    if (aId == null) return null;
-    return link.source === aId || link.target === aId;
+  // node is hovered/tapped or a cluster card is in view, then the focused ties
+  // light up in the accent colour while the rest recede.
+  function linkState(link, aId, cIds) {
+    if (aId != null) {
+      return link.source === aId || link.target === aId ? "active" : "muted";
+    }
+    if (cIds) {
+      return cIds.has(link.source) && cIds.has(link.target)
+        ? "active"
+        : "muted";
+    }
+    return "idle";
   }
-  function linkStroke(link, aId) {
-    const f = linkFocused(link, aId);
-    if (f === null) return LINK_IDLE;
-    return f ? LINK_ACTIVE : LINK_MUTED;
+  function linkStroke(link, aId, cIds) {
+    const s = linkState(link, aId, cIds);
+    return s === "idle" ? LINK_IDLE : s === "active" ? LINK_ACTIVE : LINK_MUTED;
   }
-  function linkOpacity(link, aId) {
-    const f = linkFocused(link, aId);
+  function linkOpacity(link, aId, cIds) {
+    const s = linkState(link, aId, cIds);
     const sec = link.kind === "secondary";
-    if (f === null) return sec ? 0.5 : 0.75;
-    if (f) return sec ? 0.75 : 0.95;
+    if (s === "idle") return sec ? 0.5 : 0.75;
+    if (s === "active") return sec ? 0.75 : 0.95;
     return 0.12;
   }
   // Main links encode tie strength through width; secondary ties stay thin.
@@ -70,7 +80,7 @@
         : 2.5;
   }
 
-  // Humanize a relationship_type for tooltips: "professional/mentor" → "Professional · Mentor".
+  // Humanize a relationship_type: "professional/mentor" → "Professional · Mentor".
   function humanizeRelationship(relationshipType) {
     if (!relationshipType) return "";
     return relationshipType
@@ -108,7 +118,7 @@
   let hoveredId = null; // transient (pointer over a node)
   let selectedId = null; // pinned by tap/click (persists, mobile-friendly)
 
-  // The node whose ties are highlighted and explained: hover wins, else pin.
+  // The node whose ties are highlighted: hover wins, else pin.
   $: activeId = hoveredId ?? selectedId;
 
   // Rendered node positions resolved by id (kept in sync with the simulation on
@@ -128,48 +138,108 @@
     return set;
   })();
 
-  // Connections of the active node, described from that person's perspective.
-  $: activeNode = activeId ? posById.get(activeId) : null;
-  $: activeConnections = activeId ? buildConnections(activeId) : [];
-
-  function buildConnections(id) {
-    const strengthRank = { strong: 3, moderate: 2, weak: 1 };
-    const out = [];
-    for (const l of simLinks) {
-      if (l.source !== id && l.target !== id) continue;
-      const otherId = l.source === id ? l.target : l.source;
-      const other = posById.get(otherId);
-      if (!other) continue;
-      const selfView = l.endpoints?.[id];
-      const view = selfView || l.endpoints?.[otherId] || l;
-      out.push({
-        otherId,
-        otherName: displayName(other.name),
-        otherType: other.type,
-        relationship: humanizeRelationship(view.relationship_type),
-        description: view.relationship_description || "",
-        // Whether the description is in the active person's own words, or
-        // recalled from the other person's side of the relationship.
-        recalledBy: selfView ? null : displayName(other.name),
-        rank: strengthRank[l.strength] || 0,
-      });
-    }
-    // Main ties first, then stronger ties, then alphabetical.
-    out.sort(
-      (a, b) =>
-        (a.otherType === "main" ? 0 : 1) - (b.otherType === "main" ? 0 : 1) ||
-        b.rank - a.rank ||
-        a.otherName.localeCompare(b.otherName)
-    );
-    return out;
-  }
-
   $: hasNetwork =
     network &&
     Array.isArray(network.nodes) &&
     network.nodes.length > 0 &&
     Array.isArray(network.links) &&
     network.links.length > 0;
+
+  // --- Scroll narration ("circles") ----------------------------------------
+  // Clusters derived from the network, ordered roughly by time. Each gets a
+  // card that scrolls over the pinned graph and highlights its members.
+  $: clusters = hasNetwork ? computeClusters(network) : [];
+  $: nodeById = new Map(hasNetwork ? network.nodes.map((n) => [n.id, n]) : []);
+
+  // Which step card is in the viewport band: 0 = intro, i > 0 = clusters[i-1].
+  let activeStep = null;
+  $: scrollCluster =
+    activeStep != null && activeStep > 0
+      ? (clusters[activeStep - 1] ?? null)
+      : null;
+  // Node-level focus (hover/tap) temporarily overrides the cluster highlight.
+  $: clusterIds =
+    activeId == null && scrollCluster ? scrollCluster.nodeIds : null;
+
+  // A pinned node selection would block the narration once the reader scrolls
+  // on, so moving to another card releases it.
+  let lastStep = null;
+  $: if (activeStep !== lastStep) {
+    lastStep = activeStep;
+    selectedId = null;
+  }
+
+  function isDimmed(nodeId, aId, nIds, cIds) {
+    if (aId != null) return !nIds.has(nodeId);
+    if (cIds) return !cIds.has(nodeId);
+    return false;
+  }
+
+  // A step activates while its card crosses the lower third of the viewport,
+  // so the highlight is readable before the card covers the graph, and stays
+  // active until the next card takes over. The observer only says WHEN to look
+  // (a card crossed the band); the active step is recomputed from the cards'
+  // actual positions, so jump-scrolls (scrollbar drags) can't leave a stale
+  // highlight behind.
+  const BAND_BOTTOM = 0.75; // matches the observer's -25% bottom rootMargin
+  const stepEls = [];
+  let stepObserver = null;
+
+  function recomputeActiveStep() {
+    const bandBottom = window.innerHeight * BAND_BOTTOM;
+    let current = null;
+    for (let i = 0; i < stepEls.length; i++) {
+      const el = stepEls[i];
+      if (el && el.getBoundingClientRect().top < bandBottom) current = i;
+    }
+    activeStep = current;
+  }
+
+  function observeStep(node, index) {
+    if (!stepObserver && typeof IntersectionObserver !== "undefined") {
+      stepObserver = new IntersectionObserver(recomputeActiveStep, {
+        rootMargin: "-55% 0px -25% 0px",
+      });
+    }
+    stepEls[index] = node;
+    stepObserver?.observe(node);
+    return {
+      destroy() {
+        stepObserver?.unobserve(node);
+        if (stepEls[index] === node) stepEls[index] = null;
+      },
+    };
+  }
+
+  // "Ada Lovelace, Charles Babbage and Konrad Zuse" — localized list joining.
+  function formatNameList(names, lang) {
+    try {
+      return new Intl.ListFormat(lang, {
+        style: "long",
+        type: "conjunction",
+      }).format(names);
+    } catch {
+      return names.join(", ");
+    }
+  }
+
+  function clusterTitle(cluster, lang) {
+    return formatNameList(
+      cluster.mains.map((n) => displayName(n.name)),
+      lang
+    );
+  }
+
+  // Card tie label with the story's own person first: "Ada Lovelace · Mary Somerville".
+  function tieNames(link) {
+    const a = nodeById.get(link.source);
+    const b = nodeById.get(link.target);
+    const [first, second] =
+      a?.type !== "main" && b?.type === "main" ? [b, a] : [a, b];
+    return `${displayName(first?.name || link.source)} · ${displayName(
+      second?.name || link.target
+    )}`;
+  }
 
   // Temporal layout: assign each node a target x from its birth year so the
   // graph reads left→right in chronological order. Main nodes map their birth
@@ -310,7 +380,7 @@
   }
 
   // --- Selection (tap / click) ---------------------------------------------
-  // Nodes are not draggable; tapping one toggles its selection (details panel).
+  // Nodes are not draggable; tapping one pins its ties highlighted.
   function selectNode(node, evt) {
     evt.stopPropagation();
     selectedId = selectedId === node.id ? null : node.id;
@@ -332,6 +402,7 @@
   onDestroy(() => {
     if (rafId) cancelAnimationFrame(rafId);
     if (simulation) simulation.stop();
+    stepObserver?.disconnect();
   });
 
   async function handleResize() {
@@ -354,216 +425,240 @@
 
 {#if hasNetwork}
   <div class="mnet">
-    <div
-      class="network-frame"
-      bind:this={container}
-      bind:clientWidth={width}
-      style="height: {height}px;"
-    >
-      {#if !ready}
-        <div class="network-loading">{$_("meta_story.network_loading")}</div>
-      {/if}
-      <svg
-        class="network-svg"
-        class:hidden={!ready}
-        viewBox={`0 0 ${width} ${height}`}
-        role="img"
-        aria-label={$_("meta_story.network_aria")}
-        on:pointerup={clearSelection}
+    <!-- The graph pins below the sticky header while the cards scroll over it -->
+    <div class="mnet-sticky">
+      <div
+        class="network-frame"
+        bind:this={container}
+        bind:clientWidth={width}
+        style="height: {height}px;"
       >
-        <defs>
-          {#each simNodes as node (node.id)}
-            {#if node.type === "main" && node.portrait}
-              <clipPath id={clipId(node.id)}>
-                <circle cx="0" cy="0" r={MAIN_R} />
-              </clipPath>
-            {/if}
-          {/each}
-        </defs>
+        {#if !ready}
+          <div class="network-loading">{$_("meta_story.network_loading")}</div>
+        {/if}
+        <svg
+          class="network-svg"
+          class:hidden={!ready}
+          viewBox={`0 0 ${width} ${height}`}
+          role="img"
+          aria-label={$_("meta_story.network_aria")}
+          on:pointerup={clearSelection}
+        >
+          <defs>
+            {#each simNodes as node (node.id)}
+              {#if node.type === "main" && node.portrait}
+                <clipPath id={clipId(node.id)}>
+                  <circle cx="0" cy="0" r={MAIN_R} />
+                </clipPath>
+              {/if}
+            {/each}
+          </defs>
 
-        <!-- Links -->
-        <g class="links" stroke-linecap="round">
-          {#each simLinks as link (`${link.source}-${link.target}`)}
-            {@const s = posById.get(link.source)}
-            {@const t = posById.get(link.target)}
-            {#if s && t}
-              <line
-                x1={s.x}
-                y1={s.y}
-                x2={t.x}
-                y2={t.y}
-                stroke={linkStroke(link, activeId)}
-                stroke-width={linkWidth(link)}
-                stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
-                opacity={linkOpacity(link, activeId)}
+          <!-- Links -->
+          <g class="links" stroke-linecap="round">
+            {#each simLinks as link (`${link.source}-${link.target}`)}
+              {@const s = posById.get(link.source)}
+              {@const t = posById.get(link.target)}
+              {#if s && t}
+                <line
+                  x1={s.x}
+                  y1={s.y}
+                  x2={t.x}
+                  y2={t.y}
+                  stroke={linkStroke(link, activeId, clusterIds)}
+                  stroke-width={linkWidth(link)}
+                  stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
+                  opacity={linkOpacity(link, activeId, clusterIds)}
+                >
+                  <title
+                    >{humanizeRelationship(
+                      link.relationship_type
+                    )}{link.relationship_description
+                      ? " — " + link.relationship_description
+                      : ""}</title
+                  >
+                </line>
+              {/if}
+            {/each}
+          </g>
+
+          <!-- Nodes -->
+          <g class="nodes">
+            {#each simNodes as node (node.id)}
+              {@const dim = isDimmed(
+                node.id,
+                activeId,
+                neighborIds,
+                clusterIds
+              )}
+              <g
+                class="node"
+                class:main={node.type === "main"}
+                class:secondary={node.type === "secondary"}
+                class:dim
+                class:selected={node.id === selectedId}
+                transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
+                on:pointerup={(e) => selectNode(node, e)}
+                on:pointerenter={() => (hoveredId = node.id)}
+                on:pointerleave={() => (hoveredId = null)}
+                role="listitem"
               >
                 <title
-                  >{humanizeRelationship(
-                    link.relationship_type
-                  )}{link.relationship_description
-                    ? " — " + link.relationship_description
+                  >{node.name}{node.roles && node.roles.length
+                    ? " — " + node.roles.join(", ")
                     : ""}</title
                 >
-              </line>
-            {/if}
-          {/each}
-        </g>
 
-        <!-- Nodes -->
-        <g class="nodes">
-          {#each simNodes as node (node.id)}
-            {@const dim = activeId != null && !neighborIds.has(node.id)}
-            <g
-              class="node"
-              class:main={node.type === "main"}
-              class:secondary={node.type === "secondary"}
-              class:dim
-              class:selected={node.id === selectedId}
-              transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
-              on:pointerup={(e) => selectNode(node, e)}
-              on:pointerenter={() => (hoveredId = node.id)}
-              on:pointerleave={() => (hoveredId = null)}
-              role="listitem"
-            >
-              <title
-                >{node.name}{node.roles && node.roles.length
-                  ? " — " + node.roles.join(", ")
-                  : ""}</title
-              >
-
-              {#if node.type === "main"}
-                <circle
-                  class="halo"
-                  r={MAIN_R + 3}
-                  fill="none"
-                  stroke={primaryColor(node.id)}
-                  stroke-width={node.id === selectedId ? 4.5 : 3}
-                />
-                {#if node.portrait}
-                  <image
-                    href={node.portrait}
-                    x={-MAIN_R}
-                    y={-MAIN_R}
-                    width={MAIN_R * 2}
-                    height={MAIN_R * 2}
-                    clip-path={`url(#${clipId(node.id)})`}
-                    preserveAspectRatio="xMidYMid slice"
+                {#if node.type === "main"}
+                  <circle
+                    class="halo"
+                    r={MAIN_R + 3}
+                    fill="none"
+                    stroke={primaryColor(node.id)}
+                    stroke-width={node.id === selectedId ? 4.5 : 3}
                   />
+                  {#if node.portrait}
+                    <image
+                      href={node.portrait}
+                      x={-MAIN_R}
+                      y={-MAIN_R}
+                      width={MAIN_R * 2}
+                      height={MAIN_R * 2}
+                      clip-path={`url(#${clipId(node.id)})`}
+                      preserveAspectRatio="xMidYMid slice"
+                    />
+                  {:else}
+                    <circle
+                      r={MAIN_R}
+                      fill={primaryColor(node.id)}
+                      opacity="0.35"
+                    />
+                  {/if}
+                  <text class="label main-label" y={MAIN_R + 16}>
+                    {displayName(node.name)}
+                  </text>
                 {:else}
                   <circle
-                    r={MAIN_R}
-                    fill={primaryColor(node.id)}
-                    opacity="0.35"
+                    r={SECONDARY_R}
+                    fill="#1e293b"
+                    stroke={SECONDARY_COLOR}
+                    stroke-width="1.5"
                   />
+                  <text class="label secondary-label" y={SECONDARY_R + 13}>
+                    {displayName(node.name)}
+                  </text>
                 {/if}
-                <text class="label main-label" y={MAIN_R + 16}>
-                  {displayName(node.name)}
-                </text>
-              {:else}
-                <circle
-                  r={SECONDARY_R}
-                  fill="#1e293b"
-                  stroke={SECONDARY_COLOR}
-                  stroke-width="1.5"
-                />
-                <text class="label secondary-label" y={SECONDARY_R + 13}>
-                  {displayName(node.name)}
-                </text>
-              {/if}
-            </g>
-          {/each}
-        </g>
-      </svg>
+              </g>
+            {/each}
+          </g>
+        </svg>
 
-      <!-- Legend -->
-      <div class="legend" class:hidden={!ready}>
-        <span class="legend-item">
-          <span class="legend-dot main-dot"></span>
-          {$_("meta_story.network_main")}
-        </span>
-        <span class="legend-item">
-          <span class="legend-dot secondary-dot"></span>
-          {$_("meta_story.network_secondary")}
-        </span>
+        <!-- Legend -->
+        <div class="legend" class:hidden={!ready}>
+          <span class="legend-item">
+            <span class="legend-dot main-dot"></span>
+            {$_("meta_story.network_main")}
+          </span>
+          <span class="legend-item">
+            <span class="legend-dot secondary-dot"></span>
+            {$_("meta_story.network_secondary")}
+          </span>
+        </div>
       </div>
     </div>
 
-    <!-- Explanation panel: a node's ties, described from that person's view -->
-    <div
-      class="network-explain"
-      class:has-active={!!activeNode}
-      aria-live="polite"
-    >
-      {#if activeNode}
-        <div class="explain-head">
-          <div class="explain-head-text">
-            <span class="explain-name">{displayName(activeNode.name)}</span>
-            {#if activeNode.roles && activeNode.roles.length}
-              <span class="explain-roles">{activeNode.roles.join(", ")}</span>
-            {/if}
+    <!-- Narration: cards scroll up over the pinned graph, each highlighting
+         and explaining one circle of connected people. -->
+    {#if clusters.length}
+      <ol class="mnet-steps">
+        <li class="step" use:observeStep={0}>
+          <div class="step-card" class:current={activeStep === 0}>
+            <h3 class="step-title">{$_("meta_story.network_intro_title")}</h3>
+            <p class="step-body">{$_("meta_story.network_intro_body")}</p>
           </div>
-          {#if activeNode.type === "main"}
-            <button
-              type="button"
-              class="explain-jump"
-              on:click={() => goToStory(activeNode.id)}
-            >
-              {$_("meta_story.network_view_story")}
-            </button>
-          {/if}
-        </div>
-        {#if activeConnections.length}
-          <ul class="explain-list">
-            {#each activeConnections as c (c.otherId)}
-              <li
-                class="explain-item"
-                class:is-secondary={c.otherType === "secondary"}
-              >
-                <div class="explain-item-head">
-                  {#if c.otherType === "main"}
-                    <button
-                      type="button"
-                      class="explain-other-link"
-                      on:click={() => goToStory(c.otherId)}
-                    >
-                      {c.otherName}
-                    </button>
-                  {:else}
-                    <span class="explain-other">{c.otherName}</span>
-                  {/if}
-                  {#if c.relationship}
-                    <span class="explain-rel">{c.relationship}</span>
-                  {/if}
-                </div>
-                {#if c.description}
-                  <p class="explain-desc">
-                    {c.description}
-                    {#if c.recalledBy}
-                      <span class="explain-recalled"
-                        >{$_("meta_story.network_recalled_by", {
-                          name: c.recalledBy,
-                        })}</span
-                      >
+        </li>
+        {#each clusters as cluster, i (cluster.key)}
+          <li class="step" use:observeStep={i + 1}>
+            <div class="step-card" class:current={activeStep === i + 1}>
+              <p class="step-kicker">
+                {$_("meta_story.network_step", {
+                  index: i + 1,
+                  total: clusters.length,
+                })}
+              </p>
+              <h3 class="step-title">
+                {clusterTitle(cluster, currentLanguage)}
+              </h3>
+              {#if cluster.yearStart != null}
+                <p class="step-years">
+                  {cluster.yearStart === cluster.yearEnd
+                    ? $_("meta_story.network_born_one", {
+                        start: cluster.yearStart,
+                      })
+                    : $_("meta_story.network_born_range", {
+                        start: cluster.yearStart,
+                        end: cluster.yearEnd,
+                      })}
+                </p>
+              {/if}
+              <ul class="tie-list">
+                {#each cluster.links.slice(0, MAX_CARD_TIES) as tie (`${tie.source}-${tie.target}`)}
+                  <li class="tie" class:is-secondary={tie.kind === "secondary"}>
+                    <div class="tie-head">
+                      <span class="tie-names">{tieNames(tie)}</span>
+                      {#if tie.relationship_type}
+                        <span class="tie-rel"
+                          >{humanizeRelationship(tie.relationship_type)}</span
+                        >
+                      {/if}
+                    </div>
+                    {#if tie.relationship_description}
+                      <p class="tie-desc">{tie.relationship_description}</p>
                     {/if}
-                  </p>
-                {/if}
-              </li>
-            {/each}
-          </ul>
-        {:else}
-          <p class="explain-empty">{$_("meta_story.network_no_connections")}</p>
-        {/if}
-      {:else}
-        <p class="explain-hint">{$_("meta_story.network_hint")}</p>
-      {/if}
-    </div>
+                  </li>
+                {/each}
+              </ul>
+              {#if cluster.links.length > MAX_CARD_TIES}
+                <p class="tie-more">
+                  {$_("meta_story.network_more_ties", {
+                    count: cluster.links.length - MAX_CARD_TIES,
+                  })}
+                </p>
+              {/if}
+              <div class="step-people">
+                {#each cluster.mains as person (person.id)}
+                  <button
+                    type="button"
+                    class="person-chip"
+                    title={$_("meta_story.network_view_story")}
+                    on:click={() => goToStory(person.id)}
+                  >
+                    {#if person.portrait}
+                      <img src={person.portrait} alt="" loading="lazy" />
+                    {/if}
+                    <span>{displayName(person.name)}</span>
+                  </button>
+                {/each}
+              </div>
+            </div>
+          </li>
+        {/each}
+      </ol>
+    {/if}
   </div>
 {/if}
 
 <style>
-  /* Positioned wrapper so the details panel can overlay the graph on mobile. */
   .mnet {
     position: relative;
+  }
+
+  /* The graph sticks below the app's sticky header while the narration cards
+     (which follow in flow) scroll up and over it. */
+  .mnet-sticky {
+    position: sticky;
+    top: calc(var(--sticky-header-height, 0px) + 0.5rem);
+    z-index: 1;
   }
 
   .network-frame {
@@ -628,6 +723,9 @@
     }
     .network-loading {
       animation: none;
+    }
+    .node {
+      transition: none;
     }
   }
 
@@ -711,158 +809,168 @@
     border: 1.5px solid #94a3b8;
   }
 
-  /* Explanation panel */
-  .network-explain {
-    margin-top: 0.85rem;
-    padding: 0.85rem 1rem;
-    min-height: 4.5rem;
-    border-radius: 12px;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(148, 163, 184, 0.16);
-  }
-
-  .explain-hint {
-    margin: 0;
-    color: #94a3b8;
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .explain-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.6rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
-  }
-
-  .explain-head-text {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  .explain-name {
-    font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #e2e8f0;
-  }
-
-  /* "Open story" action for a focused main person. */
-  .explain-jump {
-    flex: 0 0 auto;
-    border: 1px solid rgba(56, 189, 248, 0.5);
-    background: rgba(56, 189, 248, 0.12);
-    color: #7dd3fc;
-    font: inherit;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition:
-      background-color 0.15s ease,
-      border-color 0.15s ease;
-  }
-  .explain-jump:hover,
-  .explain-jump:focus-visible {
-    background: rgba(56, 189, 248, 0.22);
-    border-color: rgba(56, 189, 248, 0.8);
-    outline: none;
-  }
-
-  /* A connection that is itself a main person links to their story. */
-  .explain-other-link {
-    border: none;
-    background: none;
-    padding: 0;
-    font-family: inherit;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: #f1f5f9;
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: rgba(125, 211, 252, 0.45);
-    text-underline-offset: 2px;
-  }
-  .explain-other-link:hover,
-  .explain-other-link:focus-visible {
-    text-decoration-color: #7dd3fc;
-    outline: none;
-  }
-
-  .explain-roles {
-    font-size: 0.8rem;
-    color: #94a3b8;
-    text-transform: capitalize;
-  }
-
-  .explain-list {
+  /* --- Narration cards ---------------------------------------------------- */
+  .mnet-steps {
+    position: relative;
+    z-index: 2;
     list-style: none;
     margin: 0;
+    padding: 12vh 0 16vh;
+    /* Let the pointer reach the graph between cards; cards opt back in. */
+    pointer-events: none;
+  }
+
+  .step {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 55vh;
+  }
+
+  .step:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Blurred, slightly transparent card scrolling over the graph. */
+  .step-card {
+    pointer-events: auto;
+    width: min(30rem, 100%);
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 16px;
+    padding: 1.1rem 1.3rem 1.2rem;
+    box-shadow: 0 14px 34px rgba(2, 6, 23, 0.45);
+    transition: border-color 0.25s ease;
+  }
+
+  .step-card.current {
+    border-color: rgba(56, 189, 248, 0.55);
+  }
+
+  .step-kicker {
+    margin: 0 0 0.3rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7dd3fc;
+  }
+
+  .step-title {
+    margin: 0;
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    line-height: 1.35;
+  }
+
+  .step-years {
+    margin: 0.2rem 0 0;
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+
+  .step-body {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+  }
+
+  .tie-list {
+    list-style: none;
+    margin: 0.8rem 0 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    max-height: 15rem;
-    overflow-y: auto;
   }
 
-  .explain-item {
+  .tie {
     border-left: 2px solid rgba(56, 189, 248, 0.6);
     padding-left: 0.6rem;
   }
 
-  .explain-item.is-secondary {
+  .tie.is-secondary {
     border-left-color: rgba(148, 163, 184, 0.55);
   }
 
-  .explain-item-head {
+  .tie-head {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0.4rem;
   }
 
-  .explain-other {
+  .tie-names {
     font-weight: 600;
     color: #f1f5f9;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
   }
 
-  .explain-rel {
-    font-size: 0.75rem;
+  .tie-rel {
+    font-size: 0.72rem;
     color: #7dd3fc;
     letter-spacing: 0.01em;
   }
 
-  .explain-item.is-secondary .explain-rel {
+  .tie.is-secondary .tie-rel {
     color: #cbd5e1;
   }
 
-  .explain-desc {
+  .tie-desc {
     margin: 0.15rem 0 0;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     line-height: 1.5;
     color: #cbd5e1;
   }
 
-  .explain-recalled {
+  .tie-more {
+    margin: 0.5rem 0 0;
+    font-size: 0.78rem;
     color: #94a3b8;
-    font-style: italic;
   }
 
-  .explain-empty {
-    margin: 0;
-    color: #94a3b8;
-    font-size: 0.88rem;
+  .step-people {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+
+  .person-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    background: rgba(56, 189, 248, 0.1);
+    color: #bae6fd;
+    border-radius: 999px;
+    padding: 0.22rem 0.7rem;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .person-chip img {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: -0.4rem;
+  }
+
+  .person-chip:hover,
+  .person-chip:focus-visible {
+    background: rgba(56, 189, 248, 0.22);
+    border-color: rgba(56, 189, 248, 0.8);
+    outline: none;
   }
 
   @media (max-width: 640px) {
@@ -876,30 +984,9 @@
       font-size: 0.68rem;
       gap: 0.6rem;
     }
-
-    /* On mobile the details slide up as a bottom sheet over the lower part of
-       the graph, so the network and the selection details share one screen. */
-    .network-explain {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: 0;
-      max-height: 60%;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 14px 14px 0 0;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      box-shadow: 0 -10px 24px rgba(2, 6, 23, 0.5);
-    }
-    /* Keep the whole graph visible until something is selected. */
-    .network-explain:not(.has-active) {
-      display: none;
-    }
-    .explain-list {
-      max-height: none;
+    .step-card {
+      width: min(28rem, 100%);
+      padding: 0.95rem 1.05rem 1.05rem;
     }
   }
 </style>
