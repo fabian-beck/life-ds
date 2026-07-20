@@ -7,6 +7,7 @@
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
+  import { consumeMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
   export let metaStoryData = null;
@@ -26,6 +27,7 @@
   let scrollProgress = 0; // 0 to 1, current scroll position for timeline indicator
   let lastScrollOrigin = null; // Track origin of last scroll: 'vertical' | 'horizontal' | null
   let timelineScrollListenerAttached = false; // Track if listener is attached
+  let scrollRestoreHandled = false; // Whether the remembered scroll position has been applied
 
   // Navigate back to landing
   function backToLanding() {
@@ -38,6 +40,36 @@
     requestAnimationFrame(() => {
       calculateProxyHeight();
     });
+  }
+
+  // Once the timeline is laid out (proxy container is tall enough to scroll),
+  // restore the scroll position the reader left from when opening a person's
+  // story. Runs at most once per mount; a fresh visit has nothing stored.
+  $: if (!scrollRestoreHandled && proxyHeight > 0 && metaStoryData) {
+    restoreScrollPosition();
+  }
+
+  function restoreScrollPosition() {
+    scrollRestoreHandled = true;
+    const metaStoryId = metaStoryData?.meta_story?.id;
+    const savedScrollY = consumeMetaStoryScroll(metaStoryId);
+    if (savedScrollY == null || savedScrollY <= 0) return;
+
+    // The scroll-proxy container height depends on proxyHeight, which may still
+    // be growing as the timeline finishes measuring. Retry across a few frames
+    // until the page is tall enough to reach the saved offset, then let the
+    // window scroll handler translate it back into horizontal timeline scroll.
+    let attempts = 0;
+    const applyScroll = () => {
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo(0, Math.min(savedScrollY, Math.max(maxScroll, 0)));
+      if (maxScroll < savedScrollY && attempts < 12) {
+        attempts += 1;
+        requestAnimationFrame(applyScroll);
+      }
+    };
+    requestAnimationFrame(applyScroll);
   }
 
   // Attach scroll listener to timeline after it renders

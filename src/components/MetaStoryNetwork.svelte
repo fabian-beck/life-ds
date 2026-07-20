@@ -10,6 +10,7 @@
   } from "d3-force";
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
+  import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
@@ -23,6 +24,8 @@
   // the navigation used by the meta timeline).
   function goToStory(personId) {
     const fromMeta = metaStoryId ? `?from_meta=${metaStoryId}` : "";
+    // Remember where the reader left the meta story so returning restores it
+    saveMetaStoryScroll(metaStoryId);
     window.location.hash = `/${currentLanguage}/story/${encodeURIComponent(
       personId
     )}${fromMeta}`;
