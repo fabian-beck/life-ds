@@ -22,7 +22,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
-from meta_story_network import DATA_DIR, build_social_network
+from meta_story_network import DATA_DIR, build_social_network, derive_clusters
 
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 REGISTER_PATH = DATA_DIR / "persons.json"
@@ -76,9 +76,33 @@ def backfill(story_ids: List[str], registry: Dict[str, Any], dry_run: bool) -> N
             f"{len(network['links'])} links"
         )
 
+        # Circle keys of the re-derived network, for narration carry-over.
+        valid_keys = {c["key"] for c in derive_clusters(network)}
+
         for path in _story_files(story_id):
             data = _load(path)
-            data["social_network"] = network
+            # Carry over each file's own narration (English or translated),
+            # dropping circles whose cluster no longer exists. Regenerate
+            # narration with the meta story pipeline when circles changed.
+            old_narration = (data.get("social_network") or {}).get("narration")
+            data["social_network"] = json.loads(json.dumps(network))
+            if isinstance(old_narration, dict):
+                kept = [
+                    circle
+                    for circle in (old_narration.get("circles") or [])
+                    if circle.get("key") in valid_keys
+                ]
+                dropped = len(old_narration.get("circles") or []) - len(kept)
+                data["social_network"]["narration"] = {
+                    **old_narration,
+                    "circles": kept,
+                }
+                if dropped:
+                    print(
+                        f"    ⚠ {path.relative_to(DATA_DIR)}: dropped {dropped} "
+                        "narration circle(s) whose cluster changed — regenerate "
+                        "narration"
+                    )
             if dry_run:
                 print(f"    [dry-run] would update {path.relative_to(DATA_DIR)}")
             else:

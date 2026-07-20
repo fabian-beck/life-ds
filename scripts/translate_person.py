@@ -174,6 +174,15 @@ class TrSubtopic(BaseModel):
     description: str
 
 
+class TrNetworkCircle(BaseModel):
+    text: str
+
+
+class TrNetworkNarration(BaseModel):
+    intro: str
+    circles: List[TrNetworkCircle]
+
+
 class MetaStoryTranslation(BaseModel):
     title: str
     tagline: str
@@ -181,6 +190,7 @@ class MetaStoryTranslation(BaseModel):
     subtopics: List[TrSubtopic]
     chapters: List[TrMetaChapter]
     conclusion: Optional[str] = None
+    network_narration: Optional[TrNetworkNarration] = None
 
 
 # ---------------------------------------------------------------------------
@@ -268,7 +278,7 @@ def extract_registry_entry_translatables(entry: Dict[str, Any]) -> Dict[str, Any
 def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     """Extract only the translatable text fields from a meta story dataset."""
     meta = data.get("meta_story", {}) or {}
-    return {
+    payload: Dict[str, Any] = {
         "title": meta.get("title", ""),
         "tagline": meta.get("tagline", ""),
         "description": meta.get("description", ""),
@@ -301,6 +311,20 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         ],
         "conclusion": data.get("conclusion"),
     }
+    # The social network itself is technical (copied verbatim), but its
+    # narration texts are prose and must be translated. The key is only added
+    # when narration exists, so fingerprints of stories without narration are
+    # unchanged.
+    narration = (data.get("social_network") or {}).get("narration")
+    if isinstance(narration, dict):
+        payload["network_narration"] = {
+            "intro": narration.get("intro", ""),
+            "circles": [
+                {"text": circle.get("text", "")}
+                for circle in (narration.get("circles") or [])
+            ],
+        }
+    return payload
 
 
 # ---------------------------------------------------------------------------
@@ -589,6 +613,18 @@ def apply_meta_story_translations(
             _set_if_source_has(pe, "theme_connection", tr_pe.get("theme_connection"))
 
     _set_if_source_has(result, "conclusion", translated.get("conclusion"))
+
+    # Network narration: the graph data stays verbatim, only the prose is
+    # overlaid. Circle keys (main person ids) are technical and never touched.
+    src_narration = (result.get("social_network") or {}).get("narration")
+    tr_narration = translated.get("network_narration")
+    if isinstance(src_narration, dict) and isinstance(tr_narration, dict):
+        _set_if_source_has(src_narration, "intro", tr_narration.get("intro"))
+        src_circles = src_narration.get("circles") or []
+        tr_circles = tr_narration.get("circles") or []
+        _require_same_length("network_narration.circles", src_circles, tr_circles)
+        for circle, tr_circle in zip(src_circles, tr_circles):
+            _set_if_source_has(circle, "text", tr_circle.get("text"))
 
     return result
 
@@ -1009,7 +1045,10 @@ def translate_meta_story(
             '"Programmability Imagined (1820-1852)" — translate the words and '
             "keep the parenthesized range exactly as-is.\n"
             "8. event_title entries reference event slides — translate them as "
-            "crisp headlines (2-6 words)."
+            "crisp headlines (2-6 words).\n"
+            "9. network_narration texts are short narrative paragraphs about "
+            "the story's social network — translate them as flowing prose, "
+            "localizing person names per the usual name rules."
         ),
         target_lang=target_lang,
         glossary={},

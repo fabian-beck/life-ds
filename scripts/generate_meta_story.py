@@ -23,7 +23,7 @@ from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL
-from meta_story_network import build_social_network
+from meta_story_network import build_social_network, derive_clusters
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -261,6 +261,24 @@ class MetaStoryDataset(BaseModel):
     subtopics: List[Subtopic]
     chapters: List[ChapterWithEvents]
     conclusion: str
+
+
+class NetworkCircleNarration(BaseModel):
+    """Narrative text for one cluster ("circle") of the social network."""
+
+    key: str = Field(description="The circle's key, copied verbatim from the input")
+    text: str = Field(
+        description="2-4 sentence story text weaving the circle's ties together"
+    )
+
+
+class NetworkNarrationResult(BaseModel):
+    """AI-written narration for the social network scroll-over cards."""
+
+    intro: str = Field(
+        description="1-2 sentence story-specific introduction to the network"
+    )
+    circles: List[NetworkCircleNarration]
 
 
 # ============================================================================
@@ -1508,6 +1526,104 @@ def build_meta_story_dataset(
     return result
 
 
+def phase6_network_narration(
+    dataset: Dict[str, Any],
+    client: OpenAI,
+    model: str,
+    verbose: bool = False,
+) -> None:
+    """Phase 6: Write short story texts for the network's clusters ("circles").
+
+    The UI narrates the social network with scroll-over cards, one per cluster
+    (derived deterministically by ``derive_clusters``, mirroring the client).
+    This phase asks the model for a short narrative per circle plus an intro,
+    stored as ``social_network.narration``. Failures are non-fatal — without
+    narration the UI falls back to listing the ties.
+    """
+    network = dataset.get("social_network") or {}
+    clusters = derive_clusters(network)
+    if not clusters:
+        return
+
+    meta = dataset.get("meta_story", {})
+    cluster_briefs = []
+    for cluster in clusters:
+        members = ", ".join(
+            f"{n['name']} ({n.get('birth_year') or '?'}; "
+            f"{', '.join(n.get('roles') or []) or 'role unknown'})"
+            for n in cluster["mains"]
+        )
+        bridges = ", ".join(n["name"] for n in cluster["secondaries"]) or "none"
+        ties = "\n".join(
+            f"  - {link['source']} <-> {link['target']} "
+            f"[{link.get('relationship_type', '')}, {link.get('strength', '')}]: "
+            f"{link.get('relationship_description', '')}"
+            for link in cluster["links"]
+        )
+        cluster_briefs.append(
+            f"Circle key: {cluster['key']}\n"
+            f"Main people: {members}\n"
+            f"Bridging acquaintances: {bridges}\n"
+            f"Ties:\n{ties}"
+        )
+    briefs = "\n\n".join(cluster_briefs)
+
+    prompt = f"""Write the narration for the social-network section of the meta story
+"{meta.get("title", "")}" ({meta.get("tagline", "")}).
+
+The network is shown as a graph; while the reader scrolls, each "circle"
+(cluster of closely connected people) is highlighted with a card containing a
+short story text. Write those texts.
+
+CIRCLES:
+
+{briefs}
+
+REQUIREMENTS:
+- intro: 1-2 sentences that set up this specific network (who its threads run
+  through, what shape it has). No generic explanations of how to read a graph.
+- One entry per circle, in the given order, with `key` copied EXACTLY.
+- Each circle text: 2-4 sentences of flowing prose that weave the ties into a
+  miniature story — how these people found each other, what bound them, who
+  bridged whom. Ground every claim in the tie descriptions above; do not invent
+  facts. No bullet points, no lists of relationships.
+- Refer to people by natural name forms (e.g. "Babbage" on second mention).
+- Tone: vivid but factual, matching a biographical story collection."""
+
+    try:
+        response = client.beta.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a skilled narrative writer turning "
+                    "relationship data into short, factual story texts.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            response_format=NetworkNarrationResult,
+        )
+        result = response.choices[0].message
+        if not result.parsed:
+            print("Warning: Phase 6 returned no parsed result, skipping narration")
+            return
+        by_key = {c.key: c.text for c in result.parsed.circles}
+        missing = [c["key"] for c in clusters if c["key"] not in by_key]
+        if missing:
+            print(f"Warning: Phase 6 narration missing circles {missing}, skipping")
+            return
+        network["narration"] = {
+            "intro": result.parsed.intro,
+            "circles": [
+                {"key": c["key"], "text": by_key[c["key"]]} for c in clusters
+            ],
+        }
+        if verbose:
+            print(f"  Narrated {len(clusters)} circle(s)")
+    except Exception as e:
+        print(f"Warning: Phase 6 network narration failed: {e}")
+
+
 def save_meta_story(
     story_id: str, dataset: Dict[str, Any], verbose: bool = False
 ) -> bool:
@@ -1794,6 +1910,13 @@ def main():
     # Build dataset
     dataset = build_meta_story_dataset(
         plan, chapters, story_id, registry, hints=hints, model=args.model
+    )
+
+    # Phase 6: narrate the social network's circles (non-fatal on failure)
+    if args.verbose:
+        print("\n=== PHASE 6: Network Narration ===")
+    phase6_network_narration(
+        dataset, client=client, model=args.model, verbose=args.verbose
     )
 
     # Save files

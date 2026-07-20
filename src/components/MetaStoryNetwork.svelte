@@ -151,6 +151,15 @@
   $: clusters = hasNetwork ? computeClusters(network) : [];
   $: nodeById = new Map(hasNetwork ? network.nodes.map((n) => [n.id, n]) : []);
 
+  // Story texts authored by the generation pipeline (social_network.narration),
+  // matched to clusters by key. A card shows its cluster's story text; only
+  // when a text is missing (e.g. clusters changed since narration was written)
+  // does it fall back to listing the ties.
+  $: narrationTexts = new Map(
+    (network?.narration?.circles || []).map((c) => [c.key, c.text])
+  );
+  $: introText = network?.narration?.intro || null;
+
   // Which step card is in the viewport band: 0 = intro, i > 0 = clusters[i-1].
   let activeStep = null;
   $: scrollCluster =
@@ -574,7 +583,12 @@
         <li class="step" use:observeStep={0}>
           <div class="step-card" class:current={activeStep === 0}>
             <h3 class="step-title">{$_("meta_story.network_intro_title")}</h3>
-            <p class="step-body">{$_("meta_story.network_intro_body")}</p>
+            {#if introText}
+              <p class="step-body">{introText}</p>
+            {/if}
+            <p class="step-body" class:step-hint={!!introText}>
+              {$_("meta_story.network_intro_body")}
+            </p>
           </div>
         </li>
         {#each clusters as cluster, i (cluster.key)}
@@ -601,29 +615,36 @@
                       })}
                 </p>
               {/if}
-              <ul class="tie-list">
-                {#each cluster.links.slice(0, MAX_CARD_TIES) as tie (`${tie.source}-${tie.target}`)}
-                  <li class="tie" class:is-secondary={tie.kind === "secondary"}>
-                    <div class="tie-head">
-                      <span class="tie-names">{tieNames(tie)}</span>
-                      {#if tie.relationship_type}
-                        <span class="tie-rel"
-                          >{humanizeRelationship(tie.relationship_type)}</span
-                        >
+              {#if narrationTexts.has(cluster.key)}
+                <p class="step-body">{narrationTexts.get(cluster.key)}</p>
+              {:else}
+                <ul class="tie-list">
+                  {#each cluster.links.slice(0, MAX_CARD_TIES) as tie (`${tie.source}-${tie.target}`)}
+                    <li
+                      class="tie"
+                      class:is-secondary={tie.kind === "secondary"}
+                    >
+                      <div class="tie-head">
+                        <span class="tie-names">{tieNames(tie)}</span>
+                        {#if tie.relationship_type}
+                          <span class="tie-rel"
+                            >{humanizeRelationship(tie.relationship_type)}</span
+                          >
+                        {/if}
+                      </div>
+                      {#if tie.relationship_description}
+                        <p class="tie-desc">{tie.relationship_description}</p>
                       {/if}
-                    </div>
-                    {#if tie.relationship_description}
-                      <p class="tie-desc">{tie.relationship_description}</p>
-                    {/if}
-                  </li>
-                {/each}
-              </ul>
-              {#if cluster.links.length > MAX_CARD_TIES}
-                <p class="tie-more">
-                  {$_("meta_story.network_more_ties", {
-                    count: cluster.links.length - MAX_CARD_TIES,
-                  })}
-                </p>
+                    </li>
+                  {/each}
+                </ul>
+                {#if cluster.links.length > MAX_CARD_TIES}
+                  <p class="tie-more">
+                    {$_("meta_story.network_more_ties", {
+                      count: cluster.links.length - MAX_CARD_TIES,
+                    })}
+                  </p>
+                {/if}
               {/if}
               <div class="step-people">
                 {#each cluster.mains as person (person.id)}
@@ -877,6 +898,13 @@
     font-size: 0.9rem;
     line-height: 1.6;
     color: #cbd5e1;
+  }
+
+  /* When a story-specific intro exists, the generic reading instructions
+     recede to a quiet hint below it. */
+  .step-hint {
+    font-size: 0.8rem;
+    color: #94a3b8;
   }
 
   .tie-list {

@@ -478,8 +478,8 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "1dd48dc9b0f9a964",
-    "translated_on": "2026-07-19T05:05:11.168968+00:00",
+    "source_fingerprint": "5edb54814cb4c470",
+    "translated_on": "2026-07-20T13:56:59.661471+00:00",
     "translator": "manual"
   },
   "social_network": {
@@ -853,6 +853,23 @@
           }
         }
       }
-    ]
+    ],
+    "narration": {
+      "intro": "Drei Generationen von Computerpionieren bilden dieses Geflecht: ein viktorianischer Kreis, der von Rechenmaschinen träumte, die Mathematiker der Kriegsjahre, die Logik in funktionierende Maschinen verwandelten, und die Visionäre, die fragten, was Computer für Menschen tun sollten.",
+      "circles": [
+        {
+          "key": "charles_babbage+ada_lovelace+konrad_zuse",
+          "text": "Es begann in einem Londoner Salon: Auf einer von Charles Babbages Soireen traf 1833 Ada Lovelace — Schützling und enge Freundin der Wissenschaftsautorin Mary Somerville, die sie in Babbages Kreis eingeführt hatte — den Erfinder der Analytical Engine; daraus erwuchs die Zusammenarbeit, aus der ihre einflussreichen Notizen zu der Maschine hervorgingen. Ein Jahrhundert später baute Konrad Zuse in Berlin seine eigenen Computer, nannte Babbage aber schließlich den „wahren Vater des Computers“ und erkannte an, dass die Analytical Engine seiner Arbeit vorausgegriffen hatte."
+        },
+        {
+          "key": "john_von_neumann+grace_hopper+alan_turing",
+          "text": "Als Alan Turing 1936 in seinem Aufsatz eine universelle Maschine beschrieb, erkannte John von Neumann darin das Kernkonzept des modernen Computers und lud ihn als seinen Assistenten nach Princeton ein — doch Turing kehrte lieber nach Großbritannien zurück. Später beriet von Neumann J. Presper Eckert und John Mauchly beim logischen Neuentwurf des ENIAC und dem Übergang zu speicherprogrammierten Rechnern, und in Eckerts und Mauchlys Firma arbeitete Grace Hopper als leitende Mathematikerin an der UNIVAC I und schrieb ihre frühen Compiler."
+        },
+        {
+          "key": "vannevar_bush+joseph_weizenbaum+douglas_engelbart",
+          "text": "Vannevar Bush und der Mathematiker Norbert Wiener arbeiteten eng zusammen — Wiener begleitete die Mathematik von Bushs Lehrbuch zur Schaltkreistheorie und schrieb sogar einen Anhang dafür. Bushs Essay „As We May Think“ von 1945 erreichte später den jungen Douglas Engelbart bei der U.S. Navy und setzte ihn auf den Weg zum interaktiven, wissenserweiternden Computer, während Joseph Weizenbaum Wieners frühe ethische Warnungen vor der Automatisierung aufgriff und ins Computerzeitalter trug."
+        }
+      ]
+    }
   }
 }

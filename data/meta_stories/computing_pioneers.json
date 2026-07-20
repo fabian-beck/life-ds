@@ -846,6 +846,23 @@
           }
         }
       }
-    ]
+    ],
+    "narration": {
+      "intro": "Three generations of computing pioneers form this web: a Victorian circle dreaming of calculating engines, the wartime mathematicians who turned logic into working machines, and the visionaries who asked what computers should do for people.",
+      "circles": [
+        {
+          "key": "charles_babbage+ada_lovelace+konrad_zuse",
+          "text": "It began in a London drawing room: at one of Charles Babbage’s soirées in 1833, Ada Lovelace — protégée and close friend of the scientific author Mary Somerville, who had drawn her into Babbage’s circle — met the inventor of the Analytical Engine, beginning the collaboration that produced her influential notes on the machine. A century later Konrad Zuse built his own computers in Berlin, yet came to call Babbage the ‘real father of the computer’, acknowledging that the Analytical Engine had anticipated his work."
+        },
+        {
+          "key": "john_von_neumann+grace_hopper+alan_turing",
+          "text": "When Alan Turing described a universal machine in his 1936 paper, John von Neumann recognized the central concept of modern computing and invited him to Princeton as his assistant — though Turing chose to return to the UK. Von Neumann later advised J. Presper Eckert and John Mauchly on ENIAC’s logical redesign and the shift toward stored programs, and it was in Eckert and Mauchly’s company that Grace Hopper worked as senior mathematician on UNIVAC I, writing her early compilers."
+        },
+        {
+          "key": "vannevar_bush+joseph_weizenbaum+douglas_engelbart",
+          "text": "Vannevar Bush and the mathematician Norbert Wiener worked closely together — Wiener guided the mathematics of Bush’s circuit-theory textbook and even wrote an appendix for it. Bush’s 1945 essay “As We May Think” later reached a young Douglas Engelbart in the U.S. Navy and set him on his path toward interactive, knowledge-augmenting computing, while Joseph Weizenbaum took up Wiener’s early ethical warnings about automation and carried them into the computer age."
+        }
+      ]
+    }
   }
 }

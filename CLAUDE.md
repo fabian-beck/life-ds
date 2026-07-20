@@ -211,20 +211,41 @@ The network is presented as a **scrollytelling section**: the graph pins
 slightly-transparent narration cards scroll up over it. The first card is a
 short intro; each following card highlights one **cluster ("circle")** of the
 network — its members stay lit while everything else darkens (kept opaque so
-links never shine through) — and explains the cluster's ties
-(relationship label + description, main↔main ties first, capped with a
-"+n more" note) with chips linking to each main person's own story. Clusters
-are derived client-side in `src/utils/networkClusters.js` by deterministic
-greedy-modularity community detection (tie strength weighted, main↔main links
-boosted ×3 so e.g. spouses sharing a court are not split), ordered roughly by
-the mean birth year of their main members. Unconnected nodes simply don't
-appear in any card. The active card is tracked with an `IntersectionObserver`
-whose callback recomputes the active step from card geometry (so jump-scrolls
-can't leave a stale highlight). Hovering/tapping a node still transiently
-highlights that node's ties (overriding the cluster highlight; there is no
-details panel anymore), and the graph area uses `touch-action: pan-y` so
-vertical page scrolling stays smooth on touch. The component takes
-`currentLanguage` and `metaStoryId` props to build the story links.
+links never shine through) — and tells that circle's story with chips linking
+to each main person's own story. Clusters are derived client-side in
+`src/utils/networkClusters.js` by deterministic greedy-modularity community
+detection (tie strength weighted, main↔main links boosted ×3 so e.g. spouses
+sharing a court are not split), ordered roughly by the mean birth year of
+their main members. Unconnected nodes simply don't appear in any card. The
+active card is tracked with an `IntersectionObserver` whose callback recomputes
+the active step from card geometry (so jump-scrolls can't leave a stale
+highlight). Hovering/tapping a node still transiently highlights that node's
+ties (overriding the cluster highlight; there is no details panel anymore),
+and the graph area uses `touch-action: pan-y` so vertical page scrolling stays
+smooth on touch. The component takes `currentLanguage` and `metaStoryId` props
+to build the story links.
+
+**Narration texts** live in the data as `social_network.narration`:
+
+```json
+"narration": {
+  "intro": "1-2 sentence story-specific intro shown on the first card",
+  "circles": [
+    { "key": "charles_babbage+ada_lovelace+konrad_zuse", "text": "2-4 sentence story text…" }
+  ]
+}
+```
+
+A circle's `key` is its cluster key — the cluster's main person ids in cluster
+order joined with `+` — computed identically by `derive_clusters()` in
+`scripts/meta_story_network.py` and `computeClusters()` in the UI, which
+matches narration to clusters by that key. Narration is written by AI as
+**Phase 6** of `generate_meta_story.py` (non-fatal on failure); when a
+cluster has no matching text (e.g. the network changed and narration wasn't
+regenerated), the card falls back to listing the cluster's ties. Unlike the
+rest of `social_network`, narration texts ARE part of the translation payload
+(`network_narration` in `extract_meta_story_translatables`), so they are
+translated and fingerprinted like other meta story prose.
 
 - **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
   portraits ringed in each person's `person_styles.json` primary color. A
@@ -234,16 +255,20 @@ vertical page scrolling stays smooth on touch. The component takes
   people — not in the story, but present in the ego networks of **two or more**
   main people. They are drawn clearly smaller and capped at
   `MAX_SECONDARY_NODES` (14) so the graph stays readable.
-- Derivation is **deterministic, no AI** (`scripts/meta_story_network.py`),
-  run as Phase 5 of `generate_meta_story.py`. It is **not** part of the
-  translation payload (`extract_meta_story_translatables`), so the same network
-  is copied verbatim into translated files: node labels are person names (kept
-  in the original language) and `relationship_type` is localized by the UI;
-  only `relationship_description` tooltips fall back to English.
+- Graph derivation is **deterministic, no AI** (`scripts/meta_story_network.py`),
+  run as Phase 5 of `generate_meta_story.py`. Nodes/links are **not** part of
+  the translation payload, so the same graph is copied verbatim into translated
+  files: node labels are person names (kept in the original language) and
+  `relationship_type` is localized by the UI; `relationship_description` (used
+  by the tie-list fallback and link tooltips) falls back to English. Only the
+  `narration` texts are translated (see above).
 - Adding/removing people or regenerating ego networks changes the derived
   network. Rebuild every meta story (including translated copies) with
   `python scripts/backfill_meta_story_networks.py` (no API key needed), then
-  `npx prettier --write "data/meta_stories/**/*.json"`.
+  `npx prettier --write "data/meta_stories/**/*.json"`. The backfill carries
+  each file's existing narration over, dropping circles whose cluster key no
+  longer exists — it warns when that happens, and the dropped circles need
+  re-narration (Phase 6) or hand-written texts.
 
 ## Project Structure
 
