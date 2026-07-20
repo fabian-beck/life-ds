@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy, tick } from "svelte";
   import {
     forceSimulation,
     forceManyBody,
@@ -99,6 +99,8 @@
   let simNodes = [];
   let simLinks = [];
   let simBuilt = false;
+  let builtWidth = 0; // width the current layout was computed for
+  let ready = false; // becomes true once the background layout has settled
   let hoveredId = null; // transient (pointer over a node)
   let selectedId = null; // pinned by tap/click (persists, mobile-friendly)
 
@@ -226,7 +228,14 @@
 
     if (simulation) simulation.stop();
 
+    // The layout is computed in the BACKGROUND: the simulation runs on d3's
+    // async timer (so the main thread is never blocked), but intermediate ticks
+    // are NOT rendered — the graph stays hidden behind a placeholder until it
+    // has settled, then it appears in its final positions. This way the user
+    // never sees nodes drifting (e.g. while scrolling the section into view).
+    ready = false;
     simulation = forceSimulation(simNodes)
+      .alphaDecay(0.05) // settle in ~130 ticks so it's ready quickly
       .force(
         "link",
         forceLink(forceLinks)
@@ -247,22 +256,35 @@
         forceCollide().radius((d) =>
           d.type === "main" ? MAIN_R + 22 : SECONDARY_R + 14
         )
-      )
-      .on("tick", () => {
-        // Keep nodes (and their labels) within the frame. The horizontal inset
-        // reserves room for the label text centered under each node.
-        for (const n of simNodes) {
-          const r = n.type === "main" ? MAIN_R : SECONDARY_R;
-          const ix = n.type === "main" ? insetX : insetX - 22;
-          n.x = Math.max(ix, Math.min(width - ix, n.x));
-          // Reserve a top strip for the legend. Labels render below nodes, so a
-          // top-anchored legend can't collide with them; the bottom only needs
-          // to clear each node's own label.
-          n.y = Math.max(r + 40, Math.min(height - r - 24, n.y));
-        }
-        simNodes = simNodes; // trigger Svelte reactivity
-      });
+      );
+
+    // While ready, render every tick (so dragging animates); before ready,
+    // just keep clamping in the background without rendering.
+    simulation.on("tick", () => {
+      clampNodes();
+      if (ready) simNodes = simNodes;
+    });
+    // Reveal once the layout has settled (also fires after a drag cools down).
+    simulation.on("end", () => {
+      clampNodes();
+      ready = true;
+      simNodes = simNodes;
+    });
+
+    builtWidth = width;
     simBuilt = true;
+  }
+
+  // Keep nodes (and their labels) within the frame. The horizontal inset
+  // reserves room for the label text centered under each node; the top strip is
+  // reserved for the legend.
+  function clampNodes() {
+    for (const n of simNodes) {
+      const r = n.type === "main" ? MAIN_R : SECONDARY_R;
+      const ix = n.type === "main" ? insetX : insetX - 22;
+      n.x = Math.max(ix, Math.min(width - ix, n.x));
+      n.y = Math.max(r + 40, Math.min(height - r - 24, n.y));
+    }
   }
 
   // Rebuild once the width is known; rebuild again when the story changes.
@@ -271,81 +293,14 @@
     buildSimulation();
   }
 
-  function reheat() {
-    if (simulation) simulation.alphaTarget(0.3).restart();
-  }
-  function cool() {
-    if (simulation) simulation.alphaTarget(0);
-  }
-
-  // --- Dragging + tap-to-select (native pointer events) --------------------
-  // A pure tap must NOT disturb the layout: we don't touch fx/fy or reheat the
-  // simulation until the pointer actually moves past the drag threshold. So
-  // selecting a node leaves every node exactly where it was.
-  let dragId = null;
-  let dragStart = null;
-  let dragMoved = false;
-
-  function svgPoint(evt) {
-    const rect = container.getBoundingClientRect();
-    return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
-  }
-
-  function onPointerDown(evt, node) {
-    dragId = node.id;
-    dragStart = svgPoint(evt);
-    dragMoved = false;
-    evt.target.setPointerCapture?.(evt.pointerId);
+  // --- Selection (tap / click) ---------------------------------------------
+  // Nodes are not draggable; tapping one toggles its selection (details panel).
+  function selectNode(node, evt) {
     evt.stopPropagation();
-  }
-  function onPointerMove(evt) {
-    if (dragId == null) return;
-    const node = simNodes.find((n) => n.id === dragId);
-    if (!node) return;
-    const p = svgPoint(evt);
-    if (
-      !dragMoved &&
-      dragStart &&
-      Math.hypot(p.x - dragStart.x, p.y - dragStart.y) > 4
-    ) {
-      // Drag begins here: grab the node at its current spot and heat the sim.
-      dragMoved = true;
-      node.fx = node.x;
-      node.fy = node.y;
-      reheat();
-    }
-    if (dragMoved) {
-      node.fx = p.x;
-      node.fy = p.y;
-    }
-  }
-  function onPointerUp() {
-    if (dragId == null) return;
-    const node = simNodes.find((n) => n.id === dragId);
-    if (node) {
-      if (dragMoved) {
-        // A real drag pins the node: it keeps its manual position and the
-        // temporal force no longer moves it (fx/fy stay set).
-        node.pinned = true;
-        cool();
-      } else {
-        // A pure tap only toggles selection — nothing was moved or reheated.
-        selectedId = selectedId === dragId ? null : dragId;
-      }
-    }
-    dragId = null;
+    selectedId = selectedId === node.id ? null : node.id;
   }
 
-  // Double-click / double-tap releases a pinned node back to the temporal layout.
-  function onNodeDblClick(node) {
-    node.fx = null;
-    node.fy = null;
-    node.pinned = false;
-    reheat();
-    setTimeout(cool, 600);
-  }
-
-  // Clicking empty canvas clears any pinned selection (node taps stopPropagation).
+  // Clicking empty canvas clears the selection (node clicks stopPropagation).
   function clearSelection() {
     selectedId = null;
   }
@@ -362,24 +317,24 @@
     if (simulation) simulation.stop();
   });
 
-  function handleResize() {
-    if (!container) return;
-    width = container.clientWidth;
-    // Recompute temporal targets for the new width (keeps positions/pins).
-    if (simulation && width) {
-      computeTargets(width);
-      simulation.force("y", forceY(height / 2).strength(0.06));
-      simulation.alphaTarget(0.1).restart();
-      setTimeout(cool, 400);
-    }
+  async function handleResize() {
+    if (!container || !simulation) return;
+    const w = container.clientWidth;
+    // Ignore resizes that don't change the width (e.g. the mobile URL bar
+    // showing/hiding during a scroll) — those must not disturb the layout.
+    if (w === builtWidth) return;
+    width = w;
+    await tick(); // let compact/insetX/height react to the new width
+    computeTargets(width);
+    simulation.force("y", forceY(height / 2).strength(0.06));
+    // Re-settle in the background (hidden), then reveal — same as first build.
+    ready = false;
+    simulation.alpha(0.8).alphaTarget(0).restart();
+    builtWidth = width;
   }
 </script>
 
-<svelte:window
-  on:resize={handleResize}
-  on:pointermove={onPointerMove}
-  on:pointerup={onPointerUp}
-/>
+<svelte:window on:resize={handleResize} />
 
 {#if hasNetwork}
   <div class="mnet">
@@ -389,12 +344,16 @@
       bind:clientWidth={width}
       style="height: {height}px;"
     >
+      {#if !ready}
+        <div class="network-loading">{$_("meta_story.network_loading")}</div>
+      {/if}
       <svg
         class="network-svg"
+        class:hidden={!ready}
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label={$_("meta_story.network_aria")}
-        on:pointerdown={clearSelection}
+        on:pointerup={clearSelection}
       >
         <defs>
           {#each simNodes as node (node.id)}
@@ -444,12 +403,10 @@
               class:secondary={node.type === "secondary"}
               class:dim
               class:selected={node.id === selectedId}
-              class:pinned={node.pinned}
               transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
-              on:pointerdown={(e) => onPointerDown(e, node)}
+              on:pointerup={(e) => selectNode(node, e)}
               on:pointerenter={() => (hoveredId = node.id)}
               on:pointerleave={() => (hoveredId = null)}
-              on:dblclick={() => onNodeDblClick(node)}
               role="listitem"
             >
               <title
@@ -497,23 +454,13 @@
                   {displayName(node.name)}
                 </text>
               {/if}
-
-              {#if node.pinned}
-                {@const pr = node.type === "main" ? MAIN_R : SECONDARY_R}
-                <circle
-                  class="pin-dot"
-                  cx={pr * 0.72}
-                  cy={-pr * 0.72}
-                  r="3.5"
-                />
-              {/if}
             </g>
           {/each}
         </g>
       </svg>
 
       <!-- Legend -->
-      <div class="legend">
+      <div class="legend" class:hidden={!ready}>
         <span class="legend-item">
           <span class="legend-dot main-dot"></span>
           {$_("meta_story.network_main")}
@@ -623,15 +570,54 @@
     display: block;
     width: 100%;
     height: 100%;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  /* Kept mounted (so clip paths and pointer handlers persist) but invisible
+     until the background layout has settled. */
+  .network-svg.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .network-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    animation: mnet-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes mnet-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .legend.hidden {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .network-svg {
+      transition: none;
+    }
+    .network-loading {
+      animation: none;
+    }
   }
 
   .node {
-    cursor: grab;
+    cursor: pointer;
     transition: filter 0.18s ease;
-    touch-action: none;
-  }
-  .node:active {
-    cursor: grabbing;
   }
 
   /* Blend out non-focused nodes by DARKENING them (kept fully opaque) so the
@@ -646,13 +632,6 @@
 
   .node.selected .halo {
     filter: drop-shadow(0 0 9px rgba(56, 189, 248, 0.6));
-  }
-
-  /* Marker on a manually placed (pinned) node. */
-  .pin-dot {
-    fill: #fbbf24;
-    stroke: rgba(2, 6, 23, 0.85);
-    stroke-width: 1.5;
   }
 
   .label {

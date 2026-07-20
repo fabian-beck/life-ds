@@ -203,13 +203,16 @@ is hovered/tapped, then that node's ties light up in the accent color while
 other nodes are darkened (kept opaque so links never shine through). A weak
 `forceX` pulls each node toward an x derived from its `birth_year`, so the graph
 reads left→right chronologically; secondary nodes (no birth year) sit at the
-mean x of the main people they bridge. Dragging a node pins it (its manual
-position overrides the temporal force; double-click releases it). Focusing a
-node opens a details panel (a bottom sheet over the graph on mobile, so both
-share the screen) that explains its ties and links to each main person's own
-story; the graph area uses `touch-action: pan-y` so vertical page scrolling
-stays smooth on touch. The component takes `currentLanguage` and `metaStoryId`
-props to build those story links.
+mean x of the main people they bridge. The final layout is **fully static** —
+it is computed **in the background** (the d3 timer runs on mount but
+intermediate ticks are not rendered) behind a "Building the network…"
+placeholder, then revealed once the simulation fires `end`; nodes are not
+draggable, so the graph never moves after that. Tapping/clicking a node opens a
+details panel (a bottom sheet over the graph on mobile, so both share the
+screen) that explains its ties and links to each main person's own story; the
+graph area uses `touch-action: pan-y` so vertical page scrolling stays smooth
+on touch. The component takes `currentLanguage` and `metaStoryId` props to
+build those story links.
 
 - **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
   portraits ringed in each person's `person_styles.json` primary color. A
