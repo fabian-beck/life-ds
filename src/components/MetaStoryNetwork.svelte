@@ -101,6 +101,7 @@
   let simBuilt = false;
   let builtWidth = 0; // width the current layout was computed for
   let ready = false; // becomes true once the background layout has settled
+  let rafId = 0; // requestAnimationFrame handle for the background layout
   let hoveredId = null; // transient (pointer over a node)
   let selectedId = null; // pinned by tap/click (persists, mobile-friendly)
 
@@ -228,14 +229,10 @@
 
     if (simulation) simulation.stop();
 
-    // The layout is computed in the BACKGROUND: the simulation runs on d3's
-    // async timer (so the main thread is never blocked), but intermediate ticks
-    // are NOT rendered — the graph stays hidden behind a placeholder until it
-    // has settled, then it appears in its final positions. This way the user
-    // never sees nodes drifting (e.g. while scrolling the section into view).
-    ready = false;
+    // Create the simulation STOPPED — the layout is computed off the render path
+    // (see runLayout) so the graph never animates on its own.
     simulation = forceSimulation(simNodes)
-      .alphaDecay(0.05) // settle in ~130 ticks so it's ready quickly
+      .stop()
       .force(
         "link",
         forceLink(forceLinks)
@@ -247,32 +244,48 @@
         "charge",
         forceManyBody().strength((d) => (d.type === "main" ? -520 : -160))
       )
-      // Weak temporal pull: drags each node toward its birth-year x (left→right).
-      // d3 ignores this for manually placed (pinned) nodes whose fx is set.
+      // Weak temporal pull toward each node's birth-year x (left→right).
       .force("x", forceX((d) => d.tx).strength(0.14))
       .force("y", forceY(height / 2).strength(0.06))
+      // Extra collide iterations space nodes (and their labels) apart cleanly.
       .force(
         "collide",
-        forceCollide().radius((d) =>
-          d.type === "main" ? MAIN_R + 22 : SECONDARY_R + 14
-        )
+        forceCollide()
+          .radius((d) => (d.type === "main" ? MAIN_R + 26 : SECONDARY_R + 16))
+          .strength(1)
+          .iterations(3)
       );
 
-    // While ready, render every tick (so dragging animates); before ready,
-    // just keep clamping in the background without rendering.
-    simulation.on("tick", () => {
-      clampNodes();
-      if (ready) simNodes = simNodes;
-    });
-    // Reveal once the layout has settled (also fires after a drag cools down).
-    simulation.on("end", () => {
-      clampNodes();
-      ready = true;
-      simNodes = simNodes;
-    });
-
+    runLayout();
     builtWidth = width;
     simBuilt = true;
+  }
+
+  // Compute the layout in the BACKGROUND: advance the simulation to full
+  // convergence in per-frame batches (so the main thread is never blocked and
+  // it isn't rushed), keeping it hidden behind a placeholder, then reveal the
+  // finished, static layout. Nothing is rendered until it is ready.
+  function runLayout() {
+    if (!simulation) return;
+    if (rafId) cancelAnimationFrame(rafId);
+    ready = false;
+    simulation.alpha(1).alphaDecay(0.0228); // default decay → ~300 iterations
+    const alphaMin = simulation.alphaMin();
+    const step = () => {
+      // ~18 ticks per frame settles a graph in a few hundred ms without jank.
+      for (let i = 0; i < 18 && simulation.alpha() >= alphaMin; i++) {
+        simulation.tick();
+      }
+      clampNodes();
+      if (simulation.alpha() < alphaMin) {
+        rafId = 0;
+        ready = true;
+        simNodes = simNodes; // single render with the final positions
+      } else {
+        rafId = requestAnimationFrame(step);
+      }
+    };
+    rafId = requestAnimationFrame(step);
   }
 
   // Keep nodes (and their labels) within the frame. The horizontal inset
@@ -314,6 +327,7 @@
   });
 
   onDestroy(() => {
+    if (rafId) cancelAnimationFrame(rafId);
     if (simulation) simulation.stop();
   });
 
@@ -327,9 +341,8 @@
     await tick(); // let compact/insetX/height react to the new width
     computeTargets(width);
     simulation.force("y", forceY(height / 2).strength(0.06));
-    // Re-settle in the background (hidden), then reveal — same as first build.
-    ready = false;
-    simulation.alpha(0.8).alphaTarget(0).restart();
+    // Recompute the layout in the background (hidden), then reveal.
+    runLayout();
     builtWidth = width;
   }
 </script>
