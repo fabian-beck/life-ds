@@ -175,6 +175,9 @@ class TrSubtopic(BaseModel):
 
 
 class TrNetworkCircle(BaseModel):
+    # Optional: circles whose narration predates the headline field carry no
+    # title in the payload, so the model isn't asked to invent one.
+    title: Optional[str] = None
     text: str
 
 
@@ -317,12 +320,18 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     # unchanged.
     narration = (data.get("social_network") or {}).get("narration")
     if isinstance(narration, dict):
+        # `title` is included only when the source circle has one, so meta
+        # stories whose narration predates the headline field keep their old
+        # fingerprint (and stay "current") instead of all going stale at once.
+        circles_payload = []
+        for circle in narration.get("circles") or []:
+            entry = {"text": circle.get("text", "")}
+            if circle.get("title"):
+                entry["title"] = circle["title"]
+            circles_payload.append(entry)
         payload["network_narration"] = {
             "intro": narration.get("intro", ""),
-            "circles": [
-                {"text": circle.get("text", "")}
-                for circle in (narration.get("circles") or [])
-            ],
+            "circles": circles_payload,
         }
     return payload
 
@@ -470,8 +479,7 @@ def apply_life_events_translations(
 
         if event.get("involved_people"):
             event["involved_people"] = [
-                localize_name(name, name_glossary)
-                for name in event["involved_people"]
+                localize_name(name, name_glossary) for name in event["involved_people"]
             ]
 
     return result
@@ -624,6 +632,7 @@ def apply_meta_story_translations(
         tr_circles = tr_narration.get("circles") or []
         _require_same_length("network_narration.circles", src_circles, tr_circles)
         for circle, tr_circle in zip(src_circles, tr_circles):
+            _set_if_source_has(circle, "title", tr_circle.get("title"))
             _set_if_source_has(circle, "text", tr_circle.get("text"))
 
     return result
@@ -1048,7 +1057,9 @@ def translate_meta_story(
             "crisp headlines (2-6 words).\n"
             "9. network_narration texts are short narrative paragraphs about "
             "the story's social network — translate them as flowing prose, "
-            "localizing person names per the usual name rules."
+            "localizing person names per the usual name rules. Each circle also "
+            "has a title, an evocative 2-5 word headline (not a list of names) — "
+            "translate it as a headline, not literally."
         ),
         target_lang=target_lang,
         glossary={},

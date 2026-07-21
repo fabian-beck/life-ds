@@ -22,8 +22,9 @@ from typing import Any, Dict, List, Optional, cast
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 from meta_story_network import build_social_network, derive_clusters
+from meta_story_network_review import review_social_network
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -267,6 +268,11 @@ class NetworkCircleNarration(BaseModel):
     """Narrative text for one cluster ("circle") of the social network."""
 
     key: str = Field(description="The circle's key, copied verbatim from the input")
+    title: str = Field(
+        description="A short, evocative headline for the circle (2-5 words) — "
+        "a book-chapter-style phrase capturing what bound this group, NOT a list "
+        "of the people's names"
+    )
     text: str = Field(
         description="2-4 sentence story text weaving the circle's ties together"
     )
@@ -276,7 +282,11 @@ class NetworkNarrationResult(BaseModel):
     """AI-written narration for the social network scroll-over cards."""
 
     intro: str = Field(
-        description="1-2 sentence story-specific introduction to the network"
+        description="A 2-3 sentence introductory paragraph for the network, "
+        "written like a book's opening: thematic and inviting. It sets the scene "
+        "for the whole network WITHOUT naming individual people or previewing the "
+        "specific circles (those are revealed as the reader scrolls). No lists, "
+        "no reading guide."
     )
     circles: List[NetworkCircleNarration]
 
@@ -1580,9 +1590,16 @@ CIRCLES:
 {briefs}
 
 REQUIREMENTS:
-- intro: 1-2 sentences that set up this specific network (who its threads run
-  through, what shape it has). No generic explanations of how to read a graph.
+- intro: a 2-3 sentence opening paragraph, written the way an author opens a
+  chapter — evocative and inviting, setting up the human theme that runs through
+  this network (what kind of bonds it is made of, what world it spans, what it
+  builds toward). Do NOT name individual people, do NOT preview or list the
+  specific circles/clusters (they unfold as the reader scrolls, so naming them
+  here would spoil the journey), and do NOT explain how to read the graph.
 - One entry per circle, in the given order, with `key` copied EXACTLY.
+- Each circle title: a short, evocative headline (2-5 words) in the spirit of a
+  book chapter — capture the theme or bond that unites the circle. Do NOT list
+  the people's names; the names appear in the text below it.
 - Each circle text: 2-4 sentences of flowing prose that weave the ties into a
   miniature story — how these people found each other, what bound them, who
   bridged whom. Ground every claim in the tie descriptions above; do not invent
@@ -1607,7 +1624,7 @@ REQUIREMENTS:
         if not result.parsed:
             print("Warning: Phase 6 returned no parsed result, skipping narration")
             return
-        by_key = {c.key: c.text for c in result.parsed.circles}
+        by_key = {c.key: c for c in result.parsed.circles}
         missing = [c["key"] for c in clusters if c["key"] not in by_key]
         if missing:
             print(f"Warning: Phase 6 narration missing circles {missing}, skipping")
@@ -1615,7 +1632,12 @@ REQUIREMENTS:
         network["narration"] = {
             "intro": result.parsed.intro,
             "circles": [
-                {"key": c["key"], "text": by_key[c["key"]]} for c in clusters
+                {
+                    "key": c["key"],
+                    "title": by_key[c["key"]].title,
+                    "text": by_key[c["key"]].text,
+                }
+                for c in clusters
             ],
         }
         if verbose:
@@ -1750,6 +1772,11 @@ def main():
         type=int,
         default=2,
         help="Maximum historical context events per chapter (default: 2)",
+    )
+    parser.add_argument(
+        "--skip-network-review",
+        action="store_true",
+        help="Skip Phase 5b (AI review/enrichment of the derived social network)",
     )
     parser.add_argument(
         "--skip-translate",
@@ -1907,10 +1934,28 @@ def main():
             verbose=args.verbose,
         )
 
-    # Build dataset
+    # Build dataset (Phase 5: derive the social network deterministically)
     dataset = build_meta_story_dataset(
         plan, chapters, story_id, registry, hints=hints, model=args.model
     )
+
+    # Phase 5b: AI review of the derived network — enrich with missing direct
+    # ties, refine wording, and prune vague/indirect ones. Runs BEFORE
+    # clustering/narration so the circles reflect the reviewed graph. Non-fatal:
+    # on any failure the deterministic network is kept.
+    if args.skip_network_review:
+        if args.verbose:
+            print("\n=== PHASE 5b: Network Review (SKIPPED) ===")
+    else:
+        if args.verbose:
+            print("\n=== PHASE 5b: Network Review ===")
+        dataset["social_network"] = review_social_network(
+            dataset.get("social_network") or {},
+            client=client,
+            model=args.model,
+            reasoning_effort=DEFAULT_REASONING_EFFORT,
+            verbose=args.verbose,
+        )
 
     # Phase 6: narrate the social network's circles (non-fatal on failure)
     if args.verbose:

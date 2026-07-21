@@ -11,26 +11,14 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
-  import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { generateNameVariants } from "../utils/storyHelpers.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
   export let network = null;
   export let currentLanguage = "en";
-  export let metaStoryId = null;
 
   const personStyles = personStylesData.styles;
-
-  // Jump to a main person's own story, preserving meta-story context (mirrors
-  // the navigation used by the meta timeline).
-  function goToStory(personId) {
-    const fromMeta = metaStoryId ? `?from_meta=${metaStoryId}` : "";
-    // Remember where the reader left the meta story so returning restores it
-    saveMetaStoryScroll(metaStoryId);
-    window.location.hash = `/${currentLanguage}/story/${encodeURIComponent(
-      personId
-    )}${fromMeta}`;
-  }
 
   const SECONDARY_COLOR = "#94a3b8";
   const LINK_IDLE = "#64748b"; // links when nothing is focused
@@ -158,14 +146,77 @@
   $: narrationTexts = new Map(
     (network?.narration?.circles || []).map((c) => [c.key, c.text])
   );
-  $: introText = network?.narration?.intro || null;
+  // AI-written headline per circle (social_network.narration). When absent
+  // (older data), the card falls back to a joined list of the members' names.
+  $: narrationTitles = new Map(
+    (network?.narration?.circles || [])
+      .filter((c) => c.title)
+      .map((c) => [c.key, c.title])
+  );
 
-  // Which step card is in the viewport band: 0 = intro, i > 0 = clusters[i-1].
+  // Highlight each circle member's name where it appears in the narration text,
+  // the way person names are emphasized in the story slides. Returns an array
+  // of { type: "text" | "person", content, personType, personId } segments.
+  function highlightNarration(text, cluster) {
+    if (!text) return [{ type: "text", content: "" }];
+    const people = [...cluster.mains, ...cluster.secondaries];
+
+    // Best (longest / highest-priority) match per person.
+    const matches = [];
+    for (const person of people) {
+      let best = null;
+      for (const variant of generateNameVariants(person.name)) {
+        variant.regex.lastIndex = 0;
+        let m;
+        while ((m = variant.regex.exec(text)) !== null) {
+          const cand = {
+            start: m.index,
+            end: variant.regex.lastIndex,
+            len: m[0].length,
+            priority: variant.priority,
+            person,
+          };
+          if (
+            !best ||
+            cand.priority < best.priority ||
+            (cand.priority === best.priority && cand.len > best.len)
+          ) {
+            best = cand;
+          }
+        }
+      }
+      if (best) matches.push(best);
+    }
+
+    // Resolve overlaps: earliest start wins, then the longer span.
+    matches.sort((a, b) => a.start - b.start || b.len - a.len);
+    const segments = [];
+    let cursor = 0;
+    for (const match of matches) {
+      if (match.start < cursor) continue; // overlaps a chosen match — skip
+      if (match.start > cursor) {
+        segments.push({
+          type: "text",
+          content: text.slice(cursor, match.start),
+        });
+      }
+      segments.push({
+        type: "person",
+        content: text.slice(match.start, match.end),
+        personType: match.person.type,
+        personId: match.person.id,
+      });
+      cursor = match.end;
+    }
+    if (cursor < text.length) {
+      segments.push({ type: "text", content: text.slice(cursor) });
+    }
+    return segments;
+  }
+
+  // Which step card is in the viewport band; each step maps 1:1 to a cluster.
   let activeStep = null;
-  $: scrollCluster =
-    activeStep != null && activeStep > 0
-      ? (clusters[activeStep - 1] ?? null)
-      : null;
+  $: scrollCluster = activeStep != null ? (clusters[activeStep] ?? null) : null;
   // Node-level focus (hover/tap) temporarily overrides the cluster highlight.
   $: clusterIds =
     activeId == null && scrollCluster ? scrollCluster.nodeIds : null;
@@ -371,8 +422,8 @@
   }
 
   // Keep nodes (and their labels) within the frame. The horizontal inset
-  // reserves room for the label text centered under each node; the top strip is
-  // reserved for the legend.
+  // reserves room for the label text centered under each node; the top strip
+  // keeps nodes and their upper halo clear of the frame edge.
   function clampNodes() {
     for (const n of simNodes) {
       const r = n.type === "main" ? MAIN_R : SECONDARY_R;
@@ -561,18 +612,6 @@
             {/each}
           </g>
         </svg>
-
-        <!-- Legend -->
-        <div class="legend" class:hidden={!ready}>
-          <span class="legend-item">
-            <span class="legend-dot main-dot"></span>
-            {$_("meta_story.network_main")}
-          </span>
-          <span class="legend-item">
-            <span class="legend-dot secondary-dot"></span>
-            {$_("meta_story.network_secondary")}
-          </span>
-        </div>
       </div>
     </div>
 
@@ -580,20 +619,9 @@
          and explaining one circle of connected people. -->
     {#if clusters.length}
       <ol class="mnet-steps">
-        <li class="step" use:observeStep={0}>
-          <div class="step-card" class:current={activeStep === 0}>
-            <h3 class="step-title">{$_("meta_story.network_intro_title")}</h3>
-            {#if introText}
-              <p class="step-body">{introText}</p>
-            {/if}
-            <p class="step-body" class:step-hint={!!introText}>
-              {$_("meta_story.network_intro_body")}
-            </p>
-          </div>
-        </li>
         {#each clusters as cluster, i (cluster.key)}
-          <li class="step" use:observeStep={i + 1}>
-            <div class="step-card" class:current={activeStep === i + 1}>
+          <li class="step" use:observeStep={i}>
+            <div class="step-card" class:current={activeStep === i}>
               <p class="step-kicker">
                 {$_("meta_story.network_step", {
                   index: i + 1,
@@ -601,22 +629,20 @@
                 })}
               </p>
               <h3 class="step-title">
-                {clusterTitle(cluster, currentLanguage)}
+                {narrationTitles.get(cluster.key) ??
+                  clusterTitle(cluster, currentLanguage)}
               </h3>
-              {#if cluster.yearStart != null}
-                <p class="step-years">
-                  {cluster.yearStart === cluster.yearEnd
-                    ? $_("meta_story.network_born_one", {
-                        start: cluster.yearStart,
-                      })
-                    : $_("meta_story.network_born_range", {
-                        start: cluster.yearStart,
-                        end: cluster.yearEnd,
-                      })}
-                </p>
-              {/if}
               {#if narrationTexts.has(cluster.key)}
-                <p class="step-body">{narrationTexts.get(cluster.key)}</p>
+                <p class="step-body">
+                  {#each highlightNarration(narrationTexts.get(cluster.key), cluster) as seg}{#if seg.type === "text"}{seg.content}{:else if seg.personType === "main"}<strong
+                        class="person-mention"
+                        style={`--mention-color: ${primaryColor(seg.personId)}`}
+                        >{seg.content}</strong
+                      >{:else}<strong
+                        class="person-mention person-mention-secondary"
+                        >{seg.content}</strong
+                      >{/if}{/each}
+                </p>
               {:else}
                 <ul class="tie-list">
                   {#each cluster.links.slice(0, MAX_CARD_TIES) as tie (`${tie.source}-${tie.target}`)}
@@ -646,21 +672,6 @@
                   </p>
                 {/if}
               {/if}
-              <div class="step-people">
-                {#each cluster.mains as person (person.id)}
-                  <button
-                    type="button"
-                    class="person-chip"
-                    title={$_("meta_story.network_view_story")}
-                    on:click={() => goToStory(person.id)}
-                  >
-                    {#if person.portrait}
-                      <img src={person.portrait} alt="" loading="lazy" />
-                    {/if}
-                    <span>{displayName(person.name)}</span>
-                  </button>
-                {/each}
-              </div>
             </div>
           </li>
         {/each}
@@ -734,10 +745,6 @@
     }
   }
 
-  .legend.hidden {
-    display: none;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .network-svg {
       transition: none;
@@ -789,45 +796,6 @@
     font-size: 10.5px;
     font-weight: 500;
     fill: #cbd5e1;
-  }
-
-  .legend {
-    position: absolute;
-    top: 10px;
-    left: 12px;
-    display: flex;
-    gap: 1rem;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    background: rgba(15, 23, 42, 0.55);
-    backdrop-filter: blur(4px);
-    padding: 0.3rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid rgba(148, 163, 184, 0.14);
-    pointer-events: none;
-  }
-
-  .legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .legend-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .main-dot {
-    background: #38bdf8;
-    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
-  }
-
-  .secondary-dot {
-    background: rgba(148, 163, 184, 0.25);
-    border: 1.5px solid #94a3b8;
   }
 
   /* --- Narration cards ---------------------------------------------------- */
@@ -887,12 +855,6 @@
     line-height: 1.35;
   }
 
-  .step-years {
-    margin: 0.2rem 0 0;
-    font-size: 0.8rem;
-    color: #94a3b8;
-  }
-
   .step-body {
     margin: 0.5rem 0 0;
     font-size: 0.9rem;
@@ -900,11 +862,18 @@
     color: #cbd5e1;
   }
 
-  /* When a story-specific intro exists, the generic reading instructions
-     recede to a quiet hint below it. */
-  .step-hint {
-    font-size: 0.8rem;
-    color: #94a3b8;
+  /* Person names emphasized inside the narration, mirroring the story slides'
+     .person-mention. Main people glow in their own story color; bridging
+     (secondary) people get a neutral emphasis. */
+  .person-mention {
+    font-weight: 700;
+    color: #f1f5f9;
+    text-shadow: 0 0 6px var(--mention-color, rgba(56, 189, 248, 0.35));
+  }
+
+  .person-mention-secondary {
+    color: #e2e8f0;
+    text-shadow: none;
   }
 
   .tie-list {
@@ -961,56 +930,12 @@
     color: #94a3b8;
   }
 
-  .step-people {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.9rem;
-  }
-
-  .person-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    background: rgba(56, 189, 248, 0.1);
-    color: #bae6fd;
-    border-radius: 999px;
-    padding: 0.22rem 0.7rem;
-    font: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition:
-      background-color 0.15s ease,
-      border-color 0.15s ease;
-  }
-
-  .person-chip img {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: -0.4rem;
-  }
-
-  .person-chip:hover,
-  .person-chip:focus-visible {
-    background: rgba(56, 189, 248, 0.22);
-    border-color: rgba(56, 189, 248, 0.8);
-    outline: none;
-  }
-
   @media (max-width: 640px) {
     .main-label {
       font-size: 11px;
     }
     .secondary-label {
       font-size: 9.5px;
-    }
-    .legend {
-      font-size: 0.68rem;
-      gap: 0.6rem;
     }
     .step-card {
       width: min(28rem, 100%);

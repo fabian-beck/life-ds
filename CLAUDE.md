@@ -208,11 +208,18 @@ draggable, so the graph never moves after that.
 
 The network is presented as a **scrollytelling section**: the graph pins
 (`position: sticky`, below the app's sticky header) while blurred,
-slightly-transparent narration cards scroll up over it. The first card is a
-short intro; each following card highlights one **cluster ("circle")** of the
-network — its members stay lit while everything else darkens (kept opaque so
-links never shine through) — and tells that circle's story with chips linking
-to each main person's own story. Clusters are derived client-side in
+slightly-transparent narration cards scroll up over it. The section's opening
+text (under the "Connections" heading, rendered by `MetaStoryView.svelte`) is
+the AI-written `social_network.narration.intro` paragraph (falling back to the
+static `meta_story.network_subtitle` label only when a story has no narration);
+there is no separate intro card and no legend. Each scroll card highlights one
+**cluster ("circle")** of the network — its members stay lit while everything
+else darkens (kept opaque so links never shine through) — under an AI-written
+**headline** (`title`) and a short story text in which each circle member's name
+is emphasized in place (the same `.person-mention` treatment used in the story
+slides: main people glow in their own story color, bridging people get a neutral
+emphasis; the names are not links). Each card maps 1:1 to a cluster (step index
+`i` ⇒ `clusters[i]`). Clusters are derived client-side in
 `src/utils/networkClusters.js` by deterministic greedy-modularity community
 detection (tie strength weighted, main↔main links boosted ×3 so e.g. spouses
 sharing a court are not split), ordered roughly by the mean birth year of
@@ -222,16 +229,18 @@ the active step from card geometry (so jump-scrolls can't leave a stale
 highlight). Hovering/tapping a node still transiently highlights that node's
 ties (overriding the cluster highlight; there is no details panel anymore),
 and the graph area uses `touch-action: pan-y` so vertical page scrolling stays
-smooth on touch. The component takes `currentLanguage` and `metaStoryId` props
-to build the story links.
+smooth on touch. The component takes a `currentLanguage` prop (used to localize
+`relationship_type` and the fallback name list).
 
 **Narration texts** live in the data as `social_network.narration`:
 
 ```json
 "narration": {
-  "intro": "1-2 sentence story-specific intro shown on the first card",
+  "intro": "2-3 sentence story-specific paragraph shown as the section's opening text",
   "circles": [
-    { "key": "charles_babbage+ada_lovelace+konrad_zuse", "text": "2-4 sentence story text…" }
+    { "key": "charles_babbage+ada_lovelace+konrad_zuse",
+      "title": "The Engine Foretold",
+      "text": "2-4 sentence story text…" }
   ]
 }
 ```
@@ -239,11 +248,14 @@ to build the story links.
 A circle's `key` is its cluster key — the cluster's main person ids in cluster
 order joined with `+` — computed identically by `derive_clusters()` in
 `scripts/meta_story_network.py` and `computeClusters()` in the UI, which
-matches narration to clusters by that key. Narration is written by AI as
-**Phase 6** of `generate_meta_story.py` (non-fatal on failure); when a
-cluster has no matching text (e.g. the network changed and narration wasn't
-regenerated), the card falls back to listing the cluster's ties. Unlike the
-rest of `social_network`, narration texts ARE part of the translation payload
+matches narration to clusters by that key. Each circle's `title` is a short
+evocative headline (not a list of names), shown as the card's heading; when a
+circle has no `title` (older data) the card falls back to a joined list of the
+members' names. Narration is written by AI as **Phase 6** of
+`generate_meta_story.py` (non-fatal on failure); when a cluster has no matching
+`text` (e.g. the network changed and narration wasn't regenerated), the card
+falls back to listing the cluster's ties. Unlike the rest of `social_network`,
+narration texts (both `title` and `text`) ARE part of the translation payload
 (`network_narration` in `extract_meta_story_translatables`), so they are
 translated and fingerprinted like other meta story prose.
 
@@ -262,13 +274,36 @@ translated and fingerprinted like other meta story prose.
   `relationship_type` is localized by the UI; `relationship_description` (used
   by the tie-list fallback and link tooltips) falls back to English. Only the
   `narration` texts are translated (see above).
+- **Phase 5b — AI network review** (`scripts/meta_story_network_review.py`, one
+  AI call, runs after derivation and **before** clustering/narration; non-fatal,
+  opt out with `--skip-network-review`). The ego networks were each generated
+  per person without seeing the meta story's people as a group, so the derived
+  union misses direct ties, over-states vague ones, or carries stale wording.
+  Given the derived graph plus **focused Wikipedia excerpts** for the main people
+  (each article's lead plus the sentences that mention another main person — kept
+  small so the prompt stays affordable), the model may **add** links between
+  existing nodes, **modify** a link's type/description/strength, and **delete**
+  rather indirect ties (e.g. a vague "influence" with no documented contact). How
+  aggressively it enriches vs. prunes is scaled by the **density of the
+  main↔main subgraph**: a sparse graph invites generous, well-supported additions
+  and keeps documented influence (only truly unsupported ties are cut); a dense
+  graph invites strict pruning of indirect ties. Application is deterministic and
+  defensive — node ids are validated, unordered pairs matched regardless of
+  orientation, self-loops skipped, and secondary nodes that no longer bridge ≥2
+  main people are pruned — so a bad response can only edit links between existing
+  nodes, never invent people. Added/modified links carry an `origin`
+  (`review_added` / `reviewed`) marker; like the rest of the graph they are not
+  translated (copied verbatim into translated files).
 - Adding/removing people or regenerating ego networks changes the derived
   network. Rebuild every meta story (including translated copies) with
   `python scripts/backfill_meta_story_networks.py` (no API key needed), then
   `npx prettier --write "data/meta_stories/**/*.json"`. The backfill carries
   each file's existing narration over, dropping circles whose cluster key no
   longer exists — it warns when that happens, and the dropped circles need
-  re-narration (Phase 6) or hand-written texts.
+  re-narration (Phase 6) or hand-written texts. **Note:** the backfill is a pure
+  re-derivation, so it discards Phase 5b review edits (added/modified/deleted
+  ties) just as it can orphan narration — re-run the full pipeline (or Phase
+  5b + 6) when you need the reviewed graph back.
 
 ## Project Structure
 
@@ -305,8 +340,9 @@ life-ds/
 │   ├── translate_person.py          # Translation core + translate single person
 │   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
 │   ├── translate_meta_story.py      # Translate meta stories
-│   ├── generate_meta_story.py       # Meta story workflow (5 phases)
-│   ├── meta_story_network.py        # Derive meta story social network from ego networks
+│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration)
+│   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
+│   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
 │   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
 │   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
