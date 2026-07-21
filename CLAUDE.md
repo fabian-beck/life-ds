@@ -903,6 +903,25 @@ npm run preview      # Preview production build
 
 **Note**: The dev server is always running in this environment. No need to start it manually.
 
+### Deployment
+
+Hosted on **Netlify**, deployed **on demand only** — pushing/merging to `main`
+does not publish. Auto-builds are stopped in the Netlify dashboard, and
+`netlify.toml`'s `ignore = "exit 0"` skips git-triggered builds. Publish by
+uploading the pre-built `dist/` with the CLI (not Netlify's build-from-git,
+which is disabled; the Netlify MCP `deploy-site`/zip-and-build path returns
+`400` for this project):
+
+```powershell
+npx netlify-cli login   # once per machine (browser auth)
+npm run build
+npx netlify-cli deploy --prod --dir=dist --site 12d3d478-2a11-4020-b56c-4580fa57e108
+```
+
+Use the `netlify-cli` package (its bin is `netlify`), **not** `npx netlify`
+(that is the unrelated `netlify` API-client package). See README "Deployment"
+for the full rationale.
+
 ### Adding a New Person
 
 1. Run `python scripts/generate_person.py "Person Name"`
