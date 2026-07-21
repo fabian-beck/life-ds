@@ -23,6 +23,10 @@
 
 <style>
   .contrast-toggle {
+    /* Height is pinned to match the neighbouring language selector exactly
+       (both use box-sizing: border-box); keep these values in sync with
+       .language-selector in Landing.svelte. */
+    height: 2.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -59,6 +63,7 @@
   }
 
   .contrast-toggle.sticky {
+    height: 1.85rem;
     padding: 0.4rem;
     background: rgba(15, 23, 42, 0.6);
     border-color: rgba(148, 163, 184, 0.25);
@@ -67,5 +72,12 @@
   .contrast-toggle.sticky svg {
     width: 1.05rem;
     height: 1.05rem;
+  }
+
+  /* Matches the .language-selector.sticky height bump at this breakpoint. */
+  @media (min-width: 768px) {
+    .contrast-toggle.sticky {
+      height: 2rem;
+    }
   }
 </style>

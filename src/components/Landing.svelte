@@ -831,6 +831,7 @@
   }
 
   .language-selector.sticky {
+    height: 1.85rem;
     padding: 0.35rem 0.5rem;
     font-size: 0.75rem;
     background: rgba(15, 23, 42, 0.6);
@@ -847,6 +848,7 @@
     }
 
     .language-selector.sticky {
+      height: 2rem;
       padding: 0.4rem 0.6rem;
       font-size: 0.8rem;
     }
@@ -867,6 +869,7 @@
   }
 
   .language-selector {
+    height: 2.25rem;
     padding: 0.5rem 0.75rem;
     background: rgba(15, 23, 42, 0.9);
     border: 1px solid rgba(226, 232, 240, 0.2);
