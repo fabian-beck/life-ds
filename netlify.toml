@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+  # Deploy on demand only — do not publish the live site on every push/merge to main.
+  #
+  # Netlify runs this "ignore" command before each *git-triggered* build and skips
+  # the build when it exits 0. Returning 0 unconditionally therefore turns off
+  # automatic deploys for pushes to main (and branch/PR deploy previews).
+  #
+  # On-demand deploys are unaffected — the ignore command does NOT run for them:
+  #   - Netlify UI:  "Trigger deploy" > "Deploy site" (or "Clear cache and deploy")
+  #   - Build hook:  POST to a build hook URL (Project settings > Build & deploy > Build hooks)
+  #   - CLI / API:   `netlify deploy --build --prod`
+  #
+  # To restore automatic deploys, delete the `ignore` line below.
+  ignore = "exit 0"
