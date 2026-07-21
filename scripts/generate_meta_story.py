@@ -22,8 +22,9 @@ from typing import Any, Dict, List, Optional, cast
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL
-from meta_story_network import build_social_network
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from meta_story_network import build_social_network, derive_clusters
+from meta_story_network_review import review_social_network
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -261,6 +262,33 @@ class MetaStoryDataset(BaseModel):
     subtopics: List[Subtopic]
     chapters: List[ChapterWithEvents]
     conclusion: str
+
+
+class NetworkCircleNarration(BaseModel):
+    """Narrative text for one cluster ("circle") of the social network."""
+
+    key: str = Field(description="The circle's key, copied verbatim from the input")
+    title: str = Field(
+        description="A short, evocative headline for the circle (2-5 words) — "
+        "a book-chapter-style phrase capturing what bound this group, NOT a list "
+        "of the people's names"
+    )
+    text: str = Field(
+        description="2-4 sentence story text weaving the circle's ties together"
+    )
+
+
+class NetworkNarrationResult(BaseModel):
+    """AI-written narration for the social network scroll-over cards."""
+
+    intro: str = Field(
+        description="A 2-3 sentence introductory paragraph for the network, "
+        "written like a book's opening: thematic and inviting. It sets the scene "
+        "for the whole network WITHOUT naming individual people or previewing the "
+        "specific circles (those are revealed as the reader scrolls). No lists, "
+        "no reading guide."
+    )
+    circles: List[NetworkCircleNarration]
 
 
 # ============================================================================
@@ -1508,6 +1536,116 @@ def build_meta_story_dataset(
     return result
 
 
+def phase6_network_narration(
+    dataset: Dict[str, Any],
+    client: OpenAI,
+    model: str,
+    verbose: bool = False,
+) -> None:
+    """Phase 6: Write short story texts for the network's clusters ("circles").
+
+    The UI narrates the social network with scroll-over cards, one per cluster
+    (derived deterministically by ``derive_clusters``, mirroring the client).
+    This phase asks the model for a short narrative per circle plus an intro,
+    stored as ``social_network.narration``. Failures are non-fatal — without
+    narration the UI falls back to listing the ties.
+    """
+    network = dataset.get("social_network") or {}
+    clusters = derive_clusters(network)
+    if not clusters:
+        return
+
+    meta = dataset.get("meta_story", {})
+    cluster_briefs = []
+    for cluster in clusters:
+        members = ", ".join(
+            f"{n['name']} ({n.get('birth_year') or '?'}; "
+            f"{', '.join(n.get('roles') or []) or 'role unknown'})"
+            for n in cluster["mains"]
+        )
+        bridges = ", ".join(n["name"] for n in cluster["secondaries"]) or "none"
+        ties = "\n".join(
+            f"  - {link['source']} <-> {link['target']} "
+            f"[{link.get('relationship_type', '')}, {link.get('strength', '')}]: "
+            f"{link.get('relationship_description', '')}"
+            for link in cluster["links"]
+        )
+        cluster_briefs.append(
+            f"Circle key: {cluster['key']}\n"
+            f"Main people: {members}\n"
+            f"Bridging acquaintances: {bridges}\n"
+            f"Ties:\n{ties}"
+        )
+    briefs = "\n\n".join(cluster_briefs)
+
+    prompt = f"""Write the narration for the social-network section of the meta story
+"{meta.get("title", "")}" ({meta.get("tagline", "")}).
+
+The network is shown as a graph; while the reader scrolls, each "circle"
+(cluster of closely connected people) is highlighted with a card containing a
+short story text. Write those texts.
+
+CIRCLES:
+
+{briefs}
+
+REQUIREMENTS:
+- intro: a 2-3 sentence opening paragraph, written the way an author opens a
+  chapter — evocative and inviting, setting up the human theme that runs through
+  this network (what kind of bonds it is made of, what world it spans, what it
+  builds toward). Do NOT name individual people, do NOT preview or list the
+  specific circles/clusters (they unfold as the reader scrolls, so naming them
+  here would spoil the journey), and do NOT explain how to read the graph.
+- One entry per circle, in the given order, with `key` copied EXACTLY.
+- Each circle title: a short, evocative headline (2-5 words) in the spirit of a
+  book chapter — capture the theme or bond that unites the circle. Do NOT list
+  the people's names; the names appear in the text below it.
+- Each circle text: 2-4 sentences of flowing prose that weave the ties into a
+  miniature story — how these people found each other, what bound them, who
+  bridged whom. Ground every claim in the tie descriptions above; do not invent
+  facts. No bullet points, no lists of relationships.
+- Refer to people by natural name forms (e.g. "Babbage" on second mention).
+- Tone: vivid but factual, matching a biographical story collection."""
+
+    try:
+        response = client.beta.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a skilled narrative writer turning "
+                    "relationship data into short, factual story texts.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            response_format=NetworkNarrationResult,
+        )
+        result = response.choices[0].message
+        if not result.parsed:
+            print("Warning: Phase 6 returned no parsed result, skipping narration")
+            return
+        by_key = {c.key: c for c in result.parsed.circles}
+        missing = [c["key"] for c in clusters if c["key"] not in by_key]
+        if missing:
+            print(f"Warning: Phase 6 narration missing circles {missing}, skipping")
+            return
+        network["narration"] = {
+            "intro": result.parsed.intro,
+            "circles": [
+                {
+                    "key": c["key"],
+                    "title": by_key[c["key"]].title,
+                    "text": by_key[c["key"]].text,
+                }
+                for c in clusters
+            ],
+        }
+        if verbose:
+            print(f"  Narrated {len(clusters)} circle(s)")
+    except Exception as e:
+        print(f"Warning: Phase 6 network narration failed: {e}")
+
+
 def save_meta_story(
     story_id: str, dataset: Dict[str, Any], verbose: bool = False
 ) -> bool:
@@ -1634,6 +1772,11 @@ def main():
         type=int,
         default=2,
         help="Maximum historical context events per chapter (default: 2)",
+    )
+    parser.add_argument(
+        "--skip-network-review",
+        action="store_true",
+        help="Skip Phase 5b (AI review/enrichment of the derived social network)",
     )
     parser.add_argument(
         "--skip-translate",
@@ -1791,9 +1934,34 @@ def main():
             verbose=args.verbose,
         )
 
-    # Build dataset
+    # Build dataset (Phase 5: derive the social network deterministically)
     dataset = build_meta_story_dataset(
         plan, chapters, story_id, registry, hints=hints, model=args.model
+    )
+
+    # Phase 5b: AI review of the derived network — enrich with missing direct
+    # ties, refine wording, and prune vague/indirect ones. Runs BEFORE
+    # clustering/narration so the circles reflect the reviewed graph. Non-fatal:
+    # on any failure the deterministic network is kept.
+    if args.skip_network_review:
+        if args.verbose:
+            print("\n=== PHASE 5b: Network Review (SKIPPED) ===")
+    else:
+        if args.verbose:
+            print("\n=== PHASE 5b: Network Review ===")
+        dataset["social_network"] = review_social_network(
+            dataset.get("social_network") or {},
+            client=client,
+            model=args.model,
+            reasoning_effort=DEFAULT_REASONING_EFFORT,
+            verbose=args.verbose,
+        )
+
+    # Phase 6: narrate the social network's circles (non-fatal on failure)
+    if args.verbose:
+        print("\n=== PHASE 6: Network Narration ===")
+    phase6_network_narration(
+        dataset, client=client, model=args.model, verbose=args.verbose
     )
 
     # Save files

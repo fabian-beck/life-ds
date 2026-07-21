@@ -16,6 +16,11 @@ relationship types, strengths) it is copied verbatim into translated meta-story
 files: node labels are person names (kept in the original language per the
 translation rules) and ``relationship_type`` is localized by the UI. Only the
 optional ``relationship_description`` falls back to English in other languages.
+
+The one exception is ``social_network.narration`` — the AI-written story texts
+for the network's clusters (see ``derive_clusters`` below and Phase 6 of
+``generate_meta_story.py``) — which is prose and part of the translation
+payload.
 """
 
 from __future__ import annotations
@@ -305,6 +310,150 @@ def build_social_network(
             )
 
     return {"nodes": nodes, "links": links}
+
+
+# ---------------------------------------------------------------------------
+# Cluster ("circle") derivation — must mirror src/utils/networkClusters.js
+# ---------------------------------------------------------------------------
+
+# Tie strength weights and the boost for direct main↔main links (see the JS
+# counterpart for why the boost exists: without it two main people sharing many
+# acquaintances become hubs that modularity prefers to split apart).
+_STRENGTH_WEIGHT = {"strong": 3, "moderate": 2, "weak": 1}
+_MAIN_LINK_BOOST = 3
+
+
+def _cluster_link_weight(link: Dict[str, Any]) -> int:
+    weight = _STRENGTH_WEIGHT.get(link.get("strength", ""), 2)
+    return weight * _MAIN_LINK_BOOST if link.get("kind") == "main" else weight
+
+
+def _pair_key(a: str, b: str) -> str:
+    return f"{a}|{b}" if a < b else f"{b}|{a}"
+
+
+def _detect_communities(links: List[Dict[str, Any]]) -> List[set]:
+    """Greedy modularity merging (CNM), deterministic. Mirrors the JS version."""
+    community_of: Dict[str, str] = {}
+    members: Dict[str, set] = {}
+    degree: Dict[str, float] = {}
+    between: Dict[str, float] = {}
+    m = 0.0
+
+    for link in links:
+        w = _cluster_link_weight(link)
+        m += w
+        for node_id in (link["source"], link["target"]):
+            if node_id not in community_of:
+                community_of[node_id] = node_id
+                members[node_id] = {node_id}
+                degree[node_id] = 0.0
+            degree[node_id] += w
+        key = _pair_key(link["source"], link["target"])
+        between[key] = between.get(key, 0.0) + w
+    if m == 0:
+        return []
+
+    while True:
+        best_key = None
+        best_gain = 1e-9
+        for key in sorted(between.keys()):
+            a, b = key.split("|")
+            gain = between[key] / m - (degree[a] * degree[b]) / (2 * m * m)
+            if gain > best_gain:
+                best_gain = gain
+                best_key = key
+        if best_key is None:
+            break
+
+        a, b = best_key.split("|")
+        for node_id in members[b]:
+            members[a].add(node_id)
+            community_of[node_id] = a
+        degree[a] += degree[b]
+        del members[b], degree[b], between[best_key]
+        for key in list(between.keys()):
+            x, y = key.split("|")
+            if x != b and y != b:
+                continue
+            other = y if x == b else x
+            w = between.pop(key)
+            if other == a:
+                continue
+            merged = _pair_key(a, other)
+            between[merged] = between.get(merged, 0.0) + w
+
+    return [ids for ids in members.values() if len(ids) >= 2]
+
+
+def derive_clusters(network: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Derive the ordered clusters ("circles") the UI narrates while scrolling.
+
+    Mirrors ``computeClusters`` in ``src/utils/networkClusters.js`` — same
+    weights, same deterministic greedy modularity, same roughly-temporal
+    ordering — so a cluster ``key`` computed here always matches the key the
+    UI computes at runtime (narration texts are matched by that key).
+    """
+    nodes = network.get("nodes") or []
+    all_links = network.get("links") or []
+    node_by_id = {n["id"]: n for n in nodes}
+    links = [
+        l
+        for l in all_links
+        if l.get("source") in node_by_id
+        and l.get("target") in node_by_id
+        and l["source"] != l["target"]
+    ]
+    if not links:
+        return []
+
+    strength_rank = {"strong": 3, "moderate": 2, "weak": 1}
+    clusters: List[Dict[str, Any]] = []
+    for ids in _detect_communities(links):
+        mains = [node_by_id[i] for i in ids if node_by_id[i].get("type") == "main"]
+        secondaries = [
+            node_by_id[i] for i in ids if node_by_id[i].get("type") != "main"
+        ]
+        if not mains:
+            continue
+        mains.sort(
+            key=lambda n: (
+                n.get("birth_year") if n.get("birth_year") is not None else 10**9,
+                n.get("name", ""),
+            )
+        )
+        secondaries.sort(key=lambda n: n.get("name", ""))
+        internal = sorted(
+            (l for l in links if l["source"] in ids and l["target"] in ids),
+            key=lambda l: (
+                0 if l.get("kind") == "main" else 1,
+                -strength_rank.get(l.get("strength", ""), 0),
+                _pair_key(l["source"], l["target"]),
+            ),
+        )
+        years = [
+            n["birth_year"] for n in mains if isinstance(n.get("birth_year"), int)
+        ]
+        clusters.append(
+            {
+                "key": "+".join(n["id"] for n in mains),
+                "mains": mains,
+                "secondaries": secondaries,
+                "links": internal,
+                "year_start": min(years) if years else None,
+                "year_end": max(years) if years else None,
+                "mean_year": sum(years) / len(years) if years else float("inf"),
+            }
+        )
+
+    clusters.sort(
+        key=lambda c: (
+            c["mean_year"],
+            c["year_start"] if c["year_start"] is not None else 10**9,
+            c["key"],
+        )
+    )
+    return clusters
 
 
 def main() -> int:

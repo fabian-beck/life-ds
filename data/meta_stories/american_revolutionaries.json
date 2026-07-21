@@ -258,5 +258,364 @@
       "historical_context": []
     }
   ],
-  "conclusion": "American independence was not secured at Yorktown alone. It depended on an intertwined practice of command, persuasion, international alliance, household endurance, constitutional compromise, and financial state-building—work that made a republic possible while leaving its promises of equality fiercely unfinished."
+  "conclusion": "American independence was not secured at Yorktown alone. It depended on an intertwined practice of command, persuasion, international alliance, household endurance, constitutional compromise, and financial state-building—work that made a republic possible while leaving its promises of equality fiercely unfinished.",
+  "social_network": {
+    "nodes": [
+      {
+        "id": "george_washington",
+        "name": "George Washington",
+        "type": "main",
+        "portrait": "/portraits/george_washington_thumbnail.webp",
+        "roles": ["soldier", "politician"],
+        "birth_year": 1732
+      },
+      {
+        "id": "benjamin_franklin",
+        "name": "Benjamin Franklin",
+        "type": "main",
+        "portrait": "/portraits/benjamin_franklin_thumbnail.webp",
+        "roles": ["statesman", "inventor"],
+        "birth_year": 1706
+      },
+      {
+        "id": "abigail_adams",
+        "name": "Abigail Adams",
+        "type": "main",
+        "portrait": "/portraits/abigail_adams_thumbnail.webp",
+        "roles": ["writer", "political advisor"],
+        "birth_year": 1744
+      },
+      {
+        "id": "alexander_hamilton",
+        "name": "Alexander Hamilton",
+        "type": "main",
+        "portrait": "/portraits/alexander_hamilton_thumbnail.webp",
+        "roles": ["statesman", "soldier"],
+        "birth_year": 1755
+      },
+      {
+        "id": "sec:thomas_jefferson",
+        "name": "Thomas Jefferson",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:john_adams",
+        "name": "John Adams",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:marquis_de_lafayette",
+        "name": "Marquis de Lafayette",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:william_smith",
+        "name": "William Smith",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:james_madison",
+        "name": "James Madison",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:john_jay",
+        "name": "John Jay",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "alexander_hamilton",
+        "target": "george_washington",
+        "kind": "main",
+        "relationship_type": "professional/commander-and-patron",
+        "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
+        "strength": "strong",
+        "endpoints": {
+          "george_washington": {
+            "relationship_type": "professional/advisor",
+            "relationship_description": "Hamilton served as Washington's aide-de-camp during the Revolutionary War and became his first secretary of the treasury. He was a key architect of Washington administration policy and helped draft the 1796 Farewell Address.",
+            "strength": "strong"
+          },
+          "alexander_hamilton": {
+            "relationship_type": "professional/commander-and-patron",
+            "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "benjamin_franklin",
+        "target": "george_washington",
+        "kind": "main",
+        "relationship_type": "professional/founding_colleague",
+        "relationship_description": "Washington and Franklin were leading figures in the American revolutionary and constitutional founding. Franklin worked with Washington in national public affairs, returned to Pennsylvania during Washington's command of the Revolution, and attended the Constitutional Convention that Washington chaired.",
+        "strength": "moderate",
+        "endpoints": {
+          "benjamin_franklin": {
+            "relationship_type": "professional/founding_colleague",
+            "relationship_description": "Washington and Franklin were leading figures in the American revolutionary and constitutional founding. Franklin worked with Washington in national public affairs, returned to Pennsylvania during Washington's command of the Revolution, and attended the Constitutional Convention that Washington chaired.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "george_washington",
+        "target": "sec:thomas_jefferson",
+        "kind": "secondary",
+        "relationship_type": "professional/cabinet member",
+        "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
+        "strength": "moderate",
+        "endpoints": {
+          "george_washington": {
+            "relationship_type": "professional/cabinet member",
+            "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "benjamin_franklin",
+        "target": "sec:thomas_jefferson",
+        "kind": "secondary",
+        "relationship_type": "professional/founding_colleague",
+        "relationship_description": "Jefferson and Franklin were fellow members of the Committee of Five appointed to draft the Declaration of Independence. Franklin reviewed Jefferson's draft and joined Congress in the broader effort to establish American independence.",
+        "strength": "moderate",
+        "endpoints": {
+          "benjamin_franklin": {
+            "relationship_type": "professional/founding_colleague",
+            "relationship_description": "Jefferson and Franklin were fellow members of the Committee of Five appointed to draft the Declaration of Independence. Franklin reviewed Jefferson's draft and joined Congress in the broader effort to establish American independence.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "abigail_adams",
+        "target": "sec:thomas_jefferson",
+        "kind": "secondary",
+        "relationship_type": "professional/political correspondent",
+        "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
+        "strength": "moderate",
+        "endpoints": {
+          "abigail_adams": {
+            "relationship_type": "professional/political correspondent",
+            "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:thomas_jefferson",
+        "kind": "secondary",
+        "relationship_type": "professional/political rival",
+        "relationship_description": "Secretary of state in Washington's cabinet and leader of the Democratic-Republicans. Jefferson opposed Hamilton's financial program, but Hamilton nevertheless backed Jefferson over Burr in the disputed presidential election of 1800.",
+        "strength": "moderate",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/political rival",
+            "relationship_description": "Secretary of state in Washington's cabinet and leader of the Democratic-Republicans. Jefferson opposed Hamilton's financial program, but Hamilton nevertheless backed Jefferson over Burr in the disputed presidential election of 1800.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "benjamin_franklin",
+        "target": "sec:john_adams",
+        "kind": "secondary",
+        "relationship_type": "professional/founding_colleague",
+        "relationship_description": "Adams and Franklin worked together in the Continental Congress, including on the Committee of Five that prepared the Declaration of Independence. They later served together in American diplomacy in Europe, though Adams found Franklin's approach to French diplomacy frustrating.",
+        "strength": "moderate",
+        "endpoints": {
+          "benjamin_franklin": {
+            "relationship_type": "professional/founding_colleague",
+            "relationship_description": "Adams and Franklin worked together in the Continental Congress, including on the Committee of Five that prepared the Declaration of Independence. They later served together in American diplomacy in Europe, though Adams found Franklin's approach to French diplomacy frustrating.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "abigail_adams",
+        "target": "sec:john_adams",
+        "kind": "secondary",
+        "relationship_type": "family/spouse",
+        "relationship_description": "Abigail’s husband, intellectual partner, and closest political correspondent; their letters joined family life with sustained discussion of government and public affairs.",
+        "strength": "strong",
+        "endpoints": {
+          "abigail_adams": {
+            "relationship_type": "family/spouse",
+            "relationship_description": "Abigail’s husband, intellectual partner, and closest political correspondent; their letters joined family life with sustained discussion of government and public affairs.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:john_adams",
+        "kind": "secondary",
+        "relationship_type": "professional/political rival",
+        "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
+        "strength": "moderate",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/political rival",
+            "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "george_washington",
+        "target": "sec:marquis_de_lafayette",
+        "kind": "secondary",
+        "relationship_type": "professional/military collaborator",
+        "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
+        "strength": "strong",
+        "endpoints": {
+          "george_washington": {
+            "relationship_type": "professional/military collaborator",
+            "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:marquis_de_lafayette",
+        "kind": "secondary",
+        "relationship_type": "professional/fellow officer",
+        "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
+        "strength": "strong",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/fellow officer",
+            "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "benjamin_franklin",
+        "target": "sec:william_smith",
+        "kind": "secondary",
+        "relationship_type": "academic/civic_colleague",
+        "relationship_description": "Smith was an educator and the first provost of the College of Philadelphia. Franklin helped establish and became first president of the Academy and College of Philadelphia, placing the two men at the center of its early governance and educational mission.",
+        "strength": "moderate",
+        "endpoints": {
+          "benjamin_franklin": {
+            "relationship_type": "academic/civic_colleague",
+            "relationship_description": "Smith was an educator and the first provost of the College of Philadelphia. Franklin helped establish and became first president of the Academy and College of Philadelphia, placing the two men at the center of its early governance and educational mission.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "abigail_adams",
+        "target": "sec:william_smith",
+        "kind": "secondary",
+        "relationship_type": "family/father",
+        "relationship_description": "Abigail’s father was a liberal Congregational minister who officiated at her 1764 marriage and whose library helped support her self-education.",
+        "strength": "strong",
+        "endpoints": {
+          "abigail_adams": {
+            "relationship_type": "family/father",
+            "relationship_description": "Abigail’s father was a liberal Congregational minister who officiated at her 1764 marriage and whose library helped support her self-education.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "george_washington",
+        "target": "sec:james_madison",
+        "kind": "secondary",
+        "relationship_type": "professional/political collaborator",
+        "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
+        "strength": "moderate",
+        "endpoints": {
+          "george_washington": {
+            "relationship_type": "professional/political collaborator",
+            "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:james_madison",
+        "kind": "secondary",
+        "relationship_type": "professional/collaborator-and-rival",
+        "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
+        "strength": "moderate",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/collaborator-and-rival",
+            "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "benjamin_franklin",
+        "target": "sec:john_jay",
+        "kind": "secondary",
+        "relationship_type": "professional/diplomatic_colleague",
+        "relationship_description": "Jay and Franklin were American peace commissioners in Paris who helped negotiate the Treaty of Paris ending the Revolutionary War. Together with John Adams, they participated in the negotiations that secured British recognition of American independence.",
+        "strength": "moderate",
+        "endpoints": {
+          "benjamin_franklin": {
+            "relationship_type": "professional/diplomatic_colleague",
+            "relationship_description": "Jay and Franklin were American peace commissioners in Paris who helped negotiate the Treaty of Paris ending the Revolutionary War. Together with John Adams, they participated in the negotiations that secured British recognition of American independence.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:john_jay",
+        "kind": "secondary",
+        "relationship_type": "professional/collaborator",
+        "relationship_description": "New York legal and political associate who worked with Hamilton in the Revolutionary movement, constitutional ratification campaign, and Federalist political network.",
+        "strength": "moderate",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/collaborator",
+            "relationship_description": "New York legal and political associate who worked with Hamilton in the Revolutionary movement, constitutional ratification campaign, and Federalist political network.",
+            "strength": "moderate"
+          }
+        }
+      }
+    ],
+    "narration": {
+      "intro": "Two circles anchor this network: the founders’ pen — Franklin and Abigail Adams, joined through the men who drafted independence — and the founders’ sword, Washington and Hamilton with their brothers in arms.",
+      "circles": [
+        {
+          "key": "benjamin_franklin+abigail_adams",
+          "text": "Benjamin Franklin and Abigail Adams are joined here not by a single tie but by a shared founding circle. Abigail’s husband and closest political correspondent John Adams sat with Franklin on the Committee of Five that prepared the Declaration of Independence and later served beside him — not always happily — in American diplomacy in Europe, where John Jay joined Franklin in negotiating the Treaty of Paris. Thomas Jefferson completes the web: Franklin’s fellow drafter of the Declaration, and a correspondent whose bond with Abigail weathered family losses and a famous reconciliation."
+        },
+        {
+          "key": "george_washington+alexander_hamilton",
+          "text": "George Washington picked the young Alexander Hamilton as his aide-de-camp in 1777 and never really let him go, later appointing him the nation’s first secretary of the treasury. Around the pair stood the Marquis de Lafayette — the French volunteer general who fought under Washington and corresponded closely with Hamilton through the Yorktown campaign — and James Madison, who co-wrote The Federalist Papers with Hamilton and worked with Washington on the Constitution before becoming one of Hamilton’s chief opponents."
+        }
+      ]
+    }
+  }
 }
