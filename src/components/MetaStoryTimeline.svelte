@@ -3,6 +3,7 @@
   import { fade } from "svelte/transition";
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
+  import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
   export let metaStoryId = null; // ID of the meta story (for navigation context)
@@ -1912,6 +1913,9 @@
     // Include meta story context if available
     const fromMetaParam = metaStoryId ? `&from_meta=${metaStoryId}` : "";
 
+    // Remember where the reader left the meta story so returning restores it
+    saveMetaStoryScroll(metaStoryId);
+
     // Build URL with event query parameter and meta story context
     window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}${fromMetaParam}`;
   }
@@ -1924,6 +1928,9 @@
 
     // Include meta story context if available
     const fromMetaParam = metaStoryId ? `?from_meta=${metaStoryId}` : "";
+
+    // Remember where the reader left the meta story so returning restores it
+    saveMetaStoryScroll(metaStoryId);
 
     window.location.hash = `/${currentLang}/story/${personId}${fromMetaParam}`;
   }
