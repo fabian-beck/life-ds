@@ -3,9 +3,9 @@
   "created_on": "2026-07-21T05:59:38.402085+02:00",
   "meta_story": {
     "id": "computing_pioneers",
-    "title": "Maschinen des Denkens",
+    "title": "Denkmaschinen",
     "tagline": "Von kodierten Anweisungen zum digitalen Leben",
-    "description": "Lange bevor das Rechnen elektronisch, mobil oder alltäglich wurde, begann es mit einer anspruchsvollen These: dass sich eine Operation als Anweisungen ausdrücken und von einer Maschine ausführen lassen könne. Mechanische Rechenmaschinen, Lochkarten und mathematische Theorie gaben dieser These jeweils eine Form und fassten Berechnung und Information als Prozesse neu, die kodiert, wiederholt und verallgemeinert werden konnten.\n\nDamit diese Möglichkeit folgenreich wurde, brauchte es mehr als Geschwindigkeit. Maschinen mussten die Aufzeichnungen von Institutionen verarbeiten, wissenschaftliche Arbeit und Kriegsarbeit unterstützen sowie für Programmierende verständlich und menschlichen Zwecken zugänglich werden. Compiler, Algorithmen, Schnittstellen und persönliche Geräte erweiterten die Reichweite des Rechnens, während eine schwierigere Frage bestehen blieb: Sollten Maschinen menschliche Arbeit automatisieren oder menschliches Urteilsvermögen stärken?",
+    "description": "Das Rechnen begann mit einer Behauptung über Anweisungen: dass Operationen ausgedrückt, in einer für Maschinen lesbaren Form gespeichert und zuverlässig ausgeführt werden könnten. Mechanische Entwürfe, Lochkarten und mathematische Theorie verwandelten Berechnung und Information allmählich in Prozesse, die kodiert, wiederholt und verallgemeinert werden konnten.\n\nDamit diese Möglichkeit über Werkstatt oder Seite hinaus Bedeutung gewann, mussten Maschinen Volkszählungsämtern, wissenschaftlicher Forschung, Kriegseinsätzen und Unternehmen dienen. Sie mussten auch in menschlichen Händen handhabbar werden: durch Compiler, Algorithmen, Betriebssysteme und Schnittstellen, die technische Leistungsfähigkeit in praktisches Handeln übersetzten.\n\nAls persönliche Geräte und vernetzte Medien das Rechnen in den Alltag brachten, gewann die alte Frage neue Dringlichkeit. Maschinen konnten Aufgaben automatisieren und Gespräche simulieren, doch ihre wachsende Reichweite machte den Stellenwert menschlichen Urteilsvermögens unmöglich zu übersehen.",
     "person_ids": [
       "ada_lovelace",
       "charles_babbage",
@@ -24,7 +24,7 @@
     ],
     "date_range_start": "1822",
     "date_range_end": "2007",
-    "lastUpdated": "2026-07-22T06:54:52.978508+02:00"
+    "lastUpdated": "2026-07-22T08:41:16.504800+02:00"
   },
   "generation_metadata": {
     "hints": null,
@@ -35,7 +35,7 @@
     {
       "id": "imagining_programmable_machines",
       "title": "Die Logik der Anweisungen",
-      "description": "Dieser Strang verfolgt den Weg von mechanischen Rechenmaschinen über formale Berechenbarkeit bis zu funktionierenden automatischen Systemen. Seine Beteiligten zeigten, dass kodierte Anweisungen eine universell einsetzbare Maschine steuern können.",
+      "description": "Babbage, Lovelace, Zuse und Turing begründeten einen zentralen Grundsatz des Rechnens: Kodierte Anweisungen konnten eine universell einsetzbare Maschine steuern. Ihre Arbeit reicht von mechanischen Entwürfen und früher automatischer Maschinerie bis zur formalen Berechenbarkeit.",
       "person_ids": [
         "charles_babbage",
         "ada_lovelace",
@@ -46,7 +46,7 @@
     {
       "id": "building_computing_infrastructure",
       "title": "Rechnen im großen Maßstab",
-      "description": "Dieser Strang behandelt das Rechnen als dauerhafte institutionelle Kapazität, die Informationen für Wissenschaft, Krieg und Wirtschaft verarbeitet. Seine Beteiligten machten Maschinen und die sie umgebenden Organisationen in der weiteren Welt folgenreich.",
+      "description": "Hollerith, Bush, von Neumann und Nixdorf machten das Rechnen für Institutionen folgenreich. Ihre Arbeit verband Informationsverarbeitung, wissenschaftliches Rechnen, Rechnerarchitektur und den Einsatz in Unternehmen.",
       "person_ids": [
         "herman_hollerith",
         "vannevar_bush",
@@ -57,7 +57,7 @@
     {
       "id": "making_machines_usable",
       "title": "Menschliche Maßstäbe für Maschinen",
-      "description": "Dieser Strang konzentriert sich auf Software, Methoden und Schnittstellen, die leistungsstarke Computer nutzbar machten. Seine Beteiligten betrachteten Programmierung, Systemverwaltung und Interaktion als wesentliche Bestandteile des Rechnens selbst.",
+      "description": "Hopper, Dijkstra, Allen und Engelbart verstanden Software, Systemgestaltung und Interaktion als Teil der wesentlichen Arbeit des Rechnens. Sie machten leistungsstarke Maschinen verständlicher, zuverlässiger und auf menschliche Zwecke ausgerichteter.",
       "person_ids": [
         "grace_hopper",
         "edsger_w_dijkstra",
@@ -67,15 +67,15 @@
     },
     {
       "id": "computing_enters_daily_life",
-      "title": "Digitales Alltagsleben",
-      "description": "Dieser Strang verfolgt das Rechnen in Konsumprodukte und vernetzte Medien, ohne seine Grenzen aus dem Blick zu verlieren. Seine Beteiligten zeigen, wie scheinbares maschinelles Verstehen und delegiertes Urteilen zu Fragen des Alltagslebens wurden.",
+      "title": "Digitaler Alltag",
+      "description": "Jobs und Weizenbaum stehen für den Einzug des Rechnens ins Konsumleben und das damit einhergehende ethische Unbehagen. Ihr roter Faden verbindet zugängliche persönliche Technologie mit einer anhaltenden Herausforderung rund um simuliertes Verständnis und delegiertes Urteilsvermögen.",
       "person_ids": ["joseph_weizenbaum", "steve_jobs"]
     }
   ],
   "chapters": [
     {
       "id": "mechanical_imagination",
-      "title": "Anweisungen nehmen Gestalt an (1822-1852)",
+      "title": "Die Maschine als Anweisung (1822-1852)",
       "date_start": "1822",
       "date_start_precision": "year",
       "date_end": "1852",
@@ -87,7 +87,7 @@
           "event_date_precision": "year",
           "event_title": "Konzeption der Differenzmaschine",
           "event_index": 7,
-          "theme_connection": "Babbages Konzeption der Difference Engine war ein wegweisender Entwurf für automatische mechanische Berechnungen, der menschliche Übertragungsfehler in mathematischen Tabellen beseitigen sollte. Sie begründete ein entscheidendes frühes Modell der systematisch von Maschinen ausgeführten Berechnung."
+          "theme_connection": "Babbages Konzeption der Differenzmaschine war ein wegweisender Entwurf für automatisches mechanisches Rechnen, der menschliche Übertragungsfehler in mathematischen Tabellen beseitigen sollte. Sie begründete ein entscheidendes frühes Modell des systematischen Rechnens durch Maschinen."
         },
         {
           "person_id": "charles_babbage",
@@ -95,7 +95,7 @@
           "event_date_precision": "year",
           "event_title": "Entwurf der Analytischen Maschine",
           "event_index": 13,
-          "theme_connection": "Babbages Entwurf der Analytical Engine legte die Kernarchitektur eines universell einsetzbaren programmierbaren Computers fest: ein Rechenwerk, einen Speicher und Lochkartenanweisungen, die bedingte und iterative Operationen ermöglichen. Sie bleibt ein wesentlicher mechanischer Vorläufer des Rechnens mit gespeicherten Programmen."
+          "theme_connection": "Babbages Entwurf der Analytischen Maschine legte die Kernarchitektur eines universell programmierbaren Computers fest: ein Rechenwerk, einen Speicher und Lochkarteninstruktionen, die bedingte und iterative Operationen ermöglichten. Er bleibt ein wesentlicher mechanischer Vorläufer des Rechnens mit gespeicherten Programmen."
         },
         {
           "person_id": "ada_lovelace",
@@ -103,15 +103,15 @@
           "event_date_precision": "month",
           "event_title": "Anmerkungen zur Analytical Engine veröffentlicht",
           "event_index": 11,
-          "theme_connection": "In ihren veröffentlichten Anmerkungen zur Analytical Engine, insbesondere dem Verfahren für Bernoulli-Zahlen in Anmerkung G, beschrieb Lovelace eine Abfolge von Operationen für eine universell einsetzbare Maschine. Sie erkannte auch, dass eine solche Maschine Symbole über die Arithmetik hinaus manipulieren könnte, und verlieh der Programmierbarkeit damit eine für ihre Zeit außergewöhnlich weitreichende Vision."
+          "theme_connection": "In ihren veröffentlichten Anmerkungen zur Analytischen Maschine, insbesondere im Verfahren für Bernoulli-Zahlen in Anmerkung G, beschrieb Lovelace eine Abfolge von Operationen für eine universell einsetzbare Maschine. Sie erkannte zudem, dass eine solche Maschine Symbole über die Arithmetik hinaus manipulieren könnte, und verlieh der Programmierbarkeit damit früh eine ungewöhnlich weitreichende Vision."
         }
       ],
       "historical_context": [],
-      "lead_in": "Mechanische Entwürfe eröffneten eine radikale Möglichkeit: Eine Maschine könnte einem geordneten Verfahren folgen. Die Herausforderung bestand darin, Berechnungen in einer Form zu beschreiben, die Maschinen ausführen konnten."
+      "lead_in": "Mechanisches Rechnen wurde mehr als bloße Automatisierung, als Konstrukteure Maschinen vorschlugen, die durch kodierte Operationen gesteuert wurden. Die Möglichkeit einer universell einsetzbaren Rechenmaschine nahm erstmals begriffliche Gestalt an."
     },
     {
       "id": "data_and_machine_design",
-      "title": "Information findet eine Form (1884-1939)",
+      "title": "Information nimmt Gestalt an (1884-1939)",
       "date_start": "1884",
       "date_start_precision": "year",
       "date_end": "1939",
@@ -123,7 +123,7 @@
           "event_date_precision": "year",
           "event_title": "Lochkartenanordnung übernommen",
           "event_index": 6,
-          "theme_connection": "Holleriths Lochkarten- und elektrisches Kontaktschema machte Daten maschinenlesbar: Kartenpositionen kodierten Fakten und steuerten Schaltkreise, die sie zählten. Dies war eine grundlegende Architektur der Informationsverarbeitung und etablierte Lochkarten als dauerhaftes Medium für die großskalige programmierbare Datenverarbeitung."
+          "theme_connection": "Holleriths Lochkarten- und Elektrisches-Kontakt-System machte Daten maschinenlesbar: Kartenpositionen kodierten Fakten und steuerten Schaltkreise, die sie zählten. Dies war eine grundlegende Architektur der Informationsverarbeitung und etablierte Lochkarten als dauerhaftes Medium für programmierbare Datenverarbeitung im großen Maßstab."
         },
         {
           "person_id": "herman_hollerith",
@@ -131,7 +131,7 @@
           "event_date_precision": "day",
           "event_title": "US-Volkszählung 1890 tabuliert",
           "event_index": 9,
-          "theme_connection": "Die US-Volkszählung von 1890 zeigte, dass die Lochkartentabellierung die Daten eines Landes in einem beispiellosen institutionellen Maßstab verarbeiten konnte. Ihr erfolgreicher Einsatz verwandelte das Rechnen von mühsamer händischer Zusammenstellung in folgenreiche automatisierte Datenverarbeitung."
+          "theme_connection": "Die US-Volkszählung von 1890 zeigte, dass Lochkartentabellierung die Daten eines Landes in einem bis dahin beispiellosen institutionellen Umfang verarbeiten konnte. Ihr erfolgreicher Einsatz verwandelte das Rechnen von mühsamer manueller Zusammenstellung in folgenreiche automatisierte Datenverarbeitung."
         },
         {
           "person_id": "herman_hollerith",
@@ -139,7 +139,7 @@
           "event_date_precision": "year",
           "event_title": "Tabulator mit Steuerfeld eingeführt",
           "event_index": 13,
-          "theme_connection": "Die Schalttafel machte Tabelliermaschinen für unterschiedliche Aufgaben konfigurierbar, ohne ihre Verdrahtung neu aufbauen zu müssen, und führte Lochkartengeräte in Richtung praktischer Programmierbarkeit. Sie war ein bedeutender Schritt von einer spezialisierten Zählmaschine hin zu einer anpassungsfähigen Recheninfrastruktur für zahlreiche Aufgaben der Informationsverarbeitung."
+          "theme_connection": "Die Schalttafel machte Tabelliermaschinen für verschiedene Aufgaben konfigurierbar, ohne ihre Verdrahtung neu aufbauen zu müssen, und führte Lochkartengeräte in Richtung praktischer Programmierbarkeit. Sie war ein bedeutender Schritt von einer spezialisierten Volkszählungsmaschine hin zu anpassungsfähiger Recheninfrastruktur für zahlreiche Aufgaben der Informationsverarbeitung."
         },
         {
           "person_id": "vannevar_bush",
@@ -147,7 +147,7 @@
           "event_date_precision": "year",
           "event_title": "Beginnt den Differentialanalysator zu bauen",
           "event_index": 6,
-          "theme_connection": "Bushs Differentialanalysator war ein wegweisender großformatiger mechanischer Analogrechner zur automatischen Lösung von Differentialgleichungen. Er machte komplexe wissenschaftliche Berechnungen in einem Umfang praktisch möglich, der über händisches Rechnen hinausging, und beeinflusste die weitere Entwicklung von Rechenmaschinen."
+          "theme_connection": "Bushs Differentialanalysator war ein wegweisender mechanischer Analogrechner großen Maßstabs zur automatischen Lösung von Differentialgleichungen. Er machte komplexe wissenschaftliche Berechnungen in einem Umfang praktikabel, der über manuelles Rechnen hinausging, und beeinflusste die weitere Entwicklung von Rechenmaschinen."
         },
         {
           "person_id": "alan_turing",
@@ -155,7 +155,7 @@
           "event_date_precision": "day",
           "event_title": "Arbeit zur Turingmaschine abgeschlossen",
           "event_index": 6,
-          "theme_connection": "In „On Computable Numbers“ definierte Turing das Modell der universellen Maschine und bestimmte grundlegende Grenzen algorithmischer Entscheidbarkeit. Der Aufsatz lieferte eine konzeptionelle Grammatik für programmierbares universelles Rechnen, die für die Informatik weiterhin zentral ist."
+          "theme_connection": "In „On Computable Numbers“ definierte Turing das Modell der universellen Maschine und bestimmte grundlegende Grenzen algorithmischer Entscheidbarkeit. Der Aufsatz lieferte eine begriffliche Grammatik für programmierbares universelles Rechnen, die weiterhin zentral für die Informatik ist."
         },
         {
           "person_id": "konrad_zuse",
@@ -163,15 +163,15 @@
           "event_date_precision": "year",
           "event_title": "Baut die Z1 in der Wohnung seiner Eltern",
           "event_index": 5,
-          "theme_connection": "Zuses Z1 war ein wegweisender binärer, programmierbarer mechanischer Rechnerentwurf mit Programmeingabe und getrennten Funktionseinheiten, die für die spätere Computerarchitektur zentral wurden. Obwohl sie mechanisch unzuverlässig war, stellte sie eine unverzichtbare frühe Verwirklichung der Idee der programmierbaren Maschine dar."
+          "theme_connection": "Zuses Z1 war ein wegweisender Entwurf eines binären, programmierbaren mechanischen Computers, der Programmeingaben und getrennte Funktionseinheiten nutzte, die für spätere Rechnerarchitekturen zentral wurden. Obwohl mechanisch unzuverlässig, war sie eine unverzichtbare frühe Verwirklichung der Idee einer programmierbaren Maschine."
         }
       ],
       "historical_context": [],
-      "lead_in": "Lochkarten machten Fakten für Maschinen lesbar, während neue Entwürfe verdeutlichten, was allgemeines Rechnen bedeuten könnte. Berechnung wurde sowohl zu einem institutionellen Prozess als auch zu einer formalen Idee."
+      "lead_in": "Lochkarten machten Fakten für Maschinen lesbar, während analoge und theoretische Arbeiten erweiterten, was Rechnen bedeuten konnte. Die Entwicklung bewegte sich zugleich auf institutionelle Datenverarbeitung und universelle Verfahren zu."
     },
     {
       "id": "war_code_and_stored_programs",
-      "title": "Maschinen werden einsatzfähig (1940-1955)",
+      "title": "Programme werden zu Maschinen (1940-1955)",
       "date_start": "1940",
       "date_start_precision": "year",
       "date_end": "1955",
@@ -183,7 +183,7 @@
           "event_date_precision": "year",
           "event_title": "Leitung der Marinekryptanalyse in Hut 8",
           "event_index": 9,
-          "theme_connection": "Turings Leitung von Hut 8 und seine kryptanalytischen Methoden trugen dazu bei, mechanisierte Berechnung in eine operative Fähigkeit für den Krieg zu verwandeln, und beschleunigten die Entschlüsselung des deutschen Marineverkehrs über Enigma. Dies ist ein wegweisendes Beispiel dafür, wie Rechenmethoden in einem folgenreichen institutionellen Maßstab eingesetzt wurden."
+          "theme_connection": "Turings Leitung von Hut 8 und seine kryptanalytischen Methoden machten mechanisiertes Rechnen zu einer operativen Fähigkeit im Krieg und beschleunigten die Entzifferung des deutschen Marine-Enigma-Verkehrs. Dies ist ein wegweisendes Beispiel dafür, wie Rechenmethoden im institutionellen Maßstab mit erheblicher Wirkung eingesetzt wurden."
         },
         {
           "person_id": "konrad_zuse",
@@ -191,7 +191,7 @@
           "event_date_precision": "day",
           "event_title": "Enthüllt die Z3",
           "event_index": 7,
-          "theme_connection": "Die Z3 war eine funktionierende relaisbasierte Maschine, die zu vollständig automatischen, programmgesteuerten digitalen Berechnungen fähig war. Als weithin anerkannter früher frei programmierbarer Computer ist sie ein entscheidender Meilenstein bei der Verwirklichung programmierbarer Maschinen."
+          "theme_connection": "Die Z3 war eine funktionierende relaisbasierte Maschine, die vollautomatische, programmgesteuerte digitale Berechnungen ausführen konnte. Als weithin anerkannter früher frei programmierbarer Computer ist sie ein entscheidender Meilenstein bei der Verwirklichung programmierbarer Maschinen."
         },
         {
           "person_id": "alan_turing",
@@ -199,7 +199,7 @@
           "event_date_precision": "year",
           "event_title": "Entwurf des ACE-Computers",
           "event_index": 10,
-          "theme_connection": "Turings ACE-Entwurf war eine bedeutende frühe Architektur eines Rechners mit gespeichertem Programm und betonte schnelle, praktische Berechnungen. Er lieferte einen grundlegenden Bauplan für den Übergang nach dem Krieg von spezialisierten Kriegsmaschinen zu universell einsetzbaren Digitalcomputern."
+          "theme_connection": "Turings ACE-Entwurf war eine bedeutende frühe Architektur eines Rechners mit gespeichertem Programm und betonte schnelle, praktische Berechnungen. Er lieferte einen grundlegenden Bauplan für den Übergang nach dem Krieg von spezialisierter Kriegsmaschinerie zu universell einsetzbaren digitalen Computern."
         },
         {
           "person_id": "john_von_neumann",
@@ -207,7 +207,7 @@
           "event_date_precision": "day",
           "event_title": "Stored-Program-Computer geprägt",
           "event_index": 13,
-          "theme_connection": "Von Neumanns First Draft of a Report on the EDVAC verbreitete die Architektur des gespeicherten Programms, bei der Anweisungen und Daten denselben Speicher nutzen. Dieses wegweisende Entwurfsmodell wurde weltweit zentral für den Bau universell einsetzbarer Digitalcomputer."
+          "theme_connection": "Von Neumanns First Draft of a Report on the EDVAC verbreitete die Architektur des gespeicherten Programms, in der Anweisungen und Daten denselben Speicher nutzen. Dieser wegweisende Entwurfsrahmen wurde weltweit zentral für den Bau universell einsetzbarer digitaler Computer."
         },
         {
           "person_id": "vannevar_bush",
@@ -215,7 +215,7 @@
           "event_date_precision": "day",
           "event_title": "Veröffentlicht „As We May Think“ in The Atlantic",
           "event_index": 11,
-          "theme_connection": "In „As We May Think“ schlug Bush den Memex vor, ein assoziatives System zum Speichern, Abrufen und Verknüpfen von Wissen. Obwohl es ein Konzept blieb, wurde es zu einem einflussreichen geistigen Vorläufer von Hypertext und menschenzentrierter Informationsverarbeitung."
+          "theme_connection": "In „As We May Think“ schlug Bush den Memex vor, ein assoziatives System zum Speichern, Abrufen und Verknüpfen von Wissen. Obwohl konzeptionell, wurde er zu einem einflussreichen geistigen Vorläufer von Hypertext und menschenzentrierter Informationsverarbeitung."
         },
         {
           "person_id": "alan_turing",
@@ -231,7 +231,7 @@
           "event_date_precision": "year",
           "event_title": "A-0-Compiler-Link-Loader entwickelt",
           "event_index": 9,
-          "theme_connection": "Hoppers einsatzfähiges A-0-System war ein wegweisender Compiler/Link-Loader, der symbolische Programmbeschreibungen automatisch für UNIVAC übersetzte. Es machte automatisches Programmieren zu einer praktischen Möglichkeit und ist ein grundlegender Meilenstein dafür, Computer durch Softwarewerkzeuge auf höherer Ebene nutzbar zu machen."
+          "theme_connection": "Hoppers einsatzfähiges A-0-System war ein wegweisender Compiler/Link-Loader, der symbolische Programmbeschreibungen automatisch für UNIVAC übersetzte. Es machte automatische Programmierung zu einer praktischen Möglichkeit und ist ein grundlegender Meilenstein dafür, Computer durch Softwarewerkzeuge höherer Ebene nutzbar zu machen."
         },
         {
           "person_id": "heinz_nixdorf",
@@ -239,14 +239,14 @@
           "event_date_precision": "year",
           "event_title": "Liefert ersten deutschen Röhrencomputer",
           "event_index": 5,
-          "theme_connection": "Nixdorfs Team lieferte die ES, einen elektronischen Röhrenrechner, der Lochkartendaten für die Buchhaltung von RWE nutzte und als Deutschlands erster röhrenbasierter Computer gilt. Sie steht für den praktischen institutionellen Einsatz elektronischer Datenverarbeitung im Nachkriegsdeutschland und brachte die Recheninfrastruktur unmittelbar voran."
+          "theme_connection": "Nixdorfs Team lieferte die ES, einen elektronischen Röhrenrechner, der Lochkartendaten für die Buchhaltung von RWE nutzte und als Deutschlands erster röhrenbasierter Computer gilt. Sie steht für den praktischen institutionellen Einsatz elektronischer Datenverarbeitung im Nachkriegsdeutschland und trieb die Recheninfrastruktur unmittelbar voran."
         }
       ],
       "historical_context": [
         {
           "id": "world_war_ii",
           "title": "Zweiter Weltkrieg",
-          "description": "Der Zweite Weltkrieg führte Turing zur Codeentschlüsselung in Bletchley Park, lenkte Bushs Verwaltung der kriegsbezogenen Forschung, unterstützte Zuses Arbeit durch deutsche Militäraufträge und motivierte Lamarrs Erfindung sicherer Kommunikation.",
+          "description": "Der Zweite Weltkrieg brachte Turing zur Codeentschlüsselung nach Bletchley Park, lenkte Bushs Verwaltung kriegsbezogener Forschung, unterstützte Zuses Arbeit durch deutsche Militäraufträge und motivierte Lamarrs Erfindung sicherer Kommunikation.",
           "date_start": "1939-09-01",
           "date_start_precision": "day",
           "date_end": "1945-09-02",
@@ -254,11 +254,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_II"
         }
       ],
-      "lead_in": "Krieg und Wiederaufbau der Nachkriegszeit verwandelten das Rechnen von einer Möglichkeit in eine funktionierende Fähigkeit. Gespeicherte Programme, automatische Berechnung und neue Software machten universell einsetzbare Maschinen praktikabel."
+      "lead_in": "Der Krieg machte mechanisiertes Rechnen operativ, und Entwürfe der Nachkriegszeit speicherten Anweisungen gemeinsam mit Daten im Speicher. Das Rechnen entwickelte sich zu einem praktischen, universell einsetzbaren elektronischen System."
     },
     {
       "id": "software_and_interaction",
-      "title": "Leistung trifft auf Menschen (1956-1976)",
+      "title": "Leistung trifft Menschen (1956-1976)",
       "date_start": "1956",
       "date_start_precision": "year",
       "date_end": "1976",
@@ -270,7 +270,7 @@
           "event_date_precision": "year",
           "event_title": "Kürzeste-Wege-Problem gelöst",
           "event_index": 5,
-          "theme_connection": "Dijkstras Kürzeste-Wege-Algorithmus wurde zu einem grundlegenden Algorithmus zur Bestimmung optimaler Routen in Netzwerken und Graphen. Er lieferte eine dauerhafte, weitverbreitete Methode, die Computer bei der Lösung einer zentralen Klasse von Optimierungsproblemen wirksam machte."
+          "theme_connection": "Dijkstras Kürzeste-Wege-Algorithmus wurde zu einem grundlegenden Algorithmus für das Finden optimaler Routen in Netzwerken und Graphen. Er bot eine dauerhafte, weit verbreitete Methode, die Computer bei der Lösung einer zentralen Klasse von Optimierungsproblemen wirksam machte."
         },
         {
           "person_id": "frances_allen",
@@ -278,7 +278,7 @@
           "event_date_precision": "year",
           "event_title": "Leitet Stretch-Harvest-Optimierungen",
           "event_index": 5,
-          "theme_connection": "Allen leitete die Compileroptimierung für die Stretch-Harvest-Systeme und half dabei, Verfahren zur Übersetzung von Programmen höherer Programmiersprachen in effiziente Maschinenausführung zu etablieren. Diese Arbeit war grundlegend für optimierende Compiler, die fortschrittliche Hardware für wissenschaftliches Rechnen und Sicherheitsanwendungen besser nutzbar machten."
+          "theme_connection": "Allen leitete die Compileroptimierung für die Stretch-Harvest-Systeme und half dabei, Techniken zur Übersetzung von Programmen höherer Ebene in effiziente Maschinenausführung zu etablieren. Diese Arbeit war grundlegend für optimierende Compiler, die fortschrittliche Hardware für wissenschaftliches Rechnen und Sicherheitsanwendungen besser nutzbar machten."
         },
         {
           "person_id": "edsger_w_dijkstra",
@@ -286,7 +286,7 @@
           "event_date_precision": "day",
           "event_title": "Erster ALGOL-60-Compiler fertiggestellt",
           "event_index": 8,
-          "theme_connection": "Der erste ALGOL-60-Compiler zeigte, dass eine bedeutende höhere Programmiersprache auf den damaligen Maschinen wirksam implementiert werden konnte. Dies war ein entscheidender Fortschritt, um Programmiersprachen zu praktischen Werkzeugen statt bloß zu Spezifikationen zu machen."
+          "theme_connection": "Der erste ALGOL-60-Compiler zeigte, dass eine bedeutende Programmiersprache höherer Ebene auf zeitgenössischen Maschinen wirksam implementiert werden konnte. Dies war ein entscheidender Fortschritt auf dem Weg zu Programmiersprachen als praktischen Werkzeugen statt bloßer Spezifikationen."
         },
         {
           "person_id": "douglas_engelbart",
@@ -294,7 +294,7 @@
           "event_date_precision": "month",
           "event_title": "Veröffentlicht Augmentationskonzept",
           "event_index": 9,
-          "theme_connection": "Engelbart formulierte 1962 mit seinem Erweiterungsrahmen die wegweisende Vision von Computern als interaktiven Werkzeugen zur Erweiterung des menschlichen Intellekts. Er lieferte den intellektuellen Bauplan für spätere Benutzerschnittstellen, kollaborative Systeme und menschenzentriertes Rechnen."
+          "theme_connection": "Engelbarts Augmentationsrahmen von 1962 formulierte die wegweisende Vision von Computern als interaktiven Werkzeugen zur Erweiterung menschlicher Intelligenz. Er lieferte den gedanklichen Bauplan für spätere Schnittstellen, kollaborative Systeme und menschenzentriertes Rechnen."
         },
         {
           "person_id": "douglas_engelbart",
@@ -302,7 +302,7 @@
           "event_date_precision": "year",
           "event_title": "Baut den ersten Mausprototyp",
           "event_index": 11,
-          "theme_connection": "Engelbarts Mausprototyp schuf eine grundlegende Zeigeschnittstelle, um Objekte auf einem Bildschirm direkt auszuwählen und zu bearbeiten. Sie wurde zu einem unverzichtbaren Element des interaktiven Personal Computing und machte grafische Systeme besser nutzbar."
+          "theme_connection": "Engelbarts Mausprototyp schuf eine grundlegende Zeigeschnittstelle, um Objekte auf einem Bildschirm direkt auszuwählen und zu bearbeiten. Sie wurde zu einem unverzichtbaren Element interaktiven Personal Computings und machte grafische Systeme besser nutzbar."
         },
         {
           "person_id": "joseph_weizenbaum",
@@ -310,7 +310,7 @@
           "event_date_precision": "year",
           "event_title": "ELIZA: wegweisender Chatbot",
           "event_index": 9,
-          "theme_connection": "ELIZA war ein wegweisendes frühes Programm zur natürlichen Sprachverarbeitung, das simulierte Gespräche zwischen Menschen und Computern konkret und weithin sichtbar machte. Ihr DOCTOR-Skript zeigte sowohl die Möglichkeiten als auch menschliche Fehlinterpretationen maschineller Intelligenz auf – zentral für ein nutzbares und ethisch umstrittenes Rechnen."
+          "theme_connection": "ELIZA war ein wegweisendes frühes Programm zur Verarbeitung natürlicher Sprache, das simulierte Gespräche zwischen Menschen und Computern konkret und weithin sichtbar machte. Ihr DOCTOR-Skript zeigte sowohl die Möglichkeiten als auch menschliche Fehlinterpretationen maschineller Intelligenz auf – zentral für nutzbares und ethisch umstrittenes Rechnen."
         },
         {
           "person_id": "heinz_nixdorf",
@@ -318,7 +318,7 @@
           "event_date_precision": "year",
           "event_title": "Führt Nixdorf System 820 ein",
           "event_index": 8,
-          "theme_connection": "Das Nixdorf System 820 war ein frei programmierbarer, kompakter Universalcomputer, der Rechenkapazitäten in Büros und kleinere Institutionen brachte. Sein integriertes Eingabe-, Ausgabe- und Kernspeicherdesign stellt einen bedeutenden Übergang von zentralisierten Maschinen zu praktischem, verteiltem Rechnen für Unternehmen dar."
+          "theme_connection": "Das Nixdorf System 820 war ein frei programmierbarer, kompakter Universalcomputer, der Rechenkapazitäten in Büros und kleinere Institutionen brachte. Sein integriertes Konzept aus Ein- und Ausgabe sowie Kernspeicher steht für einen bedeutenden Schritt von zentralisierten Maschinen hin zu praktischer verteilter Datenverarbeitung in Unternehmen."
         },
         {
           "person_id": "edsger_w_dijkstra",
@@ -326,7 +326,7 @@
           "event_date_precision": "year",
           "event_title": "THE-Multiprogrammiersystem entwickelt",
           "event_index": 10,
-          "theme_connection": "Dijkstras Team entwickelte das geschichtete Betriebssystem THE, eine wegweisende Demonstration strukturierten Betriebssystementwurfs und der Mehrprogrammierung. Seine geschichtete Architektur wurde zu einem grundlegenden Modell für die zuverlässige Verwaltung komplexer Computersysteme."
+          "theme_connection": "Dijkstras Team baute das geschichtete Betriebssystem THE, eine wegweisende Demonstration strukturierter Betriebssystemgestaltung und Mehrprogrammierung. Seine Schichtenarchitektur wurde zu einem grundlegenden Modell für die zuverlässige Verwaltung komplexer Computersysteme."
         },
         {
           "person_id": "douglas_engelbart",
@@ -334,7 +334,7 @@
           "event_date_precision": "day",
           "event_title": "Präsentiert die Mother of All Demos",
           "event_index": 12,
-          "theme_connection": "Die NLS-Demonstration von 1968 führte wegweisende Konzepte des interaktiven Rechnens – darunter Maus, Hypertext, verknüpfte Zusammenarbeit, Fenster und Videokonferenzen – öffentlich in einem funktionierenden System vor. Sie lieferte eine prägende Vision für menschenzentriertes, vernetztes Rechnen."
+          "theme_connection": "Die NLS-Demonstration von 1968 führte wegweisende Konzepte des interaktiven Rechnens – darunter Maus, Hypertext, vernetzte Zusammenarbeit, Fenster und Videokonferenzen – öffentlich in einem funktionierenden System vor. Sie vermittelte eine prägende Vision menschenzentrierten, vernetzten Rechnens."
         },
         {
           "person_id": "joseph_weizenbaum",
@@ -342,7 +342,7 @@
           "event_date_precision": "year",
           "event_title": "Veröffentlichung von „Computer Power and Human Reason“",
           "event_index": 13,
-          "theme_connection": "Computer Power and Human Reason bot eine grundlegende Kritik an den Grenzen der KI und daran, menschliches Urteilen an Maschinen zu delegieren. Das Werk machte Ethik und Verantwortung zu dauerhaften Bestandteilen der öffentlichen Debatte über das Rechnen."
+          "theme_connection": "Computer Power and Human Reason lieferte eine grundlegende Kritik an den Grenzen der KI und an der Übertragung menschlichen Urteilsvermögens auf Maschinen. Das Werk machte Ethik und Verantwortung zu dauerhaften Bestandteilen der öffentlichen Debatte über das Rechnen."
         },
         {
           "person_id": "steve_jobs",
@@ -350,14 +350,14 @@
           "event_date_precision": "day",
           "event_title": "Apple mitgegründet",
           "event_index": 4,
-          "theme_connection": "Indem Jobs Apple gemeinsam mit Wozniak gründete, um den Apple I zu entwickeln und zu verkaufen, trug er dazu bei, Personal Computing von einer Beschäftigung für Hobbyisten zu einem produktorientierten Massenmarktunternehmen zu machen. Apple wurde zu einem zentralen Weg, programmierbare Computer auf individuelle Schreibtische zu bringen."
+          "theme_connection": "Indem Jobs gemeinsam mit Wozniak Apple gründete, um den Apple I zu entwickeln und zu verkaufen, half er, Personal Computing von einer Beschäftigung für Hobbyisten in ein massenmarktorientiertes Unternehmen zu verwandeln. Apple wurde zu einem zentralen Weg, programmierbare Computer auf die Schreibtische Einzelner zu bringen."
         }
       ],
       "historical_context": [
         {
           "id": "arpa_created",
           "title": "ARPA gegründet",
-          "description": "Die Gründung von ARPA schuf die staatliche Forschungsförderung, die später Douglas Engelbarts Augmentation Research Center und dessen Arbeit am interaktiven Rechnen am SRI unterstützte.",
+          "description": "Die Gründung von ARPA schuf die staatliche Forschungsförderung, die später Douglas Engelbarts Augmentation Research Center und dessen Arbeit zum interaktiven Rechnen am SRI unterstützte.",
           "date_start": "1958-02-07",
           "date_start_precision": "day",
           "date_end": null,
@@ -365,11 +365,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/DARPA"
         }
       ],
-      "lead_in": "Als Systeme leistungsfähiger wurden, rückten Programmierung und Interaktion ins Zentrum der Herausforderungen. Rechnen wurde sowohl als disziplinierte technische Praxis als auch als Unterstützung des menschlichen Denkens neu verstanden."
+      "lead_in": "Mit der wachsenden Leistungsfähigkeit der Systeme wurden Programmiermethoden und interaktive Werkzeuge unverzichtbar, um sie gut zu nutzen. Rechnen wurde nun nicht nur als Automatisierung, sondern auch als Hilfe für menschliches Denken verstanden."
     },
     {
       "id": "personal_and_connected_computing",
-      "title": "Rechnen zieht ins Alltagsleben ein (1977-2007)",
+      "title": "Rechnen wird persönlich (1977-2007)",
       "date_start": "1977",
       "date_start_precision": "year",
       "date_end": "2007",
@@ -381,7 +381,7 @@
           "event_date_precision": "month",
           "event_title": "Apple II und Börsenboom",
           "event_index": 5,
-          "theme_connection": "Der Apple II wurde zu einem der ersten äußerst erfolgreichen Personal Computer für den Massenmarkt und half dabei, das Rechnen aus Institutionen und Hobbyistenkreisen in Haushalte, Schulen und kleine Unternehmen zu bringen. Seine kommerzielle Reichweite war ein Meilenstein für den Einzug des Rechnens ins Alltagsleben."
+          "theme_connection": "Der Apple II wurde zu einem der ersten äußerst erfolgreichen Personal Computer für den Massenmarkt und half dabei, das Rechnen aus Institutionen und Hobbyistenkreisen in Haushalte, Schulen und kleine Unternehmen zu bringen. Seine kommerzielle Reichweite war ein Meilenstein beim Einzug des Rechnens in den Alltag."
         },
         {
           "person_id": "frances_allen",
@@ -389,7 +389,7 @@
           "event_date_precision": "year",
           "event_title": "Leitet paralleles Rechnen bei IBM",
           "event_index": 10,
-          "theme_connection": "Allen leitete IBMs PTRAN-Projekt, das den Programmabhängigkeitsgraphen einführte und die automatische Parallelisierung vorantrieb. Diese Compilerverfahren ermöglichten es, Programme für parallele Maschinen zu analysieren und zu optimieren – ein grundlegender Schritt, um Hochleistungsrechnen nutzbar zu machen."
+          "theme_connection": "Allen leitete IBMs PTRAN-Projekt, das den Programmabhängigkeitsgraphen einführte und die automatische Parallelisierung vorantrieb. Diese Compilertechniken ermöglichten es, Programme für parallele Maschinen zu analysieren und zu optimieren – ein grundlegender Schritt, um Hochleistungsrechnen nutzbar zu machen."
         },
         {
           "person_id": "steve_jobs",
@@ -397,7 +397,7 @@
           "event_date_precision": "month",
           "event_title": "Macintosh-Plattform eingeführt",
           "event_index": 7,
-          "theme_connection": "Jobs leitete die Einführung des Macintosh und brachte eine grafische Benutzeroberfläche, Maus und integrierte Personal-Computer-Plattform auf einen breiten Verbrauchermarkt. Dies zeigte wegweisend, dass Rechnen auch für nicht spezialisierte Nutzende zugänglich sein konnte, und ermöglichte neue Arbeitsabläufe im Desktop-Publishing."
+          "theme_connection": "Jobs leitete die Einführung des Macintosh und brachte eine grafische Benutzeroberfläche, Maus und integrierte Personal-Computer-Plattform auf einen breiten Verbrauchermarkt. Dies war ein wegweisender Beleg dafür, dass Computer auch für nicht spezialisierte Nutzer zugänglich sein konnten, und ermöglichte neue Arbeitsabläufe im Desktop-Publishing."
         },
         {
           "person_id": "steve_jobs",
@@ -405,7 +405,7 @@
           "event_date_precision": "month",
           "event_title": "Apples digitales Ökosystem geschaffen",
           "event_index": 12,
-          "theme_connection": "Das iPod-iTunes-Ökosystem und Apples Einzelhandelsstrategie machten das Rechnen mit vernetzten digitalen Medien zu einer zugänglichen Praxis für Verbraucherinnen und Verbraucher. Sein eng integriertes Modell aus Hardware, Software und Diensten war ein Meilenstein, der Personal Computing über den Schreibtisch hinaus ins Alltagsleben führte."
+          "theme_connection": "Das iPod-iTunes-Ökosystem und Apples Einzelhandelsstrategie machten vernetzte digitale Mediennutzung zu einer zugänglichen Praxis für Verbraucher. Sein eng integriertes Modell aus Hardware, Software und Diensten war ein Meilenstein dabei, Personal Computing über den Schreibtisch hinaus in den Alltag zu bringen."
         },
         {
           "person_id": "steve_jobs",
@@ -413,14 +413,14 @@
           "event_date_precision": "day",
           "event_title": "Das iPhone vorgestellt",
           "event_index": 14,
-          "theme_connection": "Das iPhone vereinte berührungsbasierte Interaktion, Internetverbindung, Softwareanwendungen und persönliche Medien in einem für den täglichen Gebrauch konzipierten mobilen Computer für den Massenmarkt. Seine Einführung veränderte das persönliche und vernetzte Rechnen entscheidend."
+          "theme_connection": "Das iPhone vereinte berührungsbasierte Interaktion, Internetverbindung, Softwareanwendungen und persönliche Medien in einem mobilen Computer für den Massenmarkt, der für den täglichen Gebrauch konzipiert war. Seine Einführung veränderte Personal Computing und vernetztes Rechnen entscheidend."
         }
       ],
       "historical_context": [
         {
           "id": "jobs_apple_ouster",
-          "title": "Jobs’ Absetzung",
-          "description": "Apples Absetzung von Steve Jobs aus der täglichen Führung drängte ihn aus dem Unternehmen und führte zur Gründung von NeXT, bevor er später zu Apple zurückkehrte.",
+          "title": "Jobs’ Entmachtung",
+          "description": "Apples Absetzung von Steve Jobs aus der täglichen Unternehmensführung drängte ihn aus dem Unternehmen und führte zur Gründung von NeXT, bevor er später zu Apple zurückkehrte.",
           "date_start": "1985",
           "date_start_precision": "year",
           "date_end": null,
@@ -428,10 +428,10 @@
           "wikipedia_url": null
         }
       ],
-      "lead_in": "Persönliche Rechner und vernetzte Medien brachten das Rechnen über spezialisierte Umgebungen hinaus. Vertraute Geräte machten seine technische Leistungsfähigkeit zu einem Teil alltäglicher Arbeit, Kommunikation und Kultur."
+      "lead_in": "Personal Computer und mobile Geräte brachten programmierbare Systeme über spezialisierte Institutionen hinaus. Digitale Medien, Anwendungen und Netzzugang wurden zu gewöhnlichen Bestandteilen des Alltags."
     }
   ],
-  "conclusion": "Das Rechnen entstand nicht aus einer einzelnen Erfindung, sondern aus einem langen Bemühen, Operationen und Informationen so zu kodieren, dass Maschinen auf sie einwirken konnten. Von mechanischen Entwürfen bis zu persönlichen digitalen Geräten vergrößerte dieses Bemühen zugleich die Verantwortung, zu entscheiden, wofür solche Macht eingesetzt wird – und wo menschliches Urteilsvermögen erhalten bleiben muss.",
+  "conclusion": "Die Denkmaschine wurde durch eine lange Folge von Handlungen Wirklichkeit: Anweisungen kodieren, Informationen ordnen, Programme speichern und Systeme über Fachräume hinaus nutzbar machen. Ihr Einzug in den Alltag entschied nicht über ihren Zweck; er verschärfte die Verpflichtung, darüber zu befinden, wann Rechnen menschliches Handeln automatisieren und wann es menschliches Urteilsvermögen erweitern sollte.",
   "social_network": {
     "nodes": [
       {
@@ -777,43 +777,85 @@
       }
     ],
     "narration": {
-      "intro": "Das Rechnen entwickelte sich durch mehr als Maschinen und Aufsätze. Freundschaften, Arbeitsplätze, berufliche Begegnungen und einflussreiche Schriften trugen Ideen von der Spekulation zur Umsetzung und von technischen Entwürfen zu neuen Auffassungen menschlicher Arbeit.",
+      "intro": "Ideen verbreiteten sich durch Freundschaften, gemeinsame Institutionen, berufliche Begegnungen und einflussreiche Schriften ebenso sicher wie durch Maschinen. Ein Entwurf konnte einen Deuter finden, ein theoretischer Aufsatz eine Architektur prägen, und eine spekulative Darstellung von Wissen konnte zu einem praktischen Ziel werden. Die menschlichen Verbindungen hinter dem Rechnen zeigen, wie technische Möglichkeit zu einem fortdauernden Projekt wurde.",
       "circles": [
         {
           "key": "charles_babbage+ada_lovelace",
           "title": "Die erste Stimme der Maschine",
-          "text": "Ada Lovelace kam durch Mary Somerville, ihre Lehrerin, Freundin und wissenschaftliche Verbindung in Babbages Umfeld, auf dessen Soirée von 1833 in den Kreis von Charles Babbage. Lovelace und Babbage wurden langjährige Freunde und intellektuelle Mitstreiter. Durch ihre Übersetzung und ihren Kommentar zu Menabreas Aufsatz lieferte Lovelace eine der einflussreichsten frühen Deutungen der Analytical Engine, während Somerville eine enge intellektuelle Gefährtin und ihre gemeinsame Verbindung blieb."
+          "text": "Mary Somerville, Ada Lovelaces Lehrerin, Freundin und intellektuelle Weggefährtin, brachte sie mit Charles Babbages wissenschaftlichem Kreis und seinen Soireen in Verbindung. Lovelace und Babbage wurden nach ihrer Begegnung auf seiner Soiree von 1833 langjährige Freunde und intellektuelle Mitstreiter. Durch ihre Übersetzung und Kommentierung von Menabreas Aufsatz gab Lovelace der Analytischen Maschine eine ihrer einflussreichsten frühen Deutungen."
         },
         {
           "key": "john_von_neumann+grace_hopper+alan_turing",
           "title": "Baupläne in Bewegung",
-          "text": "Alan Turings Aufsatz von 1936 weckte John von Neumanns Aufmerksamkeit in Princeton, wo von Neumann ihn einlud, wissenschaftlicher Mitarbeiter nach der Promotion zu werden; Turing entschied sich, ins Vereinigte Königreich zurückzukehren. Von Neumann arbeitete später mit J. Presper Eckert und John Mauchly zusammen, als ENIAC sich von fest verdrahteter Logik hin zu Konzepten gespeicherter Programme bewegte. In dem von Eckert und Mauchly mitgegründeten Unternehmen arbeitete Grace Hopper als leitende Mathematikerin an UNIVAC I und an frühen Compilerarbeiten."
+          "text": "Alan Turings Aufsatz von 1936 weckte in Princeton das Interesse von John von Neumann, der Turing einlud, sein Postdoktorandenassistent zu werden; Turing entschied sich, ins Vereinigte Königreich zurückzukehren. Von Neumann arbeitete später im Umfeld von J. Presper Eckert und John Mauchly, als sich die Logik der ENIAC von fest verdrahteten Entwürfen hin zu Konzepten gespeicherter Programme verlagerte. In dem Unternehmen, das Eckert und Mauchly mitbegründeten, arbeitete Grace Hopper als leitende Mathematikerin an UNIVAC I und frühen Compilerarbeiten."
         },
         {
           "key": "vannevar_bush+douglas_engelbart",
-          "title": "Eine Idee wird weitergetragen",
-          "text": "In „As We May Think“ stellte sich Vannevar Bush Wissen vor, das leichter gespeichert, abgerufen, verknüpft und erforscht werden konnte. Douglas Engelbart las den Aufsatz während seines Dienstes in der US-Marine, und er beeinflusste seine Vision des interaktiven Rechnens als Unterstützung des menschlichen Denkens stark. Ein spekulativer Essay wurde zur Inspiration für das Lebenswerk eines Ingenieurs."
+          "title": "Eine weitergetragene Idee",
+          "text": "In „As We May Think“ entwarf Vannevar Bush ein System zum Speichern, Abrufen, Verknüpfen und Erkunden von Wissen. Douglas Engelbart las den Aufsatz während seines Dienstes in der US-Marine, und er beeinflusste nachhaltig seine Vision des interaktiven Rechnens als Hilfe für menschliches Denken. Ein spekulativer Entwurf wurde zur Inspiration für das Lebenswerk eines Ingenieurs."
         },
         {
           "key": "konrad_zuse+heinz_nixdorf",
-          "title": "Eine unvollendete Allianz",
-          "text": "Konrad Zuse besuchte Heinz Nixdorf wiederholt in Paderborn, als ihre Unternehmen eine Zusammenarbeit erwogen. Sie prüften, Zuse-Software auf Nixdorf-Computer zu übertragen und damit die Software eines Erfinders mit einem expandierenden Computerunternehmen zu verbinden. Die Vereinbarung scheiterte letztlich, doch sie war ein praktischer Versuch, Software über Maschinengrenzen hinweg zu übertragen."
+          "title": "Ein unvollendetes Bündnis",
+          "text": "Konrad Zuse besuchte Heinz Nixdorf wiederholt in Paderborn, während ihre Unternehmen eine Zusammenarbeit erwogen. Sie prüften, Zuse-Software auf Nixdorf-Computer zu übertragen, und verbanden damit die Software eines Erfinders mit einem wachsenden Computerunternehmen. Die Vereinbarung scheiterte letztlich, doch sie war ein praktischer Versuch, Software über Maschinengrenzen hinweg zu übertragen."
         }
       ]
     }
   },
-  "timeline_intro": "Was als Versuch begann, Berechnungen zu mechanisieren, wurde zu einer Theorie universeller Anweisungen und dann zu einer operativen Realität in digitalen Maschinen. Das Rechnen bewegte sich nach außen – von spezialisierten Systemen für Staaten, Labore und Unternehmen hin zu Software und Schnittstellen, die seine Leistungsfähigkeit breiter nutzbar machten. Als es in Wohnungen, Büros und Hosentaschen einzog, wurden Fragen nach Intelligenz, Verantwortung und menschlichem Urteilsvermögen untrennbar von der Technologie selbst.",
+  "timeline_intro": "Die ersten Maschinen wurden als Mechanismen zur Ausführung geordneter Operationen erdacht, dann wurden sie zu Systemen, die Akten sortierten, wissenschaftliche Probleme lösten und dringliche institutionelle Aufgaben erledigten. Elektronische Architekturen machten Programme zu dauerhaften Bestandteilen der Maschine selbst, während Software und Schnittstellen diese Leistung besser handhabbar machten. Als das Rechnen Schreibtische, Haushalte und Taschen erreichte, war sein technisches Versprechen untrennbar mit Fragen der Nutzung und Verantwortung verbunden.",
   "composition": {
     "model": "gpt-5.6-terra",
-    "composed_at": "2026-07-22T06:54:52.978508+02:00",
-    "throughline": "This story follows the transformation of computing from a proposition about encoded instructions—imagined in Babbage and Lovelace’s engines, formalized by Turing, and operationalized by Zuse and stored-program designs—into an institutional and everyday force. Punched-card systems, scientific and business machines, compilers, algorithms, and interfaces made that force scalable and usable, while Bush, Engelbart, and Weizenbaum keep a linked question in view: whether computers should merely automate work or augment human judgment. By the time Jobs’s devices put networked computing into daily life, the original problem of instructing machines had become inseparable from deciding how people would live and think with them.",
+    "composed_at": "2026-07-22T08:41:16.504800+02:00",
+    "throughline": "This story traces how the idea of encoded instructions moved from Babbage and Lovelace’s mechanical designs through Turing’s theory, Zuse’s working machine, and stored-program architectures into a durable technological reality. Hollerith, Bush, von Neumann, and Nixdorf show that computing became consequential when it could organize institutional information and scientific work at scale; Hopper, Dijkstra, Allen, and Engelbart show that it also had to become usable in software and interaction. As Jobs brought these systems into everyday life, Weizenbaum’s critique keeps the central question in view: whether computing should merely automate and simulate human activity, or responsibly augment human judgment.",
     "excluded_people": []
+  },
+  "opening": {
+    "text": "Im August 1843 veröffentlichte Ada Lovelace ihre Anmerkungen zu Charles Babbages vorgeschlagener Analytischer Maschine. In Anmerkung G beschrieb ein Verfahren für Bernoulli-Zahlen eine Abfolge von Operationen für eine Maschine, die noch nicht existierte – und ihr Kommentar argumentierte, dass eine solche Maschine Symbole über die Arithmetik hinaus manipulieren könnte.",
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/05/Houghton_AC85.Su662.Zz843m.jpg",
+      "caption": "Veröffentlichung von 1843 mit Ada Lovelaces übersetztem Artikel",
+      "source": "https://commons.wikimedia.org/wiki/File:Houghton_AC85.Su662.Zz843m.jpg",
+      "person_id": "ada_lovelace",
+      "event_index": 11,
+      "image_index": 0
+    }
+  },
+  "section_headings": {
+    "timeline": "Anweisungen setzen sich durch",
+    "network": "Ideen zwischen Menschen",
+    "conclusion": "Urteilsvermögen im Maschinenzeitalter"
+  },
+  "section_images": {
+    "timeline": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Z3_Deutsches_Museum.JPG",
+      "caption": "Nachbau der Zuse Z3, Deutsches Museum München",
+      "source": "https://commons.wikimedia.org/wiki/File:Z3_Deutsches_Museum.JPG",
+      "person_id": "konrad_zuse",
+      "event_index": 7,
+      "image_index": 0
+    },
+    "network": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/The_Memex_%283002477109%29.jpg/960px-The_Memex_%283002477109%29.jpg",
+      "caption": "Illustration und Titel von „As We May Think“",
+      "source": "https://commons.wikimedia.org/wiki/File:The_Memex_(3002477109).jpg",
+      "person_id": "vannevar_bush",
+      "event_index": 11,
+      "image_index": 0
+    },
+    "conclusion": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Steve_Jobs_%28352583119%29.jpg",
+      "caption": "Steve Jobs während seiner Keynote auf der Macworld Expo 2007",
+      "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_(352583119).jpg",
+      "person_id": "steve_jobs",
+      "event_index": 14,
+      "image_index": 0
+    }
   },
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "79f058464ef2920f",
-    "translated_on": "2026-07-22T06:55:37.816234+02:00",
+    "source_fingerprint": "6755547619cdff98",
+    "translated_on": "2026-07-22T08:42:05.165649+02:00",
     "translator": "openai:gpt-5.6-terra"
   }
 }
