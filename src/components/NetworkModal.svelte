@@ -244,7 +244,7 @@
       const accumulatedStrength = calculateAccumulatedStrength(people);
       groupsArray.push({
         subcategory,
-        label: capitalizeSubcategory(subcategory),
+        label: capitalizeSubcategory(subcategory, people.length),
         people: sortByStrength(people),
         accumulatedStrength,
       });
@@ -280,12 +280,29 @@
     }, 0);
   }
 
-  function capitalizeSubcategory(subcategory) {
+  // Naive English pluralization for a single word — enough for the
+  // relationship subcategories that appear as box labels (colleague → colleagues,
+  // rival → rivals, adversary → adversaries).
+  function pluralizeWord(word) {
+    if (/[^aeiou]y$/i.test(word)) {
+      return word.slice(0, -1) + "ies";
+    }
+    if (/(s|x|z|ch|sh)$/i.test(word)) {
+      return word + "es";
+    }
+    return word + "s";
+  }
+
+  function capitalizeSubcategory(subcategory, count = 1) {
     if (!subcategory) return "";
-    return subcategory
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+    const words = subcategory
+      .split(/[\s_-]+/)
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+    if (count !== 1 && words.length > 0) {
+      words[words.length - 1] = pluralizeWord(words[words.length - 1]);
+    }
+    return words.join(" ");
   }
 
   // Family layout: three generation layers, each holding "boxes" of people
@@ -771,8 +788,7 @@
                                   <span class="ego-portrait-clip">
                                     <img
                                       class="ego-portrait"
-                                      src={portrait.thumbnail ||
-                                        portrait.image}
+                                      src={portrait.thumbnail || portrait.image}
                                       alt={personName}
                                     />
                                   </span>
