@@ -784,12 +784,15 @@
     margin-bottom: 1rem;
   }
 
+  /* Raised initial rather than a floated drop cap: a floated cap reserves
+     only the glyph's own width, so narrow letters ("In 1911...", "It...")
+     read as a stray vertical rule and leave the wrapped lines indented
+     against nothing. Raising the letter is glyph-width independent. */
   .opening-text:first-of-type::first-letter {
     font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    font-size: 2.6em;
-    line-height: 0.85;
-    float: left;
-    padding-right: 0.35rem;
+    font-size: 1.9em;
+    line-height: 1;
+    padding-right: 0.06em;
     color: #38bdf8;
   }
 

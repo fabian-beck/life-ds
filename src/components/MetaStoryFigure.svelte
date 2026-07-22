@@ -41,6 +41,17 @@
     border: 1px solid rgba(148, 163, 184, 0.2);
   }
 
+  /* Portrait scans (tall book pages, standing portraits) would otherwise fill
+     the whole viewport at full width and push the text they illustrate below
+     the fold. Cap the height and let the image shrink to fit instead. */
+  @media (max-width: 699px) {
+    img {
+      width: auto;
+      max-height: 45vh;
+      margin: 0 auto;
+    }
+  }
+
   figcaption {
     margin-top: 0.4rem;
     font-size: 0.8rem;
