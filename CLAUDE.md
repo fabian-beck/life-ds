@@ -326,14 +326,29 @@ narrative in two AI calls:
    re-derived**, so Phase 5b review edits on surviving ties are kept;
    secondary nodes that no longer bridge ≥2 main people are removed.
 2. **Composition** — rewrites all display prose in one voice: title, tagline,
-   description, a new top-level **`timeline_intro`** (paragraph shown under
-   the "Chapters" heading before the timeline), chapter headlines (date range
-   re-appended automatically) plus a new per-chapter **`lead_in`** (1-2
-   sentences shown inside the floating chapter header while scrolling; hidden
-   in the landscape-mobile compact header), subtopic titles/descriptions,
-   *sparse* refinements of event `theme_connection`s, the network narration
-   (intro + circles, replacing the Phase 6 baseline in the story's unified
-   voice), and the conclusion.
+   a top-level **`opening`** (a cold-open scene anchored in one specific
+   event or person — rendered with a drop cap between the date range and the
+   description, optionally with an image floated beside it), the description,
+   story-specific **`section_headings`** (`{timeline, network, conclusion}`,
+   replacing the generic "Timeline"/"Connections"/"Legacy" labels — the UI
+   falls back to the localized labels when absent), a top-level
+   **`timeline_intro`** (paragraph shown under the timeline heading), chapter
+   headlines (date range re-appended automatically) plus a per-chapter
+   **`lead_in`** (1-2 sentences shown inside the floating chapter header
+   while scrolling; hidden in the landscape-mobile compact header), subtopic
+   titles/descriptions, *sparse* refinements of event `theme_connection`s,
+   the network narration (intro + circles, replacing the Phase 6 baseline in
+   the story's unified voice), the conclusion, and optional
+   **`section_images`** (`{timeline?, network?, conclusion?}`).
+
+**Images** come exclusively from the people's own story slides: the composer
+is shown a candidate list built from the story's `person_events` (each event's
+`images` from the person's `life_events.json`) and may only *select by key*
+(`person_id:event_index:image_index`, at most 4 per story, no reuse). The
+url/caption/source are copied deterministically, so a hallucinated URL can
+never enter the data. Each stored image keeps its provenance
+(`person_id`/`event_index`/`image_index`); `MetaStoryFigure.svelte` renders it
+with caption and source link.
 
 Application is structural and defensive: chapters/subtopics/circles are
 matched by id/key, unknown entries are ignored with warnings, missing entries
@@ -342,11 +357,15 @@ model-editable. Provenance (model, throughline, exclusions with reasons) is
 stamped into a top-level `composition` block. The whole phase is non-fatal —
 on any failure the bottom-up texts are kept unchanged.
 
-`timeline_intro` and `lead_in` are part of the translation payload, but only
-when present, so uncomposed stories keep their old fingerprints (and their
-translations stay "current"). Composing a story changes its English prose, so
-its translations go stale by fingerprint; the standalone CLI re-translates
-right away (default `de`, `--skip-translate` to opt out).
+`timeline_intro`, `lead_in`, `opening`, `section_headings`, and the image
+captions are part of the translation payload, but only when present, so
+uncomposed stories keep their old fingerprints (and their translations stay
+"current"). Image captions prefer the caption from the person's *translated*
+life events (matched by provenance, like event titles), falling back to the
+model-translated payload; URLs and sources are never touched. Composing a
+story changes its English prose, so its translations go stale by fingerprint;
+the standalone CLI re-translates right away (default `de`, `--skip-translate`
+to opt out).
 
 Recompose existing stories standalone (updates the registry entry and
 translations too):

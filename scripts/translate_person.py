@@ -189,6 +189,26 @@ class TrNetworkNarration(BaseModel):
     circles: List[TrNetworkCircle]
 
 
+class TrOpening(BaseModel):
+    text: str
+    # Only present when the opening carries an image with a caption.
+    image_caption: Optional[str] = None
+
+
+class TrSectionHeadings(BaseModel):
+    timeline: Optional[str] = None
+    network: Optional[str] = None
+    conclusion: Optional[str] = None
+
+
+class TrSectionImages(BaseModel):
+    # Captions of the per-section images; each only present when the source
+    # image exists and has a caption.
+    timeline_caption: Optional[str] = None
+    network_caption: Optional[str] = None
+    conclusion_caption: Optional[str] = None
+
+
 class MetaStoryTranslation(BaseModel):
     title: str
     tagline: str
@@ -196,6 +216,9 @@ class MetaStoryTranslation(BaseModel):
     subtopics: List[TrSubtopic]
     chapters: List[TrMetaChapter]
     # Optional: only present for composed stories (see compose_meta_story.py).
+    opening: Optional[TrOpening] = None
+    section_headings: Optional[TrSectionHeadings] = None
+    section_images: Optional[TrSectionImages] = None
     timeline_intro: Optional[str] = None
     conclusion: Optional[str] = None
     network_narration: Optional[TrNetworkNarration] = None
@@ -326,6 +349,31 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     # stability rationale as the chapter lead-ins above.
     if data.get("timeline_intro"):
         payload["timeline_intro"] = data["timeline_intro"]
+    # Composed opening, section headings, and section image captions (Phase 7),
+    # likewise only when present.
+    opening = data.get("opening")
+    if isinstance(opening, dict) and opening.get("text"):
+        opening_payload: Dict[str, Any] = {"text": opening["text"]}
+        opening_caption = (opening.get("image") or {}).get("caption")
+        if opening_caption:
+            opening_payload["image_caption"] = opening_caption
+        payload["opening"] = opening_payload
+    headings = data.get("section_headings")
+    if isinstance(headings, dict) and headings:
+        payload["section_headings"] = {
+            slot: headings[slot]
+            for slot in ("timeline", "network", "conclusion")
+            if headings.get(slot)
+        }
+    section_images = data.get("section_images")
+    if isinstance(section_images, dict) and section_images:
+        image_captions = {
+            f"{slot}_caption": (section_images.get(slot) or {}).get("caption")
+            for slot in ("timeline", "network", "conclusion")
+            if (section_images.get(slot) or {}).get("caption")
+        }
+        if image_captions:
+            payload["section_images"] = image_captions
     # The social network itself is technical (copied verbatim), but its
     # narration texts are prose and must be translated. The key is only added
     # when narration exists, so fingerprints of stories without narration are
@@ -608,6 +656,36 @@ def apply_meta_story_translations(
             return title if isinstance(title, str) else None
         return None
 
+    def translated_image_caption(
+        person_id: str, event_index: Any, image_index: Any
+    ) -> Optional[str]:
+        """Caption of an image from the person's translated life events."""
+        if not isinstance(event_index, int) or not isinstance(image_index, int):
+            return None
+        # Reuse the cache warmed by translated_event_title.
+        if person_id not in translated_events_cache:
+            translated_event_title(person_id, event_index)
+        events = translated_events_cache.get(person_id)
+        if events and 0 <= event_index < len(events):
+            images = events[event_index].get("images") or []
+            if 0 <= image_index < len(images):
+                caption = images[image_index].get("caption")
+                return caption if isinstance(caption, str) else None
+        return None
+
+    def overlay_image_caption(image: Any, payload_caption: Optional[str]) -> None:
+        """Overlay an image caption, preferring the person's translated data."""
+        if not isinstance(image, dict) or image.get("caption") is None:
+            return
+        from_dataset = translated_image_caption(
+            image.get("person_id", ""),
+            image.get("event_index"),
+            image.get("image_index"),
+        )
+        caption = from_dataset or payload_caption
+        if caption:
+            image["caption"] = caption
+
     src_chapters = result.get("chapters") or []
     tr_chapters = translated.get("chapters") or []
     _require_same_length("chapters", src_chapters, tr_chapters)
@@ -635,6 +713,28 @@ def apply_meta_story_translations(
 
     _set_if_source_has(result, "conclusion", translated.get("conclusion"))
     _set_if_source_has(result, "timeline_intro", translated.get("timeline_intro"))
+
+    # Composed opening, section headings, and section images (Phase 7). Image
+    # URLs/sources stay verbatim; captions prefer the person's translated life
+    # events (like event titles) and fall back to the translated payload.
+    src_opening = result.get("opening")
+    tr_opening = translated.get("opening")
+    if isinstance(src_opening, dict) and isinstance(tr_opening, dict):
+        _set_if_source_has(src_opening, "text", tr_opening.get("text"))
+        overlay_image_caption(src_opening.get("image"), tr_opening.get("image_caption"))
+    src_headings = result.get("section_headings")
+    tr_headings = translated.get("section_headings")
+    if isinstance(src_headings, dict) and isinstance(tr_headings, dict):
+        for slot in ("timeline", "network", "conclusion"):
+            _set_if_source_has(src_headings, slot, tr_headings.get(slot))
+    src_images = result.get("section_images")
+    tr_images = translated.get("section_images")
+    if isinstance(src_images, dict):
+        tr_images = tr_images if isinstance(tr_images, dict) else {}
+        for slot in ("timeline", "network", "conclusion"):
+            overlay_image_caption(
+                src_images.get(slot), tr_images.get(f"{slot}_caption")
+            )
 
     # Network narration: the graph data stays verbatim, only the prose is
     # overlaid. Circle keys (main person ids) are technical and never touched.
@@ -1076,7 +1176,11 @@ def translate_meta_story(
             "translate it as a headline, not literally.\n"
             "10. timeline_intro and chapter lead_in entries are short narrative "
             "passages shown around the story timeline — translate them as "
-            "flowing prose in the same voice as the description."
+            "flowing prose in the same voice as the description.\n"
+            "11. opening is the story's cold-open scene and section_headings "
+            "are its section titles — translate both as narrative prose and "
+            "evocative headlines respectively, never as literal labels. "
+            "image_caption / *_caption entries are image captions."
         ),
         target_lang=target_lang,
         glossary={},
