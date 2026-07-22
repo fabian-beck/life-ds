@@ -1,5 +1,28 @@
 import { writable, derived } from "svelte/store";
 
+// Eagerly bundle every locale file. They are tiny (~8-9 KB each), so pulling
+// them into the entry chunk is cheap and — crucially — makes the strings
+// available *synchronously*. Without this, the very first render happens
+// before the async translation import resolves, so every `$_('some.key')`
+// falls back to rendering the raw key ("story.loading_life"), which then
+// flickers to the real text once the JSON arrives. Eager loading removes that
+// flash entirely, including on slow connections.
+const localeModules = import.meta.glob("../locales/*.json", {
+  eager: true,
+  import: "default",
+});
+
+// Map "en" -> parsed translations, keyed off the filename.
+const locales = {};
+for (const [path, data] of Object.entries(localeModules)) {
+  const match = path.match(/\/([^/]+)\.json$/);
+  if (match) locales[match[1]] = data;
+}
+
+function getLocale(lang) {
+  return locales[lang] || locales.en || {};
+}
+
 // Detect initial language from localStorage or browser
 const browserLang =
   typeof navigator !== "undefined" ? navigator.language.split("-")[0] : "en";
@@ -12,8 +35,9 @@ const initialLang = storedLang || (browserLang === "de" ? "de" : "en");
 // Current language code
 export const currentLanguage = writable(initialLang);
 
-// Translation strings
-export const translations = writable({});
+// Translation strings — seeded synchronously so the first paint already has
+// real text (no flash of raw translation keys).
+export const translations = writable(getLocale(initialLang));
 
 // Persist language preference and update HTML lang attribute
 currentLanguage.subscribe((lang) => {
@@ -37,29 +61,9 @@ export const _ = derived([currentLanguage, translations], ([, $trans]) => {
   };
 });
 
-// Load translation file dynamically. The generation counter ensures that when
-// the language is switched rapidly, only the most recent request applies —
-// otherwise the last load to resolve would win regardless of order.
-let loadGeneration = 0;
-export async function loadTranslations(lang) {
-  const generation = ++loadGeneration;
-  try {
-    const module = await import(`../locales/${lang}.json`);
-    if (generation !== loadGeneration) return;
-    translations.set(module.default);
-  } catch (error) {
-    console.error(`Failed to load translations for ${lang}:`, error);
-    // Fallback to English
-    if (lang !== "en") {
-      try {
-        const fallback = await import("../locales/en.json");
-        if (generation !== loadGeneration) return;
-        translations.set(fallback.default);
-      } catch (fallbackError) {
-        console.error("Failed to load English fallback:", fallbackError);
-        if (generation !== loadGeneration) return;
-        translations.set({});
-      }
-    }
-  }
+// Swap the active translation strings. Locales are already bundled, so this is
+// a synchronous lookup — no network round-trip and no chance of the switch
+// resolving out of order.
+export function loadTranslations(lang) {
+  translations.set(getLocale(lang));
 }
