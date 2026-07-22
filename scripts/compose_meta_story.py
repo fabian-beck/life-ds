@@ -102,10 +102,10 @@ class ComposedChapter(BaseModel):
         "date range is appended automatically. One unified concept, not a list."
     )
     lead_in: str = Field(
-        description="1-2 short sentences shown with the chapter while the "
-        "reader scrolls the timeline: set the era's stakes and pull the "
-        "reader onward. No name-dropping lists, no dates (they are shown "
-        "next to it)."
+        description="1-2 short sentences shown with the chapter on the "
+        "timeline, stating what was at stake in this era. Written about the "
+        "era, never addressed to the reader. No name-dropping lists, no "
+        "dates (they are shown next to it)."
     )
 
 
@@ -153,8 +153,9 @@ class CompositionResult(BaseModel):
     )
     timeline_intro: str = Field(
         description="2-4 sentence paragraph shown right before the chapters "
-        "timeline, inviting the reader into the chronological journey. Do not "
-        "enumerate the chapters."
+        "timeline, narrating the arc it covers and what shifts across it. "
+        "Written about the history itself — never addressed to the reader, "
+        "never a meta-reference to the timeline. Do not enumerate the chapters."
     )
     chapters: List[ComposedChapter] = Field(
         description="One entry per chapter, same order as given"
@@ -574,13 +575,15 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   feature article. NEVER use meta-references ("This collection...", "These
   figures..."); write directly about the topic.
 - timeline_intro: 2-4 sentences shown right before the chronological
-  timeline. Invite the reader into the journey the chapters trace — where it
-  begins, what changes along the way — WITHOUT enumerating the chapters.
+  timeline. Narrate the arc the chapters trace — where it begins, what
+  changes along the way — WITHOUT enumerating the chapters. Write about the
+  history itself, not about the timeline ("The chronology begins...", "This
+  story follows..." are meta-references and are forbidden).
 - chapters: for each chapter (same order, ids verbatim) a headline of 2-5
   words WITHOUT any date range (it is appended automatically), one unified
-  concept, no lists; and a lead_in of 1-2 short sentences that set the era's
-  stakes while the reader scrolls. Chapter headlines must build on one
-  another so the sequence reads like a story's chapters.
+  concept, no lists; and a lead_in of 1-2 short sentences stating what was at
+  stake in that era. Chapter headlines must build on one another so the
+  sequence reads like a story's chapters.
 - subtopics: for each subtopic (same order, ids verbatim) a title and a 1-2
   sentence description that names the thread its members share.
 - theme_connection_refinements: rewrite an event's theme connection ONLY
@@ -602,6 +605,12 @@ HARD RULES:
   relationships, or claims.
 - Copy ids and circle keys EXACTLY; keep list order.
 - Vivid but factual tone, matching a biographical story collection.
+- NEVER address the reader. This is a data story, not a tutorial or a guided
+  tour: no "you"/"your"/"we"/"us", no imperatives aimed at the audience
+  ("Follow...", "Trace...", "Explore...", "Imagine...", "See how..."), no
+  references to scrolling, clicking, or the timeline as an interface. Write
+  every text in the third person, about the people and their era — narrate
+  the history instead of guiding a visitor through it.
 """
 
     try:
