@@ -19,12 +19,18 @@ The composer works in two AI calls:
    subtopics, chapter events, and the social network. The network is *pruned*
    (not re-derived), so Phase 5b review edits on surviving ties are kept.
 2. **Composition** — rewrites the story's prose in one voice, guided by the
-   throughline: title, tagline, description, a new ``timeline_intro`` shown
-   before the chapters timeline, chapter headlines plus a new per-chapter
-   ``lead_in``, subtopic texts, sparse refinements of event theme
-   connections, the network narration (intro + circles), and the conclusion.
-   Facts, dates, IDs, event indices, and the graph itself are never sent to
-   the model as editable fields, so they cannot drift.
+   throughline: title, tagline, an ``opening`` cold-open scene anchored in a
+   specific event or person (optionally with an image), the description,
+   story-specific ``section_headings`` replacing the generic section labels,
+   a ``timeline_intro`` shown before the chapters timeline, chapter headlines
+   plus a per-chapter ``lead_in``, subtopic texts, sparse refinements of
+   event theme connections, the network narration (intro + circles), the
+   conclusion, and optional ``section_images``. Images are only ever
+   *selected by key* from the people's own story slides
+   (``collect_image_candidates``) and copied deterministically — the model
+   cannot introduce a URL. Facts, dates, IDs, event indices, and the graph
+   itself are never sent to the model as editable fields, so they cannot
+   drift.
 
 Both calls operate on a working copy; the original dataset is returned
 unchanged if anything fails, so the composer is safe to run as a non-fatal
@@ -56,12 +62,19 @@ from meta_story_network import derive_clusters
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
+PEOPLE_DIR = DATA_DIR / "people"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 
 # Exclusion guardrails: the composer may only drop clearly disconnected
 # people, never gut the cast.
 MIN_REMAINING_PEOPLE = 3
 MAX_EXCLUSION_FRACTION = 0.25
+
+# Image guardrails: the composer only ever *selects* images by key from the
+# people's own story slides; URLs are copied deterministically, so it can
+# never invent one.
+MAX_IMAGE_CANDIDATES = 80
+MAX_IMAGES_PER_STORY = 4
 
 
 # ============================================================================
@@ -142,14 +155,56 @@ class ComposedCircle(BaseModel):
     )
 
 
+class ComposedOpening(BaseModel):
+    """The story's cold open — a specific scene instead of a panorama."""
+
+    text: str = Field(
+        description="1-2 short paragraphs (separated by a blank line) that "
+        "open the story inside ONE specific moment or with ONE specific "
+        "person from the material: a dated act, a concrete scene, an object "
+        "changing hands. Never a panoramic overview, never a thesis statement."
+    )
+    image_key: Optional[str] = Field(
+        default=None,
+        description="Key of an image candidate that belongs to the opening "
+        "scene (copied verbatim from the candidate list), or null if none "
+        "genuinely fits.",
+    )
+
+
+class ComposedSectionHeadings(BaseModel):
+    """Story-specific headings replacing the generic section labels."""
+
+    timeline: str = Field(
+        description="Heading for the chronology section (2-6 words), specific "
+        "to this story — never a generic label like 'Timeline' or 'Chapters'"
+    )
+    network: str = Field(
+        description="Heading for the social-network section (2-6 words), "
+        "specific to this story — never 'Connections' or 'Network'"
+    )
+    conclusion: str = Field(
+        description="Heading for the closing section (2-6 words), specific "
+        "to this story — never 'Conclusion' or 'Legacy'"
+    )
+
+
 class CompositionResult(BaseModel):
     """Second composer call: the story's full prose, written in one voice."""
 
     title: str = Field(description="Story title (2-5 words)")
     tagline: str = Field(description="Short hook (3-10 words)")
+    opening: ComposedOpening = Field(
+        description="The cold open shown before the description"
+    )
     description: str = Field(
-        description="Opening narrative (2-3 paragraphs) introducing the topic "
-        "like a feature article — no meta-references such as 'this collection'"
+        description="Narrative (2-3 paragraphs) that widens the frame after "
+        "the opening scene, introducing the topic like a feature article — "
+        "no meta-references such as 'this collection', and no repetition of "
+        "the opening scene"
+    )
+    section_headings: ComposedSectionHeadings = Field(
+        description="Story-specific headings for the three main sections"
     )
     timeline_intro: str = Field(
         description="2-4 sentence paragraph shown right before the chapters "
@@ -178,6 +233,21 @@ class CompositionResult(BaseModel):
     )
     conclusion: str = Field(
         description="Closing statement (2-3 sentences) echoing the throughline"
+    )
+    timeline_image_key: Optional[str] = Field(
+        default=None,
+        description="Key of an image candidate shown with the chronology "
+        "section, or null. Copied verbatim from the candidate list.",
+    )
+    network_image_key: Optional[str] = Field(
+        default=None,
+        description="Key of an image candidate shown with the social-network "
+        "section, or null. Copied verbatim from the candidate list.",
+    )
+    conclusion_image_key: Optional[str] = Field(
+        default=None,
+        description="Key of an image candidate shown with the closing "
+        "section, or null. Copied verbatim from the candidate list.",
     )
 
 
@@ -238,6 +308,93 @@ def build_cast_sheet(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
             f"story events: {event_count.get(pid, 0)}; "
             f"direct ties to other main people: {main_link_count.get(pid, 0)}\n"
             f"    summary: {_truncate(person.get('summary', ''))}"
+        )
+    return "\n".join(lines)
+
+
+def load_person_life_events(person_id: str) -> Optional[Dict[str, Any]]:
+    """Load a person's life_events.json (English reference)."""
+    path = PEOPLE_DIR / person_id / "life_events.json"
+    if not path.exists():
+        return None
+    with open(path, "r", encoding="utf-8") as f:
+        return cast(Optional[Dict[str, Any]], json.load(f))
+
+
+def collect_image_candidates(
+    dataset: Dict[str, Any], registry: Dict[str, Any]
+) -> Dict[str, Dict[str, Any]]:
+    """Collect selectable images from the story events' person slides.
+
+    Returns an ordered mapping of ``person_id:event_index:image_index`` keys
+    to image records carrying the actual ``url``/``caption``/``source`` plus
+    provenance. The composer only ever picks one of these keys; the record is
+    copied deterministically, so a hallucinated URL can never enter the data.
+    """
+    index = _person_index(registry)
+    events_cache: Dict[str, Optional[List[Dict[str, Any]]]] = {}
+    candidates: Dict[str, Dict[str, Any]] = {}
+
+    for chapter in dataset.get("chapters") or []:
+        for story_event in chapter.get("person_events") or []:
+            person_id = story_event.get("person_id", "")
+            event_index = story_event.get("event_index")
+            if not isinstance(event_index, int):
+                continue
+            if person_id not in events_cache:
+                data = load_person_life_events(person_id)
+                events_cache[person_id] = (
+                    data.get("events") if isinstance(data, dict) else None
+                )
+            events = events_cache[person_id]
+            if not events or not 0 <= event_index < len(events):
+                continue
+            event = events[event_index]
+            person_name = (
+                index.get(person_id, {}).get("name", person_id).replace("_", " ")
+            )
+            for image_index, image in enumerate(event.get("images") or []):
+                url = image.get("url")
+                if not url:
+                    continue
+                key = f"{person_id}:{event_index}:{image_index}"
+                candidates[key] = {
+                    "url": url,
+                    "caption": image.get("caption", ""),
+                    "source": image.get("source", ""),
+                    "person_id": person_id,
+                    "event_index": event_index,
+                    "image_index": image_index,
+                    "person_name": person_name,
+                    "event_title": event.get("title", ""),
+                    "event_date": story_event.get("event_date", ""),
+                }
+                if len(candidates) >= MAX_IMAGE_CANDIDATES:
+                    return candidates
+    return candidates
+
+
+def image_record(candidate: Dict[str, Any]) -> Dict[str, Any]:
+    """The subset of a candidate that is stored in the meta story JSON."""
+    return {
+        "url": candidate["url"],
+        "caption": candidate["caption"],
+        "source": candidate["source"],
+        "person_id": candidate["person_id"],
+        "event_index": candidate["event_index"],
+        "image_index": candidate["image_index"],
+    }
+
+
+def build_image_candidates_brief(candidates: Dict[str, Dict[str, Any]]) -> str:
+    """Render the image candidates for the composition prompt."""
+    if not candidates:
+        return "IMAGE CANDIDATES: none available."
+    lines = ["IMAGE CANDIDATES (from the people's own story slides; select by key):"]
+    for key, cand in candidates.items():
+        lines.append(
+            f"- [img={key}] {cand['event_date']} — {cand['person_name']}: "
+            f"{cand['event_title']} — {_truncate(cand['caption'], 140)}"
         )
     return "\n".join(lines)
 
@@ -550,6 +707,7 @@ def run_composition(
     registry: Dict[str, Any],
     throughline: str,
     clusters: List[Dict[str, Any]],
+    image_candidates: Dict[str, Dict[str, Any]],
     client: OpenAI,
     model: str,
     reasoning_effort: str,
@@ -557,6 +715,7 @@ def run_composition(
 ) -> Optional[CompositionResult]:
     """Ask the composer to write the story's full prose in one voice."""
     brief = build_story_brief(dataset, registry, clusters)
+    images_brief = build_image_candidates_brief(image_candidates)
 
     prompt = f"""Compose the final narrative for this meta story. All existing texts are
 bottom-up drafts written without seeing the whole; you see everything and
@@ -567,13 +726,28 @@ THROUGHLINE (your anchor, not for display):
 
 {brief}
 
+{images_brief}
+
 WRITE THE FOLLOWING (all display-facing, general educated audience):
 
 - title (2-5 words) and tagline (3-10 words): refine the drafts or replace
   them if the throughline calls for it.
-- description: 2-3 paragraphs introducing the topic like the opening of a
-  feature article. NEVER use meta-references ("This collection...", "These
-  figures..."); write directly about the topic.
+- opening: the story's cold open, 1-2 short paragraphs. Begin INSIDE the
+  material — one specific moment, act, or person drawn from the events above:
+  a date, a place, a thing being made or said. Choose the anchor that best
+  crystallizes the throughline; different stories should open differently (a
+  scene, a person at work, an object, a decision). No panorama, no thesis, no
+  scene-setting clichés ("It was a time of..."). If an image candidate shows
+  this exact moment or its protagonist, set its key as image_key.
+- description: 2-3 paragraphs that widen the frame after the opening scene,
+  introducing the topic like a feature article. Do not retell the opening.
+  NEVER use meta-references ("This collection...", "These figures...");
+  write directly about the topic.
+- section_headings: one heading each for the chronology, network, and closing
+  sections (2-6 words). They must read like chapter titles of one essay —
+  specific to this story, carrying its arc forward. Generic labels
+  ("Timeline", "Chapters", "Connections", "Network", "Conclusion", "Legacy")
+  are forbidden.
 - timeline_intro: 2-4 sentences shown right before the chronological
   timeline. Narrate the arc the chapters trace — where it begins, what
   changes along the way — WITHOUT enumerating the chapters. Write about the
@@ -599,11 +773,19 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   weave the circle's ties into a miniature story. Ground every claim in the
   tie descriptions; refer to people naturally ("Babbage" on second mention).
 - conclusion: 2-3 sentences that close the arc the throughline names.
+- timeline_image_key / network_image_key / conclusion_image_key: optionally
+  attach one image candidate to a section where it genuinely deepens the
+  story (an artifact, a scene, a document — prefer these over portraits).
+  Use AT MOST {MAX_IMAGES_PER_STORY} images in the whole story including the
+  opening; leaving slots null is the normal case. Never reuse the same image
+  twice.
 
 HARD RULES:
 - Stick to the facts in the material above; never invent events, dates,
   relationships, or claims.
 - Copy ids and circle keys EXACTLY; keep list order.
+- Image keys must be copied EXACTLY from the candidate list; if in doubt,
+  use null. Never construct or modify a key.
 - Vivid but factual tone, matching a biographical story collection.
 - NEVER address the reader. This is a data story, not a tutorial or a guided
   tour: no "you"/"your"/"we"/"us", no imperatives aimed at the audience
@@ -634,7 +816,25 @@ HARD RULES:
             return None
         if verbose:
             print(f"  Composed title: {result.title}")
+            print(f"  Opening: {result.opening.text[:90]}...")
+            print(
+                "  Section headings: "
+                f"{result.section_headings.timeline} / "
+                f"{result.section_headings.network} / "
+                f"{result.section_headings.conclusion}"
+            )
             print(f"  Chapter headlines: {[c.headline for c in result.chapters]}")
+            chosen = [
+                key
+                for key in (
+                    result.opening.image_key,
+                    result.timeline_image_key,
+                    result.network_image_key,
+                    result.conclusion_image_key,
+                )
+                if key
+            ]
+            print(f"  Selected images: {chosen or 'none'}")
             print(
                 f"  Theme connection refinements: "
                 f"{len(result.theme_connection_refinements)}"
@@ -654,21 +854,73 @@ def apply_composition(
     dataset: Dict[str, Any],
     composed: CompositionResult,
     clusters: List[Dict[str, Any]],
+    image_candidates: Optional[Dict[str, Dict[str, Any]]] = None,
     verbose: bool = False,
 ) -> None:
     """Overlay the composed texts onto the dataset (mutates in place).
 
     Structure is authoritative on the dataset side: chapters, subtopics, and
     circles are matched by id/key, unknown entries are ignored with a warning,
-    and missing entries keep their existing texts.
+    and missing entries keep their existing texts. Images are resolved from
+    the candidate pool only — an unknown key is dropped with a warning, so a
+    hallucinated URL can never enter the data.
     """
+    candidates = image_candidates or {}
+    used_image_keys: set = set()
+
+    def resolve_image(key: Optional[str], slot: str) -> Optional[Dict[str, Any]]:
+        if not key:
+            return None
+        candidate = candidates.get(key)
+        if candidate is None:
+            print(f"Warning: unknown image key '{key}' for {slot}, dropped")
+            return None
+        if key in used_image_keys:
+            print(f"Warning: image '{key}' reused for {slot}, dropped")
+            return None
+        if len(used_image_keys) >= MAX_IMAGES_PER_STORY:
+            print(f"Warning: image budget exhausted, '{key}' for {slot} dropped")
+            return None
+        used_image_keys.add(key)
+        return image_record(candidate)
+
     meta = dataset.get("meta_story", {})
     if composed.title.strip():
         meta["title"] = composed.title.strip()
     if composed.tagline.strip():
         meta["tagline"] = composed.tagline.strip()
+    if composed.opening.text.strip():
+        dataset["opening"] = {
+            "text": composed.opening.text.strip(),
+            "image": resolve_image(composed.opening.image_key, "opening"),
+        }
     if composed.description.strip():
         meta["description"] = composed.description.strip()
+    headings = {
+        slot: text.strip()
+        for slot, text in (
+            ("timeline", composed.section_headings.timeline),
+            ("network", composed.section_headings.network),
+            ("conclusion", composed.section_headings.conclusion),
+        )
+        if text.strip()
+    }
+    if headings:
+        dataset["section_headings"] = headings
+    section_images = {
+        slot: image
+        for slot, image in (
+            ("timeline", resolve_image(composed.timeline_image_key, "timeline")),
+            ("network", resolve_image(composed.network_image_key, "network")),
+            (
+                "conclusion",
+                resolve_image(composed.conclusion_image_key, "conclusion"),
+            ),
+        )
+        if image is not None
+    }
+    if section_images:
+        dataset["section_images"] = section_images
     if composed.timeline_intro.strip():
         dataset["timeline_intro"] = composed.timeline_intro.strip()
     if composed.conclusion.strip():
@@ -809,12 +1061,16 @@ def compose_meta_story_dataset(
     apply_exclusions(working, exclusions, verbose=verbose)
 
     clusters = derive_clusters(working.get("social_network") or {})
+    # Candidates are collected AFTER exclusions, so a dropped person's images
+    # can never be selected.
+    image_candidates = collect_image_candidates(working, registry)
 
     composed = run_composition(
         working,
         registry,
         curation.throughline,
         clusters,
+        image_candidates,
         client,
         model,
         reasoning_effort,
@@ -823,7 +1079,9 @@ def compose_meta_story_dataset(
     if composed is None:
         return None
 
-    apply_composition(working, composed, clusters, verbose=verbose)
+    apply_composition(
+        working, composed, clusters, image_candidates=image_candidates, verbose=verbose
+    )
 
     now = datetime.now().astimezone().isoformat()
     working["composition"] = {
@@ -887,6 +1145,21 @@ def compose_and_save(
 
     if dry_run:
         print(f"  Dry run: not writing {path.name}")
+        opening = composed.get("opening") or {}
+        if opening.get("text"):
+            print(f"    Opening: {opening['text'][:160]}...")
+            if opening.get("image"):
+                print(f"      Opening image: {opening['image'].get('caption', '')}")
+        headings = composed.get("section_headings") or {}
+        if headings:
+            print(
+                "    Section headings: "
+                f"{headings.get('timeline', '-')} / "
+                f"{headings.get('network', '-')} / "
+                f"{headings.get('conclusion', '-')}"
+            )
+        for slot, image in (composed.get("section_images") or {}).items():
+            print(f"    {slot} image: {image.get('caption', '')}")
         for chapter in composed.get("chapters") or []:
             print(f"    Chapter: {chapter.get('title', '')}")
             if chapter.get("lead_in"):

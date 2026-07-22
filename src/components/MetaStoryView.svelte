@@ -4,6 +4,7 @@
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
+  import MetaStoryFigure from "./MetaStoryFigure.svelte";
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
@@ -33,6 +34,15 @@
   function backToLanding() {
     push(`/${currentLanguage}`);
   }
+
+  // Composed cold open (Phase 7): split into paragraphs for rendering
+  $: openingParagraphs = metaStoryData?.opening?.text
+    ? metaStoryData.opening.text.split(/\n\s*\n/).filter((p) => p.trim())
+    : [];
+
+  // Composed story-specific section headings, falling back to generic labels
+  $: sectionHeadings = metaStoryData?.section_headings || {};
+  $: sectionImages = metaStoryData?.section_images || {};
 
   // Calculate proxy height based on timeline's horizontal scroll distance
   $: if (timelineContainer && metaStoryData?.chapters?.length) {
@@ -514,16 +524,28 @@
           end: metaStoryData.meta_story.date_range_end,
         })}
       </p>
+      {#if openingParagraphs.length}
+        <div class="opening">
+          <MetaStoryFigure
+            image={metaStoryData.opening.image}
+            variant="opening"
+          />
+          {#each openingParagraphs as paragraph}
+            <p class="opening-text">{paragraph}</p>
+          {/each}
+        </div>
+      {/if}
       <p class="description">{metaStoryData.meta_story.description}</p>
     </header>
 
     <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
     {#if metaStoryData.chapters?.length}
       <section class="chapters-section">
-        <h2>{$_("meta_story.chapters_heading")}</h2>
+        <h2>{sectionHeadings.timeline || $_("meta_story.chapters_heading")}</h2>
         {#if metaStoryData.timeline_intro}
           <p class="timeline-intro">{metaStoryData.timeline_intro}</p>
         {/if}
+        <MetaStoryFigure image={sectionImages.timeline} />
 
         <div
           class="scroll-proxy-container"
@@ -585,11 +607,12 @@
     <!-- Social network section - follows the timeline -->
     {#if metaStoryData.social_network?.links?.length}
       <section class="network-section">
-        <h2>{$_("meta_story.network_heading")}</h2>
+        <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
         <p class="network-intro">
           {metaStoryData.social_network?.narration?.intro ||
             $_("meta_story.network_subtitle")}
         </p>
+        <MetaStoryFigure image={sectionImages.network} />
         {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
           <MetaStoryNetwork
             network={metaStoryData.social_network}
@@ -602,7 +625,10 @@
     <!-- Conclusion section -->
     {#if metaStoryData.conclusion}
       <section class="conclusion">
-        <h2>{$_("meta_story.conclusion_heading")}</h2>
+        <h2>
+          {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
+        </h2>
+        <MetaStoryFigure image={sectionImages.conclusion} />
         <p>{metaStoryData.conclusion}</p>
       </section>
     {/if}
@@ -737,6 +763,34 @@
   .date-range {
     color: #94a3b8;
     margin-bottom: 1.5rem;
+  }
+
+  /* Composed cold open — visually leads before the wider description */
+  .opening {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Contain the floated opening figure (see MetaStoryFigure) */
+  .opening::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .opening-text {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+    margin-bottom: 1rem;
+  }
+
+  .opening-text:first-of-type::first-letter {
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
+    font-size: 2.6em;
+    line-height: 0.85;
+    float: left;
+    padding-right: 0.35rem;
+    color: #38bdf8;
   }
 
   .description {
