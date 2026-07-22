@@ -1,0 +1,382 @@
+{
+  "dataset": "Wikipedia Ego Network: George Washington",
+  "created_on": "2026-07-16",
+  "ego": {
+    "name": "George Washington",
+    "birth_year": 1732,
+    "death_year": 1799,
+    "primary_roles": [
+      "Pflanzer in Virginia",
+      "Oberbefehlshaber der Kontinentalarmee",
+      "Politiker",
+      "erster Präsident der Vereinigten Staaten"
+    ],
+    "summary": "George Washington war ein Pflanzer in Virginia, Oberbefehlshaber der Kontinentalarmee während des Amerikanischen Unabhängigkeitskriegs, Präsident des Verfassungskonvents von 1787 und von 1789 bis 1797 der erste Präsident der Vereinigten Staaten. Er trug zur Sicherung der amerikanischen Unabhängigkeit bei und schuf dauerhafte Präzedenzfälle für die föderale Präsidentschaft.",
+    "wikipedia": "https://de.wikipedia.org/wiki/George_Washington"
+  },
+  "connections": [
+    {
+      "person_name": "Augustine Washington",
+      "relationship_type": "family/father",
+      "relationship_description": "Washingtons Vater war Pflanzer und Kaufmann in Virginia. Sein Tod, als George elf Jahre alt war, stellte George faktisch unter die Vormundschaft seines älteren Halbbruders Lawrence und machte Mary für Haushalt und Anwesen verantwortlich.",
+      "start_year": 1732,
+      "end_year": 1743,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Haushalt der Familie Washington",
+        "Leben auf Plantagen in Virginia",
+        "Erbschafts- und Anwesenangelegenheiten"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Augustine_Washington"
+      ],
+      "notes": "Augustines Tod war ein wichtiges prägendes Ereignis in Washingtons Kindheit."
+    },
+    {
+      "person_name": "Mary Ball Washington",
+      "relationship_type": "family/mother",
+      "relationship_description": "Washingtons Mutter führte nach dem Tod von Augustine Washington die Familie und Ferry Farm. Er blieb ihr zeitlebens verbunden und besuchte sie kurz vor ihrem Tod im Jahr 1789.",
+      "start_year": 1732,
+      "end_year": 1789,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Haushalt der Familie Washington",
+        "Verwaltung des Anwesens Ferry Farm",
+        "Familienbesuche in Fredericksburg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Mary_Ball_Washington"
+      ],
+      "notes": "Mary heiratete nach Augustines Tod nie wieder und war während Washingtons Minderjährigkeit für sein Eigentum verantwortlich."
+    },
+    {
+      "person_name": "Lawrence Washington",
+      "relationship_type": "family/half-brother",
+      "relationship_description": "Lawrence war Washingtons deutlich älterer Halbbruder, nach dem Tod ihres Vaters sein Vormund und ein wichtiges frühes Vorbild. George begleitete ihn 1751 auf einer Reise nach Barbados und übernahm nach Lawrences Tod später die Verwaltung von Mount Vernon.",
+      "start_year": 1732,
+      "end_year": 1752,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Vormundschaft in der Familie",
+        "Reise nach Barbados 1751",
+        "Nachfolge beim Anwesen Mount Vernon",
+        "Verbindungen zur Familie Fairfax"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://de.wikipedia.org/wiki/Lawrence_Washington_(Soldat)"
+      ],
+      "notes": "Lawrences Ehe mit Anne Fairfax brachte George der Familie Fairfax näher."
+    },
+    {
+      "person_name": "George William Fairfax",
+      "relationship_type": "social/friend",
+      "relationship_description": "Fairfax war Mitglied der einflussreichen benachbarten Familie Fairfax und Ehemann von Sally Fairfax. Er nahm den jungen Washington 1748 auf eine Vermessungsexpedition durch Fairfax-Ländereien im Shenandoah-Tal mit, wodurch eine dauerhafte Freundschaft und Patronatsbeziehung begann.",
+      "start_year": 1748,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Vermessungsexpedition im Shenandoah-Tal",
+        "Vermessung von Fairfax-Grenzland",
+        "Gesellschaftlicher und intellektueller Kreis von Belvoir"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Die Familie Fairfax behandelte Washington auch nach dem Tod von Lawrence Washington weiterhin als Familienmitglied."
+    },
+    {
+      "person_name": "Sally Fairfax",
+      "relationship_type": "social/friend",
+      "relationship_description": "Sally Fairfax, die Ehefrau von George William Fairfax, war eine enge und intellektuell einflussreiche Freundin Washingtons. In Belvoir erweiterte sie seine Bildung durch Bücher, Theater und Gespräche; der Bericht beschreibt außerdem, dass Washington Gefühle für sie bewahrte, die über gewöhnliche Freundschaft hinausgingen.",
+      "start_year": 1748,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Literarische und intellektuelle Gespräche in Belvoir",
+        "Lesen von Philosophie und Literatur",
+        "Gesellschaftlicher Briefwechsel"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Ihre Beziehung wird als anfangs platonisch und bildungsorientiert beschrieben, wobei Washingtons dauerhafte Zuneigung in der Quelle hervorgehoben wird."
+    },
+    {
+      "person_name": "Robert Dinwiddie",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Als Vizegouverneur von Virginia ernannte Dinwiddie Washington zum Adjutanten und entsandte ihn 1753 auf die diplomatische Mission ins Ohio-Gebiet. Später vertraute er Washington 1754 das Kommando über eine kleine Miliztruppe aus Virginia an.",
+      "start_year": 1752,
+      "end_year": 1754,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Ernennung zur Miliz in Virginia",
+        "Diplomatische Mission ins Ohio-Gebiet",
+        "Vorbereitungen für den Franzosen- und Indianerkrieg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/George_Washington%27s_journey_to_the_Ohio_Country"
+      ],
+      "notes": "Washingtons veröffentlichtes Tagebuch über seine Mission für Dinwiddie verschaffte ihm erstmals breite öffentliche Aufmerksamkeit."
+    },
+    {
+      "person_name": "Edward Braddock",
+      "relationship_type": "professional/commander",
+      "relationship_description": "Der britische General Braddock setzte Washington während der Expedition von 1755 gegen Fort Duquesne als Adjutanten ein. Nachdem Braddock in der verheerenden Schlacht am Monongahela tödlich verwundet worden war, half Washington, den Rückzug zu organisieren.",
+      "start_year": 1755,
+      "end_year": 1755,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Braddock-Expedition",
+        "Schlacht am Monongahela",
+        "Rückzug nach britischer Niederlage"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Braddock_Expedition"
+      ],
+      "notes": "Der Feldzug verschaffte Washington bedeutsame Erfahrungen mit Grenzkriegführung und den Begrenzungen des britischen Militärs."
+    },
+    {
+      "person_name": "Martha Washington",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Martha Dandridge Custis war von 1759 bis zu seinem Tod Washingtons Ehefrau. Sie machten Mount Vernon zu ihrem Zuhause, zogen gemeinsam ihre überlebenden Kinder und Enkelkinder groß, und während seiner Amtszeit war sie die erste Präsidentengattin.",
+      "start_year": 1759,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Haushalt und Plantagenleben in Mount Vernon",
+        "Erziehung der Custis-Kinder und -Enkelkinder",
+        "Besuche in Winterlagern der Kontinentalarmee",
+        "Repräsentative Pflichten in New York und Philadelphia"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Martha_Washington"
+      ],
+      "notes": "Ihre Ehe wurde als dauerhaft beschrieben; sie hatten keine gemeinsamen leiblichen Kinder."
+    },
+    {
+      "person_name": "John Parke Custis",
+      "relationship_type": "family/stepchild",
+      "relationship_description": "Der überlebende Sohn von Martha Washington wurde Washingtons Stiefsohn und wuchs in Mount Vernon auf. Während des Yorktown-Feldzugs diente er seinem Stiefvater als ziviler Adjutant und starb 1781 an einer Lagerkrankheit.",
+      "start_year": 1759,
+      "end_year": 1781,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Familienleben in Mount Vernon",
+        "Verwaltung der Angelegenheiten der Familie Custis",
+        "Yorktown-Feldzug"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Martha_Washington"
+      ],
+      "notes": "Nach dem Tod von John Parke Custis zogen George und Martha Washington zwei seiner Kinder groß, Eleanor Parke Custis und George Washington Parke Custis."
+    },
+    {
+      "person_name": "Nathanael Greene",
+      "relationship_type": "professional/military colleague",
+      "relationship_description": "Greene war einer von Washingtons führenden Generälen der Kontinentalarmee und nahm an den Operationen bei Trenton und Princeton teil. Er war ein vertrauenswürdiger hochrangiger Mitarbeiter in Washingtons Kommandostruktur während des Unabhängigkeitskriegs.",
+      "start_year": 1775,
+      "end_year": 1783,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kommando der Kontinentalarmee",
+        "Feldzug in New Jersey",
+        "Schlachten von Trenton und Princeton",
+        "Strategische Koordinierung im Unabhängigkeitskrieg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Nathanael_Greene",
+        "https://en.wikipedia.org/wiki/Battle_of_Trenton"
+      ],
+      "notes": "Greene gehörte zu den wichtigsten Generälen, die während des Krieges mit Washingtons Führung verbunden waren."
+    },
+    {
+      "person_name": "Benedict Arnold",
+      "relationship_type": "professional/military subordinate",
+      "relationship_description": "Arnold war ein bedeutender General der Kontinentalarmee, dem Washington vertraute und den er schließlich zum Kommandanten von West Point ernannte. Arnolds Plan von 1780, den Posten den Briten zu übergeben, wurde aufgedeckt, woraufhin er zu den britischen Linien entkam.",
+      "start_year": 1775,
+      "end_year": 1780,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Kommando der Kontinentalarmee",
+        "Feldzüge im Unabhängigkeitskrieg",
+        "Kommando in West Point und aufgedeckter Verrat"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benedict_Arnold",
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Washingtons tiefes Vertrauen in Arnold machte den Verrat zu einem großen persönlichen wie auch militärischen Bruch."
+    },
+    {
+      "person_name": "John Hancock",
+      "relationship_type": "professional/political colleague",
+      "relationship_description": "Hancock leitete den Zweiten Kontinentalkongress, als dieser Washington im Juni 1775 zum Oberbefehlshaber der Kontinentalarmee ernannte. Ihre Verbindung verknüpfte die zivile Autorität des Kongresses mit Washingtons militärischem Kommando.",
+      "start_year": 1775,
+      "end_year": 1783,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ernennung durch den Zweiten Kontinentalkongress",
+        "Kriegsführung der Kontinentalarmee",
+        "Kriegszeitlicher Briefwechsel zwischen Kongress und Armeekommando"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+      ],
+      "notes": "Hancock war Präsident des Kongresses, der Washington auswählte, die Kontinentalarmee zu führen."
+    },
+    {
+      "person_name": "Charles Cornwallis",
+      "relationship_type": "professional/military adversary",
+      "relationship_description": "Cornwallis war ein führender britischer General im Kampf gegen Washingtons Kontinentalarmee. Seine Kapitulation vor den vereinigten amerikanischen und französischen Streitkräften bei Yorktown im Jahr 1781 beendete den letzten großen Landfeldzug des Unabhängigkeitskriegs.",
+      "start_year": 1776,
+      "end_year": 1781,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Feldzüge im Amerikanischen Unabhängigkeitskrieg",
+        "Belagerung und Kapitulation von Yorktown"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Cornwallis,_1st_Marquess_Cornwallis",
+        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette"
+      ],
+      "notes": "Ihre Beziehung war hauptsächlich von Gegnerschaft geprägt und gipfelte in Cornwallis’ Kapitulation bei Yorktown."
+    },
+    {
+      "person_name": "Marquis de Lafayette",
+      "relationship_type": "professional/military collaborator",
+      "relationship_description": "Lafayette war ein französischer freiwilliger Generalmajor in der Kontinentalarmee, der eine enge Beziehung zu Washington entwickelte. Während des Yorktown-Feldzugs befehligte er Truppen unter Washington und blieb später ein bedeutender transatlantischer Verbündeter und Freund.",
+      "start_year": 1777,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Dienst in der Kontinentalarmee",
+        "Französisch-amerikanisches Militärbündnis",
+        "Yorktown-Feldzug",
+        "Briefwechsel und politische Freundschaft nach dem Krieg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette",
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Lafayette bekundete öffentlich tiefe Zuneigung zu Washington, und ihre Beziehung symbolisierte das französisch-amerikanische Bündnis."
+    },
+    {
+      "person_name": "Alexander Hamilton",
+      "relationship_type": "professional/advisor",
+      "relationship_description": "Hamilton diente Washington während des Unabhängigkeitskriegs als Adjutant und wurde sein erster Finanzminister. Er war ein zentraler Architekt der Politik der Washington-Regierung und half bei der Abfassung der Abschiedsrede von 1796.",
+      "start_year": 1777,
+      "end_year": 1799,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Stab des Hauptquartiers der Kontinentalarmee",
+        "Washingtons Kabinett",
+        "Bundesfinanzpolitik",
+        "Abfassung der Abschiedsrede"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/George_Washington%27s_Farewell_Address"
+      ],
+      "notes": "Hamiltons Einfluss war insbesondere in Finanz- und Verwaltungsfragen erheblich, obwohl Washington letztlich die präsidialen Entscheidungen traf."
+    },
+    {
+      "person_name": "James Madison",
+      "relationship_type": "professional/political collaborator",
+      "relationship_description": "Madison arbeitete mit Washington während des Verfassungskonvents zusammen, dem Washington vorstand, und gehörte später dem ersten Kongress an. Ihre Zusammenarbeit schwächte sich ab, als Madison sich Jefferson in der Opposition gegen Hamiltons Politik und die föderalistische Koalition anschloss.",
+      "start_year": 1787,
+      "end_year": 1792,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Verfassungskonvent",
+        "Frühe bundesstaatliche Verfassungspolitik",
+        "Erster Kongress"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/James_Madison",
+        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+      ],
+      "notes": "Madison hatte Washington zuvor geholfen, zur Teilnahme am Verfassungskonvent zu bewegen, und diente als wichtiger früher Berater."
+    },
+    {
+      "person_name": "Thomas Jefferson",
+      "relationship_type": "professional/cabinet member",
+      "relationship_description": "Washington ernannte Jefferson zum ersten Außenminister. Ihre Kabinettsbeziehung wurde durch Jeffersons Konflikte mit Finanzminister Hamilton sowie durch Meinungsverschiedenheiten über Bundesgewalt und Außenpolitik belastet.",
+      "start_year": 1789,
+      "end_year": 1793,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Washingtons Kabinett",
+        "Gestaltung der frühen bundesstaatlichen Außenpolitik",
+        "Kabinettsdebatten über Finanzen und Neutralität"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "Jefferson trat 1793 aus dem Kabinett zurück und wurde zu einem führenden Kritiker des föderalistischen politischen Programms."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Washingtons engstes persönliches Netzwerk umfasste seine Eltern, seinen einflussreichen Halbbruder Lawrence und Martha Washington, seine Ehefrau von 1759 bis zu seinem Tod. Zu ihrem Haushalt in Mount Vernon gehörten auch Marthas Sohn John Parke Custis und später zwei Custis-Enkelkinder."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Washingtons berufliches Netzwerk reichte von militärischen Förderern in Virginia über Kollegen in der Kontinentalarmee, Verbündete der Revolution, Kabinettsmitglieder bis hin zu Gegnern. Seine Beziehungen zu Hamilton, Jefferson und Madison trugen dazu bei, die frühe Bundesregierung zu prägen – und ihre inneren Spaltungen offenzulegen."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Der Fairfax-Kreis beschleunigte Washingtons gesellschaftlichen Aufstieg und seine informelle Bildung. George William Fairfax eröffnete ihm Möglichkeiten in der Landvermessung, während Sally Fairfax eine einflussreiche intellektuelle Freundschaft bot."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "b5a794a7d1766f64",
+    "translated_on": "2026-07-19T07:44:39.816310+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

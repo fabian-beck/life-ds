@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+  # Deploy on demand only — do not publish the live site on every push/merge to main.
+  #
+  # Primary control: the Netlify dashboard's "Stop builds" (Site configuration >
+  # Build & deploy > Continuous deployment), which stops a build from even
+  # starting on a push. This `ignore = "exit 0"` is a version-controlled backstop:
+  # if builds are ever re-enabled, it still skips git-triggered builds by exiting 0.
+  #
+  # Publishing is done from the CLI by uploading the prebuilt dist/ (see README
+  # "Deployment"):
+  #   npx netlify-cli deploy --prod --dir=dist --site <site-id>
+  # With "Stop builds" on, the dashboard "Trigger deploy" and build hooks are
+  # disabled too, so this CLI upload is the deploy path.
+  #
+  # To restore automatic deploys: re-enable builds in the dashboard AND delete
+  # the `ignore` line below.
+  ignore = "exit 0"

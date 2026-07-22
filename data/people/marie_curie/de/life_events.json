@@ -1,0 +1,759 @@
+{
+  "dataset": "Biographical timeline outlines",
+  "created_on": "2025-12-20",
+  "person": {
+    "name": "Marie_Curie",
+    "birth_date": "1867-11-07",
+    "death_date": "1934-07-04",
+    "primary_roles": [
+      "Physikerin",
+      "Chemikerin"
+    ],
+    "tagline": "Pionierin der Radioaktivitätsforschung",
+    "summary": "Marie Curie war eine in Polen geborene Physikerin und Chemikerin, die ihre Karriere in Frankreich aufbaute und die Erforschung der Radioaktivität grundlegend veränderte. Gemeinsam mit Pierre Curie entdeckte sie die Elemente Polonium und Radium, führte zentrale Konzepte und Messmethoden für radioaktive Phänomene ein und erhielt Nobelpreise sowohl für Physik als auch für Chemie. Während des Ersten Weltkriegs förderte sie die Radiologie auf dem Schlachtfeld und leitete später bedeutende Forschungseinrichtungen, während sie die internationale wissenschaftliche Zusammenarbeit vorantrieb.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Marie_Curie",
+    "portrait": {
+      "image": "/portraits/marie_curie_thumbnail.webp",
+      "source": "https://de.wikipedia.org/wiki/Marie_Curie",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Marie_Curie_%28Nobel-Chem%29.jpg",
+      "originalCaption": "AI-generated stylized portrait based on historical photograph",
+      "thumbnail": "/portraits/marie_curie_thumbnail.webp",
+      "medium": "/portraits/marie_curie_medium.webp",
+      "full": "/portraits/marie_curie_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "warsaw_under_shadow",
+      "headline": "Warschau unter dem Zarenreich",
+      "date_start": "1867-11-07",
+      "date_start_precision": "day",
+      "date_end": "1883",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 15,
+      "involved_people": [
+        "Władysław Skłodowski",
+        "Bronisława Skłodowska (Mutter)"
+      ],
+      "location": "Polen"
+    },
+    {
+      "id": "the_hidden_curriculum",
+      "headline": "Der verborgene Lehrplan",
+      "date_start": "1885-09",
+      "date_start_precision": "month",
+      "date_end": "1890",
+      "date_end_precision": "year",
+      "age_start": 17,
+      "age_end": 22,
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Józef Wierusz-Kowalski"
+      ],
+      "location": "Polen"
+    },
+    {
+      "id": "paris_hard_won_genius",
+      "headline": "Paris, hart erkämpft",
+      "date_start": "1891-11-03",
+      "date_start_precision": "day",
+      "date_end": "1894-07",
+      "date_end_precision": "month",
+      "age_start": 23,
+      "age_end": 26,
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Kazimierz Dłuski"
+      ],
+      "location": "Frankreich"
+    },
+    {
+      "id": "radium_firestorm",
+      "headline": "Radiums Feuersturm",
+      "date_start": "1895-07-26",
+      "date_start_precision": "day",
+      "date_end": "1903",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 35,
+      "involved_people": [
+        "Pierre Curie",
+        "Henri Becquerel"
+      ],
+      "location": "Frankreich"
+    },
+    {
+      "id": "solitary_authority",
+      "headline": "Einsame Autorität",
+      "date_start": "1906-04-19",
+      "date_start_precision": "day",
+      "date_end": "1911-12-10",
+      "date_end_precision": "day",
+      "age_start": 38,
+      "age_end": 44,
+      "involved_people": [
+        "Pierre Curie",
+        "Svante Arrhenius"
+      ],
+      "location": "Frankreich"
+    },
+    {
+      "id": "science_in_service",
+      "headline": "Wissenschaft im Dienst",
+      "date_start": "1914-08",
+      "date_start_precision": "month",
+      "date_end": "1934-07-04",
+      "date_end_precision": "day",
+      "age_start": 46,
+      "age_end": 66,
+      "involved_people": [
+        "Irène Curie"
+      ],
+      "location": "Frankreich"
+    }
+  ],
+  "conclusion": "Marie Curie verwandelte Exil und Verlust in eine neue Wissenschaft des Unsichtbaren – eine Wissenschaft, die Medizin, Industrie und die Bedeutung der Entdeckung selbst veränderte.",
+  "events": [
+    {
+      "date": "1867-11-07",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geboren im russisch beherrschten Warschau",
+      "description": "Marie Curie wurde als Maria Salomea Skłodowska in eine polnische Pädagogenfamilie im [[Russian Partition|russisch beherrschten]] Warschau geboren. Ihre Erziehung verband starken intellektuellen Ehrgeiz mit dem Druck politischer Repression und eingeschränkten Möglichkeiten für Frauen. Diese frühen Umstände prägten ihre spätere Entschlossenheit, im Ausland Wissenschaft zu betreiben.",
+      "locations": [
+        {
+          "name_historic": "Warschau",
+          "name_modern": "Warschau, Polen",
+          "centroid": [
+            21.0122287,
+            52.2296756
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Władysław Skłodowski",
+        "Bronisława Skłodowska"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "warsaw_under_shadow",
+      "annotations": {
+        "Russian Partition": {
+          "explanation": "Der Teil des ehemaligen Polen-Litauen, der nach den Teilungen Polens im späten 18. Jahrhundert vom Russischen Reich annektiert wurde; Warschau lag 1867 in diesem russisch kontrollierten Gebiet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Russian_Partition"
+        }
+      }
+    },
+    {
+      "date": "1878-05",
+      "date_precision": "month",
+      "date_end": "1883",
+      "date_end_precision": "year",
+      "date_note": "Dieser Zeitraum umfasst den Tod ihrer Mutter und den Abschluss ihrer Sekundarschulbildung",
+      "age": 10,
+      "title": "Ausgezeichnet trotz familiärer Not",
+      "description": "Nachdem ihre Mutter an Tuberkulose gestorben war, setzte Marie ihre Ausbildung unter schwierigen familiären und politischen Bedingungen in Warschau fort. Sie lernte in einem von [[Russification|Russifizierung]] geprägten System, in dem polnische Kultur und Geschichte eingeschränkt wurden. 1883 schloss sie ihre Sekundarschulbildung mit Bestnoten ab und begründete damit ihren Ruf außergewöhnlicher akademischer Begabung.",
+      "locations": [
+        {
+          "name_historic": "Warschau",
+          "name_modern": "Warschau, Polen",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bronisława Skłodowska"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "warsaw_under_shadow",
+      "annotations": {
+        "Russification": {
+          "explanation": "Eine Politik des Russischen Reiches, die darauf abzielte, in seinen nichtrussischen Gebieten russische Sprache, Verwaltung und Kultur zu fördern und dabei häufig lokale Identitäten wie die polnische Bildung und ihre Institutionen zu unterdrücken.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Russification"
+        }
+      }
+    },
+    {
+      "date": "1885-09",
+      "date_precision": "month",
+      "date_end": "1889-04",
+      "date_end_precision": "month",
+      "date_note": "Die Daten entsprechen ungefähr Beginn und Ende ihrer längsten, in der Quelle beschriebenen Stelle als Gouvernante",
+      "age": 17,
+      "title": "Gouvernante und geheime Studien",
+      "description": "Da Frauen in Polen nicht an einer Universität studieren durften, arbeitete Marie als Gouvernante, um sich selbst zu unterhalten und die Ausbildung ihrer Schwester mitzufinanzieren. Neben dieser Arbeit besuchten sie und ihre Schwester die geheime [[Flying University|„Fliegende Universität“]], die von Jadwiga Szczawińska-Dawidowa heimlich organisiert worden war und höhere Bildung außerhalb staatlicher Kontrolle vermittelte. Die Erfahrung vertiefte ihre wissenschaftlichen Ambitionen und bestärkte sie in ihrem Entschluss, in Paris ein reguläres Studium aufzunehmen.",
+      "locations": [
+        {
+          "name_historic": "Warschau",
+          "name_modern": "Warschau, Polen",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Königreich Polen",
+          "name_modern": "Polen",
+          "centroid": [
+            19.134422,
+            52.215933
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Jadwiga Szczawińska-Dawidowa"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "the_hidden_curriculum",
+      "annotations": {
+        "Flying University": {
+          "explanation": "Ein konspiratives polnisches Hochschulnetzwerk in Warschau (auch Fliegende Universität genannt), das unter den Einschränkungen der russischen Teilungszeit operierte und außerhalb offizieller Institutionen Kurse – häufig für Frauen – anbot.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Flying_University"
+        }
+      }
+    },
+    {
+      "date": "1890",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Erste ernsthafte Laborausbildung",
+      "description": "Zurück in Warschau erhielt Marie durch das Labor des [[Warsaw Museum of Industry and Agriculture|Warschauer Museums für Industrie und Landwirtschaft]] Zugang zu praktischer wissenschaftlicher Arbeit. Mit Hilfe ihres Cousins Józef Boguski führte sie erste Experimente durch, die ihre Neigung zur Experimentalphysik und Chemie stärkten. Diese praktische Vorbereitung wurde zur Brücke zwischen ihrer informellen Bildung in Polen und der formalen Universitätsausbildung in Frankreich.",
+      "locations": [
+        {
+          "name_historic": "Warschau",
+          "name_modern": "Warschau, Polen",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Józef Wierusz-Kowalski",
+        "Józef Boguski"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska",
+        "https://en.wikipedia.org/wiki/J%C3%B3zef_Wierusz-Kowalski"
+      ],
+      "event_type_icon": "mdi-test-tube",
+      "chapter": "the_hidden_curriculum",
+      "annotations": {
+        "Warsaw Museum of Industry and Agriculture": {
+          "explanation": "Eine Warschauer technisch-pädagogische Einrichtung, deren Laboratorien Studierenden und Forschenden im geteilten Polen Zugang zu wissenschaftlichen Geräten und praktischer Ausbildung boten."
+        }
+      }
+    },
+    {
+      "date": "1891-11-03",
+      "date_precision": "day",
+      "age": 23,
+      "title": "An der Sorbonne eingeschrieben",
+      "description": "Marie zog aus dem russisch beherrschten Polen nach Paris, um ein Universitätsstudium aufzunehmen, und lebte zunächst bei ihrer Schwester Bronisława und ihrem Schwager Kazimierz Dłuski. Sie schrieb sich an der Sorbonne für ein Physikstudium ein und trat damit in ein wissenschaftliches Umfeld ein, in dem Studentinnen selten waren. Trotz sprachlicher Hürden und einer schwächeren formalen Vorbereitung als viele ihrer französischen Kommilitonen zeichnete sie sich rasch akademisch aus.",
+      "locations": [
+        {
+          "name_historic": "Warschau",
+          "name_modern": "Warschau, Polen",
+          "centroid": [
+            21.0711489,
+            52.2333742
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bronisława Dłuska",
+        "Kazimierz Dłuski"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bronis%C5%82awa_D%C5%82uska",
+        "https://en.wikipedia.org/wiki/Kazimierz_D%C5%82uski"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Universit%C3%A9_Paris-Sorbonne_Rue_de_Jacques.jpg/960px-Universit%C3%A9_Paris-Sorbonne_Rue_de_Jacques.jpg",
+          "caption": "Die Sorbonne, von der Rue des Jacques aus gesehen",
+          "source": "https://commons.wikimedia.org/wiki/File:Université_Paris-Sorbonne_Rue_de_Jacques.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-airplane",
+      "chapter": "paris_hard_won_genius",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Russian Empire (Congress Poland)",
+        "to_location": "France (Paris)",
+        "characterization": "education"
+      }
+    },
+    {
+      "date": "1893-07",
+      "date_precision": "month",
+      "date_end": "1894-07",
+      "date_end_precision": "month",
+      "date_note": "Bezeichnet den Abschluss ihrer Licence-Studiengänge in Physik und Mathematik in aufeinanderfolgenden Jahren",
+      "age": 25,
+      "title": "Naturwissenschaftliche Abschlüsse in Paris",
+      "description": "An der [[Sorbonne|Sorbonne]] in Paris schloss Marie 1893 ihre Licence in Physik ab und belegte in ihrem Jahrgang den ersten Platz inmitten des anspruchsvollen Lehrplans der Fakultät. Im folgenden Jahr erwarb sie eine Licence in Mathematik und gehörte erneut zu den Besten – Leistungen, die ihr den Eintritt in Pariser Forschungskreise ermöglichten und ihr Zugang zu wichtigen Mentoren und Laboratorien verschafften.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "paris_hard_won_genius",
+      "annotations": {
+        "Sorbonne": {
+          "explanation": "Eine führende Pariser Universitätsfakultät (damals die Fakultät für Naturwissenschaften der Universität Paris), an der Curie ihre Hochschulausbildung absolvierte und ihre Licence-Abschlüsse erwarb.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sorbonne"
+        }
+      }
+    },
+    {
+      "date": "1895-07-26",
+      "date_precision": "day",
+      "age": 27,
+      "title": "Heirat mit Pierre Curie",
+      "description": "Marie und Pierre heirateten in einer standesamtlichen Zeremonie in [[Sceaux|Sceaux (einem Vorort von Paris)]], womit sie eine Beziehung formalisierten, die aus ihrer gemeinsamen wissenschaftlichen Arbeit und gegenseitigem Respekt erwachsen war.",
+      "locations": [
+        {
+          "name_historic": "Sceaux",
+          "name_modern": "Sceaux, Hauts-de-Seine, Frankreich",
+          "centroid": [
+            2.2886619,
+            48.7790592
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Pierre_Curie",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Marie_and_Pierre_Curie_Converse.jpg/960px-Marie_and_Pierre_Curie_Converse.jpg",
+          "caption": "Marie und Pierre Curie im Gespräch (Fotografie von 1896)",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie_and_Pierre_Curie_Converse.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "radium_firestorm",
+      "annotations": {
+        "Sceaux": {
+          "explanation": "Ein Vorort südwestlich von Paris; die Ehe der Curies wird gemeinhin als dort geschlossen vermerkt (standesamtliche Eintragung in der örtlichen Gemeinde).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sceaux,_Hauts-de-Seine"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Pierre Curie",
+        "duration": "until his death",
+        "children": 2,
+        "characterization": "scientific partnership"
+      }
+    },
+    {
+      "date": "1897-12-16",
+      "date_precision": "day",
+      "date_note": "Ihre erste Tochter, Irène, wurde Anfang 1897 geboren",
+      "age": 30,
+      "title": "Beginn der Radioaktivitätsforschung",
+      "description": "Marie begann in Paris systematische Experimente zur Strahlung, die in Uranverbindungen beobachtet wurde, baute dabei auf [[Becquerel rays|den Erkenntnissen Henri Becquerels]] auf und arbeitete eng mit Pierre Curie zusammen. Mithilfe empfindlicher elektrometrischer Messungen setzte sie sich zum Ziel, die ionisierenden Wirkungen zu quantifizieren und verschiedene Materialien zu vergleichen – ein früher Schritt, der die Radioaktivität zum zentralen Schwerpunkt ihrer wissenschaftlichen Laufbahn machte.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Henri Becquerel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henri_Becquerel",
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Radioactivity"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Pierre_and_Marie_Curie_at_work_in_laboratory_Wellcome_L0001761.jpg/960px-Pierre_and_Marie_Curie_at_work_in_laboratory_Wellcome_L0001761.jpg",
+          "caption": "Pierre und Marie Curie bei der Arbeit in einem Labor",
+          "source": "https://commons.wikimedia.org/wiki/File:Pierre_and_Marie_Curie_at_work_in_laboratory_Wellcome_L0001761.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "radium_firestorm",
+      "annotations": {
+        "Becquerel rays": {
+          "explanation": "Die frühe Bezeichnung für die spontane, durchdringende Strahlung von Uransalzen, die Henri Becquerel 1896 erstmals beschrieb und die später als Radioaktivität verstanden wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Radioactivity"
+        }
+      }
+    },
+    {
+      "date": "1898-07",
+      "date_precision": "month",
+      "date_end": "1898-12",
+      "date_end_precision": "month",
+      "date_note": "Umfasst den Zeitraum, in dem die Curies in Pechblende Hinweise auf neue Elemente bekannt gaben und Polonium und Radium identifizierten",
+      "age": 30,
+      "title": "Polonium und Radium entdeckt",
+      "description": "Durch die Untersuchung von [[pitchblende|Pechblende]] und anderen uranhaltigen Materialien in Paris kam Marie Curie zu dem Schluss, dass deren Aktivität nicht allein durch Uran erklärt werden konnte. Gemeinsam mit Pierre Curie trug sie dazu bei, das Konzept der „Radioaktivität“ zu begründen, und gab Mitte 1898 Hinweise auf neue Elemente bekannt – Polonium (benannt nach ihrem Heimatland Polen) und später im selben Jahr Radium. Als die Arbeit intensiver wurde, halfen Mitarbeitende wie Gustave Bémont bei der Herstellung hochaktiver Proben, und die Spektroskopie von Eugène-Anatole Demarçay lieferte eine unabhängige Bestätigung, dass sich Radium wie ein eigenständiges neues Element verhielt.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Gustave Bémont",
+        "Eugène-Anatole Demarçay"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Pierre_Curie",
+        "https://en.wikipedia.org/wiki/Polonium"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Pierre_and_Marie_Curie.jpg/960px-Pierre_and_Marie_Curie.jpg",
+          "caption": "Pierre und Maria Skłodowska-Curie im Labor",
+          "source": "https://commons.wikimedia.org/wiki/File:Pierre_and_Marie_Curie.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "radium_firestorm",
+      "annotations": {
+        "pitchblende": {
+          "explanation": "Ein uranreiches Erz (überwiegend Uraninit), das die Curies verarbeiteten, weil seine ungewöhnlich starke Strahlung auf weitere radioaktive Substanzen neben Uran hindeutete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pitchblende"
+        }
+      }
+    },
+    {
+      "date": "1903",
+      "date_precision": "year",
+      "date_note": "1903 schloss sie ihre Promotion ab und teilte den Nobelpreis für Physik mit Pierre Curie und Henri Becquerel",
+      "age": 35,
+      "title": "Promotion und Nobelpreis für Physik",
+      "description": "In Paris schloss Marie ihre Doktorarbeit über radioaktive Substanzen ab und führte damit jahrelange Laborergebnisse zu einem kohärenten Forschungsprogramm zusammen. Später im Jahr 1903 teilte sie den Nobelpreis für Physik mit Pierre Curie und Henri Becquerel; die Auszeichnung verschaffte ihr breite internationale Anerkennung für das aufstrebende Gebiet der Strahlungsforschung.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Henri Becquerel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henri_Becquerel",
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Marie_and_Pierre_Curie%27s_Nobel_Prize_in_Physics_1903.jpg/960px-Marie_and_Pierre_Curie%27s_Nobel_Prize_in_Physics_1903.jpg",
+          "caption": "Der Nobelpreis für Physik von Marie und Pierre Curie (1903)",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie_and_Pierre_Curie's_Nobel_Prize_in_Physics_1903.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "radium_firestorm",
+      "event_class": {
+        "type": "publication",
+        "title": "Recherches sur les substances radioactives",
+        "publication_type": "thesis",
+        "significance": "foundational",
+        "impact": "It synthesized her measurements and interpretations into a defining framework for early radioactivity research."
+      }
+    },
+    {
+      "date": "1906-04-19",
+      "date_precision": "day",
+      "date_note": "Pierre Curie starb im April 1906 bei einem Verkehrsunfall; kurz darauf übernahm sie seine Lehrverpflichtungen und rückte in eine Professur auf",
+      "age": 38,
+      "title": "Verwitwet und in die Sorbonne-Fakultät berufen",
+      "description": "Der plötzliche Tod Pierre Curies beendete ihre Partnerschaft und ließ Marie zurück, die Forschung fortzusetzen und zugleich ihre Kinder großzuziehen. Sie wurde gebeten, seine Lehrverpflichtungen an der Sorbonne zu übernehmen, und wurde bald Professorin, womit sie als erste Frau dort lehrte und bedeutende Barrieren durchbrach. Dieser Übergang kennzeichnete ihren Aufstieg zu einer eigenständigen wissenschaftlichen Führungspersönlichkeit im französischen Hochschulleben.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.3522,
+            48.8566
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Pierre Curie",
+        "Irène Joliot-Curie",
+        "Ève Curie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://de.wikipedia.org/wiki/Pierre_Curie"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "solitary_authority"
+    },
+    {
+      "date": "1911-12-10",
+      "date_precision": "day",
+      "age": 44,
+      "title": "Nobelpreis für Chemie gewonnen",
+      "description": "Marie erhielt in Stockholm den Nobelpreis für Chemie für ihre Arbeit zur Radioaktivität und radiochemische Forschung und festigte damit ihre Stellung in zwei Fachgebieten. Das Jahr brachte auch intensive öffentliche Beobachtung in Frankreich, einschließlich feindseliger Presseangriffe während der Kontroverse um ihre Beziehung zu Paul Langevin. Trotz der Gegenreaktionen bestätigte der Preis ihre wissenschaftliche Autorität und ihre einzigartige internationale Stellung.",
+      "locations": [
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Schweden",
+          "centroid": [
+            18.0710935,
+            59.3251172
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Svante Arrhenius",
+        "Paul Langevin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Nobel_Prize_in_Chemistry"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Marie_Curie_in_her_Paris_Laboratory%2C_1912.jpg/960px-Marie_Curie_in_her_Paris_Laboratory%2C_1912.jpg",
+          "caption": "Marie Curie in ihrem Pariser Labor, 1912",
+          "source": "https://commons.wikimedia.org/wiki/File:Marie_Curie_in_her_Paris_Laboratory,_1912.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "solitary_authority"
+    },
+    {
+      "date": "1914-08",
+      "date_precision": "month",
+      "date_end": "1918-11",
+      "date_end_precision": "month",
+      "age": 46,
+      "title": "Röntgendienst im Krieg geschaffen",
+      "description": "Während des [[World War I|Ersten Weltkriegs]] richtete Marie ihre Expertise auf die medizinische Radiologie für verwundete Soldaten aus. Von Paris aus organisierte sie mobile Röntgendienste (später als [[Little Curies|„Kleine Curies“]] bezeichnet), die Bildgebung in die Nähe der Verwundetenstationen der französischen Armee an der Front brachten, und half bei der Ausbildung von Technikern und Krankenschwestern für die Bedienung der Geräte. Diese Arbeit trug dazu bei, die Radiologie zu einem praktischen Instrument der modernen Schlachtfeldmedizin zu machen, und zeigte ihre Fähigkeit, Laborwissen in dringend benötigten öffentlichen Dienst zu übertragen.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.3522,
+            48.8566
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Französische Front",
+          "name_modern": "Nordfrankreich",
+          "centroid": [
+            2.5,
+            49.0
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Irène Joliot-Curie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/X-ray_car_with_tent._20th_century._Wellcome_L0022591.jpg/960px-X-ray_car_with_tent._20th_century._Wellcome_L0022591.jpg",
+          "caption": "Röntgenwagen mit Zelt (Wellcome-Bild)",
+          "source": "https://commons.wikimedia.org/wiki/File:X-ray_car_with_tent._20th_century._Wellcome_L0022591.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "science_in_service",
+      "annotations": {
+        "World War I": {
+          "explanation": "Ein globaler Konflikt (1914–1918), der eine enorme Zahl von Gefallenen und Verwundeten forderte und die rasche Entwicklung der Militärmedizin und medizinischen Bildgebung vorantrieb.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_I"
+        },
+        "Little Curies": {
+          "explanation": "Beiname für die mobilen Röntgeneinheiten, die Marie Curie während des Ersten Weltkriegs für die französische Armee organisierte und die Röntgenmöglichkeiten näher an das Schlachtfeld brachten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Little_Curies"
+        }
+      }
+    },
+    {
+      "date": "1918",
+      "date_precision": "year",
+      "date_end": "1922",
+      "date_end_precision": "year",
+      "date_note": "Dieser Zeitraum umfasst ihre institutionelle Führung nach dem Krieg, ihr internationales Engagement und bedeutende Fundraising-Aktivitäten (einschließlich Auslandsreisen)",
+      "age": 50,
+      "title": "Radiologische Institutionen nach dem Krieg aufgebaut",
+      "description": "Nach dem Ersten Weltkrieg leitete Marie am [[Radium Institute|Pariser Radium-Institut]] bedeutende Forschungs- und Ausbildungsarbeiten und förderte eine Laborkultur, die Frauen und internationale Studierende willkommen hieß. Sie beteiligte sich zudem durch [[International Committee on Intellectual Cooperation|Initiativen mit Verbindung zum Völkerbund]] an internationaler wissenschaftlicher Zusammenarbeit, die auf die Verbesserung der Bedingungen für Forschende zielten, und unternahm bedeutende Fundraising-Reisen ins Ausland, um Radium zu beschaffen und die wachsende Forschung sowie medizinische Anwendungen zu unterstützen.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.320041,
+            48.8588897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie",
+        "https://en.wikipedia.org/wiki/Curie_Institute",
+        "https://en.wikipedia.org/wiki/International_Committee_on_Intellectual_Cooperation"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/The_Radium_Institute%2C_Paris._Wellcome_M0015303.jpg/960px-The_Radium_Institute%2C_Paris._Wellcome_M0015303.jpg",
+          "caption": "Das Radium-Institut, Paris (Labor im Pasteur-Pavillon)",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Radium_Institute,_Paris._Wellcome_M0015303.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "science_in_service",
+      "annotations": {
+        "Radium Institute": {
+          "explanation": "Das Pariser Radium-Institut (später Teil des Curie-Instituts) verband Forschung und medizinische Arbeit zur Radioaktivität und wurde unter Curies Leitung nach dem Ersten Weltkrieg zu einem bedeutenden Zentrum für Radiochemie und Strahlentherapie.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Curie_Institute"
+        },
+        "International Committee on Intellectual Cooperation": {
+          "explanation": "Ein Beratungsgremium des Völkerbunds (1922–1946), das die internationale Zusammenarbeit von Gelehrten und Wissenschaftlern fördern sollte; Curie war Mitglied und prägte dessen Bemühungen um wissenschaftliche Kooperation mit.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/International_Committee_on_Intellectual_Cooperation"
+        }
+      }
+    },
+    {
+      "date": "1934-07-04",
+      "date_precision": "day",
+      "age": 66,
+      "title": "Tod im Sanatorium Sancellemoz in Passy",
+      "description": "Marie Curie starb am 4. Juli 1934 im [[Sancellemoz|Sanatorium Sancellemoz bei Passy]], nachdem sie in einer Zeit vor modernen Sicherheitsstandards jahrelang radioaktiven Materialien ausgesetzt gewesen war. Ihre letzten Jahre blieben eng mit wissenschaftlicher Arbeit und den Institutionen verbunden, die sie mit aufgebaut hatte. Als sie starb, hatte sie innerhalb eines einzigen Lebens Physik, Chemie und medizinische Praxis grundlegend verändert.",
+      "locations": [
+        {
+          "name_historic": "Passy",
+          "name_modern": "Passy, Haute-Savoie, Frankreich",
+          "centroid": [
+            6.6845339,
+            45.9232994
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marie_Curie"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "science_in_service",
+      "annotations": {
+        "Sancellemoz": {
+          "explanation": "Bezeichnet das Sanatorium Sancellemoz in Passy in Haute-Savoie, wo Curie starb; die Einrichtung wurde später als Centre de Rééducation Fonctionnelle (CRF) de Sancellemoz bekannt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Marie_Curie"
+        }
+      }
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "06a15c74e840b43c",
+    "translated_on": "2026-07-19T07:39:07.770989+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

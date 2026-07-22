@@ -1,0 +1,308 @@
+{
+  "dataset": "Wikipedia ego network: Abigail Adams",
+  "created_on": "2026-07-19",
+  "ego": {
+    "name": "Abigail Adams",
+    "birth_year": 1744,
+    "death_year": 1818,
+    "primary_roles": [
+      "writer",
+      "political advisor",
+      "first lady",
+      "household manager"
+    ],
+    "summary": "Abigail Adams was an American writer, household manager, and influential political confidante to her husband, President John Adams. Her extensive correspondence documented the Revolutionary home front, family life, women's rights, and political affairs in the early United States.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Abigail_Adams"
+  },
+  "connections": [
+    {
+      "person_name": "William Smith",
+      "relationship_type": "family/father",
+      "relationship_description": "Abigail’s father was a liberal Congregational minister who officiated at her 1764 marriage and whose library helped support her self-education.",
+      "start_year": 1744,
+      "end_year": 1784,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "family life in Weymouth and Braintree",
+        "access to family libraries",
+        "her marriage ceremony to John Adams"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "notes": "He died in 1784, shortly after Abigail had traveled to Europe."
+    },
+    {
+      "person_name": "Elizabeth Quincy Smith",
+      "relationship_type": "family/mother",
+      "relationship_description": "Abigail’s mother taught her to read, write, and cipher, laying the foundation for her largely informal education.",
+      "start_year": 1744,
+      "end_year": 1775,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "childhood education",
+        "family life in Weymouth and Braintree",
+        "supporting the Smith household"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "notes": "Elizabeth Quincy Smith died in October 1775."
+    },
+    {
+      "person_name": "Mary Smith Cranch",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Mary was Abigail's elder sister. Her courtship and marriage to Richard Cranch brought John Adams to the Smith household, where Abigail and John first met.",
+      "start_year": 1744,
+      "end_year": 1811,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Smith family life",
+        "the Cranch-Adams extended family network",
+        "correspondence and family affairs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/John_Adams"
+      ],
+      "notes": "Mary and Richard Cranch were the parents of federal judge William Cranch."
+    },
+    {
+      "person_name": "John Adams",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Abigail’s husband, intellectual partner, and closest political correspondent; their letters joined family life with sustained discussion of government and public affairs.",
+      "start_year": 1759,
+      "end_year": 1818,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "marriage and raising six children",
+        "management of the Braintree and Quincy households",
+        "extensive political and personal correspondence",
+        "diplomatic residence in Paris and London",
+        "vice-presidential and presidential public life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/John_Adams"
+      ],
+      "notes": "They married on October 25, 1764. Abigail's March 1776 'Remember the Ladies' letter was addressed to John while he served in the Continental Congress."
+    },
+    {
+      "person_name": "Richard Cranch",
+      "relationship_type": "family/brother-in-law",
+      "relationship_description": "Richard Cranch, husband of Abigail's sister Mary, introduced John Adams to the Smith household in 1759 while courting Mary. He thereafter remained part of Abigail's extended family network.",
+      "start_year": 1759,
+      "end_year": 1811,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "the meeting of Abigail Smith and John Adams",
+        "extended-family gatherings and correspondence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/John_Adams"
+      ],
+      "notes": "His connection to Abigail was both familial and consequential to the beginning of the Adams marriage."
+    },
+    {
+      "person_name": "Abigail Adams Smith",
+      "relationship_type": "family/child",
+      "relationship_description": "Known as Nabby, Abigail's eldest child accompanied her mother to Europe in 1784 and remained an important focus of her maternal care. Abigail supported Nabby through her final illness before Nabby's death from breast cancer.",
+      "start_year": 1765,
+      "end_year": 1813,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "childrearing and moral education",
+        "travel to Paris and residence in London",
+        "family household life in Quincy",
+        "care during Nabby's illness"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Abigail_Adams_Smith"
+      ],
+      "notes": "Nabby was named for her mother and died in 1813."
+    },
+    {
+      "person_name": "John Quincy Adams",
+      "relationship_type": "family/child",
+      "relationship_description": "Abigail's eldest son became the sixth U.S. president. She supervised much of his early upbringing, joined him and John Adams in Europe in 1784, closely followed his public career, and cared for several of his children while he served abroad.",
+      "start_year": 1767,
+      "end_year": 1818,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "education and family correspondence",
+        "diplomatic family life in Paris and London",
+        "discussion of political affairs",
+        "care of John Quincy Adams's children during his Russian mission"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/John_Quincy_Adams"
+      ],
+      "notes": "Abigail was a major formative influence during his childhood, when John Adams was frequently absent on public business."
+    },
+    {
+      "person_name": "Susanna Adams",
+      "relationship_type": "family/child",
+      "relationship_description": "Susanna, called Suky, was Abigail and John Adams's second daughter. Abigail cared for her during her brief life before the child died in infancy.",
+      "start_year": 1768,
+      "end_year": 1770,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "early family life in Massachusetts",
+        "maternal care and upbringing"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "notes": "Susanna died at about one year of age."
+    },
+    {
+      "person_name": "Charles Adams",
+      "relationship_type": "family/child",
+      "relationship_description": "Charles was Abigail’s second son and part of the family’s early Massachusetts and European household life.",
+      "start_year": 1770,
+      "end_year": 1800,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "childrearing and education",
+        "family correspondence",
+        "care for Charles's daughter Susanna during John Adams's presidency"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Charles_Adams_(1770%E2%80%931800)"
+      ],
+      "notes": "Charles died in New York City in 1800."
+    },
+    {
+      "person_name": "Mercy Otis Warren",
+      "relationship_type": "social/friend",
+      "relationship_description": "Mercy Otis Warren was a fellow politically engaged writer and one of Abigail Adams's close correspondents in the Revolutionary era. Their friendship linked Abigail to a wider network of women participating in Patriot political culture.",
+      "start_year": 1770,
+      "end_year": 1814,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "correspondence",
+        "Patriot political discussion",
+        "women's literary and political networks during the Revolution"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Mercy_Otis_Warren",
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "notes": "Warren's correspondence network included Abigail Adams, Martha Washington, and Hannah Winthrop."
+    },
+    {
+      "person_name": "Thomas Boylston Adams",
+      "relationship_type": "family/child",
+      "relationship_description": "Thomas was Abigail’s youngest surviving son, raised in the Adams household and present during the family’s European diplomatic years.",
+      "start_year": 1772,
+      "end_year": 1818,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "childhood upbringing",
+        "family residence in London",
+        "Adams household and family correspondence"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/John_Adams"
+      ],
+      "notes": "His adult struggles, including alcoholism, were a source of concern in the extended Adams family."
+    },
+    {
+      "person_name": "Elizabeth Adams",
+      "relationship_type": "family/child",
+      "relationship_description": "Elizabeth was Abigail and John Adams's sixth child, born stillborn in 1777. Her death was one of the family's early bereavements.",
+      "start_year": 1777,
+      "end_year": 1777,
+      "strength": "strong",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "pregnancy and childbirth within the Adams family"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "notes": "She was stillborn."
+    },
+    {
+      "person_name": "Mary Jefferson Eppes",
+      "relationship_type": "social/ward",
+      "relationship_description": "Known as Polly, Mary Jefferson was the young daughter of Thomas Jefferson. Abigail temporarily cared for her in London and developed a deep, lasting affection for her.",
+      "start_year": 1785,
+      "end_year": 1787,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "temporary guardianship in London",
+        "care within the Adams diplomatic household"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Abigail's affection for Polly later helped prompt her renewed correspondence with Thomas Jefferson after Polly's death."
+    },
+    {
+      "person_name": "Thomas Jefferson",
+      "relationship_type": "professional/political correspondent",
+      "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
+      "start_year": 1804,
+      "end_year": 1818,
+      "strength": "moderate",
+      "interaction_frequency": "yearly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "correspondence after Maria Jefferson Eppes's death",
+        "shared Revolutionary and early-republic political world",
+        "discussion and remembrance of Maria Jefferson Eppes"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Their renewed exchange followed years of political and personal distance between the Adams and Jefferson families."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Family anchored Abigail Adams’s life: her mother shaped her education, John Adams was her intellectual partner, and she raised six children amid separation, bereavement, and public responsibility."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Abigail’s political influence operated through advice and correspondence rather than formal office, placing her within the early republic’s public debates and relationships."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Friendship, correspondence, and care connected Abigail to women writers and to dependents in diplomatic households, extending her influence beyond family."
+    }
+  ]
+}

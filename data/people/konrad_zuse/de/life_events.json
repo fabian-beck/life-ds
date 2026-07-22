@@ -1,0 +1,754 @@
+{
+  "dataset": "konrad_zuse_timeline_v1",
+  "created_on": "2025-12-18",
+  "person": {
+    "name": "Konrad_Zuse",
+    "birth_date": "1910-06-22",
+    "death_date": "1995-12-18",
+    "primary_roles": [
+      "Erfinder",
+      "Informatiker",
+      "Unternehmer"
+    ],
+    "tagline": "Erbauer des ersten programmierbaren Computers",
+    "summary": "Konrad Zuse war ein deutscher Ingenieur und Erfinder, dessen relaisbasierte Z3 (seit 1941 betriebsbereit) weithin als erster funktionsfähiger, frei programmierbarer, automatischer Digitalrechner gilt. Später gründete er eines der frühesten deutschen Computerunternehmen und verfolgte neben künstlerischer Arbeit Ideen der Computertheorie.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Konrad_Zuse",
+    "portrait": {
+      "image": "/portraits/konrad_zuse_thumbnail.webp",
+      "source": "https://de.wikipedia.org/wiki/Konrad_Zuse",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/da/Konrad_Zuse_%281992%29.jpg",
+      "thumbnail": "/portraits/konrad_zuse_thumbnail.webp",
+      "medium": "/portraits/konrad_zuse_medium.webp",
+      "full": "/portraits/konrad_zuse_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "tinkerers_apprenticeship",
+      "headline": "Tüftler in der Provinz",
+      "date_start": "1910-06-22",
+      "date_start_precision": "day",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Maria Zuse",
+        "Emil Zuse"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "berlin_blueprints_to_automation",
+      "headline": "Pläne werden Logik",
+      "date_start": "1928",
+      "date_start_precision": "year",
+      "date_end": "1935",
+      "date_end_precision": "year",
+      "age_start": 18,
+      "age_end": 25,
+      "involved_people": null,
+      "location": "Deutschland"
+    },
+    {
+      "id": "apartment_workshop_revolution",
+      "headline": "Revolution in der Wohnungswerkstatt",
+      "date_start": "1936",
+      "date_start_precision": "year",
+      "date_end": "1941-05-12",
+      "date_end_precision": "day",
+      "age_start": 26,
+      "age_end": 30,
+      "involved_people": [
+        "Günther Bock",
+        "Helmut Schreyer"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "war_escape_z4",
+      "headline": "Der Krieg zieht die Schrauben an",
+      "date_start": "1942",
+      "date_start_precision": "year",
+      "date_end": "1945-06",
+      "date_end_precision": "month",
+      "age_start": 32,
+      "age_end": 34,
+      "involved_people": [
+        "Herbert Wagner",
+        "Gisela Brandes"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "founder_without_a_crown",
+      "headline": "Gründer ohne Krone",
+      "date_start": "1949",
+      "date_start_precision": "year",
+      "date_end": "1964",
+      "date_end_precision": "year",
+      "age_start": 39,
+      "age_end": 54,
+      "involved_people": [
+        "Eduard Stiefel"
+      ],
+      "location": "Mitteleuropa"
+    },
+    {
+      "id": "elder_witness_of_computing",
+      "headline": "Zeitzeuge der Informatik",
+      "date_start": "1983",
+      "date_start_precision": "year",
+      "date_end": "1995-12-18",
+      "date_end_precision": "day",
+      "age_start": 73,
+      "age_end": 85,
+      "involved_people": null,
+      "location": "Deutschland"
+    }
+  ],
+  "conclusion": "Konrad Zuse bewies, dass programmierbare Maschinen gebaut werden konnten – nicht in einer Fabrik, sondern in einem Raum voller improvisierter Teile und unbeirrbarer Klarheit. Von der Z3 bis zur Gründung der Zuse KG zeichnet sein Leben den Bogen von der einsamen Erfindung zu einer neuen Industrie, während er im Herzen ein Schöpfer blieb, der Technologie als eine Form kreativer Arbeit verstand.",
+  "events": [
+    {
+      "date": "1910-06-22",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geboren in Deutsch-Wilmersdorf (Berlin)",
+      "description": "Konrad Ernst Otto Zuse wurde am 22. Juni 1910 in Deutsch-Wilmersdorf (Berlin) als Sohn von Maria und Emil Zuse geboren.",
+      "locations": [
+        {
+          "name_historic": "Deutsch-Wilmersdorf (Berlin)",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Maria Zuse",
+        "Emil Zuse"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Konrad_Zuse_in_der_Bundesallee.jpg",
+          "caption": "Konrad Zuse in der Berliner Bundesallee; Geburtsort erwähnt",
+          "source": "https://commons.wikimedia.org/wiki/File:Konrad_Zuse_in_der_Bundesallee.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "tinkerers_apprenticeship"
+    },
+    {
+      "date": "1923",
+      "date_precision": "year",
+      "age": 13,
+      "title": "Familie lässt sich in Hoyerswerda nieder",
+      "description": "1923 zog Zuses Familie nach Hoyerswerda, nachdem sie zuvor in Ostpreußen (Braunsberg) gelebt hatte. Dort in der Schule begann er ernsthaft zu tüfteln: Mit etwa 14 Jahren baute er den „Zuses Mandarinenautomat“, einen münzbetriebenen Automaten, der Obst und Wechselgeld ausgab.",
+      "locations": [
+        {
+          "name_historic": "Hoyerswerda",
+          "name_modern": "Hoyerswerda, Deutschland",
+          "centroid": [
+            14.250083,
+            51.4333103
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "East Prussia",
+          "name_modern": "Oblast Kaliningrad, Russland",
+          "centroid": [
+            21.1489473,
+            54.7293041
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/00889-Hoyerswerda-1898-Wendische_M%C3%A4dchen_und_Blick_zur_Stadt-Br%C3%BCck_%26_Sohn_Kunstverlag.jpg",
+          "caption": "Postkartenansicht von Hoyerswerda (1898)",
+          "source": "https://commons.wikimedia.org/wiki/File:00889-Hoyerswerda-1898-Wendische_Mädchen_und_Blick_zur_Stadt-Brück_&_Sohn_Kunstverlag.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "tinkerers_apprenticeship"
+    },
+    {
+      "date": "1928",
+      "date_precision": "year",
+      "age": 18,
+      "title": "Besteht das Abitur",
+      "description": "1928 legte Zuse sein [[Abitur|Abitur]] ab, den für ein Hochschulstudium in Deutschland erforderlichen Schulabschluss. Dieser Meilenstein ebnete den Weg für seinen Umzug nach Berlin zur technischen Ausbildung.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "tinkerers_apprenticeship",
+      "annotations": {
+        "Abitur": {
+          "explanation": "Der deutsche Sekundarschulabschluss, der zur Aufnahme eines Hochschulstudiums berechtigt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Abitur"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Hoyerswerda",
+          "name": "Hoyerswerda, Germany",
+          "primary": true,
+          "centroid": [
+            14.250083,
+            51.4333103
+          ],
+          "source": "https://en.wikipedia.org/wiki/Konrad_Zuse"
+        }
+      ]
+    },
+    {
+      "date": "1928",
+      "date_precision": "year",
+      "age": 18,
+      "title": "Beginnt an der TH Berlin-Charlottenburg",
+      "description": "1928 begann Zuse sein Studium an der [[Technische Hochschule Berlin-Charlottenburg|Technischen Hochschule Berlin-Charlottenburg]] (heute TU Berlin). Er begann mit Maschinenbau, wechselte zur Architektur und entschied sich schließlich für Bauingenieurwesen. Daneben arbeitete er fast ein Jahr lang als Gebrauchsgrafiker, was seine anhaltende Neigung zu Technik und Kunst widerspiegelte.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://en.wikipedia.org/wiki/Technische_Universit%C3%A4t_Berlin"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/1895_technische_hochschule_charlottenburg.jpg",
+          "caption": "Technische Hochschule Berlin-Charlottenburg (1895)",
+          "source": "https://commons.wikimedia.org/wiki/File:1895_technische_hochschule_charlottenburg.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "tinkerers_apprenticeship",
+      "annotations": {
+        "Technische Hochschule Berlin-Charlottenburg": {
+          "explanation": "Historische Bezeichnung der Ingenieurhochschule in Berlin-Charlottenburg, die später zur Technischen Universität Berlin (TU Berlin) wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Technische_Universit%C3%A4t_Berlin"
+        }
+      }
+    },
+    {
+      "date": "1935",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Erwirbt Ingenieurdiplom",
+      "description": "1935 schloss Zuse in Berlin sein Bauingenieurdiplom ab. Anschließend arbeitete er als Statiker bei der Henschel Flugzeug-Werke AG in Schönefeld bei Berlin, wo wiederkehrende Berechnungen seinen Wunsch bestärkten, das Rechnen zu automatisieren.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://en.wikipedia.org/wiki/Henschel_%26_Son"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "berlin_blueprints_to_automation",
+      "annotations": {
+        "Henschel & Son": {
+          "explanation": "Ein bedeutendes deutsches Maschinenbau- und Rüstungsunternehmen; zu seinen Kasseler Werken gehörte in den 1930er Jahren die Flugzeugproduktion, später wurde es für die Kriegsproduktion bekannt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Henschel_%26_Son"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Berlin",
+          "name": "Berlin, Germany",
+          "primary": true,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "source": "https://en.wikipedia.org/wiki/Konrad_Zuse"
+        },
+        {
+          "label": "Schönefeld",
+          "name": "Schönefeld, Brandenburg, Germany",
+          "primary": false,
+          "centroid": [
+            13.511,
+            52.389
+          ],
+          "source": "https://de.wikipedia.org/wiki/Konrad_Zuse"
+        }
+      ]
+    },
+    {
+      "date": "1936",
+      "date_precision": "year",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "Baut die Z1 in der Wohnung seiner Eltern",
+      "description": "Nachdem er seine Stelle aufgegeben hatte, richtete Zuse in der Berliner Wohnung seiner Eltern eine Erfinderwerkstatt ein und begann mit dem Bau einer programmierbaren Rechenmaschine. Daraus entstand die Z1 (1938 fertiggestellt): ein kühner architektonischer Entwurf für einen Computer, der in der Praxis jedoch noch nicht vollständig zuverlässig war, weil er auf mechanischen Teilen beruhte. Die Grundideen sollten in seine späteren Maschinen einfließen.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://en.wikipedia.org/wiki/Z1_(computer)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Zuse_Patent_907948_vector.svg/800px-Zuse_Patent_907948_vector.svg.png",
+          "caption": "Diagramme aus Zuses Patent vom Mai 1936 (binäre Schaltungstechnik)",
+          "source": "https://commons.wikimedia.org/wiki/File:Zuse_Patent_907948_vector.svg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "apartment_workshop_revolution",
+      "event_class": {
+        "type": "invention",
+        "title": "Z1",
+        "description": "An electrically driven mechanical binary calculator with separate memory and control, reading programs from punched film.",
+        "impact": "Introduced core computer architecture elements, though mechanical tolerances prevented reliable long-term operation."
+      }
+    },
+    {
+      "date": "1940",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Führt den Z2-Prototyp vor",
+      "description": "1940 stellte Zuse die Z2 als Zwischenschritt nach der Z1 fertig und führte sie in Berlin einflussreichen Vertretern aus Luftfahrt und Forschung vor, darunter Günther Bock von der [[Deutsche Versuchsanstalt für Luftfahrt|Deutschen Versuchsanstalt für Luftfahrt]]. Die Vorführung verhalf ihm zu Unterstützung für eine leistungsfähigere Nachfolgemaschine.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Günther Bock"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/G%C3%BCnther_Bock_(Aeronautiker)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Zuse_archive_Z2.jpg",
+          "caption": "Zeichnung der Zuse Z2",
+          "source": "https://commons.wikimedia.org/wiki/File:Zuse_archive_Z2.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "apartment_workshop_revolution",
+      "annotations": {
+        "Deutsche Versuchsanstalt für Luftfahrt": {
+          "explanation": "Deutsche Luftfahrtforschungseinrichtung (oft DVL abgekürzt), die die Luftfahrtforschung begutachtete und koordinierte; ihre Unterstützung konnte Kriegsmittel erschließen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Aeronautical_Research_Institute"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "Z2",
+        "description": "An electromechanical relay-based prototype using binary fixed-point arithmetic to validate control logic, memory, and switching principles.",
+        "impact": "Its successful demonstration helped unlock institutional funding and momentum for the later Z3 computer."
+      }
+    },
+    {
+      "date": "1941-05-12",
+      "date_precision": "day",
+      "age": 30,
+      "title": "Enthüllt die Z3",
+      "description": "Am 12. Mai 1941 stellte Zuse die Z3 öffentlich in Berlin vor. Mit Relais gebaut und für programmgesteuerte Berechnungen konzipiert, wird sie weithin als erster funktionsfähiger, vollautomatischer, frei programmierbarer Digitalrechner beschrieben. In dieser Zeit tauschte Zuse auch Ideen mit Helmut Schreyer aus, während er die Grenzen rein mechanischer Konstruktionen zu überwinden suchte.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Helmut Schreyer"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Z3_(computer)",
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/Helmut_Schreyer"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Z3_Deutsches_Museum.JPG",
+          "caption": "Nachbau der Zuse Z3, Deutsches Museum München",
+          "source": "https://commons.wikimedia.org/wiki/File:Z3_Deutsches_Museum.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "apartment_workshop_revolution",
+      "annotations": {
+        "Berlin": {
+          "explanation": "Deutschlands Hauptstadt; 1941 war sie das Verwaltungszentrum des NS-Staates, wo Zuse während des Krieges sein kleines Ingenieurbüro unterhielt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Berlin"
+        }
+      },
+      "event_class": {
+        "type": "invention",
+        "title": "Z3",
+        "description": "A relay-based, program-controlled digital computer using binary floating-point arithmetic, with memory and a central processing unit.",
+        "impact": "Widely regarded as the first functioning, freely programmable automatic digital computer."
+      }
+    },
+    {
+      "date": "1942",
+      "date_precision": "year",
+      "date_end": "1944",
+      "date_end_precision": "year",
+      "age": 32,
+      "title": "Kriegsarbeit bei Henschel",
+      "description": "Während des Zweiten Weltkriegs wurde Zuse zweimal eingezogen, nahm jedoch nicht an Kampfhandlungen teil. Mit Hilfe von Herbert Wagner bei Henschel wurde er als „unabkömmlich“ eingestuft und setzte dort seine technische Arbeit fort. In dieser Zeit wirkte er am Projekt der Gleitbombe Henschel Hs 293 mit und entwickelte Spezialrechner für Flügelvermessungen – Kriegsarbeit, die seine Rechenideen unter strengen Einschränkungen am Leben hielt.",
+      "locations": [
+        {
+          "name_historic": "Kassel",
+          "name_modern": "Kassel, Deutschland",
+          "centroid": [
+            9.4978479,
+            51.3157833
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Herbert Wagner"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/Herbert_Wagner_(Ingenieur)"
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "war_escape_z4",
+      "event_class": {
+        "type": "invention",
+        "title": "S1/S2 measurement computers",
+        "description": "Special-purpose systems that mechanized instrument readings, converting analog measurement values into discrete signals for computation and control.",
+        "impact": "Among the earliest practical analog-to-digital conversion approaches, enabling computer-assisted measurement and automated control."
+      },
+      "annotations": {
+        "Hs 293": {
+          "explanation": "Deutsche, von Henschel während des Zweiten Weltkriegs entwickelte, luftgestützte und funkgesteuerte Gleitbombe.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Henschel_Hs_293"
+        }
+      }
+    },
+    {
+      "date": "1945-01-06",
+      "date_precision": "day",
+      "age": 34,
+      "title": "Heiratet Gisela Brandes",
+      "description": "Am 6. Januar 1945 heiratete Zuse Gisela Brandes (1919–2013) in Berlin. Inmitten von Zusammenbruch und Vertreibung wurde die Ehe zum Beginn einer Familie, zu der später fünf Kinder gehören sollten.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Gisela Brandes"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "war_escape_z4",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Gisela Brandes",
+        "duration": "until his death",
+        "children": 5,
+        "characterization": "family partnership"
+      }
+    },
+    {
+      "date": "1945-03",
+      "date_precision": "month",
+      "date_end": "1945-06",
+      "date_end_precision": "month",
+      "age": 34,
+      "title": "Flieht aus Berlin, rettet die Z4",
+      "description": "Als Berlin in den letzten Kriegswochen zunehmend gefährlich wurde, flohen Zuse und seine Familie nach Westen. Es gelang ihm, den Computer [[Z4]] zu retten und ihn zunächst in Richtung Göttingen, dann weiter ins Allgäu zu bringen. Die Maschine intakt zu halten, sollte sich später als entscheidend erweisen: Sie wurde zur praktischen Grundlage für seinen Neuanfang nach dem Krieg.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Niedersachsen, Deutschland",
+          "centroid": [
+            9.9351811,
+            51.5328328
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Allgäu",
+          "name_modern": "Allgäu, Bayern/Baden-Württemberg, Deutschland",
+          "centroid": [
+            10.209156,
+            47.5926009
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Zuse-Z4-Totale_deutsches-museum.jpg",
+          "caption": "Zuse-Z4-Computer im Deutschen Museum, München",
+          "source": "https://commons.wikimedia.org/wiki/File:Zuse-Z4-Totale_deutsches-museum.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "war_escape_z4",
+      "annotations": {
+        "Z4": {
+          "explanation": "Zuses letzter Kriegscomputer, der Anfang der 1950er Jahre in Zürich für ernsthafte wissenschaftliche Zwecke eingesetzt wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Z4_(computer)"
+        },
+        "Allgäu": {
+          "explanation": "Eine Kultur- und Landschaftsregion in Süddeutschland (hauptsächlich in Bayern, bis nach Baden-Württemberg reichend).",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Allg%C3%A4u"
+        }
+      },
+      "involved_people": [
+        "Gisela Brandes"
+      ]
+    },
+    {
+      "date": "1949",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Gründet die Zuse KG",
+      "description": "1949 gründete Zuse die [[Zuse KG]] und begann, seine Erfindungen in Produkte zu verwandeln – ein früher Schritt beim Wiederaufbau der deutschen Computerindustrie nach dem Krieg. In den frühen Nachkriegsjahren weckte die gerettete Z4 auch ernsthaftes akademisches Interesse, darunter Vereinbarungen, die sie unter Eduard Stiefel an der [[ETH Zürich|ETH Zürich]] wissenschaftlich nutzbar machten.",
+      "locations": [
+        {
+          "name_historic": "Neukirchen",
+          "name_modern": "Neukirchen, Hessen, Deutschland",
+          "centroid": [
+            9.3686244,
+            50.8760349
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5410422,
+            47.3744489
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Eduard Stiefel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://en.wikipedia.org/wiki/Z4_(computer)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Zuse-logo.svg/800px-Zuse-logo.svg.png",
+          "caption": "Logo der Zuse KG",
+          "source": "https://commons.wikimedia.org/wiki/File:Zuse-logo.svg"
+        }
+      ],
+      "event_type_icon": "mdi-hammer",
+      "chapter": "founder_without_a_crown",
+      "annotations": {
+        "Zuse KG": {
+          "explanation": "Konrad Zuses nach dem Zweiten Weltkrieg gegründetes Computerunternehmen; es baute frühe kommerzielle Computer und wurde später von Siemens übernommen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Zuse_KG"
+        },
+        "ETH Zürich": {
+          "explanation": "Eidgenössische Technische Hochschule Zürich, eine führende technische Universität, an der die Z4 Anfang der 1950er Jahre eingesetzt wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
+        }
+      }
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "age": 54,
+      "title": "Verliert die Kontrolle über die Zuse KG",
+      "description": "1964 musste Konrad Zuse, nachdem die rasche Expansion die Zuse KG überschuldet hatte, seinen Kapitalanteil abgeben – damit endete seine Rolle als beherrschender Eigentümer des von ihm aufgebauten Unternehmens. Danach arbeitete er weiterhin als Berater und konzentrierte sich zunehmend auf seine theoretische Idee des „Rechnenden Raums“.",
+      "locations": [
+        {
+          "name_historic": "Bad Hersfeld",
+          "name_modern": "Bad Hersfeld, Deutschland",
+          "centroid": [
+            9.6767709,
+            50.8604177
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "event_type_icon": "mdi-currency-usd-off",
+      "chapter": "founder_without_a_crown",
+      "annotations": {
+        "Zuse KG": {
+          "explanation": "Konrad Zuses Computerhersteller (Zuse Kommanditgesellschaft), der nach dem Zweiten Weltkrieg gegründet wurde und seinen Sitz in Bad Hersfeld hatte; er produzierte frühe kommerzielle Computer und wurde später von Siemens übernommen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Zuse_KG"
+        }
+      }
+    },
+    {
+      "date": "1983",
+      "date_precision": "year",
+      "age": 73,
+      "title": "Hält Vortrag in Ostdeutschland",
+      "description": "1983 nahm Zuse eine Einladung an, die ihm erlaubte, in Ilmenau in der [[German Democratic Republic|Deutschen Demokratischen Republik]] einen öffentlichen Vortrag zu halten. Der Moment zeigte, wie weit seine frühen Arbeiten getragen hatten – auch wenn Europa weiterhin durch die Grenzen des Kalten Krieges geteilt war.",
+      "locations": [
+        {
+          "name_historic": "Ilmenau",
+          "name_modern": "Ilmenau, Thüringen, Deutschland",
+          "centroid": [
+            10.9142385,
+            50.6867695
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse",
+        "https://en.wikipedia.org/wiki/Ilmenau_University_of_Technology",
+        "https://en.wikipedia.org/wiki/German_Democratic_Republic"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Campus_TU_Ilmenau.jpg",
+          "caption": "Campus der Technischen Universität Ilmenau",
+          "source": "https://commons.wikimedia.org/wiki/File:Campus_TU_Ilmenau.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "elder_witness_of_computing",
+      "annotations": {
+        "German Democratic Republic": {
+          "explanation": "Ostdeutschland (1949–1990), der nach dem Zweiten Weltkrieg entstandene sowjetisch ausgerichtete Staat, der während des Kalten Krieges von Westdeutschland getrennt war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/East_Germany"
+        }
+      }
+    },
+    {
+      "date": "1995-12-18",
+      "date_precision": "day",
+      "age": 85,
+      "title": "Tod in Hünfeld",
+      "description": "Konrad Zuse starb am 18. Dezember 1995 in Hünfeld. Zu diesem Zeitpunkt war er zu einer lebenden Bezugsperson für die Entstehungsgeschichte des Computers geworden – während er sich privat weiterhin neben seinen ingenieurtechnischen Ideen dem Zeichnen und Malen widmete.",
+      "locations": [
+        {
+          "name_historic": "Hünfeld",
+          "name_modern": "Hünfeld, Hessen, Deutschland",
+          "centroid": [
+            9.7764627,
+            50.65546
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/1176/4727817704_d394e7891b_b.jpg",
+          "caption": "Grab von Konrad Zuse in Hünfeld",
+          "source": "https://www.flickr.com/photos/39882162@N05/4727817704"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "elder_witness_of_computing"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "5920439cf633abef",
+    "translated_on": "2026-07-19T07:45:23.692152+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

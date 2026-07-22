@@ -1,0 +1,443 @@
+{
+  "dataset": "Benjamin Franklin ego network",
+  "created_on": "2026-07-17",
+  "ego": {
+    "name": "Benjamin Franklin",
+    "birth_year": 1706,
+    "death_year": 1790,
+    "primary_roles": [
+      "Staatsmann",
+      "Erfinder",
+      "Wissenschaftler",
+      "Drucker",
+      "Schriftsteller",
+      "Diplomat"
+    ],
+    "summary": "Benjamin Franklin war ein amerikanischer Drucker, Schriftsteller, Wissenschaftler, Erfinder, bürgerschaftlicher Organisator, Diplomat und Gründervater. Er prägte die bürgerschaftlichen Institutionen Philadelphias, leistete einflussreiche wissenschaftliche Beiträge, half dabei, französische Unterstützung für die Amerikanische Revolution zu sichern, und wirkte an der Gründung der Vereinigten Staaten mit.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+  },
+  "connections": [
+    {
+      "person_name": "Josiah Franklin",
+      "relationship_type": "family/father",
+      "relationship_description": "Franklins Vater war in Boston Talgkerzenzieher, Seifensieder und Kerzenmacher. Er strebte für Benjamin eine religiöse Ausbildung an, konnte sich jedoch nur zwei Jahre Schulbildung leisten und vermittelte ihm eine Lehre im Druckereigewerbe von James Franklin.",
+      "start_year": 1706,
+      "end_year": 1745,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Boston",
+        "Entscheidungen zur frühen Schulbildung",
+        "Einführung in das Druckereigewerbe durch James Franklin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Josiah_Franklin"
+      ],
+      "notes": "Josiah wurde als jemand beschrieben, der eine enge Beziehung zu Benjamin hatte und großen Einfluss auf ihn ausübte."
+    },
+    {
+      "person_name": "Abiah Folger",
+      "relationship_type": "family/mother",
+      "relationship_description": "Franklins Mutter zog ihn in Boston auf. Das vorliegende biografische Material bezeichnet sie als Josiah Franklins zweite Ehefrau und als Mutter Benjamins, ihres achten gemeinsamen Kindes.",
+      "start_year": 1706,
+      "end_year": 1752,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Boston",
+        "Kindliche Bildung und moralische Anleitung",
+        "Unterstützung von Franklins früher Karriere"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Abiah_Folger"
+      ],
+      "notes": "Franklin war das achte gemeinsame Kind von Josiah und Abiah sowie ihr zehnter und letzter Sohn."
+    },
+    {
+      "person_name": "James Franklin",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Franklins älterer Bruder war sein Lehrmeister im Druckereigewerbe und Herausgeber des New-England Courant. Benjamin absolvierte bei ihm eine Lehre, schrieb heimlich die Silence-Dogood-Briefe und floh 1723 aus dem zunehmend angespannten Lehrverhältnis.",
+      "start_year": 1718,
+      "end_year": 1723,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Lehre im Druckereigewerbe",
+        "Produktion des New-England Courant",
+        "Veröffentlichung der Silence-Dogood-Briefe"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/James_Franklin_(printer)"
+      ],
+      "notes": "Ihre berufliche und brüderliche Beziehung war folgenreich, aber angespannt; James starb 1735."
+    },
+    {
+      "person_name": "Deborah Read",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Read war von 1730 bis zu ihrem Tod Franklins Ehefrau nach Gewohnheitsrecht. Während seiner langen Abwesenheiten in Europa führte sie ihren gemeinsamen Haushalt und die Geschäfte in Philadelphia und half bei der Erziehung seines Sohnes William sowie ihrer gemeinsamen Kinder.",
+      "start_year": 1730,
+      "end_year": 1774,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Werben in Philadelphia",
+        "Haushalt nach Gewohnheitsrecht und Kindererziehung",
+        "Führung von Franklins Geschäften und Haushalt",
+        "Familienkorrespondenz während Franklins europäischer Missionen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Deborah_Read",
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "notes": "Sie lernten sich 1723 kennen, nahmen ihre Beziehung wieder auf, nachdem Franklin aus London zurückgekehrt war, und vollzogen am 1. September 1730 eine Zeremonie, da das Schicksal ihres früheren Ehemanns ungeklärt war."
+    },
+    {
+      "person_name": "Sir William Keith",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Der Gouverneur von Pennsylvania ermutigte den jungen Franklin, nach London zu gehen, um Druckausrüstung für eine geplante Zeitung in Philadelphia zu beschaffen. Keiths zugesagte finanzielle Unterstützung blieb aus, sodass Franklin in London strandete.",
+      "start_year": 1723,
+      "end_year": 1724,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Druckpläne in Philadelphia",
+        "Organisation von Franklins Reise nach London"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/William_Keith_(colonial_governor)"
+      ],
+      "notes": "Keiths unzuverlässige Förderung war für Franklin eine wichtige frühe Lektion in Unabhängigkeit."
+    },
+    {
+      "person_name": "Samuel Keimer",
+      "relationship_type": "professional/employer_rival",
+      "relationship_description": "Keimer beschäftigte Franklin in Philadelphia, bevor Franklin sein eigenes Druckunternehmen aufbaute. Nachdem Franklin die Vorgängerpublikation der Pennsylvania Gazette übernommen hatte, konkurrierte er später mit Keimer und verspottete ihn satirisch.",
+      "start_year": 1723,
+      "end_year": 1729,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Druckereigewerbe in Philadelphia",
+        "Arbeit in Keimers Druckerei",
+        "Zeitungskonkurrenz und Satire"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Samuel_Keimer"
+      ],
+      "notes": "Franklins Darstellung der fiktiven Figur „Cretico“ wurde als Karikatur Keimers verstanden."
+    },
+    {
+      "person_name": "Thomas Denham",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Denham, ein englischer Kaufmann, half Franklin bei der Rückkehr von London nach Philadelphia und beschäftigte ihn als Angestellten, Ladenbesitzer und Buchhalter. Nach Denhams Tod kehrte Franklin vollständig zum Druckereigewerbe zurück.",
+      "start_year": 1726,
+      "end_year": 1727,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Rückreise von England nach Philadelphia",
+        "Kaufmännische Buchführung",
+        "Laden- und Büroarbeit"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "notes": "Denhams Unterstützung ermöglichte Franklin nach dem Scheitern von Keiths zugesagter Förderung die Rückkehr nach Philadelphia."
+    },
+    {
+      "person_name": "Hugh Meredith",
+      "relationship_type": "professional/business_partner",
+      "relationship_description": "Meredith war Franklins früher Geschäftspartner im Druckereigewerbe in Philadelphia. Gemeinsam gründeten sie 1728 eine Druckerei; nach dem Ende ihrer Partnerschaft wurde Franklin alleiniger Inhaber.",
+      "start_year": 1728,
+      "end_year": 1729,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Partnerschaft in einer Druckerei in Philadelphia",
+        "Herstellung von Druckerzeugnissen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Hugh_Meredith_(printer)"
+      ],
+      "notes": "Die Partnerschaft trug dazu bei, Franklin als unabhängigen Drucker zu etablieren."
+    },
+    {
+      "person_name": "William Franklin",
+      "relationship_type": "family/son",
+      "relationship_description": "William war Franklins unehelicher Sohn und wurde im Haushalt von Franklin und Read aufgezogen. Später wurde er der letzte königliche Gouverneur von New Jersey, und sein Loyalismus während der Revolution führte zu einem tiefen und dauerhaften politischen sowie persönlichen Bruch mit seinem patriotischen Vater.",
+      "start_year": 1730,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben in Philadelphia",
+        "Öffentlicher Dienst in Kolonien und Empire",
+        "Politische Korrespondenz zur Zeit der Revolution"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/William_Franklin"
+      ],
+      "notes": "Deborah Read half bei der Erziehung Williams; die Vater-Sohn-Beziehung wurde durch Williams loyalistische Gesinnung schwer beschädigt."
+    },
+    {
+      "person_name": "Elizabeth Timothy",
+      "relationship_type": "professional/business_partner",
+      "relationship_description": "Timothy wurde zu einer führenden Druckerin in den Kolonien, nachdem sie nach dem Tod ihres Ehemanns die South Carolina Gazette weiterführte. Ihre Geschäftsbeziehung zu Franklin war Teil seines interkolonialen Drucknetzwerks.",
+      "start_year": 1738,
+      "end_year": 1757,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Franklins interkoloniales Drucknetzwerk",
+        "Herausgabe der South Carolina Gazette",
+        "Förderung öffentlicher Debatten durch Zeitungen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Elizabeth_Timothy"
+      ],
+      "notes": "Dieser Eintrag betrifft ausschließlich Elizabeth Timothy. Franklins spätere Geschäftsbeziehung mit ihrem Sohn Peter Timothy sollte nicht als Fortsetzung ihrer individuellen Verbindung dargestellt werden."
+    },
+    {
+      "person_name": "Francis Folger Franklin",
+      "relationship_type": "family/son",
+      "relationship_description": "Francis, bekannt als Franky, war der Sohn von Franklin und Deborah Read. Sein Tod durch Pocken im Alter von vier Jahren erschütterte Franklin zutiefst und bestärkte sein späteres Eintreten für die Pockeninokulation.",
+      "start_year": 1732,
+      "end_year": 1736,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Philadelphia",
+        "Franklins versuchte Organisation einer Pockeninokulation"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Deborah_Read"
+      ],
+      "notes": "Franky starb, bevor eine Inokulation durchgeführt werden konnte."
+    },
+    {
+      "person_name": "Sarah Franklin Bache",
+      "relationship_type": "family/daughter",
+      "relationship_description": "Franklins einzige Tochter, bekannt als Sally, wurde zu einer bedeutenden Organisatorin patriotischer Hilfsmaßnahmen und fungierte nach seiner Rückkehr aus Frankreich häufig als seine politische Gastgeberin. In seinen letzten Jahren lebte Franklin schließlich bei Sarah und ihrer Familie.",
+      "start_year": 1743,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Haushalt der Familie Franklin in Philadelphia",
+        "Politische Gastgeberschaft zur Zeit der Revolution",
+        "Pflege und Zusammenleben während Franklins letzter Jahre"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sarah_Franklin_Bache",
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "notes": "Ihre Beziehung war oft emotional distanziert, insbesondere während Franklins langem Aufenthalt in Europa, doch nach seiner Rückkehr nach Philadelphia 1785 führten sie einen gemeinsamen Haushalt."
+    },
+    {
+      "person_name": "William Smith",
+      "relationship_type": "academic/civic_colleague",
+      "relationship_description": "Smith war Pädagoge und erster Provost der College of Philadelphia. Franklin half bei der Gründung der Academy and College of Philadelphia und wurde ihr erster Präsident, wodurch beide Männer im Zentrum ihrer frühen Leitung und ihres Bildungsauftrags standen.",
+      "start_year": 1751,
+      "end_year": 1779,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Academy and College of Philadelphia",
+        "Leitung der Hochschulbildung in Philadelphia",
+        "Förderung praktischer und bürgerschaftlicher Bildung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/William_Smith_(provost)",
+        "https://en.wikipedia.org/wiki/University_of_Pennsylvania"
+      ],
+      "notes": "Die Academy and College of Philadelphia entwickelte sich später zur University of Pennsylvania."
+    },
+    {
+      "person_name": "Joseph Priestley",
+      "relationship_type": "academic/scientific_correspondent",
+      "relationship_description": "Priestley und Franklin standen als Wissenschaftler und Schriftsteller der Aufklärung mit gemeinsamen experimentellen und intellektuellen Interessen in Briefwechsel. Ihr Austausch verband Franklins amerikanischen Kreis mit britischen wissenschaftlichen Netzwerken.",
+      "start_year": 1766,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Wissenschaftliche Korrespondenz",
+        "Elektrizitätslehre und Experimentalwissenschaft",
+        "Intellektueller Austausch der Aufklärung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Joseph_Priestley"
+      ],
+      "notes": "Ihre Interaktion wurde hauptsächlich durch Korrespondenz und gemeinsame wissenschaftliche Netzwerke aufrechterhalten."
+    },
+    {
+      "person_name": "Richard Bache",
+      "relationship_type": "family/son-in-law",
+      "relationship_description": "Bache heiratete 1767 Franklins Tochter Sarah. Franklin lehnte die Verbindung zunächst wegen Baches unsicherer finanzieller Lage ab, akzeptierte ihn später jedoch und veranlasste seine Ernennung zum Generalpostmeister der Vereinigten Staaten.",
+      "start_year": 1767,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Haushalt der Familien Franklin und Bache in Philadelphia",
+        "Postverwaltung",
+        "Öffentlicher Dienst zur Zeit der Revolution"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Richard_Bache",
+        "https://en.wikipedia.org/wiki/Sarah_Franklin_Bache"
+      ],
+      "notes": "Bache und Sarah erbten nach Franklins Tod einen Großteil seines Nachlasses."
+    },
+    {
+      "person_name": "David Rittenhouse",
+      "relationship_type": "academic/scientific_colleague",
+      "relationship_description": "Rittenhouse war ein Astronom, Instrumentenbauer und führendes Mitglied der American Philosophical Society aus Philadelphia, der innerhalb der wissenschaftlichen und bürgerschaftlichen Institutionen wirkte, die Franklin mit aufgebaut hatte. Nach Franklins Tod folgte er ihm als Präsident der American Philosophical Society nach.",
+      "start_year": 1769,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "American Philosophical Society",
+        "Wissenschaftliche Gemeinschaft in Philadelphia",
+        "Wissenschaftliche Forschung der Aufklärung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/David_Rittenhouse",
+        "https://en.wikipedia.org/wiki/American_Philosophical_Society"
+      ],
+      "notes": "Ihre Beziehung war in der American Philosophical Society verankert, deren Präsident Franklin 1769 wurde."
+    },
+    {
+      "person_name": "George Washington",
+      "relationship_type": "professional/founding_colleague",
+      "relationship_description": "Washington und Franklin waren führende Persönlichkeiten der amerikanischen Revolution und Staatsgründung. Franklin arbeitete mit Washington in nationalen öffentlichen Angelegenheiten zusammen, kehrte während Washingtons Führung der Revolution nach Pennsylvania zurück und nahm am Verfassungskonvent teil, dem Washington vorstand.",
+      "start_year": 1775,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Führung der Amerikanischen Revolution",
+        "Verfassungskonvent von 1787",
+        "Gründung der Vereinigten Staaten"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+      ],
+      "notes": "Ihre Verbindung war hauptsächlich institutioneller und politischer Natur, nicht eine enge persönliche Freundschaft."
+    },
+    {
+      "person_name": "John Adams",
+      "relationship_type": "professional/founding_colleague",
+      "relationship_description": "Adams und Franklin arbeiteten im Kontinentalkongress zusammen, unter anderem im Fünferausschuss, der die Unabhängigkeitserklärung ausarbeitete. Später dienten sie gemeinsam in der amerikanischen Diplomatie in Europa, obwohl Adams Franklins Ansatz in der französischen Diplomatie frustrierend fand.",
+      "start_year": 1775,
+      "end_year": 1783,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Zweiter Kontinentalkongress",
+        "Fünferausschuss für die Unabhängigkeitserklärung",
+        "Diplomatischer Dienst in Frankreich",
+        "Verhandlungen zum Vertrag von Paris"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/John_Adams"
+      ],
+      "notes": "Ihre Beziehung verband die Zusammenarbeit bei der Staatsgründung mit erheblichen Unterschieden in diplomatischem Temperament und Strategie."
+    },
+    {
+      "person_name": "Thomas Jefferson",
+      "relationship_type": "professional/founding_colleague",
+      "relationship_description": "Jefferson und Franklin waren beide Mitglieder des Fünferausschusses, der mit der Ausarbeitung der Unabhängigkeitserklärung beauftragt war. Franklin prüfte Jeffersons Entwurf und schloss sich dem Kongress bei den umfassenderen Bemühungen an, die amerikanische Unabhängigkeit zu begründen.",
+      "start_year": 1776,
+      "end_year": 1790,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Fünferausschuss",
+        "Ausarbeitung und Annahme der Unabhängigkeitserklärung",
+        "Nationale Angelegenheiten der Gründungszeit"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Franklins Überarbeitungen von Jeffersons Entwurf der Unabhängigkeitserklärung gehörten zu den bekanntesten redaktionellen Beiträgen zu diesem Dokument."
+    },
+    {
+      "person_name": "John Jay",
+      "relationship_type": "professional/diplomatic_colleague",
+      "relationship_description": "Jay und Franklin waren amerikanische Friedenskommissare in Paris, die bei den Verhandlungen zum Vertrag von Paris mitwirkten, der den Unabhängigkeitskrieg beendete. Gemeinsam mit John Adams nahmen sie an den Verhandlungen teil, die die britische Anerkennung der amerikanischen Unabhängigkeit sicherten.",
+      "start_year": 1782,
+      "end_year": 1783,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Amerikanische Friedenskommission in Paris",
+        "Verhandlungen zum Vertrag von Paris",
+        "Aushandlung amerikanischer Unabhängigkeit und Fischereirechte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/John_Jay"
+      ],
+      "notes": "Jay und Adams verhandelten trotz französischer Einwände direkt mit Großbritannien; Franklin gehörte der amerikanischen Kommission an."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Franklins engstes Familiennetzwerk begann mit dem prägenden Einfluss beider Eltern und seiner konfliktreichen Lehre bei seinem Bruder James. Seine langjährige häusliche Partnerschaft mit Deborah Read, die Beziehungen zu seinen Kindern und die späteren Verbindungen zum Haushalt von Sarah Bache verknüpften sein Privatleben mit der bürgerlichen und revolutionären Welt Philadelphias."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Franklins berufliches Netzwerk entwickelte sich von frühen Druckern, Arbeitgebern, Gönnern und Geschäftspartnern zu einem weitreichenden Netzwerk von Kollegen aus dem Zeitungswesen, der Diplomatie und der Staatsgründung. Sein unternehmerisches Wirken im Druckgewerbe bildete die Grundlage für seinen bürgerschaftlichen Einfluss, während ihn die revolutionäre Diplomatie mit Führungspersönlichkeiten wie Adams, Jay, Jefferson und Washington verband."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Franklin pflegte ein Netzwerk der Aufklärung durch Bildungs- und Wissenschaftseinrichtungen, insbesondere durch die Academy and College of Philadelphia und die American Philosophical Society. Seine Beziehungen zu Pädagogen und wissenschaftlichen Briefpartnern unterstützten seine Arbeit als Forscher, bürgerschaftlicher Reformer und Gründer von Institutionen."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "181a531da3c3ff10",
+    "translated_on": "2026-07-19T07:36:43.215925+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

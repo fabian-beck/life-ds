@@ -1,0 +1,476 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-01-09",
+  "ego": {
+    "name": "Otto Wagner",
+    "birth_year": 1841,
+    "death_year": 1918,
+    "primary_roles": [
+      "Architekt",
+      "Designer",
+      "Stadtplaner",
+      "Architekturtheoretiker",
+      "Professor"
+    ],
+    "summary": "Otto Koloman Wagner war ein österreichischer Architekt, Designer, Stadtplaner und Theoretiker, der dazu beitrug, die Wiener Architektur vom Historismus hin zur Moderne der Secessionszeit zu führen. Ab den 1890er Jahren erlangte er durch wegweisende Wiener Projekte (insbesondere Infrastruktur- und öffentliche Bauten), einflussreiche Publikationen und seine Lehrtätigkeit an der Akademie der bildenden Künste Wien internationale Bekanntheit und prägte eine neue Architektengeneration.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Otto_Wagner"
+  },
+  "connections": [
+    {
+      "person_name": "Susanne Wagner",
+      "relationship_type": "family/mother",
+      "relationship_description": "Wagners Mutter; sie führte den Haushalt und das Familienleben. Nach dem Tod seines Vaters blieb sie eine zentrale Figur in seinem Leben und beeinflusste seine persönlichen Entscheidungen, einschließlich seiner ersten Ehe, maßgeblich.",
+      "start_year": 1841,
+      "end_year": 1880,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben und gesellschaftliche Positionierung",
+        "Unterstützung von Wagners Ausbildung und früher Karriere"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Der Artikel weist auf eine starke Mutterbindung hin; Wagner übertrug später eine nahezu kultische Verehrung auf seine zweite Ehefrau."
+    },
+    {
+      "person_name": "Rudolf Simeon Wagner",
+      "relationship_type": "family/father",
+      "relationship_description": "Wagners Vater; ein königlich-ungarischer Hofnotar in Wien. Sein früher Tod (Lungenerkrankung) prägte Wagners Kindheit und wird als Grund für Wagners starke Bindung an seine Mutter angeführt.",
+      "start_year": 1841,
+      "end_year": 1846,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Penzing/Wien während Wagners früher Kindheit"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Starb, als Otto Wagner etwa fünf Jahre alt war."
+    },
+    {
+      "person_name": "August Sicard von Sicardsburg",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Einer von Wagners Lehrern an der Akademie der bildenden Künste Wien während seiner Architekturausbildung.",
+      "start_year": 1861,
+      "end_year": 1862,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Architekturstudium an der Akademie der bildenden Künste Wien"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/August_Sicard_von_Sicardsburg"
+      ],
+      "notes": "Sicardsburg wird im Zusammenhang mit dem Auftrag für die Wiener Hofoper erwähnt."
+    },
+    {
+      "person_name": "Eduard van der Nüll",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Einer von Wagners Lehrern an der Akademie der bildenden Künste Wien während seiner Architekturausbildung.",
+      "start_year": 1861,
+      "end_year": 1862,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Architekturstudium an der Akademie der bildenden Künste Wien"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Eduard_van_der_N%C3%BCll"
+      ],
+      "notes": "Van der Nüll wird ebenfalls zusammen mit Sicardsburg für den Auftrag zur Wiener Hofoper erwähnt."
+    },
+    {
+      "person_name": "Ludwig von Förster",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Wagner trat 1862 in Försters Atelier ein, wodurch er in das historistische Architekturumfeld Wiens gelangte und unter einem etablierten Architekten seine frühe berufliche Ausbildung erhielt.",
+      "start_year": 1862,
+      "end_year": 1863,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Atelierarbeit und berufliche Ausbildung in Wien"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://de.wikipedia.org/wiki/Ludwig_von_F%C3%B6rster"
+      ],
+      "notes": "Der Artikel über Otto Wagner verortet Wagner zudem im Kreis um die Försters und Theophil von Hansen."
+    },
+    {
+      "person_name": "Sophia Paupie",
+      "relationship_type": "family/partner",
+      "relationship_description": "Wagners langjährige Partnerin (nicht verheiratet). Sie hatten zwei Söhne zusammen, die Wagner 1882 adoptierte.",
+      "start_year": 1863,
+      "end_year": 1912,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "langjährige Partnerschaft",
+        "Elternschaft zweier später von Wagner adoptierter Söhne"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Die Beziehung überschnitt sich mit seiner ersten Ehe; die Adoption der Söhne im Jahr 1882 wird ausdrücklich erwähnt."
+    },
+    {
+      "person_name": "Otto Emerich Wagner",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Sohn mit Sophia Paupie; 1882 von Wagner adoptiert.",
+      "start_year": 1864,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "rechtliche Adoption (1882)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Das Endjahr entspricht Wagners Todesjahr; Otto Emerich starb später (1945)."
+    },
+    {
+      "person_name": "Robert Koloman Wagner",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Sohn mit Sophia Paupie; 1882 von Wagner adoptiert.",
+      "start_year": 1865,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "rechtliche Adoption (1882)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Das Endjahr entspricht Wagners Todesjahr; Robert Koloman starb später (1954)."
+    },
+    {
+      "person_name": "Josefine Domhart",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Wagners erste Ehefrau, die er auf Druck seiner Mutter heiratete. Sie hatten zwei Töchter; die Ehe endete kurz nach dem Tod seiner Mutter mit einer Scheidung.",
+      "start_year": 1867,
+      "end_year": 1880,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und Haushaltsleben",
+        "Erziehung zweier Töchter"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Josefine starb 1889."
+    },
+    {
+      "person_name": "Susanna Wallisch",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Tochter mit Josefine Domhart; später verheiratet (Familienname Wallisch).",
+      "start_year": 1868,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Das Endjahr entspricht Wagners Todesjahr; sie selbst starb später (1937)."
+    },
+    {
+      "person_name": "Margarete Wagner",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Tochter mit Josefine Domhart; starb im Kindesalter.",
+      "start_year": 1869,
+      "end_year": 1880,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Ihr Tod fiel mit dem Jahr von Wagners Scheidung von Josefine zusammen."
+    },
+    {
+      "person_name": "Louise Stiffel",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Wagners zweite Ehefrau. Sie lebten mehrere Jahre in Budapest und später in Wien; sie war als Bewohnerin der Villa Wagner II vorgesehen, starb jedoch vor einer langfristigen Nutzung.",
+      "start_year": 1884,
+      "end_year": 1915,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und Haushaltsleben",
+        "Umzug der Familie nach Budapest",
+        "Planung von Wohnsitzen (Villa Wagner I und II)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Nach ihrem Tod im Jahr 1915 konzentriert sich Wagners Tagebuch (1915–1918) stark auf Trauer und an sie gerichtete Briefe."
+    },
+    {
+      "person_name": "Stefan Wagner",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Sohn mit Louise Stiffel.",
+      "start_year": 1884,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Das Endjahr entspricht Wagners Todesjahr; Stefan starb später (1945)."
+    },
+    {
+      "person_name": "Louise Watzlawick",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Tochter mit Louise Stiffel; später verheiratet (die Familiennamen Watzlawick/Wick werden genannt).",
+      "start_year": 1885,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Das Endjahr entspricht Wagners Todesjahr; sie starb später (1976)."
+    },
+    {
+      "person_name": "Christine von Lütgendorff-Gyllenstorm",
+      "relationship_type": "family/child",
+      "relationship_description": "Wagners Tochter mit Louise Stiffel; später verheiratet (Familienname v. Lütgendorff-Gyllenstorm).",
+      "start_year": 1889,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Das Endjahr entspricht Wagners Todesjahr; sie starb später (1970)."
+    },
+    {
+      "person_name": "Josef Hoffmann",
+      "relationship_type": "academic/student",
+      "relationship_description": "Studierte bei Otto Wagner an der Akademie der bildenden Künste Wien und trat später in Wagners Büro ein; außerdem überschnitt sich seine Tätigkeit um 1897 mit Wagner in der Secession und im institutionellen Umfeld des Kunstgewerbes.",
+      "start_year": 1892,
+      "end_year": 1899,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Architekturausbildung an der Akademie der bildenden Künste Wien",
+        "Arbeit in Wagners Architekturbüro (laut Biografie nach 1897)",
+        "Umfeld der Wiener Secession"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Josef_Hoffmann",
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Hoffmann wird auch unter denjenigen aufgeführt, die zur Mitarbeit mit dem Museum/der Schule unter Arthur von Scala gewonnen wurden."
+    },
+    {
+      "person_name": "Joseph Maria Olbrich",
+      "relationship_type": "academic/student",
+      "relationship_description": "Arbeitete ab 1893 in Wagners Büro und wird mit der Detailplanung der Wiener Stadtbahn in Verbindung gebracht; Wagner schätzte ihn sehr und erwog sogar eine Heirat zwischen Olbrich und einer seiner Töchter.",
+      "start_year": 1893,
+      "end_year": 1899,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Arbeit in Wagners Architekturbüro",
+        "Planungs-/Entwurfsarbeit für die Wiener Stadtbahn (Zuschreibung als wahrscheinlich erwähnt)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Joseph_Maria_Olbrich",
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Olbrich erhielt später den Auftrag für das Secessionsgebäude (1897), was Wagners Einfluss über die Wagnerschule verstärkte."
+    },
+    {
+      "person_name": "Ladislaus Gundacker von Wurmbrand-Stuppach",
+      "relationship_type": "professional/political_appointer",
+      "relationship_description": "Als für die Eisenbahnen zuständiger k. k. Handelsminister ernannte er Wagner (als Oberbaurat und Professor) 1894 zum künstlerischen Berater für die einheitliche architektonische Gestaltung der Bauwerke der Wiener Stadtbahn.",
+      "start_year": 1894,
+      "end_year": 1901,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "staatlicher Auftrag für die architektonische Gestaltung der Wiener Stadtbahn",
+        "Aufsicht über die Kommission für Verkehrsanlagen in Wien"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Die Arbeiten an der Stadtbahn dauerten über 1901 hinaus an, aber Wurmbrand-Stuppach starb 1901."
+    },
+    {
+      "person_name": "Max Fabiani",
+      "relationship_type": "academic/student",
+      "relationship_description": "Trat für etwa zwei Jahre (durch Vermittlung Olbrichs) in Wagners Atelier ein und arbeitete an der Wiener Stadtbahn; Fabiani wird zudem über Vorlesungsmitschriften mit Wagners Publikation „Moderne Architektur“ in Verbindung gebracht.",
+      "start_year": 1894,
+      "end_year": 1896,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Atelierarbeit bei Wagner",
+        "Projektarbeit an der Wiener Stadtbahn",
+        "Vermittlung von Wagners Architekturtheorie (Verbindung über Vorlesungsmitschriften zu „Moderne Architektur“)"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Fabiani",
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Fabianis Artikel beschreibt die Verbindung zu Wagners theoretischem Werk und seine Mitarbeit in dessen Atelier."
+    },
+    {
+      "person_name": "Jože Plečnik",
+      "relationship_type": "academic/student",
+      "relationship_description": "Studierte bei Wagner und arbeitete bis 1900 in Wagners Wiener Büro; später wurde er ein bedeutender Architekt in Wien, Prag und Ljubljana.",
+      "start_year": 1896,
+      "end_year": 1900,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Meisterklassestudium bei Wagner",
+        "berufliche Tätigkeit in Wagners Architekturbüro in Wien"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jo%C5%BEe_Ple%C4%8Dnik",
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Plečniks frühe bedeutende Wiener Werke werden als während seiner Zeit in Wagners Büro entstanden beschrieben."
+    },
+    {
+      "person_name": "Arthur von Scala",
+      "relationship_type": "professional/institutional_collaborator",
+      "relationship_description": "Als Leiter des Museums für Kunst und Industrie (heute MAK) holte er Wagner als Mitarbeiter hinzu (zusammen mit anderen Secessionsvertretern) und unterstützte eine reformorientierte kunstgewerbliche Ausbildung, die mit dem Museum und seiner Kunstgewerbeschule verbunden war.",
+      "start_year": 1897,
+      "end_year": 1905,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Zusammenarbeit mit Museum und Kunstgewerbeschule",
+        "Design- und Bildungsreform in Wiener Kunstgewerbeinstitutionen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Der Artikel über Otto Wagner nennt Scala als Organisator, der Wagner, Myrbach, Moser, Hoffmann und Roller gewann."
+    },
+    {
+      "person_name": "Felician von Myrbach",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Ein mit der Secession verbundener Künstler und institutioneller Akteur; mit Wagner über das unter Arthur von Scala gewonnene Netzwerk von Museum und Schule sowie die breitere Reformbewegung um 1900 verbunden.",
+      "start_year": 1897,
+      "end_year": 1905,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Zusammenarbeit/Überschneidung über das Museum für Kunst und Industrie und die angeschlossene Kunstschule",
+        "gemeinsames modernistisches Reformumfeld in Wien"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Felician_Myrbach"
+      ],
+      "notes": "Myrbach wird neben Wagner als Teil des gewonnenen Teams modernistischer Mitarbeiter und Mitwirkender aufgeführt."
+    },
+    {
+      "person_name": "Gustav Klimt",
+      "relationship_type": "artistic/peer",
+      "relationship_description": "Weggefährte im Wiener modernistischen Umfeld; Wagner wird als jemand beschrieben, der gemeinsam mit Klimt und anderen die Wiener Secessionsbewegung ins Leben rief und damit Architektur mit der breiteren Kunstbewegung der Secession verband.",
+      "start_year": 1897,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kontext der Wiener Secessionsbewegung",
+        "gemeinsame modernistische Kulturplattform in Wien"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Josef_Hoffmann",
+        "https://de.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "notes": "Der zugehörige Artikel über Josef Hoffmann nennt Wagner und Klimt ausdrücklich als Begründer der Secessionsbewegung im Jahr 1897."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Wagners Familienleben war vom frühen Verlust seines Vaters und einer besonders starken Bindung zu seiner Mutter geprägt, die wichtige persönliche Entscheidungen beeinflusste. Er führte ein komplexes Privatleben mit zwei Ehen und einer langjährigen Partnerschaft und erkannte und unterstützte Kinder aus diesen Beziehungen (einschließlich der Adoption zweier Söhne im Jahr 1882)."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Wagners akademisches Netzwerk umfasst prägende Lehrer an der Akademie der bildenden Künste Wien sowie seine einflussreiche Rolle als Lehrer und Meister einer Gruppe von Architekten. Schüler und Büroprotégés wie Olbrich, Plečnik, Hoffmann und Fabiani erweitern seinen Einfluss auf die Architektur der Secessionszeit und der frühen Moderne in ganz Mitteleuropa."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Wagners berufliche Verbindungen umfassen staatliche und institutionelle Persönlichkeiten, die bedeutende öffentliche Aufträge und Plattformen für Designreformen ermöglichten. Ernennungen und Kooperationen verbanden ihn mit großen Infrastrukturprojekten (insbesondere der Wiener Stadtbahn) sowie mit museumsgebundener kunstgewerblicher Ausbildung und Produktion."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Im künstlerischen Bereich verbindet Wagners Netzwerk die Architektur mit der Wiener Secession und mit Reformkreisen an Museum und Kunstschule, die bildende Kunst, Design und modernes Kunsthandwerk zusammenführten. Seine Beziehungen in diesem Bereich sind eher durch Zusammenarbeit auf Bewegungsebene und gemeinsame institutionelle Plattformen als durch ständige persönliche Interaktion geprägt."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "ea0ade0bbba1abad",
+    "translated_on": "2026-07-19T07:40:31.293849+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

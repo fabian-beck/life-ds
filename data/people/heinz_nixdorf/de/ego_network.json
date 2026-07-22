@@ -1,0 +1,234 @@
+{
+  "dataset": "wikipedia_ego_network_heinz_nixdorf",
+  "created_on": "2025-12-06",
+  "ego": {
+    "name": "Heinz Nixdorf",
+    "birth_year": 1925,
+    "death_year": 1986,
+    "primary_roles": [
+      "Unternehmer",
+      "Informatiker"
+    ],
+    "summary": "Heinz Nixdorf (1925–1986) war ein deutscher Computerpionier und Unternehmer, der die Nixdorf Computer AG gründete und sie von einem kleinen Start-up zu einem großen internationalen Elektronik- und Computerunternehmen ausbaute. Aus einer armen Eisenbahnerfamilie stammend, studierte er angewandte Physik, erlernte bei Remington Rand unter Walter Sprick die Konstruktion elektronischer Rechenmaschinen und gründete 1952 mit entscheidender Unterstützung des Energieversorgers RWE sein eigenes Labor für Impulstechnik. Durch die Entwicklung röhren-, später transistor- und halbleiterbasierter Kleincomputer wie der Wanderer Logatronic und des Nixdorf System 820 sowie durch hohe Investitionen in die Ausbildung seiner Belegschaft wurde er bis zu seinem plötzlichen Tod auf der CeBIT-Messe 1986 zu einer führenden Figur des deutschen Wirtschaftswunders.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+  },
+  "connections": [
+    {
+      "person_name": "Walter Nixdorf",
+      "relationship_type": "family/father",
+      "relationship_description": "Vater von Heinz Nixdorf, ein Handelsreisender und späterer Eisenbahnbediensteter, dessen zeitweilige Arbeitslosigkeit und früher Tod im Zweiten Weltkrieg Heinz’ Kindheit und seinen späteren Schwerpunkt auf die Schaffung von Arbeitsplätzen tief prägten.",
+      "start_year": 1925,
+      "end_year": 1944,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Torgau und Paderborn",
+        "Unterstützung und Einschränkungen bei Heinz’ Schulwahl",
+        "Haus- und Feldarbeit nach den Verlusten des Zweiten Weltkriegs"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "notes": "Er wird als in den 1920er- und 1930er-Jahren häufig arbeitslos beschrieben; 1944 fiel er an der Ostfront und hinterließ Heinz im Alter von zwanzig Jahren als wichtigsten männlichen Versorger der sechsköpfigen Familie."
+    },
+    {
+      "person_name": "Änne Nixdorf (geb. Ströhmeier)",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mutter von Heinz Nixdorf, die sich gegen seinen Wunsch stellte, den Weg der Lehrerausbildung zu verlassen, der er sich jedoch schließlich widersetzte, indem er beim Preußischen Kultusministerium die Versetzung an ein Gymnasium beantragte.",
+      "start_year": 1925,
+      "end_year": 1986,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Torgau und Paderborn",
+        "Entscheidungen über Heinz’ Schulbildung und Stipendien",
+        "Nachkriegshaushalt, der teilweise durch Heinz’ Feldarbeit unterstützt wurde"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "notes": "Während Mutter und Lehrer darauf drängten, dass er den Weg der Lehrerausbildung fortsetzte, führte ihr Widerstand zu Nixdorfs früher Erfahrung, seinen eigenen Bildungs- und Berufsweg durchzusetzen."
+    },
+    {
+      "person_name": "Walter Sprick",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Physiker und Leiter der Entwicklungsabteilung der deutschen Tochtergesellschaft von Remington Rand, der Nixdorf als Assistenten einstellte, ihm die Konstruktion elektronischer Rechenmaschinen beibrachte und später seine Erfindungen und Patentrechte übertrug sowie persönlich für den ersten Entwicklungsauftrag von RWE bürgte.",
+      "start_year": 1951,
+      "end_year": 1986,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Entwicklung von Zählgeräten und elektronischen Rechenmaschinen bei Remington Rand",
+        "Übertragung und Weiterentwicklung von Spricks Patenten zu Produkten wie dem Elektronensaldierer und dem Elektronenmultiplizierer",
+        "Finanzierung und technische Beratung für das Heinz Nixdorf Labor für Impulstechnik",
+        "Fortlaufende technische Zusammenarbeit während des frühen Wachstums des Unternehmens"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Walter_Sprick"
+      ],
+      "notes": "Sprick bildete Nixdorf nicht nur technisch aus, sondern bürgte auch für den RWE-Auftrag über 30.000 Mark, der Nixdorf die Gründung seines eigenen Labors ermöglichte, und unterstützte ihn später während Krisen in der Produktentwicklung."
+    },
+    {
+      "person_name": "Alfred Wierzoich",
+      "relationship_type": "professional/employee",
+      "relationship_description": "Radio- und Fernsehtechniker, den Nixdorf als ersten Mitarbeiter des Labors für Impulstechnik einstellte und der beim Bau der frühen röhrenbasierten Rechenmaschinen und Computer half.",
+      "start_year": 1952,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Entwicklung und Bau früher elektronischer Rechenmaschinen für RWE",
+        "Ausbau der Produktionskapazitäten in Essen in den frühen 1950er-Jahren",
+        "Übergang von maßgefertigten Rechenmaschinen zu elektronischen Rechenmodulen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "notes": "Er trat am 1. September 1952 als erster Entwickler des Unternehmens bei; seine Rolle veranschaulicht, wie Nixdorf begann, ein Team um seine eigene technische Führung aufzubauen."
+    },
+    {
+      "person_name": "Otto Müller",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Entwicklungsingenieur und Computerpionier, den Nixdorf anwarb, nachdem Müllers Ideen für eine kompakte Tischrechenmaschine ihn auf der Hannover Messe beeindruckt hatten; gemeinsam realisierten sie die Wanderer Logatronic und das Nixdorf System 820, grundlegende Produkte der Kleincomputergeschichte.",
+      "start_year": 1964,
+      "end_year": 1969,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Konzeption und Entwicklung eines transistorisierten, modularen Tischcomputers",
+        "Einführung der Wanderer Logatronic auf der Hannover Messe 1965",
+        "Weiterentwicklung zum frei programmierbaren Nixdorf System 820",
+        "Positionierung Nixdorfs als Pionier der dezentralen elektronischen Datenverarbeitung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computerpionier)"
+      ],
+      "notes": "Nixdorf zweifelte zunächst daran, ob Müller der Aufgabe gewachsen war, seinen mikroprogrammierten Entwurf umzusetzen, unterstützte ihn aber schließlich; der Erfolg von Logatronic und System 820 wurde zentral für Nixdorfs Strategie."
+    },
+    {
+      "person_name": "Ilse Müller",
+      "relationship_type": "social/friend",
+      "relationship_description": "Erste Ehefrau und enge Mitarbeiterin von Otto Müller, deren persönliches Eingreifen in einer entscheidenden Phase der Entscheidungsfindung dazu beitrug, Nixdorf zu überzeugen, Otto Müllers neues Tischcomputerprojekt zu unterstützen.",
+      "start_year": 1964,
+      "end_year": 1969,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Private Gespräche über das Risiko der Einführung einer neuen Kleincomputerlinie",
+        "Indirekte Unterstützung der Entwicklung der Wanderer Logatronic durch Einsatz für Otto Müllers Konzept"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computerpionier)"
+      ],
+      "notes": "Der Heinz-Nixdorf-Artikel vermerkt, dass die „Frau von Otto Müller“ intervenierte, um Nixdorf umzustimmen; der Otto-Müller-Artikel identifiziert seine erste Ehefrau und langjährige Geschäftspartnerin als Ilse Müller."
+    },
+    {
+      "person_name": "Klaus Luft",
+      "relationship_type": "professional/protégé",
+      "relationship_description": "Vertriebschef und langjähriger Nixdorf-Manager, den Heinz Nixdorf als seinen Nachfolger bevorzugte und der kurz nach Nixdorfs Tod Vorstandsvorsitzender der Nixdorf Computer AG wurde.",
+      "start_year": 1969,
+      "end_year": 1986,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Aufbau und Leitung der nationalen und internationalen Vertriebsorganisation der Nixdorf Computer AG",
+        "Strategische Planung und Unternehmensführung während der Expansion des Unternehmens",
+        "Nachfolgeplanung für die Führung der Nixdorf Computer AG"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://en.wikipedia.org/wiki/Klaus_Luft"
+      ],
+      "notes": "Der Nixdorf-Artikel besagt, dass Vertriebschef Klaus Luft, den Nixdorf favorisiert hatte, im April 1986 die Führung übernahm; Lufts eigene Biografie vermerkt eine 17-jährige Führungslaufbahn bei Nixdorf, die in der Rolle des Vorstandsvorsitzenden gipfelte."
+    },
+    {
+      "person_name": "Kurt Bendlin",
+      "relationship_type": "professional/consultant",
+      "relationship_description": "Olympischer Zehnkämpfer, der auf Nixdorfs persönliche Initiative hin zum Sportberater für Auszubildende bei der Nixdorf Computer AG wurde und die Betonung körperlicher Fitness im Unternehmen prägte.",
+      "start_year": 1978,
+      "end_year": 1986,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gestaltung und Betreuung des verpflichtenden Sporttrainings für Auszubildende",
+        "Förderung einer gesundheitsorientierten Unternehmenskultur bei der Nixdorf Computer AG",
+        "Einsatz von Sport als Teil der Mitarbeiterentwicklung nach Nixdorfs eigenem Herzinfarkt"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Kurt_Bendlin"
+      ],
+      "notes": "Nachdem Nixdorf 1978 einen Herzinfarkt erlitten hatte, ordnete er Sportunterricht für Auszubildende an und gewann Bendlin „auf seine persönliche Initiative“ als Ansprechpartner für Sport im Unternehmen."
+    },
+    {
+      "person_name": "Jörg Schomburg",
+      "relationship_type": "professional/industry_peer",
+      "relationship_description": "Direktor, dem zugeschrieben wird, die erste eigenständige CeBIT zum Erfolg gemacht zu haben; diese erste Messe von 1986, die unter seiner Leitung organisiert wurde, wurde von Nixdorfs tödlichem Herzinfarkt auf dem Hannoveraner Messegelände überschattet.",
+      "start_year": 1986,
+      "end_year": 1986,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Teilnahme an der ersten eigenständigen CeBIT-Messe in Hannover",
+        "Öffentliche Repräsentation der westdeutschen IT- und Computerindustrie 1986"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Cebit",
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "notes": "Obwohl keine enge persönliche Zusammenarbeit dokumentiert ist, heben Schomburgs Rolle als CeBIT-Organisator und die Tatsache, dass Nixdorf bei dieser Veranstaltung starb, ihren gemeinsamen Kontext in der deutschen IT-Messeszene hervor."
+    },
+    {
+      "person_name": "Renate Nixdorf",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Ehefrau und spätere Witwe von Heinz Nixdorf, die nach seinem Tod zu einer Schlüsselfigur bei der Bewahrung und Erweiterung seines unternehmerischen und philanthropischen Vermächtnisses durch Stiftungen und Unternehmensführung wurde.",
+      "start_year": null,
+      "end_year": 1986,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "Eigentum und Unternehmensführung der Nixdorf Computer AG",
+        "Unterstützung von bildungs- und technologieorientierten Stiftungen nach seinem Tod"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "notes": "Das genaue Jahr der Eheschließung wird im vorliegenden Text nicht genannt, aber mehrere Wikipedia-Quellen vermerken, dass seine Witwe Renate eine zentrale Rolle in der Heinz Nixdorf Stiftung und verwandten Institutionen spielte."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Heinz Nixdorfs familiärer Hintergrund – insbesondere die Armut seiner Eltern, die Arbeitslosigkeit und der Kriegstod seines Vaters Walter sowie die Bildungserwartungen seiner Mutter Änne – prägten stark seinen Drang nach Unabhängigkeit und Arbeitsplätze zu schaffen. Seine Ehe mit Renate Nixdorf bot persönliche Unterstützung und später Kontinuität für sein unternehmerisches und philanthropisches Vermächtnis."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Nixdorfs berufliches Netzwerk konzentriert sich auf Mentoren wie Walter Sprick, frühe Mitarbeiter wie Alfred Wierzoich, wichtige Innovatoren wie Otto Müller und leitende Führungskräfte einschließlich Vertriebschef und Nachfolger Klaus Luft. Diese Beziehungen bildeten die Grundlage für die technischen Durchbrüche von Röhrenrechnern bis zu halbleiterbasierten Kleincomputern sowie für die rasche kommerzielle Expansion der Nixdorf Computer AG."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Seine persönlicheren und gesellschaftlichen Beziehungen überschnitten sich mit seiner Arbeit, von Ilse Müllers Ermutigung während einer entscheidenden Innovationsentscheidung bis zur Einbindung des olympischen Zehnkämpfers Kurt Bendlin, um unter den Auszubildenden eine Kultur von Sport und Gesundheit zu fördern. Auch lockerere Verbindungen wie die zum CeBIT-Organisator Jörg Schomburg verorten ihn in einer breiteren Gemeinschaft, die das öffentliche Gesicht der deutschen Computerindustrie prägte."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "16f4c39beefe37ac",
+    "translated_on": "2026-07-19T07:39:46.407055+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

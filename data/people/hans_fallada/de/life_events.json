@@ -1,0 +1,754 @@
+{
+  "dataset": "wikipedia-hans-fallada-phase1",
+  "created_on": "2026-02-22",
+  "person": {
+    "name": "Hans_Fallada",
+    "birth_date": "1893-07-21",
+    "death_date": "1947-02-05",
+    "primary_roles": [
+      "Schriftsteller",
+      "Romanautor",
+      "Journalist"
+    ],
+    "tagline": "Romancier des deutschen Alltags",
+    "summary": "Hans Fallada war ein deutscher Schriftsteller der Neuen Sachlichkeit, dessen Prosa sozialen Druck, Schulden und moralische Kompromisse im Alltag schilderte. Unter einem Pseudonym schreibend, erlangte er mit dem Roman der Weimarer Zeit „Kleiner Mann – was nun?“ breite Anerkennung und arbeitete auch unter der NS-Diktatur weiter, wobei er Zensur und politischer Überwachung ausgesetzt war. In den Nachkriegsmonaten schrieb er auf Grundlage von Gestapo-Akten einen bedeutenden Berlin-Roman über einen Widerstandsakt aus der Arbeiterschaft.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Hans_Fallada",
+    "portrait": {
+      "image": "/portraits/hans_fallada_thumbnail.webp",
+      "thumbnail": "/portraits/hans_fallada_thumbnail.webp",
+      "medium": "/portraits/hans_fallada_medium.webp",
+      "full": "/portraits/hans_fallada_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Hans_Fallada",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Hans_Fallada.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "restless_childhood",
+      "headline": "Unruhige Kindheit",
+      "date_start": "1893-07-21",
+      "date_start_precision": "day",
+      "date_end": "1911-10-16",
+      "date_end_precision": "day",
+      "age_start": 0,
+      "age_end": 18,
+      "involved_people": [
+        "Wilhelm Ditzen",
+        "Elisabeth Ditzen"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "the_duel_fallout",
+      "headline": "Das Duell",
+      "date_start": "1911-10-17",
+      "date_start_precision": "day",
+      "date_end": "1913-07",
+      "date_end_precision": "month",
+      "age_start": 18,
+      "age_end": 19,
+      "involved_people": [
+        "Hanns Dietrich von Necker"
+      ],
+      "location": "Norddeutschland"
+    },
+    {
+      "id": "hard_labor_inner_storm",
+      "headline": "Harte Jahre",
+      "date_start": "1913",
+      "date_start_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age_start": 20,
+      "age_end": 35,
+      "involved_people": [
+        "Anne Marie Seyerlen"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "breakthrough_under_the_reich",
+      "headline": "Durchbruch, dann Angst",
+      "date_start": "1929-04-05",
+      "date_start_precision": "day",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age_start": 35,
+      "age_end": 45,
+      "involved_people": [
+        "Anna Margarete Issel (\"Suse\")",
+        "Ernst Rowohlt",
+        "Marianne Portisch"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "last_books_last_days",
+      "headline": "Letztes Berlin",
+      "date_start": "1944-09-04",
+      "date_start_precision": "day",
+      "date_end": "1947-02-05",
+      "date_end_precision": "day",
+      "age_start": 51,
+      "age_end": 53,
+      "involved_people": [
+        "Anna Ditzen",
+        "Ursula Boltzenthal (née Losch)",
+        "Otto Hampel",
+        "Elise Hampel"
+      ],
+      "location": "Deutschland"
+    }
+  ],
+  "conclusion": "Hans Fallada verwandelte private Katastrophen und öffentlichen Terror in Romane, die sich weigerten, vom alltäglichen Leid wegzusehen. Sein Leben brannte ungleichmäßig, doch sein Mitgefühl für Menschen, die von Schulden, Angst und Kompromissen bedrängt wurden, spricht noch immer mit großer Kraft.",
+  "events": [
+    {
+      "date": "1893-07-21",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Greifswald",
+      "description": "Rudolf Wilhelm Friedrich Ditzen wurde am 21. Juli 1893 in Greifswald als Sohn des Juristen Wilhelm Ditzen und dessen Ehefrau Elisabeth Ditzen geboren.",
+      "locations": [
+        {
+          "name_historic": "Greifswald",
+          "name_modern": "Greifswald, Deutschland",
+          "centroid": [
+            13.3815238,
+            54.095791
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Wilhelm Ditzen",
+        "Elisabeth Ditzen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://www.deutsche-biographie.de/sfz15552.html",
+        "https://de.wikipedia.org/wiki/Wilhelm_Ditzen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/HGW_Steinstrasse_58_Falladahaus.JPG/960px-HGW_Steinstrasse_58_Falladahaus.JPG",
+          "caption": "Fallada-Haus, Steinstraße 58, in Greifswald",
+          "source": "https://commons.wikimedia.org/wiki/File:HGW_Steinstrasse_58_Falladahaus.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "restless_childhood"
+    },
+    {
+      "date": "1899",
+      "date_precision": "year",
+      "date_end": "1911",
+      "date_end_precision": "year",
+      "age": 6,
+      "title": "Umzüge, Schulen, Isolation",
+      "description": "1899 zog die Familie Ditzen, als sein Vater in der Justiz aufstieg, zunächst nach Berlin und später nach Leipzig. Rudolf besuchte mehrere Gymnasien und geriet zunehmend mit der Erwartung seines Vaters in Konflikt, dass er Jurist werden sollte.\n\nIn der Schule wurde er oft als Außenseiter behandelt und zog sich sozial zurück; selbst während einer kurzen, unbefriedigenden Beteiligung an der [[Wandervogel|Wandervogelbewegung]] fand er kaum echte Zugehörigkeit.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Deutschland",
+          "centroid": [
+            12.3747329,
+            51.3406321
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Wilhelm Ditzen",
+        "Elisabeth Ditzen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Wilhelm_Ditzen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hans_Fallada_Leipzig.jpg/960px-Hans_Fallada_Leipzig.jpg",
+          "caption": "Gedenktafel für Hans Fallada in Leipzig, Schenkendorfstraße 61",
+          "source": "https://commons.wikimedia.org/wiki/File:Hans_Fallada_Leipzig.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "restless_childhood",
+      "annotations": {
+        "Wandervogel": {
+          "explanation": "Eine deutsche Jugendbewegung, die um 1896 entstand und Wandern, Volkskultur sowie Unabhängigkeit von herkömmlichen bürgerlichen Normen förderte; sie prägte vor dem Ersten Weltkrieg viele Jugendliche aus dem Bürgertum.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Wandervogel"
+        }
+      }
+    },
+    {
+      "date": "1911-10-17",
+      "date_precision": "day",
+      "age": 18,
+      "title": "Katastrophe des Suizidduells",
+      "description": "Nach einer Phase schwerer seelischer Krise und einem Sanatoriumsaufenthalt im Vorjahr verabredete Ditzen mit seinem Schulfreund Hanns Dietrich von Necker, in einem inszenierten Duell zu sterben. Am 17. Oktober 1911 wurde von Necker getötet, während Ditzen mit schweren Verletzungen überlebte und sich nun einem Gerichtsverfahren sowie fortdauernder ärztlicher Aufsicht gegenübersah.",
+      "locations": [],
+      "involved_people": [
+        "Hanns Dietrich von Necker"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "the_duel_fallout"
+    },
+    {
+      "date": "1912-02",
+      "date_precision": "month",
+      "date_end": "1913-07",
+      "date_end_precision": "month",
+      "age": 18,
+      "title": "Psychiatrische Unterbringung in Tannenfeld",
+      "description": "Im Februar 1912 wurde Ditzen, nachdem er im Zusammenhang mit dem tödlichen Duell angeklagt worden war, zur Beobachtung und Behandlung als Patient in die [[Tannenfeld psychiatric and neurological institution|psychiatrisch-neurologische Anstalt Tannenfeld]] eingewiesen, während seine strafrechtliche Verantwortlichkeit geprüft wurde. Das Verfahren endete mit der Einstellung der Anklage wegen verminderter Zurechnungsfähigkeit, und er verließ die Schule ohne Abschluss.",
+      "locations": [
+        {
+          "name_historic": "Tannenfeld",
+          "name_modern": "Tannenfeld, Travenbrück, Schleswig-Holstein, Deutschland",
+          "centroid": [
+            12.2511805,
+            50.875333
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "event_type_icon": "mdi-gavel",
+      "chapter": "the_duel_fallout",
+      "annotations": {
+        "Tannenfeld psychiatric and neurological institution": {
+          "explanation": "Eine private psychiatrische und neurologische Heilanstalt in Tannenfeld (Holstein), in der Rudolf Ditzen (später Hans Fallada) nach dem Duellvorfall von 1911 zur forensischen Beobachtung untergebracht war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hans_Fallada"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Tannenfeld",
+          "name": "Tannenfeld (Holstein), Travenbrück, Schleswig-Holstein, Germany",
+          "primary": true,
+          "centroid": [
+            10.333,
+            53.83
+          ],
+          "source": "Wikipedia (Tannenfeld is in Holstein/Schleswig-Holstein per provided Hans Fallada excerpt context)"
+        }
+      ]
+    },
+    {
+      "date": "1913",
+      "date_precision": "year",
+      "date_end": "1916",
+      "date_end_precision": "year",
+      "age": 20,
+      "title": "Landwirtschaftslehre und Stabilitätssuche",
+      "description": "Nachdem er die Schule ohne Abschluss verlassen hatte, absolvierte Ditzen in [[Posterstein]] in Thüringen eine Ausbildung zum Landwirtschaftseleven und strebte durch praktische Arbeit auf einem Gut statt durch ein Universitätsstudium nach Stabilität. Bei Ausbruch des Ersten Weltkriegs meldete er sich freiwillig, wurde jedoch als „dauernd untauglich“ abgewiesen.\n\nSeine landwirtschaftliche Ausbildung eröffnete ihm dennoch Möglichkeiten: Bis 1916 arbeitete er bei staatlichen Landwirtschaftseinrichtungen, darunter in Stellen mit Bezug zu Stettin und Berlin.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-tractor",
+      "chapter": "the_duel_fallout",
+      "annotations": {
+        "Posterstein": {
+          "explanation": "Eine Gemeinde in Thüringen, in der Fallada (Rudolf Ditzen) nach dem Verlassen der Schule seine landwirtschaftliche Ausbildung abschloss.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Posterstein"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Posterstein",
+          "name": "Posterstein, Thuringia, Germany",
+          "primary": true,
+          "centroid": [
+            12.251,
+            50.875
+          ],
+          "source": "Wikipedia (Posterstein mentioned explicitly in provided Hans Fallada excerpt)"
+        },
+        {
+          "label": "Stettin",
+          "name": "Szczecin (Stettin), Poland",
+          "primary": false,
+          "centroid": [
+            14.5528,
+            53.4285
+          ],
+          "source": "Wikipedia (Stettin post in 1916 mentioned in provided Hans Fallada excerpt)"
+        },
+        {
+          "label": "Berlin",
+          "name": "Berlin, Germany",
+          "primary": false,
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "source": "Wikipedia (Berlin agricultural institution mentioned in provided Hans Fallada excerpt)"
+        }
+      ]
+    },
+    {
+      "date": "1917",
+      "date_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age": 24,
+      "title": "Sucht und wiederholte Behandlung",
+      "description": "Ab 1917 kämpfte Fallada mit Alkoholabhängigkeit und Morphiumsucht und verbrachte wiederholt längere Zeit in Entzugskliniken und Sanatorien. Der Kreislauf aus Rückfällen und Behandlung beeinträchtigte seine Fähigkeit, einer regelmäßigen Arbeit nachzugehen, und belastete seine Familienbeziehungen. Anfang 1921 wurde er erneut hospitalisiert, diesmal in einer Provinzialanstalt in Stralsund, während er seine frühen literarischen Schreibversuche fortsetzte.",
+      "locations": [
+        {
+          "name_historic": "Stralsund",
+          "name_modern": "Stralsund, Deutschland",
+          "centroid": [
+            13.0820846,
+            54.3096314
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://www.deutsche-biographie.de/sfz15552.html",
+        "https://de.wikipedia.org/wiki/Der_junge_Goedeschal._Ein_Pubert%C3%A4tsroman"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "hard_labor_inner_storm"
+    },
+    {
+      "date": "1920",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Erster Roman erscheint",
+      "description": "1920 veröffentlichte er seinen Debütroman „Der junge Goedeschal“ und nahm erstmals im Druck das Pseudonym [[Hans Fallada|Hans Fallada]] an. Das Buch fand in der Öffentlichkeit wenig Beachtung und war für seinen Verlag ein kommerzieller Misserfolg.\n\nEtwa zur selben Zeit verfolgte Rowohlt auch ein erfolgloses Übersetzungsprojekt mit Werken von Romain Rolland – ein weiterer Rückschlag in einem ohnehin prekären Beginn.",
+      "locations": [],
+      "involved_people": [
+        "Anne Marie Seyerlen",
+        "Ernst Rowohlt",
+        "Romain Rolland"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Der_junge_Goedeschal._Ein_Pubert%C3%A4tsroman",
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "hard_labor_inner_storm",
+      "annotations": {
+        "Hans Fallada": {
+          "explanation": "Das Pseudonym, das Rudolf Ditzen für seine literarische Laufbahn zu verwenden begann; später wurde er unter diesem Namen weithin bekannt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hans_Fallada"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Der junge Goedeschal. Ein Pubertätsroman",
+        "publication_type": "book",
+        "publisher": "Rowohlt Verlag",
+        "significance": "debut novel",
+        "impact": "The novel introduced him to the publishing world under the name Hans Fallada, though it drew only limited readership at the time."
+      }
+    },
+    {
+      "date": "1923",
+      "date_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age": 29,
+      "title": "Unterschlagung, Betrug und Haftstrafen",
+      "description": "Um seinen Morphium- und Alkoholkonsum zu finanzieren, beging Fallada Unterschlagungen und verwandte Delikte. 1923 erhielt er wegen Unterschlagung eine dreimonatige Gefängnisstrafe.\n\n1926 folgte eine zweite Verurteilung: Wegen Betrugs wurde er zu zweieinhalb Jahren verurteilt und 1928 aus dem Gefängnis entlassen – mit einem Vorstrafenregister, das seine Möglichkeiten noch lange nach Verbüßung der Strafe einschränkte.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Haftbefehl_Fallada.JPG/960px-Haftbefehl_Fallada.JPG",
+          "caption": "Haftbefehl für Fallada",
+          "source": "https://commons.wikimedia.org/wiki/File:Haftbefehl_Fallada.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-lock",
+      "chapter": "hard_labor_inner_storm"
+    },
+    {
+      "date": "1929-04-05",
+      "date_precision": "day",
+      "date_end": "1944-07-05",
+      "date_end_precision": "day",
+      "age": 35,
+      "title": "Heirat mit Anna Issel",
+      "description": "Nachdem er Anna Issel (Spitzname „Suse“) im Oktober 1928 kennengelernt hatte, als er zur Untermiete in der Wohnung ihrer Eltern in Hamburg-Eilbek wohnte, heiratete er sie am 5. April 1929 in Hamburg.\n\nNach der Hochzeit lebten sie zunächst getrennt – sie mit ihrer Mutter in Hamburg, er in Neumünster –, bevor sie versuchten, einen stabileren gemeinsamen Haushalt zu gründen.",
+      "locations": [
+        {
+          "name_historic": "Hamburg",
+          "name_modern": "Hamburg, Deutschland",
+          "centroid": [
+            10.000654,
+            53.550341
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Anna Ditzen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "breakthrough_under_the_reich",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Anna Margarete Issel",
+        "duration": "until divorce",
+        "children": 4,
+        "characterization": "strained"
+      },
+      "location_coordinates": [
+        {
+          "label": "Hamburg",
+          "name": "Hamburg, Germany",
+          "primary": true,
+          "centroid": [
+            10.000654,
+            53.550341
+          ],
+          "source": "Wikipedia (Hamburg-Eilbek and marriage location in provided excerpt)"
+        },
+        {
+          "label": "Neumünster",
+          "name": "Neumünster, Schleswig-Holstein, Germany",
+          "primary": false,
+          "centroid": [
+            9.991,
+            54.074
+          ],
+          "source": "Wikipedia (initial separate residence in provided excerpt)"
+        }
+      ]
+    },
+    {
+      "date": "1932",
+      "date_precision": "year",
+      "age": 38,
+      "title": "„Kleiner Mann – was nun?“ erscheint",
+      "description": "Nachdem er auf Anregung seines Verlegers [[Ernst Rowohlt|Ernst Rowohlt]] nach Berlin gezogen war, vollendete Fallada den Roman vor dem Hintergrund von Massenarbeitslosigkeit und Unsicherheit in den letzten Jahren der [[Weimar Republic|Weimarer Republik]]. 1932 erschien er zunächst als Fortsetzungsroman in der [[Vossische Zeitung|Vossischen Zeitung]] und wurde dann als Buch herausgegeben, das rasch große Aufmerksamkeit und hohe Verkaufszahlen erzielte.\n\nSeine Frau Anna Ditzen wurde später eng mit dem emotionalen Kern des Romans identifiziert, da sie das Vorbild für die Figur „Lämmchen“ war; auch die Titelgestaltung der ersten Ausgabe von George Grosz wurde Teil des frühen öffentlichen Bildes des Buches.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ernst Rowohlt",
+        "Anna Ditzen",
+        "George Grosz"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Kleiner_Mann_%E2%80%93_was_nun%3F",
+        "https://de.wikipedia.org/wiki/Ernst_Rowohlt"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Little_Man%2CWhat_Now%3F_%2810629213655%29.jpg/960px-Little_Man%2CWhat_Now%3F_%2810629213655%29.jpg",
+          "caption": "Kleiner Mann – was nun?",
+          "source": "https://commons.wikimedia.org/wiki/File:Little_Man,What_Now?_(10629213655).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "breakthrough_under_the_reich",
+      "annotations": {
+        "Ernst Rowohlt": {
+          "explanation": "Deutscher Verleger und Gründer des Rowohlt Verlags, der zu Falladas wichtigsten frühen Förderern wurde und half, seine Karriere zu prägen.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Ernst_Rowohlt"
+        },
+        "Weimar Republic": {
+          "explanation": "Deutschlands demokratischer Staat von 1919 bis 1933, der in seinen letzten Jahren von einer schweren Wirtschaftskrise und politischer Instabilität geprägt war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Weimar_Republic"
+        },
+        "Vossische Zeitung": {
+          "explanation": "Eine bedeutende liberale Berliner Zeitung, in der der Roman 1932 erstmals als Fortsetzungsroman veröffentlicht wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vossische_Zeitung"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "Kleiner Mann – was nun?",
+        "publication_type": "book",
+        "publisher": "Rowohlt Verlag",
+        "significance": "breakthrough",
+        "impact": "Its publication established him as a widely read novelist with a realist eye for economic hardship and intimate domestic life."
+      }
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Denunziert und umgezogen",
+      "description": "In den ersten Monaten der NS-Herrschaft wurde Fallada bei der [[SA|örtlichen SA]] in Berkenbrück denunziert und kurzzeitig festgehalten, nachdem ein privates Gespräch als politisch verdächtig gemeldet worden war. Daraufhin gab er sein Haus dort auf und zog nach Carwitz, um Abstand von der örtlichen Feindseligkeit zu gewinnen und Sicherheit zu suchen.",
+      "locations": [
+        {
+          "name_historic": "Berkenbrück",
+          "name_modern": "Berkenbrück, Brandenburg, Deutschland",
+          "centroid": [
+            14.1482449,
+            52.3518222
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Carwitz (near Feldberg)",
+          "name_modern": "Carwitz, Feldberger Seenlandschaft, Mecklenburg-Vorpommern, Deutschland",
+          "centroid": [
+            13.4384174,
+            53.3020462
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Anna_Ditzen",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "breakthrough_under_the_reich",
+      "annotations": {
+        "SA": {
+          "explanation": "Die Sturmabteilung (SA) war die paramilitärische Organisation der NSDAP, die in den frühen Jahren der NS-Herrschaft zur Einschüchterung und zur Durchsetzung auf der Straße eingesetzt wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sturmabteilung"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "Brandenburg",
+        "to_location": "Mecklenburg (Carwitz area)",
+        "characterization": "political pressure"
+      }
+    },
+    {
+      "date": "1937",
+      "date_precision": "year",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age": 43,
+      "title": "„Wolf unter Wölfen“ erscheint",
+      "description": "Während er in Carwitz lebte, veröffentlichte Fallada den Roman und befand sich in einer widersprüchlichen Lage: von manchen Funktionären gelobt, von anderen blockiert, nie wirklich sicher.\n\nEtwa zur selben Zeit lernte er die junge Emigrantin Marianne Portisch kennen und entwickelte eine enge, weitgehend platonische Bindung zu ihr. Er blieb durch Besuche während ihrer medizinischen Behandlung und durch das Teilen von Manuskripten mit ihr in Kontakt – während seine Ehe zunehmend unter Druck geriet.",
+      "locations": [
+        {
+          "name_historic": "Carwitz",
+          "name_modern": "Carwitz (Feldberger Seenlandschaft), Deutschland",
+          "centroid": [
+            13.4384174,
+            53.3020462
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Marianne Portisch",
+        "Anna Ditzen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Wolf_unter_W%C3%B6lfen",
+        "https://www.deutsche-biographie.de/sfz15552.html",
+        "https://de.wikipedia.org/wiki/Anna_Ditzen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fallada-Haus.jpg",
+          "caption": "Hans-Fallada-Haus in Carwitz",
+          "source": "https://commons.wikimedia.org/wiki/File:Fallada-Haus.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "breakthrough_under_the_reich",
+      "event_class": {
+        "type": "publication",
+        "title": "Wolf unter Wölfen",
+        "publication_type": "book",
+        "significance": "major novel",
+        "impact": "Its release placed him under heightened scrutiny as his work circulated within a tightly controlled literary system."
+      }
+    },
+    {
+      "date": "1944-09-04",
+      "date_precision": "day",
+      "date_end": "1944-12-13",
+      "date_end_precision": "day",
+      "age": 51,
+      "title": "Nach Gewalt eingewiesen",
+      "description": "Nach dem Zerbrechen seiner ersten Ehe und einem Schusswaffenvorfall im betrunkenen Zustand, der zu einer Anklage wegen versuchten Totschlags führte, wurde Fallada zur Beobachtung in die psychiatrisch-forensische Abteilung der Landesanstalt [[Neustrelitz-Strelitz|Neustrelitz-Strelitz]] eingewiesen. Während seiner Unterbringung schrieb er intensiv, darunter das später als „Der Trinker“ veröffentlichte Manuskript; Mitte Dezember 1944 wurde er entlassen und kehrte in ein von Sucht und Instabilität geprägtes Leben zurück.",
+      "locations": [
+        {
+          "name_historic": "Neustrelitz-Strelitz",
+          "name_modern": "Neustrelitz, Mecklenburg-Vorpommern, Deutschland",
+          "centroid": [
+            13.0630004,
+            53.3617163
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Anna Ditzen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Der_Trinker_(Roman)",
+        "https://de.wikipedia.org/wiki/Anna_Ditzen"
+      ],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "last_books_last_days",
+      "annotations": {
+        "Neustrelitz-Strelitz": {
+          "explanation": "Historische Bezeichnung für einen Bereich einer staatlichen Anstalt in Neustrelitz in Mecklenburg; Fallada war dort 1944 unter strafrechtlichem Gewahrsam zur psychiatrischen Beobachtung untergebracht.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Der_Trinker_(Roman)"
+        }
+      }
+    },
+    {
+      "date": "1945-02-01",
+      "date_precision": "day",
+      "age": 51,
+      "title": "Heirat mit Ursula Losch",
+      "description": "Am 1. Februar 1945 heiratete Fallada in den letzten Monaten des Zweiten Weltkriegs seine zweite Frau, während er im Gebiet von [[Feldberg (Mecklenburg)|Feldberg]] lebte. Beide kämpften mit Morphiumabhängigkeit und versuchten, unter Mangelbedingungen und wachsender psychischer Belastung einen gemeinsamen Haushalt aufrechtzuerhalten. Die Beziehung war von Anfang an instabil; Krankheit und Substanzkonsum prägten den Alltag und die Konflikte.",
+      "locations": [
+        {
+          "name_historic": "Feldberg",
+          "name_modern": "Feldberger Seenlandschaft, Mecklenburg-Vorpommern, Deutschland",
+          "centroid": [
+            13.4229937,
+            53.3385781
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ursula Boltzenthal (née Losch)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://www.deutsche-biographie.de/sfz15552.html"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "last_books_last_days",
+      "annotations": {
+        "Feldberg (Mecklenburg)": {
+          "explanation": "Eine kleine Stadt in Mecklenburg (heute Teil der Feldberger Seenlandschaft), in der Fallada während der Endphase des Zweiten Weltkriegs lebte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Feldberger_Seenlandschaft"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Ursula Losch",
+        "duration": "until death",
+        "characterization": "turbulent"
+      }
+    },
+    {
+      "date": "1946",
+      "date_precision": "year",
+      "age": 52,
+      "title": "Widerstandsroman in Berlin geschrieben",
+      "description": "Im Berlin der Nachkriegszeit erhielt Fallada Zugang zu [[Gestapo|Gestapo]]-Akten über das Arbeiterpaar Otto und Elise Hampel, das regimkritische Botschaften verbreitet hatte. Auf Grundlage der Akte schrieb er den Roman in einem konzentrierten Schub innerhalb weniger Wochen Ende 1946, bei angegriffener Gesundheit inmitten der Ruinen der Stadt und der angespannten Atmosphäre politischer Abrechnung und des täglichen Überlebens.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Otto Hampel",
+        "Elise Hampel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_and_Elise_Hampel",
+        "https://de.wikipedia.org/wiki/Jeder_stirbt_f%C3%BCr_sich_allein_(Roman)"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "last_books_last_days",
+      "annotations": {
+        "Gestapo": {
+          "explanation": "Die Geheime Staatspolizei NS-Deutschlands, verantwortlich für Überwachung, Repression und die Führung umfangreicher Ermittlungsakten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Gestapo"
+        }
+      }
+    },
+    {
+      "date": "1947-02-05",
+      "date_precision": "day",
+      "date_note": "Einige Quellen nennen den 06.02.1947 als Todesdatum",
+      "age": 53,
+      "title": "Tod in Berlin",
+      "description": "Hans Fallada starb am 5. Februar 1947 im Alter von 53 Jahren in Berlin, nach einer langen Zeit schwerer Krankheit und sich verschlechternder Gesundheit.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.3951309,
+            52.5173885
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hans_Fallada",
+        "https://de.wikipedia.org/wiki/Jeder_stirbt_f%C3%BCr_sich_allein_(Roman)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/CarwitzAlterFriedhofGrabFallada.jpg/960px-CarwitzAlterFriedhofGrabFallada.jpg",
+          "caption": "Grab von Hans Fallada, Alter Friedhof Carwitz",
+          "source": "https://commons.wikimedia.org/wiki/File:CarwitzAlterFriedhofGrabFallada.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "last_books_last_days"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "fef2eaef9013f71c",
+    "translated_on": "2026-07-19T07:46:56.971151+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

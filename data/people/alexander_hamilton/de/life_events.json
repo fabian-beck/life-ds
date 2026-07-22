@@ -1,0 +1,802 @@
+{
+  "dataset": "Alexander Hamilton Biographical Timeline",
+  "created_on": "2026-07-19",
+  "person": {
+    "name": "Alexander_Hamilton",
+    "birth_date": "1755-01-11",
+    "death_date": "1804-07-12",
+    "primary_roles": [
+      "Staatsmann",
+      "Soldat",
+      "Anwalt"
+    ],
+    "tagline": "Architekt der amerikanischen Staatsfinanzen",
+    "summary": "Alexander Hamilton war ein in der Karibik geborener amerikanischer Staatsmann, Offizier im Unabhängigkeitskrieg, Anwalt und Gründervater. Als erster Finanzminister der Vereinigten Staaten schuf er wesentliche Elemente des frühen föderalen Finanzsystems und wurde zu einem führenden Verfechter einer starken nationalen Regierung.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+    "portrait": {
+      "image": "/portraits/alexander_hamilton_thumbnail.webp",
+      "thumbnail": "/portraits/alexander_hamilton_thumbnail.webp",
+      "medium": "/portraits/alexander_hamilton_medium.webp",
+      "full": "/portraits/alexander_hamilton_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Alexander_Hamilton_%28NPG%29.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "island_crucible",
+      "headline": "Insel als Schmelztiegel",
+      "date_start": "1755-01-11",
+      "date_start_precision": "day",
+      "date_end": "1775",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 20,
+      "involved_people": [
+        "Rachel Faucette",
+        "James A. Hamilton",
+        "James Hamilton Jr.",
+        "Nicholas Cruger",
+        "Edward Stevens",
+        "Hercules Mulligan",
+        "Samuel Seabury"
+      ],
+      "location": "Karibik und Mittelatlantikstaaten der USA"
+    },
+    {
+      "id": "guns_under_washington",
+      "headline": "Geschütze unter Washington",
+      "date_start": "1776-01",
+      "date_start_precision": "month",
+      "date_end": "1781",
+      "date_end_precision": "year",
+      "age_start": 20,
+      "age_end": 26,
+      "involved_people": [
+        "George Washington",
+        "Elizabeth Schuyler Hamilton",
+        "Philip Schuyler",
+        "Catherine Van Rensselaer Schuyler",
+        "Charles Cornwallis",
+        "Marquis de Lafayette",
+        "Jean-Joseph Sourbader de Gimat"
+      ],
+      "location": "Östliche Vereinigte Staaten"
+    },
+    {
+      "id": "a_nation_held_together",
+      "headline": "Eine geeinte Nation",
+      "date_start": "1782",
+      "date_start_precision": "year",
+      "date_end": "1788",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 33,
+      "involved_people": [
+        "James Madison",
+        "John Dickinson",
+        "Edmund Jennings Randolph",
+        "John Jay",
+        "George Washington"
+      ],
+      "location": "Mittelatlantikstaaten der USA"
+    },
+    {
+      "id": "architect_of_american_finance",
+      "headline": "Architekt der amerikanischen Finanzen",
+      "date_start": "1789-09-11",
+      "date_start_precision": "day",
+      "date_end": "1795-01-31",
+      "date_end_precision": "day",
+      "age_start": 34,
+      "age_end": 40,
+      "involved_people": [
+        "George Washington"
+      ],
+      "location": "Vereinigte Staaten"
+    },
+    {
+      "id": "fatal_reckoning",
+      "headline": "Tödliche Abrechnung",
+      "date_start": "1797-08-25",
+      "date_start_precision": "day",
+      "date_end": "1804-07-12",
+      "date_end_precision": "day",
+      "age_start": 42,
+      "age_end": 49,
+      "involved_people": [
+        "Maria Reynolds",
+        "James Reynolds",
+        "Elizabeth Schuyler Hamilton",
+        "John Adams",
+        "Aaron Burr",
+        "Thomas Jefferson",
+        "Philip Hamilton",
+        "George Eacker",
+        "William Bayard Jr."
+      ],
+      "location": "Mittelatlantikstaaten der USA"
+    }
+  ],
+  "conclusion": "Vom verwaisten Schreiber aus der Karibik zum maßgeblichen Architekten des amerikanischen Finanzsystems machte Hamilton nationale Macht durch Intellekt, Dringlichkeit und unermüdlichen Ehrgeiz greifbar. Sein gewaltsamer Tod besiegelte ein Leben außergewöhnlicher Schaffenskraft und hinterließ Institutionen, die jede Rivalität überdauerten.",
+  "events": [
+    {
+      "date": "1755-01-11",
+      "date_precision": "day",
+      "date_note": "Hamiltons Geburtsjahr ist umstritten; Quellen nennen sowohl 1755 als auch 1757",
+      "title": "Geburt auf Nevis",
+      "description": "Alexander Hamilton wurde in Charlestown auf der Karibikinsel Nevis als Sohn von Rachel Faucette und James A. Hamilton geboren. Seine Eltern waren nicht verheiratet, und er wuchs mit seinem älteren Bruder James Jr. in den Britischen Westindischen Inseln auf.",
+      "locations": [
+        {
+          "name_historic": "Charlestown, Nevis",
+          "name_modern": "Charlestown, Saint Kitts und Nevis",
+          "centroid": [
+            -62.862,
+            17.133
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Rachel Faucette",
+        "James A. Hamilton"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Museum_of_Nevis_History_-_Alexander_Hamilton_birthplace.jpg/960px-The_Museum_of_Nevis_History_-_Alexander_Hamilton_birthplace.jpg",
+          "caption": "Museum für die Geschichte von Nevis an Hamiltons Geburtsort",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Museum_of_Nevis_History_-_Alexander_Hamilton_birthplace.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "island_crucible"
+    },
+    {
+      "date": "1768-02-19",
+      "date_precision": "day",
+      "date_end": "1772",
+      "date_end_precision": "year",
+      "title": "Verwaist und Schreiber",
+      "description": "Am 19. Februar 1768 starb Hamiltons Mutter Rachel Faucette in Saint Croix, damals eine dänische Kolonie in der Karibik, an Fieber und hinterließ Alexander und seinen Bruder James als Waisen. Die Brüder wurden bald getrennt; Kaufleute nahmen Hamilton auf, und er wurde Schreiber bei der Import-Export-Firma Beekman and Cruger, deren Geschäfte er mehrere Monate lang führte, obwohl er noch ein Teenager war.",
+      "locations": [
+        {
+          "name_historic": "Christiansted, Saint Croix",
+          "name_modern": "Christiansted, Amerikanische Jungferninseln",
+          "centroid": [
+            -64.7032,
+            17.7466
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Rachel Faucette",
+        "James Hamilton Jr.",
+        "Nicholas Cruger",
+        "Edward Stevens"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Saint_Croix"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Historical_marker_for_Alexander_Hamilton%2C_Christiansted%2C_St._Croix.jpg/960px-Historical_marker_for_Alexander_Hamilton%2C_Christiansted%2C_St._Croix.jpg",
+          "caption": "Historische Gedenktafel für Alexander Hamilton, Christiansted, St. Croix",
+          "source": "https://commons.wikimedia.org/wiki/File:Historical_marker_for_Alexander_Hamilton,_Christiansted,_St._Croix.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "island_crucible",
+      "annotations": {
+        "Saint Croix": {
+          "explanation": "Die größte der Amerikanischen Jungferninseln; die Vereinigten Staaten erwarben sie 1917 von Dänemark.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Saint_Croix"
+        }
+      }
+    },
+    {
+      "date": "1772-10",
+      "date_precision": "month",
+      "date_end": "1774-05",
+      "date_end_precision": "month",
+      "title": "Bildung in New York",
+      "description": "Nachdem örtliche Förderer nach der Veröffentlichung seines Berichts über einen verheerenden Hurrikan Geld gesammelt hatten, verließ Hamilton Saint Croix in Richtung der nordamerikanischen Kolonien. Er besuchte die Elizabethtown Academy in New Jersey, wohnte bei Hercules Mulligan in New York City und schrieb sich 1774 am King's College ein.",
+      "locations": [
+        {
+          "name_historic": "Christiansted",
+          "name_modern": "Christiansted, Amerikanische Jungferninseln",
+          "centroid": [
+            -64.7032,
+            17.7466
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, New York, USA",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Hercules Mulligan"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Hercules_Mulligan"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "island_crucible",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Saint Croix, British West Indies",
+        "to_location": "New York City, New York",
+        "characterization": "educational opportunity"
+      }
+    },
+    {
+      "date": "1774",
+      "date_precision": "year",
+      "title": "Verteidigt die Sache der Patrioten",
+      "description": "In New York City mischte sich Hamilton anonym in eine öffentliche Kontroverse mit dem loyalistischen Pamphletisten Samuel Seabury ein und verteidigte den Kontinentalkongress sowie den kolonialen Widerstand gegen die britische Politik, während die revolutionären Spannungen zunahmen.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Samuel Seabury"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Samuel_Seabury_(Anglican_bishop)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Full_Vindication_of_the_Measures_of_Congress.webp/960px-A_Full_Vindication_of_the_Measures_of_Congress.webp.png",
+          "caption": "Titelseite von Hamiltons Kongress-Pamphlet von 1774",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Full_Vindication_of_the_Measures_of_Congress.webp"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "island_crucible",
+      "event_class": {
+        "type": "publication",
+        "title": "A Full Vindication of the Measures of Congress",
+        "publication_type": "essay",
+        "significance": "Patriot polemic",
+        "impact": "Hamilton argued publicly for the revolutionary cause while still a King's College student."
+      }
+    },
+    {
+      "date": "1776-03",
+      "date_precision": "month",
+      "title": "Kommandiert New Yorker Artillerie",
+      "description": "Im März 1776 beauftragte die revolutionäre Regierung New Yorks Hamilton damit, die [[New York Provincial Company of Artillery|New Yorker Provinzial-Artilleriekompanie]] aufzustellen, und ernannte ihn zu ihrem Hauptmann. Er führte die Einheit im Feldzug um New York City, einschließlich des Rückzugs der Kontinentalarmee aus Manhattan.",
+      "locations": [
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, New York, USA",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Manhattan",
+          "name_modern": "New York City, New York, USA",
+          "centroid": [
+            -73.9712,
+            40.7831
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/New_York_Provincial_Company_of_Artillery",
+        "https://en.wikipedia.org/wiki/New_York_and_New_Jersey_campaign"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg/960px-Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg",
+          "caption": "Hamilton in der Uniform der New Yorker Artillerie",
+          "source": "https://commons.wikimedia.org/wiki/File:Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "guns_under_washington",
+      "annotations": {
+        "New York Provincial Company of Artillery": {
+          "explanation": "Eine Artilleriekompanie bediente Kanonen und zugehörige Ausrüstung; Hamiltons New Yorker Einheit diente in den frühen Feldzügen des Krieges bei der Kontinentalarmee.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/New_York_Provincial_Company_of_Artillery"
+        }
+      }
+    },
+    {
+      "date": "1777-03-01",
+      "date_precision": "day",
+      "date_end": "1781-03",
+      "date_end_precision": "month",
+      "title": "Dient Washington als Adjutant",
+      "description": "Am 1. März 1777 ernannte George Washington Hamilton im Hauptquartier der Kontinentalarmee zu seinem Adjutanten im Rang eines Oberstleutnants. Hamilton übernahm Korrespondenz-, Nachrichtendienst- und Stabsaufgaben, während er weiterhin ein eigenständiges Feldkommando anstrebte.",
+      "locations": [
+        {
+          "name_historic": "Morristown",
+          "name_modern": "Morristown, New Jersey, Vereinigte Staaten",
+          "centroid": [
+            -74.4815,
+            40.7968
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/George_Washington"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "guns_under_washington"
+    },
+    {
+      "date": "1780-12-14",
+      "date_precision": "day",
+      "title": "Heiratet Elizabeth Schuyler",
+      "description": "Die Hochzeit fand im Haus der Familie Schuyler in Albany statt, wo Hamilton als Adjutant von General George Washington diente. Nach einer kurzen Hochzeitsreise kehrte er in den Militärdienst zurück.",
+      "locations": [
+        {
+          "name_historic": "Albany",
+          "name_modern": "Albany, New York, Vereinigte Staaten",
+          "centroid": [
+            -73.7562,
+            42.6526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Elizabeth Schuyler Hamilton",
+        "Philip Schuyler",
+        "Catherine Van Rensselaer Schuyler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton",
+        "https://en.wikipedia.org/wiki/Philip_Schuyler"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Schuyler_Mansion_Panorama_Left.jpg/960px-Schuyler_Mansion_Panorama_Left.jpg",
+          "caption": "Schuyler Mansion, Albany, New York",
+          "source": "https://commons.wikimedia.org/wiki/File:Schuyler_Mansion_Panorama_Left.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "guns_under_washington",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Elizabeth Schuyler",
+        "duration": "until death",
+        "children": 8,
+        "characterization": "devoted marriage"
+      }
+    },
+    {
+      "date": "1781-10-14",
+      "date_precision": "day",
+      "date_end": "1781-10-19",
+      "date_end_precision": "day",
+      "title": "Erstürmt Yorktowns Redoute",
+      "description": "Als Befehlshaber eines Bataillons leichter Infanterie führte Hamilton während der Belagerung von Yorktown den nächtlichen Angriff auf [[Redoubt No. 10|Redoute Nr. 10]]. Ihre Einnahme trug dazu bei, die französisch-amerikanischen Belagerungslinien um die britische Armee unter Charles Cornwallis zu schließen.",
+      "locations": [
+        {
+          "name_historic": "Yorktown, Virginia",
+          "name_modern": "Yorktown, Virginia, Vereinigte Staaten",
+          "centroid": [
+            -76.5097,
+            37.2388
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Charles Cornwallis",
+        "George Washington",
+        "Marquis de Lafayette",
+        "Jean-Joseph Sourbader de Gimat"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_%281840%29.jpg/960px-EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_%281840%29.jpg",
+          "caption": "Erstürmung der Redoute 10 während der Belagerung von Yorktown",
+          "source": "https://commons.wikimedia.org/wiki/File:EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_(1840).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "guns_under_washington",
+      "annotations": {
+        "Redoubt No. 10": {
+          "explanation": "Eine Redoute war ein kleines, geschlossenes befestigtes Außenwerk, häufig aus Erde errichtet und zur Verstärkung einer Verteidigungslinie bestimmt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
+        }
+      }
+    },
+    {
+      "date": "1782",
+      "date_precision": "year",
+      "date_end": "1785",
+      "date_end_precision": "year",
+      "title": "Baut juristische Karriere auf",
+      "description": "Nach dem Krieg baute Hamilton in New York City eine erfolgreiche Anwaltspraxis auf, vertrat New York als Delegierter im [[Congress of the Confederation|Konföderationskongress]] und half bei der Gründung der Bank of New York, um Handelskredite auszuweiten, während die Stadt nach der Unabhängigkeit ihre Wirtschaft wiederaufbaute.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Bank_of_New_York",
+        "https://en.wikipedia.org/wiki/Congress_of_the_Confederation"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "a_nation_held_together",
+      "annotations": {
+        "Congress of the Confederation": {
+          "explanation": "Das nationale Regierungsorgan der Vereinigten Staaten unter den Konföderationsartikeln, das der durch die Verfassung geschaffenen Bundesregierung vorausging.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Congress_of_the_Confederation"
+        }
+      }
+    },
+    {
+      "date": "1786-09-11",
+      "date_precision": "day",
+      "date_end": "1786-09-14",
+      "date_end_precision": "day",
+      "title": "Fordert Verfassungskonvent",
+      "description": "Hamilton vertrat New York bei der [[Annapolis Convention|Annapolis-Konvention]], wo die Delegierten mit der Unfähigkeit der Konföderationsregierung konfrontiert waren, den Handel zwischen den Staaten zu regulieren. Er verfasste den Bericht der Konvention, der die Staaten aufforderte, Delegierte zu einer umfassenderen Versammlung in Philadelphia zu entsenden.",
+      "locations": [
+        {
+          "name_historic": "Annapolis",
+          "name_modern": "Annapolis, Maryland, Vereinigte Staaten",
+          "centroid": [
+            -76.4922,
+            38.9784
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "James Madison",
+        "John Dickinson",
+        "Edmund Jennings Randolph"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Annapolis_Convention_(1786)",
+        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "a_nation_held_together",
+      "annotations": {
+        "Annapolis Convention": {
+          "explanation": "Nur fünf Staaten entsandten Delegierte – eine geringe Beteiligung, die die Schwäche der Zusammenarbeit zwischen den Staaten unter den Konföderationsartikeln unterstrich.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Annapolis_Convention_(1786)"
+        }
+      }
+    },
+    {
+      "date": "1787-05",
+      "date_precision": "month",
+      "date_end": "1788-05",
+      "date_end_precision": "month",
+      "title": "Plädiert für die Verfassung",
+      "description": "Auf der [[Constitutional Convention|Philadelphia-Konvention]] trat Hamilton für eine wesentlich stärkere nationale Regierung ein. In den anschließenden Debatten über die Ratifizierung arbeitete er mit James Madison und John Jay an Essays zusammen, die die vorgeschlagene Verfassung verteidigten.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "James Madison",
+        "John Jay",
+        "George Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)",
+        "https://en.wikipedia.org/wiki/The_Federalist_Papers",
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/The_Federalist_%281788%29.jpg/960px-The_Federalist_%281788%29.jpg",
+          "caption": "The Federalist, Ausgabe von 1788",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Federalist_(1788).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "a_nation_held_together",
+      "annotations": {
+        "Constitutional Convention": {
+          "explanation": "Obwohl der Konvent ursprünglich zur Überarbeitung der Konföderationsartikel vorgesehen war, brachte er eine völlig neue föderale Ordnung hervor.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "The Federalist Papers",
+        "publication_type": "essay",
+        "significance": "ratification defense",
+        "impact": "The essays presented a sustained public argument for adopting the United States Constitution."
+      }
+    },
+    {
+      "date": "1789-09-11",
+      "date_precision": "day",
+      "date_end": "1795-01-31",
+      "date_end_precision": "day",
+      "title": "Leitet das Finanzministerium",
+      "description": "Am 11. September 1789 ernannte Präsident George Washington Hamilton zum ersten Finanzminister. Vom Sitz der neuen Bundesregierung in New York City aus begann er, das Ministerium zu organisieren und ein Programm voranzutreiben, das die Übernahme der Kriegsschulden der Einzelstaaten aus dem Unabhängigkeitskrieg durch den Bund, Zolleinnahmen, eine Verbrauchsteuer auf Whiskey, eine Nationalbank und den [[Revenue Cutter Service|Zollkutterdienst]] umfasste.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/United_States_Secretary_of_the_Treasury",
+        "https://en.wikipedia.org/wiki/United_States_Revenue_Cutter_Service"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg/960px-Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg",
+          "caption": "Hamiltons Rundschreiben des Finanzministeriums an Zollbeamte",
+          "source": "https://commons.wikimedia.org/wiki/File:Circular_from_Alexander_Hamilton,_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_(page_1).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "architect_of_american_finance",
+      "annotations": {
+        "Revenue Cutter Service": {
+          "explanation": "Diese Flotte zur Durchsetzung der Zollbestimmungen wurde später zu einer Vorläuferinstitution der United States Coast Guard.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Revenue_Cutter_Service"
+        }
+      }
+    },
+    {
+      "date": "1797-08-25",
+      "date_precision": "day",
+      "title": "Veröffentlicht Reynolds-Pamphlet",
+      "description": "In Philadelphia sah sich Hamilton mit Vorwürfen finanziellen Fehlverhaltens konfrontiert und räumte öffentlich seine ehebrecherische Beziehung mit Maria Reynolds sowie Zahlungen an deren Ehemann James Reynolds ein. Die Enthüllung verursachte Elizabeth Hamilton, die während ihrer Schwangerschaft bei ihren Eltern in Albany wohnte, tiefen Schmerz.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Albany",
+          "name_modern": "Albany, New York, Vereinigte Staaten",
+          "centroid": [
+            -73.7562,
+            42.6526
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Maria Reynolds",
+        "James Reynolds",
+        "Elizabeth Schuyler Hamilton"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Maria_Reynolds",
+        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Observations_on_Certain_Documents_Alexander_Hamilton_1797.jpg/960px-Observations_on_Certain_Documents_Alexander_Hamilton_1797.jpg",
+          "caption": "Titelseite von Observations on Certain Documents, 1797",
+          "source": "https://commons.wikimedia.org/wiki/File:Observations_on_Certain_Documents_Alexander_Hamilton_1797.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "fatal_reckoning",
+      "event_class": {
+        "type": "publication",
+        "title": "Reynolds Pamphlet",
+        "publication_type": "essay",
+        "significance": "personal scandal",
+        "impact": "Hamilton sought to refute allegations of public corruption by disclosing the affair and its related blackmail."
+      }
+    },
+    {
+      "date": "1798",
+      "date_precision": "year",
+      "date_end": "1800",
+      "date_end_precision": "year",
+      "title": "Kommandiert Armee und bekämpft Burr",
+      "description": "Während des [[Quasi-War|Quasi-Kriegs mit Frankreich]] ernannte Präsident John Adams Hamilton zum Generalmajor und Generalinspekteur der provisorischen Armee, die jedoch nicht zum Kampfeinsatz kam. Bei der Präsidentschaftswahl von 1800 setzte Hamilton seinen Einfluss gegen Aaron Burr ein und unterstützte Thomas Jefferson, nachdem Jefferson und Burr im Wahlmännerkollegium gleichauf gelegen hatten.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "John Adams",
+        "Aaron Burr",
+        "Thomas Jefferson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Adams",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Aaron_Burr"
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "fatal_reckoning",
+      "annotations": {
+        "Quasi-War": {
+          "explanation": "Ein nicht erklärter Seekonflikt zwischen den Vereinigten Staaten und Frankreich, der von 1798 bis 1800 hauptsächlich auf See ausgetragen wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Quasi-War"
+        }
+      }
+    },
+    {
+      "date": "1801-11-24",
+      "date_precision": "day",
+      "title": "Trauert um Philips Tod",
+      "description": "Hamiltons ältester Sohn Philip starb in New York City, nachdem er bei einem Duell mit George Eacker in New Jersey angeschossen worden war. Alexander Hamilton und Elizabeth Schuyler Hamilton blieben in der Nacht vor seinem Tod an Philips Sterbebett.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Weehawken",
+          "name_modern": "Weehawken, New Jersey, Vereinigte Staaten",
+          "centroid": [
+            -74.0254,
+            40.769
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Philip Hamilton",
+        "Elizabeth Schuyler Hamilton",
+        "George Eacker"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Philip_Hamilton",
+        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "fatal_reckoning"
+    },
+    {
+      "date": "1804-07-11",
+      "date_precision": "day",
+      "date_end": "1804-07-12",
+      "date_end_precision": "day",
+      "title": "Stirbt nach dem Duell mit Burr",
+      "description": "Am 11. Juli 1804 focht Hamilton in Weehawken, New Jersey, ein Pistolenduell mit Aaron Burr und wurde in den Unterleib geschossen. Er wurde über den Hudson River nach New York City gebracht, wo er am folgenden Tag an seiner Verletzung starb.",
+      "locations": [
+        {
+          "name_historic": "Weehawken",
+          "name_modern": "Weehawken, New Jersey, Vereinigte Staaten",
+          "centroid": [
+            -74.0232,
+            40.7695
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Aaron Burr",
+        "William Bayard Jr."
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Burr%E2%80%93Hamilton_duel"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/18040725_Mourn%2C_Oh_Columbia_-_%28Burr-Hamilton_duel%29_The_Adams_Centinel.jpg/960px-18040725_Mourn%2C_Oh_Columbia_-_%28Burr-Hamilton_duel%29_The_Adams_Centinel.jpg",
+          "caption": "Zeitungsbericht über das Burr-Hamilton-Duell",
+          "source": "https://commons.wikimedia.org/wiki/File:18040725_Mourn,_Oh_Columbia_-_(Burr-Hamilton_duel)_The_Adams_Centinel.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "fatal_reckoning"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "e87db93cbd0dd8ce",
+    "translated_on": "2026-07-19T11:37:19.433696+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

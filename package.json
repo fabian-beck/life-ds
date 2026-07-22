@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "test:interface": "playwright test",
+    "test:interface:report": "playwright show-report",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:py",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"**/*.css\"",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
@@ -36,6 +39,7 @@
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "@protomaps/basemaps": "^5.7.0",
+    "d3-force": "^3.0.0",
     "maplibre-gl": "^5.18.0",
     "pmtiles": "^4.4.0",
     "svelte-spa-router": "^5.1.1"

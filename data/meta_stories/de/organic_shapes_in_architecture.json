@@ -1,0 +1,480 @@
+{
+  "dataset": "meta_story",
+  "created_on": "2026-07-22T07:02:52.703470+02:00",
+  "meta_story": {
+    "id": "organic_shapes_in_architecture",
+    "title": "Architektur in lebendiger Form",
+    "tagline": "Wenn Gebäude vom Leben lernen",
+    "description": "Organische Architektur beginnt mit einer Verweigerung: der Weigerung, ein Gebäude als abgeschlossenes, statisches Objekt zu behandeln, das historischen Stilformen entstammt. Um die Wende zum zwanzigsten Jahrhundert nutzten Art Nouveau und Jugendstil geschwungene Linien, botanisches Ornament und reich integrierte Innenräume, um moderne Architektur als kohärente Umgebung statt als Ansammlung übernommener Formen erfahrbar zu machen.\n\nDieser Impuls ging stetig über das Erscheinungsbild hinaus. Gebäude wurden zu Argumenten für eine engere Beziehung zu Landschaft und alltäglichem Wohnen, während Vegetation und Unregelmäßigkeit standardisiertes Bauen herausforderten. Experimente mit Membranen, Seilnetzen und Gitterschalen ließen Schwerkraft und Zugspannung außergewöhnlich leichte Hüllen bestimmen; später machten fließende bürgerliche Räume Zirkulation und körperliche Bewegung zur architektonischen Form. Lebendige Form bezeichnete schließlich nicht nur, woran Architektur erinnerte, sondern auch, wie sie auf einen Ort einging, Material nutzte, Leben beherbergte und Menschen in Bewegung setzte.",
+    "person_ids": [
+      "antoni_gaud",
+      "charles_rennie_mackintosh",
+      "frank_lloyd_wright",
+      "frei_otto",
+      "friedensreich_hundertwasser",
+      "otto_wagner",
+      "zaha_hadid"
+    ],
+    "date_range_start": "1880",
+    "date_range_end": "2016",
+    "lastUpdated": "2026-07-22T08:41:17.236249+02:00"
+  },
+  "generation_metadata": {
+    "hints": {
+      "hint": "include Jugendstil architects"
+    },
+    "model": "gpt-5.6-terra",
+    "generated_at": "2026-07-22T07:02:52.703470+02:00"
+  },
+  "subtopics": [
+    {
+      "id": "art_nouveau_and_jugendstil",
+      "title": "Die lebendige Linie",
+      "description": "Gaudí, Mackintosh und Wagner nutzten botanisches Ornament, geschwungene Linien und integriertes Design, um mit historischer Nachahmung zu brechen. Ihre Arbeit verband Gebäude, Ausstattung, Oberflächen und öffentliches Erleben zu immersiven modernen Umgebungen.",
+      "person_ids": ["antoni_gaud", "charles_rennie_mackintosh", "otto_wagner"]
+    },
+    {
+      "id": "architecture_as_living_habitat",
+      "title": "Das Wohnen schlägt Wurzeln",
+      "description": "Wright und Hundertwasser behandelten Architektur als Erweiterung von Landschaft, Wohnen und der natürlichen Welt. Auf deutlich unterschiedliche Weise widersetzten sich beide standardisierten Gebäuden, die von Lebensbedingungen losgelöst waren.",
+      "person_ids": ["frank_lloyd_wright", "friedensreich_hundertwasser"]
+    },
+    {
+      "id": "structures_in_motion",
+      "title": "Sichtbar gemachte Kräfte",
+      "description": "Otto und Hadid machten organische Form zu einer Frage der architektonischen Methode. Otto entwickelte effiziente Konstruktionen aus Materialkräften, während Hadid fließende Bewegung und kontinuierlichen Raum im bürgerlichen Maßstab baubar machte.",
+      "person_ids": ["frei_otto", "zaha_hadid"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "art_nouveau_breakthroughs",
+      "title": "Linie wird Umgebung (1880-1914)",
+      "date_start": "1880",
+      "date_start_precision": "year",
+      "date_end": "1914",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "otto_wagner",
+          "event_date": "1894",
+          "event_date_precision": "year",
+          "event_title": "Entwurf der Wiener Stadtbahn",
+          "event_index": 10,
+          "theme_connection": "Wagners einheitliche Architektur der Wiener Stadtbahn machte den Modernismus des Jugendstils zu einem Teil der alltäglichen städtischen Infrastruktur. Ihre Stationen und zugehörigen Bauten verliehen Wiens neuer Architektursprache einen bedeutenden, dauerhaften öffentlichen Ausdruck."
+        },
+        {
+          "person_id": "otto_wagner",
+          "event_date": "1896",
+          "event_date_precision": "year",
+          "event_title": "Veröffentlichung von Moderne Architektur",
+          "event_index": 11,
+          "theme_connection": "Moderne Architektur war ein wegweisender theoretischer Text, der Wagners moderne Wiener Architektur formulierte und nachfolgende Gestalter tiefgreifend beeinflusste. Das Werk ist zentral für die Erzählung, wie das Design der Jugendstilzeit in ein einflussreiches modernes Architekturprogramm überführt wurde."
+        },
+        {
+          "person_id": "charles_rennie_mackintosh",
+          "event_date": "1897",
+          "event_date_precision": "year",
+          "event_title": "Die Glasgow School of Art entsteht",
+          "event_index": 7,
+          "theme_connection": "Die Glasgow School of Art ist Mackintoshs prägendes architektonisches Wahrzeichen; sie verbindet Struktur, Licht, Einbauten, Möbel und dekorative Details zu einem einheitlichen räumlichen Organismus. Sie etablierte eine unverwechselbare nördliche Jugendstilsprache, die half, die moderne Architektur über historische Nachahmung hinauszuführen."
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1900",
+          "event_date_precision": "year",
+          "event_title": "Projekt Park Güell entwickelt",
+          "event_index": 11,
+          "theme_connection": "Der Park Güell ist eine wegweisende Synthese aus Architektur, Landschaft, Handwerk und Gelände: Seine Viadukte, Säulen, Mosaike und bepflanzte Anlage lassen den gebauten Raum wie aus dem Hang hervorgehen. Er ist unverzichtbar für Gaudís Erweiterung des Jugendstils zu einer immersiven, naturähnlichen Umgebung."
+        },
+        {
+          "person_id": "charles_rennie_mackintosh",
+          "event_date": "1902",
+          "event_date_precision": "year",
+          "event_title": "Höhepunkt mit Hill House und Willow Tearooms",
+          "event_index": 11,
+          "theme_connection": "Hill House und die Willow Tearooms sind wegweisende Gesamtensembles, in denen Architektur, Möbel, Oberflächenmuster und Atmosphäre als ein gestaltetes System wirken. Sie sind wesentliche Beispiele für Mackintoshs Jugendstil-Neuerfindung des bewohnten Innenraums."
+        },
+        {
+          "person_id": "otto_wagner",
+          "event_date": "1902",
+          "event_date_precision": "year",
+          "event_title": "Vollendung öffentlicher Schlüsselbauten",
+          "event_index": 13,
+          "theme_connection": "Die Kirche am Steinhof ist ein kanonischer Bau der Wiener Secession, der ein modernes konstruktives und hygienisches Programm mit einer immersiven, hochgradig integrierten Dekorationssprache verbindet. Sie gab Wagners Variante des Jugendstils ein bedeutendes bürgerliches und räumliches Monument."
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1904",
+          "event_date_precision": "year",
+          "event_title": "Markante Stadthäuser geschaffen",
+          "event_index": 12,
+          "theme_connection": "Casa Batlló und Casa Milà sind bedeutende Wahrzeichen von Gaudís reifer organischer Architektur; sie nutzen wellenartige Fassaden, knochen- und organismusähnliche Formen sowie innovative Raumkonstruktionen. Sie machten natürliche Form zu einer konstruktiven und urbanen Architektursprache, nicht bloß zu Ornament."
+        },
+        {
+          "person_id": "frank_lloyd_wright",
+          "event_date": "1911",
+          "event_date_precision": "year",
+          "event_title": "Baut Taliesin in Wisconsin",
+          "event_index": 9,
+          "theme_connection": "Taliesin ist Wrights dauerhaftes Labor für organische Architektur: Seine niedrige, dem Gelände folgende Komposition und die Verbindung von Wohnen, Arbeiten und der Landschaft Wisconsins ließen die Architektur aus ihrem Ort hervorzugehen scheinen und prägten seine spätere Philosophie."
+        }
+      ],
+      "historical_context": [],
+      "lead_in": "Modernes Design stellte überkommene Stilformen infrage, indem es Architektur, Oberflächen, Ausstattung und öffentliches Erleben zusammenwirken ließ. Natürliche Form erweiterte sich vom Ornament zu einer immersiven Raumsprache."
+    },
+    {
+      "id": "organic_architecture_matures",
+      "title": "Form trifft Kraft (1915-1959)",
+      "date_start": "1915",
+      "date_start_precision": "year",
+      "date_end": "1959",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "frei_otto",
+          "event_date": "1954",
+          "event_date_precision": "year",
+          "event_title": "Veröffentlicht „Das hängende Dach“ und lehrt im Ausland",
+          "event_index": 5,
+          "theme_connection": "Ottos Veröffentlichung Das hängende Dach von 1954 war die erste umfassende Studie zu vorgespannten Flächentragwerken. Sie schuf eine grundlegende theoretische und technische Basis für die außerordentlich leichten, kraftgenerierten Membrandächer, durch die seine Architektur aus natürlichen Prinzipien hervorzuwachsen schien."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "spanish_civil_war",
+          "title": "Spanischer Bürgerkrieg",
+          "description": "Revolutionäre Gewalt in Barcelona zerstörte oder beschädigte große Teile von Gaudís Werkstatt, darunter Zeichnungen und Modelle der Sagrada Família, die spätere Architekten zur Rekonstruktion seiner Absichten benötigten.",
+          "date_start": "1936-07-17",
+          "date_start_precision": "day",
+          "date_end": "1939-04-01",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Spanish_Civil_War"
+        },
+        {
+          "id": "world_war_ii",
+          "title": "Zweiter Weltkrieg",
+          "description": "Der Krieg zog Frei Otto zum Militärdienst ein und ließ ihn zum Kriegsgefangenen werden; dort prägten seine Erfahrungen mit improvisierten, materialsparenden Unterkünften seine spätere Forschung zu Leichtbaukonstruktionen.",
+          "date_start": "1939-09-01",
+          "date_start_precision": "day",
+          "date_end": "1945-09-02",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_II"
+        }
+      ],
+      "lead_in": "Konflikte unterbrachen frühere Vermächtnisse, während neue Forschung den Blick auf Ökonomie, Zugkräfte und konstruktives Verhalten richtete. Organische Form begann, eine technische Methode zu gewinnen."
+    },
+    {
+      "id": "lightweight_and_ecological_experiments",
+      "title": "Lebensraum öffnet sich nach außen (1960-1989)",
+      "date_start": "1960",
+      "date_start_precision": "year",
+      "date_end": "1989",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "frei_otto",
+          "event_date": "1967",
+          "event_date_precision": "year",
+          "event_title": "Deutscher Pavillon auf der Expo 67",
+          "event_index": 8,
+          "theme_connection": "Der Deutsche Pavillon auf der Expo 67 machte Ottos Ansatz von Seilnetzen und textilen Membranen im internationalen Maßstab sichtbar. Sein außerordentlich leichtes, flexibles Dach übertrug von der Natur abgeleitete Konstruktionsprinzipien in ein bedeutendes gebautes Architekturwerk."
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1968",
+          "event_date_precision": "year",
+          "event_title": "Seilnetzdächer für Münchens Olympiagelände",
+          "event_index": 9,
+          "theme_connection": "Die Olympiadächer in München sind ein prägendes Wahrzeichen der Zugarchitektur. Ottos Formfindung mit Hängenetzen und Seifenhäuten schuf ein beispielloses, landschaftsähnliches Dach, dessen scheinbare Bewegung und Materialeffizienz natürliche Kräfte zu Erzeugern architektonischer Form machten."
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1975",
+          "event_date_precision": "year",
+          "event_title": "‚Baummieter'-Aktionen gestartet",
+          "event_index": 11,
+          "theme_connection": "Die Aktion und das Manifest „Baummieter“ formulierten unmittelbar Hundertwassers radikale These, dass Vegetation Architektur buchstäblich bewohnen sollte. Dieses fortwirkende Konzept machte lebendigen Lebensraum und den Widerstand gegen abgeschlossene, standardisierte Gebäude zu zentralen Bestandteilen seiner Architekturauffassung."
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1982",
+          "event_date_precision": "year",
+          "event_title": "Architekturwende und Hundertwasserhaus",
+          "event_index": 12,
+          "theme_connection": "Das Hundertwasserhaus gab Hundertwassers Idealen gegen Standardisierung eine dauerhafte, bewohnte bürgerliche Form: unregelmäßige Oberflächen, begrünte Dächer, aus Fenstern wachsende Bäume und individualisiertes Wohnen. Es ist die wesentliche bauliche Demonstration von Architektur als lebendigem Lebensraum."
+        }
+      ],
+      "historical_context": [],
+      "lead_in": "Leichte Dächer machten Kräfte über öffentlichen Versammlungen sichtbar, während begrünte und unregelmäßige Wohnbauten das abgeschlossene, standardisierte Gebäude herausforderten. Natur trat zugleich als Struktur und als Bewohnerin in die Architektur ein."
+    },
+    {
+      "id": "digital_fluidity",
+      "title": "Bewegung schafft Monumente (1990-2016)",
+      "date_start": "1990",
+      "date_start_precision": "year",
+      "date_end": "2016",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "frei_otto",
+          "event_date": "2000",
+          "event_date_precision": "year",
+          "event_title": "Japanischer Pavillon auf der Expo 2000",
+          "event_index": 13,
+          "theme_connection": "Der Japanische Pavillon war eine bedeutende späte Demonstration von Ottos kraftbasiertem Denken im Leichtbau: Seine experimentelle Gitterschale übertrug die Prinzipien flexibler natürlicher Systeme in ein großes öffentliches Gebäude mit außergewöhnlich geringem Materialeinsatz."
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2010",
+          "event_date_precision": "year",
+          "event_title": "MAXXI-Museum und erster Stirling Prize",
+          "event_index": 12,
+          "theme_connection": "MAXXI ist eine wegweisende Verwirklichung von Hadids reifer fließender Architektur: Ineinander verschlungene Betonbänder machen Zirkulation, körperliche Bewegung und kontinuierlichen Raum zur ordnenden Struktur eines großen bürgerlichen Museums."
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2012",
+          "event_date_precision": "year",
+          "event_title": "Damehood und London Aquatics Centre",
+          "event_index": 13,
+          "theme_connection": "Das London Aquatics Centre verlieh Hadids fließender Formensprache bei den Olympischen Spielen 2012 monumentale globale Sichtbarkeit. Sein wellenartiges Dach ließ ein großes öffentliches Gebäude von körperlicher Bewegung und Wasser geformt erscheinen – ein prägender Ausdruck digital ermöglichter organischer Form."
+        }
+      ],
+      "historical_context": [],
+      "lead_in": "Kraftbasierte Experimente mündeten in immer ambitioniertere öffentliche Bauten, während fließender Raum zu einer bürgerlichen Architektursprache wurde. Bewegung selbst konnte ein Museum oder eine olympische Anlage organisieren."
+    }
+  ],
+  "conclusion": "Mehr als ein Jahrhundert lang stellte organische Architektur die Vorstellung infrage, Gebäude müssten als starre, standardisierte Objekte von der Natur getrennt stehen. Was als ausdrucksstarke Sprache integrierten Designs begann, wurde zu einem Repertoire aus Ort, Lebensraum, konstruktiver Kraft und Bewegung – Architektur, die weniger auferlegt als lebendig wirken konnte.",
+  "social_network": {
+    "nodes": [
+      {
+        "id": "antoni_gaud",
+        "name": "Antoni Gaudí",
+        "type": "main",
+        "portrait": "/portraits/antoni_gaud_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1852
+      },
+      {
+        "id": "charles_rennie_mackintosh",
+        "name": "Charles Rennie Mackintosh",
+        "type": "main",
+        "portrait": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1868
+      },
+      {
+        "id": "frank_lloyd_wright",
+        "name": "Frank Lloyd Wright",
+        "type": "main",
+        "portrait": "/portraits/frank_lloyd_wright_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1867
+      },
+      {
+        "id": "frei_otto",
+        "name": "Frei Otto",
+        "type": "main",
+        "portrait": "/portraits/frei_otto_thumbnail.webp",
+        "roles": ["architect", "engineer"],
+        "birth_year": 1925
+      },
+      {
+        "id": "friedensreich_hundertwasser",
+        "name": "Friedensreich Hundertwasser",
+        "type": "main",
+        "portrait": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "roles": ["artist", "architect"],
+        "birth_year": 1928
+      },
+      {
+        "id": "otto_wagner",
+        "name": "Otto Wagner",
+        "type": "main",
+        "portrait": "/portraits/otto_wagner_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1841
+      },
+      {
+        "id": "zaha_hadid",
+        "name": "Zaha Hadid",
+        "type": "main",
+        "portrait": "/portraits/zaha_hadid_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1950
+      },
+      {
+        "id": "sec:josef_hoffmann",
+        "name": "Josef Hoffmann",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "frank_lloyd_wright",
+        "target": "frei_otto",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "During his American journey, Frei Otto encountered Frank Lloyd Wright and Wright's work, which exposed him to Wright's organic architectural ideas and experimental structures.",
+        "strength": "moderate",
+        "endpoints": {
+          "frank_lloyd_wright": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "During his American journey, Frei Otto encountered Frank Lloyd Wright and Wright's work, which exposed him to Wright's organic architectural ideas and experimental structures.",
+            "strength": "moderate"
+          },
+          "frei_otto": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "During his American journey, Frei Otto encountered Frank Lloyd Wright and Wright's work, which exposed him to Wright's organic architectural ideas and experimental structures.",
+            "strength": "moderate"
+          }
+        },
+        "origin": "reviewed"
+      },
+      {
+        "source": "charles_rennie_mackintosh",
+        "target": "sec:josef_hoffmann",
+        "kind": "secondary",
+        "relationship_type": "artistic/peer",
+        "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+        "strength": "weak",
+        "endpoints": {
+          "charles_rennie_mackintosh": {
+            "relationship_type": "artistic/peer",
+            "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+            "strength": "weak"
+          }
+        }
+      },
+      {
+        "source": "otto_wagner",
+        "target": "sec:josef_hoffmann",
+        "kind": "secondary",
+        "relationship_type": "academic/student",
+        "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
+        "strength": "moderate",
+        "endpoints": {
+          "otto_wagner": {
+            "relationship_type": "academic/student",
+            "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "antoni_gaud",
+        "target": "frei_otto",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "Frei Otto used forms derived from Antoni Gaudí in the construction of the Munich Olympic Stadium.",
+        "strength": "moderate",
+        "endpoints": {
+          "antoni_gaud": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Frei Otto used forms derived from Antoni Gaudí in the construction of the Munich Olympic Stadium.",
+            "strength": "moderate"
+          },
+          "frei_otto": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Frei Otto used forms derived from Antoni Gaudí in the construction of the Munich Olympic Stadium.",
+            "strength": "moderate"
+          }
+        },
+        "origin": "review_added"
+      },
+      {
+        "source": "antoni_gaud",
+        "target": "friedensreich_hundertwasser",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "Antoni Gaudí's work inspired Friedensreich Hundertwasser's architectural approach.",
+        "strength": "weak",
+        "endpoints": {
+          "antoni_gaud": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Antoni Gaudí's work inspired Friedensreich Hundertwasser's architectural approach.",
+            "strength": "weak"
+          },
+          "friedensreich_hundertwasser": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Antoni Gaudí's work inspired Friedensreich Hundertwasser's architectural approach.",
+            "strength": "weak"
+          }
+        },
+        "origin": "review_added"
+      }
+    ],
+    "narration": {
+      "intro": "Lebendige Form verbreitete sich durch Lehre, berufliche Praxis, Bewunderung und Begegnungen mit gebauter Architektur. Diese Austauschbeziehungen brachten keine einzelne Schule hervor; sie trugen einen gemeinsamen Widerstand gegen starre Regelmäßigkeit über verschiedene Orte und Generationen hinweg.",
+      "circles": [
+        {
+          "key": "otto_wagner+charles_rennie_mackintosh",
+          "title": "Anerkennung über Kreise hinweg",
+          "text": "Josef Hoffmann studierte bei Otto Wagner an der Akademie der bildenden Künste Wien, trat später in Wagners Büro ein und war um 1897 gemeinsam mit ihm in den Institutionen der Secession und des Kunstgewerbes tätig. Hoffmann würdigte auch die Arbeit von Charles Rennie Mackintosh in der weiteren Welt der Secession-Ära. Die Verbindung zwischen Wagner und Mackintosh verlief somit über Lehre, berufliche Praxis und Wertschätzung, nicht über direkte Zusammenarbeit."
+        },
+        {
+          "key": "antoni_gaud+friedensreich_hundertwasser",
+          "title": "Vorbild für Unregelmäßigkeit",
+          "text": "Antoni Gaudís Werk inspirierte Friedensreich Hundertwassers architektonischen Ansatz. Durch Generationen getrennt, fand Hundertwasser in Gaudí ein Vorbild für den Widerstand gegen starre Regelmäßigkeit und überführte dieses Beispiel in sein eigenes architektonisches Denken. Ihre Verbindung beruhte auf Einfluss, nicht auf direktem Kontakt."
+        },
+        {
+          "key": "frank_lloyd_wright+frei_otto",
+          "title": "Begegnung mit dem Experiment",
+          "text": "Während seiner Reise durch Amerika begegnete Frei Otto Frank Lloyd Wright und dessen Werk. Diese Begegnung brachte Otto mit Wrights Ideen organischer Architektur und experimentellen Konstruktionen in Berührung und prägte den gedanklichen Boden, auf dem Ottos eigene Untersuchungen weitergingen. So traf die Entdeckung eines Reisenden auf das Beispiel eines etablierten Architekten."
+        }
+      ]
+    }
+  },
+  "timeline_intro": "Der frühe Bruch mit historischer Nachahmung gab der Architektur eine neue Bildsprache aus Linie, Ornament und einheitlicher Umgebung. Mit der Reife dieser Sprache wurden ihre Ansprüche konkreter: Ein Gebäude konnte zu einer Landschaft gehören, Vegetation in das Wohnen aufnehmen oder seine Gestalt aus den auf es wirkenden Kräften gewinnen. Zu Beginn des einundzwanzigsten Jahrhunderts war fließende Form fähig geworden, bedeutende öffentliche Räume in monumentalem Maßstab zu organisieren.",
+  "composition": {
+    "model": "gpt-5.6-terra",
+    "composed_at": "2026-07-22T08:41:17.236249+02:00",
+    "throughline": "This story follows how architects turned “living form” from an Art Nouveau language of sinuous line and total design into a set of increasingly concrete architectural methods. Wagner, Mackintosh, and Gaudí made modern environments feel integrated, organic, and resistant to historic imitation; Wright and Hundertwasser recast that impulse as an argument for dwelling with landscape and vegetation. Otto then made material forces generate light structures, while Hadid carried fluid movement into monumental civic space—showing organic architecture shift from expressive appearance toward site, structure, habitation, and circulation.",
+    "excluded_people": []
+  },
+  "opening": {
+    "text": "1911 errichtete Frank Lloyd Wright Taliesin in Wisconsin als Wohn- und Arbeitsstätte, die sich niedrig an das Gelände schmiegt. Seine Komposition verband Wohnen, Arbeiten und Landschaft so eng, dass das Gebäude aus seinem Ort hervorzugehen schien, statt auf ihm zu sitzen.",
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Taliesin_-_exterior.jpg/960px-Taliesin_-_exterior.jpg",
+      "caption": "Blick von unten auf Taliesin",
+      "source": "https://commons.wikimedia.org/wiki/File:Taliesin_-_exterior.jpg",
+      "person_id": "frank_lloyd_wright",
+      "event_index": 9,
+      "image_index": 0
+    }
+  },
+  "section_headings": {
+    "timeline": "Von der Linie zur Bewegung",
+    "network": "Ideen über Grenzen hinweg",
+    "conclusion": "Weniger auferlegte Gebäude"
+  },
+  "section_images": {
+    "timeline": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg/960px-Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
+      "caption": "Frei Ottos Zugkonstruktionen für die Olympischen Spiele München 72",
+      "source": "https://commons.wikimedia.org/wiki/File:Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
+      "person_id": "frei_otto",
+      "event_index": 9,
+      "image_index": 0
+    },
+    "conclusion": {
+      "url": "https://live.staticflickr.com/2823/34196059542_382de86c85_b.jpg",
+      "caption": "MAXXI-Museum in Rom, Außenansicht",
+      "source": "https://www.flickr.com/photos/72746018@N00/34196059542",
+      "person_id": "zaha_hadid",
+      "event_index": 12,
+      "image_index": 0
+    }
+  },
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "ae0db5d39bb01978",
+    "translated_on": "2026-07-22T08:41:54.598119+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

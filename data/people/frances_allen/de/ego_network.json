@@ -1,0 +1,237 @@
+{
+  "dataset": "Frances_Allen_ego_network",
+  "created_on": "2025-12-06",
+  "ego": {
+    "name": "Frances E. Allen",
+    "birth_year": 1932,
+    "death_year": 2020,
+    "primary_roles": [
+      "Informatikerin",
+      "Mathematikerin"
+    ],
+    "summary": "Frances Elizabeth Allen (1932–2020) war eine US-amerikanische Informatikerin, deren Pionierarbeit zu optimierenden Compilern und automatischer Parallelisierung moderne Software und Hochleistungsrechnen grundlegend veränderte. In ihrer 45-jährigen Karriere bei IBM leitete sie bedeutende Projekte zu Compilern und parallelem Rechnen, wurde die erste IBM Fellow und die erste Frau, die den ACM A. M. Turing Award erhielt, und war eine prominente Mentorin und Fürsprecherin für Frauen und andere unterrepräsentierte Gruppen in der Informatik.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Frances_Allen"
+  },
+  "connections": [
+    {
+      "person_name": "Unbenannter Vater von Frances E. Allen",
+      "relationship_type": "family/father",
+      "relationship_description": "Allens Vater war Landwirt in Peru, New York; ihre Erziehung als ältestes von sechs Kindern auf dem Familienhof prägte ihre Arbeitsmoral und ihre frühe Erfahrung mit praktischer Problemlösung.",
+      "start_year": 1932,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben auf einem bewirtschafteten Hof",
+        "frühkindliche Bildung und Förderung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "Der Artikel nennt seinen Namen nicht, merkt jedoch an, dass er in der Nähe von Peru, New York, Landwirtschaft betrieb und dass Allen als ältestes von sechs Kindern auf dem Familienhof aufwuchs."
+    },
+    {
+      "person_name": "Unbenannte Mutter von Frances E. Allen",
+      "relationship_type": "family/mother",
+      "relationship_description": "Allens Mutter war Grundschullehrerin, deren Vorbild des Lehrens und der Bildung Allens eigene frühe Laufbahn als Mathematiklehrerin und ihr späteres Engagement für Mentoring stark beeinflusste.",
+      "start_year": 1932,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben",
+        "Vorbildfunktion des Lehrberufs",
+        "Unterstützung von Allens Schulbildung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "Der Artikel bezeichnet sie als Grundschullehrerin, nennt jedoch ihren Namen nicht; Allen schlug später selbst einen pädagogischen Weg ein, bevor sie zu IBM kam, und folgte damit dem Beruf ihrer Mutter."
+    },
+    {
+      "person_name": "John Backus",
+      "relationship_type": "professional/influence",
+      "relationship_description": "John Backus leitete das IBM-Team, das Fortran entwickelte, die Sprache, die Allen unterrichten sollte und deren Compiler-Quellcode sie intensiv studierte; seine Arbeit zu Fortran und zum Compilerentwurf lieferte die technische Grundlage für Allens frühe Forschungsinteressen.",
+      "start_year": 1957,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Arbeit bei IBM in den prägenden Jahren der kommerziellen Informatik",
+        "Entwicklung und industrielle Nutzung von Fortran und seinem Compiler",
+        "gemeinsame Beteiligung an der entstehenden Compilerforschungsgemeinschaft"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/John_Backus",
+        "https://en.wikipedia.org/wiki/Fortran"
+      ],
+      "notes": "Als Allen 1957 zu IBM kam, war Fortran gerade angekündigt worden, und sie erhielt die Aufgabe, es zu unterrichten, indem sie den Quellcode des Fortran-Compilers las und verstand. Backus’ Führungsrolle bei der Entwicklung von Fortran und seine Arbeit zum Entwurf von Programmiersprachen prägten stark das Umfeld, in dem Allen ihre Compilerforschung begann. Hier gibt es keinen ausdrücklichen Nachweis einer direkten Zusammenarbeit; daher wird diese Verbindung als einflussreiche Beziehung auf Feldebene charakterisiert."
+    },
+    {
+      "person_name": "John Cocke",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Der IBM-Forscher John Cocke war Allens engster langfristiger technischer Mitarbeiter am Thomas J. Watson Research Center, mit dem sie grundlegende Techniken zur maschinen- und sprachunabhängigen Compileroptimierung entwickelte und mehrere wegweisende Artikel verfasste.",
+      "start_year": 1962,
+      "end_year": 1975,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Mitverfassen wegweisender Artikel zur Programmoptimierung und Kontrollflussanalyse",
+        "Entwurf und Implementierung optimierender Compiler für Fortran, Autocoder und Alpha",
+        "gemeinsame Arbeit an der ACS-1-Architektur und verwandten Projekten bei IBM Watson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)"
+      ],
+      "notes": "Allens Wechsel an das Thomas J. Watson Research Center von IBM im Jahr 1962 führte zu einer engen Zusammenarbeit mit Cocke; ihre gemeinsame Arbeit umfasste „A Catalogue of Optimizing Transformations“ (1972) und einflussreiche Artikel zur interprozeduralen Datenflussanalyse. Cocke erhielt 1987 den Turing Award; Allen erhielt ihn 2006, wobei ihre Würdigung ausdrücklich Arbeiten hervorhob, die sie allein und gemeinsam mit Cocke geleistet hatte."
+    },
+    {
+      "person_name": "Fernando J. Corbató",
+      "relationship_type": "professional/peer",
+      "relationship_description": "Fernando J. Corbató war ein zeitgenössischer Systempionier und Träger des Turing Awards, dessen Arbeit zu Time-Sharing-Betriebssystemen und Einsatz für PL/I in der Systemprogrammierung parallel zu Allens Arbeit an PL/I-Compilern und Hochleistungssystemen bei IBM verlief.",
+      "start_year": 1969,
+      "end_year": 1990,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Beteiligung an der breiteren Forschungscommunity für Systeme und Programmiersprachen",
+        "Entwicklung und Förderung von PL/I für Systeme (Corbató) und industriellen PL/I-Compilern (Allen)",
+        "Wirken als profilierte Turing-Award-Preisträger im Bereich Computersysteme"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/Fernando_J._Corbat%C3%B3"
+      ],
+      "notes": "Allen trug in den 1970er Jahren bei IBM zur Arbeit an PL/I-Compilern bei, während Corbató PL/I als Sprache für die Systemprogrammierung förderte und analysierte sowie die Entwicklung von CTSS und Multics leitete. Die Texte dokumentieren keine direkte Zusammenarbeit, doch ihre Arbeit fand in eng verwandten technischen und institutionellen Bereichen statt; diese Verbindung wird daher als schwache Beziehung auf Ebene von Fachkollegen modelliert, die auf sich überschneidenden Beiträgen zu System- und Sprachtechnologie beruht."
+    },
+    {
+      "person_name": "Jacob T. Schwartz",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Der Informatikprofessor Jacob T. Schwartz von der New York University war von 1972 bis 1982 Allens Ehemann und ein beruflicher Mitarbeiter, der ihre IBM-Arbeit mit der theoretischen und systemorientierten Forschungsgemeinschaft der NYU verband.",
+      "start_year": 1970,
+      "end_year": 1982,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und gemeinsamer Haushalt",
+        "gemeinsame Forschungsgespräche in der Informatik",
+        "Beteiligung an sich überschneidenden IBM- und NYU-Forschungskreisen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/Jacob_T._Schwartz"
+      ],
+      "notes": "Allen lernte Schwartz etwa 1970–1971 durch ihr Sabbatical und ihre Tätigkeit als außerordentliche Dozentin an der NYU kennen; ihre Ehe von 1972 bis 1982 ist ausdrücklich dokumentiert, und der Artikel nennt ihn sowohl als Professor als auch als Mitarbeiter."
+    },
+    {
+      "person_name": "Anita Borg",
+      "relationship_type": "academic/student",
+      "relationship_description": "Anita Borg war eine von Allens Graduiertenstudentinnen während Allens Sabbatical 1977 an der Stanford University; Allen war die einzige Professorin, die Borg im Graduiertenstudium hatte, und wurde zu einer wichtigen Mentorin und einem Vorbild für Borgs späteres Engagement für Frauen in der Informatik.",
+      "start_year": 1977,
+      "end_year": 2003,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Informatikkurse auf Graduiertenniveau an der Stanford University",
+        "Mentor-Mentee-Beziehung in einem männerdominierten Forschungsumfeld",
+        "spätere Kontakte über Gemeinschaften und Auszeichnungen für Frauen in der Informatik (z. B. ABIE Award)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/Anita_Borg",
+        "https://en.wikipedia.org/wiki/Stanford_University"
+      ],
+      "notes": "Allens Sabbatical in Stanford im Jahr 1977 hält ausdrücklich fest, dass sie Anita Borg unterrichtete und Borgs einzige Professorin im Graduiertenstudium war. Borg gründete später Systers, die Grace Hopper Celebration und das Institute for Women and Technology und setzte damit die Mentoring-Tradition fort, für die Allen stand."
+    },
+    {
+      "person_name": "Barbara Simons",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Die Informatikerin Barbara Simons arbeitete mit Allen bei IBM und betrachtete sie sowohl als Kollegin als auch als Freundin; sie erinnerte sich an Allen als überzeugte Feministin und Mentorin in der Compilerforschungsgemeinschaft von IBM.",
+      "start_year": 1980,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Arbeit bei IBM Research",
+        "Beteiligung an IBMs Forschungscommunity für Compiler und Systeme",
+        "Engagement für Frauen in der Informatik und Feminismus bei IBM und in Fachgesellschaften"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/Barbara_Simons"
+      ],
+      "notes": "Allens Artikel erwähnt, dass Simons „mit Allen arbeitete und sie als Freundin betrachtete“, und erinnert an Allen als überzeugte Feministin; Simons’ eigene Biografie dokumentiert ihren IBM-Hintergrund und ihre Führungsrollen in der ACM, die sich mit Allens Mentoring- und Diversitätsbemühungen überschnitten."
+    },
+    {
+      "person_name": "Telle Whitney",
+      "relationship_type": "professional/advocate",
+      "relationship_description": "Telle Whitney leitete als Präsidentin und CEO des Institute for Women and Technology (später Anita Borg Institute) die Organisation, die Allen 2004 mit dem ABIE Award for Technical Leadership auszeichnete, und verstärkte damit Allens Wirkung als Mentorin und Vorbild für Frauen in technischen Berufen.",
+      "start_year": 2004,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Anerkennung Allens durch den ABIE Award for Technical Leadership",
+        "Beteiligung an der Gemeinschaft für das Engagement für Frauen in der Informatik",
+        "öffentliche Veranstaltungen und Preisverleihungen des Anita Borg Institute"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/Anita_Borg"
+      ],
+      "notes": "Anita Borgs Artikel vermerkt, dass Telle Whitney 2002 Präsidentin und CEO des Institute for Women and Technology wurde; Allens Artikel hält fest, dass sie 2004 vom Anita Borg Institute den ABIE Award for Technical Leadership erhielt. Direkte persönliche Interaktionen werden zwar nicht näher beschrieben, doch Whitneys Führungsrolle am Institut bildet den Rahmen für Allens Anerkennung und Sichtbarkeit in Initiativen für Frauen in der Technologie."
+    },
+    {
+      "person_name": "Barbara Liskov",
+      "relationship_type": "professional/peer",
+      "relationship_description": "Barbara Liskov ist eine Mitpionierin der Programmiersprachen und die zweite Frau, die nach Allen den ACM A. M. Turing Award erhielt; beide brachten grundlegende Ideen zur Programmiermethodik voran und wurden zu prominenten Vorbildern für Frauen in der Informatik.",
+      "start_year": 2008,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Anerkennung als weibliche Turing-Preisträgerinnen",
+        "Führungsrolle in der Forschung zu Programmiersprachen und Softwaremethodik",
+        "öffentliches Engagement und Sichtbarkeit für Frauen in der Informatik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen",
+        "https://en.wikipedia.org/wiki/Barbara_Liskov"
+      ],
+      "notes": "Liskovs Biografie vermerkt, dass sie die zweite Frau war, die den Turing Award erhielt; Allen, die 2006 ausgezeichnet wurde, war die erste. Konkrete gemeinsame Projekte sind hier zwar nicht dokumentiert, doch sie sind als Fachkolleginnen im Bereich Programmiersprachen sowie als aufeinanderfolgende weibliche Turing-Preisträgerinnen verbunden, die in Diskussionen über die Beiträge von Frauen zur Informatik häufig gemeinsam genannt werden."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Familiäre Beziehungen waren grundlegend für das Leben von Frances Allen – von dem Umfeld praktischer Problemlösung durch ihren als Landwirt tätigen Vater und ihre als Lehrerin tätige Mutter im ländlichen New York bis zu ihrer intellektuell bereichernden, aber letztlich gescheiterten Ehe mit dem NYU-Informatiker Jacob T. Schwartz. Diese Bindungen prägten ihr frühes Engagement für Bildung, ihre Arbeitsmoral und ihre spätere Fähigkeit, akademische und industrielle Forschungswelten zu verbinden."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Allens berufliches Netzwerk konzentriert sich auf ihre Jahrzehnte bei IBM und ihre Führungsrolle bei optimierenden Compilern und parallelen Systemen, hervorgehoben durch ihre enge Zusammenarbeit mit John Cocke und die kollegiale Arbeit mit Barbara Simons. Sie war zudem Teil eines breiteren Ökosystems von Pionieren der Programmiersprachen und Systeme – darunter John Backus, Fernando Corbató, Barbara Liskov und Telle Whitney –, deren Arbeit und Engagement sich durch gemeinsame Technologien, Auszeichnungen und Initiativen für Frauen in der Informatik mit ihrem überschnitten."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Als Lehrende und Mentorin war Allens herausragendste akademische Beziehung die zu ihrer Studentin Anita Borg in Stanford, wo Allen Borgs einzige Professorin und ein wichtiges Vorbild war. Ihre Positionen als außerordentliche und Gastdozentin an der NYU, Stanford, UC Berkeley und UC San Diego trugen dazu bei, Spitzenforschung zu Compilern in die Lehre zu übertragen, und legten den Grundstein für langlebige Mentor-Mentee-Beziehungen, die sich bis in die Bewegung für Frauen in der Informatik erstreckten."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "213474728e55d5a6",
+    "translated_on": "2026-07-19T07:38:42.053405+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

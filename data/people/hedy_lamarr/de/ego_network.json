@@ -1,0 +1,444 @@
+{
+  "dataset": "wikipedia-ego-network",
+  "created_on": "2025-11-21",
+  "ego": {
+    "name": "Hedy Lamarr",
+    "birth_year": 1914,
+    "death_year": 2000,
+    "primary_roles": [
+      "Schauspielerin",
+      "Erfinderin"
+    ],
+    "summary": "Hedy Lamarr (geboren als Hedwig Eva Maria Kiesler) war eine in Österreich geborene amerikanische Filmschauspielerin und Autodidaktin auf dem Gebiet der Erfindungen. Sie erlangte in Europa mit Ecstasy (1933) Berühmtheit und wurde dann mit Filmen wie Algiers (1938), Boom Town (1940), White Cargo (1942) und Samson and Delilah (1949) zu einem großen Hollywoodstar. Während des Zweiten Weltkriegs entwickelte sie gemeinsam mit dem Komponisten George Antheil ein Spreizband-Kommunikationssystem mit Frequenzsprungverfahren, ein „geheimes Kommunikationssystem“ zur Torpedosteuerung, das Technologien vorwegnahm, die später bei Bluetooth und WLAN eingesetzt wurden.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+  },
+  "connections": [
+    {
+      "person_name": "Gertrud \"Trude\" Kiesler (geb. Lichtwitz)",
+      "relationship_type": "family",
+      "relationship_description": "Mutter; eine in Budapest geborene Pianistin, die Lamarr christlich erzog und sich später ihrer Ehe mit Friedrich Mandl widersetzte.",
+      "start_year": 1914,
+      "end_year": 1977,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben",
+        "Kindheitserziehung in Wien",
+        "religiöse Erziehung",
+        "Unterstützung und Konflikte wegen Lamarrs Heiratsentscheidungen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Als praktizierende Christin beschrieben, die vom Judentum konvertierte und Lamarrs frühes kulturelles und religiöses Umfeld prägte."
+    },
+    {
+      "person_name": "Emil Kiesler",
+      "relationship_type": "family",
+      "relationship_description": "Vater; ein Wiener Bankdirektor galizisch-jüdischer Herkunft, der Lamarrs Interesse an Technik förderte, indem er ihr bei Spaziergängen in der Kindheit erklärte, wie Geräte funktionierten.",
+      "start_year": 1914,
+      "end_year": 1935,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben",
+        "Spaziergänge mit Technikgesprächen",
+        "frühe intellektuelle und technische Bildung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Ihr wird zugeschrieben, dass seine Gewohnheit, mechanische und technische Geräte zu erklären, ihr verborgenes Talent für Wissenschaft und Erfindungen förderte."
+    },
+    {
+      "person_name": "Friedrich (Fritz) Mandl",
+      "relationship_type": "family",
+      "relationship_description": "Erster Ehemann; ein wohlhabender österreichischer Waffenfabrikant, dessen kontrollierende Ehe sie isolierte und sie zugleich mit Diskussionen über Waffen und Kommunikation in Berührung brachte.",
+      "start_year": 1933,
+      "end_year": 1937,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe",
+        "Leben auf Schloss Schwarzenau",
+        "Ausrichten und Besuchen von Abendessen mit Politikern und militärischen Kunden",
+        "Teilnahme an Geschäftstreffen der Rüstungsindustrie",
+        "Einblick in Waffen- und Kommunikationstechnik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "In ihrer Autobiografie als äußerst kontrollierend und eifersüchtig beschrieben. Seine Geschäftstreffen mit Wissenschaftlern und militärischen Kunden brachten sie mit angewandter Wissenschaft in Kontakt, was später ihre Erfinderkarriere prägte."
+    },
+    {
+      "person_name": "Benito Mussolini",
+      "relationship_type": "other",
+      "relationship_description": "Italienischer faschistischer Führer, dem Lamarr nach eigener Aussage bei Zusammenkünften begegnete, die mit Mandls gesellschaftlichem Kreis verbunden waren.",
+      "start_year": 1933,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Teilnahme an von Mandl veranstalteten gesellschaftlichen und politischen Zusammenkünften",
+        "Einblick in politische und militärische Diskussionen auf hoher Ebene"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Seine Präsenz bei Mandls Veranstaltungen unterstrich die engen Verbindungen zwischen dem Rüstungsgeschäft ihres Mannes und faschistischen Regimen und trug zu ihrer Desillusionierung und späteren Flucht bei."
+    },
+    {
+      "person_name": "Adolf Hitler",
+      "relationship_type": "other",
+      "relationship_description": "NS-Führer, der nach Lamarrs späterer Aussage Veranstaltungen in Mandls Kreis besuchte und das politische Umfeld widerspiegelte, dem sie zu entkommen suchte.",
+      "start_year": 1933,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Teilnahme an Mandls opulenten politisch-geschäftlichen Zusammenkünften",
+        "Kontext für Diskussionen über Militärtechnik und Waffengeschäfte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Seine Teilnahme an Mandls Partys verschärfte das politische und moralische Umfeld, das Lamarr als verabscheuungswürdig empfand, und bestärkte sie in ihrer Entscheidung, aus Österreich und ihrer Ehe zu fliehen."
+    },
+    {
+      "person_name": "Louis B. Mayer",
+      "relationship_type": "colleague",
+      "relationship_description": "Leiter des MGM-Studios, der Lamarr in London traf, sie unter Vertrag nahm und ihre Hollywood-Identität als „Hedy Lamarr“ prägte.",
+      "start_year": 1937,
+      "end_year": 1945,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Aushandlung eines MGM-Studiovertrags",
+        "Umbenennung und Markenbildung als Hedy Lamarr",
+        "Hollywood-Filmproduktion bei MGM",
+        "Publicity und Starpromotion"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Zunächst bot er ihr 125 Dollar pro Woche an, was sie ablehnte; später handelte sie während der Überfahrt nach New York einen Vertrag über 500 Dollar pro Woche aus."
+    },
+    {
+      "person_name": "Barbara La Marr",
+      "relationship_type": "other",
+      "relationship_description": "Stummfilmstar, deren Nachname Lamarr auf Mayers Vorschlag annahm und so Hedys Hollywood-Künstlernamen schuf.",
+      "start_year": 1937,
+      "end_year": 1937,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Namenshommage",
+        "Positionierung in der Hollywood-Öffentlichkeitsarbeit"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Sie hatten keinen persönlichen Kontakt (Barbara La Marr starb 1926), doch ihr Image und ihr Name prägten Lamarrs Hollywood-Identität."
+    },
+    {
+      "person_name": "Walter Wanger",
+      "relationship_type": "collaborator",
+      "relationship_description": "Unabhängiger Produzent, an den MGM Lamarr für Algiers (1938) auslieh, den Film, der sie zum Hollywoodstar machte.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Produktion des Films Algiers (1938)",
+        "Besetzung Lamarrs an der Seite von Charles Boyer",
+        "Publicity und Vertrieb des Erfolgfilms"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Algiers wurde in den USA zu einer landesweiten Sensation und etablierte sie als großen Star."
+    },
+    {
+      "person_name": "Charles Boyer",
+      "relationship_type": "collaborator",
+      "relationship_description": "Französischer Schauspieler, der mit Lamarr in Algiers (1938), ihrer Durchbruchsrolle in Hollywood, spielte.",
+      "start_year": 1938,
+      "end_year": 1938,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Hauptrollen in Algiers (1938)",
+        "Zusammenarbeit am Set",
+        "Pressefotos und Promotion"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Ihre Paarung in Algiers war zentral für die romantische Anziehungskraft des Films und Lamarrs frühe amerikanische Leinwandpersönlichkeit."
+    },
+    {
+      "person_name": "George Antheil",
+      "relationship_type": "collaborator",
+      "relationship_description": "Komponist und Miterfinder, der während des Zweiten Weltkriegs mit Lamarr zusammenarbeitete, um ein frequenzspringendes „geheimes Kommunikationssystem“ zur Torpedosteuerung zu entwickeln und zu patentieren.",
+      "start_year": 1940,
+      "end_year": 1945,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Miterfindung eines frequenzspringenden Funkleitsystems",
+        "Anmeldung und Erhalt eines US-Patents für das „geheime Kommunikationssystem“",
+        "Diskussion militärtechnischer Anwendungen",
+        "Innovationsarbeit während des Krieges"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Ihr patentiertes System nahm die Spreizbandkommunikation vorweg; Antheil steuerte Ideen bei, die teilweise auf seiner Erfahrung mit synchronisierten Rollen für Selbstspielklaviere beruhten."
+    },
+    {
+      "person_name": "Clark Gable",
+      "relationship_type": "collaborator",
+      "relationship_description": "Bedeutender MGM-Star, der mit Lamarr in Boom Town (1940) und Comrade X (1940) spielte und dazu beitrug, ihren Status als Hauptdarstellerin zu steigern.",
+      "start_year": 1940,
+      "end_year": 1940,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Hauptrollen in Boom Town (1940)",
+        "gemeinsame Hauptrollen in Comrade X (1940)",
+        "gemeinsame MGM-Publicity und Kinokampagnen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Boom Town war ein großer Kassenerfolg; MGM brachte sie nach diesem Erfolg rasch erneut in Comrade X zusammen."
+    },
+    {
+      "person_name": "Spencer Tracy",
+      "relationship_type": "collaborator",
+      "relationship_description": "Prominenter Schauspieler, der mit Lamarr in Boom Town (1940), I Take This Woman und Tortilla Flat (1942) spielte.",
+      "start_year": 1940,
+      "end_year": 1942,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Hauptrollen in Boom Town (1940)",
+        "gemeinsame Hauptrollen in I Take This Woman",
+        "gemeinsame Hauptrollen in Tortilla Flat (1942)",
+        "MGM-Ensembleproduktionen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Ihre wiederholten Zusammenarbeiten spiegeln MGMs Praxis wider, zugkräftige Namen in mehreren Filmen zusammenzubringen."
+    },
+    {
+      "person_name": "Judy Garland",
+      "relationship_type": "collaborator",
+      "relationship_description": "MGM-Star, der mit Lamarr in Ziegfeld Girl (1941) als eine von drei angehenden Showgirls spielte.",
+      "start_year": 1941,
+      "end_year": 1941,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Hauptrollen in Ziegfeld Girl (1941)",
+        "Ensembleproduktion aus Musical und Drama",
+        "Studio-Öffentlichkeitsarbeit und Premieren"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Ziegfeld Girl war ein großer Erfolg und zeigte Lamarr neben zwei weiteren hochkarätigen MGM-Schauspielerinnen."
+    },
+    {
+      "person_name": "Lana Turner",
+      "relationship_type": "collaborator",
+      "relationship_description": "Schauspielerin, die mit Lamarr und Judy Garland in Ziegfeld Girl (1941) spielte.",
+      "start_year": 1941,
+      "end_year": 1941,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Hauptrollen in Ziegfeld Girl (1941)",
+        "Studio-Öffentlichkeitsarbeit",
+        "gesellschaftliche und berufliche Kreise Hollywoods"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Der Film trug dazu bei, den Status aller drei Schauspielerinnen innerhalb von MGMs Starensemble zu festigen."
+    },
+    {
+      "person_name": "Charles F. Kettering",
+      "relationship_type": "other",
+      "relationship_description": "Mitglied des U.S. National Inventors Council, das Lamarr Berichten zufolge zusammen mit anderen riet, den Kriegsanstrengungen am besten durch den Verkauf von Kriegsanleihen zu helfen, statt dem Council beizutreten.",
+      "start_year": 1941,
+      "end_year": 1942,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Diskussion über Lamarrs vorgeschlagene Rolle beim National Inventors Council",
+        "Entscheidung, sich auf die Beschaffung von Mitteln durch Kriegsanleihen zu konzentrieren"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Seine Haltung lenkte sie von formeller Erfindungsarbeit in einer Institution zur öffentlichen Mittelbeschaffung um, obwohl sie ihre technische Arbeit mit George Antheil unabhängig fortsetzte."
+    },
+    {
+      "person_name": "Howard Sharpe",
+      "relationship_type": "other",
+      "relationship_description": "Schriftsteller, der Lamarr während ihrer MGM-Jahre interviewte und Beobachtungen über ihre Persönlichkeit und Kultiviertheit veröffentlichte, die sich von ihrem Leinwandimage abhoben.",
+      "start_year": 1941,
+      "end_year": 1941,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "ausführliches Interview",
+        "Zeitschriften- oder Presseporträt",
+        "Prägung des öffentlichen Verständnisses von Lamarrs Persona"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Er beschrieb ihre „unglaubliche persönliche Kultiviertheit“ und ihre Fähigkeit, das zu verkörpern, was Männer von einer schönen Frau erwarteten, und verlieh ihrem öffentlichen Bild zusätzliche Nuancen."
+    },
+    {
+      "person_name": "Eddie Rhodes",
+      "relationship_type": "collaborator",
+      "relationship_description": "Matrose, der mit Lamarr bei Kundgebungen für Kriegsanleihen in einer inszenierten Darbietung auftrat, die den Verkauf von Anleihen steigern sollte.",
+      "start_year": 1942,
+      "end_year": 1945,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Veranstaltungen zum Verkauf von Kriegsanleihen",
+        "Bühnenauftritte mit Publikumsinteraktion",
+        "Reisen zu mehreren Kundgebungen für Anleihen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Er wurde bei jedem Auftritt im Publikum platziert; Lamarr setzte einen ihm versprochenen Kuss als Anreiz ein, um den Kauf von Anleihen zu fördern."
+    },
+    {
+      "person_name": "Jack Chertok",
+      "relationship_type": "collaborator",
+      "relationship_description": "Produzent, mit dem Lamarr nach ihrem Weggang von MGM eine Produktionsfirma gründete und die Thriller The Strange Woman (1946) und Dishonored Lady (1947) schuf.",
+      "start_year": 1945,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Mitgründung einer unabhängigen Produktionsfirma",
+        "Produktion von The Strange Woman (1946)",
+        "Produktion von Dishonored Lady (1947)",
+        "Budget- und Kreativentscheidungen außerhalb des Studiosystems"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Beide unabhängig produzierten Filme überschritten ihr Budget; Dishonored Lady war kein kommerzieller Erfolg, was zu ihrer finanziellen Belastung beitrug."
+    },
+    {
+      "person_name": "Cecil B. DeMille",
+      "relationship_type": "collaborator",
+      "relationship_description": "Legendärer Regisseur und Produzent von Samson and Delilah, in dem Lamarr ihre prägende Rolle als Delilah spielte.",
+      "start_year": 1948,
+      "end_year": 1949,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Produktion von Samson and Delilah (Dreharbeiten etwa 1948–49)",
+        "Besetzung und Regie von Lamarr als Delilah",
+        "Publicity für das Epos und Kampagne für Auszeichnungen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Die Zusammenarbeit mit DeMille stellte Lamarr ins Zentrum eines großen Hollywood-Bibel-Epos und steigerte ihr Ansehen trotz vorheriger Höhen und Tiefen ihrer Karriere."
+    },
+    {
+      "person_name": "Victor Mature",
+      "relationship_type": "collaborator",
+      "relationship_description": "Schauspieler, der in Cecil B. DeMilles Samson and Delilah (1949), ihrem kommerziell erfolgreichsten Film, den Samson an der Seite von Lamarrs Delilah spielte.",
+      "start_year": 1949,
+      "end_year": 1949,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Hauptrollen in Samson and Delilah (erschienen 1949)",
+        "Arbeit am Set eines groß angelegten Bibelepos",
+        "Publicity und Premieren für den Film"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Samson and Delilah wurde der umsatzstärkste Film des Jahres 1950 und gewann zwei Oscars, was den Höhepunkt von Lamarrs Kassenerfolg markierte."
+    },
+    {
+      "person_name": "Zsa Zsa Gabor",
+      "relationship_type": "rival",
+      "relationship_description": "Schauspielerin, die Lamarr im Film Picture Mommy Dead (1966) ersetzte, nachdem Lamarr während der Dreharbeiten aufgrund nervöser Erschöpfung zusammengebrochen war und entlassen wurde.",
+      "start_year": 1966,
+      "end_year": 1966,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Besetzung für Picture Mommy Dead (1966)",
+        "berufliche Konkurrenz um Rollen in Hollywood"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Die Neubesetzung verdeutlichte Lamarrs nachlassende Gesundheit und ihren Karriere-Status in den 1960er Jahren im Vergleich zu anderen glamourösen Schauspielerinnen dieser Ära."
+    },
+    {
+      "person_name": "Richard Rhodes",
+      "relationship_type": "other",
+      "relationship_description": "Späterer Autor, der über Lamarrs Leben schrieb und dazu beitrug, wie ihre Leistungen nach dem Höhepunkt ihrer Karriere interpretiert wurden.",
+      "start_year": 1990,
+      "end_year": 1996,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "biografische Recherche und Interviews (direkt oder über Zeitgenossen)",
+        "Veröffentlichung analytischer Kommentare zu ihrem Leben und Charakter"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "notes": "Obwohl er in erster Linie ein späterer Chronist und kein enger Vertrauter war, beeinflussten seine Schriften, wie Historiker und Öffentlichkeit Lamarrs Leistungen und Persönlichkeit interpretieren."
+    }
+  ],
+  "network_summary": "Hedy Lamarrs Ego-Netzwerk vereint einen engen familiären Kern, einflussreiche Hollywood-Verbindungen aus der Studioära und einen kleinen, aber äußerst folgenreichen Kreis technischer Mitarbeiter. Ihre Eltern, insbesondere ihr technisch interessierter Vater, prägten ihre frühe intellektuelle Entwicklung stark, während ihre unterdrückende Ehe mit dem Rüstungsmagnaten Friedrich Mandl zugleich ihre Autonomie einschränkte und sie mit Militärtechnik auf hoher Ebene sowie faschistischen politischen Kreisen in Berührung brachte. In Hollywood bestanden ihre engsten und dauerhaftesten beruflichen Beziehungen zu MGM und dessen Leiter Louis B. Mayer sowie zu einem wiederkehrenden Ensemble von Co-Stars und Produzenten (Clark Gable, Spencer Tracy, Judy Garland, Lana Turner, Walter Wanger, Jack Chertok und Cecil B. DeMille), die ihr Bild als exotische Leinwandsirene mitgestalteten und vermarkteten. Parallel dazu bildete ihre Partnerschaft mit dem Komponisten George Antheil eine enge, wirkungsstarke Innovationsbeziehung, aus der das frequenzspringende „geheime Kommunikationssystem“ hervorging, das später als grundlegend für die Spreizbandkommunikation anerkannt wurde. Periphere, aber aufschlussreiche Verbindungen – zum Mitarbeiter für Kriegsanleihen Eddie Rhodes, zum Vertreter des National Inventors Council Charles F. Kettering, zum Biografen Richard Rhodes und zur Ersatzschauspielerin Zsa Zsa Gabor – zeigen, wie institutionelle Entscheidungen, öffentliche Narrative und Konkurrenz in der Branche ihre Beiträge im Laufe der Zeit umlenkten oder neu rahmten. Insgesamt ist ihr Netzwerk durch eine Mischung aus starken, prägenden Bindungen in Familie und Ehe, institutionell vermittelten beruflichen Kooperationen im Film und einer kleinen Zahl technisch versierter Mitarbeiter gekennzeichnet, deren Einfluss ihren direkten Kontakt mit ihr bei Weitem überdauerte.",
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "e4d3afc3e5b89b69",
+    "translated_on": "2026-07-19T07:38:45.552495+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

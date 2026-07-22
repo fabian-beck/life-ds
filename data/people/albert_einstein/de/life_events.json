@@ -1,16 +1,16 @@
 {
-  "dataset": "albert_einstein",
-  "created_on": "2025-11-28",
+  "dataset": "historical_biography_v1",
+  "created_on": "2025-12-09",
   "person": {
     "name": "Albert_Einstein",
     "birth_date": "1879-03-14",
     "death_date": "1955-04-18",
     "primary_roles": [
       "Physiker",
-      "Theoretiker",
-      "öffentlicher Intellektueller"
+      "Wissenschaftler"
     ],
-    "summary": "Albert Einstein war ein in Deutschland geborener theoretischer Physiker, der die spezielle und die allgemeine Relativitätstheorie entwickelte und bahnbrechende Beiträge zur Quantentheorie und zur statistischen Physik leistete. Seine Annus-mirabilis-Arbeiten von 1905 veränderten die moderne Physik grundlegend, und seine Masse-Energie-Äquivalenzbeziehung E = mc² wurde zum Ikon. Für seine Erklärung des photoelektrischen Effekts erhielt er 1921 den Nobelpreis für Physik. Er hatte akademische Positionen in Zürich, Prag, Berlin und Princeton inne. Als jüdischer Flüchtling aus dem nationalsozialistischen Deutschland wurde er zu einem prominenten öffentlichen Intellektuellen, der sich zu Pazifismus, Zionismus, Bürgerrechten und den Gefahren von Atomwaffen äußerte.",
+    "tagline": "Architekt der Relativitätstheorie",
+    "summary": "Albert Einstein (1879–1955) war ein in Deutschland geborener theoretischer Physiker, dessen Arbeit das moderne Verständnis von Raum, Zeit, Materie und Energie grundlegend veränderte. Während seiner Tätigkeit am Schweizer Patentamt veröffentlichte er 1905 seine Arbeiten des „Annus Mirabilis“, darunter die spezielle Relativitätstheorie und die Masse-Energie-Beziehung E=mc² sowie eine wegweisende Erklärung des photoelektrischen Effekts. Später entwickelte er die allgemeine Relativitätstheorie, erhielt 1921 den Nobelpreis für Physik, emigrierte aus dem nationalsozialistischen Deutschland in die Vereinigten Staaten und nutzte seinen Weltruhm, um sich für Frieden, internationale Zusammenarbeit und nukleare Rüstungskontrolle einzusetzen.",
     "wikipedia": "https://en.wikipedia.org/wiki/Albert_Einstein",
     "portrait": {
       "image": "/portraits/albert_einstein_thumbnail.webp",
@@ -25,685 +25,769 @@
   },
   "chapters": [
     {
-      "id": "early_life_and_education",
-      "headline": "Kindheit und prägende Schulzeit",
+      "id": "formative_european_years",
+      "headline": "Prägende europäische Jahre",
       "date_start": "1879-03-14",
       "date_start_precision": "day",
-      "date_end": "1900",
-      "date_end_precision": "year",
+      "date_end": "1896-10-02",
+      "date_end_precision": "day",
       "age_start": 0,
-      "age_end": 21
+      "age_end": 17,
+      "involved_people": [
+        "Hermann Einstein",
+        "Pauline Einstein (née Koch)",
+        "Jakob Einstein"
+      ],
+      "location": "Mitteleuropa"
     },
     {
-      "id": "from_student_to_patent_clerk",
-      "headline": "Polytechnische Jahre und Annus mirabilis",
-      "date_start": "1901",
-      "date_start_precision": "year",
+      "id": "student_to_patent_visionary",
+      "headline": "Vom Studenten zum Patent-Visionär",
+      "date_start": "1896-10",
+      "date_start_precision": "month",
       "date_end": "1909",
       "date_end_precision": "year",
-      "age_start": 21,
-      "age_end": 30
+      "age_start": 17,
+      "age_end": 30,
+      "involved_people": [
+        "Mileva Marić"
+      ],
+      "location": "Schweiz"
     },
     {
-      "id": "rise_to_scientific_eminence",
-      "headline": "Relativität und internationaler Ruhm",
+      "id": "berlin_theoretical_breakthroughs",
+      "headline": "Berliner Durchbrüche der Theorie",
       "date_start": "1909",
       "date_start_precision": "year",
-      "date_end": "1922",
-      "date_end_precision": "year",
+      "date_end": "1922-11-09",
+      "date_end_precision": "day",
       "age_start": 30,
-      "age_end": 43
+      "age_end": 43,
+      "involved_people": [
+        "Mileva Marić",
+        "Hans Albert Einstein",
+        "Eduard Einstein",
+        "Elsa Einstein",
+        "Arthur Eddington",
+        "Frank Watson Dyson",
+        "Andrew Crommelin",
+        "Charles Rundle Davidson",
+        "Members of the Royal Swedish Academy of Sciences"
+      ],
+      "location": "Mitteleuropa"
     },
     {
-      "id": "public_intellectual_and_refugee",
-      "headline": "Vom Berliner Gelehrten zum Exilanten",
-      "date_start": "1922",
-      "date_start_precision": "year",
-      "date_end": "1940",
-      "date_end_precision": "year",
+      "id": "exile_in_america",
+      "headline": "Exil in Amerika",
+      "date_start": "1922-11-10",
+      "date_start_precision": "day",
+      "date_end": "1952-11-26",
+      "date_end_precision": "day",
       "age_start": 43,
-      "age_end": 61
+      "age_end": 73,
+      "involved_people": [
+        "Leó Szilárd",
+        "Franklin D. Roosevelt",
+        "Edward Teller",
+        "Eugene Wigner",
+        "Chaim Weizmann",
+        "David Ben-Gurion",
+        "Abba Eban"
+      ],
+      "location": "Vereinigte Staaten"
     },
     {
-      "id": "american_years_and_later_life",
-      "headline": "Princeton, Atomzeitalter, letzte Jahre",
-      "date_start": "1940",
-      "date_start_precision": "year",
+      "id": "final_princeton_days",
+      "headline": "Letzte Tage in Princeton",
+      "date_start": "1952-11-27",
+      "date_start_precision": "day",
       "date_end": "1955-04-18",
       "date_end_precision": "day",
-      "age_start": 61,
-      "age_end": 76
+      "age_start": 73,
+      "age_end": 76,
+      "involved_people": [],
+      "location": "Vereinigte Staaten"
     }
   ],
   "events": [
     {
       "date": "1879-03-14",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 0,
+      "age": null,
       "title": "Geburt in Ulm",
-      "description": "Albert Einstein wurde am 14. März 1879 in Ulm im Königreich Württemberg im Deutschen Kaiserreich als Sohn von Hermann Einstein, einem Kaufmann und Ingenieur, und Pauline Koch geboren. Die Familie waren säkulare aschkenasische Juden. Binnen eines Jahres zog sie nach München, wo sein Vater und sein Onkel eine elektrotechnische Firma gründeten, wodurch der junge Albert frühzeitig mit technischen Diskussionen und Apparaten in Berührung kam.",
+      "description": "Albert Einstein wird in Ulm im Königreich Württemberg als Sohn von Hermann und Pauline Einstein geboren, Angehörigen einer assimilierten bürgerlichen deutsch-jüdischen Familie. Kurz nach seiner Geburt zieht die Familie nach München, wo Vater und Onkel in der jungen Elektroindustrie arbeiten.",
       "locations": [
-        "Ulm"
+        {
+          "name_historic": "Ulm, Königreich Württemberg",
+          "name_modern": "Ulm, Baden-Württemberg, Deutschland",
+          "centroid": [
+            9.9937,
+            48.4011
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "München",
+          "name_modern": "München, Bayern, Deutschland",
+          "centroid": [
+            11.582,
+            48.1351
+          ],
+          "primary": false
+        }
       ],
+      "involved_people": [
+        "Hermann Einstein",
+        "Pauline Einstein (née Koch)",
+        "Jakob Einstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Einstein_family"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Gorri%C3%B3n_de_Ulm%2C_Ulm%2C_Alemania%2C_2023-06-17%2C_DD_67.jpg",
+          "caption": "Statue des Ulmer Spatzen in Einsteins Geburtsstadt Ulm, Deutschland",
+          "source": "https://commons.wikimedia.org/wiki/File:Gorrión_de_Ulm,_Ulm,_Alemania,_2023-06-17,_DD_67.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "formative_european_years"
+    },
+    {
+      "date": "1888",
+      "date_precision": "year",
+      "age": 9,
+      "title": "Eintritt ins Luitpold-Gymnasium",
+      "description": "Einstein tritt in das Luitpold-Gymnasium in München ein und erhält eine strenge klassische Bildung nach dem autoritären [[Prussian education system|preußischen Schulmodell]]. Obwohl er oft mit Drill und Auswendiglernen hadert, glänzt er in Mathematik und Physik, liest auf eigene Faust populärwissenschaftliche Werke und setzt den Violinunterricht fort, der eine lebenslange Leidenschaft bleiben wird.",
+      "locations": [
+        {
+          "name_historic": "München",
+          "name_modern": "München, Deutschland",
+          "centroid": [
+            11.576124,
+            48.137154
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "images": null,
-      "location_coordinates": [
+      "images": [
         {
-          "label": "Ulm, Baden-Württemberg, Germany",
-          "name": "Ulm",
-          "primary": true,
-          "centroid": [
-            9.9912458,
-            48.3984968
-          ],
-          "source": "nominatim",
-          "bbox": [
-            9.8424917,
-            48.3067287,
-            10.0428303,
-            48.4685153
-          ]
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Luitpold-Gymnasium_Muenchen-2.jpg",
+          "caption": "Schulgebäude des Staatlichen Luitpold-Gymnasiums München",
+          "source": "https://commons.wikimedia.org/wiki/File:Luitpold-Gymnasium_Muenchen-2.jpg"
         }
       ],
-      "chapter": "early_life_and_education",
-      "categories": null
+      "event_type_icon": "mdi-school",
+      "chapter": "formative_european_years",
+      "annotations": {
+        "Prussian education system": {
+          "explanation": "Ein stark zentralisiertes, autoritäres Schulmodell, entwickelt im Preußen des 18. und 19. Jahrhunderts, das Disziplin, Gehorsam und Auswendiglernen in staatlichen Schulen betonte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Education_in_Prussia"
+        }
+      }
     },
     {
-      "date": "1896-09",
-      "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
+      "date": "1896-10-03",
+      "date_precision": "day",
       "age": 17,
-      "title": "Maturitätsabschluss in Aarau",
-      "description": "Nachdem er das strenge Luitpold-Gymnasium in München verlassen hatte, beendete Einstein seine Sekundarschulbildung an der Aargauischen Kantonsschule in Aarau in der Schweiz. Im September 1896 bestand er seine Maturaprüfungen mit guten Noten in Geschichte, Physik, Algebra und Geometrie. Der liberale, diskussionsorientierte Unterrichtsstil dieser Schweizer Schule stand in starkem Kontrast zu seinen früheren Erfahrungen und prägte nachhaltig seinen intellektuellen Horizont.",
+      "title": "Schweizer Matura in Aarau bestanden",
+      "description": "Nachdem er das Münchner Gymnasium verlassen hat und der Familie nach Italien gefolgt ist, zieht Einstein allein nach Aarau in die Schweiz, um seine Schulzeit an der liberalen Kantonsschule Aargau abzuschließen. Am 3. Oktober 1896 erhält er sein [[Matura|Maturitätszeugnis]] mit Bestnoten in den Naturwissenschaften – ein wichtiger Schritt, der ihm den Weg in die Hochschulbildung öffnet, während er sich formal sowohl von der deutschen Staatsbürgerschaft als auch von der organisierten Religion löst.",
       "locations": [
-        "Aarau"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Albert_Einstein%27s_exam_of_maturity_grades_%28color2%29.jpg",
-          "caption": "Albert Einsteins Maturitätszeugnis von 1896 von der Aargauischen Kantonsschule in Aarau, das seine Abschlussnoten zeigt.",
-          "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein%27s_exam_of_maturity_grades_(color2).jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Aarau, Bezirk Aarau, Aargau, 5000, Switzerland",
-          "name": "Aarau",
-          "primary": true,
+          "name_historic": "Aarau",
+          "name_modern": "Aarau, Schweiz",
           "centroid": [
-            8.0444448,
-            47.3927146
+            8.051,
+            47.392
           ],
-          "source": "nominatim",
-          "bbox": [
-            8.0264433,
-            47.3697199,
-            8.1134556,
-            47.4123518
-          ]
+          "primary": true
+        },
+        {
+          "name_historic": "München",
+          "name_modern": "München, Deutschland",
+          "centroid": [
+            11.582,
+            48.135
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Mailand",
+          "name_modern": "Mailand, Italien",
+          "centroid": [
+            9.19,
+            45.464
+          ],
+          "primary": false
         }
       ],
-      "chapter": "early_life_and_education",
-      "categories": null
-    },
-    {
-      "date": "1897",
-      "date_precision": "year",
-      "date_end": "1900",
-      "date_end_precision": "year",
-      "date_note": null,
-      "age": 18,
-      "title": "Studium am Polytechnikum Zürich",
-      "description": "Im Jahr 1897, im Alter von siebzehn Jahren, schrieb sich Einstein in das Lehrdiplomprogramm für Mathematik und Physik an der Eidgenössischen Polytechnischen Schule in Zürich (später ETH Zürich) ein. Über vier Jahre studierte er höhere Mathematik, theoretische und experimentelle Physik sowie Mechanik, freundete sich mit seinem Kommilitonen Marcel Grossmann an und entwickelte eine intensive wissenschaftliche und persönliche Partnerschaft mit Mileva Marić. Er schloss 1900 ab und war damit für den Unterricht in Mathematik und Physik qualifiziert.",
-      "locations": [
-        "Zürich"
-      ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Mileva_Mari%C4%87"
+        "https://en.wikipedia.org/wiki/Kantonsschule_Aarau"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/77/ETH-BIB-Einstein%2C_Albert_und_Kollegen_am_Physik-Labor_ETH-Portrait-Portr_10750.tif",
-          "caption": "Albert Einstein mit Kollegen im Physiklabor der Eidgenössischen Polytechnischen Schule in Zürich.",
-          "source": "https://commons.wikimedia.org/wiki/File:ETH-BIB-Einstein,_Albert_und_Kollegen_am_Physik-Labor_ETH-Portrait-Portr_10750.tif"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Aarau-Alte-Kantonsschule-ps.jpg",
+          "caption": "Alte Kantonsschule in Aarau, Schweiz",
+          "source": "https://commons.wikimedia.org/wiki/File:Aarau-Alte-Kantonsschule-ps.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Zürich",
-          "primary": true,
-          "centroid": [
-            8.5410422,
-            47.3744489
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
+      "event_type_icon": "mdi-school",
+      "chapter": "student_to_patent_visionary",
+      "annotations": {
+        "Matura": {
+          "explanation": "Die Matura (Maturitätsprüfung bzw. Maturitätszeugnis) ist in mehreren europäischen Ländern die standardisierte Reifeprüfung samt Zeugnis, die zum Universitätsstudium berechtigt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
         }
-      ],
-      "chapter": "early_life_and_education",
-      "categories": null
+      }
     },
     {
-      "date": "1902",
-      "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 23,
-      "title": "Anstellung beim Patentamt in Bern",
-      "description": "Nach mehreren erfolglosen Versuchen, nach seinem Abschluss eine akademische Stelle zu erhalten, bekam Einstein 1902 eine feste Anstellung als Technischer Experte dritter Klasse beim Schweizerischen Patentamt in Bern. Die Begutachtung von Patentanmeldungen für elektromagnetische Geräte verschaffte ihm ein regelmäßiges Einkommen und geregelte Arbeitszeiten, während die relative intellektuelle Isolation ihn dazu ermutigte, in seiner Freizeit eigenständige theoretische Arbeiten zu verfolgen, die den Grundstein für seine Durchbrüche von 1905 legten.",
-      "locations": [
-        "Bern"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Einstein_patentoffice_full_%28cropped%29.jpg",
-          "caption": "Albert Einstein an seinem Schreibtisch im Schweizerischen Patentamt in Bern, wo er arbeitete, während er seine frühen bahnbrechenden Arbeiten entwickelte.",
-          "source": "https://commons.wikimedia.org/wiki/File:Einstein_patentoffice_full_(cropped).jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Bern, Bern-Mittelland administrative district, Bernese Mittelland administrative region, Bern, Switzerland",
-          "name": "Bern",
-          "primary": true,
-          "centroid": [
-            7.4521749,
-            46.9484742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            7.2943145,
-            46.9190326,
-            7.4955563,
-            46.9901527
-          ]
-        }
-      ],
-      "chapter": "from_student_to_patent_clerk",
-      "categories": null
-    },
-    {
-      "date": "1903-01",
+      "date": "1896-10",
       "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 23,
-      "title": "Heirat mit Mileva Marić",
-      "description": "Im Januar 1903 heiratete Einstein Mileva Marić, eine serbische Physikerin und Mathematikerin, die er als Kommilitonin am Polytechnikum Zürich kennengelernt hatte. Sie ließen sich in Bern nieder, wo Einstein im Patentamt arbeitete und Mileva ihre eigenen wissenschaftlichen Ambitionen zurückstellte, während sie eine Familie gründeten. Ihre komplexe persönliche und intellektuelle Beziehung ist seither Gegenstand erheblicher historischer Debatten.",
+      "age": 17,
+      "title": "Immatrikulation am Polytechnikum Zürich",
+      "description": "Einstein schreibt sich in den Lehramtsstudiengang für Mathematik und Physik am [[Eidgenössisches Polytechnikum|Eidgenössischen Polytechnikum]] in Zürich (der späteren ETH Zürich) ein. Dort studiert er bei führenden Physikern und Mathematikern, schwänzt oft Vorlesungen, die er uninspirierend findet, und arbeitet stattdessen intensiv an theoretischen Problemen mit einem kleinen Freundeskreis, zu dem auch seine Kommilitonin und spätere erste Frau Mileva Marić gehört.",
       "locations": [
-        "Bern"
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5417,
+            47.3769
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mileva Marić"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Mileva_Mari%C4%87"
+        "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87",
+        "https://en.wikipedia.org/wiki/ETH_Zurich"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/ETH_zurich_%28Ank_Kumar_Infosys_Limited%29_02.jpg",
+          "caption": "Außenansicht des Hauptgebäudes der ETH Zürich",
+          "source": "https://commons.wikimedia.org/wiki/File:ETH_zurich_(Ank_Kumar_Infosys_Limited)_02.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "formative_european_years",
+      "annotations": {
+        "Eidgenössisches Polytechnikum": {
+          "explanation": "Die Eidgenössische Polytechnische Schule in Zürich, 1855 gegründet und später in ETH Zürich umbenannt, eine führende Institution für naturwissenschaftliche und technische Lehre und Forschung.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
+        }
+      }
+    },
+    {
+      "date": "1902-06",
+      "date_precision": "month",
+      "date_end": "1909",
+      "date_end_precision": "year",
+      "age": 23,
+      "title": "Eintritt ins Berner Patentamt",
+      "description": "Nachdem er nach dem Abschluss vergeblich eine akademische Stelle gesucht hat, nimmt Einstein eine Stelle als technischer Experte am Eidgenössischen Patentamt in Bern an. Die Prüfung von Patentanmeldungen für elektrische und mechanische Geräte gibt ihm finanzielle Stabilität und täglichen Kontakt mit praktischen Problemen des Elektromagnetismus, während er in seiner Freizeit mit dem informellen Diskussionskreis der „Akademie Olympia“ seine eigene theoretische Arbeit vorantreibt.",
+      "locations": [
+        {
+          "name_historic": "Bern",
+          "name_modern": "Bern, Schweiz",
+          "centroid": [
+            7.4474,
+            46.948
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Einstein_family",
+        "https://en.wikipedia.org/wiki/Hans_Albert_Einstein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Einstein_patentoffice.jpg",
+          "caption": "Albert Einstein als in Deutschland geborener theoretischer Physiker",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_patentoffice.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "student_to_patent_visionary"
+    },
+    {
+      "date": "1903-01-06",
+      "date_precision": "day",
+      "age": 23,
+      "title": "Heirat mit Mileva Marić in Bern",
+      "description": "Einstein heiratet seine frühere [[ETH Zurich|ETH]]-Kommilitonin Mileva Marić in einer standesamtlichen Zeremonie in Bern, gegen den anfänglichen Willen seiner Familie. Das Paar richtet sich bald in der Kramgasse ein Zuhause ein, das später als Einsteinhaus bekannt wird; dort werden sie zwei Söhne großziehen, während Einstein weiter im Patentamt arbeitet und seine revolutionären Ideen entwickelt.",
+      "locations": [
+        {
+          "name_historic": "Bern",
+          "name_modern": "Bern, Schweiz",
+          "centroid": [
+            7.4474,
+            46.948
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mileva Marić"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87",
+        "https://de.wikipedia.org/wiki/Einsteinhaus_Bern",
+        "https://en.wikipedia.org/wiki/Hans_Albert_Einstein"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Albert_Einstein_and_his_wife_Mileva_Maric.jpg",
-          "caption": "Albert Einstein mit seiner ersten Ehefrau Mileva Marić, fotografiert während ihrer gemeinsamen Jahre in der Schweiz.",
+          "caption": "Albert Einstein und seine erste Frau Mileva Marić",
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_and_his_wife_Mileva_Maric.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Bern, Bern-Mittelland administrative district, Bernese Mittelland administrative region, Bern, Switzerland",
-          "name": "Bern",
-          "primary": true,
-          "centroid": [
-            7.4521749,
-            46.9484742
-          ],
-          "source": "nominatim",
-          "bbox": [
-            7.2943145,
-            46.9190326,
-            7.4955563,
-            46.9901527
-          ]
+      "event_type_icon": "mdi-ring",
+      "chapter": "student_to_patent_visionary",
+      "annotations": {
+        "ETH Zurich": {
+          "explanation": "Die Eidgenössische Technische Hochschule Zürich, eine führende natur- und ingenieurwissenschaftliche Universität, an der Albert Einstein und Mileva Marić gemeinsam studierten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
         }
-      ],
-      "chapter": "from_student_to_patent_clerk",
-      "categories": null
+      }
     },
     {
-      "date": "1905",
-      "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
+      "date": "1905-06-30",
+      "date_precision": "day",
+      "date_end": "1905-09",
+      "date_end_precision": "month",
+      "date_note": "Umfasst mehrere zwischen Juni und September 1905 veröffentlichte Arbeiten",
       "age": 26,
-      "title": "Annus-mirabilis-Arbeiten",
-      "description": "Während seiner Vollzeitbeschäftigung am Berner Patentamt veröffentlichte Einstein 1905 vier epochemachende Arbeiten in den Annalen der Physik. Sie lieferten eine Lichtquanten-Erklärung des photoelektrischen Effekts, eine Theorie der Brownschen Bewegung, die spezielle Relativitätstheorie und die Masse-Energie-Äquivalenzbeziehung E = mc². Zusammen veränderten diese Arbeiten die Grundlagen der modernen Physik und brachten ihm später den Nobelpreis für Physik für seine Erklärung des photoelektrischen Effekts ein.",
+      "title": "Veröffentlichung der Annus-Mirabilis-Arbeiten",
+      "description": "Noch als Patentprüfer in Bern veröffentlicht Einstein in einer deutschen Physikzeitschrift eine Reihe von vier bahnbrechenden Arbeiten, die zusammen die moderne Physik umgestalten. Sie erklären die Brownsche Bewegung, führen das Lichtquant zur Deutung des photoelektrischen Effekts ein, formulieren die spezielle Relativitätstheorie und leiten die Masse-Energie-Beziehung E=mc² her – und machen führende Physiker in ganz Europa auf ihn aufmerksam.",
       "locations": [
-        "Bern"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Annus_mirabilis_papers"
-      ],
-      "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Einstein_thesis.png",
-          "caption": "Titelseite von Albert Einsteins 1905 eingereichter Doktorarbeit an der Universität Zürich, aus demselben Jahr wie seine Annus-mirabilis-Arbeiten.",
-          "source": "https://commons.wikimedia.org/wiki/File:Einstein_thesis.png"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Bern, Bern-Mittelland administrative district, Bernese Mittelland administrative region, Bern, Switzerland",
-          "name": "Bern",
-          "primary": true,
+          "name_historic": "Bern",
+          "name_modern": "Bern, Schweiz",
           "centroid": [
-            7.4521749,
-            46.9484742
+            7.4474,
+            46.9481
           ],
-          "source": "nominatim",
-          "bbox": [
-            7.2943145,
-            46.9190326,
-            7.4955563,
-            46.9901527
-          ]
+          "primary": true
         }
       ],
-      "chapter": "from_student_to_patent_clerk",
-      "categories": null
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Annus_Mirabilis_papers",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "student_to_patent_visionary",
+      "annotations": {
+        "photoelectric_effect": {
+          "explanation": "Der photoelektrische Effekt ist die Emission von Elektronen aus einem Material bei Bestrahlung mit Licht und offenbart das teilchenartige Verhalten der Lichtquanten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Photoelectric_effect"
+        }
+      }
     },
     {
       "date": "1909",
       "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 30,
-      "title": "Erste Professur in Zürich",
-      "description": "Im Jahr 1909, nachdem er 1905 an der Universität Zürich promoviert hatte, verließ Einstein das Berner Patentamt, um seine erste ordentliche Professur für Theoretische Physik an der Universität Zürich anzunehmen. Dies markierte seinen Übergang vom Beamten zum professionellen akademischen Physiker und verschaffte ihm mehr Zeit und institutionelle Unterstützung, um seine Arbeiten über Strahlung, statistische Mechanik und die aufkommende Quantentheorie zu vertiefen.",
+      "age": 29,
+      "title": "Vom Patentamt zur Zürcher Professur",
+      "description": "Einstein verlässt das Schweizer Patentamt, nachdem er zum außerordentlichen Professor für theoretische Physik an der Universität Zürich ernannt worden ist. Der Schritt markiert seinen vollständigen Eintritt in die akademische Welt und verschafft ihm mehr Zeit und institutionellen Rückhalt, um seine Arbeiten zur Relativitätstheorie und zur statistischen Physik weiterzuentwickeln.",
       "locations": [
-        "Zürich"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Zürich",
-          "primary": true,
+          "name_historic": "Bern",
+          "name_modern": "Bern, Schweiz",
           "centroid": [
-            8.5410422,
-            47.3744489
+            7.4474,
+            46.9481
           ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
+          "primary": false
+        },
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5417,
+            47.3769
+          ],
+          "primary": true
         }
       ],
-      "chapter": "rise_to_scientific_eminence",
-      "categories": null
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/University_of_Zurich"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "student_to_patent_visionary"
     },
     {
-      "date": "1915",
-      "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
+      "date": "1914-04",
+      "date_precision": "month",
+      "age": 35,
+      "title": "Berufung nach Berlin",
+      "description": "Einstein nimmt eine prestigeträchtige Stellung in Berlin an – als Mitglied der [[Prussian Academy of Sciences|Preußischen Akademie der Wissenschaften]] und Professor an der Berliner Universität, zugleich als designierter Direktor eines neuen Physikinstituts. Der Wechsel rückt ihn am Vorabend des Ersten Weltkriegs ins Zentrum des deutschen Wissenschaftslebens, während seine Ehe mit Mileva Marić zerbricht und sein Privatleben zunehmend belastet ist.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5417,
+            47.3769
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Mileva Marić",
+        "Hans Albert Einstein",
+        "Eduard Einstein",
+        "Elsa Einstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Einstein_family",
+        "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "berlin_theoretical_breakthroughs",
+      "annotations": {
+        "Prussian Academy of Sciences": {
+          "explanation": "Eine führende Gelehrtengesellschaft in Berlin, gegründet 1700, die bis zu ihrer Auflösung nach dem Zweiten Weltkrieg zu den bedeutendsten Wissenschaftsakademien Europas zählte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Prussian_Academy_of_Sciences"
+        }
+      }
+    },
+    {
+      "date": "1915-11-25",
+      "date_precision": "day",
       "age": 36,
-      "title": "Vollendung der Allgemeinen Relativitätstheorie",
-      "description": "Während des Ersten Weltkriegs arbeitete Einstein in Berlin und stellte 1915 der Preußischen Akademie der Wissenschaften die endgültige Form seiner Allgemeinen Relativitätstheorie vor. Aufbauend auf seiner speziellen Relativitätstheorie von 1905 und auf fortgeschrittener Tensorrechnung beschrieb die neue Theorie die Gravitation als Krümmung der Raumzeit, hervorgerufen durch Masse und Energie. Die Allgemeine Relativitätstheorie revidierte die newtonsche Mechanik im kosmischen Maßstab grundlegend und bot einen neuen Rahmen für das Verständnis der Kosmologie und gravitativer Systeme.",
+      "title": "Feldgleichungen der allgemeinen Relativitätstheorie",
+      "description": "Nach Jahren intensiver Arbeit präsentiert Einstein in [[general theory of relativity|Berlin die endgültige Form der Feldgleichungen der allgemeinen Relativitätstheorie]] vor der Preußischen Akademie der Wissenschaften. Die neue Theorie beschreibt die Gravitation als Krümmung der Raumzeit durch Masse und Energie, löst die Newtonsche Gravitationslehre ab und liefert einen Rahmen zum Verständnis von Phänomenen wie der Periheldrehung des Merkur.",
       "locations": [
-        "Berlin"
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
       ],
+      "involved_people": null,
       "sources": [
+        "https://en.wikipedia.org/wiki/General_relativity",
         "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Albert_Einstein_photo_1920.jpg",
-          "caption": "Albert Einstein in seinem Büro an der Universität Berlin, fotografiert 1920 in der Zeit, als die Allgemeine Relativitätstheorie intensiv untersucht und diskutiert wurde.",
-          "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_photo_1920.jpg"
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "berlin_theoretical_breakthroughs",
+      "annotations": {
+        "general theory of relativity": {
+          "explanation": "Eine grundlegende physikalische Theorie, von Einstein 1915 vollendet, die die Gravitation nicht als Kraft, sondern als geometrische Krümmung der vierdimensionalen Raumzeit durch Masse und Energie beschreibt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Berlin, Germany",
-          "name": "Berlin",
-          "primary": true,
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "source": "nominatim",
-          "bbox": [
-            13.088345,
-            52.3382448,
-            13.7611609,
-            52.6755087
-          ]
-        }
-      ],
-      "chapter": "rise_to_scientific_eminence",
-      "categories": null
+      }
     },
     {
-      "date": "1919-02-14",
+      "date": "1919-11-06",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 39,
-      "title": "Scheidung von Mileva Marić",
-      "description": "Am 14. Februar 1919 sprach ein Gericht in Zürich Einstein und Mileva Marić nach fünfjähriger Trennung die Scheidung zu. Im Rahmen der Vereinbarung erklärte sich Einstein bereit, dass im Falle eines Nobelpreises das Preisgeld an Marić gehen würde. Ihre Ehe war zunehmend durch seine wachsenden wissenschaftlichen Verpflichtungen, persönliche Differenzen und seine Beziehung zu seiner Cousine Elsa Löwenthal, die er später im selben Jahr heiratete, belastet worden.",
-      "locations": [
-        "Zürich"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Mileva_Mari%C4%87"
-      ],
-      "images": null,
-      "location_coordinates": [
-        {
-          "label": "Zurich, District Zurich, Zurich, Switzerland",
-          "name": "Zürich",
-          "primary": true,
-          "centroid": [
-            8.5410422,
-            47.3744489
-          ],
-          "source": "nominatim",
-          "bbox": [
-            8.4480061,
-            47.3202187,
-            8.6254413,
-            47.4346662
-          ]
-        }
-      ],
-      "chapter": "rise_to_scientific_eminence",
-      "categories": null
-    },
-    {
-      "date": "1919-05-29",
-      "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
+      "date_note": "Datum, an dem die bestätigenden Finsternisergebnisse der Royal Society und der Royal Astronomical Society verkündet wurden",
       "age": 40,
-      "title": "Sonnenfinsternisbestätigung der Relativitätstheorie",
-      "description": "Am 29. Mai 1919 fotografierten britische Expeditionen unter der Leitung von Arthur Eddington im brasilianischen Sobral und auf Príncipe vor Westafrika eine totale Sonnenfinsternis, um Einsteins Vorhersage zu testen, dass Sternenlicht durch die Gravitation der Sonne abgelenkt würde. Ihre Auswertung zeigte eine Ablenkung, die mit der Allgemeinen Relativitätstheorie übereinstimmte und deutlich größer war als die newtonsche Erwartung. Als die Ergebnisse später im Jahr bekannt gegeben wurden, wurde Einstein zu einem internationalen wissenschaftlichen Star, und seine Gravitationstheorie fand breite Anerkennung.",
+      "title": "Sonnenfinsternis bestätigt die Relativitätstheorie",
+      "description": "Britische Astronomen verkünden in [[London|London]], dass die Messungen des Sternenlichts während der Sonnenfinsternis vom Mai 1919 mit der von Einsteins [[general relativity|allgemeiner Relativitätstheorie]] vorhergesagten Lichtablenkung übereinstimmen. Die spektakuläre Bestätigung wird von der internationalen Presse breit aufgegriffen und macht Einstein schlagartig zu einer wissenschaftlichen Weltberühmtheit und zum Symbol der geistigen Nachkriegsverständigung zwischen ehemaligen Feinden.",
       "locations": [
-        "Sobral"
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5074
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Principe",
+          "name_modern": "Príncipe, São Tomé und Príncipe",
+          "centroid": [
+            7.4,
+            1.6
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Sobral",
+          "name_modern": "Sobral, Brasilien",
+          "centroid": [
+            -40.3497,
+            -3.6894
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Arthur Eddington",
+        "Frank Watson Dyson",
+        "Andrew Crommelin",
+        "Charles Rundle Davidson"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Arthur_Eddington"
+        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Oppenheimer_relationship",
+        "https://en.wikipedia.org/wiki/Arthur_Eddington",
+        "https://en.wikipedia.org/wiki/Tests_of_general_relativity"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/1919_eclipse_positive.jpg",
-          "caption": "Eine der Sonnenfinsternisplatten von 1919 aus Sobral, mit denen die Ablenkung des Sternenlichts durch die Sonne gemessen wurde und die Einsteins Vorhersage bestätigten.",
-          "source": "https://commons.wikimedia.org/wiki/File:1919_eclipse_positive.jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/1919_eclipse_negative.jpg",
+          "caption": "Negativ der Sonnenfinsternis von 1919 zum Test der Relativitätstheorie",
+          "source": "https://commons.wikimedia.org/wiki/File:1919_eclipse_negative.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Sobral, Região Geográfica Imediata de Sobral, Região Geográfica Intermediária de Sobral, Ceará, Northeast Region, Brazil",
-          "name": "Sobral",
-          "primary": true,
-          "centroid": [
-            -40.3456372,
-            -3.6879135
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -40.7236252,
-            -4.1428044,
-            -39.840626,
-            -3.5702547
-          ]
+      "event_type_icon": "mdi-eye",
+      "chapter": "berlin_theoretical_breakthroughs",
+      "annotations": {
+        "London": {
+          "explanation": "Hauptstadt des Vereinigten Königreichs und 1919 das politische und wissenschaftliche Zentrum, in dem die britische Bekanntgabe der Finsternisergebnisse erfolgte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/London"
+        },
+        "general relativity": {
+          "explanation": "Einsteins Gravitationstheorie von 1915, die die Schwerkraft als Krümmung der Raumzeit beschreibt und vorhersagt, dass Licht in der Nähe eines massereichen Körpers wie der Sonne abgelenkt wird.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
         }
-      ],
-      "chapter": "rise_to_scientific_eminence",
-      "categories": null
+      }
     },
     {
-      "date": "1921",
-      "date_precision": "year",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
-      "age": 42,
-      "title": "Nobelpreis für Physik",
-      "description": "1921 verlieh die Königliche Schwedische Akademie der Wissenschaften Einstein den Nobelpreis für Physik für das Jahr 1921 mit der Begründung „für seine Verdienste um die Theoretische Physik, insbesondere für seine Entdeckung des Gesetzes des photoelektrischen Effekts“. Der Preis, der 1922 offiziell überreicht wurde, würdigte seine entscheidende Rolle bei der Etablierung des Quantencharakters des Lichts und nicht seine damals noch umstrittenen Relativitätstheorien. Gemäß seiner Scheidungsvereinbarung ging das Nobelpreisgeld an seine erste Ehefrau Mileva Marić.",
+      "date": "1922-11-09",
+      "date_precision": "day",
+      "date_note": "Einstein erhielt den Nobelpreis für 1921 bei der Zeremonie von 1922",
+      "age": 43,
+      "title": "Nobelpreis für Physik erhalten",
+      "description": "Einstein wird der Nobelpreis für Physik zuerkannt, „für seine Verdienste um die theoretische Physik, besonders für seine Entdeckung des Gesetzes des photoelektrischen Effekts“. Die Auszeichnung, die auf seiner Arbeit zur Quantentheorie und nicht auf der Relativitätstheorie beruht, festigt seinen Rang in der Wissenschaft und verschafft ihm die Mittel, die er seiner früheren Frau Mileva Marić im Scheidungsvertrag teilweise zugesagt hatte.",
       "locations": [
-        "Stockholm"
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Schweden",
+          "centroid": [
+            18.06324,
+            59.334591
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mileva Marić",
+        "Members of the Royal Swedish Academy of Sciences"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Nobel_Prize_in_Physics"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Albert_Einstein_%28Nobel%29.png",
-          "caption": "Offizielles Nobelpreisporträt Albert Einsteins als Nobelpreisträger für Physik 1921.",
+          "caption": "Offizielles Nobelpreis-Porträt Albert Einsteins von 1921",
           "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_(Nobel).png"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Stockholm, Stockholm Municipality, Stockholm County, 111 29, Sweden",
-          "name": "Stockholm",
-          "primary": true,
-          "centroid": [
-            18.0710935,
-            59.3251172
-          ],
-          "source": "nominatim",
-          "bbox": [
-            17.9110935,
-            59.1651172,
-            18.2310935,
-            59.4851172
-          ]
+      "event_type_icon": "mdi-trophy",
+      "chapter": "berlin_theoretical_breakthroughs",
+      "annotations": {
+        "photoelectric_effect": {
+          "explanation": "Der photoelektrische Effekt ist der Vorgang, bei dem Elektronen aus einem Material herausgelöst werden, wenn es Licht ausgesetzt wird – ein Phänomen, dessen Erklärung die Quantentheorie mitbegründete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Photoelectric_effect"
         }
-      ],
-      "chapter": "rise_to_scientific_eminence",
-      "categories": null
+      }
     },
     {
-      "date": "1933-05-26",
+      "date": "1933-10-17",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
+      "date_note": "Ankunft in den Vereinigten Staaten nach dem Entschluss, nicht ins nationalsozialistische Deutschland zurückzukehren",
       "age": 54,
-      "title": "Flucht aus dem nationalsozialistischen Deutschland",
-      "description": "Während Einstein Anfang 1933 die Vereinigten Staaten besuchte, gelangte Adolf Hitler in Deutschland an die Macht und begann damit, Juden aus dem akademischen und öffentlichen Leben zu entfernen. Entsetzt über den nationalsozialistischen Antisemitismus beschloss Einstein, nicht zurückzukehren. Am 26. Mai 1933 reiste er von Ostende nach Dover, wie auf seiner britischen Landungskarte vermerkt, und anschließend weiter nach Oxford. Kurz darauf trat er aus der Preußischen Akademie der Wissenschaften aus und gab seine deutsche Staatsbürgerschaft auf, womit er zu einem prominenten Symbol für den Exodus jüdischer und antinationalsozialistischer Intellektueller wurde.",
+      "title": "Emigration in die Vereinigten Staaten",
+      "description": "Nach der Machtübernahme der Nationalsozialisten und den antijüdischen Maßnahmen in Deutschland legt Einstein seine Berliner Ämter nieder und beschließt, von einer Auslandsreise nicht zurückzukehren. Er reist in die Vereinigten Staaten und nimmt eine dauerhafte Stelle am neu gegründeten Institute for Advanced Study in Princeton an, wo er für den Rest seines Lebens leben und arbeiten wird, während er sich gegen Faschismus und rassistische Verfolgung ausspricht.",
       "locations": [
-        "Dover"
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
+          "centroid": [
+            -74.6591,
+            40.3573
+          ],
+          "primary": true
+        }
       ],
+      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://commons.wikimedia.org/wiki/File:Einstein%27s_landing_card_(5706142737).jpg"
+        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/78/Einstein%27s_landing_card_%285706142737%29.jpg",
-          "caption": "Einsteins britische Landungskarte vom 26. Mai 1933, die seine Ankunft in Dover nach der Ausreise aus dem nationalsozialistischen Deutschland dokumentiert.",
-          "source": "https://commons.wikimedia.org/wiki/File:Einstein%27s_landing_card_(5706142737).jpg"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Institute_for_Advanced_Study_Campus.jpg",
+          "caption": "Luftaufnahme des Institute for Advanced Study, Princeton",
+          "source": "https://commons.wikimedia.org/wiki/File:Institute_for_Advanced_Study_Campus.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Dover, Kent, England, United Kingdom",
-          "name": "Dover",
-          "primary": true,
-          "centroid": [
-            1.3134228,
-            51.1251275
-          ],
-          "source": "nominatim",
-          "bbox": [
-            1.1427455,
-            51.0971868,
-            1.406207,
-            51.3323814
-          ]
-        }
-      ],
-      "chapter": "public_intellectual_and_refugee",
-      "categories": null
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "exile_in_america"
     },
     {
       "date": "1939-08-02",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 60,
-      "title": "Einstein–Szilárd-Brief an Roosevelt",
-      "description": "Am 2. August 1939 verfasste der Physiker Leó Szilárd einen Brief, den Albert Einstein unterzeichnete, an den US-Präsidenten Franklin D. Roosevelt, in dem er davor warnte, dass die jüngsten Entdeckungen der Kernspaltung es dem nationalsozialistischen Deutschland ermöglichen könnten, äußerst potente Bomben zu bauen. Der Brief drängte die Vereinigten Staaten, eigene Forschungen zu beginnen und Uran zu bevorraten. Im Oktober Roosevelt übergeben, führte er zur Einrichtung amerikanischer Uran-Ausschüsse und half, das in Gang zu setzen, was später zum Manhattan-Projekt wurde, auch wenn Einstein selbst nicht an dem Projekt mitarbeitete.",
+      "title": "Einstein-Szilard-Brief an Roosevelt",
+      "description": "Auf Drängen emigrierter Physikerkollegen um Leó Szilárd unterzeichnet Einstein einen Brief an US-Präsident Franklin D. Roosevelt, der warnt, dass das nationalsozialistische Deutschland möglicherweise Atombomben zu bauen versucht, und der amerikanische Aufmerksamkeit für die Uranforschung anmahnt. Der Brief trägt zur Einrichtung von US-Beratungsgremien bei, die schließlich zum Manhattan-Projekt führen – von der direkten Mitarbeit am Programm bleibt Einstein selbst jedoch ausgeschlossen.",
       "locations": [
-        "Long Island"
+        {
+          "name_historic": "Long Island",
+          "name_modern": "Long Island, New York, USA",
+          "centroid": [
+            -73.135,
+            40.789
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., USA",
+          "centroid": [
+            -77.0365,
+            38.8951
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Leó Szilárd",
+        "Franklin D. Roosevelt",
+        "Edward Teller",
+        "Eugene Wigner"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter",
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Franklin_D._Roosevelt"
+        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Einstein-Roosevelt-letter.png",
-          "caption": "Scan des Briefes vom 2. August 1939 an Präsident Franklin D. Roosevelt, verfasst von Leó Szilárd und von Albert Einstein unterzeichnet, in dem die USA zu Maßnahmen in der Forschung zur Kernspaltung aufgefordert werden.",
-          "source": "https://commons.wikimedia.org/wiki/File:Einstein-Roosevelt-letter.png"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/1-Einstein_and_Szilard_letter_to_Roosevelt_NNSA.jpg",
+          "caption": "Einstein und Leó Szilárd stellen die Unterzeichnung des Roosevelt-Briefs nach",
+          "source": "https://commons.wikimedia.org/wiki/File:1-Einstein_and_Szilard_letter_to_Roosevelt_NNSA.jpg"
         }
       ],
-      "location_coordinates": [
-        {
-          "label": "Long Island, New York, United States",
-          "name": "Long Island",
-          "primary": true,
-          "centroid": [
-            -73.0994297,
-            40.8514971
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.0419691,
-            40.5419011,
-            -71.8562705,
-            41.161155
-          ]
-        }
-      ],
-      "chapter": "public_intellectual_and_refugee",
-      "categories": null
+      "event_type_icon": "mdi-email",
+      "chapter": "exile_in_america"
     },
     {
-      "date": "1940-10",
-      "date_precision": "month",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": "Exact naturalization day in October 1940; commonly cited month and year are used here",
-      "age": 61,
-      "title": "Ein amerikanischer Staatsbürger wird",
-      "description": "Im Jahr 1940, nachdem er sich am Institute for Advanced Study in Princeton niedergelassen hatte, erhielt Einstein die Staatsbürgerschaft der Vereinigten Staaten, während er seine Schweizer Staatsangehörigkeit behielt. Als deutsch-jüdischer Flüchtling vor dem Nationalsozialismus nutzte er seine neue Position, um sich für andere Flüchtlinge, für Bürgerrechte und später gegen den ungezügelten Einsatz von Atomwaffen auszusprechen. Er blieb für den Rest seines Lebens in Princeton.",
+      "date": "1952-11-26",
+      "date_precision": "day",
+      "age": 73,
+      "title": "Präsidentschaft Israels abgelehnt",
+      "description": "Nach dem Tod von Chaim Weizmann bietet die israelische Regierung Einstein informell das weitgehend zeremonielle Amt des Präsidenten Israels an, in Anerkennung seiner moralischen Autorität und seiner Unterstützung des Zionismus. Er lehnt respektvoll ab und erklärt in einem Brief, ihm fehlten sowohl die natürliche Begabung als auch die Erfahrung im Umgang mit Menschen und Amtsgeschäften solchen Ausmaßes – bei gleichzeitiger Bekräftigung seiner tiefen Verbundenheit mit dem jüdischen Volk und dem neuen Staat.",
       "locations": [
-        "Princeton, New Jersey"
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, USA",
+          "centroid": [
+            -74.6591,
+            40.3573
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Jerusalem",
+          "name_modern": "Jerusalem",
+          "centroid": [
+            35.2137,
+            31.7683
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Chaim Weizmann",
+        "David Ben-Gurion",
+        "Abba Eban"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Chaim_Weizmann",
+        "https://en.wikipedia.org/wiki/President_of_Israel"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Citizen-Einstein.jpg",
-          "caption": "Albert Einstein erhält 1940 seine amerikanische Staatsbürgerschaftsurkunde von Richter Phillip Forman.",
-          "source": "https://commons.wikimedia.org/wiki/File:Citizen-Einstein.jpg"
-        }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton, New Jersey",
-          "primary": true,
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
-        }
-      ],
-      "chapter": "american_years_and_later_life",
-      "categories": null
+      "event_type_icon": "mdi-calendar",
+      "chapter": "exile_in_america"
     },
     {
       "date": "1955-04-18",
       "date_precision": "day",
-      "date_end": null,
-      "date_end_precision": null,
-      "date_note": null,
       "age": 76,
       "title": "Tod in Princeton",
-      "description": "Albert Einstein starb am 18. April 1955 im Princeton Hospital in New Jersey an den Folgen eines rupturierten Bauchaortenaneurysmas. Zu diesem Zeitpunkt wurde er weltweit nicht nur als Architekt der Relativitätstheorie, sondern auch als moralische Stimme verehrt, die sich zu Pazifismus, Zionismus, Bürgerrechten und den Gefahren eines Atomkriegs geäußert hatte. Er hinterließ seine unvollendete, jahrzehntelange Suche nach einer einheitlichen Feldtheorie und gilt weiterhin als einer der einflussreichsten Wissenschaftler der Geschichte.",
+      "description": "Einstein stirbt in [[Princeton|Princeton, New Jersey]] an den Folgen eines Aortenaneurysmas; bis in seine letzten Tage bleibt er geistig aktiv und arbeitet an einheitlichen Feldtheorien. Seinem Wunsch entsprechend wird er eingeäschert und seine Asche an einem unbekannten Ort verstreut, während sein Gehirn für wissenschaftliche Untersuchungen entnommen wird – ein Spiegel seiner lebenslangen Hingabe an das Verständnis der physikalischen Welt.",
       "locations": [
-        "Princeton, New Jersey"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "images": null,
-      "location_coordinates": [
         {
-          "label": "Princeton, Mercer County, New Jersey, United States",
-          "name": "Princeton, New Jersey",
-          "primary": true,
+          "name_historic": "Princeton, New Jersey",
+          "name_modern": "Princeton, New Jersey, USA",
           "centroid": [
-            -74.6597376,
-            40.3496953
+            -74.6591,
+            40.3573
           ],
-          "source": "nominatim",
-          "bbox": [
-            -74.7221219,
-            40.3048856,
-            -74.617508,
-            40.3917309
-          ]
+          "primary": true
         }
       ],
-      "chapter": "american_years_and_later_life",
-      "categories": null
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Brain_of_Albert_Einstein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Bust_of_Albert_Einstein_%28Princeton%29.jpg",
+          "caption": "Büste Albert Einsteins in Princeton, New Jersey",
+          "source": "https://commons.wikimedia.org/wiki/File:Bust_of_Albert_Einstein_(Princeton).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "final_princeton_days",
+      "annotations": {
+        "Princeton": {
+          "explanation": "Eine Universitätsstadt in New Jersey, Vereinigte Staaten, bekannt für die Princeton University und das Institute for Advanced Study, wo Albert Einstein in seinen späteren Jahren lebte und arbeitete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Princeton,_New_Jersey"
+        }
+      }
     }
-  ]
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "dfe3c9dc86483fe6",
+    "translated_on": "2026-07-19T04:58:28.607727+00:00",
+    "translator": "manual"
+  }
 }

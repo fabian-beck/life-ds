@@ -4,9 +4,11 @@
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
+  import MetaStoryFigure from "./MetaStoryFigure.svelte";
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
+  import { consumeMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
   export let metaStoryData = null;
@@ -26,11 +28,21 @@
   let scrollProgress = 0; // 0 to 1, current scroll position for timeline indicator
   let lastScrollOrigin = null; // Track origin of last scroll: 'vertical' | 'horizontal' | null
   let timelineScrollListenerAttached = false; // Track if listener is attached
+  let scrollRestoreHandled = false; // Whether the remembered scroll position has been applied
 
   // Navigate back to landing
   function backToLanding() {
     push(`/${currentLanguage}`);
   }
+
+  // Composed cold open (Phase 7): split into paragraphs for rendering
+  $: openingParagraphs = metaStoryData?.opening?.text
+    ? metaStoryData.opening.text.split(/\n\s*\n/).filter((p) => p.trim())
+    : [];
+
+  // Composed story-specific section headings, falling back to generic labels
+  $: sectionHeadings = metaStoryData?.section_headings || {};
+  $: sectionImages = metaStoryData?.section_images || {};
 
   // Calculate proxy height based on timeline's horizontal scroll distance
   $: if (timelineContainer && metaStoryData?.chapters?.length) {
@@ -38,6 +50,36 @@
     requestAnimationFrame(() => {
       calculateProxyHeight();
     });
+  }
+
+  // Once the timeline is laid out (proxy container is tall enough to scroll),
+  // restore the scroll position the reader left from when opening a person's
+  // story. Runs at most once per mount; a fresh visit has nothing stored.
+  $: if (!scrollRestoreHandled && proxyHeight > 0 && metaStoryData) {
+    restoreScrollPosition();
+  }
+
+  function restoreScrollPosition() {
+    scrollRestoreHandled = true;
+    const metaStoryId = metaStoryData?.meta_story?.id;
+    const savedScrollY = consumeMetaStoryScroll(metaStoryId);
+    if (savedScrollY == null || savedScrollY <= 0) return;
+
+    // The scroll-proxy container height depends on proxyHeight, which may still
+    // be growing as the timeline finishes measuring. Retry across a few frames
+    // until the page is tall enough to reach the saved offset, then let the
+    // window scroll handler translate it back into horizontal timeline scroll.
+    let attempts = 0;
+    const applyScroll = () => {
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo(0, Math.min(savedScrollY, Math.max(maxScroll, 0)));
+      if (maxScroll < savedScrollY && attempts < 12) {
+        attempts += 1;
+        requestAnimationFrame(applyScroll);
+      }
+    };
+    requestAnimationFrame(applyScroll);
   }
 
   // Attach scroll listener to timeline after it renders
@@ -482,13 +524,28 @@
           end: metaStoryData.meta_story.date_range_end,
         })}
       </p>
+      {#if openingParagraphs.length}
+        <div class="opening">
+          <MetaStoryFigure
+            image={metaStoryData.opening.image}
+            variant="opening"
+          />
+          {#each openingParagraphs as paragraph}
+            <p class="opening-text">{paragraph}</p>
+          {/each}
+        </div>
+      {/if}
       <p class="description">{metaStoryData.meta_story.description}</p>
     </header>
 
     <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
     {#if metaStoryData.chapters?.length}
       <section class="chapters-section">
-        <h2>{$_("meta_story.chapters_heading")}</h2>
+        <h2>{sectionHeadings.timeline || $_("meta_story.chapters_heading")}</h2>
+        {#if metaStoryData.timeline_intro}
+          <p class="timeline-intro">{metaStoryData.timeline_intro}</p>
+        {/if}
+        <MetaStoryFigure image={sectionImages.timeline} />
 
         <div
           class="scroll-proxy-container"
@@ -547,10 +604,31 @@
       </section>
     {/if}
 
+    <!-- Social network section - follows the timeline -->
+    {#if metaStoryData.social_network?.links?.length}
+      <section class="network-section">
+        <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
+        <p class="network-intro">
+          {metaStoryData.social_network?.narration?.intro ||
+            $_("meta_story.network_subtitle")}
+        </p>
+        <MetaStoryFigure image={sectionImages.network} />
+        {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
+          <MetaStoryNetwork
+            network={metaStoryData.social_network}
+            {currentLanguage}
+          />
+        {/await}
+      </section>
+    {/if}
+
     <!-- Conclusion section -->
     {#if metaStoryData.conclusion}
       <section class="conclusion">
-        <h2>{$_("meta_story.conclusion_heading")}</h2>
+        <h2>
+          {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
+        </h2>
+        <MetaStoryFigure image={sectionImages.conclusion} />
         <p>{metaStoryData.conclusion}</p>
       </section>
     {/if}
@@ -687,6 +765,37 @@
     margin-bottom: 1.5rem;
   }
 
+  /* Composed cold open — visually leads before the wider description */
+  .opening {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Contain the floated opening figure (see MetaStoryFigure) */
+  .opening::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .opening-text {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+    margin-bottom: 1rem;
+  }
+
+  /* Raised initial rather than a floated drop cap: a floated cap reserves
+     only the glyph's own width, so narrow letters ("In 1911...", "It...")
+     read as a stray vertical rule and leave the wrapped lines indented
+     against nothing. Raising the letter is glyph-width independent. */
+  .opening-text:first-of-type::first-letter {
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
+    font-size: 1.9em;
+    line-height: 1;
+    padding-right: 0.06em;
+    color: #38bdf8;
+  }
+
   .description {
     line-height: 1.7;
     color: #cbd5e1;
@@ -743,6 +852,19 @@
 
   .timeline-horizontal-container {
     scrollbar-width: none;
+  }
+
+  /* Social network */
+  .network-section {
+    margin-bottom: 3rem;
+  }
+
+  .network-intro,
+  .timeline-intro {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    max-width: 62ch;
   }
 
   /* Conclusion */

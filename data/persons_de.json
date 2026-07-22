@@ -1,94 +1,1436 @@
 {
   "people": [
     {
-      "id": "henry_ii",
-      "name": "Heinrich II.",
-      "summary": "Heinrich II. (6. Mai 973 – 13. Juli 1024), auch bekannt als der heilige Heinrich, war Herzog von Bayern, König der Römer, König von Italien und römisch-deutscher Kaiser. Als letzter Herrscher der ottonischen Dynastie festigte er die königliche Macht nördlich der Alpen, stützte sich stark auf die Kirche und die bischöfliche Verwaltung, förderte die Klosterreform, gründete das Bistum Bamberg und führte große Kriege gegen Bolesław I. von Polen und Rivalen in Italien. Tief religiös und kinderlos, wurde er 1146 heiliggesprochen.",
+      "id": "abigail_adams",
+      "name": "Abigail_Adams",
+      "summary": "Abigail Adams war Schriftstellerin, Haushaltsvorsteherin und politische Vertraute, deren umfangreiche Korrespondenz mit John Adams das Familienleben und öffentliche Angelegenheiten während der Amerikanischen Revolution und der frühen Republik dokumentiert. Als Ehefrau des ersten US-Vizepräsidenten und zweiten Präsidenten zog sie sechs Kinder groß, lebte während diplomatischer Entsendungen in Europa und führte später den Haushalt der Familie Adams in Quincy.",
+      "tagline": "Stimme der revolutionären Heimatfront",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/Henry_II%2C_Holy_Roman_Emperor.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Henry_II,_Holy_Roman_Emperor.jpg"
+        "image": "/portraits/abigail_adams_thumbnail.webp",
+        "thumbnail": "/portraits/abigail_adams_thumbnail.webp",
+        "medium": "/portraits/abigail_adams_medium.webp",
+        "full": "/portraits/abigail_adams_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Abigail_Adams_by_Gilbert_Stuart.jpg"
       },
+      "birthDate": "1744-11-22",
+      "deathDate": "1818-10-28",
       "primaryRoles": [
-        "Herzog von Bayern",
-        "König von Deutschland (König der Römer)",
-        "Römisch-deutscher Kaiser"
+        "Schriftstellerin",
+        "politische Beraterin",
+        "First Lady"
       ],
-      "birthDate": "973-05-06",
-      "deathDate": "1024-07-13",
-      "created": "2025-11-07T18:22:43+01:00",
-      "lastUpdated": "2025-11-29T10:48:23.123180+01:00"
+      "created": "2026-07-19T11:26:08.490578+02:00",
+      "lastUpdated": "2026-07-19T11:29:42.276334+02:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "d6db2a765d388731",
+        "translated_on": "2026-07-19T11:29:42.276334+02:00",
+        "translator": "openai:gpt-5.6-terra"
+      }
     },
     {
-      "id": "erich_k_stner",
-      "name": "Erich_Kästner",
-      "summary": "Emil Erich Kästner war ein deutscher Schriftsteller, Dichter, Drehbuchautor und Satiriker, der vor allem für seine geistreichen, gesellschaftsbeobachtenden Gedichte und für Kinderbuchklassiker wie „Emil und die Detektive“, „Das doppelte Lottchen“ und „Das fliegende Klassenzimmer“ bekannt ist. Als Schlüsselfigur der neusachlichen Literatur der Weimarer Republik blieb er im nationalsozialistischen Deutschland, wo seine Bücher verboten und verbrannt wurden, während er weiterhin einige Werke im Ausland veröffentlichte und unter Pseudonym Drehbücher schrieb. Nach 1945 ließ er sich in München nieder, arbeitete als Herausgeber, Kabarettautor, Hörfunkautor und Kinderbuchautor und erhielt 1960 den Hans-Christian-Andersen-Preis für seine Autobiografie „Als ich ein kleiner Junge war“.",
+      "id": "ada_lovelace",
+      "name": "Ada_Lovelace",
+      "tagline": "Visionäre Pionierin des Computers",
+      "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) war eine englische Mathematikerin und Schriftstellerin, die vor allem für ihre Arbeit zu Charles Babbages geplanter Analytical Engine bekannt ist. Von ihrer Mutter intensiv in Mathematik und Naturwissenschaften unterrichtet, um der vermeintlichen ‚poetischen Verrücktheit' ihres Vaters Lord Byron entgegenzuwirken, verband sie strenge Analyse mit einer fantasievollen, philosophischen Haltung, die sie ‚poetische Wissenschaft' nannte. 1842–1843 übersetzte sie Luigi Menabreas Artikel über die Analytical Engine und ergänzte ihn um umfangreiche Anmerkungen, darunter einen detaillierten Algorithmus zur Berechnung der Bernoulli-Zahlen und eine weitreichende Vision von Maschinen, die Symbole manipulieren, um Musik, Grafik und mehr zu erschaffen. Obwohl oft krank und von der viktorianischen Gesellschaft eingeschränkt, pflegte sie ein aktives Netzwerk mit führenden Wissenschaftlern und versuchte, Mathematik sogar auf das Glücksspiel anzuwenden, bevor sie mit 36 Jahren an Gebärmutterkrebs starb.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Erich_K%C3%A4stner_1961_%28cropped%29.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Erich_K%C3%A4stner_1961_(cropped).jpg"
+        "image": "/portraits/ada_lovelace_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
+        "thumbnail": "/portraits/ada_lovelace_thumbnail.webp",
+        "medium": "/portraits/ada_lovelace_medium.webp",
+        "full": "/portraits/ada_lovelace_full.webp"
       },
       "primaryRoles": [
-        "Schriftsteller",
-        "Dichter",
-        "Drehbuchautor"
+        "Mathematikerin",
+        "Schriftstellerin",
+        "Informatikerin"
       ],
-      "birthDate": "1899-02-23",
-      "deathDate": "1974-07-29",
-      "created": "2025-11-20T05:22:05+01:00",
-      "lastUpdated": "2025-11-29T20:04:37.834667+01:00"
-    },
-    {
-      "id": "friedensreich_hundertwasser",
-      "name": "Friedensreich_Hundertwasser",
-      "summary": "Friedrich Stowasser, besser bekannt als Friedensreich Regentag Dunkelbunt Hundertwasser, war ein österreichischer bildender Künstler und Architekt, der für leuchtende Farben, biomorphe Formen und ökologisches Engagement bekannt war. Er lehnte gerade Linien und Standardisierung ab und ließ sich später im äußersten Norden Neuseelands nieder, wo er einen Großteil seines Lebens lebte und arbeitete.",
-      "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
-        "source": null
-      },
-      "primaryRoles": [
-        "Bildender Künstler",
-        "Architekt",
-        "Umweltschützer"
-      ],
-      "birthDate": "1928-12-15",
-      "deathDate": "2000-02-19",
       "created": "2025-11-09T10:47:25+01:00",
-      "lastUpdated": "2025-11-29T20:06:58.875685+01:00"
+      "lastUpdated": "2026-07-18T14:37:51.189399+00:00",
+      "birthDate": "1815-12-10",
+      "deathDate": "1852-11-27",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "e6c52da532415d0d",
+        "translated_on": "2026-07-18T14:37:51.189897+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "alan_turing",
+      "name": "Alan_Turing",
+      "tagline": "Vater der theoretischen Informatik",
+      "summary": "Alan Turing war ein englischer Mathematiker und Codeknacker, dessen Arbeit die moderne Berechenbarkeitstheorie begründete, im Zweiten Weltkrieg in Bletchley Park half, deutsche Chiffren zu brechen, und den frühen Computerbau sowie die Forschung zur künstlichen Intelligenz prägte. In seiner späteren Laufbahn entwickelte er zudem einflussreiche Ideen zur mathematischen Biologie. 1952 wurde er wegen homosexueller Handlungen strafrechtlich verfolgt; 1954 starb er an einer Zyanidvergiftung.",
+      "portrait": {
+        "image": "/portraits/alan_turing_thumbnail.webp",
+        "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
+        "originalCaption": "AI-generated stylized portrait based on historical photograph",
+        "thumbnail": "/portraits/alan_turing_thumbnail.webp",
+        "medium": "/portraits/alan_turing_medium.webp",
+        "full": "/portraits/alan_turing_full.webp"
+      },
+      "primaryRoles": [
+        "Mathematiker",
+        "Informatiker",
+        "Kryptoanalytiker"
+      ],
+      "created": "2025-11-07T16:52:54+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.189937+00:00",
+      "birthDate": "1912-06-23",
+      "deathDate": "1954-06-07",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "59a4f5efa3c7cf01",
+        "translated_on": "2026-07-18T14:37:51.189966+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "albert_einstein",
+      "name": "Albert_Einstein",
+      "tagline": "Architekt der Relativitätstheorie",
+      "summary": "Albert Einstein (1879–1955) war ein in Deutschland geborener theoretischer Physiker, dessen Arbeit das moderne Verständnis von Raum, Zeit, Materie und Energie grundlegend veränderte. Während seiner Tätigkeit am Schweizer Patentamt veröffentlichte er 1905 seine Arbeiten des „Annus Mirabilis“, darunter die spezielle Relativitätstheorie und die Masse-Energie-Beziehung E=mc² sowie eine wegweisende Erklärung des photoelektrischen Effekts. Später entwickelte er die allgemeine Relativitätstheorie, erhielt 1921 den Nobelpreis für Physik, emigrierte aus dem nationalsozialistischen Deutschland in die Vereinigten Staaten und nutzte seinen Weltruhm, um sich für Frieden, internationale Zusammenarbeit und nukleare Rüstungskontrolle einzusetzen.",
+      "portrait": {
+        "image": "/portraits/albert_einstein_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Albert_Einstein_1921_by_F_Schmutzer.jpg",
+        "thumbnail": "/portraits/albert_einstein_thumbnail.webp",
+        "medium": "/portraits/albert_einstein_medium.webp",
+        "full": "/portraits/albert_einstein_full.webp"
+      },
+      "birthDate": "1879-03-14",
+      "deathDate": "1955-04-18",
+      "primaryRoles": [
+        "Physiker",
+        "Wissenschaftler"
+      ],
+      "created": "2025-11-21T16:07:51.972160+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.189988+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "c6f1a171d57db7c3",
+        "translated_on": "2026-07-18T14:37:51.190009+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "alexander_hamilton",
+      "name": "Alexander_Hamilton",
+      "summary": "Alexander Hamilton war ein in der Karibik geborener amerikanischer Staatsmann, Offizier im Unabhängigkeitskrieg, Rechtsanwalt und Gründervater. Als erster US-Finanzminister schuf er wesentliche Elemente des frühen föderalen Finanzsystems und wurde zu einem führenden Verfechter einer starken nationalen Regierung.",
+      "tagline": "Architekt der amerikanischen Staatsfinanzen",
+      "portrait": {
+        "image": "/portraits/alexander_hamilton_thumbnail.webp",
+        "thumbnail": "/portraits/alexander_hamilton_thumbnail.webp",
+        "medium": "/portraits/alexander_hamilton_medium.webp",
+        "full": "/portraits/alexander_hamilton_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Alexander_Hamilton_%28NPG%29.jpg"
+      },
+      "birthDate": "1755-01-11",
+      "deathDate": "1804-07-12",
+      "primaryRoles": [
+        "Staatsmann",
+        "Soldat",
+        "Rechtsanwalt"
+      ],
+      "created": "2026-07-19T11:33:52.015587+02:00",
+      "lastUpdated": "2026-07-19T11:37:49.691616+02:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "06f6d60cf175485f",
+        "translated_on": "2026-07-19T11:37:49.691616+02:00",
+        "translator": "openai:gpt-5.6-terra"
+      }
+    },
+    {
+      "id": "antoni_gaud",
+      "name": "Antoni_Gaudí",
+      "summary": "Antoni Gaudí i Cornet war ein katalanischer Architekt und Designer und die führende Figur des katalanischen Modernisme. Überwiegend in Barcelona tätig, entwickelte er einen höchst persönlichen Stil, der in Naturformen, Handwerkstraditionen und einer zunehmend intensiven katholischen Spiritualität wurzelte. Am bekanntesten ist er dafür, die Sagrada Família zu seinem Lebensprojekt gemacht zu haben.",
+      "tagline": "Architekt einer naturinspirierten Moderne",
+      "portrait": {
+        "image": "/portraits/antoni_gaud_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/7/72/Antoni_Gaudi_1878.jpg",
+        "thumbnail": "/portraits/antoni_gaud_thumbnail.webp",
+        "medium": "/portraits/antoni_gaud_medium.webp",
+        "full": "/portraits/antoni_gaud_full.webp"
+      },
+      "birthDate": "1852-06-25",
+      "deathDate": "1926-06-10",
+      "primaryRoles": [
+        "Architekt",
+        "Designer"
+      ],
+      "created": "2025-12-20T21:14:19.142816+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190030+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "6dd8d1bd8b76cbb5",
+        "translated_on": "2026-07-18T14:37:51.190050+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "benjamin_franklin",
+      "name": "Benjamin_Franklin",
+      "summary": "Benjamin Franklin war ein amerikanischer Drucker, Schriftsteller, Wissenschaftler, Erfinder, Bürgerorganisator und Staatsmann. Er prägte das öffentliche Leben der Kolonien, sicherte während der Amerikanischen Revolution die Unterstützung Frankreichs und wirkte an der Gründung der Vereinigten Staaten mit.",
+      "tagline": "Drucker, Wissenschaftler und Gründungsdiplomat",
+      "portrait": {
+        "image": "/portraits/benjamin_franklin_thumbnail.webp",
+        "thumbnail": "/portraits/benjamin_franklin_thumbnail.webp",
+        "medium": "/portraits/benjamin_franklin_medium.webp",
+        "full": "/portraits/benjamin_franklin_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
+        "originalCaption": "Portrait of Benjamin Franklin by Joseph Siffrein Duplessis"
+      },
+      "birthDate": "1706-01-17",
+      "deathDate": "1790-04-17",
+      "primaryRoles": [
+        "Staatsmann",
+        "Erfinder",
+        "Drucker"
+      ],
+      "created": "2026-07-17T16:10:31.150659+02:00",
+      "lastUpdated": "2026-07-18T14:37:51.190082+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "587376fecec34e83",
+        "translated_on": "2026-07-18T14:37:51.190103+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "charles_babbage",
+      "name": "Charles_Babbage",
+      "summary": "Charles Babbage war ein englischer Mathematiker und Erfinder, dessen Entwürfe für die Difference Engine und die Analytical Engine eine neue Vision maschinellen Rechnens und programmierbarer Berechnung entwarfen. In der Londoner Wissenschaftswelt aktiv, schrieb er zudem einflussreich über Industrieorganisation und die Ökonomie der Maschinen.",
+      "tagline": "Architekt des mechanischen Rechnens",
+      "portrait": {
+        "image": "/portraits/charles_babbage_thumbnail.webp",
+        "thumbnail": "/portraits/charles_babbage_thumbnail.webp",
+        "medium": "/portraits/charles_babbage_medium.webp",
+        "full": "/portraits/charles_babbage_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Charles_Babbage_-_1860.jpg"
+      },
+      "birthDate": "1791-12-26",
+      "deathDate": "1871-10-18",
+      "primaryRoles": [
+        "Mathematiker",
+        "Erfinder",
+        "Ingenieur"
+      ],
+      "created": "2025-12-28T07:49:33.669678+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190128+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "c707a70687c444e0",
+        "translated_on": "2026-07-18T14:37:51.190157+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "charles_rennie_mackintosh",
+      "name": "Charles_Rennie_Mackintosh",
+      "summary": "Charles Rennie Mackintosh war ein schottischer Architekt, Designer und Künstler, der mit dem Glasgow Style und dem breiteren europäischen Modern Style verbunden ist. Ausgebildet in der Lehre und an der Glasgow School of Art, schuf er ein kleines, aber unverwechselbares Werk, das Architektur, Innenräume und Mobiliar vereinte, oft in Zusammenarbeit mit seiner Frau Margaret Macdonald. In späteren Jahren wandte er sich weitgehend der Aquarellmalerei zu und lebte in England und dann in Südfrankreich, bevor er in London starb.",
+      "tagline": "Meister der Form des Glasgow Style",
+      "portrait": {
+        "image": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
+        "thumbnail": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
+        "medium": "/portraits/charles_rennie_mackintosh_medium.webp",
+        "full": "/portraits/charles_rennie_mackintosh_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Charles-Rennie-Mackintosh.jpg"
+      },
+      "birthDate": "1868-06-07",
+      "deathDate": "1928-12-10",
+      "primaryRoles": [
+        "Architekt",
+        "Designer",
+        "Künstler"
+      ],
+      "created": "2026-01-10T08:04:24.013112+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190179+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "7fb34a3f7ff385f6",
+        "translated_on": "2026-07-18T14:37:51.190220+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "claus_schenk_graf_von_stauffenberg",
+      "name": "Claus_von_Stauffenberg",
+      "summary": "Deutscher Offizier, der zu einer führenden Figur des militärischen Widerstands gegen den Nationalsozialismus wurde und am 20. Juli 1944 das gescheiterte Bombenattentat auf Adolf Hitler als Teil des geplanten Staatsstreichs mit dem Decknamen Operation Walküre ausführte.",
+      "tagline": "Offizier hinter dem 20. Juli",
+      "portrait": {
+        "image": "/portraits/claus_schenk_graf_von_stauffenberg_thumbnail.webp",
+        "thumbnail": "/portraits/claus_schenk_graf_von_stauffenberg_thumbnail.webp",
+        "medium": "/portraits/claus_schenk_graf_von_stauffenberg_medium.webp",
+        "full": "/portraits/claus_schenk_graf_von_stauffenberg_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Claus_Schenk_Graf_von_Stauffenberg",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/VStauffenberg_vQuirnheim_crop.jpg"
+      },
+      "birthDate": "1907-11-15",
+      "deathDate": "1944-07-20",
+      "primaryRoles": [
+        "Offizier",
+        "Widerstandskämpfer"
+      ],
+      "created": "2026-02-07T09:06:54.751221+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190256+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "38ad36b15a754643",
+        "translated_on": "2026-07-18T14:37:51.190282+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "cunigunde_of_luxembourg",
+      "name": "Kunigunde_von_Luxemburg",
+      "tagline": "Fromme Kaiserin und Mitregentin",
+      "summary": "Kunigunde von Luxemburg (um 975 – 3. März 1040) war eine Adlige aus dem Haus der Ardenner (Luxemburger), die als Ehefrau Heinrichs II. Königin des Ostfrankenreichs und später Kaiserin des Heiligen Römischen Reiches wurde. Berühmt für ihre Frömmigkeit und ihr politisches Geschick, war sie eine enge Beraterin Heinrichs, erschien in königlichen Urkunden häufig als consors regni („Teilhaberin an der Herrschaft“) und spielte eine bedeutende Rolle im kaiserlichen Kirchenpatronat, besonders in Bamberg. Nachdem sie nach Heinrichs Tod 1024 kurzzeitig als Regentin gewirkt hatte, zog sie sich in das von ihr gegründete Benediktinerinnenkloster Kaufungen zurück, wo sie bis zu ihrem Tod ein Leben des Gebets und der Mildtätigkeit führte.",
+      "birthDate": "0975-01-01",
+      "deathDate": "1040-03-03",
+      "primaryRoles": [
+        "Kaiserin",
+        "Regentin"
+      ],
+      "created": "2025-12-06T20:04:04.881689+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190310+00:00",
+      "portrait": {
+        "image": "/portraits/cunigunde_of_luxembourg_thumbnail.webp",
+        "source": "https://commons.wikimedia.org/wiki/File:Diözesanmuseum_Bamberg_-_Adamspforte_Heinrich_02.jpg",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/60/Di%C3%B6zesanmuseum_Bamberg_-_Adamspforte_Heinrich_02.jpg",
+        "originalCaption": "Bamberg ( Upper Franconia ). Lapidarium in the cloisters of Bamberg cathedral: Statue ( 1225 ) of Holy Roman empress Cunigunde",
+        "thumbnail": "/portraits/cunigunde_of_luxembourg_thumbnail.webp",
+        "medium": "/portraits/cunigunde_of_luxembourg_medium.webp",
+        "full": "/portraits/cunigunde_of_luxembourg_full.webp"
+      },
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "2943723686b7f464",
+        "translated_on": "2026-07-18T14:37:51.190331+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "david_hilbert",
+      "name": "David_Hilbert",
+      "summary": "David Hilbert war ein deutscher Mathematiker, dessen Werk Algebra, Geometrie, Analysis, mathematische Physik und die Grundlagen der Mathematik umspannte. Als führender Professor in Königsberg und dann in Göttingen prägte er Forschungsagenden durch einflussreiche Publikationen, ehrgeizige Grundlagenprogramme und eine ganze Generation von Doktoranden.",
+      "tagline": "Architekt moderner mathematischer Strenge",
+      "portrait": {
+        "image": "/portraits/david_hilbert_thumbnail.webp",
+        "thumbnail": "/portraits/david_hilbert_thumbnail.webp",
+        "medium": "/portraits/david_hilbert_medium.webp",
+        "full": "/portraits/david_hilbert_full.webp",
+        "source": "https://de.wikipedia.org/wiki/David_Hilbert",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/David_Hilbert_postcard_retusche.jpg"
+      },
+      "birthDate": "1862-01-23",
+      "deathDate": "1943-02-14",
+      "primaryRoles": [
+        "Mathematiker",
+        "Logiker",
+        "Professor"
+      ],
+      "created": "2026-01-04T21:14:18.526528+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190352+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "2c0a55fc0fa794a7",
+        "translated_on": "2026-07-18T14:37:51.190367+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "douglas_engelbart",
+      "name": "Douglas_Engelbart",
+      "summary": "Douglas Engelbart war ein amerikanischer Ingenieur und Erfinder, der interaktives Computing als Weg zur Erweiterung des menschlichen Intellekts verfolgte, vor allem im Augmentation Research Center des SRI und mit dessen oN-Line System (NLS). Seine Arbeit führte Ideen wie Maus, Hypertext und gemeinsames Bearbeiten am Bildschirm ein und vereinte sie zu Grundlagen der Mensch-Computer-Interaktion.",
+      "tagline": "Erfinder der Computermaus",
+      "portrait": {
+        "image": "/portraits/douglas_engelbart_thumbnail.webp",
+        "thumbnail": "/portraits/douglas_engelbart_thumbnail.webp",
+        "medium": "/portraits/douglas_engelbart_medium.webp",
+        "full": "/portraits/douglas_engelbart_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/0/00/SRI_Douglas_Engelbart_1968_%28cropped%29.jpg"
+      },
+      "birthDate": "1925-01-30",
+      "deathDate": "2013-07-02",
+      "primaryRoles": [
+        "Erfinder",
+        "Ingenieur",
+        "Informatiker"
+      ],
+      "created": "2026-01-14T15:24:14.762904+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190390+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "6bf40cf78caecd62",
+        "translated_on": "2026-07-18T14:37:51.190414+00:00",
+        "translator": "manual"
+      }
     },
     {
       "id": "e_t_a_hoffmann",
       "name": "E._T._A._Hoffmann",
-      "summary": "Ernst Theodor Amadeus Hoffmann (geboren als Ernst Theodor Wilhelm Hoffmann; 24. Januar 1776 – 25. Juni 1822) war ein deutscher romantischer Schriftsteller von Fantastik und Schauerliteratur sowie Jurist, Komponist, Musikkritiker und Zeichner. Seine Erzählungen, darunter „Nussknacker und Mausekönig“, „Der Sandmann“ und „Der goldne Topf“, waren zentral für die deutsche Romantik und inspirierten später Werke wie Tschaikowskys Ballett Der Nussknacker und Offenbachs Oper Hoffmanns Erzählungen.",
+      "tagline": "Romantischer Meister des Unheimlichen",
+      "summary": "E. T. A. Hoffmann (Ernst Theodor Amadeus Hoffmann) war ein deutscher Schriftsteller der Romantik, dessen fantastische und schauerliche Erzählungen die europäische Literatur umformten, während er zugleich eine Laufbahn als preußischer Jurist verfolgte. Er war außerdem als Komponist, Dirigent, Musikkritiker und bildender Künstler tätig und bewegte sich inmitten der Umbrüche der napoleonischen Ära zwischen Verwaltungsämtern und Theaterarbeit. In seinen Berliner Jahren entstanden viele seiner bekanntesten Werke, darunter Erzählungen, die später zu Vorlagen großer Opern und Ballette wurden.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Ernst_Theodor_Amadeus_Hoffmann.jpg",
-        "source": "https://commons.wikimedia.org/wiki/File:Ernst_Theodor_Amadeus_Hoffmann.jpg"
+        "image": "/portraits/e_t_a_hoffmann_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/E._T._A._Hoffmann",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5a/E._T._A._Hoffmann%2C_autorretrato.jpg",
+        "thumbnail": "/portraits/e_t_a_hoffmann_thumbnail.webp",
+        "medium": "/portraits/e_t_a_hoffmann_medium.webp",
+        "full": "/portraits/e_t_a_hoffmann_full.webp"
       },
       "primaryRoles": [
         "Schriftsteller",
         "Jurist",
         "Komponist"
       ],
+      "created": "2025-11-19T17:34:03+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190431+00:00",
       "birthDate": "1776-01-24",
       "deathDate": "1822-06-25",
-      "created": "2025-11-19T17:34:03+01:00",
-      "lastUpdated": "2025-11-29T20:14:01.550502+01:00"
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "fb47e97c483fc4eb",
+        "translated_on": "2026-07-18T14:37:51.190444+00:00",
+        "translator": "manual"
+      }
     },
     {
-      "id": "albert_einstein",
-      "name": "Albert_Einstein",
-      "summary": "Albert Einstein war ein in Deutschland geborener theoretischer Physiker, der die Theorien der speziellen und der allgemeinen Relativität entwickelte und bahnbrechende Beiträge zur Quantentheorie und zur statistischen Physik leistete. Seine Annus-mirabilis-Arbeiten von 1905 revolutionierten die moderne Physik, und seine Masse-Energie-Äquivalenzbeziehung E = mc² wurde zum Ikon. Für seine Erklärung des photoelektrischen Effekts erhielt er 1921 den Nobelpreis für Physik; er hatte akademische Positionen in Zürich, Prag, Berlin und Princeton inne. Als jüdischer Flüchtling aus dem nationalsozialistischen Deutschland wurde er zu einem prominenten öffentlichen Intellektuellen, der sich zu Pazifismus, Zionismus, Bürgerrechten und den Gefahren von Atomwaffen äußerte.",
+      "id": "edsger_w_dijkstra",
+      "name": "Edsger_W._Dijkstra",
+      "tagline": "Pionier der strukturierten Programmierung",
+      "summary": "Edsger W. Dijkstra war ein niederländischer Informatiker, dessen Ideen Programmiermethodik, Algorithmen und Betriebssysteme neu prägten. Er trug wesentlich dazu bei, disziplinierte Ansätze für Programmentwurf und Korrektheit zu etablieren, und seine Forschung beeinflusste sowohl die akademische Informatik als auch den praktischen Systembau. 1972 erhielt er den ACM Turing Award für grundlegende Beiträge zur strukturierten Programmierung und zu Programmiersprachen.",
       "portrait": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/5/50/Albert_Einstein_%28Nobel%29.png",
-        "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_(Nobel).png"
+        "image": "/portraits/edsger_w_dijkstra_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
+        "thumbnail": "/portraits/edsger_w_dijkstra_thumbnail.webp",
+        "medium": "/portraits/edsger_w_dijkstra_medium.webp",
+        "full": "/portraits/edsger_w_dijkstra_full.webp"
+      },
+      "birthDate": "1930-05-11",
+      "deathDate": "2002-08-06",
+      "primaryRoles": [
+        "Informatiker",
+        "Mathematiker",
+        "Schriftsteller"
+      ],
+      "created": "2025-11-29T23:57:01.566778+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190465+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "1757c5c3878df611",
+        "translated_on": "2026-07-18T14:37:51.190487+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "edward_bernays",
+      "name": "Edward_Bernays",
+      "summary": "Edward Bernays war ein in Österreich geborener amerikanischer Publizist, der die moderne Public Relations durch aufsehenerregende Kampagnen, staatliche Informationsarbeit und einflussreiche Bücher über Propaganda und öffentliche Meinung mitdefinierte und popularisierte.",
+      "tagline": "Architekt der modernen Public Relations",
+      "portrait": {
+        "image": "/portraits/edward_bernays_thumbnail.webp",
+        "thumbnail": "/portraits/edward_bernays_thumbnail.webp",
+        "medium": "/portraits/edward_bernays_medium.webp",
+        "full": "/portraits/edward_bernays_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/61/Edward_Bernays_cropped.png"
+      },
+      "birthDate": "1891-11-22",
+      "deathDate": "1995-03-09",
+      "primaryRoles": [
+        "Publizist",
+        "Schriftsteller",
+        "Berater"
+      ],
+      "created": "2026-03-03T11:15:22.768362+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190505+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "d4c22be227518c38",
+        "translated_on": "2026-07-18T14:37:51.190515+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "emmy_noether",
+      "name": "Emmy_Noether",
+      "tagline": "Mutter der modernen Algebra",
+      "summary": "Emmy Noether (1882–1935) war eine deutsche Mathematikerin, deren Werk die abstrakte Algebra umgestaltete und die mathematische Physik tiefgreifend beeinflusste. In Erlangen und später in Göttingen entwickelte sie die moderne Theorie der Ringe, Ideale und Moduln, führte den Begriff der noetherschen Strukturen ein und bewies die Noether-Theoreme, die Symmetrien mit Erhaltungssätzen der Physik verknüpfen. Jahrelang als Frau und Jüdin von bezahlten akademischen Stellen ausgeschlossen, leitete sie dennoch eine renommierte Schule von Algebraikern, bevor sie von den Nationalsozialisten entlassen wurde und ihre Forschung und Lehre am Bryn Mawr College und am Institute for Advanced Study in den Vereinigten Staaten fortsetzte.",
+      "portrait": {
+        "image": "/portraits/emmy_noether_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
+        "thumbnail": "/portraits/emmy_noether_thumbnail.webp",
+        "medium": "/portraits/emmy_noether_medium.webp",
+        "full": "/portraits/emmy_noether_full.webp"
       },
       "primaryRoles": [
-        "Physiker",
-        "Theoretiker",
-        "öffentlicher Intellektueller"
+        "Mathematikerin"
       ],
-      "birthDate": "1879-03-14",
-      "deathDate": "1955-04-18",
-      "created": "2025-11-21T16:07:51.972160+01:00",
-      "lastUpdated": "2025-11-29T20:20:18.151727+01:00"
+      "created": "2025-11-08T06:22:55+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190528+00:00",
+      "birthDate": "1882-03-23",
+      "deathDate": "1935-04-14",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "7506639e5f9cfcc1",
+        "translated_on": "2026-07-18T14:37:51.190542+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "erich_k_stner",
+      "name": "Erich_Kästner",
+      "tagline": "Satiriker des modernen deutschen Lebens",
+      "summary": "Erich Kästner war ein deutscher Schriftsteller, Dichter und Drehbuchautor, dessen geistreiches, sozial beobachtendes Werk von der Satire der Weimarer Zeit bis zu bleibenden Kinderklassikern wie „Emil und die Detektive“ und „Das doppelte Lottchen“ reichte. Trotz des Verbots seiner Bücher blieb er im nationalsozialistischen Deutschland und arbeitete unter Pseudonymen weiter; nach 1945 trat er in München als führender öffentlicher Intellektueller und Herausgeber wieder hervor. In späteren Jahrzehnten erhielt er bedeutende internationale Anerkennung, darunter den Hans-Christian-Andersen-Preis.",
+      "portrait": {
+        "image": "/portraits/erich_k_stner_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Erich_K%C3%A4stner",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/52/Erich_K%C3%A4stner_1961.jpg",
+        "thumbnail": "/portraits/erich_k_stner_thumbnail.webp",
+        "medium": "/portraits/erich_k_stner_medium.webp",
+        "full": "/portraits/erich_k_stner_full.webp"
+      },
+      "primaryRoles": [
+        "Schriftsteller",
+        "Dichter",
+        "Drehbuchautor"
+      ],
+      "created": "2025-11-20T05:22:05+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190557+00:00",
+      "birthDate": "1899-02-23",
+      "deathDate": "1974-07-29",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "4f40049fdfe35824",
+        "translated_on": "2026-07-18T14:37:51.190573+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "frances_allen",
+      "name": "Frances_Allen",
+      "tagline": "Pionierin optimierender Compiler",
+      "summary": "Frances E. Allen war eine amerikanische Informatikerin, deren grundlegende Arbeiten zu optimierenden Compilern und automatischer Parallelisierung moderne Software und das Hochleistungsrechnen neu formten. In einer 45-jährigen Karriere bei IBM leitete sie große Compiler- und Parallelrechnerprojekte und wurde als erste Frau IBM Fellow sowie als erste Frau mit dem ACM A. M. Turing Award ausgezeichnet. Sie war zudem eine engagierte Mentorin und Fürsprecherin für Frauen und andere unterrepräsentierte Gruppen in der Informatik.",
+      "portrait": {
+        "image": "/portraits/frances_allen_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Frances_Allen",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/15/Allen_mg_2528-3750K-b.jpg",
+        "thumbnail": "/portraits/frances_allen_thumbnail.webp",
+        "medium": "/portraits/frances_allen_medium.webp",
+        "full": "/portraits/frances_allen_full.webp"
+      },
+      "birthDate": "1932-08-04",
+      "deathDate": "2020-08-04",
+      "primaryRoles": [
+        "Informatikerin",
+        "Mathematikerin"
+      ],
+      "created": "2025-12-06T20:26:08.670101+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190589+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "1a84abe8ba32c626",
+        "translated_on": "2026-07-18T14:37:51.190601+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "frank_lloyd_wright",
+      "name": "Frank_Lloyd_Wright",
+      "summary": "Frank Lloyd Wright war ein amerikanischer Architekt, dessen lange Karriere die moderne Architektur durch die Prairie School, die Usonian-Wohnideen und Hauptwerke wie Fallingwater und den Entwurf des Guggenheim-Museums umgestaltete. Er schrieb außerdem viel und bildete über die Taliesin Fellowship Generationen von Schülern aus.",
+      "tagline": "Vorkämpfer der organischen Architektur",
+      "portrait": {
+        "image": "/portraits/frank_lloyd_wright_thumbnail.webp",
+        "thumbnail": "/portraits/frank_lloyd_wright_thumbnail.webp",
+        "medium": "/portraits/frank_lloyd_wright_medium.webp",
+        "full": "/portraits/frank_lloyd_wright_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/30/Frank_Lloyd_Wright_portrait.jpg"
+      },
+      "birthDate": "1867-06-08",
+      "deathDate": "1959-04-09",
+      "primaryRoles": [
+        "Architekt",
+        "Designer",
+        "Schriftsteller"
+      ],
+      "created": "2025-12-24T11:36:06.166396+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190615+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "de11595bf8e81c5c",
+        "translated_on": "2026-07-18T14:37:51.190625+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "franz_kafka",
+      "name": "Franz_Kafka",
+      "tagline": "Meister der kafkaesken Imagination",
+      "summary": "Franz Kafka (1883–1924) war ein deutschsprachiger jüdischer Schriftsteller aus Prag, dessen beunruhigende, präzise Prosa die Literatur des 20. Jahrhunderts umformte. Als Jurist ausgebildet und in einer Versicherung tätig, schrieb er seine Literatur in den freien Stunden und zeigte vereinzelte Protagonisten, die in undurchsichtigen bürokratischen Systemen gefangen sind. Nur wenige Werke, darunter „Die Verwandlung“ und die Erzählbände „Betrachtung“ und „Ein Landarzt“, erschienen zu Lebzeiten, doch sie beeinflussten Generationen von Schriftstellern, Philosophen und Künstlern. Sein früher Tod an Tuberkulose ließ seine Romane unvollendet, und sein Ruhm wuchs posthum von nahezu völliger Unbekanntheit zu weltweiter Bedeutung.",
+      "portrait": {
+        "image": "/portraits/franz_kafka_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Franz_Kafka",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/2/26/Franz_Kafka%2C_1923.jpg",
+        "thumbnail": "/portraits/franz_kafka_thumbnail.webp",
+        "medium": "/portraits/franz_kafka_medium.webp",
+        "full": "/portraits/franz_kafka_full.webp"
+      },
+      "primaryRoles": [
+        "Schriftsteller",
+        "Romancier"
+      ],
+      "created": "2025-11-20T06:24:36+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190638+00:00",
+      "birthDate": "1883-07-03",
+      "deathDate": "1924-06-03",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "51abc70c70da737b",
+        "translated_on": "2026-07-18T14:37:51.190652+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "frei_otto",
+      "name": "Frei_Otto",
+      "tagline": "Pionier leichter Zugarchitektur",
+      "summary": "Frei Otto war ein deutscher Architekt, Konstruktionspionier und Professor, dessen experimentelle Arbeit mit Seilnetzen, Gitterschalen und anderen Zugkonstruktionen die Architektur des 20. Jahrhunderts veränderte. Ausgehend vom Segelfliegen und vom Bauen in Kriegsgefangenschaft entwickelte er eine lebenslange Suche nach dem Bauen mit minimalem Material-, Energie- und Umweltaufwand, gründete das Institut für leichte Flächentragwerke in Stuttgart und prägte Ikonen wie die Dächer des Münchner Olympiastadions und den deutschen Pavillon auf der Expo 67. Als führende Stimme organischen und ökologischen Entwerfens erhielt er 2015, kurz vor seinem Tod, den Pritzker-Preis für Architektur.",
+      "birthDate": "1925-05-31",
+      "deathDate": "2015-03-09",
+      "primaryRoles": [
+        "Architekt",
+        "Ingenieur",
+        "Hochschullehrer"
+      ],
+      "created": "2025-12-06T20:25:22.205354+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190666+00:00",
+      "portrait": {
+        "image": "/portraits/frei_otto_thumbnail.webp",
+        "thumbnail": "/portraits/frei_otto_thumbnail.webp",
+        "medium": "/portraits/frei_otto_medium.webp",
+        "full": "/portraits/frei_otto_full.webp",
+        "source": "https://openverse.org/image/f970d4cf-d3f7-4478-92d8-9e794d71b9ec?q=frei+otto&p=5",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://live.staticflickr.com/8706/16812037915_48d48dc18b_b.jpg",
+        "originalCaption": "Stylized portrait based on historical photograph"
+      },
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "7a3c845b4c0290c7",
+        "translated_on": "2026-07-18T14:37:51.190680+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "friedensreich_hundertwasser",
+      "name": "Friedensreich_Hundertwasser",
+      "tagline": "Rebell einer naturerfüllten Architektur",
+      "summary": "Friedensreich Hundertwasser (geboren als Friedrich Stowasser) war ein österreichischer Künstler, der vor allem für leuchtend farbige Gemälde, Grafiken und eigenwillige Architekturentwürfe bekannt ist, die gerade Linien und Standardisierung ablehnten. Geprägt vom Überleben im Krieg und Jahrzehnten des Reisens entwickelte er ein künstlerisches Weltbild, in dessen Zentrum organische Form und die Rechte der Natur standen. Ab den 1970er-Jahren wurde er zu einer prominenten Stimme der Umweltbewegung und entwarf einflussreiche Gebäude, die Vegetation und unregelmäßige, menschenzentrierte Formen einbezogen.",
+      "portrait": {
+        "image": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
+        "thumbnail": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "medium": "/portraits/friedensreich_hundertwasser_medium.webp",
+        "full": "/portraits/friedensreich_hundertwasser_full.webp"
+      },
+      "primaryRoles": [
+        "Künstler",
+        "Architekt",
+        "Umweltschützer"
+      ],
+      "created": "2025-11-09T10:47:25+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190698+00:00",
+      "birthDate": "1928-12-15",
+      "deathDate": "2000-02-19",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "50d29804e034b614",
+        "translated_on": "2026-07-18T14:37:51.190709+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "georg_wilhelm_friedrich_hegel",
+      "name": "Georg_Wilhelm_Friedrich_Hegel",
+      "summary": "Georg Wilhelm Friedrich Hegel war ein deutscher Philosoph und die Vollendergestalt des deutschen Idealismus, bekannt für ein ehrgeiziges System, das Logik, Natur, Geist, Geschichte, Kunst, Religion und Politik umspannte. Seine Universitätslaufbahn führte von frühen theologischen Studien und Hauslehrertätigkeit über Professuren in Jena und Heidelberg nach Berlin, wo ihn seine Vorlesungen und Hauptwerke als zentralen Denker der modernen Philosophie etablierten.",
+      "tagline": "Systembauer des deutschen Idealismus",
+      "portrait": {
+        "image": "/portraits/georg_wilhelm_friedrich_hegel_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/bf/1831_Schlesinger_Philosoph_Georg_Friedrich_Wilhelm_Hegel_anagoria.JPG",
+        "thumbnail": "/portraits/georg_wilhelm_friedrich_hegel_thumbnail.webp",
+        "medium": "/portraits/georg_wilhelm_friedrich_hegel_medium.webp",
+        "full": "/portraits/georg_wilhelm_friedrich_hegel_full.webp"
+      },
+      "birthDate": "1770-08-27",
+      "deathDate": "1831-11-14",
+      "primaryRoles": [
+        "Philosoph",
+        "Schriftsteller",
+        "Hochschullehrer"
+      ],
+      "created": "2025-12-20T18:33:15.595889+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190722+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "150a0a7b000c4840",
+        "translated_on": "2026-07-18T14:37:51.190731+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "george_washington",
+      "name": "George_Washington",
+      "summary": "George Washington war ein Pflanzer aus Virginia, Oberbefehlshaber der Kontinentalarmee im Amerikanischen Unabhängigkeitskrieg und der erste Präsident der Vereinigten Staaten. Er trug entscheidend zur amerikanischen Unabhängigkeit bei, leitete den Verfassungskonvent und setzte wichtige Maßstäbe für das neue Amt des Bundespräsidenten.",
+      "tagline": "Erster Präsident der Vereinigten Staaten",
+      "portrait": {
+        "image": "/portraits/george_washington_thumbnail.webp",
+        "thumbnail": "/portraits/george_washington_thumbnail.webp",
+        "medium": "/portraits/george_washington_medium.webp",
+        "full": "/portraits/george_washington_full.webp",
+        "source": "https://de.wikipedia.org/wiki/George_Washington",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg"
+      },
+      "birthDate": "1732-02-22",
+      "deathDate": "1799-12-14",
+      "primaryRoles": [
+        "Soldat",
+        "Politiker",
+        "Präsident"
+      ],
+      "created": "2026-07-16T19:41:41.530624+02:00",
+      "lastUpdated": "2026-07-18T14:37:51.190745+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "950073322bdbc604",
+        "translated_on": "2026-07-18T14:37:51.190888+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "grace_hopper",
+      "name": "Grace_Hopper",
+      "tagline": "Königin des Codes",
+      "summary": "Grace Hopper war eine amerikanische Informatikerin, Mathematikerin und Konteradmiralin der US Navy, die zu den ersten Programmiererinnen des Harvard Mark I gehörte, den ersten funktionierenden Compiler schuf und eine Schlüsselfigur bei der Entwicklung von FLOW-MATIC und COBOL war, grundlegenden höheren Programmiersprachen. In einer mehr als vier Jahrzehnte umspannenden parallelen Laufbahn in Wissenschaft, Industrie und Marine setzte sie sich für maschinenunabhängiges, englischähnliches Programmieren ein und half, die Praxis der Programmiersprachen in der US Navy und der Computerindustrie zu standardisieren.",
+      "portrait": {
+        "image": "/portraits/grace_hopper_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
+        "thumbnail": "/portraits/grace_hopper_thumbnail.webp",
+        "medium": "/portraits/grace_hopper_medium.webp",
+        "full": "/portraits/grace_hopper_full.webp"
+      },
+      "primaryRoles": [
+        "Informatikerin",
+        "Mathematikerin"
+      ],
+      "created": "2025-11-20T06:24:36+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190908+00:00",
+      "birthDate": "1906-12-09",
+      "deathDate": "1992-01-01",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "6b9daac0146d10f9",
+        "translated_on": "2026-07-18T14:37:51.190925+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "hans_erlwein",
+      "name": "Hans_Erlwein",
+      "summary": "Hans Erlwein (1872–1914) war ein deutscher Architekt und städtischer Baubeamter, der von 1905 bis zu seinem Tod als Stadtbaurat von Dresden wirkte. Zwischen Späthistorismus und reformorientierten Heimatschutz-Ansätzen leitete er ein umfangreiches Programm öffentlicher Bauten und koordinierte die Zusammenarbeit mit zeitgenössischen Künstlern für eine integrierte Baugestaltung.",
+      "tagline": "Baumeister von Dresdens städtischer Moderne",
+      "portrait": {
+        "image": "/portraits/hans_erlwein_thumbnail.webp",
+        "thumbnail": "/portraits/hans_erlwein_thumbnail.webp",
+        "medium": "/portraits/hans_erlwein_medium.webp",
+        "full": "/portraits/hans_erlwein_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Hans_Erlwein",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/0/02/Hans_Erlwein.jpg"
+      },
+      "birthDate": "1872-06-13",
+      "deathDate": "1914-10-09",
+      "primaryRoles": [
+        "Architekt",
+        "Beamter",
+        "Lehrer"
+      ],
+      "created": "2026-02-08T06:11:09.154965+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190938+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "c7adde8e3488fca0",
+        "translated_on": "2026-07-18T14:37:51.190949+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "hans_fallada",
+      "name": "Hans_Fallada",
+      "summary": "Hans Fallada war ein deutscher Schriftsteller der Neuen Sachlichkeit, dessen Romane sozialen Druck, Schulden und moralische Kompromisse im Alltag schilderten. Unter Pseudonym schreibend, erlangte er mit dem Weimarer Roman „Kleiner Mann – was nun?“ breite Anerkennung und arbeitete unter der NS-Diktatur weiter, wobei er sich zwischen Zensur und politischer Überwachung bewegte. In den Nachkriegsmonaten schrieb er auf Grundlage von Gestapo-Akten einen großen Berlin-Roman über einen Widerstandsakt aus der Arbeiterschaft.",
+      "tagline": "Romancier des deutschen Alltags",
+      "portrait": {
+        "image": "/portraits/hans_fallada_thumbnail.webp",
+        "thumbnail": "/portraits/hans_fallada_thumbnail.webp",
+        "medium": "/portraits/hans_fallada_medium.webp",
+        "full": "/portraits/hans_fallada_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Hans_Fallada",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Hans_Fallada.jpg"
+      },
+      "birthDate": "1893-07-21",
+      "deathDate": "1947-02-05",
+      "primaryRoles": [
+        "Schriftsteller",
+        "Romancier",
+        "Journalist"
+      ],
+      "created": "2026-02-22T08:17:58.953757+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190963+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "56f25d3e535bd1ad",
+        "translated_on": "2026-07-18T14:37:51.190976+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "hedy_lamarr",
+      "name": "Hedy_Lamarr",
+      "tagline": "Hollywoodstar und Funkpionierin",
+      "summary": "Hedy Lamarr (geboren als Hedwig Eva Maria Kiesler) war ein in Österreich geborener amerikanischer Filmstar, deren MGM-Karriere von den späten 1930er- bis in die 1950er-Jahre ihren Höhepunkt erreichte. Während des Zweiten Weltkriegs erfand sie zusammen mit dem Komponisten George Antheil ein „geheimes Kommunikationssystem“ mit Frequenzsprungverfahren, das die Störung funkgesteuerter Torpedos verhindern sollte – ein frühes Frequenzspreizkonzept. In späteren Jahrzehnten zog sie sich aus der Öffentlichkeit zurück, erhielt aber noch zu Lebzeiten späte Anerkennung für ihre Erfindungsarbeit.",
+      "portrait": {
+        "image": "/portraits/hedy_lamarr_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/8/83/Hedy_Lamarr_Publicity_Photo_for_The_Heavenly_Body_1944.jpg",
+        "originalCaption": "AI-generated stylized portrait based on historical photograph",
+        "thumbnail": "/portraits/hedy_lamarr_thumbnail.webp",
+        "medium": "/portraits/hedy_lamarr_medium.webp",
+        "full": "/portraits/hedy_lamarr_full.webp"
+      },
+      "birthDate": "1914-11-09",
+      "deathDate": "2000-01-19",
+      "primaryRoles": [
+        "Schauspielerin",
+        "Erfinderin"
+      ],
+      "created": "2025-11-21T06:20:11.220457+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.190997+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "29373eac9d4c42f6",
+        "translated_on": "2026-07-18T14:37:51.191018+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "heinz_nixdorf",
+      "name": "Heinz_Nixdorf",
+      "tagline": "Deutschlands Computerunternehmer",
+      "summary": "Heinz Nixdorf (1925–1986) war ein deutscher Computerpionier und Unternehmer, der die Nixdorf Computer AG gründete und sie von einem winzigen Start-up zu einem großen internationalen Elektronik- und Computerunternehmen ausbaute. Aus einer armen Eisenbahnerfamilie stammend und durch den Kriegsdienst unterbrochen, kämpfte er sich zurück, um die Schule abzuschließen, angewandte Physik zu studieren und bei Remington Rand entscheidende Erfahrungen in der Rechnerentwicklung zu sammeln. Mit früher Unterstützung des Energieversorgers RWE schuf er Deutschlands ersten röhrenbasierten Rechner, wechselte dann zur Transistor- und Halbleitertechnik und wurde zu einer führenden Figur des Wirtschaftswunders sowie zu einem wichtigen Förderer dezentraler Datenverarbeitung und beruflicher Bildung, bis er 1986 überraschend auf einer Messe starb.",
+      "portrait": {
+        "image": "/portraits/heinz_nixdorf_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
+        "thumbnail": "/portraits/heinz_nixdorf_thumbnail.webp",
+        "medium": "/portraits/heinz_nixdorf_medium.webp",
+        "full": "/portraits/heinz_nixdorf_full.webp"
+      },
+      "birthDate": "1925-04-09",
+      "deathDate": "1986-03-17",
+      "primaryRoles": [
+        "Unternehmer",
+        "Informatiker"
+      ],
+      "created": "2025-12-06T19:39:33.252435+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191034+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "42a6bbcc638aa2a8",
+        "translated_on": "2026-07-18T14:37:51.191049+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "henry_ii",
+      "name": "Heinrich_II.",
+      "tagline": "Letzter Ottonenkaiser und Reformer",
+      "summary": "Heinrich II. aus der Dynastie der Ottonen stieg vom Herzog von Bayern zum König des Ostfrankenreichs, König von Italien und Kaiser des Heiligen Römischen Reiches auf. In enger Partnerschaft mit seiner Frau Kunigunde regierend, stärkte er die kaiserliche Kontrolle über die Kirche, gründete das Bistum Bamberg und verfolgte Reformen durch Synoden und Stiftungen. Seine Herrschaft war zudem von langwierigen Konflikten und Verhandlungen mit benachbarten Mächten geprägt, besonders mit Polen, sowie von wiederholten Interventionen in Italien.",
+      "portrait": {
+        "image": "/portraits/henry_ii_thumbnail.webp",
+        "thumbnail": "/portraits/henry_ii_thumbnail.webp",
+        "medium": "/portraits/henry_ii_medium.webp",
+        "full": "/portraits/henry_ii_full.webp",
+        "source": "https://commons.wikimedia.org/wiki/File:Henry_II,_Holy_Roman_Emperor.jpg",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Henry_II%2C_Holy_Roman_Emperor.jpg/956px-Henry_II%2C_Holy_Roman_Emperor.jpg",
+        "originalCaption": "Henry II, Holy Roman Emperor."
+      },
+      "primaryRoles": [
+        "Monarch",
+        "Kaiser"
+      ],
+      "created": "2025-11-07T18:22:43+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191069+00:00",
+      "birthDate": "973-05-06",
+      "deathDate": "1024-07-13",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "108034e8fa51423f",
+        "translated_on": "2026-07-18T14:37:51.191083+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "herman_hollerith",
+      "name": "Herman_Hollerith",
+      "summary": "Herman Hollerith war ein deutschamerikanischer Statistiker und Erfinder, der elektromechanische Lochkartensysteme zum Erfassen und Sortieren großer Informationsmengen entwickelte, erstmals im großen Maßstab bei der US-Volkszählung eingesetzt. Er baute ein Geschäft auf der Vermietung von Tabelliermaschinen und Karten an Regierungen und Firmen auf; sein Unternehmen ging später in der Computing-Tabulating-Recording Company auf, einem Vorläufer von IBM.",
+      "tagline": "Pionier der Lochkartentabellierung",
+      "portrait": {
+        "image": "/portraits/herman_hollerith_thumbnail.webp",
+        "thumbnail": "/portraits/herman_hollerith_thumbnail.webp",
+        "medium": "/portraits/herman_hollerith_medium.webp",
+        "full": "/portraits/herman_hollerith_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/42/Hollerith.jpg"
+      },
+      "birthDate": "1860-02-29",
+      "deathDate": "1929-11-17",
+      "primaryRoles": [
+        "Erfinder",
+        "Statistiker",
+        "Geschäftsmann"
+      ],
+      "created": "2026-01-04T21:24:23.392662+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191096+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "90cc74c56662a5e3",
+        "translated_on": "2026-07-18T14:37:51.191106+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "ida_noddack",
+      "name": "Ida_Noddack",
+      "summary": "Deutsche Chemikerin und Physikerin, die in enger Zusammenarbeit mit Walter Noddack und Otto Berg die Entdeckung des Rheniums meldete und später öffentlich Deutungen des mit Neutronen beschossenen Urans infrage stellte, indem sie vorschlug, dass schwere Kerne in große Bruchstücke zerfallen könnten.",
+      "tagline": "Frühe Stimme der Kernspaltung",
+      "portrait": {
+        "image": "/portraits/ida_noddack_thumbnail.webp",
+        "thumbnail": "/portraits/ida_noddack_thumbnail.webp",
+        "medium": "/portraits/ida_noddack_medium.webp",
+        "full": "/portraits/ida_noddack_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Ida_Noddack",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Ida_Noddack-Tacke.png"
+      },
+      "birthDate": "1896-02-25",
+      "deathDate": "1978-09-24",
+      "primaryRoles": [
+        "Chemikerin",
+        "Physikerin"
+      ],
+      "created": "2026-02-08T06:48:19.340836+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191126+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "9ebae7d010b7889c",
+        "translated_on": "2026-07-18T14:37:51.191147+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "johann_lukas_sch_nlein",
+      "name": "Johann_Lukas_Schönlein",
+      "summary": "Johann Lukas Schönlein war ein deutscher Arzt und Hochschullehrer, der die deutsche Medizin zu einem naturwissenschaftlichen, klinikbasierten Ansatz hinführte, in Würzburg, Zürich und Berlin lehrte und als Leibarzt am preußischen Hof diente.",
+      "tagline": "Pionier der modernen klinischen Methode",
+      "portrait": {
+        "image": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
+        "thumbnail": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
+        "medium": "/portraits/johann_lukas_sch_nlein_medium.webp",
+        "full": "/portraits/johann_lukas_sch_nlein_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Johann_Lukas_Sch%C3%B6nlein",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/48/Johann_Lucas_Sch%C3%B6nlein_%281793-1864%29.jpg"
+      },
+      "birthDate": "1793-11-30",
+      "deathDate": "1864-01-23",
+      "primaryRoles": [
+        "Arzt",
+        "Pathologe",
+        "Professor"
+      ],
+      "created": "2025-12-27T19:46:53.395083+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191161+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "053acdc671fb67dc",
+        "translated_on": "2026-07-18T14:37:51.191173+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "john_von_neumann",
+      "name": "John_von_Neumann",
+      "tagline": "Architekt des modernen Computers",
+      "summary": "John von Neumann war ein in Ungarn geborener amerikanischer Universalgelehrter, dessen Werk die moderne Mathematik, die Quantenphysik, die Spieltheorie und die Architektur digitaler Computer umformte. Er spielte bedeutende Rollen in der Waffenforschung des Zweiten Weltkriegs und später in der US-Verteidigungsplanung des Kalten Krieges.",
+      "portrait": {
+        "image": "/portraits/john_von_neumann_thumbnail.webp",
+        "thumbnail": "/portraits/john_von_neumann_thumbnail.webp",
+        "medium": "/portraits/john_von_neumann_medium.webp",
+        "full": "/portraits/john_von_neumann_full.webp",
+        "source": "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5e/JohnvonNeumann-LosAlamos.gif"
+      },
+      "birthDate": "1903-12-28",
+      "deathDate": "1957-02-08",
+      "primaryRoles": [
+        "Mathematiker",
+        "Physiker",
+        "Informatiker"
+      ],
+      "created": "2025-12-02T12:28:28.013204+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191216+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "21de11c8ecf83f37",
+        "translated_on": "2026-07-18T14:37:51.191237+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "joseph_weizenbaum",
+      "name": "Joseph_Weizenbaum",
+      "tagline": "Schöpfer von ELIZA, Kritiker der KI",
+      "summary": "Joseph Weizenbaum war ein deutschamerikanischer Informatiker und ein prominenter Kritiker des unreflektierten Vertrauens in Computer und künstliche Intelligenz. Nach der Emigration aus dem nationalsozialistischen Deutschland in die Vereinigten Staaten 1936 studierte er Mathematik, arbeitete als Systemingenieur bei General Electric und ging 1963 ans MIT, wo er an frühen Listenverarbeitungssprachen mitwirkte und zum ARPANET beitrug. Sein Programm ELIZA aus den 1960er-Jahren wurde ein Meilenstein der Verarbeitung natürlicher Sprache und führte ihn dazu, die sozialen und ethischen Folgen der KI zu hinterfragen – Themen, die er in seinem einflussreichen Buch „Die Macht der Computer und die Ohnmacht der Vernunft“ (1976) entfaltete. Im späteren Leben wurde er zu einem führenden öffentlichen Intellektuellen zu Fragen von Technik und Verantwortung und kehrte 1996 nach Berlin zurück, wo er bis zu seinem Tod 2008 aktiv blieb.",
+      "portrait": {
+        "image": "/portraits/joseph_weizenbaum_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
+        "thumbnail": "/portraits/joseph_weizenbaum_thumbnail.webp",
+        "medium": "/portraits/joseph_weizenbaum_medium.webp",
+        "full": "/portraits/joseph_weizenbaum_full.webp"
+      },
+      "birthDate": "1923-01-08",
+      "deathDate": "2008-03-05",
+      "primaryRoles": [
+        "Informatiker",
+        "Professor"
+      ],
+      "created": "2025-12-05T23:33:58.229576+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191260+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "c4b0e108b1e63b32",
+        "translated_on": "2026-07-18T14:37:51.191281+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "konrad_zuse",
+      "name": "Konrad_Zuse",
+      "tagline": "Erbauer des ersten programmierbaren Computers",
+      "summary": "Konrad Zuse war ein deutscher Ingenieur und Erfinder, dessen relaisbasierte Z3 (betriebsbereit 1941) weithin als der erste funktionierende, frei programmierbare, automatische Digitalrechner gilt. Später gründete er eine der ersten Computerfirmen Deutschlands und verfolgte Ideen der theoretischen Informatik neben künstlerischer Arbeit.",
+      "portrait": {
+        "image": "/portraits/konrad_zuse_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Konrad_Zuse",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/da/Konrad_Zuse_%281992%29.jpg",
+        "thumbnail": "/portraits/konrad_zuse_thumbnail.webp",
+        "medium": "/portraits/konrad_zuse_medium.webp",
+        "full": "/portraits/konrad_zuse_full.webp"
+      },
+      "birthDate": "1910-06-22",
+      "deathDate": "1995-12-18",
+      "primaryRoles": [
+        "Erfinder",
+        "Informatiker",
+        "Unternehmer"
+      ],
+      "created": "2025-12-02T15:35:52.607446+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191300+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "54e08491b42a206b",
+        "translated_on": "2026-07-18T14:37:51.191311+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "levi_strauss",
+      "name": "Levi_Strauss",
+      "summary": "Levi Strauss war ein in Deutschland geborener amerikanischer Geschäftsmann, der ein führendes Kurzwarenunternehmen in San Francisco aufbaute und zusammen mit dem Schneider Jacob Davis genietete Arbeitshosen patentierte, aus denen die modernen Blue Jeans wurden. Sein während des Goldrauschs gegründetes Unternehmen wuchs von einem Handelsbetrieb zu einem bedeutenden Hersteller strapazierfähiger Arbeitskleidung.",
+      "tagline": "Miterfinder der genieteten Jeans",
+      "portrait": {
+        "image": "/portraits/levi_strauss_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Levi_Strauss",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Levi_Strauss.gif",
+        "thumbnail": "/portraits/levi_strauss_thumbnail.webp",
+        "medium": "/portraits/levi_strauss_medium.webp",
+        "full": "/portraits/levi_strauss_full.webp"
+      },
+      "birthDate": "1829-02-26",
+      "deathDate": "1902-09-26",
+      "primaryRoles": [
+        "Geschäftsmann",
+        "Industrieller",
+        "Unternehmer"
+      ],
+      "created": "2025-12-14T13:23:04.842708+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191325+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "2c1dc9075c436e13",
+        "translated_on": "2026-07-18T14:37:51.191335+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "lina_bo_bardi",
+      "name": "Lina_Bo_Bardi",
+      "summary": "Die in Italien geborene Architektin und Designerin Lina Bo Bardi baute in Brasilien eine Karriere auf, die moderne Form mit dem alltäglichen sozialen und kulturellen Leben verband – durch Gebäude, Ausstellungen und Objekte. Ihr Werk erweiterte die moderne brasilianische Architektur, indem es Volkskultur, Handwerk und öffentliche Institutionen als zentrale Materialien des Entwerfens begriff.",
+      "tagline": "Moderne, verwurzelt in Brasilien",
+      "portrait": {
+        "image": "/portraits/lina_bo_bardi_thumbnail.webp",
+        "thumbnail": "/portraits/lina_bo_bardi_thumbnail.webp",
+        "medium": "/portraits/lina_bo_bardi_medium.webp",
+        "full": "/portraits/lina_bo_bardi_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lina_Bo_Bardi.jpg"
+      },
+      "birthDate": "1914-12-05",
+      "deathDate": "1992-03-20",
+      "primaryRoles": [
+        "Architektin",
+        "Designerin",
+        "Herausgeberin"
+      ],
+      "created": "2026-01-09T05:57:00.389189+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191346+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "fc2cb369d8b86674",
+        "translated_on": "2026-07-18T14:37:51.191356+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "marie_curie",
+      "name": "Marie_Curie",
+      "summary": "Marie Curie war eine in Polen geborene Physikerin und Chemikerin, die ihre Karriere in Frankreich aufbaute und die Erforschung der Radioaktivität grundlegend veränderte. Gemeinsam mit Pierre Curie entdeckte sie die Elemente Polonium und Radium, führte zentrale Begriffe und Messmethoden für radioaktive Phänomene ein und gewann Nobelpreise in Physik und Chemie. Im Ersten Weltkrieg trieb sie die Röntgendiagnostik an der Front voran und leitete später bedeutende Forschungseinrichtungen, während sie die internationale wissenschaftliche Zusammenarbeit förderte.",
+      "tagline": "Pionierin der Radioaktivitätsforschung",
+      "portrait": {
+        "image": "/portraits/marie_curie_thumbnail.webp",
+        "source": "https://de.wikipedia.org/wiki/Marie_Curie",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Marie_Curie_%28Nobel-Chem%29.jpg",
+        "originalCaption": "AI-generated stylized portrait based on historical photograph",
+        "thumbnail": "/portraits/marie_curie_thumbnail.webp",
+        "medium": "/portraits/marie_curie_medium.webp",
+        "full": "/portraits/marie_curie_full.webp"
+      },
+      "birthDate": "1867-11-07",
+      "deathDate": "1934-07-04",
+      "primaryRoles": [
+        "Physikerin",
+        "Chemikerin"
+      ],
+      "created": "2025-12-20T14:37:16.122965+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191368+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "e5cf640848a72581",
+        "translated_on": "2026-07-18T14:37:51.191379+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "otto_wagner",
+      "name": "Otto_Wagner",
+      "summary": "Otto Koloman Wagner war ein österreichischer Architekt, Designer und Stadtplaner, dessen Wiener Werk sich vom Historismus zur modernen Gestaltung der Secessionszeit entwickelte. Als führender Lehrer und produktiver Praktiker prägte er große öffentliche Infrastrukturen und markante Bauwerke und entwickelte zugleich einflussreiche Ideen über die moderne Architektur und die moderne Stadt.",
+      "tagline": "Architekt der Wiener Moderne",
+      "portrait": {
+        "image": "/portraits/otto_wagner_thumbnail.webp",
+        "thumbnail": "/portraits/otto_wagner_thumbnail.webp",
+        "medium": "/portraits/otto_wagner_medium.webp",
+        "full": "/portraits/otto_wagner_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Otto_Wagner",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Otto_Wagner_%281841%E2%80%931918%29.jpg"
+      },
+      "birthDate": "1841-07-13",
+      "deathDate": "1918-04-11",
+      "primaryRoles": [
+        "Architekt",
+        "Designer",
+        "Stadtplaner"
+      ],
+      "created": "2026-01-09T06:46:49.512016+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191391+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "dae8799dadfa1210",
+        "translated_on": "2026-07-18T14:37:51.191401+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "steve_jobs",
+      "name": "Steve_Jobs",
+      "tagline": "Apple-Mitgründer, Neugestalter der Technikwelt",
+      "summary": "Steve Jobs war ein amerikanischer Unternehmer, Erfinder und Investor, der Apple mitgründete und die Personal-Computer-Revolution mit vorantrieb. Nachdem er 1985 aus Apple gedrängt worden war, gründete er NeXT und wurde Mehrheitseigentümer von Pixar, das er zu Erfolgen mit computeranimierten Filmen führte. 1997 kehrte er zu Apple zurück und leitete eine dramatische Unternehmenswende, in deren Verlauf wegweisende Produkte wie iPod und iPhone entstanden, bevor er krankheitsbedingt zurücktrat.",
+      "portrait": {
+        "image": "/portraits/steve_jobs_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg",
+        "originalCaption": "AI-generated stylized portrait based on historical photograph",
+        "thumbnail": "/portraits/steve_jobs_thumbnail.webp",
+        "medium": "/portraits/steve_jobs_medium.webp",
+        "full": "/portraits/steve_jobs_full.webp"
+      },
+      "birthDate": "1955-02-24",
+      "deathDate": "2011-10-05",
+      "primaryRoles": [
+        "Unternehmer",
+        "Erfinder",
+        "Investor"
+      ],
+      "created": "2025-12-05T23:41:44.095335+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191416+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "11d084643306ee68",
+        "translated_on": "2026-07-18T14:37:51.191426+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "umberto_eco",
+      "name": "Umberto_Eco",
+      "tagline": "Gelehrter, der Bestseller schrieb",
+      "summary": "Umberto Eco war ein italienischer Mediävist, Philosoph und Semiotiker, der als Autor des Romans „Der Name der Rose“ und als führender Theoretiker der Semiotik, der Massenmedien und der Gegenwartskultur international berühmt wurde. In mittelalterlicher Philosophie ausgebildet, entwickelte er einflussreiche Ideen über das „offene Kunstwerk“, die interpretative Semiotik und den Faschismus, während er an großen italienischen Universitäten lehrte und vielgelesene Romane und Essays schrieb.",
+      "portrait": {
+        "image": "/portraits/umberto_eco_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Umberto_Eco",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/64/Italiaanse_schrijver_Umberto_Eco%2C_portret.jpg",
+        "thumbnail": "/portraits/umberto_eco_thumbnail.webp",
+        "medium": "/portraits/umberto_eco_medium.webp",
+        "full": "/portraits/umberto_eco_full.webp"
+      },
+      "birthDate": "1932-01-05",
+      "deathDate": "2016-02-19",
+      "primaryRoles": [
+        "Philosoph",
+        "Schriftsteller"
+      ],
+      "created": "2025-12-05T23:34:57.323148+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191441+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "8b2654456017fcfa",
+        "translated_on": "2026-07-18T14:37:51.191452+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "vannevar_bush",
+      "name": "Vannevar_Bush",
+      "summary": "Vannevar Bush war ein amerikanischer Ingenieur und Erfinder, der zu einem zentralen Organisator der US-amerikanischen Forschung und Entwicklung im Zweiten Weltkrieg wurde. Als führender Wissenschaftsorganisator gestaltete er die Beziehungen des Staates zu akademischer und industrieller Forschung mit und plädierte für eine dauerhafte staatliche Förderung der Wissenschaft nach dem Krieg.",
+      "tagline": "Architekt der Wissenschaftspolitik im Krieg",
+      "portrait": {
+        "image": "/portraits/vannevar_bush_thumbnail.webp",
+        "thumbnail": "/portraits/vannevar_bush_thumbnail.webp",
+        "medium": "/portraits/vannevar_bush_medium.webp",
+        "full": "/portraits/vannevar_bush_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Vannevar_Bush%2C_1938%2C_Harris_%26_Ewing_%28cropped%29.jpg"
+      },
+      "birthDate": "1890-03-11",
+      "deathDate": "1974-06-28",
+      "primaryRoles": [
+        "Ingenieur",
+        "Erfinder",
+        "Wissenschaftsorganisator"
+      ],
+      "created": "2026-01-14T16:41:49.203592+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191464+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "c8ac09baee31164c",
+        "translated_on": "2026-07-18T14:37:51.191476+00:00",
+        "translator": "manual"
+      }
+    },
+    {
+      "id": "zaha_hadid",
+      "name": "Zaha_Hadid",
+      "tagline": "Königin der Kurven in der Architektur",
+      "summary": "Zaha Hadid (1950–2016) war eine irakisch-britische Architektin, Künstlerin und Designerin, deren radikale, fließende Formen die Architektur des späten 20. und frühen 21. Jahrhunderts umgestalteten. Nach einem Mathematikstudium in Beirut und einer Architekturausbildung an der Architectural Association in London wurde sie zunächst durch visionäre, größtenteils ungebaute Projekte und ihre Rolle in der dekonstruktivistischen Bewegung bekannt. Mit Werken wie der Vitra-Feuerwache, dem MAXXI-Museum in Rom, dem Opernhaus von Guangzhou und dem Londoner Aquatics Centre übersetzte sie ihre dynamischen Gemälde in komplexe Bauwerke in aller Welt. Als erste Frau, die den Pritzker-Preis für Architektur und die RIBA Royal Gold Medal erhielt, verband sie avantgardistisches Experimentieren mit großen öffentlichen und kulturellen Aufträgen.",
+      "portrait": {
+        "image": "/portraits/zaha_hadid_thumbnail.webp",
+        "source": "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "caption": "Stylized portrait based on historical photograph",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/7/73/Zaha_Hadid_in_Heydar_Aliyev_Cultural_center_in_Baku_nov_2013.jpg",
+        "thumbnail": "/portraits/zaha_hadid_thumbnail.webp",
+        "medium": "/portraits/zaha_hadid_medium.webp",
+        "full": "/portraits/zaha_hadid_full.webp"
+      },
+      "birthDate": "1950-10-31",
+      "deathDate": "2016-03-31",
+      "primaryRoles": [
+        "Architektin",
+        "Designerin",
+        "Künstlerin"
+      ],
+      "created": "2025-12-06T20:16:18.296912+01:00",
+      "lastUpdated": "2026-07-18T14:37:51.191489+00:00",
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "4f01d17e45424b13",
+        "translated_on": "2026-07-18T14:37:51.191502+00:00",
+        "translator": "manual"
+      }
     }
   ]
 }

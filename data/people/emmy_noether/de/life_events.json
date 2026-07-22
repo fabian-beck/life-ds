@@ -1,0 +1,597 @@
+{
+  "dataset": "wiki-biography-timeline",
+  "created_on": "2025-12-06",
+  "person": {
+    "name": "Emmy_Noether",
+    "birth_date": "1882-03-23",
+    "death_date": "1935-04-14",
+    "primary_roles": [
+      "Mathematikerin"
+    ],
+    "summary": "Emmy Noether (1882–1935) war eine deutsche Mathematikerin, deren Arbeit die abstrakte Algebra umgestaltete und die mathematische Physik tiefgreifend beeinflusste. In Erlangen und später in Göttingen entwickelte sie die moderne Theorie der Ringe, Ideale und Moduln, führte den Begriff noetherscher Strukturen ein und bewies Noethers Theoreme, die Symmetrien mit Erhaltungssätzen in der Physik verknüpfen. Weil sie eine Frau und Jüdin war, blieb ihr jahrelang der Zugang zu bezahlten akademischen Stellen verwehrt; dennoch leitete sie eine renommierte Schule von Algebraikerinnen und Algebraikern, bevor sie von den Nationalsozialisten entlassen wurde und ihre Forschung und Lehre am Bryn Mawr College sowie am Institute for Advanced Study in den Vereinigten Staaten fortsetzte.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether",
+    "portrait": {
+      "image": "/portraits/emmy_noether_thumbnail.webp",
+      "source": "https://en.wikipedia.org/wiki/Emmy_Noether",
+      "caption": "Stylized portrait based on historical photograph",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
+      "thumbnail": "/portraits/emmy_noether_thumbnail.webp",
+      "medium": "/portraits/emmy_noether_medium.webp",
+      "full": "/portraits/emmy_noether_full.webp"
+    }
+  },
+  "chapters": [
+    {
+      "id": "academic_roots_in_erlangen",
+      "headline": "Akademische Wurzeln in Erlangen",
+      "date_start": "1882-03-23",
+      "date_start_precision": "day",
+      "date_end": "1907",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 25,
+      "involved_people": [
+        "Max Noether",
+        "Ida Amalia Kaufmann",
+        "Karl Schwarzschild",
+        "Hermann Minkowski",
+        "Felix Klein",
+        "David Hilbert",
+        "Paul Gordan"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "struggle_for_recognition",
+      "headline": "Kampf um Anerkennung",
+      "date_start": "1908",
+      "date_start_precision": "year",
+      "date_end": "1919-06",
+      "date_end_precision": "month",
+      "age_start": 26,
+      "age_end": 37,
+      "involved_people": [
+        "Max Noether",
+        "Ernst Sigismund Fischer",
+        "David Hilbert",
+        "Felix Klein",
+        "Ida Amalia Noether"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "architect_of_modern_algebra",
+      "headline": "Architektin der modernen Algebra",
+      "date_start": "1919-06",
+      "date_start_precision": "month",
+      "date_end": "1933-04",
+      "date_end_precision": "month",
+      "age_start": 37,
+      "age_end": 51,
+      "involved_people": [
+        "Felix Klein",
+        "David Hilbert",
+        "Bartel Leendert van der Waerden",
+        "Albert Einstein",
+        "Hermann Weyl"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "exile_and_final_legacy",
+      "headline": "Exil in der amerikanischen Wissenschaft",
+      "date_start": "1933-04",
+      "date_start_precision": "month",
+      "date_end": "1935-04-14",
+      "date_end_precision": "day",
+      "age_start": 51,
+      "age_end": 53,
+      "involved_people": [
+        "David Hilbert",
+        "Marie Johanna Weiss",
+        "Olga Taussky-Todd",
+        "Albert Einstein"
+      ],
+      "location": "Vereinigte Staaten"
+    }
+  ],
+  "events": [
+    {
+      "date": "1882-03-23",
+      "date_precision": "day",
+      "age": null,
+      "title": "Geburt in Erlangen",
+      "description": "Amalie Emmy Noether wurde am 23. März 1882 in der bayerischen Universitätsstadt Erlangen in eine wohlhabende jüdische Familie geboren. Ihr Vater, Max Noether, war ein bedeutender Professor der Mathematik, und ihre Mutter, Ida Amalia Kaufmann, stammte aus einer wohlhabenden Kaufmannsfamilie. Emmy wuchs mit drei jüngeren Brüdern in einem akademischen Haushalt auf und war von Kindheit an von mathematischen Gesprächen und dem Universitätsleben umgeben, auch wenn sie zunächst zu den für Mädchen ihrer Schicht üblichen hauswirtschaftlichen Fertigkeiten angeleitet wurde.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Bayern, Deutschland",
+          "centroid": [
+            11.0059,
+            49.5897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Max Noether",
+        "Ida Amalia Kaufmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Fritz_Noether",
+        "https://de.wikipedia.org/wiki/Max_Noether"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "academic_roots_in_erlangen"
+    },
+    {
+      "date": "1900",
+      "date_precision": "year",
+      "date_note": "Sie bestand Anfang 1900 die Prüfung für Sprachlehrerinnen und entschied sich kurz darauf für ein Universitätsstudium",
+      "age": 18,
+      "title": "Entscheidet sich für Mathematik",
+      "description": "Nachdem Noether Begabung für Französisch und Englisch gezeigt hatte, bestand sie die Staatsprüfung, die sie zum Sprachunterricht an Mädchenschulen berechtigte, mit der Bestnote „sehr gut“. Statt die sichere Lehrlaufbahn einzuschlagen, die sich ihr damit eröffnete, entschied sie sich für ein Studium an der Universität Erlangen, an der ihr Vater lehrte, obwohl Frauen Vorlesungen nur mit Erlaubnis des jeweiligen Professors als Gasthörerinnen besuchen durften. Mit dieser Wahl schlug sie einen unkonventionellen und unsicheren Weg in der höheren Mathematik ein.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0039,
+            49.5897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Max Noether"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg",
+        "https://en.wikipedia.org/wiki/Max_Noether"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "academic_roots_in_erlangen"
+    },
+    {
+      "date": "1904-10",
+      "date_precision": "month",
+      "date_note": "Die bayerischen Beschränkungen für die volle Immatrikulation von Frauen wurden 1903 aufgehoben; im Oktober 1904 immatrikulierte sie sich erneut formell in Erlangen",
+      "age": 22,
+      "title": "Volle Immatrikulation in Erlangen",
+      "description": "Nach einem Studienjahr in Göttingen im Wintersemester 1903–1904, in dem sie Vorlesungen von Karl Schwarzschild, Hermann Minkowski, Felix Klein, David Hilbert und anderen besuchte, kehrte Noether nach Erlangen zurück und schrieb sich im Oktober 1904 formell als ordentliche Studentin ein. Nun als einzige Frau in ihrem Mathematikjahrgang widmete sie sich unter dem Einfluss des Invariantentheoretikers Paul Gordan ganz der Mathematik und begann die Forschung, die zu ihrer Promotion führen sollte.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0044,
+            49.5897
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.9323,
+            51.5413
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Karl Schwarzschild",
+        "Hermann Minkowski",
+        "Felix Klein",
+        "David Hilbert",
+        "Paul Gordan"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg",
+        "https://en.wikipedia.org/wiki/Paul_Gordan"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "academic_roots_in_erlangen"
+    },
+    {
+      "date": "1907",
+      "date_precision": "year",
+      "date_note": "Sie schloss ihre Dissertation 1907 ab und verteidigte sie; später im selben Jahr erhielt sie den Grad summa cum laude",
+      "age": 25,
+      "title": "Promotion bei Paul Gordan",
+      "description": "1907 erhielt Noether an der Universität Erlangen ihren Doktorgrad mit einer von Paul Gordan betreuten Dissertation über [[invariant theory|Invariantentheorie]] mit dem Titel „Über die Bildung des Formensystems der ternären biquadratischen Form“. Die Arbeit, ganz im damals vorherrschenden Stil expliziter Berechnungen, enthielt Hunderte ausgearbeiteter Invarianten und wurde mit summa cum laude bewertet. Obwohl sie diese frühe Arbeit später als „Mist“ abtat, begründete die Dissertation ihren Status als forschende Mathematikerin und brachte ihre ersten Veröffentlichungen hervor.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0078,
+            49.5897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Paul Gordan"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Paul_Gordan"
+      ],
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "academic_roots_in_erlangen",
+      "annotations": {
+        "invariant theory": {
+          "explanation": "Ein Teilgebiet der abstrakten Algebra, das Größen oder Eigenschaften mathematischer Objekte untersucht, die unter Transformationen einer gegebenen Gruppe – etwa Drehungen oder linearen Koordinatenänderungen – unverändert (invariant) bleiben.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
+        }
+      }
+    },
+    {
+      "date": "1908",
+      "date_precision": "year",
+      "date_end": "1915-04",
+      "date_end_precision": "month",
+      "age": 26,
+      "title": "Unbezahlte Dozentin in Erlangen",
+      "description": "Von 1908 bis 1915 arbeitete Noether unbezahlt am Mathematischen Institut in Erlangen, vertrat häufig ihren kränkelnden Vater in Vorlesungen und verfolgte zugleich ihre eigene Forschung. Sie trat Fachgesellschaften wie dem [[Circolo Matematico di Palermo|Circolo Matematico di Palermo]] und der [[Deutsche Mathematiker‑Vereinigung|Deutschen Mathematiker‑Vereinigung]] bei und weitete die Ergebnisse ihrer Dissertation auf mehr Variablen aus. Dabei bewegte sie sich schrittweise von konkreten Invariantenberechnungen zu abstrakteren Methoden, die von Ernst Fischer und David Hilbert beeinflusst waren. In dieser Zeit betreute sie auch informell Doktorandinnen und Doktoranden, obwohl die offizielle Anerkennung weiterhin ihrem Vater zugeschrieben wurde – ein Spiegel der vorherrschenden Hindernisse für den akademischen Aufstieg von Frauen.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0044,
+            49.5975
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Palermo",
+          "name_modern": "Palermo, Italien",
+          "centroid": [
+            13.3615,
+            38.1157
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Max Noether",
+        "Ernst Sigismund Fischer",
+        "David Hilbert"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Deutsche_Mathematiker-Vereinigung",
+        "https://en.wikipedia.org/wiki/Circolo_Matematico_di_Palermo"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "struggle_for_recognition",
+      "annotations": {
+        "Circolo Matematico di Palermo": {
+          "explanation": "Eine 1884 in Palermo gegründete italienische mathematische Gesellschaft, die sich im späten 19. und frühen 20. Jahrhundert zu einem der angesehensten internationalen Zentren für die Veröffentlichung mathematischer Forschung entwickelte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Circolo_Matematico_di_Palermo"
+        },
+        "Deutsche Mathematiker‑Vereinigung": {
+          "explanation": "Die Deutsche Mathematiker-Vereinigung, gegründet 1890, die als wichtigster Berufsverband für Mathematikerinnen und Mathematiker im deutschsprachigen Raum fungierte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Mathematiker-Vereinigung"
+        }
+      }
+    },
+    {
+      "date": "1915-04",
+      "date_precision": "month",
+      "date_note": "Auf Einladung Hilberts und Kleins verließ sie Ende April 1915 Erlangen in Richtung Göttingen",
+      "age": 33,
+      "title": "Umzug nach Göttingen trotz Widerstands",
+      "description": "1915 luden David Hilbert und Felix Klein Noether nach Göttingen ein, damals das führende Zentrum mathematischer Forschung, um ihnen bei der Lösung algebraischer Probleme zu helfen, die aus der neuen [[general theory of relativity|Allgemeinen Relativitätstheorie]] hervorgingen. Ihre Berufung stieß bei Mitgliedern der Philosophischen Fakultät auf erbitterten Widerstand, die die Vorstellung ablehnten, dass eine Frau [[Privatdozent|Privatdozentin]] werden könnte; dies veranlasste Hilbert zu seiner berühmten Erwiderung, eine Universität sei „keine Badeanstalt“. Noether zog Ende April nach Göttingen, kurz vor dem plötzlichen Tod ihrer Mutter, und begann unter Hilberts Namen zu lesen, unbezahlt und ohne offiziellen Status, während sie sich während des Krieges um ihren pensionierten Vater kümmerte.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.9359,
+            51.5413
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0039,
+            49.5897
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "David Hilbert",
+        "Felix Klein",
+        "Max Noether",
+        "Ida Amalia Noether"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Felix_Klein",
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "struggle_for_recognition",
+      "annotations": {
+        "general theory of relativity": {
+          "explanation": "Einsteins geometrische Gravitationstheorie von 1915, die Gravitation als durch Masse und Energie verursachte Krümmung der Raumzeit beschreibt und in den meisten Zusammenhängen die Newtonsche Gravitation ersetzt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
+        },
+        "Privatdozent": {
+          "explanation": "Ein deutscher akademischer Titel für Personen, die eine Habilitation abgeschlossen haben und zur selbstständigen Lehre an einer Universität berechtigt sind, in der Regel ohne besoldete Professur.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      }
+    },
+    {
+      "date": "1918-07-26",
+      "date_precision": "day",
+      "date_note": "An diesem Tag präsentierte Felix Klein ihre Arbeit „Invariante Variationsprobleme“ der Königlichen Gesellschaft der Wissenschaften zu Göttingen",
+      "age": 36,
+      "title": "Begründet Noethers Theorem",
+      "description": "Kurz nach ihrer Ankunft in Göttingen löste Noether ein grundlegendes Problem der [[calculus of variations|Variationsrechnung]] und bewies, was heute Noethers Theorem genannt wird: Jede differenzierbare Symmetrie der Wirkung eines physikalischen Systems entspricht einem Erhaltungssatz. Ihre Arbeit „Invariante Variationsprobleme“ wurde am 26. Juli 1918 von Felix Klein der Königlichen Gesellschaft der Wissenschaften zu Göttingen vorgelegt, da sie selbst kein Mitglied war. Dieses Ergebnis wurde zu einem Grundpfeiler der modernen theoretischen Physik, da es erklärte, warum Größen wie Energie und Impuls erhalten sind, und beeinflusste spätere Arbeiten in der Feldtheorie und Teilchenphysik.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.934,
+            51.5413
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Felix Klein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Noether%27s_theorem",
+        "https://en.wikipedia.org/wiki/Felix_Klein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Noether_theorem_1st_page.png",
+          "caption": "Erste Seite von E. Noethers Arbeit „Invariante Variationsprobleme“ (Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Mathematisch-Physikalische Klasse 1918 (1918): 235-257. <http://eudml.org/doc/59024>), in der sie das gleichnamige Theorem bewies.",
+          "source": "https://commons.wikimedia.org/wiki/File:Noether_theorem_1st_page.png"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "struggle_for_recognition",
+      "annotations": {
+        "calculus of variations": {
+          "explanation": "Ein Teilgebiet der mathematischen Analysis, das untersucht, wie sich Funktionen finden lassen, die als Integrale ausgedrückte Größen minimieren oder maximieren; es ist grundlegend für die Formulierung physikalischer Gesetze und die Herleitung von Bewegungsgleichungen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Calculus_of_variations"
+        }
+      }
+    },
+    {
+      "date": "1919-06",
+      "date_precision": "month",
+      "date_note": "Ihre mündliche Prüfung fand Ende Mai 1919 statt, gefolgt von der Habilitationsvorlesung im Juni",
+      "age": 37,
+      "title": "Habilitation und Privatdozentur",
+      "description": "Nachdem der Erste Weltkrieg und die [[German Revolution of 1918–1919|Deutsche Revolution von 1918–1919]] einige Beschränkungen für Frauen gelockert hatten, erlaubte Göttingen Noether schließlich, sich für die [[habilitation|Habilitation]] zu bewerben. Ende Mai 1919 bestand sie ihre mündliche Prüfung und hielt im Juni ihre Habilitationsvorlesung, wodurch sie Privatdozentin für Mathematik wurde. Im Herbst bot sie die erste offiziell unter ihrem eigenen Namen aufgeführte Lehrveranstaltung an, erhielt jedoch weiterhin kein Gehalt – ein formeller, aber nur teilweise anerkannter Eintritt in die Fakultät.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.932966,
+            51.54128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Habilitation"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "struggle_for_recognition",
+      "annotations": {
+        "German Revolution of 1918–1919": {
+          "explanation": "Ein Bürgerkrieg und politischer Umbruch am Ende des Ersten Weltkriegs, der die deutsche Monarchie stürzte und zur Gründung der Weimarer Republik führte; er brachte Reformen mit sich, darunter eine gewisse Ausweitung der Rechte von Frauen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Revolution_of_1918%E2%80%931919"
+        },
+        "habilitation": {
+          "explanation": "Eine im deutschsprachigen Raum übliche postdoktorale Qualifikation, die die Befähigung bescheinigt, auf Universitätsebene selbstständig zu lehren und Forschung zu betreuen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
+        },
+        "Privatdozent": {
+          "explanation": "Ein akademischer Titel an deutschsprachigen Universitäten für Personen, die zur selbstständigen Lehre qualifiziert sind (üblicherweise nach der Habilitation), Lehrveranstaltungen anbieten dürfen, aber in der Regel keinen besoldeten Lehrstuhl innehaben.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      }
+    },
+    {
+      "date": "1921",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Begründet die noethersche Ringtheorie",
+      "description": "1921 veröffentlichte Noether ihre wegweisende Arbeit „[[Idealtheorie in Ringbereichen|Idealtheorie in Ringbereichen]]“ (Theorie der Ideale in Ringbereichen), die die Theorie kommutativer Ringe und Ideale in radikal abstrakter Form neu fasste. Sie führte die [[ascending chain condition|aufsteigende Kettenbedingung]] für Ideale ein und nutzte sie, wodurch sie die Klasse der „[[Noetherian ring|noetherschen]]“ Ringe und Moduln schuf, die für die moderne Algebra und algebraische Geometrie zentral wurde. Diese Arbeit leitete ihre zweite schöpferische Epoche ein, in der sie unterschiedliche algebraische Ergebnisse systematisierte und zu einer leistungsfähigen Strukturtheorie vereinigte.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.934,
+            51.5413
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Noetherian_ring"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "architect_of_modern_algebra",
+      "annotations": {
+        "Idealtheorie in Ringbereichen": {
+          "explanation": "Titel von Noethers Aufsatz von 1921, der gewöhnlich mit „Theorie der Ideale in Ringbereichen“ übersetzt wird und als Gründungswerk der modernen abstrakten Idealtheorie in der kommutativen Algebra gilt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Emmy_Noether"
+        },
+        "ascending chain condition": {
+          "explanation": "Eine Endlichkeitsbedingung für eine teilweise geordnete Menge, die verlangt, dass jede aufsteigende Folge von Elementen schließlich stationär wird; in der Ringtheorie beschränkt sie, wie Ideale wachsen können.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Artinian_module#Ascending_chain_condition"
+        },
+        "Noetherian ring": {
+          "explanation": "Ein kommutativer Ring, in dem jede aufsteigende Kette von Idealen stationär wird; äquivalent dazu ist jedes Ideal endlich erzeugt. Diese Klasse bildet eine Grundlage großer Teile der modernen algebraischen Geometrie und kommutativen Algebra.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Noetherian_ring"
+        }
+      }
+    },
+    {
+      "date": "1924",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Leitet die Göttinger Algebra-Schule",
+      "description": "Mitte der 1920er Jahre war Noether das intellektuelle Zentrum einer blühenden algebraischen Schule in [[Göttingen|Göttingen]], die unter ihren ergebenen Studierenden informell als die „Noether Boys“ bekannt war. 1924 schloss sich der junge niederländische Mathematiker Bartel Leendert van der Waerden ihrem Kreis an, nahm ihre Ideen auf und systematisierte sie später in seinem einflussreichen Lehrbuch „Moderne Algebra“, dessen zweiter Band weitgehend auf ihren Vorlesungen beruhte. Durch ihre Großzügigkeit beim Teilen von Problemen und Methoden gab Noether wichtige Impulse für bedeutende Fortschritte von Studierenden und Kolleginnen und Kollegen in Bereichen von der Körpertheorie bis zur algebraischen Topologie.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.934,
+            51.5413
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Bartel Leendert van der Waerden"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden"
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "architect_of_modern_algebra",
+      "annotations": {
+        "Göttingen": {
+          "explanation": "Universitätsstadt in Niedersachsen, die sich im späten 19. und frühen 20. Jahrhundert zu einem der weltweit führenden Zentren für Mathematik und Physik entwickelte und Persönlichkeiten wie Hilbert, Klein und Noether anzog.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/G%C3%B6ttingen"
+        }
+      }
+    },
+    {
+      "date": "1932-09",
+      "date_precision": "month",
+      "date_note": "Der Internationale Mathematikerkongress in Zürich fand im September 1932 statt",
+      "age": 50,
+      "title": "Plenarvortrag beim ICM in Zürich",
+      "description": "Im September 1932 hielt Noether auf dem Internationalen Mathematikerkongress in Zürich einen Plenarvortrag – eine besondere Auszeichnung, die ihren Rang als eine der führenden Algebraikerinnen der Welt widerspiegelte. Ihr Vortrag stellte einem internationalen Publikum, zu dem viele der bedeutendsten Mathematiker jener Zeit gehörten, die neuesten Entwicklungen der Idealtheorie und der [[noncommutative algebra|nichtkommutativen Algebra]] vor. Zu diesem Zeitpunkt war ihr Ruf fest etabliert, und Persönlichkeiten wie Albert Einstein und Hermann Weyl würdigten sie öffentlich als die bedeutendste Frau in der Geschichte der Mathematik.",
+      "locations": [
+        {
+          "name_historic": "Zürich",
+          "name_modern": "Zürich, Schweiz",
+          "centroid": [
+            8.5417,
+            47.3769
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": null,
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/International_Congress_of_Mathematicians"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "architect_of_modern_algebra",
+      "annotations": {
+        "noncommutative algebra": {
+          "explanation": "Ein Teilgebiet der Algebra, in dem die Multiplikation von Elementen nicht notwendigerweise kommutativ ist (das heißt, ab muss nicht gleich ba sein), mit wichtigen Anwendungen in der Ringtheorie und Quantenmechanik.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Noncommutative_ring_theory"
+        }
+      }
+    },
+    {
+      "date": "1933-04",
+      "date_precision": "month",
+      "date_note": "Nach der nationalsozialistischen Machtübernahme und dem Beamtengesetz vom April 1933 wurde sie als Jüdin und politisch Verdächtige von ihrer Göttinger Stelle entlassen",
+      "age": 51,
+      "title": "Von den Nazis aus Göttingen entlassen",
+      "description": "Nachdem die nationalsozialistische Regierung 1933 an die Macht gekommen war und [[Law for the Restoration of the Professional Civil Service|Gesetze zur Vertreibung von Juden und politischen Gegnern aus deutschen Universitäten]] erlassen hatte, wurde Noether kurzerhand von ihrer Stelle in Göttingen entfernt. Ihr Algebra-Seminar wurde abrupt aufgelöst, ihre Studierenden wurden zerstreut und Göttingens Vorherrschaft in der Algebra fand ein Ende. Kollegen wie David Hilbert protestierten vergeblich, und die Episode bedeutete einen verheerenden persönlichen und beruflichen Bruch in ihrem Lebenswerk in Deutschland.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.93699,
+            51.54128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "David Hilbert"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Law_for_the_Restoration_of_the_Professional_Civil_Service",
+        "https://en.wikipedia.org/wiki/David_Hilbert"
+      ],
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "architect_of_modern_algebra",
+      "annotations": {
+        "Law for the Restoration of the Professional Civil Service": {
+          "explanation": "Ein am 7. April 1933 erlassenes NS-Gesetz, das die Entlassung jüdischer und politisch als unzuverlässig geltender Beamter, einschließlich Universitätsprofessoren, aus dem Staatsdienst anordnete.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Law_for_the_Restoration_of_the_Professional_Civil_Service"
+        }
+      }
+    },
+    {
+      "date": "1935-04-14",
+      "date_precision": "day",
+      "age": 53,
+      "title": "Tod in Pennsylvania",
+      "description": "Im April 1935 unterzog sich Noether in [[Pennsylvania|Pennsylvania]] einer Operation wegen einer angeblichen Gebärmutter- oder Eierstockzyste und schien sich zunächst gut zu erholen. Eine plötzlich auftretende postoperative Infektion führte am 14. April im Alter von 53 Jahren zu ihrem Tod. Kolleginnen und Kollegen in den Vereinigten Staaten und Europa, darunter Albert Einstein, verfassten Nachrufe, in denen sie sowohl die Tiefe ihrer mathematischen Leistungen als auch ihre selbstlose, begeisterte Hingabe an Studierende und Mitarbeitende hervorhoben.",
+      "locations": [
+        {
+          "name_historic": "Bryn Mawr, Pennsylvania",
+          "name_modern": "Bryn Mawr, Pennsylvania, USA",
+          "centroid": [
+            -75.3155,
+            40.0198
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Albert Einstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "exile_and_final_legacy",
+      "annotations": {
+        "Pennsylvania": {
+          "explanation": "Ein US-Bundesstaat im Mittelatlantik; zum Zeitpunkt dieses Ereignisses arbeitete Noether am Bryn Mawr College in Pennsylvania, wo sie operiert wurde und starb.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pennsylvania"
+        }
+      }
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "299cb60f39746ef1",
+    "translated_on": "2026-07-19T07:46:46.677102+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

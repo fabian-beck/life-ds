@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy, tick } from "svelte";
   import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
@@ -10,6 +10,7 @@
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
+  import HighContrastToggle from "./HighContrastToggle.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
   // LandingMap is imported on demand where it is rendered: it pulls in MapLibre
   // and its basemap dependencies (~1.1 MB), and the map starts collapsed.
@@ -27,6 +28,8 @@
   let loadedImages = new Set();
   let activeMetaStoryFilter = null;
   let showMap = false;
+  let filtersSectionElement = null;
+  let wasFiltering = false;
 
   // Sticky header state
   let showStickyHeader = false;
@@ -106,6 +109,31 @@
     return tag.trim().toLowerCase();
   }
 
+  function getFilterTag(role, language, knownRoles) {
+    const normalized = normalizeTag(role);
+
+    if (language !== "de") {
+      return { normalized, display: role };
+    }
+
+    // Merge a German masculine/feminine pair only when both forms actually
+    // occur in the data. This avoids treating unrelated words ending in
+    // "in" as gendered role names.
+    if (normalized.endsWith("in")) {
+      const masculine = normalized.slice(0, -2);
+      if (knownRoles.has(masculine)) {
+        return {
+          normalized: masculine,
+          display: `${knownRoles.get(masculine)}:in`,
+        };
+      }
+    } else if (knownRoles.has(`${normalized}in`)) {
+      return { normalized, display: `${role}:in` };
+    }
+
+    return { normalized, display: role };
+  }
+
   function toggleTag(normalizedTag) {
     if (activeTags.has(normalizedTag)) {
       activeTags.delete(normalizedTag);
@@ -115,20 +143,35 @@
     activeTags = new Set(activeTags); // Trigger reactivity
   }
 
-  // Compute tag frequencies from entries (with case-insensitive grouping)
+  $: knownRoles = new Map(
+    entries.flatMap((entry) =>
+      Array.isArray(entry.primaryRoles)
+        ? entry.primaryRoles
+            .filter((role) => role && typeof role === "string")
+            .map((role) => [normalizeTag(role), role])
+        : []
+    )
+  );
+
+  // Compute tag frequencies from entries (with case-insensitive grouping and
+  // merged masculine/feminine role names in German).
   $: tagFrequencies = (() => {
     const frequencies = new Map(); // normalized tag -> {display: string, count: number}
     entries.forEach((entry) => {
       if (Array.isArray(entry.primaryRoles)) {
+        const entryTags = new Map();
         entry.primaryRoles.forEach((role) => {
           if (role && typeof role === "string") {
-            const normalized = normalizeTag(role);
-            const existing = frequencies.get(normalized);
-            if (existing) {
-              existing.count += 1;
-            } else {
-              frequencies.set(normalized, { display: role, count: 1 });
-            }
+            const tag = getFilterTag(role, $currentLanguage, knownRoles);
+            entryTags.set(tag.normalized, tag.display);
+          }
+        });
+        entryTags.forEach((display, normalized) => {
+          const existing = frequencies.get(normalized);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            frequencies.set(normalized, { display, count: 1 });
           }
         });
       }
@@ -225,9 +268,10 @@
       if (activeTags.size > 0) {
         result = result.filter((entry) => {
           if (!Array.isArray(entry.primaryRoles)) return false;
-          return entry.primaryRoles.some((role) =>
-            activeTags.has(normalizeTag(role))
-          );
+          return entry.primaryRoles.some((role) => {
+            const tag = getFilterTag(role, $currentLanguage, knownRoles);
+            return activeTags.has(tag.normalized);
+          });
         });
       }
 
@@ -285,6 +329,36 @@
 
     return result;
   })();
+
+  $: resultCountText = `${filteredEntries.length} ${filteredEntries.length === 1 ? $_("landing.result_one") : $_("landing.result_other")}`;
+  $: isSearching = searchQuery.trim().length > 0;
+  $: isFiltering =
+    isSearching || activeTags.size > 0 || activeMetaStoryFilter !== null;
+
+  // When search or filtering becomes active, scroll down to the filters section
+  // (the meta-story carousel and title stay in place, just above the fold).
+  $: if (isFiltering && !wasFiltering) {
+    wasFiltering = true;
+    scrollToFilters();
+  } else if (!isFiltering && wasFiltering) {
+    wasFiltering = false;
+  }
+
+  async function scrollToFilters() {
+    if (typeof window === "undefined" || !filtersSectionElement) return;
+    // The sticky header appears once we scroll past its threshold and would
+    // otherwise cover the top of the filters section. Render it first so we can
+    // measure its height and reserve room for it in the scroll target.
+    showStickyHeader = true;
+    await tick();
+    const headerOffset = stickyHeaderElement?.offsetHeight ?? 0;
+    const targetTop =
+      filtersSectionElement.getBoundingClientRect().top +
+      window.scrollY -
+      headerOffset -
+      16;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+  }
 
   function formatLifespan(entry) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
@@ -384,6 +458,7 @@
             <option value="en">English</option>
             <option value="de">Deutsch</option>
           </select>
+          <HighContrastToggle variant="sticky" />
         </div>
       </header>
       <div class="sticky-ai-button">
@@ -394,36 +469,42 @@
 
   <div class="top-controls">
     <AIGeneratedButton variant="large" onClick={toggleExplanation} />
-    <select
-      value={$currentLanguage}
-      on:change={handleLanguageChange}
-      aria-label={$_("app.select_language")}
-      class="language-selector"
-    >
-      <option value="en">English</option>
-      <option value="de">Deutsch</option>
-    </select>
+    <div class="top-controls-right">
+      <select
+        value={$currentLanguage}
+        on:change={handleLanguageChange}
+        aria-label={$_("app.select_language")}
+        class="language-selector"
+      >
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+      <HighContrastToggle />
+    </div>
   </div>
 
   <div class="header-container">
     <div class="landing-hero">
       <p class="eyebrow">{$_("app.title")}</p>
       <h1>{$_("app.tagline")}</h1>
+      <p class="hero-intro">{$_("landing.intro_text")}</p>
     </div>
-    {#if $currentLanguage === "en"}
-      {#key $currentLanguage}
-        <MetaStoryCarousel
-          {metaStories}
-          persons={englishEntries}
-          onSelectPerson={handleSelect}
-          onFilterByMetaStory={handleFilterByMetaStory}
-          onExploreMetaStory={handleExploreMetaStory}
-        />
-      {/key}
-    {/if}
+    {#key $currentLanguage}
+      <MetaStoryCarousel
+        {metaStories}
+        persons={englishEntries}
+        onSelectPerson={handleSelect}
+        onFilterByMetaStory={handleFilterByMetaStory}
+        onExploreMetaStory={handleExploreMetaStory}
+      />
+    {/key}
   </div>
 
-  <div class="filters-section">
+  <div
+    class="filters-section"
+    class:searching={isSearching}
+    bind:this={filtersSectionElement}
+  >
     <div class="search-box">
       <svg
         class="search-icon"
@@ -445,6 +526,7 @@
         class="search-input"
         placeholder={$_("landing.search_placeholder")}
         bind:value={searchQuery}
+        aria-label={$_("landing.search_label")}
       />
       {#if searchQuery}
         <button
@@ -483,6 +565,7 @@
               on:click={() => {
                 activeMetaStoryFilter = null;
               }}
+              aria-label={$_("landing.clear_all")}
             >
               {$_("landing.clear_all")}
             </button>
@@ -510,6 +593,7 @@
               on:click={() => {
                 activeTags = new Set();
               }}
+              aria-label={$_("landing.clear_all")}
             >
               {$_("landing.clear_all")}
             </button>
@@ -526,6 +610,8 @@
         class:active={showMap}
         on:click={() => (showMap = !showMap)}
         aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
+        aria-expanded={showMap}
+        aria-controls="event-map-panel"
       >
         <svg
           width="20"
@@ -544,7 +630,11 @@
     </div>
 
     {#if showMap}
-      <div class="landing-map-wrapper" transition:slide={{ duration: 300 }}>
+      <div
+        id="event-map-panel"
+        class="landing-map-wrapper"
+        transition:slide={{ duration: 300 }}
+      >
         {#await import("./LandingMap.svelte") then { default: LandingMap }}
           <LandingMap
             {filteredEntries}
@@ -559,6 +649,10 @@
         {/await}
       </div>
     {/if}
+  </div>
+
+  <div class="results-summary" role="status" aria-live="polite">
+    {resultCountText}
   </div>
 
   <div class="landing-grid">
@@ -643,6 +737,9 @@
             {#if entry.tagline}
               <p class="card-tagline">{entry.tagline}</p>
             {/if}
+            <span class="card-cta" aria-hidden="true"
+              >{$_("landing.view_story")}</span
+            >
           </div>
         </button>
       {/each}
@@ -728,9 +825,13 @@
 
   .sticky-right {
     flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .language-selector.sticky {
+    height: 1.85rem;
     padding: 0.35rem 0.5rem;
     font-size: 0.75rem;
     background: rgba(15, 23, 42, 0.6);
@@ -747,6 +848,7 @@
     }
 
     .language-selector.sticky {
+      height: 2rem;
       padding: 0.4rem 0.6rem;
       font-size: 0.8rem;
     }
@@ -760,7 +862,14 @@
     justify-content: space-between;
   }
 
+  .top-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .language-selector {
+    height: 2.25rem;
     padding: 0.5rem 0.75rem;
     background: rgba(15, 23, 42, 0.9);
     border: 1px solid rgba(226, 232, 240, 0.2);
@@ -826,6 +935,12 @@
     margin: 0;
     font-size: 1rem;
     color: #cbd5f5;
+  }
+
+  .landing-hero .hero-intro {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    max-width: 58ch;
   }
 
   .map-section {
@@ -920,6 +1035,13 @@
       margin-right: -1.5rem;
       width: calc(100% + 3rem);
     }
+  }
+
+  .results-summary {
+    margin-top: -0.25rem;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    font-weight: 600;
   }
 
   .landing-empty {
@@ -1161,6 +1283,27 @@
     font-family: var(--card-body-font, Inter, sans-serif);
   }
 
+  .card-cta {
+    margin-top: auto;
+    align-self: flex-start;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--card-secondary, #38bdf8);
+  }
+
+  .person-card:hover .card-cta,
+  .person-card:focus-visible .card-cta {
+    color: var(--card-secondary, #bae6fd);
+  }
+
+  .person-card:focus-visible {
+    outline: 3px solid var(--card-secondary, #38bdf8);
+    outline-offset: 3px;
+  }
+
   .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -1331,6 +1474,10 @@
     color: #e0f2fe;
   }
 
+  .filters-section.searching .filters-right {
+    display: none;
+  }
+
   @media (max-width: 580px) {
     .person-card {
       border-radius: 0;
@@ -1355,8 +1502,8 @@
 
   @media (min-width: 768px) {
     .landing {
-      padding: 4rem 3rem 5rem;
-      gap: 3rem;
+      padding: 2.5rem 3rem 5rem;
+      gap: 1.5rem;
     }
 
     .header-container {
@@ -1364,6 +1511,7 @@
       grid-template-columns: 1fr 2fr;
       gap: 3rem;
       align-items: start;
+      margin-bottom: 1rem;
     }
 
     .landing-hero {

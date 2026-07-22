@@ -12,6 +12,66 @@ npm run dev -- --open
 - `npm run build` generates a production bundle in `dist/`.
 - `npm run preview` serves the production build locally.
 
+## Interface Tests
+
+The Playwright smoke test covers the landing page, search, a representative
+story overview, chapter and event navigation, and the network modal in desktop
+and mobile Chromium profiles.
+
+```powershell
+# Required once per machine
+npx playwright install chromium
+
+npm run test:interface
+npm run test:interface:report
+```
+
+The HTML report includes screenshots and viewport audits. Generated reports and
+test artifacts are ignored by Git.
+
+## Deployment
+
+The site is hosted on **Netlify** (project `famous-marigold-49244d`, site id
+`12d3d478-2a11-4020-b56c-4580fa57e108`) and is deployed **on demand only** —
+pushing/merging to `main` does **not** publish the site.
+
+> Two things enforce "on demand only":
+>
+> 1. `netlify.toml` sets `ignore = "exit 0"`, so Netlify skips the build for any
+>    git-triggered event.
+> 2. Automatic builds are additionally turned off in the Netlify dashboard
+>    (Site configuration → Build & deploy → Continuous deployment → **Stop
+>    builds**), so a push doesn't even spin up a build container.
+>
+> To restore automatic deploys, re-enable builds in the dashboard and delete the
+> `ignore` line in `netlify.toml`.
+
+### Publishing a new version
+
+Deploy the **pre-built** `dist/` folder with the Netlify CLI (a direct file
+upload — it does not use Netlify's build system):
+
+```powershell
+# once per machine: authenticate (opens a browser)
+npx netlify-cli login
+
+npm run build   # refresh dist/ from the current checkout
+npx netlify-cli deploy --prod --dir=dist --site 12d3d478-2a11-4020-b56c-4580fa57e108
+```
+
+Notes:
+
+- The CLI package is **`netlify-cli`** — do **not** run `npx netlify`, which
+  pulls the unrelated `netlify` JS API-client package.
+- `--prod` publishes to the live site; without it you get a draft preview URL
+  and production stays unchanged.
+- Prefer this `--dir=dist` upload over Netlify's "build from git" paths: with
+  builds stopped, the dashboard "Trigger deploy" and build hooks are disabled,
+  and the Netlify MCP `deploy-site` (zip-and-build) path returns `400` for this
+  project.
+- To install the CLI globally instead: `npm install -g netlify-cli`, then use
+  `netlify deploy --prod --dir=dist --site …` directly.
+
 ## Routing
 
 The application supports URL-based routing, allowing you to:

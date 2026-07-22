@@ -490,6 +490,16 @@ def review_person_data(
         with open(events_path, "w", encoding="utf-8") as f:
             json.dump(updated_events, f, indent=2, ensure_ascii=False)
         print(f"  * Updated {events_path.name}")
+        try:
+            from sync_meta_story_events import sync_meta_story_events
+
+            sync_meta_story_events(
+                person_id,
+                old_person_data=person_data["events"],
+                new_person_data=updated_events,
+            )
+        except Exception as error:
+            print(f"  ! Could not sync meta-story events: {error}")
 
     if aspect in ["all", "network"] and updated_network:
         network_path = person_dir / "ego_network.json"

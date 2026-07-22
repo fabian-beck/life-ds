@@ -165,6 +165,218 @@ Social connections with rich relationship metadata:
 - `romantic/{type}` (e.g., `romantic/fiancé`)
 - `adversarial/{type}` (e.g., `adversarial/legal-opponent`)
 
+### Meta Story Social Network
+
+Each meta story JSON carries a `social_network` block, rendered as a d3-force
+graph in `MetaStoryView.svelte` (component: `MetaStoryNetwork.svelte`, lazily
+imported so `d3-force` stays out of the entry bundle). It follows the timeline
+section and visualizes how the story's people connected:
+
+```json
+"social_network": {
+  "nodes": [
+    { "id": "alan_turing", "name": "Alan Turing", "type": "main",
+      "portrait": "/portraits/alan_turing_thumbnail.webp",
+      "roles": ["mathematician", "computer scientist"] },
+    { "id": "sec:max_newman", "name": "Max Newman", "type": "secondary",
+      "portrait": null, "roles": [] }
+  ],
+  "links": [
+    { "source": "alan_turing", "target": "john_von_neumann",
+      "relationship_type": "academic/colleague",
+      "relationship_description": "…", "strength": "moderate", "kind": "main",
+      "endpoints": {
+        "alan_turing": { "relationship_type": "…", "relationship_description": "…", "strength": "…" },
+        "john_von_neumann": { "relationship_type": "…", "relationship_description": "…", "strength": "…" }
+      } }
+  ]
+}
+```
+
+Each link's `endpoints` map holds **each person's own ego-network view of the
+other** (a bridge link has only the main person's entry). Top-level
+`relationship_type`/`strength` (the richest direction) drive stroke width and
+the tie explanations shown in the narration cards. A weak
+`forceX` pulls each node toward an x derived from its `birth_year`, so the graph
+reads left→right chronologically; secondary nodes (no birth year) sit at the
+mean x of the main people they bridge. The final layout is **fully static** —
+it is computed **in the background** by advancing the simulation to full
+convergence in per-frame batches (via `requestAnimationFrame`, so the main
+thread never blocks and the layout isn't rushed) behind a "Building the
+network…" placeholder, then revealed once settled (~0.5s); nodes are not
+draggable, so the graph never moves after that.
+
+The network is presented as a **scrollytelling section**: the graph pins
+(`position: sticky`, below the app's sticky header) while blurred,
+slightly-transparent narration cards scroll up over it. The section's opening
+text (under the "Connections" heading, rendered by `MetaStoryView.svelte`) is
+the AI-written `social_network.narration.intro` paragraph (falling back to the
+static `meta_story.network_subtitle` label only when a story has no narration);
+there is no separate intro card and no legend. Each scroll card highlights one
+**cluster ("circle")** of the network — its members stay lit while everything
+else darkens (kept opaque so links never shine through) — under an AI-written
+**headline** (`title`) and a short story text in which each circle member's name
+is emphasized in place (the same `.person-mention` treatment used in the story
+slides: main people glow in their own story color, bridging people get a neutral
+emphasis; the names are not links). Each card maps 1:1 to a cluster (step index
+`i` ⇒ `clusters[i]`). Clusters are derived client-side in
+`src/utils/networkClusters.js` by deterministic greedy-modularity community
+detection (tie strength weighted, main↔main links boosted ×3 so e.g. spouses
+sharing a court are not split), ordered roughly by the mean birth year of
+their main members. Unconnected nodes simply don't appear in any card. The
+active card is tracked with an `IntersectionObserver` whose callback recomputes
+the active step from card geometry (so jump-scrolls can't leave a stale
+highlight). Hovering/tapping a node still transiently highlights that node's
+ties (overriding the cluster highlight; there is no details panel anymore),
+and the graph area uses `touch-action: pan-y` so vertical page scrolling stays
+smooth on touch. The component takes a `currentLanguage` prop (used to localize
+`relationship_type` and the fallback name list).
+
+**Narration texts** live in the data as `social_network.narration`:
+
+```json
+"narration": {
+  "intro": "2-3 sentence story-specific paragraph shown as the section's opening text",
+  "circles": [
+    { "key": "charles_babbage+ada_lovelace+konrad_zuse",
+      "title": "The Engine Foretold",
+      "text": "2-4 sentence story text…" }
+  ]
+}
+```
+
+A circle's `key` is its cluster key — the cluster's main person ids in cluster
+order joined with `+` — computed identically by `derive_clusters()` in
+`scripts/meta_story_network.py` and `computeClusters()` in the UI, which
+matches narration to clusters by that key. Each circle's `title` is a short
+evocative headline (not a list of names), shown as the card's heading; when a
+circle has no `title` (older data) the card falls back to a joined list of the
+members' names. Narration is written by AI as **Phase 6** of
+`generate_meta_story.py` (non-fatal on failure) and then rewritten in the
+story's unified voice by the Phase 7 composer (see "Meta Story Composition"
+below); when a cluster has no matching
+`text` (e.g. the network changed and narration wasn't regenerated), the card
+falls back to listing the cluster's ties. Unlike the rest of `social_network`,
+narration texts (both `title` and `text`) ARE part of the translation payload
+(`network_narration` in `extract_meta_story_translatables`), so they are
+translated and fingerprinted like other meta story prose.
+
+- **Main nodes** (`type: "main"`) are the meta story's own people, drawn with
+  portraits ringed in each person's `person_styles.json` primary color. A
+  **main link** joins two main people when one appears in the other's
+  `ego_network.json`.
+- **Secondary nodes** (`type: "secondary"`, id prefixed `sec:`) are bridging
+  people — not in the story, but present in the ego networks of **two or more**
+  main people. They are drawn clearly smaller and capped at
+  `MAX_SECONDARY_NODES` (14) so the graph stays readable.
+- Graph derivation is **deterministic, no AI** (`scripts/meta_story_network.py`),
+  run as Phase 5 of `generate_meta_story.py`. Nodes/links are **not** part of
+  the translation payload, so the same graph is copied verbatim into translated
+  files: node labels are person names (kept in the original language) and
+  `relationship_type` is localized by the UI; `relationship_description` (used
+  by the tie-list fallback and link tooltips) falls back to English. Only the
+  `narration` texts are translated (see above).
+- **Phase 5b — AI network review** (`scripts/meta_story_network_review.py`, one
+  AI call, runs after derivation and **before** clustering/narration; non-fatal,
+  opt out with `--skip-network-review`). The ego networks were each generated
+  per person without seeing the meta story's people as a group, so the derived
+  union misses direct ties, over-states vague ones, or carries stale wording.
+  Given the derived graph plus **focused Wikipedia excerpts** for the main people
+  (each article's lead plus the sentences that mention another main person — kept
+  small so the prompt stays affordable), the model may **add** links between
+  existing nodes, **modify** a link's type/description/strength, and **delete**
+  rather indirect ties (e.g. a vague "influence" with no documented contact). How
+  aggressively it enriches vs. prunes is scaled by the **density of the
+  main↔main subgraph**: a sparse graph invites generous, well-supported additions
+  and keeps documented influence (only truly unsupported ties are cut); a dense
+  graph invites strict pruning of indirect ties. Application is deterministic and
+  defensive — node ids are validated, unordered pairs matched regardless of
+  orientation, self-loops skipped, and secondary nodes that no longer bridge ≥2
+  main people are pruned — so a bad response can only edit links between existing
+  nodes, never invent people. Added/modified links carry an `origin`
+  (`review_added` / `reviewed`) marker; like the rest of the graph they are not
+  translated (copied verbatim into translated files).
+- Adding/removing people or regenerating ego networks changes the derived
+  network. Rebuild every meta story (including translated copies) with
+  `python scripts/backfill_meta_story_networks.py` (no API key needed), then
+  `npx prettier --write "data/meta_stories/**/*.json"`. The backfill carries
+  each file's existing narration over, dropping circles whose cluster key no
+  longer exists — it warns when that happens, and the dropped circles need
+  re-narration (Phase 6) or hand-written texts. **Note:** the backfill is a pure
+  re-derivation, so it discards Phase 5b review edits (added/modified/deleted
+  ties) just as it can orphan narration — re-run the full pipeline (or Phase
+  5b + 6) when you need the reviewed graph back.
+
+### Meta Story Composition (Phase 7 — Story Composer)
+
+Every text in a meta story is originally written bottom-up by a phase that only
+sees its own slice (description/conclusion before events exist, theme
+connections per batch, network narration from the graph alone). **Phase 7**
+(`scripts/compose_meta_story.py`, run automatically at the end of
+`generate_meta_story.py`, opt out with `--skip-compose`) is a story composer
+agent that reads the *assembled* story top-down and writes one coherent
+narrative in two AI calls:
+
+1. **Curation** — decides a *throughline* (the arc that anchors all prose) and,
+   exceptionally, which clearly disconnected people to drop. Exclusions are
+   applied deterministically with hard guardrails (at most ~25% of the cast,
+   never below 3 people, unknown ids ignored) and cascade through
+   `person_ids`, subtopics (emptied subtopics are dropped), chapter
+   `person_events`, and the social network. The network is **pruned, not
+   re-derived**, so Phase 5b review edits on surviving ties are kept;
+   secondary nodes that no longer bridge ≥2 main people are removed.
+2. **Composition** — rewrites all display prose in one voice: title, tagline,
+   a top-level **`opening`** (a cold-open scene anchored in one specific
+   event or person — rendered with a drop cap between the date range and the
+   description, optionally with an image floated beside it), the description,
+   story-specific **`section_headings`** (`{timeline, network, conclusion}`,
+   replacing the generic "Timeline"/"Connections"/"Legacy" labels — the UI
+   falls back to the localized labels when absent), a top-level
+   **`timeline_intro`** (paragraph shown under the timeline heading), chapter
+   headlines (date range re-appended automatically) plus a per-chapter
+   **`lead_in`** (1-2 sentences shown inside the floating chapter header
+   while scrolling; hidden in the landscape-mobile compact header), subtopic
+   titles/descriptions, *sparse* refinements of event `theme_connection`s,
+   the network narration (intro + circles, replacing the Phase 6 baseline in
+   the story's unified voice), the conclusion, and optional
+   **`section_images`** (`{timeline?, network?, conclusion?}`).
+
+**Images** come exclusively from the people's own story slides: the composer
+is shown a candidate list built from the story's `person_events` (each event's
+`images` from the person's `life_events.json`) and may only *select by key*
+(`person_id:event_index:image_index`, at most 4 per story, no reuse). The
+url/caption/source are copied deterministically, so a hallucinated URL can
+never enter the data. Each stored image keeps its provenance
+(`person_id`/`event_index`/`image_index`); `MetaStoryFigure.svelte` renders it
+with caption and source link.
+
+Application is structural and defensive: chapters/subtopics/circles are
+matched by id/key, unknown entries are ignored with warnings, missing entries
+keep their existing texts, and dates/IDs/coordinates/graph data are never
+model-editable. Provenance (model, throughline, exclusions with reasons) is
+stamped into a top-level `composition` block. The whole phase is non-fatal —
+on any failure the bottom-up texts are kept unchanged.
+
+`timeline_intro`, `lead_in`, `opening`, `section_headings`, and the image
+captions are part of the translation payload, but only when present, so
+uncomposed stories keep their old fingerprints (and their translations stay
+"current"). Image captions prefer the caption from the person's *translated*
+life events (matched by provenance, like event titles), falling back to the
+model-translated payload; URLs and sources are never touched. Composing a
+story changes its English prose, so its translations go stale by fingerprint;
+the standalone CLI re-translates right away (default `de`, `--skip-translate`
+to opt out).
+
+Recompose existing stories standalone (updates the registry entry and
+translations too):
+
+```bash
+python scripts/compose_meta_story.py computing_pioneers --verbose
+python scripts/compose_meta_story.py --all
+python scripts/compose_meta_story.py computing_pioneers --dry-run       # preview only
+python scripts/compose_meta_story.py computing_pioneers --no-exclusions # text-only
+```
+
 ## Project Structure
 
 ```
@@ -177,6 +389,7 @@ life-ds/
 │       ├── StoryView.svelte  # Main story viewer (timeline/map)
 │       ├── Timeline.svelte   # Event timeline component
 │       ├── NetworkModal.svelte # Social network visualization
+│       ├── MetaStoryNetwork.svelte # d3-force network for meta stories
 │       ├── PersonChip.svelte # Person card component
 │       └── ImageViewer.svelte # Lightbox for event images
 ├── data/
@@ -196,8 +409,15 @@ life-ds/
 │   ├── generate_all_portraits.py    # Batch portrait generation
 │   ├── icon_categories.py           # MDI icon mappings + icon normalization
 │   ├── fix_event_icons.py           # Repair invalid event_type_icon values
-│   ├── translate_person.py          # Translate single person
-│   ├── translate_all_persons.py     # Batch translate all persons
+│   ├── translate_person.py          # Translation core + translate single person
+│   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
+│   ├── translate_meta_story.py      # Translate meta stories
+│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration, 7 composer)
+│   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
+│   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
+│   ├── compose_meta_story.py        # Phase 7: story composer — top-down narrative composition
+│   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
+│   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
 │   ├── clear_caches.py              # Clear old cached data
 │   ├── remove_person.py             # Delete person
@@ -469,67 +689,97 @@ python scripts/generate_person.py "Albert Einstein" --skip-db
 
 ### Overview
 
-Person data can be translated to different languages using AI-powered translation scripts. English ("en") is always the base language, and translations are stored in language-specific subdirectories.
+English ("en") is always the **reference version**. Translations are *derived* from the English data with an extract–translate–merge architecture (see `scripts/translate_person.py`):
+
+1. **Extract**: only translatable text fields are pulled from the English document into a compact payload.
+2. **Translate**: the payload (never the whole document) goes to the model via structured outputs, so dates, coordinates, URLs, IDs, icons, `event_index` references, and structure can never drift.
+3. **Merge**: the translated payload is overlaid onto a deep copy of the English document. List lengths are validated, so a translated file is guaranteed to have the same events, chapters, images, and connections — in the same order — as the English source.
+
+Every translated file carries a `translation` provenance block with a **fingerprint of the English source text** it was derived from. When the English text changes, the fingerprint no longer matches and the translation is reported (and re-translated) as **stale**. Person names are localized via a per-person **name glossary** applied identically across life events, ego network, and registry, because UI cross-references match on exact names. `relationship_type` values stay untouched — the UI localizes them from locale files.
 
 ### Directory Structure for Translations
 
-**Before Translation**:
+**Person data (e.g., German)**:
 ```
 data/people/{person_id}/
-├── life_events.json        # English (base)
-├── ego_network.json        # English (base)
-└── _cache/
-```
-
-**After Translation (e.g., German)**:
-```
-data/people/{person_id}/
-├── life_events.json        # English (base)
-├── ego_network.json        # English (base)
-├── de/                     # German translations
+├── life_events.json        # English (reference)
+├── ego_network.json        # English (reference)
+├── de/                     # German, derived from English
 │   ├── life_events.json
 │   └── ego_network.json
 └── _cache/
 ```
 
-**Language-Specific Registries**:
-- `data/persons.json` - English (base)
-- `data/persons_de.json` - German translations
-- `data/persons_fr.json` - French translations
-- etc.
+**Meta stories**:
+- `data/meta_stories/{id}.json` - English detail (reference)
+- `data/meta_stories/de/{id}.json` - German detail
+- `data/meta_stories.json` / `data/meta_stories_de.json` - registries
 
-### Translation Scripts (require `OPENAI_API_KEY`)
+**Language-Specific Registries**:
+- `data/persons.json` - English (reference)
+- `data/persons_de.json` - German (all persons, same ids/order/fields; entries carry a `translation` block)
+
+### Translation Scripts (require `OPENAI_API_KEY`, except `--check`)
+
+**Check parity (no API key needed)**:
+
+```bash
+python scripts/translate_all_persons.py --target-lang de --check
+```
+
+Prints per-person and per-meta-story status (✓ current, ↻ stale, ✗ missing) and exits non-zero if anything is stale or missing.
 
 **Translate a single person**:
 
 ```bash
 python scripts/translate_person.py "Alan Turing" --target-lang de
-python scripts/translate_person.py "ada_lovelace" --target-lang de
 ```
 
-**Translate all persons**:
+**Translate everything (persons + meta stories)**:
 
 ```bash
-python scripts/translate_all_persons.py --target-lang de
-python scripts/translate_all_persons.py --target-lang de --force  # Re-translate existing
+python scripts/translate_all_persons.py --target-lang de          # only missing/stale
+python scripts/translate_all_persons.py --target-lang de --force  # re-translate all
 ```
+
+**Translate meta stories only**:
+
+```bash
+python scripts/translate_meta_story.py computing_pioneers --target-lang de
+python scripts/translate_meta_story.py --all --target-lang de
+```
+
+Meta story `event_title`s are copied verbatim from the person's translated life events (matched by `event_index`) whenever that translation exists, so meta story chapters and story slides always show identical titles.
+
+**Migrate legacy translation files** (deterministic, no API):
+
+```bash
+python scripts/migrate_translations.py --lang de [--dry-run]
+```
+
+Rebases old-schema translated files onto the current English structure, carries over matched translated text, and flags them as stale for retranslation.
 
 **CLI Options**:
 
 `translate_person.py`:
 - `person_name_or_id` (positional): Person name or ID
 - `--target-lang` (required): ISO language code (e.g., 'de', 'fr', 'es')
-- `--force`: Overwrite existing translation
+- `--force`: Re-translate even if the translation is current
 - `--model`: Override default OpenAI model
 - `--verbose`: Enable detailed logging
 
 `translate_all_persons.py`:
 - `--target-lang` (required): ISO language code
-- `--force`: Re-translate even if exists
+- `--check`: Report status only (no API calls, no changes)
+- `--force`: Re-translate even current translations
 - `--model`: Override default OpenAI model
 - `--persons`: Comma-separated list to translate only specific persons
-- `--skip-registry`: Skip updating persons_{lang}.json
+- `--skip-meta`: Skip meta stories
 - `--verbose`: Enable verbose output
+
+### German Is Generated Alongside English
+
+`generate_person.py` and `generate_meta_story.py` automatically translate to German as their final step (after review, so translations reflect the reviewed English text). Control this with `--translate-langs de,fr,...` or `--skip-translate`. Translation failures are non-fatal — the English reference stays complete and `--check` reports the gap. If you edit or re-review English data outside the pipeline, run `translate_all_persons.py --target-lang de` afterwards; fingerprint-based staleness detection ensures only affected documents are re-translated.
 
 ### Translation Rules
 
@@ -541,14 +791,17 @@ python scripts/translate_all_persons.py --target-lang de --force  # Re-translate
 - Relationship descriptions
 - Social network notes and summaries
 
-**What is preserved**:
+**What is preserved** (guaranteed by the merge — the model never sees these fields):
 - All dates (dates, timestamps)
-- All coordinates (location_coordinates, centroid, bbox)
-- All URLs (sources, wikipedia, images)
-- All IDs (person_id, chapter IDs)
-- Relationship types (e.g., `professional/mentor`)
+- All coordinates (locations, centroid, bbox)
+- All URLs (sources, wikipedia, images, annotation wikipedia_urls)
+- All IDs (person_id, chapter IDs, annotation term keys, event_index)
+- `event_type_icon`, `event_class`, `involved_people` list structure
+- Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files
 - Strength values (`weak`, `moderate`, `strong`)
 - Technical classifications
+
+**Annotation markers**: descriptions may contain `[[term|display]]` markers. The term (before the `|`) is an ID and stays in English; only the display text and the annotation's `explanation` are translated.
 
 **Proper name handling**:
 - Names are kept in original form by default
@@ -579,11 +832,11 @@ Common language codes:
 
 ### Translation Workflow
 
-1. Scripts use OpenAI API with structured outputs (Pydantic models)
-2. Each file type (life_events.json, ego_network.json, registry entry) uses specialized translation prompts
-3. Translated files maintain exact JSON structure
-4. Non-text fields are preserved exactly
-5. Language-specific registry (`persons_{lang}.json`) is created/updated automatically
+1. A name glossary is built once per person (single AI call) and applied deterministically everywhere a name appears
+2. Each document's translatable payload is translated with structured outputs (Pydantic models)
+3. The payload is merged onto a deep copy of the English document; misaligned outputs (wrong list lengths) are rejected
+4. A `translation` block (`source_lang`, `target_lang`, `source_fingerprint`, `translated_on`, `translator`) is stamped into the file
+5. Language-specific registries (`persons_{lang}.json`, `meta_stories_{lang}.json`) are created/updated automatically, kept in English registry order
 
 ### Language Switching in the Application
 
@@ -647,7 +900,11 @@ Features:
    }
    ```
 
-4. **Dynamic registry loading**: Loads `data/persons_{lang}.json` based on selected language
+4. **Registry merging**: `data/persons_{lang}.json` entries are merged **per person over the English registry**, so the person list is identical in every language and untranslated people fall back to English text individually (never a shorter list).
+
+5. **Language-aware meta stories**: the meta story registry (`meta_stories_{lang}.json`) is merged over the English one the same way; detail files load from `data/meta_stories/{lang}/{id}.json` with English fallback, and reload on language switch.
+
+6. **Basemap labels**: the landing map renders place labels in the current UI language and swaps label layers in place on switch.
 
 **All Components** have been updated with translation calls:
 - [Landing.svelte](src/components/Landing.svelte): Search, filters, AI disclaimer modal
@@ -667,10 +924,12 @@ Features:
    - Add option to dropdown in [App.svelte:381-384](src/App.svelte#L381-L384)
 
 3. **Update glob patterns** (if needed):
-   - Add `../data/people/*/{lang}/life_events.json` to glob in [App.svelte:50-56](src/App.svelte#L50-L56)
+   - Add `../data/people/*/{lang}/life_events.json` (and the matching `ego_network.json` pattern) to the globs in App.svelte and LandingMap.svelte
+   - Add `../data/meta_stories/{lang}/*.json` to the meta story glob in App.svelte
 
-4. **Translate person data**:
+4. **Translate person data and meta stories**:
    - Run `python scripts/translate_all_persons.py --target-lang {lang}`
+   - Verify with `python scripts/translate_all_persons.py --target-lang {lang} --check`
 
 #### Translation File Format
 
@@ -716,6 +975,25 @@ npm run preview      # Preview production build
 ```
 
 **Note**: The dev server is always running in this environment. No need to start it manually.
+
+### Deployment
+
+Hosted on **Netlify**, deployed **on demand only** — pushing/merging to `main`
+does not publish. Auto-builds are stopped in the Netlify dashboard, and
+`netlify.toml`'s `ignore = "exit 0"` skips git-triggered builds. Publish by
+uploading the pre-built `dist/` with the CLI (not Netlify's build-from-git,
+which is disabled; the Netlify MCP `deploy-site`/zip-and-build path returns
+`400` for this project):
+
+```powershell
+npx netlify-cli login   # once per machine (browser auth)
+npm run build
+npx netlify-cli deploy --prod --dir=dist --site 12d3d478-2a11-4020-b56c-4580fa57e108
+```
+
+Use the `netlify-cli` package (its bin is `netlify`), **not** `npx netlify`
+(that is the unrelated `netlify` API-client package). See README "Deployment"
+for the full rationale.
 
 ### Adding a New Person
 

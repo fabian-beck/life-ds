@@ -1,0 +1,482 @@
+{
+  "dataset": "wikipedia_ego_network",
+  "created_on": "2026-03-03",
+  "ego": {
+    "name": "Edward Bernays",
+    "birth_year": 1891,
+    "death_year": 1995,
+    "primary_roles": [
+      "Publizist",
+      "Schriftsteller",
+      "Berater"
+    ],
+    "summary": "Edward Bernays war ein in Österreich geborener amerikanischer Pionier der Public Relations und Propaganda, bekannt für die Entwicklung einflussreicher PR-Kampagnen und für seine Theorien der Massenbeeinflussung in Büchern wie Kristallisierung der öffentlichen Meinung (1923) und Propaganda (1928).",
+    "wikipedia": "https://en.wikipedia.org/wiki/Edward_Bernays"
+  },
+  "connections": [
+    {
+      "person_name": "Anna Freud",
+      "relationship_type": "family/mother",
+      "relationship_description": "Bernays’ Mutter, Anna Freud Bernays (1858–1955), war Sigmund Freuds Schwester – wodurch Bernays von Geburt an mit der Familie Freud verbunden war.",
+      "start_year": 1891,
+      "end_year": 1955,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Wien und New York City",
+        "Einwanderung in die Vereinigten Staaten"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Im Artikel als Anna (1858–1955), Schwester von Sigmund Freud, genannt."
+    },
+    {
+      "person_name": "Eli Bernays",
+      "relationship_type": "family/father",
+      "relationship_description": "Bernays’ Vater (1860–1921), ein Getreideexporteur mit Verbindungen zur Manhattan Produce Exchange, der die Familie nach New York City brachte.",
+      "start_year": 1891,
+      "end_year": 1921,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Umzug der Familie nach New York City",
+        "früher beruflicher Kontext an der Warenbörse/im Getreidehandel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Im Artikel als Eli (1860–1921) bezeichnet."
+    },
+    {
+      "person_name": "Martha Bernays",
+      "relationship_type": "family/aunt-by-marriage",
+      "relationship_description": "Ehefrau von Sigmund Freud; Bernays’ familiäre Beziehung verband ihn über beide Eltern mit Freuds Haushalt.",
+      "start_year": 1891,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "weitere familiäre Verbindungen zwischen Freud und Bernays"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Bernays’ Vater wird als Bruder von Freuds Ehefrau Martha Bernays beschrieben."
+    },
+    {
+      "person_name": "Sigmund Freud",
+      "relationship_type": "family/uncle",
+      "relationship_description": "Bernays’ „Doppelonkel“ (Bruder seiner Mutter und Onkel durch Heirat); Bernays half, Freuds Werk in den USA zu veröffentlichen, und griff in seiner PR-Theorie auf Freuds Ideen zurück.",
+      "start_year": 1891,
+      "end_year": 1939,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "veranlasste die US-Veröffentlichung von Einführungsvorlesungen zur Psychoanalyse (1920)",
+        "Tantiemenzahlungen und Gespräche über Öffentlichkeitsarbeit",
+        "intellektueller Einfluss auf Bernays’ PR-Theorie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://de.wikipedia.org/wiki/Sigmund_Freud"
+      ],
+      "notes": "Freud lehnte Bernays’ vorgeschlagene Werbereise mit Vorträgen und den Plan für eine Zeitungskolumne ab."
+    },
+    {
+      "person_name": "Fred Robinson",
+      "relationship_type": "professional/early-collaborator",
+      "relationship_description": "Schulfreund und früher Mitarbeiter; gab gemeinsam die Medical Review of Reviews heraus und arbeitete mit Bernays an der Öffentlichkeitskampagne bzw. Sexualaufklärungskampagne für Damaged Goods.",
+      "start_year": 1912,
+      "end_year": 1913,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Herausgabe von Gesundheitszeitschriften",
+        "Öffentlichkeitskampagne für Damaged Goods",
+        "verteilte Materialien an Ärzte und gewann Befürworter"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Damaged_Goods_(play)"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Richard Bennett",
+      "relationship_type": "professional/client-or-talent",
+      "relationship_description": "Hauptdarsteller in Damaged Goods; Bernays und Robinson schrieben an Bennett und boten ihre Unterstützung an, um das Stück als Sexualaufklärung zu bewerben.",
+      "start_year": 1912,
+      "end_year": 1913,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Öffentlichkeitsarbeit und Legitimitätsgewinn für Damaged Goods"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Damaged_Goods_(play)"
+      ],
+      "notes": "Die Beziehung ist durch Korrespondenz belegt, die in der Darstellung der Damaged-Goods-Kampagne zitiert wird."
+    },
+    {
+      "person_name": "John D. Rockefeller Jr.",
+      "relationship_type": "professional/endorser",
+      "relationship_description": "Angesehener Name, den Bernays für das Unterstützungskomitee von Damaged Goods gewann und der der Kampagne Legitimität verlieh.",
+      "start_year": 1912,
+      "end_year": 1913,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Unterstützung/Assoziierung über das Komitee des soziologischen Fonds zur Förderung von Damaged Goods"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Als Beispiel einer „Elitefigur“ angeführt, deren Unterstützung eingeholt wurde."
+    },
+    {
+      "person_name": "Franklin D. Roosevelt",
+      "relationship_type": "professional/endorser",
+      "relationship_description": "Einer der prominenten Namen, deren Unterstützung Bernays für das Damaged-Goods-Komitee einholte und die dem Vorhaben öffentliche Legitimität verliehen.",
+      "start_year": 1912,
+      "end_year": 1913,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "öffentliche Assoziierung/Unterstützung im Zusammenhang mit der Damaged-Goods-Kampagne"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Franklin_D._Roosevelt"
+      ],
+      "notes": "Im Bernays-Artikel als Elitefigur aufgeführt, deren Unterstützung eingeholt wurde."
+    },
+    {
+      "person_name": "Eleanor Roosevelt",
+      "relationship_type": "professional/endorser",
+      "relationship_description": "Einer der prominenten Namen, deren Unterstützung Bernays für das Damaged-Goods-Komitee einholte und die der Kampagne gesellschaftliche Legitimität verliehen.",
+      "start_year": 1912,
+      "end_year": 1913,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "öffentliche Assoziierung/Unterstützung im Zusammenhang mit der Damaged-Goods-Kampagne"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Neben Franklin D. Roosevelt als von Bernays angeworbener Unterstützer aufgeführt."
+    },
+    {
+      "person_name": "George Creel",
+      "relationship_type": "political/superior",
+      "relationship_description": "Leiter des Committee on Public Information (CPI), das Bernays für Propagandaarbeit während des Krieges anstellte und ihn später zur Öffentlichkeitsarbeitsgruppe der Pariser Friedenskonferenz entsandte.",
+      "start_year": 1917,
+      "end_year": 1919,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Botschaften des CPI-Büros für lateinamerikanische Angelegenheiten",
+        "Öffentlichkeitsarbeit im Zusammenhang mit der Pariser Friedenskonferenz"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/George_Creel"
+      ],
+      "notes": "Bernays beschrieb die Arbeit für das CPI später als prägende Lektion für die Beeinflussung in Friedenszeiten."
+    },
+    {
+      "person_name": "F. E. Ackerman",
+      "relationship_type": "political/colleague",
+      "relationship_description": "Arbeitete mit Bernays im CPI-Büro für lateinamerikanische Angelegenheiten in New York zusammen und konzentrierte sich darauf, im Inland und Ausland Unterstützung für den Krieg aufzubauen.",
+      "start_year": 1917,
+      "end_year": 1918,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Kriegsbotschaften und Aufbau von Unterstützung mit Bezug zu Lateinamerika"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Im Bernays-Artikel als wichtiger Mitarbeiter des CPI genannt."
+    },
+    {
+      "person_name": "Woodrow Wilson",
+      "relationship_type": "political/government-leader",
+      "relationship_description": "US-Präsident, der das CPI schuf bzw. beaufsichtigte; Bernays’ Propagandaarbeit während des Krieges fand unter Wilsons Regierung statt und erstreckte sich auf den Kontext der Pariser Friedenskonferenz.",
+      "start_year": 1917,
+      "end_year": 1919,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Apparat für öffentliche Information/Propaganda im Ersten Weltkrieg",
+        "Öffentlichkeitsarbeit im Zusammenhang mit der Pariser Friedenskonferenz"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Woodrow_Wilson"
+      ],
+      "notes": "Wilson wird als mit dem CPI und dem umfassenderen Kommunikationsumfeld während des Krieges verbunden angeführt."
+    },
+    {
+      "person_name": "Doris Fleischman",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Bernays’ Ehefrau und langjährige Geschäftspartnerin, die zentral an den Texten und der Organisation hinter seiner Public-Relations-Arbeit beteiligt war.",
+      "start_year": 1919,
+      "end_year": 1980,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Führung der PR-Beratungspraxis",
+        "Verfassen von Memos und Reden als Ghostwriterin",
+        "Newsletter/Publikationen zur Unterstützung der PR-Arbeit",
+        "öffentliche Position zu ihrem beibehaltenen Mädchennamen (Kontext der Lucy Stone League)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Doris_Fleischman"
+      ],
+      "notes": "1922 verheiratet; die berufliche Zusammenarbeit dauerte jahrzehntelang an."
+    },
+    {
+      "person_name": "Ivy Lee",
+      "relationship_type": "professional/rival",
+      "relationship_description": "Ein führender früher PR-Pionier, der als Bernays’ wichtigster Konkurrent in der aufkommenden Public-Relations-Branche beschrieben wird.",
+      "start_year": 1919,
+      "end_year": 1934,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "parallele Entwicklung moderner PR-Methoden",
+        "Wettbewerb um berufliche Anerkennung im Bereich Public Relations"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ivy_Lee",
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Der Artikel über Ivy Lee bezeichnet ihn ausdrücklich als Bernays’ wichtigsten Konkurrenten."
+    },
+    {
+      "person_name": "Walter Lippmann",
+      "relationship_type": "intellectual/cited-influence",
+      "relationship_description": "Öffentlicher Intellektueller und Autor über die öffentliche Meinung; Bernays führte Lippmann unter den wichtigsten Autoren an, die seine Theorien der Massenbeeinflussung prägten.",
+      "start_year": 1922,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "theoretischer Einfluss auf Bernays’ Schriften über öffentliche Meinung und Propaganda"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Walter_Lippmann"
+      ],
+      "notes": "Die Belege im Bernays-Artikel bestehen in Zitierung/Einfluss und nicht in einer dokumentierten Zusammenarbeit."
+    },
+    {
+      "person_name": "Calvin Coolidge",
+      "relationship_type": "political/client",
+      "relationship_description": "Bernays inszenierte 1924 für Coolidge ein öffentlichkeitswirksames „Pfannkuchenfrühstück“, um dessen Image vor dem Wahlkampf aufzulockern.",
+      "start_year": 1924,
+      "end_year": 1924,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Öffentlichkeitsveranstaltung auf dem Rasen des Weißen Hauses mit Unterhaltungskünstlern",
+        "Imagemanagement für die Wahlpolitik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Calvin_Coolidge"
+      ],
+      "notes": "Die Veranstaltung wurde breit berichtet und als bemerkenswerter Image-Coup dargestellt."
+    },
+    {
+      "person_name": "George Washington Hill",
+      "relationship_type": "professional/client",
+      "relationship_description": "Präsident von American Tobacco, der Bernays engagierte, um die Anziehungskraft von Lucky Strike zu steigern – insbesondere durch die Herausforderung des Tabus, dass Frauen in der Öffentlichkeit rauchen.",
+      "start_year": 1927,
+      "end_year": 1934,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Lucky-Strike-Kampagnen zum Rauchen von Frauen",
+        "Strategie zu Verpackungsfarbe und Mode (Kontext des Green Ball)",
+        "PR-Planung zur Marktexpansion"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/George_Washington_Hill"
+      ],
+      "notes": "Hill wird ausdrücklich als derjenige beschrieben, der Bernays wegen des Tabus des Rauchens von Frauen engagierte."
+    },
+    {
+      "person_name": "Doris Bernays",
+      "relationship_type": "family/child",
+      "relationship_description": "Tochter von Bernays und Fleischman (geboren 1929).",
+      "start_year": 1929,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Doris_Fleischman"
+      ],
+      "notes": "In Fleischmans Biografie als eine von zwei Töchtern genannt."
+    },
+    {
+      "person_name": "Abraham Brill",
+      "relationship_type": "intellectual/psychoanalytic-consultant",
+      "relationship_description": "Psychoanalytiker, den Bernays während der Aktion „Torches of Freedom“ konsultierte; lieferte eine Deutung, die Zigaretten als Symbole weiblicher Emanzipation darstellte.",
+      "start_year": 1929,
+      "end_year": 1929,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "psychoanalytische Rahmung für die Lucky-Strike-Kampagne zum Rauchen von Frauen",
+        "Strategieentwicklung für einen medienwirksamen öffentlichen Coup"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Im Bernays-Artikel als Schüler Freuds beschrieben."
+    },
+    {
+      "person_name": "Anne Bernays",
+      "relationship_type": "family/child",
+      "relationship_description": "Tochter von Bernays und Fleischman (geboren 1930).",
+      "start_year": 1930,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Doris_Fleischman"
+      ],
+      "notes": "In Fleischmans Biografie als eine von zwei Töchtern genannt."
+    },
+    {
+      "person_name": "Herbert Hoover",
+      "relationship_type": "political/client",
+      "relationship_description": "Konsultierte Bernays kurz vor der Präsidentschaftswahl 1932; Bernays beriet ihn zur politischen Strategie und zum Umgang mit der Opposition.",
+      "start_year": 1932,
+      "end_year": 1932,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Beratung zur Wahlkampfstrategie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Als Beispiel dafür angeführt, dass Bernays nationale politische Persönlichkeiten beriet."
+    },
+    {
+      "person_name": "Narcissa Cox Vanderlip",
+      "relationship_type": "social/society-figure",
+      "relationship_description": "Veranstaltete den „Green Ball“ im Waldorf Astoria, den Bernays im Rahmen seines Versuchs nutzte, Grün modisch zu machen und den Widerstand gegen die grüne Lucky-Strike-Verpackung zu verringern.",
+      "start_year": 1934,
+      "end_year": 1934,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gesellschaftliche Green-Ball-Veranstaltung zur Unterstützung eines mit der Marke Lucky Strike verbundenen Modetrends für Farben"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays"
+      ],
+      "notes": "Bernays nutzte gesellschaftliche Veranstaltungen und einflussreiche Gastgeber, um Modenormen zu verändern."
+    },
+    {
+      "person_name": "Sam Zemurray",
+      "relationship_type": "professional/client",
+      "relationship_description": "Führungsfigur bei United Fruit, die Bernays’ Kampagne unterstützte, die US-Meinung über Guatemala während der Árbenz-Ära zu beeinflussen.",
+      "start_year": 1953,
+      "end_year": 1954,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Propagandastrategie gegen Árbenz",
+        "unternehmensstaatliche Überzeugungskampagne im Kontext des Kalten Krieges"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Sam_Zemurray"
+      ],
+      "notes": "Der Artikel über Zemurray besagt ausdrücklich, dass er Bernays’ Propagandakampagne autorisierte."
+    },
+    {
+      "person_name": "Jacobo Árbenz",
+      "relationship_type": "political/adversary-target",
+      "relationship_description": "Guatemaltekischer Präsident, der Anfang der 1950er Jahre indirekt Ziel von Bernays’ mit United Fruit verbundener Kampagne zur Beeinflussung der US-Öffentlichkeit war.",
+      "start_year": 1953,
+      "end_year": 1954,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "propagandistische Rahmung in US-Medien und politischen Diskursen",
+        "politische Einflussoperationen der Ära des Kalten Krieges im Zusammenhang mit Unternehmensinteressen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edward_Bernays",
+        "https://en.wikipedia.org/wiki/Jacobo_%C3%81rbenz"
+      ],
+      "notes": "Die Beziehung ist indirekt (PR-Ansprache statt persönlichem Kontakt)."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Bernays’ engste Beziehungen bestanden zu seinen Eltern (Anna Freud Bernays und Eli Bernays), seinen Freud-Bernays-Verwandten (einschließlich Sigmund Freud und Martha Bernays) sowie seiner langjährigen ehelichen und beruflichen Partnerschaft mit Doris Fleischman. Seine beiden Töchter (Doris und Anne) bilden neben seiner öffentlichen Karriere die Eckpfeiler seines persönlichen Netzwerks."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Bernays’ berufliches Netzwerk reicht von frühen Mitarbeitern (z. B. Fred Robinson) bis zu einflussreichen Unternehmenskunden (insbesondere George Washington Hill von American Tobacco und Sam Zemurray von United Fruit). Es umfasst auch prägende Fachkollegen und Konkurrenten wie Ivy Lee und verortet Bernays damit innerhalb der Entstehung der modernen Public-Relations-Praxis."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Bernays’ politische Verbindungen verliefen über Institutionen und Imagegestaltung: Propagandaarbeit während des Krieges unter dem CPI (mit George Creel) in Woodrow Wilsons Regierung sowie spätere öffentlichkeitswirksame Beratung im Zusammenhang mit Persönlichkeiten wie Calvin Coolidge und Herbert Hoover. Seine Arbeit für United Fruit brachte ihn in die Nähe von Einflusskampagnen des Kalten Krieges, die sich auf Guatemala unter Jacobo Árbenz konzentrierten."
+    },
+    {
+      "relationship_type": "intellectual",
+      "summary": "Bernays’ PR-Ansatz stützte sich unmittelbar auf psychoanalytische Konzepte und Modelle der öffentlichen Meinung, was sich an seiner Beratung durch Abraham Brill und seiner familiär-intellektuellen Verbindung zu Sigmund Freud zeigt. Im Rahmen seiner theoretischen Rechtfertigung der Massenbeeinflussung setzte er sich zudem mit Denkern der öffentlichen Meinung wie Walter Lippmann auseinander und zitierte sie."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "603fcafa48c56eef",
+    "translated_on": "2026-07-19T07:46:06.990043+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

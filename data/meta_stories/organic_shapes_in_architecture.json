@@ -1,73 +1,75 @@
 {
   "dataset": "meta_story",
-  "created_on": "2026-01-10T13:42:09.238435+01:00",
+  "created_on": "2026-07-22T07:02:52.703470+02:00",
   "meta_story": {
     "id": "organic_shapes_in_architecture",
-    "title": "Organic Architecture’s Curved Line",
-    "tagline": "Nature, structure, and flowing space",
-    "description": "Organic shape in architecture is more than a taste for curves—it’s a way of thinking that treats buildings as living systems: grown from site, shaped by human movement, and often modeled on the logic of plants, bones, waves, and shells. Across the late 19th century and into the digital present, designers repeatedly returned to nature not as decoration but as a generator of form, structure, and experience.\n\nIn Europe’s Jugendstil and related modernisms, the “straight line” came to feel like an industrial imposition, while vines, waves, and sinuous surfaces promised a more human, more biological city. Later, architects and engineers pushed this impulse into new materials and structural experiments—shells, membranes, cable nets—where the most efficient geometry often resembles what nature already optimized.\n\nBy the late 20th and early 21st centuries, computation and fabrication widened the palette again, enabling fluid, continuous envelopes and complex spatial choreography at urban scale. The result is a long arc: from handcrafted, nature-derived ornament and geometry to lightweight structural biology and finally to digitally driven form-making that still borrows its credibility from the organic world.",
+    "title": "Architecture in Living Form",
+    "tagline": "When buildings learn from life",
+    "description": "Organic architecture begins with a refusal: the refusal to treat a building as a sealed, static object inherited from historical styles. Around the turn of the twentieth century, Art Nouveau and Jugendstil used sinuous lines, botanical ornament, and richly integrated interiors to make modern architecture feel like a coherent environment rather than an assembly of borrowed forms.\n\nThat impulse steadily moved beyond appearance. Buildings became arguments for a closer relation to landscape and everyday habitation, while vegetation and irregularity challenged standardized construction. Experiments with membranes, cable nets, and gridshells let gravity and tension determine exceptionally light enclosures; later, fluid civic spaces made circulation and bodily movement into architectural form. Living form came to describe not only what architecture resembled, but how it met a site, used material, housed life, and set people in motion.",
     "person_ids": [
       "antoni_gaud",
-      "otto_wagner",
       "charles_rennie_mackintosh",
       "frank_lloyd_wright",
       "frei_otto",
       "friedensreich_hundertwasser",
+      "otto_wagner",
       "zaha_hadid"
     ],
-    "date_range_start": "1890",
+    "date_range_start": "1880",
     "date_range_end": "2016",
-    "lastUpdated": "2026-01-10T13:42:09.238435+01:00"
+    "lastUpdated": "2026-07-22T08:41:17.236249+02:00"
   },
   "generation_metadata": {
     "hints": {
       "hint": "include Jugendstil architects"
     },
-    "model": "gpt-5.2",
-    "generated_at": "2026-01-10T13:42:09.238435+01:00"
+    "model": "gpt-5.6-terra",
+    "generated_at": "2026-07-22T07:02:52.703470+02:00"
   },
   "subtopics": [
     {
-      "id": "jugendstil_natures_line",
-      "title": "Jugendstil’s Nature Line",
-      "description": "Around 1900, architects reintroduced growth-like curves and integrated ornament, treating buildings as total artworks where structure, surface, and craft could feel alive.",
-      "person_ids": ["otto_wagner", "charles_rennie_mackintosh", "antoni_gaud"]
+      "id": "art_nouveau_and_jugendstil",
+      "title": "The Living Line",
+      "description": "Gaudí, Mackintosh, and Wagner used botanical ornament, sinuous line, and integrated design to break from historic imitation. Their work joined buildings, furnishings, surfaces, and public experience into immersive modern environments.",
+      "person_ids": ["antoni_gaud", "charles_rennie_mackintosh", "otto_wagner"]
     },
     {
-      "id": "organic_space_american_turn",
-      "title": "Organic Space, American Turn",
-      "description": "Organic form becomes an ethic of space—rooms, ramps, and landscapes composed as continuous experience rather than boxed enclosure.",
-      "person_ids": ["frank_lloyd_wright"]
+      "id": "architecture_as_living_habitat",
+      "title": "Habitation Takes Root",
+      "description": "Wright and Hundertwasser treated architecture as an extension of landscape, dwelling, and the natural world. In markedly different ways, both resisted standardized buildings detached from living conditions.",
+      "person_ids": ["frank_lloyd_wright", "friedensreich_hundertwasser"]
     },
     {
-      "id": "lightweight_structural_biology",
-      "title": "Lightweight Structural Biology",
-      "description": "Engineers and architects let physics “draw” the building: membranes, cable nets, and minimal surfaces generate shapes that echo bones, webs, and soap films.",
-      "person_ids": ["frei_otto"]
-    },
-    {
-      "id": "postmodern_to_parametric_flows",
-      "title": "From Rebellion to Flow",
-      "description": "Late-20th-century anti-orthogonal manifestos and 21st-century digital practice converge on fluid envelopes, uneven floors, and city-scale choreography.",
-      "person_ids": ["friedensreich_hundertwasser", "zaha_hadid"]
+      "id": "structures_in_motion",
+      "title": "Forces Made Visible",
+      "description": "Otto and Hadid made organic form a matter of architectural method. Otto drew efficient structures from material forces, while Hadid made fluid movement and continuous space buildable at civic scale.",
+      "person_ids": ["frei_otto", "zaha_hadid"]
     }
   ],
   "chapters": [
     {
-      "id": "secession_and_modernisme_seedtime",
-      "title": "Secession & Modernisme Seedtime (1890-1910)",
-      "date_start": "1890",
+      "id": "art_nouveau_breakthroughs",
+      "title": "Line Becomes Environment (1880-1914)",
+      "date_start": "1880",
       "date_start_precision": "year",
-      "date_end": "1910",
+      "date_end": "1914",
       "date_end_precision": "year",
       "person_events": [
+        {
+          "person_id": "otto_wagner",
+          "event_date": "1894",
+          "event_date_precision": "year",
+          "event_title": "Designs Vienna Stadtbahn",
+          "event_index": 10,
+          "theme_connection": "Wagner’s unified Vienna Stadtbahn architecture made Jugendstil modernism part of everyday urban infrastructure. Its stations and associated structures gave Vienna’s new architectural language a major, lasting public expression."
+        },
         {
           "person_id": "otto_wagner",
           "event_date": "1896",
           "event_date_precision": "year",
           "event_title": "Publishes Moderne Architektur",
           "event_index": 11,
-          "theme_connection": "Moderne Architektur is a seminal text of European modernism that reframed architectural form as responsive to modern life and materials; it’s an irreplaceable theoretical milestone in the turn away from historicist rigidity that enabled later nature/flow-oriented modernisms (even if not purely ‘curvilinear’)."
+          "theme_connection": "Moderne Architektur was a landmark theoretical text that articulated Wagner’s modern Viennese architecture and profoundly influenced subsequent designers. It is essential to the narrative of how Art Nouveau-era design was translated into an influential modern architectural program."
         },
         {
           "person_id": "charles_rennie_mackintosh",
@@ -75,7 +77,7 @@
           "event_date_precision": "year",
           "event_title": "Glasgow School of Art rises on Renfrew Street",
           "event_index": 7,
-          "theme_connection": "The Glasgow School of Art is a landmark Gesamtkunstwerk where building, interiors, and crafted detail are unified—an essential Jugendstil-adjacent milestone showing the turn toward living, integrated environments (a key precursor strand to organic space, even if not primarily curvilinear)."
+          "theme_connection": "The Glasgow School of Art is Mackintosh’s defining architectural landmark, integrating structure, light, fittings, furniture, and decorative detail into a unified spatial organism. It established a distinctive northern Art Nouveau language that helped redirect modern architecture beyond historic imitation."
         },
         {
           "person_id": "antoni_gaud",
@@ -83,7 +85,23 @@
           "event_date_precision": "year",
           "event_title": "Developed Park Güell project",
           "event_index": 11,
-          "theme_connection": "Park Güell is a landmark synthesis of landscape, structure, and nature-derived geometry—where architecture is composed as terrain and movement, with flowing forms and inventive construction that became a canonical reference for organic architecture."
+          "theme_connection": "Park Güell is a landmark synthesis of architecture, landscape, craft, and terrain: its viaducts, columns, mosaics, and planted setting make built space seem generated from the hillside. It is indispensable to Gaudí’s expansion of Art Nouveau into an immersive, nature-like environment."
+        },
+        {
+          "person_id": "charles_rennie_mackintosh",
+          "event_date": "1902",
+          "event_date_precision": "year",
+          "event_title": "Hill House and Willow Tearooms peak",
+          "event_index": 11,
+          "theme_connection": "Hill House and the Willow Tearooms are landmark total environments in which architecture, furniture, surface pattern, and atmosphere operate as one designed system. They are essential examples of Mackintosh’s Art Nouveau reinvention of inhabited interior space."
+        },
+        {
+          "person_id": "otto_wagner",
+          "event_date": "1902",
+          "event_date_precision": "year",
+          "event_title": "Completes landmark public works",
+          "event_index": 13,
+          "theme_connection": "The Kirche am Steinhof is a canonical Vienna Secession building, combining a modern structural and hygienic program with an immersive, highly integrated decorative language. It gave Wagner’s version of Art Nouveau a major civic and spatial monument."
         },
         {
           "person_id": "antoni_gaud",
@@ -91,57 +109,64 @@
           "event_date_precision": "year",
           "event_title": "Created landmark urban houses",
           "event_index": 12,
-          "theme_connection": "Casa Batlló and Casa Milà are globally recognized milestones in nature-modeled, curving urban architecture (bone-like structure, wave-like façades, continuous spatial effects), making them essential exemplars of Jugendstil/Modernisme’s ‘nature line’ evolving into structural and spatial organicism."
-        }
-      ]
-    },
-    {
-      "id": "craft_to_continuity",
-      "title": "Craft to Continuity (1911-1935)",
-      "date_start": "1911",
-      "date_start_precision": "year",
-      "date_end": "1935",
-      "date_end_precision": "year",
-      "person_events": [
+          "theme_connection": "Casa Batlló and Casa Milà are major landmarks of Gaudí’s mature organic architecture, using wave-like façades, bone- and organism-like forms, and innovative spatial construction. They made natural form a structural and urban architectural language, not merely ornament."
+        },
         {
           "person_id": "frank_lloyd_wright",
           "event_date": "1911",
           "event_date_precision": "year",
           "event_title": "Builds Taliesin in Wisconsin",
           "event_index": 9,
-          "theme_connection": "Taliesin is a landmark demonstration of Wright’s organic architecture as an ethic of site-grown form and continuous lived space—an enduring built laboratory where building, landscape, and movement are composed as one system."
+          "theme_connection": "Taliesin is Wright’s enduring laboratory for organic architecture: its low, terrain-following composition and integration of dwelling, work, and Wisconsin landscape made architecture appear to arise from its site and shaped his later philosophy."
         }
-      ]
+      ],
+      "historical_context": [],
+      "lead_in": "Modern design challenged inherited styles by making architecture, surfaces, furnishings, and public experience work together. Natural form expanded from ornament into an immersive spatial language."
     },
     {
-      "id": "organic_ideals_in_mass_age",
-      "title": "Organic Ideals in the Mass Age (1936-1959)",
-      "date_start": "1936",
+      "id": "organic_architecture_matures",
+      "title": "Form Meets Force (1915-1959)",
+      "date_start": "1915",
       "date_start_precision": "year",
       "date_end": "1959",
       "date_end_precision": "year",
       "person_events": [
-        {
-          "person_id": "frank_lloyd_wright",
-          "event_date": "1943",
-          "event_date_precision": "year",
-          "event_title": "Receives Guggenheim commission",
-          "event_index": 14,
-          "theme_connection": "The Guggenheim commission leads to one of the 20th century’s landmark curved, continuous-space buildings: a spiraling ramp that makes movement-through-space the generator of form. It is a widely recognized breakthrough in organic spatial choreography and anti-box enclosure at major urban scale."
-        },
         {
           "person_id": "frei_otto",
           "event_date": "1954",
           "event_date_precision": "year",
           "event_title": "Publishes \"Das hängende Dach\" and teaches abroad",
           "event_index": 5,
-          "theme_connection": "Publishing \"Das hängende Dach\" (1954) is a foundational, widely cited study of tensioned surface and cable-net roof forms—letting physics generate efficient, nature-like minimal geometries. It directly advances the lightweight structural biology strand by codifying methods that enabled later membrane/cable-net architecture."
+          "theme_connection": "Otto’s 1954 publication Das hängende Dach was the first comprehensive study of tensioned surface structures. It established a foundational theoretical and technical basis for the extraordinarily light, force-generated membrane roofs that made his architecture appear to grow from natural principles."
         }
-      ]
+      ],
+      "historical_context": [
+        {
+          "id": "spanish_civil_war",
+          "title": "Spanish Civil War",
+          "description": "Revolutionary violence in Barcelona destroyed or damaged much of Gaudí’s workshop, including drawings and Sagrada Família models that later architects needed to reconstruct his intentions.",
+          "date_start": "1936-07-17",
+          "date_start_precision": "day",
+          "date_end": "1939-04-01",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Spanish_Civil_War"
+        },
+        {
+          "id": "world_war_ii",
+          "title": "World War II",
+          "description": "The war conscripted Frei Otto into military service and left him a prisoner of war, where his experience of improvised, material-saving shelters informed his later lightweight-structure research.",
+          "date_start": "1939-09-01",
+          "date_start_precision": "day",
+          "date_end": "1945-09-02",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_II"
+        }
+      ],
+      "lead_in": "Conflict disrupted earlier legacies, while new research turned attention toward economy, tension, and structural behavior. Organic form began to acquire a technical method."
     },
     {
-      "id": "lightness_and_ecological_imagination",
-      "title": "Lightness & Ecological Imagination (1960-1989)",
+      "id": "lightweight_and_ecological_experiments",
+      "title": "Habitat Opens Outward (1960-1989)",
       "date_start": "1960",
       "date_start_precision": "year",
       "date_end": "1989",
@@ -153,7 +178,7 @@
           "event_date_precision": "year",
           "event_title": "German Pavilion at Expo 67, Montreal",
           "event_index": 8,
-          "theme_connection": "Expo 67’s German Pavilion is a widely cited milestone of lightweight, nature-analogous form-finding: cable nets and membranes generate flowing, minimal-surface roofs that made “physics-drawn” architecture a public, influential reality."
+          "theme_connection": "The German Pavilion at Expo 67 made Otto's cable-net and textile membrane approach visible at international scale. Its exceptionally light, flexible roof translated nature-derived structural principles into a major built architectural artifact."
         },
         {
           "person_id": "frei_otto",
@@ -161,7 +186,15 @@
           "event_date_precision": "year",
           "event_title": "Spans Munich Olympic site with tensile roofs",
           "event_index": 9,
-          "theme_connection": "The Munich Olympic tensile roofs are a canonical breakthrough in cable-net/membrane architecture, using hanging-chain and soap-film form-finding to produce sweeping, biomorphic geometry—one of the era’s most influential demonstrations of structural biology becoming architectural form."
+          "theme_connection": "The Munich Olympic roofs are a defining landmark of tensile architecture. Otto's hanging-net and soap-film form-finding produced an unprecedented, landscape-like canopy whose apparent motion and material efficiency made natural forces generators of architectural form."
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1975",
+          "event_date_precision": "year",
+          "event_title": "Launches 'Tree Tenant' actions",
+          "event_index": 11,
+          "theme_connection": "The 'Tree Tenant' action and manifesto directly articulated Hundertwasser's radical proposition that vegetation should literally inhabit architecture. This enduring concept made living habitat and resistance to sealed, standardized buildings central to his architectural ethic."
         },
         {
           "person_id": "friedensreich_hundertwasser",
@@ -169,13 +202,15 @@
           "event_date_precision": "year",
           "event_title": "Architectural turn and Hundertwasserhaus",
           "event_index": 12,
-          "theme_connection": "The Hundertwasserhaus concept and related architectural turn produced a highly visible built manifesto of anti-orthogonal, nature-inflected architecture (uneven floors, vegetated integration, expressive surfaces), helping carry organic/curved-line ideas into late-20th-century urban housing culture."
+          "theme_connection": "Hundertwasserhaus gave Hundertwasser's anti-standardization ideals a lasting, inhabited civic form: irregular surfaces, planted roofs, trees emerging from windows, and individualized dwelling. It is the essential built demonstration of architecture as a living habitat."
         }
-      ]
+      ],
+      "historical_context": [],
+      "lead_in": "Lightweight roofs made forces visible above public gatherings, while planted and irregular dwellings challenged the sealed, standardized building. Nature entered architecture as both structure and inhabitant."
     },
     {
-      "id": "digital_fluidity_global_icons",
-      "title": "Digital Fluidity, Global Icons (1990-2016)",
+      "id": "digital_fluidity",
+      "title": "Movement Builds Monument (1990-2016)",
       "date_start": "1990",
       "date_start_precision": "year",
       "date_end": "2016",
@@ -187,7 +222,7 @@
           "event_date_precision": "year",
           "event_title": "Japanese Pavilion at Expo 2000, Hannover",
           "event_index": 13,
-          "theme_connection": "The Expo 2000 Japanese Pavilion gridshell is a landmark late-career demonstration of Otto’s lightweight, nature-derived form-finding logic—an efficient, flowing shell structure that made “structural biology” legible to a mass public and influenced subsequent grid-/shell experimentation."
+          "theme_connection": "The Japanese Pavilion was a major late demonstration of Otto's force-based, lightweight structural thinking: its experimental gridshell translated principles of flexible natural systems into a large public building with exceptionally minimal material use."
         },
         {
           "person_id": "zaha_hadid",
@@ -195,7 +230,7 @@
           "event_date_precision": "year",
           "event_title": "MAXXI Museum and first Stirling Prize",
           "event_index": 12,
-          "theme_connection": "MAXXI is a signature built manifesto of digitally enabled flow: intertwining ‘ribbon’ galleries and continuous spatial choreography that helped define 21st-century fluid envelope/plan thinking at museum scale—central to the ‘rebellion to flow’ arc."
+          "theme_connection": "MAXXI is a landmark realization of Hadid's mature fluid architecture: intertwining concrete ribbons make circulation, bodily motion, and continuous space the organizing structure of a major civic museum."
         },
         {
           "person_id": "zaha_hadid",
@@ -203,10 +238,236 @@
           "event_date_precision": "year",
           "event_title": "Damehood and London Aquatics Centre",
           "event_index": 13,
-          "theme_connection": "The London Aquatics Centre’s sweeping roof is a widely recognized landmark of parametric-era organic form—using a wave-like, continuous shell to shape movement and spectacle—making the curved-line ethos legible at mega-event, city-scale visibility."
+          "theme_connection": "The London Aquatics Centre gave Hadid's flowing formal language monumental global visibility at the 2012 Olympics. Its wave-like roof made a large public building appear shaped by bodily movement and water, a defining expression of digitally enabled organic form."
+        }
+      ],
+      "historical_context": [],
+      "lead_in": "Force-based experimentation culminated in ever more ambitious public structures, while fluid space became a civic architectural language. Movement itself could organize a museum or an Olympic venue."
+    }
+  ],
+  "conclusion": "For more than a century, organic architecture challenged the notion that buildings must stand apart from nature as rigid, standardized objects. What began as an expressive language of integrated design became a repertoire of site, habitat, structural force, and movement—architecture that could appear less imposed than alive.",
+  "social_network": {
+    "nodes": [
+      {
+        "id": "antoni_gaud",
+        "name": "Antoni Gaudí",
+        "type": "main",
+        "portrait": "/portraits/antoni_gaud_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1852
+      },
+      {
+        "id": "charles_rennie_mackintosh",
+        "name": "Charles Rennie Mackintosh",
+        "type": "main",
+        "portrait": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1868
+      },
+      {
+        "id": "frank_lloyd_wright",
+        "name": "Frank Lloyd Wright",
+        "type": "main",
+        "portrait": "/portraits/frank_lloyd_wright_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1867
+      },
+      {
+        "id": "frei_otto",
+        "name": "Frei Otto",
+        "type": "main",
+        "portrait": "/portraits/frei_otto_thumbnail.webp",
+        "roles": ["architect", "engineer"],
+        "birth_year": 1925
+      },
+      {
+        "id": "friedensreich_hundertwasser",
+        "name": "Friedensreich Hundertwasser",
+        "type": "main",
+        "portrait": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
+        "roles": ["artist", "architect"],
+        "birth_year": 1928
+      },
+      {
+        "id": "otto_wagner",
+        "name": "Otto Wagner",
+        "type": "main",
+        "portrait": "/portraits/otto_wagner_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1841
+      },
+      {
+        "id": "zaha_hadid",
+        "name": "Zaha Hadid",
+        "type": "main",
+        "portrait": "/portraits/zaha_hadid_thumbnail.webp",
+        "roles": ["architect", "designer"],
+        "birth_year": 1950
+      },
+      {
+        "id": "sec:josef_hoffmann",
+        "name": "Josef Hoffmann",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "frank_lloyd_wright",
+        "target": "frei_otto",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "During his American journey, Frei Otto encountered Frank Lloyd Wright and Wright's work, which exposed him to Wright's organic architectural ideas and experimental structures.",
+        "strength": "moderate",
+        "endpoints": {
+          "frank_lloyd_wright": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "During his American journey, Frei Otto encountered Frank Lloyd Wright and Wright's work, which exposed him to Wright's organic architectural ideas and experimental structures.",
+            "strength": "moderate"
+          },
+          "frei_otto": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "During his American journey, Frei Otto encountered Frank Lloyd Wright and Wright's work, which exposed him to Wright's organic architectural ideas and experimental structures.",
+            "strength": "moderate"
+          }
+        },
+        "origin": "reviewed"
+      },
+      {
+        "source": "charles_rennie_mackintosh",
+        "target": "sec:josef_hoffmann",
+        "kind": "secondary",
+        "relationship_type": "artistic/peer",
+        "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+        "strength": "weak",
+        "endpoints": {
+          "charles_rennie_mackintosh": {
+            "relationship_type": "artistic/peer",
+            "relationship_description": "A leading Secession-era designer who praised Mackintosh’s work; their connection is best understood as influence and recognition rather than direct collaboration.",
+            "strength": "weak"
+          }
+        }
+      },
+      {
+        "source": "otto_wagner",
+        "target": "sec:josef_hoffmann",
+        "kind": "secondary",
+        "relationship_type": "academic/student",
+        "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
+        "strength": "moderate",
+        "endpoints": {
+          "otto_wagner": {
+            "relationship_type": "academic/student",
+            "relationship_description": "Studied under Otto Wagner at the Academy of Fine Arts Vienna and later joined Wagner’s firm; also overlapped with Wagner in the Secession and applied-arts institutional circle around 1897.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "antoni_gaud",
+        "target": "frei_otto",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "Frei Otto used forms derived from Antoni Gaudí in the construction of the Munich Olympic Stadium.",
+        "strength": "moderate",
+        "endpoints": {
+          "antoni_gaud": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Frei Otto used forms derived from Antoni Gaudí in the construction of the Munich Olympic Stadium.",
+            "strength": "moderate"
+          },
+          "frei_otto": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Frei Otto used forms derived from Antoni Gaudí in the construction of the Munich Olympic Stadium.",
+            "strength": "moderate"
+          }
+        },
+        "origin": "review_added"
+      },
+      {
+        "source": "antoni_gaud",
+        "target": "friedensreich_hundertwasser",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "Antoni Gaudí's work inspired Friedensreich Hundertwasser's architectural approach.",
+        "strength": "weak",
+        "endpoints": {
+          "antoni_gaud": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Antoni Gaudí's work inspired Friedensreich Hundertwasser's architectural approach.",
+            "strength": "weak"
+          },
+          "friedensreich_hundertwasser": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Antoni Gaudí's work inspired Friedensreich Hundertwasser's architectural approach.",
+            "strength": "weak"
+          }
+        },
+        "origin": "review_added"
+      }
+    ],
+    "narration": {
+      "intro": "Living form traveled through instruction, professional practice, admiration, and encounters with built work. These exchanges did not produce a single school; they carried a shared resistance to rigid regularity across different places and generations.",
+      "circles": [
+        {
+          "key": "otto_wagner+charles_rennie_mackintosh",
+          "title": "Recognition Across Circles",
+          "text": "Josef Hoffmann studied under Otto Wagner at the Academy of Fine Arts Vienna, later joined Wagner’s firm, and overlapped with him in the Secession and applied-arts institutions around 1897. Hoffmann also praised Charles Rennie Mackintosh’s work within the wider Secession-era world. The connection between Wagner and Mackintosh thus ran through teaching, professional practice, and esteem rather than direct collaboration."
+        },
+        {
+          "key": "antoni_gaud+friedensreich_hundertwasser",
+          "title": "A Precedent for Irregularity",
+          "text": "Antoni Gaudí’s work inspired Friedensreich Hundertwasser’s architectural approach. Separated by generations, Hundertwasser found in Gaudí a precedent for resisting rigid regularity and carried that example into his own architectural thinking. Their link was one of influence rather than direct contact."
+        },
+        {
+          "key": "frank_lloyd_wright+frei_otto",
+          "title": "Encountering Experiment",
+          "text": "During his journey through America, Frei Otto encountered Frank Lloyd Wright and Wright’s work. That encounter exposed Otto to Wright’s organic architectural ideas and experimental structures, informing the intellectual ground from which Otto’s own investigations proceeded. A traveler’s discovery thus met an established architect’s example."
         }
       ]
     }
-  ],
-  "conclusion": "Organic shapes in architecture recur whenever designers try to reconnect building with life—through nature’s geometry, through efficient structures, or through spaces that move like rivers. From Jugendstil linework to tensile minimal surfaces and digital fluidity, the “organic” remains a durable promise: form that feels inevitable rather than imposed."
+  },
+  "timeline_intro": "The early break with historic imitation gave architecture a new visual language of line, ornament, and unified surroundings. As that language matured, its claims became more concrete: a building could belong to a landscape, admit vegetation into dwelling, or take its shape from the forces acting upon it. By the early twenty-first century, fluid form had become capable of organizing major public space at monumental scale.",
+  "composition": {
+    "model": "gpt-5.6-terra",
+    "composed_at": "2026-07-22T08:41:17.236249+02:00",
+    "throughline": "This story follows how architects turned “living form” from an Art Nouveau language of sinuous line and total design into a set of increasingly concrete architectural methods. Wagner, Mackintosh, and Gaudí made modern environments feel integrated, organic, and resistant to historic imitation; Wright and Hundertwasser recast that impulse as an argument for dwelling with landscape and vegetation. Otto then made material forces generate light structures, while Hadid carried fluid movement into monumental civic space—showing organic architecture shift from expressive appearance toward site, structure, habitation, and circulation.",
+    "excluded_people": []
+  },
+  "opening": {
+    "text": "In 1911, Frank Lloyd Wright built Taliesin in Wisconsin as a home and working place set low against the terrain. Its composition joined dwelling, work, and landscape so closely that the building seemed to arise from its site rather than sit upon it.",
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Taliesin_-_exterior.jpg/960px-Taliesin_-_exterior.jpg",
+      "caption": "View of Taliesin from below",
+      "source": "https://commons.wikimedia.org/wiki/File:Taliesin_-_exterior.jpg",
+      "person_id": "frank_lloyd_wright",
+      "event_index": 9,
+      "image_index": 0
+    }
+  },
+  "section_headings": {
+    "timeline": "From Line to Movement",
+    "network": "Ideas Across Boundaries",
+    "conclusion": "Buildings Less Imposed"
+  },
+  "section_images": {
+    "timeline": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg/960px-Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
+      "caption": "Frei Otto tensile structures for Munich 72 Olympics",
+      "source": "https://commons.wikimedia.org/wiki/File:Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
+      "person_id": "frei_otto",
+      "event_index": 9,
+      "image_index": 0
+    },
+    "conclusion": {
+      "url": "https://live.staticflickr.com/2823/34196059542_382de86c85_b.jpg",
+      "caption": "MAXXI Museum in Rome, exterior view",
+      "source": "https://www.flickr.com/photos/72746018@N00/34196059542",
+      "person_id": "zaha_hadid",
+      "event_index": 12,
+      "image_index": 0
+    }
+  }
 }

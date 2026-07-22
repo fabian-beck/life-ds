@@ -76,6 +76,16 @@ def parse_args(argv: Any) -> argparse.Namespace:
         action="store_true",
         help="Skip fetching Deutsche Biographie data as additional source.",
     )
+    parser.add_argument(
+        "--skip-translate",
+        action="store_true",
+        help="Skip automatic translation after generation.",
+    )
+    parser.add_argument(
+        "--translate-langs",
+        default="de",
+        help="Comma-separated language codes to translate to after generation (default: de).",
+    )
     return parser.parse_args(argv)
 
 
@@ -159,7 +169,7 @@ def main(argv: Any = None) -> int:
         portrait_ok = False
         if not args.skip_portrait:
             print("\n" + "=" * 60)
-            print("STEP 4/5: Generating stylized portrait")
+            print("STEP 4/6: Generating stylized portrait")
             print("=" * 60 + "\n")
             try:
                 from pathlib import Path
@@ -197,7 +207,7 @@ def main(argv: Any = None) -> int:
         # Step 5: Review (if not skipped)
         if not args.skip_review:
             print("\n" + "=" * 60)
-            print("STEP 5/5: REVIEWING GENERATED DATA")
+            print("STEP 5/6: REVIEWING GENERATED DATA")
             print("=" * 60)
             print("Running quality review and polish...")
             print("(Only high-confidence changes will be applied)")
@@ -217,6 +227,52 @@ def main(argv: Any = None) -> int:
                 print("  Generated data is still usable, but not reviewed.")
         else:
             print("\n⊘ Skipping review step (--skip-review flag)")
+
+        # Step 6: Translate (if not skipped). Runs last so translations are
+        # derived from the final (reviewed) English data. Failures are
+        # non-fatal: the English reference is complete and
+        # `translate_all_persons.py --check` will report the gap.
+        translate_langs = [
+            code.strip() for code in args.translate_langs.split(",") if code.strip()
+        ]
+        if args.skip_translate or not translate_langs:
+            print("\n⊘ Skipping translation step (--skip-translate flag)")
+        elif not person_id:
+            print("\n⊘ Skipping translation step (no person_id resolved)")
+        else:
+            print("\n" + "=" * 60)
+            print("STEP 6/6: Translating generated data")
+            print("=" * 60 + "\n")
+            try:
+                import os
+
+                from openai import OpenAI
+                from translate_person import translate_person_data
+
+                translate_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+                for lang in translate_langs:
+                    print(f"Translating '{person_id}' to '{lang}'...")
+                    results = translate_person_data(
+                        person_id=person_id,
+                        target_lang=lang,
+                        client=translate_client,
+                        model=args.model or DATASET_MODEL,
+                        force=True,
+                    )
+                    if all(results.values()):
+                        print(f"✓ Translation to '{lang}' complete")
+                    else:
+                        translated = [key for key, ok in results.items() if ok]
+                        print(
+                            f"⚠ Translation to '{lang}' incomplete "
+                            f"(translated: {', '.join(translated) or 'nothing'})"
+                        )
+            except Exception as e:
+                print(f"\n⚠ Translation failed: {e}")
+                print(
+                    "  English data is complete; run scripts/translate_person.py "
+                    "manually to retry."
+                )
 
         # Final summary
         print("\n" + "=" * 60)

@@ -1,0 +1,430 @@
+{
+  "dataset": "wikipedia-egonetwork",
+  "created_on": "2025-12-04",
+  "ego": {
+    "name": "Friedensreich Hundertwasser",
+    "birth_year": 1928,
+    "death_year": 2000,
+    "primary_roles": [
+      "Maler",
+      "Architekt",
+      "Aktivist"
+    ],
+    "summary": "Friedensreich Hundertwasser (geboren als Friedrich Stowasser) war ein österreichischer Künstler und Architekt, bekannt für seine leuchtenden, organischen Gemälde und seine höchst individuellen Architekturentwürfe, die gerade Linien und Standardisierung ablehnten. Als Holocaust-Überlebender mit teils jüdischer Herkunft wurde er ab den 1950er-Jahren international berühmt, entwickelte seine eigene Maltheorie des ‚Transautomatismus' und verwirklichte später radikale grüne Bauten und Umweltprojekte in Europa, Japan und Neuseeland.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+  },
+  "connections": [
+    {
+      "person_name": "Elsa Hundertwasser (geb. Scheuer)",
+      "relationship_type": "family/mother",
+      "relationship_description": "Mutter von Friedensreich Hundertwasser, jüdischer Herkunft, die ihn allein in Wien großzog und Verfolgung und Zwangsumsiedlung unter dem Nationalsozialismus mit ihm teilte.",
+      "start_year": 1928,
+      "end_year": 1972,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben",
+        "Überleben der NS-Verfolgung in Wien",
+        "Zwangsumsiedlung in das Sammelhaus Obere Donaustraße 12"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Ihr jüdischer Hintergrund und ihr gemeinsames Überleben der NS-Verfolgung prägten Hundertwassers spätere pazifistische und ökologische Überzeugungen tief."
+    },
+    {
+      "person_name": "Ernst Stowasser",
+      "relationship_type": "family/father",
+      "relationship_description": "Leiblicher Vater von Friedensreich Hundertwasser, ein Ingenieur, der kurz nach Hundertwassers erstem Geburtstag an einer Blinddarmentzündung starb.",
+      "start_year": 1928,
+      "end_year": 1929,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "frühes Familienleben in Wien"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Sein früher Tod führte dazu, dass Hundertwasser allein von der Mutter aufgezogen wurde – eine von Verlust geprägte Kindheit."
+    },
+    {
+      "person_name": "Jüdische Großmutter von Friedensreich Hundertwasser",
+      "relationship_type": "family/grandparent",
+      "relationship_description": "Großmutter mütterlicherseits, als Jüdin verfolgt, die unter dem Nationalsozialismus zusammen mit rund 70 weiteren Verwandten deportiert und ermordet wurde.",
+      "start_year": 1928,
+      "end_year": 1942,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "erweitertes Familienleben vor der Deportation"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Ihre Ermordung im Holocaust gehörte zu Hundertwassers traumatischen Kindheitserfahrungen des NS-Terrors."
+    },
+    {
+      "person_name": "René Brô",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Französischer Maler, den Hundertwasser 1949 in Italien kennenlernte; gemeinsam reisten sie nach Paris und Nordafrika und teilten prägende künstlerische Erfahrungen.",
+      "start_year": 1949,
+      "end_year": 1951,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Reisen durch Italien, Paris, Marokko, Tunesien, Sizilien",
+        "künstlerischer Austausch und wechselseitiger Einfluss in der Nachkriegsavantgarde"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "https://en.wikipedia.org/wiki/Ren%C3%A9_Br%C3%B4"
+      ],
+      "notes": "Die Reisen brachten Hundertwasser mit dem Licht und den Farben des Mittelmeerraums und Nordafrikas in Berührung – entscheidend für seine spätere Malerei und seine ökologischen Ideen."
+    },
+    {
+      "person_name": "Egon Schiele",
+      "relationship_type": "artistic/influence",
+      "relationship_description": "Expressionistischer Maler, dessen Werken Hundertwasser auf seiner ersten Italienreise begegnete; Schieles Kunst wurde ein wichtiger Einfluss auf die eigene.",
+      "start_year": 1949,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Rezeption von Schieles Werk in italienischen Museen oder Sammlungen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Es gibt keinen Hinweis auf eine persönliche Begegnung; die Beziehung besteht in stilistischem und emotionalem Einfluss durch die Werke."
+    },
+    {
+      "person_name": "Paul Klee",
+      "relationship_type": "artistic/influence",
+      "relationship_description": "Maler der Moderne, dessen Werk Hundertwasser in Italien studierte; Klees Umgang mit Linie und Farbe prägte Hundertwassers werdenden Stil.",
+      "start_year": 1949,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Studium von Klees Gemälden während der Italienreisen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Klees poetische Abstraktion fand Widerhall in Hundertwassers späterer ‚vegetativer' Malerei und seinen Spiralmotiven."
+    },
+    {
+      "person_name": "Walter Kampmann",
+      "relationship_type": "artistic/influence",
+      "relationship_description": "Deutscher Maler, dessen ‚Seelenbäume' Hundertwasser tief beeindruckten und in seinen frühen italienischen Aquarellen nachklangen.",
+      "start_year": 1949,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Rezeption von Kampmanns Werken im Nachkriegseuropa"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Kampmanns symbolische Bäume halfen, Hundertwassers lebenslange Betonung von Vegetation und ‚beseelter Natur' in Kunst und Architektur herauszubilden."
+    },
+    {
+      "person_name": "Michel Tapié",
+      "relationship_type": "artistic/colleague",
+      "relationship_description": "Französischer Kunstkritiker und Kurator in Paris, einer von Hundertwassers wichtigen persönlichen Kontakten in den Abstraktionsdebatten der Avantgarde der 1950er-Jahre.",
+      "start_year": 1950,
+      "end_year": 1960,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Teilnahme an der Pariser Kunstszene",
+        "Diskussionen um Art Informel und Tachismus"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Tapiés Eintreten für das Art Informel bildete den kritischen Kontext, gegen den Hundertwasser seinen eigenen Begriff des ‚Transautomatismus' formulierte."
+    },
+    {
+      "person_name": "Yves Klein",
+      "relationship_type": "artistic/colleague",
+      "relationship_description": "In Paris tätiger französischer Künstler, dessen Werk und persönlicher Kontakt zu Hundertwassers Kreis in der europäischen Nachkriegsavantgarde gehörten.",
+      "start_year": 1950,
+      "end_year": 1962,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Pariser Kunstnetzwerke",
+        "Teilnahme an Debatten über Abstraktion und Nouveau Réalisme"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Kleins radikale Monochrome und Aktionen standen für einen anderen Weg der Nachkriegsinnovation neben Hundertwassers organischer Abstraktion."
+    },
+    {
+      "person_name": "Pierre Restany",
+      "relationship_type": "artistic/critic",
+      "relationship_description": "Französischer Kunstkritiker und Theoretiker des Nouveau Réalisme, der zu Hundertwassers wichtigen persönlichen Kontakten im Paris der 1950er-Jahre zählte.",
+      "start_year": 1950,
+      "end_year": 1960,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "kunsttheoretische Diskussionen",
+        "Teilnahme am Pariser Avantgardemilieu"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Restanys Fokus auf Realismus und Objekt stand im Kontrast zu Hundertwassers ‚vegetativer' Abstraktion und schärfte dessen eigene theoretische Position."
+    },
+    {
+      "person_name": "Julien Alvard",
+      "relationship_type": "artistic/critic",
+      "relationship_description": "Französischer Kunstkritiker, der neben Tapié und Restany zu Hundertwassers wichtigen Kontakten der Pariser Jahre gehörte.",
+      "start_year": 1950,
+      "end_year": 1960,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Beteiligung an den aktuellen Debatten über Abstraktion und Informel"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Alvards Schriften zur zeitgenössischen Kunst gehörten zum kritischen Umfeld, in dem Hundertwasser den ‚Transautomatismus' formulierte."
+    },
+    {
+      "person_name": "Herta Leitner",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Hundertwassers erste Ehefrau, die er 1958 in Gibraltar heiratete; die Ehe hielt etwa zwei Jahre und endete mit der Scheidung.",
+      "start_year": 1958,
+      "end_year": 1960,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Eheleben",
+        "gesellschaftliche und künstlerische Kreise um Paris und Österreich"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Sie war bei der Heirat 16 Jahre alt; über wechselseitigen künstlerischen Einfluss ist wenig überliefert."
+    },
+    {
+      "person_name": "Bazon Brock",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Deutscher Kunsttheoretiker und Performer, der 1959 mit Hundertwasser die Aktion ‚Unendliche Linie' an der Hochschule für bildende Künste Hamburg mitorganisierte.",
+      "start_year": 1959,
+      "end_year": 1959,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Performance ‚Unendliche Linie' an der Hamburger Kunsthochschule",
+        "Lehre und experimentelle Pädagogik"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Die Aktion verkörperte Hundertwassers Ablehnung der geraden Linie und seine Nähe zu aktionistischen Avantgardepraktiken."
+    },
+    {
+      "person_name": "Herbert Schuldt",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Künstler, der 1959 neben Hundertwasser und Bazon Brock an der Aktion ‚Unendliche Linie' an der Hamburger Kunsthochschule teilnahm.",
+      "start_year": 1959,
+      "end_year": 1959,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Performance ‚Unendliche Linie' mit Studierenden an der Hochschule für bildende Künste Hamburg"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Die gemeinschaftliche Zeichenperformance forderte die institutionelle Autorität heraus und unterstrich Hundertwassers antilineare Ästhetik."
+    },
+    {
+      "person_name": "Vinzenz Oberhammer",
+      "relationship_type": "professional/curator",
+      "relationship_description": "Kurator, der 1962 Hundertwassers Retrospektive im österreichischen Pavillon der Biennale von Venedig einrichtete – ein Meilenstein seiner internationalen Anerkennung.",
+      "start_year": 1962,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Retrospektive im österreichischen Pavillon der Biennale von Venedig",
+        "Ausstellungsgestaltung und Katalogvorbereitung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "https://en.wikipedia.org/wiki/Venice_Biennale"
+      ],
+      "notes": "Indem er den Nationalpavillon Hundertwassers Werk widmete, steigerte Oberhammer dessen Rang in der internationalen Kunstwelt erheblich."
+    },
+    {
+      "person_name": "Yuko Ikewada",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Japanerin, die 1962 Hundertwassers zweite Ehefrau wurde; die Ehe wurde 1966 während seiner Japanzeit geschieden.",
+      "start_year": 1962,
+      "end_year": 1966,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Eheleben in Japan",
+        "Teilnahme am japanischen Kulturleben"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Ihre gemeinsame Zeit in Japan fiel mit dem Mainichi-Preis und der Entwicklung seines Künstlernamens ‚Friedensreich' aus japanischen Schriftzeichen zusammen."
+    },
+    {
+      "person_name": "Wieland Schmied",
+      "relationship_type": "professional/curator",
+      "relationship_description": "Kunsthistoriker und Kurator, der 1964 Hundertwassers große Wanderretrospektive in der Kestner-Gesellschaft Hannover organisierte und seinen ersten Werkkatalog herausgab.",
+      "start_year": 1964,
+      "end_year": 1964,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Planung und Kuratierung der Wanderretrospektive (Hannover, Amsterdam, Bern, Hagen, Stockholm, Wien)",
+        "Herausgabe des ersten Werkverzeichnisses von Hundertwassers Arbeiten"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "https://en.wikipedia.org/wiki/Kestnergesellschaft"
+      ],
+      "notes": "Schmieds wissenschaftliche und kuratorische Arbeit festigte Hundertwassers Frühwerk und seine internationale Ausstellungspräsenz."
+    },
+    {
+      "person_name": "Ferry Radax",
+      "relationship_type": "artistic/subject",
+      "relationship_description": "Österreichischer Filmemacher, der 1966 den Dokumentarfilm ‚Hundertwasser' drehte, den ersten Film über das Leben des Künstlers.",
+      "start_year": 1966,
+      "end_year": 1966,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Dokumentarfilmarbeiten über Hundertwassers Leben und Werk"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Radax' Porträt trug dazu bei, Hundertwassers öffentliches Bild als unkonventioneller, naturverbundener Künstler zu prägen."
+    },
+    {
+      "person_name": "Peter Schamoni",
+      "relationship_type": "artistic/collaborator",
+      "relationship_description": "Deutscher Filmregisseur, der mit Hundertwasser am Film ‚Hundertwassers Regentag' (1970–1972) über sein Leben und sein Schiff Regentag zusammenarbeitete.",
+      "start_year": 1970,
+      "end_year": 1972,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "gemeinsame Arbeit am Kunstfilm ‚Hundertwassers Regentag'",
+        "Dokumentation von Umbau und Fahrten des Schiffes Regentag"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Es war das zweite bedeutende Filmporträt Hundertwassers und half, seine ökologischen und künstlerischen Ideen einem breiteren Publikum zu vermitteln."
+    },
+    {
+      "person_name": "Joram Harel",
+      "relationship_type": "professional/manager",
+      "relationship_description": "Hundertwassers Manager, der nach dem Tod des Künstlers erklärte, dieser sei praktisch mittellos und mit überschuldetem Nachlass gestorben.",
+      "start_year": 1970,
+      "end_year": 2000,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Management von Hundertwassers Projekten und Finanzen",
+        "Abwicklung von Ausstellungen und Rechten über Schweizer Gesellschaften"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Harels Aussagen zur Finanzlage stehen im Kontrast zu den Erinnerungen von Freunden an seinen bescheidenen Lebensstil und prägten die öffentliche Debatte um sein Erbe."
+    },
+    {
+      "person_name": "Heidi Trimmel",
+      "relationship_type": "family/child",
+      "relationship_description": "Hundertwassers einziges Kind, eine 1982 geborene Tochter, zu der er den Kontakt verweigerte.",
+      "start_year": 1982,
+      "end_year": 2000,
+      "strength": "weak",
+      "interaction_frequency": "rare",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "biologische Elternschaft"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Berichten zufolge erklärte sie später, sich um ihr Erbe betrogen zu fühlen; die Beziehung war von Entfremdung geprägt."
+    },
+    {
+      "person_name": "Rudolf Streicher",
+      "relationship_type": "professional/opponent",
+      "relationship_description": "Österreichischer Verkehrsminister, der 1988 die Reform der neuen Kfz-Kennzeichen durchsetzte – trotz Hundertwassers öffentlicher Kampagne für den Erhalt der alten schwarzen Tafeln.",
+      "start_year": 1988,
+      "end_year": 1988,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "öffentliche Debatte über das Design der österreichischen Kfz-Kennzeichen",
+        "Medienkampagnen und Petitionen"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "notes": "Hundertwasser entwarf alternative schwarze Kennzeichen und mobilisierte öffentlichen Widerstand, doch Streicher setzte die Reform durch – ein Zusammenprall von Künstler-Aktivist und politischer Autorität."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Hundertwassers familiäres Netzwerk war klein, aber tief prägend: Seine jüdische Mutter Elsa und der Verlust von Vater Ernst und der Großmutter im Nationalsozialismus formten sein Weltbild, während sein erwachsenes Familienleben zwei kurze Ehen und eine entfremdete Beziehung zu seiner einzigen Tochter Heidi Trimmel umfasste."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Seine künstlerischen Beziehungen reichen von prägenden Begegnungen mit früheren Modernen wie Schiele, Klee und Kampmann über reichen kollegialen Austausch im Paris der 1950er-Jahre bis zu engen Kooperationen mit Weggefährten und Filmemachern, die seine Theorien des ‚Transautomatismus' und einer antilinearen, naturintegrierenden Architektur artikulieren und verbreiten halfen."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Kuratoren wie Vinzenz Oberhammer und Wieland Schmied waren entscheidend für den Aufbau seines internationalen Rufs durch große Retrospektiven und das erste Werkverzeichnis, während Manager und Amtsträger die institutionellen und politischen Rahmenbedingungen seiner Projekte und öffentlichen Interventionen prägten."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "92f7cfb70d0f12e2",
+    "translated_on": "2026-07-19T04:56:24.282650+00:00",
+    "translator": "manual"
+  }
+}

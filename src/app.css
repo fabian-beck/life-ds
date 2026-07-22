@@ -41,3 +41,59 @@ body::before {
 a {
   color: inherit;
 }
+
+/*
+ * High-contrast mode.
+ *
+ * A `contrast()`/`brightness()` filter is applied to the document root while
+ * the mode is on, boosting everything painted on the page. Plain `filter` is
+ * used rather than the previous `backdrop-filter` overlay: `backdrop-filter:
+ * contrast()` is a no-op on iOS Safari and unreliable across other browsers, so
+ * the overlay had no visible effect in most of them. `filter` is universally
+ * supported, so the boost now works in every standard browser and on mobile.
+ *
+ * The filter is applied to the *root* element deliberately. Per the CSS Filter
+ * Effects spec, `filter` establishes a containing block for fixed/absolutely
+ * positioned descendants "unless the element it applies to is a document root
+ * element" — so the app's many `position: fixed` elements keep anchoring to the
+ * viewport instead of breaking. (This is the same exemption that lets the
+ * well-known `html { filter: invert(1) }` dark-mode hack leave fixed layout
+ * intact; applying the same filter to any non-root ancestor would re-anchor
+ * those elements and break the UI.)
+ *
+ * The `brightness()` lift accompanies `contrast()` because contrast alone
+ * pivots around mid-gray and drives dark grays toward black; brightening
+ * afterwards keeps those tones legible and raises overall lightness.
+ */
+html.high-contrast {
+  filter: contrast(1.3) brightness(1.18);
+}
+
+/*
+ * Maps in high-contrast mode.
+ *
+ * The dark MapLibre basemap sits near the floor of the contrast filter, so it
+ * reads as barely legible even after the root boost. The dedicated lift below
+ * gives it extra brightness/contrast on top of the root filter.
+ *
+ * 1. Lift the map canvas with a self-sufficient brightness/contrast that reads
+ *    well with or without the root filter compounding on top. Only the canvas
+ *    is targeted, so DOM markers and popups are untouched. This out-specifies
+ *    StoryMap's own `.map-container .maplibregl-canvas` filter.
+ */
+html.high-contrast .maplibregl-canvas {
+  filter: contrast(1.12) brightness(1.55) saturate(1.15);
+}
+
+/*
+ * 2. The story background is faded over the map to blend it into the slide;
+ *    on mobile the overlay never lightens that fade, so the brightened basemap
+ *    stays muddy. Thin the fade in high-contrast mode so the map shows through.
+ */
+html.high-contrast .map-frame::before {
+  opacity: 0.5;
+}
+
+html.high-contrast .map-gradient {
+  opacity: 0.7;
+}

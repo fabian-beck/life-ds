@@ -1,0 +1,214 @@
+{
+  "dataset": "meta_story",
+  "created_on": "2025-12-30T08:39:42.202076+01:00",
+  "meta_story": {
+    "id": "quantum_physics_pioneers",
+    "title": "Pioniere der Quantenphysik",
+    "tagline": "Von den Quanten zum modernen Formalismus",
+    "description": "Die Quantenphysik kam nicht als einzelne Entdeckung in die Welt – sie kristallisierte sich in einer Kette begrifflicher Erschütterungen heraus: die verstörende Diskretheit der Energie, die seltsame Buchführung von Strahlung und Atomen und schließlich der Bedarf an einer strengen mathematischen Sprache, die die Theorie davor bewahrte, sich in Paradoxien aufzulösen.\n\nDiese Sammlung folgt einem engen Bogen durch drei Figuren des Registers, die diese Transformation unmittelbar prägten. Einstein zwang das Quant gewissermaßen in die Existenz, indem er das Licht selbst als gequantelt behandelte – und blieb zugleich ein scharfer Kritiker der Quantenunbestimmtheit. Curie erschloss das experimentelle und begriffliche Terrain der Radioaktivität und zeigte, dass das Atom keine unteilbare Einheit, sondern ein dynamisches, energetisches System ist – eine wesentliche Voraussetzung der Quantentheorie des Atoms. Von Neumann gab der Quantenmechanik schließlich eines ihrer dauerhaftesten Fundamente: einen präzisen Formalismus, der die Theorie berechenbar, verallgemeinerbar und philosophisch unausweichlich machte.\n\nZusammen zeigen sie die Quantenphysik als doppelte Revolution – der Regeln der Natur und der Art, wie Wissenschaft beweist, modelliert und dem vertraut, was sie zu wissen beansprucht.",
+    "person_ids": ["albert_einstein", "marie_curie", "john_von_neumann"],
+    "date_range_start": "1867",
+    "date_range_end": "1957",
+    "lastUpdated": "2025-12-30T08:39:42.202076+01:00"
+  },
+  "subtopics": [
+    {
+      "id": "forcing_the_quantum_question",
+      "title": "Die Quantenfrage erzwingen",
+      "description": "Bevor es „Quantenmechanik“ gab, verlangten Anomalien von Licht und Materie nach neuen Regeln; diese Figuren machten die Diskretheit wissenschaftlich unausweichlich.",
+      "person_ids": ["albert_einstein", "marie_curie"]
+    },
+    {
+      "id": "making_quantum_precise",
+      "title": "Das Quantum präzise machen",
+      "description": "Als die neue Physik da war, brauchte sie ein hartes mathematisches Rückgrat – Definitionen, Strukturen und Beweise, die Vorhersage und Debatte tragen konnten.",
+      "person_ids": ["john_von_neumann"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "energy_becomes_granular",
+      "title": "Energie wird körnig (1867-1905)",
+      "date_start": "1867",
+      "date_start_precision": "year",
+      "date_end": "1905",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "marie_curie",
+          "event_date": "1897-12-16",
+          "event_date_precision": "day",
+          "event_title": "Beginn der Radioaktivitätsforschung",
+          "event_index": 7,
+          "theme_connection": "Der Beginn systematischer, quantitativer Radioaktivitätsexperimente etablierte die Radioaktivität als messbares physikalisches Phänomen und erweiterte die empirischen Probleme, die jede Atomtheorie erklären musste – eine Stütze der Voraussetzungen für die Quantentheorie des Atoms.",
+          "relevance_strength": "supporting"
+        },
+        {
+          "person_id": "marie_curie",
+          "event_date": "1898-07",
+          "event_date_precision": "month",
+          "event_title": "Entdeckung von Polonium und Radium",
+          "event_index": 8,
+          "theme_connection": "Die Entdeckung von Polonium und Radium und das Argument, dass die Aktivität der Pechblende die des Urans übertraf, machten die „Unteilbarkeit“ des Atoms unhaltbar und festigten die Radioaktivität als neues Feld energetischer Umwandlungen – experimentelle Grundlagenarbeit, die die Entwicklung der modernen Atom- und Quantentheorie vorantrieb.",
+          "relevance_strength": "essential"
+        },
+        {
+          "person_id": "marie_curie",
+          "event_date": "1903",
+          "event_date_precision": "year",
+          "event_title": "Promotion und Nobelpreis für Physik",
+          "event_index": 9,
+          "theme_connection": "Ihre Promotion bündelte ein kohärentes Forschungsprogramm zu radioaktiven Substanzen, und die Nobelpreis-Anerkennung von 1903 verstärkte Legitimität und Wirkung der Radioaktivitätsforschung – eine Stärkung des experimentellen Fundaments, das in die Atom- und Quantenentwicklungen des frühen 20. Jahrhunderts einfloss.",
+          "relevance_strength": "supporting"
+        },
+        {
+          "person_id": "albert_einstein",
+          "event_date": "1905-06-30",
+          "event_date_precision": "day",
+          "event_title": "Veröffentlichung der Annus-Mirabilis-Arbeiten",
+          "event_index": 6,
+          "theme_connection": "Zu den Arbeiten von 1905 gehört die Lichtquanten-Erklärung des photoelektrischen Effekts – ein entscheidender Schritt, der die Diskretheit der Energie wissenschaftlich unausweichlich machte und unmittelbar dem Bogen „Die Quantenfrage erzwingen“ dieser Sammlung entspricht.",
+          "relevance_strength": "essential"
+        }
+      ]
+    },
+    {
+      "id": "the_atom_opens_up",
+      "title": "Das Atom öffnet sich (1906-1925)",
+      "date_start": "1906",
+      "date_start_precision": "year",
+      "date_end": "1925",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "marie_curie",
+          "event_date": "1911-12-10",
+          "event_date_precision": "day",
+          "event_title": "Nobelpreis für Chemie gewonnen",
+          "event_index": 11,
+          "theme_connection": "Der Nobelpreis für Chemie würdigt ausdrücklich Curies radiochemische Arbeiten zur Radioaktivität, die halfen, das Atom als energetisches, wandelbares System zu begreifen – entscheidende experimentelle Grundlagen, die die Quantentheorie des Atoms unausweichlich machten.",
+          "relevance_strength": "supporting"
+        }
+      ]
+    },
+    {
+      "id": "foundations_and_fallout",
+      "title": "Fundamente und Folgen (1926-1957)",
+      "date_start": "1926",
+      "date_start_precision": "year",
+      "date_end": "1957",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "john_von_neumann",
+          "event_date": "1932",
+          "event_date_precision": "year",
+          "event_title": "Klassiker der Quantenmechanik veröffentlicht",
+          "event_index": 7,
+          "theme_connection": "Von Neumanns Quantenmechanik-Buch von 1932 kodifizierte den Hilbertraum- und Operatorformalismus sowie die axiomatische Struktur, die die Quantentheorie präzise, berechenbar und philosophisch belastbar machten – eine direkte Entsprechung zum Unterthema „Das Quantum präzise machen“.",
+          "relevance_strength": "essential"
+        }
+      ]
+    }
+  ],
+  "conclusion": "Die Quantenphysik entstand aus Konfrontation und Konstruktion zugleich: aus der Konfrontation mit experimentellen Überraschungen, die die klassische Intuition sprengten, und aus der Konstruktion einer formalen Sprache, die stark genug war, die neue Welt zu tragen. Einstein, Curie und von Neumann zeigen zusammen, wie moderne Physik voranschreitet – durch Entdeckung, durch Neubestimmung und durch die Mathematik, die die Revolution von Dauer macht.",
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "f2ee3d3222d76fa6",
+    "translated_on": "2026-07-20T13:56:59.664031+00:00",
+    "translator": "manual"
+  },
+  "social_network": {
+    "nodes": [
+      {
+        "id": "albert_einstein",
+        "name": "Albert Einstein",
+        "type": "main",
+        "portrait": "/portraits/albert_einstein_thumbnail.webp",
+        "roles": ["physicist", "scientist"],
+        "birth_year": 1879
+      },
+      {
+        "id": "marie_curie",
+        "name": "Marie Curie",
+        "type": "main",
+        "portrait": "/portraits/marie_curie_thumbnail.webp",
+        "roles": ["physicist", "chemist"],
+        "birth_year": 1867
+      },
+      {
+        "id": "john_von_neumann",
+        "name": "John von Neumann",
+        "type": "main",
+        "portrait": "/portraits/john_von_neumann_thumbnail.webp",
+        "roles": ["mathematician", "physicist"],
+        "birth_year": 1903
+      },
+      {
+        "id": "sec:david_hilbert",
+        "name": "David Hilbert",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      }
+    ],
+    "links": [
+      {
+        "source": "albert_einstein",
+        "target": "john_von_neumann",
+        "kind": "main",
+        "relationship_type": "academic/colleague",
+        "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
+        "strength": "moderate",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/colleague",
+            "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "albert_einstein",
+        "target": "sec:david_hilbert",
+        "kind": "secondary",
+        "relationship_type": "professional/rival",
+        "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+        "strength": "moderate",
+        "endpoints": {
+          "albert_einstein": {
+            "relationship_type": "professional/rival",
+            "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "sec:david_hilbert",
+        "kind": "secondary",
+        "relationship_type": "academic/mentor",
+        "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
+        "strength": "strong",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "academic/mentor",
+            "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
+            "strength": "strong"
+          }
+        }
+      }
+    ],
+    "narration": {
+      "intro": "Ein kleines Geflecht, gespannt zwischen Göttingen und Princeton — mit dem Mathematiker David Hilbert als verborgenem Scharnier.",
+      "circles": [
+        {
+          "key": "albert_einstein+john_von_neumann",
+          "text": "In Göttingen arbeitete David Hilbert parallel zu Albert Einstein an den Feldgleichungen der allgemeinen Relativitätstheorie — eine respektvolle Rivalität um die Mathematik der Gravitation — und wurde später zum Mentor des jungen John von Neumann, der mit einem Rockefeller-Stipendium bei ihm studierte und von seinem Programm in Funktionalanalysis und Grundlagenforschung geprägt wurde. Jahre danach begegneten sich Einstein und von Neumann als Kollegen am Institute for Advanced Study wieder, wo sich ihre Büros und Kreise im akademischen Leben Princetons überschnitten."
+        }
+      ]
+    }
+  }
+}
