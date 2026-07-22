@@ -65,9 +65,15 @@ LANGUAGE_NAMES = {
 # Extra style guidance per target language
 LANGUAGE_STYLE_NOTES = {
     "de": (
-        "Use the informal 'Du' form if the reader is ever addressed. "
-        "Use natural, idiomatic German with correct typography (e.g. „quotes“ "
-        "where quoting), but keep Markdown and [[term|display]] markers intact."
+        "Write fluent, idiomatic German that a native author would write, not a "
+        "German echo of the English. Reshape sentences to fit German rhythm and "
+        "word order — use the flexible German verb/clause placement, form natural "
+        "compounds instead of stringing words together as in English, and reach "
+        "for genuinely German phrasing rather than anglicisms or loan-translated "
+        "idioms. Vary sentence length so the prose does not feel mechanical. "
+        "Use the informal 'Du' form if the reader is ever addressed. Apply correct "
+        "German typography (e.g. „quotes“ where quoting), but keep Markdown and "
+        "[[term|display]] markers intact."
     ),
 }
 
@@ -978,7 +984,21 @@ larger document. Return the same structure with every text field translated.
 GENERAL RULES:
 1. Keep every array EXACTLY the same length and order as the input — item N of
    the output must be the translation of item N of the input.
-2. Translate faithfully and idiomatically; do not summarize, extend, or omit.
+2. Translate the MEANING, not the words. Write as a skilled native {lang_name}
+   author would — the way a professional literary translator works, not a
+   dictionary. Read each field, understand what it says, then re-express it
+   naturally in {lang_name}.
+   - Do NOT mirror English word order, sentence structure, or phrasing. Recast
+     sentences so they flow the way {lang_name} really reads; split, merge, or
+     reorder clauses when that is more natural.
+   - Render English idioms, metaphors, and turns of phrase with their true
+     {lang_name} equivalents — never translate them literally.
+   - Choose the {lang_name} word a native writer would actually use, not the
+     first cognate. Avoid stiff, calque-like phrasing and anglicisms.
+   - The result must not read like a translation. If a passage sounds awkward
+     or foreign in {lang_name}, rewrite it until it sounds native.
+   - Preserve the full meaning, tone, and register faithfully; do not summarize,
+     extend, or omit — but likeness of wording to the English is NOT a goal.
 3. Preserve Markdown formatting exactly (links, emphasis, line breaks).
 4. Descriptions may contain [[term|display]] annotation markers:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
@@ -1006,9 +1026,12 @@ PAYLOAD:
                 {
                     "role": "system",
                     "content": (
-                        f"You are a professional translator specializing in "
-                        f"biographical content. Translate to {lang_name} while "
-                        f"preserving structure, markers, and formatting."
+                        f"You are an award-winning literary translator and native "
+                        f"{lang_name} writer specializing in biographical prose. You "
+                        f"translate meaning and voice, never word for word: your "
+                        f"{lang_name} reads as though it were originally written in "
+                        f"{lang_name}, with natural idiom, word choice, and sentence "
+                        f"flow. Preserve structure, markers, and formatting exactly."
                     ),
                 },
                 {"role": "user", "content": prompt},
