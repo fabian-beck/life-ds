@@ -255,10 +255,19 @@
 
     // Add ungrouped people at the end (always last)
     if (ungrouped.length > 0) {
+      // A lone leftover that has its own subcategory needs no generic "Other"
+      // box: name the box after that subcategory and let the person drop its
+      // now-redundant role label (showRole is off once the box has a subcategory).
+      const soleSubcategory =
+        ungrouped.length === 1
+          ? getSubcategory(ungrouped[0].relationship_type)
+          : null;
       groupsArray.push({
-        subcategory: null,
-        label: null,
-        isOther: true, // Labeled "Other" (translated) in the template
+        subcategory: soleSubcategory,
+        label: soleSubcategory
+          ? capitalizeSubcategory(soleSubcategory, 1)
+          : null,
+        isOther: !soleSubcategory, // Labeled "Other" (translated) in the template
         people: sortByStrength(ungrouped),
         accumulatedStrength: Infinity, // Ensures it's always last
       });
