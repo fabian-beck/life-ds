@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """
-Generate meta-story datasets using a five-phase approach:
+Generate meta-story datasets using a multi-phase approach:
 1. Phase 1: Story planning and person selection (1 AI call)
 2. Phase 2: Event collection (programmatic, no AI)
 3. Phase 3: AI-powered event filtering for topic relevance (batched AI calls)
 4. Phase 4: Historical context landmarks (1 AI call)
 5. Phase 5: Social network derived from ego networks (programmatic, no AI)
+   Phase 5b: AI review/enrichment of the derived network (1 AI call)
+6. Phase 6: Network narration for the scroll-over cards (1 AI call)
+7. Phase 7: Story composer — top-down narrative composition (2 AI calls,
+   see compose_meta_story.py)
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -22,6 +26,7 @@ from typing import Any, Dict, List, Optional, cast
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
+from compose_meta_story import compose_meta_story_dataset
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
@@ -1779,6 +1784,16 @@ def main():
         help="Skip Phase 5b (AI review/enrichment of the derived social network)",
     )
     parser.add_argument(
+        "--skip-compose",
+        action="store_true",
+        help="Skip Phase 7 (top-down story composition)",
+    )
+    parser.add_argument(
+        "--no-exclusions",
+        action="store_true",
+        help="Phase 7: never drop people from the story (text composition only)",
+    )
+    parser.add_argument(
         "--skip-translate",
         action="store_true",
         help="Skip automatic translation after generation",
@@ -1957,12 +1972,39 @@ def main():
             verbose=args.verbose,
         )
 
-    # Phase 6: narrate the social network's circles (non-fatal on failure)
+    # Phase 6: narrate the social network's circles (non-fatal on failure).
+    # This is the baseline narration; Phase 7 rewrites it in the story's
+    # unified voice, but keeping Phase 6 means the story still has narration
+    # when composition is skipped or fails.
     if args.verbose:
         print("\n=== PHASE 6: Network Narration ===")
     phase6_network_narration(
         dataset, client=client, model=args.model, verbose=args.verbose
     )
+
+    # Phase 7: story composer — reads the assembled story top-down and writes
+    # one coherent narrative (title/description/timeline intro/chapter
+    # headlines + lead-ins/network narration/conclusion), optionally dropping
+    # clearly disconnected people. Non-fatal: on failure the bottom-up texts
+    # are kept.
+    if args.skip_compose:
+        if args.verbose:
+            print("\n=== PHASE 7: Story Composition (SKIPPED) ===")
+    else:
+        if args.verbose:
+            print("\n=== PHASE 7: Story Composition ===")
+        composed = compose_meta_story_dataset(
+            dataset,
+            registry,
+            client,
+            model=args.model,
+            allow_exclusions=not args.no_exclusions,
+            verbose=args.verbose,
+        )
+        if composed is not None:
+            dataset = composed
+        else:
+            print("Warning: story composition failed, keeping bottom-up texts")
 
     # Save files
     if not save_meta_story(story_id, dataset, verbose=args.verbose):
@@ -1998,12 +2040,19 @@ def main():
 
     print("\nSUCCESS: Meta-story created!")
     print(f"  ID: {story_id}")
-    print(f"  People: {len(plan.selected_people)}")
-    print(f"  Subtopics: {len(plan.subtopics)}")
-    print(f"  Chapters: {len(chapters)}")
-    print(f"  Total person events: {sum(len(c.person_events) for c in chapters)}")
+    print(f"  People: {len(dataset['meta_story']['person_ids'])}")
+    print(f"  Subtopics: {len(dataset['subtopics'])}")
+    print(f"  Chapters: {len(dataset['chapters'])}")
+    print(
+        "  Total person events: "
+        f"{sum(len(c.get('person_events') or []) for c in dataset['chapters'])}"
+    )
+    for excluded in (dataset.get("composition") or {}).get("excluded_people") or []:
+        print(f"  Excluded by composer: {excluded['person_id']} — {excluded['reason']}")
     total_context = sum(
-        len(c.historical_context) for c in chapters if c.historical_context
+        len(c.get("historical_context") or [])
+        for c in dataset["chapters"]
+        if c.get("historical_context")
     )
     if total_context > 0:
         print(f"  Total historical context events: {total_context}")

@@ -521,6 +521,9 @@
     {#if metaStoryData.chapters?.length}
       <section class="chapters-section">
         <h2>{$_("meta_story.chapters_heading")}</h2>
+        {#if metaStoryData.timeline_intro}
+          <p class="timeline-intro">{metaStoryData.timeline_intro}</p>
+        {/if}
 
         <div
           class="scroll-proxy-container"
@@ -799,7 +802,8 @@
     margin-bottom: 3rem;
   }
 
-  .network-intro {
+  .network-intro,
+  .timeline-intro {
     color: #94a3b8;
     line-height: 1.6;
     margin-bottom: 1.25rem;

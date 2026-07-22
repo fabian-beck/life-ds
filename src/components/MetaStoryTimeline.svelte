@@ -2035,6 +2035,9 @@
               )}
             </span>
           </div>
+          {#if currentChapterByIndicator.lead_in}
+            <p class="chapter-lead-in">{currentChapterByIndicator.lead_in}</p>
+          {/if}
         </div>
       </div>
     {/key}
@@ -2446,6 +2449,17 @@
       calc(0.35rem * max(0.9, var(--density-factor, 1)));
     border-radius: 0.25rem;
     white-space: nowrap;
+  }
+
+  /* Composed chapter lead-in (compose_meta_story.py), shown below the headline */
+  .chapter-lead-in {
+    margin: calc(0.3rem * max(0.8, var(--density-factor, 1))) 0 0;
+    font-family: var(--body-font, "IBM Plex Sans", sans-serif);
+    font-size: calc(0.72rem * max(0.85, var(--density-factor, 1)));
+    line-height: 1.45;
+    color: rgba(203, 213, 225, 0.88);
+    text-align: center;
+    max-width: 34rem;
   }
 
   /* Gaps layer - visual indicators for compressed timeline gaps */
@@ -3247,6 +3261,11 @@
     .chapter-year-range {
       font-size: 0.6rem;
       padding: 0.1rem 0.3rem;
+    }
+
+    /* No room for the lead-in next to the compact landscape header */
+    .chapter-lead-in {
+      display: none;
     }
   }
 

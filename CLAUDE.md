@@ -252,7 +252,9 @@ matches narration to clusters by that key. Each circle's `title` is a short
 evocative headline (not a list of names), shown as the card's heading; when a
 circle has no `title` (older data) the card falls back to a joined list of the
 members' names. Narration is written by AI as **Phase 6** of
-`generate_meta_story.py` (non-fatal on failure); when a cluster has no matching
+`generate_meta_story.py` (non-fatal on failure) and then rewritten in the
+story's unified voice by the Phase 7 composer (see "Meta Story Composition"
+below); when a cluster has no matching
 `text` (e.g. the network changed and narration wasn't regenerated), the card
 falls back to listing the cluster's ties. Unlike the rest of `social_network`,
 narration texts (both `title` and `text`) ARE part of the translation payload
@@ -305,6 +307,57 @@ translated and fingerprinted like other meta story prose.
   ties) just as it can orphan narration — re-run the full pipeline (or Phase
   5b + 6) when you need the reviewed graph back.
 
+### Meta Story Composition (Phase 7 — Story Composer)
+
+Every text in a meta story is originally written bottom-up by a phase that only
+sees its own slice (description/conclusion before events exist, theme
+connections per batch, network narration from the graph alone). **Phase 7**
+(`scripts/compose_meta_story.py`, run automatically at the end of
+`generate_meta_story.py`, opt out with `--skip-compose`) is a story composer
+agent that reads the *assembled* story top-down and writes one coherent
+narrative in two AI calls:
+
+1. **Curation** — decides a *throughline* (the arc that anchors all prose) and,
+   exceptionally, which clearly disconnected people to drop. Exclusions are
+   applied deterministically with hard guardrails (at most ~25% of the cast,
+   never below 3 people, unknown ids ignored) and cascade through
+   `person_ids`, subtopics (emptied subtopics are dropped), chapter
+   `person_events`, and the social network. The network is **pruned, not
+   re-derived**, so Phase 5b review edits on surviving ties are kept;
+   secondary nodes that no longer bridge ≥2 main people are removed.
+2. **Composition** — rewrites all display prose in one voice: title, tagline,
+   description, a new top-level **`timeline_intro`** (paragraph shown under
+   the "Chapters" heading before the timeline), chapter headlines (date range
+   re-appended automatically) plus a new per-chapter **`lead_in`** (1-2
+   sentences shown inside the floating chapter header while scrolling; hidden
+   in the landscape-mobile compact header), subtopic titles/descriptions,
+   *sparse* refinements of event `theme_connection`s, the network narration
+   (intro + circles, replacing the Phase 6 baseline in the story's unified
+   voice), and the conclusion.
+
+Application is structural and defensive: chapters/subtopics/circles are
+matched by id/key, unknown entries are ignored with warnings, missing entries
+keep their existing texts, and dates/IDs/coordinates/graph data are never
+model-editable. Provenance (model, throughline, exclusions with reasons) is
+stamped into a top-level `composition` block. The whole phase is non-fatal —
+on any failure the bottom-up texts are kept unchanged.
+
+`timeline_intro` and `lead_in` are part of the translation payload, but only
+when present, so uncomposed stories keep their old fingerprints (and their
+translations stay "current"). Composing a story changes its English prose, so
+its translations go stale by fingerprint; the standalone CLI re-translates
+right away (default `de`, `--skip-translate` to opt out).
+
+Recompose existing stories standalone (updates the registry entry and
+translations too):
+
+```bash
+python scripts/compose_meta_story.py computing_pioneers --verbose
+python scripts/compose_meta_story.py --all
+python scripts/compose_meta_story.py computing_pioneers --dry-run       # preview only
+python scripts/compose_meta_story.py computing_pioneers --no-exclusions # text-only
+```
+
 ## Project Structure
 
 ```
@@ -340,9 +393,10 @@ life-ds/
 │   ├── translate_person.py          # Translation core + translate single person
 │   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
 │   ├── translate_meta_story.py      # Translate meta stories
-│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration)
+│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration, 7 composer)
 │   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
 │   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
+│   ├── compose_meta_story.py        # Phase 7: story composer — top-down narrative composition
 │   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
 │   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
