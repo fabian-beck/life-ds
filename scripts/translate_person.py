@@ -165,6 +165,9 @@ class TrContextEvent(BaseModel):
 
 class TrMetaChapter(BaseModel):
     title: str
+    # Optional: only present for chapters that carry a composed lead-in (see
+    # compose_meta_story.py), so older stories aren't asked to invent one.
+    lead_in: Optional[str] = None
     historical_context: List[TrContextEvent]
     person_events: List[TrPersonEvent]
 
@@ -192,6 +195,8 @@ class MetaStoryTranslation(BaseModel):
     description: str
     subtopics: List[TrSubtopic]
     chapters: List[TrMetaChapter]
+    # Optional: only present for composed stories (see compose_meta_story.py).
+    timeline_intro: Optional[str] = None
     conclusion: Optional[str] = None
     network_narration: Optional[TrNetworkNarration] = None
 
@@ -295,6 +300,9 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         "chapters": [
             {
                 "title": chapter.get("title", ""),
+                # Composed lead-in only when present, so stories composed
+                # before/without Phase 7 keep their old fingerprint.
+                **({"lead_in": chapter["lead_in"]} if chapter.get("lead_in") else {}),
                 "historical_context": [
                     {
                         "title": ctx.get("title", ""),
@@ -314,6 +322,10 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         ],
         "conclusion": data.get("conclusion"),
     }
+    # Composed timeline intro (Phase 7) only when present — same fingerprint
+    # stability rationale as the chapter lead-ins above.
+    if data.get("timeline_intro"):
+        payload["timeline_intro"] = data["timeline_intro"]
     # The social network itself is technical (copied verbatim), but its
     # narration texts are prose and must be translated. The key is only added
     # when narration exists, so fingerprints of stories without narration are
@@ -601,6 +613,7 @@ def apply_meta_story_translations(
     _require_same_length("chapters", src_chapters, tr_chapters)
     for chapter, tr_chapter in zip(src_chapters, tr_chapters):
         _set_if_source_has(chapter, "title", tr_chapter.get("title"))
+        _set_if_source_has(chapter, "lead_in", tr_chapter.get("lead_in"))
         src_contexts = chapter.get("historical_context") or []
         tr_contexts = tr_chapter.get("historical_context") or []
         _require_same_length("chapter.historical_context", src_contexts, tr_contexts)
@@ -621,6 +634,7 @@ def apply_meta_story_translations(
             _set_if_source_has(pe, "theme_connection", tr_pe.get("theme_connection"))
 
     _set_if_source_has(result, "conclusion", translated.get("conclusion"))
+    _set_if_source_has(result, "timeline_intro", translated.get("timeline_intro"))
 
     # Network narration: the graph data stays verbatim, only the prose is
     # overlaid. Circle keys (main person ids) are technical and never touched.
@@ -1059,7 +1073,10 @@ def translate_meta_story(
             "the story's social network — translate them as flowing prose, "
             "localizing person names per the usual name rules. Each circle also "
             "has a title, an evocative 2-5 word headline (not a list of names) — "
-            "translate it as a headline, not literally."
+            "translate it as a headline, not literally.\n"
+            "10. timeline_intro and chapter lead_in entries are short narrative "
+            "passages shown around the story timeline — translate them as "
+            "flowing prose in the same voice as the description."
         ),
         target_lang=target_lang,
         glossary={},
