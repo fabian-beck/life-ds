@@ -4,8 +4,8 @@
   "meta_story": {
     "id": "computing_pioneers",
     "title": "Engines of Thought",
-    "tagline": "From mechanical dreams to digital life",
-    "description": "Computing pioneers transformed calculation from a painstaking human occupation into a programmable force that could sort a nation’s records, crack wartime ciphers, model scientific problems, and eventually sit on an individual’s desk. The story begins with mechanical engines imagined before electricity could support them, then accelerates through punched cards, relay machines, wartime laboratories, and the stored-program architecture that made general-purpose digital computers possible.",
+    "tagline": "From encoded instructions to digital life",
+    "description": "Long before computing became electronic, portable, or ordinary, it began with a demanding proposition: that an operation could be expressed as instructions and carried out by a machine. Mechanical engines, punched cards, and mathematical theory each gave that proposition a form, recasting calculation and information as processes that could be encoded, repeated, and generalized.\n\nMaking that possibility consequential required more than speed. Machines had to process institutions’ records, serve scientific and wartime work, and become legible to programmers and responsive to human purposes. Compilers, algorithms, interfaces, and personal devices widened computing’s reach, even as a harder question persisted: whether machines should automate human work or strengthen human judgment.",
     "person_ids": [
       "ada_lovelace",
       "charles_babbage",
@@ -19,13 +19,12 @@
       "frances_allen",
       "douglas_engelbart",
       "joseph_weizenbaum",
-      "hedy_lamarr",
       "heinz_nixdorf",
       "steve_jobs"
     ],
     "date_range_start": "1822",
     "date_range_end": "2007",
-    "lastUpdated": "2026-07-21T05:59:38.402085+02:00"
+    "lastUpdated": "2026-07-22T06:54:52.978508+02:00"
   },
   "generation_metadata": {
     "hints": null,
@@ -35,8 +34,8 @@
   "subtopics": [
     {
       "id": "imagining_programmable_machines",
-      "title": "Imagining Programmable Machines",
-      "description": "Before electronic computers existed, inventors and mathematicians reconceived calculation as a sequence of instructions that machines could execute. Their designs, theories, and early automatic systems supplied the grammar of programmability.",
+      "title": "The Logic of Instructions",
+      "description": "This thread follows the move from mechanical engines to formal computability and working automatic systems. Its members established that encoded instructions could direct a general-purpose machine.",
       "person_ids": [
         "charles_babbage",
         "ada_lovelace",
@@ -46,8 +45,8 @@
     },
     {
       "id": "building_computing_infrastructure",
-      "title": "Building Computing Infrastructure",
-      "description": "Computing became socially consequential when it could organize enormous bodies of information, support scientific and military coordination, and run reliably at institutional scale. This strand joins data-processing machinery to the architecture and organizations that made digital systems durable.",
+      "title": "Computing at Scale",
+      "description": "This thread concerns computation as durable institutional capacity, processing information for science, war, and business. Its members made machines and the organizations around them consequential in the wider world.",
       "person_ids": [
         "herman_hollerith",
         "vannevar_bush",
@@ -57,8 +56,8 @@
     },
     {
       "id": "making_machines_usable",
-      "title": "Making Machines Usable",
-      "description": "The decisive challenge after hardware was making machines intelligible, efficient, and useful to their operators. Compilers, algorithms, interactive interfaces, and early conversational programs shifted attention from the machine alone to the people who instructed and worked with it.",
+      "title": "Human Terms for Machines",
+      "description": "This thread centers on the software, methods, and interfaces that made powerful computers workable. Its members treated programming, system management, and interaction as essential parts of computing itself.",
       "person_ids": [
         "grace_hopper",
         "edsger_w_dijkstra",
@@ -68,15 +67,15 @@
     },
     {
       "id": "computing_enters_daily_life",
-      "title": "Computing Enters Daily Life",
-      "description": "As computing moved beyond laboratories, it became a personal, networked, and ethically contested part of daily life. Wireless invention, human-centered products, and skepticism about artificial intelligence reveal that the computer revolution was also a debate over access, connection, and responsibility.",
-      "person_ids": ["hedy_lamarr", "joseph_weizenbaum", "steve_jobs"]
+      "title": "Everyday Digital Life",
+      "description": "This thread follows computing into consumer products and networked media while keeping its limits in view. Its members show how apparent machine understanding and delegated judgment became questions of everyday life.",
+      "person_ids": ["joseph_weizenbaum", "steve_jobs"]
     }
   ],
   "chapters": [
     {
       "id": "mechanical_imagination",
-      "title": "Mechanical Imagination (1822-1852)",
+      "title": "Instructions Take Shape (1822-1852)",
       "date_start": "1822",
       "date_start_precision": "year",
       "date_end": "1852",
@@ -96,7 +95,7 @@
           "event_date_precision": "year",
           "event_title": "Designed Analytical Engine",
           "event_index": 13,
-          "theme_connection": "Babbage's Analytical Engine design introduced the essential architecture of a general-purpose programmable computer: a processing mill, memory store, and punched-card instructions capable of conditional and iterative operations. It is an irreplaceable mechanical precursor to stored-program-era computing."
+          "theme_connection": "Babbage’s Analytical Engine design set out the core architecture of a general-purpose programmable computer: a processing mill, a memory store, and punched-card instructions capable of conditional and iterative operations. It remains an essential mechanical precursor to stored-program computing."
         },
         {
           "person_id": "ada_lovelace",
@@ -104,14 +103,15 @@
           "event_date_precision": "month",
           "event_title": "Publishes Notes on the Analytical Engine",
           "event_index": 11,
-          "theme_connection": "Lovelace's published Notes on the Analytical Engine, especially Note G's Bernoulli-number procedure, articulated a sequence of operations for a general-purpose machine. Her analysis also recognized that such a machine could manipulate symbols beyond arithmetic, a foundational vision of programmability."
+          "theme_connection": "In her published Notes on the Analytical Engine, especially the Bernoulli-number procedure in Note G, Lovelace set out a sequence of operations for a general-purpose machine. She also recognized that such a machine could manipulate symbols beyond arithmetic, giving programmability an unusually expansive early vision."
         }
       ],
-      "historical_context": []
+      "historical_context": [],
+      "lead_in": "Mechanical designs posed a radical possibility: a machine could follow an ordered procedure. The challenge was to describe calculation in a form machinery could carry out."
     },
     {
       "id": "data_and_machine_design",
-      "title": "Data and Machine Design (1884-1939)",
+      "title": "Information Finds Form (1884-1939)",
       "date_start": "1884",
       "date_start_precision": "year",
       "date_end": "1939",
@@ -155,7 +155,7 @@
           "event_date_precision": "day",
           "event_title": "Completed Turing machine paper",
           "event_index": 6,
-          "theme_connection": "In “On Computable Numbers,” Turing defined the universal machine model and established fundamental limits of algorithmic decision. This supplied the conceptual grammar of programmable general-purpose computation and remains a cornerstone of computer science."
+          "theme_connection": "In “On Computable Numbers,” Turing defined the universal-machine model and established fundamental limits of algorithmic decision. The paper supplied a conceptual grammar for programmable general-purpose computation that remains central to computer science."
         },
         {
           "person_id": "konrad_zuse",
@@ -166,11 +166,12 @@
           "theme_connection": "Zuse's Z1 was a pioneering binary, programmable mechanical computer design, using program input and separated functional units central to later computer architecture. Though mechanically unreliable, it was an indispensable early realization of the programmable-machine idea."
         }
       ],
-      "historical_context": []
+      "historical_context": [],
+      "lead_in": "Punched cards made facts readable by machines, while new designs clarified what general computation might mean. Calculation became both an institutional process and a formal idea."
     },
     {
       "id": "war_code_and_stored_programs",
-      "title": "War, Code, and Stored Programs (1940-1955)",
+      "title": "Machines Become Operational (1940-1955)",
       "date_start": "1940",
       "date_start_precision": "year",
       "date_end": "1955",
@@ -191,14 +192,6 @@
           "event_title": "Unveils the Z3",
           "event_index": 7,
           "theme_connection": "The Z3 was a functioning relay-based machine capable of fully automatic, program-controlled digital calculation. As a widely recognized early freely programmable computer, it is a decisive milestone in realizing programmable machinery."
-        },
-        {
-          "person_id": "hedy_lamarr",
-          "event_date": "1941",
-          "event_date_precision": "year",
-          "event_title": "Creates frequency-hopping system",
-          "event_index": 8,
-          "theme_connection": "Lamarr and George Antheil's frequency-hopping communication system introduced a major spread-spectrum wireless principle designed to resist jamming. Though developed for military guidance, it became an important precursor to wireless communications that underpin networked digital life."
         },
         {
           "person_id": "alan_turing",
@@ -222,7 +215,7 @@
           "event_date_precision": "day",
           "event_title": "Publishes “As We May Think” in The Atlantic",
           "event_index": 11,
-          "theme_connection": "In “As We May Think,” Bush proposed the memex, an associative system for storing, retrieving, and linking knowledge. Though conceptual, the influential publication supplied a key intellectual precursor to hypertext and human-centered information computing."
+          "theme_connection": "In “As We May Think,” Bush proposed the memex, an associative system for storing, retrieving, and linking knowledge. Though conceptual, it became an influential intellectual precursor to hypertext and human-centered information computing."
         },
         {
           "person_id": "alan_turing",
@@ -260,11 +253,12 @@
           "date_end_precision": "day",
           "wikipedia_url": "https://en.wikipedia.org/wiki/World_War_II"
         }
-      ]
+      ],
+      "lead_in": "War and postwar reconstruction turned computing from proposition into working capability. Stored programs, automatic calculation, and new software made general-purpose machines practical."
     },
     {
       "id": "software_and_interaction",
-      "title": "Software and Interaction (1956-1976)",
+      "title": "Power Meets People (1956-1976)",
       "date_start": "1956",
       "date_start_precision": "year",
       "date_end": "1976",
@@ -348,7 +342,7 @@
           "event_date_precision": "year",
           "event_title": "Publishes \"Computer Power and Human Reason\"",
           "event_index": 13,
-          "theme_connection": "Computer Power and Human Reason became a foundational critique of AI's limits and of delegating human judgment to machines. It made ethics and responsibility a durable part of public debate about computing, directly serving the collection's contested-daily-life strand."
+          "theme_connection": "Computer Power and Human Reason offered a foundational critique of AI’s limits and of delegating human judgment to machines. It made ethics and responsibility durable parts of public debate about computing."
         },
         {
           "person_id": "steve_jobs",
@@ -370,11 +364,12 @@
           "date_end_precision": null,
           "wikipedia_url": "https://en.wikipedia.org/wiki/DARPA"
         }
-      ]
+      ],
+      "lead_in": "As systems grew more capable, programming and interaction became central problems. Computing was recast as both a disciplined technical practice and an aid to human thought."
     },
     {
       "id": "personal_and_connected_computing",
-      "title": "Personal and Connected Computing (1977-2007)",
+      "title": "Computing Enters Daily Life (1977-2007)",
       "date_start": "1977",
       "date_start_precision": "year",
       "date_end": "2007",
@@ -418,7 +413,7 @@
           "event_date_precision": "day",
           "event_title": "Unveiled the iPhone",
           "event_index": 14,
-          "theme_connection": "The iPhone was a landmark mass-market mobile computer that fused touch-based interaction, internet connectivity, software applications, and personal media into a daily-use device. Its launch decisively reshaped personal and networked computing."
+          "theme_connection": "The iPhone fused touch-based interaction, internet connectivity, software applications, and personal media in a mass-market mobile computer designed for daily use. Its launch decisively reshaped personal and networked computing."
         }
       ],
       "historical_context": [
@@ -432,10 +427,11 @@
           "date_end_precision": null,
           "wikipedia_url": null
         }
-      ]
+      ],
+      "lead_in": "Personal machines and networked media brought computing beyond specialist settings. Familiar devices made its technical power part of ordinary work, communication, and culture."
     }
   ],
-  "conclusion": "Computing did not emerge from a single machine, country, or discipline. It was built through an accumulating conversation among designers, theorists, programmers, entrepreneurs, and critics—people who made information processable while repeatedly asking what that new power should mean for human life. Their work turned calculation into a universal medium for science, work, communication, and imagination.",
+  "conclusion": "Computing did not emerge from a single invention, but from a long effort to encode operations and information so machines could act upon them. From mechanical designs to intimate digital devices, that effort also enlarged the responsibility to decide what such power is for—and where human judgment must remain.",
   "social_network": {
     "nodes": [
       {
@@ -533,14 +529,6 @@
         "portrait": "/portraits/joseph_weizenbaum_thumbnail.webp",
         "roles": ["computer scientist", "professor"],
         "birth_year": 1923
-      },
-      {
-        "id": "hedy_lamarr",
-        "name": "Hedy Lamarr",
-        "type": "main",
-        "portrait": "/portraits/hedy_lamarr_thumbnail.webp",
-        "roles": ["actress", "inventor"],
-        "birth_year": 1914
       },
       {
         "id": "heinz_nixdorf",
@@ -789,29 +777,36 @@
       }
     ],
     "narration": {
-      "intro": "The machines of this story did not emerge from solitary genius alone, but from salons, papers, workplaces, and encounters that carried an idea from one mind to another. Across generations, friendship, mentorship, collaboration, and even unrealized partnerships gave mechanical dreams the human connections through which they could become digital life.",
+      "intro": "Computing advanced through more than machines and papers. Friendships, workplaces, professional encounters, and influential writing carried ideas from speculation toward implementation, and from technical designs toward new accounts of human work.",
       "circles": [
         {
           "key": "charles_babbage+ada_lovelace",
           "title": "The Engine’s First Voice",
-          "text": "At one of Charles Babbage’s 1833 soirées, Ada Lovelace entered a circle that Mary Somerville had helped make possible—as her tutor, friend, and fellow scientific mind. Lovelace and Babbage formed a lasting intellectual partnership, and her translation and far-reaching notes on Menabrea’s paper gave the Analytical Engine one of its most influential early interpretations. Somerville remained the warm connective presence between them: a celebrated scientific writer, a guest in Babbage’s salon, and Ada’s close companion."
+          "text": "Ada Lovelace entered Charles Babbage’s circle at his 1833 soirée through Mary Somerville, her tutor, friend, and a scientific contact in Babbage’s world. Lovelace and Babbage became long-term friends and intellectual collaborators. Through her translation and commentary on Menabrea’s paper, Lovelace gave the Analytical Engine one of its most influential early interpretations, while Somerville remained a close intellectual companion and their shared link."
         },
         {
           "key": "john_von_neumann+grace_hopper+alan_turing",
-          "title": "Blueprints for a New Machine",
-          "text": "Alan Turing’s 1936 paper caught John von Neumann’s attention at Princeton, where von Neumann invited the younger mathematician to become his postdoctoral assistant; Turing instead returned to Britain. Across the Atlantic’s emerging machine world, von Neumann worked with ENIAC’s co-designers, J. Presper Eckert and John Mauchly, as computing moved from hard-wired logic toward stored programs. At their company, Grace Hopper joined Eckert and Mauchly on UNIVAC I, bringing her mathematical skill to the early work that would lead toward compilers."
+          "title": "Blueprints in Motion",
+          "text": "Alan Turing’s 1936 paper drew John von Neumann’s attention at Princeton, where von Neumann invited him to become a postdoctoral assistant; Turing chose to return to the United Kingdom. Von Neumann later interacted with J. Presper Eckert and John Mauchly as ENIAC moved from hard-wired logic toward stored-program concepts. At the company Eckert and Mauchly co-founded, Grace Hopper worked as a senior mathematician on UNIVAC I and early compiler work."
         },
         {
           "key": "vannevar_bush+douglas_engelbart",
-          "title": "Thought Made Interactive",
-          "text": "Vannevar Bush imagined a future in which knowledge might be more readily connected and explored in “As We May Think.” Reading the essay while serving in the U.S. Navy, Douglas Engelbart found in it a powerful spur to his own vision of interactive computing as an aid to human thought. The link was one of inspiration across a generation, carrying an essay’s speculative promise toward an engineer’s life work."
+          "title": "An Idea Carried Forward",
+          "text": "In “As We May Think,” Vannevar Bush imagined knowledge more readily stored, retrieved, linked, and explored. Douglas Engelbart read the essay while serving in the U.S. Navy, and it strongly influenced his vision of interactive computing as an aid to human thought. A speculative essay became an inspiration for an engineer’s life work."
         },
         {
           "key": "konrad_zuse+heinz_nixdorf",
           "title": "An Unfinished Alliance",
-          "text": "Konrad Zuse made repeated visits to Heinz Nixdorf in Paderborn, where two German computing ventures considered what they might build together. Their companies explored transferring Zuse software onto Nixdorf computers, a practical alliance between invention and enterprise. The cooperation did not endure, but their meetings mark an effort to carry software across the boundaries between rival machines."
+          "text": "Konrad Zuse repeatedly visited Heinz Nixdorf in Paderborn as their companies considered a cooperation. They explored transferring Zuse software to Nixdorf computers, joining an inventor’s software to an expanding computing enterprise. The arrangement ultimately failed, but it marked a practical attempt to move software across machine boundaries."
         }
       ]
     }
+  },
+  "timeline_intro": "What began as an effort to mechanize calculation became a theory of universal instruction and then an operational reality in digital machines. Computing moved outward—from specialized systems serving states, laboratories, and businesses to software and interfaces that made its power more widely usable. As it entered homes, offices, and pockets, questions about intelligence, responsibility, and human judgment became inseparable from the technology itself.",
+  "composition": {
+    "model": "gpt-5.6-terra",
+    "composed_at": "2026-07-22T06:54:52.978508+02:00",
+    "throughline": "This story follows the transformation of computing from a proposition about encoded instructions—imagined in Babbage and Lovelace’s engines, formalized by Turing, and operationalized by Zuse and stored-program designs—into an institutional and everyday force. Punched-card systems, scientific and business machines, compilers, algorithms, and interfaces made that force scalable and usable, while Bush, Engelbart, and Weizenbaum keep a linked question in view: whether computers should merely automate work or augment human judgment. By the time Jobs’s devices put networked computing into daily life, the original problem of instructing machines had become inseparable from deciding how people would live and think with them.",
+    "excluded_people": []
   }
 }

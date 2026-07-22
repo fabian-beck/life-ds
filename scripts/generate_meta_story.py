@@ -288,10 +288,10 @@ class NetworkNarrationResult(BaseModel):
 
     intro: str = Field(
         description="A 2-3 sentence introductory paragraph for the network, "
-        "written like a book's opening: thematic and inviting. It sets the scene "
-        "for the whole network WITHOUT naming individual people or previewing the "
-        "specific circles (those are revealed as the reader scrolls). No lists, "
-        "no reading guide."
+        "written like a book's opening: thematic and evocative, in the third "
+        "person and never addressed to the reader. It sets the scene for the "
+        "whole network WITHOUT naming individual people or previewing the "
+        "specific circles (those are revealed later). No lists, no reading guide."
     )
     circles: List[NetworkCircleNarration]
 
@@ -1596,11 +1596,11 @@ CIRCLES:
 
 REQUIREMENTS:
 - intro: a 2-3 sentence opening paragraph, written the way an author opens a
-  chapter — evocative and inviting, setting up the human theme that runs through
-  this network (what kind of bonds it is made of, what world it spans, what it
+  chapter — evocative, setting up the human theme that runs through this
+  network (what kind of bonds it is made of, what world it spans, what it
   builds toward). Do NOT name individual people, do NOT preview or list the
-  specific circles/clusters (they unfold as the reader scrolls, so naming them
-  here would spoil the journey), and do NOT explain how to read the graph.
+  specific circles/clusters (naming them here would spoil what follows), and
+  do NOT explain how to read the graph.
 - One entry per circle, in the given order, with `key` copied EXACTLY.
 - Each circle title: a short, evocative headline (2-5 words) in the spirit of a
   book chapter — capture the theme or bond that unites the circle. Do NOT list
@@ -1610,7 +1610,12 @@ REQUIREMENTS:
   bridged whom. Ground every claim in the tie descriptions above; do not invent
   facts. No bullet points, no lists of relationships.
 - Refer to people by natural name forms (e.g. "Babbage" on second mention).
-- Tone: vivid but factual, matching a biographical story collection."""
+- Tone: vivid but factual, matching a biographical story collection.
+- NEVER address the reader. This is a data story, not a tutorial or a guided
+  tour: no "you"/"your"/"we"/"us", no imperatives aimed at the audience
+  ("Follow...", "Trace...", "Explore..."), no references to scrolling,
+  clicking, or the graph as an interface. Write in the third person, about
+  the people themselves."""
 
     try:
         response = client.beta.chat.completions.parse(
