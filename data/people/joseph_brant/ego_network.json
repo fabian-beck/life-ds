@@ -1,0 +1,354 @@
+{
+  "dataset": "Joseph Brant ego network",
+  "created_on": "2026-07-23",
+  "ego": {
+    "name": "Joseph Brant",
+    "birth_year": 1743,
+    "death_year": 1807,
+    "primary_roles": [
+      "Mohawk military leader",
+      "politician",
+      "diplomat"
+    ],
+    "summary": "Thayendanegea, known as Joseph Brant, was a Mohawk military and political leader who allied with Great Britain during the American Revolution. He led Mohawk and Loyalist forces on the New York frontier and later helped establish the Six Nations community on the Grand River in present-day Ontario.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Joseph_Brant"
+  },
+  "connections": [
+    {
+      "person_name": "Margaret Tehonwaghkwangearahkwa",
+      "relationship_type": "family/mother",
+      "relationship_description": "Brant's mother, also called Owandah, whose Wolf Clan determined his matrilineal Mohawk identity. She returned with Joseph and Molly to Canajoharie after his father's death and was an active ginseng trader.",
+      "start_year": 1743,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Wolf Clan and Mohawk family life",
+        "Relocation from the Ohio Country to Canajoharie",
+        "Connections with British and colonial traders"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Molly_Brant"
+      ],
+      "notes": "Her commercial and social connections helped place the family in William Johnson's Mohawk Valley network."
+    },
+    {
+      "person_name": "Molly Brant",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Brant's elder sister or maternal half-sister, a prominent Mohawk leader and Loyalist intermediary. Her partnership with William Johnson brought Joseph into influential British Indian Department circles.",
+      "start_year": 1743,
+      "end_year": 1796,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Mohawk family and clan networks",
+        "British Loyalist and Haudenosaunee diplomacy",
+        "Support for the British during the American Revolution"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Molly_Brant"
+      ],
+      "notes": "Under Mohawk matrilineal social practice, they were regarded as full siblings because they shared a mother."
+    },
+    {
+      "person_name": "Peter Tehonwaghkwangearahkwa",
+      "relationship_type": "family/father",
+      "relationship_description": "Brant's father, identified in Anglican Church records as Peter; he died while Joseph was young.",
+      "start_year": 1743,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Early childhood in the Mohawk community",
+        "Christian Mohawk family life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "notes": "Later claims concerning his non-Iroquois origins are described as plausible but unverifiable."
+    },
+    {
+      "person_name": "Brant Kanagaraduncka",
+      "relationship_type": "family/stepfather",
+      "relationship_description": "Mohawk royaner and businessman who married Brant's mother in 1753. His Canajoharie household connected the family to Mohawk political and commercial life.",
+      "start_year": 1753,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Residence in Canajoharie",
+        "Hosting William Johnson during his visits",
+        "Mohawk political and commercial life"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Molly_Brant"
+      ],
+      "notes": "Joseph and Molly appear to have adopted the Brant surname through their connection to him."
+    },
+    {
+      "person_name": "Sir William Johnson",
+      "relationship_type": "professional/patron",
+      "relationship_description": "British Superintendent of Indian Affairs and Molly Brant's partner. Johnson supported Brant's English-style education and connected him with British and Indigenous leaders.",
+      "start_year": 1753,
+      "end_year": 1774,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "British-Mohawk diplomacy",
+        "Education and patronage",
+        "Seven Years' War campaigns",
+        "Indian Department networks"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://de.wikipedia.org/wiki/William_Johnson,_1._Baronet"
+      ],
+      "notes": "Johnson's visits to Brant's stepfather's house and Brant's residence with the Johnson-Molly household gave the young Brant direct access to imperial networks."
+    },
+    {
+      "person_name": "John Butler",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "British Indian Department officer and Loyalist ranger commander who worked alongside Brant in the frontier war and refugee networks centered on Fort Niagara.",
+      "start_year": 1758,
+      "end_year": 1781,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Seven Years' War service",
+        "Loyalist frontier operations",
+        "Fort Niagara refugee and military networks",
+        "Raids in the New York frontier war"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/John_Butler_(Ranger)"
+      ],
+      "notes": "Both men were introduced to one another's British-Indigenous military world during the Fort Carillon campaign and later acted on the Loyalist side."
+    },
+    {
+      "person_name": "John Deseronto",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Fellow Mohawk war chief and British ally who shared Brant's wartime experience and participated with him in postwar discussions with Haldimand about resettlement.",
+      "start_year": 1759,
+      "end_year": 1807,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Seven Years' War service at Fort Niagara and Montreal",
+        "British-allied Mohawk leadership during the Revolution",
+        "Postwar negotiations with Frederick Haldimand"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Deseronto",
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "notes": "They made different postwar settlement choices: Deseronto led Mohawks to the Bay of Quinte, while Brant favored the Grand River."
+    },
+    {
+      "person_name": "Eleazar Wheelock",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Founder of Moor's Indian Charity School, where Brant studied English literacy, academic subjects, and Anglican instruction.",
+      "start_year": 1761,
+      "end_year": 1763,
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Attendance at Moor's Indian Charity School",
+        "English-language education",
+        "Religious and academic study"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Moor%27s_Charity_School"
+      ],
+      "notes": "Wheelock praised Brant's intellectual ability and conduct; planned further study at King's College did not occur."
+    },
+    {
+      "person_name": "Samuel Kirkland",
+      "relationship_type": "academic/peer",
+      "relationship_description": "Future missionary to western New York Indigenous communities whom Brant met while studying at Moor's Indian Charity School.",
+      "start_year": 1761,
+      "end_year": 1763,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Study at Moor's Indian Charity School",
+        "English and Anglican educational setting"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "notes": "Their connection is documented as an encounter at the school rather than a long-term partnership."
+    },
+    {
+      "person_name": "Margaret",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Brant's first wife, described as the daughter of a Virginia planter; they married in the Mohawk Valley and had two children.",
+      "start_year": 1765,
+      "end_year": 1777,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Marriage and household formation in the Mohawk Valley",
+        "Raising two children"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "notes": "The supplied account identifies her only as Margaret; her death is generally placed in 1777."
+    },
+    {
+      "person_name": "Guy Johnson",
+      "relationship_type": "professional/supervisor",
+      "relationship_description": "British Indian Department official for whom Brant became secretary and interpreter in 1772; they fled the Mohawk Valley together and traveled to Britain in 1775.",
+      "start_year": 1772,
+      "end_year": 1779,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "British Indian Department administration",
+        "Interpretation and diplomacy",
+        "Loyalist withdrawal to Canada",
+        "Journey to Britain",
+        "Coordination of British-Mohawk wartime efforts"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Guy_Johnson"
+      ],
+      "notes": "Johnson's relationship with Brant combined formal employment, Loyalist alliance, and shared advocacy for British support of the Iroquois."
+    },
+    {
+      "person_name": "Barry St. Leger",
+      "relationship_type": "professional/military commander",
+      "relationship_description": "British officer whose 1777 expedition against Fort Stanwix included Brant's Mohawk force; they were allied in the Saratoga Campaign and Battle of Oriskany.",
+      "start_year": 1777,
+      "end_year": 1777,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "St. Leger Expedition",
+        "Siege of Fort Stanwix",
+        "Battle of Oriskany",
+        "British-Indigenous military coordination"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Battle_of_Oriskany",
+        "https://en.wikipedia.org/wiki/Barry_St._Leger"
+      ],
+      "notes": "Brant led part of the Indigenous contingent associated with St. Leger's expedition."
+    },
+    {
+      "person_name": "Catharine Brant",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Brant's second wife, also known as Ahdohwahgeseon and Catharine Croghan, and a Mohawk clan mother who became a major Six Nations leader at Grand River after his death.",
+      "start_year": 1780,
+      "end_year": 1807,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Marriage at Niagara amid Mohawk refugees",
+        "Relocation to the Grand River settlement",
+        "Family life at Burlington Bay",
+        "Six Nations leadership"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Catharine_Brant"
+      ],
+      "notes": "She survived Brant and continued as an influential Grand River leader until 1837."
+    },
+    {
+      "person_name": "Frederick Haldimand",
+      "relationship_type": "professional/patron",
+      "relationship_description": "Governor of Quebec who issued the 1784 Haldimand Proclamation setting aside Grand River land for Mohawk people and other displaced Six Nations people allied with Britain.",
+      "start_year": 1783,
+      "end_year": 1786,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Postwar resettlement negotiations",
+        "Grand River land grant",
+        "Establishment of the Six Nations community in Ontario"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Frederick_Haldimand",
+        "https://en.wikipedia.org/wiki/Haldimand_Proclamation"
+      ],
+      "notes": "The grant was intended to compensate Indigenous allies for settlements lost in New York during the Revolution."
+    },
+    {
+      "person_name": "John Brant",
+      "relationship_type": "family/child",
+      "relationship_description": "Brant's son with Catharine, later a Mohawk chief, Upper Canadian legislator, and advocate for Six Nations land rights.",
+      "start_year": 1794,
+      "end_year": 1807,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Family life in the Grand River and Burlington Bay communities",
+        "Mohawk political inheritance and leadership"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Brant_(Mohawk_leader)",
+        "https://en.wikipedia.org/wiki/Catharine_Brant"
+      ],
+      "notes": "John was still a child at Joseph Brant's death and later became Tekarihogen through his mother's Mohawk lineage."
+    },
+    {
+      "person_name": "John Norton",
+      "relationship_type": "professional/mentor",
+      "relationship_description": "Mohawk chief, interpreter, and Brant protégé whom Brant helped mentor after Norton entered the Six Nations community at Grand River.",
+      "start_year": 1794,
+      "end_year": 1807,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Mohawk language and cultural instruction",
+        "Grand River political life",
+        "Six Nations land-development advocacy",
+        "British Indian Department work"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Norton_(Mohawk_chief)",
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "notes": "Norton was adopted into a Mohawk family and clan, with Brant serving as his adoptive uncle."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Brant's matrilineal Mohawk family anchored his identity through his mother Margaret's Wolf Clan and his sister Molly's influential leadership. His marriages, especially to Catharine Brant, connected his household to major Mohawk political lineages and extended his legacy through children including John Brant."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Brant's career was built through close work with British Indian Department officials and allied Mohawk and Loyalist leaders. These relationships supported his roles as interpreter, diplomat, military leader, and postwar advocate for Six Nations resettlement on the Grand River."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Education at Moor's Indian Charity School provided Brant with English literacy, Anglican instruction, and familiarity with colonial intellectual networks. This training strengthened the cross-cultural skills that later made him an effective intermediary between Mohawk and British worlds."
+    }
+  ]
+}

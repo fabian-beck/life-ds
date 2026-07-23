@@ -1,0 +1,626 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-07-23",
+  "person": {
+    "name": "Phillis_Wheatley",
+    "birth_date": "1753-01-01",
+    "death_date": "1784-12-05",
+    "primary_roles": [
+      "poet",
+      "writer"
+    ],
+    "tagline": "A Voice Forged in Captivity",
+    "summary": "Phillis Wheatley was a West African-born American poet who became the first African-American author to publish a book of poetry. Enslaved in Boston as a child, she received an unusual classical education, gained transatlantic literary recognition, and later faced poverty after emancipation and marriage.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+    "portrait": {
+      "image": "/portraits/phillis_wheatley_thumbnail.webp",
+      "thumbnail": "/portraits/phillis_wheatley_thumbnail.webp",
+      "medium": "/portraits/phillis_wheatley_medium.webp",
+      "full": "/portraits/phillis_wheatley_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Phillis_Wheatley_frontispiece.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "captivity_and_learning",
+      "headline": "Stolen Into Letters",
+      "date_start": "1753",
+      "date_start_precision": "year",
+      "date_end": "1767",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 14,
+      "involved_people": [
+        "Mary Wheatley",
+        "Nathaniel Wheatley",
+        "John Wheatley",
+        "Susanna Wheatley"
+      ],
+      "location": "West Africa and colonial New England"
+    },
+    {
+      "id": "a_poet_claims_her_voice",
+      "headline": "The Poet Proves Herself",
+      "date_start": "1767",
+      "date_start_precision": "year",
+      "date_end": "1772-10-08",
+      "date_end_precision": "day",
+      "age_start": 14,
+      "age_end": 19,
+      "involved_people": [
+        "George Whitefield",
+        "John Hancock",
+        "Thomas Hutchinson",
+        "Andrew Oliver"
+      ],
+      "location": "Colonial New England"
+    },
+    {
+      "id": "london_laurels_freedom",
+      "headline": "London Laurels",
+      "date_start": "1773-05",
+      "date_start_precision": "month",
+      "date_end": "1773-11",
+      "date_end_precision": "month",
+      "age_start": 20,
+      "age_end": 20,
+      "involved_people": [
+        "Nathaniel Wheatley",
+        "Frederick Bull",
+        "George III",
+        "Selina Hastings, Countess of Huntingdon",
+        "John Wheatley",
+        "Susanna Wheatley"
+      ],
+      "location": "England and colonial New England"
+    },
+    {
+      "id": "revolutionary_muse",
+      "headline": "A Voice for Revolution",
+      "date_start": "1775",
+      "date_start_precision": "year",
+      "date_end": "1776",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 23,
+      "involved_people": [
+        "George Washington"
+      ],
+      "location": "Massachusetts"
+    },
+    {
+      "id": "unpublished_final_struggle",
+      "headline": "The Unprinted Last Years",
+      "date_start": "1778",
+      "date_start_precision": "year",
+      "date_end": "1784-12-05",
+      "date_end_precision": "day",
+      "age_start": 25,
+      "age_end": 31,
+      "involved_people": [
+        "John Peters",
+        "Benjamin Franklin"
+      ],
+      "location": "Boston, Massachusetts, United States"
+    }
+  ],
+  "conclusion": "Phillis Wheatley transformed a life begun in enslavement into a literary breakthrough that challenged the racial and intellectual boundaries of her age. Her 1773 collection made her a foundational voice in African American literature; though poverty and obscurity marked her final years, her poems endured.",
+  "events": [
+    {
+      "date": "1753",
+      "date_precision": "year",
+      "date_note": "Her birth date and exact birthplace are undocumented; scholars generally place her birth in West Africa, probably present-day Gambia or Senegal",
+      "age": 0,
+      "title": "Birth in West Africa",
+      "description": "Phillis Wheatley was born in West Africa, probably in the [[Senegambia|Senegambia region]]. Little is known of her birth family, language, or early childhood.",
+      "locations": [
+        {
+          "name_historic": "Senegambia",
+          "name_modern": "Senegambia, West Africa",
+          "centroid": [
+            -14.5,
+            13.5
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "captivity_and_learning",
+      "annotations": {
+        "Senegambia": {
+          "explanation": "A historical West African region around the Senegal and Gambia rivers, spanning parts of present-day Senegal and The Gambia.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Senegambia"
+        }
+      }
+    },
+    {
+      "date": "1761-07-11",
+      "date_precision": "day",
+      "age": 8,
+      "title": "Enslaved and Taken to Boston",
+      "description": "At about seven or eight years old, Phillis was sold into slavery and transported across the Atlantic aboard the slave ship Phillis. After arriving in Boston, she was purchased by merchant and tailor John Wheatley for his wife, Susanna, and was given the name Phillis Wheatley.",
+      "locations": [
+        {
+          "name_historic": "West Africa",
+          "name_modern": "West Africa",
+          "centroid": [
+            -1.0,
+            10.0
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Wheatley",
+        "Susanna Wheatley"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Walsh-cross-section-of-slave-ship-1830.jpg/960px-Walsh-cross-section-of-slave-ship-1830.jpg",
+          "caption": "1830 cross-section drawing of a slave ship",
+          "source": "https://commons.wikimedia.org/wiki/File:Walsh-cross-section-of-slave-ship-1830.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "captivity_and_learning",
+      "event_class": {
+        "type": "migration",
+        "from_location": "West Africa",
+        "to_location": "Boston, Province of Massachusetts Bay",
+        "characterization": "forced enslavement"
+      }
+    },
+    {
+      "date": "1761",
+      "date_precision": "year",
+      "date_end": "1767",
+      "date_end_precision": "year",
+      "date_note": "The exact beginning and end dates of her instruction are uncertain",
+      "age": 8,
+      "title": "Studies in the Wheatley Household",
+      "description": "In Boston, Mary Wheatley began teaching Phillis Wheatley to read and write, while Nathaniel Wheatley also supported her studies. The Wheatley family provided instruction in English, the Bible, and Greek and Latin classics—an exceptional opportunity for an enslaved girl in colonial Boston.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mary Wheatley",
+        "Nathaniel Wheatley"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "captivity_and_learning"
+    },
+    {
+      "date": "1767",
+      "date_precision": "year",
+      "date_note": "Approximate date, based on accounts that she wrote the poem at age fourteen",
+      "age": 14,
+      "title": "Composes First Poem",
+      "description": "In Boston, teenage Phillis Wheatley wrote “To the University of Cambridge, in New England,” drawing on the Christian instruction and classical literature she encountered in the Wheatley household.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-feather",
+      "chapter": "captivity_and_learning"
+    },
+    {
+      "date": "1770",
+      "date_precision": "year",
+      "age": 17,
+      "title": "Publishes Whitefield Elegy",
+      "description": "After [[George Whitefield|Whitefield]] died in September 1770, Wheatley composed the elegy at the request of his supporters. Its circulation in Boston, Philadelphia, and New Haven brought her wide public attention in the colonies.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "New Haven",
+          "name_modern": "New Haven, Connecticut, United States",
+          "centroid": [
+            -72.9279,
+            41.3083
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "George Whitefield"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Whitefield"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/The_Revd._George_Whitefield%2C_A.M_%28NYPL_Hades-255911-430931%29.jpg/960px-The_Revd._George_Whitefield%2C_A.M_%28NYPL_Hades-255911-430931%29.jpg",
+          "caption": "Portrait of Reverend George Whitefield",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Revd._George_Whitefield,_A.M_(NYPL_Hades-255911-430931).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "a_poet_claims_her_voice",
+      "annotations": {
+        "George Whitefield": {
+          "explanation": "An English Anglican evangelist whose revival preaching made him one of the leading figures of the Great Awakening in British North America.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/George_Whitefield"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "On the Death of the Rev. Mr. George Whitefield",
+        "publication_type": "article",
+        "significance": "first public acclaim",
+        "impact": "The widely circulated elegy established Wheatley as a poet known beyond Boston."
+      }
+    },
+    {
+      "date": "1772-10-08",
+      "date_precision": "day",
+      "age": 19,
+      "title": "Defends Her Authorship",
+      "description": "In Boston, Phillis Wheatley was examined by leading local figures, including John Hancock, Thomas Hutchinson, Andrew Oliver, and several clergymen, amid racist doubts that an enslaved African woman could have written her poetry. Eighteen men signed an attestation declaring that they believed the poems were her work.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Hancock",
+        "Thomas Hutchinson",
+        "Andrew Oliver"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral",
+        "https://en.wikipedia.org/wiki/John_Hancock"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "a_poet_claims_her_voice"
+    },
+    {
+      "date": "1773-05",
+      "date_precision": "month",
+      "date_note": "The precise departure date is uncertain",
+      "age": 20,
+      "title": "Travels to London",
+      "description": "In May 1773, Wheatley accompanied Nathaniel Wheatley to London, partly because of her chronic asthma and chiefly to seek publication for her collected poems. There she met Frederick Bull, the Lord Mayor, and other prominent supporters; an intended audience with King George III did not occur before her return to Boston.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, United Kingdom",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Nathaniel Wheatley",
+        "Frederick Bull",
+        "George III"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+        "https://en.wikipedia.org/wiki/Frederick_Bull_(Lord_Mayor_of_London)",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+      ],
+      "event_type_icon": "mdi-map-marker",
+      "chapter": "london_laurels_freedom"
+    },
+    {
+      "date": "1773-09-01",
+      "date_precision": "day",
+      "age": 20,
+      "title": "Publishes Poetry Collection",
+      "description": "Published in London on September 1, 1773, Poems on Various Subjects, Religious and Moral became Wheatley’s landmark collection. After Boston printers declined the book, London bookseller Archibald Bell issued it with support from Selina Hastings, Countess of Huntingdon, and other patrons.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, United Kingdom",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Nathaniel Wheatley",
+        "Selina Hastings, Countess of Huntingdon",
+        "Archibald Bell"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral",
+        "https://en.wikipedia.org/wiki/Selina_Hastings,_Countess_of_Huntingdon"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Benjamin_West%2C_Countess_of_Huntingdon%2C_second_half_of_18th_century%2C_early_19th_century%2C_NGA_57076.jpg/960px-Benjamin_West%2C_Countess_of_Huntingdon%2C_second_half_of_18th_century%2C_early_19th_century%2C_NGA_57076.jpg",
+          "caption": "Portrait of Selina, Countess of Huntingdon",
+          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_West,_Countess_of_Huntingdon,_second_half_of_18th_century,_early_19th_century,_NGA_57076.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "london_laurels_freedom",
+      "event_class": {
+        "type": "publication",
+        "title": "Poems on Various Subjects, Religious and Moral",
+        "publication_type": "book",
+        "publisher": "Archibald Bell",
+        "significance": "landmark collection",
+        "impact": "The book made Wheatley the first African-American author to publish a volume of poetry."
+      }
+    },
+    {
+      "date": "1773-11",
+      "date_precision": "month",
+      "date_note": "The Wheatleys had manumitted her by November 1773",
+      "age": 20,
+      "title": "Gains Her Freedom",
+      "description": "Soon after the publication of her book, John and Susanna Wheatley [[manumitted|manumitted]] Phillis Wheatley in Boston. She was no longer legally enslaved by the family that had bought her as a child.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Wheatley",
+        "Susanna Wheatley"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+      ],
+      "event_type_icon": "mdi-lock-open",
+      "chapter": "london_laurels_freedom",
+      "annotations": {
+        "manumitted": {
+          "explanation": "Formally freed from legal enslavement by an enslaver.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Manumission"
+        }
+      }
+    },
+    {
+      "date": "1775",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Addresses General Washington",
+      "description": "During the opening phase of the American Revolutionary War, Wheatley sent George Washington her poem “To His Excellency, George Washington.” Washington replied appreciatively, praising her poetic talent and inviting her to visit his headquarters.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "George Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington"
+      ],
+      "event_type_icon": "mdi-email",
+      "chapter": "revolutionary_muse"
+    },
+    {
+      "date": "1776",
+      "date_precision": "year",
+      "age": 23,
+      "title": "Visits Washington’s Headquarters",
+      "description": "In 1776, Phillis Wheatley visited General George Washington at his military headquarters in Cambridge, Massachusetts. Her poem to Washington was republished in The Pennsylvania Gazette that April.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "George Washington"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/George_Washington"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Longfellow_National_Historic_Site%2C_Cambridge%2C_Massachusetts.JPG/960px-Longfellow_National_Historic_Site%2C_Cambridge%2C_Massachusetts.JPG",
+          "caption": "Longfellow House–Washington’s Headquarters National Historic Site",
+          "source": "https://commons.wikimedia.org/wiki/File:Longfellow_National_Historic_Site,_Cambridge,_Massachusetts.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "revolutionary_muse"
+    },
+    {
+      "date": "1778",
+      "date_precision": "year",
+      "date_note": "The exact marriage date is uncertain",
+      "age": 25,
+      "title": "Marries John Peters",
+      "description": "In Boston in 1778, Wheatley married John Peters, a free Black grocer. Their household later faced severe financial hardship.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Peters"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "unpublished_final_struggle",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "John Peters",
+        "duration": "until her death",
+        "children": 3,
+        "characterization": "impoverished marriage"
+      }
+    },
+    {
+      "date": "1779",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Seeks Subscribers for Volume",
+      "description": "In 1779, Wheatley circulated proposals and newspaper advertisements for a second, substantial volume of poems, which she intended to dedicate to Benjamin Franklin. Wartime conditions prevented her from securing enough subscriptions and patronage to finance its printing, and the volume was never published.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Benjamin Franklin"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Benjamin_Franklin_1759.jpg/960px-Benjamin_Franklin_1759.jpg",
+          "caption": "Benjamin Franklin, 1759",
+          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_1759.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "unpublished_final_struggle"
+    },
+    {
+      "date": "1784-12-05",
+      "date_precision": "day",
+      "age": 31,
+      "title": "Dies in Boston",
+      "description": "Phillis Wheatley Peters died in Boston on December 5, 1784, aged 31, after developing pneumonia and giving birth to a daughter. Her newborn daughter died the same day.",
+      "locations": [
+        {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts, United States",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "unpublished_final_struggle"
+    }
+  ]
+}
