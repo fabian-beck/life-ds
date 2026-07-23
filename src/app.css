@@ -23,6 +23,16 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
+  /*
+   * Clip horizontal overflow so full-bleed sections that size themselves to
+   * `100vw` (e.g. the meta story scroll-proxy timeline) don't spill past the
+   * viewport's content width and produce a spurious horizontal scrollbar when a
+   * vertical scrollbar is present. `clip` is used rather than `hidden` because
+   * it does not establish a scroll container, so the page's `position: sticky`
+   * elements keep sticking to the viewport (and `overflow-y` stays `visible`
+   * instead of computing to `auto`).
+   */
+  overflow-x: clip;
 }
 
 body::before {
