@@ -616,6 +616,7 @@
         {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
           <MetaStoryNetwork
             network={metaStoryData.social_network}
+            metaStoryId={metaStoryData.meta_story.id}
             {currentLanguage}
           />
         {/await}

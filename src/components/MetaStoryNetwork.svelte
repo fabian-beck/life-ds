@@ -12,11 +12,15 @@
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
   import { generateNameVariants } from "../utils/storyHelpers.js";
+  import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
   export let network = null;
   export let currentLanguage = "en";
+  // Id of the meta story this network belongs to, so opening a person's story
+  // carries the `from_meta` context (returning restores the meta story + scroll).
+  export let metaStoryId = null;
 
   const personStyles = personStylesData.styles;
 
@@ -123,6 +127,16 @@
     ? Math.min(Math.max(popupNode.x, popupHalf + 6), width - popupHalf - 6)
     : 0;
   $: popupTailDx = popupNode ? popupNode.x - popupCx : 0;
+  // Carry the meta story context so the story's close button returns here.
+  $: popupHref = popupNode
+    ? `#/${currentLanguage}/story/${popupNode.id}` +
+      (metaStoryId ? `?from_meta=${metaStoryId}` : "")
+    : "#";
+
+  // Remember where the reader left the meta story before jumping into a story.
+  function openStory() {
+    if (metaStoryId) saveMetaStoryScroll(metaStoryId);
+  }
 
   // Rendered node positions resolved by id (kept in sync with the simulation on
   // every tick). Links read positions from here rather than from d3's mutated
@@ -637,10 +651,7 @@
               : popupNode.y + MAIN_R + 10}px; --tail-dx: {popupTailDx}px;"
           >
             <span class="node-popup-name">{displayName(popupNode.name)}</span>
-            <a
-              class="node-popup-link"
-              href={`#/${currentLanguage}/story/${popupNode.id}`}
-            >
+            <a class="node-popup-link" href={popupHref} on:click={openStory}>
               {$_("meta_story.network_open_story")}
               <span aria-hidden="true">→</span>
             </a>
