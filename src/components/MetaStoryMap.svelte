@@ -7,11 +7,15 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { generateNameVariants } from "../utils/storyHelpers.js";
+  import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `geo_map` block from a meta story: { clusters: [...], narration? }
   export let geoMap = null;
   export let currentLanguage = "en";
+  // Meta story id, so an event link can carry the `from_meta` context that
+  // returns the reader here (with scroll restored) on closing the story.
+  export let metaStoryId = null;
 
   const personStyles = personStylesData.styles;
 
@@ -28,6 +32,24 @@
 
   function primaryColor(personId) {
     return personStyles[personId]?.primary || "#38bdf8";
+  }
+
+  // Hash-router link to the exact event slide in the person's own story. The
+  // `event` query param addresses the life_events.json index (event index ≠
+  // slide index when chapters exist), and `from_meta` lets the story's close
+  // button return to this meta story.
+  function eventHref(event) {
+    const idx = event.event_index != null ? event.event_index : 0;
+    return (
+      `#/${currentLanguage}/story/${event.person_id}?event=${idx}` +
+      (metaStoryId ? `&from_meta=${metaStoryId}` : "")
+    );
+  }
+
+  // Remember where the reader left the meta story before jumping into a story,
+  // so returning restores this scroll position (matches the network/timeline).
+  function openStory() {
+    if (metaStoryId) saveMetaStoryScroll(metaStoryId);
   }
 
   $: clusters = geoMap?.clusters ?? [];
@@ -207,11 +229,19 @@
   }
 
   function markerElement(event, clusterIndex) {
+    // MapLibre writes its per-frame positioning transform onto the marker
+    // element itself, so the visual dot must live in a child: the wrapper is
+    // left free for MapLibre's translate (with no CSS transition to lag it
+    // behind the camera during flyTo/fitBounds), while the inner dot carries
+    // the look and the highlight/scale transitions.
     const el = document.createElement("span");
     el.className = "meta-map-marker";
-    el.style.backgroundColor = primaryColor(event.person_id);
     el.dataset.cluster = `${clusterIndex}`;
     el.title = `${event.event_date} · ${displayName(event.person_name)}: ${event.event_title}`;
+    const dot = document.createElement("span");
+    dot.className = "meta-map-marker-dot";
+    dot.style.backgroundColor = primaryColor(event.person_id);
+    el.appendChild(dot);
     return el;
   }
 
@@ -413,11 +443,20 @@
                   class="event"
                   style={`--person-color: ${primaryColor(event.person_id)}`}
                 >
-                  <span class="event-date">{event.event_date}</span>
-                  <span class="event-title">{event.event_title}</span>
-                  <span class="event-person"
-                    >{displayName(event.person_name)}</span
+                  <a
+                    class="event-link"
+                    href={eventHref(event)}
+                    on:click={openStory}
+                    title={$_("meta_story.map_open_event", {
+                      name: displayName(event.person_name),
+                    })}
                   >
+                    <span class="event-date">{event.event_date}</span>
+                    <span class="event-title">{event.event_title}</span>
+                    <span class="event-person"
+                      >{displayName(event.person_name)}</span
+                    >
+                  </a>
                 </li>
               {/each}
             </ul>
@@ -511,13 +550,27 @@
     .map-canvas {
       transition: none;
     }
+    :global(.meta-map-marker-dot) {
+      transition: none;
+    }
   }
 
-  /* Event markers (DOM elements appended by MapLibre, hence :global). */
+  /* Event markers (DOM elements appended by MapLibre, hence :global).
+     MapLibre owns the wrapper's transform (its per-frame positioning during
+     camera moves), so the wrapper carries NO transition — otherwise every
+     positional update would ease over 0.3s and the markers would lag behind
+     the map during flyTo/fitBounds. The inner dot holds the visual styling
+     and the highlight/scale transitions instead. */
   :global(.meta-map-marker) {
     display: block;
     width: 13px;
     height: 13px;
+  }
+
+  :global(.meta-map-marker-dot) {
+    display: block;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     border: 2px solid rgba(2, 6, 23, 0.85);
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
@@ -527,13 +580,13 @@
       opacity 0.3s ease;
   }
 
-  :global(.meta-map-marker.current) {
+  :global(.meta-map-marker.current .meta-map-marker-dot) {
     transform: scale(1.35);
     opacity: 1;
     z-index: 2;
   }
 
-  :global(.meta-map-marker.dimmed) {
+  :global(.meta-map-marker.dimmed .meta-map-marker-dot) {
     opacity: 0.35;
     box-shadow: none;
   }
@@ -558,12 +611,14 @@
     margin-bottom: 0;
   }
 
+  /* Frosted glass over the map: a translucent scrim so the blurred basemap
+     reads through as a soft backdrop, mirroring the network cards. */
   .step-card {
     pointer-events: auto;
     width: min(30rem, 100%);
-    background: rgba(15, 23, 42, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 16px;
     padding: 1.1rem 1.3rem 1.2rem;
@@ -623,13 +678,43 @@
 
   .event {
     border-left: 2px solid var(--person-color, rgba(56, 189, 248, 0.6));
-    padding-left: 0.6rem;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  /* Each event is a link to its slide in the person's own story. The link is
+     the full clickable row (padding lives here, not on the li) so the whole
+     entry is a comfortable target. */
+  .event-link {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0.4rem;
-    font-size: 0.82rem;
-    line-height: 1.4;
+    padding: 0.15rem 0.4rem 0.15rem 0.6rem;
+    border-radius: 0 6px 6px 0;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .event-link:hover,
+  .event-link:focus-visible {
+    background: rgba(148, 163, 184, 0.12);
+    transform: translateX(2px);
+    outline: none;
+  }
+
+  .event-link:focus-visible {
+    box-shadow: 0 0 0 2px var(--person-color, rgba(56, 189, 248, 0.6));
+  }
+
+  .event-link:hover .event-title,
+  .event-link:focus-visible .event-title {
+    text-decoration: underline;
+    text-decoration-color: var(--person-color, rgba(56, 189, 248, 0.6));
+    text-underline-offset: 2px;
   }
 
   .event-date {
