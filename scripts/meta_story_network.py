@@ -398,11 +398,11 @@ def derive_clusters(network: Dict[str, Any]) -> List[Dict[str, Any]]:
     all_links = network.get("links") or []
     node_by_id = {n["id"]: n for n in nodes}
     links = [
-        l
-        for l in all_links
-        if l.get("source") in node_by_id
-        and l.get("target") in node_by_id
-        and l["source"] != l["target"]
+        link
+        for link in all_links
+        if link.get("source") in node_by_id
+        and link.get("target") in node_by_id
+        and link["source"] != link["target"]
     ]
     if not links:
         return []
@@ -424,11 +424,11 @@ def derive_clusters(network: Dict[str, Any]) -> List[Dict[str, Any]]:
         )
         secondaries.sort(key=lambda n: n.get("name", ""))
         internal = sorted(
-            (l for l in links if l["source"] in ids and l["target"] in ids),
-            key=lambda l: (
-                0 if l.get("kind") == "main" else 1,
-                -strength_rank.get(l.get("strength", ""), 0),
-                _pair_key(l["source"], l["target"]),
+            (link for link in links if link["source"] in ids and link["target"] in ids),
+            key=lambda link: (
+                0 if link.get("kind") == "main" else 1,
+                -strength_rank.get(link.get("strength", ""), 0),
+                _pair_key(link["source"], link["target"]),
             ),
         )
         years = [
