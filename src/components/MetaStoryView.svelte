@@ -633,7 +633,11 @@
             $_("meta_story.map_subtitle")}
         </p>
         {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
-          <MetaStoryMap geoMap={metaStoryData.geo_map} {currentLanguage} />
+          <MetaStoryMap
+            geoMap={metaStoryData.geo_map}
+            metaStoryId={metaStoryData.meta_story.id}
+            {currentLanguage}
+          />
         {/await}
       </section>
     {/if}
