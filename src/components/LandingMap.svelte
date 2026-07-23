@@ -306,6 +306,32 @@
     });
   }
 
+  // Custom MapLibre control: a button that resets the map view
+  class ZoomResetControl {
+    onAdd(map) {
+      this._map = map;
+      this._container = document.createElement("div");
+      this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
+      this._container.innerHTML = `
+        <button type="button" class="maplibregl-ctrl-zoom-reset" title="Reset zoom">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 3C6.13 3 3 6.13 3 10s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+            <circle cx="10" cy="10" r="2"/>
+          </svg>
+        </button>
+      `;
+      this._container
+        .querySelector("button")
+        .addEventListener("click", () => resetMapView(map));
+      return this._container;
+    }
+
+    onRemove() {
+      this._container.parentNode.removeChild(this._container);
+      this._map = undefined;
+    }
+  }
+
   // Alias parseHexColor for local readability
   const hexToRgb = parseHexColor;
 
@@ -869,31 +895,6 @@
     );
 
     // Add custom zoom reset button
-    class ZoomResetControl {
-      onAdd(map) {
-        this._map = map;
-        this._container = document.createElement("div");
-        this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
-        this._container.innerHTML = `
-          <button type="button" class="maplibregl-ctrl-zoom-reset" title="Reset zoom">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10 3C6.13 3 3 6.13 3 10s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-              <circle cx="10" cy="10" r="2"/>
-            </svg>
-          </button>
-        `;
-        this._container
-          .querySelector("button")
-          .addEventListener("click", () => resetMapView(map));
-        return this._container;
-      }
-
-      onRemove() {
-        this._container.parentNode.removeChild(this._container);
-        this._map = undefined;
-      }
-    }
-
     mapInstance.addControl(new ZoomResetControl(), "top-right");
 
     mapInstance.on("load", () => {

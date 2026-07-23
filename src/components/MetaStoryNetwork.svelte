@@ -948,15 +948,6 @@
     border-color: rgba(56, 189, 248, 0.55);
   }
 
-  .step-kicker {
-    margin: 0 0 0.3rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #7dd3fc;
-  }
-
   .step-title {
     margin: 0;
     font-family: var(--heading-font, "Space Grotesk", sans-serif);

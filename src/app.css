@@ -23,6 +23,7 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
+
   /*
    * Clip horizontal overflow so full-bleed sections that size themselves to
    * `100vw` (e.g. the meta story scroll-proxy timeline) don't spill past the
