@@ -934,13 +934,15 @@
     margin-bottom: 0;
   }
 
-  /* Blurred, slightly transparent card scrolling over the graph. */
+  /* Frosted-glass card scrolling over the graph: the scrim is kept translucent
+     enough that the blurred network shows through as a soft backdrop rather
+     than a flat panel, while the text stays legible. */
   .step-card {
     pointer-events: auto;
     width: min(30rem, 100%);
-    background: rgba(15, 23, 42, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 16px;
     padding: 1.1rem 1.3rem 1.2rem;
