@@ -408,8 +408,8 @@
 
   // Calculate available vertical height for persons layer
   $: availableHeight = (() => {
-    // Fixed overhead: HEADER_RESERVE_HEIGHT + yearAxisMarginTop(40) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
-    const fixedOverhead = HEADER_RESERVE_HEIGHT + 40 + 28 + 10 + 20;
+    // Fixed overhead: headerReserve + yearAxisMarginTop(40) + yearAxisHeight(28) + personsLayerMarginTop(10) + bottomPadding(20)
+    const fixedOverhead = headerReserve + 40 + 28 + 10 + 20;
     const stickyOffset = stickyHeaderHeight || 0;
     // Use reactive viewportHeight state (updated on resize)
     return viewportHeight - fixedOverhead - stickyOffset;
@@ -947,7 +947,7 @@
     if (!themesWithPersons || themesWithPersons.length === 0) return 300;
 
     // Fixed heights for top sections
-    const topPadding = HEADER_RESERVE_HEIGHT; // .timeline-wrapper padding-top for fixed chapter header
+    const topPadding = headerReserve; // .timeline-wrapper padding-top for fixed chapter header
     const yearAxisHeight = 28; // .year-axis height
     const yearAxisMarginTop = 40; // Extra space for stacked historical context labels above axis
     const personsLayerMarginTop = 10;
@@ -1134,6 +1134,16 @@
 
   // Chapter header tracking
   let chapterHeaderWidth = 0;
+  let chapterHeaderHeight = 0;
+
+  // Space reserved at the top of the timeline for the floating chapter header.
+  // The header can be taller than the static minimum when it carries a lead-in,
+  // so grow the reserve to the measured header height (plus a gap) to keep the
+  // year axis and the scroll-indicator year pill clear of the box.
+  $: headerReserve =
+    isSticky && currentChapterByIndicator && chapterHeaderHeight > 0
+      ? Math.max(HEADER_RESERVE_HEIGHT, Math.ceil(chapterHeaderHeight) + 16)
+      : HEADER_RESERVE_HEIGHT;
 
   // Viewport height tracking for density recalculation on resize
   let viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
@@ -2010,7 +2020,7 @@
 
 <div
   class="meta-timeline-container"
-  style="--density-factor: {densityFactor}; --header-reserve: {HEADER_RESERVE_HEIGHT}px;"
+  style="--density-factor: {densityFactor}; --header-reserve: {headerReserve}px;"
 >
   <!-- Fixed chapter header display - only shown when timeline is sticky -->
   {#if isSticky && currentChapterByIndicator}
@@ -2024,6 +2034,7 @@
         <div
           class="chapter-title-display"
           bind:clientWidth={chapterHeaderWidth}
+          bind:clientHeight={chapterHeaderHeight}
         >
           <div class="chapter-header-main">
             <h3 class="chapter-title-text">
@@ -2261,8 +2272,8 @@
     <!-- Scroll position indicator -->
     <div
       class="scroll-indicator"
-      style="left: {scrollIndicatorLeftPx}px; top: {HEADER_RESERVE_HEIGHT -
-        10}px;"
+      style="left: {scrollIndicatorLeftPx}px; top: {headerReserve -
+        10}px; height: calc(100% - {headerReserve + 42}px);"
     >
       {#if currentIndicatorYear}
         <div class="scroll-indicator-label">{currentIndicatorYear}</div>
@@ -2401,10 +2412,10 @@
     backdrop-filter: blur(12px);
     border: 1px solid rgba(56, 189, 248, 0.7);
     border-radius: 0.5rem;
-    /* Density-adaptive padding: scales down when space is constrained.
-       The vertical floor stays generous so the year badge never touches the border. */
-    padding: calc(0.5rem * max(0.9, var(--density-factor, 1)))
-      calc(0.8rem * max(0.9, var(--density-factor, 1)));
+    /* Fixed padding: the header floats over the timeline and its space is
+       reserved dynamically from its measured height, so it does not shrink
+       with timeline density. Vertical padding keeps the year badge off the border. */
+    padding: 0.55rem 0.85rem;
     box-shadow:
       0 8px 24px rgba(0, 0, 0, 0.5),
       0 0 20px rgba(56, 189, 248, 0.2);
@@ -2423,16 +2434,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Density-adaptive gap: scales down when space is constrained */
-    gap: calc(0.5rem * max(0.85, var(--density-factor, 1)));
+    gap: 0.5rem;
     /* No margin-bottom for true vertical centering */
   }
 
   .chapter-title-text {
     font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    /* Density-adaptive font size: scales down when space is constrained,
-       but keeps a legible floor even on dense timelines. */
-    font-size: calc(1rem * max(0.9, var(--density-factor, 1)));
+    font-size: 1.05rem;
     font-weight: 600;
     color: #38bdf8;
     margin: 0;
@@ -2441,15 +2449,11 @@
 
   .chapter-year-range {
     font-family: var(--body-font, "IBM Plex Sans", sans-serif);
-    /* Density-adaptive font size: scales down when space is constrained,
-       but keeps a legible floor even on dense timelines. */
-    font-size: calc(0.72rem * max(0.9, var(--density-factor, 1)));
+    font-size: 0.75rem;
     font-weight: 500;
     color: rgba(148, 163, 184, 0.9);
     background: rgba(56, 189, 248, 0.1);
-    /* Density-adaptive padding: scales down when space is constrained */
-    padding: calc(0.2rem * max(0.85, var(--density-factor, 1)))
-      calc(0.4rem * max(0.9, var(--density-factor, 1)));
+    padding: 0.2rem 0.4rem;
     border-radius: 0.25rem;
     /* line-height: 1 keeps the badge shorter than the title's line box so it
        stays vertically centered inside the header instead of overlapping the border. */
@@ -2459,9 +2463,9 @@
 
   /* Composed chapter lead-in (compose_meta_story.py), shown below the headline */
   .chapter-lead-in {
-    margin: calc(0.3rem * max(0.8, var(--density-factor, 1))) 0 0;
+    margin: 0.35rem 0 0;
     font-family: var(--body-font, "IBM Plex Sans", sans-serif);
-    font-size: calc(0.72rem * max(0.85, var(--density-factor, 1)));
+    font-size: 0.85rem;
     line-height: 1.45;
     color: rgba(203, 213, 225, 0.88);
     text-align: center;
@@ -2820,8 +2824,7 @@
   /* Scroll position indicator - full height */
   .scroll-indicator {
     position: absolute;
-    /* top is set inline (90px) */
-    height: calc(100% - 90px);
+    /* top and height are set inline, derived from the dynamic header reserve */
     width: 2px;
     background: none;
     border-left: 2px dashed rgba(56, 189, 248, 0.4);
