@@ -692,6 +692,36 @@ def apply_exclusions(
     if dataset.get("social_network"):
         dataset["social_network"] = prune_network(dataset["social_network"], removed)
 
+    # Map section: drop excluded people's events; clusters emptied by that
+    # lose their narration stop too. Scores go slightly stale, which is fine —
+    # re-run the map pipeline (meta_story_map_narration.py) for a fresh
+    # derivation.
+    geo_map = dataset.get("geo_map")
+    if isinstance(geo_map, dict):
+        kept_clusters = []
+        for cluster in geo_map.get("clusters") or []:
+            cluster["events"] = [
+                event
+                for event in cluster.get("events") or []
+                if event.get("person_id") not in removed
+            ]
+            if cluster["events"]:
+                kept_clusters.append(cluster)
+            else:
+                print(
+                    f"Note: map stop '{cluster.get('key', '')}' emptied by "
+                    "exclusions, dropped"
+                )
+        geo_map["clusters"] = kept_clusters
+        narration = geo_map.get("narration")
+        if isinstance(narration, dict):
+            kept_keys = {c.get("key") for c in kept_clusters}
+            narration["stops"] = [
+                stop
+                for stop in narration.get("stops") or []
+                if stop.get("key") in kept_keys
+            ]
+
     if verbose:
         names = ", ".join(sorted(removed))
         print(f"  Excluded from story: {names}")

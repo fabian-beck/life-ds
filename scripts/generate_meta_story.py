@@ -10,6 +10,10 @@ Generate meta-story datasets using a multi-phase approach:
 6. Phase 6: Network narration for the scroll-over cards (1 AI call)
 7. Phase 7: Story composer — top-down narrative composition (2 AI calls,
    see compose_meta_story.py)
+8. Phase 8: Geographic map section — event rating, geographic clustering,
+   and stop narration with a discard option (see meta_story_map.py and
+   meta_story_map_narration.py). Runs after composition so exclusions are
+   respected.
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -28,6 +32,7 @@ from pydantic import BaseModel, Field
 
 from compose_meta_story import compose_meta_story_dataset
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
 
@@ -1799,6 +1804,11 @@ def main():
         help="Phase 7: never drop people from the story (text composition only)",
     )
     parser.add_argument(
+        "--skip-map",
+        action="store_true",
+        help="Skip Phase 8 (geographic map section)",
+    )
+    parser.add_argument(
         "--skip-translate",
         action="store_true",
         help="Skip automatic translation after generation",
@@ -2010,6 +2020,30 @@ def main():
             dataset = composed
         else:
             print("Warning: story composition failed, keeping bottom-up texts")
+
+    # Phase 8: geographic map section — rate the story's located events,
+    # cluster them geographically, and narrate the top clusters as map stops
+    # (with an option to discard accidental groupings). Runs after
+    # composition so excluded people never reach the map. Non-fatal.
+    if args.skip_map:
+        if args.verbose:
+            print("\n=== PHASE 8: Map Section (SKIPPED) ===")
+    else:
+        if args.verbose:
+            print("\n=== PHASE 8: Map Section ===")
+        try:
+            geo_map = generate_geo_map(
+                dataset,
+                registry,
+                client,
+                model=args.model,
+                reasoning_effort=DEFAULT_REASONING_EFFORT,
+                verbose=args.verbose,
+            )
+            if geo_map is not None:
+                dataset["geo_map"] = geo_map
+        except Exception as e:
+            print(f"Warning: map section generation failed: {e}")
 
     # Save files
     if not save_meta_story(story_id, dataset, verbose=args.verbose):
