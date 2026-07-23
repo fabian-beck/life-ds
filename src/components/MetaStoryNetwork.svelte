@@ -109,6 +109,21 @@
   // The node whose ties are highlighted: hover wins, else pin.
   $: activeId = hoveredId ?? selectedId;
 
+  // A tapped/clicked MAIN node opens a compact popup offering to jump to that
+  // person's own story. Secondary (bridging) nodes have no story, so no popup.
+  $: selectedNode = selectedId != null ? posById.get(selectedId) : null;
+  $: popupNode =
+    selectedNode && selectedNode.type === "main" ? selectedNode : null;
+  // Prefer above the node; flip below when it would clip the frame's top.
+  $: popupAbove = popupNode ? popupNode.y - MAIN_R > 96 : true;
+  // Keep the popup fully inside the (overflow-clipped) frame, then aim its
+  // little tail back at the node it belongs to.
+  $: popupHalf = compact ? 92 : 112;
+  $: popupCx = popupNode
+    ? Math.min(Math.max(popupNode.x, popupHalf + 6), width - popupHalf - 6)
+    : 0;
+  $: popupTailDx = popupNode ? popupNode.x - popupCx : 0;
+
   // Rendered node positions resolved by id (kept in sync with the simulation on
   // every tick). Links read positions from here rather than from d3's mutated
   // link.source/target objects, so endpoints always match the drawn nodes.
@@ -612,6 +627,25 @@
             {/each}
           </g>
         </svg>
+
+        {#if ready && popupNode}
+          <div
+            class="node-popup"
+            class:below={!popupAbove}
+            style="left: {popupCx}px; top: {popupAbove
+              ? popupNode.y - MAIN_R - 10
+              : popupNode.y + MAIN_R + 10}px; --tail-dx: {popupTailDx}px;"
+          >
+            <span class="node-popup-name">{displayName(popupNode.name)}</span>
+            <a
+              class="node-popup-link"
+              href={`#/${currentLanguage}/story/${popupNode.id}`}
+            >
+              {$_("meta_story.network_open_story")}
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        {/if}
       </div>
     </div>
 
@@ -755,6 +789,9 @@
     .node {
       transition: none;
     }
+    .node-popup {
+      animation: none;
+    }
   }
 
   .node {
@@ -796,6 +833,73 @@
     font-size: 10.5px;
     font-weight: 500;
     fill: #cbd5e1;
+  }
+
+  /* --- Node popup (tap/click a person to open their story) ---------------- */
+  .node-popup {
+    position: absolute;
+    z-index: 4;
+    transform: translate(-50%, -100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.7rem;
+    background: rgba(15, 23, 42, 0.94);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.55);
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: auto;
+    animation: mnet-pop 0.14s ease-out;
+  }
+
+  .node-popup.below {
+    transform: translate(-50%, 0);
+  }
+
+  /* Little tail aimed back at the node (shifted when the card was clamped). */
+  .node-popup::after {
+    content: "";
+    position: absolute;
+    left: calc(50% + var(--tail-dx, 0px));
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+  }
+  .node-popup:not(.below)::after {
+    top: 100%;
+    border-top-color: rgba(15, 23, 42, 0.94);
+  }
+  .node-popup.below::after {
+    bottom: 100%;
+    border-bottom-color: rgba(15, 23, 42, 0.94);
+  }
+
+  .node-popup-name {
+    font-family: var(--heading-font, "Space Grotesk", sans-serif);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+
+  .node-popup-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #7dd3fc;
+    text-decoration: none;
+  }
+  .node-popup-link:hover {
+    color: #bae6fd;
+  }
+
+  @keyframes mnet-pop {
+    from {
+      opacity: 0;
+    }
   }
 
   /* --- Narration cards ---------------------------------------------------- */
