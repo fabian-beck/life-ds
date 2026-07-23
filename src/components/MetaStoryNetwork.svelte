@@ -667,12 +667,6 @@
         {#each clusters as cluster, i (cluster.key)}
           <li class="step" use:observeStep={i}>
             <div class="step-card" class:current={activeStep === i}>
-              <p class="step-kicker">
-                {$_("meta_story.network_step", {
-                  index: i + 1,
-                  total: clusters.length,
-                })}
-              </p>
               <h3 class="step-title">
                 {narrationTitles.get(cluster.key) ??
                   clusterTitle(cluster, currentLanguage)}

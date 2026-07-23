@@ -207,11 +207,19 @@
   }
 
   function markerElement(event, clusterIndex) {
+    // MapLibre writes its per-frame positioning transform onto the marker
+    // element itself, so the visual dot must live in a child: the wrapper is
+    // left free for MapLibre's translate (with no CSS transition to lag it
+    // behind the camera during flyTo/fitBounds), while the inner dot carries
+    // the look and the highlight/scale transitions.
     const el = document.createElement("span");
     el.className = "meta-map-marker";
-    el.style.backgroundColor = primaryColor(event.person_id);
     el.dataset.cluster = `${clusterIndex}`;
     el.title = `${event.event_date} · ${displayName(event.person_name)}: ${event.event_title}`;
+    const dot = document.createElement("span");
+    dot.className = "meta-map-marker-dot";
+    dot.style.backgroundColor = primaryColor(event.person_id);
+    el.appendChild(dot);
     return el;
   }
 
@@ -389,12 +397,8 @@
         <li class="step" use:observeStep={i}>
           <div class="step-card" class:current={activeStep === i}>
             <p class="step-kicker">
-              {$_("meta_story.map_step", {
-                index: i + 1,
-                total: clusters.length,
-              })}
               <span class="step-place">
-                · {cluster.label}{#if stopYearRange(cluster)}&nbsp;({stopYearRange(
+                {cluster.label}{#if stopYearRange(cluster)}&nbsp;({stopYearRange(
                     cluster
                   )}){/if}
               </span>
@@ -515,13 +519,27 @@
     .map-canvas {
       transition: none;
     }
+    :global(.meta-map-marker-dot) {
+      transition: none;
+    }
   }
 
-  /* Event markers (DOM elements appended by MapLibre, hence :global). */
+  /* Event markers (DOM elements appended by MapLibre, hence :global).
+     MapLibre owns the wrapper's transform (its per-frame positioning during
+     camera moves), so the wrapper carries NO transition — otherwise every
+     positional update would ease over 0.3s and the markers would lag behind
+     the map during flyTo/fitBounds. The inner dot holds the visual styling
+     and the highlight/scale transitions instead. */
   :global(.meta-map-marker) {
     display: block;
     width: 13px;
     height: 13px;
+  }
+
+  :global(.meta-map-marker-dot) {
+    display: block;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     border: 2px solid rgba(2, 6, 23, 0.85);
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
@@ -531,13 +549,13 @@
       opacity 0.3s ease;
   }
 
-  :global(.meta-map-marker.current) {
+  :global(.meta-map-marker.current .meta-map-marker-dot) {
     transform: scale(1.35);
     opacity: 1;
     z-index: 2;
   }
 
-  :global(.meta-map-marker.dimmed) {
+  :global(.meta-map-marker.dimmed .meta-map-marker-dot) {
     opacity: 0.35;
     box-shadow: none;
   }
