@@ -660,6 +660,20 @@
     margin: 0 auto;
     padding: 2rem 1rem;
     font-family: var(--body-font, "IBM Plex Sans", sans-serif);
+
+    /* Editorial type palette — one ink, one body tone, one muted tone, one
+       accent. Every text style below draws from these four so the story reads
+       as a single typographic system instead of a stack of ad-hoc sizes and
+       colors. Conventions borrowed from print editing: display font for
+       headline and subheads, everything else in the body face at one size;
+       the accent (drop cap, links, hairline) is used sparingly. */
+    --ms-ink: #e8edf4; /* headline + subheads */
+    --ms-body: #cbd5e1; /* all running prose */
+    --ms-muted: #94a3b8; /* dateline, standfirsts, captions */
+    --ms-accent: #38bdf8; /* drop cap, links, hairline — sparingly */
+
+    color: var(--ms-body);
+    line-height: 1.75;
   }
 
   /* Sticky header group - wrapper for synchronized fade transition */
@@ -767,17 +781,28 @@
   h1 {
     font-family: var(--heading-font, "Space Grotesk", sans-serif);
     font-size: 2.5rem;
+    line-height: 1.15;
+    color: var(--ms-ink);
     margin-bottom: 0.5rem;
   }
 
+  /* Deck / standfirst — the story's one-line summary. Set in the body face at
+     a muted tone rather than the accent color, so the headline and the drop
+     cap stay the loudest elements on the page (editorial convention). */
   .tagline {
     font-size: 1.25rem;
-    color: #38bdf8;
-    margin-bottom: 0.5rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ms-muted);
+    margin-bottom: 0.75rem;
   }
 
+  /* Dateline — small, uppercase, letter-spaced like a print kicker. */
   .date-range {
-    color: #94a3b8;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ms-muted);
     margin-bottom: 1.5rem;
   }
 
@@ -793,10 +818,14 @@
     clear: both;
   }
 
-  .opening-text {
-    font-size: 1.15rem;
+  /* Running prose — the cold open, the description and the conclusion are all
+     the same body copy: one size, one tone, one measure. The only thing that
+     sets the opening apart is the raised initial. */
+  .opening-text,
+  .description {
+    font-size: 1.0625rem;
     line-height: 1.75;
-    color: #e2e8f0;
+    color: var(--ms-body);
     margin-bottom: 1rem;
   }
 
@@ -809,12 +838,7 @@
     font-size: 1.9em;
     line-height: 1;
     padding-right: 0.06em;
-    color: #38bdf8;
-  }
-
-  .description {
-    line-height: 1.7;
-    color: #cbd5e1;
+    color: var(--ms-accent);
   }
 
   /* Sections */
@@ -822,11 +846,16 @@
     margin-bottom: 3rem;
   }
 
+  /* Subheads — one step down from the headline, closed off with a neutral
+     hairline rather than a colored rule so the accent stays reserved for the
+     drop cap and links. */
   h2 {
     font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    font-size: 1.875rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ms-ink);
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
     padding-bottom: 0.5rem;
   }
 
@@ -876,21 +905,25 @@
     margin-bottom: 3rem;
   }
 
+  /* Section standfirsts — the intro line under a subhead. Body size, muted
+     tone, held to a comfortable measure so they read as secondary to the copy
+     that follows. */
   .network-intro,
   .map-intro,
   .timeline-intro {
-    color: #94a3b8;
-    line-height: 1.6;
+    font-size: 1.0625rem;
+    color: var(--ms-muted);
+    line-height: 1.7;
     margin-bottom: 1.25rem;
     max-width: 62ch;
   }
 
-  /* Conclusion */
+  /* Conclusion — the same body copy as the rest of the article; its own
+     subhead already sets it apart, so it needs no italic or size shift. */
   .conclusion p {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: #cbd5e1;
-    font-style: italic;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--ms-body);
   }
 
   /* Loading state */
