@@ -444,19 +444,22 @@
     position: relative;
   }
 
-  /* The map sticks below the app's sticky header while the narration cards
-     (which follow in flow) scroll up and over it. */
+  /* The map pins FULL SCREEN while the narration cards (which follow in
+     flow) scroll up and over it. Full-bleed out of the 800px story column
+     (same trick as the timeline's scroll proxy); the translucent app header
+     simply overlays the map's top edge. */
   .mmap-sticky {
     position: sticky;
-    top: calc(var(--sticky-header-height, 0px) + 0.5rem);
+    top: 0;
     z-index: 1;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
   }
 
   .map-frame {
     position: relative;
     width: 100%;
-    height: min(520px, 62vh);
-    border-radius: 16px;
+    height: 100vh;
     overflow: hidden;
     background: rgba(15, 23, 42, 0.6);
     /* Vertical page scrolling passes through the (non-interactive) map. */

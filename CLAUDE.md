@@ -313,8 +313,9 @@ Each meta story JSON can carry a `geo_map` block, rendered as a scrollytelling
 map section in `MetaStoryView.svelte` (component: `MetaStoryMap.svelte`, lazily
 imported so MapLibre stays out of the entry bundle). It follows the network
 section and usually comes last before the conclusion: a **non-interactive** map
-(all pan/zoom handlers disabled — the story drives the camera) pins below the
-sticky header while narration cards scroll up over it, one card per geographic
+(all pan/zoom handlers disabled — the story drives the camera) pins **full
+screen** (full-bleed out of the story column, under the translucent sticky
+header) while narration cards scroll up over it, one card per geographic
 "stop". When a card enters the viewport band, the camera automatically flies to
 that stop (single place → `flyTo` city zoom; spread cluster → `fitBounds`),
 the stop's event markers (person-colored dots) light up, and the others dim.
