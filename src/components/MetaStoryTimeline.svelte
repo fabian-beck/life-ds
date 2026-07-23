@@ -2401,8 +2401,9 @@
     backdrop-filter: blur(12px);
     border: 1px solid rgba(56, 189, 248, 0.7);
     border-radius: 0.5rem;
-    /* Density-adaptive padding: scales down when space is constrained */
-    padding: calc(0.4rem * max(0.8, var(--density-factor, 1)))
+    /* Density-adaptive padding: scales down when space is constrained.
+       The vertical floor stays generous so the year badge never touches the border. */
+    padding: calc(0.5rem * max(0.9, var(--density-factor, 1)))
       calc(0.8rem * max(0.9, var(--density-factor, 1)));
     box-shadow:
       0 8px 24px rgba(0, 0, 0, 0.5),
@@ -2429,8 +2430,9 @@
 
   .chapter-title-text {
     font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    /* Density-adaptive font size: scales down when space is constrained */
-    font-size: calc(0.9rem * max(0.85, var(--density-factor, 1)));
+    /* Density-adaptive font size: scales down when space is constrained,
+       but keeps a legible floor even on dense timelines. */
+    font-size: calc(1rem * max(0.9, var(--density-factor, 1)));
     font-weight: 600;
     color: #38bdf8;
     margin: 0;
@@ -2439,15 +2441,19 @@
 
   .chapter-year-range {
     font-family: var(--body-font, "IBM Plex Sans", sans-serif);
-    /* Density-adaptive font size: scales down when space is constrained */
-    font-size: calc(0.65rem * max(0.85, var(--density-factor, 1)));
+    /* Density-adaptive font size: scales down when space is constrained,
+       but keeps a legible floor even on dense timelines. */
+    font-size: calc(0.72rem * max(0.9, var(--density-factor, 1)));
     font-weight: 500;
     color: rgba(148, 163, 184, 0.9);
     background: rgba(56, 189, 248, 0.1);
     /* Density-adaptive padding: scales down when space is constrained */
-    padding: calc(0.15rem * max(0.8, var(--density-factor, 1)))
-      calc(0.35rem * max(0.9, var(--density-factor, 1)));
+    padding: calc(0.2rem * max(0.85, var(--density-factor, 1)))
+      calc(0.4rem * max(0.9, var(--density-factor, 1)));
     border-radius: 0.25rem;
+    /* line-height: 1 keeps the badge shorter than the title's line box so it
+       stays vertically centered inside the header instead of overlapping the border. */
+    line-height: 1;
     white-space: nowrap;
   }
 
