@@ -2027,8 +2027,8 @@
     {#key currentChapterByIndicator.id}
       <div
         class="fixed-chapter-header"
-        in:fade={{ duration: 300, delay: 100 }}
-        out:fade={{ duration: 200 }}
+        in:fade={{ duration: 320, delay: 160 }}
+        out:fade={{ duration: 220 }}
         style={chapterHeaderStyle}
       >
         <div
@@ -2395,6 +2395,9 @@
       --header-reserve,
       60px
     ); /* Reserve space for fixed chapter header */
+    /* Animate reserve changes so the year axis and rows glide when the
+       chapter header changes height, instead of jumping. */
+    transition: padding-top 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Fixed chapter header - positioned at top, doesn't scroll */
@@ -2830,7 +2833,12 @@
     border-left: 2px dashed rgba(56, 189, 248, 0.4);
     pointer-events: none;
     z-index: 15;
-    transition: left 0.1s ease-out;
+    /* left tracks the scroll position quickly; top/height follow the
+       animated header reserve so the year pill glides with the axis. */
+    transition:
+      left 0.1s ease-out,
+      top 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
