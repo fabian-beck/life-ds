@@ -389,12 +389,8 @@
         <li class="step" use:observeStep={i}>
           <div class="step-card" class:current={activeStep === i}>
             <p class="step-kicker">
-              {$_("meta_story.map_step", {
-                index: i + 1,
-                total: clusters.length,
-              })}
               <span class="step-place">
-                · {cluster.label}{#if stopYearRange(cluster)}&nbsp;({stopYearRange(
+                {cluster.label}{#if stopYearRange(cluster)}&nbsp;({stopYearRange(
                     cluster
                   )}){/if}
               </span>
