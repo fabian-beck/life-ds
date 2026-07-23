@@ -78,6 +78,16 @@ def backfill(story_ids: List[str], registry: Dict[str, Any], dry_run: bool) -> N
 
         # Circle keys of the re-derived network, for narration carry-over.
         valid_keys = {c["key"] for c in derive_clusters(network)}
+        main_ids = {n["id"] for n in network["nodes"] if n["type"] == "main"}
+
+        def circle_survives(circle: Dict[str, Any]) -> bool:
+            # Composer-organized circles carry explicit member_ids; they stay
+            # valid as long as every member is still a main node. Derived
+            # circles are matched against the re-derived cluster keys.
+            members = circle.get("member_ids")
+            if members:
+                return all(pid in main_ids for pid in members)
+            return circle.get("key") in valid_keys
 
         for path in _story_files(story_id):
             data = _load(path)
@@ -90,7 +100,7 @@ def backfill(story_ids: List[str], registry: Dict[str, Any], dry_run: bool) -> N
                 kept = [
                     circle
                     for circle in (old_narration.get("circles") or [])
-                    if circle.get("key") in valid_keys
+                    if circle_survives(circle)
                 ]
                 dropped = len(old_narration.get("circles") or []) - len(kept)
                 data["social_network"]["narration"] = {

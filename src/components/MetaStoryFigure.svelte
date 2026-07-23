@@ -6,10 +6,19 @@
   export let image = null;
   // "opening" floats the figure beside the cold-open text on wide screens.
   export let variant = "section";
+  // Body-block layout (composer's choice): "left"/"right" float the figure
+  // beside the following text on wide screens, "full" (or null) spans the
+  // column.
+  export let layout = null;
 </script>
 
 {#if image?.url}
-  <figure class="story-figure" class:opening={variant === "opening"}>
+  <figure
+    class="story-figure"
+    class:opening={variant === "opening"}
+    class:float-left={layout === "left"}
+    class:float-right={layout === "right"}
+  >
     <img src={image.url} alt={image.caption || ""} loading="lazy" />
     {#if image.caption || image.source}
       <figcaption>
@@ -71,12 +80,19 @@
     text-decoration: underline;
   }
 
-  /* Opening figure sits beside the cold-open text on wide screens */
+  /* Opening and floated body figures sit beside their text on wide screens */
   @media (min-width: 700px) {
-    .story-figure.opening {
+    .story-figure.opening,
+    .story-figure.float-right {
       float: right;
       width: 42%;
       margin: 0.25rem 0 1rem 1.5rem;
+    }
+
+    .story-figure.float-left {
+      float: left;
+      width: 42%;
+      margin: 0.25rem 1.5rem 1rem 0;
     }
   }
 </style>

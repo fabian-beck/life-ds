@@ -5,6 +5,7 @@
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
   import MetaStoryFigure from "./MetaStoryFigure.svelte";
+  import MetaStoryBody from "./MetaStoryBody.svelte";
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
@@ -43,6 +44,9 @@
   // Composed story-specific section headings, falling back to generic labels
   $: sectionHeadings = metaStoryData?.section_headings || {};
   $: sectionImages = metaStoryData?.section_images || {};
+  // Composed section bodies (Phase 8): free-form narrative blocks rendered
+  // between each section's standfirst and its interactive component.
+  $: sectionBodies = metaStoryData?.section_bodies || {};
 
   // Calculate proxy height based on timeline's horizontal scroll distance
   $: if (timelineContainer && metaStoryData?.chapters?.length) {
@@ -546,6 +550,7 @@
           <p class="timeline-intro">{metaStoryData.timeline_intro}</p>
         {/if}
         <MetaStoryFigure image={sectionImages.timeline} />
+        <MetaStoryBody blocks={sectionBodies.timeline} />
 
         <div
           class="scroll-proxy-container"
@@ -613,6 +618,7 @@
             $_("meta_story.network_subtitle")}
         </p>
         <MetaStoryFigure image={sectionImages.network} />
+        <MetaStoryBody blocks={sectionBodies.network} />
         {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
           <MetaStoryNetwork
             network={metaStoryData.social_network}
@@ -632,6 +638,7 @@
           {metaStoryData.geo_map?.narration?.intro ||
             $_("meta_story.map_subtitle")}
         </p>
+        <MetaStoryBody blocks={sectionBodies.map} />
         {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
           <MetaStoryMap geoMap={metaStoryData.geo_map} {currentLanguage} />
         {/await}
@@ -645,6 +652,7 @@
           {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
         </h2>
         <MetaStoryFigure image={sectionImages.conclusion} />
+        <MetaStoryBody blocks={sectionBodies.conclusion} />
         <p>{metaStoryData.conclusion}</p>
       </section>
     {/if}
