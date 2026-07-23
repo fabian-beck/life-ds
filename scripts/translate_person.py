@@ -195,6 +195,17 @@ class TrNetworkNarration(BaseModel):
     circles: List[TrNetworkCircle]
 
 
+class TrMapStop(BaseModel):
+    # Optional: stops kept without narration carry no title in the payload.
+    title: Optional[str] = None
+    text: str
+
+
+class TrMapNarration(BaseModel):
+    intro: str
+    stops: List[TrMapStop]
+
+
 class TrOpening(BaseModel):
     text: str
     # Only present when the opening carries an image with a caption.
@@ -228,6 +239,7 @@ class MetaStoryTranslation(BaseModel):
     timeline_intro: Optional[str] = None
     conclusion: Optional[str] = None
     network_narration: Optional[TrNetworkNarration] = None
+    map_narration: Optional[TrMapNarration] = None
 
 
 # ---------------------------------------------------------------------------
@@ -398,6 +410,21 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         payload["network_narration"] = {
             "intro": narration.get("intro", ""),
             "circles": circles_payload,
+        }
+    # The map section's cluster data is technical (names, dates, coordinates —
+    # copied verbatim), but its narration texts are prose. Only added when
+    # narration exists, so stories without a map keep their old fingerprint.
+    map_narration = (data.get("geo_map") or {}).get("narration")
+    if isinstance(map_narration, dict):
+        stops_payload = []
+        for stop in map_narration.get("stops") or []:
+            entry = {"text": stop.get("text", "")}
+            if stop.get("title"):
+                entry["title"] = stop["title"]
+            stops_payload.append(entry)
+        payload["map_narration"] = {
+            "intro": map_narration.get("intro", ""),
+            "stops": stops_payload,
         }
     return payload
 
@@ -754,6 +781,19 @@ def apply_meta_story_translations(
         for circle, tr_circle in zip(src_circles, tr_circles):
             _set_if_source_has(circle, "title", tr_circle.get("title"))
             _set_if_source_has(circle, "text", tr_circle.get("text"))
+
+    # Map narration: cluster data (labels, coordinates, events) stays
+    # verbatim, only the prose is overlaid. Stop keys are technical.
+    src_map_narration = (result.get("geo_map") or {}).get("narration")
+    tr_map_narration = translated.get("map_narration")
+    if isinstance(src_map_narration, dict) and isinstance(tr_map_narration, dict):
+        _set_if_source_has(src_map_narration, "intro", tr_map_narration.get("intro"))
+        src_stops = src_map_narration.get("stops") or []
+        tr_stops = tr_map_narration.get("stops") or []
+        _require_same_length("map_narration.stops", src_stops, tr_stops)
+        for stop, tr_stop in zip(src_stops, tr_stops):
+            _set_if_source_has(stop, "title", tr_stop.get("title"))
+            _set_if_source_has(stop, "text", tr_stop.get("text"))
 
     return result
 
@@ -1203,7 +1243,12 @@ def translate_meta_story(
             "11. opening is the story's cold-open scene and section_headings "
             "are its section titles — translate both as narrative prose and "
             "evocative headlines respectively, never as literal labels. "
-            "image_caption / *_caption entries are image captions."
+            "image_caption / *_caption entries are image captions.\n"
+            "12. map_narration texts are short narrative paragraphs about the "
+            "places of the story — translate them as flowing prose, localizing "
+            "place names per the usual place rules. Each stop also has a "
+            "title, an evocative 2-5 word headline — translate it as a "
+            "headline, not literally."
         ),
         target_lang=target_lang,
         glossary={},

@@ -623,6 +623,21 @@
       </section>
     {/if}
 
+    <!-- Map section - the story's places, usually the last stop before the
+         conclusion -->
+    {#if metaStoryData.geo_map?.clusters?.length}
+      <section class="map-section">
+        <h2>{sectionHeadings.map || $_("meta_story.map_heading")}</h2>
+        <p class="map-intro">
+          {metaStoryData.geo_map?.narration?.intro ||
+            $_("meta_story.map_subtitle")}
+        </p>
+        {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
+          <MetaStoryMap geoMap={metaStoryData.geo_map} {currentLanguage} />
+        {/await}
+      </section>
+    {/if}
+
     <!-- Conclusion section -->
     {#if metaStoryData.conclusion}
       <section class="conclusion">
@@ -856,11 +871,13 @@
   }
 
   /* Social network */
-  .network-section {
+  .network-section,
+  .map-section {
     margin-bottom: 3rem;
   }
 
   .network-intro,
+  .map-intro,
   .timeline-intro {
     color: #94a3b8;
     line-height: 1.6;

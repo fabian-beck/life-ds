@@ -307,6 +307,102 @@ translated and fingerprinted like other meta story prose.
   ties) just as it can orphan narration — re-run the full pipeline (or Phase
   5b + 6) when you need the reviewed graph back.
 
+### Meta Story Map ("Places" section)
+
+Each meta story JSON can carry a `geo_map` block, rendered as a scrollytelling
+map section in `MetaStoryView.svelte` (component: `MetaStoryMap.svelte`, lazily
+imported so MapLibre stays out of the entry bundle). It follows the network
+section and usually comes last before the conclusion: a **non-interactive** map
+(all pan/zoom handlers disabled — the story drives the camera) pins **full
+screen** (full-bleed out of the story column, under the translucent sticky
+header) while narration cards scroll up over it, one card per geographic
+"stop". When a card enters the viewport band, the camera automatically flies to
+that stop (single place → `flyTo` city zoom; spread cluster → `fitBounds`),
+the stop's event markers (person-colored dots) light up, and the others dim.
+Before the first card, the map shows an overview of all stops. The basemap
+keeps place labels (rendered in the current UI language, unlike the label-free
+story map) and the map area uses `touch-action: pan-y` so page scrolling stays
+smooth on touch. Person names in the card texts get the same `.person-mention`
+emphasis as the network cards; each card also lists up to 4 member events
+(date, title, person) with a "+n more" overflow line.
+
+```json
+"geo_map": {
+  "clusters": [
+    { "key": "bletchley", "label": "Bletchley", "score": 3.0,
+      "centroid": [-0.741, 51.997], "bbox": [-0.741, 51.997, -0.741, 51.997],
+      "year_start": 1940, "year_end": 1940,
+      "events": [
+        { "person_id": "alan_turing", "person_name": "Alan Turing",
+          "event_index": 9, "event_title": "Led Hut 8 naval cryptanalysis",
+          "event_date": "1940", "place": "Bletchley",
+          "coordinates": [-0.741, 51.997], "weight": 3.0 }
+      ] }
+  ],
+  "narration": {
+    "intro": "2-3 sentence opening paragraph shown under the section heading",
+    "stops": [ { "key": "bletchley", "title": "The Codebreakers' Room",
+                 "text": "2-4 sentence story text…" } ]
+  },
+  "discarded": [ { "key": "…", "label": "…", "reason": "…" } ],
+  "generation": { "model": "…", "generated_at": "…", "located_events": 32, "rated_events": 32 }
+}
+```
+
+The block is built by **Phase 8** of `generate_meta_story.py` (opt out with
+`--skip-map`), a small multi-agent pipeline that runs **after** Phase 7 so
+composer exclusions never reach the map (non-fatal throughout):
+
+1. **Event rating agent** (`scripts/meta_story_map_narration.py`,
+   `rate_map_events`, batched AI calls) — every located story event (the
+   chapters' `person_events` resolved against each person's
+   `life_events.json`; events without coordinates are skipped) is rated 0–3
+   for how strongly it anchors the story *geographically*: 3 = the place is
+   inseparable from the contribution (Bletchley Park), 0 = the location is
+   incidental (a publication venue's city) and drops off the map entirely.
+2. **Deterministic clustering** (`scripts/meta_story_map.py`, no AI) —
+   complete-linkage agglomerative clustering on great-circle distance
+   (`MERGE_DISTANCE_KM` = 50, so Cambridge and Bletchley stay distinct while
+   same-city events merge). A cluster's score is the sum of its events'
+   rating weights, so a single landmark event can carry a stop just like
+   several weaker but co-located events. Top clusters are selected
+   (score ≥ `MIN_CLUSTER_SCORE`, landmark-bearing clusters get
+   `LANDMARK_BONUS` so an iconic single-event place isn't crowded out, cap
+   `MAX_MAP_CLUSTERS` = 8, minimum top-up to 3) and ordered chronologically
+   so the camera travels through the story in time. Debug CLI:
+   `python scripts/meta_story_map.py <story_id>` (no API key).
+3. **Narration agent** (`narrate_map_clusters`, 1 AI call) — writes the
+   section intro plus a headline (`title`) and 2-4 sentence story text per
+   stop, and may **discard** a stop whose geographic grouping is accidental
+   rather than meaningful (events merely sharing a city that adds nothing to
+   the story). Application is defensive: unknown keys are ignored, stops
+   without narration are kept (the card falls back to its event list), and
+   discards are honored only while ≥ 3 stops survive (re-kept by score).
+   Discards are recorded under `geo_map.discarded` with reasons.
+
+Narration stops are matched to clusters by `key` (slugified cluster label,
+unique per document). Like the social network, the cluster data is technical
+and copied **verbatim** into translated files; only `geo_map.narration`
+(intro + stop titles/texts) is part of the translation payload
+(`map_narration` in `extract_meta_story_translatables`), added only when
+present so stories without a map keep their fingerprints. The composer's
+exclusion cascade also prunes `geo_map` (excluded people's events are removed,
+emptied clusters and their stops dropped).
+
+Rebuild the map section for existing stories standalone (saves the English
+file and re-translates, default `de`, `--skip-translate` to opt out):
+
+```bash
+python scripts/meta_story_map_narration.py computing_pioneers --verbose
+python scripts/meta_story_map_narration.py --all
+python scripts/meta_story_map_narration.py computing_pioneers --dry-run     # preview only
+python scripts/meta_story_map_narration.py computing_pioneers --skip-rating # all events weigh 1.0
+```
+
+The UI section heading falls back to the localized `meta_story.map_heading`
+("Places"/"Schauplätze") and the intro to `meta_story.map_subtitle` when a
+story has no narration; a composed `section_headings.map` wins when present.
+
 ### Meta Story Composition (Phase 7 — Story Composer)
 
 Every text in a meta story is originally written bottom-up by a phase that only
@@ -390,6 +486,7 @@ life-ds/
 │       ├── Timeline.svelte   # Event timeline component
 │       ├── NetworkModal.svelte # Social network visualization
 │       ├── MetaStoryNetwork.svelte # d3-force network for meta stories
+│       ├── MetaStoryMap.svelte # Scrollytelling map for meta stories
 │       ├── PersonChip.svelte # Person card component
 │       └── ImageViewer.svelte # Lightbox for event images
 ├── data/
@@ -412,10 +509,12 @@ life-ds/
 │   ├── translate_person.py          # Translation core + translate single person
 │   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
 │   ├── translate_meta_story.py      # Translate meta stories
-│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration, 7 composer)
+│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration, 7 composer, 8 map)
 │   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
 │   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
 │   ├── compose_meta_story.py        # Phase 7: story composer — top-down narrative composition
+│   ├── meta_story_map.py            # Geographic clustering of meta story events (no AI)
+│   ├── meta_story_map_narration.py  # Phase 8: map pipeline — event rating + stop narration agents, standalone CLI
 │   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
 │   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
@@ -1155,9 +1254,9 @@ that uses any rune switches to runes mode wholesale and its `export let` and
   of icon paths in the bundle. Use named imports, or `virtual:mdi-icon-map`
   (see below) when the icon name is only known at runtime.
 - **Keep MapLibre out of the initial bundle.** MapLibre, pmtiles and
-  `@protomaps/basemaps` total ~1.1 MB. `LandingMap.svelte` and
-  `StoryMap.svelte` are the only modules that may import them, and both are
-  themselves imported dynamically (`{#await import("./StoryMap.svelte")}`).
+  `@protomaps/basemaps` total ~1.1 MB. `LandingMap.svelte`, `StoryMap.svelte`
+  and `MetaStoryMap.svelte` are the only modules that may import them, and all
+  are themselves imported dynamically (`{#await import("./StoryMap.svelte")}`).
   A static import of either component from anywhere pulls all of it back into
   the entry chunk. Each map component must import `maplibre-gl.css` itself
   rather than relying on the other having been loaded.

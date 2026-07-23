@@ -850,5 +850,358 @@
       "event_index": 14,
       "image_index": 0
     }
+  },
+  "geo_map": {
+    "clusters": [
+      {
+        "label": "London",
+        "score": 8.0,
+        "centroid": [-0.12774, 51.50741],
+        "bbox": [-0.12777, 51.5072, -0.1276, 51.50745],
+        "year_start": 1822,
+        "year_end": 1945,
+        "events": [
+          {
+            "person_id": "charles_babbage",
+            "person_name": "Charles Babbage",
+            "event_index": 7,
+            "event_title": "Conceived Difference Engine",
+            "event_date": "1822",
+            "place": "London",
+            "coordinates": [-0.1277653, 51.5074456],
+            "weight": 2.0
+          },
+          {
+            "person_id": "charles_babbage",
+            "person_name": "Charles Babbage",
+            "event_index": 13,
+            "event_title": "Designed Analytical Engine",
+            "event_date": "1837",
+            "place": "London",
+            "coordinates": [-0.1277653, 51.5074456],
+            "weight": 3.0
+          },
+          {
+            "person_id": "ada_lovelace",
+            "person_name": "Ada Lovelace",
+            "event_index": 11,
+            "event_title": "Publishes Notes on the Analytical Engine",
+            "event_date": "1843-08",
+            "place": "London",
+            "coordinates": [-0.1276, 51.5072],
+            "weight": 1.0
+          },
+          {
+            "person_id": "alan_turing",
+            "person_name": "Alan Turing",
+            "event_index": 10,
+            "event_title": "Designed the ACE computer",
+            "event_date": "1945",
+            "place": "London",
+            "coordinates": [-0.1277653, 51.5074456],
+            "weight": 2.0
+          }
+        ],
+        "key": "london"
+      },
+      {
+        "label": "Washington",
+        "score": 5.0,
+        "centroid": [-77.03654, 38.89504],
+        "bbox": [-77.03654, 38.89504, -77.03654, 38.89504],
+        "year_start": 1886,
+        "year_end": 1890,
+        "events": [
+          {
+            "person_id": "herman_hollerith",
+            "person_name": "Herman Hollerith",
+            "event_index": 6,
+            "event_title": "Adopted punched-card layout",
+            "event_date": "1886",
+            "place": "Washington",
+            "coordinates": [-77.0365427, 38.8950368],
+            "weight": 2.0
+          },
+          {
+            "person_id": "herman_hollerith",
+            "person_name": "Herman Hollerith",
+            "event_index": 9,
+            "event_title": "Tabulated 1890 US Census",
+            "event_date": "1890-06-02",
+            "place": "Washington",
+            "coordinates": [-77.0365427, 38.8950368],
+            "weight": 3.0
+          }
+        ],
+        "key": "washington"
+      },
+      {
+        "label": "Berlin",
+        "score": 6.0,
+        "centroid": [13.39513, 52.51739],
+        "bbox": [13.39513, 52.51739, 13.39513, 52.51739],
+        "year_start": 1936,
+        "year_end": 1941,
+        "events": [
+          {
+            "person_id": "konrad_zuse",
+            "person_name": "Konrad Zuse",
+            "event_index": 5,
+            "event_title": "Builds the Z1 in his parents’ apartment",
+            "event_date": "1936",
+            "place": "Berlin",
+            "coordinates": [13.3951309, 52.5173885],
+            "weight": 3.0
+          },
+          {
+            "person_id": "konrad_zuse",
+            "person_name": "Konrad Zuse",
+            "event_index": 7,
+            "event_title": "Unveils the Z3",
+            "event_date": "1941-05-12",
+            "place": "Berlin",
+            "coordinates": [13.3951309, 52.5173885],
+            "weight": 3.0
+          }
+        ],
+        "key": "berlin"
+      },
+      {
+        "label": "Bletchley",
+        "score": 3.0,
+        "centroid": [-0.73257, 51.99437],
+        "bbox": [-0.73257, 51.99437, -0.73257, 51.99437],
+        "year_start": 1940,
+        "year_end": 1940,
+        "events": [
+          {
+            "person_id": "alan_turing",
+            "person_name": "Alan Turing",
+            "event_index": 9,
+            "event_title": "Led Hut 8 naval cryptanalysis",
+            "event_date": "1940",
+            "place": "Bletchley",
+            "coordinates": [-0.7325655, 51.9943694],
+            "weight": 3.0
+          }
+        ],
+        "key": "bletchley"
+      },
+      {
+        "label": "Cambridge",
+        "score": 6.0,
+        "centroid": [-71.1048, 42.36962],
+        "bbox": [-71.1056, 42.36563, -71.104, 42.3736],
+        "year_start": 1927,
+        "year_end": 1964,
+        "events": [
+          {
+            "person_id": "vannevar_bush",
+            "person_name": "Vannevar Bush",
+            "event_index": 6,
+            "event_title": "Begins building the differential analyzer",
+            "event_date": "1927",
+            "place": "Cambridge",
+            "coordinates": [-71.1040018, 42.3656347],
+            "weight": 3.0
+          },
+          {
+            "person_id": "joseph_weizenbaum",
+            "person_name": "Joseph Weizenbaum",
+            "event_index": 9,
+            "event_title": "Creates ELIZA, pioneering chatbot",
+            "event_date": "1964",
+            "place": "Cambridge",
+            "coordinates": [-71.1056, 42.3736],
+            "weight": 3.0
+          }
+        ],
+        "key": "cambridge"
+      },
+      {
+        "label": "Philadelphia",
+        "score": 5.0,
+        "centroid": [-75.16353, 39.95272],
+        "bbox": [-75.16353, 39.95272, -75.16353, 39.95272],
+        "year_start": 1945,
+        "year_end": 1952,
+        "events": [
+          {
+            "person_id": "john_von_neumann",
+            "person_name": "John von Neumann",
+            "event_index": 13,
+            "event_title": "Shaped stored-program computing",
+            "event_date": "1945-06-30",
+            "place": "Philadelphia",
+            "coordinates": [-75.1635262, 39.9527237],
+            "weight": 3.0
+          },
+          {
+            "person_id": "grace_hopper",
+            "person_name": "Grace Hopper",
+            "event_index": 9,
+            "event_title": "Builds A-0 Compiler Link-Loader",
+            "event_date": "1952",
+            "place": "Philadelphia",
+            "coordinates": [-75.1635262, 39.9527237],
+            "weight": 2.0
+          }
+        ],
+        "key": "philadelphia"
+      },
+      {
+        "label": "Cupertino",
+        "score": 14.0,
+        "centroid": [-122.08433, 37.36899],
+        "bbox": [-122.17799, 37.32289, -122.03229, 37.45197],
+        "year_start": 1962,
+        "year_end": 2001,
+        "events": [
+          {
+            "person_id": "douglas_engelbart",
+            "person_name": "Douglas Engelbart",
+            "event_index": 9,
+            "event_title": "Published augmentation framework",
+            "event_date": "1962-10",
+            "place": "Menlo Park",
+            "coordinates": [-122.177992, 37.4519671],
+            "weight": 2.0
+          },
+          {
+            "person_id": "douglas_engelbart",
+            "person_name": "Douglas Engelbart",
+            "event_index": 11,
+            "event_title": "Builds the first mouse prototype",
+            "event_date": "1964",
+            "place": "Menlo Park",
+            "coordinates": [-122.177992, 37.4519671],
+            "weight": 3.0
+          },
+          {
+            "person_id": "steve_jobs",
+            "person_name": "Steve Jobs",
+            "event_index": 4,
+            "event_title": "Co-founded Apple",
+            "event_date": "1976-04-01",
+            "place": "Cupertino",
+            "coordinates": [-122.0322895, 37.3228934],
+            "weight": 2.0
+          },
+          {
+            "person_id": "steve_jobs",
+            "person_name": "Steve Jobs",
+            "event_index": 5,
+            "event_title": "Apple II and IPO boom",
+            "event_date": "1977-04",
+            "place": "Cupertino",
+            "coordinates": [-122.0322895, 37.3228934],
+            "weight": 2.0
+          },
+          {
+            "person_id": "steve_jobs",
+            "person_name": "Steve Jobs",
+            "event_index": 7,
+            "event_title": "Launched Macintosh platform",
+            "event_date": "1984-01",
+            "place": "Cupertino",
+            "coordinates": [-122.0322895, 37.3228934],
+            "weight": 3.0
+          },
+          {
+            "person_id": "steve_jobs",
+            "person_name": "Steve Jobs",
+            "event_index": 12,
+            "event_title": "Created Apple’s digital ecosystem",
+            "event_date": "2001-05",
+            "place": "Cupertino",
+            "coordinates": [-122.0322895, 37.3228934],
+            "weight": 2.0
+          }
+        ],
+        "key": "cupertino"
+      },
+      {
+        "label": "San Francisco",
+        "score": 6.0,
+        "centroid": [-122.40752, 37.78794],
+        "bbox": [-122.40752, 37.78794, -122.40752, 37.78794],
+        "year_start": 1968,
+        "year_end": 2007,
+        "events": [
+          {
+            "person_id": "douglas_engelbart",
+            "person_name": "Douglas Engelbart",
+            "event_index": 12,
+            "event_title": "Presented Mother of All Demos",
+            "event_date": "1968-12-09",
+            "place": "San Francisco",
+            "coordinates": [-122.4075201, 37.7879363],
+            "weight": 3.0
+          },
+          {
+            "person_id": "steve_jobs",
+            "person_name": "Steve Jobs",
+            "event_index": 14,
+            "event_title": "Unveiled the iPhone",
+            "event_date": "2007-01-09",
+            "place": "San Francisco",
+            "coordinates": [-122.4075201, 37.7879363],
+            "weight": 3.0
+          }
+        ],
+        "key": "san_francisco"
+      }
+    ],
+    "narration": {
+      "intro": "The long path toward digital life began in drawing rooms, workshops, laboratories, and improvised rooms, then crossed oceans into institutions built to count, calculate, communicate, and imagine. Along the way, abstract instructions acquired machinery, machines acquired memory and language, and computation moved steadily closer to everyday hands.",
+      "stops": [
+        {
+          "key": "london",
+          "title": "The Machine Imagined",
+          "text": "In London, Charles Babbage first conceived the Difference Engine in 1822, then designed the more ambitious Analytical Engine in 1837. Ada Lovelace’s 1843 Notes gave that unrealized engine a lasting intellectual life. More than a century later, Alan Turing designed the ACE computer here, carrying the city’s early mechanical vision into the electronic age."
+        },
+        {
+          "key": "washington",
+          "title": "The Nation Counted",
+          "text": "Washington gave Herman Hollerith’s punched cards a vast practical purpose. After adopting the card layout in 1886, Hollerith used it to tabulate the 1890 United States Census. Information could now be arranged for a machine to read, turning an immense population count into a problem of encoded data."
+        },
+        {
+          "key": "berlin",
+          "title": "Machines at Home",
+          "text": "In Berlin, Konrad Zuse built the Z1 in his parents’ apartment in 1936. Five years later, he unveiled the Z3. The passage from a home-built machine to a revealed computer marked a determined step toward working programmable calculation."
+        },
+        {
+          "key": "bletchley",
+          "title": "The Codebreakers' Room",
+          "text": "At Bletchley in 1940, Alan Turing led Hut 8’s naval cryptanalysis. Computation’s emerging power was tied here to the urgent work of interpreting concealed messages. In that concentrated wartime setting, encoded instructions became a matter of intelligence and consequence."
+        },
+        {
+          "key": "cambridge",
+          "title": "Calculating, Then Conversing",
+          "text": "At Cambridge, Vannevar Bush began building the differential analyzer in 1927, pursuing calculation through a physical machine. In 1964, Joseph Weizenbaum created ELIZA there, a pioneering chatbot. Across those decades, the work traced a striking shift: from mechanizing mathematics to making a computer sustain the appearance of conversation."
+        },
+        {
+          "key": "philadelphia",
+          "title": "Programs Take Residence",
+          "text": "In Philadelphia, John von Neumann shaped stored-program computing in 1945, helping establish the principle that instructions could reside within a computer’s operation. Grace Hopper extended that path in 1952 with the A-0 Compiler Link-Loader. Programs were becoming not merely commands for a machine, but artifacts that could be organized and connected."
+        },
+        {
+          "key": "cupertino",
+          "title": "Computing Becomes Personal",
+          "text": "Around Cupertino, Douglas Engelbart published his augmentation framework in Menlo Park in 1962 and built the first mouse prototype there in 1964, imagining new ways for people to work with computers. Steve Jobs then co-founded Apple in Cupertino in 1976; the Apple II followed in 1977, the Macintosh platform launched in 1984, and Apple’s digital ecosystem emerged in 2001. The region became a proving ground for turning computing from specialized machinery into a personal environment."
+        },
+        {
+          "key": "san_francisco",
+          "title": "The Interface Arrives",
+          "text": "In San Francisco, Douglas Engelbart presented the Mother of All Demos in 1968, bringing his ideas about interactive computing before an audience. In 2007, Steve Jobs unveiled the iPhone in the same city. Nearly four decades apart, those appearances marked public moments when new forms of human-computer interaction stepped onto a larger stage."
+        }
+      ]
+    },
+    "generation": {
+      "model": "gpt-5.6-terra",
+      "generated_at": "2026-07-23T04:29:08.876701+00:00",
+      "located_events": 32,
+      "rated_events": 32
+    }
   }
 }
