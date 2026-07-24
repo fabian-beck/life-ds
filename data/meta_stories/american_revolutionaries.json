@@ -882,8 +882,8 @@
     "clusters": [
       {
         "label": "Braintree",
-        "score": 6.0,
-        "centroid": [-71.01173, 42.27077],
+        "score": 5.0,
+        "centroid": [-71.01362, 42.27434],
         "bbox": [-71.0589, 42.2529, -71.0023, 42.3601],
         "year_start": 1775,
         "year_end": 1776,
@@ -916,7 +916,7 @@
             "event_date": "1776-03-31",
             "place": "Braintree",
             "coordinates": [-71.0023, 42.2529],
-            "weight": 3.0
+            "weight": 2.0
           }
         ],
         "key": "braintree"
@@ -941,27 +941,6 @@
           }
         ],
         "key": "paris"
-      },
-      {
-        "label": "Oriskany",
-        "score": 3.0,
-        "centroid": [-75.332, 43.157],
-        "bbox": [-75.332, 43.157, -75.332, 43.157],
-        "year_start": 1777,
-        "year_end": 1777,
-        "events": [
-          {
-            "person_id": "joseph_brant",
-            "person_name": "Joseph Brant",
-            "event_index": 6,
-            "event_title": "Fought at Oriskany",
-            "event_date": "1777-08-06",
-            "place": "Oriskany",
-            "coordinates": [-75.332, 43.157],
-            "weight": 3.0
-          }
-        ],
-        "key": "oriskany"
       },
       {
         "label": "Philadelphia",
@@ -1036,27 +1015,6 @@
         "key": "grand_river"
       },
       {
-        "label": "Annapolis",
-        "score": 3.0,
-        "centroid": [-76.4922, 38.9784],
-        "bbox": [-76.4922, 38.9784, -76.4922, 38.9784],
-        "year_start": 1786,
-        "year_end": 1786,
-        "events": [
-          {
-            "person_id": "alexander_hamilton",
-            "person_name": "Alexander Hamilton",
-            "event_index": 9,
-            "event_title": "Calls for Constitutional Convention",
-            "event_date": "1786-09-11",
-            "place": "Annapolis",
-            "coordinates": [-76.4922, 38.9784],
-            "weight": 3.0
-          }
-        ],
-        "key": "annapolis"
-      },
-      {
         "label": "New York City",
         "score": 6.0,
         "centroid": [-74.006, 40.7128],
@@ -1110,53 +1068,55 @@
       }
     ],
     "narration": {
-      "intro": "The Revolution was fought across households, frontier homelands, foreign capitals, and new seats of government. Geography records both the expansion of American authority and the human costs that accompanied it.",
+      "intro": "Revolution moved across homes, capitals, battlefronts, and uneasy frontiers, binding private sacrifice to public power. The struggle for independence did not end with victory; it opened a harder argument over whose claims, lands, and liberties the new republic would protect.",
       "stops": [
         {
           "key": "braintree",
-          "title": "The Household Makes Its Claim",
-          "text": "In Braintree, Abigail Adams maintained the family home and farm while John Adams served in the Continental Congress. Wartime shortages and insecurity shaped her letters about civilian life, politics, independence, and government. In March 1776, she pressed the question of women’s recognition as new laws were being considered."
+          "title": "The Republic at Home",
+          "text": "At Braintree, Abigail Adams sustained a revolutionary household while the war pressed upon ordinary life. In 1776, she urged recognition for women, making clear that independence raised questions about rights far beyond the battlefield. Phillis Wheatley’s address to General Washington, sent from nearby Boston, joined literary support for the Continental cause to this wider Massachusetts world."
         },
         {
           "key": "paris",
-          "title": "Aid Across the Atlantic",
-          "text": "Franklin left for Paris in October 1776 as an American commissioner seeking French support for the war. Working with Silas Deane and Arthur Lee, he helped secure French aid and the alliance of 1778. The American struggle could now draw on military and material support from abroad."
-        },
-        {
-          "key": "oriskany",
-          "title": "Nations at War",
-          "text": "At Oriskany, Brant and Mohawk warriors fought in the British-allied force that ambushed a Patriot relief column near Fort Stanwix. The battle brought Mohawk, Oneida, Seneca, and other Haudenosaunee nations into direct conflict. It revealed a frontier war whose divisions could not be contained by the Patriot-British contest."
+          "title": "Aid Across the Ocean",
+          "text": "In Paris, Benjamin Franklin worked to win French aid for American independence. His success made the Revolution more than a colonial rebellion, drawing European power into the struggle for a new nation."
         },
         {
           "key": "philadelphia",
-          "title": "Army, Then Constitution",
-          "text": "Philadelphia’s Continental Congress appointed Washington commander in chief in June 1775, sending him to Cambridge to lead the forces besieging British-held Boston. After the war, the city became the site of constitutional redesign: Hamilton argued for a substantially stronger national government, and Washington chaired the convention’s deliberations. The city connected the military struggle for independence to the framework meant to govern its outcome."
+          "title": "From War to Constitution",
+          "text": "Philadelphia became a hinge between revolution and government. George Washington received command of the Continental Army here, and the campaign that brought victories at Trenton and Princeton strengthened the patriot cause. A decade later, Washington presided over the Constitutional Convention while Alexander Hamilton argued for a Constitution, turning the problem of winning independence into the problem of securing a republic."
         },
         {
           "key": "grand_river",
-          "title": "A Community Reassembled",
-          "text": "After Mohawk homelands in New York were lost, Brant led many Haudenosaunee families from the Niagara area to land set aside under the Haldimand Proclamation. He helped organize the new Six Nations community on the Grand River. The settlement was a response to the Revolution’s displacement of Indigenous communities."
-        },
-        {
-          "key": "annapolis",
-          "title": "Calling the Convention",
-          "text": "At Annapolis in 1786, delegates confronted the Confederation government’s inability to regulate interstate commerce. Hamilton drafted the report urging states to send delegates to a broader meeting in Philadelphia. The call converted dissatisfaction with the existing union into a push for constitutional revision."
+          "title": "A Homeland Reclaimed",
+          "text": "In 1784, Joseph Brant settled on the Grand River. The move marked a new chapter after a revolution that had remade Native homelands as well as colonial rule, preserving a center of community amid the political upheaval."
         },
         {
           "key": "new_york_city",
-          "title": "Government Takes Office",
-          "text": "New York City was the seat of the new federal government in 1789. Washington took the presidential oath there on April 30, formally beginning the federal executive branch under the Constitution. That September, he appointed Hamilton treasury secretary, and Hamilton began organizing the department and advancing his financial program."
+          "title": "A Government Takes Office",
+          "text": "In New York City, George Washington became the first president in 1789, giving the new Constitution a living executive. That same year, Alexander Hamilton led the Treasury Department, beginning the practical work of making federal authority function."
         },
         {
           "key": "western_pennsylvania",
-          "title": "Federal Power Tested",
-          "text": "Armed resistance to the federal excise tax on distilled spirits escalated in western Pennsylvania in 1794. Washington invoked federal authority to call out state militias. The confrontation tested whether the new government could enforce its laws against organized domestic resistance."
+          "title": "Authority Put to Test",
+          "text": "In western Pennsylvania, resistance to the whiskey tax brought the new republic into open conflict with some of its own citizens. In 1794, President Washington moved to suppress the Whiskey Rebellion, demonstrating that the federal government could enforce its laws even after a revolution fought against distant power."
         }
       ]
     },
+    "discarded": [
+      {
+        "key": "oriskany",
+        "label": "Oriskany",
+        "reason": "Oriskany was a significant wartime episode for Joseph Brant, but as a lone battle stop it would add a secondary detour; Brant’s later settlement on the Grand River more directly captures the Revolution’s contested aftermath."
+      },
+      {
+        "key": "annapolis",
+        "label": "Annapolis",
+        "reason": "Hamilton’s call for a constitutional convention was an important prelude, but Annapolis is secondary to Philadelphia, where the convention actually assembled and the constitutional argument took decisive form."
+      }
+    ],
     "generation": {
       "model": "gpt-5.6-terra",
-      "generated_at": "2026-07-24T06:05:25.640949+02:00",
+      "generated_at": "2026-07-24T06:19:44.321706+02:00",
       "located_events": 16,
       "rated_events": 16
     }

@@ -873,7 +873,7 @@
       },
       {
         "label": "Washington",
-        "score": 4.0,
+        "score": 5.0,
         "centroid": [-77.03654, 38.89504],
         "bbox": [-77.03654, 38.89504, -77.03654, 38.89504],
         "year_start": 1886,
@@ -887,7 +887,7 @@
             "event_date": "1886",
             "place": "Washington",
             "coordinates": [-77.0365427, 38.8950368],
-            "weight": 1.0
+            "weight": 2.0
           },
           {
             "person_id": "herman_hollerith",
@@ -901,57 +901,6 @@
           }
         ],
         "key": "washington"
-      },
-      {
-        "label": "Cambridge",
-        "score": 9.0,
-        "centroid": [-71.10689, 42.37095],
-        "bbox": [-71.10973, 42.36563, -71.104, 42.37362],
-        "year_start": 1927,
-        "year_end": 1976,
-        "events": [
-          {
-            "person_id": "vannevar_bush",
-            "person_name": "Vannevar Bush",
-            "event_index": 6,
-            "event_title": "Begins building the differential analyzer",
-            "event_date": "1927",
-            "place": "Cambridge",
-            "coordinates": [-71.1040018, 42.3656347],
-            "weight": 3.0
-          },
-          {
-            "person_id": "grace_hopper",
-            "person_name": "Grace Hopper",
-            "event_index": 7,
-            "event_title": "Programs the Harvard Mark I",
-            "event_date": "1944",
-            "place": "Cambridge",
-            "coordinates": [-71.1097, 42.3736],
-            "weight": 3.0
-          },
-          {
-            "person_id": "joseph_weizenbaum",
-            "person_name": "Joseph Weizenbaum",
-            "event_index": 9,
-            "event_title": "Creates ELIZA, pioneering chatbot",
-            "event_date": "1964",
-            "place": "Cambridge",
-            "coordinates": [-71.1056, 42.3736],
-            "weight": 2.0
-          },
-          {
-            "person_id": "joseph_weizenbaum",
-            "person_name": "Joseph Weizenbaum",
-            "event_index": 13,
-            "event_title": "Publishes \"Computer Power and Human Reason\"",
-            "event_date": "1976",
-            "place": "Cambridge",
-            "coordinates": [-71.109733, 42.3736158],
-            "weight": 1.0
-          }
-        ],
-        "key": "cambridge"
       },
       {
         "label": "Bletchley",
@@ -975,61 +924,60 @@
         "key": "bletchley"
       },
       {
-        "label": "Berlin",
-        "score": 3.0,
-        "centroid": [13.39513, 52.51739],
-        "bbox": [13.39513, 52.51739, 13.39513, 52.51739],
-        "year_start": 1941,
-        "year_end": 1941,
+        "label": "Cambridge",
+        "score": 9.0,
+        "centroid": [-71.10644, 42.37095],
+        "bbox": [-71.10973, 42.36563, -71.104, 42.37362],
+        "year_start": 1927,
+        "year_end": 1976,
         "events": [
           {
-            "person_id": "konrad_zuse",
-            "person_name": "Konrad Zuse",
-            "event_index": 7,
-            "event_title": "Unveils the Z3",
-            "event_date": "1941-05-12",
-            "place": "Berlin",
-            "coordinates": [13.3951309, 52.5173885],
-            "weight": 3.0
-          }
-        ],
-        "key": "berlin"
-      },
-      {
-        "label": "Philadelphia",
-        "score": 5.0,
-        "centroid": [-75.16353, 39.95272],
-        "bbox": [-75.16353, 39.95272, -75.16353, 39.95272],
-        "year_start": 1945,
-        "year_end": 1952,
-        "events": [
-          {
-            "person_id": "john_von_neumann",
-            "person_name": "John von Neumann",
-            "event_index": 13,
-            "event_title": "Shaped stored-program computing",
-            "event_date": "1945-06-30",
-            "place": "Philadelphia",
-            "coordinates": [-75.1635262, 39.9527237],
+            "person_id": "vannevar_bush",
+            "person_name": "Vannevar Bush",
+            "event_index": 6,
+            "event_title": "Begins building the differential analyzer",
+            "event_date": "1927",
+            "place": "Cambridge",
+            "coordinates": [-71.1040018, 42.3656347],
             "weight": 3.0
           },
           {
             "person_id": "grace_hopper",
             "person_name": "Grace Hopper",
-            "event_index": 9,
-            "event_title": "Builds A-0 Compiler Link-Loader",
-            "event_date": "1952",
-            "place": "Philadelphia",
-            "coordinates": [-75.1635262, 39.9527237],
+            "event_index": 7,
+            "event_title": "Programs the Harvard Mark I",
+            "event_date": "1944",
+            "place": "Cambridge",
+            "coordinates": [-71.1097, 42.3736],
             "weight": 2.0
+          },
+          {
+            "person_id": "joseph_weizenbaum",
+            "person_name": "Joseph Weizenbaum",
+            "event_index": 9,
+            "event_title": "Creates ELIZA, pioneering chatbot",
+            "event_date": "1964",
+            "place": "Cambridge",
+            "coordinates": [-71.1056, 42.3736],
+            "weight": 3.0
+          },
+          {
+            "person_id": "joseph_weizenbaum",
+            "person_name": "Joseph Weizenbaum",
+            "event_index": 13,
+            "event_title": "Publishes \"Computer Power and Human Reason\"",
+            "event_date": "1976",
+            "place": "Cambridge",
+            "coordinates": [-71.109733, 42.3736158],
+            "weight": 1.0
           }
         ],
-        "key": "philadelphia"
+        "key": "cambridge"
       },
       {
-        "label": "Cupertino",
-        "score": 14.0,
-        "centroid": [-122.08433, 37.36899],
+        "label": "Cupertino · Menlo Park",
+        "score": 11.0,
+        "centroid": [-122.09852, 37.38156],
         "bbox": [-122.17799, 37.32289, -122.03229, 37.45197],
         "year_start": 1962,
         "year_end": 2001,
@@ -1062,7 +1010,7 @@
             "event_date": "1977-04",
             "place": "Cupertino",
             "coordinates": [-122.0322895, 37.3228934],
-            "weight": 3.0
+            "weight": 2.0
           },
           {
             "person_id": "steve_jobs",
@@ -1072,7 +1020,7 @@
             "event_date": "1984-01",
             "place": "Cupertino",
             "coordinates": [-122.0322895, 37.3228934],
-            "weight": 3.0
+            "weight": 2.0
           },
           {
             "person_id": "steve_jobs",
@@ -1082,91 +1030,62 @@
             "event_date": "2001-05",
             "place": "Cupertino",
             "coordinates": [-122.0322895, 37.3228934],
-            "weight": 3.0
+            "weight": 2.0
           }
         ],
-        "key": "cupertino"
-      },
-      {
-        "label": "San Francisco",
-        "score": 6.0,
-        "centroid": [-122.40752, 37.78794],
-        "bbox": [-122.40752, 37.78794, -122.40752, 37.78794],
-        "year_start": 1968,
-        "year_end": 2007,
-        "events": [
-          {
-            "person_id": "douglas_engelbart",
-            "person_name": "Douglas Engelbart",
-            "event_index": 12,
-            "event_title": "Presented Mother of All Demos",
-            "event_date": "1968-12-09",
-            "place": "San Francisco",
-            "coordinates": [-122.4075201, 37.7879363],
-            "weight": 3.0
-          },
-          {
-            "person_id": "steve_jobs",
-            "person_name": "Steve Jobs",
-            "event_index": 14,
-            "event_title": "Unveiled the iPhone",
-            "event_date": "2007-01-09",
-            "place": "San Francisco",
-            "coordinates": [-122.4075201, 37.7879363],
-            "weight": 3.0
-          }
-        ],
-        "key": "san_francisco"
+        "key": "cupertino_menlo_park"
       }
     ],
     "narration": {
-      "intro": "Workshops, universities, government projects, and corporate centers gave different forms to the same ambition. In each setting, computation acquired a new practical use: calculation, classification, cryptanalysis, programming, collaboration, or personal communication.",
+      "intro": "The history of computing advances through workshops, census offices, wartime rooms, university laboratories, and entrepreneurial campuses. Across oceans and generations, abstract engines became instruments for calculation, communication, and everyday life.",
       "stops": [
         {
           "key": "london",
-          "title": "Engines on Paper",
-          "text": "In London, Charles Babbage conceived the Difference Engine in 1822 and drafted plans for the more ambitious Analytical Engine in 1837. Ada Lovelace’s 1843 Notes gave that unrealized design a lasting intellectual life. In 1945, Alan Turing’s ACE design made London a site of stored-program thinking as well."
+          "title": "Engines of Imagination",
+          "text": "In London, Charles Babbage conceived the Difference Engine in 1822 and designed the far more ambitious Analytical Engine in 1837. Ada Lovelace’s 1843 notes gave that engine a lasting intellectual life. More than a century later, Alan Turing designed the ACE computer here, carrying the city’s long-running vision of programmable machinery into the electronic age."
         },
         {
           "key": "washington",
           "title": "Counting a Nation",
-          "text": "Washington became the proving ground for Herman Hollerith’s punched-card method. After developing a card layout in which hole positions represented data, Hollerith used tabulators for the 1890 United States Census. The work showed that records on a national scale could be mechanically processed."
+          "text": "Washington gave Herman Hollerith’s punched-card system a vast practical test. After adopting its card layout in 1886, he used the machinery to tabulate the 1890 United States Census. Computation had become not only an idea or a mechanism, but a way to organize information at national scale."
+        },
+        {
+          "key": "bletchley",
+          "title": "Wartime Calculation",
+          "text": "At Bletchley in 1940, Alan Turing led Hut 8’s naval cryptanalysis. The urgency of wartime codebreaking placed computation in the service of an immediate, exacting problem. It marked a crucial chapter in Turing’s path from theoretical ideas toward working machines."
         },
         {
           "key": "cambridge",
           "title": "Machines Meet Minds",
-          "text": "Vannevar Bush began developing the differential analyzer at MIT in Cambridge in 1927, extending scientific calculation beyond hand methods. Grace Hopper later joined the Harvard Mark I programming staff there. Decades afterward, Joseph Weizenbaum created ELIZA in Cambridge and published Computer Power and Human Reason there, bringing the limits of machine intelligence into the same local history."
+          "text": "In Cambridge, Vannevar Bush began building the differential analyzer in 1927, and Grace Hopper programmed the Harvard Mark I in 1944. Joseph Weizenbaum later created ELIZA here, an early chatbot, then questioned computing’s human consequences in his 1976 book, Computer Power and Human Reason. This was a place where powerful machines increasingly met the questions of programming, language, and responsibility."
         },
         {
-          "key": "bletchley",
-          "title": "Calculation in Secret",
-          "text": "At Bletchley in 1940, Alan Turing led Hut 8’s work on German naval Enigma traffic. The task joined cryptanalysis to systematic methods for speeding decryption, building on pre-war Polish advances. Wartime communications made information processing an operational necessity."
-        },
-        {
-          "key": "berlin",
-          "title": "A Programmable Machine",
-          "text": "On May 12, 1941, Konrad Zuse publicly presented the Z3 in Berlin. Built with relays for program-controlled calculation, it is widely described as the first functioning, fully automatic, freely programmable digital computer. A long-imagined kind of machine had become operational."
-        },
-        {
-          "key": "philadelphia",
-          "title": "Programs Take Hold",
-          "text": "In Philadelphia in 1945, John von Neumann circulated the EDVAC First Draft, articulating an organization in which instructions and data reside in memory. In 1952, Grace Hopper built the A-0 Compiler Link-Loader there, translating symbolic descriptions into machine code for UNIVAC. The city’s listed moments mark a shift from programs as stored content to programs made more manageable for people to create."
-        },
-        {
-          "key": "cupertino",
-          "title": "Personal Computing Takes Shape",
-          "text": "Near Cupertino, Douglas Engelbart set out his augmentation framework in Menlo Park in 1962 and developed an early mouse prototype there two years later. Cupertino then became associated with Steve Jobs’s consumer-computing push through the Apple II in 1977 and the Macintosh in 1984. By 2001, Apple’s integrated hardware-and-services strategy extended the personal machine into a broader digital ecosystem."
-        },
-        {
-          "key": "san_francisco",
-          "title": "The Public Leap",
-          "text": "San Francisco hosted two public demonstrations of computing’s changing role. In 1968, Douglas Engelbart presented NLS, showing interactive and collaborative features including the mouse, hypertext, windows, and networked video. In 2007, Steve Jobs unveiled the iPhone there, presenting a convergence of phone, iPod, and internet device."
+          "key": "cupertino_menlo_park",
+          "title": "The Personal Machine",
+          "text": "At Menlo Park, Douglas Engelbart published his framework for augmenting human intellect in 1962 and built the first mouse prototype two years later. In nearby Cupertino, Steve Jobs helped carry computing into homes and hands through the Apple II, the Macintosh platform, and Apple’s digital ecosystem. The machine was no longer only a calculating device: it was becoming a personal medium."
         }
       ]
     },
+    "discarded": [
+      {
+        "key": "berlin",
+        "label": "Berlin",
+        "reason": "Zuse’s Z3 was an important single-machine milestone, but this one-event stop is secondary to the stronger arc of conceptual engines, large-scale information processing, wartime computation, and the later human-facing machines."
+      },
+      {
+        "key": "eindhoven",
+        "label": "Eindhoven",
+        "reason": "Dijkstra’s THE multiprogramming system is a significant contribution, but the single event would add a specialized secondary stop without materially strengthening the map’s broader narrative arc."
+      },
+      {
+        "key": "san_francisco",
+        "label": "San Francisco",
+        "reason": "The two events share a city but belong to separate launch moments decades apart; Engelbart’s underlying work is better represented at Menlo Park, while Jobs’s longer product arc is better represented at Cupertino."
+      }
+    ],
     "generation": {
       "model": "gpt-5.6-terra",
-      "generated_at": "2026-07-24T05:34:52.708051+02:00",
+      "generated_at": "2026-07-24T06:21:30.290308+02:00",
       "located_events": 34,
       "rated_events": 34
     }
