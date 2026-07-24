@@ -722,6 +722,11 @@
 <style>
   .mnet {
     position: relative;
+    /* Give the narration cards a clean backdrop root that already contains the
+       pinned graph, so backdrop-filter samples it. Without this some mobile
+       browsers composite the sticky graph on a separate layer that the card's
+       backdrop can't reach, and the blur silently no-ops. */
+    isolation: isolate;
   }
 
   /* The graph sticks below the app's sticky header while the narration cards
@@ -928,20 +933,30 @@
     margin-bottom: 0;
   }
 
-  /* Frosted-glass card scrolling over the graph: the scrim is kept translucent
-     enough that the blurred network shows through as a soft backdrop rather
-     than a flat panel, while the text stays legible. */
+  /* Card scrolling over the graph. Default to a near-opaque panel so the text
+     stays readable on browsers/devices where backdrop-filter doesn't render
+     (notably some Android browsers) — otherwise the sharp graph shows straight
+     through and fights the copy. Where backdrop-filter IS supported, the rule
+     below drops the scrim to a translucent frosted glass. */
   .step-card {
     pointer-events: auto;
     width: min(30rem, 100%);
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(20px) saturate(1.3);
-    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    background: rgba(15, 23, 42, 0.88);
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 16px;
     padding: 1.1rem 1.3rem 1.2rem;
     box-shadow: 0 14px 34px rgba(2, 6, 23, 0.45);
     transition: border-color 0.25s ease;
+  }
+
+  @supports (
+    (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))
+  ) {
+    .step-card {
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(20px) saturate(1.3);
+      -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    }
   }
 
   .step-card.current {

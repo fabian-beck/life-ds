@@ -446,6 +446,10 @@
 <style>
   .mmap {
     position: relative;
+    /* Clean backdrop root containing the pinned map, so the narration cards'
+       backdrop-filter can sample it even where mobile browsers would otherwise
+       composite the sticky map on a separate, unreachable layer. */
+    isolation: isolate;
   }
 
   /* The map pins FULL SCREEN while the narration cards (which follow in
@@ -580,19 +584,28 @@
     margin-bottom: 0;
   }
 
-  /* Frosted glass over the map: a translucent scrim so the blurred basemap
-     reads through as a soft backdrop, mirroring the network cards. */
+  /* Card over the map. Near-opaque by default so the copy stays legible over
+     the basemap where backdrop-filter doesn't render; the @supports rule below
+     drops it to translucent frosted glass where the blur is available. */
   .step-card {
     pointer-events: auto;
     width: min(30rem, 100%);
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(20px) saturate(1.3);
-    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    background: rgba(15, 23, 42, 0.88);
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 16px;
     padding: 1.1rem 1.3rem 1.2rem;
     box-shadow: 0 14px 34px rgba(2, 6, 23, 0.45);
     transition: border-color 0.25s ease;
+  }
+
+  @supports (
+    (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))
+  ) {
+    .step-card {
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(20px) saturate(1.3);
+      -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    }
   }
 
   .step-card.current {
