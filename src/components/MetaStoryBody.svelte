@@ -1,23 +1,34 @@
 <script>
   import MetaStoryFigure from "./MetaStoryFigure.svelte";
+  import MetaStoryProse from "./MetaStoryProse.svelte";
 
   // A composed section body (Phase 8): an ordered list of blocks —
   // { type: "paragraph", text } | { type: "image", image, layout } |
   // { type: "quote", text, attribution? }. Renders nothing when absent, so
   // uncomposed stories are unaffected.
   export let blocks = null;
+
+  // Story people (with individual stories) so their names are emphasized and
+  // linked in the body prose, matching the rest of the meta story text.
+  export let people = [];
+  export let metaStoryId = null;
+  export let currentLanguage = "en";
+
+  $: proseContext = { people, metaStoryId, currentLanguage };
 </script>
 
 {#if blocks?.length}
   <div class="story-body">
     {#each blocks as block}
       {#if block.type === "paragraph" && block.text}
-        <p class="body-text">{block.text}</p>
+        <p class="body-text">
+          <MetaStoryProse text={block.text} {...proseContext} />
+        </p>
       {:else if block.type === "image" && block.image}
         <MetaStoryFigure image={block.image} layout={block.layout} />
       {:else if block.type === "quote" && block.text}
         <blockquote class="body-quote">
-          <p>“{block.text}”</p>
+          <p>“<MetaStoryProse text={block.text} {...proseContext} />”</p>
           {#if block.attribution}
             <cite>{block.attribution}</cite>
           {/if}

@@ -772,6 +772,71 @@ export function generateNameVariants(name) {
 }
 
 /**
+ * Split a block of prose into text/person segments, emphasizing the name of
+ * each supplied person where it appears — the same treatment the story slides
+ * and meta story network/map cards use for `.person-mention`. Mirrors the
+ * matching in MetaStoryNetwork's narration highlighter: the best (longest /
+ * highest-priority) variant wins per person, and overlaps are resolved with
+ * earliest-start-then-longest.
+ *
+ * @param {string} text - The prose to segment
+ * @param {Array<{id: string, name: string}>} people - People to emphasize
+ * @returns {Array<{type: "text"|"person", content: string, personId?: string}>}
+ */
+export function highlightPersonMentions(text, people) {
+  if (!text) return [{ type: "text", content: "" }];
+  if (!people?.length) return [{ type: "text", content: text }];
+
+  // Best (longest / highest-priority) match per person.
+  const matches = [];
+  for (const person of people) {
+    let best = null;
+    for (const variant of generateNameVariants(person.name)) {
+      variant.regex.lastIndex = 0;
+      let m;
+      while ((m = variant.regex.exec(text)) !== null) {
+        const cand = {
+          start: m.index,
+          end: variant.regex.lastIndex,
+          len: m[0].length,
+          priority: variant.priority,
+          person,
+        };
+        if (
+          !best ||
+          cand.priority < best.priority ||
+          (cand.priority === best.priority && cand.len > best.len)
+        ) {
+          best = cand;
+        }
+      }
+    }
+    if (best) matches.push(best);
+  }
+
+  // Resolve overlaps: earliest start wins, then the longer span.
+  matches.sort((a, b) => a.start - b.start || b.len - a.len);
+  const segments = [];
+  let cursor = 0;
+  for (const match of matches) {
+    if (match.start < cursor) continue; // overlaps a chosen match — skip
+    if (match.start > cursor) {
+      segments.push({ type: "text", content: text.slice(cursor, match.start) });
+    }
+    segments.push({
+      type: "person",
+      content: text.slice(match.start, match.end),
+      personId: match.person.id,
+    });
+    cursor = match.end;
+  }
+  if (cursor < text.length) {
+    segments.push({ type: "text", content: text.slice(cursor) });
+  }
+  return segments;
+}
+
+/**
  * Calculate a similarity score between two normalized names.
  * Returns a score from 0 (no match) to 1 (exact match).
  * @param {Object} name1 - First normalized name
