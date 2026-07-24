@@ -376,17 +376,22 @@ cascade prunes the map deterministically (non-fatal throughout):
    several weaker but co-located events. Top clusters are selected
    (score ≥ `MIN_CLUSTER_SCORE`, landmark-bearing clusters get
    `LANDMARK_BONUS` so an iconic single-event place isn't crowded out, cap
-   `MAX_MAP_CLUSTERS` = 8, minimum top-up to 3) and ordered chronologically
+   `MAX_MAP_CLUSTERS` = 8 candidates, minimum top-up to 3) and ordered
+   chronologically
    so the camera travels through the story in time. Debug CLI:
    `python scripts/meta_story_map.py <story_id>` (no API key).
 3. **Narration agent** (`narrate_map_clusters`, 1 AI call) — writes the
    section intro plus a headline (`title`) and 2-4 sentence story text per
-   stop, and may **discard** a stop whose geographic grouping is accidental
-   rather than meaningful (events merely sharing a city that adds nothing to
-   the story). Application is defensive: unknown keys are ignored, stops
-   without narration are kept (the card falls back to its event list), and
-   discards are honored only while ≥ 3 stops survive (re-kept by score).
-   Discards are recorded under `geo_map.discarded` with reasons.
+   stop, and **curates how many stops the map has**: from the (up to
+   `MAX_MAP_CLUSTERS`) candidates it keeps only the places that genuinely
+   matter to the story — usually no more than ~5 — **discarding** both
+   accidental groupings (events merely sharing a city that adds nothing) and
+   real-but-secondary places that would only pad the map. The stop count is
+   the agent's decision, not a fixed cap. Application is defensive: unknown
+   keys are ignored, stops without narration are kept (the card falls back to
+   its event list), and discards are honored only while ≥ 3 stops survive
+   (re-kept by score). Discards are recorded under `geo_map.discarded` with
+   reasons.
 
 Narration stops are matched to clusters by `key` (slugified cluster label,
 unique per document). Like the social network, the cluster data is technical

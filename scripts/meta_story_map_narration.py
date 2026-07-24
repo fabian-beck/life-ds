@@ -18,11 +18,12 @@ clustering in ``meta_story_map.py``:
    clusters are selected and ordered chronologically.
 3. **Narration agent** (:func:`narrate_map_clusters`, one AI call) — writes
    the section intro and one card (headline + short story text) per cluster,
-   and may **discard** clusters whose geographic grouping is accidental
-   rather than meaningful (events merely sharing a city without the place
-   mattering to the story). Discards are applied defensively: unknown keys
-   are ignored and a minimum number of clusters is always kept (the model
-   can curate, not empty the section).
+   and **curates how many stops the map has**: it keeps only the places that
+   genuinely matter to the story (usually no more than ~5), discarding both
+   accidental groupings (events merely sharing a city) and real-but-secondary
+   places that would only pad the map. Discards are applied defensively:
+   unknown keys are ignored and a minimum number of clusters is always kept
+   (the model can curate, not empty the section).
 
 Everything is applied deterministically: the model never invents places,
 coordinates, or events — it only rates, keeps/discards, and writes prose.
@@ -88,13 +89,17 @@ class MapStopNarration(BaseModel):
 
     key: str = Field(description="The cluster's key, copied verbatim from the input")
     keep: bool = Field(
-        description="False when the cluster is geographically accidental — "
-        "its events merely share a place without that place meaning anything "
-        "to the story — and should not become a map stop"
+        description="True only for the places that genuinely matter to the "
+        "story and belong on the map. Set False both for geographically "
+        "accidental groupings (events merely sharing a place) AND for real but "
+        "secondary places that would only pad the map — the surviving stops "
+        "should be the meaningful few, usually no more than about five"
     )
     discard_reason: Optional[str] = Field(
         default=None,
-        description="Required when keep=false: why the grouping is accidental",
+        description="Required when keep=false: why this place is not among the "
+        "story's meaningful stops (accidental grouping, or real but secondary "
+        "and cuttable)",
     )
     title: Optional[str] = Field(
         default=None,
@@ -261,6 +266,7 @@ def narrate_map_clusters(
     """One AI call: intro + per-cluster card texts, with a discard option."""
     meta = dataset.get("meta_story", {}) or {}
     briefs = "\n\n".join(_cluster_brief(c) for c in clusters)
+    max_candidates = len(clusters)
 
     prompt = f"""Write the narration for the map section of the meta story
 "{meta.get("title", "")}" ({meta.get("tagline", "")}).
@@ -274,13 +280,23 @@ STOPS (in the order they will be shown, chronological):
 
 {briefs}
 
-CURATION — you may DISCARD a stop (keep=false, with discard_reason) when its
-geographic grouping is accidental rather than meaningful: the events merely
-happen to share a place that adds nothing to the story (e.g. unrelated works
-that were coincidentally published in the same city, or a grouping whose
-events have no thematic thread at that place). Keep a stop when the place
-genuinely matters — where work was done, machines were built, people met.
-Discarding should be the exception, not the rule; most stops are meaningful.
+CURATION — decide how many stops the map should actually have. You are given
+up to {max_candidates} candidate places; keep only the ones that genuinely
+matter to THIS story — where decisive work was done, machines were built,
+people met, history turned. A map that flies through many stops reads as a
+gazetteer, not a story, so keep the meaningful few: usually no more than about
+FIVE. Keep more only when additional places are truly essential to the arc.
+
+DISCARD a stop (keep=false, with discard_reason) in two cases:
+- accidental groupings — events that merely happen to share a place that adds
+  nothing to the story (e.g. unrelated works coincidentally published in the
+  same city, or a grouping with no thematic thread at that place);
+- real but secondary places that would only pad the map — when the story is
+  already well told by stronger stops, cut the weaker ones even if the place
+  is not strictly accidental.
+
+At least a few stops must survive, so do not discard so aggressively that the
+map becomes trivial.
 
 REQUIREMENTS:
 - intro: a 2-3 sentence opening paragraph, written the way an author opens a

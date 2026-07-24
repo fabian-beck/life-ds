@@ -43,7 +43,12 @@ PEOPLE_DIR = DATA_DIR / "people"
 # places (Cambridge vs. Bletchley Park vs. London) from collapsing into one.
 MERGE_DISTANCE_KM = 50.0
 
-# How many clusters the map section narrates at most.
+# How many clusters reach the narration agent as candidates. This is NOT the
+# final stop count — the narration agent curates these down to the places that
+# are actually meaningful to the story (usually no more than ~5). The ceiling
+# only bounds how many candidates the deterministic stage hands over, keeping
+# obvious low-score noise out; the "how many stops is meaningful" decision is
+# the agent's.
 MAX_MAP_CLUSTERS = 8
 
 # Minimum cluster score (sum of event weights) to qualify: one landmark event
