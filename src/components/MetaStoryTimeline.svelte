@@ -1023,16 +1023,40 @@
     return eventsByPerson;
   })();
 
-  // Extract historical context events from chapters, with pixel positions
+  // ============================================
+  // OPPORTUNISTIC HISTORICAL-CONTEXT LABELS
+  // Historical-context labels are decluttered globally: higher-priority events
+  // claim their horizontal space first, and a label is only rendered if it fits
+  // in one of a few stack rows without colliding with an already-placed label.
+  // Events that can't fit keep their marker (diamond/bar) but drop the text
+  // label (still reachable via hover/click). `priority` is an optional,
+  // AI-generated field (higher = more important); when absent every event
+  // shares a base priority and ties resolve by year, so placement stays
+  // deterministic even before priorities exist in the data.
+  // ============================================
+
+  // Approximate label font metrics (font-size: 0.7rem ≈ 11.2px, white-space: nowrap)
+  const LABEL_CHAR_PX = 6.3; // average glyph advance at the label font size
+  const LABEL_MIN_PX = 24; // floor so very short titles still reserve space
+  const LABEL_GAP_PX = 10; // minimum horizontal breathing room between labels
+  const LABEL_MAX_ROWS = 3; // vertical rows available within the axis top margin
+
+  // Estimate a label's rendered pixel width from its text length
+  function estimateLabelWidth(text) {
+    if (!text) return LABEL_MIN_PX;
+    return Math.max(LABEL_MIN_PX, text.length * LABEL_CHAR_PX);
+  }
+
+  // Extract historical context events from chapters, with pixel positions and
+  // opportunistic (priority-driven) label placement.
   $: historicalContextEvents = (() => {
     if (!chapters || chapters.length === 0) return [];
 
+    // 1. Flatten every historical-context event across all chapters.
     const events = [];
     chapters.forEach((chapter) => {
       if (!chapter.historical_context) return;
 
-      // Collect events for this chapter, sorted by date
-      const chapterEvents = [];
       chapter.historical_context.forEach((event) => {
         const startYear = getYear(event.date_start);
         if (!startYear) return;
@@ -1040,26 +1064,54 @@
         const endYear = event.date_end ? getYear(event.date_end) : null;
         const leftPx = yearToPixel(startYear);
         const widthPx = endYear ? yearToPixel(endYear) - leftPx : 0;
+        const labelPx = estimateLabelWidth(event.title);
 
-        chapterEvents.push({
+        // Label horizontal extent depends on how the marker is anchored:
+        //  • point markers are centre-anchored (CSS translateX(-50%))
+        //  • range markers are left-anchored at leftPx (align-items: flex-start)
+        const labelLeft = widthPx > 0 ? leftPx : leftPx - labelPx / 2;
+
+        events.push({
           ...event,
           year: startYear,
           endYear,
           leftPx,
           widthPx,
           chapterTitle: chapter.title,
+          labelLeft,
+          labelRight: labelLeft + labelPx,
+          priority: typeof event.priority === "number" ? event.priority : 0,
+          stackIndex: 0,
+          showLabel: false,
         });
       });
-
-      chapterEvents.sort((a, b) => a.year - b.year);
-
-      // Assign stack index: 0 = closest to axis (bottom), 1 = above, etc.
-      chapterEvents.forEach((evt, idx) => {
-        evt.stackIndex = idx;
-      });
-
-      events.push(...chapterEvents);
     });
+
+    if (events.length === 0) return events;
+
+    // 2. Place labels opportunistically in priority order. Each row tracks its
+    //    occupied horizontal intervals; a label takes the lowest row it fits in
+    //    (no overlap within LABEL_GAP_PX). If it fits in no row, its label is
+    //    hidden (marker stays on the axis at row 0). Sorting a shallow copy
+    //    still mutates the shared event objects returned below.
+    const rows = Array.from({ length: LABEL_MAX_ROWS }, () => []);
+    [...events]
+      .sort((a, b) => b.priority - a.priority || a.year - b.year)
+      .forEach((evt) => {
+        for (let r = 0; r < LABEL_MAX_ROWS; r++) {
+          const fits = rows[r].every(
+            (iv) =>
+              evt.labelRight + LABEL_GAP_PX <= iv.left ||
+              evt.labelLeft - LABEL_GAP_PX >= iv.right
+          );
+          if (fits) {
+            rows[r].push({ left: evt.labelLeft, right: evt.labelRight });
+            evt.stackIndex = r;
+            evt.showLabel = true;
+            break;
+          }
+        }
+      });
 
     return events;
   })();
@@ -2126,7 +2178,9 @@
             tabindex="0"
             aria-label="{hEvent.title} ({hEvent.year}–{hEvent.endYear})"
           >
-            <span class="historical-event-label">{hEvent.title}</span>
+            {#if hEvent.showLabel}
+              <span class="historical-event-label">{hEvent.title}</span>
+            {/if}
             <div class="historical-event-bar"></div>
           </div>
         {:else}
@@ -2148,7 +2202,9 @@
             tabindex="0"
             aria-label="{hEvent.title} ({hEvent.year})"
           >
-            <span class="historical-event-label">{hEvent.title}</span>
+            {#if hEvent.showLabel}
+              <span class="historical-event-label">{hEvent.title}</span>
+            {/if}
             <div class="historical-event-diamond"></div>
           </div>
         {/if}
