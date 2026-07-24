@@ -125,6 +125,8 @@ def _person_context(
     person_id: str,
     name: str,
     other_tokens: List[str],
+    lead_chars: int = LEAD_CHARS,
+    max_chars: int = MAX_ARTICLE_CHARS,
 ) -> Optional[str]:
     """Build a focused Wikipedia excerpt for one main person.
 
@@ -169,10 +171,37 @@ def _person_context(
                 if len(relation_sentences) >= MAX_RELATION_SENTENCES:
                     break
 
-    chunk = lead[:LEAD_CHARS]
+    chunk = lead[:lead_chars]
     if relation_sentences:
         chunk += "\n  Mentions of others: " + " ".join(relation_sentences)
-    return chunk[:MAX_ARTICLE_CHARS]
+    return chunk[:max_chars]
+
+
+def build_wikipedia_context(
+    people: List[Tuple[str, str]],
+    lead_chars: int = LEAD_CHARS,
+    max_chars: int = MAX_ARTICLE_CHARS,
+) -> str:
+    """Focused Wikipedia excerpts for a group of main people, as one block.
+
+    ``people`` is a list of ``(person_id, display_name)`` pairs. Each person
+    contributes their article lead plus the sentences mentioning any of the
+    other people, so the block stays centered on the group's shared history.
+    Also used by the story composer (Phase 8), which reads the same cached
+    articles with a larger ``lead_chars`` budget.
+    """
+    contexts = []
+    for person_id, name in people:
+        other_tokens: List[str] = []
+        for other_id, other_name in people:
+            if other_id != person_id:
+                other_tokens.extend(_last_name_tokens(other_name))
+        ctx = _person_context(
+            person_id, name, other_tokens, lead_chars=lead_chars, max_chars=max_chars
+        )
+        if ctx:
+            contexts.append(f"### {name} (id: {person_id})\n{ctx}")
+    return "\n\n".join(contexts) or "(no Wikipedia material available)"
 
 
 def _main_density(
@@ -256,16 +285,7 @@ def build_review_prompt(
         )
     ties = "\n".join(tie_lines) or "  (no ties yet)"
 
-    contexts = []
-    for n in main_nodes:
-        others = []
-        for other in main_nodes:
-            if other["id"] != n["id"]:
-                others.extend(_last_name_tokens(other["name"]))
-        ctx = _person_context(n["id"], n["name"], others)
-        if ctx:
-            contexts.append(f"### {n['name']} (id: {n['id']})\n{ctx}")
-    context_block = "\n\n".join(contexts) or "(no Wikipedia material available)"
+    context_block = build_wikipedia_context([(n["id"], n["name"]) for n in main_nodes])
 
     return f"""You are reviewing the social network of a biographical story collection.
 

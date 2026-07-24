@@ -7,6 +7,10 @@ import shutil
 import sys
 from pathlib import Path
 
+from config import enable_utf8_console
+
+enable_utf8_console()
+
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
 PEOPLE_DIR = DATA_DIR / "people"

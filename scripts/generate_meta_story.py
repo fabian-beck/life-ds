@@ -8,12 +8,13 @@ Generate meta-story datasets using a multi-phase approach:
 5. Phase 5: Social network derived from ego networks (programmatic, no AI)
    Phase 5b: AI review/enrichment of the derived network (1 AI call)
 6. Phase 6: Network narration for the scroll-over cards (1 AI call)
-7. Phase 7: Story composer — top-down narrative composition (2 AI calls,
-   see compose_meta_story.py)
-8. Phase 8: Geographic map section — event rating, geographic clustering,
+7. Phase 7: Geographic map section — event rating, geographic clustering,
    and stop narration with a discard option (see meta_story_map.py and
-   meta_story_map_narration.py). Runs after composition so exclusions are
-   respected.
+   meta_story_map_narration.py)
+8. Phase 8: Story composer — top-down narrative composition (2 AI calls,
+   see compose_meta_story.py). Runs LAST so it sees the assembled story
+   including the map, whose stops it may reorder/discard; its exclusion
+   cascade prunes the earlier sections deterministically.
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -31,10 +32,12 @@ from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
 from compose_meta_story import compose_meta_story_dataset
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
 from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
+
+enable_utf8_console()
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -204,6 +207,15 @@ class HistoricalContextEvent(BaseModel):
     date_end_precision: Optional[str] = Field(default=None)
     wikipedia_url: Optional[str] = Field(
         default=None, description="Wikipedia article URL for this event (if known)"
+    )
+    priority: int = Field(
+        default=2,
+        description=(
+            "Label importance 1-3 for decluttering overlapping timeline labels "
+            "(3 = a defining landmark that most shaped these people / that any "
+            "reader would recognise, 2 = notable, 1 = minor background detail). "
+            "When labels compete for horizontal space, higher priority wins."
+        ),
     )
 
 
@@ -1412,6 +1424,10 @@ RULES:
 - Use date_end for eras/wars; leave null for single moments
 - Only include events you are certain about. Do not invent.
 - For wikipedia_url: provide the full URL if confident the article exists, else null
+- For priority: rate 1-3 how strongly each event defines this story (3 = a defining
+  landmark that most shaped these people or that any reader would recognise, 2 = notable,
+  1 = minor background detail). Reserve 3 for the few events that truly anchor the era —
+  overlapping labels are decluttered by priority, so the highest-priority ones win space.
 - Many chapters may need ZERO events — only include one if it truly shaped these people's lives
 """
 
@@ -1796,17 +1812,17 @@ def main():
     parser.add_argument(
         "--skip-compose",
         action="store_true",
-        help="Skip Phase 7 (top-down story composition)",
+        help="Skip Phase 8 (top-down story composition)",
     )
     parser.add_argument(
         "--no-exclusions",
         action="store_true",
-        help="Phase 7: never drop people from the story (text composition only)",
+        help="Phase 8: never drop people from the story (text composition only)",
     )
     parser.add_argument(
         "--skip-map",
         action="store_true",
-        help="Skip Phase 8 (geographic map section)",
+        help="Skip Phase 7 (geographic map section)",
     )
     parser.add_argument(
         "--skip-translate",
@@ -1988,7 +2004,7 @@ def main():
         )
 
     # Phase 6: narrate the social network's circles (non-fatal on failure).
-    # This is the baseline narration; Phase 7 rewrites it in the story's
+    # This is the baseline narration; Phase 8 rewrites it in the story's
     # unified voice, but keeping Phase 6 means the story still has narration
     # when composition is skipped or fails.
     if args.verbose:
@@ -1997,40 +2013,17 @@ def main():
         dataset, client=client, model=args.model, verbose=args.verbose
     )
 
-    # Phase 7: story composer — reads the assembled story top-down and writes
-    # one coherent narrative (title/description/timeline intro/chapter
-    # headlines + lead-ins/network narration/conclusion), optionally dropping
-    # clearly disconnected people. Non-fatal: on failure the bottom-up texts
-    # are kept.
-    if args.skip_compose:
-        if args.verbose:
-            print("\n=== PHASE 7: Story Composition (SKIPPED) ===")
-    else:
-        if args.verbose:
-            print("\n=== PHASE 7: Story Composition ===")
-        composed = compose_meta_story_dataset(
-            dataset,
-            registry,
-            client,
-            model=args.model,
-            allow_exclusions=not args.no_exclusions,
-            verbose=args.verbose,
-        )
-        if composed is not None:
-            dataset = composed
-        else:
-            print("Warning: story composition failed, keeping bottom-up texts")
-
-    # Phase 8: geographic map section — rate the story's located events,
+    # Phase 7: geographic map section — rate the story's located events,
     # cluster them geographically, and narrate the top clusters as map stops
-    # (with an option to discard accidental groupings). Runs after
-    # composition so excluded people never reach the map. Non-fatal.
+    # (with an option to discard accidental groupings). Runs BEFORE the
+    # composer so the composer can reorder/curate the stops; its exclusion
+    # cascade prunes the map deterministically. Non-fatal.
     if args.skip_map:
         if args.verbose:
-            print("\n=== PHASE 8: Map Section (SKIPPED) ===")
+            print("\n=== PHASE 7: Map Section (SKIPPED) ===")
     else:
         if args.verbose:
-            print("\n=== PHASE 8: Map Section ===")
+            print("\n=== PHASE 7: Map Section ===")
         try:
             geo_map = generate_geo_map(
                 dataset,
@@ -2044,6 +2037,31 @@ def main():
                 dataset["geo_map"] = geo_map
         except Exception as e:
             print(f"Warning: map section generation failed: {e}")
+
+    # Phase 8: story composer — reads the assembled story top-down (with
+    # Wikipedia context) and writes one coherent narrative: title,
+    # description, opening, section bodies, chapter headlines + lead-ins,
+    # its own network circle organization, curated map stops, conclusion —
+    # optionally dropping clearly disconnected people. Non-fatal: on failure
+    # the bottom-up texts are kept.
+    if args.skip_compose:
+        if args.verbose:
+            print("\n=== PHASE 8: Story Composition (SKIPPED) ===")
+    else:
+        if args.verbose:
+            print("\n=== PHASE 8: Story Composition ===")
+        composed = compose_meta_story_dataset(
+            dataset,
+            registry,
+            client,
+            model=args.model,
+            allow_exclusions=not args.no_exclusions,
+            verbose=args.verbose,
+        )
+        if composed is not None:
+            dataset = composed
+        else:
+            print("Warning: story composition failed, keeping bottom-up texts")
 
     # Save files
     if not save_meta_story(story_id, dataset, verbose=args.verbose):

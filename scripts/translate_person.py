@@ -40,7 +40,9 @@ from typing import Any, Dict, List, Optional, cast
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel
 
-from config import DEFAULT_MODEL
+from config import DEFAULT_MODEL, enable_utf8_console
+
+enable_utf8_console()
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -215,7 +217,25 @@ class TrOpening(BaseModel):
 class TrSectionHeadings(BaseModel):
     timeline: Optional[str] = None
     network: Optional[str] = None
+    map: Optional[str] = None
     conclusion: Optional[str] = None
+
+
+class TrBodyBlock(BaseModel):
+    # One section-body block; only the keys present in the source block appear
+    # in the payload: paragraph -> text; quote -> text (+ attribution);
+    # image -> image_caption (only when the source image has a caption).
+    text: Optional[str] = None
+    attribution: Optional[str] = None
+    image_caption: Optional[str] = None
+
+
+class TrSectionBodies(BaseModel):
+    # Each slot only present when the composed story carries that body.
+    timeline: Optional[List[TrBodyBlock]] = None
+    network: Optional[List[TrBodyBlock]] = None
+    map: Optional[List[TrBodyBlock]] = None
+    conclusion: Optional[List[TrBodyBlock]] = None
 
 
 class TrSectionImages(BaseModel):
@@ -236,6 +256,7 @@ class MetaStoryTranslation(BaseModel):
     opening: Optional[TrOpening] = None
     section_headings: Optional[TrSectionHeadings] = None
     section_images: Optional[TrSectionImages] = None
+    section_bodies: Optional[TrSectionBodies] = None
     timeline_intro: Optional[str] = None
     conclusion: Optional[str] = None
     network_narration: Optional[TrNetworkNarration] = None
@@ -342,7 +363,7 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             {
                 "title": chapter.get("title", ""),
                 # Composed lead-in only when present, so stories composed
-                # before/without Phase 7 keep their old fingerprint.
+                # before/without the composer phase keep their old fingerprint.
                 **({"lead_in": chapter["lead_in"]} if chapter.get("lead_in") else {}),
                 "historical_context": [
                     {
@@ -363,11 +384,11 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         ],
         "conclusion": data.get("conclusion"),
     }
-    # Composed timeline intro (Phase 7) only when present — same fingerprint
+    # Composed timeline intro (composer phase) only when present — same fingerprint
     # stability rationale as the chapter lead-ins above.
     if data.get("timeline_intro"):
         payload["timeline_intro"] = data["timeline_intro"]
-    # Composed opening, section headings, and section image captions (Phase 7),
+    # Composed opening, section headings, and section image captions (composer),
     # likewise only when present.
     opening = data.get("opening")
     if isinstance(opening, dict) and opening.get("text"):
@@ -380,9 +401,36 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     if isinstance(headings, dict) and headings:
         payload["section_headings"] = {
             slot: headings[slot]
-            for slot in ("timeline", "network", "conclusion")
+            for slot in ("timeline", "network", "map", "conclusion")
             if headings.get(slot)
         }
+    # Composed section bodies (Phase 8): paragraph/quote texts and image
+    # captions are prose; block types, layouts, image URLs/provenance are
+    # technical. Only added when present, so uncomposed stories keep their
+    # old fingerprint.
+    section_bodies = data.get("section_bodies")
+    if isinstance(section_bodies, dict) and section_bodies:
+        bodies_payload: Dict[str, Any] = {}
+        for slot in ("timeline", "network", "map", "conclusion"):
+            blocks = section_bodies.get(slot)
+            if not blocks:
+                continue
+            blocks_payload = []
+            for block in blocks:
+                entry: Dict[str, Any] = {}
+                kind = block.get("type")
+                if kind in ("paragraph", "quote"):
+                    entry["text"] = block.get("text", "")
+                    if kind == "quote" and block.get("attribution"):
+                        entry["attribution"] = block["attribution"]
+                elif kind == "image":
+                    caption = (block.get("image") or {}).get("caption")
+                    if caption:
+                        entry["image_caption"] = caption
+                blocks_payload.append(entry)
+            bodies_payload[slot] = blocks_payload
+        if bodies_payload:
+            payload["section_bodies"] = bodies_payload
     section_images = data.get("section_images")
     if isinstance(section_images, dict) and section_images:
         image_captions = {
@@ -747,7 +795,7 @@ def apply_meta_story_translations(
     _set_if_source_has(result, "conclusion", translated.get("conclusion"))
     _set_if_source_has(result, "timeline_intro", translated.get("timeline_intro"))
 
-    # Composed opening, section headings, and section images (Phase 7). Image
+    # Composed opening, section headings, section images, and bodies (composer). Image
     # URLs/sources stay verbatim; captions prefer the person's translated life
     # events (like event titles) and fall back to the translated payload.
     src_opening = result.get("opening")
@@ -758,8 +806,32 @@ def apply_meta_story_translations(
     src_headings = result.get("section_headings")
     tr_headings = translated.get("section_headings")
     if isinstance(src_headings, dict) and isinstance(tr_headings, dict):
-        for slot in ("timeline", "network", "conclusion"):
+        for slot in ("timeline", "network", "map", "conclusion"):
             _set_if_source_has(src_headings, slot, tr_headings.get(slot))
+    # Composed section bodies: block structure (types, layouts, image
+    # URLs/provenance) stays verbatim; only paragraph/quote texts,
+    # attributions, and image captions are overlaid, aligned by index.
+    src_bodies = result.get("section_bodies")
+    tr_bodies = translated.get("section_bodies")
+    if isinstance(src_bodies, dict) and isinstance(tr_bodies, dict):
+        for slot in ("timeline", "network", "map", "conclusion"):
+            src_blocks = src_bodies.get(slot)
+            if not src_blocks:
+                continue
+            tr_blocks = tr_bodies.get(slot) or []
+            _require_same_length(f"section_bodies.{slot}", src_blocks, tr_blocks)
+            for block, tr_block in zip(src_blocks, tr_blocks):
+                kind = block.get("type")
+                if kind in ("paragraph", "quote"):
+                    _set_if_source_has(block, "text", tr_block.get("text"))
+                    if kind == "quote":
+                        _set_if_source_has(
+                            block, "attribution", tr_block.get("attribution")
+                        )
+                elif kind == "image":
+                    overlay_image_caption(
+                        block.get("image"), tr_block.get("image_caption")
+                    )
     src_images = result.get("section_images")
     tr_images = translated.get("section_images")
     if isinstance(src_images, dict):
@@ -1244,6 +1316,12 @@ def translate_meta_story(
             "are its section titles — translate both as narrative prose and "
             "evocative headlines respectively, never as literal labels. "
             "image_caption / *_caption entries are image captions.\n"
+            "11b. section_bodies entries are the story's long-form narrative "
+            "blocks — translate paragraph and quote texts as flowing prose in "
+            "the story's voice. A block with an attribution is a quotation: "
+            "translate the quote faithfully (it is a rendered translation of "
+            "a documented quote) and keep the attribution's names per the "
+            "usual name rules. Blocks with only image_caption are captions.\n"
             "12. map_narration texts are short narrative paragraphs about the "
             "places of the story — translate them as flowing prose, localizing "
             "place names per the usual place rules. Each stop also has a "

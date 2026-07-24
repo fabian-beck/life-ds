@@ -17,12 +17,11 @@ import copy
 import os
 import sys
 from datetime import datetime
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from openai import OpenAI
 
-from config import DEFAULT_MODEL
+from config import DEFAULT_MODEL, enable_utf8_console
 from translate_person import (
     DATA_DIR,
     LANGUAGE_NAMES,
@@ -33,6 +32,8 @@ from translate_person import (
     translate_meta_story,
     translation_status,
 )
+
+enable_utf8_console()
 
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 META_STORIES_REGISTER = DATA_DIR / "meta_stories.json"

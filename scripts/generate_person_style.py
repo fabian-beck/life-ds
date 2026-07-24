@@ -14,7 +14,9 @@ from xml.etree import ElementTree as ET
 
 from openai import APIStatusError, OpenAI
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+
+enable_utf8_console()
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 PEOPLE_DIR = DATA_DIR / "people"

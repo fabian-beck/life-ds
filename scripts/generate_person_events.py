@@ -25,7 +25,12 @@ import requests
 from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, LOW_REASONING_EFFORT
+from config import (
+    DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    LOW_REASONING_EFFORT,
+    enable_utf8_console,
+)
 from icon_categories import (
     format_icon_categories_for_prompt,
     normalize_icon,
@@ -36,6 +41,8 @@ from utils.wikipedia_cache import (
     ensure_cache,
     get_cache_dir,
 )
+
+enable_utf8_console()
 
 # ============================================================================
 # AI REASONING EFFORT CONFIGURATION

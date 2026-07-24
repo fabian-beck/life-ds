@@ -134,11 +134,11 @@
   })();
 
   // Define pixels per year scale
-  const PIXELS_PER_YEAR = 15;
+  const PIXELS_PER_YEAR = 7.5;
 
   // Gap compression constants
   const GAP_THRESHOLD = 50; // Minimum years to trigger compression
-  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 15 for active)
+  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 7.5 for active)
   const GAP_MIN_PX = 60; // Minimum pixel width for any compressed gap
   const BUFFER_YEARS = 5; // Years of full-scale padding kept around each gap edge
 
@@ -1023,16 +1023,40 @@
     return eventsByPerson;
   })();
 
-  // Extract historical context events from chapters, with pixel positions
+  // ============================================
+  // OPPORTUNISTIC HISTORICAL-CONTEXT LABELS
+  // Historical-context labels are decluttered globally: higher-priority events
+  // claim their horizontal space first, and a label is only rendered if it fits
+  // in one of a few stack rows without colliding with an already-placed label.
+  // Events that can't fit keep their marker (diamond/bar) but drop the text
+  // label (still reachable via hover/click). `priority` is an optional,
+  // AI-generated field (higher = more important); when absent every event
+  // shares a base priority and ties resolve by year, so placement stays
+  // deterministic even before priorities exist in the data.
+  // ============================================
+
+  // Approximate label font metrics (font-size: 0.7rem ≈ 11.2px, white-space: nowrap)
+  const LABEL_CHAR_PX = 6.3; // average glyph advance at the label font size
+  const LABEL_MIN_PX = 24; // floor so very short titles still reserve space
+  const LABEL_GAP_PX = 10; // minimum horizontal breathing room between labels
+  const LABEL_MAX_ROWS = 3; // vertical rows available within the axis top margin
+
+  // Estimate a label's rendered pixel width from its text length
+  function estimateLabelWidth(text) {
+    if (!text) return LABEL_MIN_PX;
+    return Math.max(LABEL_MIN_PX, text.length * LABEL_CHAR_PX);
+  }
+
+  // Extract historical context events from chapters, with pixel positions and
+  // opportunistic (priority-driven) label placement.
   $: historicalContextEvents = (() => {
     if (!chapters || chapters.length === 0) return [];
 
+    // 1. Flatten every historical-context event across all chapters.
     const events = [];
     chapters.forEach((chapter) => {
       if (!chapter.historical_context) return;
 
-      // Collect events for this chapter, sorted by date
-      const chapterEvents = [];
       chapter.historical_context.forEach((event) => {
         const startYear = getYear(event.date_start);
         if (!startYear) return;
@@ -1040,26 +1064,54 @@
         const endYear = event.date_end ? getYear(event.date_end) : null;
         const leftPx = yearToPixel(startYear);
         const widthPx = endYear ? yearToPixel(endYear) - leftPx : 0;
+        const labelPx = estimateLabelWidth(event.title);
 
-        chapterEvents.push({
+        // Label horizontal extent depends on how the marker is anchored:
+        //  • point markers are centre-anchored (CSS translateX(-50%))
+        //  • range markers are left-anchored at leftPx (align-items: flex-start)
+        const labelLeft = widthPx > 0 ? leftPx : leftPx - labelPx / 2;
+
+        events.push({
           ...event,
           year: startYear,
           endYear,
           leftPx,
           widthPx,
           chapterTitle: chapter.title,
+          labelLeft,
+          labelRight: labelLeft + labelPx,
+          priority: typeof event.priority === "number" ? event.priority : 0,
+          stackIndex: 0,
+          showLabel: false,
         });
       });
-
-      chapterEvents.sort((a, b) => a.year - b.year);
-
-      // Assign stack index: 0 = closest to axis (bottom), 1 = above, etc.
-      chapterEvents.forEach((evt, idx) => {
-        evt.stackIndex = idx;
-      });
-
-      events.push(...chapterEvents);
     });
+
+    if (events.length === 0) return events;
+
+    // 2. Place labels opportunistically in priority order. Each row tracks its
+    //    occupied horizontal intervals; a label takes the lowest row it fits in
+    //    (no overlap within LABEL_GAP_PX). If it fits in no row, its label is
+    //    hidden (marker stays on the axis at row 0). Sorting a shallow copy
+    //    still mutates the shared event objects returned below.
+    const rows = Array.from({ length: LABEL_MAX_ROWS }, () => []);
+    [...events]
+      .sort((a, b) => b.priority - a.priority || a.year - b.year)
+      .forEach((evt) => {
+        for (let r = 0; r < LABEL_MAX_ROWS; r++) {
+          const fits = rows[r].every(
+            (iv) =>
+              evt.labelRight + LABEL_GAP_PX <= iv.left ||
+              evt.labelLeft - LABEL_GAP_PX >= iv.right
+          );
+          if (fits) {
+            rows[r].push({ left: evt.labelLeft, right: evt.labelRight });
+            evt.stackIndex = r;
+            evt.showLabel = true;
+            break;
+          }
+        }
+      });
 
     return events;
   })();
@@ -1140,10 +1192,18 @@
   // The header can be taller than the static minimum when it carries a lead-in,
   // so grow the reserve to the measured header height (plus a gap) to keep the
   // year axis and the scroll-indicator year pill clear of the box.
-  $: headerReserve =
-    isSticky && currentChapterByIndicator && chapterHeaderHeight > 0
-      ? Math.max(HEADER_RESERVE_HEIGHT, Math.ceil(chapterHeaderHeight) + 16)
-      : HEADER_RESERVE_HEIGHT;
+  //
+  // Kept as retained state (not a plain derivation) so that when the scroll
+  // indicator sits in a gap with no active chapter, the reserve holds its last
+  // value instead of collapsing to the minimum — otherwise the timeline jumps
+  // up and back down as the box fades out and the next one fades in.
+  let headerReserve = HEADER_RESERVE_HEIGHT;
+  $: if (isSticky && currentChapterByIndicator && chapterHeaderHeight > 0) {
+    headerReserve = Math.max(
+      HEADER_RESERVE_HEIGHT,
+      Math.ceil(chapterHeaderHeight) + 16
+    );
+  }
 
   // Viewport height tracking for density recalculation on resize
   let viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
@@ -2027,8 +2087,8 @@
     {#key currentChapterByIndicator.id}
       <div
         class="fixed-chapter-header"
-        in:fade={{ duration: 300, delay: 100 }}
-        out:fade={{ duration: 200 }}
+        in:fade={{ duration: 320, delay: 160 }}
+        out:fade={{ duration: 220 }}
         style={chapterHeaderStyle}
       >
         <div
@@ -2118,7 +2178,9 @@
             tabindex="0"
             aria-label="{hEvent.title} ({hEvent.year}–{hEvent.endYear})"
           >
-            <span class="historical-event-label">{hEvent.title}</span>
+            {#if hEvent.showLabel}
+              <span class="historical-event-label">{hEvent.title}</span>
+            {/if}
             <div class="historical-event-bar"></div>
           </div>
         {:else}
@@ -2140,7 +2202,9 @@
             tabindex="0"
             aria-label="{hEvent.title} ({hEvent.year})"
           >
-            <span class="historical-event-label">{hEvent.title}</span>
+            {#if hEvent.showLabel}
+              <span class="historical-event-label">{hEvent.title}</span>
+            {/if}
             <div class="historical-event-diamond"></div>
           </div>
         {/if}
@@ -2395,6 +2459,9 @@
       --header-reserve,
       60px
     ); /* Reserve space for fixed chapter header */
+    /* Animate reserve changes so the year axis and rows glide when the
+       chapter header changes height, instead of jumping. */
+    transition: padding-top 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Fixed chapter header - positioned at top, doesn't scroll */
@@ -2830,7 +2897,12 @@
     border-left: 2px dashed rgba(56, 189, 248, 0.4);
     pointer-events: none;
     z-index: 15;
-    transition: left 0.1s ease-out;
+    /* left tracks the scroll position quickly; top/height follow the
+       animated header reserve so the year pill glides with the axis. */
+    transition:
+      left 0.1s ease-out,
+      top 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

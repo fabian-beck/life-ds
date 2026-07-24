@@ -5,16 +5,57 @@
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
   import MetaStoryFigure from "./MetaStoryFigure.svelte";
+  import MetaStoryBody from "./MetaStoryBody.svelte";
+  import MetaStoryProse from "./MetaStoryProse.svelte";
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import { consumeMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+  import personStylesData from "../../data/person_styles.json";
 
   export let metaStoryData = null;
   export let personsRegistry = [];
   export let currentLanguage = "en";
   export let isLoading = false;
+
+  const personStyles = personStylesData.styles;
+
+  // The story's own people — those with an individual story — resolved to
+  // { id, name, color } so their names can be emphasized and linked wherever
+  // they appear in the story's prose. Display names come from the social
+  // network's main nodes (clean, prose-matching) and fall back to the registry
+  // (underscores → spaces); colors come from each person's story style. Only
+  // people present in the registry (i.e. with an individual story) are kept.
+  $: storyPeople = buildStoryPeople(metaStoryData, personsRegistry);
+
+  function buildStoryPeople(data, registry) {
+    const ids = data?.meta_story?.person_ids;
+    if (!ids?.length) return [];
+    const nodeNames = new Map(
+      (data.social_network?.nodes || [])
+        .filter((n) => n.type === "main")
+        .map((n) => [n.id, n.name])
+    );
+    const registered = new Map((registry || []).map((p) => [p.id, p.name]));
+    return ids
+      .filter((id) => registered.has(id))
+      .map((id) => ({
+        id,
+        name: (nodeNames.get(id) || registered.get(id) || id).replace(
+          /_/g,
+          " "
+        ),
+        color: personStyles[id]?.primary || "#38bdf8",
+      }));
+  }
+
+  // Shared props for every prose renderer / body in the story.
+  $: proseContext = {
+    people: storyPeople,
+    metaStoryId: metaStoryData?.meta_story?.id ?? null,
+    currentLanguage,
+  };
 
   // Scroll proxy variables
   const MIN_PROXY_HEIGHT = 1500; // Minimum vertical scroll distance (px) to traverse any timeline
@@ -43,6 +84,9 @@
   // Composed story-specific section headings, falling back to generic labels
   $: sectionHeadings = metaStoryData?.section_headings || {};
   $: sectionImages = metaStoryData?.section_images || {};
+  // Composed section bodies (Phase 8): free-form narrative blocks rendered
+  // between each section's standfirst and its interactive component.
+  $: sectionBodies = metaStoryData?.section_bodies || {};
 
   // Calculate proxy height based on timeline's horizontal scroll distance
   $: if (timelineContainer && metaStoryData?.chapters?.length) {
@@ -531,11 +575,18 @@
             variant="opening"
           />
           {#each openingParagraphs as paragraph}
-            <p class="opening-text">{paragraph}</p>
+            <p class="opening-text">
+              <MetaStoryProse text={paragraph} {...proseContext} />
+            </p>
           {/each}
         </div>
       {/if}
-      <p class="description">{metaStoryData.meta_story.description}</p>
+      <p class="description">
+        <MetaStoryProse
+          text={metaStoryData.meta_story.description}
+          {...proseContext}
+        />
+      </p>
     </header>
 
     <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
@@ -543,9 +594,15 @@
       <section class="chapters-section">
         <h2>{sectionHeadings.timeline || $_("meta_story.chapters_heading")}</h2>
         {#if metaStoryData.timeline_intro}
-          <p class="timeline-intro">{metaStoryData.timeline_intro}</p>
+          <p class="timeline-intro">
+            <MetaStoryProse
+              text={metaStoryData.timeline_intro}
+              {...proseContext}
+            />
+          </p>
         {/if}
         <MetaStoryFigure image={sectionImages.timeline} />
+        <MetaStoryBody blocks={sectionBodies.timeline} {...proseContext} />
 
         <div
           class="scroll-proxy-container"
@@ -609,10 +666,17 @@
       <section class="network-section">
         <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
         <p class="network-intro">
-          {metaStoryData.social_network?.narration?.intro ||
-            $_("meta_story.network_subtitle")}
+          {#if metaStoryData.social_network?.narration?.intro}
+            <MetaStoryProse
+              text={metaStoryData.social_network.narration.intro}
+              {...proseContext}
+            />
+          {:else}
+            {$_("meta_story.network_subtitle")}
+          {/if}
         </p>
         <MetaStoryFigure image={sectionImages.network} />
+        <MetaStoryBody blocks={sectionBodies.network} {...proseContext} />
         {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
           <MetaStoryNetwork
             network={metaStoryData.social_network}
@@ -629,11 +693,22 @@
       <section class="map-section">
         <h2>{sectionHeadings.map || $_("meta_story.map_heading")}</h2>
         <p class="map-intro">
-          {metaStoryData.geo_map?.narration?.intro ||
-            $_("meta_story.map_subtitle")}
+          {#if metaStoryData.geo_map?.narration?.intro}
+            <MetaStoryProse
+              text={metaStoryData.geo_map.narration.intro}
+              {...proseContext}
+            />
+          {:else}
+            {$_("meta_story.map_subtitle")}
+          {/if}
         </p>
+        <MetaStoryBody blocks={sectionBodies.map} {...proseContext} />
         {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
-          <MetaStoryMap geoMap={metaStoryData.geo_map} {currentLanguage} />
+          <MetaStoryMap
+            geoMap={metaStoryData.geo_map}
+            metaStoryId={metaStoryData.meta_story.id}
+            {currentLanguage}
+          />
         {/await}
       </section>
     {/if}
@@ -645,7 +720,10 @@
           {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
         </h2>
         <MetaStoryFigure image={sectionImages.conclusion} />
-        <p>{metaStoryData.conclusion}</p>
+        <MetaStoryBody blocks={sectionBodies.conclusion} {...proseContext} />
+        <p>
+          <MetaStoryProse text={metaStoryData.conclusion} {...proseContext} />
+        </p>
       </section>
     {/if}
   </div>

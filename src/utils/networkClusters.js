@@ -103,14 +103,104 @@ function detectCommunities(links) {
   return [...members.values()].filter((set) => set.size >= 2);
 }
 
+const STRENGTH_RANK = { strong: 3, moderate: 2, weak: 1 };
+
+/**
+ * Sort a cluster's internal ties: main↔main bonds first (they carry the
+ * story), then bridging ties, each strongest-first.
+ */
+function sortInternalLinks(links, ids) {
+  return links
+    .filter((l) => ids.has(l.source) && ids.has(l.target))
+    .sort(
+      (a, b) =>
+        (a.kind === "main" ? 0 : 1) - (b.kind === "main" ? 0 : 1) ||
+        (STRENGTH_RANK[b.strength] || 0) - (STRENGTH_RANK[a.strength] || 0) ||
+        pairKey(a.source, a.target).localeCompare(pairKey(b.source, b.target))
+    );
+}
+
+/**
+ * Build clusters from a composed narration (the story composer's own circle
+ * organization, carried as `member_ids` per circle). Secondary (bridging)
+ * nodes join the circle holding most of their main neighbors. Returns null
+ * when the narration carries no composed circles, so the caller falls back
+ * to community detection.
+ */
+function composedClusters(network, nodeById, links) {
+  const circles = (network?.narration?.circles || []).filter(
+    (c) => Array.isArray(c.member_ids) && c.member_ids.length
+  );
+  if (!circles.length) return null;
+
+  const clusters = [];
+  for (const circle of circles) {
+    const mains = circle.member_ids
+      .map((id) => nodeById.get(id))
+      .filter((n) => n && n.type === "main");
+    if (mains.length < 2) continue; // defensively skip degenerate circles
+    mains.sort(
+      (a, b) =>
+        (a.birth_year ?? Infinity) - (b.birth_year ?? Infinity) ||
+        a.name.localeCompare(b.name)
+    );
+    clusters.push({
+      key: circle.key || mains.map((n) => n.id).join("+"),
+      mains,
+      secondaries: [],
+      nodeIds: new Set(mains.map((n) => n.id)),
+      links: [],
+    });
+  }
+  if (!clusters.length) return null;
+
+  // Assign each secondary node to the circle holding most of its main
+  // neighbors (earlier circle wins ties); unassigned ones stay outside.
+  for (const node of network.nodes) {
+    if (node.type === "secondary") {
+      let best = null;
+      let bestCount = 0;
+      for (const cluster of clusters) {
+        let count = 0;
+        for (const l of links) {
+          const other =
+            l.source === node.id
+              ? l.target
+              : l.target === node.id
+                ? l.source
+                : null;
+          if (other && cluster.nodeIds.has(other)) count++;
+        }
+        if (count > bestCount) {
+          bestCount = count;
+          best = cluster;
+        }
+      }
+      if (best) {
+        best.secondaries.push(node);
+        best.nodeIds.add(node.id);
+      }
+    }
+  }
+  for (const cluster of clusters) {
+    cluster.secondaries.sort((a, b) => a.name.localeCompare(b.name));
+    cluster.links = sortInternalLinks(links, cluster.nodeIds);
+  }
+  return clusters;
+}
+
 /**
  * Compute the ordered clusters for a meta story social network.
  *
- * @param {{nodes: Array, links: Array}} network - the `social_network` block
+ * When the network narration carries a composed circle organization
+ * (`member_ids` per circle, written by the story composer), those circles are
+ * used as-is, in their authored order. Otherwise clusters are detected by
+ * greedy modularity and ordered roughly by time.
+ *
+ * @param {{nodes: Array, links: Array, narration?: Object}} network - the
+ *   `social_network` block
  * @returns {Array<{key: string, mains: Array, secondaries: Array,
- *   nodeIds: Set<string>, links: Array, yearStart: number|null,
- *   yearEnd: number|null}>} clusters ordered roughly by time (mean birth year
- *   of their main members)
+ *   nodeIds: Set<string>, links: Array}>} ordered clusters
  */
 export function computeClusters(network) {
   if (!network?.nodes?.length || !network?.links?.length) return [];
@@ -121,7 +211,9 @@ export function computeClusters(network) {
   );
   if (!links.length) return [];
 
-  const strengthRank = { strong: 3, moderate: 2, weak: 1 };
+  const composed = composedClusters(network, nodeById, links);
+  if (composed) return composed;
+
   const clusters = [];
   for (const ids of detectCommunities(links)) {
     const mains = [];
@@ -138,16 +230,7 @@ export function computeClusters(network) {
     );
     secondaries.sort((a, b) => a.name.localeCompare(b.name));
 
-    // Internal ties: main↔main bonds first (they carry the story), then
-    // bridging ties, each strongest-first.
-    const internal = links
-      .filter((l) => ids.has(l.source) && ids.has(l.target))
-      .sort(
-        (a, b) =>
-          (a.kind === "main" ? 0 : 1) - (b.kind === "main" ? 0 : 1) ||
-          (strengthRank[b.strength] || 0) - (strengthRank[a.strength] || 0) ||
-          pairKey(a.source, a.target).localeCompare(pairKey(b.source, b.target))
-      );
+    const internal = sortInternalLinks(links, ids);
 
     const years = mains
       .map((n) => n.birth_year)

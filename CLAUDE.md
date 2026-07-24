@@ -248,12 +248,17 @@ smooth on touch. The component takes a `currentLanguage` prop (used to localize
 A circle's `key` is its cluster key — the cluster's main person ids in cluster
 order joined with `+` — computed identically by `derive_clusters()` in
 `scripts/meta_story_network.py` and `computeClusters()` in the UI, which
-matches narration to clusters by that key. Each circle's `title` is a short
-evocative headline (not a list of names), shown as the card's heading; when a
-circle has no `title` (older data) the card falls back to a joined list of the
-members' names. Narration is written by AI as **Phase 6** of
+matches narration to clusters by that key. **Composed stories** additionally
+carry an explicit `member_ids` list per circle: the Phase 8 composer may
+reorganize the circles (merge, split, reorder, or discard clusters), and when
+`member_ids` are present the UI builds the circles from them directly (in
+authored order; secondary nodes join the circle holding most of their main
+neighbors) instead of running community detection. Each circle's `title` is a
+short evocative headline (not a list of names), shown as the card's heading;
+when a circle has no `title` (older data) the card falls back to a joined
+list of the members' names. Narration is written by AI as **Phase 6** of
 `generate_meta_story.py` (non-fatal on failure) and then rewritten in the
-story's unified voice by the Phase 7 composer (see "Meta Story Composition"
+story's unified voice by the Phase 8 composer (see "Meta Story Composition"
 below); when a cluster has no matching
 `text` (e.g. the network changed and narration wasn't regenerated), the card
 falls back to listing the cluster's ties. Unlike the rest of `social_network`,
@@ -300,8 +305,10 @@ translated and fingerprinted like other meta story prose.
   network. Rebuild every meta story (including translated copies) with
   `python scripts/backfill_meta_story_networks.py` (no API key needed), then
   `npx prettier --write "data/meta_stories/**/*.json"`. The backfill carries
-  each file's existing narration over, dropping circles whose cluster key no
-  longer exists — it warns when that happens, and the dropped circles need
+  each file's existing narration over: composed circles (with `member_ids`)
+  survive as long as every member is still a main node, key-matched circles
+  are dropped when their cluster key no longer exists — it warns when that
+  happens, and the dropped circles need
   re-narration (Phase 6) or hand-written texts. **Note:** the backfill is a pure
   re-derivation, so it discards Phase 5b review edits (added/modified/deleted
   ties) just as it can orphan narration — re-run the full pipeline (or Phase
@@ -349,9 +356,10 @@ emphasis as the network cards; each card also lists up to 4 member events
 }
 ```
 
-The block is built by **Phase 8** of `generate_meta_story.py` (opt out with
-`--skip-map`), a small multi-agent pipeline that runs **after** Phase 7 so
-composer exclusions never reach the map (non-fatal throughout):
+The block is built by **Phase 7** of `generate_meta_story.py` (opt out with
+`--skip-map`), a small multi-agent pipeline that runs **before** the Phase 8
+composer — the composer may then reorder/discard the stops, and its exclusion
+cascade prunes the map deterministically (non-fatal throughout):
 
 1. **Event rating agent** (`scripts/meta_story_map_narration.py`,
    `rate_map_events`, batched AI calls) — every located story event (the
@@ -368,17 +376,22 @@ composer exclusions never reach the map (non-fatal throughout):
    several weaker but co-located events. Top clusters are selected
    (score ≥ `MIN_CLUSTER_SCORE`, landmark-bearing clusters get
    `LANDMARK_BONUS` so an iconic single-event place isn't crowded out, cap
-   `MAX_MAP_CLUSTERS` = 8, minimum top-up to 3) and ordered chronologically
+   `MAX_MAP_CLUSTERS` = 8 candidates, minimum top-up to 3) and ordered
+   chronologically
    so the camera travels through the story in time. Debug CLI:
    `python scripts/meta_story_map.py <story_id>` (no API key).
 3. **Narration agent** (`narrate_map_clusters`, 1 AI call) — writes the
    section intro plus a headline (`title`) and 2-4 sentence story text per
-   stop, and may **discard** a stop whose geographic grouping is accidental
-   rather than meaningful (events merely sharing a city that adds nothing to
-   the story). Application is defensive: unknown keys are ignored, stops
-   without narration are kept (the card falls back to its event list), and
-   discards are honored only while ≥ 3 stops survive (re-kept by score).
-   Discards are recorded under `geo_map.discarded` with reasons.
+   stop, and **curates how many stops the map has**: from the (up to
+   `MAX_MAP_CLUSTERS`) candidates it keeps only the places that genuinely
+   matter to the story — usually no more than ~5 — **discarding** both
+   accidental groupings (events merely sharing a city that adds nothing) and
+   real-but-secondary places that would only pad the map. The stop count is
+   the agent's decision, not a fixed cap. Application is defensive: unknown
+   keys are ignored, stops without narration are kept (the card falls back to
+   its event list), and discards are honored only while ≥ 3 stops survive
+   (re-kept by score). Discards are recorded under `geo_map.discarded` with
+   reasons.
 
 Narration stops are matched to clusters by `key` (slugified cluster label,
 unique per document). Like the social network, the cluster data is technical
@@ -403,60 +416,90 @@ The UI section heading falls back to the localized `meta_story.map_heading`
 ("Places"/"Schauplätze") and the intro to `meta_story.map_subtitle` when a
 story has no narration; a composed `section_headings.map` wins when present.
 
-### Meta Story Composition (Phase 7 — Story Composer)
+### Meta Story Composition (Phase 8 — Story Composer)
 
 Every text in a meta story is originally written bottom-up by a phase that only
 sees its own slice (description/conclusion before events exist, theme
-connections per batch, network narration from the graph alone). **Phase 7**
+connections per batch, network narration from the graph alone). **Phase 8**
 (`scripts/compose_meta_story.py`, run automatically at the end of
-`generate_meta_story.py`, opt out with `--skip-compose`) is a story composer
-agent that reads the *assembled* story top-down and writes one coherent
-narrative in two AI calls:
+`generate_meta_story.py` after the map phase, opt out with `--skip-compose`)
+is a story composer agent that reads the *assembled* story top-down — the
+brief now includes per-event description excerpts from the people's
+`life_events.json`, the full network tie set, the current circle
+organization, the map stops, **and focused Wikipedia excerpts for every main
+person** (article lead + sentences mentioning other main people, via
+`build_wikipedia_context` shared with Phase 5b) — and writes one coherent,
+journalistic narrative in two AI calls:
 
 1. **Curation** — decides a *throughline* (the arc that anchors all prose) and,
    exceptionally, which clearly disconnected people to drop. Exclusions are
    applied deterministically with hard guardrails (at most ~25% of the cast,
    never below 3 people, unknown ids ignored) and cascade through
    `person_ids`, subtopics (emptied subtopics are dropped), chapter
-   `person_events`, and the social network. The network is **pruned, not
-   re-derived**, so Phase 5b review edits on surviving ties are kept;
+   `person_events`, the social network, and the map. The network is **pruned,
+   not re-derived**, so Phase 5b review edits on surviving ties are kept;
    secondary nodes that no longer bridge ≥2 main people are removed.
-2. **Composition** — rewrites all display prose in one voice: title, tagline,
-   a top-level **`opening`** (a cold-open scene anchored in one specific
-   event or person — rendered with a drop cap between the date range and the
-   description, optionally with an image floated beside it), the description,
-   story-specific **`section_headings`** (`{timeline, network, conclusion}`,
-   replacing the generic "Timeline"/"Connections"/"Legacy" labels — the UI
-   falls back to the localized labels when absent), a top-level
-   **`timeline_intro`** (paragraph shown under the timeline heading), chapter
+2. **Composition** — writes the story's full prose in one voice: title,
+   tagline, a top-level **`opening`** (a cold-open scene anchored in one
+   specific event or person — rendered with a drop cap between the date range
+   and the description, optionally with an image floated beside it), the
+   description, story-specific **`section_headings`**
+   (`{timeline, network, map?, conclusion}`, replacing the generic labels —
+   the UI falls back to the localized labels when absent), the per-section
+   standfirsts (`timeline_intro`, the network narration `intro`, the map
+   narration `intro`), free-form **`section_bodies`** (see below), chapter
    headlines (date range re-appended automatically) plus a per-chapter
-   **`lead_in`** (1-2 sentences shown inside the floating chapter header
-   while scrolling; hidden in the landscape-mobile compact header), subtopic
-   titles/descriptions, *sparse* refinements of event `theme_connection`s,
-   the network narration (intro + circles, replacing the Phase 6 baseline in
-   the story's unified voice), the conclusion, and optional
-   **`section_images`** (`{timeline?, network?, conclusion?}`).
+   **`lead_in`**, subtopic titles/descriptions, *sparse* refinements of event
+   `theme_connection`s, its **own circle organization** for the network
+   section (each circle as `member_ids` + title + text — the composer may
+   merge, split, reorder, or discard the derived clusters; applied with
+   guardrails: only existing main people, each person in at most one circle,
+   ≥2 members per circle, and the organization must cover at least half of
+   the connected cast or it is rejected in favor of the previous narration),
+   **curated map stops** (kept stops in presentation order with rewritten
+   narration; discards recorded under `geo_map.discarded` with reasons and
+   honored only while ≥3 stops survive, re-kept by score), and the
+   conclusion.
+
+**`section_bodies`** are the story's narrative depth — flexible layout for
+text and images. Each section (`timeline`, `network`, `map`, `conclusion`)
+may carry an ordered list of blocks rendered between the section's standfirst
+and its interactive component (`MetaStoryBody.svelte`):
+
+- `{ "type": "paragraph", "text": "…" }` — running prose;
+- `{ "type": "image", "image": {…}, "layout": "left"|"right"|"full" }` —
+  an image selected by key (left/right float beside the following text on
+  wide screens via `MetaStoryFigure`'s `layout` prop);
+- `{ "type": "quote", "text": "…", "attribution": "…" }` — a quotation that
+  is **verified verbatim** (whitespace/typography-normalized) against the
+  material shown to the model (story brief + Wikipedia excerpts) and dropped
+  otherwise, so a fabricated quote can never enter the data.
 
 **Images** come exclusively from the people's own story slides: the composer
 is shown a candidate list built from the story's `person_events` (each event's
 `images` from the person's `life_events.json`) and may only *select by key*
-(`person_id:event_index:image_index`, at most 4 per story, no reuse). The
-url/caption/source are copied deterministically, so a hallucinated URL can
-never enter the data. Each stored image keeps its provenance
+(`person_id:event_index:image_index`; a shared budget of at most 6 per story
+covers the opening and all body images, no reuse). The url/caption/source are
+copied deterministically, so a hallucinated URL can never enter the data.
+Each stored image keeps its provenance
 (`person_id`/`event_index`/`image_index`); `MetaStoryFigure.svelte` renders it
-with caption and source link.
+with caption and source link. The legacy `section_images` slots are no longer
+written (body image blocks replace them; a recompose removes leftovers) but
+remain supported by the UI for stories composed before section bodies.
 
-Application is structural and defensive: chapters/subtopics/circles are
+Application is structural and defensive: chapters/subtopics/map stops are
 matched by id/key, unknown entries are ignored with warnings, missing entries
 keep their existing texts, and dates/IDs/coordinates/graph data are never
 model-editable. Provenance (model, throughline, exclusions with reasons) is
 stamped into a top-level `composition` block. The whole phase is non-fatal —
 on any failure the bottom-up texts are kept unchanged.
 
-`timeline_intro`, `lead_in`, `opening`, `section_headings`, and the image
-captions are part of the translation payload, but only when present, so
-uncomposed stories keep their old fingerprints (and their translations stay
-"current"). Image captions prefer the caption from the person's *translated*
+`timeline_intro`, `lead_in`, `opening`, `section_headings`, `section_bodies`
+(paragraph/quote texts, attributions, image captions), and the image captions
+are part of the translation payload, but only when present, so uncomposed
+stories keep their old fingerprints (and their translations stay "current").
+Circle `member_ids`, block types, and layouts are technical and copied
+verbatim. Image captions prefer the caption from the person's *translated*
 life events (matched by provenance, like event titles), falling back to the
 model-translated payload; URLs and sources are never touched. Composing a
 story changes its English prose, so its translations go stale by fingerprint;
