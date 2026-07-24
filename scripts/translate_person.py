@@ -40,7 +40,9 @@ from typing import Any, Dict, List, Optional, cast
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel
 
-from config import DEFAULT_MODEL
+from config import DEFAULT_MODEL, enable_utf8_console
+
+enable_utf8_console()
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"

@@ -32,10 +32,12 @@ from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
 from compose_meta_story import compose_meta_story_dataset
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
 from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
+
+enable_utf8_console()
 
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"

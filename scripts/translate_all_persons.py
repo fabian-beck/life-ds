@@ -12,7 +12,7 @@ import json
 import os
 import sys
 
-from config import DEFAULT_MODEL
+from config import DEFAULT_MODEL, enable_utf8_console
 from translate_person import (
     LANGUAGE_NAMES,
     REGISTER_PATH,
@@ -24,6 +24,8 @@ from translate_meta_story import (
     list_meta_story_ids,
     translate_meta_story_data,
 )
+
+enable_utf8_console()
 
 STATUS_ICONS = {
     "current": "✓",

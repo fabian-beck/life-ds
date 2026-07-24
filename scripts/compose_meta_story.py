@@ -79,10 +79,12 @@ from typing import Any, Dict, List, Literal, Optional, cast
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
 from meta_story_map import MIN_MAP_CLUSTERS
 from meta_story_network import derive_clusters
 from meta_story_network_review import build_wikipedia_context
+
+enable_utf8_console()
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"

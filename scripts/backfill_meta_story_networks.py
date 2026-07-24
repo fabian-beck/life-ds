@@ -22,7 +22,10 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
+from config import enable_utf8_console
 from meta_story_network import DATA_DIR, build_social_network, derive_clusters
+
+enable_utf8_console()
 
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 REGISTER_PATH = DATA_DIR / "persons.json"
