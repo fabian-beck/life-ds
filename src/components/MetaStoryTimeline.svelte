@@ -1140,10 +1140,18 @@
   // The header can be taller than the static minimum when it carries a lead-in,
   // so grow the reserve to the measured header height (plus a gap) to keep the
   // year axis and the scroll-indicator year pill clear of the box.
-  $: headerReserve =
-    isSticky && currentChapterByIndicator && chapterHeaderHeight > 0
-      ? Math.max(HEADER_RESERVE_HEIGHT, Math.ceil(chapterHeaderHeight) + 16)
-      : HEADER_RESERVE_HEIGHT;
+  //
+  // Kept as retained state (not a plain derivation) so that when the scroll
+  // indicator sits in a gap with no active chapter, the reserve holds its last
+  // value instead of collapsing to the minimum — otherwise the timeline jumps
+  // up and back down as the box fades out and the next one fades in.
+  let headerReserve = HEADER_RESERVE_HEIGHT;
+  $: if (isSticky && currentChapterByIndicator && chapterHeaderHeight > 0) {
+    headerReserve = Math.max(
+      HEADER_RESERVE_HEIGHT,
+      Math.ceil(chapterHeaderHeight) + 16
+    );
+  }
 
   // Viewport height tracking for density recalculation on resize
   let viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
