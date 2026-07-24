@@ -134,11 +134,11 @@
   })();
 
   // Define pixels per year scale
-  const PIXELS_PER_YEAR = 15;
+  const PIXELS_PER_YEAR = 7.5;
 
   // Gap compression constants
   const GAP_THRESHOLD = 50; // Minimum years to trigger compression
-  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 15 for active)
+  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 7.5 for active)
   const GAP_MIN_PX = 60; // Minimum pixel width for any compressed gap
   const BUFFER_YEARS = 5; // Years of full-scale padding kept around each gap edge
 
