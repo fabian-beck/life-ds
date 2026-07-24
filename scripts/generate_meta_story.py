@@ -208,6 +208,15 @@ class HistoricalContextEvent(BaseModel):
     wikipedia_url: Optional[str] = Field(
         default=None, description="Wikipedia article URL for this event (if known)"
     )
+    priority: int = Field(
+        default=2,
+        description=(
+            "Label importance 1-3 for decluttering overlapping timeline labels "
+            "(3 = a defining landmark that most shaped these people / that any "
+            "reader would recognise, 2 = notable, 1 = minor background detail). "
+            "When labels compete for horizontal space, higher priority wins."
+        ),
+    )
 
 
 class ChapterHistoricalEvents(BaseModel):
@@ -1415,6 +1424,10 @@ RULES:
 - Use date_end for eras/wars; leave null for single moments
 - Only include events you are certain about. Do not invent.
 - For wikipedia_url: provide the full URL if confident the article exists, else null
+- For priority: rate 1-3 how strongly each event defines this story (3 = a defining
+  landmark that most shaped these people or that any reader would recognise, 2 = notable,
+  1 = minor background detail). Reserve 3 for the few events that truly anchor the era —
+  overlapping labels are decluttered by priority, so the highest-priority ones win space.
 - Many chapters may need ZERO events — only include one if it truly shaped these people's lives
 """
 
