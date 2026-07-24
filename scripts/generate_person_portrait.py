@@ -850,9 +850,15 @@ CRITICAL - PRESERVE EXACTLY from SECOND IMAGE:
 - Expression and gaze direction EXACTLY as shown
 - Head pose, tilt, and angle EXACTLY as shown
 - Body position, shoulder orientation, and posture
-- Composition and framing (head size relative to frame)
+- Composition and crop (head size relative to the image edges)
 - The person must be IMMEDIATELY recognizable as the same individual
 - Hair style and clothing silhouette
+
+NO FRAME OR BORDER - the portrait must be borderless:
+- Do NOT draw any frame, border, oval, vignette, cartouche, medallion, or decorative surround around the subject
+- If the SECOND IMAGE is enclosed in an oval or rectangular frame (common in historical engravings and paintings), IGNORE that frame entirely — render only the person against the plain dark background
+- The luminous light strokes belong to the person, their clothing, and hair ONLY — never an enclosing outline or edge treatment
+- The background must extend uninterrupted to all four edges of the output with no ring, arch, ellipse, or containing shape
 
 ARTISTIC TREATMENT - Apply from FIRST IMAGE:
 - Light-drawing / light-painting aesthetic (glowing strokes in darkness)
@@ -876,7 +882,7 @@ OUTPUT FORMAT:
 - Match the composition scale from SECOND IMAGE
 - The portrait is "sketched" entirely with glowing light strokes against darkness
 
-REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIRST IMAGE provides only the artistic style. The result must look like the person from the SECOND IMAGE rendered in the style of the FIRST IMAGE."""
+REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIRST IMAGE provides only the artistic style. The result must look like the person from the SECOND IMAGE rendered in the style of the FIRST IMAGE, with NO frame, border, or oval surround."""
 
                     # Pass both images as file objects in a list
                     # Open files and keep references to close them properly
