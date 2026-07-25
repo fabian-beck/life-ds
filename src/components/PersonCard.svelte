@@ -5,7 +5,13 @@
   export let person = null;
   export let personStyle = null;
   export let href = null;
+  // Replaces the link's default navigation (the card handles the click itself).
   export let onClick = null;
+  // Runs before `href` is followed, e.g. to remember scroll position. Unlike
+  // `onClick` it leaves the normal link behaviour (and modifier-clicks) intact.
+  export let onNavigate = null;
+  // Localized accessible label; falls back to the person's name.
+  export let ariaLabel = null;
 
   // Format lifespan for a person
   function formatLifespan(person) {
@@ -31,6 +37,7 @@
     : "";
 
   function handleClick(e) {
+    if (onNavigate) onNavigate(person);
     if (onClick) {
       e.preventDefault();
       onClick(person);
@@ -48,7 +55,7 @@
     : 'inherit'}; --card-body-font: {personStyle?.bodyFont
     ? `'${personStyle.bodyFont}', sans-serif`
     : 'inherit'};"
-  aria-label="View {displayName(person?.name)}'s story"
+  aria-label={ariaLabel || displayName(person?.name)}
   on:click={handleClick}
 >
   {#if person?.portrait?.image}
@@ -86,9 +93,11 @@
     align-items: center;
     gap: 0;
     padding: 0.375rem 0.75rem 1rem;
-    background: rgba(15, 23, 42, 0.95);
+    /* Surface tones are overridable so the card can sit on a story slide
+       (default) or on the meta story's own dark page background. */
+    background: var(--card-bg, rgba(15, 23, 42, 0.95));
     border-radius: 0.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    border: 1px solid var(--card-border, rgba(148, 163, 184, 0.2));
     text-decoration: none;
     color: inherit;
     transition:
@@ -102,7 +111,11 @@
   .person-card:hover,
   .person-card:focus {
     transform: translateY(-2px);
-    background: rgb(15, 23, 42);
+    background: var(--card-bg-hover, rgb(15, 23, 42));
+    border-color: var(
+      --card-border-hover,
+      var(--card-border, rgba(148, 163, 184, 0.2))
+    );
     outline: none;
   }
 

@@ -183,12 +183,16 @@ export function getDateNote(event) {
 
 /**
  * Compute birth-death years label for a person.
- * @param {Object} person - Person object with birth_date and death_date
+ * @param {Object} person - Person object with birth_date/death_date (life event
+ *   documents) or birthDate/deathDate (persons registry)
  * @returns {string} Years label like "1879 - 1955" or "1879"
  */
 export function computeYearsLabel(person) {
   if (!person) return "";
-  const { birth_date: birth, death_date: death } = person;
+  // Life event documents use snake_case, the persons registry camelCase — both
+  // shapes reach this helper (story slides vs. person cards).
+  const birth = person.birth_date ?? person.birthDate;
+  const death = person.death_date ?? person.deathDate;
   const birthYear = birth ? new Date(birth).getFullYear() : NaN;
   const deathYear = death ? new Date(death).getFullYear() : NaN;
   if (!Number.isNaN(birthYear) && !Number.isNaN(deathYear)) {

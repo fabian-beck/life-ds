@@ -521,6 +521,35 @@ python scripts/compose_meta_story.py computing_pioneers --dry-run       # previe
 python scripts/compose_meta_story.py computing_pioneers --no-exclusions # text-only
 ```
 
+### Meta Story People Cards ("The People" section)
+
+A meta story closes with a card grid of **all the people the story is built
+from** — the mirror of the related-people cards at the end of an individual
+story (`ConclusionSlide.svelte`). It is the last section of
+`MetaStoryView.svelte`, after the conclusion, and is derived **purely in the
+UI**: `meta_story.person_ids` resolved against the persons registry (people
+missing from the registry are skipped — the card exists to open their story),
+ordered by birth year. Each card is the shared `PersonCard.svelte` (portrait,
+name, lifespan, roles, styled in the person's own colors and fonts) and links
+to `#/{lang}/story/{id}?from_meta={story_id}`, saving the meta story scroll
+position first so the story's close button returns the reader to the cards.
+
+There is nothing to generate: no data, translation payload, or composer field
+is involved. The heading and standfirst are localized UI labels
+(`meta_story.people_heading`, `meta_story.people_subtitle`) — unlike the other
+sections there is no story-specific `section_headings` counterpart.
+
+`PersonCard.svelte` renders the card: it takes `person`
+(registry entry), `personStyle` (normalized style — camelCase fonts),
+`href`, an optional localized `ariaLabel`, `onNavigate` (runs before the link
+is followed, e.g. to remember scroll) and `onClick` (replaces navigation).
+Its surface tones read from `--card-bg`/`--card-bg-hover`/`--card-border`/
+`--card-border-hover`, which the meta story grid overrides because the page
+background is the same near-black as the card's default.
+`ConclusionSlide.svelte` still carries its own equivalent copy of the card
+markup (it predates the component) — keep the two in sync when changing the
+card's look.
+
 ## Project Structure
 
 ```
@@ -535,7 +564,8 @@ life-ds/
 │       ├── NetworkModal.svelte # Social network visualization
 │       ├── MetaStoryNetwork.svelte # d3-force network for meta stories
 │       ├── MetaStoryMap.svelte # Scrollytelling map for meta stories
-│       ├── PersonChip.svelte # Person card component
+│       ├── PersonChip.svelte # Inline person chip (slides, tooltips)
+│       ├── PersonCard.svelte # Portrait card linking to a person's story
 │       └── ImageViewer.svelte # Lightbox for event images
 ├── data/
 │   ├── persons.json         # Master person registry

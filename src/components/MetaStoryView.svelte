@@ -7,11 +7,16 @@
   import MetaStoryFigure from "./MetaStoryFigure.svelte";
   import MetaStoryBody from "./MetaStoryBody.svelte";
   import MetaStoryProse from "./MetaStoryProse.svelte";
+  import PersonCard from "./PersonCard.svelte";
   import ImageViewer from "./ImageViewer.svelte";
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
-  import { consumeMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import {
+    consumeMetaStoryScroll,
+    saveMetaStoryScroll,
+  } from "../stores/metaStoryScroll.js";
+  import { displayName } from "../utils/helpers.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -49,6 +54,62 @@
         ),
         color: personStyles[id]?.primary || "#38bdf8",
       }));
+  }
+
+  // Everyone the story is built from, resolved to full registry entries so the
+  // closing cards can show portrait, lifespan and roles (the same card the end
+  // of an individual story uses for related people). Ordered chronologically by
+  // birth date, like the rest of the story. People without an individual story
+  // are skipped — a card whose only purpose is to open a story needs one.
+  $: storyPersonCards = buildPersonCards(metaStoryData, personsRegistry);
+
+  function buildPersonCards(data, registry) {
+    const ids = data?.meta_story?.person_ids;
+    if (!ids?.length) return [];
+    const byId = new Map((registry || []).map((p) => [p.id, p]));
+    return ids
+      .map((id) => byId.get(id))
+      .filter(Boolean)
+      .sort(
+        (a, b) =>
+          birthYear(a) - birthYear(b) ||
+          displayName(a.name).localeCompare(displayName(b.name))
+      );
+  }
+
+  // Leading year of an ISO-ish birth date ("1815-12-10"); people without one
+  // sort last rather than jumping to the front of the list.
+  function birthYear(person) {
+    const year = Number.parseInt(String(person?.birthDate ?? ""), 10);
+    return Number.isFinite(year) ? year : Number.POSITIVE_INFINITY;
+  }
+
+  // PersonCard expects the normalized (camelCase) style shape App.svelte builds;
+  // the raw registry carries everything a card needs, so map it here.
+  function cardStyle(personId) {
+    const raw = personStyles[personId];
+    if (!raw) return null;
+    return {
+      primary: raw.primary,
+      secondary: raw.secondary,
+      headingFont: raw.heading_font,
+      bodyFont: raw.body_font,
+    };
+  }
+
+  // Carry the meta story context so the story's close button returns here.
+  function personStoryHref(personId) {
+    const metaStoryId = metaStoryData?.meta_story?.id;
+    return (
+      `#/${currentLanguage}/story/${personId}` +
+      (metaStoryId ? `?from_meta=${metaStoryId}` : "")
+    );
+  }
+
+  // Remember where the reader left the meta story before jumping into a story.
+  function rememberScroll() {
+    const metaStoryId = metaStoryData?.meta_story?.id;
+    if (metaStoryId) saveMetaStoryScroll(metaStoryId);
   }
 
   // Shared props for every prose renderer / body in the story.
@@ -815,6 +876,28 @@
         </p>
       </section>
     {/if}
+
+    <!-- The story's people - closing cards linking into each individual story,
+         mirroring the related people at the end of a person's story -->
+    {#if storyPersonCards.length}
+      <section class="people-section">
+        <h2>{$_("meta_story.people_heading")}</h2>
+        <p class="people-intro">{$_("meta_story.people_subtitle")}</p>
+        <div class="people-grid">
+          {#each storyPersonCards as person (person.id)}
+            <PersonCard
+              {person}
+              personStyle={cardStyle(person.id)}
+              href={personStoryHref(person.id)}
+              ariaLabel={$_("meta_story.people_open_story", {
+                name: displayName(person.name),
+              })}
+              onNavigate={rememberScroll}
+            />
+          {/each}
+        </div>
+      </section>
+    {/if}
   </div>
 {/if}
 
@@ -1101,6 +1184,28 @@
     color: var(--ms-body);
   }
 
+  /* Closing person cards — the story's cast, each linking into their own story */
+  .people-intro {
+    font-size: 1.0625rem;
+    color: var(--ms-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 62ch;
+  }
+
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+
+    /* The page background is the same near-black as PersonCard's default
+       surface, so lift the cards a step to keep them readable as objects. */
+    --card-bg: rgba(30, 41, 59, 0.55);
+    --card-bg-hover: rgba(30, 41, 59, 0.85);
+    --card-border: rgba(148, 163, 184, 0.22);
+    --card-border-hover: rgba(148, 163, 184, 0.45);
+  }
+
   /* Loading state */
   .loading {
     display: flex;
@@ -1256,6 +1361,11 @@
 
     h1 {
       font-size: 2rem;
+    }
+
+    .people-grid {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.75rem;
     }
   }
 </style>
