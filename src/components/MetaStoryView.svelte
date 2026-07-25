@@ -28,12 +28,21 @@
   const personStyles = personStylesData.styles;
 
   // The story's own people — those with an individual story — resolved to
-  // { id, name, color } so their names can be emphasized and linked wherever
-  // they appear in the story's prose. Display names come from the social
-  // network's main nodes (clean, prose-matching) and fall back to the registry
-  // (underscores → spaces); colors come from each person's story style. Only
-  // people present in the registry (i.e. with an individual story) are kept.
+  // { id, name, aliases, color } so their names can be emphasized and linked
+  // wherever they appear in the story's prose. The registry supplies the name
+  // in the reader's language, while the social network's main nodes keep the
+  // original-language name (graph data is never translated); both are offered
+  // to the matcher, because a translated story mixes them — the prose says
+  // "Heinrich II." while the graph still says "Henry II". Colors come from
+  // each person's story style. Only people present in the registry (i.e. with
+  // an individual story) are kept.
   $: storyPeople = buildStoryPeople(metaStoryData, personsRegistry);
+
+  // Same names keyed by id, for the components that build their own people
+  // lists out of untranslated technical data (network nodes, map events).
+  $: personAliases = Object.fromEntries(
+    storyPeople.map((person) => [person.id, [person.name, ...person.aliases]])
+  );
 
   function buildStoryPeople(data, registry) {
     const ids = data?.meta_story?.person_ids;
@@ -44,16 +53,20 @@
         .map((n) => [n.id, n.name])
     );
     const registered = new Map((registry || []).map((p) => [p.id, p.name]));
+    const clean = (name) => (name || "").replace(/_/g, " ").trim();
     return ids
       .filter((id) => registered.has(id))
-      .map((id) => ({
-        id,
-        name: (nodeNames.get(id) || registered.get(id) || id).replace(
-          /_/g,
-          " "
-        ),
-        color: personStyles[id]?.primary || "#38bdf8",
-      }));
+      .map((id) => {
+        const names = [clean(registered.get(id)), clean(nodeNames.get(id))]
+          .filter(Boolean)
+          .filter((name, index, all) => all.indexOf(name) === index);
+        return {
+          id,
+          name: names[0] || id,
+          aliases: names.slice(1),
+          color: personStyles[id]?.primary || "#38bdf8",
+        };
+      });
   }
 
   // Everyone the story is built from, resolved to full registry entries so the
@@ -839,6 +852,7 @@
           <MetaStoryNetwork
             network={metaStoryData.social_network}
             metaStoryId={metaStoryData.meta_story.id}
+            {personAliases}
             {currentLanguage}
           />
         {/await}
@@ -869,6 +883,7 @@
           <MetaStoryMap
             geoMap={metaStoryData.geo_map}
             metaStoryId={metaStoryData.meta_story.id}
+            {personAliases}
             {currentLanguage}
           />
         {/await}

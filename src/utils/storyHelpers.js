@@ -2,6 +2,7 @@
  * Story-specific utility functions for date formatting, event processing, and map helpers.
  */
 
+import { findPersonMentions } from "./personNames.js";
 import {
   mdiCircleSmall,
   mdiBabyFaceOutline,
@@ -776,71 +777,6 @@ export function generateNameVariants(name) {
 }
 
 /**
- * Split a block of prose into text/person segments, emphasizing the name of
- * each supplied person where it appears — the same treatment the story slides
- * and meta story network/map cards use for `.person-mention`. Mirrors the
- * matching in MetaStoryNetwork's narration highlighter: the best (longest /
- * highest-priority) variant wins per person, and overlaps are resolved with
- * earliest-start-then-longest.
- *
- * @param {string} text - The prose to segment
- * @param {Array<{id: string, name: string}>} people - People to emphasize
- * @returns {Array<{type: "text"|"person", content: string, personId?: string}>}
- */
-export function highlightPersonMentions(text, people) {
-  if (!text) return [{ type: "text", content: "" }];
-  if (!people?.length) return [{ type: "text", content: text }];
-
-  // Best (longest / highest-priority) match per person.
-  const matches = [];
-  for (const person of people) {
-    let best = null;
-    for (const variant of generateNameVariants(person.name)) {
-      variant.regex.lastIndex = 0;
-      let m;
-      while ((m = variant.regex.exec(text)) !== null) {
-        const cand = {
-          start: m.index,
-          end: variant.regex.lastIndex,
-          len: m[0].length,
-          priority: variant.priority,
-          person,
-        };
-        if (
-          !best ||
-          cand.priority < best.priority ||
-          (cand.priority === best.priority && cand.len > best.len)
-        ) {
-          best = cand;
-        }
-      }
-    }
-    if (best) matches.push(best);
-  }
-
-  // Resolve overlaps: earliest start wins, then the longer span.
-  matches.sort((a, b) => a.start - b.start || b.len - a.len);
-  const segments = [];
-  let cursor = 0;
-  for (const match of matches) {
-    if (match.start < cursor) continue; // overlaps a chosen match — skip
-    if (match.start > cursor) {
-      segments.push({ type: "text", content: text.slice(cursor, match.start) });
-    }
-    segments.push({
-      type: "person",
-      content: text.slice(match.start, match.end),
-      personId: match.person.id,
-    });
-    cursor = match.end;
-  }
-  if (cursor < text.length) {
-    segments.push({ type: "text", content: text.slice(cursor) });
-  }
-  return segments;
-}
-
-/**
  * Calculate a similarity score between two normalized names.
  * Returns a score from 0 (no match) to 1 (exact match).
  * @param {Object} name1 - First normalized name
@@ -1003,68 +939,26 @@ export function getRelevantPeople(event, egoNetwork) {
     return matched.slice(0, 5);
   }
 
-  // PHASE 2: Fallback to smart text matching
-  const eventText =
-    `${event?.title ?? ""} ${event?.description ?? ""}`.toLowerCase();
+  // PHASE 2: Fall back to who is actually named in the event text. This is the
+  // same matcher that highlights the names, so the people offered as chips and
+  // the names emphasized in the description cannot disagree.
+  const eventText = `${event?.title ?? ""} ${event?.description ?? ""}`;
+  const mentioned = new Set(
+    findPersonMentions(eventText, connections).map((match) => match.person)
+  );
 
-  // Check if multiple people share the same last name (ambiguity detection)
-  const lastNameCounts = new Map();
-  for (const conn of connections) {
-    const normalized = normalizePersonName(conn.person_name);
-    if (normalized) {
-      const count = lastNameCounts.get(normalized.lastName) || 0;
-      lastNameCounts.set(normalized.lastName, count + 1);
-    }
-  }
-
-  const matchedConnections = connections
-    .map((connection) => {
-      const normalized = normalizePersonName(connection.person_name);
-      const variants = generateNameVariants(connection.person_name);
-
-      // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
-      const hasAmbiguousLastName =
-        normalized && lastNameCounts.get(normalized.lastName) > 1;
-
-      // Try to find best match
-      for (const variant of variants) {
-        // Skip last-name-only matches if ambiguous
-        if (hasAmbiguousLastName && variant.type === "last") {
-          continue;
-        }
-
-        if (variant.regex.test(eventText)) {
-          return {
-            connection,
-            matchType: variant.type,
-            priority: variant.priority,
-          };
-        }
-      }
-      return null;
-    })
-    .filter((match) => {
-      if (!match) return false;
-
-      // Year range check
-      const conn = match.connection;
-      return isWithinYearRange(eventYear, conn.start_year, conn.end_year);
-    })
-    .sort((a, b) => {
-      // Sort by match quality (full name > last name)
-      if (a.priority !== b.priority) return a.priority - b.priority;
-
-      // Then by relationship strength
-      const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
-      return (
-        (strengthOrder[a.connection.strength] || 3) -
-        (strengthOrder[b.connection.strength] || 3)
-      );
-    })
-    .slice(0, 5)
-    .map((match) => match.connection);
-
-  return matchedConnections;
+  const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
+  return connections
+    .filter(
+      (connection) =>
+        mentioned.has(connection) &&
+        isWithinYearRange(eventYear, connection.start_year, connection.end_year)
+    )
+    .sort(
+      (a, b) =>
+        (strengthOrder[a.strength] ?? 3) - (strengthOrder[b.strength] ?? 3)
+    )
+    .slice(0, 5);
 }
 
 /**
@@ -1073,12 +967,18 @@ export function getRelevantPeople(event, egoNetwork) {
  * @param {string} description - Event description text
  * @param {Object} annotations - Annotation dictionary
  * @param {Array} relevantPeople - Array of connection objects
+ * @param {string} [subjectName] - The story's own subject. Family shares
+ *   surnames, so without them a bare "Hamilton" in Alexander Hamilton's story
+ *   is handed to his father. Matching the subject too lets the shared surname
+ *   come out ambiguous — and therefore plain — while "James Hamilton" still
+ *   resolves to the father.
  * @returns {Array} Segments: {type: 'text'|'annotation'|'person', ...}
  */
 export function parseDescriptionSegments(
   description,
   annotations = {},
-  relevantPeople = []
+  relevantPeople = [],
+  subjectName = null
 ) {
   if (!description) return [];
 
@@ -1118,81 +1018,27 @@ export function parseDescriptionSegments(
     }
   }
 
-  // Step 2: Find person name matches
-  // We only want ONE match per person - the best one (longest/highest priority)
-  const personMatches = [];
-
-  // Check if multiple people share the same last name (ambiguity detection)
-  const lastNameCounts = new Map();
-  for (const person of relevantPeople) {
-    const normalized = normalizePersonName(person.person_name);
-    if (normalized) {
-      const count = lastNameCounts.get(normalized.lastName) || 0;
-      lastNameCounts.set(normalized.lastName, count + 1);
-    }
-  }
-
-  for (const person of relevantPeople) {
-    const normalized = normalizePersonName(person.person_name);
-    const variants = generateNameVariants(person.person_name);
-
-    // If multiple people share this last name, skip last-name-only variants to avoid ambiguity
-    const hasAmbiguousLastName =
-      normalized && lastNameCounts.get(normalized.lastName) > 1;
-
-    // Find the best match for this person (we only want one)
-    let bestMatch = null;
-
-    for (const variant of variants) {
-      // Skip last-name-only matches if ambiguous
-      if (hasAmbiguousLastName && variant.type === "last") {
-        continue;
-      }
-
-      let match;
-      variant.regex.lastIndex = 0; // Reset regex
-
-      while ((match = variant.regex.exec(description)) !== null) {
-        const start = match.index;
-        const end = variant.regex.lastIndex;
-
-        // Check if this overlaps with an annotation
-        const overlapsAnnotation = annotationRanges.some(
-          (ann) =>
-            (start >= ann.start && start < ann.end) ||
-            (end > ann.start && end <= ann.end)
-        );
-
-        if (!overlapsAnnotation) {
-          const candidate = {
-            start,
-            end,
-            type: "person",
-            person,
-            matchedText: match[0],
-            priority: variant.priority,
-          };
-
-          // Keep this match if it's better than the current best
-          // Better = lower priority number (full name beats last name)
-          // If same priority, prefer longer match
-          if (
-            !bestMatch ||
-            candidate.priority < bestMatch.priority ||
-            (candidate.priority === bestMatch.priority &&
-              candidate.matchedText.length > bestMatch.matchedText.length)
-          ) {
-            bestMatch = candidate;
-          }
-        }
-      }
-    }
-
-    // Add only the best match for this person
-    if (bestMatch) {
-      personMatches.push(bestMatch);
-    }
-  }
+  // Step 2: Find person name matches, skipping anything the annotation
+  // markup already claims (annotations win, and their `[[term|display]]`
+  // syntax would otherwise be highlighted mid-marker).
+  const subject = subjectName
+    ? { person_name: subjectName, isSubject: true }
+    : null;
+  const personMatches = findPersonMentions(
+    description,
+    subject ? [...relevantPeople, subject] : relevantPeople,
+    { exclude: annotationRanges }
+  )
+    // The subject is only in the list to compete for their own name; their
+    // mentions stay plain text (this is their story — nothing to link to).
+    .filter((match) => !match.person.isSubject)
+    .map((match) => ({
+      start: match.start,
+      end: match.end,
+      type: "person",
+      person: match.person,
+      matchedText: description.slice(match.start, match.end),
+    }));
 
   // Step 3: Merge all ranges and sort by position
   const allRanges = [...annotationRanges, ...personMatches].sort((a, b) => {

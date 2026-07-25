@@ -597,6 +597,9 @@ life-ds/
 │       ├── PersonChip.svelte # Inline person chip (slides, tooltips)
 │       ├── PersonCard.svelte # Portrait card linking to a person's story
 │       └── ImageViewer.svelte # Lightbox for event images
+│   └── utils/
+│       ├── storyHelpers.js   # Dates, images, event/person helpers
+│       └── personNames.js    # Finds person names in prose (highlighting)
 ├── data/
 │   ├── persons.json         # Master person registry
 │   ├── person_styles.json   # Visual styles registry
@@ -1273,6 +1276,49 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 - Year markers when expanded (not all events have exact dates)
 - Expandable mode: Toggle to see full vertical timeline with labels
 
+### Person Name Highlighting
+
+Wherever a person is named in running text — story slide descriptions, meta
+story prose, the network and map narration cards — the name is emphasized
+(`.person-mention`, and a link into that person's story in meta story prose).
+**One matcher does this for all of them**: `findPersonMentions()` /
+`segmentPersonMentions()` in `src/utils/personNames.js`. Do not write a second
+one; the four call sites previously each had their own copy and each was wrong
+in its own way.
+
+It works on **name runs** — stretches of capitalized tokens joined across
+spaces, hyphens, particles ("von", "of") and the dots of initials — rather than
+on `\bName\b` regexes, which cannot handle any of the things this data is full
+of: `\b` is ASCII-only (so it never matched "Gaudí"), German genitives glue an
+"s" to the name ("Zuses Software"), and a bare surname regex cannot tell
+"Adams’s letters" from "John Adams". Matching a whole run makes the surrounding
+tokens available as evidence, which is what lets short forms be matched safely.
+Every occurrence is highlighted, not just the first.
+
+Precision comes from refusing the ambiguous cases (a wrong link is worse than a
+missing highlight): a bare surname behind another capitalized token is rejected
+unless that token opens a sentence or is a title ("General Washington" yes,
+"John Adams" no); a given name alone only counts for one-name figures or
+distinctive long names, never "Alan" or "John"; regnal numerals must match
+("Otto III" is not Otto Wagner); and when two people fit a span equally well it
+is left plain. `tests/personNames.spec.js` pins these rules with cases drawn
+from the real stories — run it when touching the matcher.
+
+Two things feed the matcher besides the text:
+
+- **Aliases.** Registry names are translated but graph/map data is not, so a
+  German story prints "Heinrich II." while its network node still says
+  "Henry II". `MetaStoryView` passes both (`storyPeople[].aliases`, and
+  `personAliases` down to `MetaStoryNetwork`/`MetaStoryMap`). Without this a
+  translated story highlights nothing.
+- **The story subject.** `parseDescriptionSegments()` takes the ego's name so
+  a bare "Hamilton" in Alexander Hamilton's story comes out ambiguous — and
+  therefore plain — instead of being handed to his father, while
+  "James Hamilton" still resolves to the father.
+
+`getRelevantPeople()` uses the same matcher to decide which people an event
+mentions, so the chips offered and the names emphasized cannot disagree.
+
 ### Network Visualization
 
 `NetworkModal.svelte` uses a force-directed layout:
@@ -1453,5 +1499,6 @@ When working on specific features, read these files first:
 **Event display**: `src/components/StoryView.svelte`
 **Timeline**: `src/components/Timeline.svelte`
 **Network viz**: `src/components/NetworkModal.svelte`
+**Name highlighting**: `src/utils/personNames.js`
 **Person data**: `data/persons.json`, `data/people/{person_id}/`
 **Styles**: `data/person_styles.json`

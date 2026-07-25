@@ -6,15 +6,15 @@
   // The link carries `from_meta` (so the story's close button returns here) and
   // remembers the reader's scroll position first, matching how the timeline,
   // network and map open a story.
-  import { highlightPersonMentions } from "../utils/storyHelpers.js";
+  import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
 
   export let text = "";
-  export let people = []; // [{ id, name, color }]
+  export let people = []; // [{ id, name, aliases, color }]
   export let metaStoryId = null;
   export let currentLanguage = "en";
 
-  $: segments = highlightPersonMentions(text, people);
+  $: segments = segmentPersonMentions(text, people);
   $: colorById = new Map(people.map((p) => [p.id, p.color]));
 
   function hrefFor(personId) {
@@ -32,8 +32,8 @@
 
 {#each segments as seg}{#if seg.type === "text"}{seg.content}{:else}<a
       class="person-mention"
-      href={hrefFor(seg.personId)}
-      style={`--mention-color: ${colorById.get(seg.personId) || "#38bdf8"}`}
+      href={hrefFor(seg.person.id)}
+      style={`--mention-color: ${colorById.get(seg.person.id) || "#38bdf8"}`}
       on:click={openStory}>{seg.content}</a
     >{/if}{/each}
 

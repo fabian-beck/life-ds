@@ -6,11 +6,8 @@
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
-  import {
-    normalizePersonName,
-    generateNameVariants,
-    escapeRegex,
-  } from "../utils/storyHelpers.js";
+  import { escapeRegex } from "../utils/storyHelpers.js";
+  import { findPersonMentions } from "../utils/personNames.js";
 
   export let egoNetwork = null;
   export let personName = "";
@@ -71,60 +68,17 @@
       }
     }
 
-    // Step 2: Find person name matches
-    const lastNameCounts = new Map();
-    for (const conn of connections) {
-      const normalized = normalizePersonName(conn.person_name);
-      if (normalized) {
-        const count = lastNameCounts.get(normalized.lastName) || 0;
-        lastNameCounts.set(normalized.lastName, count + 1);
-      }
-    }
-
-    for (const conn of connections) {
-      const normalized = normalizePersonName(conn.person_name);
-      const variants = generateNameVariants(conn.person_name);
-      const hasAmbiguousLastName =
-        normalized && lastNameCounts.get(normalized.lastName) > 1;
-
-      let bestMatch = null;
-
-      for (const variant of variants) {
-        // Skip last-name-only matches if ambiguous
-        if (hasAmbiguousLastName && variant.type === "last") {
-          continue;
-        }
-
-        let match;
-        variant.regex.lastIndex = 0;
-
-        while ((match = variant.regex.exec(text)) !== null) {
-          const start = match.index;
-          const end = variant.regex.lastIndex;
-
-          const candidate = {
-            start,
-            end,
-            person: conn,
-            matchedText: match[0],
-            priority: variant.priority,
-            type: "person",
-          };
-
-          if (
-            !bestMatch ||
-            candidate.priority < bestMatch.priority ||
-            (candidate.priority === bestMatch.priority &&
-              candidate.matchedText.length > bestMatch.matchedText.length)
-          ) {
-            bestMatch = candidate;
-          }
-        }
-      }
-
-      if (bestMatch) {
-        allMatches.push(bestMatch);
-      }
+    // Step 2: Find person name matches (shared matcher — same rules the story
+    // slides and meta story prose use).
+    for (const match of findPersonMentions(text, connections)) {
+      allMatches.push({
+        start: match.start,
+        end: match.end,
+        person: match.person,
+        matchedText: text.slice(match.start, match.end),
+        priority: 1,
+        type: "person",
+      });
     }
 
     // Step 3: Sort by position and priority, then remove overlaps
