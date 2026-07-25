@@ -133,12 +133,23 @@
     return span > 0 ? span : 1; // Prevent division by zero
   })();
 
-  // Define pixels per year scale
-  const PIXELS_PER_YEAR = 7.5;
+  // ============================================
+  // ADAPTIVE TEMPORAL RESOLUTION
+  // The active (uncompressed) pixels-per-year scale adapts to how much time the
+  // story actually covers: short stories zoom in (up to 15 px/year), long ones
+  // zoom out (down to 5 px/year), so the timeline needs a comparable amount of
+  // horizontal scrolling regardless of era length. The scale is derived from the
+  // ACTIVE span (years actually drawn at full scale) rather than the raw
+  // min→max span, so a story with long empty gaps — already handled by gap
+  // compression — isn't needlessly zoomed out.
+  // ============================================
+  const MIN_PIXELS_PER_YEAR = 5; // Long spans: zoomed out
+  const MAX_PIXELS_PER_YEAR = 15; // Short spans: zoomed in
+  const TARGET_ACTIVE_WIDTH_PX = 1800; // Preferred rendered width of the active span
 
   // Gap compression constants
   const GAP_THRESHOLD = 50; // Minimum years to trigger compression
-  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 7.5 for active)
+  const GAP_PX_PER_YEAR = 1; // Reduced scale inside compressed gaps (vs 5-15 for active)
   const GAP_MIN_PX = 60; // Minimum pixel width for any compressed gap
   const BUFFER_YEARS = 5; // Years of full-scale padding kept around each gap edge
 
@@ -193,23 +204,14 @@
     return Math.max(GAP_MIN_PX, gapYears * GAP_PX_PER_YEAR);
   }
 
-  // Build timeline segments: active ranges at full scale, gaps compressed
-  $: timelineSegments = (() => {
+  // Merge person lifespans into the buffered "active" year intervals that are
+  // drawn at full scale (year domain only — no pixels, so the adaptive scale
+  // below can be derived from it before any pixel mapping exists).
+  $: bufferedIntervals = (() => {
     const { minYear, maxYear } = timelineBounds;
     const intervals = collectPersonIntervals();
 
-    if (intervals.length === 0) {
-      // Single active segment spanning entire timeline
-      return [
-        {
-          type: "active",
-          yearStart: minYear,
-          yearEnd: maxYear,
-          pixelStart: 0,
-          pixelEnd: (maxYear - minYear) * PIXELS_PER_YEAR,
-        },
-      ];
-    }
+    if (intervals.length === 0) return [];
 
     // Sort and merge overlapping intervals
     intervals.sort((a, b) => a.start - b.start);
@@ -241,6 +243,63 @@
       }
     }
 
+    return buffered;
+  })();
+
+  // Years rendered at full scale: the buffered intervals plus any sub-threshold
+  // gaps (including the leading/trailing edges), which are not compressed.
+  $: activeYearSpan = (() => {
+    const { minYear, maxYear } = timelineBounds;
+    if (bufferedIntervals.length === 0) return totalSpan;
+
+    let span = bufferedIntervals.reduce(
+      (sum, iv) => sum + (iv.end - iv.start),
+      0
+    );
+
+    const edgesAndGaps = [];
+    edgesAndGaps.push(bufferedIntervals[0].start - minYear);
+    for (let i = 0; i < bufferedIntervals.length - 1; i++) {
+      edgesAndGaps.push(
+        bufferedIntervals[i + 1].start - bufferedIntervals[i].end
+      );
+    }
+    edgesAndGaps.push(
+      maxYear - bufferedIntervals[bufferedIntervals.length - 1].end
+    );
+
+    edgesAndGaps.forEach((gap) => {
+      if (gap > 0 && gap < GAP_THRESHOLD) span += gap;
+    });
+
+    return span > 0 ? span : 1; // Prevent division by zero
+  })();
+
+  // Adaptive active scale: zoom to fit the active span into a target width,
+  // clamped to [MIN_PIXELS_PER_YEAR, MAX_PIXELS_PER_YEAR].
+  $: pixelsPerYear = Math.max(
+    MIN_PIXELS_PER_YEAR,
+    Math.min(MAX_PIXELS_PER_YEAR, TARGET_ACTIVE_WIDTH_PX / activeYearSpan)
+  );
+
+  // Build timeline segments: active ranges at full scale, gaps compressed
+  $: timelineSegments = (() => {
+    const { minYear, maxYear } = timelineBounds;
+    const buffered = bufferedIntervals;
+
+    if (buffered.length === 0) {
+      // Single active segment spanning entire timeline
+      return [
+        {
+          type: "active",
+          yearStart: minYear,
+          yearEnd: maxYear,
+          pixelStart: 0,
+          pixelEnd: (maxYear - minYear) * pixelsPerYear,
+        },
+      ];
+    }
+
     // Build segments with cumulative pixel offsets
     const segments = [];
     let px = 0;
@@ -259,7 +318,7 @@
         });
         px += w;
       } else {
-        const w = gapYears * PIXELS_PER_YEAR;
+        const w = gapYears * pixelsPerYear;
         segments.push({
           type: "active",
           yearStart: minYear,
@@ -274,7 +333,7 @@
     for (let i = 0; i < buffered.length; i++) {
       // Active segment
       const years = buffered[i].end - buffered[i].start;
-      const w = years * PIXELS_PER_YEAR;
+      const w = years * pixelsPerYear;
       segments.push({
         type: "active",
         yearStart: buffered[i].start,
@@ -299,7 +358,7 @@
           px += w;
         } else {
           // Small gap: treat as active at full scale
-          const gw = gapYears * PIXELS_PER_YEAR;
+          const gw = gapYears * pixelsPerYear;
           segments.push({
             type: "active",
             yearStart: buffered[i].end,
@@ -327,7 +386,7 @@
         });
         px += w;
       } else {
-        const w = gapYears * PIXELS_PER_YEAR;
+        const w = gapYears * pixelsPerYear;
         segments.push({
           type: "active",
           yearStart: lastEnd,
@@ -342,10 +401,15 @@
     return segments;
   })();
 
-  // Convert year to pixel position using segment-based mapping
+  // Convert year to pixel position using segment-based mapping.
+  // Reads the reactive `timelineSegments` / `pixelsPerYear`. Svelte does not
+  // track dependencies inside function bodies, so correctness relies on every
+  // reactive statement that calls this being declared BELOW those two (reactive
+  // statements without a declared dependency run in source order) — keep it
+  // that way when adding new derived values.
   function yearToPixel(year) {
     if (!timelineSegments || timelineSegments.length === 0) {
-      return (year - timelineBounds.minYear) * PIXELS_PER_YEAR;
+      return (year - timelineBounds.minYear) * pixelsPerYear;
     }
 
     const clampedYear = Math.max(
@@ -368,7 +432,7 @@
   // Convert pixel position to year using segment-based mapping (inverse)
   function pixelToYear(px) {
     if (!timelineSegments || timelineSegments.length === 0) {
-      return timelineBounds.minYear + px / PIXELS_PER_YEAR;
+      return timelineBounds.minYear + px / pixelsPerYear;
     }
 
     for (const seg of timelineSegments) {
@@ -398,7 +462,7 @@
     if (timelineSegments && timelineSegments.length > 0) {
       return timelineSegments[timelineSegments.length - 1].pixelEnd;
     }
-    return totalSpan * PIXELS_PER_YEAR;
+    return totalSpan * pixelsPerYear;
   })();
 
   // ============================================
