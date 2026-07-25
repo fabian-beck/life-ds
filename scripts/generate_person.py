@@ -15,7 +15,11 @@ from generate_person_network import (
     generate_person_network,
     DEFAULT_MODEL as NETWORK_MODEL,
 )
-from generate_person_portrait import generate_portrait
+from generate_person_portrait import (
+    extract_image_from_page,
+    generate_portrait,
+    is_direct_image_url,
+)
 from review_person import review_person_data
 
 
@@ -70,6 +74,25 @@ def parse_args(argv: Any) -> argparse.Namespace:
         "--portrait-model",
         default="gpt-image-2",
         help="OpenAI model for portrait generation (default: gpt-image-2).",
+    )
+    parser.add_argument(
+        "--portrait-url",
+        help=(
+            "Licensed portrait image or landing-page URL. Page URLs are resolved "
+            "to an image before style transfer."
+        ),
+    )
+    parser.add_argument(
+        "--portrait-source-page",
+        help="Landing page used for portrait attribution (recommended with a direct image URL).",
+    )
+    parser.add_argument(
+        "--portrait-license",
+        help="License of the source portrait, e.g. 'CC BY-SA 4.0'.",
+    )
+    parser.add_argument(
+        "--portrait-source-creator",
+        help="Creator or credited source of the reference portrait.",
     )
     parser.add_argument(
         "--skip-db",
@@ -174,10 +197,27 @@ def main(argv: Any = None) -> int:
             try:
                 from pathlib import Path
 
+                portrait_reference_url = args.portrait_url
+                portrait_source_page = args.portrait_source_page
+                if portrait_reference_url and not is_direct_image_url(
+                    portrait_reference_url
+                ):
+                    page_url = portrait_reference_url
+                    portrait_reference_url, extracted_page = extract_image_from_page(
+                        page_url
+                    )
+                    if not portrait_reference_url:
+                        raise ValueError(
+                            f"Could not resolve a portrait image from {page_url}"
+                        )
+                    portrait_source_page = portrait_source_page or extracted_page
+
                 portrait_result = generate_portrait(
                     person_id=person_id,
-                    reference_image_url=None,  # Will use reference from registry
-                    source_page_url=None,
+                    reference_image_url=portrait_reference_url,
+                    source_page_url=portrait_source_page,
+                    source_license=args.portrait_license,
+                    source_creator=args.portrait_source_creator,
                     master_style_path=Path(__file__).resolve().parents[1]
                     / "public"
                     / "master_style_portrait.png",

@@ -65,6 +65,15 @@ CRITICAL:
 - Maintain clean, professional quality suitable for biographical visualization
 """
 
+MANDATORY_PORTRAIT_FRAMING = """MANDATORY PORTRAIT FRAMING:
+- ALWAYS generate a vertical biographical portrait with the person's face dominant
+- Use a head-and-shoulders or upper-torso crop, similar in scale to the FIRST IMAGE
+- If the SECOND IMAGE is landscape, full-body, seated, or includes a large environment, crop and reframe it as necessary
+- It is explicitly permitted and required to cut away legs, furniture, tables, objects, and background from the SECOND IMAGE
+- Never shrink the person to preserve the original composition; likeness takes priority over scene preservation
+- Keep the complete head, hair, chin, and shoulders comfortably inside the frame
+"""
+
 
 def slugify(value: str) -> str:
     """Convert a string into a URL-friendly slug."""
@@ -183,6 +192,14 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
         response.raise_for_status()
 
         soup = BeautifulSoup(response.content, "html.parser")
+
+        # Architectuul exposes the subject image as data-image-src in the lead
+        # section. Prefer this uncropped asset over og:image, which is a social
+        # preview crop and can compromise likeness during style transfer.
+        if "architectuul.com" in domain:
+            lead_image = soup.select_one("section.lead [data-image-src]")
+            if lead_image and lead_image.get("data-image-src"):
+                image_url = lead_image["data-image-src"]
 
         # Flickr
         if "flickr.com" in domain:
@@ -311,12 +328,28 @@ def download_image(url: str, output_path: Path, max_retries: int = 3) -> bool:
         try:
             response = requests.get(url, timeout=30, stream=True, headers=headers)
             response.raise_for_status()
+            content_type = response.headers.get("Content-Type", "").split(";", 1)[0]
+            if content_type and not content_type.lower().startswith("image/"):
+                raise requests.RequestException(
+                    f"Expected an image response, received {content_type}"
+                )
 
             # Write to file
             output_path.parent.mkdir(parents=True, exist_ok=True)
             with open(output_path, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
+
+            # A successful HTTP response can still be an HTML error or placeholder.
+            # Decode it before allowing the file into the style-transfer request.
+            try:
+                with Image.open(output_path) as downloaded:
+                    downloaded.verify()
+            except Exception as error:
+                output_path.unlink(missing_ok=True)
+                raise requests.RequestException(
+                    f"Downloaded response is not a decodable image: {error}"
+                ) from error
 
             return True
 
@@ -523,6 +556,8 @@ def update_person_registry(
     portrait_paths: Dict[str, str],
     original_image_url: str,
     source_page_url: Optional[str] = None,
+    source_license: Optional[str] = None,
+    source_creator: Optional[str] = None,
 ) -> None:
     """
     Update data/persons.json with generated portrait.
@@ -564,13 +599,49 @@ def update_person_registry(
         "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
         "originalImage": original_image_url,
+        "referenceUsed": True,
     }
+    if source_license:
+        person["portrait"]["sourceLicense"] = source_license
+    if source_creator:
+        person["portrait"]["sourceCreator"] = source_creator
 
-    # Preserve original caption if it exists
-    if original_caption:
+    # Preserve a genuine source caption, but never carry a caption describing
+    # an older AI portrait forward as if it described the reference photograph.
+    if original_caption and not original_caption.lower().startswith(
+        ("ai-generated", "stylized portrait")
+    ):
         person["portrait"]["originalCaption"] = original_caption
 
     save_person_registry(registry)
+    sync_translated_registries(person_id, person["portrait"])
+
+
+def sync_translated_registries(
+    person_id: str,
+    portrait_data: Dict[str, Any],
+) -> None:
+    """Synchronize non-translatable portrait metadata to language registries."""
+    updated = []
+    for registry_path in sorted(DATA_DIR.glob("persons_*.json")):
+        try:
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            person = find_person_in_registry(registry, person_id)
+            if not person:
+                continue
+            person["portrait"] = portrait_data
+            registry_path.write_text(
+                json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            updated.append(registry_path.name)
+        except (OSError, ValueError, TypeError) as error:
+            print(
+                f"  Warning: Failed to sync {registry_path.name}: {error}",
+                file=sys.stderr,
+            )
+    if updated:
+        print(f"  ? Updated translated registries: {', '.join(updated)}")
 
 
 def update_life_events_portrait(
@@ -651,6 +722,8 @@ def generate_portrait(
     reference_image_url: Optional[str] = None,
     *,
     source_page_url: Optional[str] = None,
+    source_license: Optional[str] = None,
+    source_creator: Optional[str] = None,
     master_style_path: Path = DEFAULT_MASTER_STYLE_PATH,
     model: str = "gpt-image-2",
     dry_run: bool = False,
@@ -672,7 +745,7 @@ def generate_portrait(
     Returns:
         Dict with 'id', 'local_path', 'success', 'message'
     """
-    print(f"[Step 1/6] Checking prerequisites for '{person_id}'...")
+    print(f"[Step 1/7] Checking prerequisites for '{person_id}'...")
 
     # Load person's color scheme
     colors = load_person_colors(person_id)
@@ -766,7 +839,7 @@ def generate_portrait(
     print(f"  ✓ Master style portrait found: {master_style_path}")
 
     # Download reference portrait to temp file
-    print("[Step 2/6] Downloading reference portrait from Wikimedia Commons...")
+    print("[Step 2/7] Downloading reference portrait...")
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_ref_path = Path(temp_dir) / f"{person_id}_ref.jpg"
         temp_ref_png = Path(temp_dir) / f"{person_id}_ref.png"
@@ -816,7 +889,7 @@ def generate_portrait(
                     }
 
         # Call OpenAI API
-        print(f"[Step 3/6] Generating stylized portrait via {model}...")
+        print(f"[Step 3/7] Generating stylized portrait via {model}...")
 
         if dry_run:
             print("  (Dry run: skipping API call)")
@@ -849,10 +922,11 @@ CRITICAL - PRESERVE EXACTLY from SECOND IMAGE:
 - Facial likeness and all distinctive features
 - Expression and gaze direction EXACTLY as shown
 - Head pose, tilt, and angle EXACTLY as shown
-- Body position, shoulder orientation, and posture
-- Composition and crop (head size relative to the image edges)
+- Natural shoulder orientation when visible in the portrait crop
 - The person must be IMMEDIATELY recognizable as the same individual
 - Hair style and clothing silhouette
+
+{MANDATORY_PORTRAIT_FRAMING}
 
 NO FRAME OR BORDER - the portrait must be borderless:
 - Do NOT draw any frame, border, oval, vignette, cartouche, medallion, or decorative surround around the subject
@@ -878,11 +952,11 @@ COLOR PALETTE:
 - Light should have slight bloom/glow effect
 
 OUTPUT FORMAT:
-- Portrait format with 3:4 aspect ratio (vertical orientation)
-- Match the composition scale from SECOND IMAGE
+- Portrait format with 2:3 aspect ratio (vertical orientation)
+- Head-and-shoulders or upper-torso framing; the face must remain the focal point
 - The portrait is "sketched" entirely with glowing light strokes against darkness
 
-REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIRST IMAGE provides only the artistic style. The result must look like the person from the SECOND IMAGE rendered in the style of the FIRST IMAGE, with NO frame, border, or oval surround."""
+REMEMBER: The SECOND IMAGE provides identity, likeness, expression, and recognizable features. The FIRST IMAGE provides only the artistic style. Crop and reframe the SECOND IMAGE whenever needed to produce a true portrait. The result must look like the same person, with NO frame, border, or oval surround."""
 
                     # Pass both images as file objects in a list
                     # Open files and keep references to close them properly
@@ -924,9 +998,10 @@ REMEMBER: The SECOND IMAGE provides the pose, likeness, and composition. The FIR
 PRESERVE EXACTLY:
 - Facial likeness and features
 - Expression and gaze direction
-- Pose and head position
-- Composition and framing
-- Historical period clothing and styling"""
+- Head pose
+- Historical period clothing and styling
+
+ALWAYS produce a vertical head-and-shoulders or upper-torso portrait. Crop away the source scene, furniture, and lower body as necessary; never shrink the person to preserve the original composition."""
 
                     with open(temp_ref_path, "rb") as ref_file:
                         response = client.images.edit(
@@ -1048,7 +1123,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                 }
 
         # Download or save generated image
-        print("[Step 4/6] Saving generated portrait...")
+        print("[Step 4/7] Saving generated portrait...")
 
         if dry_run:
             print("  (Dry run: skipping save)")
@@ -1081,7 +1156,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             print(f"  ✓ Portrait saved to: {output_path}")
 
         # Create optimized WebP sizes
-        print("[Step 5/6] Creating optimized WebP sizes...")
+        print("[Step 5/7] Creating optimized WebP sizes...")
 
         if dry_run:
             print("  (Dry run: skipping WebP creation)")
@@ -1094,14 +1169,19 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             portrait_paths = create_webp_sizes(output_path, person_id)
 
         # Update registry and life_events.json
-        print("[Step 6/6] Updating persons registry and life events...")
+        print("[Step 6/7] Updating persons registry and life events...")
 
         if dry_run:
             print("  (Dry run: skipping registry update)")
         else:
             # Update persons.json with multi-size paths and source attribution
             update_person_registry(
-                person_id, portrait_paths, reference_image_url, source_page_url
+                person_id,
+                portrait_paths,
+                reference_image_url,
+                source_page_url,
+                source_license,
+                source_creator,
             )
             print("  ✓ Registry updated with portrait paths")
 
@@ -1117,7 +1197,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                     file=sys.stderr,
                 )
 
-        print("[Step 7/6] Portrait generation complete!")
+        print("[Step 7/7] Portrait generation complete!")
 
         return {
             "id": person_id,
@@ -1164,6 +1244,21 @@ def parse_args(argv: Any) -> argparse.Namespace:
         default=None,
         help="Optional: Reference image URL to use instead of the one from the registry.",
     )
+    parser.add_argument(
+        "--source-page",
+        default=None,
+        help="Landing page used for attribution when --url is a direct image.",
+    )
+    parser.add_argument(
+        "--license",
+        default=None,
+        help="License of the reference portrait, e.g. 'CC BY-SA 4.0'.",
+    )
+    parser.add_argument(
+        "--source-creator",
+        default=None,
+        help="Creator or credited source of the reference portrait.",
+    )
     return parser.parse_args(argv)
 
 
@@ -1190,7 +1285,7 @@ def main(argv: Any = None) -> int:
     try:
         # Determine reference image URL and source page URL
         reference_url = None
-        source_page_url = None
+        source_page_url = args.source_page
 
         # If --url is provided, check if it's a page or direct image
         if args.url:
@@ -1200,7 +1295,6 @@ def main(argv: Any = None) -> int:
             if is_direct_image_url(args.url):
                 # Direct image URL
                 reference_url = args.url
-                source_page_url = None
                 print("  Detected direct image URL")
             else:
                 # Web page - extract image
@@ -1274,6 +1368,8 @@ def main(argv: Any = None) -> int:
             person_id=person_id,
             reference_image_url=reference_url,
             source_page_url=source_page_url,
+            source_license=args.license,
+            source_creator=args.source_creator,
             master_style_path=args.master_style,
             model=args.model,
             dry_run=args.dry_run,

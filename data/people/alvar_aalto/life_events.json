@@ -1,0 +1,676 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-07-25",
+  "person": {
+    "name": "Alvar_Aalto",
+    "birth_date": "1898-02-03",
+    "death_date": "1976-05-11",
+    "primary_roles": [
+      "architect",
+      "designer"
+    ],
+    "tagline": "Humanizing Modernism Through Design",
+    "summary": "Alvar Aalto was a Finnish architect and designer whose buildings, furniture, glassware, and interiors combined modernist principles with natural materials and human-centered forms. Working closely with his wives and collaborators, he created major public buildings and design objects in Finland and abroad.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Alvar_Aalto",
+    "portrait": {
+      "image": "/portraits/alvar_aalto_thumbnail.webp",
+      "thumbnail": "/portraits/alvar_aalto_thumbnail.webp",
+      "medium": "/portraits/alvar_aalto_medium.webp",
+      "full": "/portraits/alvar_aalto_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Alvar_Aalto",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/2/25/Alvar_Aalto1.jpg"
+    }
+  },
+  "chapters": [
+    {
+      "id": "northern_foundations",
+      "headline": "Drawing the North",
+      "date_start": "1898-02-03",
+      "date_start_precision": "day",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 23,
+      "involved_people": [
+        "Johan Henrik Aalto",
+        "Selma Matilda Hackstedt"
+      ],
+      "location": "Finland"
+    },
+    {
+      "id": "independent_practice",
+      "headline": "A Practice Takes Root",
+      "date_start": "1922",
+      "date_start_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age_start": 23,
+      "age_end": 30,
+      "involved_people": [
+        "Aino Aalto",
+        "Erik Bryggman"
+      ],
+      "location": "Finland"
+    },
+    {
+      "id": "humane_modernism",
+      "headline": "Humanizing Modernism",
+      "date_start": "1929",
+      "date_start_precision": "year",
+      "date_end": "1939",
+      "date_end_precision": "year",
+      "age_start": 31,
+      "age_end": 41,
+      "involved_people": [
+        "Aino Aalto",
+        "Maire Gullichsen",
+        "Nils-Gustav Hahl",
+        "Harry Gullichsen"
+      ],
+      "location": "Finland"
+    },
+    {
+      "id": "transatlantic_wartime",
+      "headline": "Across the Atlantic",
+      "date_start": "1940",
+      "date_start_precision": "year",
+      "date_end": "1949",
+      "date_end_precision": "year",
+      "age_start": 42,
+      "age_end": 51,
+      "involved_people": [
+        "Aino Aalto"
+      ],
+      "location": "Finland and United States"
+    },
+    {
+      "id": "renewed_partnership",
+      "headline": "Rebuilding With Elissa",
+      "date_start": "1950",
+      "date_start_precision": "year",
+      "date_end": "1970",
+      "date_end_precision": "year",
+      "age_start": 51,
+      "age_end": 72,
+      "involved_people": [
+        "Elissa Aalto"
+      ],
+      "location": "Finland"
+    },
+    {
+      "id": "marble_finale",
+      "headline": "Marble Finale",
+      "date_start": "1971",
+      "date_start_precision": "year",
+      "date_end": "1976-05-11",
+      "date_end_precision": "day",
+      "age_start": 73,
+      "age_end": 78,
+      "involved_people": null,
+      "location": "Finland"
+    }
+  ],
+  "conclusion": "Alvar Aalto transformed modernism into an architecture of light, wood, landscape, and human comfort. From Paimio’s sanatorium to international landmarks, his work made functional design feel profoundly alive.",
+  "events": [
+    {
+      "date": "1898-02-03",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth in Kuortane",
+      "description": "Hugo Alvar Henrik Aalto was born in Kuortane, Finland, to Johan Henrik Aalto, a land surveyor, and Selma Matilda Hackstedt, a postmistress.",
+      "locations": [
+        {
+          "name_historic": "Kuortane",
+          "name_modern": "Kuortane, Finland",
+          "centroid": [
+            23.808,
+            62.81
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Johan Henrik Aalto",
+        "Selma Matilda Hackstedt"
+      ],
+      "sources": [
+        "https://www.deutsche-biographie.de/pnd118500023.html"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "northern_foundations"
+    },
+    {
+      "date": "1916",
+      "date_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age": 18,
+      "title": "Studies Architecture in Helsinki",
+      "description": "After completing school in Jyväskylä, Aalto entered the Helsinki University of Technology in 1916 to study architecture. His studies were interrupted by the [[Finnish Civil War|Finnish Civil War]], during which he served with the White Army; he returned to complete his degree in 1921.",
+      "locations": [
+        {
+          "name_historic": "Helsinki",
+          "name_modern": "Helsinki, Finland",
+          "centroid": [
+            24.9384,
+            60.1699
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Jyväskylä",
+          "name_modern": "Jyväskylä, Finland",
+          "centroid": [
+            25.7473,
+            62.2426
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Usko_Nystr%C3%B6m"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "northern_foundations",
+      "annotations": {
+        "Finnish Civil War": {
+          "explanation": "A 1918 conflict between the socialist Reds and the conservative White forces in newly independent Finland.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Finnish_Civil_War"
+        }
+      },
+      "involved_people": [
+        "Usko Nyström",
+        "Armas Lindgren"
+      ]
+    },
+    {
+      "date": "1923",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Opens Jyväskylä Practice",
+      "description": "After completing reserve-officer training, Aalto returned to Jyväskylä and opened an office called Alvar Aalto, Architect and Monumental Artist. He began with houses and local public commissions while also writing architectural articles for the newspaper Sisä-Suomi under the pseudonym Remus.",
+      "locations": [
+        {
+          "name_historic": "Jyväskylä",
+          "name_modern": "Jyväskylä, Finland",
+          "centroid": [
+            25.7473,
+            62.2426
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "independent_practice"
+    },
+    {
+      "date": "1924-10-06",
+      "date_precision": "day",
+      "age": 26,
+      "title": "Marries Aino Marsio",
+      "description": "On 6 October 1924, Aalto married architect Aino Marsio in Jyväskylä, Finland. They then travelled in Italy for their honeymoon, encountering Mediterranean architecture and culture together.",
+      "locations": [
+        {
+          "name_historic": "Jyväskylä",
+          "name_modern": "Jyväskylä, Finland",
+          "centroid": [
+            25.7473,
+            62.2426
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Italy",
+          "name_modern": "Italy",
+          "centroid": [
+            12.5674,
+            41.8719
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Aino_Aalto"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "independent_practice",
+      "annotations": {
+        "Jyväskylä": {
+          "explanation": "A Finnish city in Central Finland where Alvar and Aino Aalto were married.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jyv%C3%A4skyl%C3%A4"
+        }
+      },
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Aino Marsio-Aalto",
+        "duration": "until her death in 1949",
+        "children": 2,
+        "characterization": "creative partnership"
+      }
+    },
+    {
+      "date": "1927",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Moves Practice to Turku",
+      "description": "After winning the competition for the Southwest Finland Agricultural Cooperative building, Alvar and Aino Aalto moved their office to Turku. There they worked alongside architect Erik Bryggman, including on plans for the Turku Fair of 1928–29.",
+      "locations": [
+        {
+          "name_historic": "Jyväskylä",
+          "name_modern": "Jyväskylä, Finland",
+          "centroid": [
+            25.7473,
+            62.2426
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Turku",
+          "name_modern": "Turku, Finland",
+          "centroid": [
+            22.2666,
+            60.4518
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto",
+        "Erik Bryggman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erik_Bryggman",
+        "https://en.wikipedia.org/wiki/Aino_Aalto"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "independent_practice",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Jyväskylä, Finland",
+        "to_location": "Turku, Finland",
+        "characterization": "growing practice"
+      }
+    },
+    {
+      "date": "1929",
+      "date_precision": "year",
+      "date_end": "1933",
+      "date_end_precision": "year",
+      "age": 31,
+      "title": "Designs Paimio Sanatorium",
+      "description": "In 1929, Alvar Aalto designed the Paimio Sanatorium in Paimio with Aino Aalto, conceiving its architecture, furnishings, light, and colour as an integrated environment for tuberculosis patients. The furnishings included the bent-birch Paimio Chair, intended to make prolonged sitting more comfortable for patients.",
+      "locations": [
+        {
+          "name_historic": "Paimio",
+          "name_modern": "Paimio, Finland",
+          "centroid": [
+            22.686,
+            60.456
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Aino_Aalto"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Paimio_Sanatorium.jpg/960px-Paimio_Sanatorium.jpg",
+          "caption": "Paimio Sanatorium by Alvar Aalto in Finland",
+          "source": "https://commons.wikimedia.org/wiki/File:Paimio_Sanatorium.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "humane_modernism"
+    },
+    {
+      "date": "1935-12",
+      "date_precision": "month",
+      "age": 37,
+      "title": "Co-founds Artek",
+      "description": "In December 1935, Alvar Aalto co-founded Artek in Helsinki with Aino Aalto, Maire Gullichsen, and Nils-Gustav Hahl. The company was established to promote and distribute the Aaltos’ furniture and glassware and to provide furnishings for their architectural projects.",
+      "locations": [
+        {
+          "name_historic": "Helsinki",
+          "name_modern": "Helsinki, Finland",
+          "centroid": [
+            24.9384,
+            60.1699
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto",
+        "Maire Gullichsen",
+        "Nils-Gustav Hahl"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Artek_(company)",
+        "https://en.wikipedia.org/wiki/Aino_Aalto",
+        "https://en.wikipedia.org/wiki/Maire_Gullichsen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Artek_Stool.jpg/960px-Artek_Stool.jpg",
+          "caption": "Production of Aalto’s Stool 60 at Artek, 1937",
+          "source": "https://commons.wikimedia.org/wiki/File:Artek_Stool.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "humane_modernism"
+    },
+    {
+      "date": "1935",
+      "date_precision": "year",
+      "age": 37,
+      "title": "Completes Viipuri Library",
+      "description": "The Viipuri Library was completed in [[Viipuri|Viipuri, then a Finnish city and now Vyborg, Russia]] after a design and construction process begun with a 1927 competition. Aalto shaped its interiors with skylights, warm materials, a wave-like ceiling in the lecture hall, and carefully designed furnishings.",
+      "locations": [
+        {
+          "name_historic": "Viipuri",
+          "name_modern": "Vyborg, Russia",
+          "centroid": [
+            28.7556,
+            60.7139
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vyborg_Library",
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Vyborg_Library.jpg/960px-Vyborg_Library.jpg",
+          "caption": "Vyborg municipal library built by Alvar Aalto",
+          "source": "https://commons.wikimedia.org/wiki/File:Vyborg_Library.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "humane_modernism",
+      "annotations": {
+        "Viipuri": {
+          "explanation": "Viipuri was part of Finland when the library was completed; it is now the Russian city of Vyborg.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vyborg"
+        }
+      }
+    },
+    {
+      "date": "1937",
+      "date_precision": "year",
+      "date_end": "1939",
+      "date_end_precision": "year",
+      "age": 39,
+      "title": "Designs Villa Mairea",
+      "description": "In 1937, Alvar Aalto designed Villa Mairea for Maire and Harry Gullichsen near Noormarkku, collaborating closely with Aino Aalto on its interiors and furnishings. The design combined modern construction with wood, brick, natural textures, and references to Finnish forests.",
+      "locations": [
+        {
+          "name_historic": "Noormarkku",
+          "name_modern": "Noormarkku, Pori, Finland",
+          "centroid": [
+            21.871,
+            61.594
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto",
+        "Maire Gullichsen",
+        "Harry Gullichsen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Aino_Aalto",
+        "https://en.wikipedia.org/wiki/Maire_Gullichsen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Villa_Mairea%2C_Noormarkku%2C_Finland.jpg",
+          "caption": "Villa Mairea, Noormarkku, Finland",
+          "source": "https://commons.wikimedia.org/wiki/File:Villa_Mairea,_Noormarkku,_Finland.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "humane_modernism"
+    },
+    {
+      "date": "1938-11",
+      "date_precision": "month",
+      "age": 40,
+      "title": "Exhibits at MoMA",
+      "description": "In November 1938, the Museum of Modern Art in New York presented Aalto: Architecture and Furniture, a solo exhibition of Alvar Aalto’s work. Aalto traveled to the United States for the exhibition, which later toured twelve American cities.",
+      "locations": [
+        {
+          "name_historic": "New York",
+          "name_modern": "New York City, United States",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Aino_Aalto"
+      ],
+      "event_type_icon": "mdi-palette",
+      "chapter": "humane_modernism"
+    },
+    {
+      "date": "1940",
+      "date_precision": "year",
+      "date_end": "1948",
+      "date_end_precision": "year",
+      "date_note": "Aalto served as a visiting professor in 1940–41 and later as a professor from 1946 to 1948",
+      "age": 42,
+      "title": "Teaches at MIT",
+      "description": "Aalto taught architecture at the Massachusetts Institute of Technology as a visiting professor in 1940–41 and as a professor from 1946 to 1948. He worked with students and local clients while maintaining professional ties to Finland.",
+      "locations": [
+        {
+          "name_historic": "Helsinki",
+          "name_modern": "Helsinki, Finland",
+          "centroid": [
+            24.9384,
+            60.1699
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto",
+        "https://en.wikipedia.org/wiki/Aino_Aalto"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "transatlantic_wartime",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Finland",
+        "to_location": "United States",
+        "characterization": "wartime relocation"
+      }
+    },
+    {
+      "date": "1949-01-13",
+      "date_precision": "day",
+      "age": 50,
+      "title": "Loses Aino Aalto",
+      "description": "Aino Aalto died of cancer in Helsinki on 13 January 1949. For twenty-five years, she had worked alongside Alvar Aalto on architecture, interiors, furniture, textiles, lighting, and Artek’s design program.",
+      "locations": [
+        {
+          "name_historic": "Helsinki",
+          "name_modern": "Helsinki, Finland",
+          "centroid": [
+            24.9384,
+            60.1699
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Aino Aalto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Aino_Aalto"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "transatlantic_wartime"
+    },
+    {
+      "date": "1949",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Completes Baker House",
+      "description": "Aalto completed Baker House, a residence hall for the Massachusetts Institute of Technology, in Cambridge. Its sinuous plan gave many student rooms views toward the Charles River, while brick exteriors and wood-lined interiors created a domestic character.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, United States",
+          "centroid": [
+            -71.1056,
+            42.3601
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Baker_House"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/MIT_Baker_House_Dormitory_%2834321178075%29.jpg/960px-MIT_Baker_House_Dormitory_%2834321178075%29.jpg",
+          "caption": "MIT Baker House Dormitory, 1946–1949",
+          "source": "https://commons.wikimedia.org/wiki/File:MIT_Baker_House_Dormitory_(34321178075).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "transatlantic_wartime"
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "age": 54,
+      "title": "Marries Elissa Mäkiniemi",
+      "description": "In 1952, Aalto married Elissa Mäkiniemi, an architect who had joined his office in 1949. The couple began a personal and professional partnership while the office was engaged in major Finnish and international commissions.",
+      "locations": [],
+      "involved_people": [
+        "Elissa Aalto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Elissa_Aalto"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Inner_court_Muuratsalo_Experimental_House.jpg/960px-Inner_court_Muuratsalo_Experimental_House.jpg",
+          "caption": "Inner court of Muuratsalo Experimental House",
+          "source": "https://commons.wikimedia.org/wiki/File:Inner_court_Muuratsalo_Experimental_House.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "renewed_partnership",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Elissa Aalto",
+        "duration": "until his death in 1976",
+        "children": 0,
+        "characterization": "creative partnership"
+      }
+    },
+    {
+      "date": "1971",
+      "date_precision": "year",
+      "age": 73,
+      "title": "Completes Finlandia Hall",
+      "description": "Aalto completed Finlandia Hall in Helsinki, a major concert and congress building faced in [[Carrara marble]]. He designed its public interiors, furnishings, and lighting as integral parts of the building.",
+      "locations": [
+        {
+          "name_historic": "Helsinki",
+          "name_modern": "Helsinki, Finland",
+          "centroid": [
+            24.9384,
+            60.1699
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Finlandia_Hall",
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Finlandia_Hall%2C_Helsinki_-_DSC03957.JPG/960px-Finlandia_Hall%2C_Helsinki_-_DSC03957.JPG",
+          "caption": "Finlandia Hall, Helsinki, Finland",
+          "source": "https://commons.wikimedia.org/wiki/File:Finlandia_Hall,_Helsinki_-_DSC03957.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "marble_finale",
+      "annotations": {
+        "Carrara marble": {
+          "explanation": "A prestigious white marble quarried near Carrara in Tuscany, Italy, long associated with monumental architecture and sculpture.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Carrara_marble"
+        }
+      }
+    },
+    {
+      "date": "1976-05-11",
+      "date_precision": "day",
+      "age": 78,
+      "title": "Death in Helsinki",
+      "description": "Alvar Aalto died in Helsinki on 11 May 1976, aged 78. He was buried in Hietaniemi Cemetery in Helsinki.",
+      "locations": [
+        {
+          "name_historic": "Helsinki",
+          "name_modern": "Helsinki, Finland",
+          "centroid": [
+            24.9384,
+            60.1699
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://www.deutsche-biographie.de/pnd118500023.html"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Alvar-Aalto-grave.jpg/960px-Alvar-Aalto-grave.jpg",
+          "caption": "Grave of Alvar, Aino, and Elissa Aalto",
+          "source": "https://commons.wikimedia.org/wiki/File:Alvar-Aalto-grave.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "marble_finale"
+    }
+  ]
+}

@@ -1,0 +1,666 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-07-25",
+  "person": {
+    "name": "Geoffrey_Bawa",
+    "birth_date": "1919-07-23",
+    "death_date": "2003-05-27",
+    "primary_roles": [
+      "architect",
+      "designer"
+    ],
+    "tagline": "Pioneer of Tropical Modernism",
+    "summary": "Geoffrey Bawa was a Sri Lankan architect whose buildings combined modernist design with tropical landscapes, local materials, and vernacular forms. His work ranged from private houses and hotels to Sri Lanka's Parliament complex, and he was a central figure in the country's post-independence architectural culture.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
+    "portrait": {
+      "image": "/portraits/geoffrey_bawa_thumbnail.webp",
+      "thumbnail": "/portraits/geoffrey_bawa_thumbnail.webp",
+      "medium": "/portraits/geoffrey_bawa_medium.webp",
+      "full": "/portraits/geoffrey_bawa_full.webp",
+      "source": "https://architectuul.com/architect/geoffrey-bawa",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://api.architectuul.org/media/58c6f65a-f8bc-408a-9fda-7ecf6d7b5e1b/1312x.jpg",
+      "referenceUsed": true,
+      "sourceLicense": "CC BY-SA 3.0",
+      "sourceCreator": "Designtroo"
+    }
+  },
+  "chapters": [
+    {
+      "id": "law_under_empire",
+      "headline": "Law and Departure",
+      "date_start": "1919-07-23",
+      "date_start_precision": "day",
+      "date_end": "1946",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 26,
+      "involved_people": [
+        "Benjamin William Bawa",
+        "Bertha Marianne Bawa",
+        "Bevis Bawa"
+      ],
+      "location": "Sri Lanka and the United Kingdom"
+    },
+    {
+      "id": "lunugangas_awakening",
+      "headline": "Lunuganga's Awakening",
+      "date_start": "1947",
+      "date_start_precision": "year",
+      "date_end": "1951",
+      "date_end_precision": "year",
+      "age_start": 27,
+      "age_end": 31,
+      "involved_people": [
+        "H. H. Reid"
+      ],
+      "location": "Sri Lanka and the wider world"
+    },
+    {
+      "id": "learning_to_build",
+      "headline": "Learning to Build",
+      "date_start": "1952",
+      "date_start_precision": "year",
+      "date_end": "1956",
+      "date_end_precision": "year",
+      "age_start": 32,
+      "age_end": 36,
+      "involved_people": [
+        "H. H. Reid"
+      ],
+      "location": "United Kingdom"
+    },
+    {
+      "id": "tropical_modernism_emerges",
+      "headline": "Tropical Modernism Emerges",
+      "date_start": "1957",
+      "date_start_precision": "year",
+      "date_end": "1966",
+      "date_end_precision": "year",
+      "age_start": 37,
+      "age_end": 47,
+      "involved_people": [
+        "Ulrik Plesner"
+      ],
+      "location": "Sri Lanka"
+    },
+    {
+      "id": "nation_in_landscape",
+      "headline": "Nation in Landscape",
+      "date_start": "1967",
+      "date_start_precision": "year",
+      "date_end": "1982",
+      "date_end_precision": "year",
+      "age_start": 47,
+      "age_end": 63,
+      "involved_people": [
+        "Ulrik Plesner",
+        "Ena de Silva",
+        "Barbara Sansoni",
+        "Laki Senanayake",
+        "J. R. Jayewardene"
+      ],
+      "location": "Sri Lanka"
+    },
+    {
+      "id": "the_final_horizon",
+      "headline": "The Final Horizon",
+      "date_start": "1983",
+      "date_start_precision": "year",
+      "date_end": "2003-05-27",
+      "date_end_precision": "day",
+      "age_start": 63,
+      "age_end": 83,
+      "involved_people": [
+        "Laki Senanayake",
+        "Barbara Sansoni"
+      ],
+      "location": "Sri Lanka"
+    }
+  ],
+  "conclusion": "Geoffrey Bawa transformed Sri Lanka's light, vegetation, craft, and terrain into a new architectural language now known as tropical modernism. From Lunuganga to Parliament and Kandalama, his buildings made landscape not a backdrop, but architecture's living heart.",
+  "events": [
+    {
+      "date": "1919-07-23",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Birth in Colombo",
+      "description": "Geoffrey Manning Bawa was born in Colombo, Ceylon, to Major Benjamin Bawa, a lawyer, and Bertha Marianne Schrader. He was the younger brother of Bevis Bawa, who later became a landscape architect.",
+      "locations": [
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Benjamin William Bawa",
+        "Bertha Marianne Schrader",
+        "Bevis Bawa"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bevis_Bawa",
+        "https://en.wikipedia.org/wiki/Benjamin_Bawa"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "law_under_empire"
+    },
+    {
+      "date": "1938",
+      "date_precision": "year",
+      "date_end": "1944",
+      "date_end_precision": "year",
+      "age": 19,
+      "title": "Studies Law in Britain",
+      "description": "Bawa studied English and law at St Catharine's College, Cambridge, completing the English Literature [[Tripos|Tripos]]. He then trained at the Middle Temple in London and qualified as a barrister in 1944.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, UK",
+          "centroid": [
+            0.1218,
+            52.2053
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "London",
+          "name_modern": "London, UK",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/St_Catharine%27s_College%2C_Cambridge_%28night%29.jpg/960px-St_Catharine%27s_College%2C_Cambridge_%28night%29.jpg",
+          "caption": "St Catharine's College, Cambridge",
+          "source": "https://commons.wikimedia.org/wiki/File:St_Catharine's_College,_Cambridge_(night).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "law_under_empire",
+      "annotations": {
+        "Tripos": {
+          "explanation": "The University of Cambridge's traditional honours-degree examination system.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tripos"
+        }
+      }
+    },
+    {
+      "date": "1944",
+      "date_precision": "year",
+      "date_end": "1946",
+      "date_end_precision": "year",
+      "age": 25,
+      "title": "Practises Law in Colombo",
+      "description": "After qualifying as a barrister, Bawa returned to Ceylon and worked for a Colombo law firm. His mother’s death in 1946 prompted him to leave legal practice and reconsider his direction.",
+      "locations": [
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Ceylon",
+          "name_modern": "Sri Lanka",
+          "centroid": [
+            80.7718,
+            7.8731
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Bertha Marianne Bawa"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bevis_Bawa"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "law_under_empire"
+    },
+    {
+      "date": "1946",
+      "date_precision": "year",
+      "date_end": "1948",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "Travels Abroad Extensively",
+      "description": "Bawa spent two years travelling through the Far East, the United States, and Europe. In Italy, he considered buying a villa and settling there, but returned instead to Sri Lanka in 1948.",
+      "locations": [
+        {
+          "name_historic": "Italy",
+          "name_modern": "Italy",
+          "centroid": [
+            12.5674,
+            41.8719
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Ceylon",
+          "name_modern": "Sri Lanka",
+          "centroid": [
+            80.7718,
+            7.8731
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "United States",
+          "name_modern": "United States",
+          "centroid": [
+            -98.5795,
+            39.8283
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Far East",
+          "name_modern": null,
+          "centroid": [
+            -9.46832,
+            7.0019922
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-map-marker",
+      "chapter": "law_under_empire"
+    },
+    {
+      "date": "1948",
+      "date_precision": "year",
+      "age": 28,
+      "title": "Acquires Lunuganga Estate",
+      "description": "In 1948, Bawa bought an abandoned rubber estate at Lunuganga on Ceylon’s south-west coast and began transforming the tropical site into a garden, initially drawing on Italian garden traditions.",
+      "locations": [
+        {
+          "name_historic": "Lunuganga, Ceylon",
+          "name_modern": "Bentota, Sri Lanka",
+          "centroid": [
+            80.015,
+            6.421
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Geoffrey_Bawa"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lunuganga%2C_Bentota%2C_Sri_Lanka..JPG/960px-Lunuganga%2C_Bentota%2C_Sri_Lanka..JPG",
+          "caption": "Lunuganga house and garden, Bentota",
+          "source": "https://commons.wikimedia.org/wiki/File:Lunuganga,_Bentota,_Sri_Lanka..JPG"
+        }
+      ],
+      "event_type_icon": "mdi-chart-line",
+      "chapter": "lunugangas_awakening"
+    },
+    {
+      "date": "1951",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Begins Architectural Apprenticeship",
+      "description": "Recognizing the technical limits of his plans for Lunuganga, Bawa entered an architectural apprenticeship under H. H. Reid at the Colombo practice Edwards, Reid and Begg. Reid was the firm’s sole surviving partner at the time.",
+      "locations": [
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "H. H. Reid"
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-school",
+      "chapter": "lunugangas_awakening"
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "date_end": "1956",
+      "date_end_precision": "year",
+      "age": 32,
+      "title": "Studies Architecture in London",
+      "description": "After Reid’s death, Bawa returned to England for formal architectural training at the Architectural Association in London. He received its Diploma in Architecture in 1956.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, United Kingdom",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Architectural_Association_School_of_Architecture_London_20060909.jpg/960px-Architectural_Association_School_of_Architecture_London_20060909.jpg",
+          "caption": "Architectural Association School of Architecture, London",
+          "source": "https://commons.wikimedia.org/wiki/File:Architectural_Association_School_of_Architecture_London_20060909.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "learning_to_build",
+      "annotations": {
+        "Reid": {
+          "explanation": "Bawa's friend, whose death prompted him to abandon an extended European journey and pursue architecture."
+        }
+      }
+    },
+    {
+      "date": "1957",
+      "date_precision": "year",
+      "age": 37,
+      "title": "Returns as Qualified Architect",
+      "description": "After becoming an Associate of the [[Royal Institute of British Architects|Royal Institute of British Architects]], Bawa returned to Ceylon and assumed the remaining Colombo practice of Edwards, Reid and Begg.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, United Kingdom",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "tropical_modernism_emerges",
+      "annotations": {
+        "Royal Institute of British Architects": {
+          "explanation": "The United Kingdom's professional body for architects; associate membership was a recognized professional qualification.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_Institute_of_British_Architects"
+        }
+      },
+      "event_class": {
+        "type": "migration",
+        "from_location": "England",
+        "to_location": "Sri Lanka",
+        "characterization": "professional return"
+      }
+    },
+    {
+      "date": "1958",
+      "date_precision": "year",
+      "age": 38,
+      "title": "Joins Edwards Reid Begg",
+      "description": "Bawa became a partner in the Colombo firm of Edwards, Reid and Begg, gaining a professional base for designing houses, institutions, and commercial projects in post-independence Ceylon.",
+      "locations": [
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "tropical_modernism_emerges"
+    },
+    {
+      "date": "1959",
+      "date_precision": "year",
+      "date_end": "1967",
+      "date_end_precision": "year",
+      "age": 39,
+      "title": "Collaborates with Ulrik Plesner",
+      "description": "In 1959, Danish architect Ulrik Plesner joined Geoffrey Bawa’s Colombo practice. The two worked closely on schools, factories, houses, chapels, and hotels, adapting modern construction to Sri Lanka’s climate, building traditions, and landscapes.",
+      "locations": [
+        {
+          "name_historic": "Colombo, Ceylon",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ulrik Plesner"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ulrik_Plesner_(architect,_born_1930)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Geoffrey_Bawa_work.jpg/960px-Geoffrey_Bawa_work.jpg",
+          "caption": "Ceylon Steel Corporation Office Building, Oruwela",
+          "source": "https://commons.wikimedia.org/wiki/File:Geoffrey_Bawa_work.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "tropical_modernism_emerges"
+    },
+    {
+      "date": "1967",
+      "date_precision": "year",
+      "age": 47,
+      "title": "Leads Independent Practice",
+      "description": "In 1967, Ulrik Plesner left Sri Lanka, and Geoffrey Bawa directed their Colombo practice independently. His ensuing close association with Ena de Silva, Barbara Sansoni, and Laki Senanayake brought renewed attention to indigenous materials and crafts in architectural interiors.",
+      "locations": [
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Ceylon",
+          "name_modern": "Sri Lanka",
+          "centroid": [
+            80.7718,
+            7.8731
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Ulrik Plesner",
+        "Ena de Silva",
+        "Barbara Sansoni",
+        "Laki Senanayake"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ulrik_Plesner_(architect,_born_1930)",
+        "https://en.wikipedia.org/wiki/Laki_Senanayake",
+        "https://en.wikipedia.org/wiki/Ena_de_Silva"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "nation_in_landscape",
+      "annotations": {
+        "Ulrik Plesner": {
+          "explanation": "A Danish architect who was Bawa's partner in a Colombo practice from the late 1950s until his departure from Sri Lanka in 1967.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ulrik_Plesner_(architect,_born_1930)"
+        }
+      }
+    },
+    {
+      "date": "1979",
+      "date_precision": "year",
+      "age": 59,
+      "title": "Designs New Parliament",
+      "description": "In 1979, President J. R. Jayewardene invited Geoffrey Bawa to design Sri Lanka’s new Parliament complex at Sri Jayawardenepura Kotte. The project was completed in 1982 with the help of the Japanese contractors Mitsui.",
+      "locations": [
+        {
+          "name_historic": "Sri Jayawardenepura Kotte",
+          "name_modern": "Sri Jayawardenepura Kotte, Sri Lanka",
+          "centroid": [
+            79.9026,
+            6.9022
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "J. R. Jayewardene"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/J._R._Jayewardene"
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "nation_in_landscape"
+    },
+    {
+      "date": "1982",
+      "date_precision": "year",
+      "age": 62,
+      "title": "Completes Parliament Complex",
+      "description": "The new Parliament building at [[Sri Jayawardenepura Kotte|Sri Jayawardenepura Kotte]], designed by Geoffrey Bawa, was completed in 1982. That year, he also established the Geoffrey Bawa Trust to support architecture, fine arts, and environmental studies.",
+      "locations": [
+        {
+          "name_historic": "Sri Jayawardenepura Kotte",
+          "name_modern": "Sri Jayawardenepura Kotte, Sri Lanka",
+          "centroid": [
+            79.9014,
+            6.9022
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/New_Sri_Lankan_Parliament_in_Kotte.jpg/960px-New_Sri_Lankan_Parliament_in_Kotte.jpg",
+          "caption": "Sri Lankan Parliament building, Kotte",
+          "source": "https://commons.wikimedia.org/wiki/File:New_Sri_Lankan_Parliament_in_Kotte.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "nation_in_landscape",
+      "annotations": {
+        "Sri Jayawardenepura Kotte": {
+          "explanation": "Sri Lanka's administrative capital and the seat of its Parliament, adjoining Colombo.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sri_Jayawardenepura_Kotte"
+        }
+      }
+    },
+    {
+      "date": "1990",
+      "date_precision": "year",
+      "date_note": "The strokes occurred in the early 1990s",
+      "age": 70,
+      "title": "Suffers Series of Strokes",
+      "description": "Bawa suffered a series of strokes during the early 1990s. The illness left him in poor health for the remainder of his life.",
+      "locations": [],
+      "sources": [],
+      "event_type_icon": "mdi-hospital",
+      "chapter": "the_final_horizon"
+    },
+    {
+      "date": "1994",
+      "date_precision": "year",
+      "age": 74,
+      "title": "Completes Kandalama Hotel",
+      "description": "In 1994, Bawa completed the Heritance Kandalama Hotel near Dambulla, embedding its long structure within the surrounding forested landscape. The project incorporated work by artist Laki Senanayake and designer Barbara Sansoni.",
+      "locations": [
+        {
+          "name_historic": "Dambulla",
+          "name_modern": "Dambulla, Sri Lanka",
+          "centroid": [
+            80.6517,
+            7.8742
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Laki Senanayake",
+        "Barbara Sansoni"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Laki_Senanayake",
+        "https://de.wikipedia.org/wiki/Barbara_Sansoni"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kandalama_Hotel%2C_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg/960px-Kandalama_Hotel%2C_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg",
+          "caption": "Kandalama Hotel, Dambulla",
+          "source": "https://commons.wikimedia.org/wiki/File:Kandalama_Hotel,_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "the_final_horizon"
+    },
+    {
+      "date": "2003-05-27",
+      "date_precision": "day",
+      "age": 83,
+      "title": "Dies in Sri Lanka",
+      "description": "Geoffrey Bawa died in Sri Lanka on 27 May 2003, aged 83, after years of ill health following a series of strokes.",
+      "locations": [
+        {
+          "name_historic": "Colombo",
+          "name_modern": "Colombo, Sri Lanka",
+          "centroid": [
+            79.8612,
+            6.9271
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Lunuganga_-_Cinnamon_Hill.jpg/960px-Lunuganga_-_Cinnamon_Hill.jpg",
+          "caption": "Geoffrey Bawa's resting place at Lunuganga",
+          "source": "https://commons.wikimedia.org/wiki/File:Lunuganga_-_Cinnamon_Hill.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "the_final_horizon",
+      "location_coordinates": [
+        {
+          "label": "Sri Lanka",
+          "name": "Sri Lanka",
+          "primary": true,
+          "centroid": [
+            80.7718,
+            7.8731
+          ],
+          "source": "https://en.wikipedia.org/wiki/Geoffrey_Bawa"
+        }
+      ]
+    }
+  ]
+}
