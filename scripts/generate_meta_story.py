@@ -1820,6 +1820,11 @@ def main():
         help="Phase 8: never drop people from the story (text composition only)",
     )
     parser.add_argument(
+        "--skip-redundancy-pass",
+        action="store_true",
+        help="Phase 8: skip the pass that rewrites prose slots repeating each other",
+    )
+    parser.add_argument(
         "--skip-map",
         action="store_true",
         help="Skip Phase 7 (geographic map section)",
@@ -2056,6 +2061,7 @@ def main():
             client,
             model=args.model,
             allow_exclusions=not args.no_exclusions,
+            deduplicate=not args.skip_redundancy_pass,
             verbose=args.verbose,
         )
         if composed is not None:

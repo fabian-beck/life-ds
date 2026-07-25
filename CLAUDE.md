@@ -429,7 +429,7 @@ brief now includes per-event description excerpts from the people's
 organization, the map stops, **and focused Wikipedia excerpts for every main
 person** (article lead + sentences mentioning other main people, via
 `build_wikipedia_context` shared with Phase 5b) — and writes one coherent,
-journalistic narrative in two AI calls:
+journalistic narrative in three AI calls:
 
 1. **Curation** — decides a *throughline* (the arc that anchors all prose) and,
    exceptionally, which clearly disconnected people to drop. Exclusions are
@@ -460,6 +460,35 @@ journalistic narrative in two AI calls:
    narration; discards recorded under `geo_map.discarded` with reasons and
    honored only while ≥3 stops survive, re-kept by score), and the
    conclusion.
+
+   The prompt opens with a **DIVISION OF LABOUR** contract assigning each
+   prose slot what it owns and what it must not contain — the opening owns one
+   documented scene, the description the stakes, each standfirst the one
+   question its section answers, the bodies the evidence, the conclusion the
+   consequence — because a call juggling ~15 prose objectives against a single
+   throughline otherwise restates that throughline in every slot.
+3. **Redundancy pass** — a focused editing call (opt out with
+   `--skip-redundancy-pass`) that sees *only* the composed prose and rewrites
+   the slots repeating one another. Call 2 cannot police its own repetition
+   while pursuing everything else; a call with one job can. Slots are
+   addressed by stable ids — `opening`, `description`, `{section}_intro`,
+   `conclusion`, and `body:{section}:{index}` for body paragraphs — and a
+   revision may only replace the text of a slot that already exists (unknown
+   ids are ignored with a warning), so the pass can rewrite but never add or
+   remove. When two slots share a point the **later** one is rewritten, since
+   the earlier established it. Revisions are patched into the composition
+   result *before* `apply_composition`, so they pass through the same
+   defensive path as everything else; the count lands in
+   `composition.prose_revisions`. Non-fatal — on failure the prose is applied
+   unrevised.
+
+   `rank_slot_overlaps()` accompanies it as a **diagnostic, not a gate**: it
+   ranks cross-slot sentence pairs by content-word Dice overlap and is printed
+   before/after in `--verbose`. It has deliberately no threshold — measured on
+   the composed stories, real paraphrase redundancy scores ~0.27 while
+   unrelated sentences sharing two proper names score ~0.26, so the bands
+   overlap and no cutoff separates them. Only the before/after *change* is
+   meaningful; judging whether a repeat is real is the AI pass's job.
 
 **`section_bodies`** are the story's narrative depth — flexible layout for
 text and images. Each section (`timeline`, `network`, `map`, `conclusion`)
@@ -514,6 +543,7 @@ python scripts/compose_meta_story.py computing_pioneers --verbose
 python scripts/compose_meta_story.py --all
 python scripts/compose_meta_story.py computing_pioneers --dry-run       # preview only
 python scripts/compose_meta_story.py computing_pioneers --no-exclusions # text-only
+python scripts/compose_meta_story.py computing_pioneers --skip-redundancy-pass
 ```
 
 ## Project Structure
