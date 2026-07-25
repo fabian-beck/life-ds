@@ -583,6 +583,9 @@
     background-image: var(--story-pattern-image, none);
     background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
+    background-position: calc(var(--story-pattern-size, 400px) / -2) calc(
+        var(--story-pattern-size, 400px) / -2
+      );
     background-blend-mode: multiply;
     opacity: 0.12;
     mix-blend-mode: overlay;
