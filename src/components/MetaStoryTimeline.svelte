@@ -1269,6 +1269,13 @@
     );
   }
 
+  // Leaving the pinned scroll-lock zone stops vertical page scroll from
+  // driving this timeline's own (horizontal) scroll container, so the
+  // scroll-close handler below never fires. Without this, a tooltip left
+  // open here — position: fixed, so it doesn't track page scroll — would
+  // stay glued to the screen over whatever section scrolls in next.
+  $: if (!isSticky && activeEventTooltip) hideEventTooltip();
+
   // Viewport height tracking for density recalculation on resize
   let viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
 
