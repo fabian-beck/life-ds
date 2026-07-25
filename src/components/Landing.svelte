@@ -1095,6 +1095,9 @@
     background-image: var(--card-pattern-image, none);
     background-size: var(--card-pattern-size, 400px);
     background-repeat: repeat;
+    background-position: calc(var(--card-pattern-size, 400px) / -2) calc(
+        var(--card-pattern-size, 400px) / -2
+      );
     background-blend-mode: multiply;
     opacity: var(--card-pattern-opacity, 1);
     mix-blend-mode: overlay;

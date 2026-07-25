@@ -255,6 +255,7 @@
     background-color: var(--background-color);
     background-image: var(--background-pattern);
     background-size: 160px 160px;
+    background-position: -80px -80px;
     background-blend-mode: soft-light;
     display: flex;
     flex-direction: column;
