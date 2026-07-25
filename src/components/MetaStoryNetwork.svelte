@@ -72,6 +72,14 @@
         : 2.5;
   }
 
+  // Every link is masked by the node discs (see the `mnet-node-mask` in the
+  // template), so a line stops at a node's outer edge instead of running under
+  // it. Radius of the hole a node punches: the outer edge of the halo ring for
+  // main nodes, of the stroked circle for secondary ones.
+  function maskRadius(node, mainR, secondaryR) {
+    return node.type === "main" ? mainR + 5 : secondaryR + 2;
+  }
+
   // Humanize a relationship_type: "professional/mentor" → "Professional · Mentor".
   function humanizeRelationship(relationshipType) {
     if (!relationshipType) return "";
@@ -580,6 +588,30 @@
                 </clipPath>
               {/if}
             {/each}
+
+            <!-- Holes at every node, applied to every link: a line stops at the
+                 node's outer edge rather than being drawn under it, so a
+                 portrait always reads as being in front of the links — both
+                 the ties ending at it and the ones merely passing over it,
+                 which the draw order otherwise puts on top of dimmed nodes. -->
+            <mask
+              id="mnet-node-mask"
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              {width}
+              {height}
+            >
+              <rect x="0" y="0" {width} {height} fill="white" />
+              {#each simNodes as node (node.id)}
+                <circle
+                  cx={node.x ?? width / 2}
+                  cy={node.y ?? height / 2}
+                  r={maskRadius(node, MAIN_R, SECONDARY_R)}
+                  fill="black"
+                />
+              {/each}
+            </mask>
           </defs>
 
           <!-- Links and nodes share one list so highlighted ties can be lifted
@@ -592,6 +624,7 @@
                 {@const t = posById.get(link.target)}
                 {#if s && t}
                   <line
+                    mask="url(#mnet-node-mask)"
                     x1={s.x}
                     y1={s.y}
                     x2={t.x}
