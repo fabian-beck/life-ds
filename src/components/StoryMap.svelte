@@ -34,6 +34,8 @@
   let mapContainer;
   let mapInstance = null;
   let mapReady = false;
+  let mapInitializationPromise = null;
+  let isDestroyed = false;
   let currentMarkers = [];
   let trailMarkers = [];
   let lastViewportKey = "";
@@ -991,41 +993,68 @@
     }
   }
 
-  async function initialiseMap() {
-    if (mapInstance || !hasMapData) return;
-    await tick();
-    if (mapInstance || !mapContainer) return;
-    await resolvePmtilesUrl();
-    const style = createBaseStyle();
-    if (!style) {
-      return;
+  function initialiseMap() {
+    if (mapInstance || !hasMapData || isDestroyed) {
+      return mapInitializationPromise;
     }
-    if (!pmtilesProtocol) {
-      pmtilesProtocol = new Protocol();
-      maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+    if (mapInitializationPromise) {
+      return mapInitializationPromise;
     }
-    mapInstance = new maplibregl.Map({
-      container: mapContainer,
-      style,
-      center: [0, 0],
-      zoom: 1.0,
-      attributionControl: false,
-      interactive: false,
+
+    mapInitializationPromise = (async () => {
+      await tick();
+      if (mapInstance || !hasMapData || !mapContainer || isDestroyed) return;
+
+      const initialContainer = mapContainer;
+      await resolvePmtilesUrl();
+      if (
+        mapInstance ||
+        !hasMapData ||
+        !mapContainer ||
+        mapContainer !== initialContainer ||
+        isDestroyed
+      ) {
+        return;
+      }
+
+      const style = createBaseStyle();
+      if (!style) return;
+
+      if (!pmtilesProtocol) {
+        pmtilesProtocol = new Protocol();
+        maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+      }
+
+      const nextMap = new maplibregl.Map({
+        container: initialContainer,
+        style,
+        center: [0, 0],
+        zoom: 1.0,
+        attributionControl: false,
+        interactive: false,
+      });
+      mapInstance = nextMap;
+      nextMap.dragPan.disable();
+      nextMap.scrollZoom.disable();
+      nextMap.boxZoom.disable();
+      nextMap.dragRotate.disable();
+      nextMap.touchZoomRotate.disableRotation();
+      nextMap.doubleClickZoom.disable();
+      nextMap.keyboard.disable();
+      nextMap.on("load", () => {
+        if (isDestroyed || mapInstance !== nextMap) return;
+        mapReady = true;
+        updateMapState(activeCoordinates, markerTrail);
+      });
+      nextMap.on("moveend", () => {
+        if (isDestroyed || mapInstance !== nextMap) return;
+        updateLabelPositions();
+      });
+    })().finally(() => {
+      mapInitializationPromise = null;
     });
-    mapInstance.dragPan.disable();
-    mapInstance.scrollZoom.disable();
-    mapInstance.boxZoom.disable();
-    mapInstance.dragRotate.disable();
-    mapInstance.touchZoomRotate.disableRotation();
-    mapInstance.doubleClickZoom.disable();
-    mapInstance.keyboard.disable();
-    mapInstance.on("load", () => {
-      mapReady = true;
-      updateMapState(activeCoordinates, markerTrail);
-    });
-    mapInstance.on("moveend", () => {
-      updateLabelPositions();
-    });
+
+    return mapInitializationPromise;
   }
 
   // Reset viewport key when dataset changes
@@ -1038,6 +1067,7 @@
   });
 
   onDestroy(() => {
+    isDestroyed = true;
     teardownMapInstance();
     if (pmtilesProtocol && typeof maplibregl.removeProtocol === "function") {
       try {

@@ -31,6 +31,9 @@
   let mapContainer;
   let mapInstance = null;
   let mapReady = false;
+  let mapInitializationPromise = null;
+  let isDestroyed = false;
+  let updateGeneration = 0;
   let isLoading = false;
   const eventDataCache = new Map();
   let pmtilesProtocol = null;
@@ -274,10 +277,11 @@
       MAX_CLUSTER_ZOOM,
       200
     );
-    connectionLinesData = connections;
-    dummyMarkersData = dummies;
-
-    return { type: "FeatureCollection", features: markers };
+    return {
+      geojson: { type: "FeatureCollection", features: markers },
+      connections,
+      dummies,
+    };
   }
 
   function calculateInitialBounds(geojsonData) {
@@ -844,90 +848,130 @@
     popupPosition = { x: finalX, y: finalY };
   }
 
-  async function initializeMap() {
-    if (mapInstance || !mapContainer) {
-      return;
+  function initializeMap() {
+    if (mapInstance || isDestroyed || !mapContainer) {
+      return mapInitializationPromise;
+    }
+    if (mapInitializationPromise) {
+      return mapInitializationPromise;
     }
 
+    const initialContainer = mapContainer;
+    const initialEntries = filteredEntries;
     isLoading = true;
-    const geojsonData = await loadAllEventLocations(filteredEntries);
-    isLoading = false;
-    currentEventLocations = geojsonData;
 
-    await resolvePmtilesUrl();
-    const style = createBaseStyle();
+    mapInitializationPromise = (async () => {
+      const { geojson, connections, dummies } =
+        await loadAllEventLocations(initialEntries);
+      if (isDestroyed || mapContainer !== initialContainer) return;
 
-    if (!style) {
-      return;
-    }
+      await resolvePmtilesUrl();
+      if (isDestroyed || mapContainer !== initialContainer) return;
 
-    if (!pmtilesProtocol) {
-      pmtilesProtocol = new Protocol();
-      maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
-    }
+      const style = createBaseStyle();
+      if (!style) return;
 
-    const initialBounds = calculateInitialBounds(geojsonData);
+      currentEventLocations = geojson;
+      connectionLinesData = connections;
+      dummyMarkersData = dummies;
 
-    mapInstance = new maplibregl.Map({
-      container: mapContainer,
-      style: style,
-      bounds: initialBounds || undefined,
-      fitBoundsOptions: {
-        padding: { top: 80, bottom: 80, left: 80, right: 80 },
-        maxZoom: 8,
-      },
-      interactive: true,
-      attributionControl: false,
-      pitchWithRotate: false,
-      dragRotate: false,
-      touchPitch: false,
-      touchZoomRotate: true,
-      bearingSnap: 0,
+      if (!pmtilesProtocol) {
+        pmtilesProtocol = new Protocol();
+        maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+      }
+
+      const initialBounds = calculateInitialBounds(geojson);
+      const nextMap = new maplibregl.Map({
+        container: initialContainer,
+        style: style,
+        bounds: initialBounds || undefined,
+        fitBoundsOptions: {
+          padding: { top: 80, bottom: 80, left: 80, right: 80 },
+          maxZoom: 8,
+        },
+        interactive: true,
+        attributionControl: false,
+        pitchWithRotate: false,
+        dragRotate: false,
+        touchPitch: false,
+        touchZoomRotate: true,
+        bearingSnap: 0,
+      });
+      mapInstance = nextMap;
+
+      // Disable rotation completely, even with touch gestures (allows zoom only)
+      nextMap.touchZoomRotate.disableRotation();
+
+      // Add navigation control without compass (rotation disabled)
+      nextMap.addControl(
+        new maplibregl.NavigationControl({ showCompass: false }),
+        "top-right"
+      );
+
+      // Add custom zoom reset button
+      nextMap.addControl(new ZoomResetControl(), "top-right");
+
+      nextMap.on("load", () => {
+        if (isDestroyed || mapInstance !== nextMap) return;
+        mapReady = true;
+        isLoading = false;
+        setupMapLayers(geojson);
+
+        // A filter can change while the initial data or basemap is loading.
+        // Apply the latest entries once the sources exist instead of leaving
+        // the map on the stale initial snapshot.
+        if (filteredEntries !== initialEntries) {
+          updateMapData(filteredEntries);
+        }
+      });
+    })().finally(() => {
+      mapInitializationPromise = null;
+      if (!isDestroyed && !mapInstance) {
+        isLoading = false;
+      }
     });
 
-    // Disable rotation completely, even with touch gestures (allows zoom only)
-    mapInstance.touchZoomRotate.disableRotation();
-
-    // Add navigation control without compass (rotation disabled)
-    mapInstance.addControl(
-      new maplibregl.NavigationControl({ showCompass: false }),
-      "top-right"
-    );
-
-    // Add custom zoom reset button
-    mapInstance.addControl(new ZoomResetControl(), "top-right");
-
-    mapInstance.on("load", () => {
-      mapReady = true;
-      setupMapLayers(geojsonData);
-    });
+    return mapInitializationPromise;
   }
 
   async function updateMapData(entries) {
     if (!mapReady || !mapInstance) return;
 
+    const generation = ++updateGeneration;
     isLoading = true;
-    const geojsonData = await loadAllEventLocations(entries);
+    const { geojson, connections, dummies } =
+      await loadAllEventLocations(entries);
+    if (
+      isDestroyed ||
+      generation !== updateGeneration ||
+      !mapReady ||
+      !mapInstance
+    ) {
+      return;
+    }
+
     isLoading = false;
-    currentEventLocations = geojsonData;
+    currentEventLocations = geojson;
+    connectionLinesData = connections;
+    dummyMarkersData = dummies;
 
     const source = mapInstance.getSource("events");
     if (source) {
-      source.setData(geojsonData);
+      source.setData(geojson);
 
       // Update connection lines
       const connectionSource = mapInstance.getSource("marker-connections");
       if (connectionSource) {
-        connectionSource.setData(connectionLinesData);
+        connectionSource.setData(connections);
       }
 
       // Update dummy markers
       const dummySource = mapInstance.getSource("dummy-markers");
       if (dummySource) {
-        dummySource.setData(dummyMarkersData);
+        dummySource.setData(dummies);
       }
 
-      const bounds = calculateInitialBounds(geojsonData);
+      const bounds = calculateInitialBounds(geojson);
       if (bounds) {
         mapInstance.fitBounds(bounds, {
           padding: 80,
@@ -976,6 +1020,8 @@
   });
 
   onDestroy(() => {
+    isDestroyed = true;
+    updateGeneration += 1;
     if (updateTimeout) {
       clearTimeout(updateTimeout);
       updateTimeout = null;
