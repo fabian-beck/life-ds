@@ -970,6 +970,8 @@
     top: calc(var(--sticky-header-height, 3.5rem) - 0.35rem);
     left: -0.25rem;
     z-index: -1; /* Below sticky header */
+    display: flex;
+    line-height: 0;
   }
 
   .sticky-compact-info {
@@ -1296,15 +1298,14 @@
   /* Landscape mobile - compact sticky header on right side */
   @media (max-height: 450px) {
     .sticky-header-group {
-      /* Extend to full height for landscape mobile so AI button can be at bottom */
       bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
 
     .meta-sticky-header {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: auto;
+      position: relative;
       width: auto;
       max-width: 40%;
       padding: 0.15rem 0.35rem;
@@ -1319,12 +1320,12 @@
     }
 
     .sticky-ai-button {
-      /* Position directly below the ultra-compact header on the right */
-      position: absolute;
-      top: 1.4rem; /* Just below the compact header (~20px header height + small gap) */
-      right: 0;
+      /* Keep the tag in flow with the compact header; the one-pixel overlap
+         prevents fractional layout rounding from revealing a seam. */
+      position: relative;
+      top: -1px;
+      right: auto;
       left: auto;
-      bottom: auto;
       z-index: 5;
     }
 

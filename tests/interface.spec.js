@@ -170,3 +170,27 @@ test("German role filters merge masculine and feminine forms", async ({
     page.getByRole("button", { name: "Open life story for Alan Turing" })
   ).toBeVisible();
 });
+
+test("meta-story AI tag meets the landscape sticky header", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.goto("/#/en/meta/computing_pioneers");
+  await expect(page.locator(".meta-story-header")).toBeVisible();
+
+  await page.evaluate(() => window.scrollTo(0, 350));
+  const stickyHeader = page.locator(".meta-sticky-header");
+  const aiTag = page.locator(".sticky-ai-button .ai-generated-button");
+  await expect(stickyHeader).toBeVisible();
+  await expect(aiTag).toBeVisible();
+
+  await expect
+    .poll(async () => {
+      const headerBox = await stickyHeader.boundingBox();
+      const tagBox = await aiTag.boundingBox();
+      return Math.round(
+        (tagBox?.y ?? 0) - ((headerBox?.y ?? 0) + (headerBox?.height ?? 0))
+      );
+    })
+    .toBe(-1);
+});
