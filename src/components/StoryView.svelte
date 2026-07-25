@@ -223,6 +223,24 @@
 
   $: totalPanels = slides.length;
 
+  // Normalize an out-of-range slide index (a malformed deep link, or a story
+  // that shrank on regeneration) once the real panel count is known — not the
+  // single-slide placeholder shown while the dataset is still loading, which
+  // would otherwise clamp the request to slide 0 before the true count exists.
+  // Leaving it out of range means the initial-scroll logic below never runs,
+  // which leaves the whole story hidden behind the initial-loading class
+  // forever.
+  $: if (
+    !isLoading &&
+    dataset &&
+    totalPanels > 0 &&
+    activeIndex !== undefined &&
+    activeIndex !== null &&
+    (activeIndex < 0 || activeIndex >= totalPanels)
+  ) {
+    activeIndex = clamp(activeIndex, 0, totalPanels - 1);
+  }
+
   // Map slide index to event index (accounting for chapter and conclusion slides)
   $: slideIndexToEventIndex = (() => {
     const map = new Map();
