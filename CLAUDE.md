@@ -582,7 +582,7 @@ life-ds/
 │   ├── translate_person.py          # Translation core + translate single person
 │   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
 │   ├── translate_meta_story.py      # Translate meta stories
-│   ├── generate_meta_story.py       # Meta story workflow (phases 1-4, 5 network, 5b review, 6 narration, 7 composer, 8 map)
+│   ├── generate_meta_story.py       # Meta story workflow (1 plan, 2 collect, 3 curate, 3b fit chapters, 4 context, 5 network, 5b review, 6 narration, 7 map, 8 composer)
 │   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
 │   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
 │   ├── compose_meta_story.py        # Phase 7: story composer — top-down narrative composition

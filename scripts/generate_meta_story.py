@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """
 Generate meta-story datasets using a multi-phase approach:
-1. Phase 1: Story planning and person selection (1 AI call)
-2. Phase 2: Event collection (programmatic, no AI)
-3. Phase 3: AI-powered event filtering for topic relevance (batched AI calls)
+1. Phase 1: Story planning and person selection (1 AI call). Its chapters are
+   a *proposal* — thematic era names with guessed date ranges, decided before
+   any event is known.
+2. Phase 2: Event collection (programmatic, no AI) — every dated event of the
+   selected people, unfiltered and unbucketed.
+3. Phase 3: AI-powered event filtering for topic relevance (batched AI calls),
+   then Phase 3b: the proposed chapters are fitted deterministically to the
+   events that survived, so no event is lost to a date-range gap.
 4. Phase 4: Historical context landmarks (1 AI call)
 5. Phase 5: Social network derived from ego networks (programmatic, no AI)
    Phase 5b: AI review/enrichment of the derived network (1 AI call)
@@ -403,64 +408,24 @@ def parse_event_date(event: Dict[str, Any]) -> Optional[int]:
         return None
 
 
-def is_topic_relevant_event(event: Dict[str, Any]) -> bool:
-    """
-    Check if an event is topic-relevant (exclude personal life events).
-
-    Excludes:
-    - Birth, death events
-    - Migration, relocation events
-    - Marriage, family events
-    - General personal milestones
-
-    Includes:
-    - Professional achievements
-    - Publications, inventions, discoveries
-    - Awards, recognitions
-    - Collaborations, significant meetings
-    - Work-related events
-    """
-    title = event.get("title", "").lower()
-    description = event.get("description", "").lower()
-
-    # Exclude patterns (birth, death, personal life)
-    exclude_patterns = [
-        # Life events
-        r"\bbirth\b",
-        r"\bborn\b",
-        r"\bdeath\b",
-        r"\bdies\b",
-        r"\bdied\b",
-        # Migration and location changes
-        r"\bmigrat",
-        r"\bemigrat",
-        r"\bimmigrat",
-        r"\bmoves to\b",
-        r"\bmoved to\b",
-        r"\brelocat",
-        r"\bflees\b",
-        r"\bfled\b",
-        r"\bexile\b",
-        # Family events
-        r"\bmarr(y|ies|ied|iage)\b",
-        r"\bengag",
-        r"\bwedding\b",
-        r"\bdivorce\b",
-        r"\bchild\b",
-        r"\bbaby\b",
-        # Generic personal milestones
-        r"\badolescen",
-        r"\bchildhood\b",
-        r"\bearly life\b",
-    ]
-
-    combined_text = f"{title} {description}"
-
-    for pattern in exclude_patterns:
-        if re.search(pattern, combined_text, re.IGNORECASE):
-            return False
-
-    return True
+# NOTE: a regex prefilter (``is_topic_relevant_event``) used to drop "personal
+# life" events here, before Phase 3 ever saw them. It was removed deliberately:
+#
+# - It matched against the full DESCRIPTION, not just the title, so a
+#   professional event was killed by an incidental mention. Measured across the
+#   14 people of computing_pioneers it dropped 56 of 225 events, 9 of them with
+#   a perfectly clean title — "Receives Grand Cross of the Order of Merit"
+#   (killed by /\bengag/ matching "engaged"), "Earns MS and PhD at Berkeley"
+#   (a marriage mentioned in its description), "Moves company to Paderborn"
+#   (/\brelocat/).
+# - Its judgement was topic-blind. "Birth in Bamberg" is noise for a computing
+#   story and evidence for a place-based one like citizens_of_bamberg; a fixed
+#   pattern list cannot tell those apart.
+# - It was English-only, silent, and left no record of what it removed.
+#
+# Phase 3 is a strictly better version of the same filter: it sees the topic,
+# decides per event, and states a reason. Life-cycle events now reach it and
+# are rejected there — with context, and visibly.
 
 
 # ============================================================================
@@ -852,10 +817,17 @@ MISSING PEOPLE SUGGESTIONS:
 
 def phase2_event_collection(
     plan: MetaStoryPlan, registry: Dict[str, Any], verbose: bool = False
-) -> Dict[str, List[Dict[str, Any]]]:
+) -> List[Dict[str, Any]]:
     """
-    Phase 2: Collect all events from selected people within chapter date ranges.
-    Does NOT filter for relevance - that happens in Phase 3.
+    Phase 2: Collect EVERY dated event of the selected people, unfiltered.
+
+    Deliberately not bucketed by the Phase 1 chapter ranges. Those ranges are
+    guessed before anyone knows which events exist — from truncated summaries
+    and the first 15 event titles — so gating on them silently deleted any
+    essential event that fell in a gap between chapters or outside the outer
+    bounds. Relevance is Phase 3's decision and the chapter fit is made
+    afterwards, against the events that actually survived
+    (``fit_chapters_to_events``).
 
     Args:
         plan: Output from Phase 1
@@ -863,73 +835,59 @@ def phase2_event_collection(
         verbose: Enable logging
 
     Returns:
-        Dict mapping chapter IDs to lists of raw event data
+        Flat list of raw event records, sorted chronologically, so Phase 3's
+        batches stay era-coherent.
     """
     if verbose:
         print("\n=== PHASE 2: Event Collection ===")
 
-    # Load all person life events
-    person_events = {}
     person_names = {}
+    for person in registry.get("people", []):
+        person_names[person.get("id", "")] = person.get("name", person.get("id", ""))
+
+    collected: List[Dict[str, Any]] = []
+    undated = 0
 
     for person_ref in plan.selected_people:
         person_id = person_ref.person_id
         life_events = load_person_life_events(person_id)
-        if life_events:
-            person_events[person_id] = life_events.get("events", [])
-        else:
+        if not life_events:
             if verbose:
                 print(f"Warning: No life events found for {person_id}")
-            person_events[person_id] = []
+            continue
 
-        # Get person name from registry
-        for person in registry.get("people", []):
-            if person.get("id") == person_id:
-                person_names[person_id] = person.get("name", person_id)
-                break
-
-    # Collect events by chapter (unfiltered)
-    chapter_events = {}
-
-    for chapter in plan.chapters:
-        chapter_start = int(chapter.date_start.split("-")[0])
-        chapter_end = int(chapter.date_end.split("-")[0])
-
-        collected_events = []
-
-        for person_id, events in person_events.items():
-            for idx, event in enumerate(events):
-                event_year = parse_event_date(event)
-                if event_year is None:
-                    continue
-
-                # Only check date range - NO filtering yet
-                if chapter_start <= event_year <= chapter_end:
-                    # Apply basic regex filter for obviously irrelevant events
-                    if not is_topic_relevant_event(event):
-                        continue
-
-                    collected_events.append(
-                        {
-                            "person_id": person_id,
-                            "person_name": person_names.get(person_id, person_id),
-                            "event_index": idx,
-                            "event": event,
-                        }
-                    )
-
-        chapter_events[chapter.id] = collected_events
-
+        events = life_events.get("events", [])
+        person_undated = 0
+        for idx, event in enumerate(events):
+            event_year = parse_event_date(event)
+            if event_year is None:
+                # Without a year an event cannot be placed on the timeline.
+                person_undated += 1
+                continue
+            collected.append(
+                {
+                    "person_id": person_id,
+                    "person_name": person_names.get(person_id, person_id),
+                    "event_index": idx,
+                    "event_year": event_year,
+                    "event": event,
+                }
+            )
+        undated += person_undated
         if verbose:
             print(
-                f"  Chapter '{chapter.title}': {len(collected_events)} events collected"
+                f"  {person_id}: {len(events) - person_undated} dated event(s)"
+                + (f", {person_undated} undated (skipped)" if person_undated else "")
             )
 
-    total_collected = sum(len(events) for events in chapter_events.values())
-    if verbose:
-        print(f"\nTotal: {total_collected} events collected (basic filtering applied)")
+    collected.sort(key=lambda e: e["event_year"])
 
-    return chapter_events
+    if verbose:
+        print(f"\nTotal: {len(collected)} events collected (no pre-filtering)")
+        if undated:
+            print(f"  {undated} event(s) skipped for having no parsable date")
+
+    return collected
 
 
 # ============================================================================
@@ -937,27 +895,37 @@ def phase2_event_collection(
 # ============================================================================
 
 
+def _ascii(text: str) -> str:
+    """Console-safe rendering for the verbose event log."""
+    return text.encode("ascii", "replace").decode("ascii")
+
+
 def phase3_ai_event_filtering(
     plan: MetaStoryPlan,
-    chapter_events: Dict[str, List[Dict[str, Any]]],
+    collected_events: List[Dict[str, Any]],
     client: OpenAI,
     model: str,
     verbose: bool = False,
     batch_size: int = 20,
-) -> List[ChapterWithEvents]:
+) -> List[Dict[str, Any]]:
     """
     Phase 3: Use AI to filter events for topic relevance.
 
+    Reviews the story's whole event pool, not per-chapter buckets: relevance
+    is a property of the event and the topic, not of which era box an event
+    happened to land in. Chapters are fitted afterwards, to whatever survives.
+
     Args:
         plan: Output from Phase 1
-        chapter_events: Output from Phase 2 (unfiltered events by chapter)
+        collected_events: Output from Phase 2 (all dated events, chronological)
         client: OpenAI client
         model: Model to use
         verbose: Enable logging
         batch_size: Number of events to process per AI call
 
     Returns:
-        List of chapters with filtered person_events arrays
+        The curated event records (the Phase 2 dicts, each with the AI's
+        ``theme_connection`` attached), in chronological order.
     """
     if verbose:
         print("\n=== PHASE 3: AI Event Filtering ===")
@@ -972,144 +940,55 @@ Thematic Subtopics:
 
 Your task: Identify events that DIRECTLY contribute to this meta-story's narrative.
 Focus on events that demonstrate the theme through concrete achievements, innovations, or impacts.
-Exclude personal life events (births, deaths, marriages, relocations) unless they have CLEAR thematic relevance."""
+The pool below is every dated event of these people's lives, unfiltered — it includes
+births, deaths, marriages, illnesses and relocations. Reject those unless the topic
+gives them CLEAR thematic relevance (a birthplace matters to a story about a city;
+a death matters to a story about persecution). Judge each against THIS topic."""
 
-    chapters_with_filtered_events = []
-    total_reviewed = 0
-    total_included = 0
+    curated: List[Dict[str, Any]] = []
     total_excluded = 0
 
-    for chapter in plan.chapters:
-        chapter_id = chapter.id
-        events_to_review = chapter_events.get(chapter_id, [])
+    if verbose:
+        print(f"  Reviewing {len(collected_events)} events...")
 
-        if not events_to_review:
-            # Empty chapter
-            chapters_with_filtered_events.append(
-                ChapterWithEvents(
-                    id=chapter.id,
-                    title=chapter.title,
-                    date_start=chapter.date_start,
-                    date_start_precision=chapter.date_start_precision,
-                    date_end=chapter.date_end,
-                    date_end_precision=chapter.date_end_precision,
-                    person_events=[],
+    for i in range(0, len(collected_events), batch_size):
+        batch = collected_events[i : i + batch_size]
+        batch_decisions = _filter_event_batch(
+            batch, topic_context, client, model, verbose
+        )
+
+        for event_data in batch:
+            event_id = f"{event_data['person_id']}:{event_data['event_index']}"
+            decision = batch_decisions.get(event_id)
+            title = _ascii(event_data["event"].get("title", ""))
+            person_name = _ascii(event_data["person_name"])
+
+            if decision and decision["is_relevant"]:
+                curated.append(
+                    {**event_data, "theme_connection": decision["theme_connection"]}
                 )
-            )
-            continue
+                if verbose:
+                    print(f"    [+] ESSENTIAL: {person_name}: {title}")
+                    print(f"        Connection: {_ascii(decision['theme_connection'])}")
+            else:
+                total_excluded += 1
+                if verbose:
+                    print(f"    [-] WEAK: {person_name}: {title}")
+                    if decision:
+                        reason = decision.get("theme_connection", "Not relevant")
+                        print(f"        Reason: {_ascii(reason)}")
 
-        if verbose:
-            print(f"\n  Chapter: {chapter.title}")
-            print(f"  Reviewing {len(events_to_review)} events...")
-
-        # Process events in batches
-        filtered_events = []
-        for i in range(0, len(events_to_review), batch_size):
-            batch = events_to_review[i : i + batch_size]
-            batch_decisions = _filter_event_batch(
-                batch, topic_context, client, model, verbose
-            )
-
-            # Apply decisions - only include essential events (is_relevant=true)
-            for event_data in batch:
-                event_id = f"{event_data['person_id']}:{event_data['event_index']}"
-                decision = batch_decisions.get(event_id)
-
-                if decision and decision["is_relevant"]:
-                    # Include this essential event
-                    filtered_events.append(
-                        PersonEvent(
-                            person_id=event_data["person_id"],
-                            event_date=event_data["event"].get("date", ""),
-                            event_date_precision=event_data["event"].get(
-                                "date_precision", "year"
-                            ),
-                            event_title=event_data["event"].get("title", ""),
-                            event_index=event_data["event_index"],
-                            theme_connection=decision["theme_connection"],
-                        )
-                    )
-                    total_included += 1
-                    if verbose:
-                        # Use ASCII-safe encoding for console output
-                        person_name = (
-                            event_data["person_name"]
-                            .encode("ascii", "replace")
-                            .decode("ascii")
-                        )
-                        event_title = (
-                            event_data["event"]
-                            .get("title", "")
-                            .encode("ascii", "replace")
-                            .decode("ascii")
-                        )
-                        connection = (
-                            decision["theme_connection"]
-                            .encode("ascii", "replace")
-                            .decode("ascii")
-                        )
-                        print(f"    [+] ESSENTIAL: {person_name}: {event_title}")
-                        print(f"        Connection: {connection}")
-                else:
-                    # Exclude weak/tangential events
-                    total_excluded += 1
-                    if verbose:
-                        # Use ASCII-safe encoding for console output
-                        person_name = (
-                            event_data["person_name"]
-                            .encode("ascii", "replace")
-                            .decode("ascii")
-                        )
-                        event_title = (
-                            event_data["event"]
-                            .get("title", "")
-                            .encode("ascii", "replace")
-                            .decode("ascii")
-                        )
-                        print(f"    [-] WEAK: {person_name}: {event_title}")
-                        if decision:
-                            reason = (
-                                decision.get("theme_connection", "Not relevant")
-                                .encode("ascii", "replace")
-                                .decode("ascii")
-                            )
-                            print(f"        Reason: {reason}")
-
-            total_reviewed += len(batch)
-
-        # Sort events by date
-        filtered_events.sort(
-            key=lambda e: parse_event_date({"date": e.event_date}) or 0
-        )
-
-        chapters_with_filtered_events.append(
-            ChapterWithEvents(
-                id=chapter.id,
-                title=chapter.title,
-                date_start=chapter.date_start,
-                date_start_precision=chapter.date_start_precision,
-                date_end=chapter.date_end,
-                date_end_precision=chapter.date_end_precision,
-                person_events=filtered_events,
-            )
-        )
-
-        if verbose:
-            print(f"  Result: {len(filtered_events)} events included")
-
-    # Validate: Each person must have at least one essential event across ALL chapters
+    # Validate: every selected person should contribute at least one event
     person_event_counts: Dict[str, int] = {}
-    for chapter_data in chapters_with_filtered_events:
-        for event in chapter_data.person_events:
-            person_event_counts[event.person_id] = (
-                person_event_counts.get(event.person_id, 0) + 1
-            )
+    for event_data in curated:
+        pid = event_data["person_id"]
+        person_event_counts[pid] = person_event_counts.get(pid, 0) + 1
 
-    missing_persons = []
-    for person in plan.selected_people:
-        if person.person_id not in person_event_counts:
-            missing_persons.append(person.person_id)
-
+    missing_persons = [
+        p.person_id
+        for p in plan.selected_people
+        if p.person_id not in person_event_counts
+    ]
     if missing_persons:
         print(
             "\nWARNING: The following persons have NO essential events in the meta-story:"
@@ -1117,24 +996,22 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
         for person_id in missing_persons:
             print(f"  - {person_id}")
         print(
-            "This likely means their contributions fall outside the chapter date ranges,"
-        )
-        print(
-            "or the AI filtering was too strict. Consider adjusting chapter ranges or person selection."
+            "Every dated event of theirs was reviewed, so this is a curation "
+            "judgement, not a date-range gap: either the AI filtering was too "
+            "strict or the person does not belong in this story."
         )
 
+    total_reviewed = len(collected_events)
     if verbose:
         print("\n=== Filtering Summary ===")
         print(f"Total reviewed: {total_reviewed}")
         if total_reviewed > 0:
-            print(
-                f"Included: {total_included} ({100*total_included/total_reviewed:.1f}%)"
-            )
-            print(
-                f"Excluded: {total_excluded} ({100*total_excluded/total_reviewed:.1f}%)"
-            )
+            included_pct = 100 * len(curated) / total_reviewed
+            excluded_pct = 100 * total_excluded / total_reviewed
+            print(f"Included: {len(curated)} ({included_pct:.1f}%)")
+            print(f"Excluded: {total_excluded} ({excluded_pct:.1f}%)")
         else:
-            print(f"Included: {total_included}")
+            print(f"Included: {len(curated)}")
             print(f"Excluded: {total_excluded}")
         print("\nPerson coverage:")
         for person in plan.selected_people:
@@ -1142,7 +1019,7 @@ Exclude personal life events (births, deaths, marriages, relocations) unless the
             status = "[OK]" if count > 0 else "[NONE]"
             print(f"  {status} {person.person_id}: {count} event(s)")
 
-    return chapters_with_filtered_events
+    return curated
 
 
 def _filter_event_batch(
@@ -1233,7 +1110,10 @@ STRICTNESS REQUIREMENT:
 - DEFAULT TO REJECTING events unless they clearly meet ALL essential criteria
 - If uncertain whether an event is essential → mark as is_relevant=false
 - Only mark 1-3 events per person as essential (their absolute best contributions)
-- Aim for 30-50% inclusion rate across all events reviewed
+- Judge each event on its own merit against the criteria above. Do NOT aim for
+  a share of the batch: the pool is every event of these people's lives, so most
+  of it is biographical background that should be rejected. A batch in which
+  nothing qualifies is a valid outcome.
 - DO NOT include weak events just to ensure coverage - quality over quantity
 
 For each event, provide:
@@ -1298,6 +1178,142 @@ Events to review:
 # ============================================================================
 # PHASE 4: HISTORICAL CONTEXT ENRICHMENT
 # ============================================================================
+
+
+# ============================================================================
+# PHASE 3b: FIT CHAPTERS TO THE CURATED EVENTS (deterministic, no AI)
+# ============================================================================
+
+
+def _distance_to_chapter(year: int, start: int, end: int) -> int:
+    """Years between ``year`` and a chapter's span (0 when inside it)."""
+    if year < start:
+        return start - year
+    if year > end:
+        return year - end
+    return 0
+
+
+def fit_chapters_to_events(
+    plan: MetaStoryPlan,
+    curated_events: List[Dict[str, Any]],
+    verbose: bool = False,
+) -> List[ChapterWithEvents]:
+    """Place the curated events into chapters and fit the spans to them.
+
+    Phase 1 proposes chapters — thematic era names with guessed date ranges —
+    before knowing which events exist. Rather than using those ranges as a
+    gate (which silently deleted any event falling in a gap between chapters
+    or beyond the outer bounds), they are treated as a *proposal*: every
+    curated event is assigned to the chapter that contains it, or failing
+    that to the nearest one, and each chapter's span is then snapped to the
+    events it actually holds.
+
+    Nearest-chapter assignment over the ordered, non-overlapping proposal is
+    a partition of the date line into contiguous regions, so snapping the
+    spans afterwards cannot reorder the chapters or make them overlap.
+    Chapters left without events are dropped: an empty era is a gap in the
+    timeline, not a chapter.
+    """
+    if verbose:
+        print("\n=== PHASE 3b: Chapter Fitting ===")
+
+    proposal = sorted(plan.chapters, key=lambda c: int(c.date_start.split("-")[0]))
+    spans = [
+        (int(c.date_start.split("-")[0]), int(c.date_end.split("-")[0]))
+        for c in proposal
+    ]
+
+    if not curated_events or not proposal:
+        if verbose:
+            print("  No curated events to place; keeping the proposed chapters")
+        return [
+            ChapterWithEvents(
+                id=c.id,
+                title=c.title,
+                date_start=c.date_start,
+                date_start_precision=c.date_start_precision,
+                date_end=c.date_end,
+                date_end_precision=c.date_end_precision,
+                person_events=[],
+            )
+            for c in proposal
+        ]
+
+    buckets: Dict[str, List[Dict[str, Any]]] = {c.id: [] for c in proposal}
+    out_of_range = 0
+
+    for event_data in curated_events:
+        year = event_data["event_year"]
+        best_index = min(
+            range(len(proposal)),
+            key=lambda i: (_distance_to_chapter(year, *spans[i]), i),
+        )
+        if _distance_to_chapter(year, *spans[best_index]) > 0:
+            out_of_range += 1
+            if verbose:
+                print(
+                    f"  {year} {_ascii(event_data['person_name'])}: "
+                    f"{_ascii(event_data['event'].get('title', ''))} -> "
+                    f"nearest chapter '{proposal[best_index].id}' (outside its "
+                    "proposed span)"
+                )
+        buckets[proposal[best_index].id].append(event_data)
+
+    chapters: List[ChapterWithEvents] = []
+    for chapter, (proposed_start, proposed_end) in zip(proposal, spans):
+        events = sorted(buckets[chapter.id], key=lambda e: e["event_year"])
+        if not events:
+            if verbose:
+                print(f"  Dropped empty chapter '{chapter.id}' ({chapter.title})")
+            continue
+
+        start = min(e["event_year"] for e in events)
+        end = max(e["event_year"] for e in events)
+        chapters.append(
+            ChapterWithEvents(
+                id=chapter.id,
+                title=chapter.title,
+                date_start=str(start),
+                date_start_precision="year",
+                date_end=str(end),
+                date_end_precision="year",
+                person_events=[
+                    PersonEvent(
+                        person_id=e["person_id"],
+                        event_date=e["event"].get("date", ""),
+                        event_date_precision=e["event"].get("date_precision", "year"),
+                        event_title=e["event"].get("title", ""),
+                        event_index=e["event_index"],
+                        theme_connection=e["theme_connection"],
+                    )
+                    for e in events
+                ],
+            )
+        )
+        if verbose:
+            fitted = ""
+            if (start, end) != (proposed_start, proposed_end):
+                fitted = f" (proposed {proposed_start}-{proposed_end})"
+            print(
+                f"  Chapter '{chapter.title}': {len(events)} event(s), "
+                f"{start}-{end}{fitted}"
+            )
+
+    if out_of_range:
+        print(
+            f"Note: {out_of_range} curated event(s) fell outside every proposed "
+            "chapter span and were attached to the nearest chapter, which was "
+            "widened to fit them."
+        )
+    if len(chapters) < 2:
+        print(
+            f"WARNING: only {len(chapters)} chapter(s) hold events. The story's "
+            "timeline will be very flat — consider revisiting the person "
+            "selection or the topic."
+        )
+
+    return chapters
 
 
 def phase4_historical_context(
@@ -1920,8 +1936,8 @@ def main():
         print("ERROR: Phase 1 failed")
         sys.exit(1)
 
-    # Phase 2: Event collection
-    chapter_events = phase2_event_collection(
+    # Phase 2: Event collection (everything dated, unfiltered)
+    collected_events = phase2_event_collection(
         plan=plan, registry=registry, verbose=args.verbose
     )
 
@@ -1929,46 +1945,22 @@ def main():
     if args.skip_ai_filtering:
         if args.verbose:
             print("\n=== PHASE 3: AI Event Filtering (SKIPPED) ===")
-        # Convert collected events directly to ChapterWithEvents
-        chapters = []
-        for chapter in plan.chapters:
-            events_data = chapter_events.get(chapter.id, [])
-            person_events = [
-                PersonEvent(
-                    person_id=e["person_id"],
-                    event_date=e["event"].get("date", ""),
-                    event_date_precision=e["event"].get("date_precision", "year"),
-                    event_title=e["event"].get("title", ""),
-                    event_index=e["event_index"],
-                    theme_connection="Included without AI filtering",
-                )
-                for e in events_data
-            ]
-            # Sort by date
-            person_events.sort(
-                key=lambda e: parse_event_date({"date": e.event_date}) or 0
-            )
-
-            chapters.append(
-                ChapterWithEvents(
-                    id=chapter.id,
-                    title=chapter.title,
-                    date_start=chapter.date_start,
-                    date_start_precision=chapter.date_start_precision,
-                    date_end=chapter.date_end,
-                    date_end_precision=chapter.date_end_precision,
-                    person_events=person_events,
-                )
-            )
+        curated_events = [
+            {**e, "theme_connection": "Included without AI filtering"}
+            for e in collected_events
+        ]
     else:
-        chapters = phase3_ai_event_filtering(
+        curated_events = phase3_ai_event_filtering(
             plan=plan,
-            chapter_events=chapter_events,
+            collected_events=collected_events,
             client=client,
             model=args.model,
             verbose=args.verbose,
             batch_size=args.batch_size,
         )
+
+    # Phase 3b: fit the proposed chapters to the events that survived curation
+    chapters = fit_chapters_to_events(plan, curated_events, verbose=args.verbose)
 
     # Phase 4: Historical context enrichment
     if args.skip_historical_context:
