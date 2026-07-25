@@ -578,8 +578,27 @@
     // this listener was registered first, so it has to step aside itself.
     if (enlargedImage) return;
 
-    // Don't intercept when typing in input fields
+    // These shortcuts mirror the timeline's own prev/next buttons, which only
+    // render while the section is scroll-locked (pinned) — so the shortcut
+    // must not fire before/after that, e.g. at the top of the article.
+    if (!isScrollLockActive) return;
+
+    // Step aside while any modal dialog is open (AI disclaimer, network
+    // modal, ...) so it can't navigate the page behind it.
+    if (document.querySelector('[role="dialog"][aria-modal="true"]')) return;
+
+    // Don't intercept typing, or keyboard behavior owned by a focused control
+    // outside the timeline itself (the sticky header's buttons, map controls,
+    // links, etc.) — only an unfocused page or focus already inside the
+    // timeline lets these shortcuts through.
     const activeElement = document.activeElement;
+    if (
+      activeElement &&
+      activeElement !== document.body &&
+      !timelineContainer.contains(activeElement)
+    ) {
+      return;
+    }
     if (
       activeElement?.tagName === "INPUT" ||
       activeElement?.tagName === "TEXTAREA" ||
