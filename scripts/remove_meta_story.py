@@ -1,15 +1,74 @@
 #!/usr/bin/env python3
-"""Remove a meta-story from the Life Data Stories dataset."""
+"""Remove a meta-story from the Life Data Stories dataset.
+
+Removal cascades through every registry and translated copy, not just the
+English detail file and registry entry:
+
+- the English registry (``data/meta_stories.json``)
+- every localized registry (``data/meta_stories_{lang}.json``)
+- the English detail file (``data/meta_stories/{id}.json``)
+- every translated detail file (``data/meta_stories/{lang}/{id}.json`` — not
+  ``data/meta_stories/{id}/``, which is not how translations are stored)
+
+Registries are written before any files are deleted, so a mid-operation
+failure leaves the data files intact (recoverable) rather than silently
+half-removed.
+"""
 
 import argparse
 import json
-import shutil
 import sys
 from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 META_STORIES_REGISTER = DATA_DIR / "meta_stories.json"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
+
+
+def _load_json(path: Path) -> Optional[Dict[str, Any]]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+        return value if isinstance(value, dict) else None
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _save_json(path: Path, value: Dict[str, Any]) -> None:
+    path.write_text(
+        json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+
+def _find_registries() -> List[Path]:
+    registries = [META_STORIES_REGISTER] if META_STORIES_REGISTER.exists() else []
+    registries += sorted(
+        p
+        for p in DATA_DIR.glob("meta_stories_*.json")
+        if p.is_file() and p != META_STORIES_REGISTER
+    )
+    return registries
+
+
+def _find_detail_files(story_id: str) -> List[Path]:
+    """The English detail file plus every language's translated copy.
+
+    Translations live at ``data/meta_stories/{lang}/{story_id}.json`` — a
+    language subdirectory containing one file per story — not at
+    ``data/meta_stories/{story_id}/``.
+    """
+    files = []
+    english = META_STORIES_DIR / f"{story_id}.json"
+    if english.exists():
+        files.append(english)
+    if META_STORIES_DIR.exists():
+        for lang_dir in sorted(META_STORIES_DIR.iterdir()):
+            if not lang_dir.is_dir():
+                continue
+            translated = lang_dir / f"{story_id}.json"
+            if translated.exists():
+                files.append(translated)
+    return files
 
 
 def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
@@ -22,7 +81,6 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
     Returns:
         True if successful, False otherwise
     """
-    # Check if register exists
     if not META_STORIES_REGISTER.exists():
         print(
             f"Error: Register file not found at {META_STORIES_REGISTER}",
@@ -30,24 +88,16 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
         )
         return False
 
-    # Load register
-    try:
-        register = json.loads(META_STORIES_REGISTER.read_text(encoding="utf-8"))
-    except Exception as error:
-        print(f"Error: Failed to read register file: {error}", file=sys.stderr)
+    register = _load_json(META_STORIES_REGISTER)
+    if register is None:
+        print(
+            f"Error: Failed to read register file {META_STORIES_REGISTER}",
+            file=sys.stderr,
+        )
         return False
 
     meta_stories = register.get("meta_stories", [])
-
-    # Find the meta-story in the register
-    story_entry = None
-    story_index = None
-    for idx, entry in enumerate(meta_stories):
-        if entry.get("id") == story_id:
-            story_entry = entry
-            story_index = idx
-            break
-
+    story_entry = next((e for e in meta_stories if e.get("id") == story_id), None)
     if story_entry is None:
         print(
             f"Error: Meta-story with ID '{story_id}' not found in register",
@@ -59,69 +109,57 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
     print(f"  Tagline: {story_entry.get('tagline', 'N/A')}")
     print(f"  People: {story_entry.get('person_count', 0)}")
 
-    # Check for meta-story files
-    story_file = META_STORIES_DIR / f"{story_id}.json"
-    story_dir = META_STORIES_DIR / story_id  # For translations
-    files_to_delete = []
+    registries = _find_registries()
+    registry_entries: Dict[Path, dict] = {}
+    for path in registries:
+        reg = _load_json(path)
+        if reg is None:
+            continue
+        entry = next(
+            (e for e in reg.get("meta_stories", []) if e.get("id") == story_id), None
+        )
+        if entry is not None:
+            registry_entries[path] = reg
 
-    # Main story file
-    if story_file.exists():
-        files_to_delete.append(story_file)
-        print(f"Found meta-story file: {story_file.relative_to(DATA_DIR)}")
+    detail_files = _find_detail_files(story_id)
 
-    # Translation directory (if exists)
-    if story_dir.exists() and story_dir.is_dir():
-        for file_path in story_dir.rglob("*"):
-            if file_path.is_file():
-                files_to_delete.append(file_path)
-        print(f"Found translation directory: {story_dir.relative_to(DATA_DIR)}")
-        print(f"  Translation files: {len(list(story_dir.rglob('*')))} file(s)")
+    print(f"\nRegistries referencing '{story_id}':")
+    for path in registries:
+        marker = "yes" if path in registry_entries else "no"
+        print(f"  - {path.relative_to(DATA_DIR)}: {marker}")
 
-    if not files_to_delete:
-        print(f"Warning: No files found for meta-story '{story_id}'")
+    print(f"\nDetail files to delete: {len(detail_files)}")
+    for f in detail_files:
+        print(f"  - {f.relative_to(DATA_DIR)}")
+
+    if not detail_files:
+        print(f"Warning: No detail files found for meta-story '{story_id}'")
 
     if dry_run:
         print("\n--- DRY RUN MODE ---")
-        print("Would perform the following actions:")
-        print(f"1. Remove entry from register: {story_entry}")
-        if files_to_delete:
-            print("2. Delete files:")
-            for file_path in files_to_delete:
-                print(f"   - {file_path.relative_to(DATA_DIR)}")
-        if story_dir.exists():
-            print(f"3. Delete directory: {story_dir.relative_to(DATA_DIR)}")
-        print("\nNo changes made. Run without --dry-run to apply changes.")
+        print("No changes made. Run without --dry-run to apply changes.")
         return True
 
-    # Remove from register
-    print(f"\nRemoving '{story_id}' from register...")
-    meta_stories.pop(story_index)
+    # --- Apply: registries first, then files ---------------------------------
 
-    try:
-        META_STORIES_REGISTER.write_text(
-            json.dumps(register, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-        )
-        print(f"Updated register at {META_STORIES_REGISTER.relative_to(DATA_DIR)}")
-    except Exception as error:
-        print(f"Error: Failed to write register file: {error}", file=sys.stderr)
-        return False
-
-    # Delete meta-story file
-    if story_file.exists():
+    print(f"\nRemoving '{story_id}' from registries...")
+    for path, reg in registry_entries.items():
+        reg["meta_stories"] = [
+            e for e in reg.get("meta_stories", []) if e.get("id") != story_id
+        ]
         try:
-            story_file.unlink()
-            print(f"Deleted file {story_file.relative_to(DATA_DIR)}")
+            _save_json(path, reg)
+            print(f"  Updated {path.relative_to(DATA_DIR)}")
         except Exception as error:
-            print(f"Error: Failed to delete file: {error}", file=sys.stderr)
+            print(f"Error: Failed to write {path}: {error}", file=sys.stderr)
             return False
 
-    # Delete translation directory
-    if story_dir.exists() and story_dir.is_dir():
+    for f in detail_files:
         try:
-            shutil.rmtree(story_dir)
-            print(f"Deleted directory {story_dir.relative_to(DATA_DIR)}")
+            f.unlink()
+            print(f"Deleted {f.relative_to(DATA_DIR)}")
         except Exception as error:
-            print(f"Error: Failed to delete directory: {error}", file=sys.stderr)
+            print(f"Error: Failed to delete {f}: {error}", file=sys.stderr)
             return False
 
     print(f"\nSUCCESS: Removed meta-story '{story_id}'")
@@ -137,10 +175,12 @@ def list_meta_stories() -> None:
         )
         return
 
-    try:
-        register = json.loads(META_STORIES_REGISTER.read_text(encoding="utf-8"))
-    except Exception as error:
-        print(f"Error: Failed to read register file: {error}", file=sys.stderr)
+    register = _load_json(META_STORIES_REGISTER)
+    if register is None:
+        print(
+            f"Error: Failed to read register file {META_STORIES_REGISTER}",
+            file=sys.stderr,
+        )
         return
 
     meta_stories = register.get("meta_stories", [])
