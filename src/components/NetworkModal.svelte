@@ -4,6 +4,7 @@
   import PersonChip from "./PersonChip.svelte";
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
+  import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
   import {
     normalizePersonName,
@@ -700,16 +701,21 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="modal-overlay" on:click={onClose}>
+<div data-dialog-overlay class="modal-overlay" on:click={onClose}>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="network-modal"
     style={storyStyleVars(styleConfig)}
     on:click|stopPropagation
+    use:dialog={{ onClose, initialFocus: ".close-button" }}
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="network-modal-title"
+    tabindex="-1"
   >
     <div class="modal-header">
-      <h3 class="modal-title">
+      <h3 id="network-modal-title" class="modal-title">
         <svg
           class="icon"
           viewBox="0 0 24 24"

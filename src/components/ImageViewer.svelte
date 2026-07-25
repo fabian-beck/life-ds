@@ -8,6 +8,7 @@
   import { onMount, onDestroy } from "svelte";
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
+  import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
   import { getThumbnailUrl } from "../utils/storyHelpers.js";
 
@@ -311,10 +312,7 @@
     // Only handle keyboard events when image viewer is open
     if (!image) return;
 
-    if (event.key === "Escape") {
-      event.stopPropagation();
-      closeViewer();
-    } else if (event.key === "r" || event.key === "R") {
+    if (event.key === "r" || event.key === "R") {
       event.stopPropagation();
       resetView();
     } else if (event.key === "ArrowLeft") {
@@ -358,14 +356,17 @@
 </script>
 
 {#if image}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
+    data-dialog-overlay
     class="image-viewer"
     style={storyStyleVars(styleConfig)}
     on:click={handleBackdropClick}
-    on:keydown={(e) => e.key === "Enter" && handleBackdropClick(e)}
     on:wheel={handleWheel}
-    role="button"
-    tabindex="0"
+    use:dialog={{ onClose: closeViewer, initialFocus: ".close-button" }}
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
     aria-label={$_("image.viewer_title")}
   >
     <!-- Top controls: reset and close -->

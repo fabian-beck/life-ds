@@ -1,6 +1,7 @@
 <script>
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
+  import { dialog } from "../utils/dialog.js";
 
   export let show = false;
   export let onClose = () => {};
@@ -13,18 +14,22 @@
 </script>
 
 {#if show}
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
+    data-dialog-overlay
     class="modal-backdrop"
     on:click={handleBackdropClick}
-    on:keydown={(e) => e.key === "Escape" && onClose()}
-    role="dialog"
-    aria-modal="true"
-    tabindex="-1"
   >
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <div class="modal-content" on:click|stopPropagation role="document">
+    <div
+      class="modal-content"
+      on:click|stopPropagation
+      use:dialog={{ onClose, initialFocus: ".close-button" }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ai-disclaimer-title"
+      tabindex="-1"
+    >
       <CloseButton
         variant="light"
         size="small"
@@ -32,7 +37,7 @@
         ariaLabel={$_("landing.ai_modal_close")}
         on:click={onClose}
       />
-      <h2>{$_("landing.ai_modal_title")}</h2>
+      <h2 id="ai-disclaimer-title">{$_("landing.ai_modal_title")}</h2>
       <div class="modal-body">
         <p>
           <strong>{$_("landing.ai_how_it_works")}</strong>
