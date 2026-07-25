@@ -10,7 +10,7 @@ that reviews the whole dataset from the top down — including focused
 Wikipedia excerpts for every main person — and writes one coherent,
 journalistic narrative around the timeline, the network, and the map.
 
-The composer works in two AI calls:
+The composer works in three AI calls:
 
 1. **Curation** — reads the assembled story and decides on a *throughline*
    (the arc that anchors all prose) and, exceptionally, which clearly
@@ -32,6 +32,15 @@ The composer works in two AI calls:
    split, reorder, or discard clusters via explicit ``member_ids``) — the
    map narration — where it may likewise **reorder and discard stops** — and
    the conclusion.
+3. **Redundancy pass** — a focused editing call that reads only the composed
+   prose and rewrites the slots that repeat one another. Call 2 juggles some
+   fifteen prose objectives against a single throughline and resolves that
+   tension by restating the throughline everywhere, so the same point lands in
+   the description, the standfirsts, the bodies and the conclusion. It cannot
+   police this in itself; a call with one job can. Revisions are patched back
+   into the composition result before it is applied, so they pass through the
+   same defensive application path as everything else. Non-fatal, and opt out
+   with ``--skip-redundancy-pass``.
 
 Everything the model returns is applied deterministically and defensively:
 
@@ -53,6 +62,9 @@ Everything the model returns is applied deterministically and defensively:
   ``geo_map.discarded`` with the composer's reason.
 - Facts, dates, IDs, event indices, coordinates, and the graph itself are
   never sent to the model as editable fields, so they cannot drift.
+- Prose revisions from the redundancy pass are addressed by slot id and may
+  only replace the text of a slot that already exists; an unknown id is
+  ignored with a warning, so the pass can rewrite but never add or remove.
 
 Both calls operate on a working copy; the original dataset is returned
 unchanged if anything fails, so the composer is safe to run as a non-fatal
@@ -318,27 +330,33 @@ class CompositionResult(BaseModel):
     )
     description: str = Field(
         description="Narrative (2-3 paragraphs) that widens the frame after "
-        "the opening scene, introducing the topic like a feature article — "
-        "no meta-references such as 'this collection', and no repetition of "
-        "the opening scene"
+        "the opening scene, introducing the topic like a feature article. It "
+        "owns the STAKES: what was at issue, why it was hard, what world "
+        "these people worked in. No meta-references such as 'this "
+        "collection', no repetition of the opening scene, and no reaching "
+        "for the outcome or legacy (the conclusion owns that)."
     )
     section_headings: ComposedSectionHeadings = Field(
         description="Story-specific headings for the main sections"
     )
     timeline_intro: str = Field(
         description="1-3 sentence standfirst shown right under the "
-        "chronology heading. Written about the history itself — never "
-        "addressed to the reader, never a meta-reference to the timeline."
+        "chronology heading, naming the one question this section answers: "
+        "what changed over these years. Written about the history itself — "
+        "never addressed to the reader, never a meta-reference to the "
+        "timeline, never the story's general thesis restated."
     )
     network_intro: str = Field(
         description="1-3 sentence standfirst for the network section, "
-        "consistent with the timeline texts. No individual names, no preview "
-        "of the circles, no reading guide."
+        "consistent with the timeline texts but on its own question: what "
+        "travelled between these people. No individual names, no preview of "
+        "the circles, no reading guide, no restatement of the description."
     )
     map_intro: Optional[str] = Field(
         default=None,
-        description="1-3 sentence standfirst for the places section, or null "
-        "when the story has no map.",
+        description="1-3 sentence standfirst for the places section on its "
+        "own question — what these locations made possible that others did "
+        "not — or null when the story has no map.",
     )
     section_bodies: ComposedSectionBodies = Field(
         description="The story's narrative depth: free-form blocks per "
@@ -369,7 +387,9 @@ class CompositionResult(BaseModel):
         "the story; an empty list is the normal outcome"
     )
     conclusion: str = Field(
-        description="Closing statement (2-3 sentences) echoing the throughline"
+        description="Closing statement (2-3 sentences) naming what this "
+        "history left behind — what it settled, what it did not. Not a "
+        "summary of the sections above, not the description restated."
     )
 
 
@@ -1009,6 +1029,41 @@ this material or the story data above):
 
 {images_brief}
 
+DIVISION OF LABOUR (read this before writing a single line):
+
+The reader meets these texts in sequence, one after another on one page. Each
+one must ADVANCE the story — carry information the previous ones did not. The
+throughline is your anchor, but it is NOT the content of every slot: state it
+outright AT MOST ONCE, in the slot that owns it, and let the others do their
+own work. A reader who has read the opening must learn something new from the
+description, and again from each standfirst, each body, and the conclusion.
+
+  slot            | owns                        | must NOT contain
+  ----------------|-----------------------------|---------------------------
+  opening         | ONE documented scene         | the thesis, the arc, any
+                  | (a dated moment, an act)     | "and so began..." summary
+  description     | the STAKES: what was at      | the opening's scene again,
+                  | issue, why it was hard,      | the outcome or legacy
+                  | what world these people      | (the conclusion owns that)
+                  | worked in                    |
+  section         | the ONE question that        | the general thesis; a
+  standfirsts     | section answers, specific    | restatement of the
+                  | to chronology / ties /       | description in shorter
+                  | geography                    | words
+  section bodies  | EVIDENCE: named people,      | a restatement of the
+                  | dated turning points, what   | standfirst above it; the
+                  | actually happened and what   | thesis in general terms
+                  | it cost                      |
+  conclusion      | the CONSEQUENCE: what this   | the description's framing
+                  | left behind, what it settled | again; a summary of the
+                  | and what it did not          | sections just read
+
+Before you finish, re-read the slots in order and check each one against the
+one before it. If two slots make the same point — even in different words,
+even elegantly — the later one is wasted; replace its content with something
+only it can say. Repeating a striking formulation does not reinforce it, it
+tells the reader the story has run out of material.
+
 WRITE THE FOLLOWING (all display-facing, general educated audience):
 
 - title (2-5 words) and tagline (3-10 words): refine the drafts or replace
@@ -1019,10 +1074,13 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   anchor that best crystallizes the throughline; different stories should
   open differently (a scene, a person at work, an object, a decision). No
   panorama, no thesis, no scene-setting clichés ("It was a time of...").
-  If an image candidate shows this exact moment or its protagonist, set its
-  key as image_key.
+  End inside the scene — do not close with a sentence explaining what it
+  all meant. If an image candidate shows this exact moment or its
+  protagonist, set its key as image_key.
 - description: 2-3 paragraphs that widen the frame after the opening scene,
-  introducing the topic like a feature article. Do not retell the opening.
+  introducing the topic like a feature article: the conditions these people
+  worked under, the problem the era had not solved, what was genuinely at
+  stake. Do not retell the opening and do not reach for the ending.
   NEVER use meta-references ("This collection...", "These figures...");
   write directly about the topic.
 - section_headings: one heading each for the chronology, network,{" map," if has_map else ""}
@@ -1031,13 +1089,19 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   ("Timeline", "Chapters", "Connections", "Network", "Places", "Map",
   "Conclusion", "Legacy") are forbidden.
 - timeline_intro / network_intro: 1-3 sentence standfirsts shown right under
-  the respective section heading. Write about the history itself, never
+  the respective section heading. Each names the ONE question its section
+  answers — for the chronology, what changed over these years; for the
+  network, what actually travelled between these people — and each must be
+  answerable only by that section. Write about the history itself, never
   about the interface ("The chronology begins...", "This story follows..."
   are meta-references and are forbidden).
 - section_bodies: THE STORY'S NARRATIVE DEPTH. For each section, a sequence
   of blocks rendered between the standfirst and the section's interactive
   component. This is where the real storytelling happens — write it like the
-  running text of a long-form magazine feature:
+  running text of a long-form magazine feature. Bodies carry the EVIDENCE:
+  named people, dated turning points, concrete outcomes. A body paragraph
+  that could be understood without knowing which story it belongs to is
+  too general — replace it with what happened:
   - timeline: 2-4 blocks that tell the era's arc as a story — its documented
     turning points, reversals, and what changed hands between the people —
     WITHOUT enumerating the chapters (the timeline itself shows them).
@@ -1080,12 +1144,16 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   claim in the tie descriptions and the Wikipedia material; refer to people
   naturally ("Babbage" on second mention). Order the circles so the section
   reads as one narrative.{map_instructions}
-- conclusion: 2-3 sentences that close the arc the throughline names.
+- conclusion: 2-3 sentences naming what this history left behind — what it
+  settled, what it did not, what still follows from it. Not a summary of the
+  sections above and not the description's framing restated at the end.
 
 HARD RULES (journalistic standard):
 - Stick to the facts in the material above; never invent events, dates,
   relationships, scenes, thoughts, or claims. If the material does not
   support a detail, leave it out.
+- Every slot must earn its place. Do not restate a point another slot already
+  made, however differently phrased — see DIVISION OF LABOUR above.
 - Quotes must be verbatim from the material, with attribution. Never
   fabricate or embellish a quotation.
 - Copy ids, keys, and image keys EXACTLY; if in doubt about an image key,
@@ -1155,6 +1223,352 @@ HARD RULES (journalistic standard):
         return None
 
 
+# ============================================================================
+# REDUNDANCY PASS
+# ============================================================================
+#
+# The composition call has ~15 prose objectives and one throughline to anchor
+# them, and it reliably resolves that tension by restating the throughline in
+# every slot: the same thesis then appears in the description, the standfirsts,
+# the bodies and the conclusion, and the page reads as one point made five
+# times. The DIVISION OF LABOUR contract in the composition prompt is the
+# primary fix; this pass is the check on it, in the spirit of the verbatim
+# quote check — except that a repeated claim cannot simply be dropped (the slot
+# still has to say *something*), so it is rewritten by a call whose only job is
+# de-duplication.
+
+
+class ProseRevision(BaseModel):
+    """A rewritten prose slot that had repeated another slot's point."""
+
+    slot: str = Field(
+        description="Slot id, copied EXACTLY from the list of slots given"
+    )
+    repeats: str = Field(
+        description="The slot id this one was repeating, and in one short "
+        "phrase the point they shared"
+    )
+    text: str = Field(
+        description="The rewritten text for this slot, same length and voice "
+        "as the original, carrying information no other slot carries. Only "
+        "facts already present in the story's texts — never new claims."
+    )
+
+
+class RedundancyPassResult(BaseModel):
+    """Third composer call: prose slots rewritten to remove repeated claims."""
+
+    revisions: List[ProseRevision] = Field(
+        description="Only the slots that genuinely repeated another slot. An "
+        "empty list is a valid and good outcome."
+    )
+
+
+# Ordered by reading position: when two slots share a point, the LATER one is
+# the one that gets rewritten, because the earlier one established it.
+PROSE_SLOT_ORDER = (
+    "opening",
+    "description",
+    "timeline_intro",
+    "body:timeline",
+    "network_intro",
+    "body:network",
+    "map_intro",
+    "body:map",
+    # The closing section's body is rendered above the closing statement.
+    "body:conclusion",
+    "conclusion",
+)
+
+# Each slot's role AND the mode it must not fall into. The prohibitions matter
+# as much as the roles: a rewrite told only "don't repeat" will satisfy that by
+# sliding into another failure — the first live run replaced a conclusion that
+# echoed the description with one that enumerated the timeline instead.
+PROSE_SLOT_ROLES = {
+    "opening": (
+        "the cold-open scene — ONE documented moment; never the thesis or "
+        "an 'and so began' summary"
+    ),
+    "description": (
+        "the stakes: what was at issue, why it was hard, what world these "
+        "people worked in; never the outcome or legacy"
+    ),
+    "timeline_intro": (
+        "the chronology section's standfirst — the one question it answers, "
+        "what changed over these years; never the story's general thesis"
+    ),
+    "network_intro": (
+        "the network section's standfirst — what travelled between these "
+        "people; never a restatement of the description"
+    ),
+    "map_intro": (
+        "the places section's standfirst — what these locations made "
+        "possible that others did not"
+    ),
+    "conclusion": (
+        "the consequence: what this history left behind, what it settled and "
+        "what it did not; never a summary or list of what came before"
+    ),
+    "body:timeline": (
+        "evidence paragraph in the chronology section — named people, dated "
+        "turning points, what it cost; never the thesis in general terms"
+    ),
+    "body:network": (
+        "evidence paragraph in the network section — who read, hired, or "
+        "influenced whom, and where the chains broke"
+    ),
+    "body:map": (
+        "evidence paragraph in the places section — what specific places "
+        "made possible"
+    ),
+    "body:conclusion": (
+        "evidence paragraph in the closing section — the concrete case that "
+        "carries the ending"
+    ),
+}
+
+_SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
+_WORD = re.compile(r"[a-z][a-z'’-]+")
+
+# Function words carry no topical signal; without them near-duplicate
+# sentences and unrelated ones score alike.
+_STOPWORDS = frozenset("""
+    the a an and or but nor for yet so as at by from in into of off on onto out over to
+    up with within without upon after before during since until while about against
+    among around between through under above below across along
+    is was are were be been being am has have had having do does did doing
+    will would shall should can could may might must
+    that this these those there here it its their his her him she he they them we us our
+    you your i me my not no nor than then when where which who whom whose what why how
+    all any both each few more most other some such only own same too very
+    one two three first second new made make making made became become becomes
+    also still just even much many
+    """.split())
+
+
+def _content_words(text: str) -> set:
+    return {
+        w for w in _WORD.findall(text.lower()) if w not in _STOPWORDS and len(w) > 2
+    }
+
+
+def collect_prose_slots(composed: CompositionResult) -> List[tuple]:
+    """Return the rewritable prose slots as ``(slot_id, role, text)``.
+
+    Slot ids are stable addresses into ``CompositionResult``: the top-level
+    prose fields by name, and body paragraphs as ``body:{section}:{index}``
+    where the index is the block's position in that section's block list (so
+    image and quote blocks keep their positions and are never addressed).
+    """
+    slots: List[tuple] = []
+
+    def add(slot_id: str, role_key: str, text: Optional[str]) -> None:
+        if text and text.strip():
+            slots.append((slot_id, PROSE_SLOT_ROLES[role_key], text.strip()))
+
+    add("opening", "opening", composed.opening.text)
+    add("description", "description", composed.description)
+    for section in ("timeline", "network", "map", "conclusion"):
+        intro_field = f"{section}_intro"
+        if section != "conclusion":
+            add(intro_field, intro_field, getattr(composed, intro_field, None))
+        for index, block in enumerate(getattr(composed.section_bodies, section) or []):
+            if block.type == "paragraph":
+                add(f"body:{section}:{index}", f"body:{section}", block.text)
+    add("conclusion", "conclusion", composed.conclusion)
+
+    order = {name: i for i, name in enumerate(PROSE_SLOT_ORDER)}
+    return sorted(slots, key=lambda s: order.get(s[0].rsplit(":", 1)[0], 99))
+
+
+def rank_slot_overlaps(slots: List[tuple], min_shared: int = 3) -> List[tuple]:
+    """Rank cross-slot sentence pairs by content-word overlap (Dice).
+
+    Returns ``(slot_a, slot_b, sentence_a, sentence_b, score)`` sorted by score.
+
+    This is a **diagnostic, not a detector**, and deliberately has no pass/fail
+    threshold. Measured against the composed stories, the redundancy that
+    actually hurts is paraphrase — "the question was not how to calculate but
+    how to instruct" restated as "the problem shifted from what a machine could
+    calculate to what people could ask it to do" scores 0.27, while two
+    unrelated sentences that merely share two proper names score 0.26. The
+    bands overlap, so no cutoff separates them and any threshold here would
+    either never fire or fire constantly.
+
+    What it is good for is the RELATIVE comparison: running it before and after
+    the redundancy pass shows whether the pass actually pulled the most similar
+    pairs apart. Judging whether a repeat is real is left to the AI pass, which
+    reads meaning rather than counting words.
+    """
+    prepared = []
+    for slot_id, _role, text in slots:
+        for sentence in _SENTENCE_SPLIT.split(text):
+            words = _content_words(sentence)
+            if len(words) >= 5:
+                prepared.append((slot_id, sentence.strip(), words))
+
+    ranked = []
+    for i, (slot_a, sent_a, words_a) in enumerate(prepared):
+        for slot_b, sent_b, words_b in prepared[i + 1 :]:
+            if slot_a == slot_b:
+                continue
+            shared = words_a & words_b
+            if len(shared) < min_shared:
+                continue
+            score = 2 * len(shared) / (len(words_a) + len(words_b))
+            ranked.append((slot_a, slot_b, sent_a, sent_b, score))
+    return sorted(ranked, key=lambda r: r[4], reverse=True)
+
+
+def run_redundancy_pass(
+    composed: CompositionResult,
+    throughline: str,
+    client: OpenAI,
+    model: str,
+    reasoning_effort: str,
+    verbose: bool = False,
+) -> Optional[RedundancyPassResult]:
+    """Ask a focused call to rewrite prose slots that repeat one another.
+
+    Deliberately single-objective: the composition call cannot police its own
+    repetition because it is juggling fifteen other goals at the same time.
+    This call sees only the finished prose and has one thing to do.
+    """
+    slots = collect_prose_slots(composed)
+    if len(slots) < 2:
+        return RedundancyPassResult(revisions=[])
+
+    rendered = "\n\n".join(
+        f"slot: {slot_id}\nrole: {role}\n{text}" for slot_id, role, text in slots
+    )
+
+    prompt = f"""These texts are the finished prose of one meta story, listed in the order a
+reader meets them on the page. They were written in a single pass, and that
+pass tends to restate the story's central idea in slot after slot.
+
+THROUGHLINE the story was written to (background, not for display):
+{throughline}
+
+THE STORY'S PROSE, IN READING ORDER:
+
+{rendered}
+
+YOUR ONLY TASK: find the places where a slot makes a point an EARLIER slot
+already made, and rewrite the later slot so it carries something else.
+
+WHAT COUNTS AS REPETITION:
+- The same claim in different words ("the question was not how to calculate
+  but how to instruct" and "the problem shifted from what a machine could
+  compute to what people could ask of it" are the SAME sentence).
+- The same conclusion reached twice, the same formulation reused for effect,
+  the same person's significance explained again.
+- Two slots that would still say the same thing if you swapped their words.
+
+WHAT DOES NOT COUNT:
+- The same PERSON, PLACE, or EVENT appearing in several slots — recurring
+  cast is normal; only a recurring POINT is the problem.
+- A body paragraph giving the concrete evidence for something a standfirst
+  named in the abstract. That is the intended structure: the standfirst asks,
+  the body answers. Only flag it when the body merely repeats the abstraction
+  without adding specifics.
+- Deliberate echoes across a long distance where the later use genuinely
+  advances the idea rather than restating it.
+
+WHEN YOU FIND ONE:
+- Rewrite the LATER slot, never the earlier one.
+- Keep its assigned role, its approximate length, and the story's voice. The
+  "role:" line states both what the slot owns and the mode it must not fall
+  into — removing a repetition by sliding into that mode is not a fix. A
+  conclusion that stops echoing the description by listing what came before
+  has not been repaired, it has been broken differently.
+- Fill it with something only it can say — a specific documented detail from
+  the other texts, the part of the story that slot is responsible for. Use
+  ONLY facts already present in the prose above; never introduce a new claim,
+  date, name, or quotation.
+- If a slot repeats and there is genuinely nothing else for it to say, make
+  it shorter and more concrete rather than padding it.
+
+Return ONLY the slots you actually rewrote, with the slot id copied exactly as
+it appears after "slot:" above (e.g. timeline_intro, body:network:1) — bare,
+with no brackets or other decoration.
+Most stories need few or no revisions — an empty list is a good outcome, and
+is much better than rewriting text that was already doing its job."""
+
+    try:
+        response = client.responses.parse(
+            model=model,
+            reasoning=cast(Any, {"effort": reasoning_effort}),
+            input=[
+                {
+                    "role": "system",
+                    "content": "You are a long-form editor with one job: "
+                    "removing repetition between the sections of a finished "
+                    "piece. You rewrite only what repeats, you never add "
+                    "facts, and you leave good text alone.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            text_format=RedundancyPassResult,
+        )
+        result = response.output_parsed
+        if result is None:
+            print("Warning: redundancy pass returned no parsed result, skipped")
+            return None
+        if verbose:
+            for revision in result.revisions:
+                print(f"  Rewrote [{revision.slot}] — repeated {revision.repeats}")
+            if not result.revisions:
+                print("  No repeated claims found")
+        return result
+    except Exception as e:
+        print(f"Warning: redundancy pass failed: {e}")
+        return None
+
+
+def apply_prose_revisions(
+    composed: CompositionResult,
+    result: RedundancyPassResult,
+    verbose: bool = False,
+) -> int:
+    """Patch revised prose back into the composition result (mutates it).
+
+    Applied before ``apply_composition``, so the revised texts still pass
+    through the same defensive application path as everything else. Unknown
+    slot ids are ignored with a warning — the pass can only ever replace the
+    text of a slot that exists, never create one.
+
+    Slot ids are normalized before matching: the prompt renders each slot as
+    ``[slot_id] (role)``, and the model copies the id back in that bracketed
+    form often enough that taking it literally silently discarded every
+    revision in the first live run.
+    """
+    known = {slot_id for slot_id, _role, _text in collect_prose_slots(composed)}
+    applied = 0
+
+    for revision in result.revisions:
+        slot_id = revision.slot.strip().strip("[]").strip()
+        text = revision.text.strip()
+        if not text:
+            continue
+        if slot_id not in known:
+            print(f"Warning: revision for unknown prose slot '{slot_id}', ignored")
+            continue
+
+        if slot_id == "opening":
+            composed.opening.text = text
+        elif slot_id.startswith("body:"):
+            _, section, index = slot_id.split(":")
+            blocks = getattr(composed.section_bodies, section)
+            blocks[int(index)].text = text
+        else:
+            setattr(composed, slot_id, text)
+        applied += 1
+
+    if verbose and applied:
+        print(f"  Applied {applied} prose revision(s)")
+    return applied
+
+
 def _strip_date_suffix(headline: str) -> str:
     """Remove a trailing "(YYYY-YYYY)" the model may have added anyway."""
     return re.sub(r"\s*\(\d{4}\s*[-–]\s*\d{4}\)\s*$", "", headline).strip()
@@ -1218,7 +1632,7 @@ def _apply_section_bodies(
                 if _normalize_quote(text) not in corpus:
                     print(
                         f"Warning: quote in {slot} body is not verbatim in the "
-                        f"material, dropped: \"{_truncate(text, 80)}\""
+                        f'material, dropped: "{_truncate(text, 80)}"'
                     )
                     dropped_quotes += 1
                     continue
@@ -1300,9 +1714,11 @@ def _apply_network_circles(
         # the stored key stays stable however the model ordered the list.
         ids.sort(
             key=lambda pid: (
-                main_nodes[pid].get("birth_year")
-                if main_nodes[pid].get("birth_year") is not None
-                else 10**9,
+                (
+                    main_nodes[pid].get("birth_year")
+                    if main_nodes[pid].get("birth_year") is not None
+                    else 10**9
+                ),
                 main_nodes[pid].get("name", ""),
             )
         )
@@ -1586,13 +2002,16 @@ def compose_meta_story_dataset(
     model: str = DEFAULT_MODEL,
     reasoning_effort: str = DEFAULT_REASONING_EFFORT,
     allow_exclusions: bool = True,
+    deduplicate: bool = True,
     verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
     """Run the full composer over a meta story dataset.
 
     Returns the composed dataset (a new dict; the input is never mutated), or
-    ``None`` when either AI call fails — callers keep the original dataset,
-    which makes the composer safe as a non-fatal pipeline phase.
+    ``None`` when either required AI call fails — callers keep the original
+    dataset, which makes the composer safe as a non-fatal pipeline phase. The
+    third call (the redundancy pass) is itself non-fatal: if it fails, the
+    composed prose is applied unrevised.
     """
     working = copy.deepcopy(dataset)
 
@@ -1638,6 +2057,33 @@ def compose_meta_story_dataset(
     if composed is None:
         return None
 
+    # Third call: strip the repetition the composition call cannot see in
+    # itself. Non-fatal — unrevised prose is still a complete story.
+    revisions = 0
+    if deduplicate:
+        before = rank_slot_overlaps(collect_prose_slots(composed))
+        if verbose and before:
+            print("  Most similar slot pairs before pass:")
+            for slot_a, slot_b, sent_a, _sent_b, score in before[:3]:
+                print(
+                    f"    {score:.2f} [{slot_a}] ~ [{slot_b}]: "
+                    f"{_truncate(sent_a, 70)}"
+                )
+        result = run_redundancy_pass(
+            composed,
+            curation.throughline,
+            client,
+            model,
+            reasoning_effort,
+            verbose=verbose,
+        )
+        if result is not None:
+            revisions = apply_prose_revisions(composed, result, verbose=verbose)
+        if verbose and before:
+            after = rank_slot_overlaps(collect_prose_slots(composed))
+            now_top = f"{after[0][4]:.2f}" if after else "none"
+            print(f"  Top slot overlap: {before[0][4]:.2f} -> {now_top}")
+
     # The quote-verification corpus is exactly what the model was shown.
     material = build_story_brief(working, registry) + "\n" + wikipedia_context
     apply_composition(
@@ -1656,6 +2102,7 @@ def compose_meta_story_dataset(
         "excluded_people": [
             {"person_id": exc.person_id, "reason": exc.reason} for exc in exclusions
         ],
+        "prose_revisions": revisions,
     }
     working.get("meta_story", {})["lastUpdated"] = now
     return working
@@ -1679,6 +2126,7 @@ def compose_and_save(
     client: OpenAI,
     model: str,
     allow_exclusions: bool,
+    deduplicate: bool,
     dry_run: bool,
     translate_langs: List[str],
     verbose: bool,
@@ -1696,6 +2144,7 @@ def compose_and_save(
         client,
         model=model,
         allow_exclusions=allow_exclusions,
+        deduplicate=deduplicate,
         verbose=verbose,
     )
     if composed is None:
@@ -1780,6 +2229,11 @@ def main() -> int:
         help="Never drop people from the story (text composition only)",
     )
     parser.add_argument(
+        "--skip-redundancy-pass",
+        action="store_true",
+        help="Skip the third call that rewrites prose slots repeating each other",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Show composed headlines/exclusions without writing files",
@@ -1839,6 +2293,7 @@ def main() -> int:
             client,
             model=args.model,
             allow_exclusions=not args.no_exclusions,
+            deduplicate=not args.skip_redundancy_pass,
             dry_run=args.dry_run,
             translate_langs=translate_langs,
             verbose=args.verbose,
