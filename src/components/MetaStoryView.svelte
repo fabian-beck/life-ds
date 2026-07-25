@@ -1,6 +1,6 @@
 <script>
   import { _ } from "../stores/language";
-  import { push } from "svelte-spa-router";
+  import { replace } from "svelte-spa-router";
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
@@ -135,7 +135,7 @@
 
   // Navigate back to landing
   function backToLanding() {
-    push(`/${currentLanguage}`);
+    replace(`/${currentLanguage}`);
   }
 
   // Composed cold open (Phase 7): split into paragraphs for rendering

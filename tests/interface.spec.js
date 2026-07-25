@@ -171,6 +171,49 @@ test("German role filters merge masculine and feminine forms", async ({
   ).toBeVisible();
 });
 
+test("closing stories does not add a history trap", async ({ page }) => {
+  await page.goto("/#/en");
+
+  await page
+    .getByRole("button", { name: "Open life story for Ada Lovelace" })
+    .click();
+  await expect(page).toHaveURL(/#\/en\/story\/ada_lovelace/);
+  const personHistoryLength = await page.evaluate(() => history.length);
+
+  await page
+    .getByRole("button", {
+      name: "Close story and return to the landing page",
+    })
+    .click();
+  await expect(page).toHaveURL(/#\/en$/);
+  expect(await page.evaluate(() => history.length)).toBe(personHistoryLength);
+
+  await page.goBack();
+  await expect(page).toHaveURL(/#\/en$/);
+  await expect(
+    page.getByRole("button", {
+      name: "Close story and return to the landing page",
+    })
+  ).toHaveCount(0);
+
+  await page
+    .getByRole("button", { name: "Explore collection" })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/#\/en\/meta\//);
+  const metaHistoryLength = await page.evaluate(() => history.length);
+
+  await page.getByRole("button", { name: "Back to Stories" }).first().click();
+  await expect(page).toHaveURL(/#\/en$/);
+  expect(await page.evaluate(() => history.length)).toBe(metaHistoryLength);
+
+  await page.goBack();
+  await expect(page).toHaveURL(/#\/en$/);
+  await expect(
+    page.getByRole("button", { name: "Back to Stories" })
+  ).toHaveCount(0);
+});
+
 test("meta-story AI tag meets the landscape sticky header", async ({
   page,
 }) => {

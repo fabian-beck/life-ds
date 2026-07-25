@@ -581,9 +581,9 @@
 
   function handleCloseStory() {
     if (fromMetaStoryId) {
-      push(`/${$currentLanguage}/meta/${fromMetaStoryId}`);
+      replace(`/${$currentLanguage}/meta/${fromMetaStoryId}`);
     } else {
-      push(`/${$currentLanguage}`);
+      replace(`/${$currentLanguage}`);
     }
   }
 
