@@ -9,7 +9,6 @@ context, and thematic explanations untouched.
 """
 
 import argparse
-import hashlib
 import json
 import re
 from datetime import datetime
@@ -125,42 +124,10 @@ def _save(path: Path, value: Dict[str, Any]) -> None:
 
 
 def _translation_fingerprint(detail: Dict[str, Any]) -> str:
-    """Match translate_person.compute_fingerprint for meta-story text."""
-    meta = detail.get("meta_story", {}) or {}
-    payload = {
-        "title": meta.get("title", ""),
-        "tagline": meta.get("tagline", ""),
-        "description": meta.get("description", ""),
-        "subtopics": [
-            {"title": item.get("title", ""), "description": item.get("description", "")}
-            for item in (detail.get("subtopics") or [])
-        ],
-        "chapters": [
-            {
-                "title": chapter.get("title", ""),
-                "historical_context": [
-                    {
-                        "title": context.get("title", ""),
-                        "description": context.get("description", ""),
-                    }
-                    for context in (chapter.get("historical_context") or [])
-                ],
-                "person_events": [
-                    {
-                        "event_title": event.get("event_title", ""),
-                        "theme_connection": event.get("theme_connection", ""),
-                    }
-                    for event in (chapter.get("person_events") or [])
-                ],
-            }
-            for chapter in (detail.get("chapters") or [])
-        ],
-        "conclusion": detail.get("conclusion"),
-    }
-    canonical = json.dumps(
-        payload, sort_keys=True, ensure_ascii=False, separators=(",", ":")
-    )
-    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+    """Match the canonical fingerprint used by check_meta_story_translation()."""
+    from translate_person import compute_fingerprint, extract_meta_story_translatables
+
+    return compute_fingerprint(extract_meta_story_translatables(detail))
 
 
 def _touch_registry(data_dir: Path, story_ids: set, language: str = "") -> None:
