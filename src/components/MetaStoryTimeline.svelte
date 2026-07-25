@@ -1279,35 +1279,79 @@
   // Guard against infinite tooltip placement loops
   let isCalculatingPlacement = false;
 
-  // Helper to render tooltip content for runtime measurement
-  function renderTooltipContentForMeasurement(config) {
-    const { events } = config;
+  // Build the same structure as the visible tooltip without parsing story
+  // data as HTML. This element is only used for runtime size measurement.
+  function createTooltipContentForMeasurement(config) {
+    const tooltipEvents = document.createElement("div");
+    tooltipEvents.className = "tooltip-events";
 
-    // Build HTML structure matching actual tooltip
-    const eventItems = events
-      .map(
-        (evt) => `
-      <div class="event-item" style="--item-primary: ${evt.colors.primary}; --item-primary-rgb: ${evt.colors.primaryRgb};">
-        <div class="event-item-header">
-          <div class="event-item-header-content">
-            <div class="event-person-name">${evt.personName}</div>
-            <div class="event-item-title">${evt.event.title}</div>
-          </div>
-          <button class="tooltip-action-compact">→</button>
-        </div>
-        ${
-          evt.event.theme_connection
-            ? `
-          <p class="event-item-description">${evt.event.theme_connection}</p>
-        `
-            : ""
+    for (const evt of config.events) {
+      const eventItem = document.createElement("div");
+      eventItem.className = "event-item";
+      eventItem.classList.toggle("historical", Boolean(evt.isHistorical));
+      eventItem.style.setProperty("--item-primary", evt.colors.primary);
+      eventItem.style.setProperty("--item-primary-rgb", evt.colors.primaryRgb);
+
+      const header = document.createElement("div");
+      header.className = "event-item-header";
+      const headerContent = document.createElement("div");
+      headerContent.className = "event-item-header-content";
+
+      if (evt.isHistorical) {
+        const title = document.createElement("div");
+        title.className = "event-item-title";
+        title.textContent = evt.event.title ?? "";
+        headerContent.appendChild(title);
+
+        if (evt.dateRange) {
+          const dateRange = document.createElement("div");
+          dateRange.className = "event-date-range";
+          dateRange.textContent = evt.dateRange;
+          headerContent.appendChild(dateRange);
         }
-      </div>
-    `
-      )
-      .join("");
+      } else {
+        const personName = document.createElement("div");
+        personName.className = "event-person-name";
+        personName.textContent = evt.personName ?? "";
+        headerContent.appendChild(personName);
 
-    return `<div class="tooltip-events">${eventItems}</div>`;
+        const title = document.createElement("div");
+        title.className = "event-item-title";
+        title.textContent = evt.event.title ?? "";
+        headerContent.appendChild(title);
+      }
+
+      header.appendChild(headerContent);
+
+      if (evt.isHistorical && evt.wikipediaUrl) {
+        const action = document.createElement("a");
+        action.className = "tooltip-action-compact";
+        action.textContent = "W";
+        header.appendChild(action);
+      } else if (!evt.isHistorical) {
+        const action = document.createElement("button");
+        action.className = "tooltip-action-compact";
+        action.type = "button";
+        action.textContent = "→";
+        header.appendChild(action);
+      }
+
+      eventItem.appendChild(header);
+
+      const description = evt.isHistorical
+        ? evt.description
+        : evt.event.theme_connection;
+      if (description) {
+        const descriptionElement = document.createElement("p");
+        descriptionElement.className = "event-item-description";
+        descriptionElement.textContent = description;
+        eventItem.appendChild(descriptionElement);
+      }
+
+      tooltipEvents.appendChild(eventItem);
+    }
+
+    return tooltipEvents;
   }
 
   // Measure actual tooltip dimensions at runtime (replaces static estimates)
@@ -1334,9 +1378,9 @@
       z-index: -9999;
     `;
 
-    // Render tooltip content structure
-    measurementElement.innerHTML =
-      renderTooltipContentForMeasurement(tooltipConfig);
+    measurementElement.appendChild(
+      createTooltipContentForMeasurement(tooltipConfig)
+    );
 
     // Prevent this measurement from triggering any events or observers
     measurementElement.setAttribute("data-measuring", "true");
