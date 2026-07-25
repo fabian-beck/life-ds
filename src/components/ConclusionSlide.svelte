@@ -1,8 +1,9 @@
 <script>
   import { mdiWikipedia } from "@mdi/js";
   import { _, currentLanguage } from "../stores/language";
-  import { displayName, joinWithSeparator } from "../utils/helpers.js";
+  import { displayName } from "../utils/helpers.js";
   import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
+  import SeparatedList from "./SeparatedList.svelte";
 
   export let conclusion = null;
   export let relatedPersons = [];
@@ -129,8 +130,8 @@
             {@const lifespan = formatLifespan(person)}
             {@const relatedPersonStyle = getPersonStyle(person.id)}
             {@const roles = Array.isArray(person.primaryRoles)
-              ? joinWithSeparator(person.primaryRoles, relatedPersonStyle)
-              : ""}
+              ? person.primaryRoles
+              : []}
             <a
               href="#/story/{person.id}"
               class="related-person-card"
@@ -165,8 +166,13 @@
                 {#if lifespan}
                   <p class="card-years">{lifespan}</p>
                 {/if}
-                {#if roles}
-                  <p class="card-roles">{@html roles}</p>
+                {#if roles.length > 0}
+                  <p class="card-roles">
+                    <SeparatedList
+                      items={roles}
+                      styleConfig={relatedPersonStyle}
+                    />
+                  </p>
                 {/if}
               </div>
             </a>

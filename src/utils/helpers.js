@@ -57,25 +57,3 @@ export function storyStyleVars(style) {
   }
   return segments.join("; ");
 }
-
-/**
- * Join items with a separator glyph (from style config) or fallback to a default separator.
- * @param {Array<string>} items - The items to join
- * @param {Object} styleConfig - Style configuration with optional separatorGlyphDataUrl
- * @param {string} fallback - Fallback separator (default: " · ")
- * @returns {string} HTML string with items joined by separator
- */
-export function joinWithSeparator(items, styleConfig, fallback = " · ") {
-  if (!items || items.length === 0) return "";
-  if (items.length === 1) return items[0];
-
-  // Use separator_glyph_svg if available
-  if (styleConfig?.separatorGlyphDataUrl) {
-    return items.join(
-      `<span class="separator-glyph" style="display: inline-block; margin: 0 0.5rem; width: 1em; height: 1em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
-    );
-  }
-
-  // Fallback separator
-  return items.join(fallback);
-}

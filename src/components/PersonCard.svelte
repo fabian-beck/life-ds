@@ -1,6 +1,7 @@
 <script>
-  import { displayName, joinWithSeparator } from "../utils/helpers.js";
+  import { displayName } from "../utils/helpers.js";
   import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
+  import SeparatedList from "./SeparatedList.svelte";
 
   export let person = null;
   export let personStyle = null;
@@ -32,9 +33,7 @@
   }
 
   $: lifespan = formatLifespan(person);
-  $: roles = Array.isArray(person?.primaryRoles)
-    ? joinWithSeparator(person.primaryRoles, personStyle)
-    : "";
+  $: roles = Array.isArray(person?.primaryRoles) ? person.primaryRoles : [];
 
   function handleClick(e) {
     if (onNavigate) onNavigate(person);
@@ -80,8 +79,10 @@
     {#if lifespan}
       <p class="card-years">{lifespan}</p>
     {/if}
-    {#if roles}
-      <p class="card-roles">{@html roles}</p>
+    {#if roles.length > 0}
+      <p class="card-roles">
+        <SeparatedList items={roles} styleConfig={personStyle} />
+      </p>
     {/if}
   </div>
 </a>

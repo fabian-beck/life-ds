@@ -5,13 +5,14 @@
   import { _ } from "../stores/language";
   import { push } from "svelte-spa-router";
   import { location } from "../stores/router.js";
-  import { clamp, displayName, joinWithSeparator } from "../utils/helpers.js";
+  import { clamp, displayName } from "../utils/helpers.js";
   import { getThumbnailUrl } from "../utils/storyHelpers.js";
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import HighContrastToggle from "./HighContrastToggle.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
+  import SeparatedList from "./SeparatedList.svelte";
   // LandingMap is imported on demand where it is rendered: it pulls in MapLibre
   // and its basemap dependencies (~1.1 MB), and the map starts collapsed.
 
@@ -728,9 +729,12 @@
               {/if}
               {#if (entry.primaryRoles?.length ?? 0) > 0}
                 <p class="card-meta">
-                  <span class="meta-roles"
-                    >{@html joinWithSeparator(entry.primaryRoles, style)}</span
-                  >
+                  <span class="meta-roles">
+                    <SeparatedList
+                      items={entry.primaryRoles}
+                      styleConfig={style}
+                    />
+                  </span>
                 </p>
               {/if}
             </div>

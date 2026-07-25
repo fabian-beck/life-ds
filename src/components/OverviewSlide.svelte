@@ -2,12 +2,14 @@
   import { mdiMagnifyPlusOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { getThumbnailUrl } from "../utils/storyHelpers.js";
+  import SeparatedList from "./SeparatedList.svelte";
 
   export let person = {};
   export let portrait = null;
   export let personName = "";
   export let yearsLabel = "";
-  export let rolesLabel = "";
+  export let roles = [];
+  export let styleConfig = null;
   export let personSummary = "";
   export let onEnlargeImage = () => {};
 
@@ -89,8 +91,10 @@
     {#if yearsLabel}
       <p class="overview-years">{yearsLabel}</p>
     {/if}
-    {#if rolesLabel}
-      <p class="overview-roles">{@html rolesLabel}</p>
+    {#if roles.length > 0}
+      <p class="overview-roles">
+        <SeparatedList items={roles} {styleConfig} />
+      </p>
     {/if}
     {#if hasPersonSummary}
       <p class="description">

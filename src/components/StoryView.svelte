@@ -19,12 +19,7 @@
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import { _, currentLanguage } from "../stores/language";
-  import {
-    clamp,
-    displayName,
-    storyStyleVars,
-    joinWithSeparator,
-  } from "../utils/helpers.js";
+  import { clamp, displayName, storyStyleVars } from "../utils/helpers.js";
   import {
     toTimestamp,
     normalizePrimaryLocation,
@@ -84,9 +79,7 @@
   $: personName = displayName(person?.name);
   $: personSummary = person?.summary ?? "";
   $: yearsLabel = computeYearsLabel(person);
-  $: rolesLabel = Array.isArray(person?.primary_roles)
-    ? joinWithSeparator(person.primary_roles, styleConfig)
-    : "";
+  $: roles = Array.isArray(person?.primary_roles) ? person.primary_roles : [];
   $: eventSlides = events
     .slice()
     .sort((a, b) => toTimestamp(a) - toTimestamp(b))
@@ -1199,7 +1192,8 @@
                 {portrait}
                 {personName}
                 {yearsLabel}
-                {rolesLabel}
+                {roles}
+                {styleConfig}
                 {personSummary}
                 onEnlargeImage={enlargeImage}
               />

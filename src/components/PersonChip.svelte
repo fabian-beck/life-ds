@@ -3,6 +3,7 @@
   import { mdiAccountMultipleOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
+  import SeparatedList from "./SeparatedList.svelte";
 
   export let person = {};
   export let personKey = "";
@@ -37,21 +38,6 @@
     if (isExpanded && tooltipElement) {
       onToggle(personKey);
     }
-  }
-
-  function joinWithSeparator(items, styleConfig) {
-    if (!items || items.length === 0) return "";
-    if (items.length === 1) return items[0];
-
-    // Use separator_glyph_svg if available
-    if (styleConfig?.separatorGlyphSvg) {
-      return items.join(
-        `<span class="separator-glyph" style="display: inline-block; margin: 0 0.35rem; width: 0.85em; height: 0.85em; vertical-align: middle; background: url('${styleConfig.separatorGlyphDataUrl}') center/contain no-repeat;"></span>`
-      );
-    }
-
-    // Fallback to comma
-    return items.join(", ");
   }
 
   function truncateName(name) {
@@ -248,7 +234,12 @@
     {/if}
     {#if person.shared_activities?.length}
       <p class="tooltip-activities">
-        {@html joinWithSeparator(person.shared_activities, styleConfig)}
+        <SeparatedList
+          items={person.shared_activities}
+          {styleConfig}
+          fallback=", "
+          compact
+        />
       </p>
     {/if}
     {#if person.strength || person.interaction_frequency || person.influence_direction}
