@@ -13,6 +13,9 @@
   export let people = [];
   export let metaStoryId = null;
   export let currentLanguage = "en";
+  // Called with an image block's image when the reader clicks it (opens the
+  // story's lightbox); passed straight through to the figures.
+  export let onEnlarge = null;
 
   $: proseContext = { people, metaStoryId, currentLanguage };
 </script>
@@ -25,7 +28,11 @@
           <MetaStoryProse text={block.text} {...proseContext} />
         </p>
       {:else if block.type === "image" && block.image}
-        <MetaStoryFigure image={block.image} layout={block.layout} />
+        <MetaStoryFigure
+          image={block.image}
+          layout={block.layout}
+          {onEnlarge}
+        />
       {:else if block.type === "quote" && block.text}
         <blockquote class="body-quote">
           <p>“<MetaStoryProse text={block.text} {...proseContext} />”</p>

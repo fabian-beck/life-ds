@@ -483,8 +483,13 @@ covers the opening and all body images, no reuse). The url/caption/source are
 copied deterministically, so a hallucinated URL can never enter the data.
 Each stored image keeps its provenance
 (`person_id`/`event_index`/`image_index`); `MetaStoryFigure.svelte` renders it
-with caption and source link. The legacy `section_images` slots are no longer
-written (body image blocks replace them; a recompose removes leftovers) but
+with caption and source link. Clicking a figure opens it in the shared
+`ImageViewer.svelte` lightbox (zoom/pan, caption, source): `MetaStoryView`
+collects every picture the story renders — the opening image, `section_images`,
+and all body image blocks, in reading order — into one gallery, so the lightbox
+pages through the whole story with the arrow keys (its keyboard handler for the
+timeline steps aside while the lightbox is open). The legacy `section_images`
+slots are no longer written (body image blocks replace them; a recompose removes leftovers) but
 remain supported by the UI for stories composed before section bodies.
 
 Application is structural and defensive: chapters/subtopics/map stops are
