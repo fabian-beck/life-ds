@@ -304,10 +304,11 @@
     const [minLon, minLat, maxLon, maxLat] = cluster.bbox;
     const spread = Math.max(maxLon - minLon, maxLat - minLat);
     if (spread < 0.02) {
-      // Single place: settle at city level.
+      // Single place: settle at city level (kept a touch wider so the
+      // surrounding region stays in frame for context).
       mapInstance.flyTo({
         center: cluster.centroid,
-        zoom: 8.5,
+        zoom: 7,
         duration,
         essential: true,
       });
@@ -317,7 +318,7 @@
           [minLon, minLat],
           [maxLon, maxLat],
         ],
-        { padding: 90, maxZoom: 9, duration, essential: true }
+        { padding: 90, maxZoom: 7.5, duration, essential: true }
       );
     }
   }
