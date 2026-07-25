@@ -7,6 +7,7 @@
   import MetaStoryFigure from "./MetaStoryFigure.svelte";
   import MetaStoryBody from "./MetaStoryBody.svelte";
   import MetaStoryProse from "./MetaStoryProse.svelte";
+  import ImageViewer from "./ImageViewer.svelte";
   import CloseButton from "./CloseButton.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
@@ -87,6 +88,64 @@
   // Composed section bodies (Phase 8): free-form narrative blocks rendered
   // between each section's standfirst and its interactive component.
   $: sectionBodies = metaStoryData?.section_bodies || {};
+
+  // Every picture in the story, in reading order, so the lightbox can page
+  // through them. Mirrors the conditions the template renders the figures
+  // under, so an image never appears in the gallery without being on the page.
+  $: galleryImages = collectStoryImages(metaStoryData);
+
+  function collectStoryImages(data) {
+    if (!data) return [];
+    const images = [];
+    const add = (image) => {
+      if (image?.url) images.push(image);
+    };
+    const addBody = (blocks) => {
+      (blocks || []).forEach((block) => {
+        if (block?.type === "image") add(block.image);
+      });
+    };
+    const bodies = data.section_bodies || {};
+    const sectionImgs = data.section_images || {};
+
+    if (data.opening?.text?.trim()) add(data.opening.image);
+    if (data.chapters?.length) {
+      add(sectionImgs.timeline);
+      addBody(bodies.timeline);
+    }
+    if (data.social_network?.links?.length) {
+      add(sectionImgs.network);
+      addBody(bodies.network);
+    }
+    if (data.geo_map?.clusters?.length) addBody(bodies.map);
+    if (data.conclusion) {
+      add(sectionImgs.conclusion);
+      addBody(bodies.conclusion);
+    }
+    return images;
+  }
+
+  // Lightbox state
+  let enlargedImage = null;
+  let enlargedGallery = [];
+  let enlargedIndex = 0;
+
+  function openEnlargedImage(image) {
+    const index = galleryImages.indexOf(image);
+    enlargedGallery = index >= 0 ? galleryImages : [image];
+    enlargedIndex = index >= 0 ? index : 0;
+    enlargedImage = enlargedGallery[enlargedIndex];
+  }
+
+  function closeEnlargedImage() {
+    enlargedImage = null;
+  }
+
+  function handleImageNavigate(index) {
+    if (index < 0 || index >= enlargedGallery.length) return;
+    enlargedIndex = index;
+    enlargedImage = enlargedGallery[index];
+  }
 
   // Calculate proxy height based on timeline's horizontal scroll distance
   $: if (timelineContainer && metaStoryData?.chapters?.length) {
@@ -454,6 +513,10 @@
     // Only active when meta story data is loaded
     if (!metaStoryData || !timelineContainer) return;
 
+    // The lightbox owns the arrow keys while it is open (it navigates images);
+    // this listener was registered first, so it has to step aside itself.
+    if (enlargedImage) return;
+
     // Don't intercept when typing in input fields
     const activeElement = document.activeElement;
     if (
@@ -573,6 +636,7 @@
           <MetaStoryFigure
             image={metaStoryData.opening.image}
             variant="opening"
+            onEnlarge={openEnlargedImage}
           />
           {#each openingParagraphs as paragraph}
             <p class="opening-text">
@@ -601,8 +665,15 @@
             />
           </p>
         {/if}
-        <MetaStoryFigure image={sectionImages.timeline} />
-        <MetaStoryBody blocks={sectionBodies.timeline} {...proseContext} />
+        <MetaStoryFigure
+          image={sectionImages.timeline}
+          onEnlarge={openEnlargedImage}
+        />
+        <MetaStoryBody
+          blocks={sectionBodies.timeline}
+          {...proseContext}
+          onEnlarge={openEnlargedImage}
+        />
 
         <div
           class="scroll-proxy-container"
@@ -675,8 +746,15 @@
             {$_("meta_story.network_subtitle")}
           {/if}
         </p>
-        <MetaStoryFigure image={sectionImages.network} />
-        <MetaStoryBody blocks={sectionBodies.network} {...proseContext} />
+        <MetaStoryFigure
+          image={sectionImages.network}
+          onEnlarge={openEnlargedImage}
+        />
+        <MetaStoryBody
+          blocks={sectionBodies.network}
+          {...proseContext}
+          onEnlarge={openEnlargedImage}
+        />
         {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
           <MetaStoryNetwork
             network={metaStoryData.social_network}
@@ -702,7 +780,11 @@
             {$_("meta_story.map_subtitle")}
           {/if}
         </p>
-        <MetaStoryBody blocks={sectionBodies.map} {...proseContext} />
+        <MetaStoryBody
+          blocks={sectionBodies.map}
+          {...proseContext}
+          onEnlarge={openEnlargedImage}
+        />
         {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
           <MetaStoryMap
             geoMap={metaStoryData.geo_map}
@@ -719,8 +801,15 @@
         <h2>
           {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
         </h2>
-        <MetaStoryFigure image={sectionImages.conclusion} />
-        <MetaStoryBody blocks={sectionBodies.conclusion} {...proseContext} />
+        <MetaStoryFigure
+          image={sectionImages.conclusion}
+          onEnlarge={openEnlargedImage}
+        />
+        <MetaStoryBody
+          blocks={sectionBodies.conclusion}
+          {...proseContext}
+          onEnlarge={openEnlargedImage}
+        />
         <p>
           <MetaStoryProse text={metaStoryData.conclusion} {...proseContext} />
         </p>
@@ -728,6 +817,14 @@
     {/if}
   </div>
 {/if}
+
+<ImageViewer
+  image={enlargedImage}
+  allImages={enlargedGallery}
+  currentIndex={enlargedIndex}
+  onClose={closeEnlargedImage}
+  onNavigate={handleImageNavigate}
+/>
 
 <AIDisclaimerModal show={showAIModal} onClose={closeAIModal} />
 
