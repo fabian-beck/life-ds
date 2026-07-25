@@ -81,7 +81,11 @@
   $: yearsLabel = computeYearsLabel(person);
   $: roles = Array.isArray(person?.primary_roles) ? person.primary_roles : [];
   $: eventSlides = events
-    .slice()
+    // Capture each event's original position in the source array before
+    // sorting — external references (LandingMap markers, meta-story
+    // event_index entries) address events by this raw position, not by
+    // where the story's chronological sort ends up placing them.
+    .map((event, rawIndex) => ({ ...event, rawIndex }))
     .sort((a, b) => toTimestamp(a) - toTimestamp(b))
     .map((event, eventIndex) => ({ ...event, eventIndex }))
     .map((event) => ({
@@ -276,6 +280,23 @@
     return map;
   })();
 
+  // Map each event's RAW source-array index to its slide index. This is the
+  // identity external links use (LandingMap markers, meta-story event_index
+  // references are both generated from the person's events array in its
+  // original order), which can differ from the chronological sort position
+  // above whenever dates aren't already in strict array order.
+  $: rawEventIndexToSlideIndex = (() => {
+    const map = new Map();
+
+    slides.forEach((slide, slideIndex) => {
+      if (slide.type === "event" && typeof slide.rawIndex === "number") {
+        map.set(slide.rawIndex, slideIndex);
+      }
+    });
+
+    return map;
+  })();
+
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
   $: hasNetworkConnections =
@@ -332,15 +353,19 @@
   // Track the last processed targetEventIndex to avoid reprocessing
   let lastProcessedEventIndex = null;
 
-  // Convert targetEventIndex to slide index when dataset is ready
+  // Convert targetEventIndex (a raw source-array index, per LandingMap and
+  // meta-story event_index references) to a slide index when dataset is
+  // ready. Resolved via rawEventIndexToSlideIndex, not eventIndexToSlideIndex
+  // — the latter is keyed by chronological-sort position, which can differ
+  // from the raw index external links actually address.
   $: if (
     targetEventIndex !== null &&
     targetEventIndex !== undefined &&
     targetEventIndex !== lastProcessedEventIndex &&
-    eventIndexToSlideIndex &&
-    eventIndexToSlideIndex.size > 0
+    rawEventIndexToSlideIndex &&
+    rawEventIndexToSlideIndex.size > 0
   ) {
-    const targetSlideIndex = eventIndexToSlideIndex.get(
+    const targetSlideIndex = rawEventIndexToSlideIndex.get(
       Number(targetEventIndex)
     );
 
