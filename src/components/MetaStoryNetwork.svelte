@@ -106,7 +106,78 @@
   $: MAIN_R = compact ? 23 : 30;
   $: SECONDARY_R = compact ? 9 : 11;
   $: height = compact ? 640 : 520;
-  $: insetX = compact ? 62 : 82;
+
+  // Label sizing. The font size is set inline (not from CSS) because the wrap
+  // width below is computed from it — a media query that disagreed with the
+  // JS breakpoint would break lines in the wrong places.
+  $: MAIN_LABEL_FS = compact ? 11 : 13;
+  $: SECONDARY_LABEL_FS = compact ? 9.5 : 10.5;
+  $: MAIN_LABEL_MAX_W = compact ? 104 : 150;
+  $: SECONDARY_LABEL_MAX_W = compact ? 84 : 110;
+  $: MAIN_LINE_H = MAIN_LABEL_FS + 2;
+  $: SECONDARY_LINE_H = SECONDARY_LABEL_FS + 2;
+
+  // Horizontal insets reserve room for the (centered, wrapped) label under a
+  // node, so no name can be clipped at the frame edge.
+  $: insetX = MAIN_LABEL_MAX_W / 2 + 6;
+  $: secondaryInsetX = SECONDARY_LABEL_MAX_W / 2 + 6;
+
+  // SVG text does not wrap, so long names are split into lines by an estimated
+  // advance width — the label font may not even be loaded when the layout is
+  // computed, which makes measuring unreliable at that moment.
+  const NARROW_CHARS = new Set([..."ijlrtfI.,;:'!|( )"]);
+  const WIDE_CHARS = new Set([..."MWmw@"]);
+  function estimateTextWidth(text, fontSize) {
+    let units = 0;
+    for (const ch of text) {
+      units += NARROW_CHARS.has(ch) ? 0.36 : WIDE_CHARS.has(ch) ? 0.92 : 0.6;
+    }
+    return units * fontSize;
+  }
+
+  // Greedy word wrap. Once the last allowed line is reached the remaining words
+  // stay on it — an overlong final line beats dropping part of a name.
+  function wrapLabel(text, fontSize, maxWidth, maxLines) {
+    const words = String(text ?? "")
+      .split(/\s+/)
+      .filter(Boolean);
+    if (!words.length) return [];
+    const lines = [];
+    let current = words[0];
+    for (const word of words.slice(1)) {
+      const candidate = `${current} ${word}`;
+      const onLastLine = lines.length === maxLines - 1;
+      if (!onLastLine && estimateTextWidth(candidate, fontSize) > maxWidth) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = candidate;
+      }
+    }
+    lines.push(current);
+    return lines;
+  }
+
+  const MAX_LABEL_LINES = 3;
+
+  function labelLines(node) {
+    const main = node.type === "main";
+    return wrapLabel(
+      displayName(node.name),
+      main ? MAIN_LABEL_FS : SECONDARY_LABEL_FS,
+      main ? MAIN_LABEL_MAX_W : SECONDARY_LABEL_MAX_W,
+      MAX_LABEL_LINES
+    );
+  }
+
+  // Vertical room a node's label needs below its center (offset + wrapped
+  // lines + a little breathing space at the frame edge).
+  function labelExtent(node) {
+    const main = node.type === "main";
+    const lines = labelLines(node).length || 1;
+    const lineHeight = main ? MAIN_LINE_H : SECONDARY_LINE_H;
+    return (main ? 16 : 13) + (lines - 1) * lineHeight + 8;
+  }
 
   let simulation = null;
   let simNodes = [];
@@ -498,14 +569,15 @@
   }
 
   // Keep nodes (and their labels) within the frame. The horizontal inset
-  // reserves room for the label text centered under each node; the top strip
-  // keeps nodes and their upper halo clear of the frame edge.
+  // reserves room for the wrapped label centered under each node; the top strip
+  // keeps nodes and their upper halo clear of the frame edge, and the bottom
+  // one grows with the number of label lines.
   function clampNodes() {
     for (const n of simNodes) {
       const r = n.type === "main" ? MAIN_R : SECONDARY_R;
-      const ix = n.type === "main" ? insetX : insetX - 22;
+      const ix = n.type === "main" ? insetX : secondaryInsetX;
       n.x = Math.max(ix, Math.min(width - ix, n.x));
-      n.y = Math.max(r + 40, Math.min(height - r - 24, n.y));
+      n.y = Math.max(r + 40, Math.min(height - r - labelExtent(n), n.y));
     }
   }
 
@@ -679,9 +751,15 @@
                         opacity="0.35"
                       />
                     {/if}
-                    <text class="label main-label" y={MAIN_R + 16}>
-                      {displayName(node.name)}
-                    </text>
+                    <text
+                      class="label main-label"
+                      y={MAIN_R + 16}
+                      style="font-size: {MAIN_LABEL_FS}px"
+                      >{#each labelLines(node) as line, i}<tspan
+                          x="0"
+                          dy={i === 0 ? 0 : MAIN_LINE_H}>{line}</tspan
+                        >{/each}</text
+                    >
                   {:else}
                     <circle
                       r={SECONDARY_R}
@@ -689,9 +767,15 @@
                       stroke={SECONDARY_COLOR}
                       stroke-width="1.5"
                     />
-                    <text class="label secondary-label" y={SECONDARY_R + 13}>
-                      {displayName(node.name)}
-                    </text>
+                    <text
+                      class="label secondary-label"
+                      y={SECONDARY_R + 13}
+                      style="font-size: {SECONDARY_LABEL_FS}px"
+                      >{#each labelLines(node) as line, i}<tspan
+                          x="0"
+                          dy={i === 0 ? 0 : SECONDARY_LINE_H}>{line}</tspan
+                        >{/each}</text
+                    >
                   {/if}
                 </g>
               {/if}
@@ -925,13 +1009,12 @@
     stroke-linejoin: round;
   }
 
+  /* font-size is set inline — the wrap width is derived from it in JS. */
   .main-label {
-    font-size: 13px;
     font-weight: 600;
   }
 
   .secondary-label {
-    font-size: 10.5px;
     font-weight: 500;
     fill: #cbd5e1;
   }
@@ -1139,12 +1222,14 @@
   }
 
   @media (max-width: 640px) {
-    .main-label {
-      font-size: 11px;
+    /* On phones the graph breaks out of the story column and uses the full
+       viewport width (same full-bleed trick as the map section), so a crowded
+       cast gets every pixel available. The narration cards stay in the column. */
+    .mnet-sticky {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
     }
-    .secondary-label {
-      font-size: 9.5px;
-    }
+
     .step-card {
       width: min(28rem, 100%);
       padding: 0.95rem 1.05rem 1.05rem;
