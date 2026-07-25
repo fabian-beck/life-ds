@@ -264,6 +264,45 @@
     return false;
   }
 
+  // SVG has no z-index — paint order IS document order. So links and nodes are
+  // drawn from ONE re-sorted list instead of two fixed groups, in four layers:
+  // dimmed links, dimmed nodes, highlighted links, highlighted nodes. A
+  // highlighted tie therefore runs in front of the dimmed portraits and labels
+  // it passes, while the highlighted nodes still cap their own edges. With
+  // nothing highlighted this collapses to the plain "all links, then all
+  // nodes" order.
+  function buildDrawItems(links, nodes, aId, nIds, cIds) {
+    const items = [];
+    for (const link of links) {
+      items.push({
+        kind: "link",
+        key: `l:${link.source}-${link.target}`,
+        link,
+        layer: linkState(link, aId, cIds) === "active" ? 2 : 0,
+      });
+    }
+    for (const node of nodes) {
+      const dim = isDimmed(node.id, aId, nIds, cIds);
+      items.push({
+        kind: "node",
+        key: `n:${node.id}`,
+        node,
+        dim,
+        layer: dim ? 1 : 3,
+      });
+    }
+    // Array.sort is stable, so ordering within a layer stays as built.
+    return items.sort((a, b) => a.layer - b.layer);
+  }
+
+  $: drawItems = buildDrawItems(
+    simLinks,
+    simNodes,
+    activeId,
+    neighborIds,
+    clusterIds
+  );
+
   // A step activates while its card crosses the lower third of the viewport,
   // so the highlight is readable before the card covers the graph, and stays
   // active until the next card takes over. The observer only says WHEN to look
@@ -543,49 +582,98 @@
             {/each}
           </defs>
 
-          <!-- Links -->
-          <g class="links" stroke-linecap="round">
-            {#each simLinks as link (`${link.source}-${link.target}`)}
-              {@const s = posById.get(link.source)}
-              {@const t = posById.get(link.target)}
-              {#if s && t}
-                <line
-                  x1={s.x}
-                  y1={s.y}
-                  x2={t.x}
-                  y2={t.y}
-                  stroke={linkStroke(link, activeId, clusterIds)}
-                  stroke-width={linkWidth(link)}
-                  stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
-                  opacity={linkOpacity(link, activeId, clusterIds)}
-                >
-                  <title
-                    >{humanizeRelationship(
-                      link.relationship_type
-                    )}{link.relationship_description
-                      ? " — " + link.relationship_description
-                      : ""}</title
+          <!-- Links and nodes share one list so highlighted ties can be lifted
+               above dimmed nodes (see buildDrawItems). -->
+          <g class="draw" stroke-linecap="round">
+            {#each drawItems as item (item.key)}
+              {#if item.kind === "link"}
+                {@const link = item.link}
+                {@const s = posById.get(link.source)}
+                {@const t = posById.get(link.target)}
+                {#if s && t}
+                  <line
+                    x1={s.x}
+                    y1={s.y}
+                    x2={t.x}
+                    y2={t.y}
+                    stroke={linkStroke(link, activeId, clusterIds)}
+                    stroke-width={linkWidth(link)}
+                    stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
+                    opacity={linkOpacity(link, activeId, clusterIds)}
                   >
-                </line>
+                    <title
+                      >{humanizeRelationship(
+                        link.relationship_type
+                      )}{link.relationship_description
+                        ? " — " + link.relationship_description
+                        : ""}</title
+                    >
+                  </line>
+                {/if}
+              {:else}
+                {@const node = item.node}
+                {@const dim = item.dim}
+                <g
+                  class="node"
+                  class:main={node.type === "main"}
+                  class:secondary={node.type === "secondary"}
+                  class:dim
+                  class:selected={node.id === selectedId}
+                  transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
+                >
+                  {#if node.type === "main"}
+                    <circle
+                      class="halo"
+                      r={MAIN_R + 3}
+                      fill="none"
+                      stroke={primaryColor(node.id)}
+                      stroke-width={node.id === selectedId ? 4.5 : 3}
+                    />
+                    {#if node.portrait}
+                      <image
+                        href={node.portrait}
+                        x={-MAIN_R}
+                        y={-MAIN_R}
+                        width={MAIN_R * 2}
+                        height={MAIN_R * 2}
+                        clip-path={`url(#${clipId(node.id)})`}
+                        preserveAspectRatio="xMidYMid slice"
+                      />
+                    {:else}
+                      <circle
+                        r={MAIN_R}
+                        fill={primaryColor(node.id)}
+                        opacity="0.35"
+                      />
+                    {/if}
+                    <text class="label main-label" y={MAIN_R + 16}>
+                      {displayName(node.name)}
+                    </text>
+                  {:else}
+                    <circle
+                      r={SECONDARY_R}
+                      fill="#1e293b"
+                      stroke={SECONDARY_COLOR}
+                      stroke-width="1.5"
+                    />
+                    <text class="label secondary-label" y={SECONDARY_R + 13}>
+                      {displayName(node.name)}
+                    </text>
+                  {/if}
+                </g>
               {/if}
             {/each}
           </g>
 
-          <!-- Nodes -->
-          <g class="nodes">
+          <!-- Hit targets and tooltips, in a layer that is NEVER reordered:
+               the draw layer above moves its elements around on every
+               highlight change, and moving the element under the pointer
+               makes browsers fire a spurious pointerleave — which would
+               cancel the very hover that caused the move. -->
+          <g class="hits">
             {#each simNodes as node (node.id)}
-              {@const dim = isDimmed(
-                node.id,
-                activeId,
-                neighborIds,
-                clusterIds
-              )}
               <g
-                class="node"
-                class:main={node.type === "main"}
-                class:secondary={node.type === "secondary"}
-                class:dim
-                class:selected={node.id === selectedId}
+                class="hit"
                 transform={`translate(${node.x ?? width / 2}, ${node.y ?? height / 2})`}
                 on:pointerup={(e) => selectNode(node, e)}
                 on:pointerenter={() => (hoveredId = node.id)}
@@ -597,46 +685,10 @@
                     ? " — " + node.roles.join(", ")
                     : ""}</title
                 >
-
-                {#if node.type === "main"}
-                  <circle
-                    class="halo"
-                    r={MAIN_R + 3}
-                    fill="none"
-                    stroke={primaryColor(node.id)}
-                    stroke-width={node.id === selectedId ? 4.5 : 3}
-                  />
-                  {#if node.portrait}
-                    <image
-                      href={node.portrait}
-                      x={-MAIN_R}
-                      y={-MAIN_R}
-                      width={MAIN_R * 2}
-                      height={MAIN_R * 2}
-                      clip-path={`url(#${clipId(node.id)})`}
-                      preserveAspectRatio="xMidYMid slice"
-                    />
-                  {:else}
-                    <circle
-                      r={MAIN_R}
-                      fill={primaryColor(node.id)}
-                      opacity="0.35"
-                    />
-                  {/if}
-                  <text class="label main-label" y={MAIN_R + 16}>
-                    {displayName(node.name)}
-                  </text>
-                {:else}
-                  <circle
-                    r={SECONDARY_R}
-                    fill="#1e293b"
-                    stroke={SECONDARY_COLOR}
-                    stroke-width="1.5"
-                  />
-                  <text class="label secondary-label" y={SECONDARY_R + 13}>
-                    {displayName(node.name)}
-                  </text>
-                {/if}
+                <circle
+                  r={node.type === "main" ? MAIN_R + 3 : SECONDARY_R + 2}
+                  fill="transparent"
+                />
               </g>
             {/each}
           </g>
@@ -804,9 +856,15 @@
     }
   }
 
+  /* Purely visual: the draw layer is re-sorted for stacking, so all pointer
+     interaction lives in the stable .hits layer instead. */
   .node {
-    cursor: pointer;
+    pointer-events: none;
     transition: filter 0.18s ease;
+  }
+
+  .hit {
+    cursor: pointer;
   }
 
   /* Blend out non-focused nodes by DARKENING them (kept fully opaque) so the
