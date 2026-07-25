@@ -17,7 +17,7 @@ clustering in ``meta_story_map.py``:
    — complete-linkage geographic clustering with the rated weights; top
    clusters are selected and ordered chronologically.
 3. **Narration agent** (:func:`narrate_map_clusters`, one AI call) — writes
-   the section intro and one card (headline + short story text) per cluster,
+   one card (headline + short story text) per cluster,
    and **curates how many stops the map has**: it keeps only the places that
    genuinely matter to the story (usually no more than ~5), discarding both
    accidental groupings (events merely sharing a city) and real-but-secondary
@@ -117,13 +117,6 @@ class MapStopNarration(BaseModel):
 class MapNarrationResult(BaseModel):
     """AI-written narration for the map scroll-over cards."""
 
-    intro: str = Field(
-        description="A 2-3 sentence opening paragraph for the map section, "
-        "written like a book's opening: evocative and thematic about the "
-        "geography this story moves through, in the third person, never "
-        "addressed to the reader. Do NOT name the individual places or "
-        "preview the specific stops (those are revealed later)."
-    )
     stops: List[MapStopNarration]
 
 
@@ -263,7 +256,7 @@ def narrate_map_clusters(
     reasoning_effort: str = "medium",
     verbose: bool = False,
 ) -> Optional[MapNarrationResult]:
-    """One AI call: intro + per-cluster card texts, with a discard option."""
+    """One AI call: per-cluster card texts, with a discard option."""
     meta = dataset.get("meta_story", {}) or {}
     briefs = "\n\n".join(_cluster_brief(c) for c in clusters)
     max_candidates = len(clusters)
@@ -299,11 +292,6 @@ At least a few stops must survive, so do not discard so aggressively that the
 map becomes trivial.
 
 REQUIREMENTS:
-- intro: a 2-3 sentence opening paragraph, written the way an author opens a
-  chapter — evocative about the geography this story moves through (what kind
-  of places, how far the story travels, what the movement means). Do NOT name
-  the individual places, do NOT preview or list the specific stops (that
-  would spoil what follows), and do NOT explain how to read the map.
 - One entry per stop, in the given order, with `key` copied EXACTLY.
 - Each kept stop's title: a short, evocative headline (2-5 words) in the
   spirit of a book chapter — capture what this place meant to the story. Do
@@ -415,8 +403,8 @@ def apply_map_narration(
         print(f"  Narrated {len(stops)} of {len(kept)} kept stop(s)")
 
     geo_map: Dict[str, Any] = {"clusters": kept}
-    if narration.intro or stops:
-        geo_map["narration"] = {"intro": narration.intro, "stops": stops}
+    if stops:
+        geo_map["narration"] = {"stops": stops}
     if discarded:
         geo_map["discarded"] = [
             {"key": d["key"], "label": d["label"], "reason": d["reason"]}

@@ -23,11 +23,12 @@ The composer works in three AI calls:
 2. **Composition** — writes the story's full prose in one voice, guided by
    the throughline and grounded in the source material: title, tagline, an
    ``opening`` cold-open scene, the description, story-specific
-   ``section_headings`` (now including the map), the per-section standfirst
-   intros, free-form **``section_bodies``** (flexible sequences of
-   paragraph / image / quote blocks rendered between each section's heading
-   and its interactive component), chapter headlines plus lead-ins, subtopic
-   texts, sparse refinements of event theme connections, the network
+   ``section_headings`` (now including the map), free-form
+   **``section_bodies``** (flexible sequences of paragraph / image / quote
+   blocks rendered between each section's heading and its interactive
+   component — a section carries no other prose), chapter headlines plus
+   lead-ins, subtopic texts, sparse refinements of event theme connections,
+   the network
    narration — where the composer may now **reorganize the circles** (merge,
    split, reorder, or discard clusters via explicit ``member_ids``) — the
    map narration — where it may likewise **reorder and discard stops** — and
@@ -36,7 +37,7 @@ The composer works in three AI calls:
    prose and rewrites the slots that repeat one another. Call 2 juggles some
    fifteen prose objectives against a single throughline and resolves that
    tension by restating the throughline everywhere, so the same point lands in
-   the description, the standfirsts, the bodies and the conclusion. It cannot
+   the description, the section bodies and the conclusion. It cannot
    police this in itself; a call with one job can. Revisions are patched back
    into the composition result before it is applied, so they pass through the
    same defensive application path as everything else. Non-fatal, and opt out
@@ -339,28 +340,9 @@ class CompositionResult(BaseModel):
     section_headings: ComposedSectionHeadings = Field(
         description="Story-specific headings for the main sections"
     )
-    timeline_intro: str = Field(
-        description="1-3 sentence standfirst shown right under the "
-        "chronology heading, naming the one question this section answers: "
-        "what changed over these years. Written about the history itself — "
-        "never addressed to the reader, never a meta-reference to the "
-        "timeline, never the story's general thesis restated."
-    )
-    network_intro: str = Field(
-        description="1-3 sentence standfirst for the network section, "
-        "consistent with the timeline texts but on its own question: what "
-        "travelled between these people. No individual names, no preview of "
-        "the circles, no reading guide, no restatement of the description."
-    )
-    map_intro: Optional[str] = Field(
-        default=None,
-        description="1-3 sentence standfirst for the places section on its "
-        "own question — what these locations made possible that others did "
-        "not — or null when the story has no map.",
-    )
     section_bodies: ComposedSectionBodies = Field(
         description="The story's narrative depth: free-form blocks per "
-        "section, rendered between the standfirst and the section's "
+        "section, rendered between the section heading and the section's "
         "interactive component"
     )
     chapters: List[ComposedChapter] = Field(
@@ -670,9 +652,6 @@ def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
                 f"{link.get('strength', '')}]: "
                 f"{link.get('relationship_description', '')}"
             )
-        narration = network.get("narration") or {}
-        if narration.get("intro"):
-            parts.append(f"NETWORK INTRO (draft): {narration['intro']}")
         circles = _current_circles(dataset)
         if circles:
             parts.append("CURRENT CIRCLES (the network's current organization):")
@@ -714,8 +693,6 @@ def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
                     f"  Narration draft: \"{draft.get('title', '')}\" — "
                     f"{draft.get('text', '')}"
                 )
-        if map_narration.get("intro"):
-            parts.append(f"MAP INTRO (draft): {map_narration['intro']}")
 
     parts.append("")
     parts.append(f"CONCLUSION (draft):\n{dataset.get('conclusion', '')}")
@@ -992,7 +969,6 @@ def run_composition(
 
     map_instructions = (
         """
-- map_intro: 1-3 sentence standfirst for the places section.
 - map_stops: you own the places section's dramaturgy. Keep the stops that
   carry the story, ORDER them so the section reads as a journey (chronology
   is the default, but a deliberate dramaturgical order is allowed), and give
@@ -1004,8 +980,8 @@ def run_composition(
   stops must remain."""
         if has_map
         else """
-- map_intro / map_stops / discarded_map_stops: this story has no map section
-  — return null / empty lists."""
+- map_stops / discarded_map_stops: this story has no map section
+  — return empty lists."""
     )
 
     prompt = f"""Compose the final narrative for this meta story. All existing texts are
@@ -1036,7 +1012,7 @@ one must ADVANCE the story — carry information the previous ones did not. The
 throughline is your anchor, but it is NOT the content of every slot: state it
 outright AT MOST ONCE, in the slot that owns it, and let the others do their
 own work. A reader who has read the opening must learn something new from the
-description, and again from each standfirst, each body, and the conclusion.
+description, and again from each section body and the conclusion.
 
   slot            | owns                        | must NOT contain
   ----------------|-----------------------------|---------------------------
@@ -1046,14 +1022,10 @@ description, and again from each standfirst, each body, and the conclusion.
                   | issue, why it was hard,      | the outcome or legacy
                   | what world these people      | (the conclusion owns that)
                   | worked in                    |
-  section         | the ONE question that        | the general thesis; a
-  standfirsts     | section answers, specific    | restatement of the
-                  | to chronology / ties /       | description in shorter
-                  | geography                    | words
-  section bodies  | EVIDENCE: named people,      | a restatement of the
-                  | dated turning points, what   | standfirst above it; the
-                  | actually happened and what   | thesis in general terms
-                  | it cost                      |
+  section bodies  | EVIDENCE: named people,      | the general thesis in
+                  | dated turning points, what   | general terms; a
+                  | actually happened and what   | restatement of the
+                  | it cost                      | description
   conclusion      | the CONSEQUENCE: what this   | the description's framing
                   | left behind, what it settled | again; a summary of the
                   | and what it did not          | sections just read
@@ -1088,20 +1060,17 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   essay — specific to this story, carrying its arc forward. Generic labels
   ("Timeline", "Chapters", "Connections", "Network", "Places", "Map",
   "Conclusion", "Legacy") are forbidden.
-- timeline_intro / network_intro: 1-3 sentence standfirsts shown right under
-  the respective section heading. Each names the ONE question its section
-  answers — for the chronology, what changed over these years; for the
-  network, what actually travelled between these people — and each must be
-  answerable only by that section. Write about the history itself, never
-  about the interface ("The chronology begins...", "This story follows..."
-  are meta-references and are forbidden).
-- section_bodies: THE STORY'S NARRATIVE DEPTH. For each section, a sequence
-  of blocks rendered between the standfirst and the section's interactive
-  component. This is where the real storytelling happens — write it like the
-  running text of a long-form magazine feature. Bodies carry the EVIDENCE:
-  named people, dated turning points, concrete outcomes. A body paragraph
-  that could be understood without knowing which story it belongs to is
-  too general — replace it with what happened:
+- section_bodies: THE STORY'S NARRATIVE DEPTH, and the ONLY prose a section
+  carries. For each section, a sequence of blocks rendered directly under the
+  section heading, above the section's interactive component. This is where
+  the real storytelling happens — write it like the running text of a
+  long-form magazine feature. There is no standfirst under the heading, so
+  the first paragraph opens the section itself: start it INSIDE the material
+  (a name, a date, a place), never with a general framing sentence about what
+  the section is about. Bodies carry the EVIDENCE: named people, dated
+  turning points, concrete outcomes. A body paragraph that could be understood
+  without knowing which story it belongs to is too general — replace it with
+  what happened:
   - timeline: 2-4 blocks that tell the era's arc as a story — its documented
     turning points, reversals, and what changed hands between the people —
     WITHOUT enumerating the chapters (the timeline itself shows them).
@@ -1229,8 +1198,8 @@ HARD RULES (journalistic standard):
 #
 # The composition call has ~15 prose objectives and one throughline to anchor
 # them, and it reliably resolves that tension by restating the throughline in
-# every slot: the same thesis then appears in the description, the standfirsts,
-# the bodies and the conclusion, and the page reads as one point made five
+# every slot: the same thesis then appears in the description, the section
+# bodies and the conclusion, and the page reads as one point made five
 # times. The DIVISION OF LABOUR contract in the composition prompt is the
 # primary fix; this pass is the check on it, in the spirit of the verbatim
 # quote check — except that a repeated claim cannot simply be dropped (the slot
@@ -1269,11 +1238,8 @@ class RedundancyPassResult(BaseModel):
 PROSE_SLOT_ORDER = (
     "opening",
     "description",
-    "timeline_intro",
     "body:timeline",
-    "network_intro",
     "body:network",
-    "map_intro",
     "body:map",
     # The closing section's body is rendered above the closing statement.
     "body:conclusion",
@@ -1292,18 +1258,6 @@ PROSE_SLOT_ROLES = {
     "description": (
         "the stakes: what was at issue, why it was hard, what world these "
         "people worked in; never the outcome or legacy"
-    ),
-    "timeline_intro": (
-        "the chronology section's standfirst — the one question it answers, "
-        "what changed over these years; never the story's general thesis"
-    ),
-    "network_intro": (
-        "the network section's standfirst — what travelled between these "
-        "people; never a restatement of the description"
-    ),
-    "map_intro": (
-        "the places section's standfirst — what these locations made "
-        "possible that others did not"
     ),
     "conclusion": (
         "the consequence: what this history left behind, what it settled and "
@@ -1371,9 +1325,6 @@ def collect_prose_slots(composed: CompositionResult) -> List[tuple]:
     add("opening", "opening", composed.opening.text)
     add("description", "description", composed.description)
     for section in ("timeline", "network", "map", "conclusion"):
-        intro_field = f"{section}_intro"
-        if section != "conclusion":
-            add(intro_field, intro_field, getattr(composed, intro_field, None))
         for index, block in enumerate(getattr(composed.section_bodies, section) or []):
             if block.type == "paragraph":
                 add(f"body:{section}:{index}", f"body:{section}", block.text)
@@ -1469,10 +1420,10 @@ WHAT COUNTS AS REPETITION:
 WHAT DOES NOT COUNT:
 - The same PERSON, PLACE, or EVENT appearing in several slots — recurring
   cast is normal; only a recurring POINT is the problem.
-- A body paragraph giving the concrete evidence for something a standfirst
-  named in the abstract. That is the intended structure: the standfirst asks,
-  the body answers. Only flag it when the body merely repeats the abstraction
-  without adding specifics.
+- A body paragraph giving the concrete evidence for something the description
+  named in the abstract. That is the intended structure: the description
+  frames, the bodies answer. Only flag it when the body merely repeats the
+  abstraction without adding specifics.
 - Deliberate echoes across a long distance where the later use genuinely
   advances the idea rather than restating it.
 
@@ -1491,7 +1442,7 @@ WHEN YOU FIND ONE:
   it shorter and more concrete rather than padding it.
 
 Return ONLY the slots you actually rewrote, with the slot id copied exactly as
-it appears after "slot:" above (e.g. timeline_intro, body:network:1) — bare,
+it appears after "slot:" above (e.g. description, body:network:1) — bare,
 with no brackets or other decoration.
 Most stories need few or no revisions — an empty list is a good outcome, and
 is much better than rewriting text that was already doing its job."""
@@ -1676,11 +1627,6 @@ def _apply_network_circles(
     if not isinstance(network, dict) or not network.get("nodes"):
         return
 
-    def set_intro(narration: Dict[str, Any]) -> None:
-        intro = composed.network_intro.strip()
-        if intro:
-            narration["intro"] = intro
-
     main_nodes = {
         n["id"]: n for n in network.get("nodes") or [] if n.get("type") == "main"
     }
@@ -1742,19 +1688,16 @@ def _apply_network_circles(
         )
         narration = network.get("narration")
         if isinstance(narration, dict):
-            set_intro(narration)
+            # The section no longer renders an intro paragraph; drop a leftover
+            # one from stories composed before that change.
+            narration.pop("intro", None)
         return
 
     left_out = sorted(linked_mains - used)
     if left_out and verbose:
         print(f"  People outside all circles: {', '.join(left_out)}")
 
-    narration = {
-        "intro": (network.get("narration") or {}).get("intro", ""),
-        "circles": circles,
-    }
-    set_intro(narration)
-    network["narration"] = narration
+    network["narration"] = {"circles": circles}
     if verbose:
         print(f"  Composed {len(circles)} circle(s): {[c['title'] for c in circles]}")
 
@@ -1844,13 +1787,11 @@ def _apply_map_composition(
                 stop_by_key[key] = prev_stop_by_key[key]
 
     geo_map["clusters"] = kept
-    narration: Dict[str, Any] = {
-        "intro": (composed.map_intro or "").strip() or previous.get("intro", ""),
+    geo_map["narration"] = {
         "stops": [
             stop_by_key[c.get("key")] for c in kept if c.get("key") in stop_by_key
         ],
     }
-    geo_map["narration"] = narration
 
     if discard_reasons:
         discarded_list = geo_map.get("discarded") or []
@@ -1930,8 +1871,9 @@ def apply_composition(
     }
     if headings:
         dataset["section_headings"] = headings
-    if composed.timeline_intro.strip():
-        dataset["timeline_intro"] = composed.timeline_intro.strip()
+    # Sections carry no standfirst any more; drop one left over from a story
+    # composed before that change.
+    dataset.pop("timeline_intro", None)
     if composed.conclusion.strip():
         dataset["conclusion"] = composed.conclusion.strip()
 
@@ -2182,7 +2124,6 @@ def compose_and_save(
             print(f"    Chapter: {chapter.get('title', '')}")
             if chapter.get("lead_in"):
                 print(f"      Lead-in: {chapter['lead_in']}")
-        print(f"    Timeline intro: {composed.get('timeline_intro', '')}")
         narration = (composed.get("social_network") or {}).get("narration") or {}
         for circle in narration.get("circles") or []:
             print(
