@@ -1332,7 +1332,8 @@ _WORD = re.compile(r"[a-z][a-z'’-]+")
 
 # Function words carry no topical signal; without them near-duplicate
 # sentences and unrelated ones score alike.
-_STOPWORDS = frozenset("""
+_STOPWORDS = frozenset(
+    """
     the a an and or but nor for yet so as at by from in into of off on onto out over to
     up with within without upon after before during since until while about against
     among around between through under above below across along
@@ -1343,7 +1344,8 @@ _STOPWORDS = frozenset("""
     all any both each few more most other some such only own same too very
     one two three first second new made make making made became become becomes
     also still just even much many
-    """.split())
+    """.split()
+)
 
 
 def _content_words(text: str) -> set:
