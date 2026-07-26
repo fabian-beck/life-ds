@@ -3003,6 +3003,11 @@
     line-height: 1;
   }
 
+  .person-birth {
+    position: sticky;
+    left: 0;
+  }
+
   /* Scroll position indicator - full height */
   .scroll-indicator {
     position: absolute;
