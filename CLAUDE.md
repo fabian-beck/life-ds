@@ -247,17 +247,20 @@ A circle's `key` is its cluster key — the cluster's main person ids in cluster
 order joined with `+` — computed identically by `derive_clusters()` in
 `scripts/meta_story_network.py` and `computeClusters()` in the UI, which
 matches narration to clusters by that key. **Composed stories** additionally
-carry an explicit `member_ids` list per circle: the Phase 8 composer may
-reorganize the circles (merge, split, reorder, or discard clusters), and when
+carry an explicit `member_ids` list per circle: the Phase 8 composer's
+caption-layer call may reorganize the circles (merge, split, reorder, or
+discard clusters), and when
 `member_ids` are present the UI builds the circles from them directly (in
 authored order; secondary nodes join the circle holding most of their main
 neighbors) instead of running community detection. Each circle's `title` is a
 short evocative headline (not a list of names), shown as the card's heading;
 when a circle has no `title` (older data) the card falls back to a joined
 list of the members' names. Narration is written by AI as **Phase 6** of
-`generate_meta_story.py` (non-fatal on failure) and then rewritten in the
-story's unified voice by the Phase 8 composer (see "Meta Story Composition"
-below); when a cluster has no matching
+`generate_meta_story.py` (non-fatal on failure) and then rewritten by the
+Phase 8 composer's caption-layer call — the circle texts belong to the caption
+layer, so they describe their own members' documented ties and leave the
+story's argument to the article layer (see "Meta Story Composition" below);
+when a cluster has no matching
 `text` (e.g. the network changed and narration wasn't regenerated), the card
 falls back to listing the cluster's ties. Unlike the rest of `social_network`,
 narration texts (both `title` and `text`) ARE part of the translation payload
@@ -415,18 +418,29 @@ the section itself carries no standfirst, only its composed body prose.
 
 ### Meta Story Composition (Phase 8 — Story Composer)
 
-Every text in a meta story is originally written bottom-up by a phase that only
-sees its own slice (description/conclusion before events exist, theme
-connections per batch, network narration from the graph alone). **Phase 8**
+A meta story page carries **two layers of text**, and keeping them apart is
+what the composer is for:
+
+- The **caption layer** is bound one-to-one to something the reader is looking
+  at — a chapter band of the timeline, an event on it, a circle in the graph, a
+  stop on the map. It says what *that item* is: concrete, short, factual.
+- The **article layer** is the running prose *between* the components — the
+  opening, description, `section_bodies`, conclusion. It
+  says what the components structurally cannot: the world these lives happened
+  inside, the conditions that produced the sequence, what it cost, what
+  followed. **Context, not recap.**
+
+Every text is originally written bottom-up by a phase that only sees its own
+slice (description/conclusion before events exist, theme connections per batch,
+network narration from the graph alone). **Phase 8**
 (`scripts/compose_meta_story.py`, run automatically at the end of
 `generate_meta_story.py` after the map phase, opt out with `--skip-compose`)
-is a story composer agent that reads the *assembled* story top-down — the
-brief now includes per-event description excerpts from the people's
-`life_events.json`, the full network tie set, the current circle
-organization, the map stops, **and focused Wikipedia excerpts for every main
-person** (article lead + sentences mentioning other main people, via
-`build_wikipedia_context` shared with Phase 5b) — and writes one coherent,
-journalistic narrative in three AI calls:
+reads the *assembled* story top-down — per-event description excerpts from the
+people's `life_events.json`, the full network tie set, the current circle
+organization, the map stops, the chapters' `historical_context`, **and focused
+Wikipedia excerpts for every main person** (article lead + sentences mentioning
+other main people, via `build_wikipedia_context` shared with Phase 5b) — and
+rewrites both layers in four AI calls:
 
 1. **Curation** — decides a *throughline* (the arc that anchors all prose) and,
    exceptionally, which clearly disconnected people to drop. Exclusions are
@@ -436,63 +450,124 @@ journalistic narrative in three AI calls:
    `person_events`, the social network, and the map. The network is **pruned,
    not re-derived**, so Phase 5b review edits on surviving ties are kept;
    secondary nodes that no longer bridge ≥2 main people are removed.
-2. **Composition** — writes the story's full prose in one voice: title,
-   tagline, a top-level **`opening`** (a cold-open scene anchored in one
-   specific event or person — rendered with a drop cap between the date range
-   and the description, optionally with an image floated beside it), the
-   description, story-specific **`section_headings`**
-   (`{timeline, network, map?, conclusion}`, replacing the generic labels —
-   the UI falls back to the localized labels when absent), free-form
-   **`section_bodies`** — a section's only running text, since no section
-   carries a standfirst under its heading (see below) — chapter
-   headlines (date range re-appended automatically) plus a per-chapter
-   **`lead_in`**, subtopic titles/descriptions, *sparse* refinements of event
-   `theme_connection`s, its **own circle organization** for the network
-   section (each circle as `member_ids` + title + text — the composer may
-   merge, split, reorder, or discard the derived clusters; applied with
-   guardrails: only existing main people, each person in at most one circle,
-   ≥2 members per circle, and the organization must cover at least half of
-   the connected cast or it is rejected in favor of the previous narration),
-   **curated map stops** (kept stops in presentation order with rewritten
-   narration; discards recorded under `geo_map.discarded` with reasons and
-   honored only while ≥3 stops survive, re-kept by score), and the
-   conclusion.
+2. **Caption layer** (`run_component_narration`, model `ComponentNarration`) —
+   the item-bound texts: chapter headlines (date range re-appended
+   automatically) plus a per-chapter **`lead_in`**, subtopic titles and
+   descriptions, *sparse* refinements of event `theme_connection`s, its **own
+   circle organization** for the network section (each circle as `member_ids` +
+   title + text — it may merge, split, reorder, or discard the derived
+   clusters; applied with guardrails: only existing main people, each person in
+   at most one circle, ≥2 members per circle, and the organization must cover
+   at least half of the connected cast or it is rejected in favor of the
+   previous narration), and **curated map stops** (kept stops in presentation
+   order with rewritten narration; discards recorded under `geo_map.discarded`
+   with reasons and honored only while ≥3 stops survive, re-kept by score).
+   The prompt's single rule is *describe the item, never the story* — no
+   thesis, no significance, no era-level generalization.
+3. **Article layer** (`run_article`, model `StoryArticle`) — title, tagline, a
+   top-level **`opening`** (a cold-open scene anchored in one specific event or
+   person — rendered with a drop cap between the date range and the
+   description, optionally with an image floated beside it), the description,
+   story-specific **`section_headings`** (`{timeline, network, map?,
+   conclusion}`, replacing the generic labels — the UI falls back to the
+   localized labels when absent), free-form **`section_bodies`** (see below —
+   a section's only running text, since no section carries a standfirst under
+   its heading), and the conclusion.
 
-   The prompt opens with a **DIVISION OF LABOUR** contract assigning each
-   prose slot what it owns and what it must not contain — the opening owns one
-   documented scene, the description the stakes, the section bodies the
-   evidence, the conclusion the consequence — because a call juggling many
-   prose objectives against a single throughline otherwise restates that
-   throughline in every slot.
-3. **Redundancy pass** — a focused editing call (opt out with
-   `--skip-redundancy-pass`) that sees *only* the composed prose and rewrites
-   the slots repeating one another. Call 2 cannot police its own repetition
-   while pursuing everything else; a call with one job can. Slots are
-   addressed by stable ids — `opening`, `description`, `conclusion`, and
-   `body:{section}:{index}` for body paragraphs — and a
-   revision may only replace the text of a slot that already exists (unknown
-   ids are ignored with a warning), so the pass can rewrite but never add or
-   remove. When two slots share a point the **later** one is rewritten, since
-   the earlier established it. Revisions are patched into the composition
-   result *before* `apply_composition`, so they pass through the same
-   defensive path as everything else; the count lands in
+   The call is shown **the finished caption layer verbatim**
+   (`render_component_layer`) under a heading saying it is already on the page,
+   plus `build_context_notes` — the story's span, threads, cast and
+   `historical_context` entries — as its actual subject matter, deliberately
+   *not* the item list. This is the point of the call split: "do not repeat the
+   components" is unenforceable when the model has only the raw item data and
+   must guess what the captions will say, so it writes the items again in
+   better prose. Measured on the stories composed before the split, article
+   paragraphs matched the caption text directly below them at a Dice overlap of
+   **0.53** — near-verbatim restatement, about twice the paraphrase band seen
+   within the article.
+
+   Two tests govern the article: delete every component and what remains must
+   still read as one continuous essay; and no paragraph may read as a
+   description of the thing below it. The prompt names **both** failure modes
+   with worked examples from real runs — the recap (a list of the map's own
+   stops, one clause each) and the escape into abstraction it invites ("the
+   geography joined centers of coordination to territories subject to changing
+   control"). Context means **different specifics**, not generality: the named
+   law, the institution and what it could not do, the printer who refused the
+   manuscript. An empty section body beats an abstract one.
+4. **Redundancy pass** (opt out with `--skip-redundancy-pass`) — a focused
+   editing call that rewrites article slots repeating **one another or the
+   caption layer**. The captions are passed as *fixed reference slots*
+   (`collect_caption_slots`, ids `caption:{chapter|circle|stop}:{i}`): the pass
+   reads them and may rewrite an article slot that retells one, but a revision
+   addressed to a caption is rejected. Article slots are addressed by stable
+   ids — `opening`, `description`, `conclusion`, and
+   `body:{section}:{index}` for body paragraphs — and a revision may only
+   replace the text of a slot that already exists (unknown ids are ignored with
+   a warning), so the pass can rewrite but never add or remove. When two
+   article slots share a point the **later** one is rewritten; the `opening` is
+   exempt from caption overlap, being the one slot allowed to narrate a
+   documented moment in full. The pass is explicitly forbidden to fix a
+   repetition by generalizing — it must swap the repeated specifics for
+   different specifics, or make the slot shorter. Revisions are patched into
+   the composition result *before* `apply_composition`, so they pass through
+   the same defensive path as everything else; the count lands in
    `composition.prose_revisions`. Non-fatal — on failure the prose is applied
    unrevised.
 
-   `rank_slot_overlaps()` accompanies it as a **diagnostic, not a gate**: it
-   ranks cross-slot sentence pairs by content-word Dice overlap and is printed
-   before/after in `--verbose`. It has deliberately no threshold — measured on
-   the composed stories, real paraphrase redundancy scores ~0.27 while
-   unrelated sentences sharing two proper names score ~0.26, so the bands
-   overlap and no cutoff separates them. Only the before/after *change* is
-   meaningful; judging whether a repeat is real is the AI pass's job.
+Two **diagnostics, not gates**, are printed in `--verbose`, one per failure
+mode:
 
-**`section_bodies`** are the story's narrative depth — flexible layout for
+- `rank_slot_overlaps()` ranks cross-slot sentence pairs by content-word Dice
+  overlap, before and after the pass. Caption slots are compared against
+  article slots but never against each other. It has deliberately no threshold
+  *within* the article — real paraphrase scores ~0.27 while unrelated sentences
+  sharing two proper names score ~0.26, so the bands overlap and no cutoff
+  separates them; only the before/after change is meaningful. Article↔caption
+  is the one place the numbers separate cleanly: 0.43–0.53 means the article
+  has slipped back into recapping its components.
+- `find_abstract_slots()` flags article slots of 25+ words carrying fewer than
+  two *anchors* (`count_anchors()` — proper nouns or numbers, skipping
+  sentence-initial capitals). Overlap scoring rates a contentless sentence as a
+  success, so this is the counterweight: a context paragraph that names nothing
+  is the abstraction failure.
+
+The abstraction failure also gets a **deterministic gate**, because no prompt
+can fully hold it: reducing overlap by going abstract *always* works, so the
+redundancy pass has a monotone incentive toward it. In one live run the
+caption-aware pass rewrote ten of twelve slots into prose like "a workshop
+could expose constraints that a laboratory could absorb" — repeating nothing,
+saying nothing. `_revision_loses_substance()` therefore rejects any revision
+leaving a slot with fewer anchors than it had **and** below the floor of two,
+in the same spirit as the verbatim-quote rule: the model proposes, the check
+disposes. Swapping one specific for another passes; only the slide into
+generality is refused, and a slot that was already abstract can be rewritten
+freely since the check compares against its own starting point. Rejections are
+printed and counted alongside the applied revisions.
+
+`find_interface_references()` reports a third defect: an article slot using a
+part of the page as a grammatical subject ("The map asks how...", "The
+chronology follows..."). The prompts ban it outright, but it slips through, and
+unlike a hollowed revision there is no safe deterministic repair — so it is
+reported as a signal to recompose, not fixed.
+
+`ComponentNarration` and `StoryArticle` are merged into the single
+`CompositionResult` (`CompositionResult.merge`) that `apply_composition`
+consumes, so the call split changed no part of the application path.
+
+**`section_bodies`** are the article layer's substance — flexible layout for
 text and images. Each section (`timeline`, `network`, `map`, `conclusion`)
 may carry an ordered list of blocks rendered between the section's heading
 and its interactive component (`MetaStoryBody.svelte`). They are the section's
 whole prose — sections have no standfirst paragraph under the heading, so the
-first block opens the section itself:
+first block opens the section itself. They carry **context**, never a
+retelling of the component below them: the timeline body owns the wars, laws,
+markets and institutions that set the terms (never the events); the network
+body owns what carried the ties — letters, journals, courts, laboratories,
+patronage (never who knew whom); the map body owns what concentrated or moved
+people (never a tour of the stops). **An empty list is a valid answer** — a
+section with no real context to add gets no body, which is better than filler
+and much better than abstraction. Block types:
 
 - `{ "type": "paragraph", "text": "…" }` — running prose;
 - `{ "type": "image", "image": {…}, "layout": "left"|"right"|"full" }` —
@@ -503,11 +578,13 @@ first block opens the section itself:
   material shown to the model (story brief + Wikipedia excerpts) and dropped
   otherwise, so a fabricated quote can never enter the data.
 
-**Images** come exclusively from the people's own story slides: the composer
-is shown a candidate list built from the story's `person_events` (each event's
-`images` from the person's `life_events.json`) and may only *select by key*
-(`person_id:event_index:image_index`; a shared budget of at most 6 per story
-covers the opening and all body images, no reuse). The url/caption/source are
+**Images** come exclusively from the people's own story slides: the article
+call is shown a candidate list built from the story's `person_events` (each
+event's `images` from the person's `life_events.json`) and may only *select by
+key* (`person_id:event_index:image_index`; a shared budget of at most 6 per
+story covers the opening and all body images, no reuse). Keys are normalized
+before lookup — the candidate list renders them as `[img=…]` and the model
+copies that decoration back often enough to lose real selections. The url/caption/source are
 copied deterministically, so a hallucinated URL can never enter the data.
 Each stored image keeps its provenance
 (`person_id`/`event_index`/`image_index`); `MetaStoryFigure.svelte` renders it
@@ -622,9 +699,9 @@ life-ds/
 │   ├── generate_meta_story.py       # Meta story workflow (1 plan, 2 collect, 3 curate, 3b fit chapters, 4 context, 5 network, 5b review, 6 narration, 7 map, 8 composer)
 │   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
 │   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
-│   ├── compose_meta_story.py        # Phase 7: story composer — top-down narrative composition
+│   ├── compose_meta_story.py        # Phase 8: story composer — caption layer + article layer
 │   ├── meta_story_map.py            # Geographic clustering of meta story events (no AI)
-│   ├── meta_story_map_narration.py  # Phase 8: map pipeline — event rating + stop narration agents, standalone CLI
+│   ├── meta_story_map_narration.py  # Phase 7: map pipeline — event rating + stop narration agents, standalone CLI
 │   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
 │   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data

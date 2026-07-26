@@ -3,9 +3,9 @@
   "created_on": "2026-07-24T06:04:16.806574+02:00",
   "meta_story": {
     "id": "american_revolutionaries",
-    "title": "Revolutionary America",
-    "tagline": "Independence won, republic contested",
-    "description": "The American Revolution began as a rupture with empire, but military resistance alone could not secure independence. Washington held together a Continental Army through reversals and victory; Franklin helped turn French sympathy into aid and alliance. In letters and poems, Abigail Adams and Phillis Wheatley tested the Revolution’s language against women’s exclusion and racial bondage, while Joseph Brant’s wartime experience showed how the conflict divided Haudenosaunee nations and imperiled Indigenous homelands.\n\nPeace did not settle what independence meant. The Treaty of Paris enlarged the new United States while Native communities faced dispossession, and the weak Confederation gave way to demands for a stronger national framework. Hamilton and Washington helped create constitutional, financial, and executive institutions, but each assertion of federal power also raised the unresolved question beneath the Revolution: who would be protected, represented, and governed by the republic?",
+    "title": "Republic, Unevenly Won",
+    "tagline": "Power built beside unequal freedom",
+    "description": "The Revolution began amid an argument about imperial authority, but it quickly demanded capacities the colonies did not possess: an army that could endure, foreign backing that could alter a war, and a government able to make decisions beyond a single colony. Parliament’s Coercive Acts placed Massachusetts under punitive imperial control and helped turn a constitutional dispute into a crisis of security, commerce, and allegiance.\n\nIndependence sharpened another problem rather than resolving it. The language of liberty stood beside enslavement, women’s legal and political exclusion, and the vulnerability of Native nations whose lands could be bargained over by empires and new states. A republic could claim popular government while leaving the reach of its protection radically unequal.\n\nThat contradiction was not peripheral to the making of national power. The same struggle that pressed American leaders toward military command, diplomacy, constitutional authority, and public credit also determined whose claims could be heard in letters and print, whose territory could be transferred without consent, and whose resistance would meet the force of law.",
     "person_ids": [
       "abigail_adams",
       "alexander_hamilton",
@@ -16,7 +16,7 @@
     ],
     "date_range_start": "1764",
     "date_range_end": "1797",
-    "lastUpdated": "2026-07-24T06:06:11.930454+02:00"
+    "lastUpdated": "2026-07-26T04:12:10.593009+00:00"
   },
   "generation_metadata": {
     "hints": {
@@ -28,27 +28,27 @@
   "subtopics": [
     {
       "id": "winning_independence",
-      "title": "Holding the Cause Together",
-      "description": "Washington sustained the Continental military effort while Franklin helped secure the French aid and alliance that made victory achievable. Their work joined battlefield endurance to international diplomacy.",
+      "title": "Command and Alliance",
+      "description": "Washington commanded the Continental Army as Franklin pursued French aid and later helped negotiate the peace. Both also took part in the constitutional founding.",
       "person_ids": ["george_washington", "benjamin_franklin"]
     },
     {
       "id": "voices_of_revolution",
-      "title": "Liberty’s Unanswered Claims",
-      "description": "Adams and Wheatley brought the Revolution’s ideals into letters and poetry shaped by women’s exclusion and racial bondage. Their words made clear that independence did not automatically mean equal freedom.",
+      "title": "Writing Liberty’s Limits",
+      "description": "Adams’s letters joined wartime household management to arguments about government and women’s legal position. Wheatley published poetry and corresponded with Washington while enslaved.",
       "person_ids": ["abigail_adams", "phillis_wheatley"]
     },
     {
       "id": "contested_new_nation",
-      "title": "Power After Independence",
-      "description": "Hamilton pursued a stronger constitutional and fiscal state as Brant worked to preserve Haudenosaunee community after dispossession. Their contrasting postwar paths reveal how unevenly the new republic’s authority was experienced.",
+      "title": "Power and Dispossession",
+      "description": "Hamilton argued for stronger national institutions and organized the Treasury Department. After the loss of Mohawk homelands in New York, Brant helped establish a Six Nations community on the Grand River.",
       "person_ids": ["alexander_hamilton", "joseph_brant"]
     }
   ],
   "chapters": [
     {
       "id": "imperial_crisis",
-      "title": "Liberty Takes a Voice (1764-1775)",
+      "title": "Imperial Rule Tightens (1764-1775)",
       "date_start": "1764",
       "date_start_precision": "year",
       "date_end": "1775",
@@ -60,7 +60,7 @@
           "event_date_precision": "day",
           "event_title": "Publishes Poetry Collection",
           "event_index": 7,
-          "theme_connection": "Poems on Various Subjects, Religious and Moral was Wheatley’s landmark published collection, establishing an enslaved African woman as a transatlantic literary voice. Its existence directly challenged racial assumptions and supplied an essential foundation for Revolutionary-era arguments about liberty and human equality."
+          "theme_connection": "Published in London after Boston printers declined it, Poems on Various Subjects, Religious and Moral established Wheatley, an enslaved African woman, as a transatlantic literary voice. The collection entered Revolutionary-era arguments about liberty and human equality."
         },
         {
           "person_id": "abigail_adams",
@@ -68,7 +68,7 @@
           "event_date_precision": "year",
           "event_title": "Sustains Revolutionary Household",
           "event_index": 6,
-          "theme_connection": "Adams’s wartime letters made the Revolution’s civilian burdens, family responsibilities, and political stakes visible to a leading Continental congressman. This correspondence is an indispensable voice-of-the-Revolution record that connected domestic life and women’s political insight to the Patriot cause."
+          "theme_connection": "Adams’s wartime letters recorded civilian burdens, household responsibilities, and political concerns while John Adams served in the Continental Congress. They connected domestic life and her observations on politics, independence, and government to the Patriot cause."
         },
         {
           "person_id": "george_washington",
@@ -84,7 +84,7 @@
           "event_date_precision": "year",
           "event_title": "Addresses General Washington",
           "event_index": 9,
-          "theme_connection": "Wheatley’s poem to Washington directly enlisted poetic language in the Patriot struggle and linked her public literary authority to the Continental military cause. Washington’s response amplified the work’s significance as a prominent Revolutionary exchange."
+          "theme_connection": "Wheatley, an enslaved Black woman, sent “To His Excellency, George Washington” to the Continental commander during the opening phase of the war. Washington’s appreciative reply praised her poetic talent and invited her to his headquarters."
         }
       ],
       "historical_context": [
@@ -99,11 +99,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Intolerable_Acts"
         }
       ],
-      "lead_in": "Imperial coercion turned resistance into a political emergency. Poetry, household labor, and military appointment gave the emerging cause voices and structures of its own."
+      "lead_in": "Punitive imperial measures and armed conflict brought political resistance into households, print, and military organization. Continental leaders began assembling forces for a war with Britain."
     },
     {
       "id": "war_for_independence",
-      "title": "A War Enlarged (1775-1781)",
+      "title": "War Finds Allies (1775-1781)",
       "date_start": "1775",
       "date_start_precision": "year",
       "date_end": "1781",
@@ -131,7 +131,7 @@
           "event_date_precision": "day",
           "event_title": "Urges Women's Recognition",
           "event_index": 7,
-          "theme_connection": "Her “Remember the Ladies” letter made women’s legal and political exclusion an enduring part of the Revolution’s debate over liberty and republican law. It is a landmark surviving articulation of gendered limits within the Patriot cause."
+          "theme_connection": "In her “Remember the Ladies” letter, Adams addressed women’s legal and political exclusion as new republican laws were being framed. The letter remains a surviving articulation of gendered limits within the Patriot cause."
         },
         {
           "person_id": "benjamin_franklin",
@@ -155,7 +155,7 @@
           "event_date_precision": "day",
           "event_title": "Fought at Oriskany",
           "event_index": 6,
-          "theme_connection": "Brant’s role at Oriskany directly illustrates how the Revolution fractured Haudenosaunee nations and turned Indigenous homelands into a central frontier theater of war. The battle is a major landmark in the Revolution’s destructive consequences for Native political communities."
+          "theme_connection": "Brant’s role at Oriskany placed Haudenosaunee nations on opposing sides of the Revolution. Mohawk, Oneida, Seneca, and other Haudenosaunee nations fought one another in the battle."
         },
         {
           "person_id": "george_washington",
@@ -163,7 +163,7 @@
           "event_date_precision": "day",
           "event_title": "Wins Yorktown, Resigns Command",
           "event_index": 10,
-          "theme_connection": "Washington’s command at Yorktown delivered the decisive Franco-American victory that forced Cornwallis’s surrender, while his voluntary resignation of command established a powerful republican precedent of civilian supremacy over the military."
+          "theme_connection": "Washington commanded American and French forces at Yorktown, where Cornwallis surrendered in October 1781. His subsequent voluntary resignation of command established a republican precedent of civilian supremacy over the military."
         }
       ],
       "historical_context": [
@@ -188,11 +188,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Battles_of_Saratoga"
         }
       ],
-      "lead_in": "The conflict became an international war sustained by battlefield recovery and French support. Its violence also divided Haudenosaunee nations and exposed the limits of Patriot liberty."
+      "lead_in": "The Continental Army fought through reversals and victories while American diplomats sought French assistance. Revolutionary claims also appeared in letters and poetry written under unequal conditions."
     },
     {
       "id": "peace_and_political_reckoning",
-      "title": "Peace Without Settlement (1781-1787)",
+      "title": "Peace Reorders Claims (1781-1787)",
       "date_start": "1781",
       "date_start_precision": "year",
       "date_end": "1787",
@@ -212,7 +212,7 @@
           "event_date_precision": "day",
           "event_title": "Settled the Grand River",
           "event_index": 10,
-          "theme_connection": "Brant's organization of the Six Nations settlement on the Grand River was a major effort to preserve Haudenosaunee community and political autonomy after the Revolution dispossessed Indigenous nations. It concretely demonstrates the territorial and Indigenous consequences of American independence."
+          "theme_connection": "Brant led Haudenosaunee families from the Niagara area to land set aside under the Haldimand Proclamation after Mohawk homelands in New York were lost. He helped organize the new Six Nations community on the Grand River."
         },
         {
           "person_id": "alexander_hamilton",
@@ -220,7 +220,7 @@
           "event_date_precision": "day",
           "event_title": "Calls for Constitutional Convention",
           "event_index": 9,
-          "theme_connection": "Hamilton drafted the Annapolis Convention report calling for a broader convention, a direct catalyst for the Philadelphia Convention. This was a consequential concrete political intervention in replacing the inadequate Confederation framework with a constitutional republic."
+          "theme_connection": "Hamilton drafted the Annapolis Convention report calling for a broader convention in Philadelphia after delegates confronted the Confederation government’s inability to regulate interstate commerce. The report urged the states to send delegates to that meeting."
         },
         {
           "person_id": "alexander_hamilton",
@@ -228,7 +228,7 @@
           "event_date_precision": "month",
           "event_title": "Makes the Case for Constitution",
           "event_index": 10,
-          "theme_connection": "Hamilton's constitutional advocacy, especially his collaboration on the Federalist essays, produced a foundational defense of ratification and energetic national government. Those arguments became a lasting artifact of the contested creation of the new republic."
+          "theme_connection": "At the Philadelphia Convention, Hamilton argued for a substantially stronger national government. During ratification, he joined James Madison and John Jay in essays defending the proposed Constitution."
         },
         {
           "person_id": "george_washington",
@@ -261,11 +261,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Shays%27_Rebellion"
         }
       ],
-      "lead_in": "Victory brought neither secure Indigenous homelands nor an adequate national government. Displacement and constitutional reform became central facts of the postwar order."
+      "lead_in": "The war’s end altered territorial arrangements and exposed weaknesses in the Confederation government. Political leaders pressed for a new national framework as displaced Haudenosaunee families rebuilt on the Grand River."
     },
     {
       "id": "making_the_republic",
-      "title": "Power Put to Work (1787-1797)",
+      "title": "Federal Offices Act (1787-1797)",
       "date_start": "1787",
       "date_start_precision": "year",
       "date_end": "1797",
@@ -293,7 +293,7 @@
           "event_date_precision": "day",
           "event_title": "Leads the Treasury Department",
           "event_index": 11,
-          "theme_connection": "As the first treasury secretary, Hamilton developed the federal financial program of debt assumption, revenue collection, and public credit that made the new constitutional government operational. This was a landmark institutional achievement in creating the fiscally capable republic described by the collection."
+          "theme_connection": "As first secretary of the treasury, Hamilton organized the department and advanced federal assumption of state Revolutionary War debts, customs revenues, a whiskey excise, and public credit. These measures formed the financial program of the new federal government."
         },
         {
           "person_id": "george_washington",
@@ -309,7 +309,7 @@
           "event_date_precision": "month",
           "event_title": "Suppresses Whiskey Rebellion",
           "event_index": 13,
-          "theme_connection": "Washington's mobilization against the Whiskey Rebellion demonstrated that the federal government could enforce its laws against organized domestic resistance. It was a defining test of effective executive authority in the contested new nation."
+          "theme_connection": "Washington invoked federal authority to call out state militias after armed resistance to the federal excise tax on distilled spirits escalated in western Pennsylvania. The action responded to organized domestic resistance to the tax."
         }
       ],
       "historical_context": [
@@ -324,10 +324,10 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Jay_Treaty"
         }
       ],
-      "lead_in": "The Constitution acquired offices, revenue, and enforcement. Building an effective republic made the meaning and reach of federal authority newly contentious."
+      "lead_in": "The Constitution became working government through a presidency, Treasury Department, and federal enforcement. Its financial measures and use of militia authority drew organized resistance."
     }
   ],
-  "conclusion": "American independence ended British rule, but it did not settle the Revolution’s central arguments. Washington and Hamilton helped build durable national power; Adams and Wheatley exposed liberty’s exclusions; Brant’s experience showed the territorial damage inflicted on Haudenosaunee autonomy. The republic emerged not as a finished fulfillment of revolutionary ideals, but as their most consequential and contested arena.",
+  "conclusion": "The United States emerged with institutions capable of commanding troops, collecting revenue, and enforcing federal law. It did not settle who would share equal legal standing, whose lands would be secure, or whether revolutionary liberty could coexist with enslavement and exclusion.",
   "social_network": {
     "nodes": [
       {
@@ -863,16 +863,22 @@
     "narration": {
       "circles": [
         {
-          "key": "george_washington+alexander_hamilton",
-          "member_ids": ["george_washington", "alexander_hamilton"],
-          "title": "From Staff to State",
-          "text": "Hamilton entered Washington’s wartime world as an aide-de-camp, a position Washington believed required complete confidence and ability. He served four years as Washington’s chief staff aide, handling orders, correspondence, intelligence, diplomacy, and negotiation. Washington later appointed him treasury secretary, carrying their close professional relationship from the Continental Army into the new federal government despite periods of tension."
+          "key": "benjamin_franklin+george_washington",
+          "member_ids": ["benjamin_franklin", "george_washington"],
+          "title": "Army and Alliance",
+          "text": "Washington commanded the Continental Army while Franklin sought French support for the American cause. Franklin later attended the Constitutional Convention that Washington chaired, connecting their Revolutionary work to the proposed Constitution."
         },
         {
           "key": "abigail_adams+phillis_wheatley",
           "member_ids": ["abigail_adams", "phillis_wheatley"],
-          "title": "Liberty in Writing",
-          "text": "Adams and Wheatley were not connected by a recorded direct tie here, but each brought a powerful written voice to the Revolution’s public meaning. Adams’s letters joined household experience to arguments about law and women’s political standing. Wheatley’s published poetry and her exchange with Washington asserted literary authority in a world that doubted an enslaved African woman could have written the work attributed to her."
+          "title": "Writing Public Claims",
+          "text": "Adams used letters to connect household life with observations about government, independence, and women’s political position. Wheatley published poetry despite racist doubts about her authorship and sent Washington a poem that received an appreciative reply. No direct tie between Adams and Wheatley is recorded here."
+        },
+        {
+          "key": "joseph_brant+alexander_hamilton",
+          "member_ids": ["joseph_brant", "alexander_hamilton"],
+          "title": "Postwar Divergence",
+          "text": "Hamilton moved from service under Washington into constitutional advocacy and leadership of the Treasury Department. Brant, a Mohawk leader allied with Britain during the war, helped organize the Six Nations settlement on the Grand River after Mohawk homelands in New York were lost. Their documented postwar paths unfolded under different political and territorial circumstances."
         }
       ]
     }
@@ -919,27 +925,6 @@
           }
         ],
         "key": "braintree"
-      },
-      {
-        "label": "Paris",
-        "score": 3.0,
-        "centroid": [2.3522, 48.8566],
-        "bbox": [2.3522, 48.8566, 2.3522, 48.8566],
-        "year_start": 1776,
-        "year_end": 1776,
-        "events": [
-          {
-            "person_id": "benjamin_franklin",
-            "person_name": "Benjamin Franklin",
-            "event_index": 12,
-            "event_title": "Wins French Aid for Independence",
-            "event_date": "1776-10",
-            "place": "Paris",
-            "coordinates": [2.3522, 48.8566],
-            "weight": 3.0
-          }
-        ],
-        "key": "paris"
       },
       {
         "label": "Philadelphia",
@@ -991,6 +976,27 @@
           }
         ],
         "key": "philadelphia"
+      },
+      {
+        "label": "Paris",
+        "score": 3.0,
+        "centroid": [2.3522, 48.8566],
+        "bbox": [2.3522, 48.8566, 2.3522, 48.8566],
+        "year_start": 1776,
+        "year_end": 1776,
+        "events": [
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 12,
+            "event_title": "Wins French Aid for Independence",
+            "event_date": "1776-10",
+            "place": "Paris",
+            "coordinates": [2.3522, 48.8566],
+            "weight": 3.0
+          }
+        ],
+        "key": "paris"
       },
       {
         "label": "Grand River",
@@ -1070,33 +1076,33 @@
       "stops": [
         {
           "key": "braintree",
-          "title": "The Republic at Home",
-          "text": "At Braintree, Abigail Adams sustained a revolutionary household while the war pressed upon ordinary life. In 1776, she urged recognition for women, making clear that independence raised questions about rights far beyond the battlefield. Phillis Wheatley’s address to General Washington, sent from nearby Boston, joined literary support for the Continental cause to this wider Massachusetts world."
-        },
-        {
-          "key": "paris",
-          "title": "Aid Across the Ocean",
-          "text": "In Paris, Benjamin Franklin worked to win French aid for American independence. His success made the Revolution more than a colonial rebellion, drawing European power into the struggle for a new nation."
+          "title": "Letters Under Wartime Strain",
+          "text": "In Braintree, Abigail Adams maintained her home and farm while John Adams served in the Continental Congress. Her letters described wartime shortages and insecurity, and in 1776 she asked him to “Remember the Ladies” when new laws were framed. From Boston, Wheatley sent Washington her poem during the war’s opening phase."
         },
         {
           "key": "philadelphia",
-          "title": "From War to Constitution",
-          "text": "Philadelphia became a hinge between revolution and government. George Washington received command of the Continental Army here, and the campaign that brought victories at Trenton and Princeton strengthened the patriot cause. A decade later, Washington presided over the Constitutional Convention while Alexander Hamilton argued for a Constitution, turning the problem of winning independence into the problem of securing a republic."
+          "title": "Command and Constitution",
+          "text": "The Second Continental Congress appointed Washington commander in chief in Philadelphia; he then traveled to Cambridge to assume command near Boston. In 1787, Washington chaired the Philadelphia Convention as delegates drafted a proposed Constitution, while Hamilton argued there for a substantially stronger national government. Washington’s victories at Trenton and Princeton followed the Continental Army’s retreat across New Jersey."
+        },
+        {
+          "key": "paris",
+          "title": "Seeking French Support",
+          "text": "Franklin arrived in Paris as an American commissioner seeking French support for the war. Working with Silas Deane and Arthur Lee, he helped secure French aid and the alliance of 1778."
         },
         {
           "key": "grand_river",
-          "title": "A Homeland Reclaimed",
-          "text": "In 1784, Joseph Brant settled on the Grand River. The move marked a new chapter after a revolution that had remade Native homelands as well as colonial rule, preserving a center of community amid the political upheaval."
+          "title": "A Six Nations Settlement",
+          "text": "After Mohawk homelands in New York were lost, Brant led many Haudenosaunee families from the Niagara area to land set aside under the Haldimand Proclamation. He helped organize the new Six Nations community on the Grand River."
         },
         {
           "key": "new_york_city",
-          "title": "A Government Takes Office",
-          "text": "In New York City, George Washington became the first president in 1789, giving the new Constitution a living executive. That same year, Alexander Hamilton led the Treasury Department, beginning the practical work of making federal authority function."
+          "title": "Offices Take Shape",
+          "text": "Washington took the presidential oath in New York City on April 30, 1789, formally beginning the federal executive branch under the Constitution. That September, he appointed Hamilton the first secretary of the treasury, and Hamilton began organizing the department."
         },
         {
           "key": "western_pennsylvania",
-          "title": "Authority Put to Test",
-          "text": "In western Pennsylvania, resistance to the whiskey tax brought the new republic into open conflict with some of its own citizens. In 1794, President Washington moved to suppress the Whiskey Rebellion, demonstrating that the federal government could enforce its laws even after a revolution fought against distant power."
+          "title": "Resistance to the Excise",
+          "text": "Armed resistance to the federal excise tax on distilled spirits escalated in western Pennsylvania. Washington invoked federal authority to call out state militias in response."
         }
       ]
     },
@@ -1120,113 +1126,52 @@
     }
   },
   "opening": {
-    "text": "On September 11, 1789, President George Washington appointed Alexander Hamilton the first secretary of the treasury. From the new federal government’s seat in New York City, Hamilton began organizing a department meant to make the Constitution’s promises operational: public credit, revenue, and federal authority.",
-    "image": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg/960px-Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg",
-      "caption": "Hamilton Treasury circular to customs collectors",
-      "source": "https://commons.wikimedia.org/wiki/File:Circular_from_Alexander_Hamilton,_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_(page_1).jpg",
-      "person_id": "alexander_hamilton",
-      "event_index": 11,
-      "image_index": 0
-    }
+    "text": "On September 1, 1773, *Poems on Various Subjects, Religious and Moral* appeared in London. Boston printers had declined the manuscript; publication across the Atlantic made Phillis Wheatley an author before the imperial crisis had reached open war.\n\nThe book carried the name of an enslaved African woman into a transatlantic print world that had doubted both her authorship and her standing. Its pages were in circulation before Parliament’s punitive measures in Massachusetts turned resistance into a revolutionary break.",
+    "image": null
   },
   "section_headings": {
-    "timeline": "From Revolt to Authority",
-    "network": "The Bonds Behind Power",
-    "map": "A Republic Across Contested Ground",
-    "conclusion": "The Unfinished Promise"
+    "timeline": "A War Becomes Government",
+    "network": "Claims Carried by Paper",
+    "map": "Across Imperial Boundaries",
+    "conclusion": "What Power Could Not Secure"
   },
   "section_bodies": {
     "timeline": [
       {
         "type": "paragraph",
-        "text": "Before independence was declared, the Revolution already depended on forms of labor and expression beyond Congress. Abigail Adams kept her Braintree household and farm through shortages and insecurity while writing candidly about politics and government. Phillis Wheatley, whose poetry collection had been published in London after Boston printers declined it, addressed Washington in verse during the war’s opening phase. Her correspondence with the commander joined an enslaved Black poet’s public authority to the Patriot cause, even as bondage remained embedded in the society invoking liberty."
-      },
-      {
-        "type": "quote",
-        "text": "Remember the Ladies",
-        "attribution": "Abigail Adams, letter to John Adams, March 31, 1776"
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Washington_Crossing_the_Delaware_MET_DP215410.jpg/960px-Washington_Crossing_the_Delaware_MET_DP215410.jpg",
-          "caption": "Washington Crossing the Delaware",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Crossing_the_Delaware_MET_DP215410.jpg",
-          "person_id": "george_washington",
-          "event_index": 9,
-          "image_index": 0
-        },
-        "layout": "right"
+        "text": "Parliament’s Coercive Acts made Massachusetts a test case for the limits of imperial rule. Punitive control did not merely anger colonial politicians; it forced questions of coordination that local assemblies and voluntary associations could not answer on their own. When Saratoga made a French alliance politically viable, European rivalry supplied the material and military support that an American cause could not reliably generate from its own fragmented resources."
       },
       {
         "type": "paragraph",
-        "text": "Washington’s command gave the Continental cause a center of military authority, and the victories at Trenton and Princeton restored morale and enlistment prospects after the retreat across New Jersey. Franklin’s work in France converted support into supplies, military assistance, and eventually the 1778 alliance. The Franco-American victory at Yorktown brought the war to its decisive military conclusion, but the peace that followed did not distribute its consequences evenly. At Oriskany, Mohawk, Oneida, Seneca, and other Haudenosaunee nations had been drawn into direct conflict; afterward, Brant led displaced Haudenosaunee families toward a new settlement on the Grand River."
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Washington_Constitutional_Convention_1787.jpg",
-          "caption": "Washington at the Constitutional Convention, 1787",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Constitutional_Convention_1787.jpg",
-          "person_id": "george_washington",
-          "event_index": 11,
-          "image_index": 0
-        },
-        "layout": "left"
+        "text": "Peace did not make the institutional problem disappear. The Treaty of Paris ended the war while transferring vast Indigenous homelands without Native consent, intensifying the territorial danger confronting Mohawk communities. At the same time, Shays’ Rebellion exposed the Confederation government’s weaknesses and strengthened the argument among advocates of a new Constitution that interstate commerce, public order, and national obligations required more durable authority."
       },
       {
         "type": "paragraph",
-        "text": "The postwar crisis shifted the question from winning independence to governing it. Hamilton’s Annapolis report called for a broader convention after delegates confronted the Confederation’s inability to regulate interstate commerce; in Philadelphia, he argued for a stronger national government while Washington chaired the convention that produced the Constitution. Their work culminated in a federal executive and Treasury Department, then in Washington’s response to armed resistance to the whiskey excise. The new government had acquired the capacity to act, but its authority was itself a subject of dispute."
+        "text": "In the 1790s, authority acquired a fiscal as well as constitutional face. Customs revenues, public credit, and an excise tax made the federal government present in commercial exchange and rural production, not simply in Philadelphia’s debates. The Jay Treaty then became a defining controversy of Washington’s administration, and Hamilton’s private role in defending it helped deepen partisan conflict over the financial and foreign-policy direction of the new government."
       }
     ],
     "network": [
       {
         "type": "paragraph",
-        "text": "Washington’s relationships show how the Revolution’s military command became a governing network. Hamilton served four years as his chief staff aide, drafting orders and letters under Washington’s direction, before later joining the first cabinet as treasury secretary. Franklin belonged to a different but overlapping circle of national public affairs: he helped secure independence abroad, returned to Pennsylvania during the war, and attended the Constitutional Convention chaired by Washington."
+        "text": "This was a political world carried by paper, but paper did not circulate on equal terms. Private correspondence could bring wartime shortages, household labor, and women’s legal exclusion into the orbit of public argument without granting women a seat in the lawmaking institutions under discussion. Print offered a wider public, yet Wheatley’s path through London after Boston printers refused her manuscript showed how racial doubt and commercial gatekeeping governed access to that public."
       },
       {
         "type": "paragraph",
-        "text": "Other ties carried arguments that did not fit neatly inside official power. Wheatley sent Washington “To His Excellency, George Washington,” and he answered with praise and an invitation to his Cambridge headquarters. Adams’s political life likewise ran through correspondence, most centrally with John Adams but also with Thomas Jefferson. Brant’s connection to Washington was adversarial during the war and diplomatic afterward, a reminder that federal relations with the Haudenosaunee followed a conflict in which Native political autonomy had already been gravely damaged."
+        "text": "Official channels had a different force. The Continental Congress, French diplomatic mission, Constitutional Convention, and Treasury Department could turn arguments into recognized commands, treaties, offices, and revenue. Neither an enslaved poet’s authorship nor a wife’s political counsel had an equivalent institutional route; their words could expose the republic’s premises, but not compel its law."
       }
     ],
     "map": [
       {
         "type": "paragraph",
-        "text": "Braintree and Paris reveal two very different fronts of the same struggle. In Massachusetts, war entered a household through scarcity, insecurity, and the burden of managing home and farm while political decisions were made elsewhere. In Paris, Franklin pursued the foreign assistance that transformed a colonial rebellion into an international war."
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg/960px-Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg",
-          "caption": "1821 survey of Grand River Indian lands",
-          "source": "https://commons.wikimedia.org/wiki/File:Thomas_Ridout_map_of_Grand_River_Indian_Lands,_1821.jpg",
-          "person_id": "joseph_brant",
-          "event_index": 10,
-          "image_index": 0
-        },
-        "layout": "full"
-      },
-      {
-        "type": "paragraph",
-        "text": "The route from Oriskany to the Grand River records a harsher geography of independence. The Revolution brought Haudenosaunee nations into conflict with one another, and the loss of Mohawk homelands in New York forced many families westward from the Niagara area. Grand River became an effort to organize a new Six Nations community, not a restoration of the territory already lost."
-      },
-      {
-        "type": "paragraph",
-        "text": "Philadelphia, Annapolis, New York City, and western Pennsylvania mark the republic’s changing centers of power. Congress appointed Washington to command an army in Philadelphia; the same city later hosted the convention that drafted a new Constitution. Annapolis helped launch the call for that convention, New York housed the first presidency and Treasury Department, and western Pennsylvania tested whether federal law could be enforced against organized resistance."
-      }
-    ],
-    "conclusion": [
-      {
-        "type": "paragraph",
-        "text": "The institutions built after the war did not erase the Revolution’s contradictions. They created a more durable national government while leaving women outside formal political representation, slavery intact, and Indigenous communities to contend with the territorial consequences of American expansion."
+        "text": "The Revolution’s distances were shaped by overlapping imperial jurisdictions. Parliament’s punitive rule reached Massachusetts from across the Atlantic, while France’s support became politically possible only after Saratoga altered the wider war. The Treaty of Paris drew a new international settlement over Indigenous territory without Native consent, making the borderland north of New York a place where displaced Haudenosaunee families had to reconstruct political and communal life under British protection rather than within the United States."
       }
     ]
   },
   "composition": {
     "model": "gpt-5.6-terra",
-    "composed_at": "2026-07-24T06:06:11.930454+02:00",
-    "throughline": "This story follows how a revolt against empire became a functioning but contested republic. Washington and Franklin sustained and internationalized the war, while Adams and Wheatley pressed its language of liberty against women’s exclusion and racial bondage; Brant’s wartime and postwar experience reveals the Revolution’s devastating territorial consequences for Haudenosaunee autonomy. The postwar efforts of Hamilton and Washington to build constitutional, fiscal, and executive power show that independence did not resolve who the new nation would serve or how it would govern.",
-    "excluded_people": []
+    "composed_at": "2026-07-26T04:12:10.593009+00:00",
+    "throughline": "The Revolution forced the colonies to turn resistance into durable military, diplomatic, and political power: Washington’s command, Franklin’s French mission, and the later constitutional and fiscal programs associated with Washington and Hamilton trace that construction. Yet the same struggle exposed who the new order would not equally secure: Adams and Wheatley articulated liberty’s gendered and racial limits, while Brant’s wartime conflict and Grand River resettlement show the territorial dispossession accompanying independence. The story asks how a republic capable of winning a war and enforcing its laws could be built alongside such unequal freedom and security.",
+    "excluded_people": [],
+    "prose_revisions": 0
   }
 }

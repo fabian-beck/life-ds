@@ -3,9 +3,9 @@
   "created_on": "2026-07-24T06:04:16.806574+02:00",
   "meta_story": {
     "id": "american_revolutionaries",
-    "title": "Das revolutionäre Amerika",
-    "tagline": "Unabhängigkeit errungen, Republik umstritten",
-    "description": "Die Amerikanische Revolution begann als Bruch mit dem Empire, doch militärischer Widerstand allein konnte die Unabhängigkeit nicht sichern. Washington hielt die Kontinentalarmee durch Rückschläge und Siege zusammen; Franklin half, französische Sympathie in Hilfe und ein Bündnis zu verwandeln. In Briefen und Gedichten prüften Abigail Adams und Phillis Wheatley die Sprache der Revolution an der Ausgrenzung von Frauen und rassischer Versklavung, während Joseph Brants Kriegserfahrung zeigte, wie der Konflikt die Haudenosaunee-Nationen spaltete und indigene Heimatgebiete bedrohte.\n\nDer Frieden entschied nicht, was Unabhängigkeit bedeutete. Der Vertrag von Paris vergrößerte die neuen Vereinigten Staaten, während indigene Gemeinschaften mit Enteignung konfrontiert waren, und die schwache Konföderation wich Forderungen nach einem stärkeren nationalen Rahmen. Hamilton und Washington halfen, verfassungsmäßige, finanzielle und exekutive Institutionen zu schaffen, doch jede Behauptung bundesstaatlicher Macht warf auch die ungelöste Frage auf, die unter der Revolution lag: Wen würde die Republik schützen, vertreten und regieren?",
+    "title": "Eine ungleich errungene Republik",
+    "tagline": "Macht entsteht neben ungleicher Freiheit",
+    "description": "Die Revolution begann mit einem Streit über die Autorität des Empire, verlangte jedoch rasch Fähigkeiten, die den Kolonien fehlten: eine Armee, die durchhalten konnte, ausländische Unterstützung, die den Kriegsverlauf verändern konnte, und eine Regierung, die Entscheidungen über die Grenzen einer einzelnen Kolonie hinaus treffen konnte. Die Zwangsgesetze des Parlaments unterwarfen Massachusetts einer strafenden imperialen Kontrolle und trugen dazu bei, aus einem Verfassungskonflikt eine Krise der Sicherheit, des Handels und der Loyalität zu machen.\n\nDie Unabhängigkeit schärfte ein weiteres Problem, statt es zu lösen. Die Sprache der Freiheit stand neben Versklavung, der rechtlichen und politischen Ausgrenzung von Frauen und der Verletzlichkeit indigener Nationen, über deren Land Imperien und neue Staaten verhandeln konnten. Eine Republik konnte sich auf Volksherrschaft berufen und den Schutz, den sie gewährte, doch radikal ungleich verteilen.\n\nDieser Widerspruch war für die Entstehung nationaler Macht keineswegs nebensächlich. Derselbe Kampf, der amerikanische Führungspersönlichkeiten zu militärischem Kommando, Diplomatie, verfassungsmäßiger Autorität und staatlicher Kreditwürdigkeit drängte, entschied auch darüber, wessen Ansprüche in Briefen und Druckschriften Gehör fanden, wessen Territorium ohne Zustimmung übertragen werden konnte und wessen Widerstand auf die Gewalt des Gesetzes traf.",
     "person_ids": [
       "abigail_adams",
       "alexander_hamilton",
@@ -16,7 +16,7 @@
     ],
     "date_range_start": "1764",
     "date_range_end": "1797",
-    "lastUpdated": "2026-07-24T06:06:11.930454+02:00"
+    "lastUpdated": "2026-07-26T04:12:10.593009+00:00"
   },
   "generation_metadata": {
     "hints": {
@@ -28,27 +28,27 @@
   "subtopics": [
     {
       "id": "winning_independence",
-      "title": "Die Sache zusammenhalten",
-      "description": "Washington hielt die kontinentalen Kriegsanstrengungen aufrecht, während Franklin dazu beitrug, die französische Hilfe und das Bündnis zu sichern, die den Sieg möglich machten. Ihre Arbeit verband Durchhaltevermögen auf dem Schlachtfeld mit internationaler Diplomatie.",
+      "title": "Kommando und Bündnis",
+      "description": "Washington führte die Kontinentalarmee, während Franklin um französische Unterstützung warb und später an den Friedensverhandlungen mitwirkte. Beide beteiligten sich zudem an der verfassungsrechtlichen Gründung.",
       "person_ids": ["george_washington", "benjamin_franklin"]
     },
     {
       "id": "voices_of_revolution",
-      "title": "Die unbeantworteten Ansprüche der Freiheit",
-      "description": "Adams und Wheatley brachten die Ideale der Revolution in Briefe und Gedichte ein, die von der Ausgrenzung von Frauen und rassischer Versklavung geprägt waren. Ihre Worte machten deutlich, dass Unabhängigkeit nicht automatisch gleiche Freiheit bedeutete.",
+      "title": "Die Grenzen der Freiheit schreiben",
+      "description": "Adams’ Briefe verbanden die Führung des Haushalts während des Krieges mit Überlegungen zu Regierung und der rechtlichen Stellung von Frauen. Wheatley veröffentlichte Gedichte und korrespondierte mit Washington, obwohl sie versklavt war.",
       "person_ids": ["abigail_adams", "phillis_wheatley"]
     },
     {
       "id": "contested_new_nation",
-      "title": "Macht nach der Unabhängigkeit",
-      "description": "Hamilton strebte einen stärkeren Verfassungs- und Finanzstaat an, während Brant nach der Enteignung daran arbeitete, die Gemeinschaft der Haudenosaunee zu bewahren. Ihre gegensätzlichen Wege nach dem Krieg zeigen, wie ungleich die Autorität der neuen Republik erfahren wurde.",
+      "title": "Macht und Enteignung",
+      "description": "Hamilton trat für stärkere nationale Institutionen ein und organisierte das Finanzministerium. Nach dem Verlust der Stammesgebiete der Mohawk in New York half Brant, am Grand River eine Gemeinschaft der Six Nations aufzubauen.",
       "person_ids": ["alexander_hamilton", "joseph_brant"]
     }
   ],
   "chapters": [
     {
       "id": "imperial_crisis",
-      "title": "Die Freiheit erhebt ihre Stimme (1764-1775)",
+      "title": "Die Herrschaft des Empire zieht die Zügel an (1764-1775)",
       "date_start": "1764",
       "date_start_precision": "year",
       "date_end": "1775",
@@ -60,7 +60,7 @@
           "event_date_precision": "day",
           "event_title": "Veröffentlicht Gedichtsammlung",
           "event_index": 7,
-          "theme_connection": "Poems on Various Subjects, Religious and Moral war Wheatleys bahnbrechende veröffentlichte Sammlung und begründete den Rang einer versklavten afrikanischen Frau als transatlantische literarische Stimme. Schon ihr Erscheinen stellte rassistische Vorstellungen unmittelbar infrage und lieferte eine wesentliche Grundlage für die revolutionären Debatten über Freiheit und menschliche Gleichheit."
+          "theme_connection": "Nachdem Drucker in Boston das Manuskript abgelehnt hatten, begründete Poems on Various Subjects, Religious and Moral, das in London erschien, Wheatleys Rang als transatlantische literarische Stimme – einer versklavten Frau afrikanischer Herkunft. Der Band wurde Teil der revolutionären Debatten über Freiheit und menschliche Gleichheit."
         },
         {
           "person_id": "abigail_adams",
@@ -68,7 +68,7 @@
           "event_date_precision": "year",
           "event_title": "Trägt den Revolutionshaushalt",
           "event_index": 6,
-          "theme_connection": "Adams’ Briefe aus der Kriegszeit machten die zivilen Lasten der Revolution, die Verantwortung für die Familie und ihren politischen Einsatz für einen führenden Abgeordneten des Kontinentalkongresses sichtbar. Dieser Briefwechsel ist ein unverzichtbares Zeugnis der Revolution: Er verband häusliches Leben und die politische Einsicht von Frauen mit der Sache der Patrioten."
+          "theme_connection": "In ihren Briefen aus der Kriegszeit hielt Adams die Belastungen der Zivilbevölkerung, häusliche Pflichten und politische Sorgen fest, während John Adams dem Kontinentalkongress angehörte. Sie verband den Alltag im Haus und ihre Beobachtungen zu Politik, Unabhängigkeit und Regierung mit der Sache der Patrioten."
         },
         {
           "person_id": "george_washington",
@@ -76,7 +76,7 @@
           "event_date_precision": "day",
           "event_title": "Übernimmt die Kontinentalarmee",
           "event_index": 8,
-          "theme_connection": "Washingtons Ernennung zum Oberbefehlshaber schuf die zentrale militärische Führung der kontinentalen Sache und wies ihm jene Rolle zu, in der er die improvisierte Armee zusammenhielt. Sie war ein grundlegender Schritt, kolonialen Widerstand in einen organisierten Unabhängigkeitskrieg zu verwandeln."
+          "theme_connection": "Washingtons Ernennung zum Oberbefehlshaber schuf die zentrale militärische Führung der kontinentalen Sache und wies ihm jene Rolle zu, in der er die improvisierte Armee zusammenhielt. Sie markiert einen entscheidenden Schritt, durch den aus kolonialem Widerstand ein organisierter Unabhängigkeitskrieg wurde."
         },
         {
           "person_id": "phillis_wheatley",
@@ -84,7 +84,7 @@
           "event_date_precision": "year",
           "event_title": "Schreibt an General Washington",
           "event_index": 9,
-          "theme_connection": "Mit ihrem Gedicht an Washington stellte Wheatley poetische Sprache unmittelbar in den Dienst des Kampfes der Patrioten und verband ihre öffentliche literarische Autorität mit der kontinentalen Militärsache. Washingtons Antwort unterstrich die Bedeutung des Werks als herausragenden Austausch der Revolutionszeit."
+          "theme_connection": "Wheatley, eine versklavte Schwarze Frau, sandte dem Befehlshaber der Kontinentalarmee in der Anfangsphase des Krieges „To His Excellency, George Washington“. Washington antwortete anerkennend, würdigte ihr dichterisches Talent und lud sie in sein Hauptquartier ein."
         }
       ],
       "historical_context": [
@@ -99,11 +99,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Intolerable_Acts"
         }
       ],
-      "lead_in": "Der Druck des Empire machte aus Widerstand einen politischen Notstand. Dichtung, Hausarbeit und militärische Ernennungen verliehen der entstehenden Sache eigene Stimmen und Strukturen."
+      "lead_in": "Strafmaßnahmen des Empire und bewaffnete Konflikte trugen den politischen Widerstand in die Haushalte, in die Druckerzeugnisse und in die militärische Organisation. Die Führungsfiguren des Kontinentalkongresses begannen, Streitkräfte für einen Krieg gegen Großbritannien aufzustellen."
     },
     {
       "id": "war_for_independence",
-      "title": "Ein Krieg weitet sich aus (1775-1781)",
+      "title": "Der Krieg findet Verbündete (1775-1781)",
       "date_start": "1775",
       "date_start_precision": "year",
       "date_end": "1781",
@@ -115,7 +115,7 @@
           "event_date_precision": "day",
           "event_title": "Übernimmt die Kontinentalarmee",
           "event_index": 8,
-          "theme_connection": "Washingtons Ernennung zum Oberbefehlshaber schuf die einigende militärische Führung, die die kontinentale Sache durch den Krieg trug. Sein Kommando über die Kontinentalarmee ist unverzichtbar für die Geschichte, wie eine improvisierte Kolonialtruppe dem britischen Gegner standhielt."
+          "theme_connection": "Washingtons Ernennung zum Oberbefehlshaber schuf die einigende militärische Führung, die die kontinentale Sache durch den Krieg trug. Sein Kommando über die Kontinentalarmee ist unverzichtbar für die Geschichte einer improvisierten kolonialen Streitmacht, die sich gegen Großbritannien behauptete."
         },
         {
           "person_id": "phillis_wheatley",
@@ -123,7 +123,7 @@
           "event_date_precision": "year",
           "event_title": "Schreibt an General Washington",
           "event_index": 9,
-          "theme_connection": "Wheatleys Gedicht „To His Excellency, George Washington“ brachte die dichterische Stimme einer versklavten Schwarzen Frau in die öffentliche Sprache des Kampfes der Patrioten. Der bis heute überlieferte Text verband revolutionäre Freiheit mit der offenkundigen Wirklichkeit rassischer Versklavung."
+          "theme_connection": "Wheatleys Gedicht „To His Excellency, George Washington“ brachte die dichterische Stimme einer versklavten Schwarzen Frau in die öffentliche Sprache des Kampfes der Patrioten. Sein bleibender Text verband die revolutionäre Freiheit mit der offenkundigen Realität rassistischer Versklavung."
         },
         {
           "person_id": "abigail_adams",
@@ -131,7 +131,7 @@
           "event_date_precision": "day",
           "event_title": "Fordert Anerkennung für Frauen",
           "event_index": 7,
-          "theme_connection": "Ihr Brief „Remember the Ladies“ machte die rechtliche und politische Ausgrenzung von Frauen zu einem bleibenden Teil der revolutionären Debatte über Freiheit und republikanisches Recht. Er ist ein herausragendes erhaltenes Zeugnis für die geschlechtsspezifischen Grenzen der Sache der Patrioten."
+          "theme_connection": "In ihrem Brief „Remember the Ladies“ thematisierte Adams die rechtliche und politische Ausgrenzung von Frauen, als die neuen republikanischen Gesetze Gestalt annahmen. Der Brief ist ein überliefertes Zeugnis der geschlechtsspezifischen Grenzen innerhalb der Sache der Patrioten."
         },
         {
           "person_id": "benjamin_franklin",
@@ -139,7 +139,7 @@
           "event_date_precision": "month",
           "event_title": "Gewinnt französische Hilfe für die Unabhängigkeit",
           "event_index": 12,
-          "theme_connection": "Franklins Diplomatie verwandelte französische Sympathie in lebenswichtige Lieferungen, militärische Unterstützung und schließlich das Bündnis von 1778. Sie internationalisierte den Krieg und machte den amerikanischen Sieg möglich. Auch seine spätere Rolle beim Frieden von Paris half, die Unabhängigkeit diplomatisch zu sichern."
+          "theme_connection": "Franklins Diplomatie trug dazu bei, französische Sympathie in dringend benötigte Lieferungen, militärische Hilfe und das Bündnis von 1778 zu verwandeln. Sie internationalisierte den Krieg und machte einen amerikanischen Sieg möglich. Auch seine spätere Rolle beim Pariser Frieden half, die Unabhängigkeit diplomatisch zu sichern."
         },
         {
           "person_id": "george_washington",
@@ -147,7 +147,7 @@
           "event_date_precision": "day",
           "event_title": "Siegt bei Trenton und Princeton",
           "event_index": 9,
-          "theme_connection": "Die Siege bei Trenton und Princeton wendeten die Krise nach dem Rückzug aus New York, stärkten die Moral der Patrioten und die Aussicht auf neue Rekruten und bewiesen, dass die Kontinentalarmee bedeutende Erfolge auf dem Schlachtfeld erringen konnte."
+          "theme_connection": "Die Siege bei Trenton und Princeton wendeten die Krise nach dem Rückzug aus New York, stärkten Moral und Aussicht auf neue Rekruten bei den Patrioten und zeigten, dass die Kontinentalarmee bedeutende Erfolge auf dem Schlachtfeld erringen konnte."
         },
         {
           "person_id": "joseph_brant",
@@ -155,7 +155,7 @@
           "event_date_precision": "day",
           "event_title": "Kampf bei Oriskany",
           "event_index": 6,
-          "theme_connection": "Brants Rolle bei Oriskany zeigt unmittelbar, wie die Revolution die Haudenosaunee-Nationen zerriss und indigene Heimatgebiete in einen zentralen Kriegsschauplatz an der Grenze verwandelte. Die Schlacht steht exemplarisch für die zerstörerischen Folgen der Revolution für die politischen Gemeinschaften der indigenen Bevölkerung."
+          "theme_connection": "Brants Rolle bei Oriskany brachte die Haudenosaunee-Nationen auf gegnerische Seiten der Revolution. Mohawk, Oneida, Seneca und andere Haudenosaunee-Nationen kämpften in dieser Schlacht gegeneinander."
         },
         {
           "person_id": "george_washington",
@@ -163,14 +163,14 @@
           "event_date_precision": "day",
           "event_title": "Siegt bei Yorktown, legt Kommando nieder",
           "event_index": 10,
-          "theme_connection": "Washingtons Führung bei Yorktown brachte den entscheidenden französisch-amerikanischen Sieg, der Cornwallis zur Kapitulation zwang. Sein freiwilliger Rücktritt vom Kommando begründete zugleich einen machtvollen republikanischen Präzedenzfall für den Vorrang der zivilen Gewalt über das Militär."
+          "theme_connection": "Washington befehligte bei Yorktown amerikanische und französische Truppen, wo Cornwallis im Oktober 1781 kapitulierte. Sein anschließender freiwilliger Rücktritt vom Kommando begründete den republikanischen Präzedenzfall des Vorrangs ziviler Gewalt über das Militär."
         }
       ],
       "historical_context": [
         {
           "id": "declaration_of_independence",
           "title": "Unabhängigkeitserklärung",
-          "description": "Mit der Unabhängigkeitserklärung verpflichtete sich Benjamin Franklin endgültig der neuen Nation, deren Entstehung er mitverkündet hatte. Zugleich verschärfte sie den Widerspruch zwischen revolutionärer Freiheit und jener Versklavung, die Phillis Wheatleys Schreiben und Abigail Adams’ politische Appelle anprangerten.",
+          "description": "Die Unabhängigkeit band Benjamin Franklin endgültig an die neue Nation, deren Ausrufung er mitgestaltet hatte. Zugleich verschärfte sie den Widerspruch zwischen revolutionärer Freiheit und der Versklavung, die Phillis Wheatleys Schreiben und Abigail Adams’ politische Appelle infrage stellten.",
           "date_start": "1776-07-04",
           "date_start_precision": "day",
           "date_end": null,
@@ -180,7 +180,7 @@
         {
           "id": "battles_of_saratoga",
           "title": "Saratoga",
-          "description": "Der amerikanische Sieg bei Saratoga machte das von Franklin angestrebte Bündnis mit Frankreich politisch möglich und verschaffte Washingtons Armee die internationale Unterstützung, die sie zur Fortsetzung des Krieges brauchte.",
+          "description": "Der amerikanische Sieg bei Saratoga machte das von Franklin angestrebte Bündnis mit Frankreich politisch möglich und verschaffte Washingtons Armee die internationale Unterstützung, die sie zur Fortsetzung des Krieges benötigte.",
           "date_start": "1777-09-19",
           "date_start_precision": "day",
           "date_end": "1777-10-17",
@@ -188,11 +188,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Battles_of_Saratoga"
         }
       ],
-      "lead_in": "Aus dem Konflikt wurde ein internationaler Krieg, getragen von militärischer Erholung und französischer Hilfe. Seine Gewalt spaltete zugleich die Haudenosaunee-Nationen und legte die Grenzen der Freiheit der Patrioten offen."
+      "lead_in": "Die Kontinentalarmee erlebte Rückschläge und errang Siege, während amerikanische Diplomaten um französische Hilfe warben. Revolutionäre Ansprüche fanden auch in Briefen und Gedichten Ausdruck, die unter ungleichen Bedingungen entstanden."
     },
     {
       "id": "peace_and_political_reckoning",
-      "title": "Frieden ohne Einigung (1781-1787)",
+      "title": "Der Frieden ordnet Ansprüche neu (1781-1787)",
       "date_start": "1781",
       "date_start_precision": "year",
       "date_end": "1787",
@@ -204,7 +204,7 @@
           "event_date_precision": "day",
           "event_title": "Siegt bei Yorktown, legt Kommando nieder",
           "event_index": 10,
-          "theme_connection": "Washingtons Führung der französisch-amerikanischen Belagerung von Yorktown sicherte den entscheidenden militärischen Sieg des Krieges; sein anschließender Rücktritt bekräftigte den Vorrang der zivilen Gewalt. Gemeinsam machten diese Handlungen die Unabhängigkeit möglich und setzten einen wegweisenden republikanischen Präzedenzfall."
+          "theme_connection": "Washingtons Führung der französisch-amerikanischen Belagerung von Yorktown sicherte den entscheidenden militärischen Sieg des Krieges; sein anschließender Rücktritt bekräftigte den Vorrang ziviler Gewalt. Zusammen machten diese Handlungen die Unabhängigkeit erreichbar und setzten einen prägenden republikanischen Präzedenzfall."
         },
         {
           "person_id": "joseph_brant",
@@ -212,7 +212,7 @@
           "event_date_precision": "day",
           "event_title": "Ansiedlung am Grand River",
           "event_index": 10,
-          "theme_connection": "Brants Organisation der Siedlung der Sechs Nationen am Grand River war ein bedeutender Versuch, nach der durch die Revolution bewirkten Enteignung indigener Nationen die Gemeinschaft und politische Eigenständigkeit der Haudenosaunee zu bewahren. Sie zeigt konkret die territorialen und indigenen Folgen der amerikanischen Unabhängigkeit."
+          "theme_connection": "Nachdem die Stammesgebiete der Mohawk in New York verloren waren, führte Brant Haudenosaunee-Familien aus der Gegend von Niagara auf Land, das die Haldimand-Proklamation ausgewiesen hatte. Er half, die neue Gemeinschaft der Six Nations am Grand River zu organisieren."
         },
         {
           "person_id": "alexander_hamilton",
@@ -220,7 +220,7 @@
           "event_date_precision": "day",
           "event_title": "Fordert Verfassungskonvent",
           "event_index": 9,
-          "theme_connection": "Hamilton verfasste den Bericht des Annapolis-Konvents, der zu einer umfassenderen Versammlung aufrief – ein unmittelbarer Anstoß für den Konvent von Philadelphia. Damit griff er entscheidend in die Politik ein, um das unzulängliche Gefüge der Konföderation durch eine Verfassungsrepublik zu ersetzen."
+          "theme_connection": "Nachdem die Delegierten die Unfähigkeit der Konföderationsregierung erkannt hatten, den Handel zwischen den Bundesstaaten zu regeln, verfasste Hamilton den Bericht des Annapolis-Konvents, der zu einer weiterreichenden Versammlung in Philadelphia aufrief. Der Bericht forderte die Staaten auf, Delegierte dorthin zu entsenden."
         },
         {
           "person_id": "alexander_hamilton",
@@ -228,7 +228,7 @@
           "event_date_precision": "month",
           "event_title": "Plädiert für die Verfassung",
           "event_index": 10,
-          "theme_connection": "Hamiltons Einsatz für die Verfassung, besonders seine Mitarbeit an den Federalist Essays, schuf eine grundlegende Verteidigung der Ratifizierung und einer handlungsfähigen nationalen Regierung. Diese Argumente wurden zu einem bleibenden Zeugnis der umstrittenen Gründung der neuen Republik."
+          "theme_connection": "Auf dem Konvent von Philadelphia trat Hamilton für eine wesentlich stärkere nationale Regierung ein. Während der Ratifizierung verteidigte er gemeinsam mit James Madison und John Jay in Essays die vorgeschlagene Verfassung."
         },
         {
           "person_id": "george_washington",
@@ -236,14 +236,14 @@
           "event_date_precision": "day",
           "event_title": "Leitet den Verfassungskonvent",
           "event_index": 11,
-          "theme_connection": "Als Vorsitzender des Verfassungskonvents verlieh Washington den Beratungen, aus denen die Verfassung hervorging, unverzichtbare Autorität und Ordnung. Seine Führung verschaffte dem vorgeschlagenen neuen nationalen Rahmen außergewöhnliche Legitimität."
+          "theme_connection": "Als Vorsitzender des Verfassungskonvents verlieh Washington den Beratungen, aus denen die Verfassung hervorging, unverzichtbare Autorität und Ordnung. Seine Führung verschaffte der vorgeschlagenen neuen nationalen Ordnung außerordentliche Legitimität."
         }
       ],
       "historical_context": [
         {
           "id": "treaty_of_paris_1783",
-          "title": "Frieden von Paris",
-          "description": "Der Frieden von Paris beendete den Krieg, den Washington geführt hatte, doch er übertrug riesige indigene Heimatgebiete ohne Zustimmung ihrer Bewohner. Damit verschärfte er unmittelbar die territoriale Bedrohung, der Joseph Brant beim Wiederaufbau mohawkischen Lebens am Grand River begegnete.",
+          "title": "Pariser Frieden",
+          "description": "Der Pariser Frieden beendete den Krieg, den Washington geführt hatte, übertrug jedoch ohne Zustimmung der indigenen Bevölkerung riesige indigene Stammesgebiete. Damit verschärfte er unmittelbar die Bedrohung, der Joseph Brant beim Wiederaufbau des Lebens der Mohawk am Grand River begegnete.",
           "date_start": "1783-09-03",
           "date_start_precision": "day",
           "date_end": null,
@@ -253,7 +253,7 @@
         {
           "id": "shays_rebellion",
           "title": "Shays’ Rebellion",
-          "description": "Shays’ Rebellion legte die Schwächen der Konföderationsregierung offen und stärkte das Argument von Hamilton und Washingtons Verbündeten für einen Verfassungskonvent.",
+          "description": "Shays’ Rebellion legte die Schwächen der Konföderationsregierung offen und stärkte das Argument Hamiltons und von Washingtons Verbündeten für einen Verfassungskonvent.",
           "date_start": "1786-08-29",
           "date_start_precision": "day",
           "date_end": "1787-02-03",
@@ -261,11 +261,11 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Shays%27_Rebellion"
         }
       ],
-      "lead_in": "Der Sieg brachte weder sichere indigene Heimatgebiete noch eine tragfähige nationale Regierung. Vertreibung und Verfassungsreform wurden zu prägenden Tatsachen der Nachkriegsordnung."
+      "lead_in": "Das Kriegsende ordnete territoriale Verhältnisse neu und legte die Schwächen der Konföderationsregierung offen. Während vertriebene Haudenosaunee-Familien am Grand River ihr Leben neu aufbauten, drängten politische Führungsfiguren auf eine neue nationale Ordnung."
     },
     {
       "id": "making_the_republic",
-      "title": "Macht wird wirksam (1787-1797)",
+      "title": "Die Bundesämter nehmen Gestalt an (1787-1797)",
       "date_start": "1787",
       "date_start_precision": "year",
       "date_end": "1797",
@@ -277,7 +277,7 @@
           "event_date_precision": "month",
           "event_title": "Plädiert für die Verfassung",
           "event_index": 10,
-          "theme_connection": "Hamiltons Verteidigung einer stärkeren Verfassung, vor allem in den Federalist Essays mit Madison und Jay, lieferte ein dauerhaftes und grundlegendes Plädoyer für die Ratifizierung und eine handlungsfähige nationale Regierung. Sie steht im Zentrum des umstrittenen Aufbaus der Republik nach der Revolution."
+          "theme_connection": "Hamiltons Verteidigung einer stärkeren Verfassung, insbesondere in den Federalist Essays mit Madison und Jay, lieferte ein dauerhaftes, grundlegendes Argument für die Ratifizierung und eine handlungsfähige nationale Regierung. Sie steht im Zentrum des umkämpften Aufbaus der Republik nach der Revolution."
         },
         {
           "person_id": "george_washington",
@@ -285,7 +285,7 @@
           "event_date_precision": "day",
           "event_title": "Leitet den Verfassungskonvent",
           "event_index": 11,
-          "theme_connection": "Washingtons einstimmige Wahl zum Vorsitzenden gab dem Verfassungskonvent unverzichtbare Legitimität und eine verlässliche Führung, während er die Verfassung erarbeitete. Seine Rolle half unmittelbar dabei, den fragilen Bund der Revolution in einen vorgeschlagenen nationalen Ordnungsrahmen zu überführen."
+          "theme_connection": "Washingtons einstimmige Wahl zum Vorsitzenden gab dem Verfassungskonvent unverzichtbare Legitimität und eine stabile Führung, als er die Verfassung ausarbeitete. Seine Rolle trug unmittelbar dazu bei, die brüchige Union der Revolution in eine vorgeschlagene nationale Ordnung zu überführen."
         },
         {
           "person_id": "alexander_hamilton",
@@ -293,7 +293,7 @@
           "event_date_precision": "day",
           "event_title": "Leitet das Finanzministerium",
           "event_index": 11,
-          "theme_connection": "Als erster Finanzminister entwickelte Hamilton das bundesstaatliche Finanzprogramm aus Schuldenübernahme, Einnahmenerhebung und öffentlichem Kredit, das die neue verfassungsmäßige Regierung handlungsfähig machte. Dies war ein Meilenstein beim Aufbau jener fiskalisch leistungsfähigen Republik, die diese Sammlung beschreibt."
+          "theme_connection": "Als erster Finanzminister organisierte Hamilton das Ministerium und setzte sich für die Übernahme der Kriegsschulden der einzelnen Bundesstaaten durch den Bund, für Zolleinnahmen, eine Verbrauchsteuer auf Whiskey und staatliche Kreditwürdigkeit ein. Diese Maßnahmen bildeten das Finanzprogramm der neuen Bundesregierung."
         },
         {
           "person_id": "george_washington",
@@ -301,7 +301,7 @@
           "event_date_precision": "day",
           "event_title": "Wird erster Präsident",
           "event_index": 12,
-          "theme_connection": "Washingtons Amtseinführung etablierte die Präsidentschaft als funktionsfähiges Verfassungsamt und begründete die bundesstaatliche Exekutive. Sie war ein unverzichtbarer Schritt, die neue Verfassung vom Dokument in eine arbeitende Republik zu verwandeln."
+          "theme_connection": "Washingtons Amtseinführung etablierte die Präsidentschaft als funktionsfähiges Verfassungsamt und begründete die bundesstaatliche Exekutive. Sie war ein unverzichtbarer Schritt, um aus der neuen Verfassung ein funktionierendes Gemeinwesen zu machen."
         },
         {
           "person_id": "george_washington",
@@ -309,14 +309,14 @@
           "event_date_precision": "month",
           "event_title": "Schlägt die Whiskey-Rebellion nieder",
           "event_index": 13,
-          "theme_connection": "Washingtons Mobilisierung gegen die Whiskey-Rebellion zeigte, dass die Bundesregierung ihre Gesetze gegen organisierten Widerstand im eigenen Land durchsetzen konnte. Sie wurde zur entscheidenden Bewährungsprobe wirksamer exekutiver Gewalt in der umstrittenen neuen Nation."
+          "theme_connection": "Nachdem der bewaffnete Widerstand gegen die bundesstaatliche Verbrauchsteuer auf gebrannte Spirituosen im Westen Pennsylvanias eskaliert war, berief Washington unter Berufung auf Bundesgewalt die Milizen der Bundesstaaten ein. Damit reagierte er auf den organisierten inneren Widerstand gegen die Steuer."
         }
       ],
       "historical_context": [
         {
           "id": "jay_treaty",
           "title": "Jay-Vertrag",
-          "description": "Der Jay-Vertrag wurde zu einer prägenden Kontroverse in Washingtons Regierung. Hamilton half im Hintergrund bei seiner Verteidigung, und der Streit verschärfte den parteipolitischen Konflikt um sein finanz- und außenpolitisches Programm.",
+          "description": "Der Jay-Vertrag wurde zu einer prägenden Kontroverse in Washingtons Regierung. Hamilton half im Privaten bei seiner Verteidigung, und der Streit vertiefte den parteipolitischen Konflikt um sein finanz- und außenpolitisches Programm.",
           "date_start": "1794-11-19",
           "date_start_precision": "day",
           "date_end": null,
@@ -324,10 +324,10 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Jay_Treaty"
         }
       ],
-      "lead_in": "Die Verfassung erhielt Ämter, Einnahmen und Durchsetzungskraft. Der Aufbau einer handlungsfähigen Republik machte Sinn und Reichweite bundesstaatlicher Autorität aufs Neue umstritten."
+      "lead_in": "Durch Präsidentschaft, Finanzministerium und bundesstaatliche Durchsetzung wurde die Verfassung zur gelebten Regierungspraxis. Ihre Finanzmaßnahmen und der Einsatz der Milizgewalt riefen organisierten Widerstand hervor."
     }
   ],
-  "conclusion": "Die amerikanische Unabhängigkeit beendete die britische Herrschaft, doch sie entschied nicht die zentralen Streitfragen der Revolution. Washington und Hamilton halfen, dauerhafte nationale Macht zu errichten; Adams und Wheatley legten die Ausschlüsse der Freiheit offen; Brants Erfahrung zeigte, welchen territorialen Schaden die Autonomie der Haudenosaunee erlitt. Die Republik entstand nicht als vollendete Erfüllung revolutionärer Ideale, sondern als deren folgenreichster und umstrittenster Schauplatz.",
+  "conclusion": "Die Vereinigten Staaten gingen aus der Revolution mit Institutionen hervor, die Truppen befehligen, Einnahmen einziehen und Bundesrecht durchsetzen konnten. Ungeklärt blieb, wer gleiche Rechtsstellung genießen sollte, wessen Land sicher sein würde und ob revolutionäre Freiheit mit Versklavung und Ausschluss vereinbar sein konnte.",
   "social_network": {
     "nodes": [
       {
@@ -863,16 +863,22 @@
     "narration": {
       "circles": [
         {
-          "key": "george_washington+alexander_hamilton",
-          "member_ids": ["george_washington", "alexander_hamilton"],
-          "title": "Vom Stab zum Staat",
-          "text": "Hamilton trat als Adjutant in Washingtons Kriegswelt ein – ein Amt, das nach Washingtons Überzeugung uneingeschränktes Vertrauen und große Fähigkeiten verlangte. Vier Jahre lang war er Washingtons wichtigster Stabsoffizier und bearbeitete Befehle, Korrespondenz, Aufklärung, Diplomatie und Verhandlungen. Später ernannte Washington ihn zum Finanzminister und führte ihre enge berufliche Beziehung trotz zwischenzeitlicher Spannungen von der Kontinentalarmee in die neue Bundesregierung weiter."
+          "key": "benjamin_franklin+george_washington",
+          "member_ids": ["benjamin_franklin", "george_washington"],
+          "title": "Armee und Bündnis",
+          "text": "Washington führte die Kontinentalarmee, während Franklin für die amerikanische Sache um französische Unterstützung warb. Später nahm Franklin an dem Verfassungskonvent teil, dem Washington vorsaß, und verband so ihre Arbeit während der Revolution mit der vorgeschlagenen Verfassung."
         },
         {
           "key": "abigail_adams+phillis_wheatley",
           "member_ids": ["abigail_adams", "phillis_wheatley"],
-          "title": "Freiheit in Worten",
-          "text": "Adams und Wheatley sind hier nicht durch eine überlieferte unmittelbare Verbindung verknüpft, doch beide verliehen der öffentlichen Bedeutung der Revolution eine kraftvolle schriftliche Stimme. Adams’ Briefe verbanden die Erfahrung des Haushalts mit Argumenten über Recht und die politische Stellung der Frauen. Wheatleys veröffentlichte Dichtung und ihr Austausch mit Washington behaupteten literarische Autorität in einer Welt, die bezweifelte, dass eine versklavte afrikanische Frau das ihr zugeschriebene Werk geschrieben haben konnte."
+          "title": "Ansprüche in Schriftform",
+          "text": "Adams verband in ihren Briefen das Leben im Haushalt mit Beobachtungen über Regierung, Unabhängigkeit und die politische Stellung der Frauen. Wheatley veröffentlichte trotz rassistischer Zweifel an ihrer Autorschaft Gedichte und schickte Washington ein Gedicht, auf das er anerkennend antwortete. Eine direkte Verbindung zwischen Adams und Wheatley ist hier nicht überliefert."
+        },
+        {
+          "key": "joseph_brant+alexander_hamilton",
+          "member_ids": ["joseph_brant", "alexander_hamilton"],
+          "title": "Auseinanderdriftende Wege",
+          "text": "Hamilton wechselte aus Washingtons Dienst in die Verfechtung der Verfassung und an die Spitze des Finanzministeriums. Brant, ein Anführer der Mohawk und im Krieg Verbündeter Großbritanniens, half nach dem Verlust der Stammesgebiete der Mohawk in New York, die Siedlung der Six Nations am Grand River zu organisieren. Ihre belegten Wege nach dem Krieg verliefen unter unterschiedlichen politischen und territorialen Bedingungen."
         }
       ]
     }
@@ -919,27 +925,6 @@
           }
         ],
         "key": "braintree"
-      },
-      {
-        "label": "Paris",
-        "score": 3.0,
-        "centroid": [2.3522, 48.8566],
-        "bbox": [2.3522, 48.8566, 2.3522, 48.8566],
-        "year_start": 1776,
-        "year_end": 1776,
-        "events": [
-          {
-            "person_id": "benjamin_franklin",
-            "person_name": "Benjamin Franklin",
-            "event_index": 12,
-            "event_title": "Wins French Aid for Independence",
-            "event_date": "1776-10",
-            "place": "Paris",
-            "coordinates": [2.3522, 48.8566],
-            "weight": 3.0
-          }
-        ],
-        "key": "paris"
       },
       {
         "label": "Philadelphia",
@@ -991,6 +976,27 @@
           }
         ],
         "key": "philadelphia"
+      },
+      {
+        "label": "Paris",
+        "score": 3.0,
+        "centroid": [2.3522, 48.8566],
+        "bbox": [2.3522, 48.8566, 2.3522, 48.8566],
+        "year_start": 1776,
+        "year_end": 1776,
+        "events": [
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 12,
+            "event_title": "Wins French Aid for Independence",
+            "event_date": "1776-10",
+            "place": "Paris",
+            "coordinates": [2.3522, 48.8566],
+            "weight": 3.0
+          }
+        ],
+        "key": "paris"
       },
       {
         "label": "Grand River",
@@ -1070,33 +1076,33 @@
       "stops": [
         {
           "key": "braintree",
-          "title": "Die Republik zu Hause",
-          "text": "In Braintree hielt Abigail Adams einen Haushalt der Revolution aufrecht, während der Krieg in den Alltag gewöhnlicher Menschen eindrang. 1776 drängte sie auf die Anerkennung der Frauen und machte deutlich, dass die Unabhängigkeit Fragen nach Rechten aufwarf, die weit über das Schlachtfeld hinausgingen. Phillis Wheatleys Ansprache an General Washington, die sie aus dem nahen Boston sandte, verband literarische Unterstützung für die kontinentale Sache mit dieser größeren Welt von Massachusetts."
-        },
-        {
-          "key": "paris",
-          "title": "Hilfe über den Ozean",
-          "text": "In Paris arbeitete Benjamin Franklin daran, französische Hilfe für die amerikanische Unabhängigkeit zu gewinnen. Sein Erfolg machte aus der Revolution mehr als einen kolonialen Aufstand und zog europäische Mächte in den Kampf für eine neue Nation hinein."
+          "title": "Briefe unter Kriegsdruck",
+          "text": "In Braintree führte Abigail Adams Haus und Farm, während John Adams im Kontinentalkongress saß. Ihre Briefe schilderten Mangel und Unsicherheit während des Krieges; 1776 bat sie ihn, bei der Ausarbeitung neuer Gesetze „an die Frauen zu denken“. Von Boston aus schickte Wheatley Washington in der Anfangsphase des Krieges ihr Gedicht."
         },
         {
           "key": "philadelphia",
-          "title": "Vom Krieg zur Verfassung",
-          "text": "Philadelphia wurde zum Scharnier zwischen Revolution und Regierung. Hier erhielt George Washington das Kommando über die Kontinentalarmee, und der Feldzug mit den Siegen bei Trenton und Princeton stärkte die Sache der Patrioten. Ein Jahrzehnt später führte Washington den Verfassungskonvent, während Alexander Hamilton für eine Verfassung eintrat – aus dem Problem, die Unabhängigkeit zu erringen, wurde das Problem, eine Republik zu sichern."
+          "title": "Kommando und Verfassung",
+          "text": "Der Zweite Kontinentalkongress ernannte Washington in Philadelphia zum Oberbefehlshaber; anschließend reiste er nach Cambridge, um nahe Boston das Kommando zu übernehmen. 1787 führte Washington den Vorsitz auf dem Konvent von Philadelphia, als die Delegierten einen Verfassungsentwurf ausarbeiteten, während Hamilton dort für eine wesentlich stärkere nationale Regierung eintrat. Washingtons Siege bei Trenton und Princeton folgten auf den Rückzug der Kontinentalarmee durch New Jersey."
+        },
+        {
+          "key": "paris",
+          "title": "Auf der Suche nach französischer Hilfe",
+          "text": "Franklin kam als amerikanischer Beauftragter nach Paris, um französische Unterstützung für den Krieg zu gewinnen. Gemeinsam mit Silas Deane und Arthur Lee half er, französische Hilfe und das Bündnis von 1778 zu sichern."
         },
         {
           "key": "grand_river",
-          "title": "Eine Heimat zurückgewonnen",
-          "text": "1784 ließ sich Joseph Brant am Grand River nieder. Nach einer Revolution, die nicht nur die Kolonialherrschaft, sondern auch indigene Heimatgebiete umgestaltet hatte, markierte dies den Beginn eines neuen Kapitels: ein Mittelpunkt der Gemeinschaft inmitten politischer Umwälzungen sollte bewahrt werden."
+          "title": "Eine Siedlung der Six Nations",
+          "text": "Nachdem die Stammesgebiete der Mohawk in New York verloren waren, führte Brant zahlreiche Haudenosaunee-Familien aus der Gegend von Niagara auf Land, das die Haldimand-Proklamation ausgewiesen hatte. Er half, die neue Gemeinschaft der Six Nations am Grand River zu organisieren."
         },
         {
           "key": "new_york_city",
-          "title": "Eine Regierung tritt ihr Amt an",
-          "text": "In New York City wurde George Washington 1789 erster Präsident und verlieh der neuen Verfassung eine lebendige Exekutive. Im selben Jahr übernahm Alexander Hamilton das Finanzministerium und begann die praktische Arbeit, bundesstaatliche Autorität funktionsfähig zu machen."
+          "title": "Ämter nehmen Gestalt an",
+          "text": "Washington legte am 30. April 1789 in New York City den Amtseid als Präsident ab und begründete damit formal die bundesstaatliche Exekutive unter der Verfassung. Im September ernannte er Hamilton zum ersten Finanzminister, der sogleich mit dem Aufbau des Ministeriums begann."
         },
         {
           "key": "western_pennsylvania",
-          "title": "Macht auf dem Prüfstand",
-          "text": "Im westlichen Pennsylvania brachte der Widerstand gegen die Whiskeysteuer die neue Republik in offenen Konflikt mit einigen ihrer eigenen Bürger. 1794 setzte Präsident Washington zur Niederschlagung der Whiskey-Rebellion an und zeigte, dass die Bundesregierung ihre Gesetze auch nach einer Revolution gegen ferne Herrschaft durchsetzen konnte."
+          "title": "Widerstand gegen die Verbrauchsteuer",
+          "text": "Im Westen Pennsylvanias eskalierte der bewaffnete Widerstand gegen die bundesstaatliche Verbrauchsteuer auf gebrannte Spirituosen. Washington berief als Antwort darauf unter Berufung auf Bundesgewalt die Milizen der Bundesstaaten ein."
         }
       ]
     },
@@ -1120,120 +1126,59 @@
     }
   },
   "opening": {
-    "text": "Am 11. September 1789 ernannte Präsident George Washington Alexander Hamilton zum ersten Finanzminister. Vom Sitz der neuen Bundesregierung in New York City aus begann Hamilton, eine Behörde zu organisieren, die die Versprechen der Verfassung in die Praxis umsetzen sollte: öffentlichen Kredit, Einnahmen und bundesstaatliche Autorität.",
-    "image": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg/960px-Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg",
-      "caption": "Hamiltons Rundschreiben des Finanzministeriums an Zollbeamte",
-      "source": "https://commons.wikimedia.org/wiki/File:Circular_from_Alexander_Hamilton,_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_(page_1).jpg",
-      "person_id": "alexander_hamilton",
-      "event_index": 11,
-      "image_index": 0
-    }
+    "text": "Am 1. September 1773 erschien *Poems on Various Subjects, Religious and Moral* in London. Drucker in Boston hatten das Manuskript abgelehnt; die Veröffentlichung jenseits des Atlantiks machte Phillis Wheatley zur Autorin, noch bevor die Krise des Empire in offenen Krieg umgeschlagen war.\n\nDas Buch trug den Namen einer versklavten Frau afrikanischer Herkunft in eine transatlantische Welt des Drucks, die sowohl an ihrer Autorschaft als auch an ihrem Rang gezweifelt hatte. Seine Seiten waren bereits im Umlauf, bevor die Strafmaßnahmen des Parlaments in Massachusetts den Widerstand zum revolutionären Bruch werden ließen.",
+    "image": null
   },
   "section_headings": {
-    "timeline": "Vom Aufstand zur Autorität",
-    "network": "Die Bande hinter der Macht",
-    "map": "Eine Republik auf umkämpftem Boden",
-    "conclusion": "Das unerfüllte Versprechen"
+    "timeline": "Aus Krieg wird Regierung",
+    "network": "Ansprüche auf Papier",
+    "map": "Über die Grenzen der Imperien",
+    "conclusion": "Was Macht nicht sichern konnte"
   },
   "section_bodies": {
     "timeline": [
       {
         "type": "paragraph",
-        "text": "Noch bevor die Unabhängigkeit erklärt wurde, beruhte die Revolution auf Formen der Arbeit und des Ausdrucks jenseits des Kongresses. Abigail Adams führte ihren Haushalt und Hof in Braintree durch Mangel und Unsicherheit und schrieb zugleich offen über Politik und Regierung. Phillis Wheatley, deren Gedichtband in London erschien, nachdem Drucker in Boston ihn abgelehnt hatten, wandte sich in Versen an Washington, als der Krieg gerade begann. Ihr Briefwechsel mit dem Oberbefehlshaber verband die öffentliche Autorität einer versklavten Schwarzen Dichterin mit der Sache der Patrioten, während die Versklavung in jener Gesellschaft fortbestand, die sich auf Freiheit berief."
-      },
-      {
-        "type": "quote",
-        "text": "Vergesst die Frauen nicht",
-        "attribution": "Abigail Adams, Brief an John Adams, 31. März 1776"
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Washington_Crossing_the_Delaware_MET_DP215410.jpg/960px-Washington_Crossing_the_Delaware_MET_DP215410.jpg",
-          "caption": "Washington überquert den Delaware",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Crossing_the_Delaware_MET_DP215410.jpg",
-          "person_id": "george_washington",
-          "event_index": 9,
-          "image_index": 0
-        },
-        "layout": "right"
+        "text": "Die Zwangsgesetze des Parlaments machten Massachusetts zum Prüfstein für die Grenzen imperialer Herrschaft. Die strafende Kontrolle empörte nicht bloß koloniale Politiker; sie erzwang Fragen der Abstimmung, die lokale Versammlungen und freiwillige Zusammenschlüsse nicht aus eigener Kraft beantworten konnten. Als Saratoga ein französisches Bündnis politisch möglich machte, stellte die europäische Rivalität die materiellen und militärischen Mittel bereit, die die amerikanische Sache aus ihren eigenen zersplitterten Ressourcen nicht zuverlässig hervorbringen konnte."
       },
       {
         "type": "paragraph",
-        "text": "Washingtons Kommando gab der kontinentalen Sache ein Zentrum militärischer Autorität, und die Siege bei Trenton und Princeton stellten nach dem Rückzug durch New Jersey Moral und Aussicht auf neue Rekruten wieder her. Franklins Arbeit in Frankreich verwandelte Unterstützung in Lieferungen, militärische Hilfe und schließlich das Bündnis von 1778. Der französisch-amerikanische Sieg bei Yorktown führte den Krieg zu seinem entscheidenden militärischen Ende, doch der anschließende Frieden verteilte seine Folgen nicht gleichmäßig. Bei Oriskany waren Mohawk, Oneida, Seneca und andere Haudenosaunee-Nationen in einen unmittelbaren Konflikt hineingezogen worden; danach führte Brant vertriebene Haudenosaunee-Familien zu einer neuen Siedlung am Grand River."
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Washington_Constitutional_Convention_1787.jpg",
-          "caption": "Washington auf dem Verfassungskonvent, 1787",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Constitutional_Convention_1787.jpg",
-          "person_id": "george_washington",
-          "event_index": 11,
-          "image_index": 0
-        },
-        "layout": "left"
+        "text": "Mit dem Frieden verschwand das institutionelle Problem nicht. Der Pariser Frieden beendete den Krieg, übertrug jedoch ohne Zustimmung der indigenen Bevölkerung riesige indigene Stammesgebiete und verschärfte damit die territoriale Bedrohung der Mohawk-Gemeinschaften. Zugleich legte Shays’ Rebellion die Schwächen der Konföderationsregierung offen und bestärkte die Befürworter einer neuen Verfassung in ihrer Überzeugung, dass Handel zwischen den Bundesstaaten, öffentliche Ordnung und nationale Verpflichtungen eine dauerhaftere Autorität verlangten."
       },
       {
         "type": "paragraph",
-        "text": "Die Nachkriegskrise verlagerte die Frage vom Erringen der Unabhängigkeit auf ihre Regierung. Hamiltons Bericht aus Annapolis forderte einen umfassenderen Konvent, nachdem Delegierte erlebt hatten, dass die Konföderation den Handel zwischen den Einzelstaaten nicht regeln konnte; in Philadelphia trat er für eine stärkere nationale Regierung ein, während Washington dem Konvent vorsaß, der die Verfassung hervorbrachte. Ihre Arbeit mündete in eine bundesstaatliche Exekutive und ein Finanzministerium, dann in Washingtons Reaktion auf den bewaffneten Widerstand gegen die Whiskeyabgabe. Die neue Regierung hatte die Fähigkeit zum Handeln gewonnen, doch gerade ihre Autorität blieb umstritten."
+        "text": "In den 1790er Jahren erhielt Autorität neben einem verfassungsrechtlichen auch ein fiskalisches Gesicht. Zolleinnahmen, staatliche Kreditwürdigkeit und eine Verbrauchsteuer machten die Bundesregierung im Handel und in der ländlichen Produktion gegenwärtig, nicht nur in den Debatten Philadelphias. Der Jay-Vertrag wurde dann zu einer prägenden Kontroverse in Washingtons Regierung, und Hamiltons private Rolle bei seiner Verteidigung vertiefte den parteipolitischen Konflikt über die finanz- und außenpolitische Richtung der neuen Regierung."
       }
     ],
     "network": [
       {
         "type": "paragraph",
-        "text": "Washingtons Beziehungen zeigen, wie aus dem militärischen Kommando der Revolution ein Netzwerk des Regierens wurde. Hamilton diente vier Jahre lang als sein wichtigster Stabsoffizier, verfasste unter Washingtons Anleitung Befehle und Briefe und trat später als Finanzminister dem ersten Kabinett bei. Franklin gehörte einem anderen, aber sich überschneidenden Kreis nationaler öffentlicher Angelegenheiten an: Er half, die Unabhängigkeit im Ausland zu sichern, kehrte während des Krieges nach Pennsylvania zurück und nahm am von Washington geleiteten Verfassungskonvent teil."
+        "text": "Diese politische Welt wurde von Papier getragen, doch Papier zirkulierte nicht zu gleichen Bedingungen. Private Korrespondenz konnte Kriegsmangel, Hausarbeit und die rechtliche Ausgrenzung von Frauen in den Bereich öffentlicher Auseinandersetzung rücken, ohne Frauen einen Platz in den gerade diskutierten gesetzgebenden Institutionen zu verschaffen. Der Druck eröffnete ein breiteres Publikum; doch Wheatleys Weg über London, nachdem Drucker in Boston ihr Manuskript abgewiesen hatten, zeigte, wie rassistische Zweifel und kommerzielle Zugangshürden den Zugang zu diesem Publikum bestimmten."
       },
       {
         "type": "paragraph",
-        "text": "Andere Verbindungen trugen Argumente, die sich nicht bruchlos in die offizielle Macht einfügten. Wheatley sandte Washington „To His Excellency, George Washington“, und er antwortete mit Lob und einer Einladung in sein Hauptquartier in Cambridge. Auch Adams’ politisches Leben vollzog sich in Briefen, vor allem mit John Adams, aber auch mit Thomas Jefferson. Brants Beziehung zu Washington war im Krieg feindselig und danach diplomatisch – eine Erinnerung daran, dass die bundesstaatlichen Beziehungen zu den Haudenosaunee auf einen Konflikt folgten, in dem indigene politische Eigenständigkeit bereits schwer beschädigt worden war."
+        "text": "Offizielle Kanäle besaßen eine andere Durchsetzungskraft. Der Kontinentalkongress, die französische diplomatische Mission, der Verfassungskonvent und das Finanzministerium konnten Argumente in anerkannte Befehle, Verträge, Ämter und Einnahmen verwandeln. Weder die Autorschaft einer versklavten Dichterin noch der politische Rat einer Ehefrau verfügten über einen vergleichbaren institutionellen Weg; ihre Worte konnten die Grundlagen der Republik offenlegen, aber ihr kein Gesetz aufzwingen."
       }
     ],
     "map": [
       {
         "type": "paragraph",
-        "text": "Braintree und Paris stehen für zwei sehr unterschiedliche Fronten desselben Kampfes. In Massachusetts drang der Krieg durch Mangel, Unsicherheit und die Last, Haus und Hof zu führen, während politische Entscheidungen andernorts fielen, in einen Haushalt ein. In Paris bemühte sich Franklin um jene ausländische Hilfe, die aus einem kolonialen Aufstand einen internationalen Krieg machte."
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg/960px-Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg",
-          "caption": "Landvermessung der Indianergebiete am Grand River von 1821",
-          "source": "https://commons.wikimedia.org/wiki/File:Thomas_Ridout_map_of_Grand_River_Indian_Lands,_1821.jpg",
-          "person_id": "joseph_brant",
-          "event_index": 10,
-          "image_index": 0
-        },
-        "layout": "full"
-      },
-      {
-        "type": "paragraph",
-        "text": "Der Weg von Oriskany zum Grand River zeichnet eine härtere Geografie der Unabhängigkeit nach. Die Revolution brachte die Haudenosaunee-Nationen gegeneinander auf, und der Verlust mohawkischer Heimatgebiete in New York zwang viele Familien, das Niagara-Gebiet westwärts zu verlassen. Grand River wurde zum Versuch, eine neue Gemeinschaft der Sechs Nationen zu organisieren – nicht zur Wiederherstellung des bereits verlorenen Territoriums."
-      },
-      {
-        "type": "paragraph",
-        "text": "Philadelphia, Annapolis, New York City und das westliche Pennsylvania markieren die wechselnden Machtzentren der Republik. In Philadelphia ernannte der Kongress Washington zum Befehlshaber einer Armee; dieselbe Stadt war später Gastgeber des Konvents, der eine neue Verfassung entwarf. Annapolis gab den Anstoß zu diesem Konvent, New York beherbergte die erste Präsidentschaft und das Finanzministerium, und im westlichen Pennsylvania wurde erprobt, ob Bundesrecht gegen organisierten Widerstand durchgesetzt werden konnte."
-      }
-    ],
-    "conclusion": [
-      {
-        "type": "paragraph",
-        "text": "Die nach dem Krieg geschaffenen Institutionen beseitigten die Widersprüche der Revolution nicht. Sie errichteten eine dauerhaftere nationale Regierung, ließen Frauen jedoch außerhalb formeller politischer Vertretung, die Sklaverei unangetastet und indigene Gemeinschaften mit den territorialen Folgen der amerikanischen Expansion zurück."
+        "text": "Die Distanzen der Revolution waren von sich überlagernden Zuständigkeiten der Imperien geprägt. Die Strafherrschaft des Parlaments reichte über den Atlantik bis nach Massachusetts, während Frankreichs Unterstützung erst politisch möglich wurde, als Saratoga den größeren Krieg veränderte. Der Pariser Frieden zog ohne Zustimmung der indigenen Bevölkerung eine neue internationale Ordnung über indigenem Territorium. So wurde das Grenzgebiet nördlich von New York zu einem Ort, an dem vertriebene Haudenosaunee-Familien ihr politisches und gemeinschaftliches Leben unter britischem Schutz neu aufbauen mussten – nicht innerhalb der Vereinigten Staaten."
       }
     ]
   },
   "composition": {
     "model": "gpt-5.6-terra",
-    "composed_at": "2026-07-24T06:06:11.930454+02:00",
-    "throughline": "This story follows how a revolt against empire became a functioning but contested republic. Washington and Franklin sustained and internationalized the war, while Adams and Wheatley pressed its language of liberty against women’s exclusion and racial bondage; Brant’s wartime and postwar experience reveals the Revolution’s devastating territorial consequences for Haudenosaunee autonomy. The postwar efforts of Hamilton and Washington to build constitutional, fiscal, and executive power show that independence did not resolve who the new nation would serve or how it would govern.",
-    "excluded_people": []
+    "composed_at": "2026-07-26T04:12:10.593009+00:00",
+    "throughline": "The Revolution forced the colonies to turn resistance into durable military, diplomatic, and political power: Washington’s command, Franklin’s French mission, and the later constitutional and fiscal programs associated with Washington and Hamilton trace that construction. Yet the same struggle exposed who the new order would not equally secure: Adams and Wheatley articulated liberty’s gendered and racial limits, while Brant’s wartime conflict and Grand River resettlement show the territorial dispossession accompanying independence. The story asks how a republic capable of winning a war and enforcing its laws could be built alongside such unequal freedom and security.",
+    "excluded_people": [],
+    "prose_revisions": 0
   },
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "12e511a382efbc16",
-    "translated_on": "2026-07-24T06:20:41.192025+02:00",
+    "source_fingerprint": "c273a00fb29769dc",
+    "translated_on": "2026-07-26T04:12:58.536318+00:00",
     "translator": "openai:gpt-5.6-terra"
   }
 }

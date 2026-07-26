@@ -10,7 +10,30 @@ that reviews the whole dataset from the top down — including focused
 Wikipedia excerpts for every main person — and writes one coherent,
 journalistic narrative around the timeline, the network, and the map.
 
-The composer works in three AI calls:
+TWO LAYERS, NOT ONE
+-------------------
+
+A meta story page carries two kinds of text, and conflating them is what made
+earlier versions of this composer read as a wrapper around its own components:
+
+- The **caption layer** is bound one-to-one to something the reader is looking
+  at: a chapter of the timeline, an event on it, a circle in the graph, a stop
+  on the map. Its job is to say what *that item* is — concretely, briefly,
+  factually.
+- The **article layer** is the continuous prose the reader meets *between* the
+  components: the opening, the description, the section bodies, the
+  conclusion. Its job is **context** — the world these
+  lives happened inside, the conditions that produced the sequence, what
+  changed between one section and the next, what it cost. Not the items.
+
+When one call writes both layers from one brief of items, it writes the items
+twice: measured on the previously composed stories, article paragraphs
+overlapped the caption texts sitting right below them at a Dice score of 0.53,
+roughly twice the paraphrase band seen *within* the article layer. So the
+layers are now written by separate calls, and the article call is shown the
+finished caption layer as text that is **already on the page**.
+
+The composer works in four AI calls:
 
 1. **Curation** — reads the assembled story and decides on a *throughline*
    (the arc that anchors all prose) and, exceptionally, which clearly
@@ -20,28 +43,26 @@ The composer works in three AI calls:
    subtopics, chapter events, the social network, and the map. The network is
    *pruned* (not re-derived), so Phase 5b review edits on surviving ties are
    kept.
-2. **Composition** — writes the story's full prose in one voice, guided by
-   the throughline and grounded in the source material: title, tagline, an
-   ``opening`` cold-open scene, the description, story-specific
-   ``section_headings`` (now including the map), free-form
-   **``section_bodies``** (flexible sequences of paragraph / image / quote
-   blocks rendered between each section's heading and its interactive
-   component — a section carries no other prose), chapter headlines plus
-   lead-ins, subtopic texts, sparse refinements of event theme connections,
-   the network
-   narration — where the composer may now **reorganize the circles** (merge,
-   split, reorder, or discard clusters via explicit ``member_ids``) — the
-   map narration — where it may likewise **reorder and discard stops** — and
-   the conclusion.
-3. **Redundancy pass** — a focused editing call that reads only the composed
-   prose and rewrites the slots that repeat one another. Call 2 juggles some
-   fifteen prose objectives against a single throughline and resolves that
-   tension by restating the throughline everywhere, so the same point lands in
-   the description, the section bodies and the conclusion. It cannot
-   police this in itself; a call with one job can. Revisions are patched back
-   into the composition result before it is applied, so they pass through the
-   same defensive application path as everything else. Non-fatal, and opt out
-   with ``--skip-redundancy-pass``.
+2. **Caption layer** (``run_component_narration``) — the texts bound to items:
+   chapter headlines plus lead-ins, subtopic texts, sparse refinements of
+   event theme connections, the network circles — which this call may
+   **reorganize** (merge, split, reorder, or discard clusters via explicit
+   ``member_ids``) — and the map stops, which it may likewise reorder and
+   discard. Nothing here states the story's thesis; that belongs to call 3.
+3. **Article layer** (``run_article``) — the running prose, written with the
+   caption layer in front of it and explicitly forbidden to retell it: title,
+   tagline, an ``opening`` cold-open scene, the description, story-specific
+   ``section_headings``, free-form **``section_bodies``** (paragraph / image
+   / quote blocks rendered between each section's heading and its interactive
+   component — a section carries no other prose), and the conclusion. Two tests govern it — delete every component and the article
+   must still read as one continuous essay; and no paragraph of it may read
+   as a description of the thing below it.
+4. **Redundancy pass** — a focused editing call that rewrites article slots
+   repeating one another *or* repeating the caption layer. The caption texts
+   are passed as fixed reference slots: they can be repeated *against*, never
+   rewritten. Revisions are patched back into the composition result before it
+   is applied, so they pass through the same defensive application path as
+   everything else. Non-fatal, and opt out with ``--skip-redundancy-pass``.
 
 Everything the model returns is applied deterministically and defensively:
 
@@ -67,10 +88,11 @@ Everything the model returns is applied deterministically and defensively:
   only replace the text of a slot that already exists; an unknown id is
   ignored with a warning, so the pass can rewrite but never add or remove.
 
-Both calls operate on a working copy; the original dataset is returned
-unchanged if anything fails, so the composer is safe to run as a non-fatal
-pipeline phase. Provenance (model, throughline, exclusions) is stamped into a
-top-level ``composition`` block.
+All calls operate on a working copy; the original dataset is returned
+unchanged if either required call (curation, caption layer, article layer)
+fails, so the composer is safe to run as a non-fatal pipeline phase.
+Provenance (model, throughline, exclusions) is stamped into a top-level
+``composition`` block.
 
 Standalone usage (recompose an existing meta story):
 
@@ -185,22 +207,32 @@ class StoryBlock(BaseModel):
 
 
 class ComposedSectionBodies(BaseModel):
-    """Free-form narrative blocks rendered between each section's heading and
-    its interactive component."""
+    """Free-form narrative blocks rendered between each section's heading
+    and its interactive component.
+
+    These carry CONTEXT, never a retelling of the component below them: the
+    conditions, causes and consequences the timeline, graph and map cannot
+    show. An empty list is a valid answer when a section has no context to add.
+    """
 
     timeline: List[StoryBlock] = Field(
-        description="Body of the chronology section (before the timeline)"
+        description="Body of the chronology section (2-3 blocks): what the "
+        "world outside these lives was doing, and why the sequence took the "
+        "shape it did. Never a recap of the events on the timeline."
     )
     network: List[StoryBlock] = Field(
-        description="Body of the social-network section (before the graph)"
+        description="Body of the social-network section (1-2 blocks): what "
+        "kind of network this was — the institutions, media and channels that "
+        "carried the ties. Never a walk through who knew whom."
     )
     map: List[StoryBlock] = Field(
-        description="Body of the places section (before the map); empty when "
-        "the story has no map"
+        description="Body of the places section (1-2 blocks): why the story "
+        "is distributed the way it is. Never a tour of the stops. Empty when "
+        "the story has no map."
     )
     conclusion: List[StoryBlock] = Field(
-        description="Body of the closing section (before the closing "
-        "statement); may be empty"
+        description="Body of the closing section (0-1 blocks): the afterlife "
+        "of this history. May be empty."
     )
 
 
@@ -321,30 +353,16 @@ class ComposedSectionHeadings(BaseModel):
     )
 
 
-class CompositionResult(BaseModel):
-    """Second composer call: the story's full prose, written in one voice."""
+class ComponentNarration(BaseModel):
+    """Second composer call: the CAPTION LAYER — every text bound to an item.
 
-    title: str = Field(description="Story title (2-5 words)")
-    tagline: str = Field(description="Short hook (3-10 words)")
-    opening: ComposedOpening = Field(
-        description="The cold open shown before the description"
-    )
-    description: str = Field(
-        description="Narrative (2-3 paragraphs) that widens the frame after "
-        "the opening scene, introducing the topic like a feature article. It "
-        "owns the STAKES: what was at issue, why it was hard, what world "
-        "these people worked in. No meta-references such as 'this "
-        "collection', no repetition of the opening scene, and no reaching "
-        "for the outcome or legacy (the conclusion owns that)."
-    )
-    section_headings: ComposedSectionHeadings = Field(
-        description="Story-specific headings for the main sections"
-    )
-    section_bodies: ComposedSectionBodies = Field(
-        description="The story's narrative depth: free-form blocks per "
-        "section, rendered between the section heading and the section's "
-        "interactive component"
-    )
+    Chapter headlines and lead-ins, subtopic texts, event theme connections,
+    the network circles, and the map stops. Each of these sits directly on the
+    thing it describes, so each says what *that* thing is. None of them states
+    the story's argument — the article layer (call 3) owns that, and is shown
+    this layer's output so it does not repeat it.
+    """
+
     chapters: List[ComposedChapter] = Field(
         description="One entry per chapter, same order as given"
     )
@@ -368,11 +386,56 @@ class CompositionResult(BaseModel):
         description="Map stops to drop because their place adds nothing to "
         "the story; an empty list is the normal outcome"
     )
+
+
+class StoryArticle(BaseModel):
+    """Third composer call: the ARTICLE LAYER — the running prose between the
+    components.
+
+    Its subject is not the items on the page but the world they happened in.
+    It is written with the finished caption layer in view and must not retell
+    any of it.
+    """
+
+    title: str = Field(description="Story title (2-5 words)")
+    tagline: str = Field(description="Short hook (3-10 words)")
+    opening: ComposedOpening = Field(
+        description="The cold open shown before the description"
+    )
+    description: str = Field(
+        description="Narrative (2-3 paragraphs) that widens the frame after "
+        "the opening scene, introducing the topic like a feature article. It "
+        "owns the STAKES: what was at issue, why it was hard, what world "
+        "these people worked in. No meta-references such as 'this "
+        "collection', no repetition of the opening scene, and no reaching "
+        "for the outcome or legacy (the conclusion owns that)."
+    )
+    section_headings: ComposedSectionHeadings = Field(
+        description="Story-specific headings for the main sections"
+    )
+    section_bodies: ComposedSectionBodies = Field(
+        description="The article's context blocks per section, rendered "
+        "between the section heading and the section's interactive component"
+    )
     conclusion: str = Field(
         description="Closing statement (2-3 sentences) naming what this "
         "history left behind — what it settled, what it did not. Not a "
         "summary of the sections above, not the description restated."
     )
+
+
+class CompositionResult(ComponentNarration, StoryArticle):
+    """The two call results merged — the shape ``apply_composition`` consumes.
+
+    Kept as one model so the application path, the prose-slot addressing and
+    the redundancy pass all stay unchanged by the call split.
+    """
+
+    @classmethod
+    def merge(
+        cls, captions: ComponentNarration, article: StoryArticle
+    ) -> "CompositionResult":
+        return cls.model_validate({**captions.model_dump(), **article.model_dump()})
 
 
 # ============================================================================
@@ -574,6 +637,58 @@ def _current_circles(dataset: Dict[str, Any]) -> List[Dict[str, Any]]:
     return result
 
 
+def build_context_notes(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
+    """Render the story's world-level material for the article call.
+
+    Deliberately *not* the story brief. The brief is a list of items — events,
+    ties, stops — and an article call given a list of items writes the list
+    back out in nicer prose. This renders the material the article is actually
+    for: the span it covers, the threads running through it, and the chapters'
+    ``historical_context`` entries, which are the only place in the dataset
+    where the world outside these lives is described.
+    """
+    meta = dataset.get("meta_story", {})
+    parts = [
+        f"STORY: {meta.get('title', '')} — {meta.get('tagline', '')}",
+        f"SPAN: {meta.get('date_range_start', '')} to "
+        f"{meta.get('date_range_end', '')}",
+    ]
+
+    subtopics = dataset.get("subtopics") or []
+    if subtopics:
+        parts.append("")
+        parts.append("THREADS running through the story:")
+        for sub in subtopics:
+            parts.append(f"- {sub.get('title', '')}: {sub.get('description', '')}")
+
+    contexts = [
+        (chapter, ctx)
+        for chapter in dataset.get("chapters") or []
+        for ctx in chapter.get("historical_context") or []
+    ]
+    if contexts:
+        parts.append("")
+        parts.append(
+            "HISTORICAL CONTEXT recorded for this story, by era — the "
+            "circumstances around the events rather than the events "
+            "themselves:"
+        )
+        for chapter, ctx in contexts:
+            span = (
+                f"{chapter.get('date_start', '')}-{chapter.get('date_end', '')}"
+                if chapter.get("date_start")
+                else ""
+            )
+            parts.append(
+                f"- [{span}] {ctx.get('title', '')}: {ctx.get('description', '')}"
+            )
+
+    parts.append("")
+    parts.append("THE ARTICLE'S CAST (for reference — do not profile them):")
+    parts.append(build_cast_sheet(dataset, registry))
+    return "\n".join(parts)
+
+
 def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
     """Render the assembled story as text for the composer prompts."""
     index = _person_index(registry)
@@ -652,6 +767,9 @@ def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
                 f"{link.get('strength', '')}]: "
                 f"{link.get('relationship_description', '')}"
             )
+        narration = network.get("narration") or {}
+        if narration.get("intro"):
+            parts.append(f"NETWORK INTRO (draft): {narration['intro']}")
         circles = _current_circles(dataset)
         if circles:
             parts.append("CURRENT CIRCLES (the network's current organization):")
@@ -693,6 +811,8 @@ def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
                     f"  Narration draft: \"{draft.get('title', '')}\" — "
                     f"{draft.get('text', '')}"
                 )
+        if map_narration.get("intro"):
+            parts.append(f"MAP INTRO (draft): {map_narration['intro']}")
 
     parts.append("")
     parts.append(f"CONCLUSION (draft):\n{dataset.get('conclusion', '')}")
@@ -947,24 +1067,28 @@ def apply_exclusions(
 
 
 # ============================================================================
-# CALL 2: COMPOSITION
+# CALL 2: THE CAPTION LAYER
 # ============================================================================
 
 
-def run_composition(
+def run_component_narration(
     dataset: Dict[str, Any],
     registry: Dict[str, Any],
     throughline: str,
     wikipedia_context: str,
-    image_candidates: Dict[str, Dict[str, Any]],
     client: OpenAI,
     model: str,
     reasoning_effort: str,
     verbose: bool = False,
-) -> Optional[CompositionResult]:
-    """Ask the composer to write the story's full prose in one voice."""
+) -> Optional[ComponentNarration]:
+    """Write the texts bound to the story's items (call 2 of 4).
+
+    Deliberately narrow: every field here labels something the reader is
+    looking at, so the whole call can be told one thing — describe the item,
+    never the story. The article layer is written afterwards against this
+    output, which is what keeps the two from saying the same thing twice.
+    """
     brief = build_story_brief(dataset, registry)
-    images_brief = build_image_candidates_brief(image_candidates)
     has_map = bool((dataset.get("geo_map") or {}).get("clusters"))
 
     map_instructions = (
@@ -980,116 +1104,48 @@ def run_composition(
   stops must remain."""
         if has_map
         else """
-- map_stops / discarded_map_stops: this story has no map section
-  — return empty lists."""
+- map_stops / discarded_map_stops: this story has no map section — return
+  empty lists."""
     )
 
-    prompt = f"""Compose the final narrative for this meta story. All existing texts are
-bottom-up drafts written without seeing the whole; you see everything — the
-assembled story AND background material from the people's Wikipedia articles —
-and write the story top-down, in one coherent voice, anchored to the
-throughline. You are writing a piece of narrative journalism, not a set of
-captions: the finished page must read as ONE researched story that happens to
-carry interactive components, not as a wrapper around them.
+    prompt = f"""Write the CAPTION LAYER of this meta story: every text that is attached to a
+single item the reader is looking at.
 
-THROUGHLINE (your anchor, not for display):
+A meta story page has two layers of text. This call writes the first one.
+Each text you write sits directly on the thing it describes — a chapter band
+of a timeline, one event on it, a circle of people in a graph, a marker on a
+map. A separate article runs between the components and carries the story's
+argument, its context, and its conclusions. That article is written after
+you, and it is written to AVOID whatever you say here. So say the concrete
+thing, and only the concrete thing.
+
+THROUGHLINE (background, so your captions point the same way; never state it):
 {throughline}
 
 {brief}
 
 BACKGROUND MATERIAL (Wikipedia excerpts for the main people — use it to
-deepen and verify the narrative; every claim you write must be supported by
-this material or the story data above):
+deepen and verify; every claim must be supported by this material or the
+story data above):
 
 {wikipedia_context}
 
-{images_brief}
+HOW A CAPTION BEHAVES:
+- It describes ITS item: what happened, who was involved, what changed.
+  Specific nouns, dated facts, named people.
+- It does NOT generalize to the era, the story, or the significance of it
+  all. "This marked the beginning of the computer age" is the article's
+  sentence, not yours. Stop at what is documented.
+- It does not refer to the other components, to the reader, or to the
+  interface. No "you", no "we", no imperatives ("Follow...", "Trace...",
+  "Explore..."), no mention of scrolling, clicking, timeline, graph or map.
+- It is short. These are labels on a visualization, not paragraphs.
+- Neighbouring captions must not repeat each other: two chapter lead-ins
+  making the same point, or a circle text restating a tie already described,
+  is the failure mode to avoid.
 
-DIVISION OF LABOUR (read this before writing a single line):
+WRITE THE FOLLOWING:
 
-The reader meets these texts in sequence, one after another on one page. Each
-one must ADVANCE the story — carry information the previous ones did not. The
-throughline is your anchor, but it is NOT the content of every slot: state it
-outright AT MOST ONCE, in the slot that owns it, and let the others do their
-own work. A reader who has read the opening must learn something new from the
-description, and again from each section body and the conclusion.
-
-  slot            | owns                        | must NOT contain
-  ----------------|-----------------------------|---------------------------
-  opening         | ONE documented scene         | the thesis, the arc, any
-                  | (a dated moment, an act)     | "and so began..." summary
-  description     | the STAKES: what was at      | the opening's scene again,
-                  | issue, why it was hard,      | the outcome or legacy
-                  | what world these people      | (the conclusion owns that)
-                  | worked in                    |
-  section bodies  | EVIDENCE: named people,      | the general thesis in
-                  | dated turning points, what   | general terms; a
-                  | actually happened and what   | restatement of the
-                  | it cost                      | description
-  conclusion      | the CONSEQUENCE: what this   | the description's framing
-                  | left behind, what it settled | again; a summary of the
-                  | and what it did not          | sections just read
-
-Before you finish, re-read the slots in order and check each one against the
-one before it. If two slots make the same point — even in different words,
-even elegantly — the later one is wasted; replace its content with something
-only it can say. Repeating a striking formulation does not reinforce it, it
-tells the reader the story has run out of material.
-
-WRITE THE FOLLOWING (all display-facing, general educated audience):
-
-- title (2-5 words) and tagline (3-10 words): refine the drafts or replace
-  them if the throughline calls for it.
-- opening: the story's cold open, 1-3 short paragraphs. Begin INSIDE the
-  material — one specific documented moment, act, or person drawn from the
-  events above: a date, a place, a thing being made or said. Choose the
-  anchor that best crystallizes the throughline; different stories should
-  open differently (a scene, a person at work, an object, a decision). No
-  panorama, no thesis, no scene-setting clichés ("It was a time of...").
-  End inside the scene — do not close with a sentence explaining what it
-  all meant. If an image candidate shows this exact moment or its
-  protagonist, set its key as image_key.
-- description: 2-3 paragraphs that widen the frame after the opening scene,
-  introducing the topic like a feature article: the conditions these people
-  worked under, the problem the era had not solved, what was genuinely at
-  stake. Do not retell the opening and do not reach for the ending.
-  NEVER use meta-references ("This collection...", "These figures...");
-  write directly about the topic.
-- section_headings: one heading each for the chronology, network,{" map," if has_map else ""}
-  and closing sections (2-6 words). They must read like chapter titles of one
-  essay — specific to this story, carrying its arc forward. Generic labels
-  ("Timeline", "Chapters", "Connections", "Network", "Places", "Map",
-  "Conclusion", "Legacy") are forbidden.
-- section_bodies: THE STORY'S NARRATIVE DEPTH, and the ONLY prose a section
-  carries. For each section, a sequence of blocks rendered directly under the
-  section heading, above the section's interactive component. This is where
-  the real storytelling happens — write it like the running text of a
-  long-form magazine feature. There is no standfirst under the heading, so
-  the first paragraph opens the section itself: start it INSIDE the material
-  (a name, a date, a place), never with a general framing sentence about what
-  the section is about. Bodies carry the EVIDENCE: named people, dated
-  turning points, concrete outcomes. A body paragraph that could be understood
-  without knowing which story it belongs to is too general — replace it with
-  what happened:
-  - timeline: 2-4 blocks that tell the era's arc as a story — its documented
-    turning points, reversals, and what changed hands between the people —
-    WITHOUT enumerating the chapters (the timeline itself shows them).
-  - network: 1-3 blocks on how the relationships actually carried the ideas:
-    who read whom, who hired whom, where the chains broke. No preview of the
-    circles.
-  - map: 1-3 blocks on how geography shaped the story{"" if has_map else " (empty — no map)"}.
-  - conclusion: 0-2 blocks deepening the close (optional).
-  Block types and layout options:
-  - paragraph: flowing narrative prose (3-6 sentences).
-  - image: an image candidate selected by key, with image_layout 'left' or
-    'right' (floats beside the following text) or 'full' (spans the column).
-    Place an image next to the paragraph it illustrates.
-  - quote: a short VERBATIM quotation from the material above (the event
-    details, tie descriptions, or Wikipedia excerpts), with an attribution
-    naming who wrote or said it. Quotes are checked verbatim against the
-    material — a paraphrase or invented quote is dropped. Use at most one
-    or two quotes in the whole story, only when the words themselves carry
-    weight.
 - chapters: for each chapter (same order, ids verbatim) a headline of 2-5
   words WITHOUT any date range (it is appended automatically), one unified
   concept, no lists; and a lead_in of 1-2 short sentences stating what was at
@@ -1113,30 +1169,12 @@ WRITE THE FOLLOWING (all display-facing, general educated audience):
   claim in the tie descriptions and the Wikipedia material; refer to people
   naturally ("Babbage" on second mention). Order the circles so the section
   reads as one narrative.{map_instructions}
-- conclusion: 2-3 sentences naming what this history left behind — what it
-  settled, what it did not, what still follows from it. Not a summary of the
-  sections above and not the description's framing restated at the end.
 
-HARD RULES (journalistic standard):
+HARD RULES:
 - Stick to the facts in the material above; never invent events, dates,
-  relationships, scenes, thoughts, or claims. If the material does not
-  support a detail, leave it out.
-- Every slot must earn its place. Do not restate a point another slot already
-  made, however differently phrased — see DIVISION OF LABOUR above.
-- Quotes must be verbatim from the material, with attribution. Never
-  fabricate or embellish a quotation.
-- Copy ids, keys, and image keys EXACTLY; if in doubt about an image key,
-  use null/omit the block. Never construct or modify a key.
-- Use AT MOST {MAX_IMAGES_PER_STORY} images in the whole story (opening and
-  all body images together); never reuse an image. Prefer artifacts, scenes,
-  and documents over portraits.
-- Vivid but factual tone, matching a work of narrative journalism.
-- NEVER address the reader. This is a data story, not a tutorial or a guided
-  tour: no "you"/"your"/"we"/"us", no imperatives aimed at the audience
-  ("Follow...", "Trace...", "Explore...", "Imagine...", "See how..."), no
-  references to scrolling, clicking, or the timeline/graph/map as an
-  interface. Write every text in the third person, about the people and
-  their era — narrate the history instead of guiding a visitor through it.
+  relationships, scenes, thoughts, or claims.
+- Copy ids and keys EXACTLY. Never construct or modify one.
+- Vivid but factual tone. Third person, about the people and their era.
 """
 
     try:
@@ -1146,35 +1184,21 @@ HARD RULES (journalistic standard):
             input=[
                 {
                     "role": "system",
-                    "content": "You are a long-form journalist composing a "
-                    "coherent narrative from verified biographical material. "
-                    "You research, refine, and connect; you never invent "
-                    "facts, scenes, or quotations.",
+                    "content": "You write the caption layer of a data story: "
+                    "short, concrete texts attached to individual items. You "
+                    "describe what is there and never editorialize; you never "
+                    "invent facts.",
                 },
                 {"role": "user", "content": prompt},
             ],
-            text_format=CompositionResult,
+            text_format=ComponentNarration,
         )
         result = response.output_parsed
         if result is None:
-            print("Warning: composition returned no parsed result")
+            print("Warning: caption layer returned no parsed result")
             return None
         if verbose:
-            print(f"  Composed title: {result.title}")
-            print(f"  Opening: {result.opening.text[:90]}...")
-            print(
-                "  Section headings: "
-                f"{result.section_headings.timeline} / "
-                f"{result.section_headings.network} / "
-                f"{result.section_headings.map or '-'} / "
-                f"{result.section_headings.conclusion}"
-            )
             print(f"  Chapter headlines: {[c.headline for c in result.chapters]}")
-            body_counts = {
-                slot: len(getattr(result.section_bodies, slot))
-                for slot in ("timeline", "network", "map", "conclusion")
-            }
-            print(f"  Section body blocks: {body_counts}")
             print(f"  Circles: {[c.title for c in result.circles]}")
             print(f"  Map stops: {[s.key for s in result.map_stops]}")
             if result.discarded_map_stops:
@@ -1188,7 +1212,350 @@ HARD RULES (journalistic standard):
             )
         return result
     except Exception as e:
-        print(f"Warning: composition call failed: {e}")
+        print(f"Warning: caption layer call failed: {e}")
+        return None
+
+
+# ============================================================================
+# CALL 3: THE ARTICLE LAYER
+# ============================================================================
+#
+# The article call is shown the finished caption layer verbatim, under a
+# heading that says it is already on the page. This is the whole point of the
+# split: "do not repeat the components" is unenforceable when the model has
+# only the raw item data and has to guess what the captions will say — it
+# writes the items again, in better prose. Given the actual caption texts, the
+# instruction becomes checkable, and the article has to go looking for
+# something else to say. That something else is context.
+
+
+def render_component_layer(
+    dataset: Dict[str, Any],
+    registry: Dict[str, Any],
+    captions: ComponentNarration,
+) -> str:
+    """Render the caption layer as the text that is already on the page.
+
+    Built from the call-2 result rather than the dataset, because that is what
+    the reader will actually see; chapters and stops are matched back to the
+    dataset only to label them with their dates and places.
+    """
+    index = _person_index(registry)
+
+    def person_name(pid: str) -> str:
+        return str(index.get(pid, {}).get("name", pid)).replace("_", " ")
+
+    lines = [
+        "ALREADY ON THE PAGE — THE CAPTION LAYER.",
+        "",
+        "These texts are finished and will be printed on the components "
+        "themselves, interleaved with the article you are about to write. "
+        "Every fact, turning point and relationship below has therefore "
+        "ALREADY been told to the reader. Do not tell any of it again.",
+        "",
+        "On the timeline, per chapter:",
+    ]
+    chapter_dates = {
+        c.get("id"): (c.get("date_start", ""), c.get("date_end", ""))
+        for c in dataset.get("chapters") or []
+    }
+    for chapter in captions.chapters:
+        start, end = chapter_dates.get(chapter.id, ("", ""))
+        span = f" ({start}-{end})" if start else ""
+        lines.append(f'- "{chapter.headline}"{span}: {chapter.lead_in}')
+
+    events = [
+        (e.get("event_date", ""), person_name(e.get("person_id", "")), e)
+        for chapter in dataset.get("chapters") or []
+        for e in chapter.get("person_events") or []
+    ]
+    refined = {r.event_key: r.text for r in captions.theme_connection_refinements}
+    if events:
+        lines.append("")
+        lines.append(
+            f"On the timeline, {len(events)} events, each with its own caption. "
+            "The reader gets all of them:"
+        )
+        for date, name, event in events:
+            key = f"{event.get('person_id', '')}:{event.get('event_index', '')}"
+            caption = refined.get(key) or event.get("theme_connection", "")
+            lines.append(
+                f"- {date} — {name}: {event.get('event_title', '')}. "
+                f"{_truncate(caption, 200)}"
+            )
+
+    if captions.circles:
+        lines.append("")
+        lines.append("In the network graph, one card per circle of people:")
+        for circle in captions.circles:
+            members = ", ".join(person_name(pid) for pid in circle.member_ids)
+            lines.append(f'- "{circle.title}" ({members}): {circle.text}')
+
+    if captions.map_stops:
+        stop_labels = {
+            c.get("key"): c.get("label", "")
+            for c in (dataset.get("geo_map") or {}).get("clusters") or []
+        }
+        lines.append("")
+        lines.append("On the map, one card per stop:")
+        for stop in captions.map_stops:
+            label = stop_labels.get(stop.key, stop.key)
+            lines.append(f'- "{stop.title}" ({label}): {stop.text}')
+
+    return "\n".join(lines)
+
+
+def run_article(
+    dataset: Dict[str, Any],
+    registry: Dict[str, Any],
+    throughline: str,
+    component_layer: str,
+    wikipedia_context: str,
+    image_candidates: Dict[str, Dict[str, Any]],
+    client: OpenAI,
+    model: str,
+    reasoning_effort: str,
+    verbose: bool = False,
+) -> Optional[StoryArticle]:
+    """Write the running prose between the components (call 3 of 4)."""
+    images_brief = build_image_candidates_brief(image_candidates)
+    has_map = bool((dataset.get("geo_map") or {}).get("clusters"))
+    context_notes = build_context_notes(dataset, registry)
+
+    prompt = f"""Write the ARTICLE of this meta story — the running prose a reader meets
+between the interactive components.
+
+The page is built from three components: a timeline of dated events, a graph
+of who was connected to whom, and a map of the places involved. Each of them
+is already captioned, and those captions are reproduced below. They tell the
+reader WHAT happened, WHO was connected, and WHERE.
+
+Your article is not a wrapper around them and not a summary of them. It is
+the other half of the page: the WORLD these lives happened inside. The
+conditions that made this sequence possible or necessary. What the era had
+not solved. What it cost, who paid, and what changed as a result. The things
+a dated event list, a graph and a set of map pins structurally cannot show.
+
+THROUGHLINE (your anchor, not for display):
+{throughline}
+
+{component_layer}
+
+CONTEXT MATERIAL — this is your subject matter. The captions above own the
+events; these own the world around them:
+
+{context_notes}
+
+BACKGROUND MATERIAL (Wikipedia excerpts for the main people — the article's
+factual ground; every claim you write must be supported by this material or
+by the captions above):
+
+{wikipedia_context}
+
+{images_brief}
+
+TWO TESTS YOUR ARTICLE MUST PASS. Apply them to every paragraph before you
+finish:
+
+1. THE REMOVAL TEST. Delete all three components from the page. What remains
+   — opening, description, bodies, conclusion, read in that order — must
+   still be one continuous, coherent essay that could be published on its
+   own. If a paragraph becomes meaningless without the component beside it,
+   it was a caption, not an article paragraph.
+2. THE CAPTION TEST. No paragraph may read as a description of the thing
+   directly below it. If a paragraph in the places section walks through the
+   places, or a paragraph in the network section walks through who knew whom,
+   it has failed and must be replaced.
+
+THERE ARE TWO WAYS TO FAIL THIS, AND YOU MUST AVOID BOTH.
+
+FAILURE 1 — THE RECAP. A previous version produced: "Philadelphia, Annapolis,
+New York City, and western Pennsylvania mark the republic's changing centres
+of power. Congress appointed Washington to command an army in Philadelphia;
+the same city later hosted the convention that drafted a new Constitution.
+Annapolis helped launch the call for that convention..." — a list of the map's
+own stops, one clause each, telling the reader what the cards beside it
+already said. Every sentence there is on the page twice. If your sentences
+each attach to a different item, you are writing a list, not an argument.
+
+FAILURE 2 — THE ESCAPE INTO ABSTRACTION, which is the trap set by the fix for
+the first. The same article, told not to recap, produced: "The geography
+joined centers of coordination to territories subject to changing control" and
+"Unlike correspondence or print, institutional ties could bind decisions to
+resources and enforcement across distance." Not one proper noun, not one
+checkable fact, nothing a reader can picture. This is worse than the recap: it
+is unreadable, and it could be pasted into a story about any century.
+
+CONCRETENESS IS NOT OPTIONAL. Context does not mean generality — it means
+DIFFERENT SPECIFICS. Not this story's events, but the world's: the named law,
+the institution and what it could not do, the market, the war being fought
+elsewhere, the printer who refused the manuscript, the technology that did not
+yet exist, the sum of money, the year something became illegal. Every
+paragraph you write must contain specifics of that kind, named and checkable
+from the material. A paragraph with no proper nouns has failed. If you cannot
+find real context for a section, write FEWER paragraphs — an empty body beats
+an abstract one.
+
+WHAT EACH SLOT OWNS:
+
+  slot            | owns                        | must NOT contain
+  ----------------|-----------------------------|---------------------------
+  opening         | ONE documented scene         | the thesis, the arc, any
+                  | (a dated moment, an act)     | "and so began..." summary
+  description     | the STAKES: what was at      | the opening's scene again,
+                  | issue, why it was hard,      | the outcome or legacy
+                  | what world these people      | (the conclusion owns that)
+                  | worked in                    |
+  section bodies  | CONTEXT: causes, conditions, | any retelling of the
+                  | constraints, consequences,   | captions; a walk through
+                  | the connective tissue        | the chapters, circles or
+                  | between the sections         | stops; a list of names
+  conclusion      | the CONSEQUENCE: what this   | the description's framing
+                  | left behind, what it settled | again; a summary of the
+                  | and what it did not          | sections just read
+
+Each slot must ADVANCE the story. The throughline is your anchor but NOT the
+content of every slot: state it outright AT MOST ONCE, in the slot that owns
+it. A reader who has read the opening must learn something new from the
+description, and again from each body, and from the conclusion.
+
+WRITE THE FOLLOWING (all display-facing, general educated audience):
+
+- title (2-5 words) and tagline (3-10 words): refine the drafts or replace
+  them if the throughline calls for it.
+- opening: the story's cold open, 1-3 short paragraphs. Begin INSIDE the
+  material — one specific documented moment, act, or person: a date, a place,
+  a thing being made or said. This is the ONE place the article may narrate
+  an event in full, because it is the reader's way in. Choose the anchor that
+  best crystallizes the throughline; different stories should open
+  differently (a scene, a person at work, an object, a decision). No
+  panorama, no thesis, no scene-setting clichés ("It was a time of..."). End
+  inside the scene — do not close with a sentence explaining what it all
+  meant. If an image candidate shows this exact moment or its protagonist,
+  set its key as image_key.
+- description: 2-3 paragraphs that widen the frame after the opening scene,
+  introducing the topic like a feature article: the conditions these people
+  worked under, the problem the era had not solved, what was genuinely at
+  stake. Do not retell the opening and do not reach for the ending. NEVER use
+  meta-references ("This collection...", "These figures..."); write directly
+  about the topic.
+- section_headings: one heading each for the chronology, network,{" map," if has_map else ""}
+  and closing sections (2-6 words). They must read like chapter titles of one
+  essay — specific to this story, carrying its arc forward. Generic labels
+  ("Timeline", "Chapters", "Connections", "Network", "Places", "Map",
+  "Conclusion", "Legacy") are forbidden.
+- section_bodies: THE ARTICLE'S SUBSTANCE — the context blocks between each
+  section heading and its component. A section carries no other prose, so the
+  first block opens the section itself: no standfirst precedes it and nothing
+  else introduces it. Write them as the running text of one long-form
+  feature, continuous across the sections: each body picks up the argument
+  where the previous section left it. Ground every paragraph in a
+  specific condition, institution, constraint, or consequence — a paragraph
+  that could sit in any story about any era is too general, and one that
+  could sit in a caption belongs in a caption.
+  - timeline (2-3 blocks): what the world outside these lives was
+    doing — the wars, laws, markets, institutions and technologies that set
+    the terms — and why the sequence took the shape it did. NOT what happened
+    in it.
+  - network (1-2 blocks): what KIND of network this was. What carried the
+    ties — letters, journals, courts, laboratories, patronage, workshops,
+    exile — and what those channels made possible or foreclosed. NOT who knew
+    whom.
+  - map (1-2 blocks): why this history is distributed the way it is — what
+    concentrated people in some places, what moved them, what a place could
+    offer that another could not.{"" if has_map else " (empty — this story has no map)"} NOT a
+    tour of the stops.
+  - conclusion (0-1 blocks): the afterlife — what happened to this world
+    afterwards. May be empty.
+  A section body may be EMPTY when the article genuinely has no context to
+  add there. An empty body is much better than a paragraph of filler, and far
+  better than an abstract one.
+  Block types and layout options:
+  - paragraph: flowing narrative prose (3-6 sentences).
+  - image: an image candidate selected by key, with image_layout 'left' or
+    'right' (floats beside the following text) or 'full' (spans the column).
+    Place an image next to the paragraph it illustrates.
+  - quote: a short VERBATIM quotation from the material above, with an
+    attribution naming who wrote or said it. Quotes are checked verbatim — a
+    paraphrase or invented quote is dropped. Use at most one or two in the
+    whole story, only when the words themselves carry weight.
+- conclusion: 2-3 sentences naming what this history left behind — what it
+  settled, what it did not, what still follows from it. Not a summary of the
+  sections above and not the description's framing restated at the end.
+
+HARD RULES (journalistic standard):
+- Stick to the facts in the material above; never invent events, dates,
+  relationships, scenes, thoughts, or claims. If the material does not
+  support a detail, leave it out.
+- Do not retell the caption layer. Naming a person, place or event in passing
+  as a fixed point ("by the time the Treaty was signed...") is fine;
+  recounting it is not.
+- Never buy your way out of that rule with vagueness. "Institutional ties
+  could bind decisions to resources across distance" is not context, it is
+  the absence of content. Name the institution.
+- Quotes must be verbatim from the material, with attribution. Never
+  fabricate or embellish a quotation.
+- Copy image keys EXACTLY; if in doubt, omit the block. Never construct one.
+- Use AT MOST {MAX_IMAGES_PER_STORY} images in the whole story (opening and
+  all body images together); never reuse an image. Prefer artifacts, scenes,
+  and documents over portraits.
+- Vivid but factual tone, matching a work of narrative journalism.
+- WRITE IT TO BE READ. This is a story, not a policy paper. Prefer concrete
+  subjects doing things to abstract nouns in the subject position ("Parliament
+  closed the port of Boston", not "the imposition of punitive measures
+  affected commercial life"). Vary sentence length; let a short one land after
+  a long one. Avoid stacked abstractions, nominalizations, and hedging
+  clauses. If a sentence has to be read twice to be understood, rewrite it.
+- NEVER address the reader. This is a data story, not a tutorial or a guided
+  tour: no "you"/"your"/"we"/"us", no imperatives aimed at the audience
+  ("Follow...", "Trace...", "Explore...", "Imagine...", "See how..."), no
+  references to scrolling, clicking, or the timeline/graph/map as an
+  interface. Write every text in the third person, about the people and
+  their era — narrate the history instead of guiding a visitor through it.
+- NEVER make a part of this page the subject of a sentence. "The chronology
+  follows...", "The map sets...", "This section shows..." are all forbidden,
+  in every slot. The subject is always the history, never its presentation.
+"""
+
+    try:
+        response = client.responses.parse(
+            model=model,
+            reasoning=cast(Any, {"effort": reasoning_effort}),
+            input=[
+                {
+                    "role": "system",
+                    "content": "You are a long-form journalist writing the "
+                    "connective essay of a data story. The story's items are "
+                    "already captioned; your subject is the world around "
+                    "them. You research, contextualize and conclude; you "
+                    "never recap, and you never invent facts or quotations.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            text_format=StoryArticle,
+        )
+        result = response.output_parsed
+        if result is None:
+            print("Warning: article call returned no parsed result")
+            return None
+        if verbose:
+            print(f"  Composed title: {result.title}")
+            print(f"  Opening: {_truncate(result.opening.text, 90)}")
+            print(
+                "  Section headings: "
+                f"{result.section_headings.timeline} / "
+                f"{result.section_headings.network} / "
+                f"{result.section_headings.map or '-'} / "
+                f"{result.section_headings.conclusion}"
+            )
+            body_counts = {
+                slot: len(getattr(result.section_bodies, slot))
+                for slot in ("timeline", "network", "map", "conclusion")
+            }
+            print(f"  Section body blocks: {body_counts}")
+        return result
+    except Exception as e:
+        print(f"Warning: article call failed: {e}")
         return None
 
 
@@ -1196,14 +1563,25 @@ HARD RULES (journalistic standard):
 # REDUNDANCY PASS
 # ============================================================================
 #
-# The composition call has ~15 prose objectives and one throughline to anchor
-# them, and it reliably resolves that tension by restating the throughline in
-# every slot: the same thesis then appears in the description, the section
-# bodies and the conclusion, and the page reads as one point made five
-# times. The DIVISION OF LABOUR contract in the composition prompt is the
-# primary fix; this pass is the check on it, in the spirit of the verbatim
-# quote check — except that a repeated claim cannot simply be dropped (the slot
-# still has to say *something*), so it is rewritten by a call whose only job is
+# Two kinds of repetition reach this pass, and the second is the larger one.
+#
+# Within the article, a call juggling a dozen prose objectives against a single
+# throughline tends to restate that throughline in slot after slot, so the same
+# thesis lands in the description, the section bodies and the conclusion. The slot contract in the article prompt is the primary fix; this
+# pass is the check on it.
+#
+# Between the article and the captions, the page says the same thing twice in
+# two different voices. Measured on the stories composed before the call split,
+# article paragraphs matched the caption text sitting below them at a Dice
+# score of 0.53 — twice the paraphrase band seen inside the article — and this
+# pass could not see it, because it was only ever shown the article. The
+# captions are now passed as FIXED reference slots: the pass reads them, may
+# rewrite an article slot that repeats one, and can never rewrite a caption
+# (their ids are not in the rewritable set, so a revision aimed at one is
+# rejected by ``apply_prose_revisions`` like any unknown slot).
+#
+# In both cases a repeated claim cannot simply be dropped — the slot still has
+# to say something — so it is rewritten by a call whose only job is
 # de-duplication.
 
 
@@ -1264,21 +1642,32 @@ PROSE_SLOT_ROLES = {
         "what it did not; never a summary or list of what came before"
     ),
     "body:timeline": (
-        "evidence paragraph in the chronology section — named people, dated "
-        "turning points, what it cost; never the thesis in general terms"
+        "context paragraph in the chronology section — the wars, laws, "
+        "markets and institutions that set the terms, and why the sequence "
+        "took the shape it did; never a recap of the events themselves"
     ),
     "body:network": (
-        "evidence paragraph in the network section — who read, hired, or "
-        "influenced whom, and where the chains broke"
+        "context paragraph in the network section — what carried the ties "
+        "(letters, journals, courts, laboratories, patronage) and what those "
+        "channels made possible; never a walk through who knew whom"
     ),
     "body:map": (
-        "evidence paragraph in the places section — what specific places "
-        "made possible"
+        "context paragraph in the places section — what concentrated people "
+        "in some places and moved them from others; never a tour of the stops"
     ),
     "body:conclusion": (
-        "evidence paragraph in the closing section — the concrete case that "
-        "carries the ending"
+        "context paragraph in the closing section — the afterlife of this "
+        "world; never a summary of the sections above"
     ),
+}
+
+# The caption layer's roles, for the fixed reference slots. These are never
+# rewritten; they are shown so the pass can tell when an article slot is
+# saying something the reader has already been given on a component.
+CAPTION_SLOT_ROLES = {
+    "chapter": "printed on the timeline as a chapter's own text",
+    "circle": "printed in the network graph as a circle's own card",
+    "stop": "printed on the map as a place's own card",
 }
 
 _SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
@@ -1334,8 +1723,58 @@ def collect_prose_slots(composed: CompositionResult) -> List[tuple]:
     return sorted(slots, key=lambda s: order.get(s[0].rsplit(":", 1)[0], 99))
 
 
-def rank_slot_overlaps(slots: List[tuple], min_shared: int = 3) -> List[tuple]:
+def collect_caption_slots(composed: CompositionResult) -> List[tuple]:
+    """Return the caption layer as fixed ``(slot_id, role, text)`` reference.
+
+    These slot ids are deliberately NOT in the rewritable set returned by
+    ``collect_prose_slots``: the pass may find that an article slot repeats
+    one of them, but a revision addressed to a caption is rejected as unknown.
+
+    Event theme connections are left out on purpose. There are dozens of them,
+    each one sentence long, and including them would swamp the prompt with the
+    layer the article is least likely to paraphrase wholesale — the chapter,
+    circle and stop texts are the ones that sit as blocks of prose right
+    beside the article's own paragraphs.
+    """
+    slots: List[tuple] = []
+    for index, chapter in enumerate(composed.chapters):
+        if chapter.lead_in.strip():
+            slots.append(
+                (
+                    f"caption:chapter:{index}",
+                    CAPTION_SLOT_ROLES["chapter"],
+                    f"{chapter.headline} — {chapter.lead_in.strip()}",
+                )
+            )
+    for index, circle in enumerate(composed.circles):
+        if circle.text.strip():
+            slots.append(
+                (
+                    f"caption:circle:{index}",
+                    CAPTION_SLOT_ROLES["circle"],
+                    f"{circle.title} — {circle.text.strip()}",
+                )
+            )
+    for index, stop in enumerate(composed.map_stops):
+        if stop.text.strip():
+            slots.append(
+                (
+                    f"caption:stop:{index}",
+                    CAPTION_SLOT_ROLES["stop"],
+                    f"{stop.title} — {stop.text.strip()}",
+                )
+            )
+    return slots
+
+
+def rank_slot_overlaps(
+    slots: List[tuple], reference: Optional[List[tuple]] = None, min_shared: int = 3
+) -> List[tuple]:
     """Rank cross-slot sentence pairs by content-word overlap (Dice).
+
+    ``reference`` slots (the caption layer) are compared against ``slots`` but
+    never against each other — two captions describing adjacent chapters
+    naturally share vocabulary, and that is not a defect of the article.
 
     Returns ``(slot_a, slot_b, sentence_a, sentence_b, score)`` sorted by score.
 
@@ -1352,17 +1791,38 @@ def rank_slot_overlaps(slots: List[tuple], min_shared: int = 3) -> List[tuple]:
     the redundancy pass shows whether the pass actually pulled the most similar
     pairs apart. Judging whether a repeat is real is left to the AI pass, which
     reads meaning rather than counting words.
+
+    The one place the numbers do separate cleanly is article-against-caption:
+    before the caption/article calls were split, the top pairs there sat at
+    0.43-0.53 — near-verbatim restatement, not paraphrase — well clear of the
+    ~0.27 band. A top reference score in that range is a strong signal that
+    the article has slipped back into recapping its own components.
     """
-    prepared = []
-    for slot_id, _role, text in slots:
-        for sentence in _SENTENCE_SPLIT.split(text):
-            words = _content_words(sentence)
-            if len(words) >= 5:
-                prepared.append((slot_id, sentence.strip(), words))
+
+    def prepare(entries: List[tuple]) -> List[tuple]:
+        prepared = []
+        for slot_id, _role, text in entries:
+            for sentence in _SENTENCE_SPLIT.split(text):
+                words = _content_words(sentence)
+                if len(words) >= 5:
+                    prepared.append((slot_id, sentence.strip(), words))
+        return prepared
+
+    prepared = prepare(slots)
+    prepared_reference = prepare(reference or [])
 
     ranked = []
     for i, (slot_a, sent_a, words_a) in enumerate(prepared):
-        for slot_b, sent_b, words_b in prepared[i + 1 :]:
+        # Article against article (later slots only), then article against
+        # every caption — captions are never scored against one another.
+        against = list(prepared[i + 1 :])
+        # The opening is allowed to narrate one documented moment in full, so
+        # it legitimately overlaps whichever caption covers that moment. The
+        # redundancy pass is told to leave it alone; scoring it here would
+        # only park an unactionable pair at the top of the ranking.
+        if slot_a != "opening":
+            against += prepared_reference
+        for slot_b, sent_b, words_b in against:
             if slot_a == slot_b:
                 continue
             shared = words_a & words_b
@@ -1373,41 +1833,174 @@ def rank_slot_overlaps(slots: List[tuple], min_shared: int = 3) -> List[tuple]:
     return sorted(ranked, key=lambda r: r[4], reverse=True)
 
 
+_PROPER_NOUN = re.compile(r"\b[A-Z][a-zA-Z'’-]+")
+_NUMBER = re.compile(r"\b\d[\d,.]*\b")
+
+# Below this many anchors a passage of any length has stopped saying anything
+# checkable. Used both by the diagnostic and by the revision guardrail.
+MIN_ANCHORS = 2
+# Short passages are exempt: a single line can be concrete without naming
+# three institutions, and the anchor count is noisy at that length.
+ANCHOR_MIN_WORDS = 25
+
+
+def count_anchors(text: str) -> int:
+    """Count the concrete anchors in a passage.
+
+    An *anchor* is a proper noun or a number: the named law, institution,
+    place, person or year that makes a sentence checkable. Words at the start
+    of a sentence are capitalized by grammar rather than by content, so they
+    are skipped.
+    """
+    body = " ".join(
+        sentence[len(sentence.split(" ")[0]) :]
+        for sentence in _SENTENCE_SPLIT.split(text)
+    )
+    return len(_PROPER_NOUN.findall(body)) + len(_NUMBER.findall(text))
+
+
+def find_abstract_slots(slots: List[tuple]) -> List[tuple]:
+    """Return ``(slot_id, anchors)`` for article slots with too few specifics.
+
+    The counterpart to ``rank_slot_overlaps``, and it exists because the two
+    diagnostics catch opposite failures of the same instruction. Told not to
+    retell the components, the article call's easiest escape is to stop naming
+    anything at all — "the geography joined centers of coordination to
+    territories subject to changing control" repeats no caption and says
+    nothing. Overlap scoring rates that sentence as a success.
+
+    Reported in ``--verbose``; like the overlap ranking this is a signal for
+    the operator, not a gate. The gate is ``_revision_loses_substance``.
+    """
+    return [
+        (slot_id, count_anchors(text))
+        for slot_id, _role, text in slots
+        if len(text.split()) >= ANCHOR_MIN_WORDS and count_anchors(text) < MIN_ANCHORS
+    ]
+
+
+# A part of the page used as a grammatical subject — "The map asks how...",
+# "The chronology follows...". The article is supposed to narrate the history,
+# not describe its own presentation, and this is the phrasing that slips
+# through the prompt's ban most often.
+_INTERFACE_SUBJECT = re.compile(
+    r"\b(?:the|this)\s+(?:chronology|timeline|network|graph|map|section|story)\b",
+    re.IGNORECASE,
+)
+
+
+def find_interface_references(slots: List[tuple]) -> List[tuple]:
+    """Return ``(slot_id, phrase)`` for article slots that describe the page.
+
+    Reported, not repaired: unlike a hollowed-out revision there is no safe
+    deterministic fallback (the previous text is usually worse, and dropping
+    the sentence can leave a fragment), so this is a signal to recompose.
+    """
+    found = []
+    for slot_id, _role, text in slots:
+        match = _INTERFACE_SUBJECT.search(text)
+        if match:
+            found.append((slot_id, match.group(0)))
+    return found
+
+
+def _revision_loses_substance(original: str, revised: str) -> bool:
+    """True when a revision removes a slot's specifics instead of changing them.
+
+    The redundancy pass has a monotone incentive that no prompt can fully
+    hold: abstraction *always* reduces overlap. Stripping the names and dates
+    from a paragraph reliably satisfies "stop repeating that", which is why an
+    early run of the caption-aware pass rewrote ten of twelve slots into prose
+    like "a workshop could expose constraints that a laboratory could absorb"
+    — repeating nothing, saying nothing, and scoring as a success.
+
+    So the instruction is backed by a check, in the same spirit as the
+    verbatim-quote rule: the model proposes, and a revision that leaves the
+    slot with fewer anchors than it had *and* below the floor is rejected. A
+    legitimate de-duplication swaps one specific for another and passes; only
+    the slide into generality is refused. A slot that was already abstract can
+    be rewritten freely, since the check compares against its own starting
+    point and can only ever hold the line.
+    """
+    if len(revised.split()) < ANCHOR_MIN_WORDS:
+        return False
+    return count_anchors(revised) < min(count_anchors(original), MIN_ANCHORS)
+
+
 def run_redundancy_pass(
     composed: CompositionResult,
     throughline: str,
+    source_material: str,
     client: OpenAI,
     model: str,
     reasoning_effort: str,
     verbose: bool = False,
 ) -> Optional[RedundancyPassResult]:
-    """Ask a focused call to rewrite prose slots that repeat one another.
+    """Ask a focused call to rewrite article slots that repeat something.
 
-    Deliberately single-objective: the composition call cannot police its own
-    repetition because it is juggling fifteen other goals at the same time.
-    This call sees only the finished prose and has one thing to do.
+    Deliberately single-objective: the article call cannot police its own
+    repetition while pursuing a dozen other goals, and it cannot see the
+    caption layer's finished text as a reader does — as prose already spent.
+    This call sees both and has one thing to do.
+
+    ``source_material`` is the article call's own grounding (context notes and
+    Wikipedia excerpts). Without it the pass is a trap: told to remove a
+    repeated point but restricted to the facts already in the prose, its only
+    remaining move is to delete the specifics, which is the one repair
+    ``_revision_loses_substance`` refuses. Given the material it can do what
+    the instruction actually asks — swap the repeated specifics for different
+    ones.
     """
     slots = collect_prose_slots(composed)
     if len(slots) < 2:
         return RedundancyPassResult(revisions=[])
+    captions = collect_caption_slots(composed)
 
     rendered = "\n\n".join(
         f"slot: {slot_id}\nrole: {role}\n{text}" for slot_id, role, text in slots
     )
+    rendered_captions = (
+        "\n\n".join(
+            f"slot: {slot_id}\nrole: {role}\n{text}" for slot_id, role, text in captions
+        )
+        or "(none)"
+    )
 
-    prompt = f"""These texts are the finished prose of one meta story, listed in the order a
-reader meets them on the page. They were written in a single pass, and that
-pass tends to restate the story's central idea in slot after slot.
+    prompt = f"""These texts are the finished prose of one meta story. They come in two layers.
+
+The ARTICLE is the running prose a reader meets between the page's three
+interactive components (a timeline, a network graph, a map). It was written
+in a single pass, and such a pass tends to restate the story's central idea in
+slot after slot.
+
+The CAPTIONS are printed on the components themselves, interleaved with the
+article. They are FIXED — you cannot change them — but the reader reads them,
+so anything they say is already spent. An article slot that says it again is
+the page telling the reader the same thing twice in two voices, which is the
+most damaging kind of repetition here.
 
 THROUGHLINE the story was written to (background, not for display):
 {throughline}
 
-THE STORY'S PROSE, IN READING ORDER:
+SOURCE MATERIAL the article was written from. When you rewrite a slot, this
+is where its replacement content comes from — a different condition,
+institution, law or consequence that no other slot has used yet. Every fact
+you write must be supported here or in the texts below:
+
+{source_material}
+
+THE ARTICLE, IN READING ORDER (these you may rewrite):
 
 {rendered}
 
-YOUR ONLY TASK: find the places where a slot makes a point an EARLIER slot
-already made, and rewrite the later slot so it carries something else.
+THE CAPTIONS ALREADY ON THE COMPONENTS (fixed reference — NEVER return a
+revision for one of these slots):
+
+{rendered_captions}
+
+YOUR ONLY TASK: find the article slots that make a point an EARLIER article
+slot already made, OR that retell something the captions already gave the
+reader, and rewrite them so they carry something else.
 
 WHAT COUNTS AS REPETITION:
 - The same claim in different words ("the question was not how to calculate
@@ -1416,34 +2009,53 @@ WHAT COUNTS AS REPETITION:
 - The same conclusion reached twice, the same formulation reused for effect,
   the same person's significance explained again.
 - Two slots that would still say the same thing if you swapped their words.
+- An article paragraph narrating an event, relationship or place that a
+  caption narrates. The article may name one in passing as a fixed point
+  ("by the time the Treaty was signed..."); recounting it is repetition.
+- An article paragraph whose sentences each attach to a different item from
+  the captions. That is a list of the component's own contents.
 
 WHAT DOES NOT COUNT:
 - The same PERSON, PLACE, or EVENT appearing in several slots — recurring
   cast is normal; only a recurring POINT is the problem.
-- A body paragraph giving the concrete evidence for something the description
-  named in the abstract. That is the intended structure: the description
-  frames, the bodies answer. Only flag it when the body merely repeats the
-  abstraction without adding specifics.
+- A body paragraph giving the wider context for something the description
+  named in the abstract. That is the intended structure. Only flag it when
+  the body merely repeats the abstraction without adding anything.
 - Deliberate echoes across a long distance where the later use genuinely
   advances the idea rather than restating it.
+- THE OPENING sharing its scene with a caption. The opening is the reader's
+  way into the story and is the one slot allowed to narrate a documented
+  moment in full. Leave it alone unless it repeats another ARTICLE slot.
 
 WHEN YOU FIND ONE:
-- Rewrite the LATER slot, never the earlier one.
+- Rewrite the ARTICLE slot. Never the earlier of two article slots, and never
+  a caption — captions are fixed, and a revision addressed to one is discarded.
 - Keep its assigned role, its approximate length, and the story's voice. The
   "role:" line states both what the slot owns and the mode it must not fall
   into — removing a repetition by sliding into that mode is not a fix. A
   conclusion that stops echoing the description by listing what came before
   has not been repaired, it has been broken differently.
-- Fill it with something only it can say — a specific documented detail from
-  the other texts, the part of the story that slot is responsible for. Use
-  ONLY facts already present in the prose above; never introduce a new claim,
-  date, name, or quotation.
+- Fill it with something only it can say — the part of the story that slot is
+  responsible for, which for the section bodies is the CONTEXT around the
+  components rather than their contents. Draw the replacement from the SOURCE
+  MATERIAL above: a different named condition, institution, law, market or
+  consequence. Every fact must be supported by the source material or the
+  texts below; never invent a claim, date, name, or quotation.
+- NEVER fix a repetition by making the slot more abstract. Removing the names
+  and dates from a sentence does not remove the repetition, it removes the
+  meaning: "the geography joined centers of coordination to territories
+  subject to changing control" is a real rewrite this pass once produced, and
+  it is worse than what it replaced. Repetition is fixed by swapping the
+  repeated specifics for DIFFERENT specifics — a condition, an institution, a
+  constraint from the surrounding world — never by generalizing.
 - If a slot repeats and there is genuinely nothing else for it to say, make
-  it shorter and more concrete rather than padding it.
+  it SHORTER. A single concrete sentence is a good outcome; a vague paragraph
+  is not.
 
-Return ONLY the slots you actually rewrote, with the slot id copied exactly as
-it appears after "slot:" above (e.g. description, body:network:1) — bare,
-with no brackets or other decoration.
+Return ONLY the article slots you actually rewrote, with the slot id copied
+exactly as it appears after "slot:" above (e.g. description,
+body:network:1) — bare, with no brackets or other decoration. Never return a
+"caption:..." slot.
 Most stories need few or no revisions — an empty list is a good outcome, and
 is much better than rewriting text that was already doing its job."""
 
@@ -1455,9 +2067,11 @@ is much better than rewriting text that was already doing its job."""
                 {
                     "role": "system",
                     "content": "You are a long-form editor with one job: "
-                    "removing repetition between the sections of a finished "
-                    "piece. You rewrite only what repeats, you never add "
-                    "facts, and you leave good text alone.",
+                    "removing repetition from a finished piece — both between "
+                    "its own sections and against the captions printed beside "
+                    "it. You rewrite only what repeats, you never touch a "
+                    "caption, you never add facts, and you leave good text "
+                    "alone.",
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -1494,17 +2108,37 @@ def apply_prose_revisions(
     ``[slot_id] (role)``, and the model copies the id back in that bracketed
     form often enough that taking it literally silently discarded every
     revision in the first live run.
+
+    Revisions that de-duplicate by going abstract are rejected outright — see
+    ``_revision_loses_substance``.
     """
-    known = {slot_id for slot_id, _role, _text in collect_prose_slots(composed)}
+    originals = {
+        slot_id: text for slot_id, _role, text in collect_prose_slots(composed)
+    }
     applied = 0
+    hollowed = 0
 
     for revision in result.revisions:
         slot_id = revision.slot.strip().strip("[]").strip()
         text = revision.text.strip()
         if not text:
             continue
-        if slot_id not in known:
+        if slot_id.startswith("caption:"):
+            print(
+                f"Warning: revision aimed at caption slot '{slot_id}', ignored "
+                "(the caption layer is fixed)"
+            )
+            continue
+        if slot_id not in originals:
             print(f"Warning: revision for unknown prose slot '{slot_id}', ignored")
+            continue
+        if _revision_loses_substance(originals[slot_id], text):
+            print(
+                f"Warning: revision for '{slot_id}' removes its specifics "
+                f"({count_anchors(originals[slot_id])} concrete anchors -> "
+                f"{count_anchors(text)}), rejected"
+            )
+            hollowed += 1
             continue
 
         if slot_id == "opening":
@@ -1517,8 +2151,11 @@ def apply_prose_revisions(
             setattr(composed, slot_id, text)
         applied += 1
 
-    if verbose and applied:
-        print(f"  Applied {applied} prose revision(s)")
+    if verbose and (applied or hollowed):
+        print(
+            f"  Applied {applied} prose revision(s)"
+            + (f", rejected {hollowed} as substance-losing" if hollowed else "")
+        )
     return applied
 
 
@@ -1539,6 +2176,10 @@ _QUOTE_TRANS = str.maketrans(
         "—": "-",
     }
 )
+
+
+# An image candidate key: person_id:event_index:image_index.
+_IMAGE_KEY = re.compile(r"[a-z0-9_]+:\d+:\d+")
 
 
 def _normalize_quote(text: str) -> str:
@@ -1597,11 +2238,17 @@ def _apply_section_bodies(
         if blocks_out:
             bodies[slot] = blocks_out
 
+    # Always replace rather than merge: an empty body is a legitimate result
+    # (a section with no real context to add gets none), so leaving the
+    # previous composition's paragraphs in place would silently keep prose the
+    # article deliberately dropped.
     if bodies:
         dataset["section_bodies"] = bodies
-        # Section images are superseded by body image blocks; leftovers from a
-        # previous composition would render twice.
-        dataset.pop("section_images", None)
+    else:
+        dataset.pop("section_bodies", None)
+    # Section images are superseded by body image blocks; leftovers from a
+    # previous composition would render twice.
+    dataset.pop("section_images", None)
     if verbose:
         print(
             "  Section bodies: "
@@ -1833,7 +2480,14 @@ def apply_composition(
     def resolve_image(key: Optional[str], slot: str) -> Optional[Dict[str, Any]]:
         if not key:
             return None
-        candidate = candidates.get(key)
+        # The candidate list renders each key inside a whole line —
+        # "[img=person:12:0] 1843 — Ada Lovelace: Publishes Notes ..." — and
+        # the model copies back varying amounts of that decoration, from the
+        # brackets alone to the entire line. Both forms were observed dropping
+        # real selections, so the key is extracted by shape rather than
+        # trimmed by prefix. Same class of bug as the prose slot ids.
+        match = _IMAGE_KEY.search(key)
+        candidate = candidates.get(match.group(0) if match else key.strip())
         if candidate is None:
             print(f"Warning: unknown image key '{key}' for {slot}, dropped")
             return None
@@ -1987,10 +2641,29 @@ def compose_meta_story_dataset(
     # can never be selected.
     image_candidates = collect_image_candidates(working, registry)
 
-    composed = run_composition(
+    # Second call: the caption layer — every text bound to an item.
+    captions = run_component_narration(
         working,
         registry,
         curation.throughline,
+        wikipedia_context,
+        client,
+        model,
+        reasoning_effort,
+        verbose=verbose,
+    )
+    if captions is None:
+        return None
+
+    # Third call: the article between the components, written against the
+    # finished captions so it has to find something else to say.
+    component_layer = render_component_layer(working, registry, captions)
+    context_notes = build_context_notes(working, registry)
+    article = run_article(
+        working,
+        registry,
+        curation.throughline,
+        component_layer,
         wikipedia_context,
         image_candidates,
         client,
@@ -1998,14 +2671,17 @@ def compose_meta_story_dataset(
         reasoning_effort,
         verbose=verbose,
     )
-    if composed is None:
+    if article is None:
         return None
 
-    # Third call: strip the repetition the composition call cannot see in
-    # itself. Non-fatal — unrevised prose is still a complete story.
+    composed = CompositionResult.merge(captions, article)
+
+    # Fourth call: strip the repetition the article call cannot see in itself.
+    # Non-fatal — unrevised prose is still a complete story.
     revisions = 0
     if deduplicate:
-        before = rank_slot_overlaps(collect_prose_slots(composed))
+        caption_slots = collect_caption_slots(composed)
+        before = rank_slot_overlaps(collect_prose_slots(composed), caption_slots)
         if verbose and before:
             print("  Most similar slot pairs before pass:")
             for slot_a, slot_b, sent_a, _sent_b, score in before[:3]:
@@ -2016,6 +2692,7 @@ def compose_meta_story_dataset(
         result = run_redundancy_pass(
             composed,
             curation.throughline,
+            context_notes + "\n" + wikipedia_context,
             client,
             model,
             reasoning_effort,
@@ -2024,12 +2701,41 @@ def compose_meta_story_dataset(
         if result is not None:
             revisions = apply_prose_revisions(composed, result, verbose=verbose)
         if verbose and before:
-            after = rank_slot_overlaps(collect_prose_slots(composed))
+            after = rank_slot_overlaps(collect_prose_slots(composed), caption_slots)
             now_top = f"{after[0][4]:.2f}" if after else "none"
             print(f"  Top slot overlap: {before[0][4]:.2f} -> {now_top}")
 
-    # The quote-verification corpus is exactly what the model was shown.
-    material = build_story_brief(working, registry) + "\n" + wikipedia_context
+    if verbose:
+        final_slots = collect_prose_slots(composed)
+        # The other half of the picture: prose that repeats nothing because it
+        # says nothing. See find_abstract_slots.
+        abstract = find_abstract_slots(final_slots)
+        if abstract:
+            print(
+                "  Slots with too few concrete anchors: "
+                + ", ".join(f"{slot_id} ({n})" for slot_id, n in abstract)
+            )
+        interface = find_interface_references(final_slots)
+        if interface:
+            print(
+                "  Slots describing the page instead of the history: "
+                + ", ".join(f'{slot_id} ("{phrase}")' for slot_id, phrase in interface)
+            )
+
+    # The quote-verification corpus must be exactly what the ARTICLE call was
+    # shown, since it is the call that writes quote blocks. Since the call
+    # split that is no longer the story brief: it sees the caption layer and
+    # the context notes instead, and a quote lifted from either would fail a
+    # brief-only check. The brief stays in the corpus because the captions are
+    # derived from it and quoting through them is legitimate.
+    material = "\n".join(
+        [
+            build_story_brief(working, registry),
+            context_notes,
+            component_layer,
+            wikipedia_context,
+        ]
+    )
     apply_composition(
         working,
         composed,

@@ -16,8 +16,10 @@ Generate meta-story datasets using a multi-phase approach:
 7. Phase 7: Geographic map section — event rating, geographic clustering,
    and stop narration with a discard option (see meta_story_map.py and
    meta_story_map_narration.py)
-8. Phase 8: Story composer — top-down narrative composition (2 AI calls,
-   see compose_meta_story.py). Runs LAST so it sees the assembled story
+8. Phase 8: Story composer — top-down narrative composition (4 AI calls,
+   see compose_meta_story.py): curation, then the caption layer bound to the
+   items, then the article that runs between the components, then a
+   redundancy pass over both. Runs LAST so it sees the assembled story
    including the map, whose stops it may reorder/discard; its exclusion
    cascade prunes the earlier sections deterministically.
 
@@ -1824,7 +1826,8 @@ def main():
     parser.add_argument(
         "--skip-redundancy-pass",
         action="store_true",
-        help="Phase 8: skip the pass that rewrites prose slots repeating each other",
+        help="Phase 8: skip the pass that rewrites article slots repeating "
+        "each other or the captions",
     )
     parser.add_argument(
         "--skip-map",
@@ -2022,11 +2025,12 @@ def main():
             print(f"Warning: map section generation failed: {e}")
 
     # Phase 8: story composer — reads the assembled story top-down (with
-    # Wikipedia context) and writes one coherent narrative: title,
-    # description, opening, section bodies, chapter headlines + lead-ins,
-    # its own network circle organization, curated map stops, conclusion —
-    # optionally dropping clearly disconnected people. Non-fatal: on failure
-    # the bottom-up texts are kept.
+    # Wikipedia context) and rewrites it as two layers: the captions bound to
+    # the timeline, graph and map, and the article running between them, which
+    # carries the context those components cannot show. Also curates — its own
+    # network circle organization, curated map stops, and optionally dropping
+    # clearly disconnected people. Non-fatal: on failure the bottom-up texts
+    # are kept.
     if args.skip_compose:
         if args.verbose:
             print("\n=== PHASE 8: Story Composition (SKIPPED) ===")
