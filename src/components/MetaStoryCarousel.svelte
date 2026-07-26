@@ -344,10 +344,12 @@
                     {metaStory.title}
                   </h2>
                   <p class="slide-tagline">{metaStory.tagline}</p>
-                  <span class="separator">·</span>
-                  <span class="date-range"
-                    >{metaStory.date_range_start}–{metaStory.date_range_end}</span
-                  >
+                  <span class="date-range-group">
+                    <span class="separator">·</span>
+                    <span class="date-range"
+                      >{metaStory.date_range_start}–{metaStory.date_range_end}</span
+                    >
+                  </span>
                 </button>
                 <div class="slide-meta" on:click|stopPropagation>
                   <div class="button-container">
@@ -782,6 +784,10 @@
       0 3px 10px rgba(0, 0, 0, 1),
       0 2px 6px rgba(0, 0, 0, 1),
       0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  .date-range-group {
+    white-space: nowrap;
   }
 
   .carousel-nav {
