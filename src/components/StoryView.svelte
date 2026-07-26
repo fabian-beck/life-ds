@@ -819,12 +819,24 @@
 
     if (totalPanels === 0) return;
 
-    if (event.key === "ArrowLeft") {
+    if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
       event.preventDefault();
       prevSlide();
-    } else if (event.key === "ArrowRight") {
+    } else if (["ArrowRight", "ArrowDown", "PageDown"].includes(event.key)) {
       event.preventDefault();
       nextSlide();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      requestScrollTo(0, {
+        source: "keyboard",
+        updateStateImmediately: true,
+      });
+    } else if (event.key === "End") {
+      event.preventDefault();
+      requestScrollTo(totalPanels - 1, {
+        source: "keyboard",
+        updateStateImmediately: true,
+      });
     }
   }
 

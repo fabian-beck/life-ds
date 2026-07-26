@@ -94,8 +94,8 @@ test("core visitor journey", async ({ page }, testInfo) => {
   });
   await expect(adaCard).toBeVisible();
   await expect(page.getByRole("status")).toContainText("1");
-  await expect(page.locator(".header-container")).toBeHidden();
-  await expect(page.locator(".filters-right")).toBeHidden();
+  await expect(page.locator(".header-container")).toBeVisible();
+  await expect(page.locator(".filters-right")).toBeVisible();
 
   if (testInfo.project.name === "mobile-chromium") {
     const resultIsInViewport = await adaCard.evaluate((element) => {
@@ -116,11 +116,11 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await capture(page, testInfo, "03-story-overview");
   await attachAudit(testInfo, "story-overview", await viewportAudit(page));
 
-  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowDown");
   await expect(page).toHaveURL(/[?&]slide=1(?:&|$)/);
   await capture(page, testInfo, "04-story-chapter");
 
-  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("PageDown");
   await expect(page).toHaveURL(/[?&]slide=2(?:&|$)/);
   await capture(page, testInfo, "05-story-event");
   await attachAudit(testInfo, "story-event", await viewportAudit(page));
