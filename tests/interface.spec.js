@@ -88,6 +88,15 @@ test("core visitor journey", async ({ page }, testInfo) => {
   const search = page.getByRole("textbox", {
     name: "Search people by name, role, or keywords",
   });
+  const skipToSearch = page.getByRole("button", { name: "Skip to search" });
+  await expect(page.locator(".indicator.active")).toHaveAttribute(
+    "aria-current",
+    "true"
+  );
+  await page.keyboard.press("Tab");
+  await expect(skipToSearch).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(search).toBeFocused();
   await search.fill("Ada Lovelace");
   const adaCard = page.getByRole("button", {
     name: "Open life story for Ada Lovelace",

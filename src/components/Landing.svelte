@@ -30,6 +30,7 @@
   let activeMetaStoryFilter = null;
   let showMap = false;
   let filtersSectionElement = null;
+  let searchInputElement = null;
   let wasFiltering = false;
 
   // Sticky header state
@@ -448,6 +449,13 @@
 </script>
 
 <section class="landing">
+  <button
+    type="button"
+    class="skip-link"
+    on:click={() => searchInputElement?.focus()}
+  >
+    {$_("landing.skip_to_search")}
+  </button>
   <!-- Sticky header - appears when scrolling down -->
   {#if showStickyHeader}
     <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
@@ -528,6 +536,7 @@
         type="text"
         class="search-input"
         placeholder={$_("landing.search_placeholder")}
+        bind:this={searchInputElement}
         bind:value={searchQuery}
         aria-label={$_("landing.search_label")}
       />
@@ -774,6 +783,26 @@
     gap: 1rem;
     padding: 1rem 1.5rem 4rem;
     position: relative;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 300;
+    padding: 0.6rem 0.85rem;
+    border: 2px solid #38bdf8;
+    border-radius: 0.4rem;
+    background: #0f172a;
+    color: #f8fafc;
+    font: inherit;
+    font-weight: 700;
+    transform: translateY(-200%);
+    transition: transform 0.15s ease;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
   }
 
   /* Sticky header group - wrapper for synchronized fade transition */

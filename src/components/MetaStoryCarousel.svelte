@@ -305,7 +305,12 @@
       >
         {#each metaStories as metaStory, index (metaStory.id)}
           {@const storyPersons = getPersonsForMetaStory(metaStory)}
-          <div class="carousel-slide" class:active={index === currentSlide}>
+          <div
+            class="carousel-slide"
+            class:active={index === currentSlide}
+            inert={index !== currentSlide}
+            aria-hidden={index !== currentSlide}
+          >
             {#if storyPersons.length > 0}
               <div class="portrait-background">
                 {#each storyPersons as person (person.id)}
@@ -428,6 +433,7 @@
               class:active={index === currentSlide}
               on:click={() => goToSlide(index)}
               aria-label={slideLabel}
+              aria-current={index === currentSlide ? "true" : undefined}
             ></button>
           {/each}
         </div>
