@@ -568,6 +568,12 @@
     push(`/${$currentLanguage}`);
   }
 
+  // Replace invalid collection routes so a stale link cannot trap the visitor
+  // on an empty page or remain in browser history.
+  $: if (metaMatch && !metaStoryData && metaStoryId && !dataLoading) {
+    replace(`/${$currentLanguage}`);
+  }
+
   // Extract from_meta parameter to preserve meta story context
   // Use the queryParams store which is already reactive to URL changes
   $: fromMetaStoryId = $queryParams.from_meta;
