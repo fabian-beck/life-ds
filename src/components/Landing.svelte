@@ -144,6 +144,12 @@
     activeTags = new Set(activeTags); // Trigger reactivity
   }
 
+  function clearFilters() {
+    searchQuery = "";
+    activeTags = new Set();
+    activeMetaStoryFilter = null;
+  }
+
   $: knownRoles = new Map(
     entries.flatMap((entry) =>
       Array.isArray(entry.primaryRoles)
@@ -501,11 +507,7 @@
     {/key}
   </div>
 
-  <div
-    class="filters-section"
-    class:searching={isSearching}
-    bind:this={filtersSectionElement}
-  >
+  <div class="filters-section" bind:this={filtersSectionElement}>
     <div class="search-box">
       <svg
         class="search-icon"
@@ -752,7 +754,12 @@
         {$_("landing.empty_message")}
       </p>
     {:else}
-      <p class="landing-empty">No persons match the selected filters.</p>
+      <div class="landing-empty">
+        <span>{$_("landing.no_matches")}</span>
+        <button class="clear-filters" on:click={clearFilters}>
+          {$_("landing.clear_all")}
+        </button>
+      </div>
     {/if}
   </div>
 </section>
@@ -1054,6 +1061,9 @@
     margin: 0;
     font-size: 1rem;
     color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .person-card {
@@ -1481,10 +1491,6 @@
   .tag-chip.active .tag-count {
     background: rgba(56, 189, 248, 0.3);
     color: #e0f2fe;
-  }
-
-  .filters-section.searching .filters-right {
-    display: none;
   }
 
   @media (max-width: 580px) {
