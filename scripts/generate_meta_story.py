@@ -308,13 +308,6 @@ class NetworkCircleNarration(BaseModel):
 class NetworkNarrationResult(BaseModel):
     """AI-written narration for the social network scroll-over cards."""
 
-    intro: str = Field(
-        description="A 2-3 sentence introductory paragraph for the network, "
-        "written like a book's opening: thematic and evocative, in the third "
-        "person and never addressed to the reader. It sets the scene for the "
-        "whole network WITHOUT naming individual people or previewing the "
-        "specific circles (those are revealed later). No lists, no reading guide."
-    )
     circles: List[NetworkCircleNarration]
 
 
@@ -1588,9 +1581,9 @@ def phase6_network_narration(
 
     The UI narrates the social network with scroll-over cards, one per cluster
     (derived deterministically by ``derive_clusters``, mirroring the client).
-    This phase asks the model for a short narrative per circle plus an intro,
-    stored as ``social_network.narration``. Failures are non-fatal — without
-    narration the UI falls back to listing the ties.
+    This phase asks the model for a short narrative per circle, stored as
+    ``social_network.narration``. Failures are non-fatal — without narration
+    the UI falls back to listing the ties.
     """
     network = dataset.get("social_network") or {}
     clusters = derive_clusters(network)
@@ -1632,12 +1625,6 @@ CIRCLES:
 {briefs}
 
 REQUIREMENTS:
-- intro: a 2-3 sentence opening paragraph, written the way an author opens a
-  chapter — evocative, setting up the human theme that runs through this
-  network (what kind of bonds it is made of, what world it spans, what it
-  builds toward). Do NOT name individual people, do NOT preview or list the
-  specific circles/clusters (naming them here would spoil what follows), and
-  do NOT explain how to read the graph.
 - One entry per circle, in the given order, with `key` copied EXACTLY.
 - Each circle title: a short, evocative headline (2-5 words) in the spirit of a
   book chapter — capture the theme or bond that unites the circle. Do NOT list
@@ -1677,7 +1664,6 @@ REQUIREMENTS:
             print(f"Warning: Phase 6 narration missing circles {missing}, skipping")
             return
         network["narration"] = {
-            "intro": result.parsed.intro,
             "circles": [
                 {
                     "key": c["key"],
