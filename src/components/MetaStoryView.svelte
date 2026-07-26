@@ -971,12 +971,15 @@
   }
 
   .sticky-ai-button {
+    /* Hangs the tag off the bottom edge of the sticky header. `display: flex`
+       drops the inline line box that would otherwise pad the tag downwards;
+       the one-pixel overlap then keeps fractional header heights from
+       revealing a seam without covering the label itself. */
     position: absolute;
-    top: calc(var(--sticky-header-height, 3.5rem) - 0.35rem);
+    top: calc(var(--sticky-header-height, 3.5rem) - 1px);
     left: -0.25rem;
     z-index: -1; /* Below sticky header */
     display: flex;
-    line-height: 0;
   }
 
   .sticky-compact-info {
