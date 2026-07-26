@@ -625,6 +625,11 @@ python scripts/compose_meta_story.py computing_pioneers --no-exclusions # text-o
 python scripts/compose_meta_story.py computing_pioneers --skip-redundancy-pass
 ```
 
+The composer defaults to `gpt-5.6-sol`, independently of the other generation
+phases. Override it with `OPENAI_COMPOSER_MODEL` or the standalone command's
+`--model` flag; the full pipeline exposes the same override as
+`--composer-model`.
+
 ### Meta Story People Cards ("The People" section)
 
 A meta story closes with a card grid of **all the people the story is built

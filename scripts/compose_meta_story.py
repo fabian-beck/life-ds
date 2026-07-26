@@ -114,7 +114,11 @@ from typing import Any, Dict, List, Literal, Optional, cast
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+from config import (
+    COMPOSER_DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    enable_utf8_console,
+)
 from meta_story_map import MIN_MAP_CLUSTERS
 from meta_story_network import derive_clusters
 from meta_story_network_review import build_wikipedia_context
@@ -2597,7 +2601,7 @@ def compose_meta_story_dataset(
     dataset: Dict[str, Any],
     registry: Dict[str, Any],
     client: OpenAI,
-    model: str = DEFAULT_MODEL,
+    model: str = COMPOSER_DEFAULT_MODEL,
     reasoning_effort: str = DEFAULT_REASONING_EFFORT,
     allow_exclusions: bool = True,
     deduplicate: bool = True,
@@ -2889,8 +2893,8 @@ def main() -> int:
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
-        help=f"OpenAI model (default: {DEFAULT_MODEL})",
+        default=COMPOSER_DEFAULT_MODEL,
+        help=f"OpenAI model (default: {COMPOSER_DEFAULT_MODEL})",
     )
     parser.add_argument(
         "--skip-translate",

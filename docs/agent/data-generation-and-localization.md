@@ -20,7 +20,10 @@ Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/ge
 
 **Model configuration** (see `scripts/config.py`):
 
-- `OPENAI_MODEL` — text/reasoning model for all generation (default: `gpt-5.6-terra`)
+- `OPENAI_MODEL` — text/reasoning model for generation phases other than the
+  meta-story composer (default: `gpt-5.6-terra`)
+- `OPENAI_COMPOSER_MODEL` — Phase 8 meta-story composer model (default:
+  `gpt-5.6-sol`)
 - `OPENAI_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels
 - Portrait scripts take `--model` separately (default: `gpt-image-2`)
 

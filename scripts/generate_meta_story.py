@@ -39,7 +39,12 @@ from openai import OpenAI, APIStatusError
 from pydantic import BaseModel, Field
 
 from compose_meta_story import compose_meta_story_dataset
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+from config import (
+    COMPOSER_DEFAULT_MODEL,
+    DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    enable_utf8_console,
+)
 from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
@@ -1781,6 +1786,11 @@ def main():
         default=DEFAULT_MODEL,
         help=f"OpenAI model (default: {DEFAULT_MODEL})",
     )
+    parser.add_argument(
+        "--composer-model",
+        default=COMPOSER_DEFAULT_MODEL,
+        help=f"Phase 8 composer model (default: {COMPOSER_DEFAULT_MODEL})",
+    )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     parser.add_argument(
         "--batch-size",
@@ -2041,7 +2051,7 @@ def main():
             dataset,
             registry,
             client,
-            model=args.model,
+            model=args.composer_model,
             allow_exclusions=not args.no_exclusions,
             deduplicate=not args.skip_redundancy_pass,
             verbose=args.verbose,
