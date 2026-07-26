@@ -11,7 +11,11 @@ npm install          # Install dependencies
 npm run dev          # Start dev server (localhost:5173)
 npm run build        # Production build to dist/
 npm run preview      # Preview production build
+npm run test:core    # Minimal UI, logic, and Python regression safeguards
 ```
+
+See [Testing strategy](../testing-strategy.md) for the boundary between the
+small deterministic suite and the repository's AI exploratory testing skill.
 
 **Note**: The dev server is always running in this environment. No need to start it manually.
 

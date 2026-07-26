@@ -75,9 +75,7 @@ async function attachAudit(testInfo, name, audit) {
   expect(audit.documentWidth).toBeLessThanOrEqual(audit.viewport.width + 1);
 }
 
-test("landing, search, story navigation, and network modal", async ({
-  page,
-}, testInfo) => {
+test("core visitor journey", async ({ page }, testInfo) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
@@ -140,100 +138,16 @@ test("landing, search, story navigation, and network modal", async ({
     .click();
   await expect(page).toHaveURL(/\/en$/);
 
-  expect(pageErrors).toEqual([]);
-});
-
-test("German role filters merge masculine and feminine forms", async ({
-  page,
-}) => {
-  await page.goto("/en");
-  await page
-    .getByRole("combobox", { name: "Select language" })
-    .selectOption("de");
-  await expect(page).toHaveURL(/\/de$/);
-
-  const roleFilter = page.getByRole("button", {
-    name: /^Informatiker:in 10$/,
-  });
-  await expect(roleFilter).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: /^Informatikerin(?: |$)/ })
-  ).toHaveCount(0);
-
-  await roleFilter.click();
-
-  await expect(page.getByRole("status")).toContainText("10");
-  await expect(
-    page.getByRole("button", { name: "Open life story for Ada Lovelace" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Open life story for Alan Turing" })
-  ).toBeVisible();
-});
-
-test("closing stories does not add a history trap", async ({ page }) => {
-  await page.goto("/#/en");
-
-  await page
-    .getByRole("button", { name: "Open life story for Ada Lovelace" })
-    .click();
-  await expect(page).toHaveURL(/#\/en\/story\/ada_lovelace/);
-  const personHistoryLength = await page.evaluate(() => history.length);
-
-  await page
-    .getByRole("button", {
-      name: "Close story and return to the landing page",
-    })
-    .click();
-  await expect(page).toHaveURL(/#\/en$/);
-  expect(await page.evaluate(() => history.length)).toBe(personHistoryLength);
-
-  await page.goBack();
-  await expect(page).toHaveURL(/#\/en$/);
-  await expect(
-    page.getByRole("button", {
-      name: "Close story and return to the landing page",
-    })
-  ).toHaveCount(0);
-
   await page
     .getByRole("button", { name: "Explore collection" })
     .first()
     .click();
-  await expect(page).toHaveURL(/#\/en\/meta\//);
-  const metaHistoryLength = await page.evaluate(() => history.length);
-
-  await page.getByRole("button", { name: "Back to Stories" }).first().click();
-  await expect(page).toHaveURL(/#\/en$/);
-  expect(await page.evaluate(() => history.length)).toBe(metaHistoryLength);
-
-  await page.goBack();
-  await expect(page).toHaveURL(/#\/en$/);
+  await expect(page).toHaveURL(/\/en\/meta\//);
   await expect(
-    page.getByRole("button", { name: "Back to Stories" })
-  ).toHaveCount(0);
-});
+    page.getByRole("button", { name: "Back to Stories" }).first()
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Back to Stories" }).first().click();
+  await expect(page).toHaveURL(/\/en$/);
 
-test("meta-story AI tag meets the landscape sticky header", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 844, height: 390 });
-  await page.goto("/#/en/meta/computing_pioneers");
-  await expect(page.locator(".meta-story-header")).toBeVisible();
-
-  await page.evaluate(() => window.scrollTo(0, 350));
-  const stickyHeader = page.locator(".meta-sticky-header");
-  const aiTag = page.locator(".sticky-ai-button .ai-generated-button");
-  await expect(stickyHeader).toBeVisible();
-  await expect(aiTag).toBeVisible();
-
-  await expect
-    .poll(async () => {
-      const headerBox = await stickyHeader.boundingBox();
-      const tagBox = await aiTag.boundingBox();
-      return Math.round(
-        (tagBox?.y ?? 0) - ((headerBox?.y ?? 0) + (headerBox?.height ?? 0))
-      );
-    })
-    .toBe(-1);
+  expect(pageErrors).toEqual([]);
 });

@@ -22,7 +22,13 @@ export default defineConfig({
   },
   projects: [
     {
+      name: "logic",
+      testMatch: "personNames.spec.js",
+      use: {},
+    },
+    {
       name: "desktop-chromium",
+      testMatch: "interface.spec.js",
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },
@@ -30,6 +36,7 @@ export default defineConfig({
     },
     {
       name: "mobile-chromium",
+      testMatch: "interface.spec.js",
       use: {
         ...devices["Pixel 7"],
       },

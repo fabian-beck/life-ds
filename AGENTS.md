@@ -32,6 +32,7 @@ npm install
 npm run dev
 npm run validate
 npm run build
+npm run test:core
 npm run test:interface
 ```
 
@@ -42,6 +43,9 @@ type-checking when changing Python code:
 python -m pytest
 npm run type-check:py
 ```
+
+The intentionally small automated suite and the Codex/Claude exploratory user
+testing skill are documented in [Testing strategy](docs/testing-strategy.md).
 
 The development server is normally already running in this environment.
 
