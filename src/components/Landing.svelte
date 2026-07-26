@@ -933,6 +933,8 @@
     font-size: 2.1rem;
     margin: 0;
     line-height: 1.15;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .landing-hero p {
