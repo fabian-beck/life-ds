@@ -48,7 +48,8 @@
   $: descriptionSegments = parseDescriptionSegments(
     slide.description,
     slide.annotations,
-    relevantPeople
+    relevantPeople,
+    egoNetwork?.ego?.name
   );
 
   // Create a reactive map of which annotations should be visible

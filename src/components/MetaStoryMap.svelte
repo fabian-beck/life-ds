@@ -6,7 +6,7 @@
   import { layers, namedFlavor } from "@protomaps/basemaps";
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
-  import { generateNameVariants } from "../utils/storyHelpers.js";
+  import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -16,6 +16,10 @@
   // Meta story id, so an event link can carry the `from_meta` context that
   // returns the reader here (with scroll restored) on closing the story.
   export let metaStoryId = null;
+  // Extra names per person id (e.g. the translated registry name): the map
+  // clusters store the untranslated person_name, so a translated story needs
+  // the reader-facing name to recognize its people in the stop texts.
+  export let personAliases = null;
 
   const personStyles = personStylesData.styles;
 
@@ -83,57 +87,11 @@
   // Highlight each member's name where it appears in the narration text —
   // the same .person-mention treatment used in the network cards.
   function highlightNarration(text, cluster) {
-    if (!text) return [{ type: "text", content: "" }];
-    const people = clusterPeople(cluster);
-
-    const matches = [];
-    for (const person of people) {
-      let best = null;
-      for (const variant of generateNameVariants(person.name)) {
-        variant.regex.lastIndex = 0;
-        let m;
-        while ((m = variant.regex.exec(text)) !== null) {
-          const cand = {
-            start: m.index,
-            end: variant.regex.lastIndex,
-            len: m[0].length,
-            priority: variant.priority,
-            person,
-          };
-          if (
-            !best ||
-            cand.priority < best.priority ||
-            (cand.priority === best.priority && cand.len > best.len)
-          ) {
-            best = cand;
-          }
-        }
-      }
-      if (best) matches.push(best);
-    }
-
-    matches.sort((a, b) => a.start - b.start || b.len - a.len);
-    const segments = [];
-    let cursor = 0;
-    for (const match of matches) {
-      if (match.start < cursor) continue;
-      if (match.start > cursor) {
-        segments.push({
-          type: "text",
-          content: text.slice(cursor, match.start),
-        });
-      }
-      segments.push({
-        type: "person",
-        content: text.slice(match.start, match.end),
-        personId: match.person.id,
-      });
-      cursor = match.end;
-    }
-    if (cursor < text.length) {
-      segments.push({ type: "text", content: text.slice(cursor) });
-    }
-    return segments;
+    const people = clusterPeople(cluster).map((person) => ({
+      ...person,
+      aliases: personAliases?.[person.id] ?? [],
+    }));
+    return segmentPersonMentions(text, people);
   }
 
   function stopYearRange(cluster) {
@@ -433,7 +391,7 @@
               <p class="step-body">
                 {#each highlightNarration(stopTexts.get(cluster.key), cluster) as seg}{#if seg.type === "text"}{seg.content}{:else}<strong
                       class="person-mention"
-                      style={`--mention-color: ${primaryColor(seg.personId)}`}
+                      style={`--mention-color: ${primaryColor(seg.person.id)}`}
                       >{seg.content}</strong
                     >{/if}{/each}
               </p>

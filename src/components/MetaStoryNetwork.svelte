@@ -11,7 +11,7 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
-  import { generateNameVariants } from "../utils/storyHelpers.js";
+  import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -21,6 +21,9 @@
   // Id of the meta story this network belongs to, so opening a person's story
   // carries the `from_meta` context (returning restores the meta story + scroll).
   export let metaStoryId = null;
+  // Extra names per person id (e.g. the translated registry name), so a
+  // translated story still recognizes its people in the narration prose.
+  export let personAliases = null;
 
   const personStyles = personStylesData.styles;
 
@@ -263,63 +266,15 @@
   );
 
   // Highlight each circle member's name where it appears in the narration text,
-  // the way person names are emphasized in the story slides. Returns an array
-  // of { type: "text" | "person", content, personType, personId } segments.
+  // the way person names are emphasized in the story slides. The nodes carry
+  // the untranslated name, so `personAliases` supplies the name the reader
+  // actually sees in a translated story.
   function highlightNarration(text, cluster) {
-    if (!text) return [{ type: "text", content: "" }];
-    const people = [...cluster.mains, ...cluster.secondaries];
-
-    // Best (longest / highest-priority) match per person.
-    const matches = [];
-    for (const person of people) {
-      let best = null;
-      for (const variant of generateNameVariants(person.name)) {
-        variant.regex.lastIndex = 0;
-        let m;
-        while ((m = variant.regex.exec(text)) !== null) {
-          const cand = {
-            start: m.index,
-            end: variant.regex.lastIndex,
-            len: m[0].length,
-            priority: variant.priority,
-            person,
-          };
-          if (
-            !best ||
-            cand.priority < best.priority ||
-            (cand.priority === best.priority && cand.len > best.len)
-          ) {
-            best = cand;
-          }
-        }
-      }
-      if (best) matches.push(best);
-    }
-
-    // Resolve overlaps: earliest start wins, then the longer span.
-    matches.sort((a, b) => a.start - b.start || b.len - a.len);
-    const segments = [];
-    let cursor = 0;
-    for (const match of matches) {
-      if (match.start < cursor) continue; // overlaps a chosen match — skip
-      if (match.start > cursor) {
-        segments.push({
-          type: "text",
-          content: text.slice(cursor, match.start),
-        });
-      }
-      segments.push({
-        type: "person",
-        content: text.slice(match.start, match.end),
-        personType: match.person.type,
-        personId: match.person.id,
-      });
-      cursor = match.end;
-    }
-    if (cursor < text.length) {
-      segments.push({ type: "text", content: text.slice(cursor) });
-    }
-    return segments;
+    const people = [...cluster.mains, ...cluster.secondaries].map((person) => ({
+      ...person,
+      aliases: personAliases?.[person.id] ?? [],
+    }));
+    return segmentPersonMentions(text, people);
   }
 
   // Which step card is in the viewport band; each step maps 1:1 to a cluster.
@@ -842,10 +797,11 @@
               </h3>
               {#if narrationTexts.has(cluster.key)}
                 <p class="step-body">
-                  {#each highlightNarration(narrationTexts.get(cluster.key), cluster) as seg}{#if seg.type === "text"}{seg.content}{:else if seg.personType === "main"}<strong
+                  {#each highlightNarration(narrationTexts.get(cluster.key), cluster) as seg}{#if seg.type === "text"}{seg.content}{:else if seg.person.type === "main"}<strong
                         class="person-mention"
-                        style={`--mention-color: ${primaryColor(seg.personId)}`}
-                        >{seg.content}</strong
+                        style={`--mention-color: ${primaryColor(
+                          seg.person.id
+                        )}`}>{seg.content}</strong
                       >{:else}<strong
                         class="person-mention person-mention-secondary"
                         >{seg.content}</strong
