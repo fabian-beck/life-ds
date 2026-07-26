@@ -42,7 +42,7 @@ map and network sections, enter a person story, then return to the same context.
 
 Use narrow mobile, short landscape, and desktop at 200% zoom. Look for
 horizontal overflow, clipped text, obscured controls, unstable layout, and long
-German or French copy.
+German copy.
 
 ### Resilience
 
@@ -63,5 +63,5 @@ touch target sizes. Label this a heuristic review, not a conformance audit.
 - **Focused:** persona matching the diff; changed-feature charter plus one
   adjacent journey and one stress dimension.
 - **Release:** rotate at least three personas; cover all feature families in
-  mobile, desktop, short landscape, English, German, and French. Sample rather
-  than exhaustively permuting combinations.
+  mobile, desktop, short landscape, English, and German. Sample rather than
+  exhaustively permuting combinations.
