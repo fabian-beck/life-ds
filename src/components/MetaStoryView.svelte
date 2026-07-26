@@ -737,14 +737,6 @@
     {#if metaStoryData.chapters?.length}
       <section class="chapters-section">
         <h2>{sectionHeadings.timeline || $_("meta_story.chapters_heading")}</h2>
-        {#if metaStoryData.timeline_intro}
-          <p class="timeline-intro">
-            <MetaStoryProse
-              text={metaStoryData.timeline_intro}
-              {...proseContext}
-            />
-          </p>
-        {/if}
         <MetaStoryFigure
           image={sectionImages.timeline}
           onEnlarge={openEnlargedImage}
@@ -816,16 +808,6 @@
     {#if metaStoryData.social_network?.links?.length}
       <section class="network-section">
         <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
-        <p class="network-intro">
-          {#if metaStoryData.social_network?.narration?.intro}
-            <MetaStoryProse
-              text={metaStoryData.social_network.narration.intro}
-              {...proseContext}
-            />
-          {:else}
-            {$_("meta_story.network_subtitle")}
-          {/if}
-        </p>
         <MetaStoryFigure
           image={sectionImages.network}
           onEnlarge={openEnlargedImage}
@@ -850,16 +832,6 @@
     {#if metaStoryData.geo_map?.clusters?.length}
       <section class="map-section">
         <h2>{sectionHeadings.map || $_("meta_story.map_heading")}</h2>
-        <p class="map-intro">
-          {#if metaStoryData.geo_map?.narration?.intro}
-            <MetaStoryProse
-              text={metaStoryData.geo_map.narration.intro}
-              {...proseContext}
-            />
-          {:else}
-            {$_("meta_story.map_subtitle")}
-          {/if}
-        </p>
         <MetaStoryBody
           blocks={sectionBodies.map}
           {...proseContext}
@@ -901,7 +873,6 @@
     {#if storyPersonCards.length}
       <section class="people-section">
         <h2>{$_("meta_story.people_heading")}</h2>
-        <p class="people-intro">{$_("meta_story.people_subtitle")}</p>
         <div class="people-grid">
           {#each storyPersonCards as person (person.id)}
             <PersonCard
@@ -1184,19 +1155,6 @@
     margin-bottom: 3rem;
   }
 
-  /* Section standfirsts — the intro line under a subhead. Body size, muted
-     tone, held to a comfortable measure so they read as secondary to the copy
-     that follows. */
-  .network-intro,
-  .map-intro,
-  .timeline-intro {
-    font-size: 1.0625rem;
-    color: var(--ms-muted);
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-    max-width: 62ch;
-  }
-
   /* Conclusion — the same body copy as the rest of the article; its own
      subhead already sets it apart, so it needs no italic or size shift. */
   .conclusion p {
@@ -1206,14 +1164,6 @@
   }
 
   /* Closing person cards — the story's cast, each linking into their own story */
-  .people-intro {
-    font-size: 1.0625rem;
-    color: var(--ms-muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    max-width: 62ch;
-  }
-
   .people-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

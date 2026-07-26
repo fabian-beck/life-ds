@@ -208,11 +208,10 @@ draggable, so the graph never moves after that.
 
 The network is presented as a **scrollytelling section**: the graph pins
 (`position: sticky`, below the app's sticky header) while blurred,
-slightly-transparent narration cards scroll up over it. The section's opening
-text (under the "Connections" heading, rendered by `MetaStoryView.svelte`) is
-the AI-written `social_network.narration.intro` paragraph (falling back to the
-static `meta_story.network_subtitle` label only when a story has no narration);
-there is no separate intro card and no legend. Each scroll card highlights one
+slightly-transparent narration cards scroll up over it. The section carries no
+standfirst under its heading — the composed `section_bodies.network` prose is
+the section's only running text (see "Meta Story Composition") — and there is
+no separate intro card and no legend. Each scroll card highlights one
 **cluster ("circle")** of the network — its members stay lit while everything
 else darkens (kept opaque so links never shine through) — under an AI-written
 **headline** (`title`) and a short story text in which each circle member's name
@@ -236,7 +235,6 @@ smooth on touch. The component takes a `currentLanguage` prop (used to localize
 
 ```json
 "narration": {
-  "intro": "2-3 sentence story-specific paragraph shown as the section's opening text",
   "circles": [
     { "key": "charles_babbage+ada_lovelace+konrad_zuse",
       "title": "The Engine Foretold",
@@ -350,7 +348,6 @@ emphasis as the network cards; each card also lists up to 4 member events
       ] }
   ],
   "narration": {
-    "intro": "2-3 sentence opening paragraph shown under the section heading",
     "stops": [ { "key": "bletchley", "title": "The Codebreakers' Room",
                  "text": "2-4 sentence story text…" } ]
   },
@@ -383,8 +380,8 @@ cascade prunes the map deterministically (non-fatal throughout):
    chronologically
    so the camera travels through the story in time. Debug CLI:
    `python scripts/meta_story_map.py <story_id>` (no API key).
-3. **Narration agent** (`narrate_map_clusters`, 1 AI call) — writes the
-   section intro plus a headline (`title`) and 2-4 sentence story text per
+3. **Narration agent** (`narrate_map_clusters`, 1 AI call) — writes a
+   headline (`title`) and a 2-4 sentence story text per
    stop, and **curates how many stops the map has**: from the (up to
    `MAX_MAP_CLUSTERS`) candidates it keeps only the places that genuinely
    matter to the story — usually no more than ~5 — **discarding** both
@@ -399,7 +396,7 @@ cascade prunes the map deterministically (non-fatal throughout):
 Narration stops are matched to clusters by `key` (slugified cluster label,
 unique per document). Like the social network, the cluster data is technical
 and copied **verbatim** into translated files; only `geo_map.narration`
-(intro + stop titles/texts) is part of the translation payload
+(the stop titles/texts) is part of the translation payload
 (`map_narration` in `extract_meta_story_translatables`), added only when
 present so stories without a map keep their fingerprints. The composer's
 exclusion cascade also prunes `geo_map` (excluded people's events are removed,
@@ -416,8 +413,8 @@ python scripts/meta_story_map_narration.py computing_pioneers --skip-rating # al
 ```
 
 The UI section heading falls back to the localized `meta_story.map_heading`
-("Places"/"Schauplätze") and the intro to `meta_story.map_subtitle` when a
-story has no narration; a composed `section_headings.map` wins when present.
+("Places"/"Schauplätze") when a story has no composed `section_headings.map`;
+the section itself carries no standfirst, only its composed body prose.
 
 ### Meta Story Composition (Phase 8 — Story Composer)
 
@@ -428,7 +425,7 @@ what the composer is for:
   at — a chapter band of the timeline, an event on it, a circle in the graph, a
   stop on the map. It says what *that item* is: concrete, short, factual.
 - The **article layer** is the running prose *between* the components — the
-  opening, description, section standfirsts, `section_bodies`, conclusion. It
+  opening, description, `section_bodies`, conclusion. It
   says what the components structurally cannot: the world these lives happened
   inside, the conditions that produced the sequence, what it cost, what
   followed. **Context, not recap.**
@@ -473,9 +470,9 @@ rewrites both layers in four AI calls:
    description, optionally with an image floated beside it), the description,
    story-specific **`section_headings`** (`{timeline, network, map?,
    conclusion}`, replacing the generic labels — the UI falls back to the
-   localized labels when absent), the per-section standfirsts
-   (`timeline_intro`, the network narration `intro`, the map narration
-   `intro`), free-form **`section_bodies`** (see below), and the conclusion.
+   localized labels when absent), free-form **`section_bodies`** (see below —
+   a section's only running text, since no section carries a standfirst under
+   its heading), and the conclusion.
 
    The call is shown **the finished caption layer verbatim**
    (`render_component_layer`) under a heading saying it is already on the page,
@@ -504,7 +501,7 @@ rewrites both layers in four AI calls:
    (`collect_caption_slots`, ids `caption:{chapter|circle|stop}:{i}`): the pass
    reads them and may rewrite an article slot that retells one, but a revision
    addressed to a caption is rejected. Article slots are addressed by stable
-   ids — `opening`, `description`, `{section}_intro`, `conclusion`, and
+   ids — `opening`, `description`, `conclusion`, and
    `body:{section}:{index}` for body paragraphs — and a revision may only
    replace the text of a slot that already exists (unknown ids are ignored with
    a warning), so the pass can rewrite but never add or remove. When two
@@ -560,15 +557,17 @@ consumes, so the call split changed no part of the application path.
 
 **`section_bodies`** are the article layer's substance — flexible layout for
 text and images. Each section (`timeline`, `network`, `map`, `conclusion`)
-may carry an ordered list of blocks rendered between the section's standfirst
-and its interactive component (`MetaStoryBody.svelte`). They carry **context**,
-never a retelling of the component below them: the timeline body owns the
-wars, laws, markets and institutions that set the terms (never the events);
-the network body owns what carried the ties — letters, journals, courts,
-laboratories, patronage (never who knew whom); the map body owns what
-concentrated or moved people (never a tour of the stops). **An empty list is a
-valid answer** — a section with no real context to add gets no body, which is
-better than filler and much better than abstraction. Block types:
+may carry an ordered list of blocks rendered between the section's heading
+and its interactive component (`MetaStoryBody.svelte`). They are the section's
+whole prose — sections have no standfirst paragraph under the heading, so the
+first block opens the section itself. They carry **context**, never a
+retelling of the component below them: the timeline body owns the wars, laws,
+markets and institutions that set the terms (never the events); the network
+body owns what carried the ties — letters, journals, courts, laboratories,
+patronage (never who knew whom); the map body owns what concentrated or moved
+people (never a tour of the stops). **An empty list is a valid answer** — a
+section with no real context to add gets no body, which is better than filler
+and much better than abstraction. Block types:
 
 - `{ "type": "paragraph", "text": "…" }` — running prose;
 - `{ "type": "image", "image": {…}, "layout": "left"|"right"|"full" }` —
@@ -605,7 +604,7 @@ model-editable. Provenance (model, throughline, exclusions with reasons) is
 stamped into a top-level `composition` block. The whole phase is non-fatal —
 on any failure the bottom-up texts are kept unchanged.
 
-`timeline_intro`, `lead_in`, `opening`, `section_headings`, `section_bodies`
+`lead_in`, `opening`, `section_headings`, `section_bodies`
 (paragraph/quote texts, attributions, image captions), and the image captions
 are part of the translation payload, but only when present, so uncomposed
 stories keep their old fingerprints (and their translations stay "current").
@@ -642,9 +641,9 @@ to `#/{lang}/story/{id}?from_meta={story_id}`, saving the meta story scroll
 position first so the story's close button returns the reader to the cards.
 
 There is nothing to generate: no data, translation payload, or composer field
-is involved. The heading and standfirst are localized UI labels
-(`meta_story.people_heading`, `meta_story.people_subtitle`) — unlike the other
-sections there is no story-specific `section_headings` counterpart.
+is involved. The heading is the localized UI label `meta_story.people_heading`
+— unlike the other sections there is no story-specific `section_headings`
+counterpart, and like them the section carries no text under its heading.
 
 `PersonCard.svelte` renders the card: it takes `person`
 (registry entry), `personStyle` (normalized style — camelCase fonts),

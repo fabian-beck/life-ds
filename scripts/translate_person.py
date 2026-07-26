@@ -193,7 +193,6 @@ class TrNetworkCircle(BaseModel):
 
 
 class TrNetworkNarration(BaseModel):
-    intro: str
     circles: List[TrNetworkCircle]
 
 
@@ -204,7 +203,6 @@ class TrMapStop(BaseModel):
 
 
 class TrMapNarration(BaseModel):
-    intro: str
     stops: List[TrMapStop]
 
 
@@ -257,7 +255,6 @@ class MetaStoryTranslation(BaseModel):
     section_headings: Optional[TrSectionHeadings] = None
     section_images: Optional[TrSectionImages] = None
     section_bodies: Optional[TrSectionBodies] = None
-    timeline_intro: Optional[str] = None
     conclusion: Optional[str] = None
     network_narration: Optional[TrNetworkNarration] = None
     map_narration: Optional[TrMapNarration] = None
@@ -384,10 +381,6 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         ],
         "conclusion": data.get("conclusion"),
     }
-    # Composed timeline intro (composer phase) only when present — same fingerprint
-    # stability rationale as the chapter lead-ins above.
-    if data.get("timeline_intro"):
-        payload["timeline_intro"] = data["timeline_intro"]
     # Composed opening, section headings, and section image captions (composer),
     # likewise only when present.
     opening = data.get("opening")
@@ -455,10 +448,7 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             if circle.get("title"):
                 entry["title"] = circle["title"]
             circles_payload.append(entry)
-        payload["network_narration"] = {
-            "intro": narration.get("intro", ""),
-            "circles": circles_payload,
-        }
+        payload["network_narration"] = {"circles": circles_payload}
     # The map section's cluster data is technical (names, dates, coordinates —
     # copied verbatim), but its narration texts are prose. Only added when
     # narration exists, so stories without a map keep their old fingerprint.
@@ -470,10 +460,7 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             if stop.get("title"):
                 entry["title"] = stop["title"]
             stops_payload.append(entry)
-        payload["map_narration"] = {
-            "intro": map_narration.get("intro", ""),
-            "stops": stops_payload,
-        }
+        payload["map_narration"] = {"stops": stops_payload}
     return payload
 
 
@@ -793,7 +780,6 @@ def apply_meta_story_translations(
             _set_if_source_has(pe, "theme_connection", tr_pe.get("theme_connection"))
 
     _set_if_source_has(result, "conclusion", translated.get("conclusion"))
-    _set_if_source_has(result, "timeline_intro", translated.get("timeline_intro"))
 
     # Composed opening, section headings, section images, and bodies (composer). Image
     # URLs/sources stay verbatim; captions prefer the person's translated life
@@ -846,7 +832,6 @@ def apply_meta_story_translations(
     src_narration = (result.get("social_network") or {}).get("narration")
     tr_narration = translated.get("network_narration")
     if isinstance(src_narration, dict) and isinstance(tr_narration, dict):
-        _set_if_source_has(src_narration, "intro", tr_narration.get("intro"))
         src_circles = src_narration.get("circles") or []
         tr_circles = tr_narration.get("circles") or []
         _require_same_length("network_narration.circles", src_circles, tr_circles)
@@ -859,7 +844,6 @@ def apply_meta_story_translations(
     src_map_narration = (result.get("geo_map") or {}).get("narration")
     tr_map_narration = translated.get("map_narration")
     if isinstance(src_map_narration, dict) and isinstance(tr_map_narration, dict):
-        _set_if_source_has(src_map_narration, "intro", tr_map_narration.get("intro"))
         src_stops = src_map_narration.get("stops") or []
         tr_stops = tr_map_narration.get("stops") or []
         _require_same_length("map_narration.stops", src_stops, tr_stops)
@@ -1309,9 +1293,9 @@ def translate_meta_story(
             "localizing person names per the usual name rules. Each circle also "
             "has a title, an evocative 2-5 word headline (not a list of names) — "
             "translate it as a headline, not literally.\n"
-            "10. timeline_intro and chapter lead_in entries are short narrative "
-            "passages shown around the story timeline — translate them as "
-            "flowing prose in the same voice as the description.\n"
+            "10. chapter lead_in entries are short narrative passages shown "
+            "around the story timeline — translate them as flowing prose in "
+            "the same voice as the description.\n"
             "11. opening is the story's cold-open scene and section_headings "
             "are its section titles — translate both as narrative prose and "
             "evocative headlines respectively, never as literal labels. "
