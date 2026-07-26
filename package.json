@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:interface": "playwright test",
+    "test:core": "npm run test:interface && python -m pytest",
     "test:interface:report": "playwright show-report",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:py",
     "lint:js": "eslint .",
