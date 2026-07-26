@@ -594,6 +594,11 @@
   }
 
   function handleSlideChange(event) {
+    // Ignore transient scroll notifications while a language change has
+    // unloaded the current dataset. The route already carries the requested
+    // slide and remains the source of truth until the replacement data loads.
+    if (dataLoading || !dataset) return;
+
     const slideIndex = event.detail;
 
     if (personId && slideIndex !== null && slideIndex !== undefined) {

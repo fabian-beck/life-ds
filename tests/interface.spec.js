@@ -134,6 +134,27 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await capture(page, testInfo, "05-story-event");
   await attachAudit(testInfo, "story-event", await viewportAudit(page));
 
+  await page.evaluate(async () => {
+    const languages = ["de", "en", "de", "en", "de", "en", "de", "en", "de"];
+    languages.forEach((language, index) => {
+      setTimeout(() => {
+        window.location.hash = `#/${language}/story/ada_lovelace?slide=2`;
+      }, index * 75);
+    });
+    await new Promise((resolve) => {
+      setTimeout(resolve, languages.length * 75);
+    });
+  });
+  await expect(page).toHaveURL(/\/de\/story\/ada_lovelace\?slide=2$/);
+
+  await page.evaluate(() => {
+    window.location.hash = "#/en/story/ada_lovelace?slide=2";
+  });
+  await expect(page).toHaveURL(/\/en\/story\/ada_lovelace\?slide=2$/);
+  await expect(
+    page.getByRole("button", { name: "Show full network" })
+  ).toBeVisible();
+
   await page.getByRole("button", { name: "Show full network" }).click();
   await expect(page.locator(".network-modal")).toBeVisible();
   await capture(page, testInfo, "06-network-modal");
