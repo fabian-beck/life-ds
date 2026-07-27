@@ -55,6 +55,15 @@
     color: var(--mention-color, #38bdf8);
     text-decoration: underline;
     text-underline-offset: 0.15em;
+  }
+
+  .person-mention:hover {
     outline: none;
+  }
+
+  .person-mention:focus-visible {
+    outline: 2px solid var(--mention-color, #38bdf8);
+    outline-offset: 2px;
+    border-radius: 0.15em;
   }
 </style>

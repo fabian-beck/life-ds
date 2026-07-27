@@ -53,6 +53,9 @@
 
   // Network modal state - reactive to URL query parameter
   $: showNetworkModal = $queryParams.network;
+  $: closeStoryLabel = $queryParams.from_meta
+    ? $_("story.close_story_to_collection")
+    : $_("story.close_story");
 
   // Timeline expanded state - check if timeline parameter is in URL
   $: hasTimelineParam = new URLSearchParams($location.split("?")[1] || "").has(
@@ -1168,7 +1171,7 @@
         <CloseButton
           variant="theme"
           size="responsive"
-          ariaLabel={$_("story.close_story")}
+          ariaLabel={closeStoryLabel}
           on:click={onClose}
           class="compact"
         />

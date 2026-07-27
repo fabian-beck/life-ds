@@ -38,9 +38,13 @@
     line-height: 1;
   }
 
-  .close-button:hover,
-  .close-button:focus-visible {
+  .close-button:hover {
     outline: none;
+  }
+
+  .close-button:focus-visible {
+    outline: 3px solid #38bdf8;
+    outline-offset: 3px;
   }
 
   .close-button:active {
