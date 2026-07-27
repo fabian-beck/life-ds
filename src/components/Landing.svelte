@@ -967,12 +967,13 @@
 
   .language-selector {
     height: 2.25rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.375rem 0.75rem;
     background: rgba(15, 23, 42, 0.9);
     border: 1px solid rgba(226, 232, 240, 0.2);
     border-radius: 0.375rem;
     color: #e2e8f0;
     font-size: 0.875rem;
+    line-height: 1.25;
     font-family: inherit;
     cursor: pointer;
     backdrop-filter: blur(8px);
