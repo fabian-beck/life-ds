@@ -477,6 +477,8 @@
   // Reactive data loading - load when personId OR language changes
   let dataset = null;
   let egoNetwork = null;
+  let loadedPersonId = null;
+  let loadedDatasetLanguage = null;
   let metaStoryData = null;
   let dataLoading = false;
   let loadingStage = null; // Track which part is loading: 'initial', 'dataset', 'network', null
@@ -489,20 +491,26 @@
 
   $: if (personId && $currentLanguage) {
     const generation = ++dataLoadGeneration;
+    const requestedPersonId = personId;
+    const requestedLanguage = $currentLanguage;
     dataLoading = true;
     loadingStage = "initial";
     dataset = null;
     egoNetwork = null;
+    loadedPersonId = null;
+    loadedDatasetLanguage = null;
 
     // Load dataset first (includes portrait and events)
     loadingStage = "dataset";
-    loadDataset(personId, $currentLanguage)
+    loadDataset(requestedPersonId, requestedLanguage)
       .then((datasetResult) => {
         if (generation !== dataLoadGeneration) return null;
         dataset = datasetResult;
+        loadedPersonId = requestedPersonId;
+        loadedDatasetLanguage = requestedLanguage;
         loadingStage = "network";
         // Load network data after dataset
-        return loadEgoNetwork(personId, $currentLanguage);
+        return loadEgoNetwork(requestedPersonId, requestedLanguage);
       })
       .then((networkResult) => {
         if (generation !== dataLoadGeneration) return;
@@ -515,6 +523,8 @@
         console.error("Failed to load data:", error);
         dataset = null;
         egoNetwork = null;
+        loadedPersonId = null;
+        loadedDatasetLanguage = null;
         dataLoading = false;
         loadingStage = null;
       });
@@ -522,6 +532,8 @@
     dataLoadGeneration += 1;
     dataset = null;
     egoNetwork = null;
+    loadedPersonId = null;
+    loadedDatasetLanguage = null;
     dataLoading = false;
     loadingStage = null;
   }
@@ -533,6 +545,8 @@
     metaStoryData = null;
     dataset = null;
     egoNetwork = null;
+    loadedPersonId = null;
+    loadedDatasetLanguage = null;
 
     loadMetaStoryData(metaStoryId, $currentLanguage)
       .then((result) => {
@@ -597,7 +611,13 @@
     // Ignore transient scroll notifications while a language change has
     // unloaded the current dataset. The route already carries the requested
     // slide and remains the source of truth until the replacement data loads.
-    if (dataLoading || !dataset) return;
+    if (
+      dataLoading ||
+      !dataset ||
+      loadedPersonId !== personId ||
+      loadedDatasetLanguage !== langFromUrl
+    )
+      return;
 
     const slideIndex = event.detail;
 
