@@ -3,8 +3,8 @@
   import { currentLanguage } from "../stores/language";
   import { mdiBabyFaceOutline, mdiSkullOutline } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { push } from "svelte-spa-router";
-  import { location } from "../stores/router.js";
+  import { push, replace } from "svelte-spa-router";
+  import { location, querystring } from "../stores/router.js";
   import { clamp, displayName } from "../utils/helpers.js";
   import { getThumbnailUrl } from "../utils/storyHelpers.js";
   import { slide, fade } from "svelte/transition";
@@ -149,6 +149,63 @@
     searchQuery = "";
     activeTags = new Set();
     activeMetaStoryFilter = null;
+  }
+
+  function setsEqual(left, right) {
+    return (
+      left.size === right.size && [...left].every((value) => right.has(value))
+    );
+  }
+
+  function readLandingFilters(locationValue) {
+    const [, queryString = ""] = locationValue.split("?");
+    const params = new URLSearchParams(queryString);
+    return {
+      query: params.get("q") || "",
+      roles: new Set((params.get("roles") || "").split(",").filter(Boolean)),
+    };
+  }
+
+  $: landingLocation = $querystring ? `${$location}?${$querystring}` : $location;
+
+  let lastFilterLocation = null;
+  let pendingFilterLocations = [];
+
+  // Browser navigation is authoritative: restore filters when returning to a
+  // landing URL that already carries them.
+  $: if (landingLocation !== lastFilterLocation) {
+    lastFilterLocation = landingLocation;
+    const pendingIndex = pendingFilterLocations.indexOf(landingLocation);
+    if (pendingIndex >= 0) {
+      pendingFilterLocations = pendingFilterLocations.slice(pendingIndex + 1);
+    } else {
+      const basePath = $location;
+      if (/^\/[a-z]{2}\/?$/.test(basePath)) {
+        const filters = readLandingFilters(landingLocation);
+        if (searchQuery !== filters.query) searchQuery = filters.query;
+        if (!setsEqual(activeTags, filters.roles)) activeTags = filters.roles;
+      }
+    }
+  }
+
+  // Keep the current landing history entry shareable without adding a browser
+  // history step for every keystroke or role toggle.
+  $: {
+    const basePath = $location;
+    if (lastFilterLocation === landingLocation && /^\/[a-z]{2}\/?$/.test(basePath)) {
+      const params = new URLSearchParams();
+      if (searchQuery) params.set("q", searchQuery);
+      if (activeTags.size > 0) {
+        params.set("roles", [...activeTags].sort().join(","));
+      }
+      const queryString = params.toString();
+      const nextLocation = queryString ? `${basePath}?${queryString}` : basePath;
+      const latestLocation = pendingFilterLocations[pendingFilterLocations.length - 1];
+      if (nextLocation !== (latestLocation || landingLocation)) {
+        pendingFilterLocations = [...pendingFilterLocations, nextLocation];
+        replace(nextLocation);
+      }
+    }
   }
 
   $: knownRoles = new Map(

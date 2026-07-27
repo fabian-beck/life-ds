@@ -97,7 +97,15 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(skipToSearch).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(search).toBeFocused();
+
+  const roleChip = page.locator(".tag-chip").first();
+  await roleChip.click();
+  await expect(page).toHaveURL(/[?&]roles=/);
+  await roleChip.click();
+  await expect(page).not.toHaveURL(/[?&]roles=/);
+
   await search.fill("Ada Lovelace");
+  await expect(page).toHaveURL(/\/en\?q=Ada(?:\+|%20)Lovelace$/);
   const adaCard = page.getByRole("button", {
     name: "Open life story for Ada Lovelace",
   });
@@ -138,7 +146,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
     const languages = ["de", "en", "de", "en", "de", "en", "de", "en", "de"];
     languages.forEach((language, index) => {
       setTimeout(() => {
-        window.location.hash = `#/${language}/story/ada_lovelace?slide=2`;
+        window.location.replace(`#/${language}/story/ada_lovelace?slide=2`);
       }, index * 75);
     });
     await new Promise((resolve) => {
@@ -148,7 +156,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(page).toHaveURL(/\/de\/story\/ada_lovelace\?slide=2$/);
 
   await page.evaluate(() => {
-    window.location.hash = "#/en/story/ada_lovelace?slide=2";
+    window.location.replace("#/en/story/ada_lovelace?slide=2");
   });
   await expect(page).toHaveURL(/\/en\/story\/ada_lovelace\?slide=2$/);
   await expect(
@@ -161,11 +169,10 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await page.getByRole("button", { name: "Close modal" }).click();
   await expect(page.locator(".network-modal")).toBeHidden();
 
-  await page
-    .getByRole("button", {
-      name: "Close story and return to the landing page",
-    })
-    .click();
+  await page.goBack();
+  await expect(page).toHaveURL(/\/en\?q=Ada(?:\+|%20)Lovelace$/);
+  await expect(search).toHaveValue("Ada Lovelace");
+  await page.getByRole("button", { name: "Clear search" }).click();
   await expect(page).toHaveURL(/\/en$/);
 
   await page
