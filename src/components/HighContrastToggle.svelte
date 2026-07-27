@@ -1,17 +1,36 @@
 <script>
   import { mdiContrastCircle } from "@mdi/js";
+  import { onDestroy } from "svelte";
   import { highContrast, toggleHighContrast } from "../stores/contrast.js";
   import { _ } from "../stores/language";
 
   // Visual variant to match the neighbouring language selector.
   export let variant = "default"; // "default" | "sticky"
+
+  let toastKey = "";
+  let toastTimer;
+
+  function handleToggle() {
+    const enabled = !$highContrast;
+    toggleHighContrast();
+    toastKey = enabled
+      ? "app.high_contrast_enabled"
+      : "app.high_contrast_disabled";
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastKey = "";
+    }, 3000);
+  }
+
+  onDestroy(() => clearTimeout(toastTimer));
 </script>
 
 <button
   type="button"
   class="contrast-toggle {variant}"
   class:active={$highContrast}
-  on:click={toggleHighContrast}
+  on:click={handleToggle}
   aria-pressed={$highContrast}
   aria-label={$_("app.toggle_high_contrast")}
   title={$_("app.toggle_high_contrast")}
@@ -20,6 +39,17 @@
     <path d={mdiContrastCircle} fill="currentColor" />
   </svg>
 </button>
+
+{#if toastKey}
+  <div
+    class="contrast-toast"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    {$_(toastKey)}
+  </div>
+{/if}
 
 <style>
   .contrast-toggle {
@@ -62,6 +92,34 @@
     border-color: rgba(56, 189, 248, 0.6);
   }
 
+  .contrast-toast {
+    position: fixed;
+    left: 50%;
+    bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem));
+    z-index: 10000;
+    max-width: min(28rem, calc(100vw - 2rem));
+    transform: translateX(-50%);
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(226, 232, 240, 0.28);
+    border-radius: 0.5rem;
+    background: rgba(15, 23, 42, 0.96);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
+    color: #f8fafc;
+    font:
+      500 0.9rem/1.35 system-ui,
+      sans-serif;
+    text-align: center;
+    pointer-events: none;
+    animation: toast-in 0.2s ease-out;
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 0.5rem);
+    }
+  }
+
   .contrast-toggle.sticky {
     height: 1.85rem;
     padding: 0.4rem;
@@ -78,6 +136,12 @@
   @media (min-width: 768px) {
     .contrast-toggle.sticky {
       height: 2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contrast-toast {
+      animation: none;
     }
   }
 </style>
