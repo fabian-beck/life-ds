@@ -23,17 +23,29 @@ say the same thing twice" checkable — so it is now simply asked, once.
 
 What the prompt still carries is what the model cannot infer:
 
-- **The page map** — every text this story contains, in the order a reader
-  meets it. Placement is invisible from field names alone (the reader hits a
-  chapter's lead-in one at a time inside a horizontally scroll-locked
-  timeline; circle and stop texts arrive as cards), and it is what makes the
-  adjacency of article prose and component captions self-evident.
-- **The material** — the assembled story, the historical context recorded for
-  it, Wikipedia excerpts, and the selectable images.
+- **The goal** — one sentence on what a reader who knows none of these people
+  should come away with.
+- **The page** (``build_page``) — the whole story rendered as the page, in the
+  order the reader meets it, every drafted text sitting at the position it
+  occupies and marked either ``>>> YOURS`` or ``[not on the page]``.
+- **The material** (``build_material``) — the cast's ids, the historical
+  context, Wikipedia excerpts and the selectable images: what the reader
+  never sees.
 - **The mechanical contract** — ids copied verbatim, quotes verbatim, the
-  image budget, third person, no address of the reader.
+  image budget, third person, no address of the reader, and never the page
+  itself as the subject of a sentence.
 
 Everything about *craft* is left to the model.
+
+That page/material split is load-bearing. A first version rendered the story
+twice — a short page map for placement, plus a brief listing the same story
+grouped by data structure — and the composer wrote paragraphs introducing
+whatever component sat below them ("The chronology begins with...", "The
+graph's gaps matter too"), while its prose restated the circle cards beneath
+it at a Dice overlap of 0.62, deep in the near-verbatim band. Rendering one
+page instead, in which a component's texts are visibly story the reader has
+already been told, dropped the top overlap to 0.38 and the page-as-subject
+sentences to none.
 
 Everything it returns is applied deterministically and defensively:
 
@@ -118,9 +130,13 @@ MAX_IMAGES_PER_STORY = 6
 WIKI_LEAD_CHARS = 1200
 WIKI_MAX_CHARS = 6000
 
-# How much of each story event's own description the brief quotes — the
+# How much of each story event's own description the page quotes — the
 # events carry the documented facts the composer must build the story from.
 EVENT_DESCRIPTION_CHARS = 320
+
+# Below this the Wikipedia grounding is effectively absent (the helper returns
+# a short placeholder when no cached article is found for anybody).
+MIN_WIKIPEDIA_CHARS = 200
 
 # The prose regions, in reading order. One name per region, used by the
 # schema, the page map, the application path and the diagnostics alike.
@@ -409,15 +425,30 @@ def build_image_candidates_brief(candidates: Dict[str, Dict[str, Any]]) -> str:
 def build_story_wikipedia_context(
     dataset: Dict[str, Any], registry: Dict[str, Any]
 ) -> str:
-    """Focused Wikipedia excerpts for the story's main people."""
+    """Focused Wikipedia excerpts for the story's main people.
+
+    Grounding, not decoration: without it the composer writes the story from
+    the brief alone, which is a materially weaker call. The cache lives in
+    ``data/people/{id}/_cache/`` and is gitignored, so a fresh checkout has
+    none — hence the loud warning rather than a quiet fallback string.
+    """
     index = _person_index(registry)
     people = [
         (pid, str(index.get(pid, {}).get("name", pid)).replace("_", " "))
         for pid in dataset.get("meta_story", {}).get("person_ids", [])
     ]
-    return build_wikipedia_context(
+    context = build_wikipedia_context(
         people, lead_chars=WIKI_LEAD_CHARS, max_chars=WIKI_MAX_CHARS
     )
+    if len(context) < MIN_WIKIPEDIA_CHARS:
+        print(
+            f"WARNING: only {len(context)} characters of Wikipedia material "
+            f"for {len(people)} people — the composer is running without its "
+            "background grounding.\n"
+            "         Populate the cache first:  python "
+            "scripts/cache_wikipedia_materials.py --all"
+        )
+    return context
 
 
 def _current_circles(dataset: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -453,35 +484,20 @@ def _current_circles(dataset: Dict[str, Any]) -> List[Dict[str, Any]]:
     return result
 
 
-def build_historical_context(dataset: Dict[str, Any]) -> str:
-    """The chapters' ``historical_context`` entries.
+def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
+    """Render the whole story AS THE PAGE, in the order the reader meets it.
 
-    The only place in the dataset where the world *outside* these lives is
-    described, and so the material for any prose that is not about the items.
+    This replaced a pair of renders — a page map showing where each text
+    lands, plus a story brief listing the same story again grouped by data
+    structure (cast, chapters, ties, stops). Two shapes of one story, and the
+    larger one organized like a database, which is how the composer came to
+    treat the timeline, graph and map as material to summarize rather than as
+    story the reader is already being told. Here every drafted text sits at
+    the position it occupies on the page, and everything is marked either
+    ``>>> YOURS`` (a text this call writes) or ``[not on the page]`` (source
+    the reader never sees). What the reader has already been given by the time
+    a paragraph arrives is then visible rather than asserted.
     """
-    contexts = [
-        (chapter, ctx)
-        for chapter in dataset.get("chapters") or []
-        for ctx in chapter.get("historical_context") or []
-    ]
-    if not contexts:
-        return ""
-    parts = [
-        "HISTORICAL CONTEXT recorded for this story, by era — the "
-        "circumstances around the events rather than the events themselves:"
-    ]
-    for chapter, ctx in contexts:
-        span = (
-            f"{chapter.get('date_start', '')}-{chapter.get('date_end', '')}"
-            if chapter.get("date_start")
-            else ""
-        )
-        parts.append(f"- [{span}] {ctx.get('title', '')}: {ctx.get('description', '')}")
-    return "\n".join(parts)
-
-
-def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
-    """Render the assembled story as text for the composer prompt."""
     index = _person_index(registry)
     meta = dataset.get("meta_story", {})
     events_cache: Dict[str, Optional[List[Dict[str, Any]]]] = {}
@@ -500,140 +516,202 @@ def build_story_brief(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
             EVENT_DESCRIPTION_CHARS,
         )
 
+    rule = "─" * 68
     parts = [
-        f"TITLE (draft): {meta.get('title', '')}",
-        f"TAGLINE (draft): {meta.get('tagline', '')}",
-        f"SPAN: {meta.get('date_range_start', '')} to {meta.get('date_range_end', '')}",
+        "THE PAGE, IN THE ORDER THE READER MEETS IT",
         "",
-        "CAST:",
-        build_cast_sheet(dataset, registry),
+        "Everything below is ON THE PAGE. One reader goes through all of it in",
+        "this order: your prose and the texts printed on the timeline, the graph",
+        "and the map are the same story, read one after another. A text on a",
+        "component is not data about the story — it is story the reader has",
+        "already been told by the time the next paragraph arrives.",
         "",
-        "CHAPTERS (the timeline, in order):",
+        "Lines marked >>> YOURS are texts this call writes. Drafts shown were",
+        "written bottom-up by earlier steps that never saw the whole page; they",
+        "are yours to keep, rewrite or replace. Lines marked [not on the page]",
+        "are source material the reader never sees.",
+        "",
+        rule,
+        "HEADER",
+        rule,
+        f"  title            >>> YOURS    draft: {meta.get('title', '')}",
+        f"  tagline          >>> YOURS    draft: {meta.get('tagline', '')}",
+        f"  date range       fixed: {meta.get('date_range_start', '')}"
+        f"–{meta.get('date_range_end', '')}",
+        "  opening          >>> YOURS",
+        "  description      >>> YOURS",
+        "",
+        rule,
+        "SECTION 1",
+        rule,
+        "  heading          >>> YOURS  (section_headings.timeline)",
+        "  timeline_body    >>> YOURS",
+        "",
+        "  then THE TIMELINE, which gives the reader the sequence itself: what",
+        "  happened, dated, era by era. It scrolls sideways and the reader meets",
+        "  one era at a time, seeing that chapter's headline and lead-in alone",
+        "  with its events. These texts are on the page and are yours:",
+        "",
     ]
+
     for chapter in dataset.get("chapters") or []:
         parts.append(
-            f"Chapter [{chapter.get('id', '')}] \"{chapter.get('title', '')}\" "
-            f"({chapter.get('date_start', '')}-{chapter.get('date_end', '')})"
+            f"  CHAPTER [{chapter.get('id', '')}] "
+            f"{chapter.get('date_start', '')}–{chapter.get('date_end', '')}"
+            "   >>> headline + lead_in YOURS"
         )
+        parts.append(f"      draft headline: {chapter.get('title', '')}")
+        if chapter.get("lead_in"):
+            parts.append(f"      draft lead-in: {chapter['lead_in']}")
         for event in chapter.get("person_events") or []:
             parts.append(
-                f"  {event.get('event_date', '')} — "
+                f"      · {event.get('event_date', '')} — "
                 f"{person_name(event.get('person_id', ''))}: "
-                f"{event.get('event_title', '')}\n"
-                f"      shown on the timeline: {event.get('theme_connection', '')}"
+                f"{event.get('event_title', '')}"
             )
+            if event.get("theme_connection"):
+                parts.append(
+                    f"          printed under this event: {event['theme_connection']}"
+                )
             description = event_description(
                 event.get("person_id", ""), event.get("event_index")
             )
             if description:
-                parts.append(f"      event details: {description}")
+                parts.append(f"          [not on the page] source: {description}")
+        parts.append("")
 
     network = dataset.get("social_network") or {}
     if network.get("links"):
         node_name = {
             n.get("id"): n.get("name", n.get("id")) for n in network.get("nodes") or []
         }
-        parts.append("")
-        parts.append("NETWORK TIES (the full tie set of the social graph):")
+        parts += [
+            rule,
+            "SECTION 2",
+            rule,
+            "  heading          >>> YOURS  (section_headings.network)",
+            "  network_body     >>> YOURS",
+            "",
+            "  then THE GRAPH, which gives the reader who was connected to whom.",
+            "  The cast appears as a graph and the circles arrive one card at a",
+            "  time. You decide the circles (member_ids) and write their cards:",
+            "",
+        ]
+        for circle in _current_circles(dataset):
+            members = ", ".join(person_name(pid) for pid in circle["members"])
+            parts.append(f"  CIRCLE  members: {members}   >>> YOURS to reorganize")
+            if circle["title"] or circle["text"]:
+                parts.append(
+                    f'      draft card: "{circle["title"]}" — {circle["text"]}'
+                )
+        parts += [
+            "",
+            "  [not on the page] the graph's ties — the source your circle cards",
+            "  are built from; the reader sees the graph, never these lines:",
+        ]
         for link in network.get("links") or []:
             s, t = link.get("source", ""), link.get("target", "")
             bridge = " (bridge)" if link.get("kind") != "main" else ""
             parts.append(
-                f"  - {s} <-> {t} ({node_name.get(s, s)} <-> {node_name.get(t, t)})"
-                f"{bridge} [{link.get('relationship_type', '')}, "
+                f"      {s} <-> {t} ({node_name.get(s, s)} <-> "
+                f"{node_name.get(t, t)}){bridge} "
+                f"[{link.get('relationship_type', '')}, "
                 f"{link.get('strength', '')}]: "
                 f"{link.get('relationship_description', '')}"
             )
-        circles = _current_circles(dataset)
-        if circles:
-            parts.append("CURRENT CIRCLES (the network's current organization):")
-            for circle in circles:
-                members = ", ".join(person_name(pid) for pid in circle["members"])
-                parts.append(f"- Members: {members}")
-                if circle["title"] or circle["text"]:
-                    parts.append(
-                        f"  Narration draft: \"{circle['title']}\" — {circle['text']}"
-                    )
+        parts.append("")
 
     geo_map = dataset.get("geo_map")
     if isinstance(geo_map, dict) and geo_map.get("clusters"):
-        map_narration = geo_map.get("narration") or {}
-        parts.append("")
-        parts.append("MAP STOPS (the story's places, currently in this order):")
         stop_drafts = {
-            s.get("key"): s for s in map_narration.get("stops") or [] if s.get("key")
+            s.get("key"): s
+            for s in (geo_map.get("narration") or {}).get("stops") or []
+            if s.get("key")
         }
+        parts += [
+            rule,
+            "SECTION 3",
+            rule,
+            "  heading          >>> YOURS  (section_headings.map)",
+            "  map_body         >>> YOURS",
+            "",
+            "  then THE MAP, which gives the reader where it happened. The map",
+            "  pins full screen while the stop cards arrive in the order you set.",
+            "  You keep, order and discard the stops and write their cards:",
+            "",
+        ]
         for cluster in geo_map["clusters"]:
             years = (
-                f"{cluster.get('year_start', '')}-{cluster.get('year_end', '')}"
+                f"{cluster.get('year_start', '')}–{cluster.get('year_end', '')}"
                 if cluster.get("year_start") is not None
                 else ""
             )
             parts.append(
-                f"Stop key: {cluster.get('key', '')} — {cluster.get('label', '')} "
+                f"  STOP [{cluster.get('key', '')}] {cluster.get('label', '')} "
                 f"({years}; geographic weight {cluster.get('score', 0):.1f})"
+                "   >>> YOURS"
             )
-            for event in cluster.get("events") or []:
-                parts.append(
-                    f"  - {event.get('event_date', '')} — "
-                    f"{event.get('person_name', '')}: {event.get('event_title', '')} "
-                    f"@ {event.get('place', '')}"
-                )
             draft = stop_drafts.get(cluster.get("key"))
             if draft:
                 parts.append(
-                    f"  Narration draft: \"{draft.get('title', '')}\" — "
+                    f'      draft card: "{draft.get("title", "")}" — '
                     f"{draft.get('text', '')}"
                 )
+            for event in cluster.get("events") or []:
+                parts.append(
+                    f"      [not on the page] {event.get('event_date', '')} — "
+                    f"{event.get('person_name', '')}: "
+                    f"{event.get('event_title', '')} @ {event.get('place', '')}"
+                )
+        parts.append("")
 
+    parts += [
+        rule,
+        "CLOSING SECTION",
+        rule,
+        "  heading          >>> YOURS  (section_headings.conclusion)",
+        "  conclusion       >>> YOURS — the last prose on the page",
+        "",
+        "  then a card for each person, linking into their own story (fixed).",
+    ]
     return "\n".join(parts)
 
 
-# ============================================================================
-# THE COMPOSITION CALL
-# ============================================================================
+def build_material(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
+    """What the reader never sees — the composer's source for everything else.
 
-
-def build_page_map(has_map: bool) -> str:
-    """The page, in the order the reader meets it.
-
-    The one thing the model cannot infer from a schema. Field names say what
-    a text is; only this says where it lands, what sits next to it, and that a
-    chapter's lead-in is met alone rather than as one item of a list.
+    Kept strictly apart from ``build_page``: the historical context and the
+    people's summaries are the only material in the dataset describing the
+    world *around* the events, and they are the one part of the input that is
+    not already spent on the page.
     """
-    map_section = (
-        """  ──────────────────────────────────────────────────────
-  heading: section_headings.map
-  map_body                        ← yours
-  THE MAP — pinned full screen while the stops arrive one card at a
-    time, in the order you set; each card is a map_stops title + text
-"""
-        if has_map
-        else "  (this story has no map: map_body, map_stops and\n"
-        "   section_headings.map stay empty)\n"
-    )
-    return f"""THE PAGE, IN THE ORDER THE READER MEETS IT
-
-  title
-  tagline
-  the story's date range (already on the page)
-  opening                         ← yours
-  description                     ← yours
-  ──────────────────────────────────────────────────────
-  heading: section_headings.timeline
-  timeline_body                   ← yours
-  THE TIMELINE — scrolled sideways; the reader meets one chapter at a
-    time, seeing that chapter's headline and lead_in alone, with its
-    events and their one-line texts
-  ──────────────────────────────────────────────────────
-  heading: section_headings.network
-  network_body                    ← yours
-  THE GRAPH — the cast as a graph; circles arrive one card at a time,
-    each card a circles title + text
-{map_section}  ──────────────────────────────────────────────────────
-  heading: section_headings.conclusion
-  conclusion                      ← yours, the last prose on the page
-  cards linking to each person's own story (already on the page)"""
+    parts = [
+        "MATERIAL THE READER NEVER SEES — your source for everything above.",
+        "",
+        "THE CAST (copy these ids verbatim):",
+        build_cast_sheet(dataset, registry),
+    ]
+    contexts = [
+        (chapter, ctx)
+        for chapter in dataset.get("chapters") or []
+        for ctx in chapter.get("historical_context") or []
+    ]
+    if contexts:
+        parts += [
+            "",
+            "HISTORICAL CONTEXT recorded for this story, by era — the " "circumstances",
+            "around the events rather than the events themselves:",
+        ]
+        for chapter, ctx in contexts:
+            span = (
+                f"{chapter.get('date_start', '')}–{chapter.get('date_end', '')}"
+                if chapter.get("date_start")
+                else ""
+            )
+            parts.append(
+                f"  [{span}] {ctx.get('title', '')}: {ctx.get('description', '')}"
+            )
+    return "\n".join(parts)
 
 
 def run_composition(
@@ -647,29 +725,18 @@ def run_composition(
     verbose: bool = False,
 ) -> Optional[CompositionResult]:
     """Compose the whole story in one call."""
-    has_map = bool((dataset.get("geo_map") or {}).get("clusters"))
-
     prompt = f"""You are composing a meta story: one page about several connected lives, told
 through a timeline of events, a graph of who knew whom, and a map of places.
 Earlier steps drafted its texts bottom-up, one item at a time, never seeing
 the whole. You see the whole — write the story they add up to.
 
-{build_page_map(has_map)}
+A curious reader who has never heard of any of these people goes through the
+page from top to bottom and comes out understanding why these lives belong in
+one story. Everything you write is one stretch of that single read.
 
-Two kinds of text. The captions — chapter headlines and lead-ins, circle
-cards, map stop cards — belong to the things the reader is looking at. The
-prose regions run between them and are a piece of writing in its own right.
-Decide for yourself what this story is about and how it is best told, as a
-journalist or a good teacher would tell it to a curious general reader.
+{build_page(dataset, registry)}
 
-You also decide the shape of two sections: organize the cast into the circles
-that tell the relationship story, and keep, order and discard the map stops.
-
-THE ASSEMBLED STORY:
-
-{build_story_brief(dataset, registry)}
-
-{build_historical_context(dataset)}
+{build_material(dataset, registry)}
 
 BACKGROUND MATERIAL (Wikipedia excerpts for the main people):
 
@@ -677,11 +744,15 @@ BACKGROUND MATERIAL (Wikipedia excerpts for the main people):
 
 {build_image_candidates_brief(image_candidates)}
 
+Write it as a journalist or a good teacher would. Decide for yourself what
+this story is about and how it is best told.
+
 Ground everything in the material above: no invented events, dates,
 relationships or quotations. Quotes verbatim, with attribution. Copy every id
 and key exactly, never construct one. At most {MAX_IMAGES_PER_STORY} images in
 the whole story, never reused. Third person, about the people and their era —
-never address the reader, never mention the page or its parts."""
+never address the reader, and never make the page or one of its parts the
+subject of a sentence."""
 
     if verbose:
         print(f"  Prompt: {len(prompt)} characters")
@@ -1404,10 +1475,12 @@ def compose_meta_story_dataset(
     if composed is None:
         return None
 
+    # The quote-verification corpus must be exactly what the call was shown,
+    # since a legitimate quote may come from any part of it.
     material = "\n".join(
         [
-            build_story_brief(working, registry),
-            build_historical_context(working),
+            build_page(working, registry),
+            build_material(working, registry),
             wikipedia_context,
         ]
     )
