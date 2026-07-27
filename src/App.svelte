@@ -4,7 +4,6 @@
   import { location } from "./stores/router.js";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
-  import ExhibitionView from "./components/ExhibitionView.svelte";
   import MetaStoryView from "./components/MetaStoryView.svelte";
   import { currentLanguage, loadTranslations, _ } from "./stores/language";
   // Side-effect import: the store's subscription applies the persisted
@@ -434,7 +433,7 @@
   // Updated regex patterns to support optional language prefix: /en/story/... or /story/...
   $: currentPath = $location;
   $: storyMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?story\/([^/]+)/);
-  $: exhibitionMatch = currentPath.match(
+  $: legacyExhibitionMatch = currentPath.match(
     /^\/(?:([a-z]{2})\/)?exhibition\/([^/]+)/
   );
   $: metaMatch = currentPath.match(/^\/(?:([a-z]{2})\/)?meta\/([^/]+)/);
@@ -442,15 +441,11 @@
   $: landingMatch = currentPath.match(/^\/([a-z]{2})(?:\/|$)/);
   $: langFromUrl =
     storyMatch?.[1] ||
-    exhibitionMatch?.[1] ||
+    legacyExhibitionMatch?.[1] ||
     metaMatch?.[1] ||
     landingMatch?.[1] ||
     null;
-  $: personId = storyMatch
-    ? decodeURIComponent(storyMatch[2])
-    : exhibitionMatch
-      ? decodeURIComponent(exhibitionMatch[2])
-      : null;
+  $: personId = storyMatch ? decodeURIComponent(storyMatch[2]) : null;
   $: metaStoryId = metaMatch ? decodeURIComponent(metaMatch[2]) : null;
   $: slideParam = $queryParams.slide;
   $: eventParam = $queryParams.event;
@@ -459,9 +454,16 @@
   $: if (langFromUrl && langFromUrl !== $currentLanguage) {
     currentLanguage.set(langFromUrl);
   }
+  // The removed exhibition surface has a direct story equivalent, so keep
+  // existing bookmarks useful without loading any exhibition-only code.
+  $: if (legacyExhibitionMatch) {
+    const legacyLanguage = legacyExhibitionMatch[1] || $currentLanguage;
+    const legacyPersonId = decodeURIComponent(legacyExhibitionMatch[2]);
+    replace(`/${legacyLanguage}/story/${encodeURIComponent(legacyPersonId)}`);
+  }
 
   // Redirect to language-prefixed URL if accessing any page without language
-  $: if (!langFromUrl && currentPath !== "/") {
+  $: if (!langFromUrl && currentPath !== "/" && !legacyExhibitionMatch) {
     // Don't redirect if we're already on a language-prefixed path
     if (!currentPath.startsWith(`/${$currentLanguage}`)) {
       const newPath = `/${$currentLanguage}${currentPath}`;
@@ -572,13 +574,8 @@
     ? `Life Data Stories · ${currentTitlePerson}`
     : "Life Data Stories";
 
-  // Redirect to home if trying to view non-existent story or exhibition (after loading completes)
-  $: if (
-    (storyMatch || exhibitionMatch) &&
-    !dataset &&
-    personId &&
-    !dataLoading
-  ) {
+  // Redirect to home if trying to view a non-existent story after loading completes.
+  $: if (storyMatch && !dataset && personId && !dataLoading) {
     push(`/${$currentLanguage}`);
   }
 
@@ -648,13 +645,6 @@
       personsRegistry={registry.people}
       currentLanguage={$currentLanguage}
       isLoading={dataLoading}
-    />
-  {:else if exhibitionMatch}
-    <ExhibitionView
-      {dataset}
-      {egoNetwork}
-      isLoading={dataLoading}
-      styleConfig={styleFor(personId)}
     />
   {:else if storyMatch}
     <StoryView

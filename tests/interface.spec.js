@@ -185,6 +185,11 @@ test("core visitor journey", async ({ page }, testInfo) => {
   ).toBeVisible();
   await page.getByRole("button", { name: "Back to Stories" }).first().click();
   await expect(page).toHaveURL(/\/en$/);
+  await page.goto("/en#/en/exhibition/ada_lovelace");
+  await expect(page).toHaveURL(/\/en\/story\/ada_lovelace$/);
+  await expect(
+    page.locator('section[aria-label^="Overview: Ada Lovelace"]')
+  ).toBeVisible();
 
   expect(pageErrors).toEqual([]);
 });
