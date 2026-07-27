@@ -4,9 +4,7 @@
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
-  import MetaStoryFigure from "./MetaStoryFigure.svelte";
   import MetaStoryBody from "./MetaStoryBody.svelte";
-  import MetaStoryProse from "./MetaStoryProse.svelte";
   import PersonCard from "./PersonCard.svelte";
   import ImageViewer from "./ImageViewer.svelte";
   import CloseButton from "./CloseButton.svelte";
@@ -151,51 +149,69 @@
     replace(`/${currentLanguage}`);
   }
 
-  // Composed cold open (Phase 7): split into paragraphs for rendering
-  $: openingParagraphs = metaStoryData?.opening?.text
-    ? metaStoryData.opening.text.split(/\n\s*\n/).filter((p) => p.trim())
-    : [];
+  // Every prose region of a composed story is a list of blocks —
+  // paragraph | image | quote — rendered by MetaStoryBody. Stories composed
+  // before that unification stored plain strings (and the opening a separate
+  // image), so they are normalized to the same shape here.
+  function toBlocks(value, legacyImage = null) {
+    if (Array.isArray(value)) return value;
+    if (typeof value !== "string" || !value.trim()) return [];
+    const blocks = String(value)
+      .split(/\n\s*\n/)
+      .filter((paragraph) => paragraph.trim())
+      .map((paragraph) => ({ type: "paragraph", text: paragraph.trim() }));
+    if (legacyImage?.url) {
+      blocks.unshift({ type: "image", image: legacyImage, layout: "full" });
+    }
+    return blocks;
+  }
+
+  $: openingBlocks = Array.isArray(metaStoryData?.opening)
+    ? metaStoryData.opening
+    : toBlocks(metaStoryData?.opening?.text, metaStoryData?.opening?.image);
+  $: descriptionBlocks = toBlocks(
+    metaStoryData?.description ?? metaStoryData?.meta_story?.description
+  );
+  // The closing section's prose. Legacy stories split it into a body block
+  // list plus a trailing string; both render as one region now.
+  $: conclusionBlocks = [
+    ...toBlocks(metaStoryData?.section_bodies?.conclusion),
+    ...toBlocks(metaStoryData?.conclusion),
+  ];
 
   // Composed story-specific section headings, falling back to generic labels
   $: sectionHeadings = metaStoryData?.section_headings || {};
-  $: sectionImages = metaStoryData?.section_images || {};
-  // Composed section bodies (Phase 8): free-form narrative blocks rendered
-  // between each section's standfirst and its interactive component.
+  // Composed section bodies: the prose between a section's heading and its
+  // interactive component.
   $: sectionBodies = metaStoryData?.section_bodies || {};
 
   // Every picture in the story, in reading order, so the lightbox can page
   // through them. Mirrors the conditions the template renders the figures
   // under, so an image never appears in the gallery without being on the page.
-  $: galleryImages = collectStoryImages(metaStoryData);
+  $: galleryImages = collectStoryImages(
+    metaStoryData,
+    openingBlocks,
+    descriptionBlocks,
+    conclusionBlocks
+  );
 
-  function collectStoryImages(data) {
+  function collectStoryImages(data, opening, description, conclusion) {
     if (!data) return [];
     const images = [];
-    const add = (image) => {
-      if (image?.url) images.push(image);
-    };
     const addBody = (blocks) => {
       (blocks || []).forEach((block) => {
-        if (block?.type === "image") add(block.image);
+        if (block?.type === "image" && block.image?.url)
+          images.push(block.image);
       });
     };
     const bodies = data.section_bodies || {};
-    const sectionImgs = data.section_images || {};
 
-    if (data.opening?.text?.trim()) add(data.opening.image);
-    if (data.chapters?.length) {
-      add(sectionImgs.timeline);
-      addBody(bodies.timeline);
-    }
-    if (data.social_network?.links?.length) {
-      add(sectionImgs.network);
-      addBody(bodies.network);
-    }
+    addBody(opening);
+    addBody(description);
+    if (data.chapters?.length) addBody(bodies.timeline);
+    if (data.social_network?.links?.length) addBody(bodies.network);
     if (data.geo_map?.clusters?.length) addBody(bodies.map);
-    if (data.conclusion) {
-      add(sectionImgs.conclusion);
-      addBody(bodies.conclusion);
-    }
+    addBody(conclusion);
     return images;
   }
 
@@ -724,36 +740,23 @@
           end: metaStoryData.meta_story.date_range_end,
         })}
       </p>
-      {#if openingParagraphs.length}
-        <div class="opening">
-          <MetaStoryFigure
-            image={metaStoryData.opening.image}
-            variant="opening"
-            onEnlarge={openEnlargedImage}
-          />
-          {#each openingParagraphs as paragraph}
-            <p class="opening-text">
-              <MetaStoryProse text={paragraph} {...proseContext} />
-            </p>
-          {/each}
-        </div>
-      {/if}
-      <p class="description">
-        <MetaStoryProse
-          text={metaStoryData.meta_story.description}
-          {...proseContext}
-        />
-      </p>
+      <MetaStoryBody
+        blocks={openingBlocks}
+        variant="opening"
+        {...proseContext}
+        onEnlarge={openEnlargedImage}
+      />
+      <MetaStoryBody
+        blocks={descriptionBlocks}
+        {...proseContext}
+        onEnlarge={openEnlargedImage}
+      />
     </header>
 
     <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
     {#if metaStoryData.chapters?.length}
       <section class="chapters-section">
         <h2>{sectionHeadings.timeline || $_("meta_story.chapters_heading")}</h2>
-        <MetaStoryFigure
-          image={sectionImages.timeline}
-          onEnlarge={openEnlargedImage}
-        />
         <MetaStoryBody
           blocks={sectionBodies.timeline}
           {...proseContext}
@@ -821,10 +824,6 @@
     {#if metaStoryData.social_network?.links?.length}
       <section class="network-section">
         <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
-        <MetaStoryFigure
-          image={sectionImages.network}
-          onEnlarge={openEnlargedImage}
-        />
         <MetaStoryBody
           blocks={sectionBodies.network}
           {...proseContext}
@@ -863,23 +862,16 @@
     {/if}
 
     <!-- Conclusion section -->
-    {#if metaStoryData.conclusion}
+    {#if conclusionBlocks.length}
       <section class="conclusion">
         <h2>
           {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
         </h2>
-        <MetaStoryFigure
-          image={sectionImages.conclusion}
-          onEnlarge={openEnlargedImage}
-        />
         <MetaStoryBody
-          blocks={sectionBodies.conclusion}
+          blocks={conclusionBlocks}
           {...proseContext}
           onEnlarge={openEnlargedImage}
         />
-        <p>
-          <MetaStoryProse text={metaStoryData.conclusion} {...proseContext} />
-        </p>
       </section>
     {/if}
 
@@ -1074,40 +1066,8 @@
     margin-bottom: 1.5rem;
   }
 
-  /* Composed cold open — visually leads before the wider description */
-  .opening {
-    margin-bottom: 1.5rem;
-  }
-
-  /* Contain the floated opening figure (see MetaStoryFigure) */
-  .opening::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  /* Running prose — the cold open, the description and the conclusion are all
-     the same body copy: one size, one tone, one measure. The only thing that
-     sets the opening apart is the raised initial. */
-  .opening-text,
-  .description {
-    font-size: 1.0625rem;
-    line-height: 1.75;
-    color: var(--ms-body);
-    margin-bottom: 1rem;
-  }
-
-  /* Raised initial rather than a floated drop cap: a floated cap reserves
-     only the glyph's own width, so narrow letters ("In 1911...", "It...")
-     read as a stray vertical rule and leave the wrapped lines indented
-     against nothing. Raising the letter is glyph-width independent. */
-  .opening-text:first-of-type::first-letter {
-    font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    font-size: 1.9em;
-    line-height: 1;
-    padding-right: 0.06em;
-    color: var(--ms-accent);
-  }
+  /* Every prose region — the cold open, the description, the section bodies
+     and the closing — is the same body copy, styled once in MetaStoryBody. */
 
   /* Sections */
   section {

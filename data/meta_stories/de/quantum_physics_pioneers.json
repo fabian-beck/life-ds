@@ -5,7 +5,6 @@
     "id": "quantum_physics_pioneers",
     "title": "Pioniere der Quantenphysik",
     "tagline": "Von den Quanten zum modernen Formalismus",
-    "description": "Die Quantenphysik kam nicht als einzelne Entdeckung in die Welt – sie kristallisierte sich in einer Kette begrifflicher Erschütterungen heraus: die verstörende Diskretheit der Energie, die seltsame Buchführung von Strahlung und Atomen und schließlich der Bedarf an einer strengen mathematischen Sprache, die die Theorie davor bewahrte, sich in Paradoxien aufzulösen.\n\nDiese Sammlung folgt einem engen Bogen durch drei Figuren des Registers, die diese Transformation unmittelbar prägten. Einstein zwang das Quant gewissermaßen in die Existenz, indem er das Licht selbst als gequantelt behandelte – und blieb zugleich ein scharfer Kritiker der Quantenunbestimmtheit. Curie erschloss das experimentelle und begriffliche Terrain der Radioaktivität und zeigte, dass das Atom keine unteilbare Einheit, sondern ein dynamisches, energetisches System ist – eine wesentliche Voraussetzung der Quantentheorie des Atoms. Von Neumann gab der Quantenmechanik schließlich eines ihrer dauerhaftesten Fundamente: einen präzisen Formalismus, der die Theorie berechenbar, verallgemeinerbar und philosophisch unausweichlich machte.\n\nZusammen zeigen sie die Quantenphysik als doppelte Revolution – der Regeln der Natur und der Art, wie Wissenschaft beweist, modelliert und dem vertraut, was sie zu wissen beansprucht.",
     "person_ids": ["albert_einstein", "marie_curie", "john_von_neumann"],
     "date_range_start": "1867",
     "date_range_end": "1957",
@@ -15,14 +14,26 @@
     {
       "id": "forcing_the_quantum_question",
       "title": "Die Quantenfrage erzwingen",
-      "description": "Bevor es „Quantenmechanik“ gab, verlangten Anomalien von Licht und Materie nach neuen Regeln; diese Figuren machten die Diskretheit wissenschaftlich unausweichlich.",
       "person_ids": ["albert_einstein", "marie_curie"]
     },
     {
       "id": "making_quantum_precise",
       "title": "Das Quantum präzise machen",
-      "description": "Als die neue Physik da war, brauchte sie ein hartes mathematisches Rückgrat – Definitionen, Strukturen und Beweise, die Vorhersage und Debatte tragen konnten.",
       "person_ids": ["john_von_neumann"]
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Die Quantenphysik kam nicht als einzelne Entdeckung in die Welt – sie kristallisierte sich in einer Kette begrifflicher Erschütterungen heraus: die verstörende Diskretheit der Energie, die seltsame Buchführung von Strahlung und Atomen und schließlich der Bedarf an einer strengen mathematischen Sprache, die die Theorie davor bewahrte, sich in Paradoxien aufzulösen."
+    },
+    {
+      "type": "paragraph",
+      "text": "Diese Sammlung folgt einem engen Bogen durch drei Figuren des Registers, die diese Transformation unmittelbar prägten. Einstein zwang das Quant gewissermaßen in die Existenz, indem er das Licht selbst als gequantelt behandelte – und blieb zugleich ein scharfer Kritiker der Quantenunbestimmtheit. Curie erschloss das experimentelle und begriffliche Terrain der Radioaktivität und zeigte, dass das Atom keine unteilbare Einheit, sondern ein dynamisches, energetisches System ist – eine wesentliche Voraussetzung der Quantentheorie des Atoms. Von Neumann gab der Quantenmechanik schließlich eines ihrer dauerhaftesten Fundamente: einen präzisen Formalismus, der die Theorie berechenbar, verallgemeinerbar und philosophisch unausweichlich machte."
+    },
+    {
+      "type": "paragraph",
+      "text": "Zusammen zeigen sie die Quantenphysik als doppelte Revolution – der Regeln der Natur und der Art, wie Wissenschaft beweist, modelliert und dem vertraut, was sie zu wissen beansprucht."
     }
   ],
   "chapters": [
@@ -111,14 +122,6 @@
       ]
     }
   ],
-  "conclusion": "Die Quantenphysik entstand aus Konfrontation und Konstruktion zugleich: aus der Konfrontation mit experimentellen Überraschungen, die die klassische Intuition sprengten, und aus der Konstruktion einer formalen Sprache, die stark genug war, die neue Welt zu tragen. Einstein, Curie und von Neumann zeigen zusammen, wie moderne Physik voranschreitet – durch Entdeckung, durch Neubestimmung und durch die Mathematik, die die Revolution von Dauer macht.",
-  "translation": {
-    "source_lang": "en",
-    "target_lang": "de",
-    "source_fingerprint": "6372519c9460e55e",
-    "translated_on": "2026-07-20T13:56:59.664031+00:00",
-    "translator": "manual"
-  },
   "social_network": {
     "nodes": [
       {
@@ -209,5 +212,18 @@
         }
       ]
     }
+  },
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "Die Quantenphysik entstand aus Konfrontation und Konstruktion zugleich: aus der Konfrontation mit experimentellen Überraschungen, die die klassische Intuition sprengten, und aus der Konstruktion einer formalen Sprache, die stark genug war, die neue Welt zu tragen. Einstein, Curie und von Neumann zeigen zusammen, wie moderne Physik voranschreitet – durch Entdeckung, durch Neubestimmung und durch die Mathematik, die die Revolution von Dauer macht."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "6372519c9460e55e",
+    "translated_on": "2026-07-20T13:56:59.664031+00:00",
+    "translator": "manual"
   }
 }

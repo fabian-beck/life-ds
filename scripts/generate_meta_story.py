@@ -16,12 +16,10 @@ Generate meta-story datasets using a multi-phase approach:
 7. Phase 7: Geographic map section — event rating, geographic clustering,
    and stop narration with a discard option (see meta_story_map.py and
    meta_story_map_narration.py)
-8. Phase 8: Story composer — top-down narrative composition (4 AI calls,
-   see compose_meta_story.py): curation, then the caption layer bound to the
-   items, then the article that runs between the components, then a
-   redundancy pass over both. Runs LAST so it sees the assembled story
-   including the map, whose stops it may reorder/discard; its exclusion
-   cascade prunes the earlier sections deterministically.
+8. Phase 8: Story composer — top-down narrative composition (1 AI call, see
+   compose_meta_story.py). Runs LAST so it sees the assembled story including
+   the map, whose stops it may reorder and discard, and the network, whose
+   circles it organizes.
 
 Meta-stories group multiple people around thematic topics with temporal chapters.
 """
@@ -74,13 +72,15 @@ class PersonReference(BaseModel):
 
 
 class Subtopic(BaseModel):
-    """A thematic subtopic organizing selected people."""
+    """A thematic subtopic organizing selected people.
+
+    Only the title reaches the reader — it labels a lane of the story
+    timeline. The grouping itself is what matters; there is nowhere to show a
+    description, so none is asked for.
+    """
 
     id: str = Field(description="Unique identifier (snake_case)")
     title: str = Field(description="Subtopic name (2-5 words)")
-    description: str = Field(
-        description="Brief narrative explaining this subtopic (1-2 sentences)"
-    )
     person_ids: List[str] = Field(
         description="Person IDs belonging to this subtopic (2-4 people per subtopic)"
     )
@@ -1829,17 +1829,6 @@ def main():
         help="Skip Phase 8 (top-down story composition)",
     )
     parser.add_argument(
-        "--no-exclusions",
-        action="store_true",
-        help="Phase 8: never drop people from the story (text composition only)",
-    )
-    parser.add_argument(
-        "--skip-redundancy-pass",
-        action="store_true",
-        help="Phase 8: skip the pass that rewrites article slots repeating "
-        "each other or the captions",
-    )
-    parser.add_argument(
         "--skip-map",
         action="store_true",
         help="Skip Phase 7 (geographic map section)",
@@ -2035,12 +2024,10 @@ def main():
             print(f"Warning: map section generation failed: {e}")
 
     # Phase 8: story composer — reads the assembled story top-down (with
-    # Wikipedia context) and rewrites it as two layers: the captions bound to
-    # the timeline, graph and map, and the article running between them, which
-    # carries the context those components cannot show. Also curates — its own
-    # network circle organization, curated map stops, and optionally dropping
-    # clearly disconnected people. Non-fatal: on failure the bottom-up texts
-    # are kept.
+    # Wikipedia context) and rewrites every text in it: the prose regions
+    # between the components, the captions printed on them, the network's
+    # circle organization and the map's stops. Non-fatal: on failure the
+    # bottom-up texts are kept.
     if args.skip_compose:
         if args.verbose:
             print("\n=== PHASE 8: Story Composition (SKIPPED) ===")
@@ -2052,8 +2039,6 @@ def main():
             registry,
             client,
             model=args.composer_model,
-            allow_exclusions=not args.no_exclusions,
-            deduplicate=not args.skip_redundancy_pass,
             verbose=args.verbose,
         )
         if composed is not None:

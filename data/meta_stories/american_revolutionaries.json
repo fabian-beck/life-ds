@@ -5,7 +5,6 @@
     "id": "american_revolutionaries",
     "title": "Republic, Unevenly Won",
     "tagline": "Power built beside unequal freedom",
-    "description": "The Revolution began amid an argument about imperial authority, but it quickly demanded capacities the colonies did not possess: an army that could endure, foreign backing that could alter a war, and a government able to make decisions beyond a single colony. Parliament’s Coercive Acts placed Massachusetts under punitive imperial control and helped turn a constitutional dispute into a crisis of security, commerce, and allegiance.\n\nIndependence sharpened another problem rather than resolving it. The language of liberty stood beside enslavement, women’s legal and political exclusion, and the vulnerability of Native nations whose lands could be bargained over by empires and new states. A republic could claim popular government while leaving the reach of its protection radically unequal.\n\nThat contradiction was not peripheral to the making of national power. The same struggle that pressed American leaders toward military command, diplomacy, constitutional authority, and public credit also determined whose claims could be heard in letters and print, whose territory could be transferred without consent, and whose resistance would meet the force of law.",
     "person_ids": [
       "abigail_adams",
       "alexander_hamilton",
@@ -29,22 +28,81 @@
     {
       "id": "winning_independence",
       "title": "Command and Alliance",
-      "description": "Washington commanded the Continental Army as Franklin pursued French aid and later helped negotiate the peace. Both also took part in the constitutional founding.",
       "person_ids": ["george_washington", "benjamin_franklin"]
     },
     {
       "id": "voices_of_revolution",
       "title": "Writing Liberty’s Limits",
-      "description": "Adams’s letters joined wartime household management to arguments about government and women’s legal position. Wheatley published poetry and corresponded with Washington while enslaved.",
       "person_ids": ["abigail_adams", "phillis_wheatley"]
     },
     {
       "id": "contested_new_nation",
       "title": "Power and Dispossession",
-      "description": "Hamilton argued for stronger national institutions and organized the Treasury Department. After the loss of Mohawk homelands in New York, Brant helped establish a Six Nations community on the Grand River.",
       "person_ids": ["alexander_hamilton", "joseph_brant"]
     }
   ],
+  "opening": [
+    {
+      "type": "paragraph",
+      "text": "On September 1, 1773, *Poems on Various Subjects, Religious and Moral* appeared in London. Boston printers had declined the manuscript; publication across the Atlantic made Phillis Wheatley an author before the imperial crisis had reached open war."
+    },
+    {
+      "type": "paragraph",
+      "text": "The book carried the name of an enslaved African woman into a transatlantic print world that had doubted both her authorship and her standing. Its pages were in circulation before Parliament’s punitive measures in Massachusetts turned resistance into a revolutionary break."
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "The Revolution began amid an argument about imperial authority, but it quickly demanded capacities the colonies did not possess: an army that could endure, foreign backing that could alter a war, and a government able to make decisions beyond a single colony. Parliament’s Coercive Acts placed Massachusetts under punitive imperial control and helped turn a constitutional dispute into a crisis of security, commerce, and allegiance."
+    },
+    {
+      "type": "paragraph",
+      "text": "Independence sharpened another problem rather than resolving it. The language of liberty stood beside enslavement, women’s legal and political exclusion, and the vulnerability of Native nations whose lands could be bargained over by empires and new states. A republic could claim popular government while leaving the reach of its protection radically unequal."
+    },
+    {
+      "type": "paragraph",
+      "text": "That contradiction was not peripheral to the making of national power. The same struggle that pressed American leaders toward military command, diplomacy, constitutional authority, and public credit also determined whose claims could be heard in letters and print, whose territory could be transferred without consent, and whose resistance would meet the force of law."
+    }
+  ],
+  "section_headings": {
+    "timeline": "A War Becomes Government",
+    "network": "Claims Carried by Paper",
+    "map": "Across Imperial Boundaries",
+    "conclusion": "What Power Could Not Secure"
+  },
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Parliament’s Coercive Acts made Massachusetts a test case for the limits of imperial rule. Punitive control did not merely anger colonial politicians; it forced questions of coordination that local assemblies and voluntary associations could not answer on their own. When Saratoga made a French alliance politically viable, European rivalry supplied the material and military support that an American cause could not reliably generate from its own fragmented resources."
+      },
+      {
+        "type": "paragraph",
+        "text": "Peace did not make the institutional problem disappear. The Treaty of Paris ended the war while transferring vast Indigenous homelands without Native consent, intensifying the territorial danger confronting Mohawk communities. At the same time, Shays’ Rebellion exposed the Confederation government’s weaknesses and strengthened the argument among advocates of a new Constitution that interstate commerce, public order, and national obligations required more durable authority."
+      },
+      {
+        "type": "paragraph",
+        "text": "In the 1790s, authority acquired a fiscal as well as constitutional face. Customs revenues, public credit, and an excise tax made the federal government present in commercial exchange and rural production, not simply in Philadelphia’s debates. The Jay Treaty then became a defining controversy of Washington’s administration, and Hamilton’s private role in defending it helped deepen partisan conflict over the financial and foreign-policy direction of the new government."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "This was a political world carried by paper, but paper did not circulate on equal terms. Private correspondence could bring wartime shortages, household labor, and women’s legal exclusion into the orbit of public argument without granting women a seat in the lawmaking institutions under discussion. Print offered a wider public, yet Wheatley’s path through London after Boston printers refused her manuscript showed how racial doubt and commercial gatekeeping governed access to that public."
+      },
+      {
+        "type": "paragraph",
+        "text": "Official channels had a different force. The Continental Congress, French diplomatic mission, Constitutional Convention, and Treasury Department could turn arguments into recognized commands, treaties, offices, and revenue. Neither an enslaved poet’s authorship nor a wife’s political counsel had an equivalent institutional route; their words could expose the republic’s premises, but not compel its law."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "The Revolution’s distances were shaped by overlapping imperial jurisdictions. Parliament’s punitive rule reached Massachusetts from across the Atlantic, while France’s support became politically possible only after Saratoga altered the wider war. The Treaty of Paris drew a new international settlement over Indigenous territory without Native consent, making the borderland north of New York a place where displaced Haudenosaunee families had to reconstruct political and communal life under British protection rather than within the United States."
+      }
+    ]
+  },
   "chapters": [
     {
       "id": "imperial_crisis",
@@ -327,7 +385,6 @@
       "lead_in": "The Constitution became working government through a presidency, Treasury Department, and federal enforcement. Its financial measures and use of militia authority drew organized resistance."
     }
   ],
-  "conclusion": "The United States emerged with institutions capable of commanding troops, collecting revenue, and enforcing federal law. It did not settle who would share equal legal standing, whose lands would be secure, or whether revolutionary liberty could coexist with enslavement and exclusion.",
   "social_network": {
     "nodes": [
       {
@@ -1125,48 +1182,12 @@
       "rated_events": 16
     }
   },
-  "opening": {
-    "text": "On September 1, 1773, *Poems on Various Subjects, Religious and Moral* appeared in London. Boston printers had declined the manuscript; publication across the Atlantic made Phillis Wheatley an author before the imperial crisis had reached open war.\n\nThe book carried the name of an enslaved African woman into a transatlantic print world that had doubted both her authorship and her standing. Its pages were in circulation before Parliament’s punitive measures in Massachusetts turned resistance into a revolutionary break.",
-    "image": null
-  },
-  "section_headings": {
-    "timeline": "A War Becomes Government",
-    "network": "Claims Carried by Paper",
-    "map": "Across Imperial Boundaries",
-    "conclusion": "What Power Could Not Secure"
-  },
-  "section_bodies": {
-    "timeline": [
-      {
-        "type": "paragraph",
-        "text": "Parliament’s Coercive Acts made Massachusetts a test case for the limits of imperial rule. Punitive control did not merely anger colonial politicians; it forced questions of coordination that local assemblies and voluntary associations could not answer on their own. When Saratoga made a French alliance politically viable, European rivalry supplied the material and military support that an American cause could not reliably generate from its own fragmented resources."
-      },
-      {
-        "type": "paragraph",
-        "text": "Peace did not make the institutional problem disappear. The Treaty of Paris ended the war while transferring vast Indigenous homelands without Native consent, intensifying the territorial danger confronting Mohawk communities. At the same time, Shays’ Rebellion exposed the Confederation government’s weaknesses and strengthened the argument among advocates of a new Constitution that interstate commerce, public order, and national obligations required more durable authority."
-      },
-      {
-        "type": "paragraph",
-        "text": "In the 1790s, authority acquired a fiscal as well as constitutional face. Customs revenues, public credit, and an excise tax made the federal government present in commercial exchange and rural production, not simply in Philadelphia’s debates. The Jay Treaty then became a defining controversy of Washington’s administration, and Hamilton’s private role in defending it helped deepen partisan conflict over the financial and foreign-policy direction of the new government."
-      }
-    ],
-    "network": [
-      {
-        "type": "paragraph",
-        "text": "This was a political world carried by paper, but paper did not circulate on equal terms. Private correspondence could bring wartime shortages, household labor, and women’s legal exclusion into the orbit of public argument without granting women a seat in the lawmaking institutions under discussion. Print offered a wider public, yet Wheatley’s path through London after Boston printers refused her manuscript showed how racial doubt and commercial gatekeeping governed access to that public."
-      },
-      {
-        "type": "paragraph",
-        "text": "Official channels had a different force. The Continental Congress, French diplomatic mission, Constitutional Convention, and Treasury Department could turn arguments into recognized commands, treaties, offices, and revenue. Neither an enslaved poet’s authorship nor a wife’s political counsel had an equivalent institutional route; their words could expose the republic’s premises, but not compel its law."
-      }
-    ],
-    "map": [
-      {
-        "type": "paragraph",
-        "text": "The Revolution’s distances were shaped by overlapping imperial jurisdictions. Parliament’s punitive rule reached Massachusetts from across the Atlantic, while France’s support became politically possible only after Saratoga altered the wider war. The Treaty of Paris drew a new international settlement over Indigenous territory without Native consent, making the borderland north of New York a place where displaced Haudenosaunee families had to reconstruct political and communal life under British protection rather than within the United States."
-      }
-    ]
-  },
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "The United States emerged with institutions capable of commanding troops, collecting revenue, and enforcing federal law. It did not settle who would share equal legal standing, whose lands would be secure, or whether revolutionary liberty could coexist with enslavement and exclusion."
+    }
+  ],
   "composition": {
     "model": "gpt-5.6-terra",
     "composed_at": "2026-07-26T04:12:10.593009+00:00",

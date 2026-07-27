@@ -105,9 +105,7 @@ def _find_meta_story_registries() -> List[Path]:
     path = DATA_DIR / "meta_stories.json"
     registries = [path] if path.exists() else []
     registries += sorted(
-        p
-        for p in DATA_DIR.glob("meta_stories_*.json")
-        if p.is_file() and p != path
+        p for p in DATA_DIR.glob("meta_stories_*.json") if p.is_file() and p != path
     )
     return registries
 
@@ -166,15 +164,11 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
             person_registry_entries[path] = reg
 
     styles = _load_json(STYLES_PATH)
-    has_style_entry = bool(
-        styles and person_id in (styles.get("styles") or {})
-    )
+    has_style_entry = bool(styles and person_id in (styles.get("styles") or {}))
 
     person_dir = PEOPLE_DIR / person_id
     person_files = (
-        [f for f in person_dir.rglob("*") if f.is_file()]
-        if person_dir.exists()
-        else []
+        [f for f in person_dir.rglob("*") if f.is_file()] if person_dir.exists() else []
     )
 
     portrait_files = _find_portrait_files(person_id)
@@ -278,22 +272,17 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
     if meta_story_matches:
         print("Cascading removal through meta stories...")
         try:
-            from compose_meta_story import ExclusionDecision, apply_exclusions
+            from compose_meta_story import remove_people_from_story
         except Exception as error:
             print(
-                f"Error: Failed to load exclusion cascade logic: {error}",
+                f"Error: Failed to load removal cascade logic: {error}",
                 file=sys.stderr,
             )
             return False
 
-        exclusions = [
-            ExclusionDecision(
-                person_id=person_id, reason="Person removed from dataset"
-            )
-        ]
         affected_story_ids = set()
         for path, detail in meta_story_matches:
-            apply_exclusions(detail, exclusions, verbose=False)
+            remove_people_from_story(detail, [person_id], verbose=False)
             _prune_narration_circles(detail, person_id)
             try:
                 _save_json(path, detail)

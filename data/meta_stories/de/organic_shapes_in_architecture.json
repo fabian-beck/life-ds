@@ -5,7 +5,6 @@
     "id": "organic_shapes_in_architecture",
     "title": "Gebäude lernen vom Leben",
     "tagline": "Architektur wider den abgeschlossenen, genormten Kasten",
-    "description": "Zur Debatte stand, wie weit die Architektur zulassen würde, dass das Leben selbst sie formte. Der genormte Baukörper bevorzugte regelmäßige Flächen und feste Grenzen; Gaudí und Mackintosh hingegen begriffen Ornament, Möbel, Einbauten und Handwerk als Teil der Architektur. Später trieb Hundertwasser diese Herausforderung mit Pflanzen und Unregelmäßigkeit weiter. Der Streit erschöpfte sich keineswegs im Dekorativen: Es ging um die Frage, ob Architektur an der äußeren Hülle endete.\n\nDie moderne Bauweise allein gab darauf keine Antwort. Aalto richtete sie am Erleben des Körpers aus, Wright und Bawa an Landschaft und Nutzung, Bo Bardi am gemeinschaftlichen Gebrauch. Hadid machte Bewegung zum Ausgangspunkt öffentlicher Räume. Jeder dieser Ansätze verlangte eine Entscheidung darüber, welche Kräfte jenseits des herkömmlichen Kastens die Gestalt bestimmen durften.",
     "person_ids": [
       "antoni_gaud",
       "charles_rennie_mackintosh",
@@ -32,7 +31,6 @@
     {
       "id": "craft_growth_and_rebellion",
       "title": "Widerstand des Handwerks",
-      "description": "Gaudí und Mackintosh verbanden ihre Bauten mit eigens entworfenen Ornamenten, Möbeln und Innenraumdetails. Später stellte Hundertwasser geraden Linien und genormten Oberflächen unregelmäßige Formen, Farben und Pflanzen entgegen.",
       "person_ids": [
         "antoni_gaud",
         "charles_rennie_mackintosh",
@@ -42,16 +40,76 @@
     {
       "id": "buildings_belonging_to_place",
       "title": "Der Ort formt das Gebäude",
-      "description": "Wright, Aalto und Bawa entwarfen im Einklang mit Gelände, Klima, Materialien, Ausblicken und alltäglicher Nutzung. So verankerten sie Wohnhäuser, Bildungs- und Kulturbauten, öffentliche Gebäude und Hotels in ihrer jeweiligen Umgebung.",
       "person_ids": ["frank_lloyd_wright", "alvar_aalto", "geoffrey_bawa"]
     },
     {
       "id": "forces_fields_and_flow",
       "title": "Form unter Spannung",
-      "description": "Otto leitete leichte Tragwerke aus Zugkräften ab, Bo Bardi passte bestehende Räume an gemeinschaftliche Nutzungen an, und Hadid ordnete öffentliche Innenräume durch geneigte oder durchgehende Geometrien. Konstruktion, Nutzung und Bewegung wurden zu wirksamen Bedingungen des Entwerfens.",
       "person_ids": ["frei_otto", "lina_bo_bardi", "zaha_hadid"]
     }
   ],
+  "opening": [
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
+        "caption": "Tanzbrunnen Köln Sternwellenzelt von Frei Otto (1957)",
+        "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
+        "person_id": "frei_otto",
+        "event_index": 6,
+        "image_index": 0
+      },
+      "layout": "full"
+    },
+    {
+      "type": "paragraph",
+      "text": "1957 gründete Frei Otto in Köln ein privates Zentrum für Leichtbau und erprobte dessen Ideen im Maßstab eins zu eins. Beim Sternwellenzelt gab nicht eine starre Hülle dem Dach seine Form, sondern das Spiel der Zugkräfte."
+    },
+    {
+      "type": "paragraph",
+      "text": "Seile und Membranen trugen das Experiment in den architektonischen Raum."
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Zur Debatte stand, wie weit die Architektur zulassen würde, dass das Leben selbst sie formte. Der genormte Baukörper bevorzugte regelmäßige Flächen und feste Grenzen; Gaudí und Mackintosh hingegen begriffen Ornament, Möbel, Einbauten und Handwerk als Teil der Architektur. Später trieb Hundertwasser diese Herausforderung mit Pflanzen und Unregelmäßigkeit weiter. Der Streit erschöpfte sich keineswegs im Dekorativen: Es ging um die Frage, ob Architektur an der äußeren Hülle endete."
+    },
+    {
+      "type": "paragraph",
+      "text": "Die moderne Bauweise allein gab darauf keine Antwort. Aalto richtete sie am Erleben des Körpers aus, Wright und Bawa an Landschaft und Nutzung, Bo Bardi am gemeinschaftlichen Gebrauch. Hadid machte Bewegung zum Ausgangspunkt öffentlicher Räume. Jeder dieser Ansätze verlangte eine Entscheidung darüber, welche Kräfte jenseits des herkömmlichen Kastens die Gestalt bestimmen durften."
+    }
+  ],
+  "section_headings": {
+    "timeline": "Die Wirklichkeit kommt aufs Zeichenbrett",
+    "network": "Wie Ideen auf Reisen gingen",
+    "map": "Schauplätze des Unterschieds",
+    "conclusion": "Was der Kasten nicht fassen konnte"
+  },
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Politische Katastrophen durchbrachen immer wieder die vermeintliche Kontinuität des architektonischen Fortschritts. Der Zweite Weltkrieg unterbrach Alvar Aaltos Arbeit in Finnland und verzögerte die Verwirklichung von Frank Lloyd Wrights Guggenheim-Projekt, nachdem er 1943 den Auftrag erhalten hatte. In beiden Fällen musste sich der Zeitplan des Entwerfens einem Krieg unterordnen, der jenseits der Zeichenbüros tobte."
+      },
+      {
+        "type": "paragraph",
+        "text": "In Brasilien griff die Politik unmittelbar in die Kulturarbeit ein. Der Militärputsch beendete Lina Bo Bardis Tätigkeit in Bahia und veranlasste sie zur Rückkehr nach São Paulo; unter der folgenden Diktatur arbeitete sie weiter. Ihr Interesse am gemeinschaftlichen Leben entwickelte sich somit unter politischem Druck, nicht in einem von der Wirklichkeit unberührten Formlabor."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "Technisches Wissen verbreitete sich durch Publikationen, Lehre und internationale Ausstellungen, nicht über eine einzelne Schule. Das hängende Dach verschaffte dem Bauen mit Zugkräften eine veröffentlichte Grundlage, während die Lehrtätigkeit im Ausland die Forschung über Grenzen hinwegtrug. Die Expo 67 bot eine internationale Bühne, auf der sich die Arbeit vor einem riesigen Publikum bewähren konnte. So wanderte der Leichtbau zwischen schriftlicher Argumentation, Unterricht und Demonstration im Maßstab eins zu eins."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "Zwei Lebenswege machen die Bewegung selbst zum Bestandteil architektonischen Austauschs. Die in Italien geborene Lina Bo Bardi machte ihre berufliche Laufbahn in Brasilien, während Zaha Hadids Leben den irakischen mit dem britischen Kontext verband. Ihre Wege überschritten nationale Grenzen, statt einen einzigen, in sich geschlossenen Nationalstil von einem Projekt zum nächsten zu tragen."
+      }
+    ]
+  },
   "chapters": [
     {
       "id": "craft_nature_and_modern_style",
@@ -342,7 +400,6 @@
       "lead_in": "Öffentliche Bauten, Wohnhäuser und Hotels verbanden Bewegung, Vegetation und Landschaft mit weit ausgreifenden Raumsystemen. Experimentelle Geometrien fanden ihren Weg aus Zeichnungen und Pavillons in bedeutende Bauprojekte."
     }
   ],
-  "conclusion": "Als Hadid 2012 zur Dame erhoben wurde, war der abgeschlossene Kasten längst nicht mehr der letzte Horizont moderner Architektur: Konstruktion, Klima, Handwerk, Vegetation, Bewegung und öffentliche Nutzung konnten gleichermaßen an der Entstehung von Form mitwirken. Eine einzige organische Alternative trat dennoch nicht an seine Stelle. Offen bleibt bis heute, wessen Erfahrung – und welchen Bedingungen – Architektur gerecht werden soll.",
   "social_network": {
     "nodes": [
       {
@@ -743,46 +800,18 @@
       "rated_events": 27
     }
   },
-  "opening": {
-    "text": "1957 gründete Frei Otto in Köln ein privates Zentrum für Leichtbau und erprobte dessen Ideen im Maßstab eins zu eins. Beim Sternwellenzelt gab nicht eine starre Hülle dem Dach seine Form, sondern das Spiel der Zugkräfte.\n\nSeile und Membranen trugen das Experiment in den architektonischen Raum.",
-    "image": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
-      "caption": "Tanzbrunnen Köln Sternwellenzelt von Frei Otto (1957)",
-      "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
-      "person_id": "frei_otto",
-      "event_index": 6,
-      "image_index": 0
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "Als Hadid 2012 zur Dame erhoben wurde, war der abgeschlossene Kasten längst nicht mehr der letzte Horizont moderner Architektur: Konstruktion, Klima, Handwerk, Vegetation, Bewegung und öffentliche Nutzung konnten gleichermaßen an der Entstehung von Form mitwirken. Eine einzige organische Alternative trat dennoch nicht an seine Stelle. Offen bleibt bis heute, wessen Erfahrung – und welchen Bedingungen – Architektur gerecht werden soll."
     }
-  },
-  "section_headings": {
-    "timeline": "Die Wirklichkeit kommt aufs Zeichenbrett",
-    "network": "Wie Ideen auf Reisen gingen",
-    "map": "Schauplätze des Unterschieds",
-    "conclusion": "Was der Kasten nicht fassen konnte"
-  },
-  "section_bodies": {
-    "timeline": [
-      {
-        "type": "paragraph",
-        "text": "Politische Katastrophen durchbrachen immer wieder die vermeintliche Kontinuität des architektonischen Fortschritts. Der Zweite Weltkrieg unterbrach Alvar Aaltos Arbeit in Finnland und verzögerte die Verwirklichung von Frank Lloyd Wrights Guggenheim-Projekt, nachdem er 1943 den Auftrag erhalten hatte. In beiden Fällen musste sich der Zeitplan des Entwerfens einem Krieg unterordnen, der jenseits der Zeichenbüros tobte."
-      },
-      {
-        "type": "paragraph",
-        "text": "In Brasilien griff die Politik unmittelbar in die Kulturarbeit ein. Der Militärputsch beendete Lina Bo Bardis Tätigkeit in Bahia und veranlasste sie zur Rückkehr nach São Paulo; unter der folgenden Diktatur arbeitete sie weiter. Ihr Interesse am gemeinschaftlichen Leben entwickelte sich somit unter politischem Druck, nicht in einem von der Wirklichkeit unberührten Formlabor."
-      }
-    ],
-    "network": [
-      {
-        "type": "paragraph",
-        "text": "Technisches Wissen verbreitete sich durch Publikationen, Lehre und internationale Ausstellungen, nicht über eine einzelne Schule. Das hängende Dach verschaffte dem Bauen mit Zugkräften eine veröffentlichte Grundlage, während die Lehrtätigkeit im Ausland die Forschung über Grenzen hinwegtrug. Die Expo 67 bot eine internationale Bühne, auf der sich die Arbeit vor einem riesigen Publikum bewähren konnte. So wanderte der Leichtbau zwischen schriftlicher Argumentation, Unterricht und Demonstration im Maßstab eins zu eins."
-      }
-    ],
-    "map": [
-      {
-        "type": "paragraph",
-        "text": "Zwei Lebenswege machen die Bewegung selbst zum Bestandteil architektonischen Austauschs. Die in Italien geborene Lina Bo Bardi machte ihre berufliche Laufbahn in Brasilien, während Zaha Hadids Leben den irakischen mit dem britischen Kontext verband. Ihre Wege überschritten nationale Grenzen, statt einen einzigen, in sich geschlossenen Nationalstil von einem Projekt zum nächsten zu tragen."
-      }
-    ]
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "85ca767c22ee129e",
+    "translated_on": "2026-07-26T07:28:21.356631+02:00",
+    "translator": "openai:gpt-5.6-sol"
   },
   "composition": {
     "model": "gpt-5.6-sol",
@@ -790,12 +819,5 @@
     "throughline": "The story follows architects who challenged the sealed, standardized building by making form answer to conditions beyond the box: craft and ornament, bodies and daily use, landscape and climate, structural forces, vegetation, and movement. Beginning with Gaudí and Mackintosh’s total environments, it moves through Wright, Aalto, and Bawa’s place-responsive buildings to Otto, Bo Bardi, Hundertwasser, and Hadid’s experiments with tension, collective occupation, ecological irregularity, and fluid public space. The unifying tension is that responsiveness produced no single organic style; each architect had to decide which relationships should generate form and whose experience the building should serve.",
     "excluded_people": [],
     "prose_revisions": 2
-  },
-  "translation": {
-    "source_lang": "en",
-    "target_lang": "de",
-    "source_fingerprint": "85ca767c22ee129e",
-    "translated_on": "2026-07-26T07:28:21.356631+02:00",
-    "translator": "openai:gpt-5.6-sol"
   }
 }

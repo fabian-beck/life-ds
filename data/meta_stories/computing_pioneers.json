@@ -4,8 +4,7 @@
   "meta_story": {
     "id": "computing_pioneers",
     "title": "Instructions, Then Judgment",
-    "tagline": "When procedures became consequential software",
-    "description": "Long before electronic computers, reliable calculation depended on organizing human labor around tables, records, and repeated procedures. Errors in published tables preoccupied Charles Babbage; the U.S. Census confronted information at national scale. The central transfer was gradual but profound: facts became machine-readable records, instructions became executable programs, and tasks once assigned to operators moved into technical systems.\n\nThe stakes rose as those systems entered institutions with greater reach. World War II made mechanized information processing a military necessity at Bletchley Park, while companies such as IBM and Apple later placed software inside corporate research, workplaces, schools, homes, and consumer markets. Dependability no longer meant obtaining the right answer to one calculation; it also meant translating instructions correctly, managing several operations, improving performance, and designing interfaces through which people could act.",
+    "tagline": "How procedures became consequential software",
     "person_ids": [
       "ada_lovelace",
       "alan_turing",
@@ -24,7 +23,7 @@
     ],
     "date_range_start": "1822",
     "date_range_end": "2007",
-    "lastUpdated": "2026-07-26T07:19:08.051557+02:00"
+    "lastUpdated": "2026-07-27T06:27:37.940957+02:00"
   },
   "generation_metadata": {
     "hints": null,
@@ -35,7 +34,6 @@
     {
       "id": "calculation_and_information",
       "title": "Operable Information",
-      "description": "Babbage, Lovelace, Hollerith, and Bush described ways to calculate, encode, organize, and retrieve recorded information. Their work ranged from engines and punched cards to associative stores of knowledge.",
       "person_ids": [
         "charles_babbage",
         "ada_lovelace",
@@ -46,19 +44,16 @@
     {
       "id": "programmable_machine",
       "title": "Programs Inside Machines",
-      "description": "Turing, Zuse, and von Neumann connected formal procedures with programmable devices and stored instructions. Their work addressed both what machines could compute and how programs could control them.",
       "person_ids": ["alan_turing", "konrad_zuse", "john_von_neumann"]
     },
     {
       "id": "software_disciplines",
       "title": "Disciplined Programming",
-      "description": "Hopper, Dijkstra, and Allen developed translation, algorithms, program structure, correctness methods, and optimization. Their work made software easier to express, analyze, and execute efficiently.",
       "person_ids": ["grace_hopper", "edsger_w_dijkstra", "frances_allen"]
     },
     {
       "id": "human_centered_computing",
       "title": "Computers at Work",
-      "description": "Engelbart, Nixdorf, Weizenbaum, and Jobs placed computing in workplaces, interactive systems, commercial products, and debates about automated judgment. Their projects addressed how people used computers and what decisions should remain human.",
       "person_ids": [
         "douglas_engelbart",
         "heinz_nixdorf",
@@ -67,10 +62,104 @@
       ]
     }
   ],
+  "opening": [
+    {
+      "type": "paragraph",
+      "text": "In 1822, Charles Babbage responded to errors in printed tables by imagining calculation as a procedure machinery could execute. Ada Lovelace soon pushed the idea further: a general-purpose engine might follow written instructions and manipulate symbols, not merely produce numbers."
+    },
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Babbage_Analytical_Engine_Plan_1840_CHM.agr.jpg/960px-Babbage_Analytical_Engine_Plan_1840_CHM.agr.jpg",
+        "caption": "Babbage Analytical Engine Plan from 1840",
+        "source": "https://commons.wikimedia.org/wiki/File:Babbage_Analytical_Engine_Plan_1840_CHM.agr.jpg",
+        "person_id": "charles_babbage",
+        "event_index": 13,
+        "image_index": 0
+      },
+      "layout": "right"
+    },
+    {
+      "type": "paragraph",
+      "text": "Over the next 185 years, that premise moved through punched cards, abstract models, wartime cryptanalysis, stored programs, compilers, interactive displays and consumer devices. Each step expanded what could be encoded as an instruction—and how deeply the resulting systems could enter public, commercial and private life."
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "The progression was neither a single chain of invention nor a parade of isolated geniuses. Lovelace collaborated with Babbage; John von Neumann recognized the importance of Alan Turing’s theoretical work; Vannevar Bush’s account of associative information helped shape Douglas Engelbart’s interactive vision. Other figures worked without recorded direct ties to one another, addressing common problems from different institutions and disciplines."
+    },
+    {
+      "type": "paragraph",
+      "text": "Together, their work changed the meaning of programming. Instructions became storable, translatable, optimizable and shareable; interfaces made them accessible to far more people. By the time computing was carried in a pocket, the central question was no longer only whether a procedure could be automated, but where calculation ended and human judgment still had to begin."
+    }
+  ],
+  "section_headings": {
+    "timeline": "How Instructions Took Form",
+    "network": "Lines of Influence",
+    "map": "Where Computing Took Shape",
+    "conclusion": "Power and Responsibility"
+  },
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "image",
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg",
+          "caption": "Hollerith electric tabulating machine used for the 1890 census",
+          "source": "https://commons.wikimedia.org/wiki/File:1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg",
+          "person_id": "herman_hollerith",
+          "event_index": 9,
+          "image_index": 0
+        },
+        "layout": "left"
+      },
+      {
+        "type": "paragraph",
+        "text": "The chronology begins with machines designed to execute defined operations, then turns to records encoded for repeated processing. Herman Hollerith’s punched-card systems made national-scale tabulation practical, while the configurable control panel pointed toward machinery that could be adapted to different questions."
+      },
+      {
+        "type": "paragraph",
+        "text": "From the 1930s onward, theory and engineering converged. Turing defined an abstract universal machine; Konrad Zuse built programmable digital machines; wartime demands made mechanized information processing urgent; and stored-program designs brought instructions into memory. Compilers, operating systems and optimization then made increasingly complex software manageable, while interactive systems and personal products moved computing from specialist environments into everyday use."
+      },
+      {
+        "type": "paragraph",
+        "text": "That advance did not unfold apart from political and personal history. World War II directed Turing into cryptanalysis and disrupted Zuse’s work in Germany. Turing’s later conviction for gross indecency, compulsory hormone treatment and loss of security clearance severely constrained his final years, a reminder that technical achievement offered no protection from the institutions of the era."
+      }
+    ],
+    "network": [
+      {
+        "type": "image",
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/The_Memex_%283002477109%29.jpg/960px-The_Memex_%283002477109%29.jpg",
+          "caption": "Illustration and title of \"As We May Think\"",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Memex_(3002477109).jpg",
+          "person_id": "vannevar_bush",
+          "event_index": 11,
+          "image_index": 0
+        },
+        "layout": "right"
+      },
+      {
+        "type": "paragraph",
+        "text": "The clearest relationships connect ideas across time. Lovelace and Babbage formed a direct friendship and collaboration around the Analytical Engine. Bush’s description of associative knowledge retrieval strongly influenced Engelbart, while Turing and von Neumann met within the mathematical world from which stored-program computing emerged."
+      },
+      {
+        "type": "paragraph",
+        "text": "Other connections ran through intermediaries. Mary Somerville linked Lovelace and Babbage socially; J. Presper Eckert and John Mauchly connect von Neumann’s architectural work with Grace Hopper’s UNIVAC and compiler work. The graph’s gaps matter too: Hollerith, Edsger Dijkstra, Frances Allen, Joseph Weizenbaum and Steve Jobs made consequential contributions without recorded direct ties to most of this cast, showing a field advancing through parallel institutions as well as personal networks."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "The geography shifts with the work. London joined nineteenth-century engine designs to Turing’s postwar ACE; Berlin housed Zuse’s improvised workshop and functioning Z3; Philadelphia’s computing circles helped circulate stored-program architecture and support early compiler work. Later, IBM research sites became centers of software analysis, while Menlo Park and Cupertino carried interactive ideas toward mass-market products."
+      }
+    ]
+  },
   "chapters": [
     {
       "id": "mechanical_origins",
-      "title": "Mechanizing the Procedure (1822-1843)",
+      "title": "A Machine for Procedure (1822-1843)",
       "date_start": "1822",
       "date_start_precision": "year",
       "date_end": "1843",
@@ -102,11 +191,11 @@
         }
       ],
       "historical_context": [],
-      "lead_in": "Mechanical designs sought to produce calculation tables without repeated hand copying. Punched-card control also opened the prospect of machines carrying out different sequences of operations."
+      "lead_in": "Babbage sought to replace error-prone manual calculation with machinery. Lovelace’s Notes showed how a general engine could follow procedures and manipulate symbols beyond arithmetic."
     },
     {
       "id": "information_machines",
-      "title": "Encoding the Record (1884-1906)",
+      "title": "Records Become Machine-Readable (1884-1906)",
       "date_start": "1884",
       "date_start_precision": "year",
       "date_end": "1906",
@@ -138,11 +227,11 @@
         }
       ],
       "historical_context": [],
-      "lead_in": "Punched cards turned census returns into records that tabulators could sort and count. Configurable control panels then let operators adapt the equipment to new jobs."
+      "lead_in": "Hollerith encoded census information on punched cards for electrical sorting and counting. His configurable tabulators turned large-scale records into material for repeatable machine processing."
     },
     {
       "id": "programmable_breakthrough",
-      "title": "Storing the Program (1936-1956)",
+      "title": "Programs Enter the Machine (1936-1956)",
       "date_start": "1936",
       "date_start_precision": "year",
       "date_end": "1956",
@@ -269,11 +358,11 @@
           "priority": 2
         }
       ],
-      "lead_in": "Formal models of computation were joined by automatic, program-controlled machines and stored-program designs. Compilers began translating symbolic descriptions into machine instructions."
+      "lead_in": "Abstract models, functioning digital computers and stored-program designs brought general computation into focus. Wartime demands accelerated the work, while early programmers and compilers began separating software from machine construction."
     },
     {
       "id": "software_and_interaction",
-      "title": "Structuring Software (1959-1968)",
+      "title": "Software Takes Structure (1959-1968)",
       "date_start": "1959",
       "date_start_precision": "year",
       "date_end": "1968",
@@ -345,11 +434,11 @@
         }
       ],
       "historical_context": [],
-      "lead_in": "Compiler optimization, algorithms, and layered operating systems gave programs more systematic forms. Interactive systems added pointing, linked documents, collaborative editing, and conversational exchange."
+      "lead_in": "Compilers, optimization and layered operating systems made programs more expressive and dependable. Engelbart and Weizenbaum also revealed two sides of interaction: computers could augment human work, yet conversational software could invite misplaced assumptions about understanding."
     },
     {
       "id": "personal_networked_era",
-      "title": "Computing at Hand (1976-2007)",
+      "title": "Computing Becomes Continuous (1976-2007)",
       "date_start": "1976",
       "date_start_precision": "year",
       "date_end": "2007",
@@ -425,10 +514,9 @@
           "priority": 2
         }
       ],
-      "lead_in": "Personal computers, graphical interfaces, digital media platforms, and smartphones brought software into everyday use. Work on correctness and parallelization continued as computer-made decisions drew explicit criticism."
+      "lead_in": "Rigorous programming and automatic parallelization developed alongside mass-market personal devices. As computers moved onto desks and into pockets, Weizenbaum’s distinction between calculation and judgment became increasingly consequential."
     }
   ],
-  "conclusion": "Software made procedures repeatable, portable, and powerful enough to shape work and daily life. It did not settle which decisions should be reduced to procedures in the first place. Weizenbaum’s distinction between calculation and human judgment remains open wherever software is asked not merely to assist a choice, but to make one.",
   "social_network": {
     "nodes": [
       {
@@ -772,19 +860,35 @@
             "heinz_nixdorf"
           ],
           "title": "Designs Across Generations",
-          "text": "Ada Lovelace met Charles Babbage at his soirée and became his friend and collaborator, expanding a translation of Menabrea’s paper into influential Notes on the Analytical Engine. Konrad Zuse later credited Babbage with anticipating his own work and called him the “real father of the computer.” Zuse subsequently visited Heinz Nixdorf in Paderborn, where their companies considered—but did not complete—a transfer of Zuse software to Nixdorf computers."
+          "text": "Ada Lovelace became Charles Babbage’s friend and collaborator, expanding a translation of Menabrea’s article into influential Notes on the Analytical Engine. Konrad Zuse later credited Babbage with anticipating his work. Zuse also visited Heinz Nixdorf in Paderborn, where their companies considered—but did not complete—a transfer of Zuse software to Nixdorf computers."
         },
         {
           "key": "john_von_neumann+grace_hopper+alan_turing",
           "member_ids": ["john_von_neumann", "grace_hopper", "alan_turing"],
           "title": "From Models to Programs",
-          "text": "John von Neumann recognized the importance of Alan Turing’s machine concept and invited him to become his postdoctoral assistant at Princeton, though Turing returned to the United Kingdom. Von Neumann later interacted with J. Presper Eckert and John Mauchly during the move from hard-wired to stored-program computing. Grace Hopper worked with Eckert and Mauchly’s company on UNIVAC I and early compiler development."
+          "text": "John von Neumann recognized the importance of Alan Turing’s machine concept and invited him to become his postdoctoral assistant at Princeton, though Turing returned to the United Kingdom. J. Presper Eckert and John Mauchly form indirect bridges from von Neumann’s stored-program work to Grace Hopper, who worked at their company on UNIVAC I and early compiler development."
         },
         {
           "key": "vannevar_bush+douglas_engelbart",
           "member_ids": ["vannevar_bush", "douglas_engelbart"],
           "title": "Associative Paths",
-          "text": "Vannevar Bush described a system for storing and retrieving knowledge through associative links in “As We May Think.” Douglas Engelbart read the essay while serving in the U.S. Navy, and it strongly influenced his later vision of interactive computing for augmenting human intellect."
+          "text": "Vannevar Bush imagined storing and retrieving knowledge through associative links in “As We May Think.” Douglas Engelbart encountered the essay while serving in the U.S. Navy, and it strongly influenced his later vision of interactive computing as a means of augmenting human intellect."
+        },
+        {
+          "key": "herman_hollerith+edsger_w_dijkstra+frances_allen",
+          "member_ids": [
+            "herman_hollerith",
+            "edsger_w_dijkstra",
+            "frances_allen"
+          ],
+          "title": "Systems at Scale",
+          "text": "Herman Hollerith, Edsger Dijkstra and Frances Allen occupy parallel rather than directly connected branches of the network. Hollerith mechanized large-scale data processing; Dijkstra developed rigorous algorithms and software structures; Allen established methods for compiler optimization and automatic parallelization."
+        },
+        {
+          "key": "joseph_weizenbaum+steve_jobs",
+          "member_ids": ["joseph_weizenbaum", "steve_jobs"],
+          "title": "Reach and Restraint",
+          "text": "No direct tie is recorded between Joseph Weizenbaum and Steve Jobs, but their work frames a defining tension in personal computing. Jobs helped make digital systems widely accessible and continuously present, while Weizenbaum warned against confusing computational performance with human understanding and judgment."
         }
       ]
     }
@@ -1011,48 +1115,31 @@
       "stops": [
         {
           "key": "london",
-          "title": "Engines and Instructions",
-          "text": "Charles Babbage began planning the Difference Engine in London after finding errors in published calculation tables, then drafted the more general Analytical Engine. Ada Lovelace’s Notes described procedures for the proposed machine. After the war, Alan Turing designed the stored-program ACE at the National Physical Laboratory."
+          "title": "Engines and Stored Programs",
+          "text": "In London, Charles Babbage planned the Difference Engine and the more general Analytical Engine, while Ada Lovelace described procedures for the proposed machine. More than a century later, Alan Turing designed the stored-program ACE at the National Physical Laboratory."
         },
         {
           "key": "berlin",
-          "title": "A Programmable Machine",
-          "text": "Konrad Zuse began building the Z1 in his parents’ Berlin apartment as a programmable calculating machine, though its mechanical parts proved unreliable. He later presented the relay-built Z3, a functioning, fully automatic, freely programmable digital computer."
+          "title": "Building the Programmable",
+          "text": "Konrad Zuse began the Z1 in his parents’ Berlin apartment, creating a programmable mechanical design whose components proved unreliable. He later presented the relay-built Z3, a functioning, fully automatic and freely programmable digital computer."
         },
         {
           "key": "philadelphia",
           "title": "Programs Stored and Translated",
-          "text": "John von Neumann prepared and circulated his EDVAC report while working in Philadelphia’s wartime computing circles, setting out a stored-program architecture. Grace Hopper’s A-0 system later translated symbolic descriptions into machine code for UNIVAC."
+          "text": "John von Neumann prepared and circulated his EDVAC report while working in Philadelphia’s wartime computing circles, setting out an influential stored-program architecture. Grace Hopper’s A-0 system later translated symbolic descriptions into machine code for UNIVAC."
         },
         {
           "key": "yorktown_heights",
-          "title": "Compilers Under Analysis",
-          "text": "Frances Allen began optimization work on IBM’s Stretch–Harvest projects in Poughkeepsie. After moving to the Watson Research Center in Yorktown Heights, she developed compiler-analysis and optimization methods. Her later leadership of PTRAN advanced automatic parallelization and the program dependence graph."
+          "title": "Compilers at IBM",
+          "text": "Frances Allen began optimization work on IBM’s Stretch–Harvest projects in Poughkeepsie. After moving to the Watson Research Center in Yorktown Heights, she developed compiler-analysis methods and later led PTRAN work on automatic parallelization and the program dependence graph."
         },
         {
           "key": "cupertino_menlo_park",
-          "title": "Interfaces Reach the Market",
-          "text": "In Menlo Park, Douglas Engelbart published his framework for computer-supported intellectual work and helped develop an early mouse prototype. In Cupertino, Steve Jobs helped bring the Apple II to a mass market, launched the Macintosh, and later pursued an integrated strategy spanning devices, iTunes, and retail stores."
+          "title": "From Augmentation to Market",
+          "text": "In Menlo Park, Douglas Engelbart articulated a framework for computer-supported intellectual work and helped develop an early mouse. In Cupertino, Steve Jobs helped take the Apple II and Macintosh to mass audiences, then pursued an integrated strategy spanning personal devices, digital media and retail."
         }
       ]
     },
-    "discarded": [
-      {
-        "key": "bletchley",
-        "label": "Bletchley",
-        "reason": "Turing’s Hut 8 work was important, but this single wartime episode is secondary to the story’s selected arc of computer design, programming, and everyday use; London already carries his decisive design contribution."
-      },
-      {
-        "key": "cambridge",
-        "label": "Cambridge",
-        "reason": "The events span important but distinct moments—Mark I programming and ELIZA’s creation and later critique—without a sufficiently unified local role to justify an additional stop in the tighter narrative."
-      },
-      {
-        "key": "san_francisco",
-        "label": "San Francisco",
-        "reason": "San Francisco hosted two landmark public presentations, but the decisive development work represented by them is better captured at Menlo Park and Cupertino; keeping it would duplicate the same human-interface and personal-computing arc."
-      }
-    ],
     "generation": {
       "model": "gpt-5.6-terra",
       "generated_at": "2026-07-25T06:40:29.177781+02:00",
@@ -1060,60 +1147,31 @@
       "rated_events": 31
     }
   },
-  "opening": {
-    "text": "In 1976, Joseph Weizenbaum published Computer Power and Human Reason. Twelve years after creating ELIZA, he set calculation against human judgment and challenged expansive claims about artificial intelligence.",
-    "image": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Computer_Power_and_Human_Reason_by_Joseph_Weizenbaum.jpg",
-      "caption": "Cover of Joseph Weizenbaum's 1976 book \"Computer Power and Human Reason,\" in which he later reflected on the implications of his ELIZA program and human responses to it.",
-      "source": "https://commons.wikimedia.org/wiki/File:Computer_Power_and_Human_Reason_by_Joseph_Weizenbaum.jpg",
-      "person_id": "joseph_weizenbaum",
-      "event_index": 9,
-      "image_index": 0
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "By 2007, the long effort to formalize instructions had produced software that could organize information, optimize itself for machines, support collaboration and mediate daily communication. The iPhone’s combination of touch interaction, internet access and a mobile software platform made general-purpose computing continuously personal."
+    },
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Steve_Jobs_%28352583119%29.jpg",
+        "caption": "Steve Jobs during his keynote at Macworld Expo 2007",
+        "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_(352583119).jpg",
+        "person_id": "steve_jobs",
+        "event_index": 14,
+        "image_index": 0
+      },
+      "layout": "full"
+    },
+    {
+      "type": "paragraph",
+      "text": "Yet greater reach made earlier cautions more urgent. Dijkstra treated correctness as a discipline rather than an afterthought, and Weizenbaum argued that computational capability did not amount to wisdom or empathy. The history of software is therefore both a history of increasingly powerful instructions and a history of responsibility: procedures can be mechanized, but the judgment to choose, limit and answer for them remains human."
     }
-  },
-  "section_headings": {
-    "timeline": "Systems Under Pressure",
-    "network": "Carriers of the Idea",
-    "map": "Where Patronage Gathered",
-    "conclusion": "The Decision Left Open"
-  },
-  "section_bodies": {
-    "timeline": [
-      {
-        "type": "paragraph",
-        "text": "World War II accelerated computing while bending it toward secrecy and military need. Bletchley Park drew Alan Turing into naval cryptanalysis, while the war disrupted Konrad Zuse’s work in Germany and redirected it toward wartime demands. Under those conditions, speed and automation were not academic conveniences: governments needed information processed quickly enough to affect operations."
-      },
-      {
-        "type": "paragraph",
-        "text": "The state that relied on Turing’s work also sharply limited his life. His conviction for gross indecency brought compulsory hormone treatment and the loss of his security clearance, severely constraining his final years. The episode exposes a cost that accounts of technical progress can hide: institutions could value a person’s methods while using law and administrative power against the person who devised them."
-      },
-      {
-        "type": "paragraph",
-        "text": "As computing moved into corporate laboratories and consumer markets, different forms of authority shaped what could be built. IBM’s Watson Research Center supported long-running work on compilers and parallel computing; at Apple, control over product direction remained subject to boardroom power. When Apple’s board sided with John Sculley and stripped Steve Jobs of operational authority, Jobs left and founded NeXT. Technical systems were becoming personal, but their development still depended on institutions able to fund, redirect, or halt the work."
-      }
-    ],
-    "network": [
-      {
-        "type": "paragraph",
-        "text": "Formal organizations carried knowledge alongside publication. During World War II, Vannevar Bush became a central organizer of U.S. scientific research and development; Grace Hopper’s career crossed U.S. Navy service and early programming work on Harvard’s Mark I. Government coordination, military service, and university work could gather expertise around technical problems without depending on direct personal acquaintance."
-      },
-      {
-        "type": "paragraph",
-        "text": "Later ties ran through appointments, laboratories, and firms. Princeton could offer a postdoctoral position; the Eckert–Mauchly company could turn wartime expertise toward UNIVAC; IBM could maintain research programs whose value extended beyond a single machine. Commercial negotiation created another channel, though not every exchange succeeded: the companies associated with Konrad Zuse and Heinz Nixdorf considered a software transfer in Paderborn but did not complete it. This was a network of documents and institutions as much as one of personal acquaintance."
-      }
-    ],
-    "map": [
-      {
-        "type": "paragraph",
-        "text": "The settings changed with the source and purpose of support. Britain’s National Physical Laboratory and Philadelphia’s wartime computing circles linked machine design to state-backed research; IBM’s Watson Research Center gave compiler work a corporate laboratory; SRI’s Augmentation Research Center made interactive computing an organized research program. Apple’s base in Cupertino belonged to a later commercial geography, one built around mass-market devices and integrated services. The movement from apartments and workshops into government laboratories, research centers, and consumer companies marked computing’s growing demand for capital, staff, and durable institutional backing."
-      }
-    ]
-  },
+  ],
   "composition": {
     "model": "gpt-5.6-sol",
-    "composed_at": "2026-07-26T07:19:08.051557+02:00",
-    "throughline": "The story follows a shift from mechanizing error-prone calculation and encoding records to placing instructions inside programmable machines, then building compilers, algorithms, and interfaces that made those machines dependable and usable at institutional and personal scale. Babbage, Hollerith, Turing, Zuse, von Neumann, Hopper, Dijkstra, and Allen mark successive transfers of work from human operators into technical systems, while Bush, Engelbart, Nixdorf, and Jobs show those systems entering knowledge work and everyday life. That growing reach culminates in Weizenbaum’s challenge: greater computational capability does not by itself justify transferring consequential human judgment to software.",
-    "excluded_people": [],
-    "prose_revisions": 1
+    "composed_at": "2026-07-27T06:27:37.940957+02:00",
+    "throughline": "The story follows computation from mechanical procedures and punched-card records to stored programs, structured software and continuously available personal devices. Its central arc is not only the growing power of instructions, but the widening consequences of deciding what software should do. Collaborations and intellectual influence mattered, while several important advances also emerged on separate institutional paths."
   }
 }

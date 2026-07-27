@@ -5,7 +5,6 @@
     "id": "organic_shapes_in_architecture",
     "title": "Buildings Learn From Life",
     "tagline": "Architecture against the sealed, standardized box",
-    "description": "At issue was how much of life architecture would permit to shape it. The standardized enclosure favored regular surfaces and fixed boundaries; Gaudí and Mackintosh instead treated ornament, furniture, fittings and handwork as architectural matter. Hundertwasser later pushed the challenge toward vegetation and irregularity. The disagreement was not merely decorative: it concerned whether architecture ended at the shell.\n\nModern construction did not answer that question by itself. Aalto calibrated it to bodily experience, Wright and Bawa to landscape and occupation, and Bo Bardi to collective use. Hadid made movement a generator of public space. Each approach required a choice about which forces outside the conventional box deserved authority over form.",
     "person_ids": [
       "antoni_gaud",
       "charles_rennie_mackintosh",
@@ -32,7 +31,6 @@
     {
       "id": "craft_growth_and_rebellion",
       "title": "Crafted Resistance",
-      "description": "Gaudí and Mackintosh joined buildings to custom ornament, furnishings, and interior detail. Hundertwasser later opposed straight lines and standardized surfaces through irregular form, color, and vegetation.",
       "person_ids": [
         "antoni_gaud",
         "charles_rennie_mackintosh",
@@ -42,16 +40,76 @@
     {
       "id": "buildings_belonging_to_place",
       "title": "Place Shapes Buildings",
-      "description": "Wright, Aalto, and Bawa designed in response to terrain, climate, materials, views, and daily occupation. Their work connected domestic, institutional, civic, and hospitality buildings to their settings.",
       "person_ids": ["frank_lloyd_wright", "alvar_aalto", "geoffrey_bawa"]
     },
     {
       "id": "forces_fields_and_flow",
       "title": "Form Under Pressure",
-      "description": "Otto derived lightweight structures from tension, Bo Bardi adapted existing spaces for collective use, and Hadid organized public interiors through angled or continuous geometries. Structure, occupation, and movement became active design conditions.",
       "person_ids": ["frei_otto", "lina_bo_bardi", "zaha_hadid"]
     }
   ],
+  "opening": [
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
+        "caption": "Tanzbrunnen Köln Sternwellenzelt by Frei Otto (1957)",
+        "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
+        "person_id": "frei_otto",
+        "event_index": 6,
+        "image_index": 0
+      },
+      "layout": "full"
+    },
+    {
+      "type": "paragraph",
+      "text": "In Cologne in 1957, Frei Otto founded a private center for lightweight construction and put its ideas to work at full scale. At the Sternwellenzelt, tension rather than rigid enclosure shaped the roof."
+    },
+    {
+      "type": "paragraph",
+      "text": "Cable and membrane carried the experiment into architectural space."
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "At issue was how much of life architecture would permit to shape it. The standardized enclosure favored regular surfaces and fixed boundaries; Gaudí and Mackintosh instead treated ornament, furniture, fittings and handwork as architectural matter. Hundertwasser later pushed the challenge toward vegetation and irregularity. The disagreement was not merely decorative: it concerned whether architecture ended at the shell."
+    },
+    {
+      "type": "paragraph",
+      "text": "Modern construction did not answer that question by itself. Aalto calibrated it to bodily experience, Wright and Bawa to landscape and occupation, and Bo Bardi to collective use. Hadid made movement a generator of public space. Each approach required a choice about which forces outside the conventional box deserved authority over form."
+    }
+  ],
+  "section_headings": {
+    "timeline": "Conditions Enter the Drawing",
+    "network": "How Ideas Traveled",
+    "map": "Grounds of Difference",
+    "conclusion": "What the Box Couldn’t Hold"
+  },
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Political catastrophe repeatedly broke the supposed continuity of architectural progress. World War II disrupted Alvar Aalto’s Finnish practice and delayed realization of Frank Lloyd Wright’s Guggenheim project after the 1943 commission. In both cases, the calendar of design was subordinated to a war taking place beyond the drawing office."
+      },
+      {
+        "type": "paragraph",
+        "text": "In Brazil, politics reached directly into cultural practice. The military coup ended Lina Bo Bardi’s work in Bahia and prompted her return to São Paulo; she continued working under the dictatorship that followed. Her concern with collective life therefore developed under political pressure, not in an untouched laboratory of form."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "Technical research traveled through publication, teaching, and international exhibitions rather than through a single school. Das hängende Dach gave tensile construction a published basis, while teaching abroad carried the research across borders. Expo 67 offered an international platform where the work could be tested before enormous publics. Together, those channels moved lightweight construction between written argument, instruction, and full-scale demonstration."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "Two careers make movement itself part of architectural exchange. Italian-born Lina Bo Bardi built her career in Brazil, while Zaha Hadid’s life joined Iraqi and British contexts. Their trajectories crossed national frames rather than carrying a single, closed national style from one project to the next."
+      }
+    ]
+  },
   "chapters": [
     {
       "id": "craft_nature_and_modern_style",
@@ -342,7 +400,6 @@
       "lead_in": "Public buildings, housing, and hotels joined movement, vegetation, and landscape to expansive spatial systems. Experimental geometries moved from drawings and pavilions into major built projects."
     }
   ],
-  "conclusion": "By Hadid’s 2012 damehood, the sealed box no longer exhausted modern architecture’s possibilities: structure, climate, craft, vegetation, movement and public use could all claim a role in generating form. No single organic alternative replaced it, and the unresolved question remains whose experience—and which conditions—architecture should answer.",
   "social_network": {
     "nodes": [
       {
@@ -743,47 +800,12 @@
       "rated_events": 27
     }
   },
-  "opening": {
-    "text": "In Cologne in 1957, Frei Otto founded a private center for lightweight construction and put its ideas to work at full scale. At the Sternwellenzelt, tension rather than rigid enclosure shaped the roof.\n\nCable and membrane carried the experiment into architectural space.",
-    "image": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
-      "caption": "Tanzbrunnen Köln Sternwellenzelt by Frei Otto (1957)",
-      "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
-      "person_id": "frei_otto",
-      "event_index": 6,
-      "image_index": 0
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "By Hadid’s 2012 damehood, the sealed box no longer exhausted modern architecture’s possibilities: structure, climate, craft, vegetation, movement and public use could all claim a role in generating form. No single organic alternative replaced it, and the unresolved question remains whose experience—and which conditions—architecture should answer."
     }
-  },
-  "section_headings": {
-    "timeline": "Conditions Enter the Drawing",
-    "network": "How Ideas Traveled",
-    "map": "Grounds of Difference",
-    "conclusion": "What the Box Couldn’t Hold"
-  },
-  "section_bodies": {
-    "timeline": [
-      {
-        "type": "paragraph",
-        "text": "Political catastrophe repeatedly broke the supposed continuity of architectural progress. World War II disrupted Alvar Aalto’s Finnish practice and delayed realization of Frank Lloyd Wright’s Guggenheim project after the 1943 commission. In both cases, the calendar of design was subordinated to a war taking place beyond the drawing office."
-      },
-      {
-        "type": "paragraph",
-        "text": "In Brazil, politics reached directly into cultural practice. The military coup ended Lina Bo Bardi’s work in Bahia and prompted her return to São Paulo; she continued working under the dictatorship that followed. Her concern with collective life therefore developed under political pressure, not in an untouched laboratory of form."
-      }
-    ],
-    "network": [
-      {
-        "type": "paragraph",
-        "text": "Technical research traveled through publication, teaching, and international exhibitions rather than through a single school. Das hängende Dach gave tensile construction a published basis, while teaching abroad carried the research across borders. Expo 67 offered an international platform where the work could be tested before enormous publics. Together, those channels moved lightweight construction between written argument, instruction, and full-scale demonstration."
-      }
-    ],
-    "map": [
-      {
-        "type": "paragraph",
-        "text": "Two careers make movement itself part of architectural exchange. Italian-born Lina Bo Bardi built her career in Brazil, while Zaha Hadid’s life joined Iraqi and British contexts. Their trajectories crossed national frames rather than carrying a single, closed national style from one project to the next."
-      }
-    ]
-  },
+  ],
   "composition": {
     "model": "gpt-5.6-sol",
     "composed_at": "2026-07-26T07:24:26.322072+02:00",

@@ -5,7 +5,6 @@
     "id": "citizens_of_bamberg",
     "title": "Citizens of Bamberg",
     "tagline": "Saints, thinkers, builders, dissenters",
-    "description": "Bamberg’s identity was forged as much by power and piety as by paper, ink, and stone. Founded and endowed as an imperial project, the city became a stage where rulership, reform, and artistic patronage could be turned into durable institutions—cathedrals, dioceses, courts, and civic offices that anchored Franconia to the wider Holy Roman Empire.\n\nCenturies later, Bamberg’s streets and theatres drew a different kind of talent: writers and philosophers whose careers were shaped by the pressures of Napoleonic change and the rise of modern German public life. The city also produced and employed practical modernizers—municipal professionals and medical teachers—whose work translated lofty ideals into infrastructure and clinical method.\n\nEven figures only loosely tied to Bamberg can illuminate its “citizenship” in a broader sense: the way German history and science, from resistance to radiochemistry, pressed upon every city’s memory and institutions. Bamberg becomes a lens: a place where local lives meet national turning points.",
     "person_ids": [
       "henry_ii",
       "cunigunde_of_luxembourg",
@@ -31,26 +30,36 @@
     {
       "id": "imperial_founders_and_sacred_patronage",
       "title": "Imperial Founders, Sacred City",
-      "description": "Bamberg begins as an imperial blueprint—authority expressed through a diocese, relic culture, and enduring institutions that bound city life to empire and church.",
       "person_ids": ["henry_ii", "cunigunde_of_luxembourg"]
     },
     {
       "id": "napoleonic_aftershocks_and_romantic_bamberg",
       "title": "Romantic Bamberg, Modern Pressures",
-      "description": "In the early 1800s, Bamberg becomes a working town for artists and intellectuals navigating censorship, theatre economies, and the birth of modern German public culture.",
       "person_ids": ["e_t_a_hoffmann", "georg_wilhelm_friedrich_hegel"]
     },
     {
       "id": "civic_professionals_and_urban_making",
       "title": "Civic Experts, Built City",
-      "description": "Behind Bamberg’s appearance and public health stood professionals—city architects and medical innovators—who translated administration into streetscapes and clinical practice.",
       "person_ids": ["hans_erlwein", "johann_lukas_sch_nlein"]
     },
     {
       "id": "national_science_and_conscience",
       "title": "Science and Conscience in Germany",
-      "description": "Bamberg’s story also lives in wider German currents: the scientific transformations of the 20th century and the moral reckoning of resistance—forces that reshaped civic identity everywhere.",
       "person_ids": ["ida_noddack", "claus_schenk_graf_von_stauffenberg"]
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Bamberg’s identity was forged as much by power and piety as by paper, ink, and stone. Founded and endowed as an imperial project, the city became a stage where rulership, reform, and artistic patronage could be turned into durable institutions—cathedrals, dioceses, courts, and civic offices that anchored Franconia to the wider Holy Roman Empire."
+    },
+    {
+      "type": "paragraph",
+      "text": "Centuries later, Bamberg’s streets and theatres drew a different kind of talent: writers and philosophers whose careers were shaped by the pressures of Napoleonic change and the rise of modern German public life. The city also produced and employed practical modernizers—municipal professionals and medical teachers—whose work translated lofty ideals into infrastructure and clinical method."
+    },
+    {
+      "type": "paragraph",
+      "text": "Even figures only loosely tied to Bamberg can illuminate its “citizenship” in a broader sense: the way German history and science, from resistance to radiochemistry, pressed upon every city’s memory and institutions. Bamberg becomes a lens: a place where local lives meet national turning points."
     }
   ],
   "chapters": [
@@ -265,7 +274,6 @@
       ]
     }
   ],
-  "conclusion": "Bamberg’s “citizens” are not only those who were born within its walls, but also those who built its institutions, worked its stages and presses, and left marks on its civic fabric. From imperial founders to modern professionals—and even to figures of science and resistance—Bamberg reads like a small city with a long, European-scale echo.",
   "social_network": {
     "nodes": [
       {
@@ -591,5 +599,11 @@
         }
       ]
     }
-  }
+  },
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "Bamberg’s “citizens” are not only those who were born within its walls, but also those who built its institutions, worked its stages and presses, and left marks on its civic fabric. From imperial founders to modern professionals—and even to figures of science and resistance—Bamberg reads like a small city with a long, European-scale echo."
+    }
+  ]
 }

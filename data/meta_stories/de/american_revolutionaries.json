@@ -5,7 +5,6 @@
     "id": "american_revolutionaries",
     "title": "Eine ungleich errungene Republik",
     "tagline": "Macht entsteht neben ungleicher Freiheit",
-    "description": "Die Revolution begann mit einem Streit über die Autorität des Empire, verlangte jedoch rasch Fähigkeiten, die den Kolonien fehlten: eine Armee, die durchhalten konnte, ausländische Unterstützung, die den Kriegsverlauf verändern konnte, und eine Regierung, die Entscheidungen über die Grenzen einer einzelnen Kolonie hinaus treffen konnte. Die Zwangsgesetze des Parlaments unterwarfen Massachusetts einer strafenden imperialen Kontrolle und trugen dazu bei, aus einem Verfassungskonflikt eine Krise der Sicherheit, des Handels und der Loyalität zu machen.\n\nDie Unabhängigkeit schärfte ein weiteres Problem, statt es zu lösen. Die Sprache der Freiheit stand neben Versklavung, der rechtlichen und politischen Ausgrenzung von Frauen und der Verletzlichkeit indigener Nationen, über deren Land Imperien und neue Staaten verhandeln konnten. Eine Republik konnte sich auf Volksherrschaft berufen und den Schutz, den sie gewährte, doch radikal ungleich verteilen.\n\nDieser Widerspruch war für die Entstehung nationaler Macht keineswegs nebensächlich. Derselbe Kampf, der amerikanische Führungspersönlichkeiten zu militärischem Kommando, Diplomatie, verfassungsmäßiger Autorität und staatlicher Kreditwürdigkeit drängte, entschied auch darüber, wessen Ansprüche in Briefen und Druckschriften Gehör fanden, wessen Territorium ohne Zustimmung übertragen werden konnte und wessen Widerstand auf die Gewalt des Gesetzes traf.",
     "person_ids": [
       "abigail_adams",
       "alexander_hamilton",
@@ -29,22 +28,81 @@
     {
       "id": "winning_independence",
       "title": "Kommando und Bündnis",
-      "description": "Washington führte die Kontinentalarmee, während Franklin um französische Unterstützung warb und später an den Friedensverhandlungen mitwirkte. Beide beteiligten sich zudem an der verfassungsrechtlichen Gründung.",
       "person_ids": ["george_washington", "benjamin_franklin"]
     },
     {
       "id": "voices_of_revolution",
       "title": "Die Grenzen der Freiheit schreiben",
-      "description": "Adams’ Briefe verbanden die Führung des Haushalts während des Krieges mit Überlegungen zu Regierung und der rechtlichen Stellung von Frauen. Wheatley veröffentlichte Gedichte und korrespondierte mit Washington, obwohl sie versklavt war.",
       "person_ids": ["abigail_adams", "phillis_wheatley"]
     },
     {
       "id": "contested_new_nation",
       "title": "Macht und Enteignung",
-      "description": "Hamilton trat für stärkere nationale Institutionen ein und organisierte das Finanzministerium. Nach dem Verlust der Stammesgebiete der Mohawk in New York half Brant, am Grand River eine Gemeinschaft der Six Nations aufzubauen.",
       "person_ids": ["alexander_hamilton", "joseph_brant"]
     }
   ],
+  "opening": [
+    {
+      "type": "paragraph",
+      "text": "Am 1. September 1773 erschien *Poems on Various Subjects, Religious and Moral* in London. Drucker in Boston hatten das Manuskript abgelehnt; die Veröffentlichung jenseits des Atlantiks machte Phillis Wheatley zur Autorin, noch bevor die Krise des Empire in offenen Krieg umgeschlagen war."
+    },
+    {
+      "type": "paragraph",
+      "text": "Das Buch trug den Namen einer versklavten Frau afrikanischer Herkunft in eine transatlantische Welt des Drucks, die sowohl an ihrer Autorschaft als auch an ihrem Rang gezweifelt hatte. Seine Seiten waren bereits im Umlauf, bevor die Strafmaßnahmen des Parlaments in Massachusetts den Widerstand zum revolutionären Bruch werden ließen."
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Die Revolution begann mit einem Streit über die Autorität des Empire, verlangte jedoch rasch Fähigkeiten, die den Kolonien fehlten: eine Armee, die durchhalten konnte, ausländische Unterstützung, die den Kriegsverlauf verändern konnte, und eine Regierung, die Entscheidungen über die Grenzen einer einzelnen Kolonie hinaus treffen konnte. Die Zwangsgesetze des Parlaments unterwarfen Massachusetts einer strafenden imperialen Kontrolle und trugen dazu bei, aus einem Verfassungskonflikt eine Krise der Sicherheit, des Handels und der Loyalität zu machen."
+    },
+    {
+      "type": "paragraph",
+      "text": "Die Unabhängigkeit schärfte ein weiteres Problem, statt es zu lösen. Die Sprache der Freiheit stand neben Versklavung, der rechtlichen und politischen Ausgrenzung von Frauen und der Verletzlichkeit indigener Nationen, über deren Land Imperien und neue Staaten verhandeln konnten. Eine Republik konnte sich auf Volksherrschaft berufen und den Schutz, den sie gewährte, doch radikal ungleich verteilen."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dieser Widerspruch war für die Entstehung nationaler Macht keineswegs nebensächlich. Derselbe Kampf, der amerikanische Führungspersönlichkeiten zu militärischem Kommando, Diplomatie, verfassungsmäßiger Autorität und staatlicher Kreditwürdigkeit drängte, entschied auch darüber, wessen Ansprüche in Briefen und Druckschriften Gehör fanden, wessen Territorium ohne Zustimmung übertragen werden konnte und wessen Widerstand auf die Gewalt des Gesetzes traf."
+    }
+  ],
+  "section_headings": {
+    "timeline": "Aus Krieg wird Regierung",
+    "network": "Ansprüche auf Papier",
+    "map": "Über die Grenzen der Imperien",
+    "conclusion": "Was Macht nicht sichern konnte"
+  },
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Die Zwangsgesetze des Parlaments machten Massachusetts zum Prüfstein für die Grenzen imperialer Herrschaft. Die strafende Kontrolle empörte nicht bloß koloniale Politiker; sie erzwang Fragen der Abstimmung, die lokale Versammlungen und freiwillige Zusammenschlüsse nicht aus eigener Kraft beantworten konnten. Als Saratoga ein französisches Bündnis politisch möglich machte, stellte die europäische Rivalität die materiellen und militärischen Mittel bereit, die die amerikanische Sache aus ihren eigenen zersplitterten Ressourcen nicht zuverlässig hervorbringen konnte."
+      },
+      {
+        "type": "paragraph",
+        "text": "Mit dem Frieden verschwand das institutionelle Problem nicht. Der Pariser Frieden beendete den Krieg, übertrug jedoch ohne Zustimmung der indigenen Bevölkerung riesige indigene Stammesgebiete und verschärfte damit die territoriale Bedrohung der Mohawk-Gemeinschaften. Zugleich legte Shays’ Rebellion die Schwächen der Konföderationsregierung offen und bestärkte die Befürworter einer neuen Verfassung in ihrer Überzeugung, dass Handel zwischen den Bundesstaaten, öffentliche Ordnung und nationale Verpflichtungen eine dauerhaftere Autorität verlangten."
+      },
+      {
+        "type": "paragraph",
+        "text": "In den 1790er Jahren erhielt Autorität neben einem verfassungsrechtlichen auch ein fiskalisches Gesicht. Zolleinnahmen, staatliche Kreditwürdigkeit und eine Verbrauchsteuer machten die Bundesregierung im Handel und in der ländlichen Produktion gegenwärtig, nicht nur in den Debatten Philadelphias. Der Jay-Vertrag wurde dann zu einer prägenden Kontroverse in Washingtons Regierung, und Hamiltons private Rolle bei seiner Verteidigung vertiefte den parteipolitischen Konflikt über die finanz- und außenpolitische Richtung der neuen Regierung."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "Diese politische Welt wurde von Papier getragen, doch Papier zirkulierte nicht zu gleichen Bedingungen. Private Korrespondenz konnte Kriegsmangel, Hausarbeit und die rechtliche Ausgrenzung von Frauen in den Bereich öffentlicher Auseinandersetzung rücken, ohne Frauen einen Platz in den gerade diskutierten gesetzgebenden Institutionen zu verschaffen. Der Druck eröffnete ein breiteres Publikum; doch Wheatleys Weg über London, nachdem Drucker in Boston ihr Manuskript abgewiesen hatten, zeigte, wie rassistische Zweifel und kommerzielle Zugangshürden den Zugang zu diesem Publikum bestimmten."
+      },
+      {
+        "type": "paragraph",
+        "text": "Offizielle Kanäle besaßen eine andere Durchsetzungskraft. Der Kontinentalkongress, die französische diplomatische Mission, der Verfassungskonvent und das Finanzministerium konnten Argumente in anerkannte Befehle, Verträge, Ämter und Einnahmen verwandeln. Weder die Autorschaft einer versklavten Dichterin noch der politische Rat einer Ehefrau verfügten über einen vergleichbaren institutionellen Weg; ihre Worte konnten die Grundlagen der Republik offenlegen, aber ihr kein Gesetz aufzwingen."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "Die Distanzen der Revolution waren von sich überlagernden Zuständigkeiten der Imperien geprägt. Die Strafherrschaft des Parlaments reichte über den Atlantik bis nach Massachusetts, während Frankreichs Unterstützung erst politisch möglich wurde, als Saratoga den größeren Krieg veränderte. Der Pariser Frieden zog ohne Zustimmung der indigenen Bevölkerung eine neue internationale Ordnung über indigenem Territorium. So wurde das Grenzgebiet nördlich von New York zu einem Ort, an dem vertriebene Haudenosaunee-Familien ihr politisches und gemeinschaftliches Leben unter britischem Schutz neu aufbauen mussten – nicht innerhalb der Vereinigten Staaten."
+      }
+    ]
+  },
   "chapters": [
     {
       "id": "imperial_crisis",
@@ -327,7 +385,6 @@
       "lead_in": "Durch Präsidentschaft, Finanzministerium und bundesstaatliche Durchsetzung wurde die Verfassung zur gelebten Regierungspraxis. Ihre Finanzmaßnahmen und der Einsatz der Milizgewalt riefen organisierten Widerstand hervor."
     }
   ],
-  "conclusion": "Die Vereinigten Staaten gingen aus der Revolution mit Institutionen hervor, die Truppen befehligen, Einnahmen einziehen und Bundesrecht durchsetzen konnten. Ungeklärt blieb, wer gleiche Rechtsstellung genießen sollte, wessen Land sicher sein würde und ob revolutionäre Freiheit mit Versklavung und Ausschluss vereinbar sein konnte.",
   "social_network": {
     "nodes": [
       {
@@ -1125,47 +1182,18 @@
       "rated_events": 16
     }
   },
-  "opening": {
-    "text": "Am 1. September 1773 erschien *Poems on Various Subjects, Religious and Moral* in London. Drucker in Boston hatten das Manuskript abgelehnt; die Veröffentlichung jenseits des Atlantiks machte Phillis Wheatley zur Autorin, noch bevor die Krise des Empire in offenen Krieg umgeschlagen war.\n\nDas Buch trug den Namen einer versklavten Frau afrikanischer Herkunft in eine transatlantische Welt des Drucks, die sowohl an ihrer Autorschaft als auch an ihrem Rang gezweifelt hatte. Seine Seiten waren bereits im Umlauf, bevor die Strafmaßnahmen des Parlaments in Massachusetts den Widerstand zum revolutionären Bruch werden ließen.",
-    "image": null
-  },
-  "section_headings": {
-    "timeline": "Aus Krieg wird Regierung",
-    "network": "Ansprüche auf Papier",
-    "map": "Über die Grenzen der Imperien",
-    "conclusion": "Was Macht nicht sichern konnte"
-  },
-  "section_bodies": {
-    "timeline": [
-      {
-        "type": "paragraph",
-        "text": "Die Zwangsgesetze des Parlaments machten Massachusetts zum Prüfstein für die Grenzen imperialer Herrschaft. Die strafende Kontrolle empörte nicht bloß koloniale Politiker; sie erzwang Fragen der Abstimmung, die lokale Versammlungen und freiwillige Zusammenschlüsse nicht aus eigener Kraft beantworten konnten. Als Saratoga ein französisches Bündnis politisch möglich machte, stellte die europäische Rivalität die materiellen und militärischen Mittel bereit, die die amerikanische Sache aus ihren eigenen zersplitterten Ressourcen nicht zuverlässig hervorbringen konnte."
-      },
-      {
-        "type": "paragraph",
-        "text": "Mit dem Frieden verschwand das institutionelle Problem nicht. Der Pariser Frieden beendete den Krieg, übertrug jedoch ohne Zustimmung der indigenen Bevölkerung riesige indigene Stammesgebiete und verschärfte damit die territoriale Bedrohung der Mohawk-Gemeinschaften. Zugleich legte Shays’ Rebellion die Schwächen der Konföderationsregierung offen und bestärkte die Befürworter einer neuen Verfassung in ihrer Überzeugung, dass Handel zwischen den Bundesstaaten, öffentliche Ordnung und nationale Verpflichtungen eine dauerhaftere Autorität verlangten."
-      },
-      {
-        "type": "paragraph",
-        "text": "In den 1790er Jahren erhielt Autorität neben einem verfassungsrechtlichen auch ein fiskalisches Gesicht. Zolleinnahmen, staatliche Kreditwürdigkeit und eine Verbrauchsteuer machten die Bundesregierung im Handel und in der ländlichen Produktion gegenwärtig, nicht nur in den Debatten Philadelphias. Der Jay-Vertrag wurde dann zu einer prägenden Kontroverse in Washingtons Regierung, und Hamiltons private Rolle bei seiner Verteidigung vertiefte den parteipolitischen Konflikt über die finanz- und außenpolitische Richtung der neuen Regierung."
-      }
-    ],
-    "network": [
-      {
-        "type": "paragraph",
-        "text": "Diese politische Welt wurde von Papier getragen, doch Papier zirkulierte nicht zu gleichen Bedingungen. Private Korrespondenz konnte Kriegsmangel, Hausarbeit und die rechtliche Ausgrenzung von Frauen in den Bereich öffentlicher Auseinandersetzung rücken, ohne Frauen einen Platz in den gerade diskutierten gesetzgebenden Institutionen zu verschaffen. Der Druck eröffnete ein breiteres Publikum; doch Wheatleys Weg über London, nachdem Drucker in Boston ihr Manuskript abgewiesen hatten, zeigte, wie rassistische Zweifel und kommerzielle Zugangshürden den Zugang zu diesem Publikum bestimmten."
-      },
-      {
-        "type": "paragraph",
-        "text": "Offizielle Kanäle besaßen eine andere Durchsetzungskraft. Der Kontinentalkongress, die französische diplomatische Mission, der Verfassungskonvent und das Finanzministerium konnten Argumente in anerkannte Befehle, Verträge, Ämter und Einnahmen verwandeln. Weder die Autorschaft einer versklavten Dichterin noch der politische Rat einer Ehefrau verfügten über einen vergleichbaren institutionellen Weg; ihre Worte konnten die Grundlagen der Republik offenlegen, aber ihr kein Gesetz aufzwingen."
-      }
-    ],
-    "map": [
-      {
-        "type": "paragraph",
-        "text": "Die Distanzen der Revolution waren von sich überlagernden Zuständigkeiten der Imperien geprägt. Die Strafherrschaft des Parlaments reichte über den Atlantik bis nach Massachusetts, während Frankreichs Unterstützung erst politisch möglich wurde, als Saratoga den größeren Krieg veränderte. Der Pariser Frieden zog ohne Zustimmung der indigenen Bevölkerung eine neue internationale Ordnung über indigenem Territorium. So wurde das Grenzgebiet nördlich von New York zu einem Ort, an dem vertriebene Haudenosaunee-Familien ihr politisches und gemeinschaftliches Leben unter britischem Schutz neu aufbauen mussten – nicht innerhalb der Vereinigten Staaten."
-      }
-    ]
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "Die Vereinigten Staaten gingen aus der Revolution mit Institutionen hervor, die Truppen befehligen, Einnahmen einziehen und Bundesrecht durchsetzen konnten. Ungeklärt blieb, wer gleiche Rechtsstellung genießen sollte, wessen Land sicher sein würde und ob revolutionäre Freiheit mit Versklavung und Ausschluss vereinbar sein konnte."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "c273a00fb29769dc",
+    "translated_on": "2026-07-26T04:12:58.536318+00:00",
+    "translator": "openai:gpt-5.6-terra"
   },
   "composition": {
     "model": "gpt-5.6-terra",
@@ -1173,12 +1201,5 @@
     "throughline": "The Revolution forced the colonies to turn resistance into durable military, diplomatic, and political power: Washington’s command, Franklin’s French mission, and the later constitutional and fiscal programs associated with Washington and Hamilton trace that construction. Yet the same struggle exposed who the new order would not equally secure: Adams and Wheatley articulated liberty’s gendered and racial limits, while Brant’s wartime conflict and Grand River resettlement show the territorial dispossession accompanying independence. The story asks how a republic capable of winning a war and enforcing its laws could be built alongside such unequal freedom and security.",
     "excluded_people": [],
     "prose_revisions": 0
-  },
-  "translation": {
-    "source_lang": "en",
-    "target_lang": "de",
-    "source_fingerprint": "c273a00fb29769dc",
-    "translated_on": "2026-07-26T04:12:58.536318+00:00",
-    "translator": "openai:gpt-5.6-terra"
   }
 }

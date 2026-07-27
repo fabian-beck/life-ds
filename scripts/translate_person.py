@@ -182,7 +182,6 @@ class TrMetaChapter(BaseModel):
 
 class TrSubtopic(BaseModel):
     title: str
-    description: str
 
 
 class TrNetworkCircle(BaseModel):
@@ -206,12 +205,6 @@ class TrMapNarration(BaseModel):
     stops: List[TrMapStop]
 
 
-class TrOpening(BaseModel):
-    text: str
-    # Only present when the opening carries an image with a caption.
-    image_caption: Optional[str] = None
-
-
 class TrSectionHeadings(BaseModel):
     timeline: Optional[str] = None
     network: Optional[str] = None
@@ -220,8 +213,8 @@ class TrSectionHeadings(BaseModel):
 
 
 class TrBodyBlock(BaseModel):
-    # One section-body block; only the keys present in the source block appear
-    # in the payload: paragraph -> text; quote -> text (+ attribution);
+    # One block of a prose region; only the keys present in the source block
+    # appear in the payload: paragraph -> text; quote -> text (+ attribution);
     # image -> image_caption (only when the source image has a caption).
     text: Optional[str] = None
     attribution: Optional[str] = None
@@ -233,29 +226,20 @@ class TrSectionBodies(BaseModel):
     timeline: Optional[List[TrBodyBlock]] = None
     network: Optional[List[TrBodyBlock]] = None
     map: Optional[List[TrBodyBlock]] = None
-    conclusion: Optional[List[TrBodyBlock]] = None
-
-
-class TrSectionImages(BaseModel):
-    # Captions of the per-section images; each only present when the source
-    # image exists and has a caption.
-    timeline_caption: Optional[str] = None
-    network_caption: Optional[str] = None
-    conclusion_caption: Optional[str] = None
 
 
 class MetaStoryTranslation(BaseModel):
     title: str
     tagline: str
-    description: str
     subtopics: List[TrSubtopic]
     chapters: List[TrMetaChapter]
     # Optional: only present for composed stories (see compose_meta_story.py).
-    opening: Optional[TrOpening] = None
+    # Every prose region is a list of blocks, aligned by index with the source.
+    opening: Optional[List[TrBodyBlock]] = None
+    description: Optional[List[TrBodyBlock]] = None
     section_headings: Optional[TrSectionHeadings] = None
-    section_images: Optional[TrSectionImages] = None
     section_bodies: Optional[TrSectionBodies] = None
-    conclusion: Optional[str] = None
+    conclusion: Optional[List[TrBodyBlock]] = None
     network_narration: Optional[TrNetworkNarration] = None
     map_narration: Optional[TrMapNarration] = None
 
@@ -342,19 +326,39 @@ def extract_registry_entry_translatables(entry: Dict[str, Any]) -> Dict[str, Any
     }
 
 
+def _blocks_translatables(blocks: Any) -> List[Dict[str, Any]]:
+    """One prose region's blocks as payload entries.
+
+    Block types, layouts and image URLs/provenance are technical and stay
+    verbatim; only paragraph/quote texts, attributions and image captions are
+    prose. Entries keep their positions so the merge can align by index.
+    """
+    payload = []
+    for block in blocks or []:
+        entry: Dict[str, Any] = {}
+        kind = block.get("type")
+        if kind in ("paragraph", "quote"):
+            entry["text"] = block.get("text", "")
+            if kind == "quote" and block.get("attribution"):
+                entry["attribution"] = block["attribution"]
+        elif kind == "image":
+            caption = (block.get("image") or {}).get("caption")
+            if caption:
+                entry["image_caption"] = caption
+        payload.append(entry)
+    return payload
+
+
 def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     """Extract only the translatable text fields from a meta story dataset."""
     meta = data.get("meta_story", {}) or {}
     payload: Dict[str, Any] = {
         "title": meta.get("title", ""),
         "tagline": meta.get("tagline", ""),
-        "description": meta.get("description", ""),
+        # Subtopics reach the reader as timeline lane labels only; there is
+        # nowhere to show a description, so none is written or translated.
         "subtopics": [
-            {
-                "title": sub.get("title", ""),
-                "description": sub.get("description", ""),
-            }
-            for sub in (data.get("subtopics") or [])
+            {"title": sub.get("title", "")} for sub in (data.get("subtopics") or [])
         ],
         "chapters": [
             {
@@ -379,17 +383,14 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             }
             for chapter in (data.get("chapters") or [])
         ],
-        "conclusion": data.get("conclusion"),
     }
-    # Composed opening, section headings, and section image captions (composer),
-    # likewise only when present.
-    opening = data.get("opening")
-    if isinstance(opening, dict) and opening.get("text"):
-        opening_payload: Dict[str, Any] = {"text": opening["text"]}
-        opening_caption = (opening.get("image") or {}).get("caption")
-        if opening_caption:
-            opening_payload["image_caption"] = opening_caption
-        payload["opening"] = opening_payload
+    # Composed prose regions (see compose_meta_story.py): each a list of
+    # paragraph/image/quote blocks. Only added when present, so uncomposed
+    # stories keep their old fingerprint.
+    for region in ("opening", "description", "conclusion"):
+        blocks = _blocks_translatables(data.get(region))
+        if blocks:
+            payload[region] = blocks
     headings = data.get("section_headings")
     if isinstance(headings, dict) and headings:
         payload["section_headings"] = {
@@ -397,42 +398,15 @@ def extract_meta_story_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             for slot in ("timeline", "network", "map", "conclusion")
             if headings.get(slot)
         }
-    # Composed section bodies (Phase 8): paragraph/quote texts and image
-    # captions are prose; block types, layouts, image URLs/provenance are
-    # technical. Only added when present, so uncomposed stories keep their
-    # old fingerprint.
     section_bodies = data.get("section_bodies")
     if isinstance(section_bodies, dict) and section_bodies:
-        bodies_payload: Dict[str, Any] = {}
-        for slot in ("timeline", "network", "map", "conclusion"):
-            blocks = section_bodies.get(slot)
-            if not blocks:
-                continue
-            blocks_payload = []
-            for block in blocks:
-                entry: Dict[str, Any] = {}
-                kind = block.get("type")
-                if kind in ("paragraph", "quote"):
-                    entry["text"] = block.get("text", "")
-                    if kind == "quote" and block.get("attribution"):
-                        entry["attribution"] = block["attribution"]
-                elif kind == "image":
-                    caption = (block.get("image") or {}).get("caption")
-                    if caption:
-                        entry["image_caption"] = caption
-                blocks_payload.append(entry)
-            bodies_payload[slot] = blocks_payload
+        bodies_payload = {
+            slot: _blocks_translatables(section_bodies.get(slot))
+            for slot in ("timeline", "network", "map")
+            if section_bodies.get(slot)
+        }
         if bodies_payload:
             payload["section_bodies"] = bodies_payload
-    section_images = data.get("section_images")
-    if isinstance(section_images, dict) and section_images:
-        image_captions = {
-            f"{slot}_caption": (section_images.get(slot) or {}).get("caption")
-            for slot in ("timeline", "network", "conclusion")
-            if (section_images.get(slot) or {}).get("caption")
-        }
-        if image_captions:
-            payload["section_images"] = image_captions
     # The social network itself is technical (copied verbatim), but its
     # narration texts are prose and must be translated. The key is only added
     # when narration exists, so fingerprints of stories without narration are
@@ -697,14 +671,12 @@ def apply_meta_story_translations(
     meta = result.get("meta_story", {})
     _set_if_source_has(meta, "title", translated.get("title"))
     _set_if_source_has(meta, "tagline", translated.get("tagline"))
-    _set_if_source_has(meta, "description", translated.get("description"))
 
     src_subtopics = result.get("subtopics") or []
     tr_subtopics = translated.get("subtopics") or []
     _require_same_length("subtopics", src_subtopics, tr_subtopics)
     for sub, tr_sub in zip(src_subtopics, tr_subtopics):
         _set_if_source_has(sub, "title", tr_sub.get("title"))
-        _set_if_source_has(sub, "description", tr_sub.get("description"))
 
     # Cache of translated life events per person for event title lookups
     translated_events_cache: Dict[str, Optional[List[Dict[str, Any]]]] = {}
@@ -779,52 +751,44 @@ def apply_meta_story_translations(
             )
             _set_if_source_has(pe, "theme_connection", tr_pe.get("theme_connection"))
 
-    _set_if_source_has(result, "conclusion", translated.get("conclusion"))
+    def overlay_blocks(src_blocks: Any, tr_blocks: Any, label: str) -> None:
+        """Overlay one prose region's translated text, aligned by index.
 
-    # Composed opening, section headings, section images, and bodies (composer). Image
-    # URLs/sources stay verbatim; captions prefer the person's translated life
-    # events (like event titles) and fall back to the translated payload.
-    src_opening = result.get("opening")
-    tr_opening = translated.get("opening")
-    if isinstance(src_opening, dict) and isinstance(tr_opening, dict):
-        _set_if_source_has(src_opening, "text", tr_opening.get("text"))
-        overlay_image_caption(src_opening.get("image"), tr_opening.get("image_caption"))
+        Block structure (types, layouts, image URLs and provenance) stays
+        verbatim; only paragraph/quote texts, attributions and image captions
+        are replaced. Image captions prefer the person's translated life
+        events and fall back to the payload.
+        """
+        if not isinstance(src_blocks, list) or not src_blocks:
+            return
+        tr_blocks = tr_blocks if isinstance(tr_blocks, list) else []
+        _require_same_length(label, src_blocks, tr_blocks)
+        for block, tr_block in zip(src_blocks, tr_blocks):
+            kind = block.get("type")
+            if kind in ("paragraph", "quote"):
+                _set_if_source_has(block, "text", tr_block.get("text"))
+                if kind == "quote":
+                    _set_if_source_has(
+                        block, "attribution", tr_block.get("attribution")
+                    )
+            elif kind == "image":
+                overlay_image_caption(block.get("image"), tr_block.get("image_caption"))
+
+    # Composed prose regions: the opening, the description and the closing.
+    for region in ("opening", "description", "conclusion"):
+        overlay_blocks(result.get(region), translated.get(region), region)
+
     src_headings = result.get("section_headings")
     tr_headings = translated.get("section_headings")
     if isinstance(src_headings, dict) and isinstance(tr_headings, dict):
         for slot in ("timeline", "network", "map", "conclusion"):
             _set_if_source_has(src_headings, slot, tr_headings.get(slot))
-    # Composed section bodies: block structure (types, layouts, image
-    # URLs/provenance) stays verbatim; only paragraph/quote texts,
-    # attributions, and image captions are overlaid, aligned by index.
     src_bodies = result.get("section_bodies")
     tr_bodies = translated.get("section_bodies")
     if isinstance(src_bodies, dict) and isinstance(tr_bodies, dict):
-        for slot in ("timeline", "network", "map", "conclusion"):
-            src_blocks = src_bodies.get(slot)
-            if not src_blocks:
-                continue
-            tr_blocks = tr_bodies.get(slot) or []
-            _require_same_length(f"section_bodies.{slot}", src_blocks, tr_blocks)
-            for block, tr_block in zip(src_blocks, tr_blocks):
-                kind = block.get("type")
-                if kind in ("paragraph", "quote"):
-                    _set_if_source_has(block, "text", tr_block.get("text"))
-                    if kind == "quote":
-                        _set_if_source_has(
-                            block, "attribution", tr_block.get("attribution")
-                        )
-                elif kind == "image":
-                    overlay_image_caption(
-                        block.get("image"), tr_block.get("image_caption")
-                    )
-    src_images = result.get("section_images")
-    tr_images = translated.get("section_images")
-    if isinstance(src_images, dict):
-        tr_images = tr_images if isinstance(tr_images, dict) else {}
-        for slot in ("timeline", "network", "conclusion"):
-            overlay_image_caption(
-                src_images.get(slot), tr_images.get(f"{slot}_caption")
+        for slot in ("timeline", "network", "map"):
+            overlay_blocks(
+                src_bodies.get(slot), tr_bodies.get(slot), f"section_bodies.{slot}"
             )
 
     # Network narration: the graph data stays verbatim, only the prose is
@@ -1295,17 +1259,16 @@ def translate_meta_story(
             "translate it as a headline, not literally.\n"
             "10. chapter lead_in entries are short narrative passages shown "
             "around the story timeline — translate them as flowing prose in "
-            "the same voice as the description.\n"
-            "11. opening is the story's cold-open scene and section_headings "
-            "are its section titles — translate both as narrative prose and "
-            "evocative headlines respectively, never as literal labels. "
-            "image_caption / *_caption entries are image captions.\n"
-            "11b. section_bodies entries are the story's long-form narrative "
-            "blocks — translate paragraph and quote texts as flowing prose in "
-            "the story's voice. A block with an attribution is a quotation: "
-            "translate the quote faithfully (it is a rendered translation of "
-            "a documented quote) and keep the attribution's names per the "
-            "usual name rules. Blocks with only image_caption are captions.\n"
+            "the story's voice.\n"
+            "11. section_headings are the story's section titles — translate "
+            "them as evocative headlines, never as literal labels.\n"
+            "11b. opening, description, section_bodies and conclusion are the "
+            "story's long-form narrative, each a list of blocks — translate "
+            "text entries as flowing prose in the story's voice. A block with "
+            "an attribution is a quotation: translate the quote faithfully (it "
+            "is a rendered translation of a documented quote) and keep the "
+            "attribution's names per the usual name rules. Blocks with only "
+            "image_caption are image captions.\n"
             "12. map_narration texts are short narrative paragraphs about the "
             "places of the story — translate them as flowing prose, localizing "
             "place names per the usual place rules. Each stop also has a "

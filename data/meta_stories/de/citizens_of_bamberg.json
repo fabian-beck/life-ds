@@ -5,7 +5,6 @@
     "id": "citizens_of_bamberg",
     "title": "Bürger Bambergs",
     "tagline": "Heilige, Denker, Baumeister, Dissidenten",
-    "description": "Bambergs Identität wurde ebenso von Macht und Frömmigkeit geformt wie von Papier, Tinte und Stein. Als kaiserliches Projekt gegründet und ausgestattet, wurde die Stadt zur Bühne, auf der Herrschaft, Reform und Kunstförderung in dauerhafte Institutionen übersetzt werden konnten – Dome, Bistümer, Gerichte und städtische Ämter, die Franken an das größere Heilige Römische Reich banden.\n\nJahrhunderte später zogen Bambergs Straßen und Theater ein anderes Talent an: Schriftsteller und Philosophen, deren Laufbahnen vom Druck der napoleonischen Umwälzungen und vom Aufstieg der modernen deutschen Öffentlichkeit geprägt waren. Die Stadt brachte auch praktische Modernisierer hervor und beschäftigte sie – kommunale Fachleute und medizinische Lehrer, deren Arbeit hehre Ideale in Infrastruktur und klinische Methode übersetzte.\n\nSelbst Figuren, die nur lose mit Bamberg verbunden sind, können sein „Bürgertum“ im weiteren Sinne erhellen: die Art, wie deutsche Geschichte und Wissenschaft – vom Widerstand bis zur Radiochemie – auf Gedächtnis und Institutionen jeder Stadt drückten. Bamberg wird zur Linse: ein Ort, an dem lokale Leben auf nationale Wendepunkte treffen.",
     "person_ids": [
       "henry_ii",
       "cunigunde_of_luxembourg",
@@ -31,26 +30,36 @@
     {
       "id": "imperial_founders_and_sacred_patronage",
       "title": "Kaiserliche Gründer, heilige Stadt",
-      "description": "Bamberg beginnt als kaiserlicher Bauplan – Autorität, ausgedrückt durch ein Bistum, Reliquienkultur und dauerhafte Institutionen, die das Stadtleben an Reich und Kirche banden.",
       "person_ids": ["henry_ii", "cunigunde_of_luxembourg"]
     },
     {
       "id": "napoleonic_aftershocks_and_romantic_bamberg",
       "title": "Romantisches Bamberg, moderner Druck",
-      "description": "Im frühen 19. Jahrhundert wird Bamberg zur Arbeitsstadt für Künstler und Intellektuelle, die sich zwischen Zensur, Theaterökonomie und der Geburt der modernen deutschen Öffentlichkeit bewegen.",
       "person_ids": ["e_t_a_hoffmann", "georg_wilhelm_friedrich_hegel"]
     },
     {
       "id": "civic_professionals_and_urban_making",
       "title": "Städtische Experten, gebaute Stadt",
-      "description": "Hinter Bambergs Erscheinungsbild und öffentlicher Gesundheit standen Fachleute – Stadtbaumeister und medizinische Erneuerer, die Verwaltung in Straßenbilder und klinische Praxis übersetzten.",
       "person_ids": ["hans_erlwein", "johann_lukas_sch_nlein"]
     },
     {
       "id": "national_science_and_conscience",
       "title": "Wissenschaft und Gewissen in Deutschland",
-      "description": "Bambergs Geschichte lebt auch in größeren deutschen Strömungen: den wissenschaftlichen Umbrüchen des 20. Jahrhunderts und der moralischen Auseinandersetzung des Widerstands – Kräfte, die die bürgerliche Identität überall neu formten.",
       "person_ids": ["ida_noddack", "claus_schenk_graf_von_stauffenberg"]
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Bambergs Identität wurde ebenso von Macht und Frömmigkeit geformt wie von Papier, Tinte und Stein. Als kaiserliches Projekt gegründet und ausgestattet, wurde die Stadt zur Bühne, auf der Herrschaft, Reform und Kunstförderung in dauerhafte Institutionen übersetzt werden konnten – Dome, Bistümer, Gerichte und städtische Ämter, die Franken an das größere Heilige Römische Reich banden."
+    },
+    {
+      "type": "paragraph",
+      "text": "Jahrhunderte später zogen Bambergs Straßen und Theater ein anderes Talent an: Schriftsteller und Philosophen, deren Laufbahnen vom Druck der napoleonischen Umwälzungen und vom Aufstieg der modernen deutschen Öffentlichkeit geprägt waren. Die Stadt brachte auch praktische Modernisierer hervor und beschäftigte sie – kommunale Fachleute und medizinische Lehrer, deren Arbeit hehre Ideale in Infrastruktur und klinische Methode übersetzte."
+    },
+    {
+      "type": "paragraph",
+      "text": "Selbst Figuren, die nur lose mit Bamberg verbunden sind, können sein „Bürgertum“ im weiteren Sinne erhellen: die Art, wie deutsche Geschichte und Wissenschaft – vom Widerstand bis zur Radiochemie – auf Gedächtnis und Institutionen jeder Stadt drückten. Bamberg wird zur Linse: ein Ort, an dem lokale Leben auf nationale Wendepunkte treffen."
     }
   ],
   "chapters": [
@@ -265,14 +274,6 @@
       ]
     }
   ],
-  "conclusion": "Bambergs „Bürger“ sind nicht nur jene, die innerhalb seiner Mauern geboren wurden, sondern auch jene, die seine Institutionen bauten, auf seinen Bühnen und in seinen Druckereien arbeiteten und Spuren im städtischen Gefüge hinterließen. Von kaiserlichen Gründern über moderne Fachleute bis hin zu Gestalten der Wissenschaft und des Widerstands liest sich Bamberg wie eine kleine Stadt mit langem, europäisch weitem Echo.",
-  "translation": {
-    "source_lang": "en",
-    "target_lang": "de",
-    "source_fingerprint": "ce05352214f330b4",
-    "translated_on": "2026-07-20T13:56:59.665993+00:00",
-    "translator": "manual"
-  },
   "social_network": {
     "nodes": [
       {
@@ -598,5 +599,18 @@
         }
       ]
     }
+  },
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "Bambergs „Bürger“ sind nicht nur jene, die innerhalb seiner Mauern geboren wurden, sondern auch jene, die seine Institutionen bauten, auf seinen Bühnen und in seinen Druckereien arbeiteten und Spuren im städtischen Gefüge hinterließen. Von kaiserlichen Gründern über moderne Fachleute bis hin zu Gestalten der Wissenschaft und des Widerstands liest sich Bamberg wie eine kleine Stadt mit langem, europäisch weitem Echo."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "ce05352214f330b4",
+    "translated_on": "2026-07-20T13:56:59.665993+00:00",
+    "translator": "manual"
   }
 }
