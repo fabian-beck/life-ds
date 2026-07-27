@@ -32,6 +32,25 @@
   const LINK_ACTIVE = "#38bdf8"; // focused ties (meta accent)
   const LINK_MUTED = "#475569"; // other ties while something is focused
 
+  function hashString(value) {
+    let hash = 2166136261;
+    for (let i = 0; i < value.length; i++) {
+      hash ^= value.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return hash >>> 0;
+  }
+
+  // A graph-derived pseudo-random source keeps force initialization identical
+  // whenever the reader returns to the same meta story.
+  function seededRandom(seed) {
+    let state = hashString(seed) || 1;
+    return () => {
+      state = (Math.imul(1664525, state) + 1013904223) >>> 0;
+      return state / 4294967296;
+    };
+  }
+
   // How many ties a cluster card spells out before summarizing the rest.
   const MAX_CARD_TIES = 4;
 
@@ -446,6 +465,10 @@
     const valid = network.links.filter(
       (l) => nodeIds.has(l.source) && nodeIds.has(l.target)
     );
+    const layoutSeed = [
+      ...simNodes.map((n) => `n:${n.id}`).sort(),
+      ...valid.map((l) => `l:${[l.source, l.target].sort().join("-")}`).sort(),
+    ].join("|");
     // `simLinks` (for rendering) keeps string ids and metadata. d3 gets its own
     // array, which it mutates by replacing source/target with node objects.
     simLinks = valid.map((l) => ({ ...l }));
@@ -459,7 +482,8 @@
     computeTargets(width);
     for (const n of simNodes) {
       n.x = n.tx;
-      n.y = height / 2 + (Math.random() - 0.5) * height * 0.5;
+      const nodeRandom = seededRandom(`${layoutSeed}|${n.id}`);
+      n.y = height / 2 + (nodeRandom() - 0.5) * height * 0.5;
     }
 
     if (simulation) simulation.stop();
@@ -468,6 +492,7 @@
     // (see runLayout) so the graph never animates on its own.
     simulation = forceSimulation(simNodes)
       .stop()
+      .randomSource(seededRandom(layoutSeed))
       .force(
         "link",
         forceLink(forceLinks)
