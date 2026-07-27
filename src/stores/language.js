@@ -39,8 +39,9 @@ export const currentLanguage = writable(initialLang);
 // real text (no flash of raw translation keys).
 export const translations = writable(getLocale(initialLang));
 
-// Persist language preference and update HTML lang attribute
+// Keep the active strings, persisted preference, and document language in sync.
 currentLanguage.subscribe((lang) => {
+  translations.set(getLocale(lang));
   if (typeof localStorage !== "undefined") {
     localStorage.setItem("preferredLanguage", lang);
   }

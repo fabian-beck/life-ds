@@ -5,7 +5,7 @@
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import MetaStoryView from "./components/MetaStoryView.svelte";
-  import { currentLanguage, loadTranslations, _ } from "./stores/language";
+  import { currentLanguage, _ } from "./stores/language";
   // Side-effect import: the store's subscription applies the persisted
   // `html.high-contrast` class (see app.css) on every route, including
   // deep-linked story pages that never render the toggle button itself.
@@ -14,14 +14,6 @@
   import styleRegistry from "../data/person_styles.json";
   import { displayName } from "./utils/helpers.js";
   import { parseHexColor } from "./utils/storyHelpers.js";
-
-  // Reload translations when language changes
-  onMount(() => {
-    const unsubscribe = currentLanguage.subscribe((lang) => {
-      loadTranslations(lang);
-    });
-    return unsubscribe;
-  });
 
   // Initial registry (will be replaced with language-specific version)
   let registry = { people: [] };
