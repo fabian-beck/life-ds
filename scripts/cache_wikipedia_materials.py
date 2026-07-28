@@ -14,8 +14,10 @@ from config import DEFAULT_MODEL, LOW_REASONING_EFFORT
 from utils.wikipedia_cache import (
     cache_exists,
     ensure_cache,
+    extract_wikipedia_title,
     get_cache_dir,
     get_cached_wikipedia_page,
+    is_url,
     slugify,
     wikipedia_headers,
     _fetch_wikipedia_page_direct,
@@ -54,8 +56,25 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
 
 
 def find_wikipedia_page(title: str) -> str:
-    """Find a Wikipedia page, trying various title variants."""
+    """Find a Wikipedia page, trying various title variants.
+
+    A Wikipedia URL names its article outright, so it is reduced to that title
+    and never handed to the search fallback: searching for the URL string
+    itself matches whatever article happens to mention it — '.../wiki/Zaha
+    Hadid' once resolved to 'Neom' — and the wrong article was then cached
+    under the right person's id without a word of complaint.
+    """
     import re
+
+    url_title = extract_wikipedia_title(title)
+    if url_title is not None:
+        title = url_title[0]
+    elif is_url(title):
+        raise ValueError(
+            f"'{title}' is a URL but not a Wikipedia article URL. Pass a "
+            "subject name, or a URL of the form "
+            "https://en.wikipedia.org/wiki/Article_Title."
+        )
 
     candidates: List[str] = []
     seen: Set[str] = set()

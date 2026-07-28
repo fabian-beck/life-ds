@@ -5,7 +5,8 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, List, Optional, Tuple, cast
+from urllib.parse import unquote, urlparse
 
 import requests
 
@@ -42,6 +43,57 @@ def wikipedia_headers() -> Dict[str, str]:
     """Return headers for Wikipedia API requests."""
     user_agent = os.getenv("WIKIPEDIA_USER_AGENT", DEFAULT_USER_AGENT)
     return {"User-Agent": user_agent}
+
+
+def is_url(value: str) -> bool:
+    """Report whether a string is an http(s) URL rather than a subject name."""
+    value = (value or "").strip()
+    return value.startswith("http://") or value.startswith("https://")
+
+
+def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
+    """Extract the article title and language code from a Wikipedia URL.
+
+    Supports URLs like:
+    - https://en.wikipedia.org/wiki/Ada_Lovelace
+    - https://de.wikipedia.org/wiki/Hanna_Nagel
+    - http://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD
+
+    Returns ``(article_title, language_code)`` for a Wikipedia article URL and
+    ``None`` for anything else, including a plain subject name.
+    """
+    url_or_subject = (url_or_subject or "").strip()
+    if not is_url(url_or_subject):
+        return None
+
+    try:
+        parsed = urlparse(url_or_subject)
+    except ValueError:
+        return None
+
+    if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
+        return None
+
+    domain_parts = parsed.netloc.split(".")
+    if (
+        len(domain_parts) >= 3
+        and domain_parts[-2] == "wikipedia"
+        and domain_parts[-1] == "org"
+        and domain_parts[0] != "www"
+    ):
+        lang_code = domain_parts[0]
+    else:
+        lang_code = "en"
+
+    # The path is /wiki/Article_Title; the title itself may contain slashes.
+    path_parts = parsed.path.split("/")
+    if len(path_parts) < 3 or path_parts[1] != "wiki":
+        return None
+
+    title = unquote("/".join(path_parts[2:])).replace("_", " ").strip()
+    if not title:
+        return None
+    return (title, lang_code)
 
 
 def get_cache_dir(person_id: str) -> Path:
