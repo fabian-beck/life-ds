@@ -3,8 +3,8 @@
   "created_on": "2026-07-25T10:13:20.000829+02:00",
   "meta_story": {
     "id": "organic_shapes_in_architecture",
-    "title": "Buildings Learn From Life",
-    "tagline": "Architecture against the sealed, standardized box",
+    "title": "Beyond the Box",
+    "tagline": "Architecture shaped by life, place and force",
     "person_ids": [
       "antoni_gaud",
       "charles_rennie_mackintosh",
@@ -18,7 +18,7 @@
     ],
     "date_range_start": "1883",
     "date_range_end": "2012",
-    "lastUpdated": "2026-07-26T07:24:26.322072+02:00"
+    "lastUpdated": "2026-07-28T04:37:21.767645+00:00"
   },
   "generation_metadata": {
     "hints": {
@@ -50,63 +50,111 @@
   ],
   "opening": [
     {
+      "type": "paragraph",
+      "text": "Modern architecture is often described as a march toward smooth walls, right angles, and repeatable systems. The lives of these nine architects and designers reveal another current: buildings shaped by craft, bodies, landscapes, structural forces, and the unpredictable uses of everyday life."
+    },
+    {
       "type": "image",
       "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
-        "caption": "Tanzbrunnen Köln Sternwellenzelt by Frei Otto (1957)",
-        "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
-        "person_id": "frei_otto",
-        "event_index": 6,
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Barcelona_Parc_G%C3%BCell_el_drac.jpg/960px-Barcelona_Parc_G%C3%BCell_el_drac.jpg",
+        "caption": "Park Güell ‘el drac’ fountain, Barcelona",
+        "source": "https://commons.wikimedia.org/wiki/File:Barcelona_Parc_Güell_el_drac.jpg",
+        "person_id": "antoni_gaud",
+        "event_index": 11,
         "image_index": 0
       },
       "layout": "full"
     },
     {
       "type": "paragraph",
-      "text": "In Cologne in 1957, Frei Otto founded a private center for lightweight construction and put its ideas to work at full scale. At the Sternwellenzelt, tension rather than rigid enclosure shaped the roof."
-    },
-    {
-      "type": "paragraph",
-      "text": "Cable and membrane carried the experiment into architectural space."
+      "text": "Gaudí made stone, tile, and structure seem botanical or geological. Wright rooted architecture in a particular terrain; Aalto adjusted modernism to touch, light, sound, and comfort; Otto let tension determine form. Bo Bardi and Bawa opened modern architecture to social life and tropical settings, while Hundertwasser and Hadid attacked the standardized box through vegetation, irregularity, and fluid geometry."
     }
   ],
   "description": [
     {
       "type": "paragraph",
-      "text": "At issue was how much of life architecture would permit to shape it. The standardized enclosure favored regular surfaces and fixed boundaries; Gaudí and Mackintosh instead treated ornament, furniture, fittings and handwork as architectural matter. Hundertwasser later pushed the challenge toward vegetation and irregularity. The disagreement was not merely decorative: it concerned whether architecture ended at the shell."
+      "text": "They did not belong to one movement, share a manifesto, or all know one another. The documented links are limited: Frei Otto visited Frank Lloyd Wright at Taliesin in 1950 and later drew on Antoni Gaudí’s forms for the Munich Olympic Stadium. Ludwig Mies van der Rohe provides another bridge, through his friendship and professional work with Otto and his influence on Lina Bo Bardi’s Glass House."
     },
     {
       "type": "paragraph",
-      "text": "Modern construction did not answer that question by itself. Aalto calibrated it to bodily experience, Wright and Bawa to landscape and occupation, and Bo Bardi to collective use. Hadid made movement a generator of public space. Each approach required a choice about which forces outside the conventional box deserved authority over form."
+      "text": "Most of the kinship lies instead in recurring questions. Could a room respond to a patient’s breathing, a dormitory follow a river, a roof find its shape through tension, or a cultural center grow from the habits of its users? Across Europe, the Americas, and Asia, their answers steadily enlarged what an organic architecture could be."
     }
   ],
   "section_headings": {
-    "timeline": "Conditions Enter the Drawing",
-    "network": "How Ideas Traveled",
-    "map": "Grounds of Difference",
-    "conclusion": "What the Box Couldn’t Hold"
+    "timeline": "Forms Through Time",
+    "network": "Contacts and Convergences",
+    "map": "Local Grounds",
+    "conclusion": "What Organic Came to Mean"
   },
   "section_bodies": {
     "timeline": [
       {
         "type": "paragraph",
-        "text": "Political catastrophe repeatedly broke the supposed continuity of architectural progress. World War II disrupted Alvar Aalto’s Finnish practice and delayed realization of Frank Lloyd Wright’s Guggenheim project after the 1943 commission. In both cases, the calendar of design was subordinated to a war taking place beyond the drawing office."
+        "text": "In the earliest works, the alternative to uniformity began with total design: structure, furniture, ornament, and landscape were treated as one environment. By the late 1920s, Aalto was redirecting modern construction toward the senses and needs of occupants, while Wright pursued continuous space and architecture rooted in place."
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Paimio_Sanatorium.jpg/960px-Paimio_Sanatorium.jpg",
+          "caption": "Paimio Sanatorium by Alvar Aalto in Finland",
+          "source": "https://commons.wikimedia.org/wiki/File:Paimio_Sanatorium.jpg",
+          "person_id": "alvar_aalto",
+          "event_index": 5,
+          "image_index": 0
+        },
+        "layout": "right"
       },
       {
         "type": "paragraph",
-        "text": "In Brazil, politics reached directly into cultural practice. The military coup ended Lina Bo Bardi’s work in Bahia and prompted her return to São Paulo; she continued working under the dictatorship that followed. Her concern with collective life therefore developed under political pressure, not in an untouched laboratory of form."
+        "text": "War disrupted Aalto’s Finnish practice and delayed the Guggenheim’s realization after Wright received the commission in 1943. In the postwar decades, the inquiry expanded: Bo Bardi joined architecture to Brazilian landscape and public life, while Otto’s experiments allowed cable nets, membranes, and lightweight materials to find forms through physical forces. Brazil’s military coup ended Bo Bardi’s cultural work in Bahia and prompted her return to São Paulo, where she continued working under the dictatorship."
+      },
+      {
+        "type": "paragraph",
+        "text": "By the closing decades of the twentieth century, these ideas operated at civic and international scales. Factories became communal leisure centers, hotels receded into forests, housing admitted trees, and Hadid’s dynamic drawings became major public buildings organized around motion rather than static rooms."
       }
     ],
     "network": [
       {
         "type": "paragraph",
-        "text": "Technical research traveled through publication, teaching, and international exhibitions rather than through a single school. Das hängende Dach gave tensile construction a published basis, while teaching abroad carried the research across borders. Expo 67 offered an international platform where the work could be tested before enormous publics. Together, those channels moved lightweight construction between written argument, instruction, and full-scale demonstration."
+        "text": "The clearest chain of contact runs through Otto. His visit to Wright connected the experimental engineer to an older philosophy of organic architecture, while Gaudí’s forceful, nature-derived forms supplied another precedent for the Munich roofs. Mies van der Rohe linked Otto and Bo Bardi in different ways: as Otto’s friend and professional collaborator, and as an influence on Bo Bardi’s early modernism."
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg/960px-Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
+          "caption": "Frei Otto tensile structures for Munich 72 Olympics",
+          "source": "https://commons.wikimedia.org/wiki/File:Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
+          "person_id": "frei_otto",
+          "event_index": 9,
+          "image_index": 0
+        },
+        "layout": "full"
+      },
+      {
+        "type": "paragraph",
+        "text": "Beyond those documented connections, the groupings are comparisons rather than claims of personal acquaintance. Mackintosh and Hundertwasser opposed uniform surfaces in different eras; Aalto and Bawa adapted modernism to material and climate; Bo Bardi and Hadid reworked public space through occupation and movement. Their convergence came through practice, not membership in a common circle."
       }
     ],
     "map": [
       {
         "type": "paragraph",
-        "text": "Two careers make movement itself part of architectural exchange. Italian-born Lina Bo Bardi built her career in Brazil, while Zaha Hadid’s life joined Iraqi and British contexts. Their trajectories crossed national frames rather than carrying a single, closed national style from one project to the next."
+        "text": "These ideas were never detached from location. Barcelona’s craft traditions and urban fabric, Glasgow’s custom-designed interiors, São Paulo’s domestic and industrial settings, Cologne’s experimental workshop culture, and Dambulla’s forest each became material in the architecture itself."
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kandalama_Hotel%2C_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg/960px-Kandalama_Hotel%2C_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg",
+          "caption": "Kandalama Hotel, Dambulla",
+          "source": "https://commons.wikimedia.org/wiki/File:Kandalama_Hotel,_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg",
+          "person_id": "geoffrey_bawa",
+          "event_index": 14,
+          "image_index": 0
+        },
+        "layout": "right"
+      },
+      {
+        "type": "paragraph",
+        "text": "The geographic shift also changed the meaning of belonging to place. It could mean using local craft, calibrating a building to climate, preserving an industrial complex for new public life, or allowing vegetation to overtake a hotel façade. Place was not scenery added after design; it helped generate form and experience."
       }
     ]
   },
@@ -177,7 +225,7 @@
         }
       ],
       "historical_context": [],
-      "lead_in": "Buildings, interiors, furnishings, and ornament were designed as continuous environments. Natural forms and local craft entered both structure and surface."
+      "lead_in": "Around the turn of the twentieth century, buildings, furnishings, ornament, and landscape were conceived as continuous environments. Natural forms and local craft shaped both structure and surface."
     },
     {
       "id": "organic_modernism_emerges",
@@ -233,11 +281,11 @@
           "priority": 3
         }
       ],
-      "lead_in": "Light, ventilation, acoustics, materials, and circulation were adjusted to bodily experience. Modern construction became the framework for carefully shaped rooms and routes."
+      "lead_in": "Modern construction became a framework for bodily experience, adjusted through light, ventilation, acoustics, materials, and circulation. World War II disrupted practices and delayed projects, but not the search for a more humane modernism."
     },
     {
       "id": "landscape_structure_and_society",
-      "title": "Forces Generate Form (1949-1975)",
+      "title": "Conditions Generate Form (1949-1975)",
       "date_start": "1949",
       "date_start_precision": "year",
       "date_end": "1975",
@@ -313,7 +361,7 @@
           "priority": 2
         }
       ],
-      "lead_in": "Terrain, structural tension, and collective occupation began directing plans and roof systems. Form emerged from physical and social conditions rather than fixed enclosure."
+      "lead_in": "Landscape, structural force, and vegetation became active design agents. Buildings followed river views, tropical sites, tensile behavior, and ideas of nonhuman inhabitation."
     },
     {
       "id": "fluid_architecture_goes_global",
@@ -397,7 +445,7 @@
         }
       ],
       "historical_context": [],
-      "lead_in": "Public buildings, housing, and hotels joined movement, vegetation, and landscape to expansive spatial systems. Experimental geometries moved from drawings and pavilions into major built projects."
+      "lead_in": "Public buildings, housing, and hotels joined movement, vegetation, landscape, and social use to expansive spatial systems. Experimental forms moved from manifestos, models, and drawings into major built projects."
     }
   ],
   "social_network": {
@@ -562,8 +610,8 @@
         {
           "key": "antoni_gaud+frank_lloyd_wright+frei_otto",
           "member_ids": ["antoni_gaud", "frank_lloyd_wright", "frei_otto"],
-          "title": "Otto’s Lines of Contact",
-          "text": "During his United States trip in 1950, Frei Otto visited Frank Lloyd Wright at Taliesin and encountered Wright’s work and ideas. Otto later used Gaudí’s forms in developing the Munich Olympic Stadium, where cable-net roofs were shaped through hanging-net and soap-film experiments."
+          "title": "Recorded Lines of Contact",
+          "text": "Frei Otto visited Frank Lloyd Wright at Taliesin during his 1950 trip to the United States, encountering Wright’s work and architectural ideas. Otto later used Gaudí’s forms while developing the Munich Olympic Stadium, where hanging-net and soap-film experiments informed the cable-net roofs."
         },
         {
           "key": "charles_rennie_mackintosh+friedensreich_hundertwasser",
@@ -571,20 +619,20 @@
             "charles_rennie_mackintosh",
             "friedensreich_hundertwasser"
           ],
-          "title": "Against Uniform Surfaces",
-          "text": "Mackintosh coordinated architecture, interiors, furnishings, fittings, and ornament in his Glasgow commissions. Hundertwasser later rejected straight lines and standardization, using irregular surfaces, vivid color, and vegetation in architectural designs such as the Hundertwasserhaus."
+          "title": "Against Uniformity",
+          "text": "Mackintosh coordinated structure, interiors, furnishings, fittings, and ornament into complete environments. Decades later, Hundertwasser mounted a different attack on standardization through uneven surfaces, vivid color, vegetation, and his rejection of straight lines."
         },
         {
           "key": "alvar_aalto+geoffrey_bawa",
           "member_ids": ["alvar_aalto", "geoffrey_bawa"],
-          "title": "Materials Meet Landscape",
-          "text": "Aalto combined modern construction with wood, brick, natural textures, and carefully designed interiors and furniture. In Sri Lanka, Bawa joined modern design to tropical landscapes, local materials, and vernacular forms in projects including the Parliament complex and Kandalama Hotel."
+          "title": "Modernism Meets Place",
+          "text": "Aalto tempered modern construction with wood, brick, natural textures, and interiors calibrated to human experience. In Sri Lanka, Bawa joined modern design to tropical climate, water, planting, local materials, and vernacular roof forms."
         },
         {
           "key": "lina_bo_bardi+zaha_hadid",
           "member_ids": ["lina_bo_bardi", "zaha_hadid"],
           "title": "Public Space Recast",
-          "text": "Bo Bardi adapted architecture to everyday social and cultural use, converting a São Paulo factory into the SESC Pompéia leisure center. Hadid developed dynamic public spaces through sharply angled planes at the Vitra Fire Station and flowing galleries at MAXXI."
+          "text": "Bo Bardi turned architecture toward everyday social and cultural use, most visibly in the SESC Pompéia factory conversion. Hadid reorganized public space through angled planes, continuous routes, and flowing galleries, carrying radical geometry from drawings into built institutions."
         }
       ]
     }
@@ -751,48 +799,31 @@
       "stops": [
         {
           "key": "barcelona",
-          "title": "Gaudí’s Working City",
-          "text": "In Barcelona, Gaudí built Casa Vicens, developed Park Güell, transformed Casa Batlló, and designed Casa Milà. He later devoted his practice to the Sagrada Família, directing its development through models and on-site problem-solving."
+          "title": "Gaudí’s Urban Laboratory",
+          "text": "In Barcelona, Gaudí moved from the crafted surfaces of Casa Vicens to the landscape synthesis of Park Güell and the sculptural forms of Casa Batlló and Casa Milà. He eventually devoted his practice to the Sagrada Família, developing it through models and decisions made on site."
         },
         {
           "key": "glasgow",
-          "title": "Rooms as Total Works",
-          "text": "Mackintosh shaped the Glasgow School of Art on Renfrew Street as a coordinated building of structure, fittings, finishes, and interior details. Hill House and the Willow Tearooms extended this approach to custom furniture and complete domestic and commercial interiors."
+          "title": "The Total Interior",
+          "text": "Mackintosh shaped the Glasgow School of Art as a coordinated work of structure, fittings, finishes, light, and ornament. The Willow Tearooms extended that approach into commercial life, while nearby Hill House carried it into a complete domestic environment."
         },
         {
           "key": "sao_paulo",
           "title": "Home and Common Ground",
-          "text": "Bo Bardi completed the Casa de Vidro in São Paulo as a home for herself and Pietro Maria Bardi. She later designed the SESC Pompéia factory conversion as a leisure center for everyday use, using straightforward methods that could employ local craftspeople and workers."
+          "text": "Bo Bardi’s Casa de Vidro elevated a glass home within its garden setting, making domestic space an extension of the tropical site. At SESC Pompéia, she later converted an industrial complex into a leisure center for everyday use, favoring straightforward methods suited to local craftspeople and workers."
         },
         {
           "key": "cologne",
-          "title": "Lightweight Experiments",
-          "text": "In Cologne, Otto founded the Entwicklungsstätte für den Leichtbau, a private center for lightweight construction. It provided a workshop for full-scale experiments associated with projects such as the tensile-roof Sternwellenzelt."
+          "title": "Testing Lightness",
+          "text": "In Cologne, Otto founded a private center for lightweight construction and pursued experiments at full scale. The Sternwellenzelt made his principles visible in a tensile roof shaped by tension rather than structural mass."
         },
         {
           "key": "dambulla",
-          "title": "Hotel in the Forest",
-          "text": "Near Dambulla, Bawa embedded the long structure of the Heritance Kandalama Hotel within a forested landscape. The completed project included work by artist Laki Senanayake and designer Barbara Sansoni."
+          "title": "Architecture in the Forest",
+          "text": "Near Dambulla, Bawa embedded the long Kandalama Hotel in a forested landscape rather than treating the site as a backdrop. Climate, terrain, and vegetation shaped both its form and the experience of moving through it."
         }
       ]
     },
-    "discarded": [
-      {
-        "key": "cambridge",
-        "label": "Cambridge",
-        "reason": "A meaningful single work by Alvar Aalto, but this one-event stop is secondary to the stronger, more sustained geographic chapters in the story’s arc."
-      },
-      {
-        "key": "hong_kong",
-        "label": "Hong Kong",
-        "reason": "Zaha Hadid’s competition victory was significant, but the solitary unbuilt competition entry would broaden the itinerary without developing the material and built-work thread carried by the surviving stops."
-      },
-      {
-        "key": "hanover",
-        "label": "Hanover",
-        "reason": "The Japanese Pavilion is an important later work by Frei Otto, but Cologne already provides the more decisive chapter: the founding of his lightweight-structure laboratory alongside an early built experiment."
-      }
-    ],
     "generation": {
       "model": "gpt-5.6-terra",
       "generated_at": "2026-07-25T10:13:58.036102+02:00",
@@ -803,14 +834,32 @@
   "conclusion": [
     {
       "type": "paragraph",
-      "text": "By Hadid’s 2012 damehood, the sealed box no longer exhausted modern architecture’s possibilities: structure, climate, craft, vegetation, movement and public use could all claim a role in generating form. No single organic alternative replaced it, and the unresolved question remains whose experience—and which conditions—architecture should answer."
+      "text": "Across 129 years, organic architecture never settled into a recognizable look. For Gaudí it could be branching structure and handcrafted surface; for Aalto, a chair shaped around a patient’s body; for Otto, a roof discovered through hanging nets and soap films. Bo Bardi found it in collective use, Bawa in climate and terrain, Hundertwasser in vegetation and irregularity, and Hadid in geometry experienced as movement."
+    },
+    {
+      "type": "image",
+      "image": {
+        "url": "https://live.staticflickr.com/2823/34196059542_382de86c85_b.jpg",
+        "caption": "MAXXI Museum in Rome, exterior view",
+        "source": "https://www.flickr.com/photos/72746018@N00/34196059542",
+        "person_id": "zaha_hadid",
+        "event_index": 12,
+        "image_index": 0
+      },
+      "layout": "full"
+    },
+    {
+      "type": "paragraph",
+      "text": "The strongest continuity was therefore a method: beginning with conditions that the abstract box tends to suppress. Materials have limits, landscapes have contours, bodies have needs, structures carry forces, and communities alter the spaces they inhabit."
+    },
+    {
+      "type": "paragraph",
+      "text": "These architects were not all allies, and their work cannot be reduced to one lineage. Their shared achievement was to keep architecture answerable to life outside its walls—and to show that modernity did not have to mean uniformity."
     }
   ],
   "composition": {
     "model": "gpt-5.6-sol",
-    "composed_at": "2026-07-26T07:24:26.322072+02:00",
-    "throughline": "The story follows architects who challenged the sealed, standardized building by making form answer to conditions beyond the box: craft and ornament, bodies and daily use, landscape and climate, structural forces, vegetation, and movement. Beginning with Gaudí and Mackintosh’s total environments, it moves through Wright, Aalto, and Bawa’s place-responsive buildings to Otto, Bo Bardi, Hundertwasser, and Hadid’s experiments with tension, collective occupation, ecological irregularity, and fluid public space. The unifying tension is that responsiveness produced no single organic style; each architect had to decide which relationships should generate form and whose experience the building should serve.",
-    "excluded_people": [],
-    "prose_revisions": 2
+    "composed_at": "2026-07-28T04:37:21.767645+00:00",
+    "throughline": "Across 129 years, nine architects and designers resisted the building as a sealed, standardized object. Their alternatives emerged from craft, bodily comfort, landscape, structural forces, social use, vegetation, and movement. Only a few were directly connected, but together their work reveals organic architecture as a recurring method rather than a single style or school."
   }
 }
