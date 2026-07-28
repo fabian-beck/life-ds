@@ -1,0 +1,728 @@
+/* Pipeline documentation — standalone page styles.
+   Palette: validated categorical slots 1-4 (blue/orange/aqua/yellow) for step
+   kinds, blue/orange for the two token series. Colour never carries meaning
+   alone: every node has its label, every kind has a legend entry and a badge.
+
+   Light only, by request — `color-scheme: light` keeps form controls and
+   scrollbars light even when the OS is in dark mode, so nothing renders as a
+   half-converted hybrid. */
+
+:root {
+  color-scheme: light;
+  --surface: #fcfcfb;
+  --plane: #f9f9f7;
+  --card: #ffffff;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --hairline: rgb(11 11 11 / 10%);
+  --shadow: 0 1px 2px rgb(11 11 11 / 6%), 0 8px 24px rgb(11 11 11 / 6%);
+  --kind-ai: #2a78d6;
+  --kind-deterministic: #eb6834;
+  --kind-external: #1baf7a;
+  --kind-image: #eda100;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --accent-soft: rgb(42 120 214 / 10%);
+  --mono: ui-monospace, sfmono-regular, "SF Mono", menlo, consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px 96px;
+}
+
+/* ---------------------------------------------------------------- header */
+
+header.page {
+  padding: 40px 0 20px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 640;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--ink-2);
+  font-size: 16px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.chip {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-2);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.chip code {
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+/* ------------------------------------------------------------ stat tiles */
+
+.tiles {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 28px 0 8px;
+}
+
+.tile {
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.tile .value {
+  font-size: 26px;
+  font-weight: 620;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.tile .label {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------- toolbar */
+
+.chart-section {
+  position: relative;
+}
+
+.toolbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 26px 0 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--plane);
+}
+
+.search {
+  flex: 1 1 240px;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+}
+
+.search:focus {
+  border-color: var(--series-1);
+  outline: 2px solid var(--accent-soft);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.toggle {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  padding: 5px 11px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.toggle[aria-pressed="true"] {
+  border-color: var(--axis);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.toggle[aria-pressed="false"] {
+  opacity: 0.55;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+}
+
+.hint {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+/* ----------------------------------------------------------------- chart */
+
+.chart-scroll {
+  overflow-x: auto;
+  padding: 6px 0 18px;
+  border-radius: 14px;
+}
+
+svg#flow {
+  display: block;
+  min-width: 940px;
+  background: transparent;
+  font-family: var(--sans);
+}
+
+.lane-title {
+  font-size: 15px;
+  font-weight: 640;
+  fill: var(--ink);
+}
+
+.lane-sub {
+  font-size: 11.5px;
+  fill: var(--muted);
+}
+
+.lane-band {
+  fill: var(--surface);
+  stroke: var(--hairline);
+}
+
+.edge {
+  fill: none;
+  stroke: var(--axis);
+  stroke-width: 1.5;
+}
+
+.edge-arrow {
+  fill: var(--axis);
+}
+
+.node rect.body {
+  fill: var(--card);
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+
+.node:hover rect.body,
+.node:focus-visible rect.body {
+  stroke: var(--axis);
+}
+
+.node.selected rect.body {
+  stroke: var(--series-1);
+  stroke-width: 2;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node text.title {
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+
+.node text.sub {
+  font-size: 10.5px;
+  fill: var(--muted);
+  font-family: var(--mono);
+}
+
+.node text.metric {
+  font-size: 10.5px;
+  fill: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.node text.badge-text {
+  font-size: 9.5px;
+  font-weight: 600;
+  fill: var(--card);
+}
+
+.node.dim {
+  opacity: 0.22;
+}
+
+.artifact rect {
+  fill: var(--surface);
+  stroke: var(--axis);
+  stroke-width: 1;
+  stroke-dasharray: 3 2.5;
+}
+
+.artifact text {
+  font-size: 10.5px;
+  fill: var(--ink-2);
+}
+
+.artifact.related rect {
+  stroke: var(--series-1);
+  stroke-dasharray: none;
+  fill: var(--accent-soft);
+}
+
+.artifact.dim {
+  opacity: 0.25;
+}
+
+/* ---------------------------------------------------------------- drawer */
+
+.drawer {
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  right: 0;
+  display: flex;
+  overflow: hidden;
+  width: min(560px, 100%);
+  height: 100%;
+  border-left: 1px solid var(--hairline);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  flex-direction: column;
+  transform: translateX(102%);
+  transition: transform 0.22s ease;
+}
+
+.drawer.open {
+  transform: none;
+}
+
+.drawer-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.drawer-head h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 640;
+  letter-spacing: -0.01em;
+}
+
+.drawer-close {
+  margin-left: auto;
+  padding: 2px 9px;
+  border: 1px solid var(--hairline);
+  border-radius: 7px;
+  background: var(--card);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.drawer-body {
+  overflow-y: auto;
+  padding: 16px 20px 60px;
+}
+
+.drawer-body h3 {
+  margin: 24px 0 8px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 660;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.drawer-body h3:first-child {
+  margin-top: 4px;
+}
+
+.drawer-body p {
+  margin: 0 0 10px;
+}
+
+.drawer-body p.sub,
+.drawer-body .inner p.sub {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.facts {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.facts th {
+  width: 38%;
+  padding: 5px 10px 5px 0;
+  color: var(--muted);
+  font-weight: 500;
+  text-align: left;
+  vertical-align: top;
+}
+
+.facts td {
+  padding: 5px 0;
+  vertical-align: top;
+}
+
+.facts tr + tr th,
+.facts tr + tr td {
+  border-top: 1px solid var(--grid);
+}
+
+code,
+.mono {
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+ul.bullets {
+  margin: 0 0 10px;
+  padding-left: 18px;
+}
+
+ul.bullets li {
+  margin-bottom: 4px;
+}
+
+details.block {
+  margin-bottom: 8px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+details.block > summary {
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 560;
+  cursor: pointer;
+  list-style: none;
+}
+
+details.block > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.block > summary::before {
+  display: inline-block;
+  width: 14px;
+  content: "▸";
+  color: var(--muted);
+}
+
+details.block[open] > summary::before {
+  content: "▾";
+}
+
+details.block .inner {
+  padding: 0 12px 12px;
+}
+
+pre.prompt {
+  overflow: auto;
+  max-height: 460px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--plane);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+pre.prompt .ph {
+  padding: 0 2px;
+  border-radius: 3px;
+  background: var(--accent-soft);
+  color: var(--series-1);
+}
+
+pre.prompt .role {
+  display: block;
+  margin: 6px 0 2px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cond {
+  display: block;
+  margin: 8px 0 2px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.schema-field {
+  padding: 5px 0;
+  border-top: 1px solid var(--grid);
+  font-size: 12.5px;
+}
+
+.schema-field:first-child {
+  border-top: 0;
+}
+
+.schema-field .fname {
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+.schema-field .ftype {
+  color: var(--series-1);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.schema-field .fdesc {
+  color: var(--ink-2);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.tab {
+  padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 7px;
+  background: var(--card);
+  color: var(--ink-2);
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+  border-color: var(--series-1);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.empty {
+  padding: 18px;
+  border: 1px dashed var(--axis);
+  border-radius: 12px;
+  color: var(--ink-2);
+  font-size: 13.5px;
+}
+
+.empty code {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--plane);
+}
+
+/* ------------------------------------------------------------ run charts */
+
+section.runs {
+  margin-top: 46px;
+}
+
+section.runs h2,
+section.appendix h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 640;
+  letter-spacing: -0.015em;
+}
+
+.section-lede {
+  margin: 0 0 18px;
+  max-width: 70ch;
+  color: var(--ink-2);
+  font-size: 14.5px;
+}
+
+.chart-card {
+  padding: 18px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--surface);
+  margin-bottom: 16px;
+}
+
+.chart-card h3 {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 620;
+}
+
+.chart-card .sub {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 12px;
+  color: var(--ink-2);
+  font-size: 12px;
+}
+
+.legend span {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.bars {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: minmax(120px, 210px) 1fr auto;
+  align-items: center;
+  font-size: 12.5px;
+}
+
+.bars .name {
+  overflow: hidden;
+  color: var(--ink-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bars .track {
+  position: relative;
+  display: flex;
+  height: 14px;
+  gap: 2px;
+  border-radius: 3px;
+}
+
+.bars .seg {
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  min-width: 2px;
+}
+
+.bars .seg:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.bars .seg:only-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.bars .val {
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bars .row-hit {
+  display: contents;
+}
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+table.data th {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--axis);
+  color: var(--muted);
+  font-weight: 560;
+  text-align: left;
+}
+
+table.data td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--grid);
+  font-variant-numeric: tabular-nums;
+}
+
+table.data td:first-child {
+  font-variant-numeric: normal;
+}
+
+footer.page {
+  margin-top: 54px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+@media (width <= 720px) {
+  .drawer {
+    width: 100%;
+  }
+
+  .bars {
+    grid-template-columns: minmax(90px, 130px) 1fr auto;
+  }
+}
+
+@media print {
+  .toolbar,
+  .drawer {
+    display: none;
+  }
+}

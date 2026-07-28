@@ -324,6 +324,60 @@ Python scripts use:
 - Verify svelte-spa-router routes in `App.svelte`
 - Test with `console.log($location)` in component
 
+## Pipeline Documentation
+
+`docs/pipeline/index.html` is a standalone, interactive chart of both generation
+pipelines: every step, the model and reasoning effort it uses, the prompt it
+sends, the structured output it asks for, and — when a run has been recorded —
+the real prompts, responses, timings and token counts.
+
+```bash
+python scripts/generate_pipeline_docs.py            # rebuild the page
+python scripts/generate_pipeline_docs.py --check    # drift check only, no API key needed
+python scripts/generate_pipeline_docs.py --skip-ai  # rebuild without calling the API
+```
+
+It is built from three layers, in `scripts/pipeline_docs/`:
+
+| Layer | File | What it contributes |
+| --- | --- | --- |
+| Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
+| Pipeline shape | `spec.py` | The **only hand-maintained file** — which steps exist, their order, and which files they read and write. Each step points at a real function. |
+| Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/pipeline/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
+| Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
+
+### Keeping It Honest
+
+`--check` fails when `spec.py` no longer matches the source: a documented step
+whose function was renamed, a dead prompt symbol, or — most importantly — a
+model call site that **no step claims**. Adding a phase without documenting it
+is therefore an error rather than a silent omission. The check needs no API key,
+so it is safe to run anywhere. It is deliberately **not** part of
+`npm run validate`; run it after changing any generation script.
+
+### Recording a Run
+
+```bash
+python scripts/record_pipeline_run.py person "Ada Lovelace"
+python scripts/record_pipeline_run.py meta "Computing Pioneers"
+```
+
+This performs a **real generation run** — it calls the API and rewrites that
+subject's data files exactly as a normal regeneration would. Records land in
+`docs/pipeline/runs/*.json` and are picked up by the next docs build. Prompts
+and responses are truncated to 4000 characters by default (`--truncate 0` keeps
+everything, but a Phase 1 prompt carries whole Wikipedia articles).
+
+### When the Pipeline Changes
+
+1. Add or update the step in `scripts/pipeline_docs/spec.py`.
+2. Run `python scripts/generate_pipeline_docs.py` — the summary cache refreshes
+   only the steps whose source changed.
+3. Commit the regenerated `docs/pipeline/index.html` and `summaries.json`.
+
+Everything except `spec.py` and the page's own styling is derived, so never
+hand-edit `docs/pipeline/index.html`.
+
 ## Key Files for Context
 
 When working on specific features, read these files first:
@@ -335,3 +389,4 @@ When working on specific features, read these files first:
 **Name highlighting**: `src/utils/personNames.js`
 **Person data**: `data/persons.json`, `data/people/{person_id}/`
 **Styles**: `data/person_styles.json`
+**Pipeline overview**: `docs/pipeline/index.html` (open it), `scripts/pipeline_docs/spec.py`

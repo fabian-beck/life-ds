@@ -25,6 +25,11 @@ file. Read only the references relevant to the current task:
 - [Data generation and localization](docs/agent/data-generation-and-localization.md)
 - [Development reference](docs/agent/development-reference.md)
 
+`docs/pipeline/index.html` is a generated, interactive map of both generation
+pipelines — steps, prompts, output schemas and recorded timings. Open it to
+orient yourself before changing a generation script, and run
+`python scripts/generate_pipeline_docs.py --check` after doing so.
+
 ## Common Commands
 
 ```powershell
