@@ -936,7 +936,7 @@ Tagline: {plan.tagline}
 Description: {plan.description}
 
 Thematic Subtopics:
-{chr(10).join(f"- {st.title}: {st.description}" for st in plan.subtopics)}
+{chr(10).join(f"- {st.title}: {', '.join(st.person_ids)}" for st in plan.subtopics)}
 
 Your task: Identify events that DIRECTLY contribute to this meta-story's narrative.
 Focus on events that demonstrate the theme through concrete achievements, innovations, or impacts.
