@@ -30,28 +30,36 @@ __CSS__
   <header class="page">
     <h1>Story generation pipeline</h1>
     <p class="lede">
-      Every step that turns encyclopedia articles into a Life Data Story — the
-      personal pipeline on the left, the meta story pipeline on the right.
-      Facts on this page are extracted from <code>scripts/</code> at build time,
-      so they cannot drift from the code; timings and real prompts come from
-      recorded runs.
+      Every step that turns encyclopedia articles into a Life Data Story. The
+      two pipelines are documented separately — pick one below. Facts on this
+      page are extracted from <code>scripts/</code> at build time, so they
+      cannot drift from the code; timings and real prompts come from recorded
+      runs.
     </p>
     <div class="meta-row" id="meta-row"></div>
     <div class="tiles" id="tiles"></div>
   </header>
 
+  <!-- One panel is rendered at a time; every section below belongs to the
+       selected pipeline and is redrawn when the tab changes. -->
+  <nav class="pipeline-tabs" id="pipeline-tabs" role="tablist" aria-label="Pipeline"></nav>
+  <p class="panel-lede" id="panel-lede"></p>
+
   <!-- The toolbar sticks only within this section, so it stops following the
        reader once the chart has scrolled past. -->
-  <section class="chart-section">
+  <section class="chart-section" id="panel" role="tabpanel">
     <div class="toolbar">
       <input class="search" id="search" type="search" placeholder="Search steps, prompts, schemas…" aria-label="Search the pipeline">
       <div class="filters" id="filters"></div>
     </div>
     <p class="hint" id="hint"></p>
 
-    <div class="chart-scroll">
-      <svg id="flow" role="img" aria-label="Flow chart of the story generation pipeline"></svg>
-    </div>
+    <figure class="figure">
+      <div class="chart-scroll">
+        <svg id="flow" role="img" aria-label="Flow chart of the story generation pipeline"></svg>
+      </div>
+      <figcaption id="flow-caption"></figcaption>
+    </figure>
   </section>
 
   <section class="runs">
@@ -60,8 +68,8 @@ __CSS__
   </section>
 
   <section class="appendix">
-    <h2 style="margin-top:46px">Entry points</h2>
-    <p class="section-lede">Command-line options, read from each script's argument parser.</p>
+    <h2 style="margin-top:46px">Entry point</h2>
+    <p class="section-lede">Command-line options, read from the script's argument parser.</p>
     <div id="appendix"></div>
   </section>
 

@@ -1,6 +1,10 @@
 /* Pipeline documentation — rendering and interaction.
    The page is a pure function of window.PIPELINE, which the Python build emits.
-   Layout runs client-side so filters can re-flow the chart. */
+   Layout runs client-side so filters can re-flow the chart.
+
+   One pipeline is shown at a time: the tab selects it, and the chart, the run
+   charts and the entry-point appendix are all rebuilt for that pipeline only.
+   Colour encodes the step kind and nothing else. */
 
 (function () {
   "use strict";
@@ -8,18 +12,20 @@
   const DATA = window.PIPELINE;
   const SVG_NS = "http://www.w3.org/2000/svg";
 
-  const NODE_W = 252;
-  const NODE_H = 76;
-  const ROW_GAP = 46;
-  const COL_GAP = 74;
-  const ART_W = 172;
-  const ART_H = 34;
-  const ART_GAP = 16;
-  const PAD = 16;
-  const HEAD_H = 62;
-  const COL_W = NODE_W + ART_GAP + ART_W;
+  const COLUMNS = ["person", "meta"];
+
+  const RAIL_W = 108;
+  const NODE_W = 400;
+  const NODE_H = 64;
+  const ROW_GAP = 26;
+  const ART_W = 320;
+  const ART_H = 32;
+  const ART_GAP = 22;
+  const PAD = 10;
+  const HEAD_H = 10;
 
   const state = {
+    tab: COLUMNS[0],
     kinds: new Set(Object.keys(DATA.kinds)),
     showShared: true,
     showArtifacts: true,
@@ -55,6 +61,14 @@
       }
     });
     return node;
+  }
+
+  function tableScroll(table) {
+    return el("div", { class: "table-scroll" }, [table]);
+  }
+
+  function clear(node) {
+    while (node.firstChild) node.removeChild(node.firstChild);
   }
 
   function escapeHtml(value) {
@@ -122,6 +136,12 @@
     return "var(--kind-" + kind + ")";
   }
 
+  function stepsInTab() {
+    return DATA.steps.filter((step) => {
+      return step.column === state.tab;
+    });
+  }
+
   function matchesFilters(step) {
     if (!state.kinds.has(step.kind)) return false;
     if (!state.showShared && step.lane === "shared") return false;
@@ -152,7 +172,7 @@
     chips.forEach((chip) => {
       meta.appendChild(
         el("span", { class: "chip" }, [
-          el("span", { text: chip[0] + ":" }),
+          el("span", { text: chip[0] }),
           el("code", { text: chip[1] }),
         ])
       );
@@ -192,10 +212,53 @@
     });
   }
 
+  /* --------------------------------------------------------- story tabs */
+
+  function renderTabs() {
+    const host = document.getElementById("pipeline-tabs");
+    clear(host);
+    COLUMNS.forEach((column) => {
+      const lane = DATA.lanes[column];
+      const count = DATA.steps.filter((step) => {
+        return step.column === column;
+      }).length;
+      const button = el("button", {
+        class: "pipeline-tab",
+        type: "button",
+        role: "tab",
+        "aria-selected": state.tab === column ? "true" : "false",
+        onclick: function () {
+          if (state.tab === column) return;
+          state.tab = column;
+          state.selected = null;
+          document.getElementById("drawer").classList.remove("open");
+          renderTabs();
+          renderPanel();
+        },
+      });
+      button.appendChild(el("span", { text: lane.label }));
+      button.appendChild(
+        el("span", { class: "count", text: count + " steps" })
+      );
+      host.appendChild(button);
+    });
+  }
+
+  function renderPanelLede() {
+    const lane = DATA.lanes[state.tab];
+    const host = document.getElementById("panel-lede");
+    clear(host);
+    host.appendChild(el("span", { text: lane.blurb + " " }));
+    host.appendChild(el("span", { text: "Entry point: " }));
+    host.appendChild(el("code", { class: "entry", text: lane.entry }));
+    host.appendChild(el("span", { text: "." }));
+  }
+
   /* ------------------------------------------------------------ toolbar */
 
   function renderToolbar() {
     const host = document.getElementById("filters");
+    clear(host);
 
     Object.entries(DATA.kinds).forEach((entry) => {
       const kind = entry[0];
@@ -203,7 +266,7 @@
       const button = el("button", {
         class: "toggle",
         type: "button",
-        "aria-pressed": "true",
+        "aria-pressed": state.kinds.has(kind) ? "true" : "false",
         title: info.description,
         onclick: function () {
           if (state.kinds.has(kind)) state.kinds.delete(kind);
@@ -225,7 +288,7 @@
     const shared = el("button", {
       class: "toggle",
       type: "button",
-      "aria-pressed": "true",
+      "aria-pressed": state.showShared ? "true" : "false",
       title: "Steps that belong to shared subsystems rather than one pipeline.",
       text: "Shared subsystems",
       onclick: function () {
@@ -242,7 +305,7 @@
     const artifacts = el("button", {
       class: "toggle",
       type: "button",
-      "aria-pressed": "true",
+      "aria-pressed": state.showArtifacts ? "true" : "false",
       title: "Show the files each step writes.",
       text: "Data files",
       onclick: function () {
@@ -255,63 +318,86 @@
       },
     });
     host.appendChild(artifacts);
-
-    const search = document.getElementById("search");
-    search.addEventListener("input", () => {
-      state.query = search.value.trim().toLowerCase();
-      draw();
-    });
   }
 
   /* -------------------------------------------------------------- chart */
 
   function layout() {
-    const columns = ["person", "meta"];
+    const colX = PAD + RAIL_W;
     const placed = [];
     const chips = [];
-    let maxY = 0;
+    const rails = [];
 
-    columns.forEach((column, columnIndex) => {
-      const colX = PAD + columnIndex * (COL_W + COL_GAP);
-      const steps = DATA.steps
-        .filter((step) => {
-          return step.column === column && matchesFilters(step);
-        })
-        .sort((a, b) => {
-          return a.stage - b.stage || a._order - b._order;
-        });
-
-      let y = HEAD_H;
-      steps.forEach((step, index) => {
-        const outputs = state.showArtifacts ? step.outputs || [] : [];
-        placed.push({
-          step: step,
-          x: colX,
-          y: y,
-          column: column,
-          prev: index > 0 ? steps[index - 1] : null,
-          sameStageAsPrev: index > 0 && steps[index - 1].stage === step.stage,
-        });
-        outputs.forEach((artifactId, chipIndex) => {
-          chips.push({
-            artifact: artifactById[artifactId],
-            stepId: step.id,
-            x: colX + NODE_W + ART_GAP,
-            y: y + chipIndex * (ART_H + 6),
-          });
-        });
-        const blockHeight = Math.max(NODE_H, outputs.length * (ART_H + 6) - 6);
-        y += blockHeight + ROW_GAP;
-        maxY = Math.max(maxY, y);
+    const steps = stepsInTab()
+      .filter(matchesFilters)
+      .sort((a, b) => {
+        return a.stage - b.stage || a._order - b._order;
       });
+
+    let y = HEAD_H;
+    steps.forEach((step, index) => {
+      const outputs = state.showArtifacts ? step.outputs || [] : [];
+      placed.push({
+        step: step,
+        x: colX,
+        y: y,
+        prev: index > 0 ? steps[index - 1] : null,
+        sameStageAsPrev: index > 0 && steps[index - 1].stage === step.stage,
+      });
+      outputs.forEach((artifactId, chipIndex) => {
+        chips.push({
+          artifact: artifactById[artifactId],
+          stepId: step.id,
+          x: colX + NODE_W + ART_GAP,
+          y: y + chipIndex * (ART_H + 6),
+        });
+      });
+      const blockHeight = Math.max(NODE_H, outputs.length * (ART_H + 6) - 6);
+
+      // The rail brackets consecutive steps of the same stage, which is what
+      // "runs in the same phase" means in the source.
+      const last = rails[rails.length - 1];
+      if (last && last.stage === step.stage) {
+        last.y1 = y + blockHeight;
+      } else {
+        rails.push({
+          stage: step.stage,
+          label: step.phase || "Stage " + step.stage,
+          y0: y,
+          y1: y + blockHeight,
+        });
+      }
+
+      y += blockHeight + ROW_GAP;
     });
 
     return {
       placed: placed,
       chips: chips,
-      width: PAD * 2 + COL_W * 2 + COL_GAP,
-      height: maxY + PAD,
+      rails: rails,
+      width: PAD * 2 + RAIL_W + NODE_W + ART_GAP + ART_W,
+      height: (placed.length ? y - ROW_GAP : HEAD_H) + PAD,
     };
+  }
+
+  function drawRails(root, rails) {
+    rails.forEach((rail) => {
+      const x = PAD + RAIL_W - 16;
+      root.appendChild(
+        svg("path", {
+          class: "rail-rule",
+          d: "M" + x + " " + rail.y0 + " L" + x + " " + rail.y1,
+        })
+      );
+      const label = svg("text", {
+        class: "rail-label",
+        x: x - 8,
+        y: rail.y0 + 14,
+        "text-anchor": "end",
+      });
+      label.textContent = truncateLabel(rail.label, 12);
+      root.appendChild(label);
+    });
   }
 
   function drawNode(root, item) {
@@ -329,43 +415,43 @@
     });
 
     group.appendChild(
-      svg("rect", { class: "body", width: NODE_W, height: NODE_H, rx: 11 })
+      svg("rect", { class: "body", width: NODE_W, height: NODE_H })
     );
-    // Kind accent: a colour bar plus the badge text below, so the kind is
-    // never signalled by colour alone.
-    const accent = svg("path", {
-      d:
-        "M0 11 A11 11 0 0 1 11 0 L11 " +
-        NODE_H +
-        " A11 11 0 0 1 0 " +
-        (NODE_H - 11) +
-        " Z",
-      fill: kindColor(step.kind),
-    });
-    group.appendChild(accent);
+    // Kind accent: a colour bar plus the kind's name in the fact line below,
+    // so the kind is never signalled by colour alone.
+    group.appendChild(
+      svg("rect", {
+        x: 0,
+        y: 0,
+        width: 4,
+        height: NODE_H,
+        fill: kindColor(step.kind),
+      })
+    );
 
-    const title = svg("text", { class: "title", x: 22, y: 25 });
-    title.textContent = truncateLabel(step.label, 32);
+    const title = svg("text", { class: "title", x: 18, y: 22 });
+    title.textContent = truncateLabel(step.label, 44);
     group.appendChild(title);
 
-    const sub = svg("text", { class: "sub", x: 22, y: 43 });
-    sub.textContent = truncateLabel(step.script.replace(".py", ""), 30);
+    const sub = svg("text", { class: "sub", x: 18, y: 39 });
+    sub.textContent = truncateLabel(step.script.replace(".py", ""), 42);
     group.appendChild(sub);
 
     const facts = [];
-    if (step.phase) facts.push(step.phase);
     facts.push(DATA.kinds[step.kind].label);
     if (step.lane === "shared") facts.push("shared");
     if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
-    const factLine = svg("text", { class: "metric", x: 22, y: 62 });
+    // Bare model id only — where it was resolved from belongs in the drawer.
+    if (step.model) facts.push(truncateLabel(step.model.split(" (")[0], 22));
+    const factLine = svg("text", { class: "metric", x: 18, y: 56 });
     factLine.textContent = facts.join(" · ");
     group.appendChild(factLine);
 
     if (step.stats) {
       const metric = svg("text", {
         class: "metric",
-        x: NODE_W - 12,
-        y: 62,
+        x: NODE_W - 14,
+        y: 56,
         "text-anchor": "end",
       });
       metric.textContent =
@@ -375,8 +461,8 @@
       group.appendChild(metric);
       const badge = svg("text", {
         class: "metric",
-        x: NODE_W - 12,
-        y: 25,
+        x: NODE_W - 14,
+        y: 22,
         "text-anchor": "end",
       });
       badge.textContent = step.stats.calls + "×";
@@ -411,16 +497,16 @@
         (matchesQuery(step) ? "" : " dim"),
       transform: "translate(" + chip.x + "," + chip.y + ")",
     });
-    group.appendChild(svg("rect", { width: ART_W, height: ART_H, rx: 8 }));
-    const label = svg("text", { x: 10, y: 15 });
-    label.textContent = truncateLabel(chip.artifact.label, 24);
+    group.appendChild(svg("rect", { width: ART_W, height: ART_H }));
+    const label = svg("text", { x: 10, y: 14 });
+    label.textContent = truncateLabel(chip.artifact.label, 42);
     group.appendChild(label);
-    const path = svg("text", { x: 10, y: 27, class: "sub" });
+    const path = svg("text", { x: 10, y: 26, class: "sub" });
     path.setAttribute("font-size", "9.5");
     path.setAttribute("fill", "var(--muted)");
     path.textContent = truncateLabel(
       chip.artifact.path.split(",")[0].split("/").slice(-1)[0],
-      26
+      46
     );
     group.appendChild(path);
     const tip = svg("title");
@@ -430,62 +516,44 @@
   }
 
   function drawEdges(root, placed) {
-    const byColumn = {};
-    placed.forEach((item) => {
-      (byColumn[item.column] = byColumn[item.column] || []).push(item);
-    });
-    Object.values(byColumn).forEach((items) => {
-      for (let index = 1; index < items.length; index += 1) {
-        const from = items[index - 1];
-        const to = items[index];
-        const x = from.x + NODE_W / 2;
-        const y1 = from.y + NODE_H;
-        const y2 = to.y;
-        const line = svg("path", {
+    for (let index = 1; index < placed.length; index += 1) {
+      const from = placed[index - 1];
+      const to = placed[index];
+      const x = from.x + NODE_W / 2;
+      const y1 = from.y + NODE_H;
+      const y2 = to.y;
+      root.appendChild(
+        svg("path", {
           class: "edge",
           d: "M" + x + " " + y1 + " L" + x + " " + (y2 - 7),
           "stroke-dasharray": to.sameStageAsPrev ? "4 4" : null,
-        });
-        root.appendChild(line);
-        root.appendChild(
-          svg("path", {
-            class: "edge-arrow",
-            d:
-              "M" +
-              (x - 4) +
-              " " +
-              (y2 - 7) +
-              " L" +
-              (x + 4) +
-              " " +
-              (y2 - 7) +
-              " L" +
-              x +
-              " " +
-              y2 +
-              " Z",
-          })
-        );
-      }
-    });
-  }
-
-  function drawColumnHeads(root) {
-    ["person", "meta"].forEach((column, index) => {
-      const lane = DATA.lanes[column];
-      const x = PAD + index * (COL_W + COL_GAP);
-      const title = svg("text", { class: "lane-title", x: x, y: 18 });
-      title.textContent = lane.label;
-      root.appendChild(title);
-      const sub = svg("text", { class: "lane-sub", x: x, y: 36 });
-      sub.textContent = lane.entry;
-      root.appendChild(sub);
-    });
+        })
+      );
+      root.appendChild(
+        svg("path", {
+          class: "edge-arrow",
+          d:
+            "M" +
+            (x - 4) +
+            " " +
+            (y2 - 7) +
+            " L" +
+            (x + 4) +
+            " " +
+            (y2 - 7) +
+            " L" +
+            x +
+            " " +
+            y2 +
+            " Z",
+        })
+      );
+    }
   }
 
   function draw() {
     const host = document.getElementById("flow");
-    while (host.firstChild) host.removeChild(host.firstChild);
+    clear(host);
 
     const geometry = layout();
     host.setAttribute(
@@ -494,8 +562,13 @@
     );
     host.setAttribute("width", geometry.width);
     host.setAttribute("height", geometry.height);
+    host.style.minWidth = geometry.width + "px";
+    host.setAttribute(
+      "aria-label",
+      "Flow chart of the " + DATA.lanes[state.tab].label + " pipeline"
+    );
 
-    drawColumnHeads(host);
+    drawRails(host, geometry.rails);
     drawEdges(host, geometry.placed);
     geometry.chips.forEach((chip) => {
       drawChip(host, chip);
@@ -514,7 +587,18 @@
         " visible steps match “" +
         state.query +
         "”"
-      : "Click any step for its prompt, output schema and recorded calls. Dashed connectors link steps that run in the same phase.";
+      : "Click any step for its prompt, output schema and recorded calls.";
+
+    document.getElementById("flow-caption").innerHTML =
+      "<b>Figure 1.</b> " +
+      escapeHtml(DATA.lanes[state.tab].label) +
+      " pipeline — " +
+      geometry.placed.length +
+      " steps in execution order, read top to bottom. The left rail brackets " +
+      "steps that belong to the same stage; a dashed connector links two steps " +
+      "inside one stage. The colour bar on each step gives its kind, which is " +
+      "also written out under the step name. Dashed boxes on the right are the " +
+      "files a step writes.";
   }
 
   /* ------------------------------------------------------------- drawer */
@@ -646,7 +730,7 @@
     const head = document.getElementById("drawer-title");
     head.textContent = step.label;
     const body = document.getElementById("drawer-body");
-    while (body.firstChild) body.removeChild(body.firstChild);
+    clear(body);
 
     const summary = step.summary || {};
     body.appendChild(el("h3", { text: "What this step does" }));
@@ -845,6 +929,30 @@
 
   /* --------------------------------------------------------- run charts */
 
+  // Only the kinds that actually appear in the chart get a legend entry —
+  // naming hues that are not on screen makes the reader hunt for them.
+  function kindLegend(steps) {
+    const present = new Set(
+      steps.map((step) => {
+        return step.kind;
+      })
+    );
+    const legend = el("div", { class: "legend" });
+    Object.entries(DATA.kinds).forEach((entry) => {
+      if (!present.has(entry[0])) return;
+      legend.appendChild(
+        el("span", { class: "item" }, [
+          el("span", {
+            class: "swatch",
+            style: "background:" + kindColor(entry[0]),
+          }),
+          el("span", { text: entry[1].label }),
+        ])
+      );
+    });
+    return legend;
+  }
+
   function barChart(host, rows, options) {
     const max =
       rows.reduce((best, row) => {
@@ -855,20 +963,27 @@
       grid.appendChild(
         el("div", { class: "name", title: row.name, text: row.name })
       );
-      const track = el("div", { class: "track" });
-      (row.parts || [{ value: row.total, color: "var(--series-1)" }]).forEach(
+      const track = el("div", {
+        class: "track",
+        title: row.name + " — " + options.format(row.total),
+      });
+      (row.parts || [{ value: row.total, color: row.color }]).forEach(
         (part) => {
           if (!part.value) return;
           track.appendChild(
             el("div", {
-              class: "seg",
+              class: "seg" + (part.tinted ? " tinted" : ""),
               style:
                 "width:" +
                 ((part.value / max) * 100).toFixed(2) +
                 "%;background:" +
                 part.color,
               title: part.label
-                ? part.label + ": " + options.format(part.value)
+                ? row.name +
+                  " — " +
+                  part.label +
+                  ": " +
+                  options.format(part.value)
                 : options.format(part.value),
             })
           );
@@ -884,45 +999,61 @@
 
   function renderRuns() {
     const host = document.getElementById("runs");
+    clear(host);
     const runs = (DATA.runs && DATA.runs.runs) || [];
-    if (!runs.length) {
+    const withStats = stepsInTab().filter((step) => {
+      return step.stats;
+    });
+
+    if (!withStats.length) {
+      const other = state.tab === "person" ? "meta" : "person";
       host.appendChild(
         el("div", {
           class: "empty",
           html:
-            "<strong>No run recorded yet.</strong><br>The chart above is built from " +
+            "<strong>No run recorded for the " +
+            escapeHtml(DATA.lanes[state.tab].label.toLowerCase()) +
+            " pipeline yet.</strong><br>The chart above is built from " +
             "static analysis alone, so it shows prompt templates but no real " +
             "prompts, timings or token counts. To add them, run a real generation " +
-            'under the recorder:<br><br><code>python scripts/record_pipeline_run.py person "Ada Lovelace"</code><br>' +
-            '<code>python scripts/record_pipeline_run.py meta "Computing Pioneers"</code><br><br>' +
+            "under the recorder:<br><br><code>python scripts/record_pipeline_run.py " +
+            escapeHtml(state.tab) +
+            ' "' +
+            (state.tab === "person" ? "Ada Lovelace" : "Computing Pioneers") +
+            '"</code><br><br>' +
             "Then rebuild with <code>python scripts/generate_pipeline_docs.py</code>. " +
-            "Recording performs real API calls and rewrites that subject's data files.",
+            "Recording performs real API calls and rewrites that subject's data files." +
+            (runs.length
+              ? "<br><br>Recorded runs do exist for the " +
+                escapeHtml(DATA.lanes[other].label.toLowerCase()) +
+                " pipeline — see the other tab."
+              : ""),
         })
       );
       return;
     }
 
+    const used = {};
+    runs.forEach((run) => {
+      (run.calls || []).forEach((call) => {
+        const step = stepById[call.step];
+        if (step && step.column === state.tab) used[run.label] = run;
+      });
+    });
     host.appendChild(
-      el("p", { class: "section-lede" }, [
-        el("span", {
-          text:
-            "From " +
-            runs
-              .map((run) => {
-                return run.label + " (" + run.recorded_at + ")";
-              })
-              .join(", ") +
-            ". Times are wall-clock per API call; token counts come from the " +
-            "API's own usage reporting.",
-        }),
-      ])
-    );
-
-    const withStats = DATA.steps
-      .filter((step) => {
-        return step.stats;
+      el("p", {
+        class: "section-lede",
+        text:
+          "From " +
+          Object.values(used)
+            .map((run) => {
+              return run.label + " (" + run.recorded_at + ")";
+            })
+            .join(", ") +
+          ". Times are wall-clock per API call; token counts come from the " +
+          "API's own usage reporting. Bars are coloured by step kind.",
       })
-      .slice();
+    );
 
     const timeRows = withStats
       .slice()
@@ -933,16 +1064,17 @@
         return {
           name: step.label,
           total: step.stats.total_s,
-          parts: [{ value: step.stats.total_s, color: "var(--series-1)" }],
+          color: kindColor(step.kind),
         };
       });
 
     const timeCard = el("div", { class: "chart-card" }, [
-      el("h3", { text: "API time per step" }),
+      el("h3", { text: "Figure 2. API time per step" }),
       el("p", {
         class: "sub",
-        text: "Total seconds spent waiting on the model, summed over every call the step made.",
+        text: "Total seconds spent waiting on the model, summed over every call the step made. Longest first.",
       }),
+      kindLegend(withStats),
     ]);
     barChart(timeCard, timeRows, { format: fmtSeconds });
     host.appendChild(timeCard);
@@ -963,12 +1095,13 @@
           parts: [
             {
               value: step.stats.input_tokens,
-              color: "var(--series-1)",
+              color: kindColor(step.kind),
               label: "input",
             },
             {
               value: step.stats.output_tokens,
-              color: "var(--series-2)",
+              color: kindColor(step.kind),
+              tinted: true,
               label: "output",
             },
           ],
@@ -976,16 +1109,25 @@
       });
 
     const tokenCard = el("div", { class: "chart-card" }, [
-      el("h3", { text: "Tokens per step" }),
-      el("p", { class: "sub", text: "Input and output tokens, stacked." }),
+      el("h3", { text: "Figure 3. Tokens per step" }),
+      el("p", {
+        class: "sub",
+        text: "Input and output tokens, stacked. Colour is the step kind, as above; the solid segment is input and the pale one output.",
+      }),
       el("div", { class: "legend" }, [
-        el("span", {}, [
-          el("span", { class: "swatch", style: "background:var(--series-1)" }),
-          el("span", { text: "input" }),
+        el("span", { class: "item" }, [
+          el("span", {
+            class: "swatch",
+            style: "background:var(--ink-2)",
+          }),
+          el("span", { text: "input tokens (solid)" }),
         ]),
-        el("span", {}, [
-          el("span", { class: "swatch", style: "background:var(--series-2)" }),
-          el("span", { text: "output" }),
+        el("span", { class: "item" }, [
+          el("span", {
+            class: "swatch tinted",
+            style: "background:var(--ink-2);opacity:.42",
+          }),
+          el("span", { text: "output tokens (pale)" }),
         ]),
       ]),
     ]);
@@ -996,6 +1138,7 @@
     table.appendChild(
       el("tr", {}, [
         el("th", { text: "Step" }),
+        el("th", { text: "Kind" }),
         el("th", { text: "Calls" }),
         el("th", { text: "Total" }),
         el("th", { text: "Median" }),
@@ -1008,6 +1151,13 @@
       table.appendChild(
         el("tr", {}, [
           el("td", { text: step.label }),
+          el("td", { class: "kind-cell" }, [
+            el("span", {
+              class: "swatch",
+              style: "background:" + kindColor(step.kind),
+            }),
+            el("span", { text: DATA.kinds[step.kind].label }),
+          ]),
           el("td", { text: String(step.stats.calls) }),
           el("td", { text: fmtSeconds(step.stats.total_s) }),
           el("td", { text: fmtSeconds(step.stats.median_s) }),
@@ -1019,22 +1169,23 @@
     });
     host.appendChild(
       el("div", { class: "chart-card" }, [
-        el("h3", { text: "Every recorded step" }),
+        el("h3", { text: "Table 1. Every recorded step" }),
         el("p", {
           class: "sub",
           text: "The same numbers as a table, in pipeline order.",
         }),
-        table,
+        tableScroll(table),
       ])
     );
 
-    if ((DATA.unattributed || []).length) {
+    const unattributed = (DATA.unattributed || []).length;
+    if (unattributed) {
       host.appendChild(
         el("div", { class: "empty" }, [
           el("span", {
             text:
-              DATA.unattributed.length +
-              " recorded call(s) could not be attributed to a documented step: " +
+              unattributed +
+              " recorded call(s) across both pipelines could not be attributed to a documented step: " +
               DATA.unattributed
                 .map((item) => {
                   return item.origin;
@@ -1051,44 +1202,59 @@
 
   function renderAppendix() {
     const host = document.getElementById("appendix");
-    DATA.entrypoints.forEach((entry) => {
-      const inner = el("div", { class: "inner" });
-      if (entry.docstring) {
-        inner.appendChild(el("p", { class: "sub", text: entry.docstring }));
-      }
-      const table = el("table", { class: "data" });
-      table.appendChild(
-        el("tr", {}, [
-          el("th", { text: "Flag" }),
-          el("th", { text: "Default" }),
-          el("th", { text: "What it does" }),
-        ])
-      );
-      entry.flags.forEach((flag) => {
+    clear(host);
+    DATA.entrypoints
+      .filter((entry) => {
+        return entry.lane === state.tab;
+      })
+      .forEach((entry) => {
+        const table = el("table", { class: "data" });
         table.appendChild(
           el("tr", {}, [
-            el("td", {}, [el("code", { text: flag.flags.join(", ") })]),
-            el("td", {
+            el("th", { text: "Flag" }),
+            el("th", { text: "Default" }),
+            el("th", { text: "What it does" }),
+          ])
+        );
+        entry.flags.forEach((flag) => {
+          table.appendChild(
+            el("tr", {}, [
+              el("td", {}, [el("code", { text: flag.flags.join(", ") })]),
+              el("td", {
+                text:
+                  flag.default && flag.default !== "None" ? flag.default : "—",
+              }),
+              el("td", { text: flag.help || "" }),
+            ])
+          );
+        });
+        host.appendChild(
+          el("div", { class: "chart-card" }, [
+            el("h3", {
               text:
-                flag.default && flag.default !== "None" ? flag.default : "—",
+                "Table 2. " +
+                entry.script +
+                " — " +
+                entry.flags.length +
+                " options",
             }),
-            el("td", { text: flag.help || "" }),
+            entry.docstring
+              ? el("p", { class: "sub", text: entry.docstring })
+              : null,
+            tableScroll(table),
           ])
         );
       });
-      inner.appendChild(table);
-      host.appendChild(
-        el("details", { class: "block" }, [
-          el("summary", {
-            text: entry.script + " — " + entry.flags.length + " options",
-          }),
-          inner,
-        ])
-      );
-    });
   }
 
   /* --------------------------------------------------------------- init */
+
+  function renderPanel() {
+    renderPanelLede();
+    renderRuns();
+    renderAppendix();
+    draw();
+  }
 
   document
     .getElementById("drawer-close")
@@ -1097,9 +1263,14 @@
     if (event.key === "Escape") closeDrawer();
   });
 
+  const search = document.getElementById("search");
+  search.addEventListener("input", () => {
+    state.query = search.value.trim().toLowerCase();
+    draw();
+  });
+
   renderHeader();
   renderToolbar();
-  renderRuns();
-  renderAppendix();
-  draw();
+  renderTabs();
+  renderPanel();
 })();

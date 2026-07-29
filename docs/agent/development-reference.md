@@ -331,6 +331,11 @@ pipelines: every step, the model and reasoning effort it uses, the prompt it
 sends, the structured output it asks for, and — when a run has been recorded —
 the real prompts, responses, timings and token counts.
 
+The page is styled as an academic report: black on white, square corners, and
+colour reserved for the step kind alone. One pipeline is shown at a time — the
+tab at the top selects it, and the flow chart, the run charts and the entry-point
+appendix all follow that selection.
+
 ```bash
 python scripts/generate_pipeline_docs.py            # rebuild the page
 python scripts/generate_pipeline_docs.py --check    # drift check only, no API key needed
