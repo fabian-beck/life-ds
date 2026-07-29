@@ -317,8 +317,50 @@ figcaption b {
   stroke-width: 1;
 }
 
+/* A hidden intermediate step still has to show the dependency it carried. */
+.edge-indirect {
+  stroke-dasharray: 4 4;
+  opacity: 0.6;
+}
+
+/* Dotted, not dashed: dashed already means "drawn through a hidden step". */
+.edge-file {
+  stroke: var(--muted);
+  stroke-dasharray: 1.5 3;
+}
+
+.edge.active,
+.edge-file.active {
+  stroke: var(--rule-strong);
+  stroke-width: 2;
+  stroke-dasharray: none;
+}
+
+.edge.dim {
+  opacity: 0.14;
+}
+
 .edge-arrow {
   fill: var(--ink-2);
+}
+
+.edge-arrow.active {
+  fill: var(--rule-strong);
+}
+
+.edge-arrow.dim {
+  opacity: 0.14;
+}
+
+.edge-label {
+  font-size: 9.5px;
+  fill: var(--ink);
+}
+
+.edge-label-bg {
+  fill: var(--paper);
+  stroke: var(--rule);
+  stroke-width: 1;
 }
 
 .node rect.body {
@@ -363,6 +405,19 @@ figcaption b {
   opacity: 0.2;
 }
 
+/* Files the step writes, printed inside its node — the pipeline's state
+   changes here, not in a box floating beside it. */
+.node .writes text {
+  font-size: 9.5px;
+  fill: var(--ink-2);
+  font-family: var(--mono);
+}
+
+.node .writes-rule {
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+}
+
 .artifact rect {
   fill: none;
   stroke: var(--rule);
@@ -375,14 +430,9 @@ figcaption b {
   fill: var(--ink-2);
 }
 
-.artifact.related rect {
+/* A file this pipeline only reads: the other pipeline wrote it. */
+.artifact.source rect {
   fill: var(--surface);
-  stroke: var(--rule-strong);
-  stroke-dasharray: none;
-}
-
-.artifact.dim {
-  opacity: 0.22;
 }
 
 /* ---------------------------------------------------------------- drawer */

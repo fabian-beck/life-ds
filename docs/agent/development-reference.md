@@ -333,8 +333,18 @@ the real prompts, responses, timings and token counts.
 
 The page is styled as an academic report: black on white, square corners, and
 colour reserved for the step kind alone. One pipeline is shown at a time — the
-tab at the top selects it, and the flow chart, the run charts and the entry-point
+tab at the top selects it, and the chart, the run charts and the entry-point
 appendix all follow that selection.
+
+The chart is a **layered DAG, not a sequence**. An arrow means one step consumes
+what another produced (`Step.depends_on` in `spec.py`, with a label for the data
+that travels along it); a step's layer is the longest such chain reaching it, so
+steps drawn side by side are genuinely independent — the meta story's map branch
+and network branch really do run without seeing each other. Files a step writes
+are printed inside its node; a file the pipeline only reads becomes a source
+node, which is how the meta chart shows that it consumes person-pipeline output.
+Orchestrator `main()` functions are deliberately not steps: they impose an order
+without creating a dependency, and drawing them made a fork look like a chain.
 
 ```bash
 python scripts/generate_pipeline_docs.py            # rebuild the page
@@ -347,14 +357,15 @@ It is built from three layers, in `scripts/pipeline_docs/`:
 | Layer | File | What it contributes |
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
-| Pipeline shape | `spec.py` | The **only hand-maintained file** — which steps exist, their order, and which files they read and write. Each step points at a real function. |
+| Pipeline shape | `spec.py` | The **only hand-maintained file** — which steps exist, what data flows between them (`depends_on`), and which files they read and write. Each step points at a real function. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/pipeline/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
 
 ### Keeping It Honest
 
 `--check` fails when `spec.py` no longer matches the source: a documented step
-whose function was renamed, a dead prompt symbol, or — most importantly — a
+whose function was renamed, a dead prompt symbol, a dependency edge pointing at
+a step that does not exist, a cycle in the graph, or — most importantly — a
 model call site that **no step claims**. Adding a phase without documenting it
 is therefore an error rather than a silent omission. The check needs no API key,
 so it is safe to run anywhere. It is deliberately **not** part of
@@ -375,7 +386,9 @@ everything, but a Phase 1 prompt carries whole Wikipedia articles).
 
 ### When the Pipeline Changes
 
-1. Add or update the step in `scripts/pipeline_docs/spec.py`.
+1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the
+   `depends_on` edges into it *and* any existing step that now reads its output.
+   An edge is a real data dependency, not "runs after".
 2. Run `python scripts/generate_pipeline_docs.py` — the summary cache refreshes
    only the steps whose source changed.
 3. Commit the regenerated `docs/pipeline/index.html` and `summaries.json`.

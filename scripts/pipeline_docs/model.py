@@ -250,7 +250,9 @@ def build_payload(
                 "column": _column_of(step),
                 "lane": step.lane,
                 "kind": step.kind,
-                "stage": step.stage,
+                "depends_on": [
+                    {"on": dep.on, "data": dep.data} for dep in step.depends_on
+                ],
                 "script": step.script,
                 "function": step.function,
                 "line": _step_line(codebase, step),

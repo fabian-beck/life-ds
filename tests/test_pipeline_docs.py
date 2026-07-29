@@ -156,6 +156,97 @@ class DriftCheckTests(unittest.TestCase):
         )
 
 
+def _layers() -> dict:
+    """Longest-path layer per step — the same rule the chart applies."""
+    steps = {step.id: step for step in spec.STEPS}
+    layers: dict = {}
+
+    def layer(step_id: str) -> int:
+        if step_id in layers:
+            return layers[step_id]
+        layers[step_id] = 0
+        layers[step_id] = max(
+            (layer(dep.on) + 1 for dep in steps[step_id].depends_on), default=0
+        )
+        return layers[step_id]
+
+    for step_id in steps:
+        layer(step_id)
+    return layers
+
+
+class DependencyGraphTests(unittest.TestCase):
+    """The chart claims to show real dependencies, so the graph has to be one."""
+
+    def setUp(self) -> None:
+        self.original_steps = list(spec.STEPS)
+
+    def tearDown(self) -> None:
+        spec.STEPS[:] = self.original_steps
+
+    def test_every_edge_points_at_a_known_step_in_the_same_pipeline(self) -> None:
+        known = {step.id: step for step in spec.STEPS}
+        for step in spec.STEPS:
+            for dep in step.depends_on:
+                self.assertIn(dep.on, known, f"{step.id} depends on unknown {dep.on}")
+                self.assertEqual(
+                    step.id[:2],
+                    dep.on[:2],
+                    f"{step.id} depends across pipelines on {dep.on}",
+                )
+                self.assertTrue(dep.data, f"{step.id} -> {dep.on} has no data label")
+
+    def test_graph_is_acyclic(self) -> None:
+        problems = [str(problem) for problem in validate._check_graph()]
+        self.assertEqual([], [text for text in problems if "cycle" in text])
+
+    def test_a_cycle_fails_the_build(self) -> None:
+        step = next(item for item in spec.STEPS if item.id == "m_p1")
+        step.depends_on = [spec.Dep("m_save", "an impossible back-edge")]
+        try:
+            messages = [str(problem) for problem in validate._check_graph()]
+            self.assertTrue(any("cycle" in message for message in messages))
+        finally:
+            step.depends_on = []
+
+    def test_no_orchestrator_is_documented_as_a_step(self) -> None:
+        """`main` only sequences the steps; drawing it flattens the fork."""
+        for step in spec.STEPS:
+            self.assertNotEqual(
+                (step.script, step.function),
+                ("generate_person.py", "main"),
+            )
+            self.assertNotEqual(
+                (step.script, step.function),
+                ("generate_meta_story.py", "main"),
+            )
+
+    def test_both_pipelines_really_branch(self) -> None:
+        """A layer holding two steps is the whole reason for drawing a DAG."""
+        layers = _layers()
+        for prefix in ("p_", "m_"):
+            widths: dict = {}
+            for step in spec.STEPS:
+                if step.id.startswith(prefix):
+                    widths[layers[step.id]] = widths.get(layers[step.id], 0) + 1
+            self.assertGreater(
+                max(widths.values()),
+                1,
+                f"{prefix} pipeline drew as a chain, not a graph",
+            )
+
+    def test_map_branch_rates_before_it_clusters(self) -> None:
+        """Ratings are the weights the clustering uses; the order is not free."""
+        layers = _layers()
+        self.assertLess(layers["m_p7b"], layers["m_p7a"])
+        self.assertLess(layers["m_p7a"], layers["m_p7c"])
+
+    def test_network_is_reviewed_before_circles_are_detected(self) -> None:
+        layers = _layers()
+        self.assertLess(layers["m_p5"], layers["m_p5b"])
+        self.assertLess(layers["m_p5b"], layers["m_clusters"])
+
+
 class PayloadAndRenderTests(unittest.TestCase):
     """The page is a pure function of the payload, so test the payload."""
 
@@ -169,6 +260,14 @@ class PayloadAndRenderTests(unittest.TestCase):
         for step in self.payload["steps"]:
             self.assertIn(step["column"], {"person", "meta"})
             self.assertTrue(step["spec_summary"])
+
+    def test_payload_carries_the_graph_the_chart_lays_out(self) -> None:
+        by_id = {step["id"]: step for step in self.payload["steps"]}
+        for step in self.payload["steps"]:
+            for dep in step["depends_on"]:
+                self.assertIn(dep["on"], by_id)
+                self.assertTrue(dep["data"])
+        self.assertTrue(by_id["p_translate"]["depends_on"])
 
     def test_ai_steps_carry_a_model_and_a_schema_or_prompt(self) -> None:
         for step in self.payload["steps"]:

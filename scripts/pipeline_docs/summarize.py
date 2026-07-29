@@ -234,7 +234,14 @@ def summarize_steps(
             )
             results[step.id] = (cached or {}).get("summary") or _fallback(step)
 
-    if written:
+    # Drop entries for steps that no longer exist, so a renamed or removed step
+    # does not keep paying for cache space and reading as current.
+    live = {step.id for step in spec.STEPS}
+    stale = [step_id for step_id in entries if step_id not in live]
+    for step_id in stale:
+        del entries[step_id]
+
+    if written or stale:
         save_cache(cache_path, {"version": CACHE_VERSION, "steps": entries})
     print(f"  Summaries: {fresh} cached, {written} regenerated.")
     return results

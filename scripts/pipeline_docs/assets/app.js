@@ -4,7 +4,14 @@
 
    One pipeline is shown at a time: the tab selects it, and the chart, the run
    charts and the entry-point appendix are all rebuilt for that pipeline only.
-   Colour encodes the step kind and nothing else. */
+   Colour encodes the step kind and nothing else.
+
+   The chart is a layered DAG, not a sequence. A step's layer is the longest
+   path of real data dependencies reaching it, so steps drawn side by side are
+   genuinely independent — the map branch and the network branch of the meta
+   story really do run without seeing each other. Files a step writes are drawn
+   inside its node; files that arrive from the other pipeline become source
+   nodes, since nothing in this chart produces them. */
 
 (function () {
   "use strict";
@@ -14,15 +21,17 @@
 
   const COLUMNS = ["person", "meta"];
 
-  const RAIL_W = 108;
-  const NODE_W = 400;
-  const NODE_H = 64;
-  const ROW_GAP = 26;
-  const ART_W = 320;
-  const ART_H = 32;
-  const ART_GAP = 22;
-  const PAD = 10;
-  const HEAD_H = 10;
+  const RAIL_W = 58;
+  const NODE_W = 268;
+  const NODE_H = 66;
+  const FILE_H = 15;
+  const ART_W = 214;
+  const ART_H = 38;
+  const COL_GAP = 26;
+  const LAYER_GAP = 52;
+  const MARGIN_CH = 26; // side channels for edges that skip a layer
+  const PAD = 12;
+  const HEAD_H = 12;
 
   const state = {
     tab: COLUMNS[0],
@@ -134,6 +143,14 @@
 
   function kindColor(kind) {
     return "var(--kind-" + kind + ")";
+  }
+
+  // Artifacts that span several files (the Wikipedia cache, a language folder)
+  // have no single filename to print, and naming only the first would be wrong
+  // for the steps that write the others.
+  function artifactFile(artifact) {
+    if (artifact.path.indexOf(",") !== -1) return artifact.label;
+    return artifact.path.split("/").slice(-1)[0];
   }
 
   function stepsInTab() {
@@ -306,7 +323,9 @@
       class: "toggle",
       type: "button",
       "aria-pressed": state.showArtifacts ? "true" : "false",
-      title: "Show the files each step writes.",
+      title:
+        "Show the files each step writes, and the files this pipeline reads " +
+        "from the other one.",
       text: "Data files",
       onclick: function () {
         state.showArtifacts = !state.showArtifacts;
@@ -322,67 +341,357 @@
 
   /* -------------------------------------------------------------- chart */
 
-  function layout() {
-    const colX = PAD + RAIL_W;
-    const placed = [];
-    const chips = [];
-    const rails = [];
-
-    const steps = stepsInTab()
-      .filter(matchesFilters)
-      .sort((a, b) => {
-        return a.stage - b.stage || a._order - b._order;
-      });
-
-    let y = HEAD_H;
-    steps.forEach((step, index) => {
-      const outputs = state.showArtifacts ? step.outputs || [] : [];
-      placed.push({
-        step: step,
-        x: colX,
-        y: y,
-        prev: index > 0 ? steps[index - 1] : null,
-        sameStageAsPrev: index > 0 && steps[index - 1].stage === step.stage,
-      });
-      outputs.forEach((artifactId, chipIndex) => {
-        chips.push({
-          artifact: artifactById[artifactId],
-          stepId: step.id,
-          x: colX + NODE_W + ART_GAP,
-          y: y + chipIndex * (ART_H + 6),
-        });
-      });
-      const blockHeight = Math.max(NODE_H, outputs.length * (ART_H + 6) - 6);
-
-      // The rail brackets consecutive steps of the same stage, which is what
-      // "runs in the same phase" means in the source.
-      const last = rails[rails.length - 1];
-      if (last && last.stage === step.stage) {
-        last.y1 = y + blockHeight;
-      } else {
-        rails.push({
-          stage: step.stage,
-          label: step.phase || "Stage " + step.stage,
-          y0: y,
-          y1: y + blockHeight,
-        });
+  /* Resolve a step's dependencies against the *visible* set. A filtered-out
+     step must not break the chain, so its own dependencies are inherited and
+     the resulting edge is marked indirect and drawn dashed. */
+  function resolveDeps(step, visibleIds, seen) {
+    const out = [];
+    (step.depends_on || []).forEach((dep) => {
+      const parent = stepById[dep.on];
+      if (!parent) return;
+      if (visibleIds.has(dep.on)) {
+        out.push({ from: dep.on, data: dep.data, indirect: false });
+        return;
       }
+      if (seen.indexOf(dep.on) !== -1) return;
+      resolveDeps(parent, visibleIds, seen.concat([dep.on])).forEach((edge) => {
+        out.push({ from: edge.from, data: edge.data, indirect: true });
+      });
+    });
+    // One edge per source; keep the first (most direct) label.
+    const unique = [];
+    const taken = new Set();
+    out.forEach((edge) => {
+      if (taken.has(edge.from)) return;
+      taken.add(edge.from);
+      unique.push(edge);
+    });
+    return unique;
+  }
 
-      y += blockHeight + ROW_GAP;
+  function buildGraph() {
+    const steps = stepsInTab().filter(matchesFilters);
+    const visibleIds = new Set(
+      steps.map((step) => {
+        return step.id;
+      })
+    );
+
+    const parents = {};
+    steps.forEach((step) => {
+      parents[step.id] = resolveDeps(step, visibleIds, [step.id]);
     });
 
+    // Layer = longest dependency path, so nothing is ever drawn above
+    // something it reads. The spec is validated acyclic, so this terminates.
+    const layerOf = {};
+    function layer(id) {
+      if (layerOf[id] !== undefined) return layerOf[id];
+      layerOf[id] = 0;
+      let best = 0;
+      (parents[id] || []).forEach((edge) => {
+        best = Math.max(best, layer(edge.from) + 1);
+      });
+      layerOf[id] = best;
+      return best;
+    }
+    steps.forEach((step) => {
+      layer(step.id);
+    });
+
+    // A file read but never written in this pipeline comes from the other one;
+    // it becomes a source node so the hand-off is visible rather than implied.
+    const sources = {};
+    if (state.showArtifacts) {
+      const produced = new Set();
+      steps.forEach((step) => {
+        (step.outputs || []).forEach((id) => {
+          produced.add(id);
+        });
+      });
+      steps.forEach((step) => {
+        (step.inputs || []).forEach((id) => {
+          if (produced.has(id) || !artifactById[id]) return;
+          if (!sources[id])
+            sources[id] = { artifact: artifactById[id], to: [] };
+          sources[id].to.push(step.id);
+        });
+      });
+    }
+
+    // Source files sit one layer above their earliest reader rather than all at
+    // the top: a file only needed by the last step should be read as arriving
+    // late, not as an input to the whole pipeline.
+    let shift = 0;
+    Object.values(sources).forEach((source) => {
+      const earliest = Math.min.apply(
+        null,
+        source.to.map((id) => {
+          return layerOf[id];
+        })
+      );
+      source.layer = earliest - 1;
+      if (source.layer < 0) shift = 1;
+    });
+    if (shift) {
+      steps.forEach((step) => {
+        layerOf[step.id] += 1;
+      });
+      Object.values(sources).forEach((source) => {
+        source.layer += 1;
+      });
+    }
+
     return {
-      placed: placed,
-      chips: chips,
-      rails: rails,
-      width: PAD * 2 + RAIL_W + NODE_W + ART_GAP + ART_W,
-      height: (placed.length ? y - ROW_GAP : HEAD_H) + PAD,
+      steps: steps,
+      parents: parents,
+      layerOf: layerOf,
+      sources: sources,
     };
   }
 
+  function nodeHeight(step) {
+    const files = state.showArtifacts ? (step.outputs || []).length : 0;
+    return NODE_H + (files ? 6 + files * FILE_H : 0);
+  }
+
+  function layout() {
+    const graph = buildGraph();
+    const rows = [];
+
+    function rowFor(index) {
+      while (rows.length <= index) rows.push([]);
+      return rows[index];
+    }
+
+    graph.steps.forEach((step) => {
+      rowFor(graph.layerOf[step.id]).push({
+        type: "step",
+        id: step.id,
+        step: step,
+        w: NODE_W,
+        h: nodeHeight(step),
+        order: step._order,
+      });
+    });
+    Object.entries(graph.sources).forEach((entry) => {
+      rowFor(entry[1].layer).push({
+        type: "artifact",
+        id: "file:" + entry[0],
+        artifact: entry[1].artifact,
+        to: entry[1].to,
+        w: ART_W,
+        h: ART_H,
+        order: -1,
+      });
+    });
+
+    // Two barycentre passes: order each row by the average position of its
+    // parents, which is enough to untangle graphs this small.
+    const indexOf = {};
+    function reindex() {
+      rows.forEach((row) => {
+        row.forEach((node, index) => {
+          indexOf[node.id] = index;
+        });
+      });
+    }
+    rows.forEach((row) => {
+      row.sort((a, b) => {
+        return a.order - b.order;
+      });
+    });
+    reindex();
+    for (let pass = 0; pass < 2; pass += 1) {
+      rows.forEach((row) => {
+        row.forEach((node) => {
+          const upstream =
+            node.type === "step"
+              ? (graph.parents[node.id] || []).map((edge) => {
+                  return indexOf[edge.from];
+                })
+              : node.to.map((id) => {
+                  return indexOf[id];
+                });
+          const known = upstream.filter((value) => {
+            return value !== undefined;
+          });
+          node.bary = known.length
+            ? known.reduce((sum, value) => {
+                return sum + value;
+              }, 0) / known.length
+            : indexOf[node.id];
+        });
+        row.sort((a, b) => {
+          return a.bary - b.bary || a.order - b.order;
+        });
+      });
+      reindex();
+    }
+
+    const contentW = rows.reduce((best, row) => {
+      const width =
+        row.reduce((sum, node) => {
+          return sum + node.w;
+        }, 0) +
+        COL_GAP * Math.max(0, row.length - 1);
+      return Math.max(best, width);
+    }, NODE_W);
+
+    const nodes = [];
+    const byId = {};
+    const rails = [];
+    let y = HEAD_H;
+    rows.forEach((row, index) => {
+      const rowW =
+        row.reduce((sum, node) => {
+          return sum + node.w;
+        }, 0) +
+        COL_GAP * Math.max(0, row.length - 1);
+      const rowH = row.reduce((best, node) => {
+        return Math.max(best, node.h);
+      }, 0);
+      let x = PAD + RAIL_W + MARGIN_CH + (contentW - rowW) / 2;
+      row.forEach((node) => {
+        node.x = x;
+        node.y = y;
+        node.layer = index;
+        x += node.w + COL_GAP;
+        nodes.push(node);
+        byId[node.id] = node;
+      });
+      rails.push({ label: String(index + 1), y0: y, y1: y + rowH });
+      y += rowH + LAYER_GAP;
+    });
+
+    // Edges leave and enter along the node's edge, fanned out and sorted by the
+    // other end's position so parallel links do not cross inside a gap.
+    const edges = [];
+    graph.steps.forEach((step) => {
+      (graph.parents[step.id] || []).forEach((edge) => {
+        if (!byId[edge.from] || !byId[step.id]) return;
+        edges.push({
+          from: byId[edge.from],
+          to: byId[step.id],
+          data: edge.data,
+          indirect: edge.indirect,
+          file: false,
+        });
+      });
+    });
+    Object.values(graph.sources).forEach((source) => {
+      source.to.forEach((stepId) => {
+        const from = byId["file:" + source.artifact.id];
+        if (!from || !byId[stepId]) return;
+        edges.push({
+          from: from,
+          to: byId[stepId],
+          data: source.artifact.label,
+          indirect: false,
+          file: true,
+        });
+      });
+    });
+
+    const outgoing = {};
+    const incoming = {};
+    edges.forEach((edge) => {
+      (outgoing[edge.from.id] = outgoing[edge.from.id] || []).push(edge);
+      (incoming[edge.to.id] = incoming[edge.to.id] || []).push(edge);
+    });
+    Object.values(outgoing).forEach((list) => {
+      list.sort((a, b) => {
+        return a.to.x - b.to.x;
+      });
+      list.forEach((edge, index) => {
+        edge.x1 = edge.from.x + (edge.from.w * (index + 1)) / (list.length + 1);
+        edge.y1 = edge.from.y + edge.from.h;
+      });
+    });
+    Object.values(incoming).forEach((list) => {
+      list.sort((a, b) => {
+        return a.from.x - b.from.x;
+      });
+      list.forEach((edge, index) => {
+        edge.x2 = edge.to.x + (edge.to.w * (index + 1)) / (list.length + 1);
+        edge.y2 = edge.to.y;
+      });
+    });
+
+    routeLongEdges(edges, rows, contentW);
+
+    return {
+      nodes: nodes,
+      edges: edges,
+      rails: rails,
+      layers: rows.length,
+      width: PAD * 2 + RAIL_W + MARGIN_CH * 2 + contentW,
+      height: (rows.length ? y - LAYER_GAP : HEAD_H) + PAD,
+    };
+  }
+
+  /* An edge that skips a layer would otherwise be drawn straight through the
+     nodes in between. Each one is given a vertical channel — a column of empty
+     space free across every layer it crosses — and routed down it. */
+  function routeLongEdges(edges, rows, contentW) {
+    const left = PAD + RAIL_W;
+    const right = left + MARGIN_CH * 2 + contentW;
+    const candidates = [left + MARGIN_CH / 2, right - MARGIN_CH / 2];
+    rows.forEach((row) => {
+      row.forEach((node, index) => {
+        if (index === 0) return;
+        const previous = row[index - 1];
+        candidates.push((previous.x + previous.w + node.x) / 2);
+      });
+    });
+
+    const taken = [];
+    edges
+      .filter((edge) => {
+        return edge.to.layer - edge.from.layer > 1;
+      })
+      .sort((a, b) => {
+        return b.to.layer - b.from.layer - (a.to.layer - a.from.layer);
+      })
+      .forEach((edge) => {
+        const crossed = [];
+        for (
+          let index = edge.from.layer + 1;
+          index < edge.to.layer;
+          index += 1
+        ) {
+          crossed.push(rows[index]);
+        }
+        const midpoint = (edge.x1 + edge.x2) / 2;
+        const usable = candidates
+          .filter((x) => {
+            return crossed.every((row) => {
+              return row.every((node) => {
+                return x < node.x - 18 || x > node.x + node.w + 18;
+              });
+            });
+          })
+          .filter((x) => {
+            return !taken.some((used) => {
+              return (
+                Math.abs(used.x - x) < 10 &&
+                used.y0 < edge.y2 &&
+                edge.y1 < used.y1
+              );
+            });
+          })
+          .sort((a, b) => {
+            return Math.abs(a - midpoint) - Math.abs(b - midpoint);
+          });
+        if (!usable.length) return;
+        edge.channel = usable[0];
+        taken.push({ x: edge.channel, y0: edge.y1, y1: edge.y2 });
+      });
+  }
+
   function drawRails(root, rails) {
+    const x = PAD + RAIL_W - 20;
     rails.forEach((rail) => {
-      const x = PAD + RAIL_W - 16;
       root.appendChild(
         svg("path", {
           class: "rail-rule",
@@ -391,31 +700,198 @@
       );
       const label = svg("text", {
         class: "rail-label",
-        x: x - 8,
-        y: rail.y0 + 14,
+        x: x - 7,
+        y: rail.y0 + 13,
         "text-anchor": "end",
       });
-      label.textContent = truncateLabel(rail.label, 12);
+      label.textContent = rail.label;
       root.appendChild(label);
     });
   }
 
-  function drawNode(root, item) {
-    const step = item.step;
+  function edgeActive(edge) {
+    if (!state.selected) return false;
+    return edge.from.id === state.selected || edge.to.id === state.selected;
+  }
+
+  function edgePath(edge) {
+    const end = edge.y2 - 7;
+    if (edge.channel === undefined) {
+      const bend = Math.max(14, (end - edge.y1) * 0.45);
+      return (
+        "M" +
+        edge.x1 +
+        " " +
+        edge.y1 +
+        " C" +
+        edge.x1 +
+        " " +
+        (edge.y1 + bend) +
+        ", " +
+        edge.x2 +
+        " " +
+        (end - bend) +
+        ", " +
+        edge.x2 +
+        " " +
+        end
+      );
+    }
+    const knee = 22;
+    const enter = edge.y1 + knee * 2;
+    const leave = end - knee * 2;
+    return (
+      "M" +
+      edge.x1 +
+      " " +
+      edge.y1 +
+      " C" +
+      edge.x1 +
+      " " +
+      (edge.y1 + knee) +
+      ", " +
+      edge.channel +
+      " " +
+      (enter - knee) +
+      ", " +
+      edge.channel +
+      " " +
+      enter +
+      " L" +
+      edge.channel +
+      " " +
+      leave +
+      " C" +
+      edge.channel +
+      " " +
+      (leave + knee) +
+      ", " +
+      edge.x2 +
+      " " +
+      (end - knee) +
+      ", " +
+      edge.x2 +
+      " " +
+      end
+    );
+  }
+
+  function drawEdges(root, edges) {
+    edges.forEach((edge) => {
+      const active = edgeActive(edge);
+      const ends = [edge.from.step, edge.to.step].filter(Boolean);
+      const dim = !ends.some(matchesQuery);
+      const path = svg("path", {
+        class:
+          "edge" +
+          (edge.file ? " edge-file" : "") +
+          (edge.indirect ? " edge-indirect" : "") +
+          (active ? " active" : "") +
+          (dim && !active ? " dim" : ""),
+        d: edgePath(edge),
+      });
+      const tip = svg("title");
+      tip.textContent = edge.data
+        ? edge.data + (edge.indirect ? " (via a hidden step)" : "")
+        : "data flow";
+      path.appendChild(tip);
+      root.appendChild(path);
+      root.appendChild(
+        svg("path", {
+          class:
+            "edge-arrow" +
+            (active ? " active" : "") +
+            (dim && !active ? " dim" : ""),
+          d:
+            "M" +
+            (edge.x2 - 4) +
+            " " +
+            (edge.y2 - 7) +
+            " L" +
+            (edge.x2 + 4) +
+            " " +
+            (edge.y2 - 7) +
+            " L" +
+            edge.x2 +
+            " " +
+            edge.y2 +
+            " Z",
+        })
+      );
+    });
+
+    // Labels only for the selected step's edges: naming every flow at once
+    // turns the chart into a wall of 9px type.
+    edges.filter(edgeActive).forEach((edge) => {
+      if (!edge.data) return;
+      const midX =
+        edge.channel === undefined ? (edge.x1 + edge.x2) / 2 : edge.channel;
+      const midY = (edge.y1 + edge.y2) / 2;
+      const text = truncateLabel(edge.data, 44);
+      const box = svg("rect", {
+        class: "edge-label-bg",
+        x: midX - text.length * 2.5 - 5,
+        y: midY - 8,
+        width: text.length * 5 + 10,
+        height: 15,
+        rx: 4,
+      });
+      root.appendChild(box);
+      const label = svg("text", {
+        class: "edge-label",
+        x: midX,
+        y: midY + 3,
+        "text-anchor": "middle",
+      });
+      label.textContent = text;
+      root.appendChild(label);
+    });
+  }
+
+  function drawArtifactNode(root, node) {
+    const group = svg("g", {
+      class: "artifact source",
+      transform: "translate(" + node.x + "," + node.y + ")",
+    });
+    group.appendChild(svg("rect", { width: node.w, height: node.h }));
+    const file = artifactFile(node.artifact);
+    const single = file !== node.artifact.label;
+    const label = svg("text", { x: 10, y: single ? 16 : 23 });
+    label.textContent = truncateLabel(node.artifact.label, 30);
+    group.appendChild(label);
+    if (single) {
+      const path = svg("text", { x: 10, y: 29, class: "sub" });
+      path.setAttribute("font-size", "9.5");
+      path.setAttribute("fill", "var(--muted)");
+      path.textContent = truncateLabel(file, 32);
+      group.appendChild(path);
+    }
+    const tip = svg("title");
+    tip.textContent =
+      node.artifact.path +
+      "\n" +
+      node.artifact.note +
+      "\nProduced by the other pipeline; read here.";
+    group.appendChild(tip);
+    root.appendChild(group);
+  }
+
+  function drawNode(root, node) {
+    const step = node.step;
     const dim = !matchesQuery(step);
     const group = svg("g", {
       class:
         "node" +
         (dim ? " dim" : "") +
         (state.selected === step.id ? " selected" : ""),
-      transform: "translate(" + item.x + "," + item.y + ")",
+      transform: "translate(" + node.x + "," + node.y + ")",
       tabindex: "0",
       role: "button",
       "aria-label": step.label + " — " + DATA.kinds[step.kind].label,
     });
 
     group.appendChild(
-      svg("rect", { class: "body", width: NODE_W, height: NODE_H })
+      svg("rect", { class: "body", width: node.w, height: node.h })
     );
     // Kind accent: a colour bar plus the kind's name in the fact line below,
     // so the kind is never signalled by colour alone.
@@ -424,17 +900,17 @@
         x: 0,
         y: 0,
         width: 4,
-        height: NODE_H,
+        height: node.h,
         fill: kindColor(step.kind),
       })
     );
 
-    const title = svg("text", { class: "title", x: 18, y: 22 });
-    title.textContent = truncateLabel(step.label, 44);
+    const title = svg("text", { class: "title", x: 16, y: 22 });
+    title.textContent = truncateLabel(step.label, 33);
     group.appendChild(title);
 
-    const sub = svg("text", { class: "sub", x: 18, y: 39 });
-    sub.textContent = truncateLabel(step.script.replace(".py", ""), 42);
+    const sub = svg("text", { class: "sub", x: 16, y: 38 });
+    sub.textContent = truncateLabel(step.script.replace(".py", ""), 32);
     group.appendChild(sub);
 
     const facts = [];
@@ -442,16 +918,16 @@
     if (step.lane === "shared") facts.push("shared");
     if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
     // Bare model id only — where it was resolved from belongs in the drawer.
-    if (step.model) facts.push(truncateLabel(step.model.split(" (")[0], 22));
-    const factLine = svg("text", { class: "metric", x: 18, y: 56 });
-    factLine.textContent = facts.join(" · ");
+    if (step.model) facts.push(truncateLabel(step.model.split(" (")[0], 18));
+    const factLine = svg("text", { class: "metric", x: 16, y: 55 });
+    factLine.textContent = truncateLabel(facts.join(" · "), 40);
     group.appendChild(factLine);
 
     if (step.stats) {
       const metric = svg("text", {
         class: "metric",
-        x: NODE_W - 14,
-        y: 56,
+        x: node.w - 12,
+        y: 55,
         "text-anchor": "end",
       });
       metric.textContent =
@@ -459,15 +935,39 @@
         " · " +
         fmtTokens(step.stats.input_tokens + step.stats.output_tokens);
       group.appendChild(metric);
-      const badge = svg("text", {
+      const runs = svg("text", {
         class: "metric",
-        x: NODE_W - 14,
-        y: 22,
+        x: node.w - 12,
+        y: 38,
         "text-anchor": "end",
       });
-      badge.textContent = step.stats.calls + "×";
-      group.appendChild(badge);
+      runs.textContent = step.stats.calls + "×";
+      group.appendChild(runs);
     }
+
+    // The files the step writes belong to the step, not beside it: this is
+    // where the pipeline's state actually changes.
+    const files = state.showArtifacts ? step.outputs || [] : [];
+    files.forEach((artifactId, index) => {
+      const artifact = artifactById[artifactId];
+      if (!artifact) return;
+      const rowY = NODE_H + index * FILE_H;
+      const row = svg("g", { class: "writes" });
+      row.appendChild(
+        svg("path", {
+          class: "writes-rule",
+          d: "M12 " + (rowY - 6) + " L" + (node.w - 12) + " " + (rowY - 6),
+        })
+      );
+      const text = svg("text", { x: 16, y: rowY + 5 });
+      text.textContent = "writes  " + truncateLabel(artifactFile(artifact), 32);
+      row.appendChild(text);
+      const tip = svg("title");
+      tip.textContent =
+        artifact.label + "\n" + artifact.path + "\n" + artifact.note;
+      row.appendChild(tip);
+      group.appendChild(row);
+    });
 
     group.addEventListener("click", () => {
       select(step.id);
@@ -480,75 +980,6 @@
     });
 
     root.appendChild(group);
-  }
-
-  function drawChip(root, chip) {
-    if (!chip.artifact) return;
-    const step = stepById[chip.stepId];
-    const related =
-      state.selected &&
-      (state.selected === chip.stepId ||
-        (stepById[state.selected].inputs || []).indexOf(chip.artifact.id) !==
-          -1);
-    const group = svg("g", {
-      class:
-        "artifact" +
-        (related ? " related" : "") +
-        (matchesQuery(step) ? "" : " dim"),
-      transform: "translate(" + chip.x + "," + chip.y + ")",
-    });
-    group.appendChild(svg("rect", { width: ART_W, height: ART_H }));
-    const label = svg("text", { x: 10, y: 14 });
-    label.textContent = truncateLabel(chip.artifact.label, 42);
-    group.appendChild(label);
-    const path = svg("text", { x: 10, y: 26, class: "sub" });
-    path.setAttribute("font-size", "9.5");
-    path.setAttribute("fill", "var(--muted)");
-    path.textContent = truncateLabel(
-      chip.artifact.path.split(",")[0].split("/").slice(-1)[0],
-      46
-    );
-    group.appendChild(path);
-    const tip = svg("title");
-    tip.textContent = chip.artifact.path + "\n" + chip.artifact.note;
-    group.appendChild(tip);
-    root.appendChild(group);
-  }
-
-  function drawEdges(root, placed) {
-    for (let index = 1; index < placed.length; index += 1) {
-      const from = placed[index - 1];
-      const to = placed[index];
-      const x = from.x + NODE_W / 2;
-      const y1 = from.y + NODE_H;
-      const y2 = to.y;
-      root.appendChild(
-        svg("path", {
-          class: "edge",
-          d: "M" + x + " " + y1 + " L" + x + " " + (y2 - 7),
-          "stroke-dasharray": to.sameStageAsPrev ? "4 4" : null,
-        })
-      );
-      root.appendChild(
-        svg("path", {
-          class: "edge-arrow",
-          d:
-            "M" +
-            (x - 4) +
-            " " +
-            (y2 - 7) +
-            " L" +
-            (x + 4) +
-            " " +
-            (y2 - 7) +
-            " L" +
-            x +
-            " " +
-            y2 +
-            " Z",
-        })
-      );
-    }
   }
 
   function draw() {
@@ -565,40 +996,54 @@
     host.style.minWidth = geometry.width + "px";
     host.setAttribute(
       "aria-label",
-      "Flow chart of the " + DATA.lanes[state.tab].label + " pipeline"
+      "Dependency graph of the " + DATA.lanes[state.tab].label + " pipeline"
     );
 
     drawRails(host, geometry.rails);
-    drawEdges(host, geometry.placed);
-    geometry.chips.forEach((chip) => {
-      drawChip(host, chip);
+    drawEdges(host, geometry.edges);
+    geometry.nodes.forEach((node) => {
+      if (node.type === "artifact") drawArtifactNode(host, node);
     });
-    geometry.placed.forEach((item) => {
-      drawNode(host, item);
+    geometry.nodes.forEach((node) => {
+      if (node.type === "step") drawNode(host, node);
     });
 
-    const visible = geometry.placed.filter((item) => {
-      return matchesQuery(item.step);
+    const stepNodes = geometry.nodes.filter((node) => {
+      return node.type === "step";
+    });
+    const visible = stepNodes.filter((node) => {
+      return matchesQuery(node.step);
     }).length;
     document.getElementById("hint").textContent = state.query
       ? visible +
         " of " +
-        geometry.placed.length +
+        stepNodes.length +
         " visible steps match “" +
         state.query +
         "”"
-      : "Click any step for its prompt, output schema and recorded calls.";
+      : "Click any step for its prompt, output schema, dependencies and recorded calls.";
 
+    const sourceCount = geometry.nodes.length - stepNodes.length;
     document.getElementById("flow-caption").innerHTML =
       "<b>Figure 1.</b> " +
       escapeHtml(DATA.lanes[state.tab].label) +
-      " pipeline — " +
-      geometry.placed.length +
-      " steps in execution order, read top to bottom. The left rail brackets " +
-      "steps that belong to the same stage; a dashed connector links two steps " +
-      "inside one stage. The colour bar on each step gives its kind, which is " +
-      "also written out under the step name. Dashed boxes on the right are the " +
-      "files a step writes.";
+      " pipeline as a dependency graph — " +
+      stepNodes.length +
+      " steps in " +
+      geometry.layers +
+      " layers, read top to bottom. An arrow means one step consumes what the " +
+      "step above it produced; a step's layer is the longest such chain " +
+      "reaching it, so steps drawn side by side are independent and could run " +
+      "in either order. Click a step to label its arrows with the data that " +
+      "travels along them. The colour bar gives the step kind, also written " +
+      "out under the step name; the lines at the foot of a node are the files " +
+      "it writes." +
+      (sourceCount
+        ? " Grey boxes are files this pipeline only reads — the other pipeline " +
+          "writes them — and dotted arrows carry them in."
+        : "") +
+      " A dashed arrow means a filter has hidden an intermediate step and the " +
+      "dependency is drawn straight through it.";
   }
 
   /* ------------------------------------------------------------- drawer */
@@ -726,6 +1171,38 @@
     return el("tr", {}, [el("th", { text: label }), el("td", { html: value })]);
   }
 
+  function dependencyList(step) {
+    return (step.depends_on || [])
+      .map((dep) => {
+        const parent = stepById[dep.on];
+        return (
+          "<b>" +
+          escapeHtml(parent ? parent.label : dep.on) +
+          "</b> — " +
+          escapeHtml(dep.data)
+        );
+      })
+      .join("<br>");
+  }
+
+  function dependentList(step) {
+    return DATA.steps
+      .filter((other) => {
+        return (other.depends_on || []).some((dep) => {
+          return dep.on === step.id;
+        });
+      })
+      .map((other) => {
+        const dep = other.depends_on.filter((entry) => {
+          return entry.on === step.id;
+        })[0];
+        return (
+          "<b>" + escapeHtml(other.label) + "</b> — " + escapeHtml(dep.data)
+        );
+      })
+      .join("<br>");
+  }
+
   function renderDrawer(step) {
     const head = document.getElementById("drawer-title");
     head.textContent = step.label;
@@ -765,6 +1242,11 @@
       factRow("Kind", escapeHtml(DATA.kinds[step.kind].label)),
       factRow("Pipeline", escapeHtml(DATA.lanes[step.lane].label)),
       factRow("Phase", step.phase ? escapeHtml(step.phase) : null),
+      factRow(
+        "Needs",
+        dependencyList(step) || "Nothing — this step starts a branch"
+      ),
+      factRow("Feeds", dependentList(step) || null),
       factRow(
         "Model",
         step.model

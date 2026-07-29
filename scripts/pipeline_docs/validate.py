@@ -5,6 +5,10 @@ The chart is only worth reading if it cannot quietly fall behind the code, so
 every spec entry is resolved against the source and every AI call site in the
 codebase has to be claimed by some step. A new phase that nobody documented is
 an error, not a silent omission.
+
+The dependency graph is checked too: an edge to an unknown step, or a cycle,
+would make the layered layout meaningless rather than merely wrong, so both are
+build errors.
 """
 
 from __future__ import annotations
@@ -35,6 +39,53 @@ def _function_exists(codebase: Codebase, script: str, function: str) -> bool:
         return True
     # Nested definitions are stored qualified (`outer.inner`).
     return any(name.split(".")[-1] == function for name in facts.functions)
+
+
+def _check_graph() -> List[Problem]:
+    """Dangling edges, self-loops, cycles and cross-pipeline edges."""
+    problems: List[Problem] = []
+    known = {step.id for step in spec.STEPS}
+    edges: Dict[str, List[str]] = {}
+
+    for step in spec.STEPS:
+        targets: List[str] = []
+        for dep in step.depends_on:
+            where = f"step '{step.id}'"
+            if dep.on not in known:
+                problems.append(
+                    Problem("error", where, f"depends on unknown step '{dep.on}'")
+                )
+                continue
+            if dep.on == step.id:
+                problems.append(Problem("error", where, "depends on itself"))
+                continue
+            if not dep.data:
+                problems.append(
+                    Problem("warning", where, f"edge from '{dep.on}' has no data label")
+                )
+            targets.append(dep.on)
+        edges[step.id] = targets
+
+    # Depth-first cycle detection: the layout assigns a layer by longest path,
+    # which never terminates on a cycle.
+    WHITE, GREY, BLACK = 0, 1, 2
+    colour = {step_id: WHITE for step_id in edges}
+
+    def visit(node: str, trail: List[str]) -> None:
+        colour[node] = GREY
+        for parent in edges.get(node, []):
+            if colour[parent] == GREY:
+                loop = " -> ".join(trail[trail.index(parent) :] + [parent])
+                problems.append(Problem("error", "spec", f"dependency cycle: {loop}"))
+            elif colour[parent] == WHITE:
+                visit(parent, trail + [parent])
+        colour[node] = BLACK
+
+    for step_id in edges:
+        if colour[step_id] == WHITE:
+            visit(step_id, [step_id])
+
+    return problems
 
 
 def check(codebase: Codebase) -> List[Problem]:
@@ -108,6 +159,8 @@ def check(codebase: Codebase) -> List[Problem]:
     for step_id in set(ids):
         if ids.count(step_id) > 1:
             problems.append(Problem("error", "spec", f"duplicate step id '{step_id}'"))
+
+    problems.extend(_check_graph())
 
     used_artifacts = {
         artifact_id
