@@ -2,16 +2,16 @@
 title: Life Data Stories
 subtitle: A technical report on generating and presenting biographical data stories
 description:
-  Technical report on the Life Data Stories system — its data model, its two
+  Technical report on the Life Data Stories system—its data model, its two
   generation pipelines, the reader-facing application, and how this document
   keeps itself honest.
 abstract:
   Life Data Stories turns encyclopedia articles into biographical data stories:
   full-screen, scroll-snapped slides carrying an event timeline, a map and a
   social network. The system has two halves. A set of Python pipelines does the
-  writing — sourcing material, proposing and researching life events, deriving
+  writing—sourcing material, proposing and researching life events, deriving
   networks, clustering places, generating a portrait and a visual identity, then
-  translating everything — and a mobile-first Svelte application does the
+  translating everything—and a mobile-first Svelte application does the
   reading.
 
   This report describes both, and is itself generated. Every count, model name,
@@ -34,13 +34,13 @@ A biography is not a dataset, and that is the problem this system exists to
 work on. Encyclopedia prose is continuous, hedged and unevenly detailed; a data
 story needs discrete units with dates, places, people and images attached to
 them, each one confident enough to fill a screen on its own. Turning the first
-into the second is the whole job, and it cannot be done by parsing — it needs
+into the second is the whole job, and it cannot be done by parsing—it needs
 judgement about what mattered in a life, and that judgement has to be auditable
 afterwards.
 
 The system currently holds {{ data.people }} biographies carrying
-{{ data.events }} life events between them — about {{ data.events_per_person }}
-per person — and {{ data.meta_stories }} meta stories, which are themes traced
+{{ data.events }} life events between them—about {{ data.events_per_person }}
+per person—and {{ data.meta_stories }} meta stories, which are themes traced
 across several lives at once. The generation side is {{ scripts.count }} Python
 scripts, {{ scripts.lines }} lines, reaching a language model at
 {{ pipeline.call_sites }} distinct places in the code. The reading side is
@@ -78,8 +78,8 @@ network, and what can be tested with an assertion.
 
 The mix matters more than the totals. A pipeline that is nothing but model calls
 cannot be tested; one with no model calls could not do this job at all. Keeping
-the deterministic steps deterministic — clustering, geocoding, chapter fitting,
-network merging — is what makes the expensive steps small enough to reason
+the deterministic steps deterministic—clustering, geocoding, chapter fitting,
+network merging—is what makes the expensive steps small enough to reason
 about.
 
 ### Where the code lives
@@ -90,9 +90,9 @@ about.
 Prompt text is not stored in templates or configuration; it is built in Python
 functions, {{ pipeline.prompt_builders }} of them, because prompts need
 conditionals and injected data far more than they need to be edited without a
-code review. Structured output is declared as Pydantic models —
-{{ pipeline.schemas }} classes across the scripts — so the shape the model must
-return is a type, not a paragraph of instructions.
+code review. Structured output is declared as Pydantic
+models—{{ pipeline.schemas }} classes across the scripts—so the shape the model
+must return is a type, not a paragraph of instructions.
 
 ## Data model
 
@@ -111,7 +111,7 @@ that name the phases of a life, plus a conclusion.
 
 An **ego network** file records who a person was connected to and how. Across
 the corpus these hold {{ data.connections }} connections over
-{{ data.networked_people }} biographies — the small shortfall against
+{{ data.networked_people }} biographies—the small shortfall against
 {{ data.people }} is what a network step that has not been run yet looks like.
 
 A **meta story** file is a theme across several biographies, and is the only
@@ -124,7 +124,7 @@ Every file the personal pipeline touches, with the steps that write and read it.
 ::: artifacts lane=meta
 The meta pipeline reads what the personal pipeline wrote. Files with no writer
 in this table are produced by the other pipeline, which is where the two are
-coupled — on disk, not in code.
+coupled—on disk, not in code.
 :::
 
 ## Generation
@@ -175,7 +175,7 @@ rather than external sources, which is why its chart begins with grey file nodes
 that nothing on the page produces.
 
 Where the personal pipeline forks once, this one runs two long independent
-branches — the social network and the geographic map — that never see each
+branches—the social network and the geographic map—that never see each
 other's results, and only meet in the composition step that rewrites every text
 in one voice.
 
@@ -188,7 +188,7 @@ in one voice.
 ### Models, prompts and structured output
 
 The generation side uses {{ pipeline.models }}. No model name is written down in
-this report — the table below is read from the call sites themselves, so a model
+this report—the table below is read from the call sites themselves, so a model
 swap in the code appears here on the next build and cannot be forgotten.
 
 ::: modeltable
@@ -200,16 +200,16 @@ already-chosen event is a retrieval-and-writing problem and deliberately gets
 none.
 
 ::: schemalist names=LifePlan,EventDetails,EgoNetwork,MetaStoryPlan
-The four schemas at the heart of the two pipelines — the plan of a life, one
-researched event, a person's ego network and a meta story's plan — expanded field
+The four schemas at the heart of the two pipelines—the plan of a life, one
+researched event, a person's ego network and a meta story's plan—expanded field
 by field from the Pydantic models the API is asked to fill in.
 :::
 
 ## Cost and latency
 
 Timings and token counts on this page come from real generations captured by
-`scripts/record_pipeline_run.py`, which wraps the pipelines and writes each call
-— prompt, response, duration, usage — to `docs/report/runs/`. There are
+`scripts/record_pipeline_run.py`, which wraps the pipelines and writes each
+call—prompt, response, duration, usage—to `docs/report/runs/`. There are
 currently {{ runs.count }} recorded runs holding {{ runs.calls }} model calls,
 {{ runs.minutes }} minutes of API time and {{ runs.tokens }} tokens.
 
@@ -242,15 +242,15 @@ routing is URL-based, so any slide is a shareable address.
 
 Three visualisations carry the data beyond prose: a timeline of the events, a
 MapLibre and Protomaps map of their places, and a force-directed social network.
-Each person's story also carries a generated visual identity — colours, fonts
-and a background pattern — injected as CSS custom properties, which is why two
+Each person's story also carries a generated visual identity—colours, fonts
+and a background pattern—injected as CSS custom properties, which is why two
 stories in this system do not look alike.
 
 ::: aside
 This section is the thinnest part of the report, and knowingly so. The
 application is described here in prose only, because nothing in the current
-build measures it beyond counting files. Component-level computed content — a
-route map, a props graph, a slide-type inventory — would be the natural next
+build measures it beyond counting files. Component-level computed content—a
+route map, a props graph, a slide-type inventory—would be the natural next
 extension, and would slot in as new components without touching this text.
 :::
 
@@ -272,7 +272,7 @@ The automated suite is intentionally small: {{ tests.python_modules }} Python
 test modules holding {{ tests.python_cases }} cases, and
 {{ tests.browser_specs }} Playwright specs. It does not try to test generated
 content, which is not deterministic. It tests the machinery that makes generated
-content trustworthy — that the static extraction really reads the source, that
+content trustworthy—that the static extraction really reads the source, that
 the dependency graph really is acyclic, that the drift check really fails.
 
 ### Drift as a build error
@@ -285,7 +285,7 @@ plausibly out of date. So the checks that matter run at build time and fail it.
 
 A step whose function was renamed, a prompt symbol that no longer exists, a
 dependency cycle, a group spanning both pipelines, a citation to a measurement
-that was deleted, a component the page cannot render — each of these stops the
+that was deleted, a component the page cannot render—each of these stops the
 build rather than degrading the page.
 
 ## Operations
@@ -331,7 +331,7 @@ Python.
 **Why:** the two rot at different speeds. Counts, models, prompts and timings
 change with every commit and are therefore measured, never transcribed. Reasons,
 trade-offs and admissions of what is missing do not change with a commit and
-cannot be derived from anything — so they are written by hand, and the build
+cannot be derived from anything—so they are written by hand, and the build
 refuses to render a claim it cannot resolve.
 :::
 

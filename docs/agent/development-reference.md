@@ -21,7 +21,7 @@ small deterministic suite and the repository's AI exploratory testing skill.
 
 ### Deployment
 
-Hosted on **Netlify**, deployed **on demand only** — pushing/merging to `main`
+Hosted on **Netlify**, deployed **on demand only**—pushing/merging to `main`
 does not publish. Auto-builds are stopped in the Netlify dashboard, and
 `netlify.toml`'s `ignore = "exit 0"` skips git-triggered builds. Publish by
 uploading the pre-built `dist/` with the CLI (not Netlify's build-from-git,
@@ -111,16 +111,16 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 
 ### Person Name Highlighting
 
-Wherever a person is named in running text — story slide descriptions, meta
-story prose, the network and map narration cards — the name is emphasized
+Wherever a person is named in running text—story slide descriptions, meta
+story prose, the network and map narration cards—the name is emphasized
 (`.person-mention`, and a link into that person's story in meta story prose).
 **One matcher does this for all of them**: `findPersonMentions()` /
 `segmentPersonMentions()` in `src/utils/personNames.js`. Do not write a second
 one; the four call sites previously each had their own copy and each was wrong
 in its own way.
 
-It works on **name runs** — stretches of capitalized tokens joined across
-spaces, hyphens, particles ("von", "of") and the dots of initials — rather than
+It works on **name runs**—stretches of capitalized tokens joined across
+spaces, hyphens, particles ("von", "of") and the dots of initials—rather than
 on `\bName\b` regexes, which cannot handle any of the things this data is full
 of: `\b` is ASCII-only (so it never matched "Gaudí"), German genitives glue an
 "s" to the name ("Zuses Software"), and a bare surname regex cannot tell
@@ -135,7 +135,7 @@ unless that token opens a sentence or is a title ("General Washington" yes,
 distinctive long names, never "Alan" or "John"; regnal numerals must match
 ("Otto III" is not Otto Wagner); and when two people fit a span equally well it
 is left plain. `tests/personNames.spec.js` pins these rules with cases drawn
-from the real stories — run it when touching the matcher.
+from the real stories—run it when touching the matcher.
 
 Two things feed the matcher besides the text:
 
@@ -145,8 +145,8 @@ Two things feed the matcher besides the text:
   `personAliases` down to `MetaStoryNetwork`/`MetaStoryMap`). Without this a
   translated story highlights nothing.
 - **The story subject.** `parseDescriptionSegments()` takes the ego's name so
-  a bare "Hamilton" in Alexander Hamilton's story comes out ambiguous — and
-  therefore plain — instead of being handed to his father, while
+  a bare "Hamilton" in Alexander Hamilton's story comes out ambiguous—and
+  therefore plain—instead of being handed to his father, while
   "James Hamilton" still resolves to the father.
 
 `getRelevantPeople()` uses the same matcher to decide which people an event
@@ -173,7 +173,7 @@ mentions, so the chips offered and the names emphasized cannot disagree.
 
 **Components run in legacy (non-runes) mode.** The project is on Svelte 5, but
 `export let`, `$:` and `on:click` all still work there and no component has been
-converted. Adopting runes is a deliberate, separate decision — do not introduce
+converted. Adopting runes is a deliberate, separate decision—do not introduce
 `$state`/`$derived`/`$props` into a component piecemeal, because a component
 that uses any rune switches to runes mode wholesale and its `export let` and
 `$:` statements stop compiling.
@@ -237,7 +237,7 @@ that uses any rune switches to runes mode wholesale and its `export let` and
   `npm run build`. Person data and the map components are separate chunks
   fetched on demand.
 - **Never `import * as` from `@mdi/js`.** The package holds ~7,400 icons
-  (6.3 MB) and a wildcard import defeats tree-shaking — this once put 2.5 MB
+  (6.3 MB) and a wildcard import defeats tree-shaking—this once put 2.5 MB
   of icon paths in the bundle. Use named imports, or `virtual:mdi-icon-map`
   (see below) when the icon name is only known at runtime.
 - **Keep MapLibre out of the initial bundle.** MapLibre, pmtiles and
@@ -269,13 +269,13 @@ Two mechanisms keep that true, because the model reliably gets it wrong:
   lookup from the union of `icon_categories.py` and the icons actually present
   in `data/people`, since generated data drifts from the vocabulary. It
   validates every name against real `@mdi/js` exports and **warns at build
-  time** about any that do not exist — that warning is the signal that data
+  time** about any that do not exist—that warning is the signal that data
   needs repair.
 
 Repair existing data with `python scripts/fix_event_icons.py --dry-run` (then
 without the flag). It rewrites icon values in place and touches nothing else.
 `data/people/**/*.json` is prettier-ignored and formatted as it was generated,
-so never rewrite these files with `json.dump` — it would reflow every line of
+so never rewrite these files with `json.dump`—it would reflow every line of
 all 47 of them to change a handful of strings. Open them with `newline=""` when
 writing, or Python turns each `\n` into `\r\n` on Windows and does the same
 damage by a different route.
@@ -328,9 +328,9 @@ Python scripts use:
 
 `docs/report/index.html` is a standalone, interactive technical report on the
 whole system: what it is for, how the data is modelled, both generation pipelines
-step by step — the model and reasoning effort each uses, the prompt it sends, the
+step by step—the model and reasoning effort each uses, the prompt it sends, the
 structured output it asks for, and, when a run has been recorded, the real
-prompts, responses, timings and token counts — plus the application, localization
+prompts, responses, timings and token counts—plus the application, localization
 and testing.
 
 It has two halves that never mix. The prose is authored by hand in
@@ -345,7 +345,7 @@ the step drawer is shared between them.
 The chart is a **layered DAG, not a sequence**. An arrow means one step consumes
 what another produced (`Step.depends_on` in `spec.py`, with a label for the data
 that travels along it); a step's layer is the longest such chain reaching it, so
-steps drawn side by side are genuinely independent — the meta story's map branch
+steps drawn side by side are genuinely independent—the meta story's map branch
 and network branch really do run without seeing each other. Files a step writes
 are printed inside its node; a file the pipeline only reads becomes a source
 node, which is how the meta chart shows that it consumes person-pipeline output.
@@ -354,15 +354,15 @@ without creating a dependency, and drawing them made a fork look like a chain.
 
 The vertical axis is the dependency graph; the horizontal axis carries no graph
 meaning, so `spec.GROUPS` spends it on concerns. A group names steps that do one
-job across several layers — planning the image searches, running them, matching
-the results — and the layout aligns them and draws a labelled band behind them,
+job across several layers—planning the image searches, running them, matching
+the results—and the layout aligns them and draws a labelled band behind them,
 so the strand can be read straight down instead of being tracked as it drifts
 sideways. Grouping is presentation only: it never moves a layer.
 
 Alignment holds only where a group is **continuous**. The layers a group occupies
 are cut into runs of consecutive layers, and each run is aligned and banded on
-its own, so the portrait — four layers below the last image step, with unrelated
-work in between — is placed by the graph rather than dragged into the imagery
+its own, so the portrait—four layers below the last image step, with unrelated
+work in between—is placed by the graph rather than dragged into the imagery
 strand under a band stretched over the gap. A run of one step is not banded at
 all, which is also what happens to a group most of whose steps a filter has
 hidden.
@@ -370,7 +370,7 @@ hidden.
 Horizontal placement runs in two stages and uses **continuous positions, not a
 column grid**:
 
-1. Blocks — one per group run, one per ungrouped node — are placed as rigid
+1. Blocks—one per group run, one per ungrouped node—are placed as rigid
    rectangles with a single x across every layer they cross. A leftmost packing
    gives a feasible start; blocks are then relaxed towards the mean position of
    their graph neighbours, each clamped to the room its neighbours in every layer
@@ -394,7 +394,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
 | Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which files they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
-| Measurements | `facts.py` | Repository-scale numbers the prose cites — corpus size, component counts, test counts — each with the place it was measured. |
+| Measurements | `facts.py` | Repository-scale numbers the prose cites—corpus size, component counts, test counts—each with the place it was measured. |
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `::: component` mount points, callouts. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
@@ -405,7 +405,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 
 `--check` fails when `spec.py` no longer matches the source: a documented step
 whose function was renamed, a dead prompt symbol, a dependency edge pointing at
-a step that does not exist, a cycle in the graph, or — most importantly — a
+a step that does not exist, a cycle in the graph, or—most importantly—a
 model call site that **no step claims**. Adding a phase without documenting it
 is therefore an error rather than a silent omission.
 
@@ -425,7 +425,7 @@ python scripts/record_pipeline_run.py person "Ada Lovelace"
 python scripts/record_pipeline_run.py meta "Computing Pioneers"
 ```
 
-This performs a **real generation run** — it calls the API and rewrites that
+This performs a **real generation run**—it calls the API and rewrites that
 subject's data files exactly as a normal regeneration would. Records land in
 `docs/report/runs/*.json` and are picked up by the next report build. Prompts
 and responses are truncated to 4000 characters by default (`--truncate 0` keeps
@@ -437,7 +437,7 @@ the run blocks consume no caption numbers, so the sequence has no gaps.
 ### Authoring the Report
 
 `docs/report/report.md` holds the prose and nothing else. **No number, model
-name or file count belongs in it** — those are cited, so they cannot go stale.
+name or file count belongs in it**—those are cited, so they cannot go stale.
 
 | Syntax | Meaning |
 | --- | --- |
@@ -460,7 +460,7 @@ repository rather than typed in.
 1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the
    `depends_on` edges into it *and* any existing step that now reads its output.
    An edge is a real data dependency, not "runs after".
-2. Run `python scripts/generate_report.py` — the summary cache refreshes only
+2. Run `python scripts/generate_report.py`—the summary cache refreshes only
    the steps whose source changed.
 3. Commit the regenerated `docs/report/index.html` and `summaries.json`.
 

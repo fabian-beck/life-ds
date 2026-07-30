@@ -4,14 +4,14 @@
 The authored markdown never writes a figure down. It writes `{{ data.people }}`
 and this module supplies the number, so a sentence about the size of the corpus
 cannot rot the way a hard-coded "52 biographies" would. Every fact carries the
-place it was measured, which the page prints on hover — a claim in the report is
+place it was measured, which the page prints on hover—a claim in the report is
 therefore always traceable to a file, a directory or a spec entry.
 
 Facts are deliberately cheap: directory listings, line counts, lengths of JSON
 arrays. Anything that needs the AST lives in `introspect.py` and reaches the
 report through `model.py` instead. A fact that cannot be measured is omitted
 rather than guessed, and `validate.py` then fails the build for the citation
-that referenced it — a missing number must never render as an empty gap in a
+that referenced it—a missing number must never render as an empty gap in a
 sentence.
 """
 
@@ -133,25 +133,25 @@ def _pipeline_facts(codebase: Codebase) -> List[Fact]:
         Fact(
             "pipeline.ai_steps",
             str(len(ai_steps)),
-            "pipeline_docs/spec.py — steps of kind 'ai'",
+            "pipeline_docs/spec.py—steps of kind 'ai'",
             len(ai_steps),
         ),
         Fact(
             "pipeline.code_steps",
             str(len(spec.STEPS) - len(ai_steps)),
-            "pipeline_docs/spec.py — steps of any non-AI kind",
+            "pipeline_docs/spec.py—steps of any non-AI kind",
             len(spec.STEPS) - len(ai_steps),
         ),
         Fact(
             "pipeline.person_steps",
             str(len(person)),
-            "pipeline_docs/spec.py — steps drawn in the personal column",
+            "pipeline_docs/spec.py—steps drawn in the personal column",
             len(person),
         ),
         Fact(
             "pipeline.meta_steps",
             str(len(meta)),
-            "pipeline_docs/spec.py — steps drawn in the meta column",
+            "pipeline_docs/spec.py—steps drawn in the meta column",
             len(meta),
         ),
         Fact(
@@ -169,19 +169,19 @@ def _pipeline_facts(codebase: Codebase) -> List[Fact]:
         Fact(
             "pipeline.edges",
             str(sum(len(step.depends_on) for step in spec.STEPS)),
-            "pipeline_docs/spec.py — Step.depends_on entries",
+            "pipeline_docs/spec.py—Step.depends_on entries",
             sum(len(step.depends_on) for step in spec.STEPS),
         ),
         Fact(
             "pipeline.groups",
             str(len(spec.GROUPS)),
-            "pipeline_docs/spec.py — GROUPS",
+            "pipeline_docs/spec.py—GROUPS",
             len(spec.GROUPS),
         ),
         Fact(
             "pipeline.artifacts",
             str(len(spec.ARTIFACTS)),
-            "pipeline_docs/spec.py — ARTIFACTS",
+            "pipeline_docs/spec.py—ARTIFACTS",
             len(spec.ARTIFACTS),
         ),
         Fact(
@@ -413,7 +413,7 @@ def _run_facts(runs: Dict[str, Any]) -> List[Fact]:
     return [
         Fact("runs.count", str(len(records)), "docs/report/runs/*.json", len(records)),
         Fact("runs.calls", str(len(calls)), "recorded model calls", len(calls)),
-        # Zero is a real answer here — "no run has been recorded yet" is
+        # Zero is a real answer here—"no run has been recorded yet" is
         # something the report should be able to say in a sentence.
         Fact(
             "runs.minutes",

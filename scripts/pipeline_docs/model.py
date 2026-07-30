@@ -2,8 +2,8 @@
 """Fuse the static scan, the AI summaries and the recorded runs into one payload.
 
 The HTML page is a pure function of the dictionary this module returns, which
-keeps the rendering layer free of any knowledge about how a fact was obtained —
-and makes the whole build testable without touching a browser.
+keeps the rendering layer free of any knowledge about how a fact was
+obtained—and makes the whole build testable without touching a browser.
 
 The payload also carries the report's own structure: the section tree the sidebar
 navigates, the mount manifest the page hydrates, and the measurements the
@@ -34,7 +34,7 @@ KIND_META: Dict[str, Dict[str, str]] = {
     },
     spec.CODE: {
         "label": "Deterministic",
-        "description": "Plain code — same inputs, same outputs, no model involved.",
+        "description": "Plain code—same inputs, same outputs, no model involved.",
     },
     spec.EXTERNAL: {
         "label": "External source",
@@ -66,8 +66,8 @@ def _git(*args: str) -> Optional[str]:
 def _column_of(step: spec.Step) -> str:
     """Which pipeline column a step is drawn in.
 
-    Lane records *ownership* — several shared subsystems (sourcing, review,
-    translation) are their own scripts — but the reader wants to see them at the
+    Lane records *ownership*—several shared subsystems (sourcing, review,
+    translation) are their own scripts—but the reader wants to see them at the
     point in the flow where they run, so the drawn column comes from the step id.
     """
     return spec.PERSON if step.id.startswith("p_") else spec.META
@@ -195,7 +195,7 @@ def _run_stats(runs: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
 
 
 def _unattributed(runs: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Recorded calls that no step claimed — usually a spec gap worth seeing."""
+    """Recorded calls that no step claimed—usually a spec gap worth seeing."""
     out: List[Dict[str, Any]] = []
     for run in runs.get("runs", []):
         for call in run.get("calls", []):
@@ -215,7 +215,7 @@ def _script_index(codebase: Codebase) -> Dict[str, Dict[str, Any]]:
 
     The report cites a script's options by name (`::: cliflags script=...`), so
     the whole surface travels in the payload rather than only the two entry
-    points — a section about the maintenance tools can then show theirs too.
+    points—a section about the maintenance tools can then show theirs too.
     """
     return {
         name: {

@@ -10,7 +10,7 @@ It is deliberately non-invasive: nothing in `scripts/` imports it, and it
 patches the resource classes rather than a client instance so it captures every
 client the generators construct internally.
 
-Captured text is truncated by default — a Phase 1 prompt carries whole
+Captured text is truncated by default—a Phase 1 prompt carries whole
 Wikipedia articles, and the point of the record is to show the *shape* of a
 real call, not to vendor the encyclopedia into the repo.
 """

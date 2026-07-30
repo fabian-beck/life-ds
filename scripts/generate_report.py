@@ -10,15 +10,15 @@ The page is written to `docs/report/index.html` as one self-contained file.
 The report is half written and half measured, and the two halves never mix.
 
 1. `docs/report/report.md` holds the prose: what the system is for, why a step
-   exists, which trade-offs were taken. It contains no numbers of its own — it
+   exists, which trade-offs were taken. It contains no numbers of its own—it
    cites them as `{{ some.fact }}` and mounts computed blocks as `::: component`.
 2. Static analysis of `scripts/*.py` supplies models, reasoning efforts, output
    schemas, prompt templates and CLI flags. Always fresh, never guessed.
-3. `facts.py` measures the repository — corpus size, component counts, test
-   counts — so a sentence about scale cannot go stale.
+3. `facts.py` measures the repository—corpus size, component counts, test
+   counts—so a sentence about scale cannot go stale.
 4. AI-written step explanations, cached in `docs/report/summaries.json` against a
    fingerprint of each step's source, so a rebuild only pays for what changed.
-5. Runs recorded by `scripts/record_pipeline_run.py` — real prompts, real
+5. Runs recorded by `scripts/record_pipeline_run.py`—real prompts, real
    responses, timings and token counts. Optional; the page renders without them.
 
 `--check` runs only the drift checks: it fails when a documented step no longer
@@ -166,7 +166,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if recorded:
         print(f"  {len(runs['runs'])} recorded run(s), {recorded} model calls.")
     else:
-        print("  No recorded runs found — the page will show templates only.")
+        print("  No recorded runs found—the page will show templates only.")
 
     payload = build_payload(codebase, summaries, runs, document, measurements)
     out = render.write(payload, args.out, document)
@@ -191,7 +191,7 @@ def _emits_for(runs: dict):
     """Caption budget per block, given what the recorded runs can actually show.
 
     Without this the run figures reserve numbers they never print, and the
-    sequence skips — Table 5 followed by Table 8. Numbering has to describe the
+    sequence skips—Table 5 followed by Table 8. Numbering has to describe the
     rendered page, not the markup that asked for it.
     """
     lanes = _lanes_with_runs(runs)

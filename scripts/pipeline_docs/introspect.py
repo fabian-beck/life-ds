@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static extraction of pipeline facts from the generation scripts.
 
-Everything in here is derived from the source with `ast` — no imports of the
+Everything in here is derived from the source with `ast`—no imports of the
 generators, so it runs without an API key and without triggering module-level
 side effects. That matters because the whole point of this layer is to be the
 thing that *cannot* drift from the code: if a phase changes its model, its
@@ -10,16 +10,16 @@ with it on the next run.
 
 What is extracted per script:
 
-- **AI call sites** — `client.responses.parse/create`, `chat.completions.create`
+- **AI call sites**—`client.responses.parse/create`, `chat.completions.create`
   and image generation calls, with the model expression, reasoning effort and
   structured-output schema resolved through module-level constants.
-- **Prompt sources** — functions whose name looks like a prompt builder, plus
+- **Prompt sources**—functions whose name looks like a prompt builder, plus
   module-level `*_PROMPT` constants, reduced to a template: the literal text the
   model sees, with `{expr}` placeholders where data is injected and the
   surrounding conditions recorded.
-- **Schemas** — Pydantic model classes with their fields, annotations and
+- **Schemas**—Pydantic model classes with their fields, annotations and
   `Field(description=...)` text.
-- **CLI flags** — `parser.add_argument` calls with help text and defaults.
+- **CLI flags**—`parser.add_argument` calls with help text and defaults.
 """
 
 from __future__ import annotations
@@ -329,9 +329,9 @@ def _resolve_constant(
 ) -> Optional[str]:
     """Follow `A = B = os.getenv("X", "default")` chains down to a literal.
 
-    The generators layer their model configuration — `PHASE1_REASONING_EFFORT =
+    The generators layer their model configuration—`PHASE1_REASONING_EFFORT =
     DEFAULT_REASONING_EFFORT` in the script, `DEFAULT_REASONING_EFFORT =
-    os.getenv(...)` in `config.py` — so a single hop is never enough.
+    os.getenv(...)` in `config.py`—so a single hop is never enough.
     """
     if expr is None or depth > 6:
         return None
@@ -411,7 +411,7 @@ def _literal_strings(node: ast.AST) -> List[Tuple[int, int, str]]:
     """Collect prompt-ish string literals from an expression, in source order.
 
     f-strings keep their shape: `{expr}` marks where runtime data lands, which
-    is exactly the distinction that makes a static template readable — the
+    is exactly the distinction that makes a static template readable—the
     instructions are ours, the placeholders are the biography.
     """
     found: List[Tuple[int, int, str]] = []
@@ -430,7 +430,7 @@ def _literal_strings(node: ast.AST) -> List[Tuple[int, int, str]]:
                 return  # progress output, not prompt text
             if isinstance(func, ast.Attribute):
                 if func.attr in SEPARATOR_CALLS or func.attr in CONSOLE_ATTRS:
-                    return  # `", ".join(...)` — the receiver is a separator
+                    return  # `", ".join(...)`—the receiver is a separator
                 if func.attr in NON_PROMPT_CALLS:
                     # Still descend into the receiver: `("a" + x).strip()` keeps "a".
                     visit(func.value)
@@ -774,7 +774,7 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
 
     Visitor().visit(tree)
 
-    # Phases take `model` as a plain parameter with no default — the value is
+    # Phases take `model` as a plain parameter with no default—the value is
     # whatever the entry point passed. Falling back to the script's own
     # `--model` default is what makes the chart show a real model name instead
     # of the word "model", and the source is labelled so the distinction stays

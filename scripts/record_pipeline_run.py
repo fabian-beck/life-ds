@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Record a real generation run for the technical report.
 
-This runs the actual generator — it calls the OpenAI API, costs money, and
+This runs the actual generator—it calls the OpenAI API, costs money, and
 overwrites that person's or story's data files exactly as a normal regeneration
 would. Nothing is recorded without doing real work, which is the point: the
 report then shows the prompts as they are actually assembled, what came back,
@@ -57,7 +57,7 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         default=4000,
         help=(
             "Characters kept per prompt/response before eliding the middle "
-            "(default: 4000). Use 0 to keep everything — a Phase 1 prompt "
+            "(default: 4000). Use 0 to keep everything—a Phase 1 prompt "
             "carries whole Wikipedia articles, so records get large."
         ),
     )

@@ -1,4 +1,4 @@
-/* Technical report — computed content and interaction.
+/* Technical report—computed content and interaction.
    The page is a pure function of window.PIPELINE, which the Python build emits.
    Layout runs client-side so filters can re-flow the chart.
 
@@ -18,14 +18,14 @@
 
    The chart is a layered DAG, not a sequence. A step's layer is the longest
    path of real data dependencies reaching it, so steps drawn side by side are
-   genuinely independent — the map branch and the network branch of the meta
+   genuinely independent—the map branch and the network branch of the meta
    story really do run without seeing each other. Files a step writes are drawn
    inside its node; files that arrive from the other pipeline become source
    nodes, since nothing in this chart produces them.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
-   `spec.GROUPS` spends it on meaning. Steps of one concern — plan the image
-   searches, run them, match the results — are aligned and banded, so a job that
+   `spec.GROUPS` spends it on meaning. Steps of one concern—plan the image
+   searches, run them, match the results—are aligned and banded, so a job that
    takes three layers reads as one vertical strand instead of drifting across the
    chart. Alignment holds only where a group is continuous: a member several
    layers below the rest is placed on its own. Positions are continuous and
@@ -183,9 +183,9 @@
 
      Everything from here to the end of `createChart` is per-instance: the two
      pipelines are drawn side by side in the document, and a filter applied to
-     one must not re-flow the other. The layout itself is unchanged — the layer
+     one must not re-flow the other. The layout itself is unchanged—the layer
      rule, the group blocks and the edge routing are the same code that drew the
-     single tabbed chart — it simply closes over an instance `state` and instance
+     single tabbed chart—it simply closes over an instance `state` and instance
      DOM nodes instead of the page's. */
   function createChart(host, laneId, figureNumber) {
     // Declared up front so `select` can name the instance the drawer belongs to
@@ -426,7 +426,7 @@
        rigid block: the portrait sits four layers below the last image step, with
        unrelated work in between, so it is placed on its own rather than dragged
        into the imagery strand and stretching a band over the gap. A run of one
-       step is no group at all — nothing to align, nothing to band. */
+       step is no group at all—nothing to align, nothing to band. */
     function buildBlocks(rows) {
       const runOfLayer = {};
       const layersOf = {};
@@ -515,7 +515,7 @@
 
     /* Horizontal placement, in two stages. The layer decides how far *down* a
        node goes; the graph says nothing about how far across, and that freedom is
-       spent on meaning — the steps of one concern are aligned so they read as a
+       spent on meaning—the steps of one concern are aligned so they read as a
        single vertical strand.
 
        Stage one places the blocks: group runs and lone nodes alike, each a rigid
@@ -852,8 +852,8 @@
     }
 
     /* An edge that skips a layer would otherwise be drawn straight through the
-       nodes in between. Each one is given a vertical channel — a column of empty
-       space free across every layer it crosses — and routed down it. A group's
+       nodes in between. Each one is given a vertical channel—a column of empty
+       space free across every layer it crosses—and routed down it. A group's
        band counts as occupied even where its column is empty: a line running
        down the middle of a band would read as belonging to it. */
     function routeLongEdges(edges, rows, contentW, bands) {
@@ -923,7 +923,7 @@
           if (!usable.length) {
             // Nothing free. A short skip is still readable drawn straight; one
             // that crosses the whole chart is not, and cutting it through a band
-            // would read as belonging to that group — so it takes the near margin
+            // would read as belonging to that group—so it takes the near margin
             // and shares it rather than going through the middle.
             if (edge.to.layer - edge.from.layer < 3) return;
             edge.channel =
@@ -956,7 +956,7 @@
         const tip = svg("title");
         tip.textContent =
           band.group.label +
-          " — " +
+          "—" +
           band.count +
           " consecutive steps of one concern, aligned" +
           (band.group.note ? "\n" + band.group.note : "");
@@ -1186,7 +1186,7 @@
         transform: "translate(" + node.x + "," + node.y + ")",
         tabindex: "0",
         role: "button",
-        "aria-label": step.label + " — " + DATA.kinds[step.kind].label,
+        "aria-label": step.label + "—" + DATA.kinds[step.kind].label,
       });
 
       group.appendChild(
@@ -1216,7 +1216,7 @@
       facts.push(DATA.kinds[step.kind].label);
       if (step.lane === "shared") facts.push("shared");
       if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
-      // Bare model id only — where it was resolved from belongs in the drawer.
+      // Bare model id only—where it was resolved from belongs in the drawer.
       if (step.model) facts.push(truncateLabel(step.model.split(" (")[0], 18));
       const factLine = svg("text", { class: "metric", x: 16, y: 55 });
       factLine.textContent = truncateLabel(facts.join(" · "), 40);
@@ -1331,7 +1331,7 @@
         figureNumber +
         ".</b> " +
         escapeHtml(DATA.lanes[state.tab].label) +
-        " pipeline as a dependency graph — " +
+        " pipeline as a dependency graph—" +
         stepNodes.length +
         " steps in " +
         geometry.layers +
@@ -1340,7 +1340,7 @@
         "reaching it, so steps drawn side by side are independent and could run " +
         "in either order. " +
         (geometry.bands.length
-          ? "A shaded band is one concern spread over several layers — its steps " +
+          ? "A shaded band is one concern spread over several layers—its steps " +
             "are lined up so the strand can be followed straight down; hover the " +
             "band for what holds it together. "
           : "") +
@@ -1349,8 +1349,8 @@
         "out under the step name; the lines at the foot of a node are the files " +
         "it writes." +
         (sourceCount
-          ? " Grey boxes are files this pipeline only reads — the other pipeline " +
-            "writes them — and dotted arrows carry them in."
+          ? " Grey boxes are files this pipeline only reads—the other pipeline " +
+            "writes them—and dotted arrows carry them in."
           : "") +
         " A dashed arrow means a filter has hidden an intermediate step and the " +
         "dependency is drawn straight through it.";
@@ -1371,7 +1371,7 @@
 
     // Only what the prose above cannot say for itself: the entry point and the
     // size of the graph. The lane's own blurb is deliberately not repeated here
-    // — the authored section introduces the pipeline, and saying it twice made
+    //—the authored section introduces the pipeline, and saying it twice made
     // the figure look like it was arguing with the text.
     const lede = el("p", { class: "lane-lede" }, [
       el("span", { text: "Entry point " }),
@@ -1453,7 +1453,7 @@
     });
     return el("details", { class: "block" }, [
       el("summary", {
-        text: name + " — " + (schema.fields || []).length + " fields",
+        text: name + "—" + (schema.fields || []).length + " fields",
       }),
       inner,
     ]);
@@ -1523,9 +1523,9 @@
         text:
           "Call " +
           (index + 1) +
-          " — " +
+          "—" +
           entry.run +
-          " — " +
+          "—" +
           fmtSeconds(call.duration_s),
       }),
       inner,
@@ -1544,7 +1544,7 @@
         return (
           "<b>" +
           escapeHtml(parent ? parent.label : dep.on) +
-          "</b> — " +
+          "</b>—" +
           escapeHtml(dep.data)
         );
       })
@@ -1562,9 +1562,7 @@
         const dep = other.depends_on.filter((entry) => {
           return entry.on === step.id;
         })[0];
-        return (
-          "<b>" + escapeHtml(other.label) + "</b> — " + escapeHtml(dep.data)
-        );
+        return "<b>" + escapeHtml(other.label) + "</b>—" + escapeHtml(dep.data);
       })
       .join("<br>");
   }
@@ -1612,7 +1610,7 @@
         step.group && groupById[step.group]
           ? escapeHtml(groupById[step.group].label) +
               (groupById[step.group].note
-                ? " <span class='sub'>— " +
+                ? "<span class='sub'>—" +
                   escapeHtml(groupById[step.group].note) +
                   "</span>"
                 : "")
@@ -1621,7 +1619,7 @@
       factRow("Phase", step.phase ? escapeHtml(step.phase) : null),
       factRow(
         "Needs",
-        dependencyList(step) || "Nothing — this step starts a branch"
+        dependencyList(step) || "Nothing—this step starts a branch"
       ),
       factRow("Feeds", dependentList(step) || null),
       factRow(
@@ -1810,7 +1808,7 @@
   }
 
   /* A numbered caption. Figures and tables are numbered in Python, in document
-     order, so the number a component prints is the one the prose cites — a
+     order, so the number a component prints is the one the prose cites—a
      caption can never drift out of step with a cross-reference. */
   function caption(kind, number, title, sub) {
     return el("div", { class: "cap" }, [
@@ -1851,7 +1849,7 @@
     return el("div", { class: "empty", html: html });
   }
 
-  // Only the kinds that actually appear get a legend entry — naming hues that
+  // Only the kinds that actually appear get a legend entry—naming hues that
   // are not on screen makes the reader hunt for them.
   function kindLegend(steps) {
     const present = new Set(
@@ -1887,7 +1885,7 @@
       );
       const track = el("div", {
         class: "track",
-        title: row.name + " — " + options.format(row.total),
+        title: row.name + "—" + options.format(row.total),
       });
       (row.parts || [{ value: row.total, color: row.color }]).forEach(
         (part) => {
@@ -1902,7 +1900,7 @@
                 part.color,
               title: part.label
                 ? row.name +
-                  " — " +
+                  "—" +
                   part.label +
                   ": " +
                   options.format(part.value)
@@ -1939,7 +1937,7 @@
   function noRunNote(laneId) {
     if (noRunExplained.has(laneId)) {
       return emptyNote(
-        "Nothing to show — no run has been recorded for the " +
+        "Nothing to show—no run has been recorded for the " +
           escapeHtml(laneLabel(laneId).toLowerCase()) +
           " pipeline."
       );
@@ -2357,7 +2355,7 @@
         caption(
           "Table",
           numbers.table,
-          entry.script + " — " + entry.flags.length + " options",
+          entry.script + "—" + entry.flags.length + " options",
           "Read from the script's own argument parser, so a flag added to the " +
             "code appears here on the next build."
         )

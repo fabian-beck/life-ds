@@ -3,7 +3,7 @@
 
 Each step is summarized once from its own source, prompt template and output
 schema. The summary is stored with a fingerprint of exactly those inputs, so a
-rebuild only pays for the steps that actually changed — the same
+rebuild only pays for the steps that actually changed—the same
 staleness-by-fingerprint idea the translation pipeline uses for person data.
 
 Without an API key (or with `--skip-ai`) the build falls back to the
@@ -34,7 +34,8 @@ SYSTEM_PROMPT = (
     "for. Explain what the step does and why it is built that way. Be concrete "
     "and technical; prefer the specific constraint over the general claim. "
     "Never address the reader, never use second person, and do not restate the "
-    "step's name as a sentence."
+    "step's name as a sentence. Set em dashes closed up against the words they "
+    "join, with no surrounding spaces, as the rest of the report does."
 )
 
 
@@ -96,7 +97,7 @@ def _schema_block(codebase: Codebase, step: spec.Step) -> str:
             continue
         fields = "\n".join(
             f"  - {item.name}: {item.annotation}"
-            + (f" — {item.description}" if item.description else "")
+            + (f"—{item.description}" if item.description else "")
             for item in schema.fields
         )
         blocks.append(f"{schema.name}: {schema.docstring or ''}\n{fields}")
@@ -184,7 +185,7 @@ def summarize_steps(
     client = None
     if not skip_ai:
         if not os.getenv("OPENAI_API_KEY"):
-            print("  No OPENAI_API_KEY set — using the hand-written spec summaries.")
+            print("  No OPENAI_API_KEY set—using the hand-written spec summaries.")
             skip_ai = True
         else:
             from openai import OpenAI

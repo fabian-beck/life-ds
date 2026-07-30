@@ -4,8 +4,8 @@
 This is the only file in `pipeline_docs` that a human edits when the pipeline
 changes, and it deliberately holds just the things a parser cannot infer:
 which processing steps exist, which data actually flows between them, and which
-files they read and write. Everything factual about a step — its model,
-reasoning effort, output schema, prompt text, CLI flags — is pulled from the
+files they read and write. Everything factual about a step—its model,
+reasoning effort, output schema, prompt text, CLI flags—is pulled from the
 source by `introspect.py` and must not be duplicated here.
 
 The pipeline is a DAG, not a sequence. `Step.depends_on` names the steps whose
@@ -21,8 +21,8 @@ in the same pipeline is already implied by an edge; a file that arrives from the
 *other* pipeline is drawn as a source node, which is how the meta chart shows
 that it consumes what the person chart produces.
 
-`GROUPS` names the concerns that span several layers — planning image searches,
-running them and matching the results are three layers of one job — and the chart
+`GROUPS` names the concerns that span several layers—planning image searches,
+running them and matching the results are three layers of one job—and the chart
 aligns each group's steps so they read as one strand under a banded label. The
 group names the whole concern; the chart aligns only the parts of it that are
 continuous, so a member several layers below the rest (the portrait, generated
@@ -68,7 +68,7 @@ LANES: Dict[str, Dict[str, str]] = {
         "label": "Shared subsystems",
         "entry": "",
         "blurb": (
-            "Sourcing, geocoding, review and localization — used by both "
+            "Sourcing, geocoding, review and localization—used by both "
             "pipelines and run as their own scripts too."
         ),
     },
@@ -137,7 +137,7 @@ class Group:
     chain, but they may also sit in the same layer (two sourcing calls that do
     not see each other), in which case they are simply placed side by side
     inside the group. Members separated by layers the group has no step in are
-    aligned and banded separately — see `imagery`, whose portrait step runs long
+    aligned and banded separately—see `imagery`, whose portrait step runs long
     after the rest. Every member must be drawn in the same pipeline column.
     """
 
@@ -145,7 +145,7 @@ class Group:
     label: str
     steps: List[str]
     note: str = ""
-    """Why these steps belong together — shown as the band's tooltip."""
+    """Why these steps belong together—shown as the band's tooltip."""
 
 
 GROUPS: List[Group] = [
@@ -173,7 +173,7 @@ GROUPS: List[Group] = [
         ["p_img_search", "p_img_fetch", "p_img_match", "p_portrait"],
         note=(
             "One job: plan the searches, run them, match the hits to events, and "
-            "style-transfer the portrait the match picked — which happens far "
+            "style-transfer the portrait the match picked—which happens far "
             "enough downstream that the chart bands it separately."
         ),
     ),
@@ -364,7 +364,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_events_p1",
-        "Phase 1 — event skeletons",
+        "Phase 1—event skeletons",
         PERSON,
         AI,
         "generate_person_events.py",
@@ -372,7 +372,7 @@ STEPS: List[Step] = [
         phase_label="Phase 1",
         summary=(
             "Reads the whole article set and proposes 12–16 significant events "
-            "with titles, dates and descriptions — the narrative spine, with no "
+            "with titles, dates and descriptions—the narrative spine, with no "
             "locations, images or sources yet."
         ),
         depends_on=[
@@ -384,7 +384,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_events_p2",
-        "Phase 2 — research each event",
+        "Phase 2—research each event",
         PERSON,
         AI,
         "generate_person_events.py",
@@ -478,7 +478,7 @@ STEPS: List[Step] = [
         "geocode_location",
         summary=(
             "Resolves each place through Nominatim, preferring the modern name "
-            "Phase 2 supplied — which is why historic places with renamed "
+            "Phase 2 supplied—which is why historic places with renamed "
             "successors still land on the map."
         ),
         depends_on=[Dep("p_events_p2", "historic and modern place names")],
@@ -511,7 +511,7 @@ STEPS: List[Step] = [
         "update_register",
         summary=(
             "Folds the person into the landing-page index, carrying over the "
-            "portrait reference the image matching picked — which is where the "
+            "portrait reference the image matching picked—which is where the "
             "portrait step later reads it from."
         ),
         depends_on=[Dep("p_write", "the written dataset")],
@@ -544,7 +544,7 @@ STEPS: List[Step] = [
         "call_openai",
         summary=(
             "Builds the person's relationship graph with typed, weighted and "
-            "described ties — the input the meta story pipeline later merges."
+            "described ties—the input the meta story pipeline later merges."
         ),
         depends_on=[
             Dep("p_write", "the finished life events as context"),
@@ -622,7 +622,7 @@ STEPS: List[Step] = [
         "build_name_glossary",
         summary=(
             "Decides once per person how every name is rendered in the target "
-            "language, then applies it everywhere — the UI cross-references match "
+            "language, then applies it everywhere—the UI cross-references match "
             "on exact names, so drift between documents would break them."
         ),
         depends_on=[
@@ -656,7 +656,7 @@ STEPS: List[Step] = [
     # ------------------------------------------------------------------ meta
     Step(
         "m_p1",
-        "Phase 1 — story planning",
+        "Phase 1—story planning",
         META,
         AI,
         "generate_meta_story.py",
@@ -672,7 +672,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p2",
-        "Phase 2 — collect events",
+        "Phase 2—collect events",
         META,
         CODE,
         "generate_meta_story.py",
@@ -684,7 +684,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p3",
-        "Phase 3 — curate events",
+        "Phase 3—curate events",
         META,
         AI,
         "generate_meta_story.py",
@@ -720,7 +720,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p4",
-        "Phase 4 — historical context",
+        "Phase 4—historical context",
         META,
         AI,
         "generate_meta_story.py",
@@ -737,7 +737,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p5",
-        "Phase 5 — derive social network",
+        "Phase 5—derive social network",
         META,
         CODE,
         "meta_story_network.py",
@@ -746,14 +746,14 @@ STEPS: List[Step] = [
         summary=(
             "Merges the individual ego networks by normalized name into one graph "
             "of main people plus the acquaintances that bridge them. Purely "
-            "deterministic — no model sees this step."
+            "deterministic—no model sees this step."
         ),
         depends_on=[Dep("m_p1", "the selected person ids")],
         inputs=["ego_network"],
     ),
     Step(
         "m_p5b",
-        "Phase 5b — review network",
+        "Phase 5b—review network",
         META,
         AI,
         "meta_story_network_review.py",
@@ -780,13 +780,13 @@ STEPS: List[Step] = [
         summary=(
             "Community detection over the reviewed graph produces the story's "
             "circles. Called from the narration phase and mirrored by the client, "
-            "so the circles are never stored — they are always re-derived."
+            "so the circles are never stored—they are always re-derived."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
     ),
     Step(
         "m_p6",
-        "Phase 6 — narrate circles",
+        "Phase 6—narrate circles",
         META,
         AI,
         "generate_meta_story.py",
@@ -801,7 +801,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p7b",
-        "Phase 7 — rate map events",
+        "Phase 7—rate map events",
         META,
         AI,
         "meta_story_map_narration.py",
@@ -818,7 +818,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p7a",
-        "Phase 7 — cluster places",
+        "Phase 7—cluster places",
         META,
         CODE,
         "meta_story_map.py",
@@ -833,7 +833,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p7c",
-        "Phase 7 — narrate map stops",
+        "Phase 7—narrate map stops",
         META,
         AI,
         "meta_story_map_narration.py",
@@ -849,7 +849,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p8",
-        "Phase 8 — compose the story",
+        "Phase 8—compose the story",
         META,
         AI,
         "compose_meta_story.py",

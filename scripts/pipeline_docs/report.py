@@ -3,12 +3,12 @@
 
 The report has two kinds of content and they are kept strictly apart.
 
-*Authored* material — motivation, design rationale, the reasons a step exists at
-all — lives in `docs/report/report.md`, written by hand, because no amount of
-static analysis can explain why a decision was made. *Computed* material —
-counts, models, prompts, schemas, timings, the dependency graphs — is never
-written down in the markdown. The markdown only says where it goes, and this
-module leaves a mount point that the page fills from the build payload. A
+*Authored* material—motivation, design rationale, the reasons a step exists at
+all—lives in `docs/report/report.md`, written by hand, because no amount of
+static analysis can explain why a decision was made. *Computed*
+material—counts, models, prompts, schemas, timings, the dependency graphs—is
+never written down in the markdown. The markdown only says where it goes, and
+this module leaves a mount point that the page fills from the build payload. A
 rebuild therefore refreshes every number and every figure without anyone editing
 a sentence, and a sentence can never contradict the code.
 
@@ -20,8 +20,8 @@ The authoring surface is small on purpose:
 
 `{{ some.fact }}`
     A citable measurement from `facts.py`, rendered with its provenance as a
-    tooltip. An unknown key fails the build rather than printing nothing —
-    a hole in a sentence is worse than a broken build.
+    tooltip. An unknown key fails the build rather than printing
+    nothing—a hole in a sentence is worse than a broken build.
 
 `::: component key=value`
     A mount point for computed content. The block's own body is authored prose
@@ -70,8 +70,8 @@ class ComponentSpec:
     """A computed block the markdown may mount, and what it needs to be valid.
 
     `figures` and `tables` are how many numbered captions the component emits,
-    which is what lets numbering be assigned here — in document order, in
-    Python, where it can be tested — instead of counted at runtime.
+    which is what lets numbering be assigned here—in document order, in
+    Python, where it can be tested—instead of counted at runtime.
     """
 
     name: str
@@ -285,8 +285,8 @@ def parse_params(text: str, line: int) -> Dict[str, str]:
         remainder = remainder.replace(match.group(0), "", 1)
     if remainder.strip():
         raise ReportError(
-            f"line {line}: could not read directive arguments {remainder.strip()!r} "
-            '— use key=value or key="two words"'
+            f"line {line}: could not read directive arguments {remainder.strip()!r}"
+            '—use key=value or key="two words"'
         )
     return params
 
@@ -386,7 +386,7 @@ def substitute_citations(
         fact = facts.get(key)
         if fact is None:
             raise ReportError(
-                f"{line_hint}unknown fact '{{{{ {key} }}}}' — add it to "
+                f"{line_hint}unknown fact '{{{{ {key} }}}}'—add it to "
                 "pipeline_docs/facts.py or fix the citation"
             )
         return (
@@ -434,7 +434,7 @@ def _renumber_headings(
         title = match.group(2)
         if any(counters[level] == 0 for level in range(depth - 1)):
             raise ReportError(
-                f"heading '{title}' skips a level — a depth-{depth} heading needs "
+                f"heading '{title}' skips a level—a depth-{depth} heading needs "
                 "a parent heading above it"
             )
         counters[depth - 1] += 1
@@ -546,8 +546,8 @@ def compile_report(
     """Authored Markdown in, page body plus mount manifest out.
 
     `emits` overrides how many figure and table numbers a block consumes. It
-    exists because a block can legitimately have nothing to show — the recorded
-    run charts, before any run has been recorded — and a number reserved for a
+    exists because a block can legitimately have nothing to show—the recorded
+    run charts, before any run has been recorded—and a number reserved for a
     caption that never appears leaves a hole in the sequence. The build passes a
     function that knows which blocks will actually render, so the numbering
     matches the page rather than the markup.
@@ -590,7 +590,7 @@ def compile_report(
         spec = COMPONENTS.get(block.name)
         if spec is None:
             raise ReportError(
-                f"{hint}unknown component '{block.name}' — known components are "
+                f"{hint}unknown component '{block.name}'—known components are "
                 + ", ".join(sorted(COMPONENTS))
             )
         missing = [key for key in spec.required if key not in block.params]

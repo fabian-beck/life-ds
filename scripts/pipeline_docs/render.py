@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the standalone HTML report.
 
-Everything is inlined — CSS, JS, the compiled Markdown and the payload — so the
+Everything is inlined—CSS, JS, the compiled Markdown and the payload—so the
 file works from `file://`, from a repo checkout, or attached to an email, with no
 build step and no network access.
 
@@ -65,7 +65,7 @@ __BODY__
       <p>
         Authored prose lives in <code>__SOURCE__</code>. Every figure, table,
         count and prompt on this page is computed at build time by
-        <code>scripts/generate_report.py</code> — from the abstract syntax trees
+        <code>scripts/generate_report.py</code>—from the abstract syntax trees
         of <code>scripts/</code>, from the repository itself, and from runs
         recorded by <code>scripts/record_pipeline_run.py</code>. Step
         explanations are written by a language model from the source and cached
@@ -123,7 +123,7 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
     # slash keeps the JSON valid while making that impossible.
     data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
 
-    title = document.title if document else "Life Data Stories — technical report"
+    title = document.title if document else "Life Data Stories—technical report"
     subtitle = (document.front.get("subtitle", "") if document else "").strip()
     description = (
         (document.front.get("description", "").strip() if document else "")

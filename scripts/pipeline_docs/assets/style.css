@@ -1,8 +1,8 @@
-/* Technical report — standalone page styles.
+/* Technical report—standalone page styles.
 
    The page is a two-column shell: a contents rail that follows the reader, and
    one measure of running text. The report body is compiled from Markdown, so its
-   typography is styled by element under `.report` rather than by class — the
+   typography is styled by element under `.report` rather than by class—the
    compiler has to stay free to emit ordinary HTML.
 
    Computed blocks (`.widget`) and authored callouts (`.callout`) are deliberately
@@ -10,13 +10,14 @@
    this document were measured and which were argued.
 
    Academic report styling: black on white, hairline rules, square corners, no
-   shadows and no decorative fills. Colour is reserved for exactly one job —
-   the step-kind category (AI, deterministic, external source, image model) —
-   and is never the only carrier of that meaning: every node prints its kind in
-   the fact line, and every legend and filter pairs the swatch with a label.
+   shadows and no decorative fills. Colour is reserved for exactly one
+   job—the step-kind category (AI, deterministic, external source, image
+   model)—and is never the only carrier of that meaning: every node prints its
+   kind in the fact line, and every legend and filter pairs the swatch with a
+   label.
    The four hues are validated categorical slots (light surface, CVD-checked).
 
-   Light only, by request — `color-scheme: light` keeps form controls and
+   Light only, by request—`color-scheme: light` keeps form controls and
    scrollbars light even when the OS is in dark mode, so nothing renders as a
    half-converted hybrid. */
 
@@ -326,8 +327,8 @@ h1 {
   font-size: 16px;
 }
 
-/* The number is a link, so a section can be cited by pointing at its number —
-   which is the thing the prose refers to. */
+/* The number is a link, so a section can be cited by pointing at its
+   number—which is the thing the prose refers to. */
 .secno {
   flex: none;
   min-width: 2.6ch;
@@ -421,7 +422,7 @@ h1 {
 /* ------------------------------------------------------------- contents */
 
 /* Rendered in Python from the heading tree, so it survives print and a page with
-   no JavaScript — unlike the rail, which is chrome. Hidden while the rail is a
+   no JavaScript—unlike the rail, which is chrome. Hidden while the rail is a
    column, because showing both is the same list twice. */
 .toc {
   display: none;
@@ -880,7 +881,7 @@ figcaption b {
   opacity: 0.2;
 }
 
-/* Files the step writes, printed inside its node — the pipeline's state
+/* Files the step writes, printed inside its node—the pipeline's state
    changes here, not in a box floating beside it. */
 .node .writes text {
   font-size: 9.5px;

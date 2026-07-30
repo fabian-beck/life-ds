@@ -14,7 +14,7 @@ build errors.
 A component the page cannot hydrate, a lane or script that no longer exists, and
 a citation to a measurement that was removed are all build errors: each would
 render as a silent gap in a sentence the reader is meant to trust. Facts nobody
-cites are a warning only — they cost a measurement, not a claim.
+cites are a warning only—they cost a measurement, not a claim.
 """
 
 from __future__ import annotations
@@ -100,7 +100,7 @@ def _check_groups() -> List[Problem]:
     """Groups must name real steps, claim each one once, and stay in one column.
 
     A group is drawn as one band across several layers, so a member from the
-    other pipeline — or a step claimed twice — would have the layout reserving a
+    other pipeline—or a step claimed twice—would have the layout reserving a
     column that cannot exist.
     """
     problems: List[Problem] = []
@@ -166,7 +166,7 @@ def check(codebase: Codebase) -> List[Problem]:
                 Problem(
                     "error",
                     where,
-                    f"{step.script} has no function '{step.function}' — it was "
+                    f"{step.script} has no function '{step.function}'—it was "
                     "renamed or removed",
                 )
             )
@@ -248,8 +248,8 @@ def check_report(
 ) -> List[Problem]:
     """Resolve every mount point and citation in the authored report.
 
-    The markdown is allowed to name things it does not own — a lane, a script, a
-    schema — so each of those names is resolved here rather than trusted. The
+    The markdown is allowed to name things it does not own—a lane, a script, a
+    schema—so each of those names is resolved here rather than trusted. The
     coverage checks at the end are about the report as a document: a pipeline
     that no chart draws, or a section tree with no contents, means the base
     version lost something rather than merely rendering it differently.
@@ -267,7 +267,7 @@ def check_report(
                 Problem(
                     "error",
                     where,
-                    f"lane '{lane}' is not a drawn pipeline — use "
+                    f"lane '{lane}' is not a drawn pipeline—use "
                     f"'{spec.PERSON}' or '{spec.META}'",
                 )
             )

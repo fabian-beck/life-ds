@@ -162,7 +162,7 @@ class DriftCheckTests(unittest.TestCase):
 
 
 def _layers() -> dict:
-    """Longest-path layer per step — the same rule the chart applies."""
+    """Longest-path layer per step—the same rule the chart applies."""
     steps = {step.id: step for step in spec.STEPS}
     layers: dict = {}
 
@@ -302,8 +302,8 @@ class GroupTests(unittest.TestCase):
         """A group that splits into nothing but single steps is never drawn.
 
         The chart aligns a group only where it occupies consecutive layers, so a
-        group whose every run is one step long would produce no band at all —
-        which means the grouping was wishful rather than structural.
+        group whose every run is one step long would produce no band at
+        all—which means the grouping was wishful rather than structural.
         """
         for group in spec.GROUPS:
             runs = _group_runs(group)
@@ -602,7 +602,7 @@ class ReportSourceTests(unittest.TestCase):
         self.assertEqual(problems, [])
 
     def test_both_pipelines_are_drawn_as_subsections(self) -> None:
-        """Two charts, not two tabs — the report has to read straight through."""
+        """Two charts, not two tabs—the report has to read straight through."""
         lanes = [
             mount.params["lane"]
             for mount in self.document.mounts
