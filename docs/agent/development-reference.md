@@ -346,6 +346,18 @@ node, which is how the meta chart shows that it consumes person-pipeline output.
 Orchestrator `main()` functions are deliberately not steps: they impose an order
 without creating a dependency, and drawing them made a fork look like a chain.
 
+The vertical axis is the dependency graph; the horizontal axis carries no graph
+meaning, so `spec.GROUPS` spends it on concerns. A group names steps that do one
+job across several layers — planning the image searches, running them, matching
+the results, generating the portrait — and the layout gives the group a single
+column and draws a labelled band behind it, so the strand can be read straight
+down instead of being tracked as it drifts sideways. Grouping is presentation
+only: it never moves a layer. A column is shared by steps whose layers do not
+collide, which keeps a group's band free of unrelated steps and keeps the chart
+from growing a column per step. Adding a group is a `spec.py` edit; `--check`
+rejects one that names an unknown step, claims a step twice, or mixes the two
+pipelines.
+
 ```bash
 python scripts/generate_pipeline_docs.py            # rebuild the page
 python scripts/generate_pipeline_docs.py --check    # drift check only, no API key needed
@@ -357,7 +369,7 @@ It is built from three layers, in `scripts/pipeline_docs/`:
 | Layer | File | What it contributes |
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
-| Pipeline shape | `spec.py` | The **only hand-maintained file** — which steps exist, what data flows between them (`depends_on`), and which files they read and write. Each step points at a real function. |
+| Pipeline shape | `spec.py` | The **only hand-maintained file** — which steps exist, what data flows between them (`depends_on`), which files they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/pipeline/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
 

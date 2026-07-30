@@ -21,6 +21,12 @@ in the same pipeline is already implied by an edge; a file that arrives from the
 *other* pipeline is drawn as a source node, which is how the meta chart shows
 that it consumes what the person chart produces.
 
+`GROUPS` names the concerns that span several layers — planning image searches,
+running them and matching the results are three layers of one job — and the
+chart gives each group a single column so its steps line up vertically under a
+banded label. Grouping is presentation only: it never changes a layer, and the
+layer is still the longest dependency path.
+
 Each step names a `script` and a `function`. `validate.py` checks that both
 still exist, that the dependency graph is acyclic, and that no AI call site in
 the codebase is left unclaimed, so a step added to the pipeline without a spec
@@ -118,6 +124,105 @@ class Step:
     delegate the actual API call to a helper: the call site knows only the
     `model` its caller handed it, so the value has to come from the entry point.
     """
+
+
+@dataclass
+class Group:
+    """Steps of one concern that the chart aligns in a single column.
+
+    A group is a reading aid, not a dependency: its members usually form a
+    chain, but they may also sit in the same layer (two sourcing calls that do
+    not see each other), in which case the group simply gets that many adjacent
+    columns. Every member must be drawn in the same pipeline column.
+    """
+
+    id: str
+    label: str
+    steps: List[str]
+    note: str = ""
+    """Why these steps belong together — shown as the band's tooltip."""
+
+
+GROUPS: List[Group] = [
+    Group(
+        "sourcing",
+        "Source material",
+        ["p_wiki_fetch", "p_wiki_select", "p_db"],
+        note=(
+            "Everything the pipeline learns about the person before any writing "
+            "happens: fetch, then narrow, plus the second biographical source."
+        ),
+    ),
+    Group(
+        "event_research",
+        "Event research",
+        ["p_events_p1", "p_events_p2", "p_chapters"],
+        note=(
+            "The narrative spine: propose the events, research each one, then "
+            "arrange them into chapters."
+        ),
+    ),
+    Group(
+        "imagery",
+        "Imagery",
+        ["p_img_search", "p_img_fetch", "p_img_match", "p_portrait"],
+        note=(
+            "One job across four layers: plan the searches, run them, match the "
+            "hits to events, and style-transfer the portrait the match picked."
+        ),
+    ),
+    Group(
+        "interface_style",
+        "Interface style",
+        ["p_style", "p_review_style"],
+        note="The story's colour and type system, and the critic pass over it.",
+    ),
+    Group(
+        "localization",
+        "Localization",
+        ["p_glossary", "p_translate"],
+        note=(
+            "The glossary exists only to serve the translation: names are decided "
+            "once, then applied to every document."
+        ),
+    ),
+    Group(
+        "event_curation",
+        "Event curation",
+        ["m_p2", "m_p3", "m_p3b", "m_p4"],
+        note=(
+            "Collect every event of the selected people, judge them against the "
+            "theme, refit the chapters to the survivors, then give them a period."
+        ),
+    ),
+    Group(
+        "social_network",
+        "Social network",
+        ["m_p5", "m_p5b", "m_clusters", "m_p6"],
+        note=(
+            "The network branch end to end: merge the ego networks, review the "
+            "graph, detect the circles, write their cards."
+        ),
+    ),
+    Group(
+        "map_branch",
+        "Map",
+        ["m_p7b", "m_p7a", "m_p7c"],
+        note=(
+            "The map branch end to end: rate the located events, cluster them "
+            "into stops, narrate the stops that survive."
+        ),
+    ),
+    Group(
+        "composition",
+        "Composition and output",
+        ["m_p8", "m_save", "m_translate"],
+        note=(
+            "Where the branches become one story: rewrite every text in one "
+            "voice, save it, translate it."
+        ),
+    ),
+]
 
 
 ARTIFACTS: List[Artifact] = [
@@ -802,6 +907,13 @@ def step_by_id(step_id: str) -> Optional[Step]:
     for step in STEPS:
         if step.id == step_id:
             return step
+    return None
+
+
+def group_of(step_id: str) -> Optional[Group]:
+    for group in GROUPS:
+        if step_id in group.steps:
+            return group
     return None
 
 

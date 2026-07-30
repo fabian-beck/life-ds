@@ -247,6 +247,57 @@ class DependencyGraphTests(unittest.TestCase):
         self.assertLess(layers["m_p5b"], layers["m_clusters"])
 
 
+class GroupTests(unittest.TestCase):
+    """Groups are what the chart aligns into one column, so they must be sane."""
+
+    def setUp(self) -> None:
+        self.original_groups = list(spec.GROUPS)
+
+    def tearDown(self) -> None:
+        spec.GROUPS[:] = self.original_groups
+
+    def test_groups_name_known_steps_exactly_once(self) -> None:
+        problems = [
+            problem
+            for problem in validate._check_groups()
+            if problem.severity == "error"
+        ]
+        self.assertEqual(problems, [], str(problems))
+
+    def test_a_step_in_two_groups_fails_the_build(self) -> None:
+        spec.GROUPS.append(spec.Group("clash", "Clash", ["p_img_match", "p_write"]))
+        messages = [str(problem) for problem in validate._check_groups()]
+        self.assertTrue(any("already in group" in message for message in messages))
+
+    def test_a_group_across_both_pipelines_fails_the_build(self) -> None:
+        spec.GROUPS.append(spec.Group("mixed", "Mixed", ["p_write", "m_save"]))
+        messages = [str(problem) for problem in validate._check_groups()]
+        self.assertTrue(any("spans both pipelines" in message for message in messages))
+
+    def test_the_imagery_group_really_spans_several_layers(self) -> None:
+        """Aligning a group is only worth doing when it crosses layers."""
+        layers = _layers()
+        group = spec.group_of("p_img_search")
+        self.assertIsNotNone(group)
+        assert group is not None
+        spanned = {layers[step_id] for step_id in group.steps}
+        self.assertGreater(len(spanned), 1, "the imagery group sits in one layer")
+        self.assertIn("p_portrait", group.steps)
+
+    def test_every_group_stays_within_one_layer_per_step(self) -> None:
+        """Two members in one layer is legal but should not be the normal case."""
+        layers = _layers()
+        for group in spec.GROUPS:
+            counts: dict = {}
+            for step_id in group.steps:
+                counts[layers[step_id]] = counts.get(layers[step_id], 0) + 1
+            self.assertLessEqual(
+                max(counts.values()),
+                2,
+                f"group '{group.id}' would reserve more than two columns",
+            )
+
+
 class PayloadAndRenderTests(unittest.TestCase):
     """The page is a pure function of the payload, so test the payload."""
 
@@ -260,6 +311,15 @@ class PayloadAndRenderTests(unittest.TestCase):
         for step in self.payload["steps"]:
             self.assertIn(step["column"], {"person", "meta"})
             self.assertTrue(step["spec_summary"])
+
+    def test_payload_carries_the_groups_the_chart_aligns(self) -> None:
+        groups = {group["id"]: group for group in self.payload["groups"]}
+        self.assertEqual(len(groups), len(spec.GROUPS))
+        by_id = {step["id"]: step for step in self.payload["steps"]}
+        for group in self.payload["groups"]:
+            for step_id in group["steps"]:
+                self.assertEqual(by_id[step_id]["group"], group["id"])
+        self.assertIsNone(by_id["p_write"]["group"])
 
     def test_payload_carries_the_graph_the_chart_lays_out(self) -> None:
         by_id = {step["id"]: step for step in self.payload["steps"]}

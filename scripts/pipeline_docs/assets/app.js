@@ -11,7 +11,13 @@
    genuinely independent — the map branch and the network branch of the meta
    story really do run without seeing each other. Files a step writes are drawn
    inside its node; files that arrive from the other pipeline become source
-   nodes, since nothing in this chart produces them. */
+   nodes, since nothing in this chart produces them.
+
+   The vertical axis is the dependency graph; the horizontal axis is free, and
+   `spec.GROUPS` spends it on meaning. Steps of one concern — planning image
+   searches, running them, matching the results, generating the portrait — are
+   aligned in one column and banded, so a job that takes four layers reads as
+   one vertical strand instead of drifting across the chart. */
 
 (function () {
   "use strict";
@@ -31,7 +37,9 @@
   const LAYER_GAP = 52;
   const MARGIN_CH = 26; // side channels for edges that skip a layer
   const PAD = 12;
-  const HEAD_H = 12;
+  const BAND_PAD = 9;
+  const BAND_HEAD = 20; // room for a group band's label above its first step
+  const HEAD_H = BAND_HEAD + 4; // a band on the first layer has to fit above it
 
   const state = {
     tab: COLUMNS[0],
@@ -139,6 +147,17 @@
   const artifactById = {};
   DATA.artifacts.forEach((artifact) => {
     artifactById[artifact.id] = artifact;
+  });
+
+  // Which concern a step belongs to, and therefore which column it is aligned
+  // in. Validated in spec.py to claim each step at most once.
+  const groupById = {};
+  const groupOfStep = {};
+  (DATA.groups || []).forEach((group) => {
+    groupById[group.id] = group;
+    (group.steps || []).forEach((stepId) => {
+      groupOfStep[stepId] = group.id;
+    });
   });
 
   function kindColor(kind) {
@@ -455,6 +474,155 @@
     return NODE_H + (files ? 6 + files * FILE_H : 0);
   }
 
+  /* Horizontal placement. The layer decides how far *down* a node goes; the
+     graph says nothing about how far across, so that freedom is spent on
+     meaning: the steps of one concern share a column and read as a single
+     vertical strand.
+
+     The unit that gets a column is not the node but the *entity* — a group, or
+     an ungrouped node on its own. A group whose members all sit in different
+     layers takes one column; if a filter or the graph puts two members in the
+     same layer, it takes that many adjacent columns and they fill left to
+     right.
+
+     Columns are shared by entities whose layer spans do not overlap, which is
+     what keeps the chart from growing a column per node: alignment costs width
+     only where a group actually reserves a strip. That same rule guarantees a
+     group's strip is free of strangers over its whole height, so the band drawn
+     behind it never encloses an unrelated step. */
+  function assignColumns(rows) {
+    const entities = [];
+    const byKey = {};
+    rows.forEach((row, layer) => {
+      row.forEach((node, index) => {
+        const groupId = node.type === "step" ? groupOfStep[node.id] : null;
+        const key = groupId ? "g:" + groupId : "n:" + node.id;
+        let entity = byKey[key];
+        if (!entity) {
+          entity = {
+            group: groupId ? groupById[groupId] : null,
+            members: [],
+            byLayer: {},
+            first: layer,
+            last: layer,
+            rank: 0,
+          };
+          byKey[key] = entity;
+          entities.push(entity);
+        }
+        entity.members.push(node);
+        (entity.byLayer[layer] = entity.byLayer[layer] || []).push(node);
+        entity.first = Math.min(entity.first, layer);
+        entity.last = Math.max(entity.last, layer);
+        // Where the barycentre pass put this node in its row, normalized, so an
+        // entity keeps the side of the chart its members were ordered onto.
+        entity.rank += row.length > 1 ? index / (row.length - 1) : 0.5;
+      });
+    });
+
+    entities.forEach((entity) => {
+      entity.rank /= entity.members.length;
+      entity.width = entity.members.reduce((best, node) => {
+        return Math.max(best, node.w);
+      }, 0);
+      entity.slots = Object.keys(entity.byLayer).reduce((best, layer) => {
+        return Math.max(best, entity.byLayer[layer].length);
+      }, 1);
+    });
+    entities.sort((a, b) => {
+      return a.rank - b.rank || a.first - b.first;
+    });
+
+    function sharesLayer(a, b) {
+      return Object.keys(a.byLayer).some((layer) => {
+        return b.byLayer[layer] !== undefined;
+      });
+    }
+
+    const columns = [];
+    const placed = [];
+    entities.forEach((entity) => {
+      function free(index) {
+        return (columns[index] || []).every((other) => {
+          return other.last < entity.first || entity.last < other.first;
+        });
+      }
+      function fits(index) {
+        for (let offset = 0; offset < entity.slots; offset += 1) {
+          if (!free(index + offset)) return false;
+        }
+        return true;
+      }
+
+      // Everything already placed that shares a layer with this entity has a
+      // lower rank, so it belongs to its left: that preserves the row order the
+      // barycentre pass found.
+      let start = 0;
+      placed.forEach((other) => {
+        if (sharesLayer(other, entity)) {
+          start = Math.max(start, other.column + other.slots);
+        }
+      });
+      while (!fits(start)) start += 1;
+
+      entity.column = start;
+      for (let offset = 0; offset < entity.slots; offset += 1) {
+        columns[start + offset] = columns[start + offset] || [];
+        columns[start + offset].push(entity);
+      }
+      placed.push(entity);
+      Object.keys(entity.byLayer).forEach((layer) => {
+        entity.byLayer[layer].forEach((node, index) => {
+          node.slot = start + index;
+        });
+      });
+    });
+
+    const xOf = [];
+    let cursor = PAD + RAIL_W + MARGIN_CH;
+    for (let index = 0; index < columns.length; index += 1) {
+      xOf[index] = cursor;
+      cursor +=
+        (columns[index] || []).reduce((best, entity) => {
+          return Math.max(best, entity.width);
+        }, 0) + COL_GAP;
+    }
+
+    return {
+      entities: entities,
+      xOf: xOf,
+      width: Math.max(NODE_W, cursor - COL_GAP - (PAD + RAIL_W + MARGIN_CH)),
+    };
+  }
+
+  /* The band behind a group. A single-member group is not worth a label — with
+     a filter on, that is all a group may have left. */
+  function groupBands(entities) {
+    const bands = [];
+    entities.forEach((entity) => {
+      if (!entity.group || entity.members.length < 2) return;
+      let x0 = Infinity;
+      let x1 = -Infinity;
+      let y0 = Infinity;
+      let y1 = -Infinity;
+      entity.members.forEach((node) => {
+        x0 = Math.min(x0, node.x);
+        x1 = Math.max(x1, node.x + node.w);
+        y0 = Math.min(y0, node.y);
+        y1 = Math.max(y1, node.y + node.h);
+      });
+      bands.push({
+        group: entity.group,
+        count: entity.members.length,
+        x0: x0 - BAND_PAD,
+        x1: x1 + BAND_PAD,
+        y0: y0 - BAND_HEAD,
+        y1: y1 + BAND_PAD,
+      });
+    });
+    return bands;
+  }
+
   function layout() {
     const graph = buildGraph();
     const rows = [];
@@ -529,40 +697,35 @@
       reindex();
     }
 
-    const contentW = rows.reduce((best, row) => {
-      const width =
-        row.reduce((sum, node) => {
-          return sum + node.w;
-        }, 0) +
-        COL_GAP * Math.max(0, row.length - 1);
-      return Math.max(best, width);
-    }, NODE_W);
+    const grid = assignColumns(rows);
+    const contentW = grid.width;
 
     const nodes = [];
     const byId = {};
     const rails = [];
     let y = HEAD_H;
     rows.forEach((row, index) => {
-      const rowW =
-        row.reduce((sum, node) => {
-          return sum + node.w;
-        }, 0) +
-        COL_GAP * Math.max(0, row.length - 1);
       const rowH = row.reduce((best, node) => {
         return Math.max(best, node.h);
       }, 0);
-      let x = PAD + RAIL_W + MARGIN_CH + (contentW - rowW) / 2;
       row.forEach((node) => {
-        node.x = x;
+        node.x = grid.xOf[node.slot];
         node.y = y;
         node.layer = index;
-        x += node.w + COL_GAP;
         nodes.push(node);
         byId[node.id] = node;
+      });
+      // Columns leave holes in sparse layers, so a row is no longer in
+      // barycentre order; the edge fanning and the channel search below both
+      // read rows left to right.
+      row.sort((a, b) => {
+        return a.x - b.x;
       });
       rails.push({ label: String(index + 1), y0: y, y1: y + rowH });
       y += rowH + LAYER_GAP;
     });
+
+    const bands = groupBands(grid.entities);
 
     // Edges leave and enter along the node's edge, fanned out and sorted by the
     // other end's position so parallel links do not cross inside a gap.
@@ -618,12 +781,13 @@
       });
     });
 
-    routeLongEdges(edges, rows, contentW);
+    routeLongEdges(edges, rows, contentW, bands);
 
     return {
       nodes: nodes,
       edges: edges,
       rails: rails,
+      bands: bands,
       layers: rows.length,
       width: PAD * 2 + RAIL_W + MARGIN_CH * 2 + contentW,
       height: (rows.length ? y - LAYER_GAP : HEAD_H) + PAD,
@@ -632,8 +796,10 @@
 
   /* An edge that skips a layer would otherwise be drawn straight through the
      nodes in between. Each one is given a vertical channel — a column of empty
-     space free across every layer it crosses — and routed down it. */
-  function routeLongEdges(edges, rows, contentW) {
+     space free across every layer it crosses — and routed down it. A group's
+     band counts as occupied even where its column is empty: a line running
+     down the middle of a band would read as belonging to it. */
+  function routeLongEdges(edges, rows, contentW, bands) {
     const left = PAD + RAIL_W;
     const right = left + MARGIN_CH * 2 + contentW;
     const candidates = [left + MARGIN_CH / 2, right - MARGIN_CH / 2];
@@ -672,6 +838,16 @@
             });
           })
           .filter((x) => {
+            return !(bands || []).some((band) => {
+              return (
+                x > band.x0 - 2 &&
+                x < band.x1 + 2 &&
+                band.y0 < edge.y2 &&
+                edge.y1 < band.y1
+              );
+            });
+          })
+          .filter((x) => {
             return !taken.some((used) => {
               return (
                 Math.abs(used.x - x) < 10 &&
@@ -687,6 +863,57 @@
         edge.channel = usable[0];
         taken.push({ x: edge.channel, y0: edge.y1, y1: edge.y2 });
       });
+  }
+
+  /* The band is ground: it goes down before the edges and the nodes. Its label
+     goes on last, in `drawBandLabels`, or the arrows into the group's first step
+     would be drawn across it. */
+  function drawBandAreas(root, bands) {
+    bands.forEach((band) => {
+      const group = svg("g", { class: "band" });
+      group.appendChild(
+        svg("rect", {
+          class: "band-area",
+          x: band.x0,
+          y: band.y0,
+          width: band.x1 - band.x0,
+          height: band.y1 - band.y0,
+          rx: 8,
+        })
+      );
+      const tip = svg("title");
+      tip.textContent =
+        band.group.label +
+        " — " +
+        band.count +
+        " steps of one concern, aligned in one column" +
+        (band.group.note ? "\n" + band.group.note : "");
+      group.appendChild(tip);
+      root.appendChild(group);
+    });
+  }
+
+  function drawBandLabels(root, bands) {
+    bands.forEach((band) => {
+      const text = truncateLabel(band.group.label, 30);
+      root.appendChild(
+        svg("rect", {
+          class: "band-label-bg",
+          x: band.x0 + 7,
+          y: band.y0 + 2,
+          width: text.length * 6 + 12,
+          height: 15,
+          rx: 3,
+        })
+      );
+      const label = svg("text", {
+        class: "band-label",
+        x: band.x0 + 13,
+        y: band.y0 + 13,
+      });
+      label.textContent = text;
+      root.appendChild(label);
+    });
   }
 
   function drawRails(root, rails) {
@@ -999,6 +1226,7 @@
       "Dependency graph of the " + DATA.lanes[state.tab].label + " pipeline"
     );
 
+    drawBandAreas(host, geometry.bands);
     drawRails(host, geometry.rails);
     drawEdges(host, geometry.edges);
     geometry.nodes.forEach((node) => {
@@ -1007,6 +1235,7 @@
     geometry.nodes.forEach((node) => {
       if (node.type === "step") drawNode(host, node);
     });
+    drawBandLabels(host, geometry.bands);
 
     const stepNodes = geometry.nodes.filter((node) => {
       return node.type === "step";
@@ -1034,7 +1263,13 @@
       " layers, read top to bottom. An arrow means one step consumes what the " +
       "step above it produced; a step's layer is the longest such chain " +
       "reaching it, so steps drawn side by side are independent and could run " +
-      "in either order. Click a step to label its arrows with the data that " +
+      "in either order. " +
+      (geometry.bands.length
+        ? "A shaded band is one concern spread over several layers — its steps " +
+          "are aligned in a single column, so the strand can be followed " +
+          "straight down; hover the band for what holds it together. "
+        : "") +
+      "Click a step to label its arrows with the data that " +
       "travels along them. The colour bar gives the step kind, also written " +
       "out under the step name; the lines at the foot of a node are the files " +
       "it writes." +
@@ -1241,6 +1476,17 @@
       ),
       factRow("Kind", escapeHtml(DATA.kinds[step.kind].label)),
       factRow("Pipeline", escapeHtml(DATA.lanes[step.lane].label)),
+      factRow(
+        "Part of",
+        step.group && groupById[step.group]
+          ? escapeHtml(groupById[step.group].label) +
+              (groupById[step.group].note
+                ? " <span class='sub'>— " +
+                  escapeHtml(groupById[step.group].note) +
+                  "</span>"
+                : "")
+          : null
+      ),
       factRow("Phase", step.phase ? escapeHtml(step.phase) : null),
       factRow(
         "Needs",

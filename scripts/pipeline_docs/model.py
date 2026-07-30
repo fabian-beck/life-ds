@@ -231,6 +231,7 @@ def build_payload(
     steps: List[Dict[str, Any]] = []
 
     for step in spec.STEPS:
+        group = spec.group_of(step.id)
         ai_calls = _step_ai_calls(codebase, step)
         names = [call["schema"] for call in ai_calls if call.get("schema")]
         schema_names.extend(names)
@@ -249,6 +250,7 @@ def build_payload(
                 "label": step.label,
                 "column": _column_of(step),
                 "lane": step.lane,
+                "group": group.id if group else None,
                 "kind": step.kind,
                 "depends_on": [
                     {"on": dep.on, "data": dep.data} for dep in step.depends_on
@@ -281,6 +283,7 @@ def build_payload(
         "lanes": spec.LANES,
         "kinds": KIND_META,
         "steps": steps,
+        "groups": [group.__dict__ for group in spec.GROUPS],
         "artifacts": [artifact.__dict__ for artifact in spec.ARTIFACTS],
         "schemas": _collect_schemas(codebase, schema_names),
         "entrypoints": _entrypoints(codebase),

@@ -299,6 +299,29 @@ figcaption b {
   font-weight: 600;
 }
 
+/* A group of steps that do one job across several layers. Drawn behind
+   everything, so it reads as ground rather than as another box. */
+.band-area {
+  fill: var(--surface);
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+}
+
+/* Matches the band, not the page: the label sits inside the band's head, where
+   the arrows into its first step converge. */
+.band-label-bg {
+  fill: var(--surface);
+  stroke: none;
+}
+
+.band-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .rail-label {
   font-family: var(--mono);
   font-size: 10px;

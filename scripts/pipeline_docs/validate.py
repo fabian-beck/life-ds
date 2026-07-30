@@ -88,6 +88,58 @@ def _check_graph() -> List[Problem]:
     return problems
 
 
+def _check_groups() -> List[Problem]:
+    """Groups must name real steps, claim each one once, and stay in one column.
+
+    A group is drawn as one band across several layers, so a member from the
+    other pipeline — or a step claimed twice — would have the layout reserving a
+    column that cannot exist.
+    """
+    problems: List[Problem] = []
+    known = {step.id for step in spec.STEPS}
+    owner: Dict[str, str] = {}
+    seen_ids: Set[str] = set()
+
+    for group in spec.GROUPS:
+        where = f"group '{group.id}'"
+        if group.id in seen_ids:
+            problems.append(
+                Problem("error", "spec", f"duplicate group id '{group.id}'")
+            )
+        seen_ids.add(group.id)
+        if len(group.steps) < 2:
+            problems.append(
+                Problem("warning", where, "has fewer than two steps to align")
+            )
+        columns = set()
+        for step_id in group.steps:
+            if step_id not in known:
+                problems.append(
+                    Problem("error", where, f"names unknown step '{step_id}'")
+                )
+                continue
+            if step_id in owner:
+                problems.append(
+                    Problem(
+                        "error",
+                        where,
+                        f"step '{step_id}' is already in group '{owner[step_id]}'",
+                    )
+                )
+            owner[step_id] = group.id
+            # The drawn column comes from the id prefix, as it does in model.py.
+            columns.add(step_id[:2])
+        if len(columns) > 1:
+            problems.append(
+                Problem(
+                    "error",
+                    where,
+                    "spans both pipelines: " + ", ".join(sorted(columns)),
+                )
+            )
+    return problems
+
+
 def check(codebase: Codebase) -> List[Problem]:
     problems: List[Problem] = []
     known_scripts = set(codebase.scripts)
@@ -161,6 +213,7 @@ def check(codebase: Codebase) -> List[Problem]:
             problems.append(Problem("error", "spec", f"duplicate step id '{step_id}'"))
 
     problems.extend(_check_graph())
+    problems.extend(_check_groups())
 
     used_artifacts = {
         artifact_id
