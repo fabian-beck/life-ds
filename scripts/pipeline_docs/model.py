@@ -4,6 +4,12 @@
 The HTML page is a pure function of the dictionary this module returns, which
 keeps the rendering layer free of any knowledge about how a fact was obtained —
 and makes the whole build testable without touching a browser.
+
+The payload also carries the report's own structure: the section tree the sidebar
+navigates, the mount manifest the page hydrates, and the measurements the
+authored prose cites. Everything the page shows therefore arrives through one
+dictionary, whether it came from the AST, from a recorded run, or from a sentence
+someone wrote by hand.
 """
 
 from __future__ import annotations
@@ -14,8 +20,10 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from . import facts as facts_module
 from . import spec
 from .introspect import Codebase
+from .report import Document
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -202,33 +210,73 @@ def _unattributed(runs: Dict[str, Any]) -> List[Dict[str, Any]]:
     return out
 
 
-def _entrypoints(codebase: Codebase) -> List[Dict[str, Any]]:
-    entries = []
-    for lane_id in (spec.PERSON, spec.META):
-        script = spec.LANES[lane_id]["entry"].rsplit("/", 1)[-1]
-        facts = codebase.scripts.get(script)
-        if facts is None:
-            continue
-        entries.append(
+def _script_index(codebase: Codebase) -> Dict[str, Dict[str, Any]]:
+    """Docstring, size and CLI surface of every scanned script.
+
+    The report cites a script's options by name (`::: cliflags script=...`), so
+    the whole surface travels in the payload rather than only the two entry
+    points — a section about the maintenance tools can then show theirs too.
+    """
+    return {
+        name: {
+            "script": f"scripts/{name}",
+            "docstring": facts.docstring,
+            "line_count": facts.line_count,
+            "flags": [flag.to_json() for flag in facts.cli_flags],
+        }
+        for name, facts in sorted(codebase.scripts.items())
+    }
+
+
+def _call_sites(codebase: Codebase) -> List[Dict[str, Any]]:
+    """Every model call in the repo, and the step that claims it.
+
+    The report uses this to show coverage: a call site with no owning step is a
+    part of the system the document does not describe, which is exactly the thing
+    a generated report should be able to admit about itself.
+    """
+    owner: Dict[str, str] = {}
+    for step in spec.STEPS:
+        owner[f"{step.script.rsplit('/', 1)[-1]}:{step.function}"] = step.id
+
+    rows: List[Dict[str, Any]] = []
+    for call in codebase.all_ai_calls():
+        function = call.function.split(".")[-1]
+        rows.append(
             {
-                "lane": lane_id,
-                "script": script,
-                "docstring": facts.docstring,
-                "line_count": facts.line_count,
-                "flags": [flag.to_json() for flag in facts.cli_flags],
+                "script": call.script,
+                "function": function,
+                "line": call.lineno,
+                "method": call.method,
+                "model": call.model_value,
+                "model_source": call.model_source,
+                "effort": call.reasoning_value,
+                "schema": call.schema,
+                "step": owner.get(f"{call.script}:{function}"),
             }
         )
-    return entries
+    rows.sort(key=lambda row: (row["script"], row["line"]))
+    return rows
 
 
 def build_payload(
     codebase: Codebase,
     summaries: Dict[str, Dict[str, Any]],
     runs: Dict[str, Any],
+    document: Optional[Document] = None,
+    facts: Optional[Dict[str, facts_module.Fact]] = None,
 ) -> Dict[str, Any]:
     stats = _run_stats(runs)
-    schema_names: List[str] = []
     steps: List[Dict[str, Any]] = []
+    # Schemas the steps use, plus any the report asks to expand by name.
+    schema_names: List[str] = []
+    for mount in (document.mounts if document else []):
+        if mount.component == "schemalist":
+            schema_names.extend(
+                name.strip()
+                for name in (mount.params.get("names") or "").split(",")
+                if name.strip()
+            )
 
     for step in spec.STEPS:
         group = spec.group_of(step.id)
@@ -280,13 +328,16 @@ def build_payload(
         "generated_at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
         "commit": _git("rev-parse", "--short", "HEAD"),
         "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
+        "report": document.to_json() if document else None,
+        "facts": facts_module.to_json(facts or {}),
+        "call_sites": _call_sites(codebase),
+        "script_index": _script_index(codebase),
         "lanes": spec.LANES,
         "kinds": KIND_META,
         "steps": steps,
         "groups": [group.__dict__ for group in spec.GROUPS],
         "artifacts": [artifact.__dict__ for artifact in spec.ARTIFACTS],
         "schemas": _collect_schemas(codebase, schema_names),
-        "entrypoints": _entrypoints(codebase),
         "runs": runs,
         "unattributed": _unattributed(runs),
         "totals": {

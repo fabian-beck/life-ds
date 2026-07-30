@@ -12,5 +12,8 @@ data/people/**/_cache/
 *.md
 package-lock.json
 pmtiles.exe
-# Written by scripts/generate_pipeline_docs.py and record_pipeline_run.py.
-docs/pipeline/
+# Written by scripts/generate_report.py and record_pipeline_run.py. Only the
+# generated files — docs/report/report.md is authored by hand.
+docs/report/index.html
+docs/report/summaries.json
+docs/report/runs/

@@ -324,17 +324,23 @@ Python scripts use:
 - Verify svelte-spa-router routes in `App.svelte`
 - Test with `console.log($location)` in component
 
-## Pipeline Documentation
+## Technical Report
 
-`docs/pipeline/index.html` is a standalone, interactive chart of both generation
-pipelines: every step, the model and reasoning effort it uses, the prompt it
-sends, the structured output it asks for, and — when a run has been recorded —
-the real prompts, responses, timings and token counts.
+`docs/report/index.html` is a standalone, interactive technical report on the
+whole system: what it is for, how the data is modelled, both generation pipelines
+step by step — the model and reasoning effort each uses, the prompt it sends, the
+structured output it asks for, and, when a run has been recorded, the real
+prompts, responses, timings and token counts — plus the application, localization
+and testing.
+
+It has two halves that never mix. The prose is authored by hand in
+`docs/report/report.md`; everything factual is computed at build time. See
+[Authoring the Report](#authoring-the-report) below before editing either.
 
 The page is styled as an academic report: black on white, square corners, and
-colour reserved for the step kind alone. One pipeline is shown at a time — the
-tab at the top selects it, and the chart, the run charts and the entry-point
-appendix all follow that selection.
+colour reserved for the step kind alone. Both pipelines are drawn, as sections
+4.1 and 4.2 rather than as tabs, each with its own filters, search and selection;
+the step drawer is shared between them.
 
 The chart is a **layered DAG, not a sequence**. An arrow means one step consumes
 what another produced (`Step.depends_on` in `spec.py`, with a label for the data
@@ -377,19 +383,23 @@ Adding a group is a `spec.py` edit; `--check` rejects one that names an unknown
 step, claims a step twice, or mixes the two pipelines.
 
 ```bash
-python scripts/generate_pipeline_docs.py            # rebuild the page
-python scripts/generate_pipeline_docs.py --check    # drift check only, no API key needed
-python scripts/generate_pipeline_docs.py --skip-ai  # rebuild without calling the API
+python scripts/generate_report.py            # rebuild the page
+python scripts/generate_report.py --check    # drift check only, no API key needed
+python scripts/generate_report.py --skip-ai  # rebuild without calling the API
 ```
 
-It is built from three layers, in `scripts/pipeline_docs/`:
+It is built from these layers, in `scripts/pipeline_docs/`:
 
 | Layer | File | What it contributes |
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
-| Pipeline shape | `spec.py` | The **only hand-maintained file** — which steps exist, what data flows between them (`depends_on`), which files they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
-| Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/pipeline/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
+| Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which files they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
+| Measurements | `facts.py` | Repository-scale numbers the prose cites — corpus size, component counts, test counts — each with the place it was measured. |
+| Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `::: component` mount points, callouts. |
+| Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
+
+`spec.py` and `report.md` are the only hand-maintained inputs.
 
 ### Keeping It Honest
 
@@ -397,9 +407,16 @@ It is built from three layers, in `scripts/pipeline_docs/`:
 whose function was renamed, a dead prompt symbol, a dependency edge pointing at
 a step that does not exist, a cycle in the graph, or — most importantly — a
 model call site that **no step claims**. Adding a phase without documenting it
-is therefore an error rather than a silent omission. The check needs no API key,
-so it is safe to run anywhere. It is deliberately **not** part of
-`npm run validate`; run it after changing any generation script.
+is therefore an error rather than a silent omission.
+
+It also fails when the authored report no longer resolves: an unknown
+`{{ fact }}` citation, an unknown or misconfigured `::: component`, a lane or
+script that no longer exists, or a pipeline that no chart draws. A fact that is
+measured but never cited is a warning, not an error.
+
+The check needs no API key, so it is safe to run anywhere. It is deliberately
+**not** part of `npm run validate`; run it after changing any generation script
+or the report source.
 
 ### Recording a Run
 
@@ -410,21 +427,45 @@ python scripts/record_pipeline_run.py meta "Computing Pioneers"
 
 This performs a **real generation run** — it calls the API and rewrites that
 subject's data files exactly as a normal regeneration would. Records land in
-`docs/pipeline/runs/*.json` and are picked up by the next docs build. Prompts
+`docs/report/runs/*.json` and are picked up by the next report build. Prompts
 and responses are truncated to 4000 characters by default (`--truncate 0` keeps
 everything, but a Phase 1 prompt carries whole Wikipedia articles).
+
+Figure and table numbering follows what actually renders: with no run recorded,
+the run blocks consume no caption numbers, so the sequence has no gaps.
+
+### Authoring the Report
+
+`docs/report/report.md` holds the prose and nothing else. **No number, model
+name or file count belongs in it** — those are cited, so they cannot go stale.
+
+| Syntax | Meaning |
+| --- | --- |
+| `## Heading`, `### Heading` | Section and subsection. Numbers, ids, the contents and the sidebar are all derived from document order. Skipping a level is a build error. |
+| `{{ some.fact }}` | A measurement from `facts.py`, rendered with its source as a tooltip. An unknown key fails the build. |
+| `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
+| `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
+| `::: toc` | The table of contents. |
+
+Adding a new *kind* of computed block means two edits: a `ComponentSpec` in
+`report.py` (its required arguments and how many captions it emits) and a
+renderer of the same name in `assets/app.js`. The two rosters are checked against
+each other, so a block with no renderer fails the build.
+
+Adding a new citable number means one `Fact` in `facts.py`, measured from the
+repository rather than typed in.
 
 ### When the Pipeline Changes
 
 1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the
    `depends_on` edges into it *and* any existing step that now reads its output.
    An edge is a real data dependency, not "runs after".
-2. Run `python scripts/generate_pipeline_docs.py` — the summary cache refreshes
-   only the steps whose source changed.
-3. Commit the regenerated `docs/pipeline/index.html` and `summaries.json`.
+2. Run `python scripts/generate_report.py` — the summary cache refreshes only
+   the steps whose source changed.
+3. Commit the regenerated `docs/report/index.html` and `summaries.json`.
 
-Everything except `spec.py` and the page's own styling is derived, so never
-hand-edit `docs/pipeline/index.html`.
+Everything except `spec.py`, `report.md` and the page's own styling is derived,
+so never hand-edit `docs/report/index.html`.
 
 ## Key Files for Context
 
@@ -437,4 +478,4 @@ When working on specific features, read these files first:
 **Name highlighting**: `src/utils/personNames.js`
 **Person data**: `data/persons.json`, `data/people/{person_id}/`
 **Styles**: `data/person_styles.json`
-**Pipeline overview**: `docs/pipeline/index.html` (open it), `scripts/pipeline_docs/spec.py`
+**System overview**: `docs/report/index.html` (open it), `docs/report/report.md`, `scripts/pipeline_docs/spec.py`

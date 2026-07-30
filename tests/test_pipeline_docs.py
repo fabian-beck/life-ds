@@ -1,9 +1,10 @@
-"""Tests for the pipeline documentation build.
+"""Tests for the technical report build.
 
-The point of these is narrow: the docs are only trustworthy if the static
-extraction really reads the source (rather than quietly returning nothing) and
-if the drift check really fails when the pipeline moves. Everything else in the
-build is presentation.
+The point of these is narrow: the report is only trustworthy if the static
+extraction really reads the source (rather than quietly returning nothing), if
+the drift check really fails when the pipeline moves, and if a claim the authored
+prose makes can never render as a silent gap. Everything else in the build is
+presentation.
 """
 
 from __future__ import annotations
@@ -18,9 +19,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from pipeline_docs import render, spec, validate  # noqa: E402
+from pipeline_docs import facts as facts_module  # noqa: E402
+from pipeline_docs import render, report, spec, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase, scan_script  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
+
+REPORT_SOURCE = REPO_ROOT / "docs" / "report" / "report.md"
+ASSETS = SCRIPTS_DIR / "pipeline_docs" / "assets"
 
 
 class IntrospectionTests(unittest.TestCase):
@@ -421,22 +426,275 @@ class PayloadAndRenderTests(unittest.TestCase):
         data = json.loads(html[start:end].replace("<\\/", "</"))
         self.assertEqual(len(data["steps"]), len(spec.STEPS))
 
+    def test_payload_carries_the_report_structure_the_sidebar_needs(self) -> None:
+        codebase = scan_codebase()
+        facts = facts_module.collect(codebase, {"runs": []})
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), facts
+        )
+        payload = build_payload(codebase, {}, {"runs": []}, document, facts)
+        self.assertTrue(payload["report"]["sections"])
+        self.assertEqual(payload["report"]["title"], document.title)
+        self.assertEqual(len(payload["facts"]), len(facts))
+        self.assertTrue(payload["script_index"]["generate_person.py"]["flags"])
+        claimed = [site for site in payload["call_sites"] if site["step"]]
+        self.assertEqual(len(claimed), len(payload["call_sites"]))
+
+    def test_the_rendered_page_embeds_the_authored_body(self) -> None:
+        codebase = scan_codebase()
+        facts = facts_module.collect(codebase, {"runs": []})
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), facts
+        )
+        payload = build_payload(codebase, {}, {"runs": []}, document, facts)
+        html = render.render(payload, document)
+        self.assertIn(document.front["title"], html)
+        self.assertIn('data-component="pipeline"', html)
+        self.assertIn('id="introduction"', html)
+        for marker in ("__BODY__", "__ABSTRACT__", "__TITLE__", "__SOURCE__"):
+            self.assertNotIn(marker, html)
+
+
+def _facts() -> dict:
+    return facts_module.collect(scan_codebase(), {"runs": []})
+
+
+def _compile(source: str, facts: dict | None = None) -> report.Document:
+    return report.compile_report(source, facts if facts is not None else _facts())
+
+
+class MarkdownCompilerTests(unittest.TestCase):
+    """The authoring surface, exercised on small inputs rather than the report."""
+
+    HEAD = "---\ntitle: T\n---\n"
+
+    def test_front_matter_carries_a_folded_block(self) -> None:
+        front, body, offset = report.split_front_matter(
+            "---\ntitle: T\nabstract: first line\n  second line\n---\n\nbody\n"
+        )
+        self.assertEqual(front["title"], "T")
+        self.assertEqual(front["abstract"], "first line\nsecond line")
+        self.assertIn("body", body)
+        self.assertGreater(offset, 0)
+
+    def test_headings_are_numbered_anchored_and_nested(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## One\n\n### One A\n\n### One B\n\n## Two\n\n### Two A\n"
+        )
+        numbers = [(section.number, section.title) for section in document.sections]
+        self.assertEqual(numbers, [("1", "One"), ("2", "Two")])
+        self.assertEqual(
+            [child.number for child in document.sections[0].children], ["1.1", "1.2"]
+        )
+        self.assertEqual(
+            [child.number for child in document.sections[1].children], ["2.1"]
+        )
+        self.assertIn('id="one-a"', document.html)
+
+    def test_a_skipped_heading_level_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            _compile(self.HEAD + "\n#### Orphan\n")
+
+    def test_a_citation_renders_with_its_provenance(self) -> None:
+        facts = _facts()
+        document = _compile(
+            self.HEAD + "\n## S\n\nThere are {{ data.people }}.\n", facts
+        )
+        self.assertIn("data.people", document.citations)
+        self.assertIn(facts["data.people"].display, document.html)
+        self.assertIn(facts["data.people"].source.split(" ")[0], document.html)
+
+    def test_an_unknown_citation_fails_the_build(self) -> None:
+        """A hole in a sentence is worse than a broken build."""
+        with self.assertRaises(report.ReportError) as caught:
+            _compile(self.HEAD + "\n## S\n\nThere are {{ no.such.fact }}.\n")
+        self.assertIn("no.such.fact", str(caught.exception))
+
+    def test_citations_inside_a_fenced_block_are_left_alone(self) -> None:
+        """The report documents its own syntax, so it has to be able to show it."""
+        document = _compile(self.HEAD + "\n## S\n\n```text\n{{ data.people }}\n```\n")
+        self.assertIn("{{ data.people }}", document.html)
+        self.assertEqual(document.citations, [])
+
+    def test_a_component_becomes_a_mount_point_with_its_arguments(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\n::: pipeline lane=person\nLead-in.\n:::\n"
+        )
+        self.assertEqual(len(document.mounts), 1)
+        mount = document.mounts[0]
+        self.assertEqual(mount.component, "pipeline")
+        self.assertEqual(mount.params, {"lane": "person"})
+        self.assertIn('data-component="pipeline"', document.html)
+        self.assertIn('data-lane="person"', document.html)
+        self.assertIn("Lead-in.", document.html)
+
+    def test_an_unknown_component_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            _compile(self.HEAD + "\n## S\n\n::: nonesuch\n:::\n")
+
+    def test_a_component_missing_a_required_argument_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            _compile(self.HEAD + "\n## S\n\n::: pipeline\n:::\n")
+
+    def test_an_unclosed_component_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            _compile(self.HEAD + "\n## S\n\n::: pipeline lane=person\n")
+
+    def test_callouts_render_here_and_never_become_mount_points(self) -> None:
+        document = _compile(self.HEAD + "\n## S\n\n::: decision\nBecause.\n:::\n")
+        self.assertEqual(document.mounts, [])
+        self.assertIn("callout-decision", document.html)
+        self.assertIn("Design decision", document.html)
+
+    def test_captions_are_numbered_in_document_order(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\n::: steptable lane=person\n:::\n\n"
+            "::: pipeline lane=meta\n:::\n\n::: steptable lane=meta\n:::\n"
+        )
+        self.assertEqual(
+            [
+                (mount.component, mount.figure_start, mount.table_start)
+                for mount in document.mounts
+            ],
+            [("steptable", 1, 1), ("pipeline", 1, 2), ("steptable", 2, 2)],
+        )
+
+    def test_a_block_that_shows_nothing_consumes_no_caption_number(self) -> None:
+        """Otherwise the sequence skips: Table 5 followed by Table 8."""
+
+        def emits(component, params):
+            if component == "runtable":
+                return 0, 0
+            return report.default_emits(component, params)
+
+        source = (
+            self.HEAD
+            + "\n## S\n\n::: runtable lane=person\n:::\n\n::: steptable lane=person\n:::\n"
+        )
+        document = report.compile_report(source, _facts(), emits=emits)
+        self.assertEqual(document.mounts[1].table_start, 1)
+
+
+class ReportSourceTests(unittest.TestCase):
+    """The real report has to resolve against the real code."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.codebase = scan_codebase()
+        cls.facts = facts_module.collect(cls.codebase, {"runs": []})
+        cls.document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), cls.facts
+        )
+
+    def test_the_report_source_exists_and_compiles(self) -> None:
+        self.assertTrue(self.document.sections)
+        self.assertTrue(self.document.mounts)
+        self.assertTrue(self.document.front.get("abstract"))
+
+    def test_the_report_has_no_unresolved_claims(self) -> None:
+        problems = [
+            str(problem)
+            for problem in validate.check_report(
+                self.document, self.facts, self.codebase
+            )
+            if problem.severity == "error"
+        ]
+        self.assertEqual(problems, [])
+
+    def test_both_pipelines_are_drawn_as_subsections(self) -> None:
+        """Two charts, not two tabs — the report has to read straight through."""
+        lanes = [
+            mount.params["lane"]
+            for mount in self.document.mounts
+            if mount.component == "pipeline"
+        ]
+        self.assertEqual(sorted(lanes), ["meta", "person"])
+        subsections = [
+            section.number
+            for parent in self.document.sections
+            for section in parent.children
+        ]
+        self.assertIn("4.1", subsections)
+        self.assertIn("4.2", subsections)
+
+    def test_the_prose_states_no_number_it_could_have_cited(self) -> None:
+        """A transcribed count is the one thing this design exists to prevent."""
+        source = REPORT_SOURCE.read_text(encoding="utf-8")
+        body = report.split_front_matter(source)[1]
+        for fact in self.facts.values():
+            if fact.value is None or fact.value < 10:
+                continue  # small integers appear in ordinary prose
+            self.assertNotIn(
+                fact.display,
+                body,
+                f"report.md writes {fact.display!r} literally; cite "
+                f"{{{{ {fact.key} }}}} instead",
+            )
+
+    def test_every_mounted_component_has_a_renderer_in_the_page(self) -> None:
+        """The two rosters are what keep a block from rendering as a blank."""
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
+        for name in sorted(report.COMPONENTS):
+            self.assertRegex(
+                js,
+                rf"\n    {name}: function",
+                f"app.js has no renderer for '::: {name}'",
+            )
+
+
+class FactTests(unittest.TestCase):
+    """A cited number is only worth citing if it was really measured."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.facts = facts_module.collect(scan_codebase(), {"runs": []})
+
+    def test_every_fact_has_a_display_value_and_a_source(self) -> None:
+        self.assertGreater(len(self.facts), 20)
+        for key, fact in self.facts.items():
+            self.assertEqual(key, fact.key)
+            self.assertTrue(fact.display, f"{key} has no display value")
+            self.assertTrue(fact.source, f"{key} does not say where it came from")
+
+    def test_corpus_measurements_are_not_silently_zero(self) -> None:
+        """`_safe` swallows IO errors, so a zero here means it swallowed one."""
+        for key in ("data.people", "data.events", "data.connections"):
+            self.assertGreater(self.facts[key].value or 0, 0, f"{key} measured nothing")
+
+    def test_pipeline_measurements_agree_with_the_spec(self) -> None:
+        self.assertEqual(self.facts["pipeline.steps"].value, len(spec.STEPS))
+        self.assertEqual(
+            (self.facts["pipeline.person_steps"].value or 0)
+            + (self.facts["pipeline.meta_steps"].value or 0),
+            len(spec.STEPS),
+        )
+
+    def test_model_names_are_identifiers_not_expressions(self) -> None:
+        """The prose cites this inline, so it must not carry env-var noise."""
+        display = self.facts["pipeline.models"].display
+        self.assertNotIn("(", display)
+        self.assertIn("gpt-", display)
+
 
 class AssetTests(unittest.TestCase):
     def test_page_has_no_dark_mode(self) -> None:
         """Light-only was an explicit request; keep it from creeping back."""
-        css = (SCRIPTS_DIR / "pipeline_docs" / "assets" / "style.css").read_text(
-            encoding="utf-8"
-        )
+        css = (ASSETS / "style.css").read_text(encoding="utf-8")
         self.assertNotIn("prefers-color-scheme", css)
         self.assertNotIn('data-theme="dark"', css)
 
     def test_javascript_parses_and_uses_no_network(self) -> None:
-        js = (SCRIPTS_DIR / "pipeline_docs" / "assets" / "app.js").read_text(
-            encoding="utf-8"
-        )
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
         for forbidden in ("fetch(", "XMLHttpRequest", "import("):
             self.assertNotIn(forbidden, js)
+
+    def test_the_page_no_longer_switches_pipelines_with_a_tab(self) -> None:
+        """Both charts are on the page at once; keep the tabs from returning."""
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
+        css = (ASSETS / "style.css").read_text(encoding="utf-8")
+        for forbidden in ("pipeline-tab", 'role: "tab"'):
+            self.assertNotIn(forbidden, js)
+        self.assertNotIn(".pipeline-tab", css)
 
     def test_spec_module_has_no_syntax_drift(self) -> None:
         source = (SCRIPTS_DIR / "pipeline_docs" / "spec.py").read_text(encoding="utf-8")

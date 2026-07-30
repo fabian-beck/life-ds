@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Record a real generation run for the pipeline documentation.
+"""Record a real generation run for the technical report.
 
 This runs the actual generator — it calls the OpenAI API, costs money, and
 overwrites that person's or story's data files exactly as a normal regeneration
 would. Nothing is recorded without doing real work, which is the point: the
-chart then shows the prompts as they are actually assembled, what came back,
+report then shows the prompts as they are actually assembled, what came back,
 how long each phase took and what it cost in tokens.
 
     python scripts/record_pipeline_run.py person "Ada Lovelace"
     python scripts/record_pipeline_run.py meta "Computing Pioneers" -- --skip-translate
 
-Records land in `docs/pipeline/runs/` and are picked up by
-`scripts/generate_pipeline_docs.py` on the next build.
+Records land in `docs/report/runs/` and are picked up by
+`scripts/generate_report.py` on the next build.
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 from config import enable_utf8_console  # noqa: E402
 from pipeline_docs.capture import recording, write_record  # noqa: E402
 
-RUNS_DIR = REPO_ROOT / "docs" / "pipeline" / "runs"
+RUNS_DIR = REPO_ROOT / "docs" / "report" / "runs"
 
 TARGETS = {
     "person": ("generate_person", "generate_person.py"),

@@ -9,6 +9,12 @@ an error, not a silent omission.
 The dependency graph is checked too: an edge to an unknown step, or a cycle,
 would make the layered layout meaningless rather than merely wrong, so both are
 build errors.
+
+`check_report` extends the same principle to the authored half of the document.
+A component the page cannot hydrate, a lane or script that no longer exists, and
+a citation to a measurement that was removed are all build errors: each would
+render as a silent gap in a sentence the reader is meant to trust. Facts nobody
+cites are a warning only — they cost a measurement, not a claim.
 """
 
 from __future__ import annotations
@@ -17,7 +23,9 @@ from dataclasses import dataclass
 from typing import Dict, List, Set
 
 from . import spec
+from .facts import Fact
 from .introspect import AiCall, Codebase
+from .report import COMPONENTS, Document
 
 
 @dataclass
@@ -233,12 +241,100 @@ def check(codebase: Codebase) -> List[Problem]:
     return problems
 
 
-def report(problems: List[Problem]) -> int:
+def check_report(
+    document: Document,
+    facts: Dict[str, Fact],
+    codebase: Codebase,
+) -> List[Problem]:
+    """Resolve every mount point and citation in the authored report.
+
+    The markdown is allowed to name things it does not own — a lane, a script, a
+    schema — so each of those names is resolved here rather than trusted. The
+    coverage checks at the end are about the report as a document: a pipeline
+    that no chart draws, or a section tree with no contents, means the base
+    version lost something rather than merely rendering it differently.
+    """
+    problems: List[Problem] = []
+    lanes_drawn: Set[str] = set()
+
+    for mount in document.mounts:
+        where = f"report.md line {mount.line} ('::: {mount.component}')"
+        spec_entry = COMPONENTS[mount.component]
+
+        lane = mount.params.get("lane")
+        if lane is not None and lane not in (spec.PERSON, spec.META):
+            problems.append(
+                Problem(
+                    "error",
+                    where,
+                    f"lane '{lane}' is not a drawn pipeline — use "
+                    f"'{spec.PERSON}' or '{spec.META}'",
+                )
+            )
+        if mount.component == "pipeline" and lane:
+            lanes_drawn.add(lane)
+
+        script = mount.params.get("script")
+        if script is not None and script.rsplit("/", 1)[-1] not in codebase.scripts:
+            problems.append(Problem("error", where, f"unknown script '{script}'"))
+
+        for name in _split_list(mount.params.get("names")):
+            if codebase.schema(name) is None:
+                problems.append(
+                    Problem("error", where, f"unknown output schema '{name}'")
+                )
+
+        for key in _split_list(mount.params.get("keys")):
+            if key not in facts:
+                problems.append(Problem("error", where, f"unknown fact '{key}'"))
+
+        if spec_entry.figures or spec_entry.tables:
+            if mount.figure_start < 1 or mount.table_start < 1:
+                problems.append(
+                    Problem("error", where, "caption numbering was not assigned")
+                )
+
+    for key in sorted(set(facts) - set(document.citations)):
+        problems.append(
+            Problem(
+                "warning",
+                "report.md",
+                f"fact '{key}' is measured but never cited",
+            )
+        )
+
+    missing_lanes = {spec.PERSON, spec.META} - lanes_drawn
+    if missing_lanes:
+        problems.append(
+            Problem(
+                "error",
+                "report.md",
+                "no '::: pipeline' block draws " + ", ".join(sorted(missing_lanes)),
+            )
+        )
+
+    if not document.sections:
+        problems.append(
+            Problem("error", "report.md", "the report has no '##' section headings")
+        )
+    if not document.front.get("title"):
+        problems.append(Problem("error", "report.md", "front matter has no 'title'"))
+
+    return problems
+
+
+def _split_list(value: object) -> List[str]:
+    if not isinstance(value, str) or not value.strip():
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def report(problems: List[Problem], subject: str = "Pipeline spec") -> int:
     """Print problems; return the number of errors."""
     errors = [problem for problem in problems if problem.severity == "error"]
     warnings = [problem for problem in problems if problem.severity == "warning"]
     if not problems:
-        print("Pipeline spec matches the source: no drift.")
+        print(f"  {subject} matches the source: no drift.")
         return 0
     for problem in problems:
         print(str(problem))

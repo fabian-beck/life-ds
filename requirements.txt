@@ -7,3 +7,5 @@ pydantic>=2.9.0
 beautifulsoup4>=4.13.0
 # Required by generate_person_portrait.py and convert_portraits_to_webp.py
 pillow>=11.0.0
+# Required by generate_report.py to compile docs/report/report.md
+markdown>=3.7
