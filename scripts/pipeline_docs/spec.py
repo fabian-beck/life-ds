@@ -22,10 +22,13 @@ in the same pipeline is already implied by an edge; a file that arrives from the
 that it consumes what the person chart produces.
 
 `GROUPS` names the concerns that span several layers — planning image searches,
-running them and matching the results are three layers of one job — and the
-chart gives each group a single column so its steps line up vertically under a
-banded label. Grouping is presentation only: it never changes a layer, and the
-layer is still the longest dependency path.
+running them and matching the results are three layers of one job — and the chart
+aligns each group's steps so they read as one strand under a banded label. The
+group names the whole concern; the chart aligns only the parts of it that are
+continuous, so a member several layers below the rest (the portrait, generated
+long after the images it was picked from) is placed on its own. Grouping is
+presentation only: it never changes a layer, and the layer is still the longest
+dependency path.
 
 Each step names a `script` and a `function`. `validate.py` checks that both
 still exist, that the dependency graph is acyclic, and that no AI call site in
@@ -128,12 +131,14 @@ class Step:
 
 @dataclass
 class Group:
-    """Steps of one concern that the chart aligns in a single column.
+    """Steps of one concern that the chart aligns into one strand.
 
     A group is a reading aid, not a dependency: its members usually form a
     chain, but they may also sit in the same layer (two sourcing calls that do
-    not see each other), in which case the group simply gets that many adjacent
-    columns. Every member must be drawn in the same pipeline column.
+    not see each other), in which case they are simply placed side by side
+    inside the group. Members separated by layers the group has no step in are
+    aligned and banded separately — see `imagery`, whose portrait step runs long
+    after the rest. Every member must be drawn in the same pipeline column.
     """
 
     id: str
@@ -167,8 +172,9 @@ GROUPS: List[Group] = [
         "Imagery",
         ["p_img_search", "p_img_fetch", "p_img_match", "p_portrait"],
         note=(
-            "One job across four layers: plan the searches, run them, match the "
-            "hits to events, and style-transfer the portrait the match picked."
+            "One job: plan the searches, run them, match the hits to events, and "
+            "style-transfer the portrait the match picked — which happens far "
+            "enough downstream that the chart bands it separately."
         ),
     ),
     Group(

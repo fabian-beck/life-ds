@@ -349,14 +349,32 @@ without creating a dependency, and drawing them made a fork look like a chain.
 The vertical axis is the dependency graph; the horizontal axis carries no graph
 meaning, so `spec.GROUPS` spends it on concerns. A group names steps that do one
 job across several layers — planning the image searches, running them, matching
-the results, generating the portrait — and the layout gives the group a single
-column and draws a labelled band behind it, so the strand can be read straight
-down instead of being tracked as it drifts sideways. Grouping is presentation
-only: it never moves a layer. A column is shared by steps whose layers do not
-collide, which keeps a group's band free of unrelated steps and keeps the chart
-from growing a column per step. Adding a group is a `spec.py` edit; `--check`
-rejects one that names an unknown step, claims a step twice, or mixes the two
-pipelines.
+the results — and the layout aligns them and draws a labelled band behind them,
+so the strand can be read straight down instead of being tracked as it drifts
+sideways. Grouping is presentation only: it never moves a layer.
+
+Alignment holds only where a group is **continuous**. The layers a group occupies
+are cut into runs of consecutive layers, and each run is aligned and banded on
+its own, so the portrait — four layers below the last image step, with unrelated
+work in between — is placed by the graph rather than dragged into the imagery
+strand under a band stretched over the gap. A run of one step is not banded at
+all, which is also what happens to a group most of whose steps a filter has
+hidden.
+
+Horizontal placement runs in two stages and uses **continuous positions, not a
+column grid**:
+
+1. Blocks — one per group run, one per ungrouped node — are placed as rigid
+   rectangles with a single x across every layer they cross. A leftmost packing
+   gives a feasible start; blocks are then relaxed towards the mean position of
+   their graph neighbours, each clamped to the room its neighbours in every layer
+   it occupies actually leave. Feasibility is therefore invariant, and sparse
+   layers centre themselves under the layers they feed.
+2. Nodes are centred inside their block, which is what lines a group up: a run
+   with one step per layer puts every step at the same x.
+
+Adding a group is a `spec.py` edit; `--check` rejects one that names an unknown
+step, claims a step twice, or mixes the two pipelines.
 
 ```bash
 python scripts/generate_pipeline_docs.py            # rebuild the page

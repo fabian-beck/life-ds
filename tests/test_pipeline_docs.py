@@ -175,6 +175,25 @@ def _layers() -> dict:
     return layers
 
 
+def _group_runs(group: spec.Group) -> list:
+    """A group's steps cut into runs of consecutive layers, as the chart cuts them.
+
+    Mirrors `buildBlocks` in `assets/app.js`: only a run is aligned and banded,
+    which is what keeps a band from stretching over layers the group has no step
+    in.
+    """
+    layers = _layers()
+    ordered = sorted(group.steps, key=lambda step_id: layers[step_id])
+    runs: list = []
+    for step_id in ordered:
+        layer = layers[step_id]
+        if runs and layer - layers[runs[-1][-1]] <= 1:
+            runs[-1].append(step_id)
+        else:
+            runs.append([step_id])
+    return runs
+
+
 class DependencyGraphTests(unittest.TestCase):
     """The chart claims to show real dependencies, so the graph has to be one."""
 
@@ -274,17 +293,34 @@ class GroupTests(unittest.TestCase):
         messages = [str(problem) for problem in validate._check_groups()]
         self.assertTrue(any("spans both pipelines" in message for message in messages))
 
-    def test_the_imagery_group_really_spans_several_layers(self) -> None:
-        """Aligning a group is only worth doing when it crosses layers."""
-        layers = _layers()
+    def test_every_group_aligns_at_least_one_run_of_two_steps(self) -> None:
+        """A group that splits into nothing but single steps is never drawn.
+
+        The chart aligns a group only where it occupies consecutive layers, so a
+        group whose every run is one step long would produce no band at all —
+        which means the grouping was wishful rather than structural.
+        """
+        for group in spec.GROUPS:
+            runs = _group_runs(group)
+            self.assertTrue(
+                any(len(run) > 1 for run in runs),
+                f"group '{group.id}' has no run of consecutive layers to align",
+            )
+
+    def test_the_imagery_group_splits_around_the_portrait(self) -> None:
+        """The case the run-splitting exists for, pinned to the real graph."""
         group = spec.group_of("p_img_search")
         self.assertIsNotNone(group)
         assert group is not None
-        spanned = {layers[step_id] for step_id in group.steps}
-        self.assertGreater(len(spanned), 1, "the imagery group sits in one layer")
-        self.assertIn("p_portrait", group.steps)
+        runs = _group_runs(group)
+        self.assertEqual(
+            [len(run) for run in runs],
+            [3, 1],
+            "expected the three image steps to align and the portrait to detach",
+        )
+        self.assertEqual(runs[-1], ["p_portrait"])
 
-    def test_every_group_stays_within_one_layer_per_step(self) -> None:
+    def test_every_group_stays_within_two_steps_per_layer(self) -> None:
         """Two members in one layer is legal but should not be the normal case."""
         layers = _layers()
         for group in spec.GROUPS:
@@ -294,7 +330,7 @@ class GroupTests(unittest.TestCase):
             self.assertLessEqual(
                 max(counts.values()),
                 2,
-                f"group '{group.id}' would reserve more than two columns",
+                f"group '{group.id}' would be drawn more than two steps wide",
             )
 
 

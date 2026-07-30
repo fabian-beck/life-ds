@@ -14,10 +14,12 @@
    nodes, since nothing in this chart produces them.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
-   `spec.GROUPS` spends it on meaning. Steps of one concern — planning image
-   searches, running them, matching the results, generating the portrait — are
-   aligned in one column and banded, so a job that takes four layers reads as
-   one vertical strand instead of drifting across the chart. */
+   `spec.GROUPS` spends it on meaning. Steps of one concern — plan the image
+   searches, run them, match the results — are aligned and banded, so a job that
+   takes three layers reads as one vertical strand instead of drifting across the
+   chart. Alignment holds only where a group is continuous: a member several
+   layers below the rest is placed on its own. Positions are continuous and
+   relaxed towards the centre, not slots in a grid. */
 
 (function () {
   "use strict";
@@ -474,148 +476,257 @@
     return NODE_H + (files ? 6 + files * FILE_H : 0);
   }
 
-  /* Horizontal placement. The layer decides how far *down* a node goes; the
-     graph says nothing about how far across, so that freedom is spent on
-     meaning: the steps of one concern share a column and read as a single
-     vertical strand.
+  /* A group is only aligned where it is actually continuous. The layers a group
+     occupies are cut into runs of consecutive layers, and each run becomes one
+     rigid block: the portrait sits four layers below the last image step, with
+     unrelated work in between, so it is placed on its own rather than dragged
+     into the imagery strand and stretching a band over the gap. A run of one
+     step is no group at all — nothing to align, nothing to band. */
+  function buildBlocks(rows) {
+    const runOfLayer = {};
+    const layersOf = {};
+    rows.forEach((row, layer) => {
+      row.forEach((node) => {
+        const groupId = node.type === "step" ? groupOfStep[node.id] : null;
+        if (!groupId) return;
+        (layersOf[groupId] = layersOf[groupId] || []).push(layer);
+      });
+    });
+    Object.keys(layersOf).forEach((groupId) => {
+      const layers = layersOf[groupId]
+        .filter((layer, index, all) => {
+          return all.indexOf(layer) === index;
+        })
+        .sort((a, b) => {
+          return a - b;
+        });
+      const runs = {};
+      let run = 0;
+      layers.forEach((layer, index) => {
+        if (index && layer !== layers[index - 1] + 1) run += 1;
+        runs[layer] = run;
+      });
+      runOfLayer[groupId] = runs;
+    });
 
-     The unit that gets a column is not the node but the *entity* — a group, or
-     an ungrouped node on its own. A group whose members all sit in different
-     layers takes one column; if a filter or the graph puts two members in the
-     same layer, it takes that many adjacent columns and they fill left to
-     right.
-
-     Columns are shared by entities whose layer spans do not overlap, which is
-     what keeps the chart from growing a column per node: alignment costs width
-     only where a group actually reserves a strip. That same rule guarantees a
-     group's strip is free of strangers over its whole height, so the band drawn
-     behind it never encloses an unrelated step. */
-  function assignColumns(rows) {
-    const entities = [];
+    const blocks = [];
     const byKey = {};
     rows.forEach((row, layer) => {
       row.forEach((node, index) => {
         const groupId = node.type === "step" ? groupOfStep[node.id] : null;
-        const key = groupId ? "g:" + groupId : "n:" + node.id;
-        let entity = byKey[key];
-        if (!entity) {
-          entity = {
+        const key = groupId
+          ? "g:" + groupId + ":" + runOfLayer[groupId][layer]
+          : "n:" + node.id;
+        let block = byKey[key];
+        if (!block) {
+          block = {
             group: groupId ? groupById[groupId] : null,
             members: [],
             byLayer: {},
+            layers: [],
             first: layer,
-            last: layer,
             rank: 0,
+            cx: 0,
+            near: [],
           };
-          byKey[key] = entity;
-          entities.push(entity);
+          byKey[key] = block;
+          blocks.push(block);
         }
-        entity.members.push(node);
-        (entity.byLayer[layer] = entity.byLayer[layer] || []).push(node);
-        entity.first = Math.min(entity.first, layer);
-        entity.last = Math.max(entity.last, layer);
-        // Where the barycentre pass put this node in its row, normalized, so an
-        // entity keeps the side of the chart its members were ordered onto.
-        entity.rank += row.length > 1 ? index / (row.length - 1) : 0.5;
+        node.block = block;
+        block.members.push(node);
+        if (!block.byLayer[layer]) {
+          block.byLayer[layer] = [];
+          block.layers.push(layer);
+        }
+        block.byLayer[layer].push(node);
+        // Where the barycentre pass put this node in its row, normalized, so a
+        // block keeps the side of the chart its members were ordered onto.
+        block.rank += row.length > 1 ? index / (row.length - 1) : 0.5;
       });
     });
 
-    entities.forEach((entity) => {
-      entity.rank /= entity.members.length;
-      entity.width = entity.members.reduce((best, node) => {
-        return Math.max(best, node.w);
+    blocks.forEach((block) => {
+      block.rank /= block.members.length;
+      // Wide enough for its busiest layer, so the block is one rigid rectangle.
+      block.width = block.layers.reduce((best, layer) => {
+        const list = block.byLayer[layer];
+        return Math.max(
+          best,
+          list.reduce((sum, node) => {
+            return sum + node.w;
+          }, 0) +
+            COL_GAP * (list.length - 1)
+        );
       }, 0);
-      entity.slots = Object.keys(entity.byLayer).reduce((best, layer) => {
-        return Math.max(best, entity.byLayer[layer].length);
-      }, 1);
+      if (block.members.length < 2) block.group = null;
     });
-    entities.sort((a, b) => {
+    // One order for the whole chart, so a block that spans layers cannot be
+    // asked to sit left of something in one layer and right of it in another.
+    blocks.sort((a, b) => {
       return a.rank - b.rank || a.first - b.first;
     });
+    return blocks;
+  }
 
-    function sharesLayer(a, b) {
-      return Object.keys(a.byLayer).some((layer) => {
-        return b.byLayer[layer] !== undefined;
+  /* Horizontal placement, in two stages. The layer decides how far *down* a
+     node goes; the graph says nothing about how far across, and that freedom is
+     spent on meaning — the steps of one concern are aligned so they read as a
+     single vertical strand.
+
+     Stage one places the blocks: group runs and lone nodes alike, each a rigid
+     rectangle with one x for every layer it crosses. Positions are continuous,
+     not slots in a grid. A leftmost packing gives a feasible start, then blocks
+     are relaxed towards the average position of their graph neighbours, each one
+     clamped to the room its neighbours in every layer it occupies actually
+     leave. That keeps the arrangement valid at every step while letting sparse
+     layers centre themselves under the layers they feed.
+
+     Stage two places the nodes inside each block, centred on it, which is what
+     makes a group's steps line up: a run with one step per layer puts every
+     step at the same x. */
+  function arrange(rows, graph) {
+    const blocks = buildBlocks(rows);
+    if (!blocks.length) return { blocks: blocks, width: NODE_W };
+
+    const perLayer = rows.map(() => {
+      return [];
+    });
+    blocks.forEach((block) => {
+      block.layers.forEach((layer) => {
+        perLayer[layer].push(block);
+      });
+    });
+    // Who sits either side of a block, per layer: the only constraints there
+    // are, and they never change, since the order does not.
+    const bounds = [];
+    perLayer.forEach((list) => {
+      list.forEach((block, index) => {
+        if (index) bounds.push([list[index - 1], block]);
+      });
+    });
+
+    const nodeById = {};
+    rows.forEach((row) => {
+      row.forEach((node) => {
+        nodeById[node.id] = node;
+      });
+    });
+    function connect(a, b) {
+      if (!a || !b || a === b) return;
+      if (a.near.indexOf(b) === -1) a.near.push(b);
+      if (b.near.indexOf(a) === -1) b.near.push(a);
+    }
+    graph.steps.forEach((step) => {
+      (graph.parents[step.id] || []).forEach((edge) => {
+        const from = nodeById[edge.from];
+        const to = nodeById[step.id];
+        if (from && to) connect(from.block, to.block);
+      });
+    });
+    Object.values(graph.sources).forEach((source) => {
+      const from = nodeById["file:" + source.artifact.id];
+      source.to.forEach((stepId) => {
+        const to = nodeById[stepId];
+        if (from && to) connect(from.block, to.block);
+      });
+    });
+
+    function gap(left, right) {
+      return (left.width + right.width) / 2 + COL_GAP;
+    }
+
+    // Leftmost feasible packing. Pushing one block right can invalidate a layer
+    // already packed, so the sweep repeats until nothing moves; it only ever
+    // increases x, so it terminates.
+    let moved = true;
+    let guard = 0;
+    while (moved && guard < blocks.length + 4) {
+      moved = false;
+      guard += 1;
+      perLayer.forEach((list) => {
+        list.forEach((block, index) => {
+          const min = index
+            ? list[index - 1].cx + gap(list[index - 1], block)
+            : block.width / 2;
+          if (block.cx < min - 0.01) {
+            block.cx = min;
+            moved = true;
+          }
+        });
       });
     }
 
-    const columns = [];
-    const placed = [];
-    entities.forEach((entity) => {
-      function free(index) {
-        return (columns[index] || []).every((other) => {
-          return other.last < entity.first || entity.last < other.first;
+    // Relax. A block may move only inside the room its neighbours leave, so the
+    // arrangement stays valid; alternating the sweep direction keeps the result
+    // from leaning the way it was traversed.
+    for (let pass = 0; pass < 24; pass += 1) {
+      const order = pass % 2 ? blocks.slice().reverse() : blocks;
+      order.forEach((block) => {
+        if (!block.near.length) return;
+        let low = block.width / 2;
+        let high = Infinity;
+        block.layers.forEach((layer) => {
+          const list = perLayer[layer];
+          const index = list.indexOf(block);
+          const before = list[index - 1];
+          const after = list[index + 1];
+          if (before) low = Math.max(low, before.cx + gap(before, block));
+          if (after) high = Math.min(high, after.cx - gap(block, after));
         });
-      }
-      function fits(index) {
-        for (let offset = 0; offset < entity.slots; offset += 1) {
-          if (!free(index + offset)) return false;
-        }
-        return true;
-      }
-
-      // Everything already placed that shares a layer with this entity has a
-      // lower rank, so it belongs to its left: that preserves the row order the
-      // barycentre pass found.
-      let start = 0;
-      placed.forEach((other) => {
-        if (sharesLayer(other, entity)) {
-          start = Math.max(start, other.column + other.slots);
-        }
+        const target =
+          block.near.reduce((sum, other) => {
+            return sum + other.cx;
+          }, 0) / block.near.length;
+        block.cx = Math.min(Math.max(target, low), Math.max(low, high));
       });
-      while (!fits(start)) start += 1;
+    }
 
-      entity.column = start;
-      for (let offset = 0; offset < entity.slots; offset += 1) {
-        columns[start + offset] = columns[start + offset] || [];
-        columns[start + offset].push(entity);
-      }
-      placed.push(entity);
-      Object.keys(entity.byLayer).forEach((layer) => {
-        entity.byLayer[layer].forEach((node, index) => {
-          node.slot = start + index;
+    let left = Infinity;
+    let right = -Infinity;
+    blocks.forEach((block) => {
+      left = Math.min(left, block.cx - block.width / 2);
+      right = Math.max(right, block.cx + block.width / 2);
+    });
+    const origin = PAD + RAIL_W + MARGIN_CH - left;
+    blocks.forEach((block) => {
+      block.cx += origin;
+      // Stage two: the members of one layer, centred on the block.
+      block.layers.forEach((layer) => {
+        const list = block.byLayer[layer];
+        const total =
+          list.reduce((sum, node) => {
+            return sum + node.w;
+          }, 0) +
+          COL_GAP * (list.length - 1);
+        let x = block.cx - total / 2;
+        list.forEach((node) => {
+          node.px = x;
+          x += node.w + COL_GAP;
         });
       });
     });
 
-    const xOf = [];
-    let cursor = PAD + RAIL_W + MARGIN_CH;
-    for (let index = 0; index < columns.length; index += 1) {
-      xOf[index] = cursor;
-      cursor +=
-        (columns[index] || []).reduce((best, entity) => {
-          return Math.max(best, entity.width);
-        }, 0) + COL_GAP;
-    }
-
-    return {
-      entities: entities,
-      xOf: xOf,
-      width: Math.max(NODE_W, cursor - COL_GAP - (PAD + RAIL_W + MARGIN_CH)),
-    };
+    return { blocks: blocks, width: Math.max(NODE_W, right - left) };
   }
 
-  /* The band behind a group. A single-member group is not worth a label — with
-     a filter on, that is all a group may have left. */
-  function groupBands(entities) {
+  /* The band behind a group run, drawn around the whole rigid block rather than
+     around the members, so it stays a clean rectangle in layers where the run
+     has only one step. */
+  function groupBands(blocks) {
     const bands = [];
-    entities.forEach((entity) => {
-      if (!entity.group || entity.members.length < 2) return;
-      let x0 = Infinity;
-      let x1 = -Infinity;
+    blocks.forEach((block) => {
+      if (!block.group) return;
       let y0 = Infinity;
       let y1 = -Infinity;
-      entity.members.forEach((node) => {
-        x0 = Math.min(x0, node.x);
-        x1 = Math.max(x1, node.x + node.w);
+      block.members.forEach((node) => {
         y0 = Math.min(y0, node.y);
         y1 = Math.max(y1, node.y + node.h);
       });
       bands.push({
-        group: entity.group,
-        count: entity.members.length,
-        x0: x0 - BAND_PAD,
-        x1: x1 + BAND_PAD,
+        group: block.group,
+        count: block.members.length,
+        x0: block.cx - block.width / 2 - BAND_PAD,
+        x1: block.cx + block.width / 2 + BAND_PAD,
         y0: y0 - BAND_HEAD,
         y1: y1 + BAND_PAD,
       });
@@ -697,8 +808,8 @@
       reindex();
     }
 
-    const grid = assignColumns(rows);
-    const contentW = grid.width;
+    const placement = arrange(rows, graph);
+    const contentW = placement.width;
 
     const nodes = [];
     const byId = {};
@@ -709,15 +820,15 @@
         return Math.max(best, node.h);
       }, 0);
       row.forEach((node) => {
-        node.x = grid.xOf[node.slot];
+        node.x = node.px;
         node.y = y;
         node.layer = index;
         nodes.push(node);
         byId[node.id] = node;
       });
-      // Columns leave holes in sparse layers, so a row is no longer in
-      // barycentre order; the edge fanning and the channel search below both
-      // read rows left to right.
+      // Blocks are ordered once for the whole chart, which can differ from the
+      // barycentre order inside a single row; the edge fanning and the channel
+      // search below both read rows left to right.
       row.sort((a, b) => {
         return a.x - b.x;
       });
@@ -725,7 +836,7 @@
       y += rowH + LAYER_GAP;
     });
 
-    const bands = groupBands(grid.entities);
+    const bands = groupBands(placement.blocks);
 
     // Edges leave and enter along the node's edge, fanned out and sorted by the
     // other end's position so parallel links do not cross inside a gap.
@@ -802,7 +913,11 @@
   function routeLongEdges(edges, rows, contentW, bands) {
     const left = PAD + RAIL_W;
     const right = left + MARGIN_CH * 2 + contentW;
-    const candidates = [left + MARGIN_CH / 2, right - MARGIN_CH / 2];
+    // The side channels hug the very edge: with the relaxation free to push a
+    // block flush against the left of the content, anything further in is inside
+    // the clearance of the leftmost node and gets rejected in every row.
+    const margins = [left + 9, right - 9];
+    const candidates = margins.slice();
     rows.forEach((row) => {
       row.forEach((node, index) => {
         if (index === 0) return;
@@ -859,7 +974,18 @@
           .sort((a, b) => {
             return Math.abs(a - midpoint) - Math.abs(b - midpoint);
           });
-        if (!usable.length) return;
+        if (!usable.length) {
+          // Nothing free. A short skip is still readable drawn straight; one
+          // that crosses the whole chart is not, and cutting it through a band
+          // would read as belonging to that group — so it takes the near margin
+          // and shares it rather than going through the middle.
+          if (edge.to.layer - edge.from.layer < 3) return;
+          edge.channel =
+            Math.abs(margins[0] - midpoint) <= Math.abs(margins[1] - midpoint)
+              ? margins[0]
+              : margins[1];
+          return;
+        }
         edge.channel = usable[0];
         taken.push({ x: edge.channel, y0: edge.y1, y1: edge.y2 });
       });
@@ -886,7 +1012,7 @@
         band.group.label +
         " — " +
         band.count +
-        " steps of one concern, aligned in one column" +
+        " consecutive steps of one concern, aligned" +
         (band.group.note ? "\n" + band.group.note : "");
       group.appendChild(tip);
       root.appendChild(group);
@@ -1266,8 +1392,8 @@
       "in either order. " +
       (geometry.bands.length
         ? "A shaded band is one concern spread over several layers — its steps " +
-          "are aligned in a single column, so the strand can be followed " +
-          "straight down; hover the band for what holds it together. "
+          "are lined up so the strand can be followed straight down; hover the " +
+          "band for what holds it together. "
         : "") +
       "Click a step to label its arrows with the data that " +
       "travels along them. The colour bar gives the step kind, also written " +
