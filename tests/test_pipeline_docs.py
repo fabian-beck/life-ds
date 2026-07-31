@@ -519,11 +519,11 @@ class MarkdownCompilerTests(unittest.TestCase):
     def test_a_citation_renders_with_its_provenance(self) -> None:
         facts = _facts()
         document = _compile(
-            self.HEAD + "\n## S\n\nThere are {{ data.people }}.\n", facts
+            self.HEAD + "\n## S\n\nThere are {{ app.locales }}.\n", facts
         )
-        self.assertIn("data.people", document.citations)
-        self.assertIn(facts["data.people"].display, document.html)
-        self.assertIn(facts["data.people"].source.split(" ")[0], document.html)
+        self.assertIn("app.locales", document.citations)
+        self.assertIn(facts["app.locales"].display, document.html)
+        self.assertIn(facts["app.locales"].source.split(" ")[0], document.html)
 
     def test_an_unknown_citation_fails_the_build(self) -> None:
         """A hole in a sentence is worse than a broken build."""
@@ -671,15 +671,15 @@ class FactTests(unittest.TestCase):
         cls.facts = facts_module.collect(scan_codebase(), {"runs": []})
 
     def test_every_fact_has_a_display_value_and_a_source(self) -> None:
-        self.assertGreater(len(self.facts), 20)
+        self.assertGreater(len(self.facts), 10)
         for key, fact in self.facts.items():
             self.assertEqual(key, fact.key)
             self.assertTrue(fact.display, f"{key} has no display value")
             self.assertTrue(fact.source, f"{key} does not say where it came from")
 
-    def test_corpus_measurements_are_not_silently_zero(self) -> None:
-        """`_safe` swallows IO errors, so a zero here means it swallowed one."""
-        for key in ("data.people", "data.events", "data.connections"):
+    def test_repository_measurements_are_not_silently_zero(self) -> None:
+        """A directory listing that fails quietly would read as a real zero."""
+        for key in ("app.locales", "pipeline.prompt_builders", "pipeline.schemas"):
             self.assertGreater(self.facts[key].value or 0, 0, f"{key} measured nothing")
 
     def test_pipeline_measurements_agree_with_the_spec(self) -> None:

@@ -155,7 +155,7 @@ COMPONENTS: Dict[str, ComponentSpec] = {
 CALLOUTS: Dict[str, str] = {
     "note": "Note",
     "aside": "Aside",
-    "decision": "Design decision",
+    "decision": "Design decisions",
     "limitation": "Limitation",
 }
 

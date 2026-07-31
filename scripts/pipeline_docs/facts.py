@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 """Numbers the report is allowed to cite, measured at build time.
 
-The authored markdown never writes a figure down. It writes `{{ data.people }}`
-and this module supplies the number, so a sentence about the size of the corpus
-cannot rot the way a hard-coded "52 biographies" would. Every fact carries the
-place it was measured, which the page prints on hover—a claim in the report is
-therefore always traceable to a file, a directory or a spec entry.
+The authored markdown never writes a figure down. It writes `{{ app.locales }}`
+and this module supplies the number, so a sentence about the system cannot rot
+the way a hard-coded figure would. Every fact carries the place it was
+measured, which the page prints on hover—a claim in the report is therefore
+always traceable to a file, a directory or a spec entry.
 
-Facts are deliberately cheap: directory listings and lengths of JSON arrays.
-They are also deliberately few—a number is measured here because the prose
-argues something with it, not because it can be counted. Anything that needs
-the AST lives in `introspect.py` and reaches the
-report through `model.py` instead. A fact that cannot be measured is omitted
-rather than guessed, and `validate.py` then fails the build for the citation
-that referenced it—a missing number must never render as an empty gap in a
-sentence.
+Facts are deliberately few: a number is measured here because the prose argues
+something with it, not because it can be counted. Corpus sizes were measured
+here once and are not any more; how many biographies happen to exist today
+carries no argument, and a report that recites it invites the reader to mistake
+inventory for a finding. Anything that needs the AST lives in `introspect.py`
+and reaches the report through `model.py` instead. A fact that cannot be
+measured is omitted rather than guessed, and `validate.py` then fails the build
+for the citation that referenced it—a missing number must never render as an
+empty gap in a sentence.
 """
 
 from __future__ import annotations
@@ -57,34 +58,10 @@ def _thousands(number: float) -> str:
     return f"{int(number):,}".replace(",", " ")
 
 
-def _safe(fn: Callable[[], Any], default: Any = None) -> Any:
-    """Measurements run against a working tree, which may be incomplete."""
-    try:
-        return fn()
-    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError):
-        return default
-
-
 def _files(directory: Path, pattern: str) -> List[Path]:
     if not directory.is_dir():
         return []
     return sorted(path for path in directory.glob(pattern) if path.is_file())
-
-
-def _json_array_length(path: Path, *keys: str) -> Optional[int]:
-    """Length of a nested array in a JSON file, or None if the path is absent."""
-    if not path.is_file():
-        return None
-    data = _safe(lambda: json.loads(path.read_text(encoding="utf-8")))
-    if data is None:
-        return None
-    for key in keys:
-        if not isinstance(data, dict):
-            return None
-        data = data.get(key)
-    if isinstance(data, (list, dict)):
-        return len(data)
-    return None
 
 
 # ---------------------------------------------------------------------------
@@ -250,79 +227,6 @@ def _app_facts() -> List[Fact]:
     return facts
 
 
-def _data_facts() -> List[Fact]:
-    data = REPO_ROOT / "data"
-    people_dirs = (
-        sorted(path for path in (data / "people").iterdir() if path.is_dir())
-        if (data / "people").is_dir()
-        else []
-    )
-    meta_files = _files(data / "meta_stories", "*.json")
-
-    events = 0
-    networked = 0
-    connections = 0
-    for person in people_dirs:
-        count = _json_array_length(person / "life_events.json", "events")
-        if count:
-            events += count
-        links = _json_array_length(person / "ego_network.json", "connections")
-        if links:
-            networked += 1
-            connections += links
-
-    registry = _json_array_length(data / "persons.json", "people")
-
-    facts = [
-        Fact(
-            "data.people",
-            str(len(people_dirs)),
-            "data/people/ subdirectories",
-            len(people_dirs),
-        ),
-        Fact(
-            "data.meta_stories",
-            str(len(meta_files)),
-            "data/meta_stories/*.json",
-            len(meta_files),
-        ),
-        Fact(
-            "data.events",
-            _thousands(events),
-            "sum of events[] across every data/people/*/life_events.json",
-            events,
-        ),
-        Fact(
-            "data.events_per_person",
-            f"{events / len(people_dirs):.0f}" if people_dirs else "—",
-            "mean events per biography",
-            (events / len(people_dirs)) if people_dirs else None,
-        ),
-        Fact(
-            "data.connections",
-            _thousands(connections),
-            "sum of connections[] across every data/people/*/ego_network.json",
-            connections,
-        ),
-        Fact(
-            "data.networked_people",
-            str(networked),
-            "biographies that have an ego network on disk",
-            networked,
-        ),
-    ]
-    if registry is not None:
-        facts.append(
-            Fact(
-                "data.registry_entries",
-                str(registry),
-                "data/persons.json",
-                registry,
-            )
-        )
-    return facts
-
-
 def _run_facts(runs: Dict[str, Any]) -> List[Fact]:
     records = runs.get("runs") or []
     calls = [call for run in records for call in (run.get("calls") or [])]
@@ -360,7 +264,6 @@ def collect(
     groups: List[List[Fact]] = [
         _pipeline_facts(codebase),
         _app_facts(),
-        _data_facts(),
         _run_facts(runs or {}),
     ]
     facts: Dict[str, Fact] = {}
