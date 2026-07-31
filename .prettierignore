@@ -4,6 +4,9 @@ build/
 .svelte-kit/
 .venv/
 .claude/
+# Playwright writes JSON audits and reports here on every interface run.
+test-results/
+playwright-report/
 data/persons.json
 data/persons_*.json
 data/person_styles.json
