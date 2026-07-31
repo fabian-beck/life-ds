@@ -545,8 +545,33 @@ class PayloadAndRenderTests(unittest.TestCase):
         self.assertIn(document.front["title"], html)
         self.assertIn('data-component="pipeline"', html)
         self.assertIn('id="introduction"', html)
-        for marker in ("__BODY__", "__ABSTRACT__", "__TITLE__", "__SOURCE__"):
+        for marker in (
+            "__BODY__",
+            "__ABSTRACT__",
+            "__TITLE__",
+            "__SOURCE__",
+            "__AUTHORS__",
+        ):
             self.assertNotIn(marker, html)
+
+    def test_the_title_block_names_the_authors_without_scripting(self) -> None:
+        """The byline is served HTML: no reader should have to run JS for it."""
+        codebase = scan_codebase()
+        facts = facts_module.collect(codebase)
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), facts
+        )
+        payload = build_payload(codebase, {}, document, facts)
+        head = render.render(payload, document).split('<div class="report"')[0]
+        self.assertTrue(document.authors, "the report source declares no authors")
+        for author in document.authors:
+            self.assertIn(author.name, head)
+            if author.affiliation:
+                self.assertIn(author.affiliation, head)
+            if author.url:
+                self.assertIn(author.url, head)
+            if author.orcid:
+                self.assertIn(f"https://orcid.org/{author.orcid}", head)
 
 
 def _facts() -> dict:
@@ -570,6 +595,35 @@ class MarkdownCompilerTests(unittest.TestCase):
         self.assertEqual(front["abstract"], "first line\nsecond line")
         self.assertIn("body", body)
         self.assertGreater(offset, 0)
+
+    def test_authors_are_read_from_the_front_matter(self) -> None:
+        document = _compile(
+            "---\ntitle: T\nauthors:\n"
+            "  Ada Lovelace | Analytical Society | https://example.org/ada"
+            " | 0000-0001-2345-6789\n"
+            "  Alan Turing\n"
+            "---\n\n## S\n\nbody\n"
+        )
+        first, second = document.authors
+        self.assertEqual(first.name, "Ada Lovelace")
+        self.assertEqual(first.affiliation, "Analytical Society")
+        self.assertEqual(first.url, "https://example.org/ada")
+        self.assertEqual(first.orcid_url, "https://orcid.org/0000-0001-2345-6789")
+        self.assertEqual(second.name, "Alan Turing")
+        self.assertEqual((second.affiliation, second.url, second.orcid), ("", "", ""))
+
+    def test_an_orcid_is_stored_bare_however_it_was_written(self) -> None:
+        authors = report.parse_authors(
+            "A | X | | https://orcid.org/0000-0002-1825-0097\n"
+            "B | X | | 0000-0002-1825-009X\n"
+        )
+        self.assertEqual(authors[0].orcid, "0000-0002-1825-0097")
+        self.assertEqual(authors[1].orcid, "0000-0002-1825-009X")
+
+    def test_a_mistyped_orcid_fails_the_build(self) -> None:
+        """Pointing a reader at a stranger's record is worse than no link."""
+        with self.assertRaises(report.ReportError):
+            report.parse_authors("A | X | | 0000-0002-1825\n")
 
     def test_headings_are_numbered_anchored_and_nested(self) -> None:
         document = _compile(

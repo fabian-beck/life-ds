@@ -219,6 +219,7 @@ KEY = r"[A-Za-z][A-Za-z0-9_:.-]*"
 REFCITE = re.compile(rf"(?<!\\)\[@\s*({KEY}(?:\s*[;,]\s*@\s*{KEY})*)\s*\]")
 PARAM = re.compile(r"""([a-z][a-z0-9_-]*)=(?:"([^"]*)"|'([^']*)'|(\S+))""")
 FENCE = re.compile(r"^\s*(```|~~~)")
+ORCID_ID = re.compile(r"\d{4}-\d{4}-\d{4}-\d{3}[\dX]")
 
 
 # ---------------------------------------------------------------------------
@@ -273,6 +274,34 @@ class Note:
 
 
 @dataclass
+class Author:
+    """One author of the report, as the title block prints them.
+
+    Written in the front matter as `Name | Affiliation | page | ORCID`, of which
+    only the name is required: a contributor without a public page or without an
+    ORCID iD still belongs on the title block, and the renderer prints whichever
+    of the four fields the line supplied.
+    """
+
+    name: str
+    affiliation: str = ""
+    url: str = ""
+    orcid: str = ""
+
+    @property
+    def orcid_url(self) -> str:
+        return f"https://orcid.org/{self.orcid}" if self.orcid else ""
+
+    def to_json(self) -> Dict[str, Any]:
+        return {
+            "name": self.name,
+            "affiliation": self.affiliation,
+            "url": self.url,
+            "orcid": self.orcid,
+        }
+
+
+@dataclass
 class Principle:
     """One numbered design principle, declared once and referenced anywhere.
 
@@ -317,6 +346,7 @@ class Document:
     prints_references: bool = False
     principles: List[Principle] = field(default_factory=list)
     prefs: List[str] = field(default_factory=list)
+    authors: List[Author] = field(default_factory=list)
 
     @property
     def title(self) -> str:
@@ -326,6 +356,7 @@ class Document:
         return {
             "title": self.title,
             "subtitle": self.front.get("subtitle", ""),
+            "authors": [author.to_json() for author in self.authors],
             "abstract": self.front.get("abstract", ""),
             "source": self.source_path,
             "sections": [section.to_json() for section in self.sections],
@@ -376,6 +407,38 @@ def split_front_matter(text: str) -> Tuple[Dict[str, str], str, int]:
         key = name.strip()
         buffer = [value.strip()] if value.strip() else []
     raise ReportError("front matter is not closed with '---'")
+
+
+def parse_authors(text: str) -> List[Author]:
+    """One author per line of the `authors:` block, fields separated by `|`.
+
+    `Name | Affiliation | page | ORCID`, trailing fields optional. The ORCID iD
+    may be written bare or as its `https://orcid.org/...` form—both are stored
+    bare and linked by the renderer—and its checksum shape is verified here so a
+    mistyped iD fails the build rather than pointing a reader at a stranger.
+    """
+    authors: List[Author] = []
+    for line in text.splitlines():
+        if not line.strip():
+            continue
+        fields = [part.strip() for part in line.split("|")]
+        if len(fields) > 4:
+            raise ReportError(
+                f"author {fields[0]!r}: expected 'Name | Affiliation | page | "
+                "ORCID', with the last three optional"
+            )
+        fields += [""] * (4 - len(fields))
+        name, affiliation, url, orcid = fields
+        if not name:
+            raise ReportError("an author line must start with a name")
+        orcid = orcid.rstrip("/").rsplit("/", 1)[-1]
+        if orcid and not ORCID_ID.fullmatch(orcid):
+            raise ReportError(
+                f"author {name!r}: {orcid!r} is not an ORCID iD "
+                "(0000-0000-0000-0000)"
+            )
+        authors.append(Author(name, affiliation, url, orcid))
+    return authors
 
 
 def parse_params(text: str, line: int) -> Dict[str, str]:
@@ -1233,4 +1296,5 @@ def compile_report(
         references_seen,
         principles,
         prefs,
+        parse_authors(front.get("authors", "")),
     )

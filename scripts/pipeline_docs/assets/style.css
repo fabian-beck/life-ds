@@ -188,6 +188,58 @@ h1 {
   line-height: 1.4;
 }
 
+/* The byline sits between the subtitle and the build facts: authors first, the
+   page's own provenance after them. One author per item, name over affiliation,
+   so the row stays legible when it wraps on a narrow display. */
+.authors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 34px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.author {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 6px;
+  align-items: baseline;
+  max-width: 34ch;
+}
+
+.author-name {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a.author-name:hover,
+a.author-name:focus-visible {
+  text-decoration: underline;
+}
+
+.author-affil {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 12.5px;
+}
+
+.orcid {
+  display: inline-flex;
+  gap: 4px;
+  align-self: center;
+  align-items: center;
+  color: var(--ink-2);
+}
+
+.orcid-mark {
+  width: 13px;
+  height: 13px;
+}
+
 .abstract {
   margin: 26px 0 0;
   padding: 18px 0 20px;
@@ -2419,6 +2471,14 @@ figure.teaser > .cap {
 
   .titleblock {
     margin-bottom: 26px;
+  }
+
+  /* On paper the mark links nowhere, so the iD it stands for is printed. */
+  .orcid::after {
+    content: " " attr(data-orcid);
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 11px;
   }
 
   /* Both contents lists are ordinary document content on paper: the rail is

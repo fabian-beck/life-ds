@@ -50,6 +50,7 @@ __CSS__
       <p class="kicker">Technical report</p>
       <h1>__H1__</h1>
       <p class="subtitle">__SUBTITLE__</p>
+__AUTHORS__
       <div class="meta-row" id="meta-row"></div>
       <div class="abstract">
         <p class="abstract-label">Abstract</p>
@@ -120,6 +121,22 @@ __JS__
 
 FALLBACK_ABSTRACT = "<p>No abstract was written in the report's front matter.</p>"
 
+# The ORCID mark, drawn in ink rather than in the organization's green: the page
+# spends color on the step kinds alone, and an author's identifier is not one of
+# them. The disc takes `currentColor`, the letterforms are knocked out of it.
+ORCID_MARK = (
+    '<svg class="orcid-mark" viewBox="0 0 256 256" aria-hidden="true"'
+    ' focusable="false">'
+    '<circle cx="128" cy="128" r="128" fill="currentColor"/>'
+    '<path fill="var(--paper)" d="M86.3 186.2H70.9V79.1h15.4v107.1z"/>'
+    '<path fill="var(--paper)" d="M108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0'
+    " 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5"
+    ' 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4z"/>'
+    '<path fill="var(--paper)" d="M88.7 56.8c0 5.5-4.5 10.1-10.1 10.1-5.6'
+    ' 0-10.1-4.6-10.1-10.1 0-5.6 4.5-10.1 10.1-10.1 5.6 0 10.1 4.6 10.1 10.1z"/>'
+    "</svg>"
+)
+
 
 def _escape(value: str) -> str:
     return (
@@ -136,6 +153,36 @@ def _abstract_html(document: Document) -> str:
         return FALLBACK_ABSTRACT
     paragraphs = [part.strip() for part in text.split("\n\n") if part.strip()]
     return "\n".join(f"<p>{_escape(part)}</p>" for part in paragraphs)
+
+
+def _authors_html(document: Optional[Document]) -> str:
+    """The byline, written into the page rather than hydrated into it.
+
+    Authorship is authored, not measured, so it belongs to the served HTML: it
+    has to be there for a reader without JavaScript, for a printer, and for
+    whatever reads the page as a document.
+    """
+    authors = document.authors if document else []
+    if not authors:
+        return ""
+
+    items = []
+    for author in authors:
+        name = _escape(author.name)
+        if author.url:
+            head = f'<a class="author-name" href="{_escape(author.url)}">{name}</a>'
+        else:
+            head = f'<span class="author-name">{name}</span>'
+        if author.orcid:
+            head += (
+                f'<a class="orcid" href="{_escape(author.orcid_url)}"'
+                f' data-orcid="{_escape(author.orcid)}"'
+                f' aria-label="ORCID iD for {name}">{ORCID_MARK}</a>'
+            )
+        if author.affiliation:
+            head += f'<span class="author-affil">{_escape(author.affiliation)}</span>'
+        items.append(f'        <li class="author">{head}</li>')
+    return '      <ul class="authors">\n' + "\n".join(items) + "\n      </ul>"
 
 
 def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
@@ -164,6 +211,7 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
         .replace("__TITLE__", _escape(title))
         .replace("__H1__", _escape(title))
         .replace("__SUBTITLE__", _escape(subtitle))
+        .replace("__AUTHORS__", _authors_html(document))
         .replace("__DESCRIPTION__", _escape(description))
         .replace("__SOURCE__", _escape(source))
         .replace("__DATA__", data)
