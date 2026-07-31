@@ -1391,8 +1391,8 @@
     host.appendChild(hint);
     host.appendChild(
       el("figure", { class: "figure" }, [
-        el("div", { class: "chart-scroll" }, [flow]),
         caption,
+        el("div", { class: "chart-scroll" }, [flow]),
       ])
     );
 
@@ -1836,9 +1836,14 @@
      A caption states what the block is and then only what the block cannot
      show for itself; whatever a legend, an axis or the prose above already
      says is left out. Both parts are written as sentences, so the terminating
-     full stop is added here rather than trusted to every call site. */
+     full stop is added here rather than trusted to every call site.
+
+     Every caption is written before the block it names, because a reader
+     scrolling down meets it first and needs to know what is coming. Print
+     moves the figure captions back under their figures—see the caption rules
+     in `style.css`—which is why the kind is on the element as a class. */
   function caption(kind, number, title, sub) {
-    return el("div", { class: "cap" }, [
+    return el("div", { class: "cap cap-" + kind.toLowerCase() }, [
       el("p", { class: "cap-title" }, [
         el("b", { text: kind + " " + number + "." }),
         el("span", { text: " " + sentence(title) }),
@@ -3098,12 +3103,10 @@
     // A div, not a paragraph: the report's own paragraph typography applies to
     // everything inside `.report`, and this strip is chrome.
     const status = el("div", { class: "teaser-status", "aria-live": "polite" });
-    // The status strip sits between the drawing and its caption: it is where
-    // the controls for what is on screen belong, and the caption stays the last
-    // thing in the figure, as it is in every other figure on this page.
+    // The caption comes first, as it does in every other figure on this page,
+    // and the status strip stays under the drawing: it reports what is on
+    // screen, so it belongs with the drawing rather than with the caption.
     const figure = el("figure", { class: "figure teaser", id: "fig-teaser" }, [
-      el("div", { class: "teaser-frame" }, [root]),
-      status,
       el("figcaption", {
         html:
           "<b>Figure " +
@@ -3113,6 +3116,8 @@
           ". " +
           escapeHtml(TEASER.caption.sub),
       }),
+      el("div", { class: "teaser-frame" }, [root]),
+      status,
     ]);
     host.appendChild(figure);
 

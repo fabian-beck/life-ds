@@ -865,9 +865,12 @@ figure.figure {
   margin: 0 0 34px;
 }
 
+/* Above the drawing, so the rule that separates the two sits under the words.
+   Print turns the pair around and moves the rule with it. */
 figcaption {
-  padding-top: 10px;
-  border-top: 1px solid var(--rule);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
   color: var(--ink-2);
   font-family: var(--sans);
   font-size: 12.5px;
@@ -1451,6 +1454,13 @@ figure.teaser {
   margin: 0 0 30px;
 }
 
+/* The frame already rules the drawing off on both sides, so the caption's own
+   rule would only double it—whichever side of the drawing the caption is on. */
+figure.teaser figcaption {
+  padding: 0;
+  border: 0;
+}
+
 .teaser-frame {
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
@@ -1987,7 +1997,7 @@ figure.teaser {
 
 /* ------------------------------------------------------------------ print */
 
-/* The printed report is the same document with none of its affordances. Three
+/* The printed report is the same document with none of its affordances. Four
    things have to happen for that to be true rather than merely intended.
 
    Nothing may be clipped. On screen a wide figure scrolls inside its own box
@@ -2003,6 +2013,12 @@ figure.teaser {
    Nothing may straddle a page break that costs the reader the thing it
    describes. Figures stay with their captions, rows stay whole, headings stay
    with the text under them.
+
+   Nothing may keep a screen habit paper does not share. A scrolled document is
+   read in one direction, so every caption is written above the block it names;
+   a printed page is taken in whole, and the convention there puts a figure's
+   caption under it. The caption rules below turn the figure captions around
+   and leave the table captions where they are.
 
    `scripts/export_report_pdf.mjs` prints exactly this stylesheet, so
    Ctrl+P → Save as PDF and the script produce the same document. */
@@ -2118,15 +2134,38 @@ figure.teaser {
     break-inside: avoid;
   }
 
-  /* A caption belongs to what it names: figure captions sit under the figure,
-     table captions above the table. */
-  figcaption {
-    break-before: avoid;
+  /* On screen every caption is read before the block it names, because the
+     reader scrolls onto it from above. Paper has no such direction—the whole
+     page arrives at once—so the print convention applies instead: figure
+     captions under the figure, table captions above the table.
+
+     The turn is done with `order` rather than by moving anything, so the
+     document keeps one reading order for assistive technology and for
+     JavaScript-off readers. The rule under the caption becomes the rule above
+     it, so it still divides the caption from the drawing. */
+  figure.figure,
+  .chart-card {
+    display: flex;
+    flex-direction: column;
   }
 
   .cap {
     break-after: avoid;
     break-inside: avoid;
+  }
+
+  figcaption,
+  .cap-figure {
+    order: 1;
+    margin: 12px 0 0;
+    break-before: avoid;
+    break-after: auto;
+  }
+
+  figcaption {
+    padding: 10px 0 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 0;
   }
 
   /* Wide tables print every column instead of scrolling to it. The wrapper
