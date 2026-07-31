@@ -31,7 +31,10 @@ is present throughout the text and largely implicit in it: dates are given at
 whatever precision the record supports, places under the names they carried at
 the time, and relationships in subordinate clauses distributed across sections.
 A reader who wants the shape of the life—its phases, its movements, the people
-who recur in it—reconstructs that shape while reading.
+who recur in it—reconstructs that shape while reading. Extracting that structure
+from encyclopedic prose is itself an established undertaking
+[@lehmann2015dbpedia; @vrandecic2014wikidata], but one whose product is a
+knowledge base to be queried rather than a life to be read.
 
 Life Data Stories makes the shape explicit and presentable. It derives from the
 source prose [[events|a set of discrete events]], each with a resolved date, the
@@ -39,15 +42,20 @@ modern coordinates of its place, the persons involved, an illustration and the
 sources that support it; it groups those events into the phases of a life; and
 it presents the result simultaneously as [[prose|narrative text]], as
 [[timeline|a chronology]], as [[map|a geography]] and as
-[[graph|a social network]]. The same derivation applied across several
-biographies yields [[meta-story|a meta story]], in which a theme is traced
-through the lives that share it.
+[[graph|a social network]]. The result is a narrative visualization in the sense
+the genre literature gives the term [@segel2010narrative; @riche2018storytelling]:
+the reader is led through the material rather than left to query it. The same
+derivation applied across several biographies yields
+[[meta-story|a meta story]], in which a theme is traced through the lives that
+share it.
 
 The operations this requires are interpretive. Selecting the episodes that
 constitute a life, identifying the modern place a historical toponym denotes,
 and judging which relationships are constitutive of a career are decisions about
 meaning, and at the scale of a corpus they are made by
-[[inference|a language model]].
+[[inference|a language model]] [@brown2020language]. They are also editorial
+decisions, and the selection and framing they perform shape how the life is
+read [@hullman2011rhetoric].
 
 The system is accordingly built in two parts that
 [[artifacts|meet only at the data]]. Generation runs offline as a dependency
@@ -56,7 +64,10 @@ interleaved with deterministic transformation: a step proposes, researches or
 reviews material, and the steps around it resolve, cluster, merge and validate
 what the model returned. What the graph produces is a set of documents
 describing one life or one theme. The interface loads those documents and
-renders them, so that reading a story is a matter of presentation alone.
+renders them, so that reading a story is a matter of presentation alone—the
+same separation of a story's specification from its rendering that authoring
+tools for narrative visualization draw [@satyanarayan2014ellipsis], with
+generation rather than an author on the far side of it.
 
 This report describes both halves in the vocabulary of what they handle rather
 than of where it is kept. A path on disk is a storage decision; the social
@@ -148,8 +159,11 @@ localized copies derive.
 
 The **[[ego-network|ego network]]** document records the subject's
 relationships as typed and weighted edges, each with a period, a strength and a
-supporting description. It is generated independently of the narrative, so a
-biography may exist before its network does.
+supporting description. The ego network is the natural unit here for the same
+reason it is in social network analysis [@everett2005ego]: the sources describe
+a life from one vantage point, and what they support is the neighborhood around
+that person rather than a complete graph. It is generated independently of the
+narrative, so a biography may exist before its network does.
 
 The **[[meta-story|meta story]]** document is a second-order artifact. It
 describes a theme across several biographies and is the only family whose
@@ -277,13 +291,14 @@ or configuration—{{ pipeline.prompt_builders }} such functions across the
 scripts—since prompts require conditionals and injected data far more often
 than they require editing outside a code review. Structured output is declared
 as Pydantic models, {{ pipeline.schemas }} classes in total, which converts
-open-ended text generation into slot filling: the required shape of a response
-is a type rather than a paragraph of instructions, and validation occurs before
-any value reaches an artifact. Model output is then applied deterministically.
-Identifiers are matched against existing entities, unknown references are
-discarded with a warning, and coordinates, URLs and graph structure are copied
-rather than accepted, so that a defective response stays confined to the field
-it fills.
+open-ended text generation into slot filling [@willard2023guided]: the required
+shape of a response is a type rather than a paragraph of instructions, and
+validation occurs before any value reaches an artifact. A schema constrains the
+shape of a response and not its truth [@ji2023survey], so model output is then
+applied deterministically. Identifiers are matched against existing entities,
+unknown references are discarded with a warning, and coordinates, URLs and graph
+structure are copied rather than accepted, so that a defective response stays
+confined to the field it fills.
 
 ::: schemalist names=LifePlan,EventDetails,EgoNetwork,MetaStoryPlan
 The four schemas central to the two pipelines—the plan of a life, a single
@@ -331,15 +346,19 @@ than only from the landing page.
 
 The three encodings are attached to this sequence rather than displayed beside
 it. [[timeline|A persistent timeline]] maps every event to its position in the
-life, bands the chapters, and doubles as the navigation control.
+life, bands the chapters, and doubles as the navigation control—a linear,
+chronological, unified scale, in the terms of the timeline design space
+[@brehmer2017timelines], chosen because a life is read in the order it was
+lived.
 [[map|A map built on MapLibre and Protomaps]]^[Protomaps distributes a whole
 basemap as one PMTiles archive addressed by HTTP range requests, so the map is
 served by a static file beside the application rather than by a tile service it
 depends on.] locates the events whose places could be resolved, with the camera
 following the reader rather than the reader panning the map; the basemap is
 deliberately label-free, since the story supplies the toponyms. The ego network
-is presented on demand as [[graph|a force-directed graph]] of the subject's
-documented relationships, typed and weighted as the artifact records them.
+is presented on demand as [[graph|a force-directed graph]]
+[@fruchterman1991graph] of the subject's documented relationships, typed and
+weighted as the artifact records them.
 Images open in a lightbox that pages through the story's illustrations as a
 single gallery.
 
@@ -365,11 +384,15 @@ shows.
 
 The two visual sections are scrollytelling constructions, in which the
 component is pinned while narration cards scroll over it and select what it
-displays. In the network section, the force-directed graph is laid out once and
-then frozen—the simulation is advanced to convergence in the background before
-the graph is revealed—so that the narration directs the reader's attention
-while the graph holds still. Each card corresponds to one
-detected circle of the graph: its members remain lit while the remainder of the
+displays. The reading is accordingly author-driven within a section and
+reader-driven between them, which is the arrangement studies of narrative flow
+and of interactive articles find least demanding to
+read [@mckenna2017flow; @hohman2020interactive]. In the network section, the
+force-directed graph is laid out once and then frozen—the simulation is advanced
+to convergence in the background before the graph is revealed—so that the
+narration directs the reader's attention while the graph holds still. Each card
+corresponds to one detected circle of the graph, found by greedy modularity
+merging [@clauset2004finding]: its members remain lit while the remainder of the
 graph darkens. In the map section, a non-interactive map is pinned full-bleed
 and the camera flies to each geographic stop as its card enters the viewport,
 zooming to a place or fitting a bounding box according to how dispersed the
@@ -403,4 +426,12 @@ only if its fingerprint matches the English text it was derived from. The
 consequence for development is direct. A new translatable field must be added
 to the payload conditionally, since including it unconditionally invalidates
 every existing translation in the corpus at once.
+
+## References
+
+::: references
+The works the report cites, numbered in the order they are first cited and
+declared once in `docs/report/references.bib`. Every entry carries a DOI, so the
+build can refuse a reference the reader would not be able to resolve.
+:::
 

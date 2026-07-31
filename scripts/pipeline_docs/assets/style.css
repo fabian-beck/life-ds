@@ -634,6 +634,67 @@ body.has-note-pop .notes {
   text-transform: uppercase;
 }
 
+/* ------------------------------------------------------------- references */
+
+/* A citation is a number in brackets, not a link in the sentence's own color:
+   the prose has to read past it. The list it points into is rendered in Python
+   like the notes are, so following a citation works on paper and with no
+   JavaScript. */
+.report .refcite {
+  font-family: var(--sans);
+  font-size: 0.8em;
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+
+.report .refcite a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.report .refcite a:hover,
+.report .refcite a:focus-visible {
+  border-bottom-color: var(--ink);
+  background: var(--surface);
+}
+
+.references {
+  max-width: 78ch;
+}
+
+.report .reference-list {
+  margin: 0;
+  padding-left: 26px;
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.report .reference-list li {
+  margin-bottom: 9px;
+  padding-left: 4px;
+  break-inside: avoid;
+}
+
+/* The title carries the entry; everything around it is apparatus. */
+.ref-title {
+  font-style: italic;
+}
+
+.ref-venue,
+.ref-note,
+.ref-year {
+  color: var(--ink-2);
+}
+
+.ref-doi {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.87em;
+  overflow-wrap: anywhere;
+}
+
 /* -------------------------------------------------------- computed blocks */
 
 /* Full-bleed past the text measure: a chart or a wide table is not running text
@@ -2488,5 +2549,16 @@ figure.teaser > .cap {
 
   .note-back {
     display: none;
+  }
+
+  /* A DOI is the only part of a reference paper can be acted on, so it stays
+     visible and stays black; the bracketed number loses its rule, which was
+     only ever there to say the citation was clickable. */
+  .report .refcite a {
+    border-bottom: 0;
+  }
+
+  .ref-doi {
+    color: var(--ink);
   }
 }

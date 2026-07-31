@@ -32,6 +32,11 @@ The authoring surface is small on purpose:
     that concept's glyph—the same glyph the figures and the interface use—so a
     reader meets the vocabulary in the sentence that introduces it.
 
+`[@key]` / `[@key; @other]`
+    A citation of published work, resolved against `docs/report/references.bib`
+    the same way a fact is resolved against `facts.py`. Numbering follows first
+    use, and `::: references` prints the list the numbers point into.
+
 `::: component key=value`
     A mount point for computed content. The block's own body is authored prose
     that introduces the component and is kept above it.
@@ -56,7 +61,8 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 import markdown
 
-from . import concepts, teaser
+from . import bibliography, concepts, teaser
+from .bibliography import Bibliography, Reference
 from .facts import Fact
 
 MARKDOWN_EXTENSIONS = [
@@ -195,6 +201,8 @@ DIRECTIVE_CLOSE = re.compile(r"^:::\s*$")
 HEADING = re.compile(r"^(#{2,4})\s+(.*?)\s*$")
 CITATION = re.compile(r"(?<!\\)\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}")
 FIGREF = re.compile(r"(?<!\\)\[\[\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^\]]+?)\s*)?\]\]")
+KEY = r"[A-Za-z][A-Za-z0-9_:.-]*"
+REFCITE = re.compile(rf"(?<!\\)\[@\s*({KEY}(?:\s*[;,]\s*@\s*{KEY})*)\s*\]")
 PARAM = re.compile(r"""([a-z][a-z0-9_-]*)=(?:"([^"]*)"|'([^']*)'|(\S+))""")
 FENCE = re.compile(r"^\s*(```|~~~)")
 
@@ -260,6 +268,9 @@ class Document:
     source_path: str
     figrefs: List[str] = field(default_factory=list)
     notes: List[Note] = field(default_factory=list)
+    refcites: List[str] = field(default_factory=list)
+    references: List[Reference] = field(default_factory=list)
+    prints_references: bool = False
 
     @property
     def title(self) -> str:
@@ -513,6 +524,101 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
 
     substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
     return substituted.replace("\\[[", "[[")
+
+
+# ---------------------------------------------------------------------------
+# References
+# ---------------------------------------------------------------------------
+
+# Where `::: references` asked for the list. It can only be written once every
+# citation has been numbered, which is after the whole document is compiled.
+REFERENCES_PLACEHOLDER = "<!--report:references-->"
+
+
+def substitute_refcites(
+    text: str,
+    bib: Bibliography,
+    order: List[str],
+    line_hint: str = "",
+) -> str:
+    """Replace `[@key]` with the number of the work in the reference list.
+
+    Numbers are assigned on first citation, so the list at the end of the report
+    runs in the order the reader meets the works and nobody maintains a number
+    by hand. An unknown key fails the build for the same reason an unknown fact
+    does: a citation that resolves to nothing is worse than no citation.
+    """
+
+    def replace(match: re.Match) -> str:
+        keys = [
+            part.strip().lstrip("@").strip()
+            for part in re.split(r"[;,]", match.group(1))
+        ]
+        cited: List[Tuple[int, Reference]] = []
+        for key in keys:
+            entry = bib.get(key)
+            if entry is None:
+                known = ", ".join(sorted(bib.keys())) or "nothing"
+                raise ReportError(
+                    f"{line_hint}unknown reference '[@{key}]'—"
+                    f"docs/report/references.bib declares {known}"
+                )
+            if key not in order:
+                order.append(key)
+            cited.append((order.index(key) + 1, entry))
+        links = ", ".join(
+            f'<a href="#ref-{number}" role="doc-biblioref" '
+            f'title="{_escape(entry.describe())}">{number}</a>'
+            for number, entry in cited
+        )
+        return f'<span class="refcite">[{links}]</span>'
+
+    def rewrite(line: str) -> str:
+        rewritten = REFCITE.sub(replace, line)
+        leftover = rewritten.replace("\\[@", "")
+        if "[@" in leftover:
+            raise ReportError(
+                f"{line_hint}a citation is not closed on its own line: "
+                f"{line.strip()!r}—keep '[@key; @other]' on one line so it can "
+                "be resolved"
+            )
+        return rewritten
+
+    substituted = _outside_fences(text, rewrite)
+    return substituted.replace("\\[@", "[@")
+
+
+def _reference_html(number: int, entry: Reference) -> str:
+    """One entry, in the segments `bibliography` says it has.
+
+    The DOI is printed rather than hidden behind the title: on paper it is the
+    only part of the entry a reader can act on, and on screen it is the link.
+    """
+    parts = [
+        f'<span class="ref-{role}">' f"{_escape(bibliography.punctuate(text))}</span> "
+        for role, text in entry.segments()
+    ]
+    parts.append(
+        f'<a class="ref-doi" href="{_escape(entry.url)}">doi:{_escape(entry.doi)}</a>'
+    )
+    return (
+        f'<li class="reference" id="ref-{number}" value="{number}">'
+        f"{''.join(parts)}</li>"
+    )
+
+
+def references_html(entries: Sequence[Reference]) -> str:
+    """The cited works, numbered as the prose numbered them."""
+    if not entries:
+        return ""
+    items = "".join(
+        _reference_html(number, entry) for number, entry in enumerate(entries, start=1)
+    )
+    return (
+        '<div class="references" role="doc-bibliography">'
+        f'<ol class="reference-list">{items}</ol>'
+        "</div>"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -816,13 +922,16 @@ def compile_report(
     source: str,
     facts: Dict[str, Fact],
     source_path: str = "docs/report/report.md",
+    bib: Optional[Bibliography] = None,
 ) -> Document:
     """Authored Markdown in, page body plus mount manifest out."""
     front, body, offset = split_front_matter(source)
     blocks = split_blocks(body, offset)
+    works = bibliography.default() if bib is None else bib
 
     citations: List[str] = []
     figrefs: List[str] = []
+    refcites: List[str] = []
     flat: List[Section] = []
     mounts: List[Mount] = []
     notes: List[Note] = []
@@ -834,6 +943,7 @@ def compile_report(
     # The contents can only be written once every heading is known, so the
     # `::: toc` block leaves a marker and is filled in at the end.
     toc_placeholder = "<!--report:toc-->"
+    references_seen = False
 
     for block in blocks:
         hint = f"line {block.line}: " if block.line else ""
@@ -841,9 +951,10 @@ def compile_report(
         # citation inside one should still resolve.
         text = substitute_figrefs(block.text, figrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
-        # Notes last: a note may cite a measurement or point into the figure,
-        # and the marker it leaves behind is HTML neither of those two may walk
-        # into.
+        text = substitute_refcites(text, works, refcites, hint)
+        # Notes last: a note may cite a measurement, a work or point into the
+        # figure, and the marker it leaves behind is HTML none of those three
+        # may walk into.
         text = extract_notes(text, notes, hint)
 
         if block.kind == "markdown":
@@ -860,6 +971,14 @@ def compile_report(
 
         if block.name == "toc":
             parts.append(toc_placeholder)
+            continue
+
+        if block.name == "references":
+            if references_seen:
+                raise ReportError(f"{hint}the report already prints '::: references'")
+            references_seen = True
+            parts.append(inner)
+            parts.append(REFERENCES_PLACEHOLDER)
             continue
 
         spec = COMPONENTS.get(block.name)
@@ -888,8 +1007,20 @@ def compile_report(
         parts.append(_mount_html(mount, inner))
 
     sections = _tree(flat)
+    references = [entry for entry in (works.get(key) for key in refcites) if entry]
     html = place_notes("\n".join(parts), notes)
     html = html.replace(toc_placeholder, _toc_html(sections))
+    html = html.replace(REFERENCES_PLACEHOLDER, references_html(references))
     return Document(
-        front, html, sections, mounts, citations, source_path, figrefs, notes
+        front,
+        html,
+        sections,
+        mounts,
+        citations,
+        source_path,
+        figrefs,
+        notes,
+        refcites,
+        references,
+        references_seen,
     )

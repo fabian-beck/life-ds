@@ -425,12 +425,13 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which artifacts they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
 | Vocabulary | `concepts.py` | The concepts the report speaks in—source material, subjects, life events, the social network, geography and the rest—each with the interface's own Material Design icon, vendored as path data. |
 | Measurements | `facts.py` | Repository-scale numbers the prose cites—corpus size, component counts, test counts—each with the place it was measured. |
-| Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `::: component` mount points, callouts. |
+| Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `[@key]` reference citations, `::: component` mount points, callouts. |
+| Bibliography | `bibliography.py` | Parses `docs/report/references.bib`. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks, pairs each with the picture on disk, embeds it as a data URI and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
-`spec.py` and `report.md` are the only hand-maintained inputs.
+`spec.py`, `report.md` and `references.bib` are the only hand-maintained inputs.
 
 ### Keeping It Honest
 
@@ -441,12 +442,14 @@ model call site that **no step claims**. Adding a phase without documenting it
 is therefore an error rather than a silent omission.
 
 It also fails when the authored report no longer resolves: an unknown
-`{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure, a
-figure whose geometry is inconsistent, an unknown or misconfigured
+`{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure, an
+unknown `[@key]` reference or one split across two lines, a bibliography entry
+with no DOI, a figure whose geometry is inconsistent, an unknown or misconfigured
 `::: component`, a lane or script that no longer exists, a pipeline that no
 chart draws, or a declared screenshot with no picture on disk. A fact that is
-measured but never cited, a figure part no phrase references, and a screenshot
-whose declaration moved since it was taken are warnings rather than errors.
+measured but never cited, a reference declared but never cited, a figure part no
+phrase references, and a screenshot whose declaration moved since it was taken
+are warnings rather than errors.
 
 The check needs no API key, so it is safe to run anywhere. It is deliberately
 **not** part of `npm run validate`; run it after changing any generation script
@@ -465,7 +468,9 @@ name or file count belongs in it**—those are cited, so they cannot go stale.
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
 | `^[an explanation]` | An inline note. Brackets nest, `\^[` escapes the syntax, and the body is collapsed to one line, so a note is inline-level by construction. |
+| `[@key]`, `[@key; @other]` | A citation of published work from `docs/report/references.bib`, numbered by first use. An unknown key fails the build, and the whole bracket has to sit on one line. |
 | `::: toc` | The table of contents. |
+| `::: references` | The list of cited works, in citation order. |
 
 **Notes are authored once and read two ways.** The compiler emits the printed
 form—a numbered list closing the section that raised the note, with every marker
@@ -480,6 +485,14 @@ Use a note for something a specialist reader may want and the sentence cannot
 carry—a mechanism named in passing, a consequence of a decision, the reason a
 number means what it does. Anything the argument depends on belongs in the
 prose or in a callout.
+
+**Literature is cited like a measurement.** A work is described once in
+`docs/report/references.bib`, in ordinary BibTeX so the entry can be pasted into
+a paper unchanged, and the prose names it by key. Every entry carries a `doi`—an
+entry without one fails the build, because a reference the reader cannot resolve
+names a work without saying where it is. Numbering is positional, so inserting a
+citation renumbers the list without anyone editing a number, and an entry the
+report stopped citing is reported as drift.
 
 Adding a new *kind* of computed block means two edits: a `ComponentSpec` in
 `report.py` (its required arguments and how many captions it emits) and a

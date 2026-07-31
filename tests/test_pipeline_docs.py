@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from pipeline_docs import concepts  # noqa: E402
+from pipeline_docs import bibliography, concepts  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import render, report, screenshots  # noqa: E402
 from pipeline_docs import spec, teaser, validate  # noqa: E402
@@ -29,6 +29,7 @@ from pipeline_docs.introspect import scan_codebase, scan_script  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 
 REPORT_SOURCE = REPO_ROOT / "docs" / "report" / "report.md"
+REFERENCES = REPO_ROOT / "docs" / "report" / "references.bib"
 ASSETS = SCRIPTS_DIR / "pipeline_docs" / "assets"
 
 
@@ -725,6 +726,174 @@ class MarkdownCompilerTests(unittest.TestCase):
         self.assertNotIn("report:notes", document.html)
 
 
+class BibliographyTests(unittest.TestCase):
+    """A reference is only a reference if it resolves."""
+
+    SAMPLE = """
+@article{one,
+  author  = {Segel, Edward and Heer, Jeffrey},
+  title   = {Narrative Visualization},
+  journal = {IEEE TVCG},
+  volume  = {16},
+  number  = {6},
+  pages   = {1139--1148},
+  year    = {2010},
+  doi     = {10.1109/TVCG.2010.179}
+}
+
+@misc{two,
+  author = {Kr{\\"o}tzsch, Markus},
+  title  = {Something},
+  note   = {arXiv:1234.5678},
+  year   = {2023},
+  doi    = {10.48550/arXiv.1234.5678}
+}
+"""
+
+    def _parse(self) -> bibliography.Bibliography:
+        return bibliography.parse(self.SAMPLE, "sample.bib")
+
+    def test_entries_are_read_with_their_fields(self) -> None:
+        bib = self._parse()
+        self.assertEqual(sorted(bib.keys()), ["one", "two"])
+        entry = bib.get("one")
+        assert entry is not None
+        self.assertEqual(entry.kind, "article")
+        self.assertEqual(entry.doi, "10.1109/TVCG.2010.179")
+        self.assertEqual(entry.url, "https://doi.org/10.1109/TVCG.2010.179")
+        self.assertEqual(entry.venue(), "IEEE TVCG, 16(6), 1139–1148")
+
+    def test_names_become_initials_and_long_lists_are_cut(self) -> None:
+        self.assertEqual(
+            bibliography.format_names("Segel, Edward and Heer, Jeffrey"),
+            "E. Segel and J. Heer",
+        )
+        self.assertEqual(
+            bibliography.format_names("Henry Riche, Nathalie"), "N. Henry Riche"
+        )
+        self.assertEqual(
+            bibliography.format_names("Brown, Tom B. and Mann, Ben and others"),
+            "T. B. Brown et al.",
+        )
+
+    def test_bibtex_accents_are_decoded_for_the_page(self) -> None:
+        entry = self._parse().get("two")
+        assert entry is not None
+        self.assertEqual(entry.people(), "M. Krötzsch")
+
+    def test_a_folded_value_becomes_one_line(self) -> None:
+        bib = bibliography.parse(
+            "@misc{k,\n  title = {A very\n           long title},\n"
+            "  author = {Doe, Jane},\n  year = {2020},\n  doi = {10/x}\n}\n"
+        )
+        entry = bib.get("k")
+        assert entry is not None
+        self.assertEqual(entry.title(), "A very long title")
+
+    def test_an_entry_without_a_doi_is_an_error(self) -> None:
+        bib = bibliography.parse(
+            "@misc{k,\n title = {T},\n author = {Doe, Jane},\n year = {2020}\n}\n"
+        )
+        problems = bibliography.check(bib, ["k"])
+        self.assertIn(("error", "reference 'k' has no doi—every entry has to be "
+                       "resolvable, so add one or drop the entry"), problems)
+
+    def test_an_uncited_entry_is_reported_as_drift(self) -> None:
+        problems = bibliography.check(self._parse(), ["one"])
+        self.assertEqual(
+            problems, [("warning", "reference 'two' is declared but never cited")]
+        )
+
+    def test_a_duplicate_key_fails_the_parse(self) -> None:
+        with self.assertRaises(bibliography.BibliographyError):
+            bibliography.parse(self.SAMPLE + self.SAMPLE)
+
+    def test_the_shipped_bibliography_is_complete(self) -> None:
+        """The file the report ships with has to pass its own rules."""
+        bib = bibliography.load(REFERENCES)
+        self.assertTrue(bib.keys())
+        errors = [
+            message
+            for severity, message in bibliography.check(bib, bib.keys())
+            if severity == "error"
+        ]
+        self.assertEqual(errors, [])
+
+
+class ReferenceCitationTests(unittest.TestCase):
+    """`[@key]` is checked and numbered the way `{{ fact }}` is."""
+
+    HEAD = "---\ntitle: T\n---\n"
+    BIB = bibliography.parse(
+        "@misc{a, title = {A}, author = {Ada, Ann}, year = {2001}, doi = {10/a}}\n"
+        "@misc{b, title = {B}, author = {Bo, Ben}, year = {2002}, doi = {10/b}}\n"
+    )
+
+    def _compile(self, body: str) -> report.Document:
+        return report.compile_report(self.HEAD + body, _facts(), bib=self.BIB)
+
+    def test_citations_are_numbered_by_first_use(self) -> None:
+        document = self._compile(
+            "\n## S\n\nSecond [@b], first [@a], again [@b].\n\n::: references\n:::\n"
+        )
+        self.assertEqual(document.refcites, ["b", "a"])
+        self.assertEqual([entry.key for entry in document.references], ["b", "a"])
+        self.assertIn('<a href="#ref-1"', document.html)
+        self.assertIn('id="ref-2"', document.html)
+        self.assertEqual(document.html.count('href="#ref-1"'), 2)
+
+    def test_several_keys_share_one_bracket(self) -> None:
+        document = self._compile("\n## S\n\nBoth [@a; @b].\n\n::: references\n:::\n")
+        self.assertEqual(document.refcites, ["a", "b"])
+        self.assertIn(
+            '<span class="refcite">[<a href="#ref-1"', document.html.replace("\n", "")
+        )
+
+    def test_an_unknown_reference_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError) as caught:
+            self._compile("\n## S\n\nText [@nope].\n")
+        self.assertIn("nope", str(caught.exception))
+
+    def test_a_citation_split_across_lines_fails_the_build(self) -> None:
+        """Otherwise it renders as literal brackets in the middle of a sentence."""
+        with self.assertRaises(report.ReportError) as caught:
+            self._compile("\n## S\n\nText [@a;\n@b].\n")
+        self.assertIn("one line", str(caught.exception))
+
+    def test_citation_syntax_inside_a_fenced_block_is_left_alone(self) -> None:
+        document = self._compile("\n## S\n\n```text\n[@a]\n```\n")
+        self.assertIn("[@a]", document.html)
+        self.assertEqual(document.refcites, [])
+
+    def test_an_escaped_citation_prints_as_text(self) -> None:
+        document = self._compile("\n## S\n\nWrite \\[@a] to cite.\n")
+        self.assertIn("[@a]", document.html)
+        self.assertEqual(document.refcites, [])
+
+    def test_the_list_prints_the_entry_with_its_doi_as_a_link(self) -> None:
+        document = self._compile("\n## S\n\nText [@a].\n\n## R\n\n::: references\n:::\n")
+        self.assertTrue(document.prints_references)
+        self.assertIn('href="https://doi.org/10/a"', document.html)
+        self.assertIn("doi:10/a", document.html)
+
+    def test_a_note_may_cite_a_work(self) -> None:
+        document = self._compile(
+            "\n## S\n\nText.^[As shown [@a].]\n\n::: references\n:::\n"
+        )
+        self.assertEqual(document.refcites, ["a"])
+        self.assertIn('href="#ref-1"', document.notes[0].body_html)
+
+    def test_a_document_with_no_citations_prints_no_list(self) -> None:
+        document = self._compile("\n## S\n\nPlain.\n\n::: references\n:::\n")
+        self.assertEqual(document.references, [])
+        self.assertNotIn("reference-list", document.html)
+        self.assertNotIn("report:references", document.html)
+
+    def test_two_reference_blocks_fail_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            self._compile("\n## S\n\n::: references\n:::\n\n::: references\n:::\n")
+
+
 class ReportSourceTests(unittest.TestCase):
     """The real report has to resolve against the real code."""
 
@@ -767,16 +936,29 @@ class ReportSourceTests(unittest.TestCase):
         self.assertIn("4.1", subsections)
         self.assertIn("4.2", subsections)
 
+    def test_the_report_cites_work_and_prints_the_list(self) -> None:
+        self.assertTrue(self.document.refcites)
+        self.assertTrue(self.document.prints_references)
+        self.assertEqual(
+            [entry.key for entry in self.document.references], self.document.refcites
+        )
+        for entry in self.document.references:
+            self.assertTrue(entry.doi, f"{entry.key} has no doi")
+            self.assertIn(f'href="https://doi.org/{entry.doi}"', self.document.html)
+
     def test_the_prose_states_no_number_it_could_have_cited(self) -> None:
         """A transcribed count is the one thing this design exists to prevent.
 
         Directive lines are excluded: a screenshot's viewport and a route that
         names an event index are addresses the browser is given, not claims the
-        report makes, and they are read by nobody as prose.
+        report makes, and they are read by nobody as prose. Citation keys are
+        excluded for the same reason—`[@fruchterman1991graph]` names a work, and
+        the year inside the key is part of its address rather than a number the
+        report states.
         """
         source = REPORT_SOURCE.read_text(encoding="utf-8")
         body = "\n".join(
-            line
+            report.REFCITE.sub("", line)
             for line in report.split_front_matter(source)[1].splitlines()
             if not line.startswith(":::")
         )

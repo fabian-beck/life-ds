@@ -25,7 +25,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
-from . import concepts, screenshots, spec, teaser
+from . import bibliography, concepts, screenshots, spec, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
@@ -366,6 +366,7 @@ def check_report(
 
     problems.extend(_check_teaser(document, facts))
     problems.extend(_check_screenshots(document))
+    problems.extend(_check_references(document))
 
     missing_lanes = {spec.PERSON, spec.META} - lanes_drawn
     if missing_lanes:
@@ -422,6 +423,30 @@ def _check_teaser(document: Document, facts: Dict[str, Fact]) -> List[Problem]:
                         "references it",
                     )
                 )
+    return problems
+
+
+def _check_references(document: Document) -> List[Problem]:
+    """The prose and the `.bib` file have to describe the same set of works.
+
+    An unknown key already fails in the compiler, where the line number is. What
+    is left is the relation between the two: a citation with nowhere to point,
+    an entry the report never uses, and an entry that names a work without
+    saying where to resolve it.
+    """
+    problems: List[Problem] = []
+    if document.refcites and not document.prints_references:
+        problems.append(
+            Problem(
+                "error",
+                "report.md",
+                "the prose cites work, but no '::: references' block prints the list",
+            )
+        )
+    for severity, message in bibliography.check(
+        bibliography.default(), document.refcites
+    ):
+        problems.append(Problem(severity, "docs/report/references.bib", message))
     return problems
 
 
