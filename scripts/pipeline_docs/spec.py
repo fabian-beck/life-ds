@@ -16,6 +16,17 @@ deliberately absent: `generate_person.main` and `generate_meta_story.main` only
 call the steps in an order, and drawing them as nodes made the chart look like
 a chain when it is a fork.
 
+Only *direct* edges are declared. An edge that another chain of edges already
+implies—the image matching reads the event skeletons, but it is reached from
+them through the search planning and the search itself—says nothing the reader
+cannot follow along the strand, and drawing it doubled the lines crossing the
+chart. Such an edge is left out; the step's `summary` and `inputs` still record
+what it reads. Leaving one in changes no layer, since the longest path is
+unaffected, so `validate.py` reports it as a warning rather than an error, and
+naming the implying path lets a maintainer judge it. The chart re-derives the
+skipped connection whenever a filter hides the steps in between, so a strand
+never breaks.
+
 `Step.inputs` and `Step.outputs` are the files on disk. A file written by a step
 in the same pipeline is already implied by an edge; a file that arrives from the
 *other* pipeline is drawn as a source node, which is how the meta chart shows
@@ -395,11 +406,7 @@ STEPS: List[Step] = [
             "historic and modern place names, the people involved, sources, and a "
             "semantic icon. Individual failures do not abort the run."
         ),
-        depends_on=[
-            Dep("p_events_p1", "one event skeleton per call"),
-            Dep("p_wiki_select", "the per-event subset of related articles"),
-            Dep("p_db", "ADB biography text"),
-        ],
+        depends_on=[Dep("p_events_p1", "one event skeleton per call")],
         prompts=[
             "build_phase2_prompt_base",
             "build_phase2_prompt_classified",
@@ -420,10 +427,7 @@ STEPS: List[Step] = [
             "Turns the researched events into 3–5 chapters with headlines that "
             "read as a story arc rather than a date range."
         ),
-        depends_on=[
-            Dep("p_events_p1", "person metadata + skeletons"),
-            Dep("p_events_p2", "the merged, researched events"),
-        ],
+        depends_on=[Dep("p_events_p2", "the merged, researched events")],
         prompts=["build_chapter_generation_prompt", "call_openai_chapter_generation"],
     ),
     Step(
@@ -463,10 +467,7 @@ STEPS: List[Step] = [
             "preserving the attribution each file requires. The same call picks "
             "the person's reference portrait."
         ),
-        depends_on=[
-            Dep("p_img_fetch", "the filtered image candidates"),
-            Dep("p_events_p1", "event skeletons to match against"),
-        ],
+        depends_on=[Dep("p_img_fetch", "the filtered image candidates")],
         prompts=["match_images_to_events"],
     ),
     Step(
@@ -546,10 +547,7 @@ STEPS: List[Step] = [
             "Builds the person's relationship graph with typed, weighted and "
             "described ties—the input the meta story pipeline later merges."
         ),
-        depends_on=[
-            Dep("p_write", "the finished life events as context"),
-            Dep("p_wiki_select", "related articles"),
-        ],
+        depends_on=[Dep("p_write", "the finished life events as context")],
         prompts=["build_prompt", "call_openai"],
         inputs=["wiki_cache", "life_events"],
         outputs=["ego_network"],
@@ -587,10 +585,7 @@ STEPS: List[Step] = [
             "A critic pass over the generated data. Only high-confidence changes "
             "are applied automatically."
         ),
-        depends_on=[
-            Dep("p_write", "the written life events"),
-            Dep("p_network", "the ego network"),
-        ],
+        depends_on=[Dep("p_network", "the ego network")],
         prompts=["get_combined_review_prompt", "review_combined"],
         inputs=["life_events", "ego_network", "wiki_cache"],
         outputs=["life_events", "ego_network"],
@@ -604,10 +599,7 @@ STEPS: List[Step] = [
         "review_person.py",
         "review_style",
         summary="Checks color harmony and font pairing against the story's mood.",
-        depends_on=[
-            Dep("p_style", "the generated style config"),
-            Dep("p_write", "events, as the mood to check against"),
-        ],
+        depends_on=[Dep("p_style", "the generated style config")],
         prompts=["get_style_review_prompt", "review_style"],
         inputs=["person_styles", "life_events"],
         outputs=["person_styles"],
@@ -644,10 +636,7 @@ STEPS: List[Step] = [
             "result is overlaid on a copy of the English document, so dates, "
             "coordinates, URLs and IDs cannot drift."
         ),
-        depends_on=[
-            Dep("p_glossary", "the name mapping to apply"),
-            Dep("p_review", "the reviewed English documents"),
-        ],
+        depends_on=[Dep("p_glossary", "the name mapping to apply")],
         prompts=["_call_translation_model"],
         inputs=["life_events", "ego_network"],
         outputs=["person_de"],
@@ -694,10 +683,7 @@ STEPS: List[Step] = [
             "Judges each event against the theme in batches and records why it "
             "belongs, so a chapter is a claim rather than a date filter."
         ),
-        depends_on=[
-            Dep("m_p2", "the unfiltered event pool"),
-            Dep("m_p1", "the theme and subtopics to judge against"),
-        ],
+        depends_on=[Dep("m_p2", "the unfiltered event pool")],
         prompts=["_filter_event_batch"],
         calls_per_run="one per batch",
         skip_flag="--skip-ai-filtering",
@@ -713,10 +699,7 @@ STEPS: List[Step] = [
             "Re-fits the planned chapter boundaries to the events that actually "
             "survived curation."
         ),
-        depends_on=[
-            Dep("m_p1", "the proposed chapter ranges"),
-            Dep("m_p3", "the surviving events"),
-        ],
+        depends_on=[Dep("m_p3", "the surviving events")],
     ),
     Step(
         "m_p4",
@@ -862,7 +845,6 @@ STEPS: List[Step] = [
             "also drop people that do not earn their place."
         ),
         depends_on=[
-            Dep("m_p4", "chapters with their historical context"),
             Dep("m_p6", "the circle narration to rewrite"),
             Dep("m_p7c", "the map stops to curate"),
         ],

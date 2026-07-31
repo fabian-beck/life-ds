@@ -158,7 +158,12 @@ the longest chain of data dependencies reaching it, so steps drawn side by side
 are genuinely independent and may execute in either order. The two graphs
 together declare {{ pipeline.edges }} dependency edges, each labeled with the
 data that travels along it, and {{ pipeline.groups }} named concerns that the
-layout aligns into vertical strands.
+layout aligns into vertical strands. The edges are the direct ones only: a
+dependency that a longer chain already implies is omitted rather than drawn
+beside it.^[Image matching reads the event skeletons, but it is reached from
+them through the search planning and the search itself, and the second line
+said nothing the first did not. What such a step reads is still recorded in its
+own entry.]
 
 Each step in those figures is an address rather than a label. Opening one gives
 the record behind it: the function and line that implement it, the model and

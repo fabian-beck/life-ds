@@ -8,7 +8,9 @@ an error, not a silent omission.
 
 The dependency graph is checked too: an edge to an unknown step, or a cycle,
 would make the layered layout meaningless rather than merely wrong, so both are
-build errors.
+build errors. An edge that a longer chain already implies is a warning instead—
+it leaves every layer where it was and only crowds the figure with a line the
+reader could have followed along the strand.
 
 `check_report` extends the same principle to the authored half of the document.
 A component the page cannot hydrate, a lane or script that no longer exists, and
@@ -50,8 +52,34 @@ def _function_exists(codebase: Codebase, script: str, function: str) -> bool:
     return any(name.split(".")[-1] == function for name in facts.functions)
 
 
+def _implying_path(
+    edges: Dict[str, List[str]], start: str, goal: str
+) -> Optional[List[str]]:
+    """A route from `start` to `goal` that avoids the direct edge between them.
+
+    Its existence makes the direct edge redundant: the reader already reaches
+    `goal` by following the chart, so drawing the shortcut only adds a line.
+    Breadth-first, so the path reported is the shortest one and reads as the
+    argument for dropping the edge.
+    """
+    queue: List[List[str]] = [
+        [start, parent] for parent in edges.get(start, []) if parent != goal
+    ]
+    seen = {start, *(path[1] for path in queue)}
+    while queue:
+        path = queue.pop(0)
+        for parent in edges.get(path[-1], []):
+            if parent == goal:
+                return path + [goal]
+            if parent in seen:
+                continue
+            seen.add(parent)
+            queue.append(path + [parent])
+    return None
+
+
 def _check_graph() -> List[Problem]:
-    """Dangling edges, self-loops, cycles and cross-pipeline edges."""
+    """Dangling edges, self-loops, cycles, redundant edges and cross-pipeline ones."""
     problems: List[Problem] = []
     known = {step.id for step in spec.STEPS}
     edges: Dict[str, List[str]] = {}
@@ -93,6 +121,24 @@ def _check_graph() -> List[Problem]:
     for step_id in edges:
         if color[step_id] == WHITE:
             visit(step_id, [step_id])
+
+    # An edge another chain already implies changes no layer—the longest path is
+    # the same with or without it—so it is clutter rather than an error: two
+    # lines where the reader needed one. Naming the implying path lets the
+    # maintainer see what would carry the meaning instead.
+    for step_id, parents in edges.items():
+        for parent in parents:
+            path = _implying_path(edges, step_id, parent)
+            if path:
+                problems.append(
+                    Problem(
+                        "warning",
+                        f"step '{step_id}'",
+                        f"the edge from '{parent}' is already implied by "
+                        + " -> ".join(reversed(path))
+                        + "; drop it and let the summary carry the detail",
+                    )
+                )
 
     return problems
 

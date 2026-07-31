@@ -257,6 +257,44 @@ class DependencyGraphTests(unittest.TestCase):
         finally:
             step.depends_on = []
 
+    def test_no_edge_is_implied_by_a_longer_chain(self) -> None:
+        """A shortcut beside a strand is a second line saying the first thing."""
+        redundant = [
+            str(problem)
+            for problem in validate._check_graph()
+            if "already implied by" in problem.message
+        ]
+        self.assertEqual([], redundant)
+
+    def test_a_redundant_edge_is_reported_with_the_chain_that_implies_it(self) -> None:
+        step = next(item for item in spec.STEPS if item.id == "p_img_match")
+        original = list(step.depends_on)
+        step.depends_on = original + [spec.Dep("p_events_p1", "event skeletons")]
+        try:
+            messages = [
+                problem.message
+                for problem in validate._check_graph()
+                if "already implied by" in problem.message
+            ]
+            self.assertEqual(1, len(messages))
+            self.assertIn(
+                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_match",
+                messages[0],
+            )
+        finally:
+            step.depends_on = original
+
+    def test_removing_a_redundant_edge_leaves_every_layer_where_it_was(self) -> None:
+        """Why the reduction is safe: the longest path does not move."""
+        before = _layers()
+        step = next(item for item in spec.STEPS if item.id == "p_img_match")
+        original = list(step.depends_on)
+        step.depends_on = original + [spec.Dep("p_events_p1", "event skeletons")]
+        try:
+            self.assertEqual(before, _layers())
+        finally:
+            step.depends_on = original
+
     def test_no_orchestrator_is_documented_as_a_step(self) -> None:
         """`main` only sequences the steps; drawing it flattens the fork."""
         for step in spec.STEPS:

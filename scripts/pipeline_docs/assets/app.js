@@ -19,9 +19,11 @@
    The chart is a layered DAG, not a sequence. A step's layer is the longest
    path of real data dependencies reaching it, so steps drawn side by side are
    genuinely independent—the map branch and the network branch of the meta
-   story really do run without seeing each other. Files a step writes are drawn
-   inside its node; files that arrive from the other pipeline become source
-   nodes, since nothing in this chart produces them.
+   story really do run without seeing each other. Only edges the spec declares
+   directly are drawn—one a longer chain already implies is left out there, so
+   the chart never carries a line beside a strand that says the same thing.
+   Files a step writes are drawn inside its node; files that arrive from the
+   other pipeline become source nodes, since nothing in this chart produces them.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
    `spec.GROUPS` spends it on meaning. Steps of one concern—plan the image
