@@ -260,7 +260,7 @@ Two mechanisms keep that true, because the model reliably gets it wrong:
 - `normalize_icon()` (`scripts/icon_categories.py`) runs during generation and
   rewrites names that are provably wrong. The model is shown category keywords
   next to their icons and often returns the keyword prefixed with `mdi-`
-  (`mdi-lecture` instead of `mdi-school-outline`). Unrecognised `mdi-` names
+  (`mdi-lecture` instead of `mdi-school-outline`). Unrecognized `mdi-` names
   are passed through, not defaulted: MDI has ~7,400 icons and
   `ICON_CATEGORIES` names 68, so an unknown name is usually a real icon
   outside the vocabulary (`mdi-airplane`), and defaulting it would replace a
@@ -327,7 +327,7 @@ Python scripts use:
 ## Technical Report
 
 `docs/report/index.html` is a standalone, interactive technical report on the
-whole system: what it is for, how the data is modelled, both generation pipelines
+whole system: what it is for, how the data is modeled, both generation pipelines
 step by step—the model and reasoning effort each uses, the prompt it sends, the
 structured output it asks for, and, when a run has been recorded, the real
 prompts, responses, timings and token counts—plus the application, localization
@@ -338,7 +338,7 @@ It has two halves that never mix. The prose is authored by hand in
 [Authoring the Report](#authoring-the-report) below before editing either.
 
 The page is styled as an academic report: black on white, square corners, and
-colour reserved for the step kind alone. Both pipelines are drawn, as sections
+color reserved for the step kind alone. Both pipelines are drawn, as sections
 4.1 and 4.2 rather than as tabs, each with its own filters, search and selection;
 the step drawer is shared between them.
 
@@ -355,7 +355,7 @@ without creating a dependency, and drawing them made a fork look like a chain.
 The vertical axis is the dependency graph; the horizontal axis carries no graph
 meaning, so `spec.GROUPS` spends it on concerns. A group names steps that do one
 job across several layers—planning the image searches, running them, matching
-the results—and the layout aligns them and draws a labelled band behind them,
+the results—and the layout aligns them and draws a labeled band behind them,
 so the strand can be read straight down instead of being tracked as it drifts
 sideways. Grouping is presentation only: it never moves a layer.
 
@@ -372,11 +372,11 @@ column grid**:
 
 1. Blocks—one per group run, one per ungrouped node—are placed as rigid
    rectangles with a single x across every layer they cross. A leftmost packing
-   gives a feasible start; blocks are then relaxed towards the mean position of
-   their graph neighbours, each clamped to the room its neighbours in every layer
+   gives a feasible start; blocks are then relaxed toward the mean position of
+   their graph neighbors, each clamped to the room its neighbors in every layer
    it occupies actually leave. Feasibility is therefore invariant, and sparse
-   layers centre themselves under the layers they feed.
-2. Nodes are centred inside their block, which is what lines a group up: a run
+   layers center themselves under the layers they feed.
+2. Nodes are centered inside their block, which is what lines a group up: a run
    with one step per layer puts every step at the same x.
 
 Adding a group is a `spec.py` edit; `--check` rejects one that names an unknown

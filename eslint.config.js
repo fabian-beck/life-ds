@@ -92,7 +92,7 @@ export default [
       // geometry and decorative fills that are recomputed wholesale and never
       // reordered independently; for those the only available key is the
       // index, which reconciles exactly like no key at all. Requiring one
-      // would add ceremony without changing behaviour, and inventing a
+      // would add ceremony without changing behavior, and inventing a
       // non-unique key would turn a working render into a runtime error.
       "svelte/require-each-key": "off",
       // Reports "possibly" whenever a reactive block both reads and writes a

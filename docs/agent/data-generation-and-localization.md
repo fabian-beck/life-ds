@@ -327,7 +327,7 @@ Rebases old-schema translated files onto the current English structure, carries 
 
 ### German Is Generated Alongside English
 
-`generate_person.py` and `generate_meta_story.py` automatically translate to German as their final step (after review, so translations reflect the reviewed English text). Control this with `--translate-langs de,fr,...` or `--skip-translate`. Translation failures are non-fatal — the English reference stays complete and `--check` reports the gap. If you edit or re-review English data outside the pipeline, run `translate_all_persons.py --target-lang de` afterwards; fingerprint-based staleness detection ensures only affected documents are re-translated.
+`generate_person.py` and `generate_meta_story.py` automatically translate to German as their final step (after review, so translations reflect the reviewed English text). Control this with `--translate-langs de,fr,...` or `--skip-translate`. Translation failures are non-fatal — the English reference stays complete and `--check` reports the gap. If you edit or re-review English data outside the pipeline, run `translate_all_persons.py --target-lang de` afterward; fingerprint-based staleness detection ensures only affected documents are re-translated.
 
 ### Translation Rules
 
