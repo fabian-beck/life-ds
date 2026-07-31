@@ -18,6 +18,10 @@ Three rules make a reference an address rather than a gesture:
 Numbering is positional—first citation gets `[1]`—so the list at the end of the
 report is in the order a reader meets the works, and inserting a citation
 renumbers everything after it without anyone editing a number.
+
+None of that is an invitation to cite widely. The bibliography is meant to stay
+small: a work belongs here when a sentence would otherwise have to argue a point
+someone else has already settled, not when it is merely adjacent to the subject.
 """
 
 from __future__ import annotations

@@ -494,6 +494,14 @@ names a work without saying where it is. Numbering is positional, so inserting a
 citation renumbers the list without anyone editing a number, and an entry the
 report stopped citing is reported as drift.
 
+**Cite few works, and only load-bearing ones.** This is a technical report on
+one system, not a survey. A work belongs in the bibliography when a sentence
+would otherwise have to argue a point someone else has already settled—the genre
+the output belongs to, the design space a component sits in, the published
+algorithm a step implements. A broad reading list around the subject is worse
+than none: it invites the reader to follow references that do not repay the
+detour. When in doubt, leave it out.
+
 Adding a new *kind* of computed block means two edits: a `ComponentSpec` in
 `report.py` (its required arguments and how many captions it emits) and a
 renderer of the same name in `assets/app.js`. The two rosters are checked against
