@@ -1325,35 +1325,31 @@
           "”"
         : "Click any step for its prompt, output schema, dependencies and recorded calls.";
 
+      /* The caption says only what the drawing cannot: what the unlabelled
+         marks mean and what the figure does when it is touched. The layer
+         semantics and the branch structure belong to the authored prose above,
+         and repeating them here made the figure argue with the text. */
       const sourceCount = geometry.nodes.length - stepNodes.length;
       caption.innerHTML =
         "<b>Figure " +
         figureNumber +
         ".</b> " +
         escapeHtml(DATA.lanes[state.tab].label) +
-        " pipeline as a dependency graph—" +
+        " pipeline as a dependency graph, " +
         stepNodes.length +
         " steps in " +
         geometry.layers +
-        " layers, read top to bottom. An arrow means one step consumes what the " +
-        "step above it produced; a step's layer is the longest such chain " +
-        "reaching it, so steps drawn side by side are independent and could run " +
-        "in either order. " +
-        (geometry.bands.length
-          ? "A shaded band is one concern spread over several layers—its steps " +
-            "are lined up so the strand can be followed straight down; hover the " +
-            "band for what holds it together. "
-          : "") +
-        "Click a step to label its arrows with the data that " +
-        "travels along them. The colour bar gives the step kind, also written " +
-        "out under the step name; the lines at the foot of a node are the files " +
-        "it writes." +
+        " layers. " +
         (sourceCount
-          ? " Grey boxes are files this pipeline only reads—the other pipeline " +
-            "writes them—and dotted arrows carry them in."
+          ? "Grey boxes are files this pipeline only reads, written by the " +
+            "other one. "
           : "") +
-        " A dashed arrow means a filter has hidden an intermediate step and the " +
-        "dependency is drawn straight through it.";
+        (geometry.bands.length
+          ? "Hovering a shaded band names the concern its steps share. "
+          : "") +
+        "Selecting a step labels its arrows with the data that travels along " +
+        "them, and a dashed arrow stands for a dependency whose intermediate " +
+        "step the filters have hidden.";
     }
 
     /* ------------------------------------------------------------- mount */
@@ -1809,15 +1805,25 @@
 
   /* A numbered caption. Figures and tables are numbered in Python, in document
      order, so the number a component prints is the one the prose cites—a
-     caption can never drift out of step with a cross-reference. */
+     caption can never drift out of step with a cross-reference.
+
+     A caption states what the block is and then only what the block cannot
+     show for itself; whatever a legend, an axis or the prose above already
+     says is left out. Both parts are written as sentences, so the terminating
+     full stop is added here rather than trusted to every call site. */
   function caption(kind, number, title, sub) {
     return el("div", { class: "cap" }, [
       el("p", { class: "cap-title" }, [
         el("b", { text: kind + " " + number + "." }),
-        el("span", { text: " " + title }),
+        el("span", { text: " " + sentence(title) }),
       ]),
-      sub ? el("p", { class: "cap-sub", text: sub }) : null,
+      sub ? el("p", { class: "cap-sub", text: sentence(sub) }) : null,
     ]);
+  }
+
+  function sentence(text) {
+    const trimmed = String(text).trim();
+    return /[.!?]$/.test(trimmed) ? trimmed : trimmed + ".";
   }
 
   function dataTable(headers, rows) {
@@ -2020,7 +2026,9 @@
         caption(
           "Table",
           numbers.table,
-          "Every documented step of the " + laneLabel(params.lane) + " pipeline"
+          "Every documented step of the " +
+            laneLabel(params.lane).toLowerCase() +
+            " pipeline"
         )
       );
       mount.appendChild(
@@ -2068,7 +2076,9 @@
         caption(
           "Table",
           numbers.table,
-          "Files the " + laneLabel(params.lane) + " pipeline reads and writes"
+          "Files the " +
+            laneLabel(params.lane).toLowerCase() +
+            " pipeline reads and writes"
         )
       );
       mount.appendChild(
@@ -2144,14 +2154,13 @@
         el("p", {
           class: "cap-sub",
           text:
-            "From " +
+            "Measured from " +
             used
               .map((run) => {
                 return run.label + " (" + run.recorded_at + ")";
               })
               .join(", ") +
-            ". Times are wall-clock per API call; token counts come from the " +
-            "API's own usage reporting.",
+            ".",
         })
       );
 
@@ -2160,8 +2169,9 @@
           "Figure",
           numbers.figure,
           "API time per step, " + laneLabel(params.lane).toLowerCase(),
-          "Total seconds spent waiting on the model, summed over every call " +
-            "the step made. Longest first; colour is the step kind."
+          "A bar totals the wall-clock time of every call the step made, so a " +
+            "step that runs once per event is long by repetition rather than " +
+            "by latency"
         ),
         kindLegend(withStats),
       ]);
@@ -2188,8 +2198,8 @@
           "Figure",
           numbers.figure + 1,
           "Tokens per step, " + laneLabel(params.lane).toLowerCase(),
-          "Input and output tokens, stacked. Colour is the step kind as above; " +
-            "the solid segment is input and the pale one output."
+          "A bar totals the same calls, so a prompt that is re-sent for every " +
+            "event is counted once per call"
         ),
         el("div", { class: "legend" }, [
           el("span", { class: "item" }, [

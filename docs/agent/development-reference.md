@@ -452,6 +452,15 @@ Adding a new *kind* of computed block means two edits: a `ComponentSpec` in
 renderer of the same name in `assets/app.js`. The two rosters are checked against
 each other, so a block with no renderer fails the build.
 
+**Captions complement the figure, they do not describe it.** A caption names
+what the block is and then adds only what a reader cannot get from the drawing
+itself: what an unlabelled mark means, what the block does when it is touched,
+what a bar aggregates. Anything a legend, an axis, a node label or the prose
+above already states is left out—the pipeline figure does not re-explain the
+layer semantics of section 4, and the token figure does not restate its own
+legend. Captions are written as sentences; the terminating full stop is added
+by `caption()` in `assets/app.js`, so call sites need not repeat it.
+
 Adding a new citable number means one `Fact` in `facts.py`, measured from the
 repository rather than typed in.
 
