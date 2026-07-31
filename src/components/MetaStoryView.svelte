@@ -5,6 +5,7 @@
   import { fade } from "svelte/transition";
   import MetaStoryTimeline from "./MetaStoryTimeline.svelte";
   import MetaStoryBody from "./MetaStoryBody.svelte";
+  import MetaStoryOrnament from "./MetaStoryOrnament.svelte";
   import PersonCard from "./PersonCard.svelte";
   import ImageViewer from "./ImageViewer.svelte";
   import CloseButton from "./CloseButton.svelte";
@@ -15,6 +16,10 @@
     saveMetaStoryScroll,
   } from "../stores/metaStoryScroll.js";
   import { displayName } from "../utils/helpers.js";
+  import {
+    metaStoryStyle,
+    metaStoryStyleVars,
+  } from "../utils/metaStoryStyles.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -24,6 +29,13 @@
   export let isLoading = false;
 
   const personStyles = personStylesData.styles;
+
+  // The story's own visual identity — colors, fonts, and the SVG marks that
+  // punctuate its prose. Language-independent, so the same entry serves every
+  // translation. Stories without one keep the neutral editorial palette the
+  // stylesheet declares as fallbacks, and render no ornaments.
+  $: storyStyle = metaStoryStyle(metaStoryData?.meta_story?.id);
+  $: storyStyleVars = metaStoryStyleVars(storyStyle);
 
   // The story's own people — those with an individual story — resolved to
   // { id, name, aliases, color } so their names can be emphasized and linked
@@ -690,14 +702,29 @@
 {#if isLoading}
   <div class="loading">Loading meta story...</div>
 {:else if metaStoryData}
-  <div class="meta-story-view">
+  <div
+    class="meta-story-view"
+    class:styled={!!storyStyle}
+    style={storyStyleVars}
+  >
+    <!-- The story's color and pattern, painted behind the whole page rather
+         than behind the text column, so the article sits inside its own
+         atmosphere instead of on a tinted strip. -->
+    {#if storyStyle}
+      <div class="story-backdrop" aria-hidden="true"></div>
+    {/if}
+
     <!-- Sticky header - appears when scrolling down -->
     {#if showStickyHeader}
       <div class="sticky-header-group" transition:fade={{ duration: 200 }}>
         <header class="meta-sticky-header" bind:this={stickyHeaderElement}>
           <div class="sticky-compact-info">
             <span class="sticky-name">{metaStoryData.meta_story.title}</span>
-            <span class="separator">·</span>
+            {#if storyStyle?.separatorGlyphDataUrl}
+              <span class="separator glyph-separator" aria-hidden="true"></span>
+            {:else}
+              <span class="separator">·</span>
+            {/if}
             <span class="sticky-years">
               {metaStoryData.meta_story.date_range_start}–{metaStoryData
                 .meta_story.date_range_end}
@@ -740,12 +767,20 @@
           end: metaStoryData.meta_story.date_range_end,
         })}
       </p>
+      {#if storyStyle?.ornamentDataUrl}
+        <MetaStoryOrnament variant="rule" />
+      {/if}
       <MetaStoryBody
         blocks={openingBlocks}
         variant="opening"
         {...proseContext}
         onEnlarge={openEnlargedImage}
       />
+      <!-- The cold open and the description are two prose regions with no
+           subhead between them; the story's own glyph marks the break. -->
+      {#if storyStyle?.separatorGlyphDataUrl && openingBlocks.length && descriptionBlocks.length}
+        <MetaStoryOrnament />
+      {/if}
       <MetaStoryBody
         blocks={descriptionBlocks}
         {...proseContext}
@@ -872,6 +907,10 @@
           {...proseContext}
           onEnlarge={openEnlargedImage}
         />
+        <!-- End mark: the article's prose stops here, the cast follows. -->
+        {#if storyStyle?.ornamentDataUrl}
+          <MetaStoryOrnament variant="closing" />
+        {/if}
       </section>
     {/if}
 
@@ -931,6 +970,51 @@
     line-height: 1.75;
   }
 
+  /* A story with its own identity keeps the same four roles, but tinted
+     toward its primary color: the accent becomes the story's, and the three
+     inks pick up just enough of it that the page reads as one temperature
+     without losing the contrast running prose needs. The tint is deliberately
+     strongest on the muted tone (datelines, captions) and weakest on the
+     headline ink, which stays near-white. */
+  .meta-story-view.styled {
+    --ms-accent: var(--ms-primary, #38bdf8);
+    --ms-ink: color-mix(in srgb, var(--ms-primary, #38bdf8) 10%, #eef2f8);
+    --ms-body: color-mix(in srgb, var(--ms-primary, #38bdf8) 8%, #cbd5e1);
+    --ms-muted: color-mix(in srgb, var(--ms-primary, #38bdf8) 25%, #94a3b8);
+  }
+
+  /* The story's color and pattern, fixed behind the scrolling article. The
+     pattern is the same black-and-white tile the person stories use — tinted
+     by the primary color through multiply/overlay — but held far quieter and
+     faded toward the bottom of the viewport, because this page is a long
+     read rather than a full-screen slide. */
+  .story-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--ms-page-bg, transparent);
+  }
+
+  .story-backdrop::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--ms-primary, #38bdf8);
+    background-image: var(--ms-pattern-image, none);
+    background-size: 340px;
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    mix-blend-mode: overlay;
+    opacity: 0.24;
+    mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.35) 65%,
+      rgba(0, 0, 0, 0.15) 100%
+    );
+  }
+
   /* Sticky header group - wrapper for synchronized fade transition */
   .sticky-header-group {
     position: fixed;
@@ -960,6 +1044,19 @@
       rgba(15, 23, 42, 0.58);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  /* The masthead rides on the story's own background instead of the generic
+     slate, so it does not read as a foreign bar over a colored page. */
+  .styled .meta-sticky-header {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(0, 0, 0, 0.28) 100%
+      ),
+      rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.72);
+    border-bottom-color: color-mix(in srgb, var(--ms-accent) 30%, transparent);
   }
 
   .sticky-ai-button {
@@ -1011,6 +1108,17 @@
   .sticky-compact-info .separator {
     color: rgba(148, 163, 184, 0.8);
     flex: 0 0 auto;
+  }
+
+  /* The story's own glyph in place of the interpunct, as on the story slides. */
+  .glyph-separator {
+    display: inline-block;
+    width: 0.9em;
+    height: 0.9em;
+    background-image: var(--ms-glyph, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .sticky-years {
@@ -1087,6 +1195,26 @@
     padding-bottom: 0.5rem;
   }
 
+  /* In a styled story the subhead rule takes the story's color and the glyph
+     marks each section, so the same mark that separates prose also opens it. */
+  .styled h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom-color: color-mix(in srgb, var(--ms-accent) 40%, transparent);
+  }
+
+  .styled h2::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0.9em;
+    height: 0.9em;
+    background-image: var(--ms-glyph, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
   /* Chapters section - wrapper for heading and scroll proxy */
   .chapters-section {
     margin-bottom: 3rem;
@@ -1153,6 +1281,14 @@
     --card-bg-hover: rgba(30, 41, 59, 0.85);
     --card-border: rgba(148, 163, 184, 0.22);
     --card-border-hover: rgba(148, 163, 184, 0.45);
+  }
+
+  /* Only the frames pick up the story's color: the card surfaces have to stay
+     a step lighter than the page to read as objects, and what is inside them
+     already belongs to each person's own story. */
+  .styled .people-grid {
+    --card-border: color-mix(in srgb, var(--ms-accent) 25%, transparent);
+    --card-border-hover: color-mix(in srgb, var(--ms-accent) 50%, transparent);
   }
 
   /* Loading state */

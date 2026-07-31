@@ -87,8 +87,9 @@ A meta story is derived from finished biographies. The corpus is a graph: every
 life is reachable from each theme it joins.
 
 @own-look Every story looks like itself
-Palette, typography and pattern are generated per subject and carried in the
-data, so visual identity travels with the artifact.
+Palette, typography and pattern are generated per story—for a life and for a
+theme alike—and carried in the data, so visual identity travels with the
+artifact.
 :::
 
 ## Architecture
@@ -395,6 +396,14 @@ about where the theme was located.
 
 ::: screenshot id=meta-timeline route=#/en/meta/computing_pioneers width=1280 height=820 wait=".chapters-section" anchor=".chapters-section" scroll=2000 settle=5000 caption="The timeline section of a meta story, pinned while its narration scrolls: one lane per subject, grouped into the chapters the composition names, with the events of each life marked on it"
 :::
+
+A theme is presented in a visual register of its own as well ((own-look)), and
+because it is read as an article rather than as a sequence of slides, its
+identity carries something a biography's does not: two generated marks that
+punctuate prose. A glyph stands between two prose regions and before each
+subhead; a wider ornamental rule opens the article under its dateline and
+closes its last paragraph. The typographic apparatus of a printed feature is
+thus itself derived from the theme.
 
 The closing card grid links to the individual stories of every person the
 theme is built from, and each person's story links back. The two story types

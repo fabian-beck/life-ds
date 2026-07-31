@@ -218,6 +218,10 @@ test("core visitor journey", async ({ page }, testInfo) => {
     page.getByRole("button", { name: "Back to Stories" }).first()
   ).toBeVisible();
 
+  // The article wears the story's own identity: colors and fonts from
+  // meta_story_styles.json, plus the ornamental rule under the dateline.
+  await expect(page.locator(".meta-story-view.styled")).toBeVisible();
+
   // The social network graph draws each main person as an SVG <image>, the one
   // portrait in the app that is not an <img>. Scrolling it into view makes the
   // response listener see those requests.

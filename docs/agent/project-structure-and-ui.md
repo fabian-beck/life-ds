@@ -18,13 +18,16 @@ life-ds/
 │       ├── MetaStoryMap.svelte # Scrollytelling map for meta stories
 │       ├── PersonChip.svelte # Inline person chip (slides, tooltips)
 │       ├── PersonCard.svelte # Portrait card linking to a person's story
+│       ├── MetaStoryOrnament.svelte # Meta story rule/divider/end mark (SVG)
 │       └── ImageViewer.svelte # Lightbox for event images
 │   └── utils/
 │       ├── storyHelpers.js   # Dates, images, event/person helpers
+│       ├── metaStoryStyles.js # Resolves a meta story's style to CSS variables
 │       └── personNames.js    # Finds person names in prose (highlighting)
 ├── data/
 │   ├── persons.json         # Master person registry
 │   ├── person_styles.json   # Visual styles registry
+│   ├── meta_story_styles.json # Per-meta-story colors, fonts, SVG marks
 │   └── people/
 │       └── {person_id}/
 │           ├── life_events.json
@@ -42,7 +45,8 @@ life-ds/
 │   ├── translate_person.py          # Translation core + translate single person
 │   ├── translate_all_persons.py     # Batch translate persons + meta stories, --check
 │   ├── translate_meta_story.py      # Translate meta stories
-│   ├── generate_meta_story.py       # Meta story workflow (1 plan, 2 collect, 3 curate, 3b fit chapters, 4 context, 5 network, 5b review, 6 narration, 7 map, 8 composer)
+│   ├── generate_meta_story.py       # Meta story workflow (1 plan, 2 collect, 3 curate, 3b fit chapters, 4 context, 5 network, 5b review, 6 narration, 7 map, 8 composer, 9 style)
+│   ├── generate_meta_story_style.py # Phase 9: a meta story's colors, fonts and SVG marks
 │   ├── meta_story_network.py        # Derive meta story social network from ego networks (no AI)
 │   ├── meta_story_network_review.py # Phase 5b: AI review/enrich/prune of the derived network
 │   ├── compose_meta_story.py        # Phase 8: story composer — caption layer + article layer
@@ -81,9 +85,16 @@ Person-specific styles are injected as CSS variables:
 --body-font: 'IBM Plex Sans', sans-serif
 ```
 
+Meta stories carry their own identity in `meta_story_styles.json`, resolved by
+`src/utils/metaStoryStyles.js` into `--ms-*` variables (plus `--heading-font`
+and `--body-font`) on the article container. Beyond colors and fonts it holds
+two SVG marks that punctuate the prose — a separator glyph and an ornamental
+rule — rendered by `MetaStoryOrnament.svelte`. See [Domain and data
+models](domain-and-data-models.md) for the schema and where each mark appears.
+
 ### Background Patterns
 
-Each person has a custom SVG pattern (stored inline in `person_styles.json`). These are converted to data URLs and applied as CSS background images.
+Each person has a custom SVG pattern (stored inline in `person_styles.json`). These are converted to data URLs and applied as CSS background images. A meta story's pattern works the same way, but is printed far more faintly: it sits behind a page of running text rather than behind full-screen slides.
 
 ### Font Loading
 

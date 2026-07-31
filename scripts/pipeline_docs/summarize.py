@@ -106,9 +106,22 @@ def _schema_block(codebase: Codebase, step: spec.Step) -> str:
 
 
 def _prompt_block(codebase: Codebase, step: spec.Step) -> str:
+    """The prompt templates a step is built from, its own script first.
+
+    Builder names repeat across the generators—several scripts have a
+    `build_prompt` and a `call_openai`—so a plain scan of every script would
+    hand a step whichever namesake happened to be parsed first, and adding a
+    script could silently re-document an unrelated step. Only when the step's
+    own script does not define the symbol is it looked for elsewhere, which is
+    what a step that names a helper from another module means.
+    """
+    own = codebase.scripts.get(step.script.rsplit("/", 1)[-1])
+    ordered = [own] if own else []
+    ordered += [facts for facts in codebase.scripts.values() if facts is not own]
+
     chunks: List[str] = []
     for symbol in step.prompts:
-        for facts in codebase.scripts.values():
+        for facts in ordered:
             prompt = facts.prompts.get(symbol)
             if prompt is None:
                 continue

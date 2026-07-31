@@ -249,8 +249,14 @@ def sanitise_pattern_svg(svg: str) -> str:
     return compact_svg(sanitised)
 
 
-def sanitise_separator_glyph_svg(svg: str, primary_color: str) -> str:
-    """Sanitise and normalize separator glyph SVG, replacing color placeholders with the actual primary color."""
+def sanitise_separator_glyph_svg(
+    svg: str, primary_color: str, *, default_view_box: str = "0 0 32 32"
+) -> str:
+    """Sanitise and normalize separator glyph SVG, replacing color placeholders with the actual primary color.
+
+    `default_view_box` only fills in a missing one; a wider mark—the meta
+    story's ornamental rule—declares its own.
+    """
     try:
         root = ET.fromstring(svg)
     except ET.ParseError as exc:
@@ -263,7 +269,7 @@ def sanitise_separator_glyph_svg(svg: str, primary_color: str) -> str:
 
     # Normalize viewBox if not present
     if "viewBox" not in root.attrib:
-        root.set("viewBox", "0 0 32 32")
+        root.set("viewBox", default_view_box)
 
     for element in root.iter():
         # Promote inline style declarations to attributes

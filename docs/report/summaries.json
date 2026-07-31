@@ -198,6 +198,20 @@
         "why_this_design": "Directory creation happens before opening the output file, allowing a fresh or partially initialized workspace to save stories without a separate setup step. Broad exception handling prevents filesystem or serialization failures from crashing the pipeline, while still emitting an error message."
       }
     },
+    "m_style": {
+      "fingerprint": "8a0a52a9e6e17fa7",
+      "summary": {
+        "constraints": [
+          "Returns strict JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, heading_font, and body_font.",
+          "primary, secondary, and background must be #RRGGBB; background luminance must be under \"0.18,\" and the primary must remain a legible light text accent.",
+          "background_pattern_svg must be a seamless \"160x160\" abstract geometric tile using only #000000 and #FFFFFF—no gray values or opacity attributes—and must remain calm behind running text.",
+          "separator_glyph_svg uses a \"32x32\" viewBox and at most \"2-3\" simple shapes; ornament_svg uses a \"0 0 240 24\" viewBox, is horizontally symmetric, and combines a hairline rule with a related central motif."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Asks a model to create a dark-mode editorial identity for a theme-centered, long-form meta story, including a color palette, background tile, separator glyph, ornamental rule, and paired display/body fonts. The generated system is intended to unify prose with the timeline, network, and map that appear between article sections, while deriving its geometric language from the theme and its date range rather than from an individual biography.",
+        "why_this_design": "The background tile is restricted to pure black and white with no SVG opacity, separating the pattern's structural definition from its eventual faint presentation—likely allowing the interface to control its visibility consistently. The two punctuation assets share a motif, and both are recolored to the primary color at render time, preserving a coherent identity across small separators and the full-width article rule."
+      }
+    },
     "m_translate": {
       "fingerprint": "c79e6a3b7805a2f6",
       "summary": {
@@ -342,14 +356,14 @@
       "fingerprint": "c80ec6115f8a5986",
       "summary": {
         "constraints": [
-          "Returns \"10-25\" significant connections, each person appearing \"ONLY ONCE.\"",
-          "Uses exactly \"3-5\" main categories; every tie is formatted as `category/subcategory`, and category summaries begin with family when present.",
-          "Includes both parents when available, and seeks gender and work-life balance only where source evidence supports it.",
-          "Uses American English; `end_year` is null when ongoing or unknown; strength, frequency, and influence direction must use the specified enumerated values."
+          "Output must use American English.",
+          "Include \"10-25\" significant connections, and each person may appear only once.",
+          "Use exactly \"3-5\" main relationship categories; each tie must be formatted as \"category/subcategory,\" and category summaries must begin with family when present.",
+          "Connections must be supported by Wikipedia URLs; include both parents when available, seek gender and work-life balance when evidence permits, and do not inflate the network beyond documented relationships."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Transforms the subject’s Wikipedia extract and related-article context into a structured ego-network dataset for the personal-story pipeline. The model identifies 10-25 evidence-backed people connected to the subject, assigns each a typed and weighted tie with timing, direction, interaction frequency, shared activities, source URLs, and optional notes, then returns central-person metadata and summaries of the relationship categories represented. The API response is parsed directly into the `EgoNetwork` Pydantic schema and serialized to a dictionary for later graph merging.",
-        "why_this_design": "The prompt limits the graph to a small set of main categories while requiring one record per connected person, preventing the same individual from fragmenting into multiple role-specific nodes. Its balance rules encourage family, personal, and professional coverage without overriding the evidence threshold, so sparse Wikipedia material does not produce artificially diverse or inflated networks."
+        "what_it_does": "Builds a structured ego-network dataset from a subject’s Wikipedia article and related Wikipedia articles. The model identifies 10-25 evidence-backed people connected to the subject, assigns each a typed and weighted relationship, and records timing, interaction patterns, direction of influence, shared contexts, source URLs, and optional notes. It also produces central-person metadata and short summaries of the relationship categories for later merging into the personal-story pipeline.",
+        "why_this_design": "The prompt combines the primary article—truncated at 15,000 characters when necessary—with related articles, expanding relationship evidence without allowing the main-page context to grow without bound. Structured parsing into the EgoNetwork Pydantic schema, plus explicit checks for failed, incomplete, or unparseable Responses API results, prevents malformed model output from silently entering downstream story generation."
       }
     },
     "p_portrait": {
@@ -409,17 +423,17 @@
       }
     },
     "p_style": {
-      "fingerprint": "02050e21ad69ed54",
+      "fingerprint": "6594aa9db0200f3f",
       "summary": {
         "constraints": [
-          "Output text must be in American English.",
-          "The model is instructed to return strict JSON, and the API enforces `text.format.type: \"json_object\"`.",
-          "Only responses with status `\"completed\"` and nonempty `output_text` are accepted.",
-          "Missing `OPENAI_API_KEY`, API-status errors, failed responses, unexpected statuses, and empty responses raise `RuntimeError`."
+          "Returns strict JSON parsed with `json.loads`, requesting `primary`, `secondary`, `background`, `background_pattern_svg`, `separator_glyph_svg`, `heading_font`, and `body_font`.",
+          "`primary`, `secondary`, and `background` must use `#RRGGBB`; the background’s perceived luminance must be under `0.18`.",
+          "The pattern must be a tileable `160x160` SVG using only `#000000` and `#FFFFFF`—no gray, gradients, opacity attributes, or non-geometric/figurative imagery.",
+          "The separator glyph should use only the primary color, fit a roughly `32x32` viewBox, contain at most `2-3` simple geometric shapes, and remain non-directional and readable at `16-24px`."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Calls the Responses API with a senior data-storytelling brand-designer system instruction and the supplied person-story prompt, requesting a JSON object. The intended role is to derive a visual color and typography system from the subject’s era and field, but the displayed prompt template is materially mismatched: it is labeled `generate_person_network.py` and asks for a Wikipedia-based ego network rather than interface-style attributes. The function parses the model’s JSON directly into a dictionary for downstream use.",
-        "why_this_design": "The request uses the Responses API with configurable reasoning effort and JSON-object mode, separating design-oriented system guidance from the injected story context. It explicitly checks failed, incomplete, and empty API responses before JSON parsing, so downstream steps do not silently receive absent model output; however, it does not validate the returned dictionary against a style schema, leaving the prompt/source mismatch undetected."
+        "what_it_does": "Asks a GPT-5.1 Responses API call to create a dark-mode interface identity for a biographical data story, using the subject identifier and requested subject as context. The requested JSON supplies three colors, a repeating background-pattern SVG, a small separator-glyph SVG, and heading/body font choices intended to evoke the person’s era, field, personality, and contributions.",
+        "why_this_design": "The background pattern is limited to opaque black and white while the separator may use the generated primary color. This preserves a high-contrast, tile-safe decorative layer without consuming the palette or relying on opacity, while allowing the foreground identity to remain person-specific."
       }
     },
     "p_translate": {

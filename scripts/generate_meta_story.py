@@ -1835,6 +1835,11 @@ def main():
         help="Skip Phase 7 (geographic map section)",
     )
     parser.add_argument(
+        "--skip-style",
+        action="store_true",
+        help="Skip Phase 9 (the story's visual identity)",
+    )
+    parser.add_argument(
         "--skip-translate",
         action="store_true",
         help="Skip automatic translation after generation",
@@ -2053,6 +2058,23 @@ def main():
 
     if not update_meta_stories_registry(story_id, dataset, verbose=args.verbose):
         sys.exit(1)
+
+    # Phase 9: the story's visual identity — colors, fonts, and the SVG marks
+    # its prose is punctuated with. Reads the saved story, so it runs after the
+    # save. Non-fatal: without an entry the article falls back to the neutral
+    # editorial palette.
+    if args.skip_style:
+        if args.verbose:
+            print("\n=== PHASE 9: Story Style (SKIPPED) ===")
+    else:
+        if args.verbose:
+            print("\n=== PHASE 9: Story Style ===")
+        from generate_meta_story_style import generate_style as generate_story_style
+
+        try:
+            generate_story_style(story_id, model=args.model, verbose=args.verbose)
+        except Exception as e:
+            print(f"Warning: style generation failed: {e}")
 
     # Translate the meta story so language versions stay in sync with English.
     # Translation failures are non-fatal: the English reference is complete and

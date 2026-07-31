@@ -9,6 +9,7 @@ English detail file and registry entry:
 - the English detail file (``data/meta_stories/{id}.json``)
 - every translated detail file (``data/meta_stories/{lang}/{id}.json`` — not
   ``data/meta_stories/{id}/``, which is not how translations are stored)
+- the story's visual identity (``data/meta_story_styles.json``)
 
 Registries are written before any files are deleted, so a mid-operation
 failure leaves the data files intact (recoverable) rather than silently
@@ -24,6 +25,7 @@ from typing import Any, Dict, List, Optional
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 META_STORIES_REGISTER = DATA_DIR / "meta_stories.json"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
+META_STORY_STYLES = DATA_DIR / "meta_story_styles.json"
 
 
 def _load_json(path: Path) -> Optional[Dict[str, Any]]:
@@ -123,6 +125,12 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
 
     detail_files = _find_detail_files(story_id)
 
+    styles = _load_json(META_STORY_STYLES)
+    has_style = (
+        isinstance((styles or {}).get("styles"), dict)
+        and story_id in (styles or {})["styles"]
+    )
+
     print(f"\nRegistries referencing '{story_id}':")
     for path in registries:
         marker = "yes" if path in registry_entries else "no"
@@ -131,6 +139,11 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
     print(f"\nDetail files to delete: {len(detail_files)}")
     for f in detail_files:
         print(f"  - {f.relative_to(DATA_DIR)}")
+
+    print(
+        f"\nVisual identity in {META_STORY_STYLES.name}: "
+        + ("yes" if has_style else "no")
+    )
 
     if not detail_files:
         print(f"Warning: No detail files found for meta-story '{story_id}'")
@@ -152,6 +165,17 @@ def remove_meta_story(story_id: str, *, dry_run: bool = False) -> bool:
             print(f"  Updated {path.relative_to(DATA_DIR)}")
         except Exception as error:
             print(f"Error: Failed to write {path}: {error}", file=sys.stderr)
+            return False
+
+    if has_style and styles is not None:
+        del styles["styles"][story_id]
+        try:
+            _save_json(META_STORY_STYLES, styles)
+            print(f"  Updated {META_STORY_STYLES.relative_to(DATA_DIR)}")
+        except Exception as error:
+            print(
+                f"Error: Failed to write {META_STORY_STYLES}: {error}", file=sys.stderr
+            )
             return False
 
     for f in detail_files:

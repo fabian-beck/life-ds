@@ -328,6 +328,14 @@ ARTIFACTS: List[Artifact] = [
         concept="theme",
     ),
     Artifact(
+        "meta_story_styles",
+        "Meta story style",
+        "data/meta_story_styles.json",
+        "registry",
+        "Per-story colors, fonts and the SVG marks that punctuate its prose.",
+        concept="identity",
+    ),
+    Artifact(
         "meta_registry",
         "Meta story registry",
         "data/meta_stories.json",
@@ -886,6 +894,24 @@ STEPS: List[Step] = [
         summary="Writes the story document and updates the landing-page registry.",
         depends_on=[Dep("m_p8", "the composed story document")],
         outputs=["meta_story", "meta_registry"],
+    ),
+    Step(
+        "m_style",
+        "Generate story style",
+        META,
+        AI,
+        "generate_meta_story_style.py",
+        "call_openai",
+        summary=(
+            "Derives the article's color, type and ornament system from the "
+            "theme itself—including the separator glyph and the ornamental "
+            "rule its prose is punctuated with."
+        ),
+        depends_on=[Dep("m_save", "the saved story's framing and opening")],
+        prompts=["build_prompt", "call_openai"],
+        inputs=["meta_story"],
+        outputs=["meta_story_styles"],
+        skip_flag="--skip-style",
     ),
     Step(
         "m_translate",

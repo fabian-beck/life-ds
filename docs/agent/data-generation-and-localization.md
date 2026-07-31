@@ -109,6 +109,20 @@ This script acts as an AI-powered constructive critic to review and improve the 
 python scripts/remove_person.py "Ada Lovelace"
 ```
 
+**Restyle a meta story** (Phase 9 of `generate_meta_story.py`, standalone):
+
+```bash
+python scripts/generate_meta_story_style.py computing_pioneers --verbose
+python scripts/generate_meta_story_style.py computing_pioneers --dry-run
+```
+
+Writes one entry in `data/meta_story_styles.json`: the article's colors and
+fonts plus the SVG marks that punctuate its prose — a separator glyph and an
+ornamental rule. See [Domain and data
+models](domain-and-data-models.md) for the schema. Skip the phase inside the
+full workflow with `--skip-style`; it is non-fatal, and a story without an
+entry falls back to the neutral editorial palette.
+
 **Generate stylized portrait** (optional):
 
 ```bash
