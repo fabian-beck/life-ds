@@ -452,8 +452,9 @@ The list is short by intent. A work is cited where the report would otherwise
 have to argue a point someone else has already settled—the genre this system's
 output belongs to, the nearest system to it, the design space its timeline is a
 point in, the algorithm its circle detection implements—and nowhere else.
-Entries follow Chicago and name every author: a list that hides seven of ten
-people saves a line and costs them the credit. Every entry carries a DOI, so the
-build can refuse a reference the reader would not be able to resolve.
+Entries follow IEEE, with one departure: every author is named, where the style
+would cut a list of more than six to the first name. A list that hides seven of
+ten people saves a line and costs them the credit. Every entry carries a DOI, so
+the build can refuse a reference the reader would not be able to resolve.
 :::
 

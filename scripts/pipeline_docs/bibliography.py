@@ -15,12 +15,13 @@ Three rules make a reference an address rather than a gesture:
 * A citation with no entry fails the build, like an unknown fact.
 * An entry nothing cites is reported as drift, like a measurement nobody quotes.
 
-Entries are printed in Chicago's bibliography form—author block, title in
-quotation marks, italicized journal or proceedings, volume and issue, condensed
-page range, and the DOI as a resolvable URL—with every author named. Numbering
-is positional—first citation gets `[1]`—so the list at the end of the report is
-in the order a reader meets the works, and inserting a citation renumbers
-everything after it without anyone editing a number.
+Entries are printed in IEEE form—initialed author block, title in quotation
+marks, italicized journal or proceedings, `vol.`, `no.`, `pp.`, year, and the
+DOI—with one departure: every author is named, where IEEE would cut a list of
+more than six to `et al.` Numbering is positional—first citation gets `[1]`—so
+the list at the end of the report is in the order a reader meets the works, and
+inserting a citation renumbers everything after it without anyone editing a
+number.
 
 None of that is an invitation to cite widely. The bibliography is meant to stay
 small: a work belongs here when a sentence would otherwise have to argue a point
@@ -85,14 +86,14 @@ class Reference:
         if self.fields.get("author"):
             return format_names(self.fields["author"])
         if self.fields.get("editor"):
-            return f"{format_names(self.fields['editor'])}, eds."
+            return f"{format_names(self.fields['editor'])}, Eds."
         return ""
 
     def title(self) -> str:
         return self.fields.get("title", "")
 
     def segments(self) -> List[Tuple[str, str]]:
-        """The entry as Chicago prints it, in runs of `(role, text)`.
+        """The entry as IEEE prints it, in runs of `(role, text)`.
 
         Each run carries its own punctuation and spacing, so the page and the
         plain text are assembled by concatenation and cannot disagree: what a
@@ -104,101 +105,78 @@ class Reference:
         runs: List[Tuple[str, str]] = []
         people = self.people()
         if people:
-            runs.append(("people", f"{_close(people)} "))
+            runs.append(("people", f"{people}, "))
         if self.title():
-            runs.append(("title", f"“{_close(self.title())}” "))
+            runs.append(("title", f"{_quoted(self.title())} "))
 
         journal = self.fields.get("journal", "")
         booktitle = self.fields.get("booktitle", "")
-        year = self.fields.get("year", "")
-        located = _located(self.fields)
 
         if journal:
             runs.append(("container", journal))
-            detail = _volume(self.fields)
-            if year:
-                detail += f" ({year})"
-            detail += f": {located}." if located else "."
-            runs.append(("detail", f"{detail} "))
+            locus = self._locus()
         elif booktitle:
-            runs.append(("plain", "In "))
+            runs.append(("plain", "in "))
             runs.append(("container", booktitle))
-            tail = f", {located}." if located else "."
-            imprint = ", ".join(
-                part for part in (self.fields.get("publisher", ""), year) if part
-            )
-            runs.append(("detail", f"{tail} {imprint}. " if imprint else f"{tail} "))
+            locus = self._locus(named=booktitle)
         else:
-            # A book or a preprint: the title itself is the italicized work.
+            # A book or a preprint: the work itself is what is italicized, and
+            # it is the one case that names an imprint.
             if runs and runs[-1][0] == "title":
-                runs[-1] = ("container", f"{_close(self.title())} ")
-            imprint = ", ".join(
-                part
-                for part in (
-                    self.fields.get("publisher", ""),
-                    self.fields.get("note", ""),
-                    year,
-                )
-                if part
-            )
-            if imprint:
-                runs.append(("detail", f"{imprint}. "))
+                runs[-1] = ("container", self.title())
+            locus = self._locus(imprint=True)
+        if locus:
+            runs.append(("detail", f", {locus}, "))
 
         if self.url:
-            # The closing period belongs to the entry, not to the address, so it
-            # is a run of its own and stays outside the link.
-            runs.append(("doi", self.url))
+            # The identifier is the link; the closing period belongs to the
+            # entry rather than to the address, so it stays outside it.
+            runs.append(("plain", "doi: "))
+            runs.append(("doi", self.doi))
             runs.append(("plain", "."))
         return runs
+
+    def _locus(self, named: str = "", imprint: bool = False) -> str:
+        """Volume, issue, pages and year—the part that says where to look.
+
+        `named` is a container whose own title already carries the year, as a
+        proceedings volume usually does. Printing it twice is what a BibTeX
+        style does because it cannot read the title; here it can.
+        """
+        parts: List[str] = []
+        volume = self.fields.get("volume", "")
+        number = self.fields.get("number", "")
+        year = self.fields.get("year", "")
+        if volume:
+            parts.append(f"vol. {volume}")
+        if number:
+            parts.append(f"no. {number}")
+        if self.fields.get("articleno"):
+            parts.append(f"Art. no. {self.fields['articleno']}")
+        elif self.fields.get("pages"):
+            parts.append(f"pp. {self.fields['pages'].replace('--', '–')}")
+        if imprint and self.fields.get("publisher"):
+            parts.append(self.fields["publisher"])
+        if self.fields.get("note"):
+            parts.append(self.fields["note"])
+        if year and year not in named:
+            parts.append(year)
+        return ", ".join(parts)
 
     def describe(self) -> str:
         """The whole entry as plain text, for tooltips and error messages."""
         return "".join(text for _, text in self.segments()).strip()
 
 
-def _close(text: str) -> str:
-    """Close a run with a period, unless it already ends in one."""
-    return text if text.endswith((".", "?", "!")) else f"{text}."
+def _quoted(title: str) -> str:
+    """`Title` becomes `“Title,”`—the comma inside the closing quotation mark.
 
-
-def _volume(fields: Dict[str, str]) -> str:
-    volume = fields.get("volume", "")
-    number = fields.get("number", "")
-    if volume and number:
-        return f" {volume}, no. {number}"
-    return f" {volume}" if volume else ""
-
-
-def _located(fields: Dict[str, str]) -> str:
-    """Where in the volume: an article number, or a condensed page range."""
-    if fields.get("articleno"):
-        return fields["articleno"]
-    return condense_pages(fields.get("pages", ""))
-
-
-def condense_pages(pages: str) -> str:
-    """Abbreviate an inclusive page range the way Chicago does.
-
-    1139--1148 prints as 1139–48, 156--160 as 156–60, but 31--38 keeps both
-    numbers. The rule (CMOS 9.61) turns on the first number: below 100 or an
-    exact multiple of 100 it is spelled out in full; ending 01 through 09 it
-    drops to whatever digits changed; otherwise it keeps two digits, or more
-    when two would not carry the reader across the hundred.
+    A title that ends in its own terminal punctuation keeps it instead: `“Why
+    Not?”` rather than `“Why Not?,”`.
     """
-    parts = [part for part in re.split(r"-+|–", pages) if part]
-    if len(parts) != 2 or not all(part.isdigit() for part in parts):
-        return pages.replace("--", "–")
-    first, second = parts
-    start = int(first)
-    if start < 100 or start % 100 == 0 or len(first) != len(second):
-        return f"{first}–{second}"
-    shared = 0
-    while shared < len(first) and first[shared] == second[shared]:
-        shared += 1
-    changed = second[shared:] or second[-1:]
-    if start % 100 >= 10 and len(changed) < 2:
-        changed = second[-2:]
-    return f"{first}–{changed}"
+    if title.endswith(("?", "!")):
+        return f"“{title}”"
+    return f"“{title.rstrip('.')},”"
 
 
 @dataclass(frozen=True)
@@ -237,30 +215,29 @@ def decode(value: str) -> str:
 
 
 def format_names(raw: str) -> str:
-    """Chicago's author block: everyone, first one inverted, nobody cut.
+    """IEEE's author block: initials before the surname, and nobody cut.
 
-    `Segel, Edward and Heer, Jeffrey` becomes `Segel, Edward, and Jeffrey
-    Heer`. Only the leading name is inverted, because inversion exists to put
-    the alphabetizing surname first and the rest of the list is read, not
-    sorted. Given names are printed as the work prints them—full where the work
-    gives them in full, initials where it does not.
+    `Segel, Edward and Heer, Jeffrey` becomes `E. Segel and J. Heer`; three or
+    more names take a serial comma, `A. Clauset, M. E. J. Newman, and C. Moore`.
 
-    Nothing is abbreviated to `et al.`: a bibliography that hides seven of ten
-    authors makes the contribution of seven people unsearchable, and the space
-    it saves is a line.
+    IEEE would abbreviate a list of more than six authors to the first name and
+    `et al.` This one does not. A reference exists to name who did the work, and
+    a list that hides seven of ten people saves a line and costs them the
+    credit; the `.bib` entry keeps everyone either way, so the only thing the
+    abbreviation would shorten is the page.
     """
     names = [
         part.strip()
         for part in re.split(r"\s+and\s+", raw)
         if part.strip() and part.strip().lower() != "others"
     ]
-    if not names:
+    formatted = [_initialed(name) for name in names]
+    if not formatted:
         return ""
-    formatted = [_inverted(names[0])] + [_natural(name) for name in names[1:]]
     if len(formatted) == 1:
         return formatted[0]
     if len(formatted) == 2:
-        return f"{formatted[0]}, and {formatted[1]}"
+        return f"{formatted[0]} and {formatted[1]}"
     return ", ".join(formatted[:-1]) + f", and {formatted[-1]}"
 
 
@@ -275,14 +252,18 @@ def _split_name(name: str) -> Tuple[str, str]:
     return words[-1], " ".join(words[:-1])
 
 
-def _inverted(name: str) -> str:
-    family, given = _split_name(name)
-    return f"{family}, {given}" if given else family
+def _initialed(name: str) -> str:
+    """`Henry Riche, Nathalie` becomes `N. Henry Riche`; initials stay initials.
 
-
-def _natural(name: str) -> str:
+    A compound surname survives because the `.bib` entry commits to it with a
+    comma—`Henry Riche, Nathalie`—which is the one place that knowledge can be
+    recorded. Guessing it back out of `Nathalie Henry Riche` is not possible.
+    """
     family, given = _split_name(name)
-    return f"{given} {family}" if given else family
+    initials = " ".join(
+        word if word.endswith(".") else f"{word[0]}." for word in given.split() if word
+    )
+    return f"{initials} {family}".strip()
 
 
 def parse(text: str, path: str = DEFAULT_BIB.name) -> Bibliography:
