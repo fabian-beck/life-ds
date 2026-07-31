@@ -53,10 +53,6 @@ class Fact:
         }
 
 
-def _thousands(number: float) -> str:
-    return f"{int(number):,}".replace(",", " ")
-
-
 def _files(directory: Path, pattern: str) -> List[Path]:
     if not directory.is_dir():
         return []
@@ -226,44 +222,11 @@ def _app_facts() -> List[Fact]:
     return facts
 
 
-def _run_facts(runs: Dict[str, Any]) -> List[Fact]:
-    records = runs.get("runs") or []
-    calls = [call for run in records for call in (run.get("calls") or [])]
-    seconds = sum(float(call.get("duration_s") or 0) for call in calls)
-    tokens = 0
-    for call in calls:
-        usage = call.get("usage") or {}
-        tokens += int(usage.get("input_tokens") or usage.get("prompt_tokens") or 0)
-        tokens += int(usage.get("output_tokens") or usage.get("completion_tokens") or 0)
-
-    return [
-        Fact("runs.count", str(len(records)), "docs/report/runs/*.json", len(records)),
-        Fact("runs.calls", str(len(calls)), "recorded model calls", len(calls)),
-        # Zero is a real answer here—"no run has been recorded yet" is
-        # something the report should be able to say in a sentence.
-        Fact(
-            "runs.minutes",
-            f"{seconds / 60:.0f}",
-            "wall-clock seconds spent inside recorded API calls",
-            seconds / 60,
-        ),
-        Fact(
-            "runs.tokens",
-            _thousands(tokens),
-            "input plus output tokens as reported by the API",
-            tokens,
-        ),
-    ]
-
-
-def collect(
-    codebase: Codebase, runs: Optional[Dict[str, Any]] = None
-) -> Dict[str, Fact]:
+def collect(codebase: Codebase) -> Dict[str, Fact]:
     """Every citable fact, keyed by the name the markdown uses."""
     groups: List[List[Fact]] = [
         _pipeline_facts(codebase),
         _app_facts(),
-        _run_facts(runs or {}),
     ]
     facts: Dict[str, Fact] = {}
     for group in groups:

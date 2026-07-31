@@ -357,10 +357,9 @@ Python scripts use:
 
 `docs/report/index.html` is a standalone, interactive technical report on the
 whole system: what it is for, how the data is modeled, both generation pipelines
-step by step—the model and reasoning effort each uses, the prompt it sends, the
-structured output it asks for, and, when a run has been recorded, the real
-prompts, responses, timings and token counts—plus the application, localization
-and testing.
+step by step—the model and reasoning effort each uses, the prompt it sends and
+the structured output it asks for—plus the application, localization and
+testing.
 
 It has two halves that never mix. The prose is authored by hand in
 `docs/report/report.md`; everything factual is computed at build time. See
@@ -427,7 +426,6 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `::: component` mount points, callouts. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
-| Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
 | Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks, pairs each with the picture on disk, embeds it as a data URI and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
 `spec.py` and `report.md` are the only hand-maintained inputs.
@@ -451,22 +449,6 @@ whose declaration moved since it was taken are warnings rather than errors.
 The check needs no API key, so it is safe to run anywhere. It is deliberately
 **not** part of `npm run validate`; run it after changing any generation script
 or the report source.
-
-### Recording a Run
-
-```bash
-python scripts/record_pipeline_run.py person "Ada Lovelace"
-python scripts/record_pipeline_run.py meta "Computing Pioneers"
-```
-
-This performs a **real generation run**—it calls the API and rewrites that
-subject's data files exactly as a normal regeneration would. Records land in
-`docs/report/runs/*.json` and are picked up by the next report build. Prompts
-and responses are truncated to 4000 characters by default (`--truncate 0` keeps
-everything, but a Phase 1 prompt carries whole Wikipedia articles).
-
-Figure and table numbering follows what actually renders: with no run recorded,
-the run blocks consume no caption numbers, so the sequence has no gaps.
 
 ### Authoring the Report
 
@@ -504,11 +486,10 @@ each other, so a block with no renderer fails the build.
 
 **Captions complement the figure, they do not describe it.** A caption names
 what the block is and then adds only what a reader cannot get from the drawing
-itself: what an unlabelled mark means, what the block does when it is touched,
-what a bar aggregates. Anything a legend, an axis, a node label or the prose
-above already states is left out—the pipeline figure does not re-explain the
-layer semantics of section 4, and the token figure does not restate its own
-legend. Captions are written as sentences; the terminating full stop is added
+itself: what an unlabelled mark means and what the block does when it is
+touched. Anything a legend, an axis, a node label or the prose above already
+states is left out—the pipeline figure does not re-explain the layer semantics
+of section 4. Captions are written as sentences; the terminating full stop is added
 by `caption()` in `assets/app.js`, so call sites need not repeat it.
 
 Adding a new citable number means one `Fact` in `facts.py`, measured from the

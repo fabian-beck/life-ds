@@ -45,7 +45,7 @@
      more or less written inside a node, and sized to match:
 
        full     the step's name, the script it lives in, its kind, the model it
-                calls, its recorded cost and the files it writes. 990 units.
+                calls and the files it writes. 990 units.
        mid      the name, the kind and the model. No script, no files. 660.
        compact  the name. 398.
 
@@ -209,23 +209,6 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
-  }
-
-  function fmtInt(value) {
-    return Number(value || 0).toLocaleString("en-US");
-  }
-
-  function fmtSeconds(value) {
-    const seconds = Number(value || 0);
-    if (seconds >= 90) return (seconds / 60).toFixed(1) + " min";
-    return seconds.toFixed(seconds < 10 ? 1 : 0) + " s";
-  }
-
-  function fmtTokens(value) {
-    const n = Number(value || 0);
-    if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
-    if (n >= 1000) return (n / 1000).toFixed(1) + "k";
-    return String(n);
   }
 
   function truncateLabel(text, max) {
@@ -1423,9 +1406,9 @@
       /* A reduced node carries the step's name, wrapped, and at mid the one
          line that says what kind of step it is and which model it calls.
 
-         Compact stops at the name deliberately. The script, the kind, the model
-         and the recorded numbers are one line of small type each, and four of
-         those in a 104-unit box is a grey block rather than a label. What is
+         Compact stops at the name deliberately. The script, the kind and the
+         model are one line of small type each, and three of those in a
+         104-unit box is a grey block rather than a label. What is
          left out of either is still on the node—in its tooltip and its
          accessible name—and set out in full in the drawer and the modal. */
       if (reduced) {
@@ -1505,28 +1488,6 @@
       const factLine = svg("text", { class: "metric", x: 16, y: 55 });
       factLine.textContent = truncateLabel(facts.join(" · "), 40);
       group.appendChild(factLine);
-
-      if (step.stats) {
-        const metric = svg("text", {
-          class: "metric",
-          x: node.w - 12,
-          y: 55,
-          "text-anchor": "end",
-        });
-        metric.textContent =
-          fmtSeconds(step.stats.total_s) +
-          " · " +
-          fmtTokens(step.stats.input_tokens + step.stats.output_tokens);
-        group.appendChild(metric);
-        const runs = svg("text", {
-          class: "metric",
-          x: node.w - 12,
-          y: 38,
-          "text-anchor": "end",
-        });
-        runs.textContent = step.stats.calls + "×";
-        group.appendChild(runs);
-      }
 
       // The files the step writes belong to the step, not beside it: this is
       // where the pipeline's state actually changes.
@@ -1635,10 +1596,9 @@
           " visible steps match “" +
           state.query +
           "”"
-        : "Click any step for its prompt, output schema, dependencies and " +
-          "recorded calls. Hovering a shaded band names its concern; " +
-          "selecting a step labels its arrows with the data that travels " +
-          "along them.";
+        : "Click any step for its prompt, output schema and dependencies. " +
+          "Hovering a shaded band names its concern; selecting a step labels " +
+          "its arrows with the data that travels along them.";
 
       /* What the figure is, and then the marks that carry no label of their
          own. The layer semantics, the branch structure and what a step node
@@ -1838,79 +1798,6 @@
     ]);
   }
 
-  function recordedCallsFor(stepId) {
-    const out = [];
-    ((DATA.runs && DATA.runs.runs) || []).forEach((run) => {
-      (run.calls || []).forEach((call) => {
-        if (call.step === stepId) out.push({ run: run.label, call: call });
-      });
-    });
-    return out;
-  }
-
-  function callBlock(entry, index) {
-    const call = entry.call;
-    const inner = el("div", { class: "inner" });
-    const usage = call.usage || {};
-    inner.appendChild(
-      el("p", { class: "sub" }, [
-        el("span", {
-          text:
-            call.model +
-            (call.reasoning_effort
-              ? " · effort " + call.reasoning_effort
-              : "") +
-            " · " +
-            fmtSeconds(call.duration_s) +
-            (usage.input_tokens || usage.prompt_tokens
-              ? " · " +
-                fmtInt(usage.input_tokens || usage.prompt_tokens) +
-                " in / " +
-                fmtInt(usage.output_tokens || usage.completion_tokens || 0) +
-                " out"
-              : ""),
-        }),
-      ])
-    );
-    (call.messages || []).forEach((message) => {
-      const note =
-        message.full_length > message.content.length
-          ? " (" + fmtInt(message.full_length) + " chars, elided)"
-          : "";
-      inner.appendChild(
-        el("details", { class: "block" }, [
-          el("summary", { text: message.role + note }),
-          el("div", { class: "inner" }, [
-            el("pre", { class: "prompt", text: message.content }),
-          ]),
-        ])
-      );
-    });
-    const result = call.result || {};
-    if (result.text) {
-      inner.appendChild(
-        el("details", { class: "block" }, [
-          el("summary", { text: "response (" + result.kind + ")" }),
-          el("div", { class: "inner" }, [
-            el("pre", { class: "prompt", text: result.text }),
-          ]),
-        ])
-      );
-    }
-    return el("details", { class: "block" }, [
-      el("summary", {
-        text:
-          "Call " +
-          (index + 1) +
-          "—" +
-          entry.run +
-          "—" +
-          fmtSeconds(call.duration_s),
-      }),
-      inner,
-    ]);
-  }
-
   function factRow(label, value) {
     if (!value) return null;
     return el("tr", {}, [el("th", { text: label }), el("td", { html: value })]);
@@ -1950,8 +1837,8 @@
      Two readers call this. The drawer summons it for one step at a time, and
      the print appendix lays the same material out for every step, because paper
      cannot be clicked. `expand` is what that second reader needs: the prompt
-     tabs become every prompt in sequence, and no recorded call is elided, since
-     a printed page has no "show the rest" affordance. */
+     tabs become every prompt in sequence, since a printed page has no "show the
+     rest" affordance. */
   function stepDetail(body, step, expand) {
     const summary = step.summary || {};
     body.appendChild(el("h3", { text: "What this step does" }));
@@ -2111,58 +1998,6 @@
         panel.innerHTML =
           "<pre class='prompt'>" + promptHtml(step.prompts[0]) + "</pre>";
         body.appendChild(panel);
-      }
-    }
-
-    const calls = recordedCallsFor(step.id);
-    body.appendChild(el("h3", { text: "Recorded run" }));
-    if (!calls.length) {
-      body.appendChild(
-        el("div", {
-          class: "empty",
-          html:
-            "No recorded calls for this step. Capture a run with " +
-            '<code>python scripts/record_pipeline_run.py person "Ada Lovelace"</code> ' +
-            "and rebuild.",
-        })
-      );
-    } else {
-      const stats = step.stats || {};
-      body.appendChild(
-        el("p", {
-          class: "sub",
-          text:
-            calls.length +
-            " call(s) · " +
-            fmtSeconds(stats.total_s) +
-            " total · median " +
-            fmtSeconds(stats.median_s) +
-            " · " +
-            fmtInt(stats.input_tokens) +
-            " in / " +
-            fmtInt(stats.output_tokens) +
-            " out tokens" +
-            (stats.reasoning_tokens
-              ? " (" + fmtInt(stats.reasoning_tokens) + " reasoning)"
-              : ""),
-        })
-      );
-      const shown = expand ? calls : calls.slice(0, 6);
-      shown.forEach((entry, index) => {
-        body.appendChild(callBlock(entry, index));
-      });
-      if (calls.length > shown.length) {
-        body.appendChild(
-          el("p", {
-            class: "sub",
-            text:
-              "Showing the first " +
-              shown.length +
-              " of " +
-              calls.length +
-              " calls.",
-          })
-        );
       }
     }
   }
@@ -2403,124 +2238,6 @@
 
   function emptyNote(html) {
     return el("div", { class: "empty", html: html });
-  }
-
-  // Only the kinds that actually appear get a legend entry—naming hues that
-  // are not on screen makes the reader hunt for them.
-  function kindLegend(steps) {
-    const present = new Set(
-      steps.map((step) => {
-        return step.kind;
-      })
-    );
-    const legend = el("div", { class: "legend" });
-    Object.entries(DATA.kinds).forEach((entry) => {
-      if (!present.has(entry[0])) return;
-      legend.appendChild(
-        el("span", { class: "item" }, [
-          el("span", {
-            class: "swatch",
-            style: "background:" + kindColor(entry[0]),
-          }),
-          el("span", { text: entry[1].label }),
-        ])
-      );
-    });
-    return legend;
-  }
-
-  function barChart(host, rows, options) {
-    const max =
-      rows.reduce((best, row) => {
-        return Math.max(best, row.total);
-      }, 0) || 1;
-    const grid = el("div", { class: "bars" });
-    rows.forEach((row) => {
-      grid.appendChild(
-        el("div", { class: "name", title: row.name, text: row.name })
-      );
-      const track = el("div", {
-        class: "track",
-        title: row.name + "—" + options.format(row.total),
-      });
-      (row.parts || [{ value: row.total, color: row.color }]).forEach(
-        (part) => {
-          if (!part.value) return;
-          track.appendChild(
-            el("div", {
-              class: "seg" + (part.tinted ? " tinted" : ""),
-              style:
-                "width:" +
-                ((part.value / max) * 100).toFixed(2) +
-                "%;background:" +
-                part.color,
-              title: part.label
-                ? row.name +
-                  "—" +
-                  part.label +
-                  ": " +
-                  options.format(part.value)
-                : options.format(part.value),
-            })
-          );
-        }
-      );
-      grid.appendChild(track);
-      grid.appendChild(
-        el("div", { class: "val", text: options.format(row.total) })
-      );
-    });
-    host.appendChild(grid);
-  }
-
-  function recordedRunsFor(laneId) {
-    const used = {};
-    ((DATA.runs && DATA.runs.runs) || []).forEach((run) => {
-      (run.calls || []).forEach((call) => {
-        const step = stepById[call.step];
-        if (step && step.column === laneId) used[run.label] = run;
-      });
-    });
-    return Object.values(used);
-  }
-
-  /* The report mounts several run blocks per pipeline, and with no recording on
-     disk each of them would otherwise print the same paragraph of instructions.
-     The first block for a lane explains itself; the rest only say what is
-     missing. */
-  const noRunExplained = new Set();
-
-  function noRunNote(laneId) {
-    if (noRunExplained.has(laneId)) {
-      return emptyNote(
-        "Nothing to show—no run has been recorded for the " +
-          escapeHtml(laneLabel(laneId).toLowerCase()) +
-          " pipeline."
-      );
-    }
-    noRunExplained.add(laneId);
-    const other = laneId === "person" ? "meta" : "person";
-    const elsewhere = recordedRunsFor(other).length;
-    return emptyNote(
-      "<strong>No run recorded for the " +
-        escapeHtml(laneLabel(laneId).toLowerCase()) +
-        " pipeline yet.</strong><br>Everything shown for it comes from static " +
-        "analysis, so the prompts are templates and there are no timings or " +
-        "token counts. To add them, run a real generation under the " +
-        "recorder:<br><br><code>python scripts/record_pipeline_run.py " +
-        escapeHtml(laneId) +
-        ' "' +
-        (laneId === "person" ? "Ada Lovelace" : "Computing Pioneers") +
-        '"</code><br><br>' +
-        "Then rebuild with <code>python scripts/generate_report.py</code>. " +
-        "Recording performs real API calls and rewrites that subject's data " +
-        "files." +
-        (elsewhere
-          ? "<br><br>Runs do exist for the " +
-            escapeHtml(laneLabel(other).toLowerCase()) +
-            " pipeline."
-          : "")
-    );
   }
 
   /* -------------------------------------------------------------- teaser */
@@ -3962,171 +3679,6 @@
       );
     },
 
-    runfigures: function (mount, params, numbers) {
-      const withStats = stepsOf(params.lane).filter((step) => {
-        return step.stats;
-      });
-      if (!withStats.length) {
-        mount.appendChild(noRunNote(params.lane));
-        return;
-      }
-
-      const used = recordedRunsFor(params.lane);
-      mount.appendChild(
-        el("p", {
-          class: "cap",
-          text:
-            "Measured from " +
-            used
-              .map((run) => {
-                return run.label + " (" + run.recorded_at + ")";
-              })
-              .join(", ") +
-            ".",
-        })
-      );
-
-      const timeCard = el("div", { class: "chart-card" }, [
-        caption(
-          "Figure",
-          numbers.figure,
-          "API time per step of the " +
-            laneLabel(params.lane).toLowerCase() +
-            " pipeline. A bar totals the wall-clock time of every call the " +
-            "step made, so a step that runs once per event is long by " +
-            "repetition rather than by latency"
-        ),
-        kindLegend(withStats),
-      ]);
-      barChart(
-        timeCard,
-        withStats
-          .slice()
-          .sort((a, b) => {
-            return b.stats.total_s - a.stats.total_s;
-          })
-          .map((step) => {
-            return {
-              name: step.label,
-              total: step.stats.total_s,
-              color: kindColor(step.kind),
-            };
-          }),
-        { format: fmtSeconds }
-      );
-      mount.appendChild(timeCard);
-
-      const tokenCard = el("div", { class: "chart-card" }, [
-        caption(
-          "Figure",
-          numbers.figure + 1,
-          "Tokens per step of the " +
-            laneLabel(params.lane).toLowerCase() +
-            " pipeline. A bar totals the same calls, so a prompt that is " +
-            "re-sent for every event is counted once per call"
-        ),
-        el("div", { class: "legend" }, [
-          el("span", { class: "item" }, [
-            el("span", { class: "swatch", style: "background:var(--ink-2)" }),
-            el("span", { text: "input tokens (solid)" }),
-          ]),
-          el("span", { class: "item" }, [
-            el("span", {
-              class: "swatch tinted",
-              style: "background:var(--ink-2);opacity:.42",
-            }),
-            el("span", { text: "output tokens (pale)" }),
-          ]),
-        ]),
-      ]);
-      barChart(
-        tokenCard,
-        withStats
-          .slice()
-          .sort((a, b) => {
-            return (
-              b.stats.input_tokens +
-              b.stats.output_tokens -
-              (a.stats.input_tokens + a.stats.output_tokens)
-            );
-          })
-          .map((step) => {
-            return {
-              name: step.label,
-              total: step.stats.input_tokens + step.stats.output_tokens,
-              parts: [
-                {
-                  value: step.stats.input_tokens,
-                  color: kindColor(step.kind),
-                  label: "input",
-                },
-                {
-                  value: step.stats.output_tokens,
-                  color: kindColor(step.kind),
-                  tinted: true,
-                  label: "output",
-                },
-              ],
-            };
-          }),
-        { format: fmtTokens }
-      );
-      mount.appendChild(tokenCard);
-    },
-
-    runtable: function (mount, params, numbers) {
-      const withStats = stepsOf(params.lane).filter((step) => {
-        return step.stats;
-      });
-      if (!withStats.length) {
-        mount.appendChild(noRunNote(params.lane));
-        return;
-      }
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "Recorded calls per step of the " +
-            laneLabel(params.lane).toLowerCase() +
-            " pipeline"
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          [
-            "Step",
-            "Kind",
-            "Calls",
-            "Total",
-            "Median",
-            "Slowest",
-            "In",
-            "Out",
-            "Errors",
-          ],
-          withStats.map((step) => {
-            return [
-              plain(step.label),
-              el("td", {}, [
-                el("span", {
-                  class: "swatch",
-                  style: "background:" + kindColor(step.kind),
-                }),
-                el("span", { text: DATA.kinds[step.kind].label }),
-              ]),
-              plain(String(step.stats.calls)),
-              plain(fmtSeconds(step.stats.total_s)),
-              plain(fmtSeconds(step.stats.median_s)),
-              plain(fmtSeconds(step.stats.max_s)),
-              plain(fmtInt(step.stats.input_tokens)),
-              plain(fmtInt(step.stats.output_tokens)),
-              plain(step.stats.errors ? String(step.stats.errors) : "—"),
-            ];
-          })
-        )
-      );
-    },
-
     cliflags: function (mount, params, numbers) {
       const name = params.script.split("/").slice(-1)[0];
       const entry = (DATA.script_index || {})[name];
@@ -4202,7 +3754,6 @@
       const unclaimed = sites.filter((site) => {
         return !site.step;
       });
-      const unattributed = DATA.unattributed || [];
       mount.appendChild(
         el("p", { class: "cap" }, [
           el("span", {
@@ -4222,24 +3773,6 @@
           }),
         ])
       );
-      if (unattributed.length) {
-        mount.appendChild(
-          emptyNote(
-            unattributed.length +
-              " recorded call(s) could not be attributed to a documented " +
-              "step: " +
-              escapeHtml(
-                unattributed
-                  .map((item) => {
-                    return item.origin;
-                  })
-                  .join(", ")
-              ) +
-              ". That usually means a helper calls the model outside the " +
-              "function spec.py names."
-          )
-        );
-      }
     },
   };
 
@@ -4317,9 +3850,9 @@
         text:
           "One entry per documented step, in the order the pipelines reach " +
           "them: what the step does, the facts read out of its source, its " +
-          "structured output, the literal prompt text it sends and whatever a " +
-          "recorded run measured for it. In the interactive report this is the " +
-          "panel that opens when a step in Figure 2 or Figure 3 is clicked.",
+          "structured output and the literal prompt text it sends. In the " +
+          "interactive report this is the panel that opens when a step in " +
+          "Figure 2 or Figure 3 is clicked.",
       })
     );
 

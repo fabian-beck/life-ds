@@ -1473,81 +1473,6 @@ body.modal-open {
   margin-bottom: 0;
 }
 
-/* ------------------------------------------------------------ run charts */
-
-.chart-card {
-  margin-bottom: 30px;
-}
-
-.chart-card h3 {
-  margin: 0 0 2px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.chart-card .sub {
-  margin: 0 0 12px;
-  color: var(--muted);
-  font-family: var(--sans);
-  font-size: 12.5px;
-}
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  margin-bottom: 12px;
-  color: var(--ink-2);
-  font-family: var(--sans);
-  font-size: 12px;
-}
-
-.legend span.item {
-  display: inline-flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.bars {
-  display: grid;
-  gap: 6px;
-  grid-template-columns: minmax(120px, 220px) 1fr auto;
-  align-items: center;
-  font-family: var(--sans);
-  font-size: 12px;
-}
-
-.bars .name {
-  overflow: hidden;
-  color: var(--ink-2);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.bars .track {
-  position: relative;
-  display: flex;
-  height: 13px;
-  gap: 2px;
-  border-bottom: 1px solid var(--rule-soft);
-}
-
-.bars .seg {
-  height: 100%;
-  min-width: 2px;
-}
-
-.bars .seg.tinted {
-  opacity: 0.42;
-}
-
-.bars .val {
-  color: var(--ink-2);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  white-space: nowrap;
-}
-
 /* Wide tables scroll inside their own box so the page body never does. */
 .table-scroll {
   overflow-x: auto;
@@ -2130,10 +2055,6 @@ figure.teaser > .cap {
     width: 100%;
   }
 
-  .bars {
-    grid-template-columns: minmax(90px, 130px) 1fr auto;
-  }
-
   .report {
     max-width: none;
   }
@@ -2306,7 +2227,6 @@ figure.teaser > .cap {
   .callout,
   .factgrid,
   .kindlist,
-  .chart-card,
   .empty,
   .buildinfo {
     break-inside: avoid;
@@ -2321,8 +2241,7 @@ figure.teaser > .cap {
      document keeps one reading order for assistive technology and for
      JavaScript-off readers. The rule under the caption becomes the rule above
      it, so it still divides the caption from the drawing. */
-  figure.figure,
-  .chart-card {
+  figure.figure {
     display: flex;
     flex-direction: column;
   }
@@ -2332,8 +2251,7 @@ figure.teaser > .cap {
     break-inside: avoid;
   }
 
-  /* Both spellings of a figure caption—the `<figcaption>` of a figure and the
-     block above a chart card—and the first at the weight the screen rule for
+  /* Both spellings of a figure caption, at the weight the screen rule for
      `figure.figure > .cap` carries, so the margin turns around with it. */
   .cap-figure,
   figure.figure > .cap {
@@ -2404,14 +2322,6 @@ figure.teaser > .cap {
   .report pre {
     overflow: visible;
     white-space: pre-wrap;
-  }
-
-  /* A bar chart's row label is ellipsized to keep the bars aligned; on paper
-     the step it names is the whole point of the row. */
-  .bars .name {
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
   }
 
   /* A prompt is the point of the appendix, so it may not end at a scrollbar.

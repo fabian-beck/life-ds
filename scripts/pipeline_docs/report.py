@@ -6,7 +6,7 @@ The report has two kinds of content and they are kept strictly apart.
 *Authored* material—motivation, design rationale, the reasons a step exists at
 all—lives in `docs/report/report.md`, written by hand, because no amount of
 static analysis can explain why a decision was made. *Computed*
-material—counts, models, prompts, schemas, timings, the dependency graphs—is
+material—counts, models, prompts, schemas, the dependency graphs—is
 never written down in the markdown. The markdown only says where it goes, and
 this module leaves a mount point that the page fills from the build payload. A
 rebuild therefore refreshes every number and every figure without anyone editing
@@ -133,18 +133,6 @@ COMPONENTS: Dict[str, ComponentSpec] = {
         ComponentSpec(
             "modeltable",
             "Each model call site, its model and its reasoning effort.",
-            tables=1,
-        ),
-        ComponentSpec(
-            "runfigures",
-            "Recorded API time and token use per step, as bar charts.",
-            required=("lane",),
-            figures=2,
-        ),
-        ComponentSpec(
-            "runtable",
-            "The recorded per-step numbers as a table.",
-            required=("lane",),
             tables=1,
         ),
         ComponentSpec(
@@ -788,7 +776,7 @@ def _toc_html(sections: Sequence[Section]) -> str:
     return f'<nav class="toc" aria-label="Contents">{render(sections)}</nav>'
 
 
-def default_emits(component: str, params: Dict[str, str]) -> Tuple[int, int]:
+def emits(component: str, params: Dict[str, str]) -> Tuple[int, int]:
     """How many numbered captions a component is declared to produce."""
     spec = COMPONENTS[component]
     return spec.figures, spec.tables
@@ -798,17 +786,8 @@ def compile_report(
     source: str,
     facts: Dict[str, Fact],
     source_path: str = "docs/report/report.md",
-    emits: Optional[Callable[[str, Dict[str, str]], Tuple[int, int]]] = None,
 ) -> Document:
-    """Authored Markdown in, page body plus mount manifest out.
-
-    `emits` overrides how many figure and table numbers a block consumes. It
-    exists because a block can legitimately have nothing to show—the recorded
-    run charts, before any run has been recorded—and a number reserved for a
-    caption that never appears leaves a hole in the sequence. The build passes a
-    function that knows which blocks will actually render, so the numbering
-    matches the page rather than the markup.
-    """
+    """Authored Markdown in, page body plus mount manifest out."""
     front, body, offset = split_front_matter(source)
     blocks = split_blocks(body, offset)
 
@@ -872,7 +851,7 @@ def compile_report(
                 f"{hint}'::: {block.name}' does not take {', '.join(sorted(unknown))}"
             )
         mount = Mount(block.name, dict(block.params), text, figure, table, block.line)
-        figures, tables = (emits or default_emits)(block.name, mount.params)
+        figures, tables = emits(block.name, mount.params)
         figure += figures
         table += tables
         mounts.append(mount)

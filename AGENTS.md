@@ -26,9 +26,9 @@ file. Read only the references relevant to the current task:
 - [Development reference](docs/agent/development-reference.md)
 
 `docs/report/index.html` is a generated, interactive technical report on the
-system—data model, both generation pipelines with their steps, prompts, output
-schemas and recorded timings, the application, localization and testing. Open it
-to orient yourself before changing a generation script.
+system—data model, both generation pipelines with their steps, prompts and
+output schemas, the application, localization and testing. Open it to orient
+yourself before changing a generation script.
 
 Its prose is authored in `docs/report/report.md`; everything factual is computed
 at build time, so never hand-edit `index.html`. Run

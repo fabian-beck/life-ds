@@ -19,9 +19,7 @@ The report is half written and half measured, and the two halves never mix.
    counts—so a sentence about scale cannot go stale.
 4. AI-written step explanations, cached in `docs/report/summaries.json` against a
    fingerprint of each step's source, so a rebuild only pays for what changed.
-5. Runs recorded by `scripts/record_pipeline_run.py`—real prompts, real
-   responses, timings and token counts. Optional; the page renders without them.
-6. Screenshots of the running application, declared in the markdown as a
+5. Screenshots of the running application, declared in the markdown as a
    position to photograph and taken from it by a browser, so a figure of the
    interface can be retaken instead of being pasted in.
 
@@ -44,8 +42,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from config import enable_utf8_console  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
-from pipeline_docs import render, report, screenshots, spec, validate  # noqa: E402
-from pipeline_docs.capture import merge_records  # noqa: E402
+from pipeline_docs import render, report, screenshots, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 from pipeline_docs.summarize import summarize_steps  # noqa: E402
@@ -54,7 +51,6 @@ OUT_DIR = REPO_ROOT / "docs" / "report"
 DEFAULT_OUT = OUT_DIR / "index.html"
 DEFAULT_SOURCE = OUT_DIR / "report.md"
 SUMMARY_CACHE = OUT_DIR / "summaries.json"
-RUNS_DIR = OUT_DIR / "runs"
 
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
@@ -89,12 +85,6 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         help="Re-summarize every step even when the cache is current.",
     )
     parser.add_argument("--model", help="Override the summarizer model.")
-    parser.add_argument(
-        "--runs-dir",
-        type=Path,
-        default=RUNS_DIR,
-        help=f"Directory of recorded runs (default: {RUNS_DIR}).",
-    )
     parser.add_argument(
         "--shots",
         nargs="?",
@@ -141,11 +131,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         return 1
 
-    runs = merge_records(sorted(args.runs_dir.glob("*.json")))
-    recorded = sum(len(run.get("calls") or []) for run in runs.get("runs", []))
-
     print("Measuring the repository ...")
-    measurements = facts_module.collect(codebase, runs)
+    measurements = facts_module.collect(codebase)
     print(f"  {len(measurements)} citable facts.")
 
     print(f"Compiling {args.source.relative_to(REPO_ROOT).as_posix()} ...")
@@ -157,7 +144,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.source.read_text(encoding="utf-8"),
             measurements,
             args.source.relative_to(REPO_ROOT).as_posix(),
-            emits=_emits_for(runs),
         )
     except report.ReportError as error:
         print(f"  ERROR in the authored report: {error}")
@@ -194,11 +180,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         verbose=args.verbose,
     )
 
-    if recorded:
-        print(f"  {len(runs['runs'])} recorded run(s), {recorded} model calls.")
-    else:
-        print("  No recorded runs found—the page will show templates only.")
-
     album = screenshots.collect(document)
     shots = screenshots.payload(album)
     if shots:
@@ -209,7 +190,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "to retake)."
         )
 
-    payload = build_payload(codebase, summaries, runs, document, measurements, shots)
+    payload = build_payload(codebase, summaries, document, measurements, shots)
     out = render.write(payload, args.out, document)
     size_kb = out.stat().st_size / 1024
     print(f"\nWrote {out} ({size_kb:.0f} KB).")
@@ -246,35 +227,6 @@ def _capture_shots(document: report.Document, args: argparse.Namespace) -> int:
             print(f"  {failure}")
         return 1
     return 0
-
-
-def _lanes_with_runs(runs: dict) -> set:
-    """Which pipelines have recorded calls attributed to one of their steps."""
-    lanes = set()
-    for record in runs.get("runs", []):
-        for call in record.get("calls") or []:
-            step_id = call.get("step")
-            if not step_id:
-                continue
-            lanes.add(spec.PERSON if step_id.startswith("p_") else spec.META)
-    return lanes
-
-
-def _emits_for(runs: dict):
-    """Caption budget per block, given what the recorded runs can actually show.
-
-    Without this the run figures reserve numbers they never print, and the
-    sequence skips—Table 5 followed by Table 8. Numbering has to describe the
-    rendered page, not the markup that asked for it.
-    """
-    lanes = _lanes_with_runs(runs)
-
-    def emits(component: str, params: dict):
-        if component in ("runfigures", "runtable") and params.get("lane") not in lanes:
-            return 0, 0
-        return report.default_emits(component, params)
-
-    return emits
 
 
 def _count_sections(sections) -> int:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fuse the static scan, the AI summaries and the recorded runs into one payload.
+"""Fuse the static scan and the AI summaries into one payload.
 
 The HTML page is a pure function of the dictionary this module returns, which
 keeps the rendering layer free of any knowledge about how a fact was
@@ -8,13 +8,12 @@ obtained—and makes the whole build testable without touching a browser.
 The payload also carries the report's own structure: the section tree the sidebar
 navigates, the mount manifest the page hydrates, and the measurements the
 authored prose cites. Everything the page shows therefore arrives through one
-dictionary, whether it came from the AST, from a recorded run, or from a sentence
-someone wrote by hand.
+dictionary, whether it came from the AST or from a sentence someone wrote by
+hand.
 """
 
 from __future__ import annotations
 
-import statistics
 import subprocess
 import time
 from pathlib import Path
@@ -155,61 +154,6 @@ def _type_names(annotation: str) -> List[str]:
     return [token for token in tokens if token[:1].isupper()]
 
 
-def _run_stats(runs: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-    """Per-step aggregates over every recorded run."""
-    buckets: Dict[str, List[Dict[str, Any]]] = {}
-    for run in runs.get("runs", []):
-        for call in run.get("calls", []):
-            step_id = call.get("step")
-            if step_id:
-                buckets.setdefault(step_id, []).append(call)
-
-    stats: Dict[str, Dict[str, Any]] = {}
-    for step_id, calls in buckets.items():
-        durations = [float(call.get("duration_s") or 0) for call in calls]
-        input_tokens = 0
-        output_tokens = 0
-        reasoning_tokens = 0
-        for call in calls:
-            usage = call.get("usage") or {}
-            input_tokens += int(
-                usage.get("input_tokens") or usage.get("prompt_tokens") or 0
-            )
-            output_tokens += int(
-                usage.get("output_tokens") or usage.get("completion_tokens") or 0
-            )
-            reasoning_tokens += int(usage.get("reasoning_tokens") or 0)
-        stats[step_id] = {
-            "calls": len(calls),
-            "total_s": round(sum(durations), 2),
-            "median_s": round(statistics.median(durations), 2) if durations else 0,
-            "max_s": round(max(durations), 2) if durations else 0,
-            "input_tokens": input_tokens,
-            "output_tokens": output_tokens,
-            "reasoning_tokens": reasoning_tokens,
-            "errors": sum(
-                1 for call in calls if (call.get("result") or {}).get("kind") == "error"
-            ),
-        }
-    return stats
-
-
-def _unattributed(runs: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Recorded calls that no step claimed—usually a spec gap worth seeing."""
-    out: List[Dict[str, Any]] = []
-    for run in runs.get("runs", []):
-        for call in run.get("calls", []):
-            if not call.get("step"):
-                out.append(
-                    {
-                        "origin": call.get("origin"),
-                        "model": call.get("model"),
-                        "duration_s": call.get("duration_s"),
-                    }
-                )
-    return out
-
-
 def _script_index(codebase: Codebase) -> Dict[str, Dict[str, Any]]:
     """Docstring, size and CLI surface of every scanned script.
 
@@ -262,12 +206,10 @@ def _call_sites(codebase: Codebase) -> List[Dict[str, Any]]:
 def build_payload(
     codebase: Codebase,
     summaries: Dict[str, Dict[str, Any]],
-    runs: Dict[str, Any],
     document: Optional[Document] = None,
     facts: Optional[Dict[str, facts_module.Fact]] = None,
     shots: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
-    stats = _run_stats(runs)
     steps: List[Dict[str, Any]] = []
     # Schemas the steps use, plus any the report asks to expand by name.
     schema_names: List[str] = []
@@ -321,7 +263,6 @@ def build_payload(
                 "inputs": step.inputs,
                 "outputs": step.outputs,
                 "ai_calls": ai_calls,
-                "stats": stats.get(step.id),
             }
         )
 
@@ -341,8 +282,6 @@ def build_payload(
         "groups": [group.__dict__ for group in spec.GROUPS],
         "artifacts": [artifact.__dict__ for artifact in spec.ARTIFACTS],
         "schemas": _collect_schemas(codebase, schema_names),
-        "runs": runs,
-        "unattributed": _unattributed(runs),
         "totals": {
             "steps": len(spec.STEPS),
             "ai_steps": sum(1 for step in spec.STEPS if step.kind == spec.AI),

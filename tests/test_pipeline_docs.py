@@ -407,7 +407,7 @@ class PayloadAndRenderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         codebase = scan_codebase()
-        cls.payload = build_payload(codebase, summaries={}, runs={"runs": []})
+        cls.payload = build_payload(codebase, summaries={})
 
     def test_payload_covers_every_step(self) -> None:
         self.assertEqual(len(self.payload["steps"]), len(spec.STEPS))
@@ -442,33 +442,6 @@ class PayloadAndRenderTests(unittest.TestCase):
                 f"{step['id']} has neither a prompt nor a schema",
             )
 
-    def test_run_statistics_aggregate_recorded_calls(self) -> None:
-        runs = {
-            "runs": [
-                {
-                    "label": "test",
-                    "calls": [
-                        {
-                            "step": "m_p1",
-                            "duration_s": 4,
-                            "usage": {"input_tokens": 100, "output_tokens": 10},
-                        },
-                        {
-                            "step": "m_p1",
-                            "duration_s": 6,
-                            "usage": {"input_tokens": 200, "output_tokens": 20},
-                        },
-                    ],
-                }
-            ]
-        }
-        payload = build_payload(scan_codebase(), summaries={}, runs=runs)
-        stats = next(step["stats"] for step in payload["steps"] if step["id"] == "m_p1")
-        self.assertEqual(stats["calls"], 2)
-        self.assertEqual(stats["total_s"], 10)
-        self.assertEqual(stats["median_s"], 5)
-        self.assertEqual(stats["input_tokens"], 300)
-
     def test_rendered_page_is_self_contained(self) -> None:
         html = render.render(self.payload)
         self.assertIn("window.PIPELINE", html)
@@ -490,11 +463,11 @@ class PayloadAndRenderTests(unittest.TestCase):
 
     def test_payload_carries_the_report_structure_the_sidebar_needs(self) -> None:
         codebase = scan_codebase()
-        facts = facts_module.collect(codebase, {"runs": []})
+        facts = facts_module.collect(codebase)
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), facts
         )
-        payload = build_payload(codebase, {}, {"runs": []}, document, facts)
+        payload = build_payload(codebase, {}, document, facts)
         self.assertTrue(payload["report"]["sections"])
         self.assertEqual(payload["report"]["title"], document.title)
         self.assertEqual(len(payload["facts"]), len(facts))
@@ -561,11 +534,11 @@ class PayloadAndRenderTests(unittest.TestCase):
 
     def test_the_rendered_page_embeds_the_authored_body(self) -> None:
         codebase = scan_codebase()
-        facts = facts_module.collect(codebase, {"runs": []})
+        facts = facts_module.collect(codebase)
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), facts
         )
-        payload = build_payload(codebase, {}, {"runs": []}, document, facts)
+        payload = build_payload(codebase, {}, document, facts)
         html = render.render(payload, document)
         self.assertIn(document.front["title"], html)
         self.assertIn('data-component="pipeline"', html)
@@ -575,7 +548,7 @@ class PayloadAndRenderTests(unittest.TestCase):
 
 
 def _facts() -> dict:
-    return facts_module.collect(scan_codebase(), {"runs": []})
+    return facts_module.collect(scan_codebase())
 
 
 def _compile(source: str, facts: dict | None = None) -> report.Document:
@@ -750,21 +723,6 @@ class MarkdownCompilerTests(unittest.TestCase):
         self.assertNotIn("notes-list", document.html)
         self.assertNotIn("report:notes", document.html)
 
-    def test_a_block_that_shows_nothing_consumes_no_caption_number(self) -> None:
-        """Otherwise the sequence skips: Table 5 followed by Table 8."""
-
-        def emits(component, params):
-            if component == "runtable":
-                return 0, 0
-            return report.default_emits(component, params)
-
-        source = (
-            self.HEAD
-            + "\n## S\n\n::: runtable lane=person\n:::\n\n::: steptable lane=person\n:::\n"
-        )
-        document = report.compile_report(source, _facts(), emits=emits)
-        self.assertEqual(document.mounts[1].table_start, 1)
-
 
 class ReportSourceTests(unittest.TestCase):
     """The real report has to resolve against the real code."""
@@ -772,7 +730,7 @@ class ReportSourceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.codebase = scan_codebase()
-        cls.facts = facts_module.collect(cls.codebase, {"runs": []})
+        cls.facts = facts_module.collect(cls.codebase)
         cls.document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), cls.facts
         )
@@ -985,7 +943,7 @@ class ScreenshotTests(unittest.TestCase):
         codebase = scan_codebase()
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"),
-            facts_module.collect(codebase, {"runs": []}),
+            facts_module.collect(codebase),
         )
         album = screenshots.collect(document)
         self.assertTrue(album.shots, "the report declares no screenshot")
@@ -1096,7 +1054,7 @@ class TeaserTests(unittest.TestCase):
 
     def test_the_scene_travels_in_the_payload(self) -> None:
         codebase = scan_codebase()
-        payload = build_payload(codebase, {}, {"runs": []})
+        payload = build_payload(codebase, {})
         self.assertEqual(
             [part["id"] for part in payload["teaser"]["parts"]],
             teaser.part_ids(),
@@ -1108,7 +1066,7 @@ class FactTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.facts = facts_module.collect(scan_codebase(), {"runs": []})
+        cls.facts = facts_module.collect(scan_codebase())
 
     def test_every_fact_has_a_display_value_and_a_source(self) -> None:
         self.assertGreater(len(self.facts), 10)

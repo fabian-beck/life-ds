@@ -66,8 +66,7 @@ __BODY__
         Authored prose lives in <code>__SOURCE__</code>. Every figure, table,
         count and prompt in this report is computed at build time by
         <code>scripts/generate_report.py</code>—from the abstract syntax trees
-        of <code>scripts/</code>, from the repository itself, and from runs
-        recorded by <code>scripts/record_pipeline_run.py</code>. Step
+        of <code>scripts/</code> and from the repository itself. Step
         explanations are written by a language model from the source and cached
         against a fingerprint of it. Nothing here is transcribed by hand except
         the prose.

@@ -210,11 +210,10 @@ one of them against the subject's existing data.]
 
 ::: note
 Events are researched individually rather than in a single call. This is the
-most consequential granularity decision in the pipeline: latency and token
-consumption scale linearly with the number of events, and the recorded timings
-below show the effect directly. It is retained because a per-event call
-receives a focused prompt and a small output schema, and because a failed or
-malformed response is then confined to a single event.
+most consequential granularity decision in the pipeline, since the number of
+model calls it makes scales linearly with the number of events. It is retained
+because a per-event call receives a focused prompt and a small output schema,
+and because a failed or malformed response is then confined to a single event.
 :::
 
 ### Meta story pipeline
@@ -274,37 +273,6 @@ it fills.
 The four schemas central to the two pipelines—the plan of a life, a single
 researched event, a person's ego network and a meta story's plan—expanded field
 by field from the Pydantic models the API is asked to populate.
-:::
-
-## Cost and latency
-
-Timings and token counts are obtained by instrumentation rather than
-estimation. A recording wrapper around either pipeline captures every model
-call—prompt, response, wall-clock duration and reported token usage^[Usage is
-taken as the API reports it, so the output count includes the reasoning tokens a
-reasoning model emits and is not a count of the text that reached an artifact.
-Where the response separates them, the recording keeps that share.]—and the
-aggregates below are computed per step from those records. The recorded corpus
-presently comprises {{ runs.count }} runs, {{ runs.calls }} model calls,
-{{ runs.minutes }} minutes of API time and {{ runs.tokens }} tokens.
-
-::: limitation
-Recording is opt-in and rewrites the subject's data files, so the recorded set
-is small. It supports statements about the distribution of time and tokens
-across the steps of an observed generation; statements about the expected cost
-of an arbitrary subject would require a sample.
-:::
-
-::: runfigures lane=person
-:::
-
-::: runtable lane=person
-:::
-
-::: runfigures lane=meta
-:::
-
-::: runtable lane=meta
 :::
 
 ## Interface
