@@ -39,11 +39,12 @@ modern coordinates of its place, the persons involved, an illustration and the
 sources that support it; it groups those events into the phases of a life; and
 it presents the result simultaneously as [[prose|narrative text]], as
 [[timeline|a chronology]], as [[map|a geography]] and as
-[[graph|a social network]]—a narrative visualization [@segel2010narrative], in
-which the reader is led through the material rather than left to query it. The
-same derivation applied across several biographies yields
-[[meta-story|a meta story]], in which a theme is traced through the lives that
-share it.
+[[graph|a social network]]. What it produces is a narrative visualization at the
+author-driven end of that genre's spectrum [@segel2010narrative]: the order is
+fixed when the story is generated, and the reader advances along it rather than
+assembling a view of their own. The same derivation applied across several
+biographies yields [[meta-story|a meta story]], in which a theme is traced
+through the lives that share it.
 
 The operations this requires are interpretive. Selecting the episodes that
 constitute a life, identifying the modern place a historical toponym denotes,
@@ -341,9 +342,12 @@ than only from the landing page.
 
 The three encodings are attached to this sequence rather than displayed beside
 it ((one-record)). [[timeline|A persistent timeline]] maps every event to its
-position in the life, bands the chapters, and doubles as the navigation
-control: linear, chronological and unified in the terms of the timeline design
-space [@brehmer2017timelines], because a life is read in the order it was lived.
+position in the life, bands the chapters, and doubles as the navigation control.
+In the terms of the timeline design space [@brehmer2017timelines] it stays
+linear and unified and changes scale as it opens: collapsed, it spaces the
+events evenly, so that each is an equally reachable control; expanded, it sets
+each one at the age it falls at, so that the pace of a life—the crowded decade,
+the quiet one—becomes visible.
 [[map|A map built on MapLibre and Protomaps]]^[Protomaps distributes a whole
 basemap as one PMTiles archive addressed by HTTP range requests, so the map is
 served by a static file beside the application rather than by a tile service it
