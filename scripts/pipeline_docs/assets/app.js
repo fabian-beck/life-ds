@@ -4539,11 +4539,8 @@
   document
     .getElementById("chart-modal-close")
     .addEventListener("click", closeChartModal);
-  // The backdrop is the modal's own padding; a press that lands on it and not
-  // on the panel is a press outside the chart.
-  chartModal().addEventListener("click", (event) => {
-    if (event.target === chartModal()) closeChartModal();
-  });
+  // No click-outside to bind: the panel now covers the whole viewport, so there
+  // is no outside. Escape and the close button are the ways back.
   // One Escape, one layer: the drawer opens over the modal, so it closes first
   // and a second press closes the chart behind it.
   document.addEventListener("keydown", (event) => {

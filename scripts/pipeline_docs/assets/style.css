@@ -1373,16 +1373,20 @@ pre.prompt .role {
 
 /* ----------------------------------------------------------- chart modal */
 
-/* The full chart over the whole viewport. It sits below the drawer, not above
-   it: a step opened from the modal has to be readable without the modal being
-   closed first, so the drawer slides in over this. */
+/* The full chart over the whole viewport, edge to edge, with nothing framing
+   it. The reader opened this because the chart was bigger than the space it
+   had; inset in a lit backdrop it would hand back the very margin it was opened
+   to reclaim, and draw a second border around a figure that already has one.
+
+   It sits below the drawer, not above it: a step opened from the modal has to
+   be readable without the modal being closed first, so the drawer slides in
+   over this. */
 .chart-modal {
   position: fixed;
   z-index: 50;
   inset: 0;
   display: none;
-  padding: 16px;
-  background: rgb(0 0 0 / 45%);
+  background: var(--paper);
 }
 
 .chart-modal.open {
@@ -1400,7 +1404,6 @@ body.modal-open {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  border: 1px solid var(--rule-strong);
   background: var(--paper);
   flex-direction: column;
 }
