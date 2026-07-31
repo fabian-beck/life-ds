@@ -1990,44 +1990,6 @@
       mount.appendChild(list);
     },
 
-    stats: function (mount) {
-      const runs = (DATA.runs && DATA.runs.runs) || [];
-      let calls = 0;
-      let apiSeconds = 0;
-      let tokens = 0;
-      runs.forEach((run) => {
-        (run.calls || []).forEach((call) => {
-          calls += 1;
-          apiSeconds += Number(call.duration_s || 0);
-          const usage = call.usage || {};
-          tokens +=
-            Number(usage.input_tokens || usage.prompt_tokens || 0) +
-            Number(usage.output_tokens || usage.completion_tokens || 0);
-        });
-      });
-
-      // Zero is printed rather than dashed: "no run recorded yet" is a fact
-      // about the system, and the prose cites the same numbers.
-      const tiles = [
-        [String(DATA.totals.steps), "documented steps"],
-        [String(DATA.totals.ai_steps), "of them call a model"],
-        [String(DATA.totals.call_sites), "model call sites in the code"],
-        [String(calls), "recorded model calls"],
-        [fmtSeconds(apiSeconds), "recorded API time"],
-        [fmtTokens(tokens), "recorded tokens"],
-      ];
-      const grid = el("div", { class: "tiles" });
-      tiles.forEach((tile) => {
-        grid.appendChild(
-          el("div", { class: "tile" }, [
-            el("div", { class: "value", text: tile[0] }),
-            el("div", { class: "label", text: tile[1] }),
-          ])
-        );
-      });
-      mount.appendChild(grid);
-    },
-
     factgrid: function (mount, params) {
       const grid = el("div", { class: "factgrid" });
       (params.keys || "").split(",").forEach((raw) => {
@@ -2468,13 +2430,6 @@
     const chips = [
       ["Built", DATA.generated_at],
       ["Commit", DATA.commit || "—"],
-      [
-        "Scanned",
-        DATA.totals.scripts +
-          " scripts, " +
-          fmtInt(DATA.totals.script_lines) +
-          " lines",
-      ],
       ["Steps", String(DATA.totals.steps)],
     ];
     chips.forEach((chip) => {

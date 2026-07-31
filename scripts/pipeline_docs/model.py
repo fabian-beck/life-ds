@@ -344,9 +344,5 @@ def build_payload(
             "steps": len(spec.STEPS),
             "ai_steps": sum(1 for step in spec.STEPS if step.kind == spec.AI),
             "call_sites": len(codebase.all_ai_calls()),
-            "scripts": len(codebase.scripts),
-            "script_lines": sum(
-                facts.line_count for facts in codebase.scripts.values()
-            ),
         },
     }

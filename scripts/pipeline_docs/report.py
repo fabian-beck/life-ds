@@ -90,10 +90,6 @@ COMPONENTS: Dict[str, ComponentSpec] = {
             "Commit, branch and build time of this rendering.",
         ),
         ComponentSpec(
-            "stats",
-            "The headline tile row: steps, model calls, recorded time and tokens.",
-        ),
-        ComponentSpec(
             "factgrid",
             "A labelled grid of measurements, each with its source.",
             required=("keys",),

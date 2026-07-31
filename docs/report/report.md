@@ -21,10 +21,6 @@ abstract:
   documentation gets wrong, so they are not written down here at all.
 ---
 
-::: stats
-The system at a glance, recomputed on every build.
-:::
-
 ::: toc
 :::
 
@@ -41,11 +37,10 @@ afterwards.
 The system currently holds {{ data.people }} biographies carrying
 {{ data.events }} life events between them—about {{ data.events_per_person }}
 per person—and {{ data.meta_stories }} meta stories, which are themes traced
-across several lives at once. The generation side is {{ scripts.count }} Python
-scripts, {{ scripts.lines }} lines, reaching a language model at
-{{ pipeline.call_sites }} distinct places in the code. The reading side is
-{{ app.components }} Svelte components and {{ app.svelte_lines }} lines of
-component code.
+across several lives at once. The generation side is a set of command-line
+Python pipelines that reach a language model at {{ pipeline.call_sites }}
+distinct places; the reading side is a Svelte application that never runs
+them.
 
 ::: decision
 The pipelines write plain JSON files into `data/`, and the application reads
@@ -81,18 +76,6 @@ cannot be tested; one with no model calls could not do this job at all. Keeping
 the deterministic steps deterministic—clustering, geocoding, chapter fitting,
 network merging—is what makes the expensive steps small enough to reason
 about.
-
-### Where the code lives
-
-::: factgrid keys=scripts.count,scripts.lines,pipeline.prompt_builders,pipeline.schemas,app.components,app.stores,app.utils,app.js_lines caption="Hover any number for the place it was measured."
-:::
-
-Prompt text is not stored in templates or configuration; it is built in Python
-functions, {{ pipeline.prompt_builders }} of them, because prompts need
-conditionals and injected data far more than they need to be edited without a
-code review. Structured output is declared as Pydantic
-models—{{ pipeline.schemas }} classes across the scripts—so the shape the model
-must return is a type, not a paragraph of instructions.
 
 ## Data model
 
@@ -199,6 +182,13 @@ of a life is a reasoning problem and gets a reasoning budget; researching one
 already-chosen event is a retrieval-and-writing problem and deliberately gets
 none.
 
+Prompt text is not stored in templates or configuration; it is built in Python
+functions, {{ pipeline.prompt_builders }} of them, because prompts need
+conditionals and injected data far more than they need to be edited without a
+code review. Structured output is declared as Pydantic
+models—{{ pipeline.schemas }} classes across the scripts—so the shape the model
+must return is a type, not a paragraph of instructions.
+
 ::: schemalist names=LifePlan,EventDetails,EgoNetwork,MetaStoryPlan
 The four schemas at the heart of the two pipelines—the plan of a life, one
 researched event, a person's ego network and a meta story's plan—expanded field
@@ -234,11 +224,9 @@ average".
 
 ## The application
 
-The reading side is a mobile-first Svelte 5 and Vite application:
-{{ app.components }} components, {{ app.stores }} shared stores and
-{{ app.utils }} utility modules, {{ app.js_lines }} lines of plain JavaScript
-beside the component code. Stories are full-screen, scroll-snapped slides;
-routing is URL-based, so any slide is a shareable address.
+The reading side is a mobile-first Svelte 5 and Vite application. Stories are
+full-screen, scroll-snapped slides; routing is URL-based, so any slide is a
+shareable address.
 
 Three visualisations carry the data beyond prose: a timeline of the events, a
 MapLibre and Protomaps map of their places, and a force-directed social network.
@@ -248,10 +236,10 @@ stories in this system do not look alike.
 
 ::: aside
 This section is the thinnest part of the report, and knowingly so. The
-application is described here in prose only, because nothing in the current
-build measures it beyond counting files. Component-level computed content—a
-route map, a props graph, a slide-type inventory—would be the natural next
-extension, and would slot in as new components without touching this text.
+application is described here in prose only, because the build measures nothing
+about it that is worth stating. Component-level computed content—a route map, a
+props graph, a slide-type inventory—would be the natural next extension, and
+would slot in as new components without touching this text.
 :::
 
 ## Localization
@@ -268,9 +256,7 @@ document is marked stale at once.
 
 ## Validation and testing
 
-The automated suite is intentionally small: {{ tests.python_modules }} Python
-test modules holding {{ tests.python_cases }} cases, and
-{{ tests.browser_specs }} Playwright specs. It does not try to test generated
+The automated suite is intentionally small, and does not try to test generated
 content, which is not deterministic. It tests the machinery that makes generated
 content trustworthy—that the static extraction really reads the source, that
 the dependency graph really is acyclic, that the drift check really fails.

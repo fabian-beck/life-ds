@@ -7,8 +7,10 @@ cannot rot the way a hard-coded "52 biographies" would. Every fact carries the
 place it was measured, which the page prints on hover—a claim in the report is
 therefore always traceable to a file, a directory or a spec entry.
 
-Facts are deliberately cheap: directory listings, line counts, lengths of JSON
-arrays. Anything that needs the AST lives in `introspect.py` and reaches the
+Facts are deliberately cheap: directory listings and lengths of JSON arrays.
+They are also deliberately few—a number is measured here because the prose
+argues something with it, not because it can be counted. Anything that needs
+the AST lives in `introspect.py` and reaches the
 report through `model.py` instead. A fact that cannot be measured is omitted
 rather than guessed, and `validate.py` then fails the build for the citation
 that referenced it—a missing number must never render as an empty gap in a
@@ -20,7 +22,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Dict, Iterable, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from . import spec
 from .introspect import Codebase
@@ -63,25 +65,10 @@ def _safe(fn: Callable[[], Any], default: Any = None) -> Any:
         return default
 
 
-def _read_text(path: Path) -> str:
-    try:
-        return path.read_text(encoding="utf-8", errors="replace")
-    except OSError:
-        return ""
-
-
-def _line_count(path: Path) -> int:
-    return len(_read_text(path).splitlines())
-
-
 def _files(directory: Path, pattern: str) -> List[Path]:
     if not directory.is_dir():
         return []
     return sorted(path for path in directory.glob(pattern) if path.is_file())
-
-
-def _lines_of(paths: Iterable[Path]) -> int:
-    return sum(_line_count(path) for path in paths)
 
 
 def _json_array_length(path: Path, *keys: str) -> Optional[int]:
@@ -234,54 +221,19 @@ def _max_layer(steps: List[spec.Step], layers: Dict[str, int]) -> int:
     return max((layers[step.id] for step in steps), default=-1) + 1
 
 
-def _script_facts(codebase: Codebase) -> List[Fact]:
-    total_lines = sum(facts.line_count for facts in codebase.scripts.values())
-    return [
-        Fact(
-            "scripts.count",
-            str(len(codebase.scripts)),
-            "scripts/*.py, excluding the docs builder itself",
-            len(codebase.scripts),
-        ),
-        Fact(
-            "scripts.lines",
-            _thousands(total_lines),
-            "scripts/*.py line counts",
-            total_lines,
-        ),
-    ]
-
-
 def _app_facts() -> List[Fact]:
+    """What the application *is*, never how much of it there is.
+
+    Script, component and line counts used to be measured here and cited in the
+    prose. They were dropped: they move with every refactor, support no claim
+    the report makes, and lend a measurement's authority to a sentence that is
+    really just saying the project exists. A count earns a place in this module
+    by being the subject of an argument.
+    """
     src = REPO_ROOT / "src"
-    components = _files(src / "components", "*.svelte")
-    stores = _files(src / "stores", "*.js")
-    utils = _files(src / "utils", "*.js")
     locales = _files(src / "locales", "*.json")
-    svelte_lines = _lines_of(components + _files(src, "*.svelte"))
-    js_lines = _lines_of(stores + utils + _files(src, "*.js"))
 
     facts = [
-        Fact(
-            "app.components",
-            str(len(components) + len(_files(src, "*.svelte"))),
-            "src/components/*.svelte plus src/App.svelte",
-            len(components) + len(_files(src, "*.svelte")),
-        ),
-        Fact("app.stores", str(len(stores)), "src/stores/*.js", len(stores)),
-        Fact("app.utils", str(len(utils)), "src/utils/*.js", len(utils)),
-        Fact(
-            "app.svelte_lines",
-            _thousands(svelte_lines),
-            "line counts of the Svelte components",
-            svelte_lines,
-        ),
-        Fact(
-            "app.js_lines",
-            _thousands(js_lines),
-            "line counts of the plain-JavaScript modules",
-            js_lines,
-        ),
         Fact(
             "app.locales",
             str(len(locales)),
@@ -371,35 +323,6 @@ def _data_facts() -> List[Fact]:
     return facts
 
 
-def _test_facts() -> List[Fact]:
-    tests = REPO_ROOT / "tests"
-    python_tests = _files(tests, "test_*.py")
-    browser_tests = _files(tests, "*.spec.js")
-    cases = 0
-    for path in python_tests:
-        cases += _read_text(path).count("    def test_")
-    return [
-        Fact(
-            "tests.python_modules",
-            str(len(python_tests)),
-            "tests/test_*.py",
-            len(python_tests),
-        ),
-        Fact(
-            "tests.python_cases",
-            str(cases),
-            "`def test_` methods across tests/test_*.py",
-            cases,
-        ),
-        Fact(
-            "tests.browser_specs",
-            str(len(browser_tests)),
-            "tests/*.spec.js",
-            len(browser_tests),
-        ),
-    ]
-
-
 def _run_facts(runs: Dict[str, Any]) -> List[Fact]:
     records = runs.get("runs") or []
     calls = [call for run in records for call in (run.get("calls") or [])]
@@ -436,10 +359,8 @@ def collect(
     """Every citable fact, keyed by the name the markdown uses."""
     groups: List[List[Fact]] = [
         _pipeline_facts(codebase),
-        _script_facts(codebase),
         _app_facts(),
         _data_facts(),
-        _test_facts(),
         _run_facts(runs or {}),
     ]
     facts: Dict[str, Fact] = {}
