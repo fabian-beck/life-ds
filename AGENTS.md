@@ -100,6 +100,11 @@ affected area requires them.
 
 ### Integrate Directly into Main
 
+Integration is part of the task, not an optional extra. A session is only
+finished when its commits are on `origin/main`, or when the agent has reported
+that they are not and why. Leaving work on the session branch without saying so
+is the failure mode this section exists to prevent.
+
 After successful validation:
 
 ```powershell
@@ -118,9 +123,35 @@ git rebase origin/main
 git push origin HEAD:main
 ```
 
+Retry this loop until the push succeeds. A rejected push is a normal race, not
+a reason to stop.
+
+Stop and report instead of pushing when any of these hold:
+
+- The rebase produces conflicts that cannot be resolved with confidence.
+- Validation fails after the rebase, and the failure is not clearly unrelated
+  to the change.
+- The push keeps being rejected after several rebase-and-retry rounds.
+- The remote rejects the push for a reason other than `main` having advanced,
+  such as missing permissions or a protected branch.
+
+In those cases leave the commits on the session branch, do not delete the
+worktree, and say exactly what blocked the merge so a human can finish it.
+
+Verify the merge rather than assuming it. After the push reports success:
+
+```powershell
+git fetch origin
+git log origin/main --oneline -1
+git status --short --branch
+```
+
+The session's last commit must appear on `origin/main`. Treat this check, not
+the absence of an error message, as the proof that integration happened.
+
 ### Clean Up
 
-Only after confirming that the push succeeded:
+Only after the verification above shows the session's commit on `origin/main`:
 
 ```powershell
 Set-Location "<primary-repository-path>"
@@ -160,5 +191,25 @@ Before reporting completion:
 2. Run validation proportional to the change.
 3. Confirm new behavior has tests when practical.
 4. Report checks run and any checks not run.
-5. Do not deploy unless the user explicitly requests deployment. Pushing or
+5. End every summary with an explicit merge status line, described below.
+6. Do not deploy unless the user explicitly requests deployment. Pushing or
    merging to `main` does not deploy this project automatically.
+
+### Report the Merge Status
+
+The last line of every summary must state whether the work reached
+`origin/main`. Never leave this implicit, and never let a description of the
+code changes stand in for it. Use one of these forms:
+
+- `Merge status: merged into main` — the push succeeded and the verification
+  above confirmed the commit on `origin/main`.
+- `Merge status: NOT merged — <reason>` — the work is committed on
+  `agent/<session>` but not on `main`. Name the blocker (conflict, failing
+  validation, rejected push, task incomplete) and what a human needs to do
+  next.
+- `Merge status: nothing to merge` — the task produced no commits, such as a
+  question answered or an investigation with no code change.
+
+A session that stops early, runs out of scope, or hands back for review still
+reports its merge status. "NOT merged" is an acceptable outcome; silence about
+it is not.
