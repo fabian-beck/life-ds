@@ -1510,13 +1510,26 @@
           " visible steps match “" +
           state.query +
           "”"
-        : "Click any step for its prompt, output schema, dependencies and recorded calls.";
+        : "Click any step for its prompt, output schema, dependencies and " +
+          "recorded calls. Hovering a shaded band names its concern; " +
+          "selecting a step labels its arrows with the data that travels " +
+          "along them.";
 
       /* The caption says only what the drawing cannot: what the unlabelled
-         marks mean and what the figure does when it is touched. The layer
-         semantics and the branch structure belong to the authored prose above,
-         and repeating them here made the figure argue with the text. */
+         marks mean. The layer semantics and the branch structure belong to the
+         authored prose above, and repeating them here made the figure argue
+         with the text.
+
+         It describes the figure rather than what the figure does when it is
+         touched, because the printed report is read as a document in its own
+         right and there is nothing to touch in it. The affordances are the
+         hint's, above the drawing, and the hint does not print. For the same
+         reason a mark is explained only when it is actually drawn: the dashed
+         edge exists only while a filter hides the step it passes through. */
       const sourceCount = geometry.nodes.length - stepNodes.length;
+      const indirect = geometry.edges.some((edge) => {
+        return edge.indirect;
+      });
       const opening =
         "<b>Figure " +
         figureNumber +
@@ -1548,15 +1561,19 @@
       caption.innerHTML =
         opening +
         (sourceCount
-          ? "Gray boxes are files this pipeline only reads, written by the " +
-            "other one. "
+          ? "Gray boxes, joined by dotted lines, are files this pipeline only " +
+            "reads, written by the other one. "
           : "") +
         (geometry.bands.length
-          ? "Hovering a shaded band names the concern its steps share. "
+          ? "A shaded band gathers the steps that share one concern, named " +
+            "along its head. "
           : "") +
-        "Selecting a step labels its arrows with the data that travels along " +
-        "them, and a dashed arrow stands for a dependency whose intermediate " +
-        "step the filters have hidden.";
+        (indirect
+          ? "A dashed arrow stands for a dependency whose intermediate step " +
+            "the filters have hidden. "
+          : "") +
+        "Each step names the script it lives in, its kind, the model it calls " +
+        "and the files it writes.";
     }
 
     /* ------------------------------------------------------------- mount */
