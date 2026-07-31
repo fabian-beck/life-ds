@@ -97,7 +97,7 @@ def strip_namespace(tag: str) -> str:
     return tag.split("}", 1)[1] if "}" in tag else tag
 
 
-def normalise_bw_color(
+def normalize_bw_color(
     value: str | None, *, allow_none: bool = False, warn: bool = False
 ) -> str | None:
     if value is None:
@@ -190,7 +190,7 @@ def sanitise_pattern_svg(svg: str) -> str:
             height = element.attrib.get("height", "160")
             x = element.attrib.get("x", "0")
             y = element.attrib.get("y", "0")
-            fill = normalise_bw_color(element.attrib.get("fill"), allow_none=True)
+            fill = normalize_bw_color(element.attrib.get("fill"), allow_none=True)
             if (
                 fill == "#000000"
                 and x in {"0", "0.0"}
@@ -207,15 +207,13 @@ def sanitise_pattern_svg(svg: str) -> str:
             value_text = element.attrib[attr]
             if lowered in {"fill", "stroke"}:
                 allow_none = lowered == "fill"
-                colour = normalise_bw_color(
-                    value_text, allow_none=allow_none, warn=True
-                )
-                if colour is None:
+                color = normalize_bw_color(value_text, allow_none=allow_none, warn=True)
+                if color is None:
                     raise ValueError(
                         f"SVG {attr} must use only black (#000000), white (#FFFFFF), or none. Got: {value_text}"
                     )
-                element.set(attr, colour)
-                if colour == "#FFFFFF":
+                element.set(attr, color)
+                if color == "#FFFFFF":
                     white_element_present = True
             elif lowered in {"fill-opacity", "stroke-opacity", "opacity"}:
                 # Remove opacity attributes - opacity will be controlled globally
@@ -421,7 +419,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
     client = OpenAI(api_key=api_key)
     system = (
-        "You are a senior brand designer specialising in data storytelling interfaces. "
+        "You are a senior brand designer specializing in data storytelling interfaces. "
         "You respond with strict JSON that adheres to the provided schema. "
         "IMPORTANT: All output text must be in English only, regardless of the source language."
     )
@@ -463,7 +461,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     return cast(Dict[str, Any], json.loads(content))
 
 
-def normalise_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
+def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError("Response payload must be a JSON object.")
     primary = payload.get("primary")
@@ -559,7 +557,7 @@ def generate_style(
     payload = call_openai(prompt, model)
 
     print("[Step 4/5] Validating and normalizing style configuration...")
-    style_config = normalise_payload(payload)
+    style_config = normalize_payload(payload)
     print(
         f"[Step 4/5] Colors: primary={style_config['primary']}, secondary={style_config['secondary']}, background={style_config['background']}"
     )

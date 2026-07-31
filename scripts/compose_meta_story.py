@@ -855,7 +855,7 @@ def collect_prose_slots(composed: CompositionResult) -> List[tuple]:
 
 
 def collect_caption_slots(composed: CompositionResult) -> List[tuple]:
-    """The caption layer as ``(slot_id, text)`` — the prose's neighbours.
+    """The caption layer as ``(slot_id, text)`` — the prose's neighbors.
 
     Event texts are left out on purpose: there are dozens, each one sentence
     long, and the chapter, circle and stop texts are the ones that sit as
@@ -1373,7 +1373,7 @@ def remove_people_from_story(
 
     Touches the cast, the subtopics, the chapters' events, the network and the
     map. The prose is left alone — it may still name the removed person, which
-    is why callers are told to recompose the story afterwards.
+    is why callers are told to recompose the story afterward.
     """
     removed = set(person_ids)
     if not removed:

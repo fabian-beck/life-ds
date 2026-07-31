@@ -20,7 +20,7 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 
 
-def _normalise(value: Any) -> str:
+def _normalize(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
 
 
@@ -39,19 +39,19 @@ def _resolve_old_event(
     index = reference.get("event_index")
     if isinstance(index, int) and 0 <= index < len(old_events):
         indexed = old_events[index]
-        same_title = _normalise(indexed.get("title")) == _normalise(
+        same_title = _normalize(indexed.get("title")) == _normalize(
             reference.get("event_title")
         )
         same_date = indexed.get("date") == reference.get("event_date")
         if same_title or same_date:
             return indexed
 
-    title = _normalise(reference.get("event_title"))
+    title = _normalize(reference.get("event_title"))
     date = reference.get("event_date")
     matches = [
         event
         for event in old_events
-        if _normalise(event.get("title")) == title and event.get("date") == date
+        if _normalize(event.get("title")) == title and event.get("date") == date
     ]
     return matches[0] if len(matches) == 1 else _event_snapshot(reference)
 
@@ -66,13 +66,13 @@ def _find_new_event(
         if len(matches) == 1:
             return matches[0]
 
-    old_title = _normalise(old_event.get("title"))
+    old_title = _normalize(old_event.get("title"))
     old_date = old_event.get("date")
 
     exact = [
         i
         for i, event in enumerate(new_events)
-        if _normalise(event.get("title")) == old_title and event.get("date") == old_date
+        if _normalize(event.get("title")) == old_title and event.get("date") == old_date
     ]
     if len(exact) == 1:
         return exact[0]
@@ -80,7 +80,7 @@ def _find_new_event(
     same_title = [
         i
         for i, event in enumerate(new_events)
-        if old_title and _normalise(event.get("title")) == old_title
+        if old_title and _normalize(event.get("title")) == old_title
     ]
     if len(same_title) == 1:
         return same_title[0]
@@ -97,7 +97,7 @@ def _find_new_event(
     scored: List[Tuple[float, int]] = []
     if old_title:
         for i, event in enumerate(new_events):
-            title = _normalise(event.get("title"))
+            title = _normalize(event.get("title"))
             score = SequenceMatcher(None, old_title, title).ratio()
             if old_date and event.get("date") == old_date:
                 score += 0.1

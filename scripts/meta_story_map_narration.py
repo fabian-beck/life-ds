@@ -509,7 +509,7 @@ def main() -> int:
     parser.add_argument(
         "--skip-translate",
         action="store_true",
-        help="Skip re-translating the story afterwards",
+        help="Skip re-translating the story afterward",
     )
     parser.add_argument(
         "--translate-langs",

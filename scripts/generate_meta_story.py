@@ -225,7 +225,7 @@ class HistoricalContextEvent(BaseModel):
         description=(
             "Label importance 1-3 for decluttering overlapping timeline labels "
             "(3 = a defining landmark that most shaped these people / that any "
-            "reader would recognise, 2 = notable, 1 = minor background detail). "
+            "reader would recognize, 2 = notable, 1 = minor background detail). "
             "When labels compete for horizontal space, higher priority wins."
         ),
     )
@@ -418,7 +418,7 @@ def parse_event_date(event: Dict[str, Any]) -> Optional[int]:
 #   (killed by /\bengag/ matching "engaged"), "Earns MS and PhD at Berkeley"
 #   (a marriage mentioned in its description), "Moves company to Paderborn"
 #   (/\brelocat/).
-# - Its judgement was topic-blind. "Birth in Bamberg" is noise for a computing
+# - Its judgment was topic-blind. "Birth in Bamberg" is noise for a computing
 #   story and evidence for a place-based one like citizens_of_bamberg; a fixed
 #   pattern list cannot tell those apart.
 # - It was English-only, silent, and left no record of what it removed.
@@ -826,7 +826,7 @@ def phase2_event_collection(
     and the first 15 event titles — so gating on them silently deleted any
     essential event that fell in a gap between chapters or outside the outer
     bounds. Relevance is Phase 3's decision and the chapter fit is made
-    afterwards, against the events that actually survived
+    afterward, against the events that actually survived
     (``fit_chapters_to_events``).
 
     Args:
@@ -913,7 +913,7 @@ def phase3_ai_event_filtering(
 
     Reviews the story's whole event pool, not per-chapter buckets: relevance
     is a property of the event and the topic, not of which era box an event
-    happened to land in. Chapters are fitted afterwards, to whatever survives.
+    happened to land in. Chapters are fitted afterward, to whatever survives.
 
     Args:
         plan: Output from Phase 1
@@ -997,7 +997,7 @@ a death matters to a story about persecution). Judge each against THIS topic."""
             print(f"  - {person_id}")
         print(
             "Every dated event of theirs was reviewed, so this is a curation "
-            "judgement, not a date-range gap: either the AI filtering was too "
+            "judgment, not a date-range gap: either the AI filtering was too "
             "strict or the person does not belong in this story."
         )
 
@@ -1211,7 +1211,7 @@ def fit_chapters_to_events(
 
     Nearest-chapter assignment over the ordered, non-overlapping proposal is
     a partition of the date line into contiguous regions, so snapping the
-    spans afterwards cannot reorder the chapters or make them overlap.
+    spans afterward cannot reorder the chapters or make them overlap.
     Chapters left without events are dropped: an empty era is a gap in the
     timeline, not a chapter.
     """
@@ -1441,7 +1441,7 @@ RULES:
 - Only include events you are certain about. Do not invent.
 - For wikipedia_url: provide the full URL if confident the article exists, else null
 - For priority: rate 1-3 how strongly each event defines this story (3 = a defining
-  landmark that most shaped these people or that any reader would recognise, 2 = notable,
+  landmark that most shaped these people or that any reader would recognize, 2 = notable,
   1 = minor background detail). Reserve 3 for the few events that truly anchor the era —
   overlapping labels are decluttered by priority, so the highest-priority ones win space.
 - Many chapters may need ZERO events — only include one if it truly shaped these people's lives
