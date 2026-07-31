@@ -63,8 +63,8 @@ __BODY__
 
     <footer class="colophon">
       <p>
-        Authored prose lives in <code>__SOURCE__</code>. Every figure, table,
-        count and prompt on this page is computed at build time by
+        Authored prose lives in <code>__SOURCE__</code>. Every figure, table
+        and count in this report is computed at build time by
         <code>scripts/generate_report.py</code>—from the abstract syntax trees
         of <code>scripts/</code>, from the repository itself, and from runs
         recorded by <code>scripts/record_pipeline_run.py</code>. Step
