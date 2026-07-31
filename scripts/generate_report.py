@@ -4,6 +4,7 @@
     python scripts/generate_report.py              # rebuild the page
     python scripts/generate_report.py --check      # drift check only
     python scripts/generate_report.py --skip-ai    # no API calls
+    python scripts/generate_report.py --shots      # retake stale screenshots
 
 The page is written to `docs/report/index.html` as one self-contained file.
 
@@ -20,6 +21,9 @@ The report is half written and half measured, and the two halves never mix.
    fingerprint of each step's source, so a rebuild only pays for what changed.
 5. Runs recorded by `scripts/record_pipeline_run.py`—real prompts, real
    responses, timings and token counts. Optional; the page renders without them.
+6. Screenshots of the running application, declared in the markdown as a
+   position to photograph and taken from it by a browser, so a figure of the
+   interface can be retaken instead of being pasted in.
 
 `--check` runs only the drift checks: it fails when a documented step no longer
 exists, when a model call site is not claimed by any step in `spec.py`, or when
@@ -40,7 +44,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from config import enable_utf8_console  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
-from pipeline_docs import render, report, spec, validate  # noqa: E402
+from pipeline_docs import render, report, screenshots, spec, validate  # noqa: E402
 from pipeline_docs.capture import merge_records  # noqa: E402
 from pipeline_docs.introspect import scan_codebase  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
@@ -92,6 +96,23 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         help=f"Directory of recorded runs (default: {RUNS_DIR}).",
     )
     parser.add_argument(
+        "--shots",
+        nargs="?",
+        const=screenshots.STALE,
+        metavar="WHICH",
+        help=(
+            "Recapture the screenshots the report declares before building: "
+            "missing and stale ones by default, 'all' for every one, or a "
+            "comma-separated list of ids. Needs a browser and starts a dev "
+            "server."
+        ),
+    )
+    parser.add_argument(
+        "--shots-base-url",
+        metavar="URL",
+        help="Capture against this running server instead of starting one.",
+    )
+    parser.add_argument(
         "--verbose", action="store_true", help="Log each step summarized."
     )
     return parser.parse_args(list(argv))
@@ -100,6 +121,9 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
 def main(argv: Sequence[str] | None = None) -> int:
     enable_utf8_console()
     args = parse_args(sys.argv[1:] if argv is None else argv)
+    if args.check and args.shots:
+        print("--check writes nothing, and --shots writes pictures. Pick one.")
+        return 2
 
     print("Scanning scripts/ ...")
     codebase = scan_codebase()
@@ -145,6 +169,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         f"{len(document.notes)} notes."
     )
 
+    if args.shots:
+        # Before the check, so a capture taken now answers the check that would
+        # otherwise fail for the picture it just took.
+        if _capture_shots(document, args) != 0:
+            return 1
+
     print("Checking the report against the payload ...")
     problems = validate.check_report(document, measurements, codebase)
     if validate.report(problems, subject="Report"):
@@ -169,10 +199,52 @@ def main(argv: Sequence[str] | None = None) -> int:
     else:
         print("  No recorded runs found—the page will show templates only.")
 
-    payload = build_payload(codebase, summaries, runs, document, measurements)
+    album = screenshots.collect(document)
+    shots = screenshots.payload(album)
+    if shots:
+        inlined = sum(shot.get("bytes", 0) for shot in shots.values())
+        print(
+            f"  {len(shots)} screenshot(s), {inlined / 1024:.0f} KB inlined "
+            f"({sum(1 for shot in shots.values() if shot['status'] != 'current')} "
+            "to retake)."
+        )
+
+    payload = build_payload(codebase, summaries, runs, document, measurements, shots)
     out = render.write(payload, args.out, document)
     size_kb = out.stat().st_size / 1024
     print(f"\nWrote {out} ({size_kb:.0f} KB).")
+    return 0
+
+
+def _capture_shots(document: report.Document, args: argparse.Namespace) -> int:
+    """Retake the declared screenshots the `--shots` argument asks for."""
+    album = screenshots.collect(document)
+    try:
+        wanted = album.select(args.shots)
+    except screenshots.ScreenshotError as error:
+        print(f"  ERROR: {error}")
+        return 1
+    if not wanted:
+        print("Screenshots: every declared shot is current.")
+        return 0
+
+    print(f"Capturing {len(wanted)} screenshot(s) ...")
+    for shot in wanted:
+        print(f"  {shot.id}: {shot.describe()}")
+    try:
+        _, failures = screenshots.capture(
+            wanted,
+            base_url=args.shots_base_url,
+            verbose=args.verbose,
+        )
+    except screenshots.ScreenshotError as error:
+        print(f"  ERROR: {error}")
+        return 1
+    if failures:
+        print("\nSome screenshots could not be taken:")
+        for failure in failures:
+            print(f"  {failure}")
+        return 1
     return 0
 
 

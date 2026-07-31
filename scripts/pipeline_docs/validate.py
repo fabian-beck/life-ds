@@ -20,9 +20,10 @@ cites are a warning only—they cost a measurement, not a claim.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Set
+from pathlib import Path
+from typing import Dict, List, Optional, Set
 
-from . import spec, teaser
+from . import screenshots, spec, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
@@ -304,6 +305,7 @@ def check_report(
         )
 
     problems.extend(_check_teaser(document, facts))
+    problems.extend(_check_screenshots(document))
 
     missing_lanes = {spec.PERSON, spec.META} - lanes_drawn
     if missing_lanes:
@@ -360,6 +362,92 @@ def _check_teaser(document: Document, facts: Dict[str, Fact]) -> List[Problem]:
                         "references it",
                     )
                 )
+    return problems
+
+
+def _check_screenshots(
+    document: Document, directory: Optional[Path] = None
+) -> List[Problem]:
+    """Every declared screenshot has to describe a capture, and have one.
+
+    A missing picture is an error for the same reason a missing measurement is:
+    the block would render as a hole in a page whose whole claim is that it was
+    derived. A stale one is a warning—the figure still shows the application,
+    just not from the position the report now describes—and it names the command
+    that fixes it.
+
+    Whether a *current* capture still resembles the application is outside what
+    this can know, which is the honest limit of a described figure and the reason
+    `--shots all` exists.
+    """
+    where_dir = directory or screenshots.SHOTS_DIR
+    problems: List[Problem] = []
+    seen: Dict[str, int] = {}
+    parsed: List[screenshots.Shot] = []
+
+    for mount in document.mounts:
+        if mount.component != "screenshot":
+            continue
+        where = f"report.md line {mount.line} ('::: screenshot')"
+        try:
+            shot = screenshots.parse(mount.params, mount.body_markdown, mount.line)
+        except screenshots.ScreenshotError as error:
+            problems.append(Problem("error", where, str(error)))
+            continue
+        if shot.id in seen:
+            problems.append(
+                Problem(
+                    "error",
+                    where,
+                    f"id '{shot.id}' is already used at line {seen[shot.id]}—two "
+                    "shots would write the same file",
+                )
+            )
+            continue
+        seen[shot.id] = mount.line
+        parsed.append(shot)
+
+    album = screenshots.Album(parsed, screenshots.load_index(where_dir), where_dir)
+    for shot in parsed:
+        where = f"report.md line {shot.line} ('::: screenshot id={shot.id}')"
+        status = album.status(shot)
+        if status == "missing":
+            problems.append(
+                Problem(
+                    "error",
+                    where,
+                    "no capture on disk—take it with "
+                    f"'python scripts/generate_report.py --shots {shot.id}'",
+                )
+            )
+        elif status == "stale":
+            problems.append(
+                Problem(
+                    "warning",
+                    where,
+                    "the declaration changed since the capture was taken—retake "
+                    f"it with 'python scripts/generate_report.py --shots {shot.id}'",
+                )
+            )
+        capture = album.captures.get(shot.id)
+        if capture and capture.bytes > 1_500_000:
+            problems.append(
+                Problem(
+                    "warning",
+                    where,
+                    f"the capture is {capture.bytes // 1024} KB and is inlined "
+                    "into the page—consider format=jpeg or a smaller viewport",
+                )
+            )
+
+    for orphan in screenshots.prune(album):
+        problems.append(
+            Problem(
+                "warning",
+                "docs/report/screenshots",
+                f"'{orphan}' was captured for a block the report no longer has",
+            )
+        )
     return problems
 
 

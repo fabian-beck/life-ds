@@ -428,6 +428,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
+| Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks, pairs each with the picture on disk, embeds it as a data URI and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
 `spec.py` and `report.md` are the only hand-maintained inputs.
 
@@ -442,9 +443,10 @@ is therefore an error rather than a silent omission.
 It also fails when the authored report no longer resolves: an unknown
 `{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure, a
 figure whose geometry is inconsistent, an unknown or misconfigured
-`::: component`, a lane or script that no longer exists, or a pipeline that no
-chart draws. A fact that is measured but never cited, and a figure part no
-phrase references, are warnings rather than errors.
+`::: component`, a lane or script that no longer exists, a pipeline that no
+chart draws, or a declared screenshot with no picture on disk. A fact that is
+measured but never cited, a figure part no phrase references, and a screenshot
+whose declaration moved since it was taken are warnings rather than errors.
 
 The check needs no API key, so it is safe to run anywhere. It is deliberately
 **not** part of `npm run validate`; run it after changing any generation script
@@ -511,6 +513,52 @@ by `caption()` in `assets/app.js`, so call sites need not repeat it.
 
 Adding a new citable number means one `Fact` in `facts.py`, measured from the
 repository rather than typed in.
+
+### Screenshots of the Application
+
+A figure showing the interface is **described in `report.md`, not pasted in**.
+The block says where in the application the picture is taken; a browser takes it
+when asked, so a changed interface is one command away from changed figures.
+
+```markdown
+::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone"
+Optional authored prose, kept above the figure.
+:::
+```
+
+| Argument | Meaning |
+| --- | --- |
+| `id` | Stable name. Names the file (`docs/report/screenshots/<id>.jpg`) and is what `--shots <id>` selects. |
+| `route` | Where in the application, written as it appears in the address bar: `#/en/story/<person>?event=13`. Application state—language, story, position, open network view—is all in the URL, so the position is a string. |
+| `caption` | The figure's caption. Required, and outside the fingerprint: rewording it does not make the picture stale. |
+| `width`, `height` | Viewport in CSS pixels (default 1280×820). A phone shot is 390×844. |
+| `wait` | A selector that must be visible before the shot—the honest way to wait for a story to have loaded. |
+| `anchor`, `scroll` | Where in the document. `anchor` is a selector scrolled to the top of the viewport (`.network-section`, `.chapters-section`); `scroll` adjusts relative to it, or is an absolute offset when there is no anchor. Prefer an anchor: a meta story grows as its components load, so a bare pixel offset lands somewhere else on a slower machine. |
+| `settle` | Milliseconds to wait after that, for a simulation to converge or a camera to arrive. |
+| `clip` | `x,y,width,height` in CSS pixels, when the figure is one region rather than the screen. |
+| `scale` | Device pixel ratio (default 2, for print). |
+| `format`, `quality` | `jpeg` (default, quality 88) or `png`. The pictures are inlined into the single-file report, and a lossless capture of the landing page is 2.3 MB against 0.5 MB as a JPEG nobody can tell apart. Use `png` when the subject is a hairline or a screenful of small type. |
+| `alt` | Alternative text, when the caption does not serve. |
+
+```bash
+npm run report:shots                                     # missing and stale ones
+python scripts/generate_report.py --shots all            # every declared shot
+python scripts/generate_report.py --shots person-story   # one of them
+python scripts/generate_report.py --shots --shots-base-url http://127.0.0.1:5173/life-ds/
+```
+
+Capture starts a dev server of its own on port 4177 unless one already answers
+there or `--shots-base-url` names another. It is **not** part of an ordinary
+build: a build embeds what is on disk, so `--check` stays runnable without a
+browser. `docs/report/screenshots/captures.json` records, per shot, the
+fingerprint of the declaration the picture was taken from. A declaration that
+has moved since makes the figure *stale*—a warning naming the command that
+retakes it—and a declaration with no picture at all is a build error.
+
+Staleness is a property of the description, not of the application: nothing here
+can tell that the interface changed under an unchanged declaration. Retake
+everything with `--shots all` after a visible change to the application, and
+commit the pictures along with `captures.json`.
 
 ### The Teaser Figure
 

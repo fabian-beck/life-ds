@@ -315,7 +315,14 @@ within it, and the open or closed condition of the network view. Every position
 in a story is therefore a citable address, movement within a story replaces the
 history entry while movement between stories pushes one, and a reader arriving
 at a meta story from a person's story is returned to the position from which
-they left.
+they left.^[That addressability is what lets the figures in this section be
+declared rather than deposited. Each one names the position it is taken
+from—a route, a viewport, and where relevant a section to scroll to—and is
+photographed from it by a browser when the report is built, so a changed
+interface is one command away from a changed figure.]
+
+::: screenshot id=landing route=#/en width=1280 height=820 settle=2500 caption="The entry point: a collection carousel, role filters and the generated portrait of every subject in the corpus"
+:::
 
 ### Person stories
 
@@ -349,6 +356,11 @@ typography and background pattern—injected as CSS custom properties, so that
 the design system is data rather than code and each subject is presented in a
 visual register of its own.
 
+::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone: the dated narrative above, the map beneath it centered on the event's place, the chapter and the icon timeline along the bottom edge"
+The address names the event rather than the slide, so the figure survives the
+insertion of a chapter above it.
+:::
+
 ### Meta stories
 
 A meta story presents a theme across several biographies, and its structure is
@@ -371,6 +383,9 @@ and the camera flies to each geographic stop as its card enters the viewport,
 zooming to a place or fitting a bounding box according to how dispersed the
 stop's events are. Here the basemap keeps its labels, since the section is
 about where the theme was located.
+
+::: screenshot id=meta-timeline route=#/en/meta/computing_pioneers width=1280 height=820 wait=".chapters-section" anchor=".chapters-section" scroll=2000 settle=5000 caption="The timeline section of a meta story, pinned while its narration scrolls: one lane per subject, grouped into the chapters the composition names, with the events of each life marked on it"
+:::
 
 The closing card grid links to the individual stories of every person the
 theme is built from, and each person's story links back. The two story types

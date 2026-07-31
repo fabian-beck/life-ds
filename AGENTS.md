@@ -33,7 +33,10 @@ to orient yourself before changing a generation script.
 Its prose is authored in `docs/report/report.md`; everything factual is computed
 at build time, so never hand-edit `index.html`. Run
 `python scripts/generate_report.py --check` after changing a generation script or
-the report source.
+the report source. Its screenshots of the application are described in the same
+markdown and taken by a browser—`npm run report:shots` retakes the ones whose
+description moved, `--shots all` retakes them after the interface itself
+changed.
 
 The page prints as a complete document—`npm run report:pdf`, or Ctrl+P in a
 browser—including an appendix that lays out on paper what the step drawer shows

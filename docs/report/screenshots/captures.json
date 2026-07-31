@@ -1,0 +1,35 @@
+{
+  "note": "Written by scripts/generate_report.py --shots. Each entry records the fingerprint of the '::: screenshot' declaration the picture was taken from, which is how a build knows a figure is stale.",
+  "shots": {
+    "landing": {
+      "file": "landing.jpg",
+      "fingerprint": "d11d87325e16",
+      "captured": "2026-07-31T08:24:09Z",
+      "bytes": 552684,
+      "css_width": 1280,
+      "css_height": 820,
+      "scale": 2,
+      "route": "#/en"
+    },
+    "meta-timeline": {
+      "file": "meta-timeline.jpg",
+      "fingerprint": "8d2bfdb4126b",
+      "captured": "2026-07-31T08:24:46Z",
+      "bytes": 242647,
+      "css_width": 1280,
+      "css_height": 820,
+      "scale": 2,
+      "route": "#/en/meta/computing_pioneers"
+    },
+    "person-story": {
+      "file": "person-story.jpg",
+      "fingerprint": "ae70a7e0fc19",
+      "captured": "2026-07-31T08:24:26Z",
+      "bytes": 182899,
+      "css_width": 390,
+      "css_height": 844,
+      "scale": 2,
+      "route": "#/en/story/alan_turing?event=13"
+    }
+  }
+}

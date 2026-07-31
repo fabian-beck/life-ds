@@ -265,6 +265,7 @@ def build_payload(
     runs: Dict[str, Any],
     document: Optional[Document] = None,
     facts: Optional[Dict[str, facts_module.Fact]] = None,
+    shots: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     stats = _run_stats(runs)
     steps: List[Dict[str, Any]] = []
@@ -335,6 +336,7 @@ def build_payload(
         "lanes": spec.LANES,
         "kinds": KIND_META,
         "teaser": teaser.scene(),
+        "screenshots": shots or {},
         "steps": steps,
         "groups": [group.__dict__ for group in spec.GROUPS],
         "artifacts": [artifact.__dict__ for artifact in spec.ARTIFACTS],

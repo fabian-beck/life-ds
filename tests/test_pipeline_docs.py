@@ -13,6 +13,7 @@ import ast
 import json
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -21,7 +22,8 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from pipeline_docs import facts as facts_module  # noqa: E402
-from pipeline_docs import render, report, spec, teaser, validate  # noqa: E402
+from pipeline_docs import render, report, screenshots  # noqa: E402
+from pipeline_docs import spec, teaser, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase, scan_script  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 
@@ -769,9 +771,18 @@ class ReportSourceTests(unittest.TestCase):
         self.assertIn("4.2", subsections)
 
     def test_the_prose_states_no_number_it_could_have_cited(self) -> None:
-        """A transcribed count is the one thing this design exists to prevent."""
+        """A transcribed count is the one thing this design exists to prevent.
+
+        Directive lines are excluded: a screenshot's viewport and a route that
+        names an event index are addresses the browser is given, not claims the
+        report makes, and they are read by nobody as prose.
+        """
         source = REPORT_SOURCE.read_text(encoding="utf-8")
-        body = report.split_front_matter(source)[1]
+        body = "\n".join(
+            line
+            for line in report.split_front_matter(source)[1].splitlines()
+            if not line.startswith(":::")
+        )
         for fact in self.facts.values():
             if fact.value is None or fact.value < 10:
                 continue  # small integers appear in ordinary prose
@@ -801,6 +812,151 @@ class ReportSourceTests(unittest.TestCase):
                 js,
                 rf"\n    {name}: function",
                 f"app.js has no renderer for '::: {name}'",
+            )
+
+
+class ScreenshotTests(unittest.TestCase):
+    """Figures of the interface are described, so the description must hold.
+
+    A screenshot is the one figure in the report that no reader and no build can
+    re-derive by reading the source. What keeps it honest is that the position it
+    was taken from is written down and checked: the picture must exist, and the
+    build must notice when the declaration it was taken from has moved.
+    """
+
+    HEAD = "---\ntitle: T\n---\n"
+
+    @staticmethod
+    def _block(**params) -> str:
+        settings = dict(
+            id="shot-one",
+            route="#/en/story/ada_lovelace",
+            caption="A story slide",
+        )
+        settings.update(params)
+        arguments = " ".join(f'{key}="{value}"' for key, value in settings.items())
+        return f"\n## S\n\n::: screenshot {arguments}\n:::\n"
+
+    def test_a_declaration_becomes_a_typed_shot(self) -> None:
+        document = _compile(
+            self.HEAD
+            + self._block(width=390, height=844, clip="0,0,390,200", format="png")
+        )
+        shot = screenshots.parse(document.mounts[0].params)
+        self.assertEqual(shot.route, "#/en/story/ada_lovelace")
+        self.assertEqual(shot.css_size, (390, 200))
+        self.assertEqual(shot.clip, (0, 0, 390, 200))
+        self.assertEqual(shot.file_name, "shot-one.png")
+
+    def test_the_fingerprint_covers_the_position_and_not_the_prose(self) -> None:
+        """Otherwise an editing pass would report every figure as stale."""
+        base = screenshots.parse({"id": "a", "route": "#/en", "caption": "One"})
+        reworded = screenshots.parse({"id": "a", "route": "#/en", "caption": "Other"})
+        moved = screenshots.parse({"id": "a", "route": "#/de", "caption": "One"})
+        resized = screenshots.parse(
+            {"id": "a", "route": "#/en", "caption": "One", "width": "390"}
+        )
+        self.assertEqual(base.fingerprint, reworded.fingerprint)
+        self.assertNotEqual(base.fingerprint, moved.fingerprint)
+        self.assertNotEqual(base.fingerprint, resized.fingerprint)
+
+    def test_a_declaration_that_describes_no_capture_is_rejected(self) -> None:
+        for params in (
+            {"id": "a", "route": "", "caption": "c"},
+            {"id": "a b", "route": "#/en", "caption": "c"},
+            {"id": "a", "route": "#/en", "caption": "c", "clip": "1,2,3"},
+            {"id": "a", "route": "#/en", "caption": "c", "width": "wide"},
+            {"id": "a", "route": "#/en", "caption": "c", "format": "gif"},
+            {"id": "a", "route": "#/en", "caption": ""},
+        ):
+            with self.assertRaises(screenshots.ScreenshotError):
+                screenshots.parse(params)
+
+    def test_a_missing_picture_fails_the_build_and_a_moved_one_warns(self) -> None:
+        document = _compile(self.HEAD + self._block())
+        with tempfile.TemporaryDirectory() as workspace:
+            directory = Path(workspace)
+            problems = validate._check_screenshots(document, directory)
+            self.assertEqual([problem.severity for problem in problems], ["error"])
+            self.assertIn("--shots shot-one", problems[0].message)
+
+            shot = screenshots.parse(document.mounts[0].params)
+            (directory / shot.file_name).write_bytes(b"picture")
+            screenshots.save_index(
+                {
+                    shot.id: screenshots.Capture(
+                        id=shot.id,
+                        file=shot.file_name,
+                        fingerprint=shot.fingerprint,
+                        captured="2026-01-01T00:00:00Z",
+                    )
+                },
+                directory,
+            )
+            self.assertEqual(validate._check_screenshots(document, directory), [])
+
+            moved = _compile(self.HEAD + self._block(route="#/de"))
+            problems = validate._check_screenshots(moved, directory)
+            self.assertEqual([problem.severity for problem in problems], ["warning"])
+            self.assertIn("retake", problems[0].message)
+
+    def test_two_blocks_may_not_claim_one_file(self) -> None:
+        source = self.HEAD + self._block() + self._block(route="#/de")
+        problems = validate._check_screenshots(_compile(source), Path("nowhere"))
+        self.assertIn("already used", problems[0].message)
+
+    def test_the_picture_reaches_the_page_inlined(self) -> None:
+        """The report is one file; a figure beside it would travel only sometimes."""
+        document = _compile(self.HEAD + self._block(format="png"))
+        with tempfile.TemporaryDirectory() as workspace:
+            directory = Path(workspace)
+            shot = screenshots.parse(document.mounts[0].params)
+            (directory / shot.file_name).write_bytes(b"\x89PNG\r\n")
+            screenshots.save_index(
+                {
+                    shot.id: screenshots.Capture(
+                        id=shot.id,
+                        file=shot.file_name,
+                        fingerprint=shot.fingerprint,
+                        captured="2026-01-01T00:00:00Z",
+                    )
+                },
+                directory,
+            )
+            embedded = screenshots.payload(screenshots.collect(document, directory))
+        entry = embedded["shot-one"]
+        self.assertEqual(entry["status"], "current")
+        self.assertTrue(entry["src"].startswith("data:image/png;base64,"))
+        self.assertIn(entry["route"], entry["declaration"])
+
+    def test_the_manifest_says_everything_the_capture_script_reads(self) -> None:
+        """Python owns the description; Node owns the browser. One contract."""
+        shot = screenshots.parse({"id": "a", "route": "#/en", "caption": "c"})
+        script = (SCRIPTS_DIR / "capture_report_screenshots.mjs").read_text(
+            encoding="utf-8"
+        )
+        entry = screenshots.manifest([shot])["shots"][0]
+        for key in entry:
+            self.assertIn(
+                f"shot.{key}",
+                script,
+                f"the manifest carries '{key}' and the capture script ignores it",
+            )
+
+    def test_the_report_ships_the_pictures_it_declares(self) -> None:
+        codebase = scan_codebase()
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"),
+            facts_module.collect(codebase, {"runs": []}),
+        )
+        album = screenshots.collect(document)
+        self.assertTrue(album.shots, "the report declares no screenshot")
+        for shot in album.shots:
+            self.assertEqual(
+                album.status(shot),
+                "current",
+                f"'{shot.id}' is {album.status(shot)}: run "
+                f"'python scripts/generate_report.py --shots {shot.id}'",
             )
 
 

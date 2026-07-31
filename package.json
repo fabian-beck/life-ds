@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "report:pdf": "node scripts/export_report_pdf.mjs",
+    "report:shots": "python scripts/generate_report.py --shots",
     "test:interface": "playwright test",
     "test:core": "npm run test:interface && python -m pytest",
     "test:interface:report": "playwright show-report",

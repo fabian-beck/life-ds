@@ -3757,6 +3757,57 @@
       }
     },
 
+    /* A view of the running application, taken from the position the markdown
+       declares. The picture arrives in the payload as a data URI, like every
+       other asset on this page, so the report stays one file.
+
+       Under the picture, in small type, is the declaration it was taken
+       from—route, viewport, capture date. It is there because this is the one
+       figure on the page a reader cannot re-derive by reading the source: the
+       line says which position of which build it shows, and names the state a
+       reader would have to reach to see it for themselves. */
+    screenshot: function (mount, params, numbers) {
+      const shot = (DATA.screenshots || {})[params.id];
+      if (!shot || !shot.src) {
+        mount.appendChild(
+          emptyNote(
+            "<strong>No capture for <code>::: screenshot id=" +
+              escapeHtml(params.id) +
+              "</code>.</strong><br>The position is declared in " +
+              "<code>docs/report/report.md</code>; the picture is taken from " +
+              "it by<br><br><code>python scripts/generate_report.py --shots " +
+              escapeHtml(params.id) +
+              "</code>"
+          )
+        );
+        return;
+      }
+      const provenance = [shot.declaration];
+      if (shot.captured)
+        provenance.push("captured " + shot.captured.slice(0, 10));
+      if (shot.status !== "current") {
+        provenance.push("the declaration has changed since—retake it");
+      }
+      mount.appendChild(
+        el("figure", { class: "figure shot" }, [
+          figureCaption("Figure", numbers.figure, shot.caption),
+          el("div", { class: "shot-frame" }, [
+            el("img", {
+              class: "shot-img",
+              src: shot.src,
+              alt: shot.alt || shot.caption,
+              // The intrinsic size in CSS pixels, so the page reserves the
+              // right box before the picture decodes—and so no lazy loading is
+              // needed, which on paper would risk printing an undecoded image.
+              width: shot.width,
+              height: shot.height,
+            }),
+          ]),
+          el("p", { class: "shot-meta", text: provenance.join("  ·  ") }),
+        ])
+      );
+    },
+
     /* The figure follows the space it is given: the largest drawing the column
        can actually hold. The full chart needs 990 units and the report's column
        is that wide only past about 1366px of viewport; the mid drawing needs
