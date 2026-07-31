@@ -766,7 +766,7 @@ subject of a sentence."""
                     "role": "system",
                     "content": "You are a journalist composing a biographical "
                     "data story from the material you are given. You never "
-                    "invent facts.",
+                    "invent facts, and you write in American English.",
                 },
                 {"role": "user", "content": prompt},
             ],

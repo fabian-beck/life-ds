@@ -314,7 +314,8 @@ REQUIREMENTS:
                     "role": "system",
                     "content": "You are a skilled narrative writer turning "
                     "geographic event data into short, factual story texts, "
-                    "and a careful curator of which places truly matter.",
+                    "and a careful curator of which places truly matter. "
+                    "Write in American English.",
                 },
                 {"role": "user", "content": prompt},
             ],

@@ -357,7 +357,7 @@ Every generated document exists in {{ app.locales }} languages
 ({{ app.languages }}). Translation is a generation step rather than an
 interface concern: the English document is produced first, a glossary pass then
 fixes the rendering of names and recurring terminology once, and only
-afterwards is each document translated, so that a subject carries one
+afterward is each document translated, so that a subject carries one
 designation throughout a story.
 
 Translated payloads carry a fingerprint of the source fields they cover, which

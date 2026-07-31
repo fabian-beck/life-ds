@@ -539,7 +539,7 @@ def review_social_network(
                     "content": "You are a careful biographical network editor. "
                     "You add, refine, and prune social-network ties strictly from "
                     "the evidence provided, never inventing people or unsupported "
-                    "connections.",
+                    "connections. You write in American English.",
                 },
                 {"role": "user", "content": prompt},
             ],

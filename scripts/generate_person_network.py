@@ -442,7 +442,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "You are a meticulous social network analyst who converts raw Wikipedia content into structured JSON ego networks. "
         "Focus on identifying significant relationships in a person's life, including family members, colleagues, mentors, "
         "students, collaborators, friends, rivals, and other important connections. "
-        "IMPORTANT: All output text must be in English only, regardless of the source language. "
+        "IMPORTANT: All output text must be in American English only, regardless of the source language. "
         "IMPORTANT: Use only 3-5 main relationship categories maximum to keep the network organized and focused."
     )
 

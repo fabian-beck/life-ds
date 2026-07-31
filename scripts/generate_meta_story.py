@@ -1655,7 +1655,8 @@ REQUIREMENTS:
                 {
                     "role": "system",
                     "content": "You are a skilled narrative writer turning "
-                    "relationship data into short, factual story texts.",
+                    "relationship data into short, factual story texts. "
+                    "Write in American English.",
                 },
                 {"role": "user", "content": prompt},
             ],

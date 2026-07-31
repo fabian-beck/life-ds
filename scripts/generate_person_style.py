@@ -421,7 +421,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     system = (
         "You are a senior brand designer specializing in data storytelling interfaces. "
         "You respond with strict JSON that adheres to the provided schema. "
-        "IMPORTANT: All output text must be in English only, regardless of the source language."
+        "IMPORTANT: All output text must be in American English only, regardless of the source language."
     )
     try:
         # Use Responses API for GPT-5.1 with reasoning support

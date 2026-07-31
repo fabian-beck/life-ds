@@ -2223,7 +2223,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "Write event descriptions that are chronologically accurate, factually focused, "
         "and balance professional achievements with personal human context. "
         "Use ISO-8601 dates, include date_precision as 'day', 'month', or 'year'. "
-        "All output must be in English only, regardless of source language."
+        "All output must be in American English only, regardless of source language."
     )
 
     instructions = (
@@ -2778,7 +2778,7 @@ def research_event_details(
                 "You are a research assistant specializing in biographical event details. "
                 "Provide specific, factual information for the given event. "
                 "Ensure descriptions are chronologically confined, concise, and balanced. "
-                "All output must be in English only. Be precise with locations and people."
+                "All output must be in American English only. Be precise with locations and people."
             )
 
             response = client.responses.parse(
@@ -3005,7 +3005,7 @@ def call_openai_chapter_generation(
         "You are a skilled biographer crafting a compelling narrative from life events. "
         "Your task is to organize events into engaging chapters that read like a well-told story. "
         "Write with energy and insight, making each chapter feel like part of a coherent journey. "
-        "All output must be in English only."
+        "All output must be in American English only."
     )
 
     instructions = (
