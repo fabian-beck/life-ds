@@ -141,7 +141,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(
         f"  {_count_sections(document.sections)} sections, "
         f"{len(document.mounts)} computed blocks, "
-        f"{len(set(document.citations))} distinct facts cited."
+        f"{len(set(document.citations))} distinct facts cited, "
+        f"{len(document.notes)} notes."
     )
 
     print("Checking the report against the payload ...")

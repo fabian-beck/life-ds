@@ -3737,6 +3737,117 @@
     sync();
   }
 
+  /* ---------------------------------------------------------------- notes */
+
+  /* Inline notes are authored once and read two ways. Python has already put
+     the text on the page in its printed form—a numbered list closing each
+     section—and every marker is a real link into it, so the notes work with
+     this file absent and on paper. What this adds is the screen reading: the
+     list is withdrawn and the marker opens the same text in a popover, which
+     keeps an aside off the measure until it is asked for.
+
+     The popover copies the list item it points at rather than carrying its own
+     copy of the text, so the two renderings cannot drift apart. It is
+     positioned in document coordinates, so it stays on its marker while the
+     reader scrolls. */
+  function renderNotePopovers() {
+    const refs = document.querySelectorAll(".report .noteref");
+    if (!refs.length) return;
+    document.body.classList.add("has-note-pop");
+
+    const number = el("p", { class: "note-pop-no" });
+    const body = el("div", { class: "note-pop-body" });
+    const pop = el(
+      "aside",
+      { class: "note-pop", id: "note-pop", role: "note", hidden: "" },
+      [number, body]
+    );
+    document.body.appendChild(pop);
+    let open = null;
+
+    function close() {
+      if (!open) return;
+      open.classList.remove("open");
+      open.setAttribute("aria-expanded", "false");
+      open = null;
+      pop.hidden = true;
+    }
+
+    // Below the marker by preference, above it when the viewport has no room
+    // there, and never past either edge of the measure.
+    function place(ref) {
+      const rect = ref.getBoundingClientRect();
+      const width = pop.offsetWidth;
+      const height = pop.offsetHeight;
+      const margin = 12;
+      const below = rect.bottom + 8;
+      const above = rect.top - height - 8;
+      const fitsBelow = below + height + margin <= window.innerHeight;
+      const left = Math.max(
+        margin,
+        Math.min(
+          rect.left + rect.width / 2 - width / 2,
+          window.innerWidth - width - margin
+        )
+      );
+      pop.style.left = left + window.scrollX + "px";
+      pop.style.top =
+        (fitsBelow || above < margin ? below : above) + window.scrollY + "px";
+    }
+
+    function show(ref) {
+      const note = document.getElementById(
+        (ref.getAttribute("href") || "").slice(1)
+      );
+      if (!note) return false;
+      const text = note.querySelector(".note-body");
+      close();
+      number.textContent = "Note " + (ref.textContent || "").trim();
+      body.innerHTML = text ? text.innerHTML : note.innerHTML;
+      pop.hidden = false;
+      place(ref);
+      ref.classList.add("open");
+      ref.setAttribute("aria-expanded", "true");
+      open = ref;
+      return true;
+    }
+
+    Array.prototype.forEach.call(refs, (ref) => {
+      ref.setAttribute("aria-expanded", "false");
+      ref.addEventListener("click", (event) => {
+        // A modified click is a request to open the link, not to read here.
+        if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+        if (open === ref) {
+          event.preventDefault();
+          close();
+          return;
+        }
+        // Only swallow the jump if there is something to show instead.
+        if (show(ref)) event.preventDefault();
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!open) return;
+      const target = event.target;
+      if (pop.contains(target)) return;
+      if (target.closest && target.closest(".noteref")) return;
+      close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+
+    window.addEventListener(
+      "resize",
+      () => {
+        if (open) place(open);
+      },
+      { passive: true }
+    );
+  }
+
   /* --------------------------------------------------------------- init */
 
   /* Hydrate the compiled Markdown. Document order matters: the figure and table
@@ -3785,4 +3896,5 @@
   hydrate();
   renderRail();
   renderTocButton();
+  renderNotePopovers();
 })();

@@ -467,7 +467,22 @@ name or file count belongs in it**—those are cited, so they cannot go stale.
 | `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. |
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
+| `^[an explanation]` | An inline note. Brackets nest, `\^[` escapes the syntax, and the body is collapsed to one line, so a note is inline-level by construction. |
 | `::: toc` | The table of contents. |
+
+**Notes are authored once and read two ways.** The compiler emits the printed
+form—a numbered list closing the section that raised the note, with every marker
+a real link into it—and `app.js` then withdraws that list on screen and shows
+the same text in a popover on the marker. The popover copies the list item it
+points at rather than carrying its own copy, so the two renderings cannot
+disagree, and with JavaScript off or on paper the notes are still there. A note
+belongs to a `##` section, decided from its position in the rendered page rather
+than from the order the compiler collected it in.
+
+Use a note for something a specialist reader may want and the sentence cannot
+carry—a mechanism named in passing, a consequence of a decision, the reason a
+number means what it does. Anything the argument depends on belongs in the
+prose or in a callout.
 
 Adding a new *kind* of computed block means two edits: a `ComponentSpec` in
 `report.py` (its required arguments and how many captions it emits) and a

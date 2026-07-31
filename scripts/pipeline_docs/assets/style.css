@@ -534,6 +534,106 @@ h1 {
   color: var(--ink-2);
 }
 
+/* ------------------------------------------------------------------ notes */
+
+/* An inline note is authored once and read two ways. What Python puts on the
+   page is the printed form: a numbered list closing the section it belongs to,
+   which is also where a reader without JavaScript lands when they follow a
+   marker. On screen `app.js` takes that list over—it hides it and shows the
+   same text in a popover on the marker—so an aside costs a click instead of a
+   paragraph, and neither rendering can say something the other does not. */
+.report .noteref {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.report .noteref sup {
+  padding: 0 1px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.66em;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 0;
+}
+
+.report .noteref:hover sup,
+.report .noteref.open sup {
+  border-bottom-color: var(--ink);
+  background: var(--surface);
+}
+
+.report .noteref:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.notes {
+  max-width: 70ch;
+  margin: 26px 0 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  break-inside: avoid;
+}
+
+.notes-label {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.report .notes-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.report .notes-list li {
+  margin-bottom: 4px;
+}
+
+.note-back {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+/* The class is set by `app.js`, so the list is only withdrawn once something
+   else can show the text. */
+body.has-note-pop .notes {
+  display: none;
+}
+
+.note-pop {
+  position: absolute;
+  z-index: 55;
+  width: min(330px, calc(100vw - 24px));
+  padding: 11px 13px 12px;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.note-pop[hidden] {
+  display: none;
+}
+
+.note-pop-no {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /* -------------------------------------------------------- computed blocks */
 
 /* Full-bleed past the text measure: a chart or a wide table is not running text
@@ -1858,6 +1958,7 @@ figure.teaser {
   .toc-pop,
   .figpeek,
   .teaser-status,
+  .note-pop,
   .skip {
     display: none;
   }
@@ -1877,5 +1978,19 @@ figure.teaser {
 
   .toc {
     display: block;
+  }
+
+  /* On paper there is nothing to pop open, so the notes are printed under the
+     section that raised them—which is what the marker means in this medium. */
+  body.has-note-pop .notes {
+    display: block;
+  }
+
+  .report .noteref sup {
+    border-bottom: 0;
+  }
+
+  .note-back {
+    display: none;
   }
 }

@@ -580,6 +580,78 @@ class MarkdownCompilerTests(unittest.TestCase):
             [("steptable", 1, 1), ("pipeline", 1, 2), ("steptable", 2, 2)],
         )
 
+    def test_a_note_leaves_a_marker_and_prints_under_its_section(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\nA claim.^[Why it holds.]\n\n## T\n\nMore.\n"
+        )
+        self.assertEqual([note.number for note in document.notes], [1])
+        self.assertIn('id="noteref-1"', document.html)
+        self.assertIn('href="#note-1"', document.html)
+        self.assertIn('id="note-1"', document.html)
+        self.assertIn("Why it holds.", document.html)
+        # The list closes the section that raised the note, not the report.
+        self.assertLess(
+            document.html.index('class="notes"'), document.html.index('id="t"')
+        )
+
+    def test_notes_are_numbered_across_the_document_and_grouped_by_section(
+        self,
+    ) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\nOne.^[First.]\n\nTwo.^[Second.]\n\n"
+            "## T\n\nThree.^[Third.]\n"
+        )
+        self.assertEqual([note.number for note in document.notes], [1, 2, 3])
+        self.assertIn('class="notes-list" start="1"', document.html)
+        self.assertIn('class="notes-list" start="3"', document.html)
+
+    def test_a_note_is_collected_even_when_its_block_spans_a_heading(self) -> None:
+        """Extraction runs a block at a time; placement must not follow it."""
+        document = _compile(
+            self.HEAD + "\n## S\n\nBefore.^[Belongs to one.]\n\n## T\n\nAfter.\n"
+        )
+        first = document.html.index("Belongs to one.")
+        self.assertLess(first, document.html.index('id="t"'))
+
+    def test_a_note_carries_inline_markup_and_a_citation(self) -> None:
+        facts = _facts()
+        document = _compile(
+            self.HEAD + "\n## S\n\nText.^[In `code`, and {{ app.locales }}.]\n", facts
+        )
+        self.assertIn("<code>code</code>", document.html)
+        self.assertIn(facts["app.locales"].display, document.notes[0].body_html)
+
+    def test_a_note_body_spanning_several_lines_becomes_one_line(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\nText.^[A body that\nwraps in the source.]\n"
+        )
+        self.assertEqual(
+            document.notes[0].body_markdown, "A body that wraps in the source."
+        )
+
+    def test_note_syntax_inside_a_fenced_block_is_left_alone(self) -> None:
+        document = _compile(self.HEAD + "\n## S\n\n```text\nsee^[this]\n```\n")
+        self.assertEqual(document.notes, [])
+        self.assertIn("see^[this]", document.html)
+
+    def test_an_escaped_note_marker_prints_as_text(self) -> None:
+        document = _compile(self.HEAD + "\n## S\n\nWrite \\^[like this].\n")
+        self.assertEqual(document.notes, [])
+        self.assertIn("^[like this]", document.html)
+
+    def test_an_unclosed_note_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            _compile(self.HEAD + "\n## S\n\nText.^[never closed\n")
+
+    def test_an_empty_note_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError):
+            _compile(self.HEAD + "\n## S\n\nText.^[]\n")
+
+    def test_a_document_with_no_notes_renders_no_notes_block(self) -> None:
+        document = _compile(self.HEAD + "\n## S\n\nPlain.\n")
+        self.assertNotIn("notes-list", document.html)
+        self.assertNotIn("report:notes", document.html)
+
     def test_a_block_that_shows_nothing_consumes_no_caption_number(self) -> None:
         """Otherwise the sequence skips: Table 5 followed by Table 8."""
 
@@ -651,6 +723,17 @@ class ReportSourceTests(unittest.TestCase):
                 f"report.md writes {fact.display!r} literally; cite "
                 f"{{{{ {fact.key} }}}} instead",
             )
+
+    def test_every_note_in_the_report_is_readable_both_ways(self) -> None:
+        """The popover copies the printed list, so every marker needs an item."""
+        self.assertTrue(self.document.notes, "the report demonstrates no note")
+        for note in self.document.notes:
+            self.assertIn(f'id="noteref-{note.number}"', self.document.html)
+            self.assertIn(f'id="note-{note.number}"', self.document.html)
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
+        css = (ASSETS / "style.css").read_text(encoding="utf-8")
+        self.assertIn("renderNotePopovers", js)
+        self.assertIn("body.has-note-pop .notes", css)
 
     def test_every_mounted_component_has_a_renderer_in_the_page(self) -> None:
         """The two rosters are what keep a block from rendering as a blank."""

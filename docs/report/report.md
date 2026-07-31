@@ -113,7 +113,10 @@ Four artifact families carry everything the application reads, distributed over
 {{ pipeline.artifacts }} [[files|declared files and directories]]. Each is a
 denormalized document rather than a row in a normalized schema, because the
 document is the unit at which generated material is inspected, corrected and
-regenerated.
+regenerated.^[Normalization would pay for itself if the corpus were queried
+across documents. It is not: the application reads the documents of one story at
+a time and resolves the references between them by identifier, so a normalized
+store would serve a query pattern nobody issues.]
 
 The **[[registry|person registry]]** holds the identity and portrait of each
 subject, and stands in one-to-one correspondence with the per-person
@@ -147,7 +150,10 @@ code.
 ## Generation
 
 Both pipelines are directed acyclic graphs rather than sequences, and the
-figures below draw them as such. A step's vertical position is the length of
+figures below draw them as such.^[The `main()` that orchestrates each script is
+deliberately not drawn as a step. It fixes an execution order without creating a
+data dependency, and drawing it made every fork read as a chain.] A step's
+vertical position is the length of
 the longest chain of data dependencies reaching it, so steps drawn side by side
 are genuinely independent and may execute in either order. The two graphs
 together declare {{ pipeline.edges }} dependency edges, each labeled with the
@@ -180,7 +186,10 @@ branch, the network branch and the visual-identity branch cease to depend on
 one another, and they reconverge only at review and translation. Branch
 independence bounds the consequences of a failure to a single concern and makes
 partial regeneration—new imagery for an unchanged narrative, a revised palette
-for an unchanged network—an ordinary operation rather than a full rebuild.
+for an unchanged network—an ordinary operation rather than a full
+rebuild.^[Three of the branches are addressable from the command line as they
+are drawn here: `--dataset-only`, `--style-only` and `--network-only` each run
+one of them against the subject's existing data.]
 
 ::: pipeline lane=person
 :::
@@ -260,7 +269,10 @@ by field from the Pydantic models the API is asked to populate.
 
 Timings and token counts are obtained by instrumentation rather than
 estimation. A recording wrapper around either pipeline captures every model
-call—prompt, response, wall-clock duration and reported token usage—and the
+call—prompt, response, wall-clock duration and reported token usage^[Usage is
+taken as the API reports it, so the output count includes the reasoning tokens a
+reasoning model emits and is not a count of the text that reached an artifact.
+Where the response separates them, the recording keeps that share.]—and the
 aggregates below are computed per step from those records. The recorded corpus
 presently comprises {{ runs.count }} runs, {{ runs.calls }} model calls,
 {{ runs.minutes }} minutes of API time and {{ runs.tokens }} tokens.
@@ -318,13 +330,16 @@ than only from the landing page.
 The three encodings are attached to this sequence rather than displayed beside
 it. [[timeline|A persistent timeline]] maps every event to its position in the
 life, bands the chapters, and doubles as the navigation control.
-[[map|A map built on MapLibre and Protomaps]] locates the events whose places
-could be resolved, with the camera following the reader rather than the reader
-panning the map; the basemap is deliberately label-free, since the story
-supplies the toponyms. The ego network is presented on demand as
-[[graph|a force-directed graph]] of the subject's documented relationships,
-typed and weighted as the artifact records them. Images open in a lightbox that
-pages through the story's illustrations as a single gallery.
+[[map|A map built on MapLibre and Protomaps]]^[Protomaps distributes a whole
+basemap as one PMTiles archive addressed by HTTP range requests, so the map is
+served by a static file beside the application rather than by a tile service it
+depends on.] locates the events whose places could be resolved, with the camera
+following the reader rather than the reader panning the map; the basemap is
+deliberately label-free, since the story supplies the toponyms. The ego network
+is presented on demand as [[graph|a force-directed graph]] of the subject's
+documented relationships, typed and weighted as the artifact records them.
+Images open in a lightbox that pages through the story's illustrations as a
+single gallery.
 
 Each story additionally carries a generated visual identity—palette,
 typography and background pattern—injected as CSS custom properties, so that
@@ -365,7 +380,10 @@ it participates.
 Every generated document exists in {{ app.locales }} languages
 ({{ app.languages }}). Translation is a generation step rather than an
 interface concern: the English document is produced first, a glossary pass then
-fixes the rendering of names and recurring terminology once, and only
+fixes the rendering of names and recurring terminology once,^[One call per
+subject and target language decides the mapping; it is then applied to every
+document of that person, which is what keeps a name from being rendered one way
+in the events and another in the network.] and only
 afterward is each document translated, so that a subject carries one
 designation throughout a story.
 

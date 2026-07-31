@@ -36,6 +36,11 @@ The authoring surface is small on purpose:
 `::: note` / `::: aside` / `::: decision` / `::: limitation`
     Callouts rendered here in Python; they hold authored text only.
 
+`^[an explanation]`
+    An inline note: an aside a specialist reader may want and the sentence
+    cannot carry. One authored source, two renderings—a numbered note at the
+    end of its section on paper, a popover on the marker on screen.
+
 Anything else is ordinary Markdown, rendered by `markdown` with tables,
 footnotes, definition lists and fenced code enabled.
 """
@@ -218,6 +223,20 @@ class Mount:
 
 
 @dataclass
+class Note:
+    """One inline note, numbered in document order.
+
+    The marker carries no text: both renderings read the same authored body,
+    which is emitted once as list item `note-{number}` at the end of the note's
+    section.
+    """
+
+    number: int
+    body_markdown: str
+    body_html: str
+
+
+@dataclass
 class Document:
     front: Dict[str, str]
     html: str
@@ -226,6 +245,7 @@ class Document:
     citations: List[str]
     source_path: str
     figrefs: List[str] = field(default_factory=list)
+    notes: List[Note] = field(default_factory=list)
 
     @property
     def title(self) -> str:
@@ -458,6 +478,166 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
     return substituted.replace("\\[[", "[[")
 
 
+# ---------------------------------------------------------------------------
+# Inline notes
+# ---------------------------------------------------------------------------
+
+# The marker a top-level heading leaves behind: a place where the notes of the
+# section that just ended are flushed.
+NOTES_MARKER = re.compile(r"<!--report:notes-->")
+
+
+def _noteref_html(number: int) -> str:
+    """The marker in the running text.
+
+    A real link to the note, not a button: with no JavaScript, and on paper,
+    following it lands on the text it points at. The popover is an enhancement
+    that intercepts the click, not the only way to read the note.
+    """
+    return (
+        f'<a class="noteref" id="noteref-{number}" href="#note-{number}" '
+        f'role="doc-noteref" aria-describedby="note-{number}">'
+        f"<sup>{number}</sup></a>"
+    )
+
+
+def _notes_html(notes: Sequence[Note]) -> str:
+    """One section's notes, as the numbered list both renderings read from."""
+    if not notes:
+        return ""
+    items = "".join(
+        f'<li class="note" id="note-{note.number}">'
+        f'<span class="note-body">{note.body_html}</span> '
+        f'<a class="note-back" href="#noteref-{note.number}" '
+        f'aria-label="Back to the text at note {note.number}">&#8617;</a></li>'
+        for note in notes
+    )
+    return (
+        '<aside class="notes" role="doc-endnotes" aria-label="Notes">'
+        '<p class="notes-label">Notes</p>'
+        f'<ol class="notes-list" start="{notes[0].number}">{items}</ol>'
+        "</aside>"
+    )
+
+
+def _render_inline(text: str) -> str:
+    """Render a note body as inline content—no paragraph wrapper around it."""
+    html = _render_markdown(text).strip()
+    if html.startswith("<p>") and html.endswith("</p>") and "<p>" not in html[3:]:
+        return html[3:-4]
+    return html
+
+
+def extract_notes(text: str, notes: List[Note], line_hint: str = "") -> str:
+    """Replace `^[body]` with its marker, appending the note to `notes`.
+
+    Brackets are matched by counting, so a note may contain a Markdown link, and
+    `\\^[` escapes the syntax. Fenced code is skipped for the same reason
+    citations skip it: the report has to be able to show its own syntax.
+
+    The body is collapsed to one line before it is rendered. A note is
+    inline-level by construction—it has to fit in a popover and at the foot of a
+    section—so a body that tried to open a list or a heading would be a
+    formatting accident, not an authoring option.
+    """
+    out: List[str] = []
+    fence: Optional[str] = None
+    prose: List[str] = []
+
+    def flush_prose() -> None:
+        if prose:
+            out.append(_scan_notes("\n".join(prose), notes, line_hint))
+            prose.clear()
+
+    for raw in text.splitlines():
+        fence_match = FENCE.match(raw)
+        if fence_match:
+            marker = fence_match.group(1)
+            if fence is None:
+                fence = marker
+                flush_prose()
+            elif fence == marker:
+                fence = None
+            out.append(raw)
+            continue
+        if fence is not None:
+            out.append(raw)
+            continue
+        prose.append(raw)
+    flush_prose()
+    return "\n".join(out)
+
+
+def _scan_notes(chunk: str, notes: List[Note], line_hint: str) -> str:
+    out: List[str] = []
+    index = 0
+    while True:
+        start = chunk.find("^[", index)
+        if start < 0:
+            out.append(chunk[index:])
+            return "".join(out)
+        if start and chunk[start - 1] == "\\":
+            out.append(chunk[index : start - 1])
+            out.append("^[")
+            index = start + 2
+            continue
+
+        depth = 1
+        cursor = start + 2
+        while cursor < len(chunk) and depth:
+            if chunk[cursor] == "[":
+                depth += 1
+            elif chunk[cursor] == "]":
+                depth -= 1
+            cursor += 1
+        if depth:
+            raise ReportError(
+                f"{line_hint}an inline note '^[' is never closed with ']'"
+            )
+
+        body = " ".join(chunk[start + 2 : cursor - 1].split())
+        if not body:
+            raise ReportError(f"{line_hint}an inline note '^[]' has no text")
+        note = Note(len(notes) + 1, body, _render_inline(body))
+        notes.append(note)
+        out.append(chunk[index:start])
+        out.append(_noteref_html(note.number))
+        index = cursor
+
+
+def place_notes(html: str, notes: Sequence[Note]) -> str:
+    """Flush each section's notes under it, and any remainder at the end.
+
+    Notes are grouped by section rather than piled at the end of the report,
+    because a note is worth the interruption only while the paragraph that
+    raised it is still on the page—or, on paper, at most a page away.
+
+    Which notes belong to which section is decided from the rendered document
+    rather than from the order in which they were collected: a note goes to the
+    first flush marker that follows its own marker in the page. Collection runs
+    a block at a time and a block may span a heading, so counting notes as they
+    arrive would put a section's notes above its heading.
+    """
+    where = {note.number: html.find(f'id="noteref-{note.number}"') for note in notes}
+    placed: set = set()
+
+    def replace(match: re.Match) -> str:
+        at = match.start()
+        group = [
+            note
+            for note in notes
+            if note.number not in placed and 0 <= where[note.number] < at
+        ]
+        placed.update(note.number for note in group)
+        return _notes_html(group)
+
+    out = NOTES_MARKER.sub(replace, html)
+    remainder = [note for note in notes if note.number not in placed]
+    if remainder:
+        out = f"{out}\n{_notes_html(remainder)}"
+    return out
+
+
 def _renumber_headings(
     text: str, counters: List[int], flat: List[Section], used: Dict[str, int]
 ) -> str:
@@ -466,6 +646,10 @@ def _renumber_headings(
     Numbering is positional, so moving a section renumbers the report and every
     cross-reference to it follows. Skipping a level is a build error: `1.0.1`
     would be nonsense, and silently inventing a parent would be worse.
+
+    A top-level heading also closes the previous section's notes by leaving a
+    marker where they belong; `place_notes` fills the markers in afterward, once
+    the whole document has been rendered and every note has a position in it.
     """
     out: List[str] = []
     fence: Optional[str] = None
@@ -494,6 +678,9 @@ def _renumber_headings(
         number = ".".join(str(value) for value in counters[:depth])
         slug = _slug(title, used)
         flat.append(Section(number, depth, title, slug))
+
+        if depth == 1:
+            out.extend(["", "<!--report:notes-->", ""])
 
         tag = f"h{depth + 1}"
         out.extend(
@@ -610,6 +797,7 @@ def compile_report(
     figrefs: List[str] = []
     flat: List[Section] = []
     mounts: List[Mount] = []
+    notes: List[Note] = []
     counters = [0, 0, 0]
     slugs: Dict[str, int] = {}
     figure = 1
@@ -625,6 +813,10 @@ def compile_report(
         # citation inside one should still resolve.
         text = substitute_figrefs(block.text, figrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
+        # Notes last: a note may cite a measurement or point into the figure,
+        # and the marker it leaves behind is HTML neither of those two may walk
+        # into.
+        text = extract_notes(text, notes, hint)
 
         if block.kind == "markdown":
             parts.append(
@@ -668,5 +860,8 @@ def compile_report(
         parts.append(_mount_html(mount, inner))
 
     sections = _tree(flat)
-    html = "\n".join(parts).replace(toc_placeholder, _toc_html(sections))
-    return Document(front, html, sections, mounts, citations, source_path, figrefs)
+    html = place_notes("\n".join(parts), notes)
+    html = html.replace(toc_placeholder, _toc_html(sections))
+    return Document(
+        front, html, sections, mounts, citations, source_path, figrefs, notes
+    )
