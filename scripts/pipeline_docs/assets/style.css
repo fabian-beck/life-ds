@@ -763,21 +763,23 @@ body.has-note-pop .notes {
   break-inside: avoid;
 }
 
-/* The title carries the entry; everything around it is apparatus. */
-.ref-title {
+/* Chicago's one typographic distinction: the work is in quotation marks, the
+   thing that carried it is italic. Everything else in the entry is apparatus
+   and recedes. The quotation marks come from the text, not from here, so the
+   printed and the plain rendering of an entry are the same characters. */
+.ref-container {
   font-style: italic;
 }
 
-.ref-venue,
-.ref-note,
-.ref-year {
+.ref-detail,
+.ref-plain {
   color: var(--ink-2);
 }
 
+/* Spelled out as a resolvable address rather than a bare identifier: on paper
+   it is the one part of the entry a reader can act on. */
 .ref-doi {
   color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.87em;
   overflow-wrap: anywhere;
 }
 

@@ -853,25 +853,69 @@ class BibliographyTests(unittest.TestCase):
         self.assertEqual(entry.kind, "article")
         self.assertEqual(entry.doi, "10.1109/TVCG.2010.179")
         self.assertEqual(entry.url, "https://doi.org/10.1109/TVCG.2010.179")
-        self.assertEqual(entry.venue(), "IEEE TVCG, 16(6), 1139–1148")
+        self.assertEqual(
+            entry.describe(),
+            "Segel, Edward, and Jeffrey Heer. “Narrative Visualization.” "
+            "IEEE TVCG 16, no. 6 (2010): 1139–48. "
+            "https://doi.org/10.1109/TVCG.2010.179.",
+        )
 
-    def test_names_become_initials_and_long_lists_are_cut(self) -> None:
+    def test_the_author_block_is_chicago_and_names_everyone(self) -> None:
+        """Only the first name inverts, and nobody is dropped into 'et al.'"""
         self.assertEqual(
             bibliography.format_names("Segel, Edward and Heer, Jeffrey"),
-            "E. Segel and J. Heer",
+            "Segel, Edward, and Jeffrey Heer",
         )
         self.assertEqual(
-            bibliography.format_names("Henry Riche, Nathalie"), "N. Henry Riche"
+            bibliography.format_names("Henry Riche, Nathalie"), "Henry Riche, Nathalie"
         )
         self.assertEqual(
-            bibliography.format_names("Brown, Tom B. and Mann, Ben and others"),
-            "T. B. Brown et al.",
+            bibliography.format_names(
+                "Clauset, Aaron and Newman, M. E. J. and Moore, Cristopher"
+            ),
+            "Clauset, Aaron, M. E. J. Newman, and Cristopher Moore",
+        )
+        many = " and ".join(f"Family{n}, Given{n}" for n in range(1, 11))
+        self.assertNotIn("et al", bibliography.format_names(many))
+        self.assertEqual(bibliography.format_names(many).count(","), 10)
+
+    def test_page_ranges_are_condensed_the_way_chicago_condenses_them(self) -> None:
+        """The examples CMOS 9.61 gives, and the ranges this report cites."""
+        cases = {
+            "1139--1148": "1139–48",
+            "2151--2164": "2151–64",
+            "156--160": "156–60",
+            "31--38": "31–38",
+            "100--104": "100–104",
+            "101--108": "101–8",
+            "808--833": "808–33",
+            "1087--1089": "1087–89",
+            "498--532": "498–532",
+            "1496--1500": "1496–500",
+            "12991--13001": "12991–3001",
+        }
+        for pages, expected in cases.items():
+            self.assertEqual(bibliography.condense_pages(pages), expected, pages)
+
+    def test_a_proceedings_entry_reads_as_chicago_prints_one(self) -> None:
+        bib = bibliography.parse(
+            "@inproceedings{k, author = {Doe, Jane and Roe, Richard},"
+            " title = {A Paper}, booktitle = {Some Conference},"
+            " pages = {156--160}, publisher = {IEEE}, year = {2021},"
+            " doi = {10/k}}"
+        )
+        entry = bib.get("k")
+        assert entry is not None
+        self.assertEqual(
+            entry.describe(),
+            "Doe, Jane, and Richard Roe. “A Paper.” In Some Conference, "
+            "156–60. IEEE, 2021. https://doi.org/10/k.",
         )
 
     def test_bibtex_accents_are_decoded_for_the_page(self) -> None:
         entry = self._parse().get("two")
         assert entry is not None
-        self.assertEqual(entry.people(), "M. Krötzsch")
+        self.assertEqual(entry.people(), "Krötzsch, Markus")
 
     def test_a_folded_value_becomes_one_line(self) -> None:
         bib = bibliography.parse(
@@ -966,7 +1010,7 @@ class ReferenceCitationTests(unittest.TestCase):
         document = self._compile("\n## S\n\nText [@a].\n\n## R\n\n::: references\n:::\n")
         self.assertTrue(document.prints_references)
         self.assertIn('href="https://doi.org/10/a"', document.html)
-        self.assertIn("doi:10/a", document.html)
+        self.assertIn(">https://doi.org/10/a</a>", document.html)
 
     def test_a_note_may_cite_a_work(self) -> None:
         document = self._compile(

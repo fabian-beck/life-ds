@@ -426,7 +426,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Vocabulary | `concepts.py` | The concepts the report speaks in—source material, subjects, life events, the social network, geography and the rest—each with the interface's own Material Design icon, vendored as path data. |
 | Measurements | `facts.py` | Repository-scale numbers the prose cites—corpus size, component counts, test counts—each with the place it was measured. |
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `[@key]` reference citations, `::: component` mount points, callouts. |
-| Bibliography | `bibliography.py` | Parses `docs/report/references.bib`. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
+| Bibliography | `bibliography.py` | Parses `docs/report/references.bib` and prints it in Chicago form with every author named. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks, pairs each with the picture on disk, embeds it as a data URI and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
@@ -504,6 +504,12 @@ entry without one fails the build, because a reference the reader cannot resolve
 names a work without saying where it is. Numbering is positional, so inserting a
 citation renumbers the list without anyone editing a number, and an entry the
 report stopped citing is reported as drift.
+
+Entries print in **Chicago** bibliography form—author block, title in quotation
+marks, italic journal or proceedings, volume and issue, a page range condensed
+per CMOS 9.61, and the DOI spelled out as a resolvable URL. **Every author is
+named**; nothing is cut to `et al.` Write the `.bib` with full given names where
+the work gives them, and let the formatter invert only the leading one.
 
 **Cite few works, and only load-bearing ones.** This is a technical report on
 one system, not a survey. A work belongs in the bibliography when a sentence

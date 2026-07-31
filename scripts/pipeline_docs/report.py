@@ -780,18 +780,22 @@ def substitute_refcites(
 
 
 def _reference_html(number: int, entry: Reference) -> str:
-    """One entry, in the segments `bibliography` says it has.
+    """One entry, in the runs `bibliography` says Chicago prints it in.
 
-    The DOI is printed rather than hidden behind the title: on paper it is the
-    only part of the entry a reader can act on, and on screen it is the link.
+    Every run carries its own punctuation, so the markup only wraps what is
+    already correct text—the page cannot introduce a comma the plain rendering
+    does not have. The DOI is printed rather than hidden behind the title: on
+    paper it is the only part of the entry a reader can act on, and on screen it
+    is the link.
     """
-    parts = [
-        f'<span class="ref-{role}">' f"{_escape(bibliography.punctuate(text))}</span> "
-        for role, text in entry.segments()
-    ]
-    parts.append(
-        f'<a class="ref-doi" href="{_escape(entry.url)}">doi:{_escape(entry.doi)}</a>'
-    )
+    parts = []
+    for role, text in entry.segments():
+        if role == "doi":
+            parts.append(
+                f'<a class="ref-doi" href="{_escape(entry.url)}">{_escape(text)}</a>'
+            )
+        else:
+            parts.append(f'<span class="ref-{role}">{_escape(text)}</span>')
     return (
         f'<li class="reference" id="ref-{number}" value="{number}">'
         f"{''.join(parts)}</li>"

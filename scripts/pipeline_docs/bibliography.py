@@ -15,9 +15,12 @@ Three rules make a reference an address rather than a gesture:
 * A citation with no entry fails the build, like an unknown fact.
 * An entry nothing cites is reported as drift, like a measurement nobody quotes.
 
-Numbering is positional—first citation gets `[1]`—so the list at the end of the
-report is in the order a reader meets the works, and inserting a citation
-renumbers everything after it without anyone editing a number.
+Entries are printed in Chicago's bibliography form—author block, title in
+quotation marks, italicized journal or proceedings, volume and issue, condensed
+page range, and the DOI as a resolvable URL—with every author named. Numbering
+is positional—first citation gets `[1]`—so the list at the end of the report is
+in the order a reader meets the works, and inserting a citation renumbers
+everything after it without anyone editing a number.
 
 None of that is an invitation to cite widely. The bibliography is meant to stay
 small: a work belongs here when a sentence would otherwise have to argue a point
@@ -82,66 +85,120 @@ class Reference:
         if self.fields.get("author"):
             return format_names(self.fields["author"])
         if self.fields.get("editor"):
-            return f"{format_names(self.fields['editor'])} (eds.)"
+            return f"{format_names(self.fields['editor'])}, eds."
         return ""
-
-    def venue(self) -> str:
-        """Where it appeared, with volume, issue and pages when it has them."""
-        parts: List[str] = []
-        container = (
-            self.fields.get("journal")
-            or self.fields.get("booktitle")
-            or self.fields.get("publisher")
-            or ""
-        )
-        if container:
-            parts.append(container)
-        volume = self.fields.get("volume", "")
-        number = self.fields.get("number", "")
-        if volume and number:
-            parts.append(f"{volume}({number})")
-        elif volume:
-            parts.append(volume)
-        located = _pages(self.fields)
-        if located:
-            parts.append(located)
-        return ", ".join(parts)
 
     def title(self) -> str:
         return self.fields.get("title", "")
 
     def segments(self) -> List[Tuple[str, str]]:
-        """The printed entry in order, as `(role, text)`.
+        """The entry as Chicago prints it, in runs of `(role, text)`.
 
-        One description of an entry's shape, read by the page and by the plain
-        text alike, so the tooltip on a citation cannot say something the
-        reference list does not.
+        Each run carries its own punctuation and spacing, so the page and the
+        plain text are assembled by concatenation and cannot disagree: what a
+        citation's tooltip says is character for character what the reference
+        list prints. `container` is the run the stylesheet italicizes—the
+        journal or the proceedings—and `title` is the one it puts in quotation
+        marks, which is the distinction the style rests on.
         """
-        candidates = [
-            ("people", self.people()),
-            ("title", self.title()),
-            ("venue", self.venue()),
-            ("note", self.fields.get("note", "")),
-            ("year", self.fields.get("year", "")),
-        ]
-        return [(role, text) for role, text in candidates if text]
+        runs: List[Tuple[str, str]] = []
+        people = self.people()
+        if people:
+            runs.append(("people", f"{_close(people)} "))
+        if self.title():
+            runs.append(("title", f"“{_close(self.title())}” "))
+
+        journal = self.fields.get("journal", "")
+        booktitle = self.fields.get("booktitle", "")
+        year = self.fields.get("year", "")
+        located = _located(self.fields)
+
+        if journal:
+            runs.append(("container", journal))
+            detail = _volume(self.fields)
+            if year:
+                detail += f" ({year})"
+            detail += f": {located}." if located else "."
+            runs.append(("detail", f"{detail} "))
+        elif booktitle:
+            runs.append(("plain", "In "))
+            runs.append(("container", booktitle))
+            tail = f", {located}." if located else "."
+            imprint = ", ".join(
+                part for part in (self.fields.get("publisher", ""), year) if part
+            )
+            runs.append(("detail", f"{tail} {imprint}. " if imprint else f"{tail} "))
+        else:
+            # A book or a preprint: the title itself is the italicized work.
+            if runs and runs[-1][0] == "title":
+                runs[-1] = ("container", f"{_close(self.title())} ")
+            imprint = ", ".join(
+                part
+                for part in (
+                    self.fields.get("publisher", ""),
+                    self.fields.get("note", ""),
+                    year,
+                )
+                if part
+            )
+            if imprint:
+                runs.append(("detail", f"{imprint}. "))
+
+        if self.url:
+            # The closing period belongs to the entry, not to the address, so it
+            # is a run of its own and stays outside the link.
+            runs.append(("doi", self.url))
+            runs.append(("plain", "."))
+        return runs
 
     def describe(self) -> str:
         """The whole entry as plain text, for tooltips and error messages."""
-        spelled = " ".join(punctuate(text) for _, text in self.segments())
-        return f"{spelled} doi:{self.doi}".strip() if self.doi else spelled
+        return "".join(text for _, text in self.segments()).strip()
 
 
-def punctuate(text: str) -> str:
-    """Close a segment with a period, unless it already ends in one."""
-    return text if text.endswith(".") else f"{text}."
+def _close(text: str) -> str:
+    """Close a run with a period, unless it already ends in one."""
+    return text if text.endswith((".", "?", "!")) else f"{text}."
 
 
-def _pages(fields: Dict[str, str]) -> str:
+def _volume(fields: Dict[str, str]) -> str:
+    volume = fields.get("volume", "")
+    number = fields.get("number", "")
+    if volume and number:
+        return f" {volume}, no. {number}"
+    return f" {volume}" if volume else ""
+
+
+def _located(fields: Dict[str, str]) -> str:
+    """Where in the volume: an article number, or a condensed page range."""
     if fields.get("articleno"):
-        return f"article {fields['articleno']}"
-    pages = fields.get("pages", "")
-    return pages.replace("--", "–") if pages else ""
+        return fields["articleno"]
+    return condense_pages(fields.get("pages", ""))
+
+
+def condense_pages(pages: str) -> str:
+    """Abbreviate an inclusive page range the way Chicago does.
+
+    1139--1148 prints as 1139–48, 156--160 as 156–60, but 31--38 keeps both
+    numbers. The rule (CMOS 9.61) turns on the first number: below 100 or an
+    exact multiple of 100 it is spelled out in full; ending 01 through 09 it
+    drops to whatever digits changed; otherwise it keeps two digits, or more
+    when two would not carry the reader across the hundred.
+    """
+    parts = [part for part in re.split(r"-+|–", pages) if part]
+    if len(parts) != 2 or not all(part.isdigit() for part in parts):
+        return pages.replace("--", "–")
+    first, second = parts
+    start = int(first)
+    if start < 100 or start % 100 == 0 or len(first) != len(second):
+        return f"{first}–{second}"
+    shared = 0
+    while shared < len(first) and first[shared] == second[shared]:
+        shared += 1
+    changed = second[shared:] or second[-1:]
+    if start % 100 >= 10 and len(changed) < 2:
+        changed = second[-2:]
+    return f"{first}–{changed}"
 
 
 @dataclass(frozen=True)
@@ -180,35 +237,52 @@ def decode(value: str) -> str:
 
 
 def format_names(raw: str) -> str:
-    """`Segel, Edward and Heer, Jeffrey` becomes `E. Segel and J. Heer`.
+    """Chicago's author block: everyone, first one inverted, nobody cut.
 
-    Long author lists are cut to the first name and `et al.`, which is what the
-    reference list has room for; the `.bib` entry keeps everyone, so the record
-    a reader copies out is still complete.
+    `Segel, Edward and Heer, Jeffrey` becomes `Segel, Edward, and Jeffrey
+    Heer`. Only the leading name is inverted, because inversion exists to put
+    the alphabetizing surname first and the rest of the list is read, not
+    sorted. Given names are printed as the work prints them—full where the work
+    gives them in full, initials where it does not.
+
+    Nothing is abbreviated to `et al.`: a bibliography that hides seven of ten
+    authors makes the contribution of seven people unsearchable, and the space
+    it saves is a line.
     """
-    names = [part.strip() for part in re.split(r"\s+and\s+", raw) if part.strip()]
-    truncated = "others" in (name.lower() for name in names) or len(names) > 4
-    shown = [name for name in names if name.lower() != "others"][:4]
-    formatted = [_initialize(name) for name in shown]
-    if truncated:
-        return f"{formatted[0]} et al." if formatted else ""
+    names = [
+        part.strip()
+        for part in re.split(r"\s+and\s+", raw)
+        if part.strip() and part.strip().lower() != "others"
+    ]
+    if not names:
+        return ""
+    formatted = [_inverted(names[0])] + [_natural(name) for name in names[1:]]
     if len(formatted) == 1:
         return formatted[0]
-    return ", ".join(formatted[:-1]) + f" and {formatted[-1]}"
+    if len(formatted) == 2:
+        return f"{formatted[0]}, and {formatted[1]}"
+    return ", ".join(formatted[:-1]) + f", and {formatted[-1]}"
 
 
-def _initialize(name: str) -> str:
-    """`Henry Riche, Nathalie` becomes `N. Henry Riche`; initials stay initials."""
+def _split_name(name: str) -> Tuple[str, str]:
+    """`Henry Riche, Nathalie` and `Nathalie Henry Riche` both split the same."""
     if "," in name:
         family, _, given = name.partition(",")
-    else:
-        words = name.split()
-        family, given = (words[-1] if words else name), " ".join(words[:-1])
-    initials = " ".join(
-        word if word.endswith(".") else f"{word[0]}." for word in given.split() if word
-    )
-    family = family.strip()
-    return f"{initials} {family}".strip()
+        return family.strip(), given.strip()
+    words = name.split()
+    if not words:
+        return name, ""
+    return words[-1], " ".join(words[:-1])
+
+
+def _inverted(name: str) -> str:
+    family, given = _split_name(name)
+    return f"{family}, {given}" if given else family
+
+
+def _natural(name: str) -> str:
+    family, given = _split_name(name)
+    return f"{given} {family}" if given else family
 
 
 def parse(text: str, path: str = DEFAULT_BIB.name) -> Bibliography:
