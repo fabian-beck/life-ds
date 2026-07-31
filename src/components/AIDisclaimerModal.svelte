@@ -2,6 +2,7 @@
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
+  import { assetUrl } from "../utils/assetUrl.js";
 
   export let show = false;
   export let onClose = () => {};
@@ -53,6 +54,14 @@
         <p>
           <strong>{$_("landing.ai_accuracy")}</strong>
           {$_("landing.ai_accuracy_text")}
+        </p>
+        <p>
+          <strong>{$_("landing.ai_report")}</strong>
+          {$_("landing.ai_report_text")}
+          <a class="report-link" href={assetUrl("/report/")}>
+            {$_("landing.report_link")}
+            <span aria-hidden="true">→</span>
+          </a>
         </p>
       </div>
     </div>
@@ -121,6 +130,19 @@
 
   .modal-body li {
     margin-bottom: 0.375rem;
+  }
+
+  .report-link {
+    display: inline-block;
+    color: #fbbf24;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    white-space: nowrap;
+  }
+
+  .report-link:hover {
+    color: #fcd34d;
   }
 
   .modal-body li:last-child {

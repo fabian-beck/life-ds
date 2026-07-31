@@ -54,6 +54,13 @@ Notes:
   `githubPages404Plugin` in `vite.config.js`). Pages has no rewrite rules;
   shared links are hash-based and never hit the server, but this keeps
   path-style entry URLs such as `/life-ds/en` working.
+- The technical report is published with the site: the build copies
+  `docs/report/index.html` to `dist/report/index.html`, served at
+  `https://<owner>.github.io/life-ds/report/` and linked from the landing page
+  and the "AI-generated" modal. The report is committed, so a deployment
+  publishes whatever `docs/report/index.html` holds on `main` — regenerate it
+  (`python scripts/generate_report.py`) before publishing if a generation
+  script changed.
 - The site is served from a subdirectory, so the build sets
   `base: "/life-ds/"`. Anything that turns a site-absolute path — a portrait
   path from the generated data, an asset in `public/` — into a URL must go

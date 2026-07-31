@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { copyFileSync, readdirSync, readFileSync } from "fs";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync } from "fs";
 import { resolve } from "path";
 import * as mdiExports from "@mdi/js";
 
@@ -44,6 +44,46 @@ function githubPages404Plugin() {
     },
     closeBundle() {
       copyFileSync(resolve(outDir, "index.html"), resolve(outDir, "404.html"));
+    },
+  };
+}
+
+/**
+ * Vite plugin: technical-report
+ *
+ * Publishes `docs/report/index.html` — the generated technical report — as
+ * `<base>report/` next to the application, so the links in the landing page
+ * and the AI-generated modal point at a page on the same deployment instead of
+ * at a file that only exists in the repository.
+ *
+ * The report is a single self-contained HTML file with no external assets, so
+ * publishing it is one copy. It is served in dev as well: the dev server's SPA
+ * fallback would otherwise answer `/life-ds/report/` with the application, and
+ * a link that only resolves in production is a link nothing ever exercises.
+ */
+function technicalReportPlugin() {
+  const reportPath = resolve("docs/report/index.html");
+  const reportRoute = `${basePath}report`;
+  let outDir;
+
+  return {
+    name: "technical-report",
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    configureServer(server) {
+      // Ahead of the SPA fallback, which claims every extensionless path.
+      server.middlewares.use((req, res, next) => {
+        const path = req.url.split("?")[0];
+        if (path !== reportRoute && path !== `${reportRoute}/`) return next();
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.end(readFileSync(reportPath));
+      });
+    },
+    closeBundle() {
+      const reportDir = resolve(outDir, "report");
+      mkdirSync(reportDir, { recursive: true });
+      copyFileSync(reportPath, resolve(reportDir, "index.html"));
     },
   };
 }
@@ -148,5 +188,10 @@ function mdiIconMapPlugin() {
 
 export default defineConfig({
   base: basePath,
-  plugins: [mdiIconMapPlugin(), svelte(), githubPages404Plugin()],
+  plugins: [
+    mdiIconMapPlugin(),
+    svelte(),
+    technicalReportPlugin(),
+    githubPages404Plugin(),
+  ],
 });

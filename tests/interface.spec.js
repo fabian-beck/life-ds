@@ -75,6 +75,26 @@ async function attachAudit(testInfo, name, audit) {
   expect(audit.documentWidth).toBeLessThanOrEqual(audit.viewport.width + 1);
 }
 
+// The report is a separate page published next to the app, so a broken link
+// here fails silently in the application itself: nothing imports it, and no
+// other test would notice that the route stopped resolving.
+test("technical report is reachable from the landing page", async ({
+  page,
+}) => {
+  await page.goto("en");
+
+  const reportLink = page
+    .getByRole("link", { name: /Read the technical report/ })
+    .first();
+  await expect(reportLink).toHaveAttribute("href", /\/report\/$/);
+
+  await reportLink.click();
+  await expect(page).toHaveURL(/\/report\/$/);
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Life Data Stories" })
+  ).toBeVisible();
+});
+
 test("core visitor journey", async ({ page }, testInfo) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));

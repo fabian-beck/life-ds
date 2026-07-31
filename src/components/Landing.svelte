@@ -7,6 +7,7 @@
   import { location, querystring } from "../stores/router.js";
   import { clamp, displayName } from "../utils/helpers.js";
   import { getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { assetUrl } from "../utils/assetUrl.js";
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
@@ -568,6 +569,10 @@
       <p class="eyebrow">{$_("app.title")}</p>
       <h1>{$_("app.tagline")}</h1>
       <p class="hero-intro">{$_("landing.intro_text")}</p>
+      <a class="report-link" href={assetUrl("/report/")}>
+        {$_("landing.report_link")}
+        <span aria-hidden="true">→</span>
+      </a>
     </div>
     {#key $currentLanguage}
       <MetaStoryCarousel
@@ -1049,6 +1054,26 @@
     color: #cbd5e1;
     font-size: 1.05rem;
     max-width: 58ch;
+  }
+
+  .landing-hero .report-link {
+    align-self: flex-start;
+    color: #38bdf8;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.45);
+    padding-bottom: 0.1rem;
+  }
+
+  .landing-hero .report-link:hover {
+    color: #bae6fd;
+    border-bottom-color: #bae6fd;
+  }
+
+  .landing-hero .report-link:focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 3px;
   }
 
   .map-section {

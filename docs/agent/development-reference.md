@@ -50,6 +50,12 @@ Because the site lives in a subdirectory, `vite.config.js` sets
 copy of `index.html` so path-style entry URLs survive on a host without
 rewrite rules.
 
+`technicalReportPlugin` publishes the generated technical report alongside the
+app: the build copies `docs/report/index.html` to `dist/report/index.html`, and
+the dev server answers `/life-ds/report/` with the same file ahead of the SPA
+fallback. The landing page and the AI-generated modal link there through
+`assetUrl("/report/")`, and `tests/interface.spec.js` follows that link.
+
 **Consequence for application code**: every site-absolute path that becomes a
 URL—portrait paths from the generated data, assets in `public/`—must go through
 `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in
