@@ -23,7 +23,7 @@ function getFocusableElements(node) {
 }
 
 /**
- * Give a modal dialog predictable keyboard and focus behaviour.
+ * Give a modal dialog predictable keyboard and focus behavior.
  *
  * The action focuses the dialog, keeps Tab navigation inside it, handles
  * Escape, makes the page behind it inert, and restores focus when it closes.

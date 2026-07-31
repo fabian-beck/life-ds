@@ -130,7 +130,7 @@
     const mouseX = event.clientX - rect.left - rect.width / 2;
     const mouseY = event.clientY - rect.top - rect.height / 2;
 
-    // Calculate new translation to zoom towards mouse position
+    // Calculate new translation to zoom toward mouse position
     const scaleRatio = newScale / scale;
     translateX = mouseX + (translateX - mouseX) * scaleRatio;
     translateY = mouseY + (translateY - mouseY) * scaleRatio;

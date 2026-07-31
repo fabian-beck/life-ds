@@ -59,9 +59,9 @@
     return personStyles[personId]?.primary || "#38bdf8";
   }
 
-  // Links carry no colour meaning on their own: they read as neutral until a
+  // Links carry no color meaning on their own: they read as neutral until a
   // node is hovered/tapped or a cluster card is in view, then the focused ties
-  // light up in the accent colour while the rest recede.
+  // light up in the accent color while the rest recede.
   function linkState(link, aId, cIds) {
     if (aId != null) {
       return link.source === aId || link.target === aId ? "active" : "muted";

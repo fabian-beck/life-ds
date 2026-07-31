@@ -9,7 +9,7 @@
   // Replaces the link's default navigation (the card handles the click itself).
   export let onClick = null;
   // Runs before `href` is followed, e.g. to remember scroll position. Unlike
-  // `onClick` it leaves the normal link behaviour (and modifier-clicks) intact.
+  // `onClick` it leaves the normal link behavior (and modifier-clicks) intact.
   export let onNavigate = null;
   // Localized accessible label; falls back to the person's name.
   export let ariaLabel = null;

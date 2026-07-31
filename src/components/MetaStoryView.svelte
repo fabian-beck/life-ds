@@ -964,7 +964,7 @@
 
   .sticky-ai-button {
     /* Hangs the tag off the bottom edge of the sticky header. `display: flex`
-       drops the inline line box that would otherwise pad the tag downwards;
+       drops the inline line box that would otherwise pad the tag downward;
        the one-pixel overlap then keeps fractional header heights from
        revealing a seam without covering the label itself. */
     position: absolute;

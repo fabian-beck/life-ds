@@ -74,7 +74,7 @@ a {
  *
  * The `brightness()` lift accompanies `contrast()` because contrast alone
  * pivots around mid-gray and drives dark grays toward black; brightening
- * afterwards keeps those tones legible and raises overall lightness.
+ * afterward keeps those tones legible and raises overall lightness.
  */
 html.high-contrast {
   filter: contrast(1.3) brightness(1.24);

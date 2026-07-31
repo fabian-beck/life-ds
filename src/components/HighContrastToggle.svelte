@@ -4,7 +4,7 @@
   import { highContrast, toggleHighContrast } from "../stores/contrast.js";
   import { _ } from "../stores/language";
 
-  // Visual variant to match the neighbouring language selector.
+  // Visual variant to match the neighboring language selector.
   export let variant = "default"; // "default" | "sticky"
 
   let toastKey = "";
@@ -53,7 +53,7 @@
 
 <style>
   .contrast-toggle {
-    /* Height is pinned to match the neighbouring language selector exactly
+    /* Height is pinned to match the neighboring language selector exactly
        (both use box-sizing: border-box); keep these values in sync with
        .language-selector in Landing.svelte. */
     height: 2.25rem;

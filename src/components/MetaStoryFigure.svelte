@@ -144,7 +144,7 @@
       margin: 0 auto;
     }
 
-    /* Shrink the click target to the (centred, narrower) image so the zoom
+    /* Shrink the click target to the (centered, narrower) image so the zoom
        badge stays on the picture instead of the empty column beside it. */
     .image-button {
       width: fit-content;

@@ -194,7 +194,7 @@
     return `data:image/svg+xml,${encoded}`;
   }
 
-  function normaliseStyle(raw) {
+  function normalizeStyle(raw) {
     if (!raw || typeof raw !== "object") return null;
     const result = {};
     if (isHexColor(raw.primary)) {
@@ -248,23 +248,23 @@
   };
 
   const defaultStyle = (() => {
-    const normalised = normaliseStyle(defaultStyleBase) ?? {};
+    const normalized = normalizeStyle(defaultStyleBase) ?? {};
     return {
-      primary: normalised.primary ?? defaultStyleBase.primary,
-      secondary: normalised.secondary ?? defaultStyleBase.secondary,
-      background: normalised.background ?? defaultStyleBase.background,
+      primary: normalized.primary ?? defaultStyleBase.primary,
+      secondary: normalized.secondary ?? defaultStyleBase.secondary,
+      background: normalized.background ?? defaultStyleBase.background,
       backgroundRgb:
-        normalised.backgroundRgb ??
+        normalized.backgroundRgb ??
         hexToRgb(defaultStyleBase.background) ??
         "15, 23, 42",
       backgroundPatternSvg:
-        normalised.backgroundPatternSvg ??
+        normalized.backgroundPatternSvg ??
         defaultStyleBase.background_pattern_svg,
       backgroundPatternDataUrl:
-        normalised.backgroundPatternDataUrl ??
+        normalized.backgroundPatternDataUrl ??
         svgToDataUrl(defaultStyleBase.background_pattern_svg),
-      headingFont: normalised.headingFont ?? "Inter",
-      bodyFont: normalised.bodyFont ?? "Inter",
+      headingFont: normalized.headingFont ?? "Inter",
+      bodyFont: normalized.bodyFont ?? "Inter",
     };
   })();
 
@@ -277,9 +277,9 @@
       return {};
     }
     return Object.entries(rawStyles).reduce((accumulator, [key, value]) => {
-      const normalised = normaliseStyle(value);
-      if (normalised) {
-        accumulator[key] = normalised;
+      const normalized = normalizeStyle(value);
+      if (normalized) {
+        accumulator[key] = normalized;
       }
       return accumulator;
     }, {});

@@ -993,7 +993,7 @@
     }
   }
 
-  function initialiseMap() {
+  function initializeMap() {
     if (mapInstance || !hasMapData || isDestroyed) {
       return mapInitializationPromise;
     }
@@ -1063,7 +1063,7 @@
   }
 
   onMount(() => {
-    initialiseMap();
+    initializeMap();
   });
 
   onDestroy(() => {
@@ -1080,7 +1080,7 @@
   });
 
   $: if (hasMapData) {
-    initialiseMap();
+    initializeMap();
   }
 
   $: if (mapReady && hasMapData && !isChapterSlide) {
