@@ -131,13 +131,9 @@ artefacts of this system rather than an external source, which makes the
 coupling between the two pipelines a coupling of files rather than of code.
 
 ::: artifacts lane=person
-Every file the personal pipeline touches, with the steps that write and read
-it.
 :::
 
 ::: artifacts lane=meta
-The meta pipeline consumes what the personal pipeline produced. Files with no
-writer in this table originate in the other pipeline.
 :::
 
 ## Generation

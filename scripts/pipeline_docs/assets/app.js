@@ -2020,12 +2020,7 @@
         caption(
           "Table",
           numbers.table,
-          "Every documented step of the " +
-            laneLabel(params.lane) +
-            " pipeline",
-          "Read from spec.py and resolved against the source: the model and " +
-            "reasoning effort are the ones at the call site, and the schema is " +
-            "the Pydantic model the API is asked to fill in."
+          "Every documented step of the " + laneLabel(params.lane) + " pipeline"
         )
       );
       mount.appendChild(
@@ -2073,10 +2068,7 @@
         caption(
           "Table",
           numbers.table,
-          "Files the " + laneLabel(params.lane) + " pipeline reads and writes",
-          "A file with no writer in this column is produced by the other " +
-            "pipeline, which is how the two are coupled on disk rather than in " +
-            "code."
+          "Files the " + laneLabel(params.lane) + " pipeline reads and writes"
         )
       );
       mount.appendChild(
@@ -2107,10 +2099,7 @@
         caption(
           "Table",
           numbers.table,
-          "Every model call site in the generation scripts",
-          "Found by walking the abstract syntax trees of scripts/, not by " +
-            "listing them here: a new call the spec does not claim fails the " +
-            "build."
+          "Every model call site in the generation scripts"
         )
       );
       mount.appendChild(
@@ -2263,9 +2252,7 @@
         caption(
           "Table",
           numbers.table,
-          "Recorded calls per step, " + laneLabel(params.lane).toLowerCase(),
-          "In pipeline order. A step with more calls than one ran per event, " +
-            "per person or per cluster."
+          "Recorded calls per step, " + laneLabel(params.lane).toLowerCase()
         )
       );
       mount.appendChild(
@@ -2317,14 +2304,9 @@
         caption(
           "Table",
           numbers.table,
-          entry.script + "—" + entry.flags.length + " options",
-          "Read from the script's own argument parser, so a flag added to the " +
-            "code appears here on the next build."
+          entry.script + "—" + entry.flags.length + " options"
         )
       );
-      if (entry.docstring) {
-        mount.appendChild(el("p", { class: "cap-sub", text: entry.docstring }));
-      }
       mount.appendChild(
         dataTable(
           ["Flag", "Default", "What it does"],
