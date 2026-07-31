@@ -17,6 +17,11 @@ npm run preview -- --port 4173 --strictPort   # serve dist/ in the background
 
 ## Drive with Playwright
 
+The repository's own Playwright works in web sessions—`npm run test:interface`
+and `npx playwright test` both launch—because `.claude/hooks/session-start.sh`
+links the browser revision the client expects to the Chromium the image
+carries. For driving the app outside the test suite, use that same build.
+
 Chromium is pre-installed; do NOT run `playwright install`. Install
 `playwright-core` into a scratch dir and launch with:
 
