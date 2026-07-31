@@ -8,6 +8,7 @@
   import { displayName } from "../utils/helpers.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `geo_map` block from a meta story: { clusters: [...], narration? }
@@ -27,7 +28,7 @@
   const MAX_CARD_EVENTS = 4;
 
   // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
-  const DEFAULT_PM_TILES_URL = "/basemap.pmtiles";
+  const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
   const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =

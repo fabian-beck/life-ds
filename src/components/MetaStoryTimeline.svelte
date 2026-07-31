@@ -4,6 +4,7 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
 
   export let metaStoryId = null; // ID of the meta story (for navigation context)
@@ -886,7 +887,9 @@
           leftPx: yearToPixel(birthYear),
           widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
           isAlive: !deathYear,
-          portrait: person.portrait?.thumbnail || person.portrait?.image,
+          portrait: assetUrl(
+            person.portrait?.thumbnail || person.portrait?.image
+          ),
         };
       })
       .filter((p) => p !== null);
@@ -929,7 +932,9 @@
               leftPx: yearToPixel(birthYear),
               widthPx: yearToPixel(endYear) - yearToPixel(birthYear),
               isAlive: !deathYear,
-              portrait: person.portrait?.thumbnail || person.portrait?.image,
+              portrait: assetUrl(
+                person.portrait?.thumbnail || person.portrait?.image
+              ),
             };
           })
           .filter((p) => p !== null)

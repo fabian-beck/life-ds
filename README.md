@@ -31,56 +31,54 @@ test artifacts are ignored by Git.
 
 ## Deployment
 
-The site is hosted on **Netlify** (project `famous-marigold-49244d`, site id
-`12d3d478-2a11-4020-b56c-4580fa57e108`) and is deployed **on demand only** —
-pushing/merging to `main` does **not** publish the site.
+The site is hosted on **GitHub Pages** as a project page under
+`https://<owner>.github.io/life-ds/` and is published **on demand only** —
+pushing or merging to `main` does **not** publish the site.
 
-> Two things enforce "on demand only":
->
-> 1. `netlify.toml` sets `ignore = "exit 0"`, so Netlify skips the build for any
->    git-triggered event.
-> 2. Automatic builds are additionally turned off in the Netlify dashboard
->    (Site configuration → Build & deploy → Continuous deployment → **Stop
->    builds**), so a push doesn't even spin up a build container.
->
-> To restore automatic deploys, re-enable builds in the dashboard and delete the
-> `ignore` line in `netlify.toml`.
+"On demand only" is enforced by the workflow itself: `.github/workflows/deploy-pages.yml`
+has a single `workflow_dispatch` trigger and no `push` trigger, so nothing
+publishes until a maintainer starts it.
 
 ### Publishing a new version
 
-Deploy the **pre-built** `dist/` folder with the Netlify CLI (a direct file
-upload — it does not use Netlify's build system):
+Open the repository's **Actions** tab, select **Deploy to GitHub Pages**, and
+run the workflow on `main`. It installs dependencies, runs `npm run build`, and
+uploads `dist/` to Pages.
 
-```powershell
-# once per machine: authenticate (opens a browser)
-npx netlify-cli login
-
-npm run build   # refresh dist/ from the current checkout
-npx netlify-cli deploy --prod --dir=dist --site 12d3d478-2a11-4020-b56c-4580fa57e108
-```
+One-time repository setup: **Settings → Pages → Build and deployment → Source**
+must be set to **GitHub Actions**.
 
 Notes:
 
-- The CLI package is **`netlify-cli`** — do **not** run `npx netlify`, which
-  pulls the unrelated `netlify` JS API-client package.
-- `--prod` publishes to the live site; without it you get a draft preview URL
-  and production stays unchanged.
-- Prefer this `--dir=dist` upload over Netlify's "build from git" paths: with
-  builds stopped, the dashboard "Trigger deploy" and build hooks are disabled,
-  and the Netlify MCP `deploy-site` (zip-and-build) path returns `400` for this
-  project.
-- To install the CLI globally instead: `npm install -g netlify-cli`, then use
-  `netlify deploy --prod --dir=dist --site …` directly.
+- The build produces a `404.html` copy of `index.html` (see
+  `githubPages404Plugin` in `vite.config.js`). Pages has no rewrite rules;
+  shared links are hash-based and never hit the server, but this keeps
+  path-style entry URLs such as `/life-ds/en` working.
+- The site is served from a subdirectory, so the build sets
+  `base: "/life-ds/"`. Anything that turns a site-absolute path — a portrait
+  path from the generated data, an asset in `public/` — into a URL must go
+  through `assetUrl()` in `src/utils/assetUrl.js`. Adding a raw `"/portraits/…"`
+  string to markup works locally at the domain root and 404s on Pages.
+- Building for a host that serves from the domain root (a custom domain, or a
+  different static host) needs no code change: `VITE_BASE_PATH=/ npm run build`.
+- Limits worth knowing: Pages caps a published site at 1 GB and a single file at
+  100 MB, with a soft bandwidth limit of 100 GB per month. `public/` is
+  currently ~134 MB, most of it generated portraits.
+- The basemap is served from this same origin and relies on HTTP range
+  requests, which GitHub Pages has been reported to handle inconsistently for
+  `.pmtiles` files. If the map fails to load with a byte-serving error, point
+  `VITE_PROTOMAPS_PM_TILES_URL` at an external host (see "Basemap" below); the
+  map degrades to a message rather than breaking the page.
 
 ## Routing
 
 The application supports URL-based routing, allowing you to:
 
 - **Navigate with browser back/forward buttons**: The browser history is maintained, so you can use the back and forward buttons to navigate between views.
-- **Share specific stories via URL**: Each person's story has a unique URL that can be shared directly:
-  - Landing page: `http://localhost:5173/`
-  - Person story (overview): `http://localhost:5173/story/ada_lovelace`
-  - Specific event slide: `http://localhost:5173/story/ada_lovelace/3` (shows slide 3)
+- **Share specific stories via URL**: Each person's story has a unique URL that can be shared directly. Routes live in the URL hash, so they resolve entirely in the browser and need no server-side rewrite:
+  - Landing page: `http://localhost:5173/life-ds/#/en`
+  - Person story (overview): `http://localhost:5173/life-ds/#/en/story/ada_lovelace`
+  - Specific event slide: `http://localhost:5173/life-ds/#/en/story/ada_lovelace?slide=3`
 
 The routing is implemented using `svelte-spa-router` and works seamlessly with the application's existing navigation. Slide numbers are updated in the URL as you navigate through events, but use `history.replaceState` to avoid cluttering browser history, so the back button returns to the previous person/landing page rather than the previous slide.
 
@@ -139,16 +137,17 @@ The UI displays these images as small thumbnails in the top-right corner of each
 
 ## Basemap (Protomaps PMTiles)
 
-The story view uses a Protomaps vector basemap served directly from a PMTiles archive. By default it points at the public demo bucket for the v4 basemap:
+The maps use a Protomaps vector basemap served directly from a PMTiles archive. By default this is the copy shipped with the site, a zoom 0–5 world extract of the Protomaps v4 basemap:
 
 ```
+public/basemap.pmtiles   →   served as <base>/basemap.pmtiles
+```
+
+Both the primary and the fallback URL can be overridden via Vite environment variables — to follow a daily build, or to move the archive to a host with better range-request support than the site's own:
+
+```
+https://build.protomaps.com/<YYYYMMDD>.pmtiles?download=1
 https://demo-bucket.protomaps.com/v4.pmtiles
-```
-
-If that source ever fails or you prefer a different build, you can override both the primary and fallback URLs via Vite environment variables. The built-in fallback (used when the primary 404s) remains the archived public dataset:
-
-```
-https://protomaps.github.io/tiles/v3/20240820.pmtiles
 ```
 
 Environment variables:

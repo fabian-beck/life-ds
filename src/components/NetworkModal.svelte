@@ -8,6 +8,7 @@
   import { storyStyleVars } from "../utils/helpers.js";
   import { escapeRegex } from "../utils/storyHelpers.js";
   import { findPersonMentions } from "../utils/personNames.js";
+  import { assetUrl } from "../utils/assetUrl.js";
 
   export let egoNetwork = null;
   export let personName = "";
@@ -757,7 +758,9 @@
                                   <span class="ego-portrait-clip">
                                     <img
                                       class="ego-portrait"
-                                      src={portrait.thumbnail || portrait.image}
+                                      src={assetUrl(
+                                        portrait.thumbnail || portrait.image
+                                      )}
                                       alt={personName}
                                     />
                                   </span>

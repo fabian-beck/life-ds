@@ -1,8 +1,52 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { readdirSync, readFileSync } from "fs";
+import { copyFileSync, readdirSync, readFileSync } from "fs";
 import { resolve } from "path";
 import * as mdiExports from "@mdi/js";
+
+/**
+ * Deployment base path.
+ *
+ * GitHub Pages serves this repository as a project page under
+ * https://<owner>.github.io/life-ds/, so every asset URL has to carry that
+ * prefix. It is applied in dev as well, not only in the build: the interface
+ * tests run against the dev server, and a base path that only exists in
+ * production is a base path nothing ever exercises.
+ *
+ * Set `VITE_BASE_PATH=/` to build for a host that serves the site from the
+ * domain root (a custom domain, or a different static host).
+ *
+ * Code that turns a site-absolute path into a URL must go through
+ * `src/utils/assetUrl.js`, which reads this value back as
+ * `import.meta.env.BASE_URL`.
+ */
+const basePath = process.env.VITE_BASE_PATH ?? "/life-ds/";
+
+/**
+ * Vite plugin: github-pages-404
+ *
+ * GitHub Pages serves static files only — it has no rewrite rules. Shared
+ * deep links are hash-based (`/life-ds/#/en/story/ada_lovelace`) and never
+ * reach the server, but path-style entry URLs such as `/life-ds/en` — which
+ * the dev server answers through its SPA fallback, and which the interface
+ * tests use — would return the Pages 404 page.
+ *
+ * Publishing index.html as 404.html makes Pages serve the application for
+ * those paths too, at the cost of a 404 status code that no visitor sees.
+ */
+function githubPages404Plugin() {
+  let outDir;
+  return {
+    name: "github-pages-404",
+    apply: "build",
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    closeBundle() {
+      copyFileSync(resolve(outDir, "index.html"), resolve(outDir, "404.html"));
+    },
+  };
+}
 
 /**
  * Vite plugin: virtual:mdi-icon-map
@@ -103,5 +147,6 @@ function mdiIconMapPlugin() {
 }
 
 export default defineConfig({
-  plugins: [mdiIconMapPlugin(), svelte()],
+  base: basePath,
+  plugins: [mdiIconMapPlugin(), svelte(), githubPages404Plugin()],
 });

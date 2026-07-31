@@ -1,5 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
+// Mirrors `basePath` in vite.config.js: the dev server serves the app under
+// the deployment base path, so the tests have to enter it there. Test URLs are
+// relative so they resolve against this base rather than the domain root.
+const basePath = process.env.VITE_BASE_PATH ?? "/life-ds/";
+const devServerOrigin = "http://127.0.0.1:4173";
+
 export default defineConfig({
   testDir: "./tests",
   outputDir: "test-results",
@@ -10,13 +16,13 @@ export default defineConfig({
   fullyParallel: false,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: `${devServerOrigin}${basePath}`,
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
   },
   webServer: {
     command: "npm run dev -- --host 127.0.0.1 --port 4173",
-    url: "http://127.0.0.1:4173/en",
+    url: `${devServerOrigin}${basePath}en`,
     reuseExistingServer: false,
     timeout: 120_000,
   },

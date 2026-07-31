@@ -499,8 +499,10 @@ Example from `src/locales/de.json`:
 
 Uses Protomaps PMTiles for vector basemaps (MapLibre GL):
 
-- **Primary source**: `https://demo-bucket.protomaps.com/v4.pmtiles`
-- **Fallback**: `https://protomaps.github.io/tiles/v3/20240820.pmtiles`
+- **Primary source**: `public/basemap.pmtiles`, a zoom 0-5 world extract
+  shipped with the site and resolved through `assetUrl()` so it follows the
+  deployment base path
+- **Fallback**: the same local archive unless an override is set
 
 Override via `.env`:
 

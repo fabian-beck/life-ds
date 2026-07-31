@@ -10,6 +10,7 @@
     parseHexColor,
     rgbaFromHex,
   } from "../utils/storyHelpers.js";
+  import { assetUrl } from "../utils/assetUrl.js";
 
   export let activeCoordinates = null;
   export let allActiveCoordinates = [];
@@ -21,7 +22,7 @@
   export let migrationPath = null; // {from: {lon, lat}, to: {lon, lat}} or null
 
   // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
-  const DEFAULT_PM_TILES_URL = "/basemap.pmtiles";
+  const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
   const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =

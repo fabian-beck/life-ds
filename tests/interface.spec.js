@@ -79,7 +79,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
-  await page.goto("/en");
+  await page.goto("en");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("status")).toContainText(/stories shown/i);
   await capture(page, testInfo, "01-landing");
@@ -185,7 +185,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   ).toBeVisible();
   await page.getByRole("button", { name: "Back to Stories" }).first().click();
   await expect(page).toHaveURL(/\/en$/);
-  await page.goto("/en#/en/exhibition/ada_lovelace");
+  await page.goto("en#/en/exhibition/ada_lovelace");
   await expect(page).toHaveURL(/\/en\/story\/ada_lovelace$/);
   await expect(
     page.locator('section[aria-label^="Overview: Ada Lovelace"]')

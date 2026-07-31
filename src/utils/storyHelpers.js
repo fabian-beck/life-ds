@@ -3,6 +3,7 @@
  */
 
 import { findPersonMentions } from "./personNames.js";
+import { assetUrl } from "./assetUrl.js";
 import {
   mdiCircleSmall,
   mdiBabyFaceOutline,
@@ -392,14 +393,14 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
     // Select appropriate size based on target width
     if (portrait.thumbnail || portrait.medium || portrait.full) {
       if (width <= 200 && portrait.thumbnail) {
-        return portrait.thumbnail;
+        return assetUrl(portrait.thumbnail);
       } else if (width <= 400 && portrait.medium) {
-        return portrait.medium;
+        return assetUrl(portrait.medium);
       } else if (portrait.full) {
-        return portrait.full;
+        return assetUrl(portrait.full);
       }
       // Fallback to any available size
-      return portrait.thumbnail || portrait.medium || portrait.full;
+      return assetUrl(portrait.thumbnail || portrait.medium || portrait.full);
     }
 
     // Legacy: portrait object has image property
@@ -442,7 +443,7 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
     return getFlickrThumbnailUrl(imageUrl, width);
   }
 
-  return imageUrl;
+  return assetUrl(imageUrl);
 }
 
 /**

@@ -15,12 +15,13 @@
   } from "../utils/storyHelpers";
   import { displayName } from "../utils/helpers";
   import { arrangeOverlappingMarkers } from "../utils/mapHelpers";
+  import { assetUrl } from "../utils/assetUrl.js";
 
   export let filteredEntries = [];
   export let getStyle = () => ({});
   export let onNavigate = () => {};
 
-  const DEFAULT_PM_TILES_URL = "/basemap.pmtiles";
+  const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
   const PRIMARY_PM_TILES_URL =
     import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
   const FALLBACK_PM_TILES_URL =
@@ -403,8 +404,9 @@
         return {
           personId,
           personName: person?.name?.replace(/_/g, " ") || personId,
-          portraitUrl:
-            person?.portrait?.thumbnail || person?.portrait?.image || null,
+          portraitUrl: assetUrl(
+            person?.portrait?.thumbnail || person?.portrait?.image || null
+          ),
           primaryColor: style?.primary || "#38BDF8",
           count,
         };
@@ -674,8 +676,9 @@
       const person = filteredEntries.find(
         (entry) => entry.id === props.personId
       );
-      const portraitUrl =
-        person?.portrait?.thumbnail || person?.portrait?.image || null;
+      const portraitUrl = assetUrl(
+        person?.portrait?.thumbnail || person?.portrait?.image || null
+      );
 
       // Format date nicely based on precision
       const formattedDate = props.eventDate

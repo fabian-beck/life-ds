@@ -8,7 +8,7 @@
 
 ```bash
 npm install          # Install dependencies
-npm run dev          # Start dev server (localhost:5173)
+npm run dev          # Start dev server (localhost:5173/life-ds/)
 npm run build        # Production build to dist/
 npm run preview      # Preview production build
 npm run test:core    # Minimal UI, logic, and Python regression safeguards
@@ -39,29 +39,34 @@ unless `CLAUDE_CODE_REMOTE` is set—so local machines keep using their own
 
 ### Deployment
 
-Hosted on **Netlify**, deployed **on demand only**—pushing/merging to `main`
-does not publish. Auto-builds are stopped in the Netlify dashboard, and
-`netlify.toml`'s `ignore = "exit 0"` skips git-triggered builds. Publish by
-uploading the pre-built `dist/` with the CLI (not Netlify's build-from-git,
-which is disabled; the Netlify MCP `deploy-site`/zip-and-build path returns
-`400` for this project):
+Hosted on **GitHub Pages** as a project page under
+`https://<owner>.github.io/life-ds/`, published **on demand only**—pushing or
+merging to `main` does not publish. `.github/workflows/deploy-pages.yml` has a
+single `workflow_dispatch` trigger; a maintainer runs it from the Actions tab.
+Pages' repository source must be set to "GitHub Actions".
 
-```powershell
-npx netlify-cli login   # once per machine (browser auth)
-npm run build
-npx netlify-cli deploy --prod --dir=dist --site 12d3d478-2a11-4020-b56c-4580fa57e108
-```
+Because the site lives in a subdirectory, `vite.config.js` sets
+`base: "/life-ds/"` in dev and build alike, and the build writes a `404.html`
+copy of `index.html` so path-style entry URLs survive on a host without
+rewrite rules.
 
-Use the `netlify-cli` package (its bin is `netlify`), **not** `npx netlify`
-(that is the unrelated `netlify` API-client package). See README "Deployment"
-for the full rationale.
+**Consequence for application code**: every site-absolute path that becomes a
+URL—portrait paths from the generated data, assets in `public/`—must go through
+`assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in
+markup works at a domain root and 404s on Pages. The data files and the Python
+generators keep writing site-absolute paths; the prefixing happens at render
+time only.
+
+`VITE_BASE_PATH=/` builds for a host that serves from the domain root.
+
+See README "Deployment" for the setup steps and the platform limits.
 
 ### Adding a New Person
 
 1. Run `python scripts/generate_person.py "Person Name"`
 2. Review generated files in `data/people/person_id/`
 3. Check `data/persons.json` and `data/person_styles.json` were updated
-4. Test in browser at `/story/person_id`
+4. Test in browser at `/life-ds/#/en/story/person_id`
 5. Iterate on styles or data as needed
 
 ### Modifying Person Data
