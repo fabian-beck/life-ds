@@ -13,3 +13,6 @@ __pycache__/
 data/people/**/_cache/
 worktrees
 .netlify/
+# Printed from docs/report/index.html by `npm run report:pdf`. Regenerate it
+# rather than tracking a binary that changes on every report build.
+docs/report/*.pdf

@@ -1563,12 +1563,13 @@
       .join("<br>");
   }
 
-  function renderDrawer(step) {
-    const head = document.getElementById("drawer-title");
-    head.textContent = step.label;
-    const body = document.getElementById("drawer-body");
-    clear(body);
-
+  /* Everything a step can be asked about, written into `body`.
+     Two readers call this. The drawer summons it for one step at a time, and
+     the print appendix lays the same material out for every step, because paper
+     cannot be clicked. `expand` is what that second reader needs: the prompt
+     tabs become every prompt in sequence, and no recorded call is elided, since
+     a printed page has no "show the rest" affordance. */
+  function stepDetail(body, step, expand) {
     const summary = step.summary || {};
     body.appendChild(el("h3", { text: "What this step does" }));
     body.appendChild(
@@ -1694,29 +1695,40 @@
             "gray lines above a block are the conditions that guard it.",
         })
       );
-      const tabs = el("div", { class: "tabs" });
-      const panel = el("div", {});
-      step.prompts.forEach((prompt, index) => {
-        const tab = el("button", {
-          class: "tab",
-          type: "button",
-          "aria-selected": index === 0 ? "true" : "false",
-          text: prompt.symbol,
-          onclick: function () {
-            Array.prototype.forEach.call(tabs.children, (child) => {
-              child.setAttribute("aria-selected", "false");
-            });
-            tab.setAttribute("aria-selected", "true");
-            panel.innerHTML =
-              "<pre class='prompt'>" + promptHtml(prompt) + "</pre>";
-          },
+      if (expand) {
+        step.prompts.forEach((prompt) => {
+          body.appendChild(
+            el("p", { class: "prompt-name", text: prompt.symbol })
+          );
+          body.appendChild(
+            el("pre", { class: "prompt", html: promptHtml(prompt) })
+          );
         });
-        tabs.appendChild(tab);
-      });
-      body.appendChild(tabs);
-      panel.innerHTML =
-        "<pre class='prompt'>" + promptHtml(step.prompts[0]) + "</pre>";
-      body.appendChild(panel);
+      } else {
+        const tabs = el("div", { class: "tabs" });
+        const panel = el("div", {});
+        step.prompts.forEach((prompt, index) => {
+          const tab = el("button", {
+            class: "tab",
+            type: "button",
+            "aria-selected": index === 0 ? "true" : "false",
+            text: prompt.symbol,
+            onclick: function () {
+              Array.prototype.forEach.call(tabs.children, (child) => {
+                child.setAttribute("aria-selected", "false");
+              });
+              tab.setAttribute("aria-selected", "true");
+              panel.innerHTML =
+                "<pre class='prompt'>" + promptHtml(prompt) + "</pre>";
+            },
+          });
+          tabs.appendChild(tab);
+        });
+        body.appendChild(tabs);
+        panel.innerHTML =
+          "<pre class='prompt'>" + promptHtml(step.prompts[0]) + "</pre>";
+        body.appendChild(panel);
+      }
     }
 
     const calls = recordedCallsFor(step.id);
@@ -1752,18 +1764,32 @@
               : ""),
         })
       );
-      calls.slice(0, 6).forEach((entry, index) => {
+      const shown = expand ? calls : calls.slice(0, 6);
+      shown.forEach((entry, index) => {
         body.appendChild(callBlock(entry, index));
       });
-      if (calls.length > 6) {
+      if (calls.length > shown.length) {
         body.appendChild(
           el("p", {
             class: "sub",
-            text: "Showing the first 6 of " + calls.length + " calls.",
+            text:
+              "Showing the first " +
+              shown.length +
+              " of " +
+              calls.length +
+              " calls.",
           })
         );
       }
     }
+  }
+
+  function renderDrawer(step) {
+    const head = document.getElementById("drawer-title");
+    head.textContent = step.label;
+    const body = document.getElementById("drawer-body");
+    clear(body);
+    stepDetail(body, step, false);
     body.scrollTop = 0;
   }
 
@@ -3575,6 +3601,128 @@
     },
   };
 
+  /* ----------------------------------------------------- print appendix */
+
+  /* On screen, a step's prompt, schema and dependencies are one click away in
+     the drawer. Paper has no click, so a printed report that stopped at the
+     figures would be missing the material the figures are an index to. This
+     builds that material as an appendix: every step, in the order the pipelines
+     run them, with the drawer's own content expanded.
+
+     It is print-only. On screen it would double the length of the page to say
+     what the drawer already says on demand, so the stylesheet hides it and the
+     print rules bring it back. `?appendix=0` skips building it at all, for a
+     PDF that is meant to stay short. */
+
+  const APPENDIX_LETTER = "A";
+
+  function appendixWanted() {
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("appendix");
+    return value !== "0" && value !== "off" && value !== "false";
+  }
+
+  function appendixHeading(level, number, slug, title) {
+    return el("h" + (level + 1), {
+      id: slug,
+      class: "sec sec-" + level,
+      html:
+        '<a class="secno" href="#' +
+        slug +
+        '">' +
+        escapeHtml(number) +
+        "</a><span>" +
+        escapeHtml(title) +
+        "</span>",
+    });
+  }
+
+  /* The compiled contents list is built in Python from the authored headings,
+     which the appendix is not one of. Adding the entry here—print-only, like
+     the section it points at—keeps the printed contents a description of the
+     printed document rather than of the Markdown. */
+  function addAppendixToContents(count) {
+    const list = document.querySelector(".toc > .toc-list");
+    if (!list) return;
+    list.appendChild(
+      el("li", { class: "toc-appendix" }, [
+        el("a", { href: "#appendix-steps" }, [
+          el("span", { class: "toc-no", text: APPENDIX_LETTER }),
+          el("span", { text: "Step details (" + count + " steps)" }),
+        ]),
+      ])
+    );
+  }
+
+  function renderStepAppendix() {
+    const host = document.getElementById("report");
+    if (!host || !appendixWanted()) return;
+
+    const columns = Object.keys(DATA.lanes).filter((laneId) => {
+      return stepsOf(laneId).length > 0;
+    });
+    const ordered = columns.reduce((all, laneId) => {
+      return all.concat(stepsOf(laneId));
+    }, []);
+    if (!ordered.length) return;
+
+    const section = el("section", { class: "appendix", id: "appendix-steps" });
+    section.appendChild(
+      appendixHeading(1, APPENDIX_LETTER, "appendix-steps", "Step details")
+    );
+    section.appendChild(
+      el("p", {
+        text:
+          "One entry per documented step, in the order the pipelines reach " +
+          "them: what the step does, the facts read out of its source, its " +
+          "structured output, the literal prompt text it sends and whatever a " +
+          "recorded run measured for it. In the interactive report this is the " +
+          "panel that opens when a step in Figure 2 or Figure 3 is clicked.",
+      })
+    );
+
+    ordered.forEach((step, index) => {
+      const number = APPENDIX_LETTER + "." + (index + 1);
+      const slug = "appendix-" + step.id;
+      const entry = el("article", { class: "step-detail" });
+      entry.appendChild(appendixHeading(2, number, slug, step.label));
+      const body = el("div", { class: "step-detail-body" });
+      stepDetail(body, step, true);
+      entry.appendChild(body);
+      section.appendChild(entry);
+    });
+
+    host.appendChild(section);
+    addAppendixToContents(ordered.length);
+  }
+
+  /* A `<details>` is a promise that the content is one click away. Paper cannot
+     take the click, so every disclosure on the page is opened before printing
+     and put back afterwards—the reader who printed by accident gets their page
+     back as they left it. `scripts/export_report_pdf.mjs` does the same thing
+     itself, because printing through the DevTools protocol never fires these
+     events. */
+  function bindPrintDisclosure() {
+    let reopened = [];
+    window.addEventListener("beforeprint", () => {
+      reopened = Array.prototype.filter.call(
+        document.querySelectorAll("details"),
+        (node) => {
+          return !node.open;
+        }
+      );
+      reopened.forEach((node) => {
+        node.open = true;
+      });
+    });
+    window.addEventListener("afterprint", () => {
+      reopened.forEach((node) => {
+        node.open = false;
+      });
+      reopened = [];
+    });
+  }
+
   /* --------------------------------------------------------- page chrome */
 
   function renderMetaRow() {
@@ -3894,7 +4042,13 @@
 
   renderMetaRow();
   hydrate();
+  renderStepAppendix();
   renderRail();
   renderTocButton();
   renderNotePopovers();
+  bindPrintDisclosure();
+
+  // The page is fully built. `scripts/export_report_pdf.mjs` waits for this
+  // before printing, so a PDF can never catch the report half-hydrated.
+  document.documentElement.setAttribute("data-report-ready", "1");
 })();

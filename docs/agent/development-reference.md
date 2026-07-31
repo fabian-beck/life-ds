@@ -529,6 +529,44 @@ Moving a part is a coordinate edit; `--check` rejects a box outside the canvas,
 two siblings overlapping, a child escaping its parent, an arrow to a part that
 does not exist, or a metric citing a fact that was removed.
 
+### Printing the Report
+
+The page carries its own print layout, so **Ctrl+P → Save as PDF** in any
+browser produces the full report. `npm run report:pdf` does the same thing
+headlessly, through Playwright, and writes
+`docs/report/life-data-stories-technical-report.pdf` (untracked—regenerate it
+rather than committing it).
+
+```bash
+npm run report:pdf                     # docs/report/index.html -> PDF
+npm run report:pdf -- --no-appendix    # body only, no step appendix
+npm run report:pdf -- --out some.pdf   # somewhere else
+```
+
+The script prints whatever `generate_report.py` last wrote, so rebuild the page
+first if the pipeline or the prose has changed.
+
+Both routes render the same `@media print` rules at the foot of
+`assets/style.css`, whose job is that nothing on paper is missing:
+
+- **Nothing clipped.** The wide figures and tables scroll inside their own boxes
+  on screen, which on paper is a silent truncation. Print opens every scroll
+  container, drops the screen-only table minimum, and fits each pipeline graph
+  to the sheet by overriding the pixel size `app.js` measured it at.
+- **Nothing behind an interaction.** Every `<details>` is opened before printing
+  (`bindPrintDisclosure` in `app.js` for the browser, the export script itself
+  for headless runs, since the DevTools protocol never fires `beforeprint`), and
+  the drawer's material is laid out as an appendix.
+- **Nothing straddling a break** that costs the reader what it describes:
+  figures stay with captions, rows stay whole, headings stay with their text.
+
+**Appendix A is the drawer on paper.** `renderStepAppendix` in `app.js` builds
+one entry per documented step from `stepDetail`—the same function that fills the
+drawer—with the prompt tabs expanded into every prompt in sequence. It is in the
+DOM but hidden on screen, where the drawer already answers the question in
+place; `?appendix=0` skips building it. Anything added to the drawer therefore
+reaches the PDF for free, and anything printed outside `stepDetail` will drift.
+
 ### When the Pipeline Changes
 
 1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the

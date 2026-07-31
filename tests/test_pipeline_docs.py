@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -908,6 +909,86 @@ class AssetTests(unittest.TestCase):
     def test_spec_module_has_no_syntax_drift(self) -> None:
         source = (SCRIPTS_DIR / "pipeline_docs" / "spec.py").read_text(encoding="utf-8")
         ast.parse(source)
+
+
+class PrintTests(unittest.TestCase):
+    """The printed report must be the whole report.
+
+    A scrollbar is the screen's way of saying "there is more"; paper has no way
+    of saying it, so a container that clips on screen and is neither reopened nor
+    hidden for print silently drops whatever it was holding. The same goes for
+    the step details: they reach paper only because the appendix is built from
+    the very function that fills the drawer.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        css = (ASSETS / "style.css").read_text(encoding="utf-8")
+        marker = "@media print {"
+        index = css.index(marker)
+        cls.screen_css = css[:index]
+        cls.print_css = css[index:]
+        cls.js = (ASSETS / "app.js").read_text(encoding="utf-8")
+
+    @staticmethod
+    def _rules(css: str) -> "list[tuple[str, str]]":
+        """Flat (selector list, body) pairs, one per declaration block.
+
+        Enough of a parser for this stylesheet: it nests only in at-rules, whose
+        opening brace is dropped along with everything before it.
+        """
+        rules = []
+        css = re.sub(r"/\*.*?\*/", " ", css, flags=re.DOTALL)
+        for block in css.split("}"):
+            if "{" not in block:
+                continue
+            head, body = block.rsplit("{", 1)
+            selectors = head.split("{")[-1]
+            rules.append((" ".join(selectors.split()), body))
+        return rules
+
+    def test_every_clipping_container_is_reopened_or_hidden_for_print(self) -> None:
+        hidden = [
+            part.strip()
+            for selector, body in self._rules(self.print_css)
+            if "display: none" in body
+            for part in selector.split(",")
+        ]
+        self.assertIn(".rail", hidden, "the scan found no hidden chrome")
+
+        clipped = [
+            part.strip()
+            for selector, body in self._rules(self.screen_css)
+            if "overflow" in body and ("auto" in body or "hidden" in body)
+            for part in selector.split(",")
+        ]
+        self.assertIn(".chart-scroll", clipped, "the scan found no scroll boxes")
+
+        for selector in clipped:
+            leaf = selector.split()[-1]
+            # Either the print rules speak about it, or it lives inside
+            # something they hide—which this stylesheet names as a prefix.
+            covered = leaf in self.print_css or any(
+                leaf.startswith(name) for name in hidden
+            )
+            self.assertTrue(
+                covered,
+                f"{selector} clips on screen but the print rules neither reopen "
+                f"nor hide it: on paper what it holds is cut off, not scrolled to",
+            )
+
+    def test_the_appendix_is_the_drawer(self) -> None:
+        """One builder, so a new fact in the drawer reaches the PDF for free."""
+        self.assertIn("function stepDetail(", self.js)
+        self.assertIn("stepDetail(body, step, false)", self.js)  # the drawer
+        self.assertIn("stepDetail(body, step, true)", self.js)  # the appendix
+        self.assertIn("renderStepAppendix();", self.js)
+
+    def test_the_export_script_waits_for_the_page_to_finish(self) -> None:
+        """Printing a half-hydrated page yields a report of empty figures."""
+        script = (SCRIPTS_DIR / "export_report_pdf.mjs").read_text(encoding="utf-8")
+        self.assertIn("data-report-ready", script)
+        self.assertIn("data-report-ready", self.js)
 
 
 if __name__ == "__main__":

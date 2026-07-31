@@ -1093,7 +1093,8 @@ figcaption b {
   font-size: 15px;
 }
 
-.drawer-body h3 {
+.drawer-body h3,
+.step-detail-body h3 {
   margin: 24px 0 8px;
   color: var(--muted);
   font-family: var(--sans);
@@ -1103,19 +1104,32 @@ figcaption b {
   text-transform: uppercase;
 }
 
-.drawer-body h3:first-child {
+.drawer-body h3:first-child,
+.step-detail-body h3:first-child {
   margin-top: 4px;
 }
 
-.drawer-body p {
+.drawer-body p,
+.step-detail-body p {
   margin: 0 0 10px;
 }
 
 .drawer-body p.sub,
-.drawer-body .inner p.sub {
+.drawer-body .inner p.sub,
+.step-detail-body p.sub,
+.step-detail-body .inner p.sub {
   color: var(--muted);
   font-family: var(--sans);
   font-size: 12.5px;
+}
+
+/* The label above an expanded prompt, where the drawer would have shown a tab.
+   Scoped past `.report p`, which the appendix sits inside. */
+.step-detail-body .prompt-name {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11.5px;
 }
 
 .facts {
@@ -1871,6 +1885,27 @@ figure.teaser {
   line-height: 1.45;
 }
 
+/* -------------------------------------------------------- print appendix */
+
+/* Built by `app.js` from the same function that fills the drawer, and carried
+   on the page for the printer's sake alone. On screen the drawer answers this
+   question on demand and in place; laying the answer out for every step at once
+   would bury the report it belongs to. The print rules at the foot of this file
+   are what bring it back. */
+.appendix,
+.toc-appendix {
+  display: none;
+}
+
+.step-detail-body {
+  max-width: 70ch;
+  font-size: 14px;
+}
+
+.step-detail-body .facts {
+  font-family: var(--sans);
+}
+
 .colophon {
   margin-top: 56px;
   padding-top: 14px;
@@ -1950,34 +1985,252 @@ figure.teaser {
   }
 }
 
+/* ------------------------------------------------------------------ print */
+
+/* The printed report is the same document with none of its affordances. Three
+   things have to happen for that to be true rather than merely intended.
+
+   Nothing may be clipped. On screen a wide figure scrolls inside its own box
+   and a wide table scrolls inside its wrapper, which on paper is a silent
+   truncation—the columns past the fold simply do not exist. Every scroll
+   container is therefore opened and every figure is fitted to the page.
+
+   Nothing may be behind an interaction. A `<details>` is opened before
+   printing, the drawer's material is laid out as an appendix, and the controls
+   that would ask for a click—search, filters, the contents button—are dropped,
+   since they promise something paper cannot deliver.
+
+   Nothing may straddle a page break that costs the reader the thing it
+   describes. Figures stay with their captions, rows stay whole, headings stay
+   with the text under them.
+
+   `scripts/export_report_pdf.mjs` prints exactly this stylesheet, so
+   Ctrl+P → Save as PDF and the script produce the same document. */
+
+@page {
+  size: a4 portrait;
+
+  /* Room at the foot for the page number the browser prints into the margin. */
+  margin: 16mm 17mm 18mm;
+}
+
 @media print {
-  .toolbar,
-  .drawer,
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  /* Backgrounds carry meaning here—the kind swatches, the shaded bands behind a
+     group of steps, the surface of a prompt block—so they have to survive the
+     printer's default of dropping them. */
+  * {
+    print-color-adjust: exact;
+  }
+
+  /* Chrome that offers an interaction paper cannot take. */
+  .skip,
   .rail,
+  .toolbar,
+  .hint,
+  .drawer,
   .toc-fab,
   .toc-pop,
   .figpeek,
-  .teaser-status,
   .note-pop,
-  .skip {
-    display: none;
+  .teaser-status {
+    display: none !important;
   }
 
-  /* On paper a reference is only a phrase; the marker would point nowhere. */
+  .shell {
+    display: block;
+    padding: 0;
+  }
+
+  .page,
+  .report {
+    max-width: none;
+  }
+
+  .titleblock {
+    margin-bottom: 26px;
+  }
+
+  /* Both contents lists are ordinary document content on paper: the rail is
+     gone, so this is the only one left. */
+  .toc {
+    display: block;
+    break-inside: avoid;
+  }
+
+  .toc-appendix {
+    display: list-item;
+  }
+
+  /* Keep a heading with what it introduces, and never leave one line of a
+     paragraph alone on a page. */
+  .report h2.sec,
+  .report h3.sec,
+  .report h4.sec,
+  .drawer-body h3,
+  .step-detail-body h3 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  .report p,
+  .report li,
+  .step-detail-body p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* A figure scrolls on screen; on paper it is fitted to the sheet. The width
+     override undoes the pixel size `app.js` measured the graph at, and the
+     height ceiling keeps a tall pipeline graph on one page—the viewBox scales
+     the drawing to whichever of the two bounds it meets first. */
+  .chart-scroll {
+    overflow: visible;
+  }
+
+  .chart-scroll > svg {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-height: 78vh;
+    height: auto !important;
+  }
+
+  .teaser-frame,
+  .teaser-svg {
+    width: 100%;
+    max-height: 40vh;
+  }
+
+  /* A figure and its caption are one object; a widget is not—several of them
+     are a paragraph of lede followed by a full page of figure, and holding
+     those together would leave a page empty for no gain. */
+  figure.figure,
+  .callout,
+  .factgrid,
+  .kindlist,
+  .chart-card,
+  .empty,
+  .buildinfo {
+    break-inside: avoid;
+  }
+
+  /* A caption belongs to what it names: figure captions sit under the figure,
+     table captions above the table. */
+  figcaption {
+    break-before: avoid;
+  }
+
+  .cap {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  /* Wide tables print every column instead of scrolling to it. The wrapper
+     stops clipping, the screen-only minimum that forced the scroll is dropped,
+     and the type comes down a step so the columns have somewhere to go. */
+  .table-scroll {
+    overflow: visible;
+  }
+
+  table.data {
+    min-width: 0;
+    font-size: 10px;
+  }
+
+  table.data th,
+  table.data td {
+    padding-right: 6px;
+
+    /* Only where a word genuinely does not fit. Breaking anywhere would let the
+       auto layout hand "Deterministic" a column two characters wide. */
+    overflow-wrap: break-word;
+  }
+
+  /* File paths, schema names and environment variables are the long tokens
+     these tables are made of, and the only ones worth breaking mid-word: it is
+     that or a column wide enough for `cache_wikipedia_materials.py`. */
+  table.data code,
+  table.data .path,
+  table.data .mono {
+    overflow-wrap: anywhere;
+  }
+
+  /* Repeated at the top of every page a long table runs onto. */
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+
+  /* Disclosures are opened for printing (see `bindPrintDisclosure` in app.js);
+     the marker would otherwise still read "+". */
+  details.block > summary::before {
+    content: "\2212";
+  }
+
+  details.block {
+    break-inside: avoid;
+  }
+
+  /* A code block in the authored prose scrolls sideways on screen. */
+  .report pre {
+    overflow: visible;
+    white-space: pre-wrap;
+  }
+
+  /* A bar chart's row label is ellipsized to keep the bars aligned; on paper
+     the step it names is the whole point of the row. */
+  .bars .name {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  /* A prompt is the point of the appendix, so it may not end at a scrollbar.
+     It is allowed to break across pages: some of them are longer than a sheet,
+     and the alternative is a page break that leaves half a page empty. */
+  pre.prompt {
+    overflow: visible;
+    max-height: none;
+    break-inside: auto;
+  }
+
+  /* On paper a reference is only a phrase; the marker would point nowhere. The
+     button box goes with it: a button is an atomic inline whatever its display
+     says, and the line breaker treats it as an object, so the comma after one
+     of these phrases would start the next line. `display: contents` drops the
+     box and leaves the words in the paragraph they belong to. */
   .figref {
-    border-bottom: 0;
+    display: contents;
   }
 
   .figref::after {
     content: none;
   }
 
-  .shell {
+  /* The appendix the drawer stands in for on screen. It opens a page of its
+     own, and so does each step, so that an entry can be found by leafing. */
+  .appendix {
     display: block;
+    break-before: page;
   }
 
-  .toc {
-    display: block;
+  .step-detail {
+    break-before: page;
+  }
+
+  .step-detail-body {
+    max-width: none;
+  }
+
+  .colophon {
+    break-inside: avoid;
   }
 
   /* On paper there is nothing to pop open, so the notes are printed under the

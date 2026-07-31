@@ -35,6 +35,10 @@ at build time, so never hand-edit `index.html`. Run
 `python scripts/generate_report.py --check` after changing a generation script or
 the report source.
 
+The page prints as a complete document—`npm run report:pdf`, or Ctrl+P in a
+browser—including an appendix that lays out on paper what the step drawer shows
+on screen.
+
 ## Common Commands
 
 ```powershell
