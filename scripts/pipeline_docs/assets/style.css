@@ -25,7 +25,7 @@
   color-scheme: light;
   --paper: #ffffff;
   --surface: #f7f7f5;
-  --ink: #101010;
+  --ink: #000000;
   --ink-2: #3a3a38;
   --muted: #6b6b66;
   --rule: #cfcfc9;
@@ -183,7 +183,7 @@ h1 {
 .subtitle {
   margin: 0;
   max-width: 56ch;
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 18px;
   line-height: 1.4;
 }
@@ -208,7 +208,7 @@ h1 {
 .abstract p {
   margin: 0 0 10px;
   max-width: 68ch;
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 16px;
 }
 
@@ -219,7 +219,7 @@ h1 {
 .lede {
   margin: 0;
   max-width: 66ch;
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 16.5px;
 }
 
@@ -377,7 +377,7 @@ h1 {
 
 .report .footnote {
   border-top: 1px solid var(--rule);
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 14px;
 }
 
@@ -588,7 +588,7 @@ h1 {
 .report .notes-list {
   margin: 0;
   padding-left: 20px;
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -615,7 +615,7 @@ body.has-note-pop .notes {
   padding: 11px 13px 12px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 14.5px;
   line-height: 1.5;
 }
@@ -647,14 +647,14 @@ body.has-note-pop .notes {
 .widget-note p {
   margin: 0 0 12px;
   max-width: 68ch;
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: 15px;
 }
 
 .widget-fallback {
   padding: 14px;
   border: 1px dashed var(--rule);
-  color: var(--ink-2);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 13px;
 }
@@ -747,7 +747,7 @@ body.has-note-pop .notes {
 .lane-lede {
   margin: 0 0 4px;
   max-width: 68ch;
-  color: var(--ink-2);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 13.5px;
 }
@@ -918,7 +918,7 @@ figcaption {
   margin-bottom: 12px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--rule);
-  color: var(--ink-2);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 12.5px;
   line-height: 1.5;
@@ -1321,7 +1321,7 @@ pre.prompt .role {
 }
 
 .schema-field .fdesc {
-  color: var(--ink-2);
+  color: var(--ink);
 }
 
 .tabs {
@@ -2008,7 +2008,7 @@ figure.teaser figcaption {
 .figpeek-blurb {
   margin: 0;
   padding: 0 10px 10px;
-  color: var(--ink-2);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 12px;
   line-height: 1.45;
