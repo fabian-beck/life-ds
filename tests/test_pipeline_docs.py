@@ -462,6 +462,21 @@ class PayloadAndRenderTests(unittest.TestCase):
         claimed = [site for site in payload["call_sites"] if site["step"]]
         self.assertEqual(len(claimed), len(payload["call_sites"]))
 
+    def test_the_shell_carries_every_element_the_script_reaches_for(self) -> None:
+        """`app.js` wires the drawer and the chart modal up on load.
+
+        Every one of those lookups is unconditional, so an element dropped from
+        the template in `render.py` would not degrade the page—it would throw
+        before a single computed block was hydrated, and the report would render
+        as a column of "this block is computed when the report is built".
+        """
+        script = (ASSETS / "app.js").read_text(encoding="utf-8")
+        wanted = set(re.findall(r'getElementById\("([a-z0-9-]+)"\)', script))
+        self.assertIn("chart-modal", wanted)
+        html = render.render(self.payload)
+        for element_id in sorted(wanted):
+            self.assertIn(f'id="{element_id}"', html, f"the shell has no #{element_id}")
+
     def test_the_rendered_page_embeds_the_authored_body(self) -> None:
         codebase = scan_codebase()
         facts = facts_module.collect(codebase, {"runs": []})

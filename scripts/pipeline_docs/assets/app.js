@@ -37,19 +37,61 @@
   const DATA = window.PIPELINE;
   const SVG_NS = "http://www.w3.org/2000/svg";
 
-  const RAIL_W = 58;
-  const NODE_W = 268;
-  const NODE_H = 66;
-  const FILE_H = 15;
-  const ART_W = 214;
-  const ART_H = 38;
-  const COL_GAP = 26;
-  const LAYER_GAP = 52;
-  const MARGIN_CH = 26; // side channels for edges that skip a layer
-  const PAD = 12;
-  const BAND_PAD = 9;
-  const BAND_HEAD = 20; // room for a group band's label above its first step
-  const HEAD_H = BAND_HEAD + 4; // a band on the first layer has to fit above it
+  /* Chart geometry, in SVG user units, in two sizes.
+
+     `full` draws the figure as the report has always drawn it: a node wide
+     enough for the step's name, its script, its kind, its model and the files
+     it writes. `compact` draws the same graph—same layers, same order, same
+     bands—with smaller parts and most of the writing taken out, for a display
+     too narrow to hold the full one without sideways scrolling.
+
+     The compact chart is not the full chart shrunk. Fitting a 1000-unit figure
+     into a 350-unit column would put 13px type on screen at 4px, which is not
+     a reduced figure but an unreadable one. It is a drawing with less in it,
+     sized so it still fits, and the full one is one tap away in the modal. */
+  const METRICS = {
+    full: {
+      RAIL_W: 58,
+      RAIL_GAP: 20, // rule to node: where the layer number is written
+      NODE_W: 268,
+      NODE_H: 66,
+      FILE_H: 15,
+      ART_W: 214,
+      ART_H: 38,
+      COL_GAP: 26,
+      LAYER_GAP: 52,
+      MARGIN_CH: 26, // side channels for edges that skip a layer
+      PAD: 12,
+      BAND_PAD: 9,
+      BAND_HEAD: 20, // room for a group band's label above its first step
+    },
+    compact: {
+      RAIL_W: 26,
+      RAIL_GAP: 8,
+      NODE_W: 104,
+      NODE_H: 34,
+      FILE_H: 0, // files are not drawn at this size
+      ART_W: 92,
+      ART_H: 24,
+      COL_GAP: 12,
+      LAYER_GAP: 26,
+      MARGIN_CH: 12,
+      PAD: 6,
+      BAND_PAD: 5,
+      BAND_HEAD: 8, // no band label to leave room for, only the band's corner
+    },
+  };
+  Object.keys(METRICS).forEach((size) => {
+    // A band on the first layer has to fit above it.
+    METRICS[size].HEAD_H = METRICS[size].BAND_HEAD + 4;
+  });
+
+  // A compact node gives a step's name two lines and its own padding either
+  // side; `fitLines` measures the rest. The character count is only the
+  // fallback for a chart drawn where nothing can be measured.
+  const COMPACT_LINES = 2;
+  const COMPACT_PAD = 9;
+  const COMPACT_LINE_CH = 15;
 
   // Live chart instances, so the shared drawer can clear the selection in the
   // chart the reader did *not* click.
@@ -121,6 +163,82 @@
     return text.length > max ? text.slice(0, max - 1) + "…" : text;
   }
 
+  /* Break a step's name onto at most `lines` lines that fit in `width` units.
+     SVG text does not wrap and the compact node is far too narrow for a name on
+     one line, so the wrapping is done here—greedily, on words, with the
+     overflow ending in an ellipsis.
+
+     It fits by measuring rather than by counting characters. A budget in
+     characters has to assume an average glyph, and these names are nothing like
+     the average: fifteen characters of "Phase 8—compose" run six units wider
+     than fifteen of "Save story and", which is the difference between a label
+     with a margin and one touching the border of its box. The browser can
+     measure the exact string it is about to draw, so it is asked. */
+  function fitLines(root, text, width, lines) {
+    // The probe has to sit inside a `.node` to be styled like the label it is
+    // standing in for; parked off-canvas, and removed before anything is drawn.
+    const scratch = svg("g", { class: "node" });
+    const probe = svg("text", { class: "title", x: 0, y: -999 });
+    scratch.appendChild(probe);
+    root.appendChild(scratch);
+
+    function measure(value) {
+      probe.textContent = value;
+      return probe.getComputedTextLength();
+    }
+    // A chart drawn while detached or hidden measures every string as zero.
+    // Counting characters is the poorer rule, but it is a rule.
+    const measurable = measure("Mm") > 0;
+    function fits(value) {
+      return measurable
+        ? measure(value) <= width
+        : value.length <= COMPACT_LINE_CH;
+    }
+
+    /* An em dash inside a word is a break opportunity, and half the steps are
+       named "Phase 5b—review network". Treated as one word it does not fit, so
+       the line turns before it and leaves "Phase" alone above an ellipsis; cut
+       at the dash, the whole name fits. The dash stays on the line it ends, and
+       what follows it is joined without a space. */
+    const tokens = [];
+    text
+      .split(/\s+/)
+      .filter(Boolean)
+      .forEach((word) => {
+        (word.match(/[^—]*—|[^—]+/g) || [word]).forEach((piece, index) => {
+          tokens.push({ text: piece, glued: index > 0 });
+        });
+      });
+
+    const out = [];
+    let current = "";
+    tokens.forEach((token) => {
+      const candidate = current
+        ? current + (token.glued ? "" : " ") + token.text
+        : token.text;
+      if (!current || fits(candidate)) current = candidate;
+      else {
+        out.push(current);
+        current = token.text;
+      }
+    });
+    if (current) out.push(current);
+
+    const kept = out.slice(0, lines);
+    kept.forEach((line, index) => {
+      // The last line has to say that it is not the end of the name; any line
+      // may still be a single word wider than the box.
+      const cut = out.length > lines && index === lines - 1;
+      if (!cut && fits(line)) return;
+      let value = line;
+      while (value.length > 1 && !fits(value + "…")) value = value.slice(0, -1);
+      kept[index] = value.replace(/[\s—–-]+$/, "") + "…";
+    });
+
+    root.removeChild(scratch);
+    return kept;
+  }
+
   const stepById = {};
   DATA.steps.forEach((step, index) => {
     step._order = index;
@@ -186,22 +304,37 @@
      one must not re-flow the other. The layout itself is unchanged—the layer
      rule, the group blocks and the edge routing are the same code that drew the
      single tabbed chart—it simply closes over an instance `state` and instance
-     DOM nodes instead of the page's. */
-  function createChart(host, laneId, figureNumber) {
+     DOM nodes instead of the page's.
+
+     `options.compact` draws the reduced version for a narrow display: the same
+     graph, at `METRICS.compact`, with the toolbar, the data files, the group
+     labels and everything written inside a node but its name left out, and the
+     drawing scaled to the column instead of scrolled sideways. What it drops is
+     detail, never structure—the reader still sees every step, every dependency
+     and every band, and `options.expandable` puts the full version one press
+     away in the modal. */
+  function createChart(host, laneId, figureNumber, options) {
+    const settings = options || {};
+    const compact = !!settings.compact;
+    const M = METRICS[compact ? "compact" : "full"];
     // Declared up front so `select` can name the instance the drawer belongs to
     // before the instance is finished being built.
-    const instance = { lane: laneId };
+    const instance = { lane: laneId, compact: compact, host: host };
     const state = {
       tab: laneId,
       kinds: new Set(Object.keys(DATA.kinds)),
       showShared: true,
-      showArtifacts: true,
+      // The files are the first thing to go: they are the widest text in a node
+      // and a whole extra column of source boxes beside it.
+      showArtifacts: !compact,
       query: "",
       selected: null,
     };
 
     const lane = DATA.lanes[laneId];
+    const wrapCache = {}; // step id → the lines a compact node prints
     const flow = svg("svg", {
+      class: "flow" + (compact ? " flow-compact" : ""),
       role: "img",
       "aria-label": "Flow chart of the " + lane.label + " pipeline",
     });
@@ -418,7 +551,7 @@
 
     function nodeHeight(step) {
       const files = state.showArtifacts ? (step.outputs || []).length : 0;
-      return NODE_H + (files ? 6 + files * FILE_H : 0);
+      return M.NODE_H + (files ? 6 + files * M.FILE_H : 0);
     }
 
     /* A group is only aligned where it is actually continuous. The layers a group
@@ -500,7 +633,7 @@
             list.reduce((sum, node) => {
               return sum + node.w;
             }, 0) +
-              COL_GAP * (list.length - 1)
+              M.COL_GAP * (list.length - 1)
           );
         }, 0);
         if (block.members.length < 2) block.group = null;
@@ -531,7 +664,7 @@
        step at the same x. */
     function arrange(rows, graph) {
       const blocks = buildBlocks(rows);
-      if (!blocks.length) return { blocks: blocks, width: NODE_W };
+      if (!blocks.length) return { blocks: blocks, width: M.NODE_W };
 
       const perLayer = rows.map(() => {
         return [];
@@ -577,7 +710,7 @@
       });
 
       function gap(left, right) {
-        return (left.width + right.width) / 2 + COL_GAP;
+        return (left.width + right.width) / 2 + M.COL_GAP;
       }
 
       // Leftmost feasible packing. Pushing one block right can invalidate a layer
@@ -632,7 +765,7 @@
         left = Math.min(left, block.cx - block.width / 2);
         right = Math.max(right, block.cx + block.width / 2);
       });
-      const origin = PAD + RAIL_W + MARGIN_CH - left;
+      const origin = M.PAD + M.RAIL_W + M.MARGIN_CH - left;
       blocks.forEach((block) => {
         block.cx += origin;
         // Stage two: the members of one layer, centered on the block.
@@ -642,16 +775,16 @@
             list.reduce((sum, node) => {
               return sum + node.w;
             }, 0) +
-            COL_GAP * (list.length - 1);
+            M.COL_GAP * (list.length - 1);
           let x = block.cx - total / 2;
           list.forEach((node) => {
             node.px = x;
-            x += node.w + COL_GAP;
+            x += node.w + M.COL_GAP;
           });
         });
       });
 
-      return { blocks: blocks, width: Math.max(NODE_W, right - left) };
+      return { blocks: blocks, width: Math.max(M.NODE_W, right - left) };
     }
 
     /* The band behind a group run, drawn around the whole rigid block rather than
@@ -670,10 +803,10 @@
         bands.push({
           group: block.group,
           count: block.members.length,
-          x0: block.cx - block.width / 2 - BAND_PAD,
-          x1: block.cx + block.width / 2 + BAND_PAD,
-          y0: y0 - BAND_HEAD,
-          y1: y1 + BAND_PAD,
+          x0: block.cx - block.width / 2 - M.BAND_PAD,
+          x1: block.cx + block.width / 2 + M.BAND_PAD,
+          y0: y0 - M.BAND_HEAD,
+          y1: y1 + M.BAND_PAD,
         });
       });
       return bands;
@@ -693,7 +826,7 @@
           type: "step",
           id: step.id,
           step: step,
-          w: NODE_W,
+          w: M.NODE_W,
           h: nodeHeight(step),
           order: step._order,
         });
@@ -704,8 +837,8 @@
           id: "file:" + entry[0],
           artifact: entry[1].artifact,
           to: entry[1].to,
-          w: ART_W,
-          h: ART_H,
+          w: M.ART_W,
+          h: M.ART_H,
           order: -1,
         });
       });
@@ -759,7 +892,7 @@
       const nodes = [];
       const byId = {};
       const rails = [];
-      let y = HEAD_H;
+      let y = M.HEAD_H;
       rows.forEach((row, index) => {
         const rowH = row.reduce((best, node) => {
           return Math.max(best, node.h);
@@ -778,7 +911,7 @@
           return a.x - b.x;
         });
         rails.push({ label: String(index + 1), y0: y, y1: y + rowH });
-        y += rowH + LAYER_GAP;
+        y += rowH + M.LAYER_GAP;
       });
 
       const bands = groupBands(placement.blocks);
@@ -846,8 +979,8 @@
         rails: rails,
         bands: bands,
         layers: rows.length,
-        width: PAD * 2 + RAIL_W + MARGIN_CH * 2 + contentW,
-        height: (rows.length ? y - LAYER_GAP : HEAD_H) + PAD,
+        width: M.PAD * 2 + M.RAIL_W + M.MARGIN_CH * 2 + contentW,
+        height: (rows.length ? y - M.LAYER_GAP : M.HEAD_H) + M.PAD,
       };
     }
 
@@ -857,8 +990,8 @@
        band counts as occupied even where its column is empty: a line running
        down the middle of a band would read as belonging to it. */
     function routeLongEdges(edges, rows, contentW, bands) {
-      const left = PAD + RAIL_W;
-      const right = left + MARGIN_CH * 2 + contentW;
+      const left = M.PAD + M.RAIL_W;
+      const right = left + M.MARGIN_CH * 2 + contentW;
       // The side channels hug the very edge: with the relaxation free to push a
       // block flush against the left of the content, anything further in is inside
       // the clearance of the leftmost node and gets rejected in every row.
@@ -965,7 +1098,12 @@
       });
     }
 
+    /* Compact drops the label, not the band. A group's name needs more width
+       than a compact node has, and set small enough to fit it would be a smear
+       across the top of the band; the band itself still shows that those steps
+       are one concern, and its tooltip still names it. */
     function drawBandLabels(root, bands) {
+      if (compact) return;
       bands.forEach((band) => {
         const text = truncateLabel(band.group.label, 30);
         root.appendChild(
@@ -989,7 +1127,7 @@
     }
 
     function drawRails(root, rails) {
-      const x = PAD + RAIL_W - 20;
+      const x = M.PAD + M.RAIL_W - M.RAIL_GAP;
       rails.forEach((rail) => {
         root.appendChild(
           svg("path", {
@@ -999,8 +1137,8 @@
         );
         const label = svg("text", {
           class: "rail-label",
-          x: x - 7,
-          y: rail.y0 + 13,
+          x: x - (compact ? 4 : 7),
+          y: rail.y0 + (compact ? 9 : 13),
           "text-anchor": "end",
         });
         label.textContent = rail.label;
@@ -1204,6 +1342,48 @@
         })
       );
 
+      /* Compact keeps the name and nothing else. The script, the kind, the
+         model and the recorded numbers are all one line of small type each,
+         and four of those in a 104-unit box is a grey block rather than a
+         label—so the node says which step it is, the tooltip and the accessible
+         name still say what kind it is, and the rest is in the drawer and in
+         the full chart. */
+      if (compact) {
+        // Measured once per step: the node's width never changes within an
+        // instance, and `draw` runs again on every selection.
+        if (!wrapCache[step.id]) {
+          wrapCache[step.id] = fitLines(
+            root,
+            step.label,
+            node.w - COMPACT_PAD * 2,
+            COMPACT_LINES
+          );
+        }
+        const lines = wrapCache[step.id];
+        const top = node.h / 2 - (lines.length - 1) * 5 + 3;
+        lines.forEach((line, index) => {
+          const text = svg("text", {
+            class: "title",
+            x: COMPACT_PAD,
+            y: top + index * 11,
+          });
+          text.textContent = line;
+          group.appendChild(text);
+        });
+        const tip = svg("title");
+        tip.textContent =
+          step.label +
+          "\n" +
+          DATA.kinds[step.kind].label +
+          "\n" +
+          step.script +
+          (step.model ? "\n" + step.model.split(" (")[0] : "");
+        group.appendChild(tip);
+        bindNode(group, step);
+        root.appendChild(group);
+        return;
+      }
+
       const title = svg("text", { class: "title", x: 16, y: 22 });
       title.textContent = truncateLabel(step.label, 33);
       group.appendChild(title);
@@ -1250,7 +1430,7 @@
       files.forEach((artifactId, index) => {
         const artifact = artifactById[artifactId];
         if (!artifact) return;
-        const rowY = NODE_H + index * FILE_H;
+        const rowY = M.NODE_H + index * M.FILE_H;
         const row = svg("g", { class: "writes" });
         row.appendChild(
           svg("path", {
@@ -1269,6 +1449,11 @@
         group.appendChild(row);
       });
 
+      bindNode(group, step);
+      root.appendChild(group);
+    }
+
+    function bindNode(group, step) {
       group.addEventListener("click", () => {
         select(step.id);
       });
@@ -1278,8 +1463,6 @@
           select(step.id);
         }
       });
-
-      root.appendChild(group);
     }
 
     function draw() {
@@ -1293,7 +1476,11 @@
       );
       host.setAttribute("width", geometry.width);
       host.setAttribute("height", geometry.height);
-      host.style.minWidth = geometry.width + "px";
+      // The full chart is drawn at its natural size and scrolled sideways when
+      // the column is too narrow for it. The compact one must never scroll—that
+      // is the whole point of it—so it is given no minimum and the stylesheet
+      // fits it to the column.
+      host.style.minWidth = compact ? "" : geometry.width + "px";
       host.setAttribute(
         "aria-label",
         "Dependency graph of the " + DATA.lanes[state.tab].label + " pipeline"
@@ -1330,7 +1517,7 @@
          semantics and the branch structure belong to the authored prose above,
          and repeating them here made the figure argue with the text. */
       const sourceCount = geometry.nodes.length - stepNodes.length;
-      caption.innerHTML =
+      const opening =
         "<b>Figure " +
         figureNumber +
         ".</b> " +
@@ -1339,7 +1526,27 @@
         stepNodes.length +
         " steps in " +
         geometry.layers +
-        " layers. " +
+        " layers. ";
+
+      /* The compact caption describes the compact drawing. Naming the file
+         lines and the fact line under a figure that has neither would be
+         describing the other version of itself, so it says instead what was
+         left out and where the reader can find it. */
+      if (compact) {
+        caption.innerHTML =
+          opening +
+          (geometry.bands.length
+            ? "A shaded band is one concern spread over several layers. "
+            : "") +
+          "The color bar gives the step kind. Reduced for a narrow screen: " +
+          "every step and every dependency is drawn, but not the script, " +
+          "model, data files or recorded cost each step carries. Tap a step " +
+          "for those, or open the full chart.";
+        return;
+      }
+
+      caption.innerHTML =
+        opening +
         (sourceCount
           ? "Gray boxes are files this pipeline only reads, written by the " +
             "other one. "
@@ -1386,9 +1593,43 @@
       }),
     ]);
 
+    /* The way to the full-screen chart. It is offered in both versions, for the
+       same reason in each: the graph is wider than what it is drawn into. On a
+       phone that is the compact figure's missing detail; in the report's text
+       column it is the right-hand third of a chart that has to be scrolled to
+       be seen at all. */
+    function expandButton() {
+      return el("button", {
+        class: "expand",
+        type: "button",
+        text: compact ? "Open the full chart" : "Full screen",
+        title:
+          "Open " +
+          lane.label +
+          " pipeline as a full-screen chart, with the toolbar and every detail.",
+        onclick: function () {
+          openChartModal(laneId, figureNumber);
+        },
+      });
+    }
+
     host.appendChild(lede);
-    host.appendChild(el("div", { class: "toolbar" }, [search, filters]));
-    host.appendChild(hint);
+    if (compact) {
+      // No toolbar: a search field and six filter toggles cost more height than
+      // the figure they filter, and filtering a chart this reduced answers
+      // nothing that opening the full one does not answer better.
+      if (settings.expandable) {
+        host.appendChild(
+          el("div", { class: "chart-actions" }, [expandButton()])
+        );
+      }
+    } else {
+      const toolbar = el("div", { class: "toolbar" }, [search, filters]);
+      if (settings.expandable) toolbar.appendChild(expandButton());
+      host.appendChild(toolbar);
+      host.appendChild(hint);
+      renderToolbar();
+    }
     host.appendChild(
       el("figure", { class: "figure" }, [
         caption,
@@ -1396,13 +1637,20 @@
       ])
     );
 
-    renderToolbar();
     draw();
 
     instance.clearSelection = function () {
       if (state.selected === null) return;
       state.selected = null;
       draw();
+    };
+    // A chart can be replaced—the page crossing the compact breakpoint, or the
+    // modal closing—and a dead instance left in `charts` would go on drawing
+    // into a detached node every time the drawer cleared the other selection.
+    instance.destroy = function () {
+      const index = charts.indexOf(instance);
+      if (index !== -1) charts.splice(index, 1);
+      clear(host);
     };
     charts.push(instance);
     return instance;
@@ -1810,6 +2058,67 @@
     charts.forEach((chart) => {
       chart.clearSelection();
     });
+  }
+
+  /* ---------------------------------------------------------- chart modal */
+
+  /* The full chart, over the whole viewport, on demand.
+
+     A narrow display gets the compact figure inline, and this is where the
+     detail it gave up is kept: the same chart at full size, with its toolbar,
+     its search and its data files, scrollable in both directions because a
+     dependency graph is simply wider than a phone. It is built when it is
+     opened and torn down when it is closed—the report already draws two charts
+     on load, and a third held in reserve behind every figure would be paid for
+     by every reader whether or not they ever pressed the button. */
+  const modalState = { chart: null, opener: null };
+
+  function chartModal() {
+    return document.getElementById("chart-modal");
+  }
+
+  function openChartModal(laneId, figureNumber) {
+    const modal = chartModal();
+    const mount = document.getElementById("chart-modal-body");
+    closeChartModal(); // never two charts of the same lane at once
+    modalState.opener = document.activeElement;
+    document.getElementById("chart-modal-title").textContent =
+      "Figure " + figureNumber + "—" + laneLabel(laneId) + " pipeline";
+    // Shown before it is filled: a chart built inside a `display:none` panel
+    // measures every string and every scroll extent as zero.
+    modal.classList.add("open");
+    modal.removeAttribute("aria-hidden");
+    modalState.chart = createChart(mount, laneId, figureNumber, {
+      compact: false,
+    });
+    // Opened at the left edge, a chart wider than the panel shows its empty
+    // margin channel and nothing else. Start in the middle, where the graph is.
+    const scroller = mount.querySelector(".chart-scroll");
+    if (scroller) {
+      scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+    }
+    // The page behind must not scroll under the overlay; on a phone it is the
+    // difference between closing the modal and losing your place in the report.
+    document.body.classList.add("modal-open");
+    document.getElementById("chart-modal-close").focus();
+  }
+
+  function closeChartModal() {
+    const modal = chartModal();
+    if (modalState.chart) {
+      modalState.chart.destroy();
+      modalState.chart = null;
+    }
+    if (!modal.classList.contains("open")) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    if (modalState.opener && modalState.opener.focus) modalState.opener.focus();
+    modalState.opener = null;
+  }
+
+  function chartModalIsOpen() {
+    return chartModal().classList.contains("open");
   }
 
   /* ------------------------------------------------- shared computed parts */
@@ -3208,8 +3517,32 @@
       }
     },
 
+    /* The figure follows the viewport. Below the breakpoint the full chart
+       cannot be read without scrolling it sideways past its own layer numbers,
+       so the compact drawing is mounted instead and the full one moves into the
+       modal. The choice is made here rather than in CSS because the two are
+       different drawings, not one drawing at two sizes—rendering both and
+       hiding one would lay out a chart nobody looks at, on the load of every
+       phone. A rotated phone or a dragged window re-mounts the figure; the
+       chart is cheap to build and nothing but the selection is lost. */
     pipeline: function (mount, params, numbers) {
-      createChart(mount, params.lane, numbers.figure);
+      const narrow = window.matchMedia("(width <= 720px)");
+      let chart = null;
+
+      function mountChart() {
+        if (chart) chart.destroy();
+        chart = createChart(mount, params.lane, numbers.figure, {
+          compact: narrow.matches,
+          expandable: true,
+        });
+      }
+
+      mountChart();
+      // `addEventListener` on a MediaQueryList is the modern spelling; Safari
+      // only learned it in 14, and the page is meant to open anywhere.
+      if (narrow.addEventListener)
+        narrow.addEventListener("change", mountChart);
+      else narrow.addListener(mountChart);
     },
 
     steptable: function (mount, params, numbers) {
@@ -4039,10 +4372,28 @@
   document
     .getElementById("drawer-close")
     .addEventListener("click", closeDrawer);
+  document
+    .getElementById("chart-modal-close")
+    .addEventListener("click", closeChartModal);
+  // The backdrop is the modal's own padding; a press that lands on it and not
+  // on the panel is a press outside the chart.
+  chartModal().addEventListener("click", (event) => {
+    if (event.target === chartModal()) closeChartModal();
+  });
+  // One Escape, one layer: the drawer opens over the modal, so it closes first
+  // and a second press closes the chart behind it.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    closeDrawer();
     clearTeaserFocus();
+    if (document.getElementById("drawer").classList.contains("open")) {
+      closeDrawer();
+      return;
+    }
+    if (chartModalIsOpen()) {
+      closeChartModal();
+      return;
+    }
+    closeDrawer();
   });
 
   renderMetaRow();
