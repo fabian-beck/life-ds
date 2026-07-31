@@ -2444,22 +2444,34 @@
     return part ? { x: part.x, y: part.y, w: part.w, h: part.h } : null;
   }
 
+  /* A wire and its label are one thing that connects a known set of parts, so
+     both go in a group that names those parts. A focus reads that list to know
+     whether the wire is part of what it is about; see `paintFocus`. */
+  function wireGroup(host, ends) {
+    const group = svg("g", { class: "twire", "data-ends": ends.join(" ") });
+    host.appendChild(group);
+    return group;
+  }
+
   function drawLink(host, labels, link) {
     const from = boxOf(link.source);
     const to = boxOf(link.target);
     if (!from || !to) return;
+    const ends = [link.source, link.target];
+    const wire = wireGroup(host, ends);
     const cls = "tedge" + (link.kind === "call" ? " tedge-call" : "");
     const y1 = from.y + from.h * link.source_at;
     const y2 = to.y + to.h * link.target_at;
     const x1 = from.x + from.w;
     const x2 = to.x;
     const mid = x1 + (x2 - x1) * link.jog;
-    host.appendChild(
+    wire.appendChild(
       sPath("M" + x1 + " " + y1 + "H" + mid + "V" + y2 + "H" + x2, cls)
     );
-    arrowHead(host, x2, y2, "right");
-    if (link.both) arrowHead(host, x1, y1, "left");
-    if (link.label) sLabel(labels, mid, Math.min(y1, y2) - 5, link.label);
+    arrowHead(wire, x2, y2, "right");
+    if (link.both) arrowHead(wire, x1, y1, "left");
+    if (link.label)
+      sLabel(wireGroup(labels, ends), mid, Math.min(y1, y2) - 5, link.label);
   }
 
   /* One record leaving the artifact that holds it, and dropping into each
@@ -2472,7 +2484,9 @@
     const centres = targets.map((box) => box.x + box.w / 2);
     const left = Math.min.apply(null, centres);
     const right = Math.max.apply(null, centres);
-    host.appendChild(
+    const ends = [bus.source].concat(bus.targets);
+    const wire = wireGroup(host, ends);
+    wire.appendChild(
       sPath(
         "M" +
           (from.x + from.w) +
@@ -2485,20 +2499,26 @@
         "tbus"
       )
     );
-    host.appendChild(
+    wire.appendChild(
       sPath("M" + left + " " + bus.rail_y + "H" + right, "tbus")
     );
     targets.forEach((box, index) => {
-      host.appendChild(
+      wire.appendChild(
         sPath(
           "M" + centres[index] + " " + bus.rail_y + "V" + (box.y - 5),
           "tbus"
         )
       );
-      arrowHead(host, centres[index], box.y - 1, "down");
+      arrowHead(wire, centres[index], box.y - 1, "down");
     });
     if (bus.label)
-      sLabel(labels, bus.label_x, bus.rail_y + 3, bus.label, "tbus-label");
+      sLabel(
+        wireGroup(labels, ends),
+        bus.label_x,
+        bus.rail_y + 3,
+        bus.label,
+        "tbus-label"
+      );
   }
 
   /* Each routine fills one part's box. The vocabulary is closed: `teaser.py`
@@ -2999,6 +3019,17 @@
       node.classList.toggle("is-on", state === "on");
       node.classList.toggle("is-kin", state === "kin");
       node.classList.toggle("is-off", !!partId && !state);
+    });
+    // A wire recedes with the parts it joins: it stays lit while either end is
+    // still in the picture, so a focus shows what the part is connected to and
+    // nothing else. Without this the traffic between the dimmed boxes keeps its
+    // full contrast and reads as the loudest thing on the figure.
+    Array.prototype.forEach.call(root.querySelectorAll(".twire"), (node) => {
+      const ends = (node.getAttribute("data-ends") || "").split(" ");
+      const joined = ends.some((id) => {
+        return !!related[id];
+      });
+      node.classList.toggle("is-off", !!partId && !joined);
     });
   }
 

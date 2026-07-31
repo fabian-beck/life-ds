@@ -1836,7 +1836,8 @@ figure.teaser > .cap {
 /* Focus. The subject keeps its full contrast, its container and its contents
    stay legible, and everything else recedes without disappearing—the reader
    has to keep seeing where in the whole the part sits. */
-.tpart.is-off {
+.tpart.is-off,
+.twire.is-off {
   opacity: 0.16;
 }
 
@@ -1854,6 +1855,12 @@ figure.teaser > .cap {
 
 .teaser-svg .tpart {
   cursor: pointer;
+  transition: opacity 0.16s ease;
+}
+
+/* The wires fade with the parts, and on the same clock, so the whole figure
+   settles into a focus as one movement. They are not controls, so no cursor. */
+.teaser-svg .twire {
   transition: opacity 0.16s ease;
 }
 
