@@ -1851,6 +1851,53 @@ figure.teaser {
 }
 
 @media print {
+  /* The page geometry lives here rather than in the PDF script, so printing
+     from the browser and printing with `scripts/report_pdf.js` produce the
+     same document. The deeper bottom margin is the footer's. */
+  @page {
+    size: a4;
+    margin: 16mm 16mm 20mm;
+  }
+
+  /* The step tables carry six columns, one of them a script filename; at the
+     portrait measure they compress until the monospace breaks mid-token. A
+     table that overruns by more than a little gets a page turned sideways
+     instead. `app.js` decides which, since only layout knows how wide a table
+     turned out to be. */
+  @page wide {
+    size: a4 landscape;
+    margin: 16mm;
+  }
+
+  /* The caption is marked with its table so the two stay together: a named
+     page breaks before the first box that asks for it, and consecutive boxes
+     asking for the same one share it. */
+  .cap.print-wide,
+  .table-scroll.print-wide {
+    page: wide;
+  }
+
+  /* A table that got its own landscape page has the room it wanted, so the
+     wrapping concessions below are off for it. */
+  .table-scroll.print-wide code,
+  .table-scroll.print-wide .mono,
+  .table-scroll.print-wide .path {
+    overflow-wrap: normal;
+  }
+
+  /* Set for the moment `app.js` measures how wide a table wants to be. The
+     wrapping overrides further down make every table fit by construction, so
+     the question can only be asked with them off. */
+  .table-scroll.print-measure table.data {
+    width: min-content;
+  }
+
+  .table-scroll.print-measure code,
+  .table-scroll.print-measure .mono,
+  .table-scroll.print-measure .path {
+    overflow-wrap: normal;
+  }
+
   .toolbar,
   .drawer,
   .rail,
@@ -1858,6 +1905,7 @@ figure.teaser {
   .toc-pop,
   .figpeek,
   .teaser-status,
+  .hint,
   .skip {
     display: none;
   }
@@ -1877,5 +1925,79 @@ figure.teaser {
 
   .toc {
     display: block;
+  }
+
+  /* Wide blocks scroll sideways on screen. Paper has nowhere to scroll to, so
+     they are fitted to the measure instead of being cropped at its edge. */
+  .chart-scroll,
+  .table-scroll {
+    overflow: visible;
+  }
+
+  /* The charts carry a viewBox, so constraining the box scales the whole
+     drawing—labels included—rather than clipping it. The `!important` is aimed
+     at the inline `min-width` `app.js` sets from the drawing's own width: on
+     screen that is what makes the wrapper scroll, and nothing else can override
+     it. The height cap keeps the tallest chart on one page with its caption. */
+  .chart-scroll > svg {
+    width: auto;
+    min-width: 0 !important;
+    max-width: 100%;
+    height: auto;
+    max-height: 235mm;
+  }
+
+  /* The min-width that keeps columns from collapsing on screen is what pushes
+     these tables past the measure. Give it up, and let the long environment
+     variable names break instead of setting the column width. */
+  table.data {
+    min-width: 0;
+    font-size: 10px;
+  }
+
+  /* Ordinary words stay whole—a column headed "Kin d" is worse than a wide
+     one. What actually overruns the measure is the monospace: file paths and
+     environment variable names, which have no break opportunity at all. */
+  table.data th,
+  table.data td {
+    overflow-wrap: break-word;
+  }
+
+  table.data code,
+  table.data .mono,
+  table.data .path {
+    overflow-wrap: anywhere;
+  }
+
+  /* A figure split across a page break loses the drawing its caption names. */
+  figure.figure,
+  figure.teaser,
+  .chart-card,
+  .callout,
+  .colophon,
+  details.block {
+    break-inside: avoid;
+  }
+
+  .cap {
+    break-before: avoid;
+    break-inside: avoid;
+  }
+
+  .report h2.sec,
+  .report h3.sec,
+  .report h4.sec {
+    break-after: avoid;
+  }
+
+  /* Collapsed on screen because the fields are a reference rather than reading
+     matter; opened for print by `app.js`, since paper cannot be clicked—and
+     the marker that would invite the click goes with the click. */
+  details.block > summary {
+    break-after: avoid;
+  }
+
+  details.block > summary::before {
+    display: none;
   }
 }

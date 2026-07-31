@@ -3772,6 +3772,63 @@
     });
   }
 
+  /* ------------------------------------------------------------- print */
+
+  /* The schema blocks are collapsed on screen because the field lists are a
+     reference rather than reading matter. On paper there is nothing to click,
+     so open them for the print and put them back afterwards. */
+  function openBlocksForPrint(open) {
+    const blocks = document.querySelectorAll("details.block");
+    Array.prototype.forEach.call(blocks, (block) => {
+      if (open) {
+        if (!block.open) block.dataset.printReopened = "1";
+        block.open = true;
+      } else if (block.dataset.printReopened) {
+        delete block.dataset.printReopened;
+        block.open = false;
+      }
+    });
+  }
+
+  /* A table that wants to be much wider than the measure is given a landscape
+     page (see the `@page wide` rule). Only much wider: turning a page for a
+     table that misses by a few percent costs more than the wrapping it saves.
+     The print rules make every table fit, so what has to be measured is the
+     width it would take with its words kept whole. */
+  const WIDE_TABLE_RATIO = 1.2;
+
+  function naturalWidth(box) {
+    const table = box.querySelector("table");
+    if (!table) return 0;
+    box.classList.add("print-measure");
+    const width = table.getBoundingClientRect().width;
+    box.classList.remove("print-measure");
+    return width;
+  }
+
+  function markWideTablesForPrint(on) {
+    const boxes = document.querySelectorAll(".table-scroll");
+    Array.prototype.forEach.call(boxes, (box) => {
+      const caption = box.previousElementSibling;
+      const wide =
+        on && box.clientWidth
+          ? naturalWidth(box) > box.clientWidth * WIDE_TABLE_RATIO
+          : false;
+      box.classList.toggle("print-wide", wide);
+      if (caption && caption.classList.contains("cap")) {
+        caption.classList.toggle("print-wide", wide);
+      }
+    });
+  }
+
+  function preparePrint(on) {
+    openBlocksForPrint(on);
+    markWideTablesForPrint(on);
+  }
+
+  window.addEventListener("beforeprint", () => preparePrint(true));
+  window.addEventListener("afterprint", () => preparePrint(false));
+
   document
     .getElementById("drawer-close")
     .addEventListener("click", closeDrawer);

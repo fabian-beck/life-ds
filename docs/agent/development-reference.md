@@ -386,7 +386,47 @@ step, claims a step twice, or mixes the two pipelines.
 python scripts/generate_report.py            # rebuild the page
 python scripts/generate_report.py --check    # drift check only, no API key needed
 python scripts/generate_report.py --skip-ai  # rebuild without calling the API
+python scripts/generate_report.py --pdf      # rebuild, then print it to PDF
 ```
+
+### The PDF Rendition
+
+`scripts/report_pdf.js` prints the built page to `docs/report/report.pdf`—also
+reachable as `npm run report:pdf`, or as `--pdf` on the generator above. The
+HTML page is the artifact; the PDF is what a repository can show on a landing
+page, what cites with a page number, and what survives a browser generation. It
+is what a published version is uploaded as, alongside the page itself. A
+`--doi 10.5281/…` (or `LDS_REPORT_DOI`) stamps that DOI into the footer beside
+the build stamp the page carries.
+
+It is printed, not rebuilt: Chromium loads the finished page, waits for every
+computed block to hydrate, and prints it. Chromium comes from Playwright, which
+is already installed for the interface tests—`npx playwright install chromium`
+once per machine.
+
+The PDF is **not** committed. It is derived from a file that is, it is binary,
+and it would change on every rebuild; generate it when a version is published.
+
+How the page prints is decided by the page, not by the printer, so printing from
+a browser gives the same document:
+
+- The `@page` rules in `style.css` set A4 and its margins. `report_pdf.js`
+  passes `preferCSSPageSize`, so those are the ones that apply.
+- The charts carry a viewBox, so the print rules fit them to the measure by
+  constraining the box; nothing is cropped, and the tallest chart is capped so
+  it shares a page with its caption.
+- The step tables are wider than a portrait measure can hold without breaking
+  monospace mid-token. On `beforeprint`, `app.js` measures how wide each table
+  wants its words kept whole and gives the ones that overrun by more than
+  `WIDE_TABLE_RATIO` a landscape page, caption included. The cost is a partial
+  page before each; raise the ratio to trade legibility back for it.
+- The same handler opens the collapsed schema blocks, since paper cannot be
+  clicked. `report_pdf.js` dispatches `beforeprint` itself, under print media so
+  the measurements are the paper's.
+
+What needs an interaction—the step drawer, the chart's filters and search, the
+teaser's part selection—is not in the PDF, and the print rules drop the controls
+that offer it.
 
 It is built from these layers, in `scripts/pipeline_docs/`:
 

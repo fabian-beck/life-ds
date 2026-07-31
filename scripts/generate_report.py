@@ -4,8 +4,11 @@
     python scripts/generate_report.py              # rebuild the page
     python scripts/generate_report.py --check      # drift check only
     python scripts/generate_report.py --skip-ai    # no API calls
+    python scripts/generate_report.py --pdf        # and print it to PDF
 
 The page is written to `docs/report/index.html` as one self-contained file.
+`--pdf` additionally prints it to `docs/report/report.pdf`, which is what a
+published version is uploaded as; see `scripts/report_pdf.js`.
 
 The report is half written and half measured, and the two halves never mix.
 
@@ -30,6 +33,7 @@ it safe to wire into CI without needing an API key.
 from __future__ import annotations
 
 import argparse
+import subprocess
 import sys
 from pathlib import Path
 from typing import Sequence
@@ -90,6 +94,16 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         type=Path,
         default=RUNS_DIR,
         help=f"Directory of recorded runs (default: {RUNS_DIR}).",
+    )
+    parser.add_argument(
+        "--pdf",
+        action="store_true",
+        help="Also print the page to PDF (needs Node and Playwright's Chromium).",
+    )
+    parser.add_argument(
+        "--doi",
+        default="",
+        help="DOI to stamp in the PDF footer. Implies --pdf.",
     )
     parser.add_argument(
         "--verbose", action="store_true", help="Log each step summarized."
@@ -172,7 +186,28 @@ def main(argv: Sequence[str] | None = None) -> int:
     out = render.write(payload, args.out, document)
     size_kb = out.stat().st_size / 1024
     print(f"\nWrote {out} ({size_kb:.0f} KB).")
+
+    if args.pdf or args.doi:
+        return _print_pdf(out, args.doi)
     return 0
+
+
+def _print_pdf(page: Path, doi: str) -> int:
+    """Hand the finished page to `scripts/report_pdf.js`.
+
+    The printing is Node's because the browser is: Chromium comes from
+    Playwright, which this repository already installs for the interface tests.
+    """
+    command = ["node", str(SCRIPTS_DIR / "report_pdf.js"), "--in", str(page)]
+    if doi:
+        command += ["--doi", doi]
+    print("\nPrinting to PDF ...")
+    try:
+        completed = subprocess.run(command, check=False)
+    except FileNotFoundError:
+        print("  ERROR: node is not on PATH. Install Node to print the PDF.")
+        return 1
+    return completed.returncode
 
 
 def _lanes_with_runs(runs: dict) -> set:

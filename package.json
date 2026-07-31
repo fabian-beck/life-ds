@@ -10,6 +10,7 @@
     "test:interface": "playwright test",
     "test:core": "npm run test:interface && python -m pytest",
     "test:interface:report": "playwright show-report",
+    "report:pdf": "node scripts/report_pdf.js",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:py",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"**/*.css\"",

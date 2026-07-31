@@ -35,6 +35,10 @@ at build time, so never hand-edit `index.html`. Run
 `python scripts/generate_report.py --check` after changing a generation script or
 the report source.
 
+`npm run report:pdf` prints the built page to `docs/report/report.pdf`, the
+fixed rendition a published version is uploaded as. It is generated on demand
+and not committed.
+
 ## Common Commands
 
 ```powershell

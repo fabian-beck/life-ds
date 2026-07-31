@@ -827,5 +827,56 @@ class AssetTests(unittest.TestCase):
         ast.parse(source)
 
 
+class PrintTests(unittest.TestCase):
+    """The PDF is printed from the page, so the page decides how it prints.
+
+    Nothing here runs a browser. What it pins is the wiring between the three
+    files that have to agree for a printed page to come out right, and which
+    would otherwise fail silently: a renamed class means the wide tables quietly
+    stop getting their landscape page, and nothing about the HTML looks wrong.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.css = (ASSETS / "style.css").read_text(encoding="utf-8")
+        cls.js = (ASSETS / "app.js").read_text(encoding="utf-8")
+
+    def test_the_stylesheet_owns_the_page_geometry(self) -> None:
+        """`report_pdf.js` passes `preferCSSPageSize`, so these are the ones
+        that apply—to the browser's print dialog as much as to the script."""
+        self.assertIn("@page {", self.css)
+        self.assertIn("size: a4;", self.css)
+        self.assertIn("@page wide {", self.css)
+        self.assertIn("size: a4 landscape;", self.css)
+
+    def test_the_print_hooks_the_script_sets_are_the_ones_the_css_reads(
+        self,
+    ) -> None:
+        for hook in ("print-wide", "print-measure"):
+            self.assertIn(f".{hook}", self.css)
+            self.assertIn(f'"{hook}"', self.js)
+
+    def test_the_page_prepares_itself_for_print(self) -> None:
+        """`report_pdf.js` dispatches `beforeprint` rather than reaching into
+        the page, so the browser's own print goes through the same path."""
+        self.assertIn('addEventListener("beforeprint"', self.js)
+        self.assertIn('addEventListener("afterprint"', self.js)
+
+    def test_the_printer_is_wired_to_the_page_and_the_scripts(self) -> None:
+        printer = SCRIPTS_DIR / "report_pdf.js"
+        self.assertTrue(printer.is_file())
+        source = printer.read_text(encoding="utf-8")
+        self.assertIn("preferCSSPageSize", source)
+        self.assertIn('new Event("beforeprint")', source)
+
+        package = json.loads((REPO_ROOT / "package.json").read_text(encoding="utf-8"))
+        self.assertEqual(package["scripts"]["report:pdf"], "node scripts/report_pdf.js")
+
+    def test_the_generator_can_print_what_it_wrote(self) -> None:
+        source = (SCRIPTS_DIR / "generate_report.py").read_text(encoding="utf-8")
+        self.assertIn('"--pdf"', source)
+        self.assertIn("report_pdf.js", source)
+
+
 if __name__ == "__main__":
     unittest.main()

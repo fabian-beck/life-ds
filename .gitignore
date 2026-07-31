@@ -13,3 +13,7 @@ __pycache__/
 data/people/**/_cache/
 worktrees
 .netlify/
+# Printed from docs/report/index.html on demand—see scripts/report_pdf.js. The
+# page is versioned; a binary rendition of it that changes on every rebuild is
+# not, and it is only needed when a version is published.
+docs/report/report.pdf
