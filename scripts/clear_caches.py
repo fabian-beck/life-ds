@@ -87,7 +87,7 @@ def get_cache_age(cache_dir: Path) -> Optional[timedelta]:
         return None
 
     # Find the newest modification time among all files in cache
-    newest_mtime = 0
+    newest_mtime = 0.0
     for file_path in cache_dir.rglob("*"):
         if file_path.is_file():
             mtime = file_path.stat().st_mtime

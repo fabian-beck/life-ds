@@ -79,7 +79,7 @@ def _prune_narration_circles(dataset: Dict[str, Any], removed_id: str) -> None:
 
 def _find_meta_story_files(person_id: str) -> List[Tuple[Path, Dict[str, Any]]]:
     """Every meta story detail file (English + all translations) referencing person_id."""
-    matches = []
+    matches: List[Tuple[Path, Dict[str, Any]]] = []
     if not META_STORIES_DIR.exists():
         return matches
     paths = sorted(META_STORIES_DIR.glob("*.json")) + sorted(
@@ -230,7 +230,7 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
 
     print(f"\nMeta stories referencing '{person_id}': {len(meta_story_matches)}")
     for path, detail in meta_story_matches:
-        remaining = len(
+        remaining_count = len(
             [
                 pid
                 for pid in detail.get("meta_story", {}).get("person_ids", [])
@@ -239,7 +239,7 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
         )
         print(
             f"  - {path.relative_to(DATA_DIR)} "
-            f"({remaining} people remaining after removal)"
+            f"({remaining_count} people remaining after removal)"
         )
 
     if dry_run:
@@ -259,7 +259,7 @@ def remove_person(person_id: str, *, dry_run: bool = False) -> bool:
             print(f"Error: Failed to write {path}: {error}", file=sys.stderr)
             return False
 
-    if has_style_entry:
+    if styles and has_style_entry:
         print("Removing style entry...")
         del styles["styles"][person_id]
         try:

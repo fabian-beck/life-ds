@@ -377,7 +377,15 @@ def _parameter_defaults(node: ast.FunctionDef | ast.AsyncFunctionDef) -> Dict[st
 
 
 def _reasoning_effort_expr(node: Optional[ast.AST]) -> Optional[str]:
-    """Pull the effort out of `reasoning={"effort": X}`."""
+    """Pull the effort out of `reasoning={"effort": X}`.
+
+    Call sites that pass a typed `OpenAI` client wrap the dict in
+    `cast(Any, ...)`, because the effort constants are plain strings read from
+    the environment while the SDK expects a literal. Look through that wrapper
+    so the report shows the effort rather than the cast.
+    """
+    if isinstance(node, ast.Call) and _unparse(node.func) == "cast" and node.args:
+        node = node.args[-1]
     if not isinstance(node, ast.Dict):
         return _unparse(node)
     for key, value in zip(node.keys, node.values):

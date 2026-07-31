@@ -43,7 +43,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 from pydantic import BaseModel, Field
 
@@ -131,8 +131,7 @@ def _story_context(dataset: Dict[str, Any]) -> str:
     if len(description) > 900:
         description = description[:897] + "..."
     return (
-        f"Story: {meta.get('title', '')} ({meta.get('tagline', '')})\n"
-        f"{description}"
+        f"Story: {meta.get('title', '')} ({meta.get('tagline', '')})\n" f"{description}"
     )
 
 
@@ -321,7 +320,7 @@ REQUIREMENTS:
             ],
             text_format=MapNarrationResult,
         )
-        return response.output_parsed
+        return cast(Optional[MapNarrationResult], response.output_parsed)
     except Exception as e:
         print(f"Warning: map narration failed: {e}")
         return None
@@ -345,7 +344,9 @@ def apply_map_narration(
         return {"clusters": clusters}
 
     by_key = {s.key: s for s in narration.stops}
-    unknown = [s.key for s in narration.stops if s.key not in {c["key"] for c in clusters}]
+    unknown = [
+        s.key for s in narration.stops if s.key not in {c["key"] for c in clusters}
+    ]
     if unknown:
         print(f"Warning: map narration for unknown stop keys ignored: {unknown}")
 
@@ -493,9 +494,7 @@ def main() -> int:
         description="(Re)build the geo_map section of existing meta stories "
         "(event rating + geographic clustering + narration)"
     )
-    parser.add_argument(
-        "story_id", nargs="?", help="Meta story ID; omit with --all"
-    )
+    parser.add_argument("story_id", nargs="?", help="Meta story ID; omit with --all")
     parser.add_argument("--all", action="store_true", help="All meta stories")
     parser.add_argument(
         "--dry-run",
@@ -518,7 +517,9 @@ def main() -> int:
         help="Comma-separated language codes to re-translate (default: de)",
     )
     parser.add_argument(
-        "--model", default=DEFAULT_MODEL, help=f"OpenAI model (default: {DEFAULT_MODEL})"
+        "--model",
+        default=DEFAULT_MODEL,
+        help=f"OpenAI model (default: {DEFAULT_MODEL})",
     )
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
@@ -573,9 +574,7 @@ def main() -> int:
         dataset["geo_map"] = geo_map
         with open(story_path, "w", encoding="utf-8") as f:
             json.dump(dataset, f, indent=2, ensure_ascii=False)
-        print(
-            f"  Saved {story_path.name} with {len(geo_map['clusters'])} map stop(s)"
-        )
+        print(f"  Saved {story_path.name} with {len(geo_map['clusters'])} map stop(s)")
 
         # The map narration changes the story's translatable English text, so
         # refresh translations right away (mirrors compose_meta_story.py).
@@ -583,9 +582,7 @@ def main() -> int:
             from translate_meta_story import translate_meta_story_data
 
             for lang in [
-                code.strip()
-                for code in args.translate_langs.split(",")
-                if code.strip()
+                code.strip() for code in args.translate_langs.split(",") if code.strip()
             ]:
                 print(f"  Re-translating '{story_id}' to '{lang}'...")
                 try:

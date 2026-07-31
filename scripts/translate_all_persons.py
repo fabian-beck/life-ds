@@ -256,7 +256,9 @@ def main():
     print(f"  Skipped:    {len(skipped)} (already current)")
     print(f"  Failed:     {len(failed)}")
     if include_meta:
-        print(f"Meta stories translated: {len(meta_successful)}, failed: {len(meta_failed)}")
+        print(
+            f"Meta stories translated: {len(meta_successful)}, failed: {len(meta_failed)}"
+        )
     print()
 
     if failed:

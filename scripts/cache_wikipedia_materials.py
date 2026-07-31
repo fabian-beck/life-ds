@@ -269,7 +269,7 @@ Return exactly {max_to_select} article titles about PEOPLE and LIFE EVENTS, orde
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": LOW_REASONING_EFFORT},
+            reasoning=cast(Any, {"effort": LOW_REASONING_EFFORT}),
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt},

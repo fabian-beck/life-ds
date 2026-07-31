@@ -217,7 +217,7 @@ def review_combined(
         # Call AI with structured output
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": reasoning_effort},
+            reasoning=cast(Any, {"effort": reasoning_effort}),
             input=[{"role": "user", "content": prompt}],
             text_format=CombinedReviewOutput,
         )
@@ -269,7 +269,7 @@ def review_style(
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": reasoning_effort},
+            reasoning=cast(Any, {"effort": reasoning_effort}),
             input=[{"role": "user", "content": prompt}],
             text_format=StyleReviewOutput,
         )

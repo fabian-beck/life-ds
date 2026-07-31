@@ -64,7 +64,9 @@ def _period_bounds(date_str: str, precision: str) -> Tuple[datetime, datetime]:
     return start, end
 
 
-def _event_timestamp(date_str: Optional[str], precision: Optional[str]) -> Optional[datetime]:
+def _event_timestamp(
+    date_str: Optional[str], precision: Optional[str]
+) -> Optional[datetime]:
     """Mirror toTimestamp() in src/utils/storyHelpers.js: start of the date's period."""
     if not date_str:
         return None
@@ -78,7 +80,9 @@ def _chapter_range(chapter: Dict[str, Any]) -> Optional[Tuple[datetime, datetime
     if not date_start or not date_end:
         return None
     start, _ = _period_bounds(date_start, chapter.get("date_start_precision") or "year")
-    _, end_exclusive = _period_bounds(date_end, chapter.get("date_end_precision") or "year")
+    _, end_exclusive = _period_bounds(
+        date_end, chapter.get("date_end_precision") or "year"
+    )
     return start, end_exclusive
 
 
@@ -93,13 +97,16 @@ def validate_person(person_id: str, data: Dict[str, Any]) -> List[ValidationErro
         if not chapter_id:
             continue
 
-        label = f"event {index} ({event.get('date', '?')} \"{event.get('title', '?')}\")"
+        label = (
+            f"event {index} ({event.get('date', '?')} \"{event.get('title', '?')}\")"
+        )
 
         chapter = chapters_by_id.get(chapter_id)
         if chapter is None:
             errors.append(
                 ValidationError(
-                    person_id, f"{label} references nonexistent chapter id '{chapter_id}'"
+                    person_id,
+                    f"{label} references nonexistent chapter id '{chapter_id}'",
                 )
             )
             continue
@@ -150,7 +157,9 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.person_ids:
-        paths = [PEOPLE_DIR / person_id / "life_events.json" for person_id in args.person_ids]
+        paths = [
+            PEOPLE_DIR / person_id / "life_events.json" for person_id in args.person_ids
+        ]
     else:
         paths = sorted(PEOPLE_DIR.glob("*/life_events.json"))
 

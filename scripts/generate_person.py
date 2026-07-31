@@ -212,6 +212,12 @@ def main(argv: Any = None) -> int:
                         )
                     portrait_source_page = portrait_source_page or extracted_page
 
+                if not person_id:
+                    raise ValueError(
+                        "No person ID resolved — run the dataset step or pass "
+                        "--url so the portrait can be filed under a person ID"
+                    )
+
                 portrait_result = generate_portrait(
                     person_id=person_id,
                     reference_image_url=portrait_reference_url,

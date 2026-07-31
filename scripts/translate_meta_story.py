@@ -175,9 +175,7 @@ def main() -> int:
         nargs="?",
         help="Meta story ID (e.g., 'computing_pioneers'); omit with --all",
     )
-    parser.add_argument(
-        "--all", action="store_true", help="Translate all meta stories"
-    )
+    parser.add_argument("--all", action="store_true", help="Translate all meta stories")
     parser.add_argument(
         "--target-lang",
         required=True,

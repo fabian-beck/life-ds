@@ -1,11 +1,16 @@
 # Tooling for working on scripts/. Not needed to run the generators — install
 # requirements.txt for that. These back `npm run validate`, which shells out to
 # black and flake8, so without them validate fails with "No module named black".
+# `npm run test:core` and `npm run type-check:py` need pytest and mypy the same
+# way.
 #
 #   .venv/Scripts/python.exe -m pip install -r requirements-dev.txt   # Windows
 #   .venv/bin/pip install -r requirements-dev.txt                     # macOS/Linux
 #
 # Configured in pyproject.toml ([tool.black], [tool.mypy]) and .flake8.
-black>=24.0.0
+# The tree is formatted with black 26; 25.x and older reformat files nobody
+# touched (multiline-string handling changed), which fails `npm run validate`.
+black>=26.1.0
 flake8>=7.0.0
 mypy>=1.11.0
+pytest>=8.0.0

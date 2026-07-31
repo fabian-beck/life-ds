@@ -63,7 +63,7 @@ RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT  # Related article discovery (
 try:
     from cache_wikipedia_materials import fetch_related_articles
 except ImportError:
-    fetch_related_articles = None
+    fetch_related_articles = None  # type: ignore[assignment]
 
 # Import Deutsche Biographie utilities
 try:
@@ -73,9 +73,9 @@ try:
         format_for_prompt as format_db_for_prompt,
     )
 except ImportError:
-    ensure_deutsche_biographie_cache = None
-    get_cached_deutsche_biographie = None
-    format_db_for_prompt = None
+    ensure_deutsche_biographie_cache = None  # type: ignore[assignment]
+    get_cached_deutsche_biographie = None  # type: ignore[assignment]
+    format_db_for_prompt = None  # type: ignore[assignment]
 
 # Constants
 DATASET_NAME = "Life Data Stories"
@@ -240,7 +240,7 @@ EventClassification = Union[
 # - phase2_focus: List of research focus areas (emphasize what NOT to repeat)
 # - log_format: lambda cls: str for formatting log output
 
-EVENT_CLASS_CONFIG = {
+EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
     "marriage_partnership": {
         "name": "MARRIAGE_PARTNERSHIP",
         "display_name": "MARRIAGE",
@@ -737,8 +737,9 @@ def _collect_person_name_candidates(
                     seen.add(primary_key)
                     candidates.append(primary_clean)
 
-        simplified_parentheses = re.sub(r"\s*\([^)]*\)", "", cleaned).strip()
-        simplified_parentheses = _clean_candidate_name(simplified_parentheses)
+        simplified_parentheses = _clean_candidate_name(
+            re.sub(r"\s*\([^)]*\)", "", cleaned).strip()
+        )
         if simplified_parentheses:
             simple_key = simplified_parentheses.casefold()
             if simple_key not in seen:
@@ -770,7 +771,7 @@ def _name_score(value: str) -> Tuple[int, int, int]:
     return punctuation_penalty, word_count, length_penalty
 
 
-def normalize_date_value(value: str, precision: str) -> tuple[Any, str]:
+def normalize_date_value(value: Optional[str], precision: str) -> tuple[Any, str]:
     if value is None:
         return None, precision
     sanitized = str(value).strip()
@@ -949,8 +950,8 @@ def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
         return None
     primary = results[0]
     try:
-        lon = float(primary.get("lon"))
-        lat = float(primary.get("lat"))
+        lon = float(str(primary.get("lon")))
+        lat = float(str(primary.get("lat")))
     except (TypeError, ValueError):
         _geocode_cache[query] = None
         return None
@@ -1866,7 +1867,7 @@ def generate_image_search_strings(
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": PHASE3_IMAGE_SEARCH_REASONING},
+            reasoning=cast(Any, {"effort": PHASE3_IMAGE_SEARCH_REASONING}),
             input=[
                 {
                     "role": "system",
@@ -2040,7 +2041,7 @@ def match_images_to_events(
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": PHASE3_IMAGE_MATCH_REASONING},
+            reasoning=cast(Any, {"effort": PHASE3_IMAGE_MATCH_REASONING}),
             input=[
                 {
                     "role": "system",
@@ -2324,7 +2325,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     try:
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": PHASE1_REASONING_EFFORT},
+            reasoning=cast(Any, {"effort": PHASE1_REASONING_EFFORT}),
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": instructions},
@@ -2782,7 +2783,7 @@ def research_event_details(
 
             response = client.responses.parse(
                 model=model,
-                reasoning={"effort": PHASE2_REASONING_EFFORT},
+                reasoning=cast(Any, {"effort": PHASE2_REASONING_EFFORT}),
                 input=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": prompt},
@@ -3059,7 +3060,7 @@ def call_openai_chapter_generation(
         try:
             response = client.responses.parse(
                 model=model,
-                reasoning={"effort": CHAPTER_REASONING_EFFORT},
+                reasoning=cast(Any, {"effort": CHAPTER_REASONING_EFFORT}),
                 input=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": instructions},
@@ -4126,7 +4127,7 @@ def generate_person_events(
         person_data["portrait"] = existing_generated_portrait
         print("  No AI portrait found, keeping existing generated portrait")
 
-    payload = {
+    payload: Dict[str, Any] = {
         "dataset": life_plan.dataset,
         "created_on": life_plan.created_on,
         "person": person_data,

@@ -26,7 +26,7 @@ from utils.wikipedia_cache import (
 try:
     from cache_wikipedia_materials import fetch_related_articles
 except ImportError:
-    fetch_related_articles = None
+    fetch_related_articles = None  # type: ignore[assignment]
 
 DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
@@ -487,7 +487,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         # Use modern Responses API with structured outputs
         response = client.responses.parse(
             model=model,
-            reasoning={"effort": DEFAULT_REASONING_EFFORT},
+            reasoning=cast(Any, {"effort": DEFAULT_REASONING_EFFORT}),
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": instructions},

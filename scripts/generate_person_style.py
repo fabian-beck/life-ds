@@ -429,7 +429,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         # Use Responses API for GPT-5.1 with reasoning support
         response = client.responses.create(
             model=model,
-            reasoning={"effort": DEFAULT_REASONING_EFFORT},
+            reasoning=cast(Any, {"effort": DEFAULT_REASONING_EFFORT}),
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt},

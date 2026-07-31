@@ -20,7 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, cast
 
 from config import enable_utf8_console
 from meta_story_network import DATA_DIR, build_social_network, derive_clusters
@@ -33,7 +33,7 @@ REGISTER_PATH = DATA_DIR / "persons.json"
 
 def _load(path: Path) -> Dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return cast(Dict[str, Any], json.load(f))
 
 
 def _save(path: Path, data: Dict[str, Any]) -> None:

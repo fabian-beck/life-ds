@@ -195,8 +195,7 @@ def collect_located_events(
                     "person_id": person_id,
                     "person_name": person_names.get(person_id, person_id),
                     "event_index": event_index,
-                    "event_title": pe.get("event_title")
-                    or event.get("title", ""),
+                    "event_title": pe.get("event_title") or event.get("title", ""),
                     "event_date": pe.get("event_date") or event.get("date", ""),
                     "year": _event_year(pe.get("event_date") or event.get("date")),
                     "place": place,
@@ -240,9 +239,7 @@ def cluster_located_events(
         to be stored under ``geo_map.clusters``.
     """
     weights = weights or {}
-    pool = [
-        e for e in events if weights.get(e["id"], DEFAULT_EVENT_WEIGHT) > 0
-    ]
+    pool = [e for e in events if weights.get(e["id"], DEFAULT_EVENT_WEIGHT) > 0]
     if not pool:
         return []
 
@@ -322,10 +319,8 @@ def cluster_located_events(
     # topped up to MIN_MAP_CLUSTERS when the threshold leaves too few,
     # capped at MAX_MAP_CLUSTERS.
     def rank_score(cluster: Dict[str, Any]) -> float:
-        has_landmark = any(
-            e["weight"] >= LANDMARK_WEIGHT for e in cluster["events"]
-        )
-        return cluster["score"] + (LANDMARK_BONUS if has_landmark else 0.0)
+        has_landmark = any(e["weight"] >= LANDMARK_WEIGHT for e in cluster["events"])
+        return float(cluster["score"]) + (LANDMARK_BONUS if has_landmark else 0.0)
 
     built.sort(key=lambda c: (-rank_score(c), c["label"]))
     selected = [c for c in built if rank_score(c) >= MIN_CLUSTER_SCORE]

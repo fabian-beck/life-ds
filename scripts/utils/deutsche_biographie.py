@@ -138,7 +138,7 @@ def search_person(
     target_parts = set(re.findall(r"[a-zäöüß]+", target_name))
 
     best_doc = None
-    best_score = -1
+    best_score = -1.0
 
     for doc in candidates:
         defnam = (doc.get("defnam") or "").lower()

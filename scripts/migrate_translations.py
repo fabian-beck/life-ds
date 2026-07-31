@@ -138,7 +138,9 @@ def migrate_ego_network(
         if not legacy_conn:
             continue
         overlay_text(
-            conn, "relationship_description", legacy_conn.get("relationship_description")
+            conn,
+            "relationship_description",
+            legacy_conn.get("relationship_description"),
         )
         overlay_text(conn, "notes", legacy_conn.get("notes"))
         matched += 1
@@ -230,7 +232,9 @@ def main() -> int:
                 if k.startswith(("matched", "total"))
             )
             if args.dry_run:
-                print(f"[dry-run] would migrate {person_id}/{lang}/{filename} ({stats})")
+                print(
+                    f"[dry-run] would migrate {person_id}/{lang}/{filename} ({stats})"
+                )
             else:
                 save_json_file(result, lang_dir / filename)
                 print(f"✓ Migrated {person_id}/{lang}/{filename} ({stats})")

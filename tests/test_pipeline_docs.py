@@ -56,6 +56,27 @@ class IntrospectionTests(unittest.TestCase):
         research = calls[("generate_person_events.py", "research_event_details")]
         self.assertIn("none", research.reasoning_value or "")
 
+    def test_reads_reasoning_effort_through_the_typing_cast(self) -> None:
+        """Typed-client call sites wrap the reasoning dict in ``cast(Any, ...)``.
+
+        The effort constants are plain strings read from the environment, so the
+        SDK's literal type needs a cast. The report must document the effort, not
+        the cast wrapper.
+        """
+        for call in self.codebase.all_ai_calls():
+            self.assertNotIn("cast(", call.reasoning_expr or "")
+
+        source = (
+            "def call_model(client, model):\n"
+            "    return client.responses.parse(\n"
+            "        model=model,\n"
+            '        reasoning=cast(Any, {"effort": SOME_EFFORT}),\n'
+            "        input=[],\n"
+            "    )\n"
+        )
+        facts = scan_script(Path(self._write_temp(source)), {})
+        self.assertEqual(facts.ai_calls[0].reasoning_expr, "SOME_EFFORT")
+
     def test_composer_uses_its_own_model_setting(self) -> None:
         calls = [
             call

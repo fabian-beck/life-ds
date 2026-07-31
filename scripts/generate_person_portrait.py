@@ -140,6 +140,29 @@ def get_wikimedia_thumbnail_url(
     return url
 
 
+def _tag_attr(tag: Any, name: str) -> str:
+    """
+    Read an attribute off a BeautifulSoup tag as a plain string.
+
+    Multi-valued attributes such as ``class`` come back as lists, and a missing
+    tag or attribute comes back as ``None``; normalizing here keeps the
+    scraping code below working with strings only.
+
+    Args:
+        tag: A BeautifulSoup tag, or None
+        name: Attribute name to read
+
+    Returns:
+        The attribute value as a string, or "" when absent
+    """
+    value = tag.get(name) if tag is not None else None
+    if value is None:
+        return ""
+    if isinstance(value, (list, tuple)):
+        return " ".join(str(part) for part in value)
+    return str(value)
+
+
 def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]]:
     """
     Extract the main image URL from a web page (Openverse, Flickr, Wikimedia Commons, etc.).
@@ -153,7 +176,7 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
     try:
         parsed_url = urlparse(page_url)
         domain = parsed_url.netloc.lower()
-        image_url = None
+        image_url: Optional[str] = None
 
         # Openverse - use API instead of scraping (they block automated requests)
         if "openverse.org" in domain:
@@ -198,23 +221,20 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
         # preview crop and can compromise likeness during style transfer.
         if "architectuul.com" in domain:
             lead_image = soup.select_one("section.lead [data-image-src]")
-            if lead_image and lead_image.get("data-image-src"):
-                image_url = lead_image["data-image-src"]
+            image_url = _tag_attr(lead_image, "data-image-src") or None
 
         # Flickr
         if "flickr.com" in domain:
             # Flickr has specific meta tags
             og_image = soup.find("meta", property="og:image")
-            if og_image and og_image.get("content"):
-                image_url = og_image["content"]
+            image_url = _tag_attr(og_image, "content") or None
 
             # Alternative: look for the main photo
             if not image_url:
                 main_photo = soup.find(
-                    "img", {"class": lambda x: x and "main-photo" in x}
+                    "img", {"class": lambda x: bool(x and "main-photo" in x)}
                 )
-                if main_photo and main_photo.get("src"):
-                    image_url = main_photo["src"]
+                image_url = _tag_attr(main_photo, "src") or None
 
         # Wikimedia Commons file pages
         if "commons.wikimedia.org" in domain and "/File:" in page_url:
@@ -222,10 +242,12 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
             fullsize_link = soup.find(
                 "a",
                 {"class": "internal"},
-                href=lambda x: x and "/wikipedia/commons/" in x and "/thumb/" not in x,
+                href=lambda x: bool(
+                    x and "/wikipedia/commons/" in x and "/thumb/" not in x
+                ),
             )
-            if fullsize_link and fullsize_link.get("href"):
-                href = fullsize_link["href"]
+            href = _tag_attr(fullsize_link, "href")
+            if href:
                 if href.startswith("//"):
                     image_url = "https:" + href
                 elif href.startswith("/"):
@@ -236,27 +258,24 @@ def extract_image_from_page(page_url: str) -> Tuple[Optional[str], Optional[str]
         # Generic fallback: try Open Graph image or largest image on page
         if not image_url:
             og_image = soup.find("meta", property="og:image")
-            if og_image and og_image.get("content"):
-                image_url = og_image["content"]
-            else:
+            image_url = _tag_attr(og_image, "content") or None
+            if not image_url:
                 # Find the largest image on the page
                 images = soup.find_all("img")
                 max_size = 0
-                best_img = None
+                best_img: Optional[str] = None
                 for img in images:
-                    src = img.get("src", "")
+                    src = _tag_attr(img, "src")
                     # Skip tiny images, icons, tracking pixels
-                    width = img.get("width", 0)
-                    height = img.get("height", 0)
                     try:
-                        width = int(width) if width else 0
-                        height = int(height) if height else 0
-                        size = width * height
-                        if size > max_size and size > 10000:  # At least 100x100
-                            max_size = size
-                            best_img = src
+                        width = int(_tag_attr(img, "width") or 0)
+                        height = int(_tag_attr(img, "height") or 0)
                     except (ValueError, TypeError):
-                        pass
+                        continue
+                    size = width * height
+                    if size > max_size and size > 10000:  # At least 100x100
+                        max_size = size
+                        best_img = src
 
                 if best_img:
                     image_url = best_img

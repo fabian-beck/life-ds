@@ -29,7 +29,7 @@ import json
 import re
 import unicodedata
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, cast
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
@@ -129,7 +129,7 @@ def _load_ego_network(person_id: str) -> Optional[Dict[str, Any]]:
         return None
     try:
         with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            return cast(Optional[Dict[str, Any]], json.load(f))
     except Exception:
         return None
 
@@ -215,7 +215,7 @@ def build_social_network(
 
             other_main = match_main(conn_norm, exclude=pid)
             if other_main:
-                pair = tuple(sorted((pid, other_main)))
+                pair = (min(pid, other_main), max(pid, other_main))
                 # Store each direction separately so the UI can describe the tie
                 # from either person's own perspective.
                 endpoints = main_links.setdefault(pair, {})
@@ -377,11 +377,11 @@ def _detect_communities(links: List[Dict[str, Any]]) -> List[set]:
             if x != b and y != b:
                 continue
             other = y if x == b else x
-            w = between.pop(key)
+            pair_weight = between.pop(key)
             if other == a:
                 continue
             merged = _pair_key(a, other)
-            between[merged] = between.get(merged, 0.0) + w
+            between[merged] = between.get(merged, 0.0) + pair_weight
 
     return [ids for ids in members.values() if len(ids) >= 2]
 
@@ -431,9 +431,7 @@ def derive_clusters(network: Dict[str, Any]) -> List[Dict[str, Any]]:
                 _pair_key(link["source"], link["target"]),
             ),
         )
-        years = [
-            n["birth_year"] for n in mains if isinstance(n.get("birth_year"), int)
-        ]
+        years = [n["birth_year"] for n in mains if isinstance(n.get("birth_year"), int)]
         clusters.append(
             {
                 "key": "+".join(n["id"] for n in mains),
