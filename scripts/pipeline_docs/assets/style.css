@@ -861,18 +861,20 @@ body.has-note-pop .notes {
   font-family: var(--sans);
 }
 
-/* The compact chart is drawn to fit, so it is never scrolled sideways: it takes
-   the column's width and keeps its aspect ratio, and stops growing at its
-   natural size rather than being blown up on a wide phone held sideways. */
+/* The compact chart is never scrolled sideways—that is its one job. Its width
+   is set inline by `refit`, which weighs the room in the column against the
+   height of the viewport; here it only keeps its aspect ratio and sits in the
+   middle of whatever is left over. */
 .chart-scroll > svg.flow-compact {
-  width: 100%;
   max-width: 100%;
   height: auto;
+  margin-inline: auto;
 }
 
-/* Small type in a drawing that may be scaled down a little further by the
-   column it sits in. It is set for reading the shape of the graph and the name
-   of a step—everything else about a step is a tap away. */
+/* Small type, set in user units and then scaled with the drawing—down in a
+   phone's column, up in a mid-size one. It is sized for reading the shape of
+   the graph and the name of a step; everything else about a step is one
+   selection away. */
 .flow-compact .node text.title {
   font-size: 9px;
   font-weight: 600;

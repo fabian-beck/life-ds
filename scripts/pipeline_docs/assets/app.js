@@ -93,6 +93,21 @@
   const COMPACT_PAD = 9;
   const COMPACT_LINE_CH = 15;
 
+  /* How large the compact drawing is allowed to be rendered.
+
+     It fits the width it is given, but width alone is not enough of a rule. In
+     a mid-size column, fitting is an instruction to enlarge: the compact figure
+     scaled to a 676-unit column stands 1107 units tall and sets 15px type,
+     which is a poster, not a reduced figure. So the height of the viewport
+     bounds it too, and a ceiling stops it outgrowing the prose it sits in.
+
+     The floor works the other way. A short window would otherwise shrink the
+     figure to nothing; below this the drawing keeps its size and the page
+     scrolls, which is what a document does anyway. */
+  const COMPACT_HEIGHT_BUDGET = 0.9; // of the viewport
+  const COMPACT_MAX_SCALE = 1.6; // 9px type drawn at no more than 14.4px
+  const COMPACT_MIN_SCALE = 0.8;
+
   // Live chart instances, so the shared drawer can clear the selection in the
   // chart the reader did *not* click.
   const charts = [];
@@ -333,6 +348,7 @@
 
     const lane = DATA.lanes[laneId];
     const wrapCache = {}; // step id → the lines a compact node prints
+    let naturalSize = null; // the drawing's own size, in SVG user units
     const flow = svg("svg", {
       class: "flow" + (compact ? " flow-compact" : ""),
       role: "img",
@@ -1465,6 +1481,31 @@
       });
     }
 
+    /* How large to render the compact drawing, given the room it has.
+
+       The width it is given is a hard limit—a compact chart that scrolls
+       sideways has failed at its one job—while the viewport's height and the
+       ceiling only hold it back, and the floor stops a short window shrinking
+       it away. The full chart is not sized here: it is drawn at its natural
+       size and scrolled, which is why it is the one that stops fitting. */
+    function refit() {
+      if (!compact || !naturalSize) return;
+      const available = (host && host.clientWidth) || naturalSize.width;
+      // One scale for every pipeline figure, taken from the largest of them, so
+      // the meta graph is drawn smaller than the personal one because it is
+      // smaller—not because it was fitted to the same column on its own. Sized
+      // per figure, a narrow column would set the shorter graph 40% larger than
+      // its neighbour and quietly deny the comparison the prose promises.
+      const widest = widestPipeline("compact");
+      const budget = window.innerHeight * COMPACT_HEIGHT_BUDGET;
+      const scale = Math.min(
+        available / widest.width,
+        Math.max(budget / widest.height, COMPACT_MIN_SCALE),
+        COMPACT_MAX_SCALE
+      );
+      flow.style.width = Math.round(naturalSize.width * scale) + "px";
+    }
+
     function draw() {
       const host = flow;
       clear(host);
@@ -1481,6 +1522,8 @@
       // is the whole point of it—so it is given no minimum and the stylesheet
       // fits it to the column.
       host.style.minWidth = compact ? "" : geometry.width + "px";
+      naturalSize = { width: geometry.width, height: geometry.height };
+      refit();
       host.setAttribute(
         "aria-label",
         "Dependency graph of the " + DATA.lanes[state.tab].label + " pipeline"
@@ -1551,10 +1594,10 @@
           (geometry.bands.length
             ? "A shaded band is one concern spread over several layers. "
             : "") +
-          "The color bar gives the step kind. Reduced for a narrow screen: " +
-          "every step and every dependency is drawn, but not the script, " +
-          "model, data files or recorded cost each step carries. Tap a step " +
-          "for those, or open the full chart.";
+          "The color bar gives the step kind. Reduced to fit the column: every " +
+          "step and every dependency is here, without the script, model, data " +
+          "files and recorded cost each step carries—those are in the full " +
+          "chart.";
         return;
       }
 
@@ -1588,6 +1631,15 @@
       state.query = search.value.trim().toLowerCase();
       draw();
     });
+
+    /* Measuring only: the caller wants to know how much room this pipeline's
+       full drawing needs, and no chart is mounted. The layout is arithmetic over
+       the spec—no text is measured, nothing is appended—so asking is cheap, and
+       it is the only honest way to decide whether the full chart fits. */
+    if (settings.measure) {
+      const geometry = layout();
+      return { width: geometry.width, height: geometry.height };
+    }
 
     // Only what the prose above cannot say for itself: the entry point and the
     // size of the graph. The lane's own blurb is deliberately not repeated here
@@ -1661,7 +1713,10 @@
       state.selected = null;
       draw();
     };
-    // A chart can be replaced—the page crossing the compact breakpoint, or the
+    // Re-fitting is not re-drawing: the layout is unchanged, only the size the
+    // finished drawing is rendered at, so a resize costs one style write.
+    instance.refit = refit;
+    // A chart can be replaced—the page crossing into the compact size, or the
     // modal closing—and a dead instance left in `charts` would go on drawing
     // into a detached node every time the drawer cleared the other selection.
     instance.destroy = function () {
@@ -2145,6 +2200,50 @@
       return step.column === laneId;
     });
   }
+
+  /* The room the widest pipeline's full drawing needs, in CSS pixels—the full
+     chart is drawn one user unit to the pixel, so its layout size is the space
+     it asks the page for.
+
+     Measured from the spec rather than written down, so adding a step that
+     widens a layer moves the point at which the figures go compact, with
+     nothing to remember to update. Measured once: it depends on the data, not
+     on the window, so a resize never recomputes it. */
+  const widestCache = {};
+  function widestPipeline(size) {
+    if (widestCache[size]) return widestCache[size];
+    const largest = { width: 0, height: 0 };
+    Object.keys(DATA.lanes).forEach((laneId) => {
+      if (!stepsOf(laneId).length) return;
+      const measured = createChart(null, laneId, 0, {
+        measure: true,
+        compact: size === "compact",
+      });
+      largest.width = Math.max(largest.width, measured.width);
+      largest.height = Math.max(largest.height, measured.height);
+    });
+    widestCache[size] = largest;
+    return largest;
+  }
+
+  /* Anything that changes how much room a figure has: a resized window, a
+     rotated phone, the contents rail appearing and taking its 214px column.
+     Coalesced to one call a frame, since a drag fires this continuously. */
+  const viewportListeners = [];
+  let viewportPending = false;
+  function onViewportChange(listener) {
+    viewportListeners.push(listener);
+  }
+  window.addEventListener("resize", () => {
+    if (viewportPending) return;
+    viewportPending = true;
+    window.requestAnimationFrame(() => {
+      viewportPending = false;
+      viewportListeners.forEach((listener) => {
+        listener();
+      });
+    });
+  });
 
   function laneLabel(laneId) {
     const lane = DATA.lanes[laneId];
@@ -3534,32 +3633,50 @@
       }
     },
 
-    /* The figure follows the viewport. Below the breakpoint the full chart
-       cannot be read without scrolling it sideways past its own layer numbers,
-       so the compact drawing is mounted instead and the full one moves into the
-       modal. The choice is made here rather than in CSS because the two are
-       different drawings, not one drawing at two sizes—rendering both and
-       hiding one would lay out a chart nobody looks at, on the load of every
-       phone. A rotated phone or a dragged window re-mounts the figure; the
-       chart is cheap to build and nothing but the selection is lost. */
-    pipeline: function (mount, params, numbers) {
-      const narrow = window.matchMedia("(width <= 720px)");
-      let chart = null;
+    /* The figure follows the space it is given. The full chart is drawn at its
+       natural size and scrolled sideways when it does not fit, so the question
+       is simply whether it fits: the widest pipeline needs 990 units, and the
+       report's column is that wide only past about 1440px of viewport. Between
+       there and a phone—every mid-size window—the full chart was being read
+       through a slot, which is what the compact drawing is for.
 
-      function mountChart() {
+       A width, not a breakpoint, because a breakpoint is a guess at this
+       measurement and goes stale the moment a step is added to the spec. Height
+       does not decide which drawing is used—the full chart is a good deal
+       taller than any viewport, so a height test would choose compact
+       always—it decides how large the compact one is rendered, in `refit`.
+
+       Both figures answer together. The prose promises them "at the same scale,
+       so that the pipelines may be compared directly", and a page that drew one
+       full and the other reduced would quietly break that comparison. */
+    pipeline: function (mount, params, numbers) {
+      let chart = null;
+      let showingCompact = null;
+
+      function fits() {
+        const available = mount.clientWidth;
+        // Before layout there is no width to measure; nothing is decided on a
+        // zero, and the resize pass below settles it once there is a page.
+        return available <= 0 || widestPipeline("full").width <= available;
+      }
+
+      function sync() {
+        const wanted = !fits();
+        if (chart && wanted === showingCompact) {
+          // Same drawing, new room: only the size it is rendered at changes.
+          chart.refit();
+          return;
+        }
         if (chart) chart.destroy();
+        showingCompact = wanted;
         chart = createChart(mount, params.lane, numbers.figure, {
-          compact: narrow.matches,
+          compact: wanted,
           expandable: true,
         });
       }
 
-      mountChart();
-      // `addEventListener` on a MediaQueryList is the modern spelling; Safari
-      // only learned it in 14, and the page is meant to open anywhere.
-      if (narrow.addEventListener)
-        narrow.addEventListener("change", mountChart);
-      else narrow.addListener(mountChart);
+      sync();
+      onViewportChange(sync);
     },
 
     steptable: function (mount, params, numbers) {
