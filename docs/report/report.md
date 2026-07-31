@@ -236,14 +236,17 @@ supplies the context surrounding what the components encode.
 ### Models, prompts and structured output
 
 The generation side uses {{ pipeline.models }} across
-{{ pipeline.call_sites }} [[inference|call sites]]. Models are selected per call
-site rather than globally, so that a phase whose cost is dominated by volume and
-a phase whose quality determines the whole artifact need not share one setting.
+{{ pipeline.call_sites }} [[inference|call sites]]. The model is resolved per
+call site rather than fixed globally, so that a phase whose cost is dominated by
+volume and a phase whose quality determines the whole artifact need not share
+one setting. The mechanism is used sparingly. Most call sites take the default
+text model; the portrait step takes the image model; and composition—the one
+step that reads a whole assembled story—takes its own model through a separate
+variable. The point of resolving per site is not that the sites differ often,
+but that the two which matter can differ at all.
 
-::: modeltable
-:::
-
-Reasoning effort is configured per call site, because the calls differ in kind.
+Reasoning effort is configured the same way, and varies more, because the calls
+differ in kind.
 Proposing the significant events of a life is an
 inference problem and receives a reasoning budget; researching an event that
 has already been selected is a retrieval and writing problem and deliberately
