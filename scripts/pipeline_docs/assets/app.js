@@ -37,22 +37,34 @@
   const DATA = window.PIPELINE;
   const SVG_NS = "http://www.w3.org/2000/svg";
 
-  /* Chart geometry, in SVG user units, in two sizes.
+  /* Chart geometry, in SVG user units, at three levels of detail.
 
-     `full` draws the figure as the report has always drawn it: a node wide
-     enough for the step's name, its script, its kind, its model and the files
-     it writes. `compact` draws the same graph—same layers, same order, same
-     bands—with smaller parts and most of the writing taken out, for a display
-     too narrow to hold the full one without sideways scrolling.
+     They are the same graph—same layers, same order, same bands—drawn with
+     more or less written inside a node, and sized to match:
 
-     The compact chart is not the full chart shrunk. Fitting a 1000-unit figure
+       full     the step's name, the script it lives in, its kind, the model it
+                calls, its recorded cost and the files it writes. 990 units.
+       mid      the name, the kind and the model. No script, no files. 660.
+       compact  the name. 398.
+
+     A reduced drawing is not the full one shrunk. Fitting a 990-unit figure
      into a 350-unit column would put 13px type on screen at 4px, which is not
-     a reduced figure but an unreadable one. It is a drawing with less in it,
-     sized so it still fits, and the full one is one tap away in the modal. */
+     a reduced figure but an unreadable one. Each is a drawing with less in it,
+     laid out at its own size, so what survives stays legible; the full one is
+     always a press away in the modal.
+
+     Three rather than two because the gap between them is where most windows
+     are. A 1010-unit column takes the full chart and a 350-unit one takes the
+     compact, but the 650-to-950 range in between—a tablet, a half-screen
+     window, a laptop beside the contents rail—had to take the compact drawing
+     and a great deal of white space around it. */
   const METRICS = {
     full: {
+      TITLE_PX: 13, // the step-name type; mirrors style.css
       RAIL_W: 58,
       RAIL_GAP: 20, // rule to node: where the layer number is written
+      RAIL_DX: 7,
+      RAIL_DY: 13,
       NODE_W: 268,
       NODE_H: 66,
       FILE_H: 15,
@@ -65,12 +77,37 @@
       BAND_PAD: 9,
       BAND_HEAD: 20, // room for a group band's label above its first step
     },
+    mid: {
+      TITLE_PX: 11,
+      RAIL_W: 40,
+      RAIL_GAP: 14,
+      RAIL_DX: 6,
+      RAIL_DY: 11,
+      NODE_W: 176,
+      NODE_H: 44,
+      FILE_H: 0, // files are not drawn at this size
+      ART_W: 140,
+      ART_H: 30,
+      COL_GAP: 20,
+      LAYER_GAP: 30,
+      MARGIN_CH: 18,
+      PAD: 8,
+      BAND_PAD: 7,
+      BAND_HEAD: 19, // the group label still fits above the first step here
+      LABEL_PAD: 10,
+      LABEL_LINES: 2,
+      LINE_H: 13,
+      FACT_UP: 6, // the kind-and-model line, up from the node's foot
+    },
     compact: {
+      TITLE_PX: 9,
       RAIL_W: 26,
       RAIL_GAP: 8,
+      RAIL_DX: 4,
+      RAIL_DY: 9,
       NODE_W: 104,
       NODE_H: 34,
-      FILE_H: 0, // files are not drawn at this size
+      FILE_H: 0,
       ART_W: 92,
       ART_H: 24,
       COL_GAP: 12,
@@ -79,6 +116,10 @@
       PAD: 6,
       BAND_PAD: 5,
       BAND_HEAD: 8, // no band label to leave room for, only the band's corner
+      LABEL_PAD: 9,
+      LABEL_LINES: 2,
+      LINE_H: 11,
+      FACT_UP: 0, // no fact line: the name is all a compact node carries
     },
   };
   Object.keys(METRICS).forEach((size) => {
@@ -86,14 +127,15 @@
     METRICS[size].HEAD_H = METRICS[size].BAND_HEAD + 4;
   });
 
-  // A compact node gives a step's name two lines and its own padding either
-  // side; `fitLines` measures the rest. The character count is only the
-  // fallback for a chart drawn where nothing can be measured.
-  const COMPACT_LINES = 2;
-  const COMPACT_PAD = 9;
+  // Largest first: the reduced sizes, in the order they are offered a column.
+  const SIZES = ["full", "mid", "compact"];
+
+  // A reduced node wraps the step's name to `LABEL_LINES`; `fitLines` measures
+  // the rest. The character count is only the fallback for a chart drawn where
+  // nothing can be measured.
   const COMPACT_LINE_CH = 15;
 
-  /* How large the compact drawing is allowed to be rendered.
+  /* How large a reduced drawing is allowed to be rendered.
 
      It fits the width it is given, but width alone is not enough of a rule. In
      a mid-size column, fitting is an instruction to enlarge: the compact figure
@@ -103,10 +145,20 @@
 
      The floor works the other way. A short window would otherwise shrink the
      figure to nothing; below this the drawing keeps its size and the page
-     scrolls, which is what a document does anyway. */
+     scrolls, which is what a document does anyway.
+
+     `TIER_TYPE_TOLERANCE` settles which reduced size to use. They all scale to
+     the room, so the question is not which carries the most but which still
+     sets its names largest once fitted: a mid drawing squeezed by a short
+     window carries more than the compact one and reads worse. A size is taken
+     if its rendered type comes within this of the best on offer: a richer
+     drawing may read a tenth smaller and still win, because it carries more.
+     Tighter than this and the rule turns on rounding—at 0.95 a tall tablet
+     chose compact over mid on a difference of two hundredths of a pixel. */
   const COMPACT_HEIGHT_BUDGET = 0.9; // of the viewport
   const COMPACT_MAX_SCALE = 1.6; // 9px type drawn at no more than 14.4px
   const COMPACT_MIN_SCALE = 0.8;
+  const TIER_TYPE_TOLERANCE = 0.9;
 
   // Live chart instances, so the shared drawer can clear the selection in the
   // chart the reader did *not* click.
@@ -189,11 +241,13 @@
      than fifteen of "Save story and", which is the difference between a label
      with a margin and one touching the border of its box. The browser can
      measure the exact string it is about to draw, so it is asked. */
-  function fitLines(root, text, width, lines) {
-    // The probe has to sit inside a `.node` to be styled like the label it is
-    // standing in for; parked off-canvas, and removed before anything is drawn.
+  function fitLines(root, text, width, lines, className) {
+    // The probe has to sit inside a `.node`, and carry the class of the line it
+    // stands in for—a title and a fact line are set at different sizes, and a
+    // fact line measured as a title would be cut short of its own box. Parked
+    // off-canvas, and removed before anything is drawn.
     const scratch = svg("g", { class: "node" });
-    const probe = svg("text", { class: "title", x: 0, y: -999 });
+    const probe = svg("text", { class: className || "title", x: 0, y: -999 });
     scratch.appendChild(probe);
     root.appendChild(scratch);
 
@@ -321,36 +375,40 @@
      single tabbed chart—it simply closes over an instance `state` and instance
      DOM nodes instead of the page's.
 
-     `options.compact` draws the reduced version for a narrow display: the same
-     graph, at `METRICS.compact`, with the toolbar, the data files, the group
-     labels and everything written inside a node but its name left out, and the
-     drawing scaled to the column instead of scrolled sideways. What it drops is
+     `options.size` picks the level of detail—"full", "mid" or "compact". The
+     two reduced sizes drop the toolbar, the data files and, at compact, the
+     group labels and everything written inside a node but its name; they are
+     scaled to the column rather than scrolled sideways. What they drop is
      detail, never structure—the reader still sees every step, every dependency
      and every band, and `options.expandable` puts the full version one press
      away in the modal. */
   function createChart(host, laneId, figureNumber, options) {
     const settings = options || {};
-    const compact = !!settings.compact;
-    const M = METRICS[compact ? "compact" : "full"];
+    const size = settings.size || "full";
+    const M = METRICS[size];
+    // Two questions get asked of the size often enough to name: whether this is
+    // a drawing that scales to its column, and whether it carries only the name.
+    const reduced = size !== "full";
+    const compact = size === "compact";
     // Declared up front so `select` can name the instance the drawer belongs to
     // before the instance is finished being built.
-    const instance = { lane: laneId, compact: compact, host: host };
+    const instance = { lane: laneId, size: size, host: host };
     const state = {
       tab: laneId,
       kinds: new Set(Object.keys(DATA.kinds)),
       showShared: true,
       // The files are the first thing to go: they are the widest text in a node
       // and a whole extra column of source boxes beside it.
-      showArtifacts: !compact,
+      showArtifacts: !reduced,
       query: "",
       selected: null,
     };
 
     const lane = DATA.lanes[laneId];
-    const wrapCache = {}; // step id → the lines a compact node prints
+    const wrapCache = {}; // step id → the lines a reduced node prints
     let naturalSize = null; // the drawing's own size, in SVG user units
     const flow = svg("svg", {
-      class: "flow" + (compact ? " flow-compact" : ""),
+      class: "flow" + (reduced ? " flow-reduced flow-" + size : ""),
       role: "img",
       "aria-label": "Flow chart of the " + lane.label + " pipeline",
     });
@@ -1155,8 +1213,8 @@
         );
         const label = svg("text", {
           class: "rail-label",
-          x: x - (compact ? 4 : 7),
-          y: rail.y0 + (compact ? 9 : 13),
+          x: x - M.RAIL_DX,
+          y: rail.y0 + M.RAIL_DY,
           "text-anchor": "end",
         });
         label.textContent = rail.label;
@@ -1360,34 +1418,60 @@
         })
       );
 
-      /* Compact keeps the name and nothing else. The script, the kind, the
-         model and the recorded numbers are all one line of small type each,
-         and four of those in a 104-unit box is a grey block rather than a
-         label—so the node says which step it is, the tooltip and the accessible
-         name still say what kind it is, and the rest is in the drawer and in
-         the full chart. */
-      if (compact) {
+      /* A reduced node carries the step's name, wrapped, and at mid the one
+         line that says what kind of step it is and which model it calls.
+
+         Compact stops at the name deliberately. The script, the kind, the model
+         and the recorded numbers are one line of small type each, and four of
+         those in a 104-unit box is a grey block rather than a label. What is
+         left out of either is still on the node—in its tooltip and its
+         accessible name—and set out in full in the drawer and the modal. */
+      if (reduced) {
         // Measured once per step: the node's width never changes within an
         // instance, and `draw` runs again on every selection.
         if (!wrapCache[step.id]) {
           wrapCache[step.id] = fitLines(
             root,
             step.label,
-            node.w - COMPACT_PAD * 2,
-            COMPACT_LINES
+            node.w - M.LABEL_PAD * 2,
+            M.LABEL_LINES
           );
         }
         const lines = wrapCache[step.id];
-        const top = node.h / 2 - (lines.length - 1) * 5 + 3;
+        // The name is centred in what the fact line leaves it, so a one-line
+        // name sits where a two-line one would, rather than floating high.
+        const room = node.h - M.FACT_UP * 2;
+        const top = room / 2 - ((lines.length - 1) * M.LINE_H) / 2 + 3;
         lines.forEach((line, index) => {
           const text = svg("text", {
             class: "title",
-            x: COMPACT_PAD,
-            y: top + index * 11,
+            x: M.LABEL_PAD,
+            y: top + index * M.LINE_H,
           });
           text.textContent = line;
           group.appendChild(text);
         });
+
+        if (M.FACT_UP) {
+          const facts = [DATA.kinds[step.kind].label];
+          if (step.calls_per_run && step.calls_per_run !== "1")
+            facts.push("×N");
+          if (step.model) facts.push(step.model.split(" (")[0]);
+          const factLine = svg("text", {
+            class: "metric",
+            x: M.LABEL_PAD,
+            y: node.h - M.FACT_UP,
+          });
+          factLine.textContent = fitLines(
+            root,
+            facts.join(" · "),
+            node.w - M.LABEL_PAD * 2,
+            1,
+            "metric"
+          )[0];
+          group.appendChild(factLine);
+        }
+
         const tip = svg("title");
         tip.textContent =
           step.label +
@@ -1483,28 +1567,22 @@
       });
     }
 
-    /* How large to render the compact drawing, given the room it has.
+    /* How large to render a reduced drawing, given the room it has.
 
-       The width it is given is a hard limit—a compact chart that scrolls
+       The width it is given is a hard limit—a reduced chart that scrolls
        sideways has failed at its one job—while the viewport's height and the
        ceiling only hold it back, and the floor stops a short window shrinking
        it away. The full chart is not sized here: it is drawn at its natural
        size and scrolled, which is why it is the one that stops fitting. */
     function refit() {
-      if (!compact || !naturalSize) return;
+      if (!reduced || !naturalSize) return;
       const available = (host && host.clientWidth) || naturalSize.width;
-      // One scale for every pipeline figure, taken from the largest of them, so
-      // the meta graph is drawn smaller than the personal one because it is
-      // smaller—not because it was fitted to the same column on its own. Sized
-      // per figure, a narrow column would set the shorter graph 40% larger than
-      // its neighbour and quietly deny the comparison the prose promises.
-      const widest = widestPipeline("compact");
-      const budget = window.innerHeight * COMPACT_HEIGHT_BUDGET;
-      const scale = Math.min(
-        available / widest.width,
-        Math.max(budget / widest.height, COMPACT_MIN_SCALE),
-        COMPACT_MAX_SCALE
-      );
+      // `fitScale` reads the largest pipeline, so the meta graph comes out
+      // smaller than the personal one because it is smaller—not because it was
+      // fitted to the same column on its own. Sized per figure, a narrow column
+      // would set the shorter graph 40% larger than its neighbour and quietly
+      // deny the comparison the prose promises.
+      const scale = fitScale(size, available);
       flow.style.width = Math.round(naturalSize.width * scale) + "px";
     }
 
@@ -1523,7 +1601,7 @@
       // the column is too narrow for it. The compact one must never scroll—that
       // is the whole point of it—so it is given no minimum and the stylesheet
       // fits it to the column.
-      host.style.minWidth = compact ? "" : geometry.width + "px";
+      host.style.minWidth = reduced ? "" : geometry.width + "px";
       naturalSize = { width: geometry.width, height: geometry.height };
       refit();
       host.setAttribute(
@@ -1583,19 +1661,27 @@
         geometry.layers +
         " layers";
 
-      /* The compact caption describes the compact drawing. Naming the file
-         lines and the fact line under a figure that has neither would be
-         describing the other version of itself, so it says instead what was
+      /* Each caption describes the drawing it is under. Naming the file lines
+         and the script under a figure that has neither would be describing
+         another version of itself, so a reduced caption says instead what was
          left out and where the reader can find it. */
-      const marks = compact
+      const marks = reduced
         ? [
             geometry.bands.length
-              ? "A shaded band is one concern spread over several layers."
+              ? compact
+                ? "A shaded band is one concern spread over several layers."
+                : "A shaded band gathers the steps that share one concern, " +
+                  "named along its head."
               : "",
-            "The color bar gives the step kind.",
+            compact ? "The color bar gives the step kind." : "",
             "The drawing is reduced to fit the column: every step and every " +
-              "dependency is here, without the script, model, data files and " +
-              "recorded cost each step carries—those are in the full chart.",
+              "dependency is here, " +
+              (compact
+                ? "without the script, model, data files and recorded cost " +
+                  "each step carries"
+                : "each step with its kind and the model it calls, without " +
+                  "the script, the data files and the recorded cost") +
+              "—those are in the full chart.",
           ]
         : [
             sourceCount
@@ -1675,7 +1761,7 @@
       return el("button", {
         class: "expand",
         type: "button",
-        text: compact ? "Open the full chart" : "Full screen",
+        text: reduced ? "Open the full chart" : "Full screen",
         title:
           "Open " +
           lane.label +
@@ -1687,7 +1773,7 @@
     }
 
     host.appendChild(lede);
-    if (compact) {
+    if (reduced) {
       // No toolbar: a search field and six filter toggles cost more height than
       // the figure they filter, and filtering a chart this reduced answers
       // nothing that opening the full one does not answer better.
@@ -2140,8 +2226,9 @@
 
   /* The full chart, over the whole viewport, on demand.
 
-     A narrow display gets the compact figure inline, and this is where the
-     detail it gave up is kept: the same chart at full size, with its toolbar,
+     A column too narrow for the full chart gets a reduced figure inline, and
+     this is where the detail it gave up is kept: the chart at full size, with
+     its toolbar,
      its search and its data files, scrollable in both directions because a
      dependency graph is simply wider than a phone. It is built when it is
      opened and torn down when it is closed—the report already draws two charts
@@ -2165,7 +2252,7 @@
     modal.classList.add("open");
     modal.removeAttribute("aria-hidden");
     modalState.chart = createChart(mount, laneId, figureNumber, {
-      compact: false,
+      size: "full",
     });
     // Opened at the left edge, a chart wider than the panel shows its empty
     // margin channel and nothing else. Start in the middle, where the graph is.
@@ -2213,6 +2300,22 @@
      widens a layer moves the point at which the figures go compact, with
      nothing to remember to update. Measured once: it depends on the data, not
      on the window, so a resize never recomputes it. */
+  /* The factor a reduced drawing is rendered at, in a column this wide.
+
+     One function, so the size that gets chosen and the size that gets drawn can
+     never be worked out differently: `sizeFor` asks it what each size would
+     come to, and `refit` asks it what to write into the element. Taken from the
+     largest pipeline, so every figure is drawn at one scale. */
+  function fitScale(size, available) {
+    const natural = widestPipeline(size);
+    const budget = window.innerHeight * COMPACT_HEIGHT_BUDGET;
+    return Math.min(
+      available / natural.width,
+      Math.max(budget / natural.height, COMPACT_MIN_SCALE),
+      COMPACT_MAX_SCALE
+    );
+  }
+
   const widestCache = {};
   function widestPipeline(size) {
     if (widestCache[size]) return widestCache[size];
@@ -2221,7 +2324,7 @@
       if (!stepsOf(laneId).length) return;
       const measured = createChart(null, laneId, 0, {
         measure: true,
-        compact: size === "compact",
+        size: size,
       });
       largest.width = Math.max(largest.width, measured.width);
       largest.height = Math.max(largest.height, measured.height);
@@ -3654,44 +3757,70 @@
       }
     },
 
-    /* The figure follows the space it is given. The full chart is drawn at its
-       natural size and scrolled sideways when it does not fit, so the question
-       is simply whether it fits: the widest pipeline needs 990 units, and the
-       report's column is that wide only past about 1440px of viewport. Between
-       there and a phone—every mid-size window—the full chart was being read
-       through a slot, which is what the compact drawing is for.
+    /* The figure follows the space it is given: the largest drawing the column
+       can actually hold. The full chart needs 990 units and the report's column
+       is that wide only past about 1366px of viewport; the mid drawing needs
+       660, which is most windows; below that the compact one, scaled to fit.
 
-       A width, not a breakpoint, because a breakpoint is a guess at this
-       measurement and goes stale the moment a step is added to the spec. Height
-       does not decide which drawing is used—the full chart is a good deal
-       taller than any viewport, so a height test would choose compact
-       always—it decides how large the compact one is rendered, in `refit`.
+       A measurement, not a breakpoint, because a breakpoint is a guess at this
+       number and goes stale the moment a step is added to the spec.
+
+       Width alone chooses between the full chart and a reduced one, since the
+       full chart is drawn at its natural size and scrolls—it is a good deal
+       taller than any viewport, so a height test would refuse it always. Among
+       the reduced sizes height does decide, because they scale: a mid drawing
+       squeezed to 0.72 of itself by a short window carries more than the
+       compact one and reads worse, so the compact one is used instead.
 
        Both figures answer together. The prose promises them "at the same scale,
        so that the pipelines may be compared directly", and a page that drew one
        full and the other reduced would quietly break that comparison. */
     pipeline: function (mount, params, numbers) {
       let chart = null;
-      let showingCompact = null;
+      let showing = null;
 
-      function fits() {
+      function sizeFor() {
         const available = mount.clientWidth;
         // Before layout there is no width to measure; nothing is decided on a
         // zero, and the resize pass below settles it once there is a page.
-        return available <= 0 || widestPipeline("full").width <= available;
+        if (available <= 0) return "full";
+        // The full chart is drawn one unit to the pixel and scrolls; either the
+        // column holds it or it does not.
+        if (widestPipeline("full").width <= available) return "full";
+
+        /* The reduced sizes all scale to the room, so the winner is not the one
+           that carries the most but the one that still sets its names largest
+           once fitted—and ties go to the one carrying more. It is a real
+           question, not a formality: in a 980-unit column 768px tall, mid comes
+           out at 9.3px type and compact at 9.5px, so mid wins on a tie; give
+           the same column a 900px window and compact grows to 11.2px while mid
+           is still held at 10.9px by the same height, and compact takes it. */
+        const options = SIZES.filter((name) => name !== "full").map((name) => {
+          return {
+            name: name,
+            type: METRICS[name].TITLE_PX * fitScale(name, available),
+          };
+        });
+        const best = options.reduce((top, option) => {
+          return Math.max(top, option.type);
+        }, 0);
+        const winner = options.find((option) => {
+          return option.type >= best * TIER_TYPE_TOLERANCE;
+        });
+        return winner ? winner.name : "compact";
       }
 
       function sync() {
-        const wanted = !fits();
-        if (chart && wanted === showingCompact) {
+        const wanted = sizeFor();
+        if (chart && wanted === showing) {
           // Same drawing, new room: only the size it is rendered at changes.
           chart.refit();
           return;
         }
         if (chart) chart.destroy();
-        showingCompact = wanted;
+        showing = wanted;
         chart = createChart(mount, params.lane, numbers.figure, {
-          compact: wanted,
+          size: wanted,
           expandable: true,
         });
       }

@@ -477,6 +477,48 @@ class PayloadAndRenderTests(unittest.TestCase):
         for element_id in sorted(wanted):
             self.assertIn(f'id="{element_id}"', html, f"the shell has no #{element_id}")
 
+    def test_each_figure_size_states_the_type_its_stylesheet_sets(self) -> None:
+        """The chart picks a level of detail by how large its names would come out.
+
+        The step name is sized in `style.css` but weighed in `app.js`, which
+        keeps a `TITLE_PX` beside each size to weigh it with. Nothing at runtime
+        would notice the two disagreeing—the figure would simply start choosing
+        the wrong drawing for the column, which is not a thing a reader can see
+        is wrong.
+        """
+        script = (ASSETS / "app.js").read_text(encoding="utf-8")
+        css = (ASSETS / "style.css").read_text(encoding="utf-8")
+
+        claimed = {
+            name: int(px)
+            for name, px in re.findall(
+                r"^\s{4}(full|mid|compact): \{\n\s+TITLE_PX: (\d+)",
+                script,
+                flags=re.MULTILINE,
+            )
+        }
+        self.assertEqual(set(claimed), {"full", "mid", "compact"})
+
+        for size, expected in claimed.items():
+            # `full` is the plain node rule; the reduced sizes override it.
+            selector = ".node text.title" if size == "full" else f".flow-{size} &"
+            pattern = (
+                r"(?<!flow-mid )(?<!flow-compact )\.node text\.title \{[^}]*?"
+                r"font-size: (\d+(?:\.\d+)?)px"
+                if size == "full"
+                else rf"\.flow-{size} \.node text\.title \{{[^}}]*?"
+                rf"font-size: (\d+(?:\.\d+)?)px"
+            )
+            found = re.search(pattern, css, flags=re.DOTALL)
+            self.assertIsNotNone(found, f"style.css sets no title size for {selector}")
+            assert found is not None
+            self.assertEqual(
+                float(found.group(1)),
+                float(expected),
+                f"app.js weighs the {size} figure's names at {expected}px but "
+                f"style.css sets them at {found.group(1)}px",
+            )
+
     def test_the_rendered_page_embeds_the_authored_body(self) -> None:
         codebase = scan_codebase()
         facts = facts_module.collect(codebase, {"runs": []})

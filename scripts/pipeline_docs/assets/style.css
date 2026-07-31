@@ -877,20 +877,38 @@ p.cap-sub {
   font-family: var(--sans);
 }
 
-/* The compact chart is never scrolled sideways—that is its one job. Its width
-   is set inline by `refit`, which weighs the room in the column against the
-   height of the viewport; here it only keeps its aspect ratio and sits in the
-   middle of whatever is left over. */
-.chart-scroll > svg.flow-compact {
+/* A reduced chart is never scrolled sideways—that is its one job. Its width is
+   set inline by `refit`, which weighs the room in the column against the height
+   of the viewport; here it only keeps its aspect ratio and sits in the middle
+   of whatever is left over. */
+.chart-scroll > svg.flow-reduced {
   max-width: 100%;
   height: auto;
   margin-inline: auto;
 }
 
-/* Small type, set in user units and then scaled with the drawing—down in a
-   phone's column, up in a mid-size one. It is sized for reading the shape of
-   the graph and the name of a step; everything else about a step is one
-   selection away. */
+/* Type for the reduced drawings, set in user units and then scaled with the
+   drawing. Each size is set for what its node actually holds: mid has room for
+   the name and a line naming the kind and the model, compact for the name
+   alone. Everything either leaves out is one selection away.
+
+   `app.js` keeps a `TITLE_PX` per size to weigh these against each other when
+   it picks a drawing; a test holds the two in step. */
+.flow-mid .node text.title {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.flow-mid .node text.metric {
+  font-size: 9px;
+}
+
+.flow-mid .rail-label,
+.flow-mid .edge-label,
+.flow-mid .band-label {
+  font-size: 9px;
+}
+
 .flow-compact .node text.title {
   font-size: 9px;
   font-weight: 600;
@@ -904,7 +922,7 @@ p.cap-sub {
   font-size: 8px;
 }
 
-/* The one control the compact figure has: the way back to the full one. */
+/* The one control a reduced figure has: the way back to the full one. */
 .chart-actions {
   display: flex;
   gap: 8px;
