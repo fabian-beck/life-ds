@@ -2511,6 +2511,71 @@
     spy();
   }
 
+  /* ------------------------------------------------- contents button */
+
+  /* Below the rail breakpoint the contents section is plain document content:
+     it scrolls past the reader once and is gone. This keeps it one tap away—a
+     button in the corner that appears exactly when that section leaves the
+     viewport, and a panel holding the same list, cloned rather than rebuilt so
+     the two can never drift apart. Above the breakpoint the rail is already on
+     screen and the stylesheet keeps both out of the way. */
+  function renderTocButton() {
+    const inline = document.querySelector(".toc");
+    const fab = document.getElementById("toc-fab");
+    const pop = document.getElementById("toc-pop");
+    const list = inline && inline.querySelector(".toc-list");
+    if (!inline || !fab || !pop || !list) return;
+
+    pop.appendChild(list.cloneNode(true));
+
+    function close() {
+      pop.hidden = true;
+      fab.setAttribute("aria-expanded", "false");
+    }
+
+    fab.addEventListener("click", () => {
+      if (fab.getAttribute("aria-expanded") === "true") {
+        close();
+        return;
+      }
+      pop.hidden = false;
+      fab.setAttribute("aria-expanded", "true");
+    });
+
+    // Following a link is a jump away from here, so the panel has done its job.
+    pop.addEventListener("click", (event) => {
+      if (event.target.closest && event.target.closest("a")) close();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (pop.hidden) return;
+      if (fab.contains(event.target) || pop.contains(event.target)) return;
+      close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+
+    // While the contents section is on screen the button would only point at
+    // what the reader is already looking at. A hidden `.toc` measures as a zero
+    // rectangle, so this stays false at the widths where the rail is a column.
+    let raf = 0;
+    function sync() {
+      raf = 0;
+      const gone = inline.getBoundingClientRect().bottom < 0;
+      if (fab.hidden !== gone) return;
+      fab.hidden = !gone;
+      if (!gone) close();
+    }
+    function schedule() {
+      if (!raf) raf = window.requestAnimationFrame(sync);
+    }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    sync();
+  }
+
   /* --------------------------------------------------------------- init */
 
   /* Hydrate the compiled Markdown. Document order matters: the figure and table
@@ -2556,4 +2621,5 @@
   renderMetaRow();
   hydrate();
   renderRail();
+  renderTocButton();
 })();

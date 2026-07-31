@@ -77,6 +77,16 @@ __BODY__
   </main>
 </div>
 
+<!-- Below the rail breakpoint the contents section is ordinary document content,
+     so it scrolls away and never comes back. This button brings it back on
+     demand, without pinning a column the narrow measure cannot spare. Chrome,
+     like the rail: `app.js` fills the panel from the contents already on the
+     page, and a reader without JavaScript still has that section. -->
+<button class="toc-fab" id="toc-fab" type="button" aria-controls="toc-pop" aria-expanded="false" hidden>
+  <span class="toc-fab-mark" aria-hidden="true"></span>Contents
+</button>
+<nav class="toc-pop" id="toc-pop" aria-label="Contents" hidden></nav>
+
 <aside class="drawer" id="drawer" aria-label="Step details">
   <div class="drawer-head">
     <h2 id="drawer-title">Step</h2>

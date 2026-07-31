@@ -440,6 +440,62 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
+/* The corner button and its panel exist only below the rail breakpoint, where
+   the contents section has scrolled away; the media query at the foot of this
+   file is what lets them show at all, and `app.js` reveals the button once that
+   section is off screen. Kept square and hairline like the rest of the page—a
+   piece of chrome, not a floating action badge. */
+.toc-fab {
+  position: fixed;
+  z-index: 50;
+  top: 10px;
+  right: 12px;
+  display: none;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 11px;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.toc-fab[aria-expanded="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Three rules, drawn rather than fetched, so the button carries a list mark
+   without an icon font or an inline SVG. */
+.toc-fab-mark {
+  width: 12px;
+  height: 9px;
+  flex: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    currentcolor 0 1px,
+    transparent 1px 4px
+  );
+}
+
+.toc-pop {
+  position: fixed;
+  z-index: 50;
+  top: 44px;
+  right: 12px;
+  display: none;
+  overflow-y: auto;
+  width: min(330px, calc(100vw - 24px));
+  max-height: min(70vh, 520px);
+  padding: 12px 14px 14px;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  overscroll-behavior: contain;
+}
+
 /* --------------------------------------------------------------- callouts */
 
 /* Authored, not computed: an indented voice with a labeled rule, so it reads as
@@ -1292,6 +1348,16 @@ table.data .swatch {
   .toc {
     display: block;
   }
+
+  /* `hidden` is the state `app.js` drives; the media query only decides whether
+     the button is available at this width at all. */
+  .toc-fab:not([hidden]) {
+    display: inline-flex;
+  }
+
+  .toc-pop:not([hidden]) {
+    display: block;
+  }
 }
 
 @media (width <= 720px) {
@@ -1312,6 +1378,8 @@ table.data .swatch {
   .toolbar,
   .drawer,
   .rail,
+  .toc-fab,
+  .toc-pop,
   .skip {
     display: none;
   }
