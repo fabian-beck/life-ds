@@ -21,6 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
+from pipeline_docs import concepts  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import render, report, screenshots  # noqa: E402
 from pipeline_docs import spec, teaser, validate  # noqa: E402
@@ -1059,6 +1060,76 @@ class TeaserTests(unittest.TestCase):
             [part["id"] for part in payload["teaser"]["parts"]],
             teaser.part_ids(),
         )
+
+
+class ConceptTests(unittest.TestCase):
+    """The vocabulary the report speaks in, and the glyphs that carry it.
+
+    Two things can go wrong quietly here and both mislead a reader rather than
+    breaking a build: a mark that has drifted from the icon the application
+    actually draws, and a path on disk resurfacing in a page that is supposed
+    to talk about concepts.
+    """
+
+    def test_every_concept_has_a_glyph_the_application_would_draw(self) -> None:
+        self.assertEqual(concepts.check_icons(), [])
+
+    def test_every_artifact_names_a_concept(self) -> None:
+        for artifact in spec.ARTIFACTS:
+            self.assertIsNotNone(
+                concepts.concept_by_id(artifact.concept),
+                f"artifact '{artifact.id}' names unknown concept "
+                f"'{artifact.concept}'",
+            )
+
+    def test_the_payload_carries_the_vocabulary_but_no_paths(self) -> None:
+        payload = build_payload(scan_codebase(), {})
+        self.assertEqual(
+            [concept["id"] for concept in payload["concepts"]],
+            concepts.concept_ids(),
+        )
+        for concept in payload["concepts"]:
+            self.assertTrue(concept["path"], f"{concept['id']} has no icon path")
+        for artifact in payload["artifacts"]:
+            self.assertNotIn("path", artifact)
+
+    def test_the_authored_layer_names_no_generated_data_path(self) -> None:
+        """Everything the docs build writes itself speaks in concepts.
+
+        Verbatim prompts and the docstrings lifted out of the generation
+        scripts are exempt: those are the source quoted as it stands, and
+        rewriting a quotation to avoid a filename would make it a paraphrase.
+        """
+        payload = build_payload(scan_codebase(), {})
+        authored = json.dumps(
+            [
+                payload["artifacts"],
+                payload["concepts"],
+                payload["teaser"],
+                payload["lanes"],
+                payload["groups"],
+                [step["spec_summary"] for step in payload["steps"]],
+            ]
+        )
+        for needle in (
+            "life_events.json",
+            "ego_network.json",
+            "persons.json",
+            "meta_stories.json",
+            "data/people/",
+        ):
+            self.assertNotIn(needle, authored)
+
+    def test_a_referenced_part_carries_its_concept_glyph(self) -> None:
+        document = _compile(
+            "---\ntitle: T\n---\n\n## S\n\nAs [[graph|a social network]].\n"
+        )
+        self.assertIn('class="glyph"', document.html)
+        self.assertIn(concepts.icon_of("network"), document.html)
+
+    def test_a_part_without_a_concept_gets_no_glyph(self) -> None:
+        document = _compile("---\ntitle: T\n---\n\n## S\n\nSee [[kinds|them]].\n")
+        self.assertNotIn('class="glyph"', document.html)
 
 
 class FactTests(unittest.TestCase):

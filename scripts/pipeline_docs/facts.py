@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from . import spec
+from . import concepts, spec
 from .introspect import Codebase
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -142,6 +142,12 @@ def _pipeline_facts(codebase: Codebase) -> List[Fact]:
             str(len(spec.ARTIFACTS)),
             "pipeline_docs/spec.py—ARTIFACTS",
             len(spec.ARTIFACTS),
+        ),
+        Fact(
+            "pipeline.concepts",
+            str(len(concepts.CONCEPTS)),
+            "pipeline_docs/concepts.py—CONCEPTS",
+            len(concepts.CONCEPTS),
         ),
         Fact(
             "pipeline.call_sites",

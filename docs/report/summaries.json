@@ -199,17 +199,17 @@
       }
     },
     "m_translate": {
-      "fingerprint": "94825f0c4c6df284",
+      "fingerprint": "c79e6a3b7805a2f6",
       "summary": {
         "constraints": [
-          "Skips model work unless every translation-status value is \"current\"; `force=True` overrides that cache check.",
-          "The model must return the same JSON structure, with every array at exactly the input length and in the same order.",
-          "Markdown, line breaks, annotation marker syntax, annotation term keys, and the pre-`|` term in `[[term|display]]` must remain unchanged.",
-          "Translations must preserve meaning, tone, and register without additions or omissions; place names use established target-language forms and glossary person-name mappings apply consistently."
+          "Missing source meta-story JSON returns `False` without calling the model.",
+          "Without `force`, processing is skipped only when every translation-status value is `\"current\"`.",
+          "The translation model must preserve every array’s exact length and order and return the payload’s structure.",
+          "Markdown, annotation term keys, and `[[term|...]]` syntax are preserved exactly; only annotation display text is translated."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story JSON detail file, checks whether its target-language translation is current, and otherwise translates its extracted text fields through the shared literary-translation prompt. The translated detail document is saved under the target-language meta-story directory, then the corresponding language-specific meta registry entry is updated so the story remains discoverable in that language.",
-        "why_this_design": "The registry update is performed only after the translated detail file saves successfully, avoiding a registry entry that points to missing translated content. Event titles in the registry are copied verbatim from the translated person files rather than independently translated here, preventing chapter/story-slide title drift across subsystems."
+        "what_it_does": "Loads a meta-story detail JSON, checks whether its target-language translation is current, and—when needed—runs the shared extract–translate–merge workflow before writing `META_STORIES_DIR/<target_lang>/<story_id>.json`. It then updates the language-specific meta-story registry, with event titles copied verbatim from already translated person data so meta-story chapters and person-story slides use identical titles.",
+        "why_this_design": "The freshness check avoids repeat model calls unless `force` is set, while updating the registry only after the translated detail file saves successfully prevents registry entries from pointing to an unsaved translation. Reusing translated event titles avoids independently generated variants of the same title across related story views."
       }
     },
     "p_chapters": {
@@ -311,17 +311,17 @@
       }
     },
     "p_img_match": {
-      "fingerprint": "39739422f7e18273",
+      "fingerprint": "82a16d9c6863c535",
       "summary": {
         "constraints": [
-          "Candidate image IDs are presented 1-based and converted to 0-based indexes; invalid image or event indexes are discarded.",
-          "A portrait must depict the person; buildings, plaques without a likeness, works created by the person, generic costume plates, and speculative recreations are excluded. If no real depiction exists, portrait is null.",
-          "The portrait cannot also serve an event; each remaining image and each event may appear in at most one assignment.",
-          "Event matches require a direct connection, target \"40-60%\" event coverage, and captions must be factual, metadata-grounded, and \"5-12 words.\""
+          "Returns no assignments or portrait when there are no candidate images, no API key, an incomplete/unparseable response, or an exception.",
+          "Portrait must depict the person; it may not be a building, plaque without a likeness, work created by the person, generic costume illustration, or speculative reconstruction. It is reserved from event use.",
+          "An image and an event can each appear at most once; invalid image or event indices, repeated images, and repeated event assignments are discarded.",
+          "Event images require a direct connection and target \"40-60%\" event coverage; generated event captions must be factual, metadata-grounded, and \"5-12 words.\""
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a single structured-model request containing the person’s event skeletons and the candidate Commons images’ filenames and truncated source captions. The model selects an optional profile portrait, pairs other images with directly related events, and supplies short event captions; the function then validates identifiers, preserves the original portrait metadata, and returns an event-indexed image map plus the portrait.",
-        "why_this_design": "Portrait selection and event matching share the same candidate set, but the selected portrait is marked used before event assignments are processed. Post-response validation enforces uniqueness and bounds even if the model returns duplicate, out-of-range, or portrait-reusing identifiers; failed API configuration, incomplete responses, and exceptions degrade to no images rather than interrupting the timeline."
+        "what_it_does": "Presents each life-event skeleton alongside retrieved Commons image filenames and truncated source captions, then asks a structured-output model to choose one profile portrait and match other images to specific events. It returns an event-indexed image map with model-written captions and a separate portrait record, preserving the portrait's original source caption rather than replacing it.",
+        "why_this_design": "The model receives metadata rather than image pixels, so the prompt explicitly limits captions to claims supported by filenames and source metadata. Postprocessing independently validates all returned indices and enforces one-image/one-event use, preventing malformed or duplicate model output from contaminating the timeline."
       }
     },
     "p_img_search": {
@@ -465,17 +465,17 @@
       }
     },
     "p_write": {
-      "fingerprint": "39e94f83004faeb8",
+      "fingerprint": "9848d76aa3493b7e",
       "summary": {
         "constraints": [
-          "Writes only to `PEOPLE_DIR / person_id / \"life_events.json\"`.",
-          "Creates the person directory with `parents=True` and `exist_ok=True`.",
-          "Uses `json.dumps(payload, indent=2, ensure_ascii=False)`.",
-          "Writes UTF-8 text with exactly one appended trailing newline and returns the output `Path`."
+          "Output location is `<PEOPLE_DIR>/<person_id>/life_events.json`.",
+          "Parent directories are created with `parents=True` and `exist_ok=True`.",
+          "JSON is serialized with `indent=2` and `ensure_ascii=False`.",
+          "The file is UTF-8 encoded and always ends with exactly one appended newline."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Creates the per-person output directory and serializes the assembled personal-story payload to `life_events.json`. The resulting JSON file becomes the durable handoff artifact: later pipeline stages read it rather than the in-memory payload returned by the three upstream branches.",
-        "why_this_design": "The function creates parent directories before writing, so a new `person_id` does not require prior filesystem setup. Pretty-printed JSON, UTF-8 encoding, and a trailing newline make the saved dataset stable and inspectable while preserving non-ASCII names and text."
+        "what_it_does": "Creates a per-person directory under the configured people-data root and writes the assembled personal-story payload to `life_events.json`. The file becomes the durable handoff artifact: later pipeline stages read this JSON document rather than the in-memory payload assembled by the preceding branches.",
+        "why_this_design": "The function creates missing parent directories before writing, so a new person ID does not require pre-provisioned storage. Pretty-printed JSON, preserved Unicode characters, and a final newline make the artifact stable and readable for inspection, version control, and downstream consumers."
       }
     }
   },

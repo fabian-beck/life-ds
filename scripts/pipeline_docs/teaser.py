@@ -31,6 +31,8 @@ import re
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+from . import concepts
+
 # The scene is a fixed coordinate system, not a pixel size: the page scales it
 # to the width available and zooms into sub-rectangles of it on small screens.
 SCENE_W = 1076
@@ -46,6 +48,12 @@ class Part:
     `decor` names the drawing routine that fills the box—the vocabulary is
     small and closed, and `app.js` must have a routine for every name used, the
     same contract the component roster has.
+
+    `concept` ties the part to an entry of `concepts.CONCEPTS`, which is what
+    gives the figure its glyphs. The tie is the report's one visual argument
+    made without words: the box that holds the relationships and the box that
+    draws them carry the same mark, because they are the same thing recorded
+    and shown.
     """
 
     id: str
@@ -58,6 +66,7 @@ class Part:
     lane: str = ""
     parent: str = ""
     frame: str = "line"  # "line" | "soft" | "none"
+    concept: str = ""
 
     def to_json(self) -> Dict[str, Any]:
         x, y, w, h = self.box
@@ -75,6 +84,8 @@ class Part:
             "lane": self.lane,
             "parent": self.parent,
             "frame": self.frame,
+            "concept": self.concept,
+            "icon": concepts.icon_of(self.concept),
         }
 
 
@@ -153,20 +164,21 @@ class Bus:
 STAGES: Tuple[Stage, ...] = (
     Stage("Sources and inference", 8, 168),
     Stage("Generation—offline", 220, 392),
-    Stage("Artifacts—static files", 656, 180),
+    Stage("Artifacts—generated data", 656, 180),
     Stage("Interface—client-side", 880, 188),
 )
 
 PARTS: Tuple[Part, ...] = (
     Part(
         "sources",
-        "Encyclopedic sources",
+        "Source material",
         "Article prose, images and place names are fetched from Wikipedia, "
         "Deutsche Biographie, Commons and Nominatim, and cached before any step "
         "reads them.",
         (8, 40, 168, 150),
         decor="sources",
         lines=("Article prose", "Images", "Place names"),
+        concept="sources",
     ),
     Part(
         "inference",
@@ -212,55 +224,59 @@ PARTS: Tuple[Part, ...] = (
         frame="none",
     ),
     Part(
-        "files",
-        "Artifacts on disk",
-        "Denormalised JSON documents in a directory tree. The two halves of the "
-        "system communicate through these and through nothing else: no database, "
-        "no server.",
+        "artifacts",
+        "Generated artifacts",
+        "Denormalized documents, one per subject and one per theme. The two "
+        "halves of the system communicate through these and through nothing "
+        "else: no database, no server.",
         (656, 40, 180, 324),
         decor="frame",
         frame="soft",
-        metric="{pipeline.artifacts} declared files",
+        metric="{pipeline.artifacts} artifacts · {pipeline.concepts} concepts",
     ),
     Part(
         "registry",
-        "persons.json",
-        "The identity and portrait of each subject, in one-to-one correspondence "
-        "with the per-person directories that hold everything else.",
+        "Subjects",
+        "The identity, lifespan and portrait of each person the corpus holds, "
+        "in one-to-one correspondence with the stories written about them.",
         (668, 88, 156, 54),
-        decor="file",
-        parent="files",
+        decor="concept",
+        parent="artifacts",
         lines=("identity, portrait",),
+        concept="subjects",
     ),
     Part(
         "events",
-        "life_events.json",
+        "Life events",
         "The narrative spine: dated events with places, persons, sources, images "
         "and a typed icon, grouped into the chapters of a life.",
         (668, 152, 156, 70),
-        decor="file",
-        parent="files",
+        decor="concept",
+        parent="artifacts",
         lines=("dated events", "chapters, sources"),
+        concept="events",
     ),
     Part(
         "ego-network",
-        "ego_network.json",
+        "Social network",
         "The subject's relationships as typed, weighted and dated edges, "
         "generated independently of the narrative.",
         (668, 232, 156, 54),
-        decor="file",
-        parent="files",
+        decor="concept",
+        parent="artifacts",
         lines=("typed, weighted edges",),
+        concept="network",
     ),
     Part(
         "meta-story",
-        "meta_story.json",
-        "A second-order artifact: a theme across several biographies, and the "
-        "only family whose inputs are other artifacts of this system.",
+        "Theme",
+        "A second-order artifact: an idea traced across several biographies, and "
+        "the only family whose inputs are other artifacts of this system.",
         (668, 296, 156, 54),
-        decor="file",
-        parent="files",
+        decor="concept",
+        parent="artifacts",
         lines=("a theme across lives",),
+        concept="theme",
     ),
     Part(
         "slides",
@@ -289,6 +305,7 @@ PARTS: Tuple[Part, ...] = (
         (8, 396, 256, 140),
         decor="prose",
         lines=("the event's own description",),
+        concept="narrative",
     ),
     Part(
         "timeline",
@@ -298,6 +315,7 @@ PARTS: Tuple[Part, ...] = (
         (276, 396, 256, 140),
         decor="timeline",
         lines=("chapters banded, events placed",),
+        concept="events",
     ),
     Part(
         "map",
@@ -308,15 +326,17 @@ PARTS: Tuple[Part, ...] = (
         (544, 396, 256, 140),
         decor="map",
         lines=("places resolved to coordinates",),
+        concept="places",
     ),
     Part(
         "graph",
-        "Social network",
+        "Network graph",
         "The documented relationships as a force-directed graph, typed and "
         "weighted exactly as the artifact records them.",
         (812, 396, 256, 140),
         decor="graph",
         lines=("typed, weighted relationships",),
+        concept="network",
     ),
 )
 
@@ -324,17 +344,17 @@ LINKS: Tuple[Link, ...] = (
     Link("sources", "person-pipeline", label="material", source_at=0.5, jog=0.35),
     Link("inference", "person-pipeline", kind="call", source_at=0.35, jog=0.78),
     Link("inference", "meta-pipeline", kind="call", source_at=0.65, jog=0.56),
-    Link("person-pipeline", "files", label="writes", target_at=0.3, jog=0.5),
+    Link("person-pipeline", "artifacts", label="writes", target_at=0.3, jog=0.5),
     Link(
         "meta-pipeline",
-        "files",
+        "artifacts",
         label="reads · writes",
         both=True,
         target_at=0.72,
         jog=0.5,
     ),
-    Link("files", "slides", label="loads", source_at=0.25, jog=0.5),
-    Link("files", "sections", source_at=0.8, jog=0.32),
+    Link("artifacts", "slides", label="loads", source_at=0.25, jog=0.5),
+    Link("artifacts", "sections", source_at=0.8, jog=0.32),
 )
 
 BUS = Bus(
@@ -429,6 +449,12 @@ def check_scene(facts: Sequence[str] = ()) -> List[SceneProblem]:
             problems.append(SceneProblem(where, "falls outside the canvas"))
         if not part.blurb.strip():
             problems.append(SceneProblem(where, "has no blurb to show when focused"))
+        if part.concept and concepts.concept_by_id(part.concept) is None:
+            problems.append(
+                SceneProblem(where, f"names unknown concept '{part.concept}'")
+            )
+        if part.decor == "concept" and not part.concept:
+            problems.append(SceneProblem(where, "is drawn as a concept but names none"))
         if part.parent:
             parent = known.get(part.parent)
             if parent is None:

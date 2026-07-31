@@ -19,6 +19,7 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from . import concepts as concepts_module
 from . import facts as facts_module
 from . import spec, teaser
 from .introspect import Codebase
@@ -280,7 +281,19 @@ def build_payload(
         "screenshots": shots or {},
         "steps": steps,
         "groups": [group.__dict__ for group in spec.GROUPS],
-        "artifacts": [artifact.__dict__ for artifact in spec.ARTIFACTS],
+        "concepts": concepts_module.to_json(),
+        # Deliberately without `path`: the spec knows where an artifact is
+        # stored, the page speaks about what it carries.
+        "artifacts": [
+            {
+                "id": artifact.id,
+                "label": artifact.label,
+                "kind": artifact.kind,
+                "note": artifact.note,
+                "concept": artifact.concept,
+            }
+            for artifact in spec.ARTIFACTS
+        ],
         "schemas": _collect_schemas(codebase, schema_names),
         "totals": {
             "steps": len(spec.STEPS),

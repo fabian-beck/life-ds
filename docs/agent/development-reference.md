@@ -374,9 +374,10 @@ The chart is a **layered DAG, not a sequence**. An arrow means one step consumes
 what another produced (`Step.depends_on` in `spec.py`, with a label for the data
 that travels along it); a step's layer is the longest such chain reaching it, so
 steps drawn side by side are genuinely independent—the meta story's map branch
-and network branch really do run without seeing each other. Files a step writes
-are printed inside its node; a file the pipeline only reads becomes a source
-node, which is how the meta chart shows that it consumes person-pipeline output.
+and network branch really do run without seeing each other. The artifacts a step
+writes are printed inside its node, each behind its concept's glyph; an artifact
+the pipeline only reads becomes a source node, which is how the meta chart shows
+that it consumes person-pipeline output.
 Orchestrator `main()` functions are deliberately not steps: they impose an order
 without creating a dependency, and drawing them made a fork look like a chain.
 
@@ -421,7 +422,8 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Layer | File | What it contributes |
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
-| Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which files they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
+| Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which artifacts they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
+| Vocabulary | `concepts.py` | The concepts the report speaks in—source material, subjects, life events, the social network, geography and the rest—each with the interface's own Material Design icon, vendored as path data. |
 | Measurements | `facts.py` | Repository-scale numbers the prose cites—corpus size, component counts, test counts—each with the place it was measured. |
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `::: component` mount points, callouts. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
@@ -459,7 +461,7 @@ name or file count belongs in it**—those are cited, so they cannot go stale.
 | --- | --- |
 | `## Heading`, `### Heading` | Section and subsection. Numbers, ids, the contents and the sidebar are all derived from document order. Skipping a level is a build error. |
 | `{{ some.fact }}` | A measurement from `facts.py`, rendered with its source as a tooltip. An unknown key fails the build. |
-| `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. |
+| `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. Where the part carries a concept, the phrase is marked with that concept's glyph. |
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
 | `^[an explanation]` | An inline note. Brackets nest, `\^[` escapes the syntax, and the body is collapsed to one line, so a note is inline-level by construction. |
@@ -540,6 +542,33 @@ Staleness is a property of the description, not of the application: nothing here
 can tell that the interface changed under an unchanged declaration. Retake
 everything with `--shots all` after a visible change to the application, and
 commit the pictures along with `captures.json`.
+
+### The Concept Vocabulary
+
+The report talks about what the system handles, never about where it is kept.
+`data/people/<id>/ego_network.json` is a storage decision; the **social network**
+is the thing the pipeline derives, the interface draws and the reader came for.
+So no figure, table, caption or sentence the docs build writes itself names a
+generated data path—only the quoted prompts and the docstrings lifted out of the
+generation scripts do, because those are the source as it stands.
+
+`pipeline_docs/concepts.py` holds the vocabulary: an id, a conceptual name, one
+sentence, where the application shows it, and a Material Design icon named
+exactly as `@mdi/js` exports it. Every `spec.ARTIFACTS` entry declares the
+concept it carries, and so may a `teaser.PARTS` part; both are then drawn with
+that glyph. The icons are the application's own—`mdi-account-multiple-outline`
+is the network button above a story and the mark on the node that writes the
+graph—which is what lets a reader carry one vocabulary between the report, the
+figures and the product.
+
+Icon path data is vendored into `ICON_PATHS` rather than read from
+`node_modules`, so the report builds from a bare checkout. When the package
+*is* installed, `--check` compares the two and fails on a drift, so revendoring
+after an `@mdi/js` upgrade is a build error rather than a silently wrong glyph.
+
+To add a concept: append a `Concept` to `CONCEPTS`, paste its path from
+`@mdi/js` into `ICON_PATHS`, and point the artifacts or parts that carry it at
+its id. An artifact naming an unknown concept fails the build.
 
 ### The Teaser Figure
 

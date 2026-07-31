@@ -13,8 +13,8 @@ abstract:
   encodings are read by scrolling. The system separates two concerns:
   generation is performed offline by staged Python pipelines that combine
   language-model inference with deterministic transformation; presentation is
-  performed by a client-side application that reads static files and performs
-  no inference of its own.
+  performed by a client-side application that reads what those pipelines
+  produced and performs no inference of its own.
 ---
 
 ::: teaser
@@ -50,13 +50,18 @@ meaning, and at the scale of a corpus they are made by
 [[inference|a language model]].
 
 The system is accordingly built in two parts that
-[[files|meet only at the data]]. Generation runs offline as a dependency graph
-of individually addressable steps, in which model inference is interleaved with
-deterministic transformation: a step proposes, researches or reviews material,
-and the steps around it resolve, cluster, merge and validate what the model
-returned. What the graph produces is a set of documents describing one life or
-one theme. The interface loads those documents and renders them, so that
-reading a story is a matter of presentation alone.
+[[artifacts|meet only at the data]]. Generation runs offline as a dependency
+graph of individually addressable steps, in which model inference is
+interleaved with deterministic transformation: a step proposes, researches or
+reviews material, and the steps around it resolve, cluster, merge and validate
+what the model returned. What the graph produces is a set of documents
+describing one life or one theme. The interface loads those documents and
+renders them, so that reading a story is a matter of presentation alone.
+
+This report describes both halves in the vocabulary of what they handle rather
+than of where it is kept. A path on disk is a storage decision; the social
+network, the life events and the theme are what the system is actually about,
+and they are what the figures below name and mark.
 
 ::: decision
 **One record, several encodings.** The event is the unit of both the narrative
@@ -78,12 +83,12 @@ the artifact.
 
 ## Architecture
 
-The two halves of the system communicate exclusively through the file system,
-and each is decomposed along a different axis. Generation is decomposed into
-*steps*: individually addressable units of work, {{ pipeline.steps }} in total,
-of which {{ pipeline.ai_steps }} issue a prompt to a model and
-{{ pipeline.code_steps }} consist of deterministic code or plain HTTP
-retrieval. Presentation is decomposed into the units through which a reader
+The two halves of the system communicate exclusively through the artifacts one
+writes and the other reads, and each is decomposed along a different axis.
+Generation is decomposed into *steps*: individually addressable units of work,
+{{ pipeline.steps }} in total, of which {{ pipeline.ai_steps }} issue a prompt
+to a model and {{ pipeline.code_steps }} consist of deterministic code or plain
+HTTP retrieval. Presentation is decomposed into the units through which a reader
 advances: [[slides|slides in a person's story]],
 [[sections|sections in a meta story]]. The two axes answer different questions.
 A step is the granularity at which work is cached, re-run, priced and tested; a
@@ -109,8 +114,8 @@ that everything downstream of an inference is reproducible and assertable.
 
 ## Data model
 
-Four artifact families carry everything the application reads, distributed over
-{{ pipeline.artifacts }} [[files|declared files and directories]]. Each is a
+Four artifact families carry everything the application reads, distributed
+over {{ pipeline.artifacts }} [[artifacts|declared artifacts]]. Each is a
 denormalized document rather than a row in a normalized schema, because the
 document is the unit at which generated material is inspected, corrected and
 regenerated.^[Normalization would pay for itself if the corpus were queried
@@ -118,11 +123,22 @@ across documents. It is not: the application reads the documents of one story at
 a time and resolves the references between them by identifier, so a normalized
 store would serve a query pattern nobody issues.]
 
+Underneath those families is a smaller and more durable vocabulary. The system
+handles {{ pipeline.concepts }} concepts, and every artifact, every step and
+every component of the interface can be described as producing or showing one
+of them. Each concept is written here with the glyph the application already
+draws for it, and the shared mark is the claim: the icon that opens
+[[graph|the network view]] of a story is the icon on the node that writes
+[[ego-network|the social network]], and the same mark stands beside both
+phrases here, because all of them are one subject at different removes.
+
+::: conceptlegend
+:::
+
 The **[[registry|person registry]]** holds the identity and portrait of each
-subject, and stands in one-to-one correspondence with the per-person
-directories that hold everything else: a directory without a registry entry is
-invisible to the interface, and an entry without a directory is a broken
-reference.
+subject, and stands in one-to-one correspondence with the material that makes
+up everything else about them: a story without a registry entry is invisible to
+the interface, and an entry with nothing behind it is a broken reference.
 
 The **[[events|life events]]** document is the narrative spine of a biography:
 dated events with locations, involved persons, sources, images and a typed
@@ -138,7 +154,7 @@ biography may exist before its network does.
 The **[[meta-story|meta story]]** document is a second-order artifact. It
 describes a theme across several biographies and is the only family whose
 inputs are other artifacts of this system rather than an external source, which
-makes the coupling between the two pipelines a coupling of files rather than of
+makes the coupling between the two pipelines a coupling of data rather than of
 code.
 
 ::: artifacts lane=person
@@ -221,7 +237,7 @@ and because a failed or malformed response is then confined to a single event.
 [[meta-pipeline|A theme across many lives]]: {{ pipeline.meta_steps }} steps
 distributed over {{ pipeline.meta_layers }} layers. The pipeline consumes the
 output of the personal pipeline rather than external sources, which is why its
-figure begins with unattributed file nodes that no step of its own graph
+figure begins with unattributed artifact nodes that no step of its own graph
 produces.
 
 Where the personal pipeline forks once, this one maintains two long independent
@@ -278,9 +294,9 @@ by field from the Pydantic models the API is asked to populate.
 ## Interface
 
 The reading side is a mobile-first Svelte and Vite application that loads the
-generated documents as static assets and renders them directly. It presents the
-same three encodings of a life—time, space and relation—in two reading modes,
-corresponding to the two story types. A person's story is
+generated artifacts and renders them directly, with no server of its own. It
+presents the same three encodings of a life—time, space and relation—in two
+reading modes, corresponding to the two story types. A person's story is
 [[slides|a bounded sequence advanced one unit at a time]], which suits material
 that has a canonical order and a natural unit, the event. A meta story is
 [[sections|a continuous document advanced by scrolling]], which lets its order

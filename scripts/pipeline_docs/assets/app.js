@@ -45,8 +45,8 @@
      more or less written inside a node, and sized to match:
 
        full     the step's name, the script it lives in, its kind, the model it
-                calls and the files it writes. 990 units.
-       mid      the name, the kind and the model. No script, no files. 660.
+                calls and what it writes. 990 units.
+       mid      the name, the kind and the model. No script, no writes. 660.
        compact  the name. 398.
 
      A reduced drawing is not the full one shrunk. Fitting a 990-unit figure
@@ -326,6 +326,87 @@
     artifactById[artifact.id] = artifact;
   });
 
+  /* The concept vocabulary and its glyphs.
+
+     Every artifact carries a concept, every concept carries the icon the
+     application already draws for it, and the two together are why nothing on
+     this page needs to name a path: a reader who has seen the network glyph
+     above a story recognizes the same mark on the node that writes the graph.
+     Icons are Material Design Icons on a 24-unit grid, inlined by `concepts.py`
+     so the page stays one self-contained file. */
+  const conceptById = {};
+  (DATA.concepts || []).forEach((concept) => {
+    conceptById[concept.id] = concept;
+  });
+
+  function conceptOf(artifactOrId) {
+    const artifact =
+      typeof artifactOrId === "string"
+        ? artifactById[artifactOrId]
+        : artifactOrId;
+    return artifact ? conceptById[artifact.concept] || null : null;
+  }
+
+  /* An icon for an HTML flow, and one for an SVG scene. Both take the path
+     data rather than a concept, so a caller that already resolved the concept
+     does not resolve it twice. */
+  function glyph(path, cls) {
+    if (!path) return null;
+    const node = svg("svg", {
+      class: cls || "glyph",
+      viewBox: "0 0 24 24",
+      "aria-hidden": "true",
+      focusable: "false",
+    });
+    node.appendChild(svg("path", { d: path }));
+    return node;
+  }
+
+  function sceneGlyph(path, x, y, size, cls) {
+    if (!path) return null;
+    const group = svg("g", {
+      class: cls || "cglyph",
+      transform: "translate(" + x + "," + y + ") scale(" + size / 24 + ")",
+      "aria-hidden": "true",
+    });
+    group.appendChild(svg("path", { d: path }));
+    return group;
+  }
+
+  // The drawer builds its rows as markup, so the same mark is needed as a
+  // string. Path data is authored in `concepts.py`, but it still goes through
+  // the escape used for everything else that reaches innerHTML.
+  function glyphHtml(path, cls) {
+    if (!path) return "";
+    return (
+      '<svg class="' +
+      escapeHtml(cls || "glyph") +
+      '" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="' +
+      escapeHtml(path) +
+      '"/></svg>'
+    );
+  }
+
+  /* A list of artifacts, each behind its concept's glyph and titled with the
+     concept it belongs to. */
+  function artifactList(ids) {
+    return (ids || [])
+      .map((id) => {
+        const artifact = artifactById[id];
+        if (!artifact) return escapeHtml(id);
+        const concept = conceptOf(artifact);
+        return (
+          '<span class="artifact-ref"' +
+          (concept ? ' title="' + escapeHtml(concept.label) + '"' : "") +
+          ">" +
+          (concept ? glyphHtml(concept.path) : "") +
+          escapeHtml(artifact.label) +
+          "</span>"
+        );
+      })
+      .join(", ");
+  }
+
   // Which concern a step belongs to, and therefore which column it is aligned
   // in. Validated in spec.py to claim each step at most once.
   const groupById = {};
@@ -341,12 +422,13 @@
     return "var(--kind-" + kind + ")";
   }
 
-  // Artifacts that span several files (the Wikipedia cache, a language folder)
-  // have no single filename to print, and naming only the first would be wrong
-  // for the steps that write the others.
-  function artifactFile(artifact) {
-    if (artifact.path.indexOf(",") !== -1) return artifact.label;
-    return artifact.path.split("/").slice(-1)[0];
+  // What an artifact is called where it is drawn. The concept is the wider
+  // family it belongs to and is printed under the name only where the two
+  // differ—"Ego network", of the social network; "Portrait", of the imagery.
+  function artifactConceptLine(artifact) {
+    const concept = conceptOf(artifact);
+    if (!concept || concept.label === artifact.label) return "";
+    return concept.label;
   }
 
   /* -------------------------------------------------- pipeline chart */
@@ -361,7 +443,7 @@
      DOM nodes instead of the page's.
 
      `options.size` picks the level of detail—"full", "mid" or "compact". The
-     two reduced sizes drop the toolbar, the data files and, at compact, the
+     two reduced sizes drop the toolbar, the artifact lines and, at compact, the
      group labels and everything written inside a node but its name; they are
      scaled to the column rather than scrolled sideways. What they drop is
      detail, never structure—the reader still sees every step, every dependency
@@ -482,9 +564,9 @@
         type: "button",
         "aria-pressed": state.showArtifacts ? "true" : "false",
         title:
-          "Show the files each step writes, and the files this pipeline reads " +
-          "from the other one.",
-        text: "Data files",
+          "Show what each step writes, and what this pipeline reads from the " +
+          "other one.",
+        text: "Artifacts",
         onclick: function () {
           state.showArtifacts = !state.showArtifacts;
           artifacts.setAttribute(
@@ -1352,21 +1434,27 @@
         transform: "translate(" + node.x + "," + node.y + ")",
       });
       group.appendChild(svg("rect", { width: node.w, height: node.h }));
-      const file = artifactFile(node.artifact);
-      const single = file !== node.artifact.label;
-      const label = svg("text", { x: 10, y: single ? 16 : 23 });
-      label.textContent = truncateLabel(node.artifact.label, 30);
+      const concept = conceptOf(node.artifact);
+      const family = artifactConceptLine(node.artifact);
+      const mark = concept
+        ? sceneGlyph(concept.path, 9, family ? 6 : 13, 14)
+        : null;
+      if (mark) group.appendChild(mark);
+      const indent = mark ? 29 : 10;
+      const label = svg("text", { x: indent, y: family ? 16 : 23 });
+      label.textContent = truncateLabel(node.artifact.label, 28);
       group.appendChild(label);
-      if (single) {
-        const path = svg("text", { x: 10, y: 29, class: "sub" });
-        path.setAttribute("font-size", "9.5");
-        path.setAttribute("fill", "var(--muted)");
-        path.textContent = truncateLabel(file, 32);
-        group.appendChild(path);
+      if (family) {
+        const line = svg("text", { x: indent, y: 29, class: "sub" });
+        line.setAttribute("font-size", "9.5");
+        line.setAttribute("fill", "var(--muted)");
+        line.textContent = truncateLabel(family, 30);
+        group.appendChild(line);
       }
       const tip = svg("title");
       tip.textContent =
-        node.artifact.path +
+        node.artifact.label +
+        (concept ? " — " + concept.label : "") +
         "\n" +
         node.artifact.note +
         "\nProduced by the other pipeline; read here.";
@@ -1489,12 +1577,14 @@
       factLine.textContent = truncateLabel(facts.join(" · "), 40);
       group.appendChild(factLine);
 
-      // The files the step writes belong to the step, not beside it: this is
-      // where the pipeline's state actually changes.
-      const files = state.showArtifacts ? step.outputs || [] : [];
-      files.forEach((artifactId, index) => {
+      // What the step writes belongs to the step, not beside it: this is where
+      // the pipeline's state actually changes. Each line carries the glyph of
+      // the concept it advances, so a branch can be followed by its mark alone.
+      const written = state.showArtifacts ? step.outputs || [] : [];
+      written.forEach((artifactId, index) => {
         const artifact = artifactById[artifactId];
         if (!artifact) return;
+        const concept = conceptOf(artifact);
         const rowY = M.NODE_H + index * M.FILE_H;
         const row = svg("g", { class: "writes" });
         row.appendChild(
@@ -1503,13 +1593,19 @@
             d: "M12 " + (rowY - 6) + " L" + (node.w - 12) + " " + (rowY - 6),
           })
         );
-        const text = svg("text", { x: 16, y: rowY + 5 });
-        text.textContent =
-          "writes  " + truncateLabel(artifactFile(artifact), 32);
+        const mark = concept
+          ? sceneGlyph(concept.path, 16, rowY - 5, 12)
+          : null;
+        if (mark) row.appendChild(mark);
+        const text = svg("text", { x: mark ? 33 : 16, y: rowY + 5 });
+        text.textContent = "writes  " + truncateLabel(artifact.label, 30);
         row.appendChild(text);
         const tip = svg("title");
         tip.textContent =
-          artifact.label + "\n" + artifact.path + "\n" + artifact.note;
+          artifact.label +
+          (concept ? " — " + concept.label : "") +
+          "\n" +
+          artifact.note;
         row.appendChild(tip);
         group.appendChild(row);
       });
@@ -1606,10 +1702,10 @@
          that repeated them argued with both. A mark is named only when it is
          actually drawn.
 
-         Each caption describes the drawing it is under. Naming the file lines
-         and the script under a figure that has neither would be describing
-         another version of itself, so a reduced caption says instead that it
-         is reduced and where the rest is. */
+         Each caption describes the drawing it is under. Naming the artifact
+         lines and the script under a figure that has neither would be
+         describing another version of itself, so a reduced caption says
+         instead that it is reduced and where the rest is. */
       const sourceCount = geometry.nodes.length - stepNodes.length;
       const bands = geometry.bands.length;
       const marks = reduced
@@ -1620,7 +1716,7 @@
           ]
         : [
             sourceCount
-              ? "Gray boxes are files written by the other pipeline."
+              ? "Gray boxes are artifacts the other pipeline produces."
               : "",
             bands ? "A shaded band gathers the steps of one concern." : "",
           ];
@@ -1924,22 +2020,8 @@
           : null
       ),
       factRow("Note", step.model_note ? escapeHtml(step.model_note) : null),
-      factRow(
-        "Reads",
-        (step.inputs || [])
-          .map((id) => {
-            return artifactById[id] ? escapeHtml(artifactById[id].label) : id;
-          })
-          .join(", ") || null
-      ),
-      factRow(
-        "Writes",
-        (step.outputs || [])
-          .map((id) => {
-            return artifactById[id] ? escapeHtml(artifactById[id].label) : id;
-          })
-          .join(", ") || null
-      ),
+      factRow("Reads", artifactList(step.inputs) || null),
+      factRow("Writes", artifactList(step.outputs) || null),
     ];
     rows.forEach((row) => {
       if (row) table.appendChild(row);
@@ -2037,7 +2119,7 @@
      A column too narrow for the full chart gets a reduced figure inline, and
      this is where the detail it gave up is kept: the chart at full size, with
      its toolbar,
-     its search and its data files, scrollable in both directions because a
+     its search and its artifact lines, scrollable in both directions because a
      dependency graph is simply wider than a phone. It is built when it is
      opened and torn down when it is closed—the report already draws two charts
      on load, and a third held in reserve behind every figure would be paid for
@@ -2520,17 +2602,17 @@
       });
     },
 
-    file: function (host, part) {
-      host.appendChild(sRect(part.x + 10, part.y + 12, 14, 18, "tglyph"));
+    /* One thing the system produces, named by what it is and marked with the
+       glyph the application draws for it—never by the file that stores it. */
+    concept: function (host, part) {
+      const mark = sceneGlyph(part.icon, part.x + 10, part.y + 11, 18);
+      if (mark) host.appendChild(mark);
       host.appendChild(
-        sPath("M" + (part.x + 19) + " " + (part.y + 12) + "v5h5", "tglyph-fold")
-      );
-      host.appendChild(
-        sText(part.x + 32, part.y + 24, part.label, "tfile-name")
+        sText(part.x + 34, part.y + 24, part.label, "tconcept-name")
       );
       part.lines.forEach((line, index) => {
         host.appendChild(
-          sText(part.x + 32, part.y + 38 + index * 11, line, "ttiny")
+          sText(part.x + 34, part.y + 38 + index * 11, line, "ttiny")
         );
       });
     },
@@ -2739,9 +2821,15 @@
         )
       );
     }
-    if (part.decor !== "file" && part.decor !== "kinds") {
+    if (part.decor !== "concept" && part.decor !== "kinds") {
+      // A part that carries a concept wears its mark ahead of its name, so the
+      // box that records the relationships and the box that draws them are
+      // recognizably the same subject. The concept boxes lay themselves out the
+      // same way, in their own decor, where the mark stands in for a title.
+      const mark = sceneGlyph(part.icon, part.x + 11, part.y + 9, 14);
+      if (mark) group.appendChild(mark);
       group.appendChild(
-        sText(part.x + 12, part.y + 20, part.label, "tpart-label")
+        sText(part.x + (mark ? 30 : 12), part.y + 20, part.label, "tpart-label")
       );
     }
     if (part.metric) {
@@ -3615,24 +3703,31 @@
         caption(
           "Table",
           numbers.table,
-          "Files the " +
+          "What the " +
             laneLabel(params.lane).toLowerCase() +
-            " pipeline reads and writes"
+            " pipeline reads and writes, by concept"
         )
       );
       mount.appendChild(
         dataTable(
-          ["File", "Kind", "Written by", "Read by"],
+          ["Artifact", "Concept", "Kind", "Written by", "Read by"],
           DATA.artifacts
             .filter((artifact) => {
               return touched[artifact.id];
             })
             .map((artifact) => {
               const use = touched[artifact.id];
+              const concept = conceptOf(artifact);
               return [
                 el("td", {}, [
                   el("div", { text: artifact.label }),
-                  el("div", { class: "path" }, [code(artifact.path)]),
+                  el("div", { class: "cell-note", text: artifact.note }),
+                ]),
+                el("td", {}, [
+                  el("span", { class: "concept-cell" }, [
+                    concept ? glyph(concept.path) : null,
+                    el("span", { text: concept ? concept.label : "—" }),
+                  ]),
                 ]),
                 plain(artifact.kind),
                 plain(use.writes.join(", ") || "—"),
@@ -3641,6 +3736,32 @@
             })
         )
       );
+    },
+
+    /* The vocabulary itself, once, where the report first uses it. Each entry
+       pairs the glyph with the place the application draws the same thing,
+       because a legend that only named the concepts would leave the reader to
+       guess whether the marks are the interface's or the report's. */
+    conceptlegend: function (mount) {
+      const list = el("dl", { class: "conceptlist" });
+      (DATA.concepts || []).forEach((concept) => {
+        list.appendChild(
+          el("dt", {}, [
+            glyph(concept.path, "glyph big"),
+            el("span", { text: concept.label }),
+          ])
+        );
+        list.appendChild(
+          el("dd", {}, [
+            el("span", { text: concept.blurb }),
+            el("span", {
+              class: "sub",
+              text: "In the interface: " + concept.interface,
+            }),
+          ])
+        );
+      });
+      mount.appendChild(list);
     },
 
     modeltable: function (mount, params, numbers) {

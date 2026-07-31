@@ -3,8 +3,8 @@
 
 This is the only file in `pipeline_docs` that a human edits when the pipeline
 changes, and it deliberately holds just the things a parser cannot infer:
-which processing steps exist, which data actually flows between them, and which
-files they read and write. Everything factual about a step—its model,
+which processing steps exist, which data actually flows between them, and
+which artifacts they read and write. Everything factual about a step—its model,
 reasoning effort, output schema, prompt text, CLI flags—is pulled from the
 source by `introspect.py` and must not be duplicated here.
 
@@ -27,10 +27,12 @@ naming the implying path lets a maintainer judge it. The chart re-derives the
 skipped connection whenever a filter hides the steps in between, so a strand
 never breaks.
 
-`Step.inputs` and `Step.outputs` are the files on disk. A file written by a step
-in the same pipeline is already implied by an edge; a file that arrives from the
-*other* pipeline is drawn as a source node, which is how the meta chart shows
-that it consumes what the person chart produces.
+`Step.inputs` and `Step.outputs` name the artifacts a step consumes and
+produces. An artifact written by a step in the same pipeline is already implied
+by an edge; one that arrives from the *other* pipeline is drawn as a source
+node, which is how the meta chart shows that it consumes what the person chart
+produces. Each artifact declares the concept it carries, and the report draws
+that concept—its name and its glyph—rather than the path it is stored at.
 
 `GROUPS` names the concerns that span several layers—planning image searches,
 running them and matching the results are three layers of one job—and the chart
@@ -94,13 +96,23 @@ IMAGE = "image"
 
 @dataclass
 class Artifact:
-    """A file the pipeline reads or writes."""
+    """Something the pipeline produces or consumes, and where it happens to live.
+
+    `path` is the ground truth for a maintainer and stops there: the report
+    speaks about the *concept* an artifact carries—source material, life
+    events, the social network—and never about the file that holds it. A path
+    is an implementation detail of storage, and naming it in a figure invites
+    the reader to reason about a directory instead of about the system.
+    """
 
     id: str
     label: str
     path: str
     kind: str  # cache | dataset | registry | asset
     note: str = ""
+    concept: str = ""
+    """Which entry of `concepts.CONCEPTS` this artifact carries, and thus which
+    glyph stands for it wherever the report draws it."""
 
 
 @dataclass
@@ -245,17 +257,19 @@ GROUPS: List[Group] = [
 ARTIFACTS: List[Artifact] = [
     Artifact(
         "wiki_cache",
-        "Wikipedia cache",
+        "Wikipedia material",
         "data/people/{id}/_cache/wikipedia_page.json, related_articles.json, commons_images.json",
         "cache",
         "Main article, up to 15 related articles, and Commons image metadata.",
+        concept="sources",
     ),
     Artifact(
         "db_cache",
-        "Deutsche Biographie cache",
+        "Deutsche Biographie material",
         "data/people/{id}/_cache/deutsche_biographie.json",
         "cache",
         "ADB text (CC-BY-NC-SA) and CC0 metadata only; NDB text is excluded by license.",
+        concept="sources",
     ),
     Artifact(
         "life_events",
@@ -263,6 +277,7 @@ ARTIFACTS: List[Artifact] = [
         "data/people/{id}/life_events.json",
         "dataset",
         "The English reference document: person metadata, chapters, events, images, sources.",
+        concept="events",
     ),
     Artifact(
         "ego_network",
@@ -270,20 +285,23 @@ ARTIFACTS: List[Artifact] = [
         "data/people/{id}/ego_network.json",
         "dataset",
         "The person's relationships, typed and weighted.",
+        concept="network",
     ),
     Artifact(
         "person_styles",
-        "Interface styles",
+        "Interface style",
         "data/person_styles.json",
         "registry",
         "Per-person colors and fonts for the story UI.",
+        concept="identity",
     ),
     Artifact(
         "persons",
-        "Persons registry",
+        "Person registry",
         "data/persons.json",
         "registry",
         "Landing-page index of every person.",
+        concept="subjects",
     ),
     Artifact(
         "portrait",
@@ -291,6 +309,7 @@ ARTIFACTS: List[Artifact] = [
         "public/portraits/{id}.webp",
         "asset",
         "Style-transferred from a licensed reference image.",
+        concept="imagery",
     ),
     Artifact(
         "person_de",
@@ -298,6 +317,7 @@ ARTIFACTS: List[Artifact] = [
         "data/people/{id}/de/*.json, data/persons_de.json",
         "dataset",
         "Derived from English; carries a fingerprint of its source text.",
+        concept="languages",
     ),
     Artifact(
         "meta_story",
@@ -305,6 +325,7 @@ ARTIFACTS: List[Artifact] = [
         "data/meta_stories/{id}.json",
         "dataset",
         "Chapters, social network, geo map and composed prose for one theme.",
+        concept="theme",
     ),
     Artifact(
         "meta_registry",
@@ -312,6 +333,7 @@ ARTIFACTS: List[Artifact] = [
         "data/meta_stories.json",
         "registry",
         "Index of meta stories for the landing page.",
+        concept="theme",
     ),
     Artifact(
         "meta_de",
@@ -319,6 +341,7 @@ ARTIFACTS: List[Artifact] = [
         "data/meta_stories/de/{id}.json, data/meta_stories_de.json",
         "dataset",
         "Event titles are copied verbatim from translated person data.",
+        concept="languages",
     ),
 ]
 
@@ -464,7 +487,7 @@ STEPS: List[Step] = [
         "match_images_to_events",
         summary=(
             "Matches the retrieved Commons images to events and writes captions, "
-            "preserving the attribution each file requires. The same call picks "
+            "preserving the attribution each image requires. The same call picks "
             "the person's reference portrait."
         ),
         depends_on=[Dep("p_img_fetch", "the filtered image candidates")],
@@ -493,8 +516,8 @@ STEPS: List[Step] = [
         "write_dataset",
         summary=(
             "Serializes the document the three branches above assembled. This is "
-            "where the run stops being memory: everything downstream reads "
-            "life_events.json rather than the payload that produced it."
+            "where the run stops being memory: everything downstream reads the "
+            "written life events rather than the payload that produced them."
         ),
         depends_on=[
             Dep("p_chapters", "chapters + conclusion"),
@@ -873,7 +896,7 @@ STEPS: List[Step] = [
         "translate_meta_story_data",
         summary=(
             "Same extract–translate–merge contract as person data. Event titles "
-            "are copied verbatim from the translated person files so chapters and "
+            "are copied verbatim from the translated person data so chapters and "
             "story slides never disagree."
         ),
         depends_on=[Dep("m_save", "the saved English story")],

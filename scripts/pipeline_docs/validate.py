@@ -25,7 +25,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
-from . import screenshots, spec, teaser
+from . import concepts, screenshots, spec, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
@@ -284,6 +284,20 @@ def check(codebase: Codebase) -> List[Problem]:
                     f"artifact '{artifact.id}' is declared but no step touches it",
                 )
             )
+        # An artifact with no concept would be drawn as a bare label where every
+        # other one carries a glyph, which reads as a rendering bug.
+        if concepts.concept_by_id(artifact.concept) is None:
+            problems.append(
+                Problem(
+                    "error",
+                    "spec",
+                    f"artifact '{artifact.id}' names unknown concept "
+                    f"'{artifact.concept}'",
+                )
+            )
+
+    for message in concepts.check_icons():
+        problems.append(Problem("error", "concepts", message))
 
     return problems
 

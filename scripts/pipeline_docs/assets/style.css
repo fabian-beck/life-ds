@@ -744,6 +744,97 @@ p.cap {
   font-variant-numeric: tabular-nums;
 }
 
+/* ------------------------------------------------------------- concepts */
+
+/* One mark, everywhere. The glyph in a sentence, in a legend, in a table cell
+   and in a figure is the same icon at the same weight as the application's,
+   which is the whole point of having it: the reader learns the vocabulary once
+   and then recognizes it wherever it appears. */
+.glyph {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  vertical-align: -0.14em;
+  fill: currentcolor;
+}
+
+.glyph.big {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.conceptlist {
+  display: grid;
+  gap: 6px 20px;
+  grid-template-columns: minmax(150px, max-content) minmax(0, 1fr);
+  margin: 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+.conceptlist dt {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.conceptlist dd {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  color: var(--ink-2);
+}
+
+.conceptlist dd .sub {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+/* A named artifact in the step drawer: the concept's mark, then what the
+   artifact is called. */
+.artifact-ref {
+  display: inline-flex;
+  gap: 4px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.concept-cell {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* The sentence under an artifact's name in a table: what it holds, in the
+   space a path used to occupy. */
+.cell-note {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* In running prose the mark sits ahead of the phrase, quiet enough that the
+   sentence still reads as a sentence: smaller than the type it precedes, and
+   in the muted ink until the phrase is the one being looked at. */
+.figref .glyph {
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 3px;
+  color: var(--muted);
+  vertical-align: -0.07em;
+}
+
+.figref:hover .glyph,
+.figref:focus-visible .glyph,
+.figref.is-lit .glyph {
+  color: var(--ink);
+}
+
 .lane-lede {
   margin: 0 0 4px;
   max-width: 68ch;
@@ -1590,10 +1681,23 @@ figure.teaser > .cap {
   font-weight: 600;
 }
 
-.tfile-name {
+.tconcept-name {
   fill: var(--ink);
-  font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* The concept glyphs inside a figure. They are the application's own icons,
+   drawn on a 24-unit grid and scaled into scene units, so they are filled
+   shapes rather than strokes and must never inherit a stroke from a rule
+   above them. */
+.cglyph path {
+  fill: var(--ink-2);
+  stroke: none;
+}
+
+.tpart.is-on .cglyph path {
+  fill: var(--ink);
 }
 
 .tmetric {

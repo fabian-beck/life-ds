@@ -27,7 +27,10 @@ The authoring surface is small on purpose:
     A reference from a phrase into a named part of the teaser figure. The id is
     resolved against `teaser.PARTS`, so a reference into the figure is checked
     the same way a number is: the phrase reads as ordinary prose, and the page
-    turns it into a two-way link between the sentence and the drawing.
+    turns it into a two-way link between the sentence and the drawing. Where
+    the part carries one of the system's concepts, the phrase is marked with
+    that concept's glyph—the same glyph the figures and the interface use—so a
+    reader meets the vocabulary in the sentence that introduces it.
 
 `::: component key=value`
     A mount point for computed content. The block's own body is authored prose
@@ -53,7 +56,7 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 import markdown
 
-from . import teaser
+from . import concepts, teaser
 from .facts import Fact
 
 MARKDOWN_EXTENSIONS = [
@@ -126,9 +129,13 @@ COMPONENTS: Dict[str, ComponentSpec] = {
         ),
         ComponentSpec(
             "artifacts",
-            "The files one pipeline reads and writes.",
+            "The artifacts one pipeline reads and writes, by concept.",
             required=("lane",),
             tables=1,
+        ),
+        ComponentSpec(
+            "conceptlegend",
+            "The concepts the system is built from, and the glyph for each.",
         ),
         ComponentSpec(
             "modeltable",
@@ -454,6 +461,22 @@ def substitute_citations(
     return substituted.replace("\\{{", "{{")
 
 
+def concept_glyph(concept_id: str, cls: str = "glyph") -> str:
+    """A concept's icon as inline SVG, or nothing at all.
+
+    Inline rather than a sprite or a font: the report is one self-contained
+    file that has to render from `file://`, and a mark that fails to load is
+    worse than a mark that was never drawn.
+    """
+    path = concepts.icon_of(concept_id)
+    if not path:
+        return ""
+    return (
+        f'<svg class="{_escape(cls)}" viewBox="0 0 24 24" aria-hidden="true" '
+        f'focusable="false"><path d="{_escape(path)}"/></svg>'
+    )
+
+
 def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
     """Replace `[[part|phrase]]` with a control that points into the figure.
 
@@ -462,6 +485,12 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
     nothing else. Resolving the id here rather than in the page is what makes a
     reference into the figure a build-time claim: a part that was renamed or
     removed stops the build instead of leaving a phrase that lights nothing.
+
+    A part that carries a concept contributes its glyph, drawn ahead of the
+    phrase and hidden from assistive technology, since the words already say
+    what the mark repeats. The glyph is the one the application draws for the
+    same thing, which is what lets a reader carry the vocabulary from a
+    sentence into a figure and from a figure into the product.
     """
 
     def replace(match: re.Match) -> str:
@@ -478,7 +507,8 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
         return (
             f'<button type="button" class="figref" data-part="{_escape(part_id)}" '
             f'aria-label="{_escape(label)}—show '
-            f'{_escape(part.label)} in the figure">{_escape(label)}</button>'
+            f'{_escape(part.label)} in the figure">'
+            f"{concept_glyph(part.concept)}{_escape(label)}</button>"
         )
 
     substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
