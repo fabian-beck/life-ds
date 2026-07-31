@@ -467,6 +467,8 @@ name or file count belongs in it**—those are cited, so they cannot go stale.
 | `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. Where the part carries a concept, the phrase is marked with that concept's glyph. |
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
+| `::: principles` … `:::` | The design principles, one per `@id Title` line with a paragraph under it. Numbered positionally as `P1`, `P2`, …; declared once, in the introduction. |
+| `((id))` | A reference to a design principle, rendered as its number and opened in a popover. An unknown id fails the build; a principle no sentence references is a warning. |
 | `^[an explanation]` | An inline note. Brackets nest, `\^[` escapes the syntax, and the body is collapsed to one line, so a note is inline-level by construction. |
 | `[@key]`, `[@key; @other]` | A citation of published work from `docs/report/references.bib`, numbered by first use. An unknown key fails the build, and the whole bracket has to sit on one line. |
 | `::: toc` | The table of contents. |
@@ -485,6 +487,15 @@ Use a note for something a specialist reader may want and the sentence cannot
 carry—a mechanism named in passing, a consequence of a decision, the reason a
 number means what it does. Anything the argument depends on belongs in the
 prose or in a callout.
+
+**A design principle is stated once and referenced by number.** The
+`::: principles` block in the introduction declares them; a section that acts on
+one writes `((id))` and gets `P3`, which the same popover machinery opens. Add a
+principle only for a decision the report actually leans on more than
+once—a principle no sentence references is reported, because a claim the report
+states and never keeps is what the numbering exists to prevent. Reordering the
+block renumbers every reference, so the ids, not the numbers, are what the prose
+writes.
 
 **Literature is cited like a measurement.** A work is described once in
 `docs/report/references.bib`, in ordinary BibTeX so the entry can be pasted into

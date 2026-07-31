@@ -4212,23 +4212,32 @@
     sync();
   }
 
-  /* ---------------------------------------------------------------- notes */
+  /* ------------------------------------------------- notes and principles */
 
-  /* Inline notes are authored once and read two ways. Python has already put
-     the text on the page in its printed form—a numbered list closing each
-     section—and every marker is a real link into it, so the notes work with
-     this file absent and on paper. What this adds is the screen reading: the
-     list is withdrawn and the marker opens the same text in a popover, which
-     keeps an aside off the measure until it is asked for.
+  /* Two kinds of marker are read the same way. An inline note is authored once
+     and printed as a numbered list closing its section; a design principle is
+     declared once in the introduction and printed as the numbered list every
+     `P3` in the prose points into. Both markers are real links into that
+     printed text, so both work with this file absent and on paper.
 
-     The popover copies the list item it points at rather than carrying its own
-     copy of the text, so the two renderings cannot drift apart. It is
-     positioned in document coordinates, so it stays on its marker while the
-     reader scrolls. */
-  function renderNotePopovers() {
-    const refs = document.querySelectorAll(".report .noteref");
+     What this adds is the screen reading: the marker opens the text it points
+     at in a popover, which keeps an aside—or a principle stated three sections
+     earlier—off the measure until it is asked for. The notes list is withdrawn
+     once that is possible; the principles list is the introduction's own
+     content and stays.
+
+     The popover copies the item it points at rather than carrying its own copy
+     of the text, so the two renderings cannot drift apart. It is positioned in
+     document coordinates, so it stays on its marker while the reader
+     scrolls. */
+  const POP_REF = ".noteref, .pref";
+
+  function renderPopovers() {
+    const refs = document.querySelectorAll(".report .noteref, .report .pref");
     if (!refs.length) return;
-    document.body.classList.add("has-note-pop");
+    if (document.querySelector(".report .noteref")) {
+      document.body.classList.add("has-note-pop");
+    }
 
     const number = el("p", { class: "note-pop-no" });
     const body = el("div", { class: "note-pop-body" });
@@ -4271,14 +4280,15 @@
     }
 
     function show(ref) {
-      const note = document.getElementById(
+      const item = document.getElementById(
         (ref.getAttribute("href") || "").slice(1)
       );
-      if (!note) return false;
-      const text = note.querySelector(".note-body");
+      if (!item) return false;
+      const text = item.querySelector(".pop-body");
       close();
-      number.textContent = "Note " + (ref.textContent || "").trim();
-      body.innerHTML = text ? text.innerHTML : note.innerHTML;
+      number.textContent =
+        ref.getAttribute("data-pop-label") || (ref.textContent || "").trim();
+      body.innerHTML = text ? text.innerHTML : item.innerHTML;
       pop.hidden = false;
       place(ref);
       ref.classList.add("open");
@@ -4306,7 +4316,7 @@
       if (!open) return;
       const target = event.target;
       if (pop.contains(target)) return;
-      if (target.closest && target.closest(".noteref")) return;
+      if (target.closest && target.closest(POP_REF)) return;
       close();
     });
 
@@ -4387,7 +4397,7 @@
   renderStepAppendix();
   renderRail();
   renderTocButton();
-  renderNotePopovers();
+  renderPopovers();
   bindPrintDisclosure();
 
   // The page is fully built. `scripts/export_report_pdf.mjs` waits for this

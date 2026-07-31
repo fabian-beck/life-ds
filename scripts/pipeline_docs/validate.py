@@ -366,6 +366,7 @@ def check_report(
 
     problems.extend(_check_teaser(document, facts))
     problems.extend(_check_screenshots(document))
+    problems.extend(_check_principles(document))
     problems.extend(_check_references(document))
 
     missing_lanes = {spec.PERSON, spec.META} - lanes_drawn
@@ -423,6 +424,37 @@ def _check_teaser(document: Document, facts: Dict[str, Fact]) -> List[Problem]:
                         "references it",
                     )
                 )
+    return problems
+
+
+def _check_principles(document: Document) -> List[Problem]:
+    """A principle is only a principle if the report acts on it somewhere.
+
+    An unknown id already fails in the compiler. What is left is the relation
+    the numbering exists for: a principle stated in the introduction and never
+    pointed at again is a claim the report makes once and never keeps, which is
+    exactly the failure the references were introduced to prevent.
+    """
+    problems: List[Problem] = []
+    if document.prefs and not document.principles:
+        problems.append(
+            Problem(
+                "error",
+                "report.md",
+                "the prose references a design principle, but no "
+                "'::: principles' block declares one",
+            )
+        )
+    for item in document.principles:
+        if item.id not in document.prefs:
+            problems.append(
+                Problem(
+                    "warning",
+                    "report.md",
+                    f"principle {item.label} '{item.id}' is declared but no "
+                    "sentence references it",
+                )
+            )
     return problems
 
 

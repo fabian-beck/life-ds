@@ -65,22 +65,29 @@ than of where it is kept. A path on disk is a storage decision; the social
 network, the life events and the theme are what the system is actually about,
 and they are what the figures below name and mark.
 
-::: decision
-**One record, several encodings.** The event is the unit of both the narrative
-and the data. Prose, timeline, map and network encode one derived record, and
-therefore agree by construction.
+A small number of decisions shape everything that follows, and each of them is
+taken once and then relied upon in several places at once. They are therefore
+stated here and numbered, and the sections that act on one point back to its
+number instead of restating it—a marker such as ((bottom-up)) in the running
+text opens the principle it names.
 
-**Derive bottom-up, then revise top-down.** Each step observes its own slice,
-which is locally sound and globally repetitive. A closing pass reads the
-assembled story and distinguishes the text that describes a component from the
-text that surrounds it.
+::: principles
+@one-record One record, several encodings
+The event is the unit of both the narrative and the data. Prose, timeline, map
+and network encode one derived record, and therefore agree by construction.
 
-**Themes are second-order.** A meta story is derived from finished biographies.
-The corpus is a graph: every life is reachable from each theme it joins.
+@bottom-up Derive bottom-up, then revise top-down
+Each step observes its own slice, which is locally sound and globally
+repetitive. A closing pass reads the assembled story and distinguishes the text
+that describes a component from the text that surrounds it.
 
-**Every story looks like itself.** Palette, typography and pattern are
-generated per subject and carried in the data, so visual identity travels with
-the artifact.
+@second-order Themes are second-order
+A meta story is derived from finished biographies. The corpus is a graph: every
+life is reachable from each theme it joins.
+
+@own-look Every story looks like itself
+Palette, typography and pattern are generated per subject and carried in the
+data, so visual identity travels with the artifact.
 :::
 
 ## Architecture
@@ -142,22 +149,22 @@ subject, and stands in one-to-one correspondence with the material that makes
 up everything else about them: a story without a registry entry is invisible to
 the interface, and an entry with nothing behind it is a broken reference.
 
-The **[[events|life events]]** document is the narrative spine of a biography:
-dated events with locations, involved persons, sources, images and a typed
-icon, optionally grouped into chapters that name the phases of a life, together
-with a concluding statement. It is also the reference document from which all
-localized copies derive.
+The **[[events|life events]]** document is the narrative spine of a biography
+((one-record)): dated events with locations, involved persons, sources, images
+and a typed icon, optionally grouped into chapters that name the phases of a
+life, together with a concluding statement. It is also the reference document
+from which all localized copies derive.
 
 The **[[ego-network|ego network]]** document records the subject's
 relationships as typed and weighted edges, each with a period, a strength and a
 supporting description. It is generated independently of the narrative, so a
 biography may exist before its network does.
 
-The **[[meta-story|meta story]]** document is a second-order artifact. It
-describes a theme across several biographies and is the only family whose
-inputs are other artifacts of this system rather than an external source, which
-makes the coupling between the two pipelines a coupling of data rather than of
-code.
+The **[[meta-story|meta story]]** document is a second-order artifact
+((second-order)). It describes a theme across several biographies and is the
+only family whose inputs are other artifacts of this system rather than an
+external source, which makes the coupling between the two pipelines a coupling
+of data rather than of code.
 
 ::: artifacts lane=person
 :::
@@ -192,13 +199,14 @@ paper cannot be clicked. The figures are accordingly an index into the pipeline
 rather than a picture of it, and no table restates what a step's own record
 already holds.
 
-The pipelines instantiate a common pattern: material is first derived bottom-up
-by steps that each observe only their own slice of the subject, and is then
-revised top-down by a step that observes the assembled artifact. The pattern
-exists because locally optimal generation is globally redundant. A phase that
-sees only the social graph will describe the social graph, and so will the
-phase that later writes the surrounding prose, unless some step is given the
-whole document and the explicit task of distinguishing the two registers.
+The pipelines instantiate a common pattern ((bottom-up)): material is first
+derived bottom-up by steps that each observe only their own slice of the
+subject, and is then revised top-down by a step that observes the assembled
+artifact. The pattern exists because locally optimal generation is globally
+redundant. A phase that sees only the social graph will describe the social
+graph, and so will the phase that later writes the surrounding prose, unless
+some step is given the whole document and the explicit task of distinguishing
+the two registers.
 
 The two subsections that follow present the same class of figure at the same
 scale, so that the pipelines may be compared directly. The personal pipeline is
@@ -248,8 +256,8 @@ completion on its own. Each branch follows the same internal progression: a
 deterministic derivation from existing data, an inference pass that reviews or
 weights the derived structure, and a narration pass that writes the text bound
 to it. The branches meet only in the composition step, which re-reads the
-assembled story and separates its two registers of text: captions bound
-one-to-one to something the reader is looking at, and article prose that
+assembled story and separates its two registers of text ((bottom-up)): captions
+bound one-to-one to something the reader is looking at, and article prose that
 supplies the context surrounding what the components encode.
 
 ::: pipeline lane=meta
@@ -332,9 +340,9 @@ subjects, which makes the corpus traversable from within any one story rather
 than only from the landing page.
 
 The three encodings are attached to this sequence rather than displayed beside
-it. [[timeline|A persistent timeline]] maps every event to its position in the
-life, bands the chapters, and doubles as the navigation control: linear,
-chronological and unified in the terms of the timeline design
+it ((one-record)). [[timeline|A persistent timeline]] maps every event to its
+position in the life, bands the chapters, and doubles as the navigation
+control: linear, chronological and unified in the terms of the timeline design
 space [@brehmer2017timelines], because a life is read in the order it was lived.
 [[map|A map built on MapLibre and Protomaps]]^[Protomaps distributes a whole
 basemap as one PMTiles archive addressed by HTTP range requests, so the map is
@@ -348,9 +356,9 @@ Images open in a lightbox that pages through the story's illustrations as a
 single gallery.
 
 Each story additionally carries a generated visual identity—palette,
-typography and background pattern—injected as CSS custom properties, so that
-the design system is data rather than code and each subject is presented in a
-visual register of its own.
+typography and background pattern—injected as CSS custom properties
+((own-look)), so that the design system is data rather than code and each
+subject is presented in a visual register of its own.
 
 ::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone: the dated narrative above, the map beneath it centered on the event's place, the chapter and the icon timeline along the bottom edge"
 The address names the event rather than the slide, so the figure survives the
@@ -386,9 +394,9 @@ about where the theme was located.
 
 The closing card grid links to the individual stories of every person the
 theme is built from, and each person's story links back. The two story types
-are thus two views of one corpus: a meta story is navigable into the
-biographies it draws on, and a biography is reachable from every theme in which
-it participates.
+are thus two views of one corpus ((second-order)): a meta story is navigable
+into the biographies it draws on, and a biography is reachable from every theme
+in which it participates.
 
 ## Localization
 
