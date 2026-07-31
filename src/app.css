@@ -11,6 +11,21 @@
   font-weight: 400;
   background-color: #0f172a;
   color: #e2e8f0;
+
+  /* Edge emphasis for the decorative background patterns.
+     Raising the pattern contrast everywhere would fight the story text and the
+     portraits, so each patterned surface pushes the ornament outward instead:
+     the pattern strokes are painted brighter toward the margins a surface
+     rarely fills and left calm behind the content column. Story slides, person
+     cards and meta stories all mix these lift colors under a `multiply` of the
+     pattern itself, so only the strokes brighten—the gaps between them stay
+     dark and the surface gains contrast rather than a glow. */
+  --pattern-edge-lift: rgb(255 255 255 / 50%);
+  --pattern-edge-lift-soft: rgb(255 255 255 / 22%);
+  --pattern-quiet: rgb(255 255 255 / 0%);
+
+  /* How much of the pattern the calm base wash keeps behind a content column. */
+  --pattern-core-alpha: 0.75;
 }
 
 * {

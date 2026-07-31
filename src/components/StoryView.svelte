@@ -1360,6 +1360,45 @@
     flex-direction: column;
     position: fixed;
     inset: 0;
+    /* Where the slide is allowed to raise its voice. The side ramp stays quiet
+       across the content column and lifts toward the viewport edge; because the
+       column is `min(54rem, 100%)` wide, the quiet stretch is written as
+       `50% ∓ 27rem` and collapses to nothing on a viewport narrower than the
+       column—exactly where a lift would land under the text. The drop ramp is
+       the same idea below the content, plus a soft lift in the top band the
+       masthead blurs over. Slides scroll horizontally, so both ramps are sized
+       to the slide box, which is one viewport wide and tall. */
+    --pattern-side-lift: linear-gradient(
+      90deg,
+      var(--pattern-edge-lift) 0%,
+      var(--pattern-quiet) max(0px, 50% - 27rem),
+      var(--pattern-quiet) min(100%, 50% + 27rem),
+      var(--pattern-edge-lift) 100%
+    );
+    --pattern-drop-lift: linear-gradient(
+      180deg,
+      var(--pattern-edge-lift-soft) 0%,
+      var(--pattern-quiet) 13%,
+      var(--pattern-quiet) 62%,
+      var(--pattern-edge-lift) 96%
+    );
+    /* The same two shapes again, this time as the mask that confines the second
+       coat to the margins. Multiple mask layers composite with `add`, so the
+       two ramps union and a corner counts as margin on either count. */
+    --pattern-side-mask: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) max(0px, 50% - 27rem),
+      rgba(0, 0, 0, 0) min(100%, 50% + 27rem),
+      rgba(0, 0, 0, 1) 100%
+    );
+    --pattern-drop-mask: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0) 13%,
+      rgba(0, 0, 0, 0) 62%,
+      rgba(0, 0, 0, 1) 96%
+    );
     background-color: rgba(var(--story-bg-rgb, 15, 23, 42), 0.55);
     color: #e2e8f0;
     isolation: isolate;
@@ -1794,7 +1833,17 @@
     align-items: stretch;
     position: relative;
     gap: 1.25rem;
+    /* The top-to-bottom shading used to live on `.slide::before`, blended over
+       exactly this color and nothing else. Folding it into the slide's own
+       background is equivalent and frees the pseudo-element for the margin
+       pattern. */
     background-color: rgb(var(--story-bg-rgb, 15, 23, 42));
+    background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(0, 0, 0, 0.22) 100%
+    );
+    background-blend-mode: soft-light;
     border-right: 1px solid rgba(148, 163, 184, 0.12);
     overflow-y: auto;
   }
@@ -1822,52 +1871,63 @@
     position: relative;
   }
 
-  .slide::before {
+  /* A slide carries the pattern in two coats, both painted from the same image
+     at the same offset so they land stroke on stroke. `::after` is an even base
+     wash across the whole slide. `::before` is the margin coat: masked away
+     behind the content column and at full strength along the sides and below
+     the content, where it roughly doubles the pattern.
+
+     Doubling the coat rather than turning one up is what makes the margins
+     read. The wash blends with `overlay` onto a very dark slide, so its
+     contrast is capped at twice the background luminance no matter how bright
+     the strokes are painted—and most story palettes already pick a near-white
+     primary, leaving `--pattern-edge-lift` little room to work with. A second
+     coat is not capped that way.
+
+     Before this, a single coat faded out below 70% of the slide: the loudest
+     ornament sat behind the headline and the empty lower half was left bare. */
+  .slide::before,
+  .slide::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(0, 0, 0, 0.22) 100%
-    );
-    mix-blend-mode: soft-light;
+    width: 100%;
+    height: 100%;
+    background-color: var(--story-primary, #38bdf8);
+    background-image:
+      var(--story-pattern-image, none), var(--pattern-side-lift),
+      var(--pattern-drop-lift);
+    background-size:
+      var(--story-pattern-size, 400px),
+      100% 100%,
+      100% 100%;
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-blend-mode: multiply, screen, screen;
+    background-position:
+      calc(var(--story-pattern-size, 400px) / -2)
+        calc(
+          -1 * var(--header-height, 0px) - var(--story-pattern-size, 400px) / 2
+        ),
+      0 0,
+      0 0;
+    mix-blend-mode: overlay;
     pointer-events: none;
+  }
+
+  .slide::before {
+    mask-image: var(--pattern-side-mask), var(--pattern-drop-mask);
+    -webkit-mask-image: var(--pattern-side-mask), var(--pattern-drop-mask);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
     z-index: 0;
   }
 
   .slide::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--story-primary, #38bdf8);
-    background-image: var(--story-pattern-image, none);
-    background-size: var(--story-pattern-size, 400px);
-    background-repeat: repeat;
-    background-blend-mode: multiply;
-    background-position: calc(var(--story-pattern-size, 400px) / -2)
-      calc(
-        -1 * var(--header-height, 0px) - var(--story-pattern-size, 400px) / 2
-      );
-    mix-blend-mode: overlay;
-    mask-image: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 40%,
-      rgba(0, 0, 0, 0) 70%
-    );
-    -webkit-mask-image: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 40%,
-      rgba(0, 0, 0, 0) 70%
-    );
-    pointer-events: none;
+    /* Trimmed from a flat 1 so the content column ends up a shade calmer than
+       it was, which is the other half of the contrast the margins gain. */
+    opacity: var(--pattern-core-alpha);
     z-index: 2;
   }
 

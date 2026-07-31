@@ -994,18 +994,51 @@
     z-index: -1;
     pointer-events: none;
     background-color: var(--ms-page-bg, transparent);
+    /* The article is a fixed 800px column with the backdrop pinned to the
+       viewport behind it, so on anything wider than the column the two side
+       bands never carry text at any scroll position. That is where the pattern
+       is allowed to come up; the ramp collapses to nothing once the viewport is
+       no wider than the column. */
+    --ms-side-mask: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) max(0px, 50% - 25rem),
+      rgba(0, 0, 0, 0) min(100%, 50% + 25rem),
+      rgba(0, 0, 0, 1) 100%
+    );
+    /* The page's fade toward the bottom of the viewport, as a gray the side
+       coat multiplies through. The base coat gets the same shape as a mask;
+       expressing it this way for the side coat leaves that coat's mask free for
+       the horizontal ramp, and dimming the strokes scales the pattern exactly
+       as dropping its alpha would. */
+    --ms-vertical-fade: linear-gradient(
+      180deg,
+      #f2f2f2 0%,
+      #595959 65%,
+      #262626 100%
+    );
   }
 
+  /* Two coats of the same tile. `::after` is the base wash, unchanged from the
+     single coat that used to carry the whole effect—it is already quiet enough
+     to sit under running prose. `::before` is the side coat that roughly
+     doubles the pattern in the bands beside the column. On a viewport no wider
+     than the column there are no such bands, and the page keeps exactly the
+     backdrop it had. */
+  .story-backdrop::before,
   .story-backdrop::after {
     content: "";
     position: absolute;
     inset: 0;
     background-color: var(--ms-primary, #38bdf8);
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+  }
+
+  .story-backdrop::after {
     background-image: var(--ms-pattern-image, none);
     background-size: 340px;
-    background-repeat: repeat;
     background-blend-mode: multiply;
-    mix-blend-mode: overlay;
     opacity: 0.24;
     mask-image: linear-gradient(
       180deg,
@@ -1013,6 +1046,22 @@
       rgba(0, 0, 0, 0.35) 65%,
       rgba(0, 0, 0, 0.15) 100%
     );
+  }
+
+  .story-backdrop::before {
+    background-image: var(--ms-pattern-image, none), var(--ms-vertical-fade);
+    background-size:
+      340px,
+      100% 100%;
+    background-repeat: repeat, no-repeat;
+    background-blend-mode: multiply, multiply;
+    opacity: 0.3;
+    mask-image: var(--ms-side-mask);
+    -webkit-mask-image: var(--ms-side-mask);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
   }
 
   /* Sticky header group - wrapper for synchronized fade transition */

@@ -1188,13 +1188,56 @@
 
   .person-card {
     position: relative;
+    /* Rim ramps for the card pattern, in card-relative units so they hold at
+       every column count the grid falls into. The left edge is deliberately
+       left out of the horizontal ramp: that is where the portrait bleeds to the
+       card edge, and the portrait blends with `lighten`, so a louder pattern
+       there would show straight through it. */
+    --card-rim-lift-x: linear-gradient(
+      90deg,
+      var(--pattern-quiet) 0%,
+      var(--pattern-quiet) 60%,
+      var(--pattern-edge-lift) 100%
+    );
+    --card-rim-lift-y: linear-gradient(
+      180deg,
+      var(--pattern-edge-lift-soft) 0%,
+      var(--pattern-quiet) 16%,
+      var(--pattern-quiet) 70%,
+      var(--pattern-edge-lift) 100%
+    );
+    /* The same two shapes as the mask that confines the rim coat. The layers
+       union, so a corner counts as rim on either count. */
+    --card-rim-mask-x: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 1) 100%
+    );
+    --card-rim-mask-y: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0) 16%,
+      rgba(0, 0, 0, 0) 70%,
+      rgba(0, 0, 0, 1) 100%
+    );
     display: grid;
     grid-template-columns: 100px 1fr;
     align-items: stretch;
     gap: 1.5rem;
     padding: 1.25rem 0.75rem 1.25rem 1rem;
     border-radius: 1rem;
+    /* The shading that keeps the tagline and the call to action legible used to
+       sit on `::after`, above the pattern. It now sits in the card's own
+       background, below both pattern coats, which frees `::after` for the rim
+       coat. The pattern is what the shading used to mute most; underneath it,
+       the shading still darkens the card and the pattern still reads. */
     background-color: var(--card-bg, rgba(15, 23, 42, 0.94));
+    background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(0, 0, 0, 0.48) 100%
+    );
     border: 1px solid rgba(148, 163, 184, 0.18);
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.32);
     transition:
@@ -1222,24 +1265,41 @@
     z-index: 0;
   }
 
-  .person-card::before {
+  /* Two coats of the same pattern, the way a story slide carries them:
+     `::before` is an even base wash and `::after` a rim coat masked to the
+     card's outer band, where the two together roughly double the pattern. */
+  .person-card::before,
+  .person-card::after {
     background-color: var(--card-primary, #38bdf8);
-    background-image: var(--card-pattern-image, none);
-    background-size: var(--card-pattern-size, 400px);
-    background-repeat: repeat;
-    background-position: calc(var(--card-pattern-size, 400px) / -2)
-      calc(var(--card-pattern-size, 400px) / -2);
-    background-blend-mode: multiply;
-    opacity: var(--card-pattern-opacity, 1);
+    background-image:
+      var(--card-pattern-image, none), var(--card-rim-lift-x),
+      var(--card-rim-lift-y);
+    background-size:
+      var(--card-pattern-size, 400px),
+      100% 100%,
+      100% 100%;
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-position:
+      calc(var(--card-pattern-size, 400px) / -2)
+        calc(var(--card-pattern-size, 400px) / -2),
+      0 0,
+      0 0;
+    background-blend-mode: multiply, screen, screen;
     mix-blend-mode: overlay;
   }
 
+  .person-card::before {
+    opacity: calc(var(--card-pattern-opacity, 1) * var(--pattern-core-alpha));
+  }
+
   .person-card::after {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(0, 0, 0, 0.48) 100%
-    );
+    mask-image: var(--card-rim-mask-x), var(--card-rim-mask-y);
+    -webkit-mask-image: var(--card-rim-mask-x), var(--card-rim-mask-y);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    opacity: var(--card-pattern-opacity, 1);
   }
 
   .person-card:hover,
