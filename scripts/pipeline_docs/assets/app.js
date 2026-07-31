@@ -1973,6 +1973,1163 @@
     );
   }
 
+  /* -------------------------------------------------------------- teaser */
+
+  /* The teaser figure and the two-way link between it and the prose.
+
+     The drawing is declared in `teaser.py` and only rendered here, so a part is
+     a rectangle with an identity: `[[timeline|a chronology]]` in the Markdown
+     compiles to a `.figref` carrying that id, and everything below is the
+     relation between the two.
+
+     The hard part is not the highlight, it is distance. A figure the reader has
+     scrolled past cannot be lit usefully, and a figure scaled to a phone is not
+     legible even when it is on screen. So a focus is resolved against what the
+     reader can actually see, in one rule applied at every width:
+
+       figure on screen and drawn large enough  ->  light the part where it is
+       figure on screen but scaled down         ->  enlarge the part in place
+       figure off screen                        ->  show the part beside the text
+
+     There are no breakpoints in that rule. The scene is one coordinate system,
+     a part is a sub-rectangle of it, and a viewBox is all three behaviors. */
+
+  const TEASER = DATA.teaser || null;
+
+  // Below this scale the scene's 9-unit type is under about 7px: the figure
+  // still reads as a shape, but a part has to be enlarged to be read.
+  const LEGIBLE_SCALE = 0.78;
+  const PEEK_ASPECT = 16 / 9;
+  const FOCUS_PAD = 16;
+  const MIN_REGION = 232; // do not magnify a small part past legibility
+  const HOVER_DELAY = 110;
+
+  const teaserState = {
+    view: null, // the mounted figure, once hydrated
+    peek: null, // the docked detail panel, built on first use
+    part: null,
+    pinned: false,
+    zoomed: false,
+    mention: -1,
+    hoverTimer: 0,
+    animation: 0,
+  };
+
+  function teaserPart(partId) {
+    if (!TEASER) return null;
+    let found = null;
+    TEASER.parts.forEach((part) => {
+      if (part.id === partId) found = part;
+    });
+    return found;
+  }
+
+  function resolveMetric(text) {
+    return String(text || "").replace(/\{([a-zA-Z0-9_.]+)\}/g, (match, key) => {
+      const fact = factOf(key);
+      return fact ? fact.display : "—";
+    });
+  }
+
+  /* ------------------------------------------------------------ drawing */
+
+  function sText(x, y, text, cls, anchor) {
+    const node = svg("text", {
+      x: x,
+      y: y,
+      class: cls || null,
+      "text-anchor": anchor || null,
+    });
+    node.textContent = text;
+    return node;
+  }
+
+  function sRect(x, y, w, h, cls) {
+    return svg("rect", { x: x, y: y, width: w, height: h, class: cls || null });
+  }
+
+  function sPath(d, cls) {
+    return svg("path", { d: d, class: cls || null });
+  }
+
+  /* A label that stays readable where it crosses a rule or a box edge, which in
+     a figure this dense it always does—the channels between the columns are
+     narrower than the words that describe what crosses them. Labels are
+     collected and drawn last, above the parts, on their own paper. */
+  function sLabel(labels, x, y, text, cls) {
+    const width = text.length * 4.4 + 8;
+    labels.appendChild(sRect(x - width / 2, y - 8, width, 11, "tlabel-bg"));
+    labels.appendChild(sText(x, y, text, cls || "tedge-label", "middle"));
+  }
+
+  function arrowHead(host, x, y, direction) {
+    const size = 4;
+    const tip =
+      direction === "left" ? x - size : direction === "right" ? x + size : x;
+    const points =
+      direction === "down"
+        ? [x, y + size, x - size + 1, y - 1, x + size - 1, y - 1]
+        : [tip, y, x, y - size + 1, x, y + size - 1];
+    host.appendChild(
+      sPath(
+        "M" +
+          points[0] +
+          " " +
+          points[1] +
+          "L" +
+          points[2] +
+          " " +
+          points[3] +
+          "L" +
+          points[4] +
+          " " +
+          points[5] +
+          "Z",
+        "tarrow"
+      )
+    );
+  }
+
+  function boxOf(partId) {
+    const part = teaserPart(partId);
+    return part ? { x: part.x, y: part.y, w: part.w, h: part.h } : null;
+  }
+
+  function drawLink(host, labels, link) {
+    const from = boxOf(link.source);
+    const to = boxOf(link.target);
+    if (!from || !to) return;
+    const cls = "tedge" + (link.kind === "call" ? " tedge-call" : "");
+    const y1 = from.y + from.h * link.source_at;
+    const y2 = to.y + to.h * link.target_at;
+    const x1 = from.x + from.w;
+    const x2 = to.x;
+    const mid = x1 + (x2 - x1) * link.jog;
+    host.appendChild(
+      sPath("M" + x1 + " " + y1 + "H" + mid + "V" + y2 + "H" + x2, cls)
+    );
+    arrowHead(host, x2, y2, "right");
+    if (link.both) arrowHead(host, x1, y1, "left");
+    if (link.label) sLabel(labels, mid, Math.min(y1, y2) - 5, link.label);
+  }
+
+  /* One record leaving the artifact that holds it, and dropping into each
+     encoding of it—drawn as a single shape because it is a single claim. */
+  function drawBus(host, labels, bus) {
+    const from = boxOf(bus.source);
+    if (!from) return;
+    const targets = bus.targets.map(boxOf).filter(Boolean);
+    if (!targets.length) return;
+    const centres = targets.map((box) => box.x + box.w / 2);
+    const left = Math.min.apply(null, centres);
+    const right = Math.max.apply(null, centres);
+    host.appendChild(
+      sPath(
+        "M" +
+          (from.x + from.w) +
+          " " +
+          (from.y + from.h / 2) +
+          "H" +
+          bus.drop_x +
+          "V" +
+          bus.rail_y,
+        "tbus"
+      )
+    );
+    host.appendChild(
+      sPath("M" + left + " " + bus.rail_y + "H" + right, "tbus")
+    );
+    targets.forEach((box, index) => {
+      host.appendChild(
+        sPath(
+          "M" + centres[index] + " " + bus.rail_y + "V" + (box.y - 5),
+          "tbus"
+        )
+      );
+      arrowHead(host, centres[index], box.y - 1, "down");
+    });
+    if (bus.label)
+      sLabel(labels, bus.label_x, bus.rail_y + 3, bus.label, "tbus-label");
+  }
+
+  /* Each routine fills one part's box. The vocabulary is closed: `teaser.py`
+     may only name a decor that exists here, which is the same contract the
+     component roster has with `report.py`. */
+  const TEASER_DECOR = {
+    plain: function () {},
+
+    frame: function () {},
+
+    sources: function (host, part) {
+      part.lines.forEach((line, index) => {
+        const y = part.y + 48 + index * 30;
+        host.appendChild(sRect(part.x + 12, y, 15, 19, "tglyph"));
+        host.appendChild(
+          sPath(
+            "M" + (part.x + 22) + " " + y + "v6h5", // the folded corner
+            "tglyph-fold"
+          )
+        );
+        host.appendChild(sText(part.x + 34, y + 13, line, "ttext"));
+      });
+    },
+
+    inference: function (host, part) {
+      const left = part.x + 14;
+      const width = part.w - 28;
+      const top = part.y + 52;
+      host.appendChild(sRect(left, top, width, 30, "tcard"));
+      host.appendChild(sText(left + 8, top + 13, "prompt", "ttext"));
+      host.appendChild(
+        sText(left + 8, top + 24, "instructions + data", "ttiny")
+      );
+      host.appendChild(
+        sPath("M" + (left + width / 2) + " " + (top + 36) + "v14", "tedge-call")
+      );
+      arrowHead(host, left + width / 2, top + 52, "down");
+      host.appendChild(sRect(left, top + 56, width, 30, "tcard"));
+      host.appendChild(sText(left + 8, top + 69, "structured output", "ttext"));
+      host.appendChild(sText(left + 8, top + 80, "a declared schema", "ttiny"));
+    },
+
+    /* One square per documented step, in the color of its kind: the size and
+       the composition of a pipeline, without redrawing the pipeline. */
+    steps: function (host, part) {
+      const steps = DATA.steps.filter((step) => {
+        return step.column === part.lane;
+      });
+      const size = 17;
+      const gap = 4;
+      const fits = Math.floor((part.w - 24 + gap) / (size + gap));
+      // Balanced rows: a second row holding two squares reads as an accident.
+      const perRow = Math.ceil(steps.length / Math.ceil(steps.length / fits));
+      steps.forEach((step, index) => {
+        const row = Math.floor(index / perRow);
+        const column = index % perRow;
+        const cell = svg("g", { class: "tstep" });
+        const rect = sRect(
+          part.x + 12 + column * (size + gap),
+          part.y + 46 + row * (size + gap),
+          size,
+          size,
+          "tstep-box"
+        );
+        rect.setAttribute("fill", kindColor(step.kind));
+        cell.appendChild(rect);
+        const title = svg("title");
+        title.textContent = step.label + "—" + DATA.kinds[step.kind].label;
+        cell.appendChild(title);
+        host.appendChild(cell);
+      });
+      part.lines.forEach((line, index) => {
+        host.appendChild(
+          sText(part.x + 12, part.y + part.h - 22 + index * 12, line, "ttiny")
+        );
+      });
+    },
+
+    kinds: function (host, part) {
+      const kinds = Object.keys(DATA.kinds);
+      const cell = part.w / kinds.length;
+      kinds.forEach((kind, index) => {
+        const x = part.x + index * cell;
+        const count = DATA.steps.filter((step) => {
+          return step.kind === kind;
+        }).length;
+        const swatch = sRect(x, part.y + 12, 10, 10, "tswatch");
+        swatch.setAttribute("fill", kindColor(kind));
+        host.appendChild(swatch);
+        host.appendChild(
+          sText(x + 16, part.y + 21, DATA.kinds[kind].label, "ttext")
+        );
+        host.appendChild(
+          sText(
+            x + 16,
+            part.y + 33,
+            count + (count === 1 ? " step" : " steps"),
+            "ttiny"
+          )
+        );
+      });
+    },
+
+    file: function (host, part) {
+      host.appendChild(sRect(part.x + 10, part.y + 12, 14, 18, "tglyph"));
+      host.appendChild(
+        sPath("M" + (part.x + 19) + " " + (part.y + 12) + "v5h5", "tglyph-fold")
+      );
+      host.appendChild(
+        sText(part.x + 32, part.y + 24, part.label, "tfile-name")
+      );
+      part.lines.forEach((line, index) => {
+        host.appendChild(
+          sText(part.x + 32, part.y + 38 + index * 11, line, "ttiny")
+        );
+      });
+    },
+
+    /* A bounded sequence, drawn as a stack: the slide the reader is on, and the
+       ones it snaps between. */
+    slides: function (host, part) {
+      const cardW = 112;
+      const cardH = 92;
+      const x = part.x + 16;
+      const y = part.y + 46;
+      host.appendChild(sRect(x + 14, y - 8, cardW, cardH, "tghost"));
+      host.appendChild(sRect(x + 7, y - 4, cardW, cardH, "tghost"));
+      host.appendChild(sRect(x, y, cardW, cardH, "tcard"));
+      host.appendChild(
+        svg("circle", { cx: x + 20, cy: y + 22, r: 11, class: "tportrait" })
+      );
+      host.appendChild(sRect(x + 38, y + 14, 58, 4, "tbar"));
+      host.appendChild(sRect(x + 38, y + 24, 44, 4, "tbar"));
+      host.appendChild(sRect(x + 12, y + 44, 88, 3, "tbar"));
+      host.appendChild(sRect(x + 12, y + 52, 78, 3, "tbar"));
+      // the persistent timeline along the foot of every slide
+      host.appendChild(sPath("M" + (x + 12) + " " + (y + 74) + "h88", "trule"));
+      [0, 18, 34, 55, 72, 88].forEach((offset, index) => {
+        host.appendChild(
+          svg("circle", {
+            cx: x + 12 + offset,
+            cy: y + 74,
+            r: index === 2 ? 3 : 1.8,
+            class: index === 2 ? "tdot on" : "tdot",
+          })
+        );
+      });
+      host.appendChild(
+        sText(part.x + 16, part.y + part.h - 12, part.lines[0] || "", "ttiny")
+      );
+    },
+
+    /* A continuous document: one component held still while the cards that
+       narrate it move over it. */
+    sections: function (host, part) {
+      const x = part.x + 16;
+      const y = part.y + 44;
+      host.appendChild(sRect(x, y, 118, 74, "tcard"));
+      host.appendChild(sRect(x + 8, y + 8, 102, 34, "tpinned"));
+      host.appendChild(sRect(x + 46, y + 16, 60, 16, "tnarration"));
+      host.appendChild(sRect(x + 46, y + 44, 60, 16, "tnarration"));
+      host.appendChild(sRect(x + 8, y + 50, 30, 3, "tbar"));
+      host.appendChild(sRect(x + 8, y + 58, 22, 3, "tbar"));
+      host.appendChild(
+        sPath("M" + (x + 140) + " " + (y + 6) + "v56", "tedge-call")
+      );
+      arrowHead(host, x + 140, y + 66, "down");
+      host.appendChild(
+        sText(part.x + 16, part.y + part.h - 12, part.lines[0] || "", "ttiny")
+      );
+    },
+
+    prose: function (host, part) {
+      const x = part.x + 16;
+      const widths = [206, 224, 214, 228, 196, 148];
+      widths.forEach((width, index) => {
+        host.appendChild(sRect(x, part.y + 44 + index * 13, width, 4, "tbar"));
+      });
+      host.appendChild(
+        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
+      );
+    },
+
+    timeline: function (host, part) {
+      const x = part.x + 16;
+      const width = part.w - 32;
+      const y = part.y + 78;
+      const bands = [0, 0.34, 0.62];
+      const spans = [0.34, 0.28, 0.38];
+      bands.forEach((start, index) => {
+        host.appendChild(
+          sRect(
+            x + width * start,
+            y - 22,
+            width * spans[index] - 3,
+            18,
+            "tband"
+          )
+        );
+      });
+      host.appendChild(sPath("M" + x + " " + y + "h" + width, "trule"));
+      [0.04, 0.14, 0.26, 0.38, 0.47, 0.61, 0.7, 0.86, 0.95].forEach(
+        (at, index) => {
+          host.appendChild(
+            svg("circle", {
+              cx: x + width * at,
+              cy: y,
+              r: index === 4 ? 4 : 2.4,
+              class: index === 4 ? "tdot on" : "tdot",
+            })
+          );
+        }
+      );
+      host.appendChild(
+        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
+      );
+    },
+
+    map: function (host, part) {
+      const x = part.x + 16;
+      const y = part.y + 42;
+      const width = part.w - 32;
+      const height = 62;
+      host.appendChild(sRect(x, y, width, height, "tplate"));
+      host.appendChild(
+        sPath(
+          "M" + x + " " + (y + 46) + "q24 -9 46 -3t44 -10 42 2 40 -11 52 -1",
+          "tcoast"
+        )
+      );
+      [
+        [0.22, 0.34],
+        [0.44, 0.62],
+        [0.62, 0.28],
+        [0.8, 0.55],
+      ].forEach((at, index) => {
+        const px = x + width * at[0];
+        const py = y + height * at[1];
+        host.appendChild(
+          sPath(
+            "M" + px + " " + py + "l-4 -7a4.6 4.6 0 1 1 8 0Z",
+            index === 1 ? "tpin on" : "tpin"
+          )
+        );
+      });
+      host.appendChild(
+        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
+      );
+    },
+
+    graph: function (host, part) {
+      const x = part.x + 16;
+      const y = part.y + 40;
+      const nodes = [
+        [0.5, 0.5, 7],
+        [0.18, 0.24, 4],
+        [0.24, 0.78, 4],
+        [0.52, 0.12, 3.4],
+        [0.78, 0.3, 4],
+        [0.84, 0.74, 3.4],
+        [0.46, 0.9, 3.4],
+      ];
+      const width = part.w - 32;
+      const height = 66;
+      const at = (node) => {
+        return [x + width * node[0], y + height * node[1]];
+      };
+      [
+        [0, 1],
+        [0, 2],
+        [0, 3],
+        [0, 4],
+        [0, 6],
+        [1, 2],
+        [4, 5],
+        [2, 6],
+      ].forEach((edge) => {
+        const a = at(nodes[edge[0]]);
+        const b = at(nodes[edge[1]]);
+        host.appendChild(
+          sPath("M" + a[0] + " " + a[1] + "L" + b[0] + " " + b[1], "tlink")
+        );
+      });
+      nodes.forEach((node, index) => {
+        const point = at(node);
+        host.appendChild(
+          svg("circle", {
+            cx: point[0],
+            cy: point[1],
+            r: node[2],
+            class: index === 0 ? "tnode on" : "tnode",
+          })
+        );
+      });
+      host.appendChild(
+        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
+      );
+    },
+  };
+
+  function drawPart(part) {
+    const group = svg("g", {
+      class: "tpart",
+      "data-part": part.id,
+      tabindex: "0",
+      role: "button",
+      "aria-label": part.label + ". " + part.blurb,
+    });
+    const title = svg("title");
+    title.textContent = part.label;
+    group.appendChild(title);
+    if (part.frame !== "none") {
+      group.appendChild(
+        sRect(
+          part.x,
+          part.y,
+          part.w,
+          part.h,
+          part.frame === "soft" ? "tframe soft" : "tframe"
+        )
+      );
+    }
+    if (part.decor !== "file" && part.decor !== "kinds") {
+      group.appendChild(
+        sText(part.x + 12, part.y + 20, part.label, "tpart-label")
+      );
+    }
+    if (part.metric) {
+      group.appendChild(
+        sText(part.x + 12, part.y + 33, resolveMetric(part.metric), "tmetric")
+      );
+    }
+    (TEASER_DECOR[part.decor] || TEASER_DECOR.plain)(group, part);
+    // A transparent hit area last, so the whole box responds—including the
+    // white space inside it. Children are appended after their parent, so a
+    // nested part still wins the pointer.
+    group.appendChild(sRect(part.x, part.y, part.w, part.h, "thit"));
+    return group;
+  }
+
+  function buildTeaserSvg() {
+    const root = svg("svg", {
+      class: "teaser-svg",
+      viewBox: "0 0 " + TEASER.width + " " + TEASER.height,
+      preserveAspectRatio: "xMidYMid meet",
+      role: "img",
+      "aria-label":
+        "The system end to end: sources and language-model inference, two " +
+        "generation pipelines, the artifacts they write, and the interface " +
+        "that reads them.",
+    });
+    root.style.aspectRatio = TEASER.width + " / " + TEASER.height;
+
+    const chrome = svg("g", { class: "tchrome" });
+    TEASER.stages.forEach((stage) => {
+      chrome.appendChild(sText(stage.x, 20, stage.label, "tstage"));
+      chrome.appendChild(
+        sPath("M" + stage.x + " 27h" + stage.w, "tstage-rule")
+      );
+    });
+    root.appendChild(chrome);
+
+    // Three layers: wires under the parts they connect, and the wires' labels
+    // over both, since a channel between two columns is narrower than the word
+    // for what crosses it.
+    const wires = svg("g", { class: "twires" });
+    const labels = svg("g", { class: "tlabels" });
+    TEASER.links.forEach((link) => {
+      drawLink(wires, labels, link);
+    });
+    drawBus(wires, labels, TEASER.bus);
+    root.appendChild(wires);
+
+    const parts = svg("g", { class: "tparts" });
+    TEASER.parts.forEach((part) => {
+      parts.appendChild(drawPart(part));
+    });
+    root.appendChild(parts);
+    root.appendChild(labels);
+    return root;
+  }
+
+  /* --------------------------------------------------------- focus regions */
+
+  function ancestorsOf(partId) {
+    const chain = [];
+    let current = teaserPart(partId);
+    while (current && current.parent) {
+      chain.push(current.parent);
+      current = teaserPart(current.parent);
+    }
+    return chain;
+  }
+
+  function childrenOf(partId) {
+    return TEASER.parts
+      .filter((part) => {
+        return part.parent === partId;
+      })
+      .map((part) => {
+        return part.id;
+      });
+  }
+
+  /* The rectangle to show when a part is the subject: the part, some of what
+     surrounds it, and the aspect of whatever is going to display it—grown, never
+     cropped, so a focus never distorts or hides part of its subject. */
+  function focusRegion(partId, aspect) {
+    const part = teaserPart(partId);
+    if (!part) return [0, 0, TEASER.width, TEASER.height];
+    let width = Math.max(part.w + FOCUS_PAD * 2, MIN_REGION);
+    let height = Math.max(part.h + FOCUS_PAD * 2, MIN_REGION / aspect);
+    if (width / height < aspect) width = height * aspect;
+    else height = width / aspect;
+    width = Math.min(width, TEASER.width);
+    height = Math.min(height, TEASER.height);
+    let x = part.x + part.w / 2 - width / 2;
+    let y = part.y + part.h / 2 - height / 2;
+    x = Math.max(0, Math.min(x, TEASER.width - width));
+    y = Math.max(0, Math.min(y, TEASER.height - height));
+    return [x, y, width, height];
+  }
+
+  function readViewBox(node) {
+    return node
+      .getAttribute("viewBox")
+      .split(/[\s,]+/)
+      .map(Number);
+  }
+
+  function writeViewBox(node, box) {
+    node.setAttribute(
+      "viewBox",
+      box
+        .map((value) => {
+          return Math.round(value * 100) / 100;
+        })
+        .join(" ")
+    );
+  }
+
+  function reducedMotion() {
+    return (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
+
+  function animateViewBox(node, target) {
+    if (teaserState.animation) {
+      window.cancelAnimationFrame(teaserState.animation);
+      teaserState.animation = 0;
+    }
+    const from = readViewBox(node);
+    if (reducedMotion()) {
+      writeViewBox(node, target);
+      return;
+    }
+    const start = window.performance ? window.performance.now() : Date.now();
+    const duration = 240;
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      writeViewBox(
+        node,
+        from.map((value, index) => {
+          return value + (target[index] - value) * eased;
+        })
+      );
+      if (t < 1) teaserState.animation = window.requestAnimationFrame(frame);
+      else teaserState.animation = 0;
+    }
+    teaserState.animation = window.requestAnimationFrame(frame);
+  }
+
+  /* --------------------------------------------------------- highlighting */
+
+  function paintFocus(root, partId) {
+    const related = {};
+    if (partId) {
+      related[partId] = "on";
+      ancestorsOf(partId).forEach((id) => {
+        related[id] = "kin";
+      });
+      childrenOf(partId).forEach((id) => {
+        related[id] = "kin";
+      });
+    }
+    root.classList.toggle("has-focus", !!partId);
+    Array.prototype.forEach.call(root.querySelectorAll(".tpart"), (node) => {
+      const state = related[node.getAttribute("data-part")];
+      node.classList.toggle("is-on", state === "on");
+      node.classList.toggle("is-kin", state === "kin");
+      node.classList.toggle("is-off", !!partId && !state);
+    });
+  }
+
+  function mentionsOf(partId) {
+    if (!partId) return [];
+    return Array.prototype.slice.call(
+      document.querySelectorAll('.figref[data-part="' + partId + '"]')
+    );
+  }
+
+  function markRefs(partId) {
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".figref"),
+      (node) => {
+        const lit = !!partId && node.getAttribute("data-part") === partId;
+        node.classList.toggle("is-lit", lit);
+        node.setAttribute(
+          "aria-expanded",
+          lit && teaserState.pinned ? "true" : "false"
+        );
+      }
+    );
+  }
+
+  /* --------------------------------------------------------- the detail panel */
+
+  function ensurePeek() {
+    if (teaserState.peek) return teaserState.peek;
+    const clone = teaserState.view.svg.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.removeAttribute("role");
+    clone.removeAttribute("aria-label");
+    clone.style.aspectRatio = "16 / 9";
+    Array.prototype.forEach.call(clone.querySelectorAll(".tpart"), (node) => {
+      node.removeAttribute("tabindex");
+      node.removeAttribute("role");
+    });
+
+    const title = el("span", { class: "figpeek-title" });
+    const jump = el("button", {
+      class: "figpeek-act",
+      type: "button",
+      text: "Show in figure",
+      onclick: function () {
+        scrollToFigure();
+      },
+    });
+    const close = el("button", {
+      class: "figpeek-close",
+      type: "button",
+      "aria-label": "Close the figure detail",
+      html: "&times;",
+      onclick: function () {
+        clearTeaserFocus();
+      },
+    });
+    const blurb = el("p", { class: "figpeek-blurb" });
+    const panel = el(
+      "aside",
+      {
+        class: "figpeek",
+        id: "figpeek",
+        "aria-label": "Detail of the teaser figure",
+        hidden: "hidden",
+      },
+      [
+        el("div", { class: "figpeek-head" }, [
+          el("span", {
+            class: "figpeek-kicker",
+            text: teaserState.view.figureLabel,
+          }),
+          title,
+          jump,
+          close,
+        ]),
+        el("div", { class: "figpeek-view" }, [clone]),
+        blurb,
+      ]
+    );
+    document.body.appendChild(panel);
+    teaserState.peek = {
+      panel: panel,
+      svg: clone,
+      title: title,
+      blurb: blurb,
+    };
+    return teaserState.peek;
+  }
+
+  function openPeek(partId, keepRefVisible) {
+    const peek = ensurePeek();
+    const part = teaserPart(partId);
+    peek.title.textContent = part.label;
+    peek.blurb.textContent = part.blurb;
+    paintFocus(peek.svg, partId);
+    const wasHidden = peek.panel.hasAttribute("hidden");
+    peek.panel.removeAttribute("hidden");
+    const region = focusRegion(partId, PEEK_ASPECT);
+    if (wasHidden) writeViewBox(peek.svg, region);
+    else animateViewBox(peek.svg, region);
+    if (keepRefVisible) keepMentionClear(peek.panel);
+  }
+
+  function closePeek() {
+    if (teaserState.peek)
+      teaserState.peek.panel.setAttribute("hidden", "hidden");
+  }
+
+  /* On a phone the panel is a sheet along the bottom edge, so the phrase the
+     reader just touched can end up behind it. Move the page, not the panel:
+     the point of the panel is to be read together with that sentence. */
+  function keepMentionClear(panel) {
+    const active = document.activeElement;
+    const ref =
+      active && active.classList && active.classList.contains("figref")
+        ? active
+        : mentionsOf(teaserState.part)[0];
+    if (!ref) return;
+    window.requestAnimationFrame(() => {
+      const panelBox = panel.getBoundingClientRect();
+      const refBox = ref.getBoundingClientRect();
+      const overlap = refBox.bottom - panelBox.top + 20;
+      if (panelBox.top > window.innerHeight - 8 || overlap <= 0) return;
+      window.scrollBy({
+        top: overlap,
+        behavior: reducedMotion() ? "auto" : "smooth",
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------ placement */
+
+  function figureVisibility() {
+    const box = teaserState.view.figure.getBoundingClientRect();
+    const visible =
+      Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
+    return box.height ? Math.max(0, visible) / box.height : 0;
+  }
+
+  function figureScale() {
+    const box = teaserState.view.svg.getBoundingClientRect();
+    return box.width / TEASER.width;
+  }
+
+  function scrollToFigure() {
+    teaserState.view.figure.scrollIntoView({
+      block: "center",
+      behavior: reducedMotion() ? "auto" : "smooth",
+    });
+    closePeek();
+  }
+
+  function resetZoom() {
+    if (!teaserState.zoomed) return;
+    teaserState.zoomed = false;
+    animateViewBox(teaserState.view.svg, [0, 0, TEASER.width, TEASER.height]);
+  }
+
+  function zoomToPart(partId) {
+    teaserState.zoomed = true;
+    animateViewBox(
+      teaserState.view.svg,
+      focusRegion(partId, TEASER.width / TEASER.height)
+    );
+  }
+
+  /* The one rule. Where the reader is decides which of the three behaviors a
+     focus gets—never a media query, which cannot see the scroll position. */
+  function placeFocus(fromRef) {
+    if (!teaserState.part) {
+      closePeek();
+      resetZoom();
+      return;
+    }
+    if (figureVisibility() > 0.55) {
+      closePeek();
+      if (figureScale() < LEGIBLE_SCALE) zoomToPart(teaserState.part);
+      else resetZoom();
+      return;
+    }
+    resetZoom();
+    openPeek(teaserState.part, fromRef);
+  }
+
+  function setTeaserFocus(partId, options) {
+    if (!teaserState.view || !teaserPart(partId)) return;
+    const opts = options || {};
+    teaserState.part = partId;
+    teaserState.pinned = !!opts.pinned;
+    teaserState.mention = -1;
+    paintFocus(teaserState.view.svg, partId);
+    markRefs(partId);
+    placeFocus(opts.fromRef);
+    renderTeaserStatus();
+  }
+
+  function clearTeaserFocus() {
+    if (!teaserState.view || !teaserState.part) return;
+    teaserState.part = null;
+    teaserState.pinned = false;
+    paintFocus(teaserState.view.svg, null);
+    markRefs(null);
+    closePeek();
+    resetZoom();
+    renderTeaserStatus();
+  }
+
+  /* ------------------------------------------------ the figure's status line */
+
+  function showMention(step) {
+    const mentions = mentionsOf(teaserState.part);
+    if (!mentions.length) return;
+    teaserState.mention =
+      (teaserState.mention + step + mentions.length) % mentions.length;
+    const target = mentions[teaserState.mention];
+    target.scrollIntoView({
+      block: "center",
+      behavior: reducedMotion() ? "auto" : "smooth",
+    });
+    target.classList.add("is-found");
+    window.setTimeout(() => {
+      target.classList.remove("is-found");
+    }, 1400);
+    renderTeaserStatus();
+  }
+
+  function renderTeaserStatus(overrideId) {
+    const host = teaserState.view.status;
+    clear(host);
+    const part = teaserPart(overrideId || teaserState.part);
+    if (!part) {
+      host.appendChild(
+        el("p", { class: "teaser-text teaser-hint" }, [
+          el("span", {
+            text:
+              "Select a part for what it is and where the text discusses it. " +
+              "Marked phrases in the text point back.",
+          }),
+        ])
+      );
+      return;
+    }
+
+    host.appendChild(
+      el("p", { class: "teaser-text" }, [
+        el("b", { text: part.label + ". " }),
+        el("span", { text: part.blurb }),
+      ])
+    );
+
+    const controls = el("span", { class: "teaser-controls" });
+    const mentions = mentionsOf(part.id);
+    if (mentions.length) {
+      controls.appendChild(
+        el("button", {
+          class: "teaser-act",
+          type: "button",
+          "aria-label": "Previous mention in the text",
+          text: "‹",
+          onclick: function () {
+            showMention(-1);
+          },
+        })
+      );
+      controls.appendChild(
+        el("span", {
+          class: "teaser-count",
+          text:
+            (teaserState.mention < 0
+              ? mentions.length
+              : teaserState.mention + 1) +
+            (teaserState.mention < 0
+              ? mentions.length === 1
+                ? " mention"
+                : " mentions"
+              : " of " + mentions.length),
+        })
+      );
+      controls.appendChild(
+        el("button", {
+          class: "teaser-act",
+          type: "button",
+          "aria-label": "Next mention in the text",
+          text: "›",
+          onclick: function () {
+            showMention(1);
+          },
+        })
+      );
+    }
+    if (teaserState.zoomed) {
+      controls.appendChild(
+        el("button", {
+          class: "teaser-act",
+          type: "button",
+          text: "Whole figure",
+          onclick: function () {
+            clearTeaserFocus();
+          },
+        })
+      );
+    }
+    controls.appendChild(
+      el("button", {
+        class: "teaser-act",
+        type: "button",
+        text: "Clear",
+        onclick: function () {
+          clearTeaserFocus();
+        },
+      })
+    );
+    host.appendChild(controls);
+  }
+
+  /* The status line has to be able to change without moving the page.
+
+     It sits above a document the reader is pointing at: if it grew from a hint
+     to a sentence, everything below it shifted, the phrase under the cursor
+     moved out from under the cursor, and the focus it had just opened dropped
+     again—a flicker loop, and the exact opposite of bringing the two closer
+     together. So the strip reserves the height of its tallest state up front,
+     measured at the current width rather than guessed. */
+  function reserveStatusHeight() {
+    const host = teaserState.view.status;
+    host.style.minHeight = "";
+    // Only a pointer that hovers can be shaken off by a reflow. Where the
+    // reader has to tap, the strip grows and shrinks with its content rather
+    // than holding empty space open under a small figure.
+    if (!hoverCapable()) {
+      renderTeaserStatus();
+      return;
+    }
+    let longest = TEASER.parts[0];
+    TEASER.parts.forEach((part) => {
+      if (
+        part.label.length + part.blurb.length >
+        longest.label.length + longest.blurb.length
+      ) {
+        longest = part;
+      }
+    });
+    renderTeaserStatus(longest.id);
+    const height = host.getBoundingClientRect().height;
+    host.style.minHeight = Math.ceil(height) + "px";
+    renderTeaserStatus();
+  }
+
+  /* ------------------------------------------------------------------ wiring */
+
+  function hoverCapable() {
+    return !window.matchMedia || window.matchMedia("(hover: hover)").matches;
+  }
+
+  function bindTeaserRefs() {
+    const canHover = hoverCapable();
+
+    document.addEventListener("click", (event) => {
+      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      if (!ref) return;
+      event.preventDefault();
+      const partId = ref.getAttribute("data-part");
+      if (teaserState.pinned && teaserState.part === partId) clearTeaserFocus();
+      else setTeaserFocus(partId, { pinned: true, fromRef: true });
+    });
+
+    document.addEventListener("focusin", (event) => {
+      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      if (!ref || teaserState.pinned) return;
+      setTeaserFocus(ref.getAttribute("data-part"), { fromRef: true });
+    });
+
+    if (!canHover) return;
+
+    document.addEventListener("mouseover", (event) => {
+      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      if (!ref || teaserState.pinned) return;
+      window.clearTimeout(teaserState.hoverTimer);
+      teaserState.hoverTimer = window.setTimeout(() => {
+        setTeaserFocus(ref.getAttribute("data-part"), { fromRef: true });
+      }, HOVER_DELAY);
+    });
+
+    document.addEventListener("mouseout", (event) => {
+      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      if (!ref || teaserState.pinned) return;
+      window.clearTimeout(teaserState.hoverTimer);
+      clearTeaserFocus();
+    });
+  }
+
+  function bindTeaserParts(root) {
+    Array.prototype.forEach.call(root.querySelectorAll(".tpart"), (node) => {
+      const partId = node.getAttribute("data-part");
+      node.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (teaserState.pinned && teaserState.part === partId)
+          clearTeaserFocus();
+        else setTeaserFocus(partId, { pinned: true });
+      });
+      node.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        setTeaserFocus(partId, { pinned: true });
+      });
+      if (!hoverCapable()) return;
+      node.addEventListener("mouseenter", () => {
+        if (teaserState.pinned) return;
+        setTeaserFocus(partId, {});
+      });
+      node.addEventListener("mouseleave", () => {
+        if (teaserState.pinned) return;
+        clearTeaserFocus();
+      });
+    });
+  }
+
+  function createTeaser(host, figureNumber) {
+    if (!TEASER || !TEASER.parts.length) {
+      host.appendChild(
+        emptyNote("The teaser figure is missing from the build payload.")
+      );
+      return;
+    }
+    const root = buildTeaserSvg();
+    // A div, not a paragraph: the report's own paragraph typography applies to
+    // everything inside `.report`, and this strip is chrome.
+    const status = el("div", { class: "teaser-status", "aria-live": "polite" });
+    // The status strip sits between the drawing and its caption: it is where
+    // the controls for what is on screen belong, and the caption stays the last
+    // thing in the figure, as it is in every other figure on this page.
+    const figure = el("figure", { class: "figure teaser", id: "fig-teaser" }, [
+      el("div", { class: "teaser-frame" }, [root]),
+      status,
+      el("figcaption", {
+        html:
+          "<b>Figure " +
+          figureNumber +
+          ".</b> " +
+          escapeHtml(TEASER.caption.title) +
+          ". " +
+          escapeHtml(TEASER.caption.sub),
+      }),
+    ]);
+    host.appendChild(figure);
+
+    teaserState.view = {
+      svg: root,
+      figure: figure,
+      status: status,
+      figureLabel: "Figure " + figureNumber,
+    };
+
+    bindTeaserParts(root);
+    bindTeaserRefs();
+    renderTeaserStatus();
+
+    reserveStatusHeight();
+
+    // A focus is placed against what is on screen, so scrolling and resizing
+    // can change which of the three behaviors is right while it is held.
+    let pending = 0;
+    function reflow(remeasure) {
+      pending = 0;
+      if (remeasure) reserveStatusHeight();
+      if (teaserState.part) placeFocus(false);
+    }
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!pending && teaserState.pinned) {
+          pending = window.requestAnimationFrame(() => {
+            reflow(false);
+          });
+        }
+      },
+      { passive: true }
+    );
+    window.addEventListener("resize", () => {
+      if (pending) window.cancelAnimationFrame(pending);
+      pending = window.requestAnimationFrame(() => {
+        reflow(true);
+      });
+    });
+  }
+
   /* --------------------------------------------------------- components */
 
   /* Each entry hydrates one `::: name` block from the Markdown. `mount` is the
@@ -1994,6 +3151,10 @@
         list.appendChild(el("dd", {}, [code(row[1])]));
       });
       mount.appendChild(list);
+    },
+
+    teaser: function (mount, params, numbers) {
+      createTeaser(mount, numbers.figure);
     },
 
     factgrid: function (mount, params) {
@@ -2615,7 +3776,9 @@
     .getElementById("drawer-close")
     .addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeDrawer();
+    if (event.key !== "Escape") return;
+    closeDrawer();
+    clearTeaserFocus();
   });
 
   renderMetaRow();

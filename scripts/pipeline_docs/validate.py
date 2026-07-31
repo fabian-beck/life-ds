@@ -22,7 +22,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, List, Set
 
-from . import spec
+from . import spec, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
@@ -294,7 +294,7 @@ def check_report(
                     Problem("error", where, "caption numbering was not assigned")
                 )
 
-    for key in sorted(set(facts) - set(document.citations)):
+    for key in sorted(set(facts) - set(document.citations) - set(teaser.fact_keys())):
         problems.append(
             Problem(
                 "warning",
@@ -302,6 +302,8 @@ def check_report(
                 f"fact '{key}' is measured but never cited",
             )
         )
+
+    problems.extend(_check_teaser(document, facts))
 
     missing_lanes = {spec.PERSON, spec.META} - lanes_drawn
     if missing_lanes:
@@ -320,6 +322,44 @@ def check_report(
     if not document.front.get("title"):
         problems.append(Problem("error", "report.md", "front matter has no 'title'"))
 
+    return problems
+
+
+def _check_teaser(document: Document, facts: Dict[str, Fact]) -> List[Problem]:
+    """The figure, and the prose's references into it, have to agree.
+
+    Unknown part ids already fail in the compiler. What is left is the relation
+    between the two: a reference with no figure to point at is a dead control,
+    and a part nothing refers to is a region of the drawing the report never
+    explains—the same warning a measured but uncited fact gets.
+    """
+    problems: List[Problem] = []
+    mounted = any(mount.component == "teaser" for mount in document.mounts)
+
+    if document.figrefs and not mounted:
+        problems.append(
+            Problem(
+                "error",
+                "report.md",
+                "the prose references parts of the teaser figure, but no "
+                "'::: teaser' block draws it",
+            )
+        )
+
+    for problem in teaser.check_scene(list(facts)):
+        problems.append(Problem(problem.severity, problem.where, problem.message))
+
+    if mounted:
+        for part_id in teaser.part_ids():
+            if part_id not in document.figrefs:
+                problems.append(
+                    Problem(
+                        "warning",
+                        "report.md",
+                        f"teaser part '{part_id}' is drawn but no phrase "
+                        "references it",
+                    )
+                )
     return problems
 
 

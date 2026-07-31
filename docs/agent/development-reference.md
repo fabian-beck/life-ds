@@ -395,7 +395,8 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
 | Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which files they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
 | Measurements | `facts.py` | Repository-scale numbers the prose cites—corpus size, component counts, test counts—each with the place it was measured. |
-| Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `::: component` mount points, callouts. |
+| Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `::: component` mount points, callouts. |
+| Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt and schema. Only changed steps are re-summarized. |
 | Recorded runs | `capture.py` | Patches the OpenAI SDK during a real run and records each call. Optional. |
 
@@ -410,9 +411,11 @@ model call site that **no step claims**. Adding a phase without documenting it
 is therefore an error rather than a silent omission.
 
 It also fails when the authored report no longer resolves: an unknown
-`{{ fact }}` citation, an unknown or misconfigured `::: component`, a lane or
-script that no longer exists, or a pipeline that no chart draws. A fact that is
-measured but never cited is a warning, not an error.
+`{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure, a
+figure whose geometry is inconsistent, an unknown or misconfigured
+`::: component`, a lane or script that no longer exists, or a pipeline that no
+chart draws. A fact that is measured but never cited, and a figure part no
+phrase references, are warnings rather than errors.
 
 The check needs no API key, so it is safe to run anywhere. It is deliberately
 **not** part of `npm run validate`; run it after changing any generation script
@@ -443,6 +446,7 @@ name or file count belongs in it**—those are cited, so they cannot go stale.
 | --- | --- |
 | `## Heading`, `### Heading` | Section and subsection. Numbers, ids, the contents and the sidebar are all derived from document order. Skipping a level is a build error. |
 | `{{ some.fact }}` | A measurement from `facts.py`, rendered with its source as a tooltip. An unknown key fails the build. |
+| `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. |
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
 | `::: toc` | The table of contents. |
@@ -463,6 +467,34 @@ by `caption()` in `assets/app.js`, so call sites need not repeat it.
 
 Adding a new citable number means one `Fact` in `facts.py`, measured from the
 repository rather than typed in.
+
+### The Teaser Figure
+
+Figure 1 is the whole system on one canvas, and it is the only figure the prose
+points *into*. Its parts are declared in `pipeline_docs/teaser.py`—id, label,
+one sentence, a box in scene coordinates, a `decor` routine and, where a part
+prints a number, a `metric` template over `facts.py` keys. `app.js` draws the
+scene; the closed `decor` vocabulary is checked against the page the same way
+the component roster is.
+
+Reading a phrase in the text and finding the part it names are the same act, so
+a reference is resolved against where the reader actually is:
+
+- the figure on screen and large enough to read: the part lights in place;
+- the figure on screen but scaled down: the part is enlarged in place;
+- the figure off screen: the part is shown in a panel beside the passage—a
+  card at wide widths, a sheet along the bottom edge on a phone.
+
+There are no breakpoints in that rule. The scene is one coordinate system, a
+part is a sub-rectangle of it, and all three behaviors are a `viewBox`. Two
+consequences are load-bearing for anything added here: the drawing's box must
+keep a fixed aspect ratio (so zooming never reflows the page), and the status
+strip under the figure reserves the height of its tallest state where the
+pointer hovers (so lighting a phrase cannot move the phrase).
+
+Moving a part is a coordinate edit; `--check` rejects a box outside the canvas,
+two siblings overlapping, a child escaping its parent, an arrow to a part that
+does not exist, or a metric citing a fact that was removed.
 
 ### When the Pipeline Changes
 

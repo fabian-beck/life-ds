@@ -1317,6 +1317,460 @@ table.data .swatch {
   vertical-align: -1px;
 }
 
+/* ---------------------------------------------------------------- teaser */
+
+/* The teaser figure and its link to the prose.
+
+   The figure is drawn once, at one scale, in scene units; the page never
+   reflows it. What adapts is which part of it the reader is shown—in place
+   when the figure is large enough to read, enlarged in place when it is not,
+   and in a docked panel when the figure is off screen. That is why there is
+   almost no breakpoint below: the responsive behavior is a viewBox, not a
+   layout.
+
+   A reference in the text is a control that has to read as prose. It is
+   underlined like a citation and carries a small square in the figure's own
+   register, and nothing else: the sentence must be the same sentence in print,
+   with JavaScript off, or read aloud. */
+
+figure.teaser {
+  margin: 0 0 30px;
+}
+
+.teaser-frame {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 0;
+}
+
+.teaser-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--sans);
+}
+
+.tstage {
+  fill: var(--muted);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.tstage-rule {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.tframe {
+  fill: var(--paper);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.tframe.soft {
+  fill: var(--surface);
+  stroke: var(--rule-soft);
+}
+
+.tpart-label {
+  fill: var(--ink);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.tfile-name {
+  fill: var(--ink);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+
+.tmetric {
+  fill: var(--muted);
+  font-size: 9px;
+}
+
+.ttext {
+  fill: var(--ink-2);
+  font-size: 9.5px;
+}
+
+.ttiny {
+  fill: var(--muted);
+  font-size: 8.5px;
+}
+
+.thit {
+  fill: transparent;
+}
+
+/* Wires. Solid is data moving between the parts; dotted is a call out to
+   something that is not part of the pipeline's own graph. */
+.tedge,
+.tedge-call,
+.tbus {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1;
+}
+
+.tedge-call {
+  stroke: var(--muted);
+  stroke-dasharray: 3 3;
+}
+
+.tbus {
+  stroke: var(--muted);
+  stroke-dasharray: 1.5 3;
+}
+
+.tarrow {
+  fill: var(--ink-2);
+}
+
+.tedge-label,
+.tbus-label {
+  fill: var(--ink-2);
+  font-size: 8.5px;
+}
+
+.tbus-label {
+  fill: var(--muted);
+  font-style: italic;
+}
+
+.tlabel-bg {
+  fill: var(--paper);
+  stroke: none;
+}
+
+/* Contents of the parts. */
+.tglyph,
+.tcard,
+.tplate {
+  fill: var(--paper);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.tghost {
+  fill: var(--paper);
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+}
+
+.tglyph-fold,
+.trule,
+.tcoast,
+.tlink {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.trule,
+.tlink {
+  stroke: var(--ink-2);
+}
+
+.tlink {
+  stroke-width: 0.8;
+  opacity: 0.55;
+}
+
+.tbar {
+  fill: var(--rule-soft);
+}
+
+.tband,
+.tpinned {
+  fill: var(--surface);
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+}
+
+.tnarration {
+  fill: var(--paper);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.tportrait {
+  fill: var(--surface);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.tdot,
+.tnode,
+.tpin {
+  fill: var(--ink-2);
+}
+
+.tdot.on,
+.tnode.on,
+.tpin.on {
+  fill: var(--ink);
+}
+
+.tstep-box,
+.tswatch {
+  stroke: none;
+}
+
+/* Focus. The subject keeps its full contrast, its container and its contents
+   stay legible, and everything else recedes without disappearing—the reader
+   has to keep seeing where in the whole the part sits. */
+.tpart.is-off {
+  opacity: 0.16;
+}
+
+.tpart.is-kin {
+  opacity: 0.72;
+}
+
+/* The selection rule is drawn on the hit area, which is every part's own box:
+   a part with no frame of its own—the step legend—then gets the same outline
+   as one that has. */
+.tpart.is-on .thit {
+  stroke: var(--rule-strong);
+  stroke-width: 2;
+}
+
+.teaser-svg .tpart {
+  cursor: pointer;
+  transition: opacity 0.16s ease;
+}
+
+.teaser-svg .tpart:hover .tframe,
+.teaser-svg .tpart:focus-visible .tframe {
+  stroke: var(--ink-2);
+}
+
+/* The browser's own focus ring on a focusable <g> is drawn on pointer focus
+   too, and in the wrong register for this page. Suppress it and mark keyboard
+   focus with the part's own rule below. */
+.teaser-svg .tpart:focus {
+  outline: none;
+}
+
+.teaser-svg .tpart:focus-visible .thit {
+  stroke: var(--rule-strong);
+  stroke-width: 2;
+  stroke-dasharray: 3 2;
+}
+
+/* One row: the sentence about the selected part, and the controls for it. The
+   two never stack, so the strip is at most as tall as the sentence—which is
+   what makes its reserved height small enough to hold open. */
+.teaser-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4px 14px;
+  margin: 0 0 10px;
+  padding: 7px 0 9px;
+  min-height: 34px;
+  color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+/* Specific enough to beat the report's paragraph rule: this is chrome inside a
+   figure, not running text. The small flex basis keeps the controls on the same
+   row wherever there is room for them. */
+.teaser-status .teaser-text {
+  flex: 1 1 240px;
+  margin: 0;
+  min-width: 0;
+  max-width: 96ch;
+  font: inherit;
+}
+
+.teaser-status b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.teaser-hint {
+  color: var(--muted);
+}
+
+.teaser-controls {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.teaser-act {
+  padding: 2px 7px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-2);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 11.5px;
+}
+
+.teaser-act:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.teaser-count {
+  color: var(--muted);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A phrase that names a part of the figure. Styled as running text with a
+   citation's dotted underline; the square is the only mark that says the
+   figure is the thing on the other end. */
+.figref {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px dotted var(--muted);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.figref::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 3px;
+  border: 1px solid var(--muted);
+  vertical-align: 1px;
+}
+
+.figref:hover,
+.figref:focus-visible,
+.figref.is-lit {
+  border-bottom-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.figref:hover::after,
+.figref:focus-visible::after,
+.figref.is-lit::after {
+  border-color: var(--rule-strong);
+  background: var(--rule-strong);
+}
+
+/* Flashed when the figure sends the reader to a mention of the selected part. */
+.figref.is-found {
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--surface);
+}
+
+/* The detail panel. On a wide screen it sits in the corner of the viewport, on
+   a narrow one it becomes a sheet along the bottom edge—in both cases it is
+   the part of the figure that the sentence being read is about, put where the
+   sentence is. */
+.figpeek {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  width: min(400px, 34vw);
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+}
+
+.figpeek[hidden] {
+  display: none;
+}
+
+.figpeek-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px 7px 10px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 12.5px;
+}
+
+.figpeek-kicker {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.figpeek-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.figpeek-act {
+  flex: none;
+  padding: 2px 7px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-2);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 11.5px;
+}
+
+.figpeek-act:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.figpeek-close {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.figpeek-close:hover {
+  color: var(--ink);
+}
+
+.figpeek-view {
+  padding: 6px 8px;
+  background: var(--paper);
+}
+
+.figpeek-view svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figpeek-blurb {
+  margin: 0;
+  padding: 0 10px 10px;
+  color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .colophon {
   margin-top: 56px;
   padding-top: 14px;
@@ -1360,6 +1814,12 @@ table.data .swatch {
   }
 }
 
+@media (width <= 1080px) {
+  .figpeek {
+    width: min(380px, 46vw);
+  }
+}
+
 @media (width <= 720px) {
   .drawer {
     width: 100%;
@@ -1372,6 +1832,22 @@ table.data .swatch {
   .report {
     max-width: none;
   }
+
+  /* A sheet rather than a card: at this width the figure is not legible as a
+     whole, so the panel is the figure for as long as the reader needs it, and
+     it stays out of the text above it. */
+  .figpeek {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    border: 0;
+    border-top: 1.5px solid var(--rule-strong);
+  }
+
+  .figpeek-view {
+    padding: 4px 6px;
+  }
 }
 
 @media print {
@@ -1380,8 +1856,19 @@ table.data .swatch {
   .rail,
   .toc-fab,
   .toc-pop,
+  .figpeek,
+  .teaser-status,
   .skip {
     display: none;
+  }
+
+  /* On paper a reference is only a phrase; the marker would point nowhere. */
+  .figref {
+    border-bottom: 0;
+  }
+
+  .figref::after {
+    content: none;
   }
 
   .shell {

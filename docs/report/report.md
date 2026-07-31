@@ -17,41 +17,46 @@ abstract:
   no inference of its own.
 ---
 
+::: teaser
+:::
+
 ::: toc
 :::
 
 ## Introduction
 
-Encyclopedic biography is a rich and well-sourced account of a life, written as
-continuous prose. Its temporal, geographic and relational structure is present
-throughout the text and largely implicit in it: dates are given at whatever
-precision the record supports, places under the names they carried at the time,
-and relationships in subordinate clauses distributed across sections. A reader
-who wants the shape of the life—its phases, its movements, the people who
-recur in it—reconstructs that shape while reading.
+[[sources|Encyclopedic biography]] is a rich and well-sourced account of a life,
+written as continuous prose. Its temporal, geographic and relational structure
+is present throughout the text and largely implicit in it: dates are given at
+whatever precision the record supports, places under the names they carried at
+the time, and relationships in subordinate clauses distributed across sections.
+A reader who wants the shape of the life—its phases, its movements, the people
+who recur in it—reconstructs that shape while reading.
 
 Life Data Stories makes the shape explicit and presentable. It derives from the
-source prose a set of discrete events, each with a resolved date, the modern
-coordinates of its place, the persons involved, an illustration and the sources
-that support it; it groups those events into the phases of a life; and it
-presents the result simultaneously as narrative text, as a chronology, as a
-geography and as a social network. The same derivation applied across several
-biographies yields a meta story, in which a theme is traced through the lives
-that share it.
+source prose [[events|a set of discrete events]], each with a resolved date, the
+modern coordinates of its place, the persons involved, an illustration and the
+sources that support it; it groups those events into the phases of a life; and
+it presents the result simultaneously as [[prose|narrative text]], as
+[[timeline|a chronology]], as [[map|a geography]] and as
+[[graph|a social network]]. The same derivation applied across several
+biographies yields [[meta-story|a meta story]], in which a theme is traced
+through the lives that share it.
 
 The operations this requires are interpretive. Selecting the episodes that
 constitute a life, identifying the modern place a historical toponym denotes,
-and judging which relationships are constitutive of a career are decisions
-about meaning, and at the scale of a corpus they are made by a language model.
+and judging which relationships are constitutive of a career are decisions about
+meaning, and at the scale of a corpus they are made by
+[[inference|a language model]].
 
-The system is accordingly built in two parts that meet only at the data.
-Generation runs offline as a dependency graph of individually addressable
-steps, in which model inference is interleaved with deterministic
-transformation: a step proposes, researches or reviews material, and the steps
-around it resolve, cluster, merge and validate what the model returned. What
-the graph produces is a set of documents describing one life or one theme. The
-interface loads those documents and renders them, so that reading a story is a
-matter of presentation alone.
+The system is accordingly built in two parts that
+[[files|meet only at the data]]. Generation runs offline as a dependency graph
+of individually addressable steps, in which model inference is interleaved with
+deterministic transformation: a step proposes, researches or reviews material,
+and the steps around it resolve, cluster, merge and validate what the model
+returned. What the graph produces is a set of documents describing one life or
+one theme. The interface loads those documents and renders them, so that
+reading a story is a matter of presentation alone.
 
 ::: decision
 **One record, several encodings.** The event is the unit of both the narrative
@@ -79,18 +84,18 @@ and each is decomposed along a different axis. Generation is decomposed into
 of which {{ pipeline.ai_steps }} issue a prompt to a model and
 {{ pipeline.code_steps }} consist of deterministic code or plain HTTP
 retrieval. Presentation is decomposed into the units through which a reader
-advances: slides in a person's story, sections in a meta story. The two axes
-answer different questions. A step is the granularity at which work is cached,
-re-run, priced and tested; a slide or section is the granularity at which the
-reader's attention is directed and at which a position in a story becomes an
-address.
+advances: [[slides|slides in a person's story]],
+[[sections|sections in a meta story]]. The two axes answer different questions.
+A step is the granularity at which work is cached, re-run, priced and tested; a
+slide or section is the granularity at which the reader's attention is directed
+and at which a position in a story becomes an address.
 
 ### A taxonomy of steps
 
-Each step belongs to one of four kinds. The classification partitions the
-pipeline by failure mode and by cost, and thus determines what may be re-run
-freely, what must be paid for, what depends on the availability and stability
-of an external service, and what can be verified by assertion.
+Each step belongs to one of [[kinds|four kinds]]. The classification partitions
+the pipeline by failure mode and by cost, and thus determines what may be
+re-run freely, what must be paid for, what depends on the availability and
+stability of an external service, and what can be verified by assertion.
 
 ::: kindlegend
 :::
@@ -105,30 +110,33 @@ that everything downstream of an inference is reproducible and assertable.
 ## Data model
 
 Four artifact families carry everything the application reads, distributed over
-{{ pipeline.artifacts }} declared files and directories. Each is a denormalized
-document rather than a row in a normalized schema, because the document is the
-unit at which generated material is inspected, corrected and regenerated.
+{{ pipeline.artifacts }} [[files|declared files and directories]]. Each is a
+denormalized document rather than a row in a normalized schema, because the
+document is the unit at which generated material is inspected, corrected and
+regenerated.
 
-The **person registry** holds the identity and portrait of each subject, and
-stands in one-to-one correspondence with the per-person directories that hold
-everything else: a directory without a registry entry is invisible to the
-interface, and an entry without a directory is a broken reference.
+The **[[registry|person registry]]** holds the identity and portrait of each
+subject, and stands in one-to-one correspondence with the per-person
+directories that hold everything else: a directory without a registry entry is
+invisible to the interface, and an entry without a directory is a broken
+reference.
 
-The **life events** document is the narrative spine of a biography: dated
-events with locations, involved persons, sources, images and a typed icon,
-optionally grouped into chapters that name the phases of a life, together with
-a concluding statement. It is also the reference document from which all
+The **[[events|life events]]** document is the narrative spine of a biography:
+dated events with locations, involved persons, sources, images and a typed
+icon, optionally grouped into chapters that name the phases of a life, together
+with a concluding statement. It is also the reference document from which all
 localized copies derive.
 
-The **ego network** document records the subject's relationships as typed and
-weighted edges, each with a period, a strength and a supporting description. It
-is generated independently of the narrative, so a biography may exist before
-its network does.
+The **[[ego-network|ego network]]** document records the subject's
+relationships as typed and weighted edges, each with a period, a strength and a
+supporting description. It is generated independently of the narrative, so a
+biography may exist before its network does.
 
-The **meta story** document is a second-order artifact. It describes a theme
-across several biographies and is the only family whose inputs are other
-artifacts of this system rather than an external source, which makes the
-coupling between the two pipelines a coupling of files rather than of code.
+The **[[meta-story|meta story]]** document is a second-order artifact. It
+describes a theme across several biographies and is the only family whose
+inputs are other artifacts of this system rather than an external source, which
+makes the coupling between the two pipelines a coupling of files rather than of
+code.
 
 ::: artifacts lane=person
 :::
@@ -161,10 +169,10 @@ suggests, and that asymmetry is the substance of the architecture.
 
 ### Personal story pipeline
 
-One biography, end to end: {{ pipeline.person_steps }} steps distributed over
-{{ pipeline.person_layers }} dependency layers, beginning at an encyclopedia
-article and terminating in a translated, illustrated and individually styled
-story.
+[[person-pipeline|One biography, end to end]]: {{ pipeline.person_steps }} steps
+distributed over {{ pipeline.person_layers }} dependency layers, beginning at
+[[sources|an encyclopedia article]] and terminating in a translated,
+illustrated and individually styled story.
 
 The salient structural feature is the fork that follows source acquisition.
 Once the material is cached and narrowed, the narrative branch, the imagery
@@ -191,10 +199,11 @@ malformed response is then confined to a single event.
 
 ### Meta story pipeline
 
-A theme across many lives: {{ pipeline.meta_steps }} steps distributed over
-{{ pipeline.meta_layers }} layers. The pipeline consumes the output of the
-personal pipeline rather than external sources, which is why its figure begins
-with unattributed file nodes that no step of its own graph produces.
+[[meta-pipeline|A theme across many lives]]: {{ pipeline.meta_steps }} steps
+distributed over {{ pipeline.meta_layers }} layers. The pipeline consumes the
+output of the personal pipeline rather than external sources, which is why its
+figure begins with unattributed file nodes that no step of its own graph
+produces.
 
 Where the personal pipeline forks once, this one maintains two long independent
 branches—the social network and the geographic map—each of which runs to
@@ -215,9 +224,9 @@ supplies the context surrounding what the components encode.
 ### Models, prompts and structured output
 
 The generation side uses {{ pipeline.models }} across
-{{ pipeline.call_sites }} call sites. Models are selected per call site rather
-than globally, so that a phase whose cost is dominated by volume and a phase
-whose quality determines the whole artifact need not share one setting.
+{{ pipeline.call_sites }} [[inference|call sites]]. Models are selected per call
+site rather than globally, so that a phase whose cost is dominated by volume and
+a phase whose quality determines the whole artifact need not share one setting.
 
 ::: modeltable
 :::
@@ -280,11 +289,11 @@ of an arbitrary subject would require a sample.
 The reading side is a mobile-first Svelte and Vite application that loads the
 generated documents as static assets and renders them directly. It presents the
 same three encodings of a life—time, space and relation—in two reading modes,
-corresponding to the two story types. A person's story is a bounded sequence
-advanced one unit at a time, which suits material that has a canonical order
-and a natural unit, the event. A meta story is a continuous document advanced
-by scrolling, which lets its order follow the argument the composition makes
-across several lives.
+corresponding to the two story types. A person's story is
+[[slides|a bounded sequence advanced one unit at a time]], which suits material
+that has a canonical order and a natural unit, the event. A meta story is
+[[sections|a continuous document advanced by scrolling]], which lets its order
+follow the argument the composition makes across several lives.
 
 Application state is carried in the URL throughout: language, story, position
 within it, and the open or closed condition of the network view. Every position
@@ -299,23 +308,23 @@ A person's story is a horizontal sequence of full-screen, scroll-snapped
 slides of four kinds. An overview slide opens with the generated portrait, the
 lifespan, the principal roles and a summary. Chapter slides mark the phases of
 the life, so that the transition between phases is itself an event in the
-reading. Event slides are the substance: a title, a date, a long-form
-description, the images attached to that event, the persons involved rendered
-as inline chips, and the sources from which the event was researched. A
-concluding slide closes the life and offers cards for related subjects, which
-makes the corpus traversable from within any one story rather than only from
-the landing page.
+reading. Event slides are the substance: a title, a date, a
+[[prose|long-form description]], the images attached to that event, the persons
+involved rendered as inline chips, and the sources from which the event was
+researched. A concluding slide closes the life and offers cards for related
+subjects, which makes the corpus traversable from within any one story rather
+than only from the landing page.
 
 The three encodings are attached to this sequence rather than displayed beside
-it. A persistent timeline maps every event to its position in the life, bands
-the chapters, and doubles as the navigation control. A map built on MapLibre
-and Protomaps locates the events whose places could be resolved, with the
-camera following the reader rather than the reader panning the map; the
-basemap is deliberately label-free, since the story supplies the toponyms. The
-ego network is presented on demand as a force-directed graph of the subject's
-documented relationships, typed and weighted as the artifact records them.
-Images open in a lightbox that pages through the story's illustrations as a
-single gallery.
+it. [[timeline|A persistent timeline]] maps every event to its position in the
+life, bands the chapters, and doubles as the navigation control.
+[[map|A map built on MapLibre and Protomaps]] locates the events whose places
+could be resolved, with the camera following the reader rather than the reader
+panning the map; the basemap is deliberately label-free, since the story
+supplies the toponyms. The ego network is presented on demand as
+[[graph|a force-directed graph]] of the subject's documented relationships,
+typed and weighted as the artifact records them. Images open in a lightbox that
+pages through the story's illustrations as a single gallery.
 
 Each story additionally carries a generated visual identity—palette,
 typography and background pattern—injected as CSS custom properties, so that

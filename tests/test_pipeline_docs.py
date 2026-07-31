@@ -20,7 +20,7 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from pipeline_docs import facts as facts_module  # noqa: E402
-from pipeline_docs import render, report, spec, validate  # noqa: E402
+from pipeline_docs import render, report, spec, teaser, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase, scan_script  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 
@@ -661,6 +661,111 @@ class ReportSourceTests(unittest.TestCase):
                 rf"\n    {name}: function",
                 f"app.js has no renderer for '::: {name}'",
             )
+
+
+class TeaserTests(unittest.TestCase):
+    """The teaser figure, and the prose's references into it.
+
+    A figure the prose points at is only as trustworthy as the resolution of
+    those pointers, so the checks here are the geometric and referential ones a
+    reader cannot make: that the drawing's boxes really are where the focus
+    machinery will look for them, and that every phrase naming a part names one
+    that exists.
+    """
+
+    HEAD = "---\ntitle: T\n---\n"
+
+    def test_the_scene_is_geometrically_sound(self) -> None:
+        problems = [
+            f"{problem.where}: {problem.message}"
+            for problem in teaser.check_scene(list(_facts()))
+            if problem.severity == "error"
+        ]
+        self.assertEqual(problems, [])
+
+    def test_every_part_carries_a_label_and_a_sentence(self) -> None:
+        self.assertGreater(len(teaser.PARTS), 8)
+        for part in teaser.PARTS:
+            self.assertTrue(part.label.strip(), f"{part.id} has no label")
+            self.assertTrue(part.blurb.strip(), f"{part.id} has no blurb")
+
+    def test_figure_metrics_cite_measured_facts(self) -> None:
+        """The figure prints numbers; they come from facts.py or nowhere."""
+        facts = _facts()
+        for key in teaser.fact_keys():
+            self.assertIn(key, facts)
+
+    def test_every_decor_has_a_drawing_routine_in_the_page(self) -> None:
+        """The same closed-roster contract the components have with report.py."""
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
+        for name in sorted({part.decor for part in teaser.PARTS}):
+            self.assertRegex(
+                js,
+                rf"\n    {name}: function",
+                f"app.js has no teaser decor routine for '{name}'",
+            )
+
+    def test_a_reference_becomes_a_control_that_names_its_part(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\nDerived as [[timeline|a chronology]].\n"
+        )
+        self.assertIn("timeline", document.figrefs)
+        self.assertIn('class="figref" data-part="timeline"', document.html)
+        self.assertIn("a chronology", document.html)
+
+    def test_a_reference_without_a_phrase_uses_the_part_label(self) -> None:
+        document = _compile(self.HEAD + "\n## S\n\nSee [[map]].\n")
+        self.assertIn(teaser.part_by_id("map").label, document.html)
+
+    def test_an_unknown_part_fails_the_build(self) -> None:
+        """A phrase that lights nothing is the figure's version of a silent gap."""
+        with self.assertRaises(report.ReportError) as caught:
+            _compile(self.HEAD + "\n## S\n\nSee [[no-such-part|this]].\n")
+        self.assertIn("no-such-part", str(caught.exception))
+
+    def test_references_inside_a_fenced_block_are_left_alone(self) -> None:
+        document = _compile(
+            self.HEAD + "\n## S\n\n```text\n[[timeline|a chronology]]\n```\n"
+        )
+        self.assertIn("[[timeline|a chronology]]", document.html)
+        self.assertEqual(document.figrefs, [])
+
+    def test_a_reference_with_no_figure_on_the_page_is_an_error(self) -> None:
+        facts = _facts()
+        document = report.compile_report(
+            self.HEAD + "\n## S\n\nSee [[map|the map]].\n", facts
+        )
+        problems = [
+            problem
+            for problem in validate.check_report(document, facts, scan_codebase())
+            if problem.severity == "error" and "teaser" in problem.message
+        ]
+        self.assertTrue(problems)
+
+    def test_the_report_draws_the_figure_and_points_at_every_part(self) -> None:
+        source = REPORT_SOURCE.read_text(encoding="utf-8")
+        document = report.compile_report(source, _facts())
+        self.assertIn("teaser", [mount.component for mount in document.mounts])
+        unreferenced = sorted(set(teaser.part_ids()) - set(document.figrefs))
+        self.assertEqual(unreferenced, [])
+
+    def test_the_figure_is_the_first_numbered_figure(self) -> None:
+        """A teaser that is not Figure 1 is not a teaser."""
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), _facts()
+        )
+        teaser_mount = next(
+            mount for mount in document.mounts if mount.component == "teaser"
+        )
+        self.assertEqual(teaser_mount.figure_start, 1)
+
+    def test_the_scene_travels_in_the_payload(self) -> None:
+        codebase = scan_codebase()
+        payload = build_payload(codebase, {}, {"runs": []})
+        self.assertEqual(
+            [part["id"] for part in payload["teaser"]["parts"]],
+            teaser.part_ids(),
+        )
 
 
 class FactTests(unittest.TestCase):

@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from . import facts as facts_module
-from . import spec
+from . import spec, teaser
 from .introspect import Codebase
 from .report import Document
 
@@ -334,6 +334,7 @@ def build_payload(
         "script_index": _script_index(codebase),
         "lanes": spec.LANES,
         "kinds": KIND_META,
+        "teaser": teaser.scene(),
         "steps": steps,
         "groups": [group.__dict__ for group in spec.GROUPS],
         "artifacts": [artifact.__dict__ for artifact in spec.ARTIFACTS],

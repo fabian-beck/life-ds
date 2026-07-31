@@ -23,6 +23,12 @@ The authoring surface is small on purpose:
     tooltip. An unknown key fails the build rather than printing
     nothing—a hole in a sentence is worse than a broken build.
 
+`[[part|phrase]]` / `[[part]]`
+    A reference from a phrase into a named part of the teaser figure. The id is
+    resolved against `teaser.PARTS`, so a reference into the figure is checked
+    the same way a number is: the phrase reads as ordinary prose, and the page
+    turns it into a two-way link between the sentence and the drawing.
+
 `::: component key=value`
     A mount point for computed content. The block's own body is authored prose
     that introduces the component and is kept above it.
@@ -42,6 +48,7 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 import markdown
 
+from . import teaser
 from .facts import Fact
 
 MARKDOWN_EXTENSIONS = [
@@ -88,6 +95,11 @@ COMPONENTS: Dict[str, ComponentSpec] = {
         ComponentSpec(
             "buildinfo",
             "Commit, branch and build time of this rendering.",
+        ),
+        ComponentSpec(
+            "teaser",
+            "The whole system on one canvas, in parts the prose can point at.",
+            figures=1,
         ),
         ComponentSpec(
             "factgrid",
@@ -163,6 +175,7 @@ DIRECTIVE_OPEN = re.compile(r"^:::\s*([a-z][a-z0-9_-]*)\s*(.*)$")
 DIRECTIVE_CLOSE = re.compile(r"^:::\s*$")
 HEADING = re.compile(r"^(#{2,4})\s+(.*?)\s*$")
 CITATION = re.compile(r"(?<!\\)\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}")
+FIGREF = re.compile(r"(?<!\\)\[\[\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^\]]+?)\s*)?\]\]")
 PARAM = re.compile(r"""([a-z][a-z0-9_-]*)=(?:"([^"]*)"|'([^']*)'|(\S+))""")
 FENCE = re.compile(r"^\s*(```|~~~)")
 
@@ -212,6 +225,7 @@ class Document:
     mounts: List[Mount]
     citations: List[str]
     source_path: str
+    figrefs: List[str] = field(default_factory=list)
 
     @property
     def title(self) -> str:
@@ -371,6 +385,25 @@ def _escape(value: str) -> str:
     )
 
 
+def _outside_fences(text: str, replace: Callable[[str], str]) -> str:
+    """Apply an inline rewrite to prose only.
+
+    A fenced block is the one place the report can show its own syntax, so
+    nothing inside one is ever substituted.
+    """
+    out: List[str] = []
+    fence: Optional[str] = None
+    for raw in text.splitlines():
+        fence_match = FENCE.match(raw)
+        if fence_match:
+            marker = fence_match.group(1)
+            fence = None if fence == marker else (fence or marker)
+            out.append(raw)
+            continue
+        out.append(raw if fence else replace(raw))
+    return "\n".join(out)
+
+
 def substitute_citations(
     text: str, facts: Dict[str, Fact], seen: List[str], line_hint: str = ""
 ) -> str:
@@ -390,17 +423,39 @@ def substitute_citations(
             f'data-fact="{_escape(key)}">{_escape(fact.display)}</span>'
         )
 
-    out: List[str] = []
-    fence: Optional[str] = None
-    for raw in text.splitlines():
-        fence_match = FENCE.match(raw)
-        if fence_match:
-            marker = fence_match.group(1)
-            fence = None if fence == marker else (fence or marker)
-            out.append(raw)
-            continue
-        out.append(raw if fence else CITATION.sub(replace, raw))
-    return "\n".join(out).replace("\\{{", "{{")
+    substituted = _outside_fences(text, lambda line: CITATION.sub(replace, line))
+    return substituted.replace("\\{{", "{{")
+
+
+def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
+    """Replace `[[part|phrase]]` with a control that points into the figure.
+
+    The phrase stays ordinary prose—the sentence has to read the same with the
+    figure, without it, and on paper—so the element carries the relation and
+    nothing else. Resolving the id here rather than in the page is what makes a
+    reference into the figure a build-time claim: a part that was renamed or
+    removed stops the build instead of leaving a phrase that lights nothing.
+    """
+
+    def replace(match: re.Match) -> str:
+        part_id = match.group(1)
+        phrase = match.group(2)
+        part = teaser.part_by_id(part_id)
+        if part is None:
+            raise ReportError(
+                f"{line_hint}unknown figure part '[[{part_id}]]'—the teaser "
+                "draws " + ", ".join(teaser.part_ids())
+            )
+        seen.append(part_id)
+        label = phrase if phrase else part.label
+        return (
+            f'<button type="button" class="figref" data-part="{_escape(part_id)}" '
+            f'aria-label="{_escape(label)}—show '
+            f'{_escape(part.label)} in the figure">{_escape(label)}</button>'
+        )
+
+    substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
+    return substituted.replace("\\[[", "[[")
 
 
 def _renumber_headings(
@@ -552,6 +607,7 @@ def compile_report(
     blocks = split_blocks(body, offset)
 
     citations: List[str] = []
+    figrefs: List[str] = []
     flat: List[Section] = []
     mounts: List[Mount] = []
     counters = [0, 0, 0]
@@ -565,7 +621,10 @@ def compile_report(
 
     for block in blocks:
         hint = f"line {block.line}: " if block.line else ""
-        text = substitute_citations(block.text, facts, citations, hint)
+        # Figure references first: a reference's phrase is plain prose, and a
+        # citation inside one should still resolve.
+        text = substitute_figrefs(block.text, figrefs, hint)
+        text = substitute_citations(text, facts, citations, hint)
 
         if block.kind == "markdown":
             parts.append(
@@ -610,4 +669,4 @@ def compile_report(
 
     sections = _tree(flat)
     html = "\n".join(parts).replace(toc_placeholder, _toc_html(sections))
-    return Document(front, html, sections, mounts, citations, source_path)
+    return Document(front, html, sections, mounts, citations, source_path, figrefs)
