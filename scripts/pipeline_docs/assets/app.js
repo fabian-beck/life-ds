@@ -355,7 +355,9 @@
       "aria-label": "Flow chart of the " + lane.label + " pipeline",
     });
     const hint = el("p", { class: "hint" });
-    const caption = el("figcaption", {});
+    // Named for the element rather than for the helper, which the drawing
+    // routine below calls to refill it.
+    const captionNode = el("figcaption", { class: "cap cap-figure" });
     const search = el("input", {
       class: "search",
       type: "search",
@@ -1573,50 +1575,52 @@
       const indirect = geometry.edges.some((edge) => {
         return edge.indirect;
       });
-      const opening =
-        "<b>Figure " +
-        figureNumber +
-        ".</b> " +
-        escapeHtml(DATA.lanes[state.tab].label) +
+      const title =
+        DATA.lanes[state.tab].label +
         " pipeline as a dependency graph, " +
         stepNodes.length +
         " steps in " +
         geometry.layers +
-        " layers. ";
+        " layers";
 
       /* The compact caption describes the compact drawing. Naming the file
          lines and the fact line under a figure that has neither would be
          describing the other version of itself, so it says instead what was
          left out and where the reader can find it. */
-      if (compact) {
-        caption.innerHTML =
-          opening +
-          (geometry.bands.length
-            ? "A shaded band is one concern spread over several layers. "
-            : "") +
-          "The color bar gives the step kind. Reduced to fit the column: every " +
-          "step and every dependency is here, without the script, model, data " +
-          "files and recorded cost each step carries—those are in the full " +
-          "chart.";
-        return;
-      }
+      const marks = compact
+        ? [
+            geometry.bands.length
+              ? "A shaded band is one concern spread over several layers."
+              : "",
+            "The color bar gives the step kind.",
+            "The drawing is reduced to fit the column: every step and every " +
+              "dependency is here, without the script, model, data files and " +
+              "recorded cost each step carries—those are in the full chart.",
+          ]
+        : [
+            sourceCount
+              ? "Gray boxes, joined by dotted lines, are files this pipeline " +
+                "only reads, written by the other one."
+              : "",
+            geometry.bands.length
+              ? "A shaded band gathers the steps that share one concern, " +
+                "named along its head."
+              : "",
+            indirect
+              ? "A dashed arrow stands for a dependency whose intermediate " +
+                "step the filters have hidden."
+              : "",
+            "Each step names the script it lives in, its kind, the model it " +
+              "calls and the files it writes.",
+          ];
 
-      caption.innerHTML =
-        opening +
-        (sourceCount
-          ? "Gray boxes, joined by dotted lines, are files this pipeline only " +
-            "reads, written by the other one. "
-          : "") +
-        (geometry.bands.length
-          ? "A shaded band gathers the steps that share one concern, named " +
-            "along its head. "
-          : "") +
-        (indirect
-          ? "A dashed arrow stands for a dependency whose intermediate step " +
-            "the filters have hidden. "
-          : "") +
-        "Each step names the script it lives in, its kind, the model it calls " +
-        "and the files it writes.";
+      fillCaption(
+        captionNode,
+        "Figure",
+        figureNumber,
+        title,
+        marks.filter(Boolean).join(" ")
+      );
     }
 
     /* ------------------------------------------------------------- mount */
@@ -1701,7 +1705,7 @@
     }
     host.appendChild(
       el("figure", { class: "figure" }, [
-        caption,
+        captionNode,
         el("div", { class: "chart-scroll" }, [flow]),
       ])
     );
@@ -2266,15 +2270,35 @@
      Every caption is written before the block it names, because a reader
      scrolling down meets it first and needs to know what is coming. Print
      moves the figure captions back under their figures—see the caption rules
-     in `style.css`—which is why the kind is on the element as a class. */
+     in `style.css`—which is why the kind is on the element as a class.
+
+     Every caption on the page is built here, whichever element carries it: a
+     figure's is a `<figcaption>` inside its `<figure>` and a table's is a
+     block above the table, but both are the same two lines in the same type,
+     so a "Figure 3." and a "Table 3." read as one kind of object. */
   function caption(kind, number, title, sub) {
-    return el("div", { class: "cap cap-" + kind.toLowerCase() }, [
+    return fillCaption(el("div", {}), kind, number, title, sub);
+  }
+
+  function figureCaption(kind, number, title, sub) {
+    return fillCaption(el("figcaption", {}), kind, number, title, sub);
+  }
+
+  /* Rewritable, because a chart redraws its own caption whenever the filters
+     change what is on the canvas. */
+  function fillCaption(node, kind, number, title, sub) {
+    clear(node);
+    node.className = "cap cap-" + kind.toLowerCase();
+    node.appendChild(
       el("p", { class: "cap-title" }, [
         el("b", { text: kind + " " + number + "." }),
         el("span", { text: " " + sentence(title) }),
-      ]),
-      sub ? el("p", { class: "cap-sub", text: sentence(sub) }) : null,
-    ]);
+      ])
+    );
+    if (sub) {
+      node.appendChild(el("p", { class: "cap-sub", text: sentence(sub) }));
+    }
+    return node;
   }
 
   function sentence(text) {
@@ -3532,15 +3556,12 @@
     // and the status strip stays under the drawing: it reports what is on
     // screen, so it belongs with the drawing rather than with the caption.
     const figure = el("figure", { class: "figure teaser", id: "fig-teaser" }, [
-      el("figcaption", {
-        html:
-          "<b>Figure " +
-          figureNumber +
-          ".</b> " +
-          escapeHtml(TEASER.caption.title) +
-          ". " +
-          escapeHtml(TEASER.caption.sub),
-      }),
+      figureCaption(
+        "Figure",
+        figureNumber,
+        TEASER.caption.title,
+        TEASER.caption.sub
+      ),
       el("div", { class: "teaser-frame" }, [root]),
       status,
     ]);
@@ -3827,7 +3848,9 @@
         caption(
           "Figure",
           numbers.figure,
-          "API time per step, " + laneLabel(params.lane).toLowerCase(),
+          "API time per step of the " +
+            laneLabel(params.lane).toLowerCase() +
+            " pipeline",
           "A bar totals the wall-clock time of every call the step made, so a " +
             "step that runs once per event is long by repetition rather than " +
             "by latency"
@@ -3856,7 +3879,9 @@
         caption(
           "Figure",
           numbers.figure + 1,
-          "Tokens per step, " + laneLabel(params.lane).toLowerCase(),
+          "Tokens per step of the " +
+            laneLabel(params.lane).toLowerCase() +
+            " pipeline",
           "A bar totals the same calls, so a prompt that is re-sent for every " +
             "event is counted once per call"
         ),
@@ -3921,7 +3946,9 @@
         caption(
           "Table",
           numbers.table,
-          "Recorded calls per step, " + laneLabel(params.lane).toLowerCase()
+          "Recorded calls per step of the " +
+            laneLabel(params.lane).toLowerCase() +
+            " pipeline"
         )
       );
       mount.appendChild(
@@ -3973,7 +4000,10 @@
         caption(
           "Table",
           numbers.table,
-          entry.script + "—" + entry.flags.length + " options"
+          "The " +
+            entry.flags.length +
+            " command-line options of " +
+            entry.script
         )
       );
       mount.appendChild(

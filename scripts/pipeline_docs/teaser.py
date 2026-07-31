@@ -348,10 +348,10 @@ BUS = Bus(
 
 CAPTION_TITLE = "The system end to end"
 CAPTION_SUB = (
-    "Encyclopedic material and model inference on the left; the two generation "
-    "pipelines and the four kinds of step they are built from; the artifacts "
-    "they write; the interface that reads them. Along the foot, the four "
-    "encodings a single event record is presented in."
+    "Encyclopedic sources and model inference on the left feed the two "
+    "generation pipelines, which write the artifacts the interface on the "
+    "right reads. The foot shows the four encodings a single event record is "
+    "presented in."
 )
 
 
