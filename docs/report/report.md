@@ -160,6 +160,15 @@ together declare {{ pipeline.edges }} dependency edges, each labeled with the
 data that travels along it, and {{ pipeline.groups }} named concerns that the
 layout aligns into vertical strands.
 
+Each step in those figures is an address rather than a label. Opening one gives
+the record behind it: the function and line that implement it, the model and
+reasoning effort it resolves, the output schema it fills, the artifacts it
+reads and writes, the steps it needs and feeds, and the prompts it sends. The
+printed edition lays the same records out for every step as an appendix, since
+paper cannot be clicked. The figures are accordingly an index into the pipeline
+rather than a picture of it, and no table restates what a step's own record
+already holds.
+
 The pipelines instantiate a common pattern: material is first derived bottom-up
 by steps that each observe only their own slice of the subject, and is then
 revised top-down by a step that observes the assembled artifact. The pattern
@@ -203,9 +212,6 @@ receives a focused prompt and a small output schema, and because a failed or
 malformed response is then confined to a single event.
 :::
 
-::: steptable lane=person
-:::
-
 ### Meta story pipeline
 
 [[meta-pipeline|A theme across many lives]]: {{ pipeline.meta_steps }} steps
@@ -225,9 +231,6 @@ one-to-one to something the reader is looking at, and article prose that
 supplies the context surrounding what the components encode.
 
 ::: pipeline lane=meta
-:::
-
-::: steptable lane=meta
 :::
 
 ### Models, prompts and structured output
