@@ -1638,74 +1638,45 @@
           "selecting a step labels its arrows with the data that travels " +
           "along them.";
 
-      /* The caption says only what the drawing cannot: what the unlabelled
-         marks mean. The layer semantics and the branch structure belong to the
-         authored prose above, and repeating them here made the figure argue
-         with the text.
+      /* What the figure is, and then the marks that carry no label of their
+         own. The layer semantics, the branch structure and what a step node
+         prints belong to the prose and to the drawing itself, and a caption
+         that repeated them argued with both. A mark is named only when it is
+         actually drawn.
 
-         It describes the figure rather than what the figure does when it is
-         touched, because the printed report is read as a document in its own
-         right and there is nothing to touch in it. The affordances are the
-         hint's, above the drawing, and the hint does not print. For the same
-         reason a mark is explained only when it is actually drawn: the dashed
-         edge exists only while a filter hides the step it passes through. */
-      const sourceCount = geometry.nodes.length - stepNodes.length;
-      const indirect = geometry.edges.some((edge) => {
-        return edge.indirect;
-      });
-      const title =
-        DATA.lanes[state.tab].label +
-        " pipeline as a dependency graph, " +
-        stepNodes.length +
-        " steps in " +
-        geometry.layers +
-        " layers";
-
-      /* Each caption describes the drawing it is under. Naming the file lines
+         Each caption describes the drawing it is under. Naming the file lines
          and the script under a figure that has neither would be describing
-         another version of itself, so a reduced caption says instead what was
-         left out and where the reader can find it. */
+         another version of itself, so a reduced caption says instead that it
+         is reduced and where the rest is. */
+      const sourceCount = geometry.nodes.length - stepNodes.length;
+      const bands = geometry.bands.length;
       const marks = reduced
         ? [
-            geometry.bands.length
-              ? compact
-                ? "A shaded band is one concern spread over several layers."
-                : "A shaded band gathers the steps that share one concern, " +
-                  "named along its head."
-              : "",
             compact ? "The color bar gives the step kind." : "",
-            "The drawing is reduced to fit the column: every step and every " +
-              "dependency is here, " +
-              (compact
-                ? "without the script, model, data files and recorded cost " +
-                  "each step carries"
-                : "each step with its kind and the model it calls, without " +
-                  "the script, the data files and the recorded cost") +
-              "—those are in the full chart.",
+            "The drawing is reduced to fit the column; the full chart adds " +
+              "the detail it leaves out.",
           ]
         : [
             sourceCount
-              ? "Gray boxes, joined by dotted lines, are files this pipeline " +
-                "only reads, written by the other one."
+              ? "Gray boxes are files written by the other pipeline."
               : "",
-            geometry.bands.length
-              ? "A shaded band gathers the steps that share one concern, " +
-                "named along its head."
-              : "",
-            indirect
-              ? "A dashed arrow stands for a dependency whose intermediate " +
-                "step the filters have hidden."
-              : "",
-            "Each step names the script it lives in, its kind, the model it " +
-              "calls and the files it writes.",
+            bands ? "A shaded band gathers the steps of one concern." : "",
           ];
 
       fillCaption(
         captionNode,
         "Figure",
         figureNumber,
-        title,
-        marks.filter(Boolean).join(" ")
+        [
+          DATA.lanes[state.tab].label +
+            " pipeline as a dependency graph, " +
+            stepNodes.length +
+            " steps in " +
+            geometry.layers +
+            " layers.",
+        ]
+          .concat(marks.filter(Boolean))
+          .join(" ")
       );
     }
 
@@ -2365,10 +2336,12 @@
      order, so the number a component prints is the one the prose cites—a
      caption can never drift out of step with a cross-reference.
 
-     A caption states what the block is and then only what the block cannot
-     show for itself; whatever a legend, an axis or the prose above already
-     says is left out. Both parts are written as sentences, so the terminating
-     full stop is added here rather than trusted to every call site.
+     A caption is one plain run of text: it says what the block is, adds only
+     what the block cannot show for itself, and stops. Nothing inside it is
+     set in a second register—there is no subtitle and no second size, and the
+     number is bold only so the eye can find it from a cross-reference. It is
+     written as sentences, so the terminating full stop is added here rather
+     than trusted to every call site.
 
      Every caption is written before the block it names, because a reader
      scrolling down meets it first and needs to know what is coming. Print
@@ -2377,30 +2350,22 @@
 
      Every caption on the page is built here, whichever element carries it: a
      figure's is a `<figcaption>` inside its `<figure>` and a table's is a
-     block above the table, but both are the same two lines in the same type,
-     so a "Figure 3." and a "Table 3." read as one kind of object. */
-  function caption(kind, number, title, sub) {
-    return fillCaption(el("div", {}), kind, number, title, sub);
+     block above the table. */
+  function caption(kind, number, text) {
+    return fillCaption(el("p", {}), kind, number, text);
   }
 
-  function figureCaption(kind, number, title, sub) {
-    return fillCaption(el("figcaption", {}), kind, number, title, sub);
+  function figureCaption(kind, number, text) {
+    return fillCaption(el("figcaption", {}), kind, number, text);
   }
 
   /* Rewritable, because a chart redraws its own caption whenever the filters
      change what is on the canvas. */
-  function fillCaption(node, kind, number, title, sub) {
+  function fillCaption(node, kind, number, text) {
     clear(node);
     node.className = "cap cap-" + kind.toLowerCase();
-    node.appendChild(
-      el("p", { class: "cap-title" }, [
-        el("b", { text: kind + " " + number + "." }),
-        el("span", { text: " " + sentence(title) }),
-      ])
-    );
-    if (sub) {
-      node.appendChild(el("p", { class: "cap-sub", text: sentence(sub) }));
-    }
+    node.appendChild(el("b", { text: kind + " " + number + "." }));
+    node.appendChild(el("span", { text: " " + sentence(text) }));
     return node;
   }
 
@@ -3659,12 +3624,7 @@
     // and the status strip stays under the drawing: it reports what is on
     // screen, so it belongs with the drawing rather than with the caption.
     const figure = el("figure", { class: "figure teaser", id: "fig-teaser" }, [
-      figureCaption(
-        "Figure",
-        figureNumber,
-        TEASER.caption.title,
-        TEASER.caption.sub
-      ),
+      figureCaption("Figure", figureNumber, TEASER.caption),
       el("div", { class: "teaser-frame" }, [root]),
       status,
     ]);
@@ -3753,7 +3713,7 @@
       });
       mount.appendChild(grid);
       if (params.caption) {
-        mount.appendChild(el("p", { class: "cap-sub", text: params.caption }));
+        mount.appendChild(el("p", { class: "cap", text: params.caption }));
       }
     },
 
@@ -4012,7 +3972,7 @@
       const used = recordedRunsFor(params.lane);
       mount.appendChild(
         el("p", {
-          class: "cap-sub",
+          class: "cap",
           text:
             "Measured from " +
             used
@@ -4030,10 +3990,9 @@
           numbers.figure,
           "API time per step of the " +
             laneLabel(params.lane).toLowerCase() +
-            " pipeline",
-          "A bar totals the wall-clock time of every call the step made, so a " +
-            "step that runs once per event is long by repetition rather than " +
-            "by latency"
+            " pipeline. A bar totals the wall-clock time of every call the " +
+            "step made, so a step that runs once per event is long by " +
+            "repetition rather than by latency"
         ),
         kindLegend(withStats),
       ]);
@@ -4061,9 +4020,8 @@
           numbers.figure + 1,
           "Tokens per step of the " +
             laneLabel(params.lane).toLowerCase() +
-            " pipeline",
-          "A bar totals the same calls, so a prompt that is re-sent for every " +
-            "event is counted once per call"
+            " pipeline. A bar totals the same calls, so a prompt that is " +
+            "re-sent for every event is counted once per call"
         ),
         el("div", { class: "legend" }, [
           el("span", { class: "item" }, [
@@ -4244,7 +4202,7 @@
       });
       const unattributed = DATA.unattributed || [];
       mount.appendChild(
-        el("p", { class: "cap-sub" }, [
+        el("p", { class: "cap" }, [
           el("span", {
             text:
               sites.length -

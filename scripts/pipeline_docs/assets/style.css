@@ -661,41 +661,25 @@ body.has-note-pop .notes {
 
 /* Every caption on the page is set here, whether it names a figure or a table
    and whether it is carried by a `<figcaption>` inside a `<figure>` or by a
-   block above a table. One type for both: the numbered title in sans, the
-   description a step smaller under it, so a "Figure 3." and a "Table 3." are
-   recognizably the same kind of object.
+   block above a table. One paragraph, one size, one color, so a "Figure 3."
+   and a "Table 3." are the same kind of object—the number is the only thing
+   set apart, and only so the eye can find it from a cross-reference.
 
-   The paragraphs are selected by element as well as by class, because
-   `.report p` sets the size of running prose at the same weight and would
-   otherwise print a caption at body size. */
-.cap {
+   The rule is written for the element as well as the class, because `.report p`
+   sets the size of running prose at the same weight and would otherwise print
+   a caption at body size. */
+.cap,
+p.cap {
   margin: 0 0 10px;
-}
-
-/* The block already holds the gap to what it names, so the last line inside it
-   does not add a second one. */
-.cap > p:last-child {
-  margin-bottom: 0;
-}
-
-p.cap-title {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: 13.5px;
-  line-height: 1.5;
-}
-
-p.cap-title b {
-  font-weight: 600;
-}
-
-p.cap-sub {
-  margin: 3px 0 10px;
   max-width: 74ch;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 12.5px;
   line-height: 1.5;
+}
+
+.cap b {
+  font-weight: 600;
 }
 
 .factgrid {

@@ -346,12 +346,10 @@ BUS = Bus(
     label_x=272,
 )
 
-CAPTION_TITLE = "The system end to end"
-CAPTION_SUB = (
-    "Encyclopedic sources and model inference on the left feed the two "
-    "generation pipelines, which write the artifacts the interface on the "
-    "right reads. The foot shows the four encodings a single event record is "
-    "presented in."
+CAPTION = (
+    "The system end to end: encyclopedic sources and model inference feed the "
+    "two generation pipelines, whose artifacts the interface reads. Along the "
+    "foot, the four encodings of one event record."
 )
 
 
@@ -384,7 +382,7 @@ def scene() -> Dict[str, Any]:
     return {
         "width": SCENE_W,
         "height": SCENE_H,
-        "caption": {"title": CAPTION_TITLE, "sub": CAPTION_SUB},
+        "caption": CAPTION,
         "stages": [stage.to_json() for stage in STAGES],
         "parts": [part.to_json() for part in PARTS],
         "links": [link.to_json() for link in LINKS],
