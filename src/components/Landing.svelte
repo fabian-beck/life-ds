@@ -166,7 +166,9 @@
     };
   }
 
-  $: landingLocation = $querystring ? `${$location}?${$querystring}` : $location;
+  $: landingLocation = $querystring
+    ? `${$location}?${$querystring}`
+    : $location;
 
   let lastFilterLocation = null;
   let pendingFilterLocations = [];
@@ -192,15 +194,21 @@
   // history step for every keystroke or role toggle.
   $: {
     const basePath = $location;
-    if (lastFilterLocation === landingLocation && /^\/[a-z]{2}\/?$/.test(basePath)) {
+    if (
+      lastFilterLocation === landingLocation &&
+      /^\/[a-z]{2}\/?$/.test(basePath)
+    ) {
       const params = new URLSearchParams();
       if (searchQuery) params.set("q", searchQuery);
       if (activeTags.size > 0) {
         params.set("roles", [...activeTags].sort().join(","));
       }
       const queryString = params.toString();
-      const nextLocation = queryString ? `${basePath}?${queryString}` : basePath;
-      const latestLocation = pendingFilterLocations[pendingFilterLocations.length - 1];
+      const nextLocation = queryString
+        ? `${basePath}?${queryString}`
+        : basePath;
+      const latestLocation =
+        pendingFilterLocations[pendingFilterLocations.length - 1];
       if (nextLocation !== (latestLocation || landingLocation)) {
         pendingFilterLocations = [...pendingFilterLocations, nextLocation];
         replace(nextLocation);
@@ -1194,9 +1202,8 @@
     background-image: var(--card-pattern-image, none);
     background-size: var(--card-pattern-size, 400px);
     background-repeat: repeat;
-    background-position: calc(var(--card-pattern-size, 400px) / -2) calc(
-        var(--card-pattern-size, 400px) / -2
-      );
+    background-position: calc(var(--card-pattern-size, 400px) / -2)
+      calc(var(--card-pattern-size, 400px) / -2);
     background-blend-mode: multiply;
     opacity: var(--card-pattern-opacity, 1);
     mix-blend-mode: overlay;

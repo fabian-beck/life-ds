@@ -20,10 +20,9 @@ empty gap in a sentence.
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from . import spec
 from .introspect import Codebase

@@ -641,7 +641,8 @@
                           >
                             <path d={mdiMapMarkerOutline} />
                           </svg>
-                          <span class="chapter-meta-text">{chapterLocation}</span
+                          <span class="chapter-meta-text"
+                            >{chapterLocation}</span
                           >
                         </div>
                       </div>

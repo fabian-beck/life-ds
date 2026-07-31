@@ -1541,9 +1541,8 @@
     background-image: var(--story-pattern-image, none);
     background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
-    background-position: calc(var(--story-pattern-size, 400px) / -2) calc(
-        var(--story-pattern-size, 400px) / -2
-      );
+    background-position: calc(var(--story-pattern-size, 400px) / -2)
+      calc(var(--story-pattern-size, 400px) / -2);
     background-blend-mode: multiply;
     opacity: 0.7;
     mix-blend-mode: overlay;
@@ -1851,7 +1850,8 @@
     background-size: var(--story-pattern-size, 400px);
     background-repeat: repeat;
     background-blend-mode: multiply;
-    background-position: calc(var(--story-pattern-size, 400px) / -2) calc(
+    background-position: calc(var(--story-pattern-size, 400px) / -2)
+      calc(
         -1 * var(--header-height, 0px) - var(--story-pattern-size, 400px) / 2
       );
     mix-blend-mode: overlay;
