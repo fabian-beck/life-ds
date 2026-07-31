@@ -76,21 +76,21 @@ def _check_graph() -> List[Problem]:
 
     # Depth-first cycle detection: the layout assigns a layer by longest path,
     # which never terminates on a cycle.
-    WHITE, GREY, BLACK = 0, 1, 2
-    colour = {step_id: WHITE for step_id in edges}
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {step_id: WHITE for step_id in edges}
 
     def visit(node: str, trail: List[str]) -> None:
-        colour[node] = GREY
+        color[node] = GRAY
         for parent in edges.get(node, []):
-            if colour[parent] == GREY:
+            if color[parent] == GRAY:
                 loop = " -> ".join(trail[trail.index(parent) :] + [parent])
                 problems.append(Problem("error", "spec", f"dependency cycle: {loop}"))
-            elif colour[parent] == WHITE:
+            elif color[parent] == WHITE:
                 visit(parent, trail + [parent])
-        colour[node] = BLACK
+        color[node] = BLACK
 
     for step_id in edges:
-        if colour[step_id] == WHITE:
+        if color[step_id] == WHITE:
             visit(step_id, [step_id])
 
     return problems

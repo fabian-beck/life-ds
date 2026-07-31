@@ -2,7 +2,7 @@
 title: Life Data Stories
 subtitle: Generating and presenting biographical data stories
 description:
-  Technical report on the Life Data Stories system—its artefact schemas, its two
+  Technical report on the Life Data Stories system—its artifact schemas, its two
   generation pipelines and its interface.
 abstract:
   Life Data Stories transforms encyclopedic biographical prose into structured
@@ -39,7 +39,7 @@ geography and as a social network. The same derivation applied across several
 biographies yields a meta story, in which a theme is traced through the lives
 that share it.
 
-The operations this requires are interpretative. Selecting the episodes that
+The operations this requires are interpretive. Selecting the episodes that
 constitute a life, identifying the modern place a historical toponym denotes,
 and judging which relationships are constitutive of a career are decisions
 about meaning, and at the scale of a corpus they are made by a language model.
@@ -68,7 +68,7 @@ The corpus is a graph: every life is reachable from each theme it joins.
 
 **Every story looks like itself.** Palette, typography and pattern are
 generated per subject and carried in the data, so visual identity travels with
-the artefact.
+the artifact.
 :::
 
 ## Architecture
@@ -98,15 +98,15 @@ of an external service, and what can be verified by assertion.
 The ratio between the kinds is the principal design variable. Inference steps
 are what make the task possible; deterministic steps are what make the result
 testable. The system therefore confines non-determinism to the steps that
-genuinely require judgement and keeps the remainder—clustering, geocoding,
+genuinely require judgment and keeps the remainder—clustering, geocoding,
 chapter fitting, network merging, translation bookkeeping—deterministic, so
 that everything downstream of an inference is reproducible and assertable.
 
 ## Data model
 
-Four artefact families carry everything the application reads, distributed over
-{{ pipeline.artifacts }} declared files and directories. Each is a denormalised
-document rather than a row in a normalised schema, because the document is the
+Four artifact families carry everything the application reads, distributed over
+{{ pipeline.artifacts }} declared files and directories. Each is a denormalized
+document rather than a row in a normalized schema, because the document is the
 unit at which generated material is inspected, corrected and regenerated.
 
 The **person registry** holds the identity and portrait of each subject, and
@@ -118,16 +118,16 @@ The **life events** document is the narrative spine of a biography: dated
 events with locations, involved persons, sources, images and a typed icon,
 optionally grouped into chapters that name the phases of a life, together with
 a concluding statement. It is also the reference document from which all
-localised copies derive.
+localized copies derive.
 
 The **ego network** document records the subject's relationships as typed and
 weighted edges, each with a period, a strength and a supporting description. It
 is generated independently of the narrative, so a biography may exist before
 its network does.
 
-The **meta story** document is a second-order artefact. It describes a theme
+The **meta story** document is a second-order artifact. It describes a theme
 across several biographies and is the only family whose inputs are other
-artefacts of this system rather than an external source, which makes the
+artifacts of this system rather than an external source, which makes the
 coupling between the two pipelines a coupling of files rather than of code.
 
 ::: artifacts lane=person
@@ -142,13 +142,13 @@ Both pipelines are directed acyclic graphs rather than sequences, and the
 figures below draw them as such. A step's vertical position is the length of
 the longest chain of data dependencies reaching it, so steps drawn side by side
 are genuinely independent and may execute in either order. The two graphs
-together declare {{ pipeline.edges }} dependency edges, each labelled with the
+together declare {{ pipeline.edges }} dependency edges, each labeled with the
 data that travels along it, and {{ pipeline.groups }} named concerns that the
 layout aligns into vertical strands.
 
 The pipelines instantiate a common pattern: material is first derived bottom-up
 by steps that each observe only their own slice of the subject, and is then
-revised top-down by a step that observes the assembled artefact. The pattern
+revised top-down by a step that observes the assembled artifact. The pattern
 exists because locally optimal generation is globally redundant. A phase that
 sees only the social graph will describe the social graph, and so will the
 phase that later writes the surrounding prose, unless some step is given the
@@ -217,7 +217,7 @@ supplies the context surrounding what the components encode.
 The generation side uses {{ pipeline.models }} across
 {{ pipeline.call_sites }} call sites. Models are selected per call site rather
 than globally, so that a phase whose cost is dominated by volume and a phase
-whose quality determines the whole artefact need not share one setting.
+whose quality determines the whole artifact need not share one setting.
 
 ::: modeltable
 :::
@@ -235,7 +235,7 @@ than they require editing outside a code review. Structured output is declared
 as Pydantic models, {{ pipeline.schemas }} classes in total, which converts
 open-ended text generation into slot filling: the required shape of a response
 is a type rather than a paragraph of instructions, and validation occurs before
-any value reaches an artefact. Model output is then applied deterministically.
+any value reaches an artifact. Model output is then applied deterministically.
 Identifiers are matched against existing entities, unknown references are
 discarded with a warning, and coordinates, URLs and graph structure are copied
 rather than accepted, so that a defective response stays confined to the field
@@ -313,7 +313,7 @@ and Protomaps locates the events whose places could be resolved, with the
 camera following the reader rather than the reader panning the map; the
 basemap is deliberately label-free, since the story supplies the toponyms. The
 ego network is presented on demand as a force-directed graph of the subject's
-documented relationships, typed and weighted as the artefact records them.
+documented relationships, typed and weighted as the artifact records them.
 Images open in a lightbox that pages through the story's illustrations as a
 single gallery.
 

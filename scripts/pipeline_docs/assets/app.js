@@ -14,7 +14,7 @@
    report reads straight through and either chart can be cited from anywhere in
    the prose. Each chart is an independent instance with its own filters, search
    and selection; the step drawer is shared, and opening it from one chart clears
-   the other's selection. Colour encodes the step kind and nothing else.
+   the other's selection. Color encodes the step kind and nothing else.
 
    The chart is a layered DAG, not a sequence. A step's layer is the longest
    path of real data dependencies reaching it, so steps drawn side by side are
@@ -29,7 +29,7 @@
    takes three layers reads as one vertical strand instead of drifting across the
    chart. Alignment holds only where a group is continuous: a member several
    layers below the rest is placed on its own. Positions are continuous and
-   relaxed towards the centre, not slots in a grid. */
+   relaxed toward the center, not slots in a grid. */
 
 (function () {
   "use strict";
@@ -484,7 +484,7 @@
             block.layers.push(layer);
           }
           block.byLayer[layer].push(node);
-          // Where the barycentre pass put this node in its row, normalized, so a
+          // Where the barycenter pass put this node in its row, normalized, so a
           // block keeps the side of the chart its members were ordered onto.
           block.rank += row.length > 1 ? index / (row.length - 1) : 0.5;
         });
@@ -521,12 +521,12 @@
        Stage one places the blocks: group runs and lone nodes alike, each a rigid
        rectangle with one x for every layer it crosses. Positions are continuous,
        not slots in a grid. A leftmost packing gives a feasible start, then blocks
-       are relaxed towards the average position of their graph neighbours, each one
-       clamped to the room its neighbours in every layer it occupies actually
+       are relaxed toward the average position of their graph neighbors, each one
+       clamped to the room its neighbors in every layer it occupies actually
        leave. That keeps the arrangement valid at every step while letting sparse
-       layers centre themselves under the layers they feed.
+       layers center themselves under the layers they feed.
 
-       Stage two places the nodes inside each block, centred on it, which is what
+       Stage two places the nodes inside each block, centered on it, which is what
        makes a group's steps line up: a run with one step per layer puts every
        step at the same x. */
     function arrange(rows, graph) {
@@ -601,7 +601,7 @@
         });
       }
 
-      // Relax. A block may move only inside the room its neighbours leave, so the
+      // Relax. A block may move only inside the room its neighbors leave, so the
       // arrangement stays valid; alternating the sweep direction keeps the result
       // from leaning the way it was traversed.
       for (let pass = 0; pass < 24; pass += 1) {
@@ -635,7 +635,7 @@
       const origin = PAD + RAIL_W + MARGIN_CH - left;
       blocks.forEach((block) => {
         block.cx += origin;
-        // Stage two: the members of one layer, centred on the block.
+        // Stage two: the members of one layer, centered on the block.
         block.layers.forEach((layer) => {
           const list = block.byLayer[layer];
           const total =
@@ -710,7 +710,7 @@
         });
       });
 
-      // Two barycentre passes: order each row by the average position of its
+      // Two barycenter passes: order each row by the average position of its
       // parents, which is enough to untangle graphs this small.
       const indexOf = {};
       function reindex() {
@@ -772,7 +772,7 @@
           byId[node.id] = node;
         });
         // Blocks are ordered once for the whole chart, which can differ from the
-        // barycentre order inside a single row; the edge fanning and the channel
+        // barycenter order inside a single row; the edge fanning and the channel
         // search below both read rows left to right.
         row.sort((a, b) => {
           return a.x - b.x;
@@ -1192,8 +1192,8 @@
       group.appendChild(
         svg("rect", { class: "body", width: node.w, height: node.h })
       );
-      // Kind accent: a colour bar plus the kind's name in the fact line below,
-      // so the kind is never signalled by colour alone.
+      // Kind accent: a color bar plus the kind's name in the fact line below,
+      // so the kind is never signaled by color alone.
       group.appendChild(
         svg("rect", {
           x: 0,
@@ -1341,7 +1341,7 @@
         geometry.layers +
         " layers. " +
         (sourceCount
-          ? "Grey boxes are files this pipeline only reads, written by the " +
+          ? "Gray boxes are files this pipeline only reads, written by the " +
             "other one. "
           : "") +
         (geometry.bands.length
@@ -1691,7 +1691,7 @@
           html:
             "Literal instruction text extracted from the source. " +
             "<span class='ph'>{highlighted}</span> marks where runtime data is injected; " +
-            "grey lines above a block are the conditions that guard it.",
+            "gray lines above a block are the conditions that guard it.",
         })
       );
       const tabs = el("div", { class: "tabs" });

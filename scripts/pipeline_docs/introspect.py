@@ -785,7 +785,7 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
     # Phases take `model` as a plain parameter with no default—the value is
     # whatever the entry point passed. Falling back to the script's own
     # `--model` default is what makes the chart show a real model name instead
-    # of the word "model", and the source is labelled so the distinction stays
+    # of the word "model", and the source is labeled so the distinction stays
     # visible.
     cli_model_default = None
     for flag in cli_flags:

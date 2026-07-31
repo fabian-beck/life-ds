@@ -34,8 +34,9 @@ SYSTEM_PROMPT = (
     "for. Explain what the step does and why it is built that way. Be concrete "
     "and technical; prefer the specific constraint over the general claim. "
     "Never address the reader, never use second person, and do not restate the "
-    "step's name as a sentence. Set em dashes closed up against the words they "
-    "join, with no surrounding spaces, as the rest of the report does."
+    "step's name as a sentence. Write in American English, and set em dashes "
+    "closed up against the words they join, with no surrounding spaces, as the "
+    "rest of the report does."
 )
 
 

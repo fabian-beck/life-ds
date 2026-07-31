@@ -10,7 +10,7 @@
    this document were measured and which were argued.
 
    Academic report styling: black on white, hairline rules, square corners, no
-   shadows and no decorative fills. Colour is reserved for exactly one
+   shadows and no decorative fills. Color is reserved for exactly one
    job—the step-kind category (AI, deterministic, external source, image
    model)—and is never the only carrier of that meaning: every node prints its
    kind in the fact line, and every legend and filter pairs the swatch with a
@@ -381,7 +381,7 @@ h1 {
   font-size: 14px;
 }
 
-/* A cited measurement. Underdotted rather than coloured: it is a normal part of
+/* A cited measurement. Underdotted rather than colored: it is a normal part of
    the sentence, and the dots only say that its provenance is on hover. */
 .cite {
   border-bottom: 1px dotted var(--muted);
@@ -442,7 +442,7 @@ h1 {
 
 /* --------------------------------------------------------------- callouts */
 
-/* Authored, not computed: an indented voice with a labelled rule, so it reads as
+/* Authored, not computed: an indented voice with a labeled rule, so it reads as
    an argument the author is making rather than a fact the build measured. */
 .callout {
   margin: 20px 0 22px;

@@ -417,7 +417,7 @@
           "The supplied prompt requires \"10-25\" connections and exactly \"3-5\" main relationship categories, with each connected person appearing only once."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Calls the OpenAI Responses API to turn the assembled person context into a strict JSON object. Although the maintainer note describes a colour and typography system, the supplied prompt template is for extracting a Wikipedia-based ego network: 10–25 people, relationship attributes, subject metadata, and category summaries. The system instruction instead frames the model as a data-storytelling brand designer, so the visible artifacts indicate a prompt/source mismatch or stale template rather than a reliably specified interface-style generation task.",
+        "what_it_does": "Calls the OpenAI Responses API to turn the assembled person context into a strict JSON object. Although the maintainer note describes a color and typography system, the supplied prompt template is for extracting a Wikipedia-based ego network: 10–25 people, relationship attributes, subject metadata, and category summaries. The system instruction instead frames the model as a data-storytelling brand designer, so the visible artifacts indicate a prompt/source mismatch or stale template rather than a reliably specified interface-style generation task.",
         "why_this_design": "The request uses the Responses API with configurable reasoning effort and JSON-object mode, then rejects failed, incomplete, empty, or non-JSON responses before they can enter later pipeline stages. It also distinguishes API-status failures from generation-status failures, preserving status details for credential, access, or billing diagnosis."
       }
     },

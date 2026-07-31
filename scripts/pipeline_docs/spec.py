@@ -74,7 +74,7 @@ LANES: Dict[str, Dict[str, str]] = {
     },
 }
 
-# Step kinds drive both colour and the "AI only" filter in the chart.
+# Step kinds drive both color and the "AI only" filter in the chart.
 AI = "ai"
 CODE = "deterministic"
 EXTERNAL = "external"
@@ -181,7 +181,7 @@ GROUPS: List[Group] = [
         "interface_style",
         "Interface style",
         ["p_style", "p_review_style"],
-        note="The story's colour and type system, and the critic pass over it.",
+        note="The story's color and type system, and the critic pass over it.",
     ),
     Group(
         "localization",
@@ -265,7 +265,7 @@ ARTIFACTS: List[Artifact] = [
         "Interface styles",
         "data/person_styles.json",
         "registry",
-        "Per-person colours and fonts for the story UI.",
+        "Per-person colors and fonts for the story UI.",
     ),
     Artifact(
         "persons",
@@ -526,7 +526,7 @@ STEPS: List[Step] = [
         "generate_person_style.py",
         "call_openai",
         summary=(
-            "Derives a colour and type system for the story from the person's "
+            "Derives a color and type system for the story from the person's "
             "era and field."
         ),
         depends_on=[Dep("p_write", "person summary + first five events")],
@@ -568,7 +568,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[
             Dep("p_register", "the licensed reference image URL"),
-            Dep("p_style", "primary and secondary colour"),
+            Dep("p_style", "primary and secondary color"),
         ],
         prompts=["STYLE_TRANSFER_PROMPT", "generate_portrait"],
         inputs=["persons", "person_styles"],
@@ -603,7 +603,7 @@ STEPS: List[Step] = [
         AI,
         "review_person.py",
         "review_style",
-        summary="Checks colour harmony and font pairing against the story's mood.",
+        summary="Checks color harmony and font pairing against the story's mood.",
         depends_on=[
             Dep("p_style", "the generated style config"),
             Dep("p_write", "events, as the mood to check against"),

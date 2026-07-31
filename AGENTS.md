@@ -141,6 +141,8 @@ owner.
 - Use PascalCase for Svelte component filenames.
 - Use snake_case for person IDs and Python variables and functions.
 - Use kebab-case for CSS classes.
+- Write English prose in American English—the report, documentation, comments,
+  code identifiers and generated English text alike (color, artifact, labeled).
 - Follow existing Svelte 5 patterns and shared stores.
 - Keep person data synchronized across its registries and localized files.
 - Do not edit generated output when the source data or generator is the proper

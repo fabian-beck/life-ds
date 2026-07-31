@@ -91,7 +91,7 @@ COMPONENTS: Dict[str, ComponentSpec] = {
         ),
         ComponentSpec(
             "factgrid",
-            "A labelled grid of measurements, each with its source.",
+            "A labeled grid of measurements, each with its source.",
             required=("keys",),
             optional=("caption",),
         ),
@@ -143,7 +143,7 @@ COMPONENTS: Dict[str, ComponentSpec] = {
         ),
         ComponentSpec(
             "kindlegend",
-            "What the four step-kind colours mean.",
+            "What the four step-kind colors mean.",
         ),
         ComponentSpec(
             "coverage",
@@ -288,7 +288,7 @@ def parse_params(text: str, line: int) -> Dict[str, str]:
 
 
 def split_blocks(body: str, offset: int) -> List[Block]:
-    """Cut the body into prose and directives, honouring code fences."""
+    """Cut the body into prose and directives, honoring code fences."""
     blocks: List[Block] = []
     prose: List[str] = []
     fence: Optional[str] = None
