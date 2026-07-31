@@ -9,6 +9,7 @@
     forceY,
   } from "d3-force";
   import { _ } from "../stores/language.js";
+  import { assetUrl } from "../utils/assetUrl.js";
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
@@ -716,7 +717,7 @@
                     />
                     {#if node.portrait}
                       <image
-                        href={node.portrait}
+                        href={assetUrl(node.portrait)}
                         x={-MAIN_R}
                         y={-MAIN_R}
                         width={MAIN_R * 2}

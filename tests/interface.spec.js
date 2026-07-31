@@ -99,6 +99,20 @@ test("core visitor journey", async ({ page }, testInfo) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
+  // Every asset the app asks for has to exist under the deployment base path.
+  // A site-absolute path from the data files that never passed through
+  // `assetUrl` requests the domain root instead and answers 404, which shows up
+  // as a broken portrait rather than as a script error — invisible to the
+  // checks above. Collecting the misses makes that failure loud.
+  const siteOrigin = new URL(testInfo.project.use.baseURL).origin;
+  const missingAssets = [];
+  page.on("response", (response) => {
+    const url = new URL(response.url());
+    if (response.status() === 404 && url.origin === siteOrigin) {
+      missingAssets.push(url.pathname);
+    }
+  });
+
   await page.goto("en");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("status")).toContainText(/stories shown/i);
@@ -203,6 +217,15 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(
     page.getByRole("button", { name: "Back to Stories" }).first()
   ).toBeVisible();
+
+  // The social network graph draws each main person as an SVG <image>, the one
+  // portrait in the app that is not an <img>. Scrolling it into view makes the
+  // response listener see those requests.
+  const networkSection = page.locator(".network-section .mnet");
+  await networkSection.scrollIntoViewIfNeeded();
+  await expect(networkSection.locator("image").first()).toBeVisible();
+  await capture(page, testInfo, "07-meta-story-network");
+
   await page.getByRole("button", { name: "Back to Stories" }).first().click();
   await expect(page).toHaveURL(/\/en$/);
   await page.goto("en#/en/exhibition/ada_lovelace");
@@ -212,4 +235,5 @@ test("core visitor journey", async ({ page }, testInfo) => {
   ).toBeVisible();
 
   expect(pageErrors).toEqual([]);
+  expect(missingAssets).toEqual([]);
 });
