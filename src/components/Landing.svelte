@@ -5,6 +5,10 @@
   import { _ } from "../stores/language";
   import { push, replace } from "svelte-spa-router";
   import { location, querystring } from "../stores/router.js";
+  import {
+    buildUrlWithParams,
+    landingFilterQuery,
+  } from "../stores/queryParams.js";
   import { clamp, displayName } from "../utils/helpers.js";
   import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
   import { assetUrl } from "../utils/assetUrl.js";
@@ -465,8 +469,13 @@
   }
 
   function handleExploreMetaStory(metaStory) {
-    // Navigate to meta story view
-    push(`/${$currentLanguage}/meta/${metaStory.id}`);
+    // Navigate to meta story view, carrying the filters the reader set here so
+    // that closing the collection puts this page back the way they left it.
+    push(
+      buildUrlWithParams(`/${$currentLanguage}/meta/${metaStory.id}`, {
+        from_landing: landingFilterQuery($querystring),
+      })
+    );
   }
 
   function initialsFromName(name = "") {
@@ -723,8 +732,12 @@
             {getStyle}
             onNavigate={(detail) => {
               const lang = $currentLanguage;
+              const fromLanding = landingFilterQuery($querystring);
               push(
-                `/${lang}/story/${detail.personId}?event=${detail.eventIndex}`
+                `/${lang}/story/${detail.personId}?event=${detail.eventIndex}` +
+                  (fromLanding
+                    ? `&from_landing=${encodeURIComponent(fromLanding)}`
+                    : "")
               );
             }}
           />

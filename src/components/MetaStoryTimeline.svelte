@@ -4,6 +4,7 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { queryParams, originQuery } from "../stores/queryParams.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -2100,14 +2101,15 @@
     const currentLang =
       window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || "en";
 
-    // Include meta story context if available
-    const fromMetaParam = metaStoryId ? `&from_meta=${metaStoryId}` : "";
+    // Include meta story and landing context if available
+    const origin = originQuery(metaStoryId, $queryParams.from_landing);
+    const originParam = origin ? `&${origin}` : "";
 
     // Remember where the reader left the meta story so returning restores it
     saveMetaStoryScroll(metaStoryId);
 
-    // Build URL with event query parameter and meta story context
-    window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}${fromMetaParam}`;
+    // Build URL with event query parameter and navigation context
+    window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}${originParam}`;
   }
 
   // Handle person click - navigate to their story
@@ -2116,13 +2118,14 @@
     const currentLang =
       window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || "en";
 
-    // Include meta story context if available
-    const fromMetaParam = metaStoryId ? `?from_meta=${metaStoryId}` : "";
+    // Include meta story and landing context if available
+    const origin = originQuery(metaStoryId, $queryParams.from_landing);
+    const originParam = origin ? `?${origin}` : "";
 
     // Remember where the reader left the meta story so returning restores it
     saveMetaStoryScroll(metaStoryId);
 
-    window.location.hash = `/${currentLang}/story/${personId}${fromMetaParam}`;
+    window.location.hash = `/${currentLang}/story/${personId}${originParam}`;
   }
 
   // Click-outside handler to close tooltip

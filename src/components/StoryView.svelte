@@ -4,7 +4,11 @@
   import { location } from "../stores/router.js";
   import CloseButton from "./CloseButton.svelte";
   import { mdiAccountMultipleOutline } from "@mdi/js";
-  import { queryParams, buildUrlWithParams } from "../stores/queryParams";
+  import {
+    queryParams,
+    buildUrlWithParams,
+    navigationContext,
+  } from "../stores/queryParams";
   import ImageViewer from "./ImageViewer.svelte";
   import NetworkModal from "./NetworkModal.svelte";
   import OverviewSlide from "./OverviewSlide.svelte";
@@ -383,7 +387,7 @@
         slide: targetSlideIndex,
         timeline: $queryParams.timeline,
         network: $queryParams.network,
-        from_meta: $queryParams.from_meta, // Preserve meta story context
+        ...navigationContext($queryParams),
       });
       replace(newUrl);
     }
@@ -517,7 +521,7 @@
         slide: activeIndex,
         timeline: $queryParams.timeline,
         network: false,
-        from_meta: $queryParams.from_meta,
+        ...navigationContext($queryParams),
       });
       replace(newUrl);
     }
@@ -1013,7 +1017,7 @@
       slide: activeIndex,
       timeline: $queryParams.timeline,
       network: show,
-      from_meta: $queryParams.from_meta,
+      ...navigationContext($queryParams),
     });
     replace(newUrl);
   }
@@ -1035,7 +1039,7 @@
       slide: activeIndex,
       timeline: expanded,
       network: $queryParams.network,
-      from_meta: $queryParams.from_meta,
+      ...navigationContext($queryParams),
     });
 
     // Always use replace() - modal state should not create history entries

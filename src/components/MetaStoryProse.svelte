@@ -3,11 +3,13 @@
   // person who has their own individual story (the story's main people) with
   // the same `.person-mention` treatment used on the story slides and the
   // network/map cards, and turns each into a link into that person's story.
-  // The link carries `from_meta` (so the story's close button returns here) and
-  // remembers the reader's scroll position first, matching how the timeline,
-  // network and map open a story.
+  // The link carries `from_meta` (so the story's close button returns here)
+  // together with any landing filters behind it, and remembers the reader's
+  // scroll position first, matching how the timeline, network and map open a
+  // story.
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { queryParams, originQuery } from "../stores/queryParams.js";
 
   export let text = "";
   export let people = []; // [{ id, name, aliases, color }]
@@ -18,9 +20,9 @@
   $: colorById = new Map(people.map((p) => [p.id, p.color]));
 
   function hrefFor(personId) {
+    const search = originQuery(metaStoryId, $queryParams.from_landing);
     return (
-      `#/${currentLanguage}/story/${personId}` +
-      (metaStoryId ? `?from_meta=${metaStoryId}` : "")
+      `#/${currentLanguage}/story/${personId}` + (search ? `?${search}` : "")
     );
   }
 

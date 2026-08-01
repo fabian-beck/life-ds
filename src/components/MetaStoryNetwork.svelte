@@ -14,6 +14,7 @@
   import { computeClusters } from "../utils/networkClusters.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { queryParams, originQuery } from "../stores/queryParams.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
@@ -229,10 +230,12 @@
     ? Math.min(Math.max(popupNode.x, popupHalf + 6), width - popupHalf - 6)
     : 0;
   $: popupTailDx = popupNode ? popupNode.x - popupCx : 0;
-  // Carry the meta story context so the story's close button returns here.
+  // Carry the meta story context so the story's close button returns here,
+  // together with any landing filters behind it.
+  $: popupOrigin = originQuery(metaStoryId, $queryParams.from_landing);
   $: popupHref = popupNode
     ? `#/${currentLanguage}/story/${popupNode.id}` +
-      (metaStoryId ? `?from_meta=${metaStoryId}` : "")
+      (popupOrigin ? `?${popupOrigin}` : "")
     : "#";
 
   // Remember where the reader left the meta story before jumping into a story.

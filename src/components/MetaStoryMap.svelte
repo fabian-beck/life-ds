@@ -8,6 +8,7 @@
   import { displayName } from "../utils/helpers.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { queryParams, originQuery } from "../stores/queryParams.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -45,9 +46,10 @@
   // button return to this meta story.
   function eventHref(event) {
     const idx = event.event_index != null ? event.event_index : 0;
+    const origin = originQuery(metaStoryId, $queryParams.from_landing);
     return (
       `#/${currentLanguage}/story/${event.person_id}?event=${idx}` +
-      (metaStoryId ? `&from_meta=${metaStoryId}` : "")
+      (origin ? `&${origin}` : "")
     );
   }
 

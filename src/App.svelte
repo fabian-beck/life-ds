@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { push, replace } from "svelte-spa-router";
-  import { location } from "./stores/router.js";
+  import { location, querystring } from "./stores/router.js";
   import Landing from "./components/Landing.svelte";
   import StoryView from "./components/StoryView.svelte";
   import MetaStoryView from "./components/MetaStoryView.svelte";
@@ -10,7 +10,12 @@
   // `html.high-contrast` class (see app.css) on every route, including
   // deep-linked story pages that never render the toggle button itself.
   import "./stores/contrast.js";
-  import { queryParams, buildUrlWithParams } from "./stores/queryParams";
+  import {
+    queryParams,
+    buildUrlWithParams,
+    landingFilterQuery,
+    navigationContext,
+  } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
   import { displayName } from "./utils/helpers.js";
   import { parseHexColor } from "./utils/storyHelpers.js";
@@ -575,18 +580,33 @@
   // Use the queryParams store which is already reactive to URL changes
   $: fromMetaStoryId = $queryParams.from_meta;
 
+  // The landing filters the reader arrived with, carried through the story
+  // route the same way. On the landing itself they are the live query string;
+  // once inside a story or collection they travel as `from_landing`.
+  $: fromLanding =
+    !storyMatch && !metaMatch
+      ? landingFilterQuery($querystring)
+      : $queryParams.from_landing;
+
+  function landingUrl(filterQuery) {
+    const basePath = `/${$currentLanguage}`;
+    return filterQuery ? `${basePath}?${filterQuery}` : basePath;
+  }
+
   function handleSelectPerson(event) {
     const id = event.detail;
     if (id) {
-      push(`/${$currentLanguage}/story/${encodeURIComponent(id)}`);
+      const basePath = `/${$currentLanguage}/story/${encodeURIComponent(id)}`;
+      push(buildUrlWithParams(basePath, { from_landing: fromLanding }));
     }
   }
 
   function handleCloseStory() {
     if (fromMetaStoryId) {
-      replace(`/${$currentLanguage}/meta/${fromMetaStoryId}`);
+      const basePath = `/${$currentLanguage}/meta/${fromMetaStoryId}`;
+      replace(buildUrlWithParams(basePath, { from_landing: fromLanding }));
     } else {
-      replace(`/${$currentLanguage}`);
+      replace(landingUrl(fromLanding));
     }
   }
 
@@ -608,12 +628,12 @@
       // Base path without slide (slide is now a query param)
       const basePath = `/${$currentLanguage}/story/${encodeURIComponent(personId)}`;
 
-      // Build URL with all query params (slide, timeline, network, from_meta)
+      // Build URL with all query params (slide, timeline, network, context)
       const newPath = buildUrlWithParams(basePath, {
         slide: slideIndex,
         timeline: $queryParams.timeline,
         network: $queryParams.network,
-        from_meta: $queryParams.from_meta, // Preserve meta story context
+        ...navigationContext($queryParams),
       });
 
       // Always use replace() - slide changes are presentation state,

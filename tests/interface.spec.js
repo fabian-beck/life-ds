@@ -211,6 +211,20 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await page.goBack();
   await expect(page).toHaveURL(/\/en\?q=Ada(?:\+|%20)Lovelace$/);
   await expect(search).toHaveValue("Ada Lovelace");
+
+  // The two ways out of a story have to agree. Back already restored the
+  // search; the close button used to rebuild a bare landing route and drop it,
+  // so the reader watched their filter vanish.
+  await page.getByRole("button", { name: "Open life story for Ada" }).click();
+  await expect(page).toHaveURL(/\/en\/story\/ada_lovelace/);
+  await page
+    .getByRole("button", {
+      name: "Close story and return to the landing page",
+    })
+    .click();
+  await expect(page).toHaveURL(/\/en\?q=Ada(?:\+|%20)Lovelace$/);
+  await expect(search).toHaveValue("Ada Lovelace");
+
   await page.getByRole("button", { name: "Clear search" }).click();
   await expect(page).toHaveURL(/\/en$/);
 

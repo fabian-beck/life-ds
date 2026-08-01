@@ -15,6 +15,7 @@
     consumeMetaStoryScroll,
     saveMetaStoryScroll,
   } from "../stores/metaStoryScroll.js";
+  import { queryParams, originQuery } from "../stores/queryParams.js";
   import { displayName } from "../utils/helpers.js";
   import {
     metaStoryStyle,
@@ -120,12 +121,15 @@
     };
   }
 
-  // Carry the meta story context so the story's close button returns here.
+  // Carry the meta story context so the story's close button returns here, and
+  // the landing filters with it so the way out of the collection is unchanged.
   function personStoryHref(personId) {
-    const metaStoryId = metaStoryData?.meta_story?.id;
+    const search = originQuery(
+      metaStoryData?.meta_story?.id,
+      $queryParams.from_landing
+    );
     return (
-      `#/${currentLanguage}/story/${personId}` +
-      (metaStoryId ? `?from_meta=${metaStoryId}` : "")
+      `#/${currentLanguage}/story/${personId}` + (search ? `?${search}` : "")
     );
   }
 
@@ -156,9 +160,10 @@
   let timelineScrollListenerAttached = false; // Track if listener is attached
   let scrollRestoreHandled = false; // Whether the remembered scroll position has been applied
 
-  // Navigate back to landing
+  // Navigate back to landing, restoring the filters it was left with
   function backToLanding() {
-    replace(`/${currentLanguage}`);
+    const fromLanding = $queryParams.from_landing;
+    replace(`/${currentLanguage}` + (fromLanding ? `?${fromLanding}` : ""));
   }
 
   // Every prose region of a composed story is a list of blocks —
