@@ -199,6 +199,11 @@ test("core visitor journey", async ({ page }, testInfo) => {
 
   await page.getByRole("button", { name: "Show full network" }).click();
   await expect(page.locator(".network-modal")).toBeVisible();
+  // The language churn above leaves the slide container relaying out. Opening
+  // the modal has to survive that: a stale sample of the moving scroll position
+  // used to rewrite the slide behind this click, which closed the modal again
+  // and dropped the parameter that opened it.
+  await expect(page).toHaveURL(/\?slide=2&network=1$/);
   await capture(page, testInfo, "06-network-modal");
   await page.getByRole("button", { name: "Close modal" }).click();
   await expect(page.locator(".network-modal")).toBeHidden();

@@ -559,8 +559,14 @@
   function handleScrollEnd() {
     if (scrollState === SCROLL_STATE.PROGRAMMATIC) {
       scrollState = SCROLL_STATE.SETTLING;
-      // Allow snap to finish
-      setTimeout(() => {
+      // Allow snap to finish. Kept in scrollStateTimeout so that a scroll
+      // starting inside this window cancels it — an untracked timer would
+      // outlive its own scroll and sample the next one halfway through.
+      if (scrollStateTimeout) {
+        clearTimeout(scrollStateTimeout);
+      }
+      scrollStateTimeout = setTimeout(() => {
+        scrollStateTimeout = null;
         scrollState = SCROLL_STATE.IDLE;
         syncActiveIndexFromScroll();
       }, 100);
@@ -573,6 +579,17 @@
   // Sync activeIndex from current scroll position
   function syncActiveIndexFromScroll() {
     if (!slidesContainer || totalPanels === 0 || !initialScrollDone) return;
+
+    // A scroll still in flight is not a position anybody chose: sampling it
+    // reports whichever panel is being passed over, not the destination. Every
+    // legitimate caller drops back to IDLE first, so this only rejects timers
+    // left over from a scroll that has already been superseded.
+    if (
+      scrollState === SCROLL_STATE.PROGRAMMATIC ||
+      scrollState === SCROLL_STATE.SETTLING
+    ) {
+      return;
+    }
 
     const { scrollLeft, clientWidth } = slidesContainer;
     if (!clientWidth) return;
@@ -606,10 +623,15 @@
     // Validate and clamp
     const clampedIndex = Math.min(Math.max(targetIndex, 0), totalPanels - 1);
 
-    // Cancel any pending scroll operations
+    // Cancel any pending scroll operations, including a debounced sample of
+    // the position this scroll is about to leave behind.
     if (scrollStateTimeout) {
       clearTimeout(scrollStateTimeout);
       scrollStateTimeout = null;
+    }
+    if (scrollHandlerTimeout) {
+      clearTimeout(scrollHandlerTimeout);
+      scrollHandlerTimeout = null;
     }
 
     // Update state machine
@@ -742,8 +764,11 @@
       return;
     }
 
-    if (totalPanels === 0) {
-      activeIndex = 0;
+    // A reload rebuilding the panels moves the container on its own — until
+    // the initial scroll has anchored it on the requested slide, its position
+    // says nothing about where the reader is. Reading it here would promote
+    // the reflow to a user scroll and write the passing slide into the URL.
+    if (!initialScrollDone || totalPanels === 0) {
       return;
     }
 
