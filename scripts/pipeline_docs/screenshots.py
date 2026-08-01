@@ -131,13 +131,20 @@ class Shot:
         return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:12]
 
     def describe(self) -> str:
-        """The declaration in one line, for the page and for the build log."""
+        """The declaration in one line, for the page and for the build log.
+
+        Each part is named, because the line is printed under the figure where
+        a reader meets it cold: `#/en/meta/computing_pioneers · 1280x820 · @2x`
+        is three facts to anyone who already knows the shape of a route, a
+        viewport and a device pixel ratio, and a string of noise to everyone
+        else. Naming them costs a few words and spares the reader the guess.
+        """
         width, height = self.css_size
-        parts = [self.route, f"{width}x{height}"]
+        parts = [f"Address {self.route}", f"viewport {width}×{height}"]
         if self.scale != 1:
-            parts.append(f"@{self.scale}x")
+            parts.append(f"{self.scale}× density")
         if self.clip:
-            parts.append("clipped")
+            parts.append("clipped to the region declared")
         return "  ·  ".join(parts)
 
 

@@ -3468,10 +3468,11 @@
        other asset on this page, so the report stays one file.
 
        Under the picture, in small type, is the declaration it was taken
-       from—route, viewport, capture date. It is there because this is the one
-       figure on the page a reader cannot re-derive by reading the source: the
-       line says which position of which build it shows, and names the state a
-       reader would have to reach to see it for themselves. */
+       from—address, viewport, capture date, each named rather than left as a
+       bare value (see `describe` in `screenshots.py`). It is there because this
+       is the one figure on the page a reader cannot re-derive by reading the
+       source: the line says which position of which build it shows, and names
+       the state a reader would have to reach to see it for themselves. */
     screenshot: function (mount, params, numbers) {
       const shot = (DATA.screenshots || {})[params.id];
       if (!shot || !shot.src) {
