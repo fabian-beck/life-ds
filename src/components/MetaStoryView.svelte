@@ -1396,13 +1396,9 @@
     margin-bottom: 3rem;
   }
 
-  /* Conclusion — the same body copy as the rest of the article; its own
-     subhead already sets it apart, so it needs no italic or size shift. */
-  .conclusion p {
-    font-size: 1.0625rem;
-    line-height: 1.75;
-    color: var(--ms-body);
-  }
+  /* Conclusion — the same body copy as the rest of the article; MetaStoryBody's
+     .body-text already carries it, and its own subhead sets the section apart,
+     so nothing extra is needed here. */
 
   /* Closing person cards — the story's cast, each linking into their own story */
   .people-grid {
