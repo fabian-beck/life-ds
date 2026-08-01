@@ -26,7 +26,32 @@
 
    Light only, by request—`color-scheme: light` keeps form controls and
    scrollbars light even when the OS is in dark mode, so nothing renders as a
-   half-converted hybrid. */
+   half-converted hybrid.
+
+   Type runs in whole pixels, one size per job, so that a size carries a
+   meaning rather than a history:
+
+     11  labels and fine print—the uppercase eyebrow over a block, a file path,
+         a field's type, the small controls that sit inside a figure
+     12  chrome—the rail, the toolbar, the strip under a drawing: text about
+         the document rather than text in it
+     13  tables, captions, controls and code: the smallest size read as prose
+     14  apparatus—notes, references, the printed step details
+     15  supporting prose—a callout, a principle, the drawer
+     16  running text, the abstract and lede that open it, and `h4`, the one
+         heading that takes its rank from weight and number rather than size
+     18  the subtitle; 19, 25 and a clamped 30–44 for the headings above it
+
+   A page drifts into half-pixel sizes when a block is styled on its own, and
+   the drift is invisible one block at a time: no reader can tell 12px from
+   12.5px, only that the page is set in both. Space steps the same way—by 2 up
+   to 16 and by 4 above it—so the gaps between blocks are a scale rather than a
+   collection.
+
+   The figures are the exception, and deliberately so. A chart or the teaser is
+   drawn in scene units against geometry set in `app.js`, and its type is sized
+   to fit the box it is written into rather than to match the prose beside it;
+   changing it means changing the drawing. */
 
 :root {
   color-scheme: light;
@@ -52,7 +77,7 @@
      the element's own font, and a 25px heading and a 12.5px caption would each
      draw a different edge. 36rem is the measure the body text had at 70ch. */
   --measure: 36rem;
-  --figure-gutter: 34px;
+  --figure-gutter: 32px;
   --mono: ui-monospace, sfmono-regular, "SF Mono", menlo, consolas, monospace;
   --serif:
     "Iowan Old Style", charter, "Source Serif Pro", georgia, "Times New Roman",
@@ -96,7 +121,7 @@ body {
    rather than becoming an overlay the reader has to dismiss. */
 .shell {
   display: grid;
-  gap: 0 42px;
+  gap: 0 40px;
   grid-template-columns: 214px minmax(0, 1fr);
   max-width: 1320px;
   margin: 0 auto;
@@ -118,7 +143,7 @@ body {
   border-bottom: 1px solid var(--rule-strong);
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -132,7 +157,7 @@ body {
 .rail-link {
   display: flex;
   gap: 8px;
-  padding: 3px 0 3px 2px;
+  padding: 4px 0 4px 2px;
   border-left: 2px solid transparent;
   color: var(--muted);
   font-family: var(--sans);
@@ -143,7 +168,7 @@ body {
 
 .rail-link.depth-2 {
   padding-left: 16px;
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .rail-link:hover {
@@ -163,7 +188,7 @@ body {
 }
 
 .rail-foot {
-  margin-top: 18px;
+  margin-top: 20px;
   color: var(--muted);
   font-family: var(--sans);
   font-size: 11px;
@@ -212,8 +237,8 @@ h1 {
 .authors {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 34px;
-  margin: 22px 0 0;
+  gap: 4px 32px;
+  margin: 24px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -242,7 +267,7 @@ a.author-name:focus-visible {
   flex-basis: 100%;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
 .orcid {
@@ -259,8 +284,8 @@ a.author-name:focus-visible {
 }
 
 .abstract {
-  margin: 26px 0 0;
-  padding: 18px 0 20px;
+  margin: 24px 0 0;
+  padding: 20px 0;
   border-top: 1px solid var(--rule-strong);
   border-bottom: 1px solid var(--rule-strong);
 }
@@ -269,7 +294,7 @@ a.author-name:focus-visible {
   margin: 0 0 8px;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -290,13 +315,13 @@ a.author-name:focus-visible {
   margin: 0;
   max-width: 66ch;
   color: var(--ink);
-  font-size: 16.5px;
+  font-size: 16px;
 }
 
 .meta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 22px;
+  gap: 6px 24px;
   align-items: baseline;
   margin-top: 20px;
   padding-top: 12px;
@@ -316,7 +341,7 @@ a.author-name:focus-visible {
 .chip code {
   color: var(--ink-2);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 /* ------------------------------------------------------------ report body */
@@ -365,18 +390,18 @@ a.author-name:focus-visible {
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  scroll-margin-top: 18px;
+  scroll-margin-top: 20px;
 }
 
 .report h2.sec {
-  margin: 54px 0 14px;
+  margin: 56px 0 14px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--rule-strong);
   font-size: 25px;
 }
 
 .report h3.sec {
-  margin: 38px 0 10px;
+  margin: 40px 0 10px;
   font-size: 19px;
 }
 
@@ -404,20 +429,20 @@ a.author-name:focus-visible {
 
 .report p {
   margin: 0 0 14px;
-  font-size: 16.5px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
 .report ul,
 .report ol {
   margin: 0 0 14px;
-  padding-left: 22px;
-  font-size: 16.5px;
+  padding-left: 20px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
 .report li {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .report a {
@@ -432,7 +457,7 @@ a.author-name:focus-visible {
   padding: 12px 14px;
   border: 1px solid var(--rule);
   background: var(--surface);
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 1.55;
 }
 
@@ -457,7 +482,7 @@ a.author-name:focus-visible {
 }
 
 .report td {
-  padding: 5px 10px 5px 0;
+  padding: 6px 10px 6px 0;
   border-bottom: 1px solid var(--rule-soft);
   vertical-align: top;
 }
@@ -485,7 +510,7 @@ a.author-name:focus-visible {
 .toc {
   display: none;
   margin: 8px 0 12px;
-  padding: 16px 0 18px;
+  padding: 16px 0;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule-strong);
 }
@@ -497,22 +522,22 @@ a.author-name:focus-visible {
 }
 
 .toc-list .toc-list {
-  padding-left: 26px;
+  padding-left: 24px;
 }
 
 .toc-list a {
   display: flex;
   gap: 10px;
-  padding: 2.5px 0;
+  padding: 2px 0;
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 13px;
   text-decoration: none;
 }
 
 .toc-list .toc-list a {
   color: var(--ink-2);
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
 .toc-list a:hover {
@@ -540,7 +565,7 @@ a.author-name:focus-visible {
   display: none;
   gap: 8px;
   align-items: center;
-  padding: 7px 11px;
+  padding: 6px 10px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
@@ -577,7 +602,7 @@ a.author-name:focus-visible {
   overflow-y: auto;
   width: min(330px, calc(100vw - 24px));
   max-height: min(70vh, 520px);
-  padding: 12px 14px 14px;
+  padding: 12px 14px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   overscroll-behavior: contain;
@@ -588,8 +613,8 @@ a.author-name:focus-visible {
 /* Authored, not computed: an indented voice with a labeled rule, so it reads as
    an argument the author is making rather than a fact the build measured. */
 .callout {
-  margin: 20px 0 22px;
-  padding: 2px 0 2px 18px;
+  margin: 24px 0;
+  padding: 2px 0 2px 16px;
   border-left: 3px solid var(--rule-strong);
 }
 
@@ -597,7 +622,7 @@ a.author-name:focus-visible {
   margin: 0 0 6px;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -605,7 +630,7 @@ a.author-name:focus-visible {
 
 .callout-body p {
   margin: 0 0 10px;
-  font-size: 15.5px;
+  font-size: 15px;
 }
 
 .callout-body p:last-child {
@@ -628,8 +653,8 @@ a.author-name:focus-visible {
    the list's own marker: the number in the sentence and the number in the list
    have to be the same string in both media. */
 .principles {
-  margin: 22px 0 24px;
-  padding: 2px 0 2px 18px;
+  margin: 24px 0;
+  padding: 2px 0 2px 16px;
   border-left: 3px solid var(--rule-strong);
 }
 
@@ -637,7 +662,7 @@ a.author-name:focus-visible {
   margin: 0 0 8px;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -660,7 +685,7 @@ a.author-name:focus-visible {
 
 .principle-title {
   display: flex;
-  gap: 9px;
+  gap: 8px;
   margin: 0;
   font-family: var(--sans);
   font-size: 13px;
@@ -675,7 +700,7 @@ a.author-name:focus-visible {
 
 .principle-body p {
   margin: 0 0 6px;
-  font-size: 15.5px;
+  font-size: 15px;
 }
 
 .principle-body p:last-child {
@@ -688,7 +713,7 @@ a.author-name:focus-visible {
 .report .pref {
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 0.78em;
+  font-size: 0.8em;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -721,7 +746,7 @@ a.author-name:focus-visible {
 }
 
 .report .noteref sup {
-  padding: 0 1px;
+  padding: 0 2px;
   border-bottom: 1px solid var(--rule);
   font-family: var(--sans);
   font-size: 0.66em;
@@ -742,7 +767,7 @@ a.author-name:focus-visible {
 
 .notes {
   max-width: var(--measure);
-  margin: 26px 0 6px;
+  margin: 24px 0 6px;
   padding-top: 10px;
   border-top: 1px solid var(--rule);
   break-inside: avoid;
@@ -752,7 +777,7 @@ a.author-name:focus-visible {
   margin: 0 0 6px;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -785,11 +810,11 @@ body.has-note-pop .notes {
   position: absolute;
   z-index: 55;
   width: min(330px, calc(100vw - 24px));
-  padding: 11px 13px 12px;
+  padding: 12px 14px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -798,10 +823,10 @@ body.has-note-pop .notes {
 }
 
 .note-pop-no {
-  margin: 0 0 5px;
+  margin: 0 0 6px;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -848,14 +873,14 @@ body.has-note-pop .notes {
 
 .report .reference-list {
   margin: 0;
-  padding-left: 26px;
+  padding-left: 24px;
   color: var(--ink);
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
 .report .reference-list li {
-  margin-bottom: 9px;
+  margin-bottom: 8px;
   padding-left: 4px;
   break-inside: avoid;
 }
@@ -894,7 +919,7 @@ body.has-note-pop .notes {
   position: relative;
   width: 100%;
   max-width: var(--measure);
-  margin: 26px 0 30px;
+  margin: 32px 0;
 }
 
 /* Full-bleed past the text measure: a chart or a wide table is not running text
@@ -915,7 +940,8 @@ body.has-note-pop .notes {
 /* The margin column. It exists when the body is wide enough to hold the measure,
    the gutter and a figure still worth looking at—300px, about the narrowest a
    phone capture reads at—and not otherwise; below that the figure stays in the
-   text column at its own width, which is the other half of the same rule.
+   text column at its own width, which is the other half of the same rule. The
+   threshold is that sum and nothing else: 576 + 32 + 300.
 
    A float rather than a grid track, because the text has to close over the
    bottom of the figure. A grid would give the figure a row of its own and leave
@@ -926,7 +952,7 @@ body.has-note-pop .notes {
    paragraphs, lists and callouts all stop at 36rem, and the figure begins after
    the gutter. Only a full-width block would collide, so only a full-width block
    clears. */
-@container report (width >= 910px) {
+@container report (width >= 908px) {
   .report > .widget-margin {
     float: right;
     clear: right;
@@ -978,7 +1004,7 @@ p.cap {
   max-width: var(--measure);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -988,7 +1014,7 @@ p.cap {
 
 .factgrid {
   display: grid;
-  gap: 14px 26px;
+  gap: 14px 24px;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   padding: 14px 0;
   border-top: 1px solid var(--rule);
@@ -1010,7 +1036,7 @@ p.cap {
   margin-top: 2px;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 11px;
 }
 
 .buildinfo,
@@ -1093,7 +1119,7 @@ p.cap {
   margin: 14px 0 0;
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1114,7 +1140,7 @@ p.cap {
 .figref .glyph {
   width: 0.85em;
   height: 0.85em;
-  margin-right: 3px;
+  margin-right: 4px;
   color: var(--muted);
   vertical-align: -0.07em;
 }
@@ -1130,12 +1156,12 @@ p.cap {
   max-width: 68ch;
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 13px;
 }
 
 .lane-lede .entry {
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
 /* A file path or a script location under its label. Allowed to break anywhere:
@@ -1161,7 +1187,7 @@ p.cap {
   flex-wrap: wrap;
   gap: 8px 12px;
   align-items: center;
-  margin: 22px 0 12px;
+  margin: 24px 0 12px;
   padding: 10px 0;
   border-bottom: 1px solid var(--rule);
   background: var(--paper);
@@ -1191,9 +1217,9 @@ p.cap {
 
 .toggle {
   display: inline-flex;
-  gap: 7px;
+  gap: 8px;
   align-items: center;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border: 1px solid var(--rule);
   background: var(--paper);
   color: var(--ink-2);
@@ -1297,7 +1323,7 @@ p.cap {
 }
 
 .expand {
-  padding: 7px 12px;
+  padding: 6px 10px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
@@ -1311,7 +1337,7 @@ p.cap {
 }
 
 figure.figure {
-  margin: 0 0 34px;
+  margin: 0 0 32px;
 }
 
 /* A screenshot of the application. The report is black on white and the
@@ -1337,7 +1363,7 @@ figure.figure {
   max-width: var(--measure);
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 /* Placement only—the type comes from the shared caption rules. The caption sits
@@ -1535,7 +1561,7 @@ figure.figure > .cap {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  padding: 18px 20px 12px;
+  padding: 16px 20px 12px;
   border-bottom: 1px solid var(--rule-strong);
 }
 
@@ -1553,7 +1579,7 @@ figure.figure > .cap {
   background: var(--paper);
   color: var(--ink-2);
   font-family: var(--sans);
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.5;
   cursor: pointer;
 }
@@ -1591,7 +1617,7 @@ figure.figure > .cap {
 .step-detail-body .inner p.sub {
   color: var(--muted);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
 /* The label above an expanded prompt, where the drawer would have shown a tab.
@@ -1600,7 +1626,7 @@ figure.figure > .cap {
   margin: 0 0 4px;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .facts {
@@ -1609,12 +1635,12 @@ figure.figure > .cap {
   border-top: 1px solid var(--rule-strong);
   border-bottom: 1px solid var(--rule-strong);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
 }
 
 .facts th {
   width: 38%;
-  padding: 5px 10px 5px 0;
+  padding: 6px 10px 6px 0;
   color: var(--muted);
   font-weight: 400;
   text-align: left;
@@ -1622,7 +1648,7 @@ figure.figure > .cap {
 }
 
 .facts td {
-  padding: 5px 0;
+  padding: 6px 0;
   vertical-align: top;
 }
 
@@ -1634,12 +1660,12 @@ figure.figure > .cap {
 code,
 .mono {
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 13px;
 }
 
 ul.bullets {
   margin: 0 0 10px;
-  padding-left: 18px;
+  padding-left: 20px;
 }
 
 ul.bullets li {
@@ -1653,9 +1679,9 @@ details.block {
 }
 
 details.block > summary {
-  padding: 8px 11px;
+  padding: 8px 12px;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   list-style: none;
@@ -1678,14 +1704,14 @@ details.block[open] > summary::before {
 }
 
 details.block .inner {
-  padding: 0 11px 12px;
+  padding: 0 12px 12px;
 }
 
 pre.prompt {
   overflow: auto;
   max-height: 460px;
   margin: 0;
-  padding: 11px;
+  padding: 12px;
   border: 1px solid var(--rule);
   background: var(--surface);
   font-family: var(--mono);
@@ -1720,10 +1746,10 @@ pre.prompt .role {
 }
 
 .schema-field {
-  padding: 5px 0;
+  padding: 6px 0;
   border-top: 1px solid var(--rule-soft);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
 }
 
 .schema-field:first-child {
@@ -1738,7 +1764,7 @@ pre.prompt .role {
 .schema-field .ftype {
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .schema-field .fdesc {
@@ -1753,12 +1779,12 @@ pre.prompt .role {
 }
 
 .tab {
-  padding: 4px 9px;
+  padding: 4px 8px;
   border: 1px solid var(--rule);
   background: var(--paper);
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
   cursor: pointer;
 }
 
@@ -1777,7 +1803,7 @@ pre.prompt .role {
 
 .empty code {
   display: inline-block;
-  padding: 1px 5px;
+  padding: 2px 6px;
   background: var(--surface);
 }
 
@@ -1822,7 +1848,7 @@ body.modal-open {
   display: flex;
   gap: 12px;
   align-items: baseline;
-  padding: 12px 18px;
+  padding: 12px 20px;
   border-bottom: 1px solid var(--rule-strong);
 }
 
@@ -1842,7 +1868,7 @@ body.modal-open {
    reason to leave anything out. */
 .chart-modal-body {
   overflow: auto;
-  padding: 14px 18px 24px;
+  padding: 16px 20px 24px;
   flex: 1;
   overscroll-behavior: contain;
 }
@@ -1871,11 +1897,11 @@ table.data {
   border-top: 1.5px solid var(--rule-strong);
   border-bottom: 1.5px solid var(--rule-strong);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
 }
 
 table.data th {
-  padding: 6px 8px 6px 0;
+  padding: 6px 10px 6px 0;
   border-bottom: 1px solid var(--rule-strong);
   color: var(--ink);
   font-weight: 600;
@@ -1883,7 +1909,7 @@ table.data th {
 }
 
 table.data td {
-  padding: 5px 8px 5px 0;
+  padding: 6px 10px 6px 0;
   border-bottom: 1px solid var(--rule-soft);
   font-variant-numeric: tabular-nums;
 }
@@ -1919,7 +1945,7 @@ table.data .swatch {
    with JavaScript off, or read aloud. */
 
 figure.teaser {
-  margin: 0 0 30px;
+  margin: 0 0 32px;
 }
 
 /* The frame already rules the drawing off on both sides, so the caption's own
@@ -2183,11 +2209,11 @@ figure.teaser > .cap {
   align-items: flex-start;
   gap: 4px 14px;
   margin: 0 0 10px;
-  padding: 7px 0 9px;
-  min-height: 34px;
+  padding: 8px 0;
+  min-height: 32px;
   color: var(--ink-2);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -2221,13 +2247,13 @@ figure.teaser > .cap {
 }
 
 .teaser-act {
-  padding: 2px 7px;
+  padding: 4px 8px;
   border: 1px solid var(--rule);
   background: var(--paper);
   color: var(--ink-2);
   cursor: pointer;
   font-family: var(--sans);
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .teaser-act:hover {
@@ -2237,7 +2263,7 @@ figure.teaser > .cap {
 
 .teaser-count {
   color: var(--muted);
-  font-size: 11.5px;
+  font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2260,7 +2286,7 @@ figure.teaser > .cap {
   display: inline-block;
   width: 5px;
   height: 5px;
-  margin-left: 3px;
+  margin-left: 4px;
   border: 1px solid var(--muted);
   vertical-align: 1px;
 }
@@ -2307,15 +2333,15 @@ figure.teaser > .cap {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 8px 7px 10px;
+  padding: 8px 8px 8px 10px;
   border-bottom: 1px solid var(--rule);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
 .figpeek-kicker {
   color: var(--muted);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2333,13 +2359,13 @@ figure.teaser > .cap {
 
 .figpeek-act {
   flex: none;
-  padding: 2px 7px;
+  padding: 4px 8px;
   border: 1px solid var(--rule);
   background: var(--paper);
   color: var(--ink-2);
   cursor: pointer;
   font-family: var(--sans);
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .figpeek-act:hover {
@@ -2425,7 +2451,7 @@ figure.teaser > .cap {
 @media (width <= 1080px) {
   .shell {
     display: block;
-    padding: 0 22px 80px;
+    padding: 0 20px 80px;
   }
 
   .rail {
@@ -2572,7 +2598,7 @@ figure.teaser > .cap {
   }
 
   .titleblock {
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
 
   /* On paper the mark links nowhere, so the iD it stands for is printed. */
