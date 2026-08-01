@@ -815,8 +815,8 @@ def substitute_refcites(
                 order.append(key)
             cited.append((order.index(key) + 1, entry))
         links = ", ".join(
-            f'<a href="#ref-{number}" role="doc-biblioref" '
-            f'title="{_escape(entry.describe())}">{number}</a>'
+            f'<a class="refref" href="#ref-{number}" role="doc-biblioref" '
+            f'data-pop-label="[{number}]">{number}</a>'
             for number, entry in cited
         )
         return f'<span class="refcite">[{links}]</span>'
@@ -837,25 +837,31 @@ def substitute_refcites(
 
 
 def _reference_html(number: int, entry: Reference) -> str:
-    """One entry, in the runs `bibliography` says Chicago prints it in.
+    """One entry, in the runs `bibliography` says IEEE prints it in.
 
     Every run carries its own punctuation, so the markup only wraps what is
     already correct text—the page cannot introduce a comma the plain rendering
     does not have. The DOI is printed rather than hidden behind the title: on
     paper it is the only part of the entry a reader can act on, and on screen it
     is the link.
+
+    The entry sits in a `pop-body`, which is what a citation's popover copies,
+    so the reader can read the reference and follow its DOI without leaving the
+    sentence that cited it. The link opens in a new context for the same
+    reason—the report keeps the reader's place.
     """
     parts = []
     for role, text in entry.segments():
         if role == "doi":
             parts.append(
-                f'<a class="ref-doi" href="{_escape(entry.url)}">{_escape(text)}</a>'
+                f'<a class="ref-doi" href="{_escape(entry.url)}" '
+                f'target="_blank" rel="noreferrer">{_escape(text)}</a>'
             )
         else:
             parts.append(f'<span class="ref-{role}">{_escape(text)}</span>')
     return (
         f'<li class="reference" id="ref-{number}" value="{number}">'
-        f"{''.join(parts)}</li>"
+        f'<span class="pop-body">{"".join(parts)}</span></li>'
     )
 
 

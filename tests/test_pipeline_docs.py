@@ -1031,7 +1031,7 @@ class ReferenceCitationTests(unittest.TestCase):
         )
         self.assertEqual(document.refcites, ["b", "a"])
         self.assertEqual([entry.key for entry in document.references], ["b", "a"])
-        self.assertIn('<a href="#ref-1"', document.html)
+        self.assertIn('href="#ref-1"', document.html)
         self.assertIn('id="ref-2"', document.html)
         self.assertEqual(document.html.count('href="#ref-1"'), 2)
 
@@ -1039,7 +1039,8 @@ class ReferenceCitationTests(unittest.TestCase):
         document = self._compile("\n## S\n\nBoth [@a; @b].\n\n::: references\n:::\n")
         self.assertEqual(document.refcites, ["a", "b"])
         self.assertIn(
-            '<span class="refcite">[<a href="#ref-1"', document.html.replace("\n", "")
+            '<span class="refcite">[<a class="refref" href="#ref-1"',
+            document.html.replace("\n", ""),
         )
 
     def test_an_unknown_reference_fails_the_build(self) -> None:
@@ -1069,6 +1070,15 @@ class ReferenceCitationTests(unittest.TestCase):
         self.assertIn('href="https://doi.org/10/a"', document.html)
         self.assertIn("doi: ", document.html)
         self.assertIn(">10/a</a>", document.html)
+
+    def test_a_citation_opens_its_entry_the_way_a_note_does(self) -> None:
+        """Same marker contract as a note: a real link, and a pop-body to copy."""
+        document = self._compile("\n## S\n\nText [@a].\n\n::: references\n:::\n")
+        self.assertIn('class="refref" href="#ref-1"', document.html)
+        self.assertIn('data-pop-label="[1]"', document.html)
+        self.assertIn('id="ref-1"', document.html)
+        self.assertRegex(document.html, r'id="ref-1"[^>]*>\s*<span class="pop-body">')
+        self.assertIn('target="_blank"', document.html)
 
     def test_a_note_may_cite_a_work(self) -> None:
         document = self._compile(

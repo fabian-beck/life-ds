@@ -43,12 +43,17 @@ modern coordinates of its place, the persons involved, an illustration and the
 sources that support it; it groups those events into the phases of a life; and
 it presents the result simultaneously as [[prose|narrative text]], as
 [[timeline|a chronology]], as [[map|a geography]] and as
-[[graph|a social network]]. What it produces is a narrative visualization at the
-author-driven end of that genre's spectrum [@segel2010narrative]: the order is
-fixed when the story is generated, and the reader advances along it rather than
-assembling a view of their own. The same derivation applied across several
-biographies yields [[meta-story|a meta story]], in which a theme is traced
-through the lives that share it.
+[[graph|a social network]]. Segel and Heer, surveying how data is used to tell
+stories, place such a presentation on a spectrum between the author-driven, in
+which a fixed order carries the message, and the reader-driven, in which the
+audience decides what to look at [@segel2010narrative]. A story here is authored
+in its order and reader-driven in its depth. The sequence is fixed when the
+story is generated and can simply be followed to the end; the timeline that
+doubles as a control, the network opened on demand, the images as a gallery and
+the cards leading into other lives are all available and none of them is
+required. The same derivation applied across several biographies yields
+[[meta-story|a meta story]], in which a theme is traced through the lives that
+share it.
 
 Connecting historical figures through the events they have in common is what
 VisKonnect does on demand [@latif2021viskonnect]: a reader's question is parsed
@@ -334,11 +339,13 @@ than only from the landing page.
 The three encodings are attached to this sequence rather than displayed beside
 it ((one-record)). [[timeline|A persistent timeline]] maps every event to its
 position in the life, bands the chapters, and doubles as the navigation control.
-In the terms of the timeline design space [@brehmer2017timelines] it stays
-linear and unified and changes scale as it opens: collapsed, it spaces the
-events evenly, so that each is an equally reachable control; expanded, it sets
-each one at the age it falls at, so that the pace of a life—the crowded decade,
-the quiet one—becomes visible.
+Brehmer and colleagues, surveying timelines for storytelling, separate the
+choice of how time is represented from how it is scaled and how it is laid out
+[@brehmer2017timelines]. This one holds its representation and its layout
+fixed—a single line, one life on it—and changes only its scale as it opens:
+collapsed, it spaces the events evenly, so that each is an equally reachable
+control; expanded, it sets each one at the age it falls at, so that the pace of
+a life—the crowded decade, the quiet one—becomes visible.
 [[map|A map built on MapLibre and Protomaps]]^[Protomaps distributes a whole
 basemap as one PMTiles archive addressed by HTTP range requests, so the map is
 served by a static file beside the application rather than by a tile service it
@@ -373,10 +380,11 @@ component is pinned while narration cards scroll over it and select what it
 displays. In the network section, the force-directed graph is laid out once and
 then frozen—the simulation is advanced to convergence in the background before
 the graph is revealed—so that the narration directs the reader's attention
-while the graph holds still. Each card corresponds to one detected circle of the
-graph, found by the greedy modularity merging the network step
-implements [@clauset2004finding]: its members remain lit while the remainder of
-the graph darkens. In the map section, a non-interactive map is pinned full-bleed
+while the graph holds still. Each card corresponds to one circle of the graph,
+which the network step detects by repeatedly merging the two groups whose
+merger raises modularity most—the greedy method of Clauset, Newman and
+Moore [@clauset2004finding]. Its members remain lit while the remainder of the
+graph darkens. In the map section, a non-interactive map is pinned full-bleed
 and the camera flies to each geographic stop as its card enters the viewport,
 zooming to a place or fitting a bounding box according to how dispersed the
 stop's events are. Here the basemap keeps its labels, since the section is

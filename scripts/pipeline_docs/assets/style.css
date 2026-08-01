@@ -785,6 +785,9 @@ body.has-note-pop .notes {
   white-space: nowrap;
 }
 
+/* The marker behaves like a note's: it opens the entry in a popover rather than
+   sending the reader to the back of the document, and it carries the same open
+   state so the two kinds of aside cannot look like different mechanisms. */
 .report .refcite a {
   color: var(--ink);
   text-decoration: none;
@@ -792,9 +795,16 @@ body.has-note-pop .notes {
 }
 
 .report .refcite a:hover,
+.report .refcite a.open,
 .report .refcite a:focus-visible {
   border-bottom-color: var(--ink);
   background: var(--surface);
+}
+
+/* Inside a popover the entry is the whole content, so it needs no hanging
+   indent and no number—the marker already said which one it is. */
+.note-pop .ref-doi {
+  overflow-wrap: anywhere;
 }
 
 .references {

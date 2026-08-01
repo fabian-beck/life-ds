@@ -4104,28 +4104,37 @@
     sync();
   }
 
-  /* ------------------------------------------------- notes and principles */
+  /* --------------------------------------- notes, principles and citations */
 
-  /* Two kinds of marker are read the same way. An inline note is authored once
-     and printed as a numbered list closing its section; a design principle is
-     declared once in the introduction and printed as the numbered list every
-     `P3` in the prose points into. Both markers are real links into that
-     printed text, so both work with this file absent and on paper.
+  /* Three kinds of marker are read the same way. An inline note is authored
+     once and printed as a numbered list closing its section; a design principle
+     is declared once in the introduction and printed as the numbered list every
+     `P3` in the prose points into; a citation is numbered by first use and
+     printed in the references. All three markers are real links into that
+     printed text, so all three work with this file absent and on paper.
 
      What this adds is the screen reading: the marker opens the text it points
      at in a popover, which keeps an aside—or a principle stated three sections
-     earlier—off the measure until it is asked for. The notes list is withdrawn
-     once that is possible; the principles list is the introduction's own
-     content and stays.
+     earlier, or a reference the reader has no reason to have memorized—off the
+     measure until it is asked for. The notes list is withdrawn once that is
+     possible; the principles list is the introduction's own content and stays,
+     and so does the reference list, which a reader expects to find at the end
+     whether or not they ever opened a marker.
+
+     A citation's popover carries the entry's DOI as a live link, so following a
+     reference costs the reader neither their place in the sentence nor a trip
+     to the back of the document.
 
      The popover copies the item it points at rather than carrying its own copy
      of the text, so the two renderings cannot drift apart. It is positioned in
      document coordinates, so it stays on its marker while the reader
      scrolls. */
-  const POP_REF = ".noteref, .pref";
+  const POP_REF = ".noteref, .pref, .refref";
 
   function renderPopovers() {
-    const refs = document.querySelectorAll(".report .noteref, .report .pref");
+    const refs = document.querySelectorAll(
+      ".report .noteref, .report .pref, .report .refref"
+    );
     if (!refs.length) return;
     if (document.querySelector(".report .noteref")) {
       document.body.classList.add("has-note-pop");
