@@ -31,6 +31,8 @@
    Type runs in whole pixels, one size per job, so that a size carries a
    meaning rather than a history:
 
+      9  the capture declaration under a screenshot, and nothing else: the one
+         line on the page that is machinery rather than writing
      11  labels and fine print—the uppercase eyebrow over a block, a file path,
          a field's type, the small controls that sit inside a figure
      12  chrome—the rail, the toolbar, the strip under a drawing: text about
@@ -60,6 +62,12 @@
   --ink: #000000;
   --ink-2: #3a3a38;
   --muted: #6b6b66;
+
+  /* One step past muted, for the only text on the page that is machinery
+     rather than writing: the line under a screenshot naming the address, the
+     viewport and the day it was taken. It has to be there to be checked and
+     nowhere near the eye otherwise. */
+  --faint: #9a9a94;
   --rule: #cfcfc9;
   --rule-soft: #e4e4de;
   --rule-strong: #101010;
@@ -1151,12 +1159,18 @@ p.cap {
   color: var(--ink);
 }
 
-.lane-lede {
+/* Each of these three lines is a `<p>` inside the report, so `.report p` reaches
+   it and outranks a rule written on the class alone—which is how all three came
+   to be set at reading size while claiming a chrome size here. They are named
+   with the report ahead of them so the size on the page is the size in the file.
+   `.cap` solves the same problem the other way, by also matching `p.cap`. */
+.report .lane-lede {
   margin: 0 0 4px;
   max-width: 68ch;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 13px;
+  line-height: 1.5;
 }
 
 .lane-lede .entry {
@@ -1248,12 +1262,14 @@ p.cap {
   flex: none;
 }
 
-.hint {
+.hint,
+.report .hint {
   margin: 0 0 12px;
   max-width: var(--measure);
   color: var(--muted);
   font-family: var(--sans);
   font-size: 12px;
+  line-height: 1.5;
 }
 
 /* ----------------------------------------------------------------- chart */
@@ -1357,13 +1373,19 @@ figure.figure {
 }
 
 /* The declaration the picture was taken from. Chrome, like the teaser's status
-   strip: it belongs with the drawing rather than with the caption. */
-.shot-meta {
-  margin: 8px 0 0;
+   strip: it belongs with the drawing rather than with the caption—and set well
+   under the caption's weight, because a reader who wants to know what the
+   figure says never needs this line, and a reader checking the figure against
+   the running application needs every character of it. */
+.shot-meta,
+.report .shot-meta {
+  margin: 6px 0 0;
   max-width: var(--measure);
-  color: var(--muted);
+  color: var(--faint);
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 9px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
 }
 
 /* Placement only—the type comes from the shared caption rules. The caption sits
