@@ -940,9 +940,20 @@ body.has-note-pop .notes {
 
 /* A figure narrower than the column keeps its own width and does not grow into
    the space it has no use for. Where the page is wide enough it moves out of the
-   text and into the margin beside it—see the container query below. */
+   text and into the margin beside it—see the container query below.
+
+   Where it does not, the block is the text column: the drawing is centered in
+   the column at its own width, and the caption and the declaration line under it
+   run the column's full width, because they are read and the column is the width
+   reading is set at. Only the picture is narrow, and only the picture is
+   centered. */
 .widget-margin {
-  max-width: min(var(--fig-width, var(--measure)), 100%);
+  max-width: var(--measure);
+}
+
+.widget-margin .shot-frame {
+  width: min(var(--fig-width, 100%), 100%);
+  margin-inline: auto;
 }
 
 /* The margin column. It exists when the body is wide enough to hold the measure,
@@ -1161,25 +1172,6 @@ p.cap {
   color: var(--ink);
 }
 
-/* Each of these three lines is a `<p>` inside the report, so `.report p` reaches
-   it and outranks a rule written on the class alone—which is how all three came
-   to be set at reading size while claiming a chrome size here. They are named
-   with the report ahead of them so the size on the page is the size in the file.
-   `.cap` solves the same problem the other way, by also matching `p.cap`. */
-.report .lane-lede {
-  margin: 0 0 4px;
-  max-width: 68ch;
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.lane-lede .entry {
-  font-family: var(--mono);
-  font-size: 12px;
-}
-
 /* A file path or a script location under its label. Allowed to break anywhere:
    an unbreakable path would otherwise set the column's width on its own. */
 .path {
@@ -1264,6 +1256,11 @@ p.cap {
   flex: none;
 }
 
+/* Both of these lines are a `<p>` inside the report, so `.report p` reaches them
+   and outranks a rule written on the class alone—which is how they came to be
+   set at reading size while claiming a chrome size here. They are named with the
+   report ahead of them so the size on the page is the size in the file. `.cap`
+   solves the same problem the other way, by also matching `p.cap`. */
 .hint,
 .report .hint {
   margin: 0 0 12px;
@@ -1332,25 +1329,26 @@ p.cap {
   font-size: 8px;
 }
 
-/* The one control a reduced figure has: the way back to the full one. */
-.chart-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin: 10px 0 12px;
-}
-
-.expand {
-  padding: 6px 10px;
+/* The way back to the full chart, set as the caption's last clause rather than
+   as a control beside the figure: it follows the sentence that says the drawing
+   is reduced, on the same line where the line has room for it. Sized under the
+   caption's own type so it reads as a word with a border around it and does not
+   open up the line it sits on. */
+.cap .expand {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--sans);
-  font-size: 13px;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.45;
+  vertical-align: baseline;
   cursor: pointer;
 }
 
-.expand:hover {
+.cap .expand:hover {
   background: var(--surface);
 }
 
@@ -2584,7 +2582,7 @@ figure.teaser > .cap {
   .hint,
   .drawer,
   .chart-modal,
-  .chart-actions,
+  .cap .expand,
   .toc-fab,
   .toc-pop,
   .figpeek,
@@ -2612,13 +2610,14 @@ figure.teaser > .cap {
 
   /* A sheet has no margin column—the text area of an A4 page is narrower than
      the measure and the gutter and a figure together, so the container query
-     never matches and a margin figure prints in the text column at its own
-     width. Stated anyway, because the sheet is a setting and a wide one would
-     otherwise put a float on paper, where nothing clears it. */
+     never matches and a margin figure prints in the text column, centered in it,
+     exactly as it reads on a narrow screen. Stated anyway, because the sheet is
+     a setting and a wide one would otherwise put a float on paper, where nothing
+     clears it. */
   .report > .widget-margin {
     float: none;
     width: auto;
-    max-width: min(var(--fig-width, var(--measure)), 100%);
+    max-width: var(--measure);
   }
 
   .titleblock {

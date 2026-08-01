@@ -1737,6 +1737,11 @@
           .concat(marks.filter(Boolean))
           .join(" ")
       );
+      // The caption is rewritten from scratch on every draw, so the way to the
+      // full chart is put back at the end of it. Appended rather than rebuilt,
+      // so a reader who has tabbed to the button still has it under the cursor
+      // after a filter redraws the figure.
+      if (expand) captionNode.appendChild(expand);
     }
 
     /* ------------------------------------------------------------- mount */
@@ -1761,49 +1766,37 @@
       return { width: geometry.width, height: geometry.height };
     }
 
-    // Only what the prose above cannot say for itself: the entry point and the
-    // size of the graph. The lane's own blurb is deliberately not repeated here
-    //—the authored section introduces the pipeline, and saying it twice made
-    // the figure look like it was arguing with the text.
-    const lede = el("p", { class: "lane-lede" }, [
-      el("span", { text: "Entry point " }),
-      el("code", { class: "entry", text: lane.entry }),
-    ]);
-
     /* The way to the full-screen chart. It is offered in both versions, for the
        same reason in each: the graph is wider than what it is drawn into. On a
        phone that is the compact figure's missing detail; in the report's text
        column it is the right-hand third of a chart that has to be scrolled to
-       be seen at all. */
-    function expandButton() {
-      return el("button", {
-        class: "expand",
-        type: "button",
-        text: reduced ? "Open the full chart" : "Full screen",
-        title:
-          "Open " +
-          lane.label +
-          " pipeline as a full-screen chart, with the toolbar and every detail.",
-        onclick: function () {
-          openChartModal(laneId, figureNumber);
-        },
-      });
-    }
+       be seen at all.
 
-    host.appendChild(lede);
-    if (reduced) {
-      // No toolbar: a search field and six filter toggles cost more height than
-      // the figure they filter, and filtering a chart this reduced answers
-      // nothing that opening the full one does not answer better.
-      if (settings.expandable) {
-        host.appendChild(
-          el("div", { class: "chart-actions" }, [expandButton()])
-        );
-      }
-    } else {
-      const toolbar = el("div", { class: "toolbar" }, [search, filters]);
-      if (settings.expandable) toolbar.appendChild(expandButton());
-      host.appendChild(toolbar);
+       It reads as the last clause of the caption rather than as a control of
+       its own. A caption already says what the figure is and what its marks
+       mean, and where the drawing is reduced it says so and points at the full
+       one—the button is that sentence made pressable, and it belongs where the
+       sentence is. `draw()` puts it back after each rewrite. */
+    const expand = settings.expandable
+      ? el("button", {
+          class: "expand",
+          type: "button",
+          text: reduced ? "Open the full chart" : "Full screen",
+          title:
+            "Open " +
+            lane.label +
+            " pipeline as a full-screen chart, with the toolbar and every detail.",
+          onclick: function () {
+            openChartModal(laneId, figureNumber);
+          },
+        })
+      : null;
+
+    // A reduced figure gets no toolbar: a search field and six filter toggles
+    // cost more height than the figure they filter, and filtering a chart this
+    // reduced answers nothing that opening the full one does not answer better.
+    if (!reduced) {
+      host.appendChild(el("div", { class: "toolbar" }, [search, filters]));
       host.appendChild(hint);
       renderToolbar();
     }
