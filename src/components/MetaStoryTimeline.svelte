@@ -7,6 +7,7 @@
   import { queryParams, originQuery } from "../stores/queryParams.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
+  import { metaStoryStyle } from "../utils/metaStoryStyles.js";
 
   export let metaStoryId = null; // ID of the meta story (for navigation context)
   export let chapters = [];
@@ -15,6 +16,11 @@
   export let scrollProgress = 0; // 0 to 1, representing horizontal scroll position
   export let isSticky = false; // Whether timeline is in sticky/fullscreen mode
   export let stickyHeaderHeight = 0; // Height of MetaStoryView's sticky header (for positioning)
+
+  // Whether the story has a glyph to open its headings with — the chapter
+  // header floating over the timeline and each theme's title are the
+  // timeline's subheads, and carry the same mark as the article's.
+  $: storyMarked = !!metaStoryStyle(metaStoryId)?.separatorGlyphDataUrl;
 
   // Person styles registry
   const personStyles = personStylesData.styles;
@@ -2220,7 +2226,7 @@
           bind:clientHeight={chapterHeaderHeight}
         >
           <div class="chapter-header-main">
-            <h3 class="chapter-title-text">
+            <h3 class="chapter-title-text" class:marked={storyMarked}>
               {currentChapterByIndicator.title}
             </h3>
             <span class="chapter-year-range">
@@ -2346,7 +2352,9 @@
               visiblePersonIds
             )}px; height: {effectiveThemeTitleHeight}px;"
           >
-            <h4 class="theme-title">{theme.title}</h4>
+            <h4 class="theme-title" class:marked={storyMarked}>
+              {theme.title}
+            </h4>
           </div>
         {/if}
 
@@ -2850,6 +2858,28 @@
     padding: 0;
     white-space: nowrap;
     line-height: 1;
+  }
+
+  /* The story's mark opens the timeline's headings too, exactly as it opens
+     the article's subheads and the narration cards over the graph and the map.
+     Only drawn when the story has a glyph. */
+  .chapter-title-text.marked,
+  .theme-title.marked {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+  }
+
+  .chapter-title-text.marked::before,
+  .theme-title.marked::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0.85em;
+    height: 0.85em;
+    background-image: var(--ms-glyph, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   /* Individual person lifespan */

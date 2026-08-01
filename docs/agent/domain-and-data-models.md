@@ -698,9 +698,10 @@ the timeline sits on, the frame of the chapter header, the year axis and its
 ticks, the active-chapter glow, the narration cards over the graph and the map,
 the tooltips, the figure frames and the pager buttons — reads
 `rgba(var(--ms-page-bg-rgb), …)` and `color-mix(… var(--ms-accent) …)` instead
-of the slate and sky it used to hard-code. Each narration card opens with the
-story's glyph, the same mark the article's subheads carry. Two rules for
-editing them:
+of the slate and sky it used to hard-code. Every heading inside them opens with
+the story's glyph, the same mark the article's subheads carry: the narration
+cards over the graph and the map, the chapter header floating over the
+timeline, and each of the timeline's theme titles. Two rules for editing them:
 
 - Every replacement keeps the old value as the fallback, so a story without a
   style renders exactly as before.
