@@ -75,16 +75,13 @@ what the model returned. What the graph produces is a set of documents
 describing one life or one theme. The interface loads those documents and
 renders them, so that reading a story is a matter of presentation alone.
 
-This report describes both halves in the vocabulary of what they handle rather
-than of where it is kept. A path on disk is a storage decision; the social
-network, the life events and the theme are what the system is actually about,
-and they are what the figures below name and mark.
+A path on disk is a storage decision. The social network, the life events and
+the theme are what the system is actually about, and they are what the figures
+below name and mark.
 
-A small number of decisions shape everything that follows, and each of them is
-taken once and then relied upon in several places at once. They are therefore
-stated here and numbered, and the sections that act on one point back to its
-number instead of restating it—a marker such as ((bottom-up)) in the running
-text opens the principle it names.
+A small number of decisions shape everything that follows, and each is taken
+once and then relied on in several places. They are stated here and referred to
+by number where they act.
 
 ::: principles
 @one-record One record, several encodings
@@ -152,10 +149,9 @@ Underneath those families is a smaller and more durable vocabulary. The system
 handles {{ pipeline.concepts }} concepts, and every artifact, every step and
 every component of the interface can be described as producing or showing one
 of them. Each concept is written here with the glyph the application already
-draws for it, and the shared mark is the claim: the icon that opens
-[[graph|the network view]] of a story is the icon on the node that writes
-[[ego-network|the social network]], and the same mark stands beside both
-phrases here, because all of them are one subject at different removes.
+draws for it: the icon that opens [[graph|the network view]] of a story is the
+icon on the node that writes [[ego-network|the social network]], because they
+are one subject at different removes.
 
 ::: conceptlegend
 :::
@@ -209,11 +205,8 @@ own entry.]
 Each step in those figures is an address rather than a label. Opening one gives
 the record behind it: the function and line that implement it, the model and
 reasoning effort it resolves, the output schema it fills, the artifacts it
-reads and writes, the steps it needs and feeds, and the prompts it sends. The
-printed edition lays the same records out for every step as an appendix, since
-paper cannot be clicked. The figures are accordingly an index into the pipeline
-rather than a picture of it, and no table restates what a step's own record
-already holds.
+reads and writes, the steps it needs and feeds, and the prompts it sends. On
+paper the same records are laid out for every step as an appendix.
 
 The pipelines instantiate a common pattern ((bottom-up)): material is first
 derived bottom-up by steps that each observe only their own slice of the
@@ -224,10 +217,9 @@ graph, and so will the phase that later writes the surrounding prose, unless
 some step is given the whole document and the explicit task of distinguishing
 the two registers.
 
-The two subsections that follow present the same class of figure at the same
-scale, so that the pipelines may be compared directly. The personal pipeline is
-deeper than its width suggests and the meta pipeline is wider than its depth
-suggests, and that asymmetry is the substance of the architecture.
+The personal pipeline is deeper than its width suggests and the meta pipeline is
+wider than its depth suggests. The two figures are drawn at the same scale, so
+the asymmetry can be read off them directly.
 
 ### Personal story pipeline
 
@@ -333,11 +325,7 @@ within it, and the open or closed condition of the network view. Every position
 in a story is therefore a citable address, movement within a story replaces the
 history entry while movement between stories pushes one, and a reader arriving
 at a meta story from a person's story is returned to the position from which
-they left.^[That addressability is what lets the figures in this section be
-declared rather than deposited. Each one names the position it is taken
-from—a route, a viewport, and where relevant a section to scroll to—and is
-photographed from it by a browser when the report is built, so a changed
-interface is one command away from a changed figure.]
+they left.
 
 ::: screenshot id=landing route=#/en width=1280 height=820 settle=2500 caption="The entry point: a collection carousel, role filters and the generated portrait of every subject in the corpus"
 :::
@@ -380,8 +368,6 @@ typography and background pattern—injected as CSS custom properties
 subject is presented in a visual register of its own.
 
 ::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone: the dated narrative above, the map beneath it centered on the event's place, the chapter and the icon timeline along the bottom edge"
-The address names the event rather than the slide, so the figure survives the
-insertion of a chapter above it.
 :::
 
 ### Meta stories
