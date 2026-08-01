@@ -52,9 +52,9 @@
   style="--card-primary: {personStyle?.primary ||
     '#f8fafc'}; --card-secondary: {personStyle?.secondary ||
     '#38bdf8'}; --card-heading-font: {personStyle?.headingFont
-    ? `'${personStyle.headingFont}', sans-serif`
+    ? `'${personStyle.headingFont}', Inter, sans-serif`
     : 'inherit'}; --card-body-font: {personStyle?.bodyFont
-    ? `'${personStyle.bodyFont}', sans-serif`
+    ? `'${personStyle.bodyFont}', Inter, sans-serif`
     : 'inherit'};"
   aria-label={ariaLabel || displayName(person?.name)}
   on:click={handleClick}

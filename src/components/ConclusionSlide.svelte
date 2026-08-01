@@ -139,10 +139,10 @@
               style="--card-primary: {relatedPersonStyle?.primary ||
                 '#f8fafc'}; --card-secondary: {relatedPersonStyle?.secondary ||
                 '#38bdf8'}; --card-heading-font: {relatedPersonStyle?.headingFont
-                ? `'${relatedPersonStyle.headingFont}', sans-serif`
-                : 'var(--story-heading-font, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont
-                ? `'${relatedPersonStyle.bodyFont}', sans-serif`
-                : 'var(--story-body-font, sans-serif)'};"
+                ? `'${relatedPersonStyle.headingFont}', Inter, sans-serif`
+                : 'var(--story-heading-font, Inter, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont
+                ? `'${relatedPersonStyle.bodyFont}', Inter, sans-serif`
+                : 'var(--story-body-font, Inter, sans-serif)'};"
               aria-label={`Open life story for ${displayName(person.name)}`}
             >
               {#if person?.portrait?.image}
@@ -254,7 +254,7 @@
   }
 
   .conclusion-headline {
-    font-family: var(--story-heading-font, sans-serif);
+    font-family: var(--story-heading-font, Inter, sans-serif);
     font-size: clamp(1.25rem, 3.5vw, 1.75rem);
     font-weight: 700;
     line-height: 1.2;
@@ -268,7 +268,7 @@
   }
 
   .conclusion-text {
-    font-family: var(--story-body-font, sans-serif);
+    font-family: var(--story-body-font, Inter, sans-serif);
     font-size: clamp(1rem, 2.2vw, 1.125rem);
     font-style: italic;
     line-height: 1.7;
@@ -291,7 +291,7 @@
   }
 
   .related-headline {
-    font-family: var(--story-heading-font, sans-serif);
+    font-family: var(--story-heading-font, Inter, sans-serif);
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 600;
     line-height: 1.3;
@@ -395,7 +395,7 @@
   .card-name {
     font-family: var(
       --card-heading-font,
-      var(--story-heading-font, sans-serif)
+      var(--story-heading-font, Inter, sans-serif)
     );
     font-size: 0.875rem;
     font-weight: 600;
@@ -408,7 +408,10 @@
   }
 
   .card-years {
-    font-family: var(--card-body-font, var(--story-body-font, sans-serif));
+    font-family: var(
+      --card-body-font,
+      var(--story-body-font, Inter, sans-serif)
+    );
     font-size: 0.75rem;
     line-height: 1.3;
     color: var(--card-secondary, #38bdf8);
@@ -420,7 +423,10 @@
   }
 
   .card-roles {
-    font-family: var(--card-body-font, var(--story-body-font, sans-serif));
+    font-family: var(
+      --card-body-font,
+      var(--story-body-font, Inter, sans-serif)
+    );
     font-size: 0.75rem;
     line-height: 1.3;
     color: rgba(226, 232, 240, 0.8);
@@ -448,7 +454,7 @@
   }
 
   .references-headline {
-    font-family: var(--story-heading-font, sans-serif);
+    font-family: var(--story-heading-font, Inter, sans-serif);
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 600;
     line-height: 1.3;
@@ -489,7 +495,7 @@
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 400;
-    font-family: var(--story-body-font, sans-serif);
+    font-family: var(--story-body-font, Inter, sans-serif);
     transition: all 0.2s ease;
     word-break: break-word;
     text-shadow:

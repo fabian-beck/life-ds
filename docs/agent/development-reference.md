@@ -94,7 +94,8 @@ See README "Deployment" for the setup steps and the platform limits.
 
 - Colors must be hex format (`#RRGGBB`)
 - Background pattern SVG must be valid, self-contained
-- Fonts must be available on Google Fonts
+- Fonts must be one of the families imported by `src/fonts.css` (the same set
+  `generate_person_style.py` offers); anything else renders in the fallback font
 
 ## Important Implementation Details
 
@@ -116,7 +117,9 @@ Events and networks are only loaded when a person's story is viewed.
 
 - Hex colors → RGB values (for CSS custom properties with alpha)
 - SVG strings → data URLs
-- Font names → Google Fonts API format
+- Font names → trimmed and wrapped into the `--story-heading-font` /
+  `--story-body-font` chains by `storyStyleVars()` in `src/utils/helpers.js`,
+  always ending in `Inter, sans-serif`
 - Missing/invalid styles fall back to defaults
 
 ### Event Images
@@ -243,7 +246,8 @@ that uses any rune switches to runes mode wholesale and its `export let` and
 1. Check `data/person_styles.json` for the person ID
 2. Verify hex color format (`#RRGGBB`)
 3. Test SVG pattern in browser (data URL conversion)
-4. Confirm fonts exist on Google Fonts
+4. Confirm the fonts are imported in `src/fonts.css` (run
+   `python -m pytest tests/test_font_coverage.py`)
 5. Check browser console for CSS custom property errors
 
 ### Fixing Routing Issues

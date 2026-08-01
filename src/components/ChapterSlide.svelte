@@ -174,7 +174,7 @@
   }
 
   .chapter-headline {
-    font-family: var(--story-heading-font, sans-serif);
+    font-family: var(--story-heading-font, Inter, sans-serif);
     font-size: clamp(1.5rem, 4vw, 2.25rem);
     font-weight: 700;
     line-height: 1.2;
@@ -192,7 +192,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-family: var(--story-body-font, sans-serif);
+    font-family: var(--story-body-font, Inter, sans-serif);
     font-size: 0.8125rem;
     color: var(--story-secondary, #38bdf8);
     font-weight: 500;

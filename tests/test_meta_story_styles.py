@@ -24,7 +24,6 @@ from generate_meta_story_style import (  # noqa: E402
 
 STYLES_PATH = ROOT / "data" / "meta_story_styles.json"
 META_STORIES_REGISTER = ROOT / "data" / "meta_stories.json"
-INDEX_HTML = ROOT / "index.html"
 
 HEX = re.compile(r"^#[0-9A-F]{6}$")
 
@@ -55,19 +54,18 @@ class MetaStoryStyleRegistryTests(unittest.TestCase):
                 with self.subTest(story_id=story_id, field=field):
                     self.assertRegex(style[field], HEX)
 
-    def test_fonts_are_loaded_by_the_app(self):
-        """Both faces must be in the choice lists *and* in the font link tag.
+    def test_fonts_are_in_the_choice_lists(self):
+        """A stored face outside the vocabulary is a font nothing will style.
 
-        A font that is only in the choice list would fall back to Inter in the
-        browser, which is a styling bug nobody sees in the data.
+        That the app also *loads* each face is checked in
+        tests/test_font_coverage.py, which owns parsing src/fonts.css. This
+        assertion used to search index.html for the Google Fonts link; the
+        fonts are self-hosted now, so there is no link tag to search.
         """
-        head = INDEX_HTML.read_text(encoding="utf-8")
         for story_id, style in load_styles().items():
             with self.subTest(story_id=story_id):
                 self.assertIn(style["heading_font"], HEADING_FONT_CHOICES)
                 self.assertIn(style["body_font"], BODY_FONT_CHOICES)
-                for font in (style["heading_font"], style["body_font"]):
-                    self.assertIn(font.replace(" ", "+"), head)
 
     def test_marks_are_valid_single_color_svg(self):
         """The glyph and the ornament are drawn in the story's primary color."""

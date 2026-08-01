@@ -1,0 +1,108 @@
+/*
+ * Self-hosted web fonts.
+ *
+ * These eleven families used to arrive from fonts.googleapis.com through a
+ * render-blocking <link> in index.html. That link gated the first paint on a
+ * third party: when the host was reachable-but-hanging — a campus proxy, a DNS
+ * blackhole, a content blocker that drops rather than refuses — the page stayed
+ * blank for the whole timeout. Measured on the production build, mobile
+ * viewport: first contentful paint went from 112 ms (request refused at once)
+ * to 12,848 ms (request left hanging). Hotlinking the fonts also sent every
+ * visitor's IP address to Google, which is the arrangement German courts have
+ * ruled on.
+ *
+ * Serving the files from our own origin removes both. @fontsource ships the
+ * same faces under their canonical family names, so nothing that references
+ * "Space Grotesk" or "Inter" — person_styles.json, the --story-*-font
+ * variables, the CSS fallback chains — has to change.
+ *
+ * Two rules for editing this file:
+ *
+ * 1. Load `latin` AND `latin-ext`. The content needs Latin Extended: "ł"
+ *    appears 110 times, among others in Skłodowska (Marie Curie), plus ć ń ō ő
+ *    ę č ř ž ź Ł Œ. Dropping latin-ext would mangle those names. The heavy
+ *    typographic punctuation (’ „ – —) already lives in `latin`.
+ *
+ * 2. Load only the cuts that are used, and keep this list in step with
+ *    HEADING_FONT_CHOICES / BODY_FONT_CHOICES in
+ *    scripts/generate_person_style.py. A family the generator can pick but that
+ *    is not imported here renders in the fallback font instead.
+ *
+ * The set below reproduces exactly what the Google request fetched, so this is
+ * a like-for-like migration. Adding real italics for the sans body fonts, or a
+ * 500 cut, would change how existing stories render and belongs in its own
+ * change.
+ */
+
+/* --- Heading faces -------------------------------------------------------- */
+
+/* Playfair Display — 6 people. Headings only, bold. */
+@import url("@fontsource/playfair-display/latin-700.css");
+@import url("@fontsource/playfair-display/latin-ext-700.css");
+
+/* DM Serif Display — 12 people. Ships a single weight by design. */
+@import url("@fontsource/dm-serif-display/latin-400.css");
+@import url("@fontsource/dm-serif-display/latin-ext-400.css");
+
+/* Space Grotesk — 22 people, the most common heading face. */
+@import url("@fontsource/space-grotesk/latin-600.css");
+@import url("@fontsource/space-grotesk/latin-ext-600.css");
+@import url("@fontsource/space-grotesk/latin-700.css");
+@import url("@fontsource/space-grotesk/latin-ext-700.css");
+
+/* Unbounded — 1 person (frank_lloyd_wright), headings. */
+@import url("@fontsource/unbounded/latin-600.css");
+@import url("@fontsource/unbounded/latin-ext-600.css");
+@import url("@fontsource/unbounded/latin-700.css");
+@import url("@fontsource/unbounded/latin-ext-700.css");
+
+/* Archivo Black — 5 people. An ultra-black display face with one weight; see
+   font-synthesis-weight in app.css for why headings do not fake a bold cut. */
+@import url("@fontsource/archivo-black/latin-400.css");
+@import url("@fontsource/archivo-black/latin-ext-400.css");
+
+/* --- Body faces ----------------------------------------------------------- */
+
+/* Inter — 26 people, and the default for the surrounding UI chrome. */
+@import url("@fontsource/inter/latin-400.css");
+@import url("@fontsource/inter/latin-ext-400.css");
+@import url("@fontsource/inter/latin-600.css");
+@import url("@fontsource/inter/latin-ext-600.css");
+
+/* Source Serif 4 — 8 people. Italic is rendered by .impact-text and
+   .conclusion-text, so the real italic face is loaded rather than synthesized. */
+@import url("@fontsource/source-serif-4/latin-400.css");
+@import url("@fontsource/source-serif-4/latin-ext-400.css");
+@import url("@fontsource/source-serif-4/latin-400-italic.css");
+@import url("@fontsource/source-serif-4/latin-ext-400-italic.css");
+@import url("@fontsource/source-serif-4/latin-600.css");
+@import url("@fontsource/source-serif-4/latin-ext-600.css");
+
+/* Lora — 6 people. Same italic reasoning as Source Serif 4. */
+@import url("@fontsource/lora/latin-400.css");
+@import url("@fontsource/lora/latin-ext-400.css");
+@import url("@fontsource/lora/latin-400-italic.css");
+@import url("@fontsource/lora/latin-ext-400-italic.css");
+@import url("@fontsource/lora/latin-600.css");
+@import url("@fontsource/lora/latin-ext-600.css");
+
+/* IBM Plex Sans — 3 people as a heading face, 7 as a body face, so it needs
+   the bold cut the other body faces do not. */
+@import url("@fontsource/ibm-plex-sans/latin-400.css");
+@import url("@fontsource/ibm-plex-sans/latin-ext-400.css");
+@import url("@fontsource/ibm-plex-sans/latin-600.css");
+@import url("@fontsource/ibm-plex-sans/latin-ext-600.css");
+@import url("@fontsource/ibm-plex-sans/latin-700.css");
+@import url("@fontsource/ibm-plex-sans/latin-ext-700.css");
+
+/* DM Sans — 1 person (geoffrey_bawa), body text. */
+@import url("@fontsource/dm-sans/latin-400.css");
+@import url("@fontsource/dm-sans/latin-ext-400.css");
+@import url("@fontsource/dm-sans/latin-600.css");
+@import url("@fontsource/dm-sans/latin-ext-600.css");
+
+/* Manrope — 1 person (friedensreich_hundertwasser), body text. */
+@import url("@fontsource/manrope/latin-400.css");
+@import url("@fontsource/manrope/latin-ext-400.css");
+@import url("@fontsource/manrope/latin-600.css");
+@import url("@fontsource/manrope/latin-ext-600.css");

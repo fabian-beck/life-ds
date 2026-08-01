@@ -26,6 +26,22 @@
 
   /* How much of the pattern the calm base wash keeps behind a content column. */
   --pattern-core-alpha: 0.75;
+
+  /*
+   * Never fake a bold cut that the family does not have.
+   *
+   * Slide headings ask for weight 600-700, but two of the six heading faces
+   * ship a single weight by design: Archivo Black (5 people) and DM Serif
+   * Display (12 people). Left alone, the browser smears a synthetic bold over
+   * a face that is already black — 17 of 49 stories. With synthesis off the
+   * real face is used instead, which is what those designs intend.
+   *
+   * Deliberately only `-weight`, never `font-synthesis-style`: the sans body
+   * faces (Inter, IBM Plex Sans, DM Sans, Manrope) are loaded without a true
+   * italic, and .impact-text and .conclusion-text do render italic. Their
+   * synthetic oblique is the intended fallback and must keep working.
+   */
+  font-synthesis-weight: none;
 }
 
 * {
