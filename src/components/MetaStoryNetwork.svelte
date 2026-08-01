@@ -14,6 +14,7 @@
   import { computeClusters } from "../utils/networkClusters.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
   import { queryParams, originQuery } from "../stores/queryParams.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -104,19 +105,11 @@
     return node.type === "main" ? mainR + 5 : secondaryR + 2;
   }
 
-  // Humanize a relationship_type: "professional/mentor" → "Professional · Mentor".
+  // Name a relationship_type: "professional/mentor" → "Professional · Mentor".
+  // The token is machine-readable and identical in every language's dataset,
+  // so both of its segments are resolved through the locale.
   function humanizeRelationship(relationshipType) {
-    if (!relationshipType) return "";
-    return relationshipType
-      .split("/")
-      .map((part) =>
-        part
-          .replace(/[_-]+/g, " ")
-          .replace(/\b\w/g, (c) => c.toUpperCase())
-          .trim()
-      )
-      .filter(Boolean)
-      .join(" · ");
+    return relationshipTypeLabel($_, relationshipType);
   }
 
   // --- Layout / simulation state -------------------------------------------

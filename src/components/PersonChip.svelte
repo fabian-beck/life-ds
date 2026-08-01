@@ -3,6 +3,7 @@
   import { mdiAccountMultipleOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
+  import { relationshipRoleLabel } from "../utils/relationshipLabels.js";
   import SeparatedList from "./SeparatedList.svelte";
 
   export let person = {};
@@ -199,13 +200,14 @@
     <span class="person-name" class:long-name={isLongName}>{truncatedName}</span
     >
     {#if showRole}
-      {#if subcategory}
-        <span class="person-role">{displayName(subcategory)}</span>
-      {:else}
-        <span class="person-role"
-          >{displayName(person.relationship_type) || ""}</span
-        >
-      {/if}
+      <!-- `relationship_type` is a machine token the datasets keep in every
+           language, so it is resolved through the locale rather than printed. -->
+      <span class="person-role"
+        >{relationshipRoleLabel(
+          $_,
+          subcategory ?? person.relationship_type
+        )}</span
+      >
     {/if}
   </button>
 </div>

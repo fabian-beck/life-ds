@@ -165,6 +165,14 @@ Social connections with rich relationship metadata:
 - `romantic/{type}` (e.g., `romantic/fiancé`)
 - `adversarial/{type}` (e.g., `adversarial/legal-opponent`)
 
+The vocabulary is open: the generator writes whatever the source suggests, so
+the datasets hold a long tail of one-off subcategories. Both segments of the
+token are reader-facing text, and both are resolved through the locale files by
+`src/utils/relationshipLabels.js` — `network.category.{segment}` for the first
+and `network.role.{segment}_one`/`_other` for the second, with the token itself
+as the fallback when there is no entry. Adding a common relation to the data is
+therefore a locale change, not a data one, and a new one-off needs nothing.
+
 ### Meta Story Social Network
 
 Each meta story JSON carries a `social_network` block, rendered as a d3-force

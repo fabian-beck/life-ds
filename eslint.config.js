@@ -34,7 +34,9 @@ export default [
   ...svelte.configs.prettier,
   {
     languageOptions: {
-      ecmaVersion: 2022,
+      // 2025 for import attributes (`with { type: "json" }`), which Node
+      // requires when a test reads a locale file directly.
+      ecmaVersion: 2025,
       sourceType: "module",
       globals: {
         ...globals.browser,

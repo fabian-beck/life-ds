@@ -1,0 +1,127 @@
+/**
+ * Reader-facing names for the relationship tokens in an ego network.
+ *
+ * `relationship_type` is a machine token — `family/father`, `professional/mentor`
+ * — and the localized datasets correctly leave it untranslated: the German
+ * ego_network.json carries the same `family/father` as the English one. It is
+ * the interface's job to name it, and it used to do that by replacing
+ * underscores, which meant a German reader got FATHER on the chip and
+ * `Academic (6)` on the heading no matter what language they had chosen.
+ *
+ * Both segments of the token are looked up here instead. The vocabulary is
+ * open — the generator writes whatever the source suggests, so the datasets
+ * hold over two hundred distinct subcategories with a long tail of one-offs
+ * ("authorship attester", "poetic subject") — and translating all of it is not
+ * the point. Anything without an entry falls back to the humanized token, so a
+ * new value from the generator reads exactly as it did before rather than
+ * breaking.
+ */
+
+/**
+ * Fold a token to its locale key segment: lower case, one separator.
+ * This also collapses the spellings the datasets disagree on —
+ * `mother-in-law`, `mother_in_law` and `mother in law` are one key.
+ * @param {string} token
+ * @returns {string}
+ */
+function tokenKey(token) {
+  return String(token || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s\-/]+/g, "_");
+}
+
+// Naive English pluralization for a single word — enough for the relationship
+// subcategories that reach it as a fallback (colleague → colleagues, rival →
+// rivals, adversary → adversaries).
+function pluralizeWord(word) {
+  if (/[^aeiou]y$/i.test(word)) {
+    return `${word.slice(0, -1)}ies`;
+  }
+  if (/(s|x|z|ch|sh)$/i.test(word)) {
+    return `${word}es`;
+  }
+  return `${word}s`;
+}
+
+/**
+ * The fallback name: the raw token, spaced and capitalized.
+ * @param {string} token
+ * @param {number} count - 1 for the singular form
+ * @returns {string}
+ */
+export function humanizeRelationshipToken(token, count = 1) {
+  if (!token) return "";
+  const words = String(token)
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+  if (count !== 1 && words.length > 0) {
+    words[words.length - 1] = pluralizeWord(words[words.length - 1]);
+  }
+  return words.join(" ");
+}
+
+// The translation store answers with the key itself when there is no entry,
+// which is how a missing mapping is detected.
+function lookup(t, key) {
+  if (typeof t !== "function") return null;
+  const value = t(key);
+  return value && value !== key ? value : null;
+}
+
+/**
+ * Name a relationship role — the segment after the slash, or a bare token.
+ * @param {Function} t - the translate function from the language store
+ * @param {string} subcategory - e.g. "father", "field_peer"
+ * @param {number} count - 1 for the singular form
+ * @returns {string}
+ */
+export function relationshipRoleLabel(t, subcategory, count = 1) {
+  if (!subcategory) return "";
+  // A caller with only the full token in hand ("family/father") means the role
+  // it names; the category is the caller's other lookup.
+  const role = String(subcategory).includes("/")
+    ? String(subcategory).split("/").pop()
+    : subcategory;
+  if (!role) return "";
+  const key = tokenKey(role);
+  const suffix = count === 1 ? "one" : "other";
+  return (
+    lookup(t, `network.role.${key}_${suffix}`) ??
+    humanizeRelationshipToken(role, count)
+  );
+}
+
+/**
+ * Name a relationship category — the segment before the slash. A token with no
+ * slash is a category and a role at once ("colleague"), so it falls through to
+ * the role vocabulary before giving up.
+ * @param {Function} t - the translate function from the language store
+ * @param {string} category - e.g. "family", "professional", "colleague"
+ * @param {number} count - how many people the heading covers
+ * @returns {string}
+ */
+export function relationshipCategoryLabel(t, category, count = 2) {
+  if (!category) return "";
+  const key = tokenKey(category);
+  return (
+    lookup(t, `network.category.${key}`) ??
+    lookup(t, `network.role.${key}_${count === 1 ? "one" : "other"}`) ??
+    humanizeRelationshipToken(category, count)
+  );
+}
+
+/**
+ * Name a whole `relationship_type` as one string: "Professional · Mentor".
+ * @param {Function} t - the translate function from the language store
+ * @param {string} relationshipType
+ * @returns {string}
+ */
+export function relationshipTypeLabel(t, relationshipType) {
+  if (!relationshipType) return "";
+  const [category, subcategory] = String(relationshipType).split("/");
+  const parts = [relationshipCategoryLabel(t, category, 1)];
+  if (subcategory) parts.push(relationshipRoleLabel(t, subcategory, 1));
+  return parts.filter(Boolean).join(" · ");
+}

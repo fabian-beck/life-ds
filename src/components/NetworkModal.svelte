@@ -8,6 +8,10 @@
   import { storyStyleVars } from "../utils/helpers.js";
   import { escapeRegex } from "../utils/storyHelpers.js";
   import { findPersonMentions } from "../utils/personNames.js";
+  import {
+    relationshipCategoryLabel,
+    relationshipRoleLabel,
+  } from "../utils/relationshipLabels.js";
   import { assetUrl } from "../utils/assetUrl.js";
 
   export let egoNetwork = null;
@@ -200,7 +204,7 @@
       const accumulatedStrength = calculateAccumulatedStrength(people);
       groupsArray.push({
         subcategory,
-        label: capitalizeSubcategory(subcategory, people.length),
+        label: subcategoryLabel(subcategory, people.length),
         people: sortByStrength(people),
         accumulatedStrength,
       });
@@ -220,9 +224,7 @@
           : null;
       groupsArray.push({
         subcategory: soleSubcategory,
-        label: soleSubcategory
-          ? capitalizeSubcategory(soleSubcategory, 1)
-          : null,
+        label: soleSubcategory ? subcategoryLabel(soleSubcategory, 1) : null,
         isOther: !soleSubcategory, // Labeled "Other" (translated) in the template
         people: sortByStrength(ungrouped),
         accumulatedStrength: Infinity, // Ensures it's always last
@@ -245,29 +247,12 @@
     }, 0);
   }
 
-  // Naive English pluralization for a single word — enough for the
-  // relationship subcategories that appear as box labels (colleague → colleagues,
-  // rival → rivals, adversary → adversaries).
-  function pluralizeWord(word) {
-    if (/[^aeiou]y$/i.test(word)) {
-      return word.slice(0, -1) + "ies";
-    }
-    if (/(s|x|z|ch|sh)$/i.test(word)) {
-      return word + "es";
-    }
-    return word + "s";
-  }
-
-  function capitalizeSubcategory(subcategory, count = 1) {
-    if (!subcategory) return "";
-    const words = subcategory
-      .split(/[\s_-]+/)
-      .filter(Boolean)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    if (count !== 1 && words.length > 0) {
-      words[words.length - 1] = pluralizeWord(words[words.length - 1]);
-    }
-    return words.join(" ");
+  // A box label names a repeated subcategory. `relationship_type` is a machine
+  // token the datasets keep untranslated in every language, so it is resolved
+  // through the locale rather than merely capitalized — which is also what
+  // stops two children from being labeled "Childs".
+  function subcategoryLabel(subcategory, count = 1) {
+    return relationshipRoleLabel($_, subcategory, count);
   }
 
   // Family layout: three generation layers, each holding "boxes" of people
@@ -700,7 +685,7 @@
           {@const familyGenerations = buildFamilyGenerations(people)}
           <div class="person-group">
             <h4 class="group-title">
-              {type}
+              {relationshipCategoryLabel($_, type, people.length)}
               <span class="group-count"
                 >{$_("network.group_count", { count: people.length })}</span
               >
@@ -833,7 +818,7 @@
           {@const subgroups = groupBySubcategory(people)}
           <div class="person-group">
             <h4 class="group-title">
-              {type}
+              {relationshipCategoryLabel($_, type, people.length)}
               <span class="group-count"
                 >{$_("network.group_count", { count: people.length })}</span
               >
