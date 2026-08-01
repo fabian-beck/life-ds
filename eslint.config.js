@@ -14,6 +14,11 @@ export default [
       ".svelte-kit/",
       ".claude/",
       ".venv/",
+      // Playwright writes JSON audits and an HTML report here on every
+      // interface run, and the report embeds bundled, minified JavaScript.
+      // Same exclusion .prettierignore already carries.
+      "test-results/",
+      "playwright-report/",
       "data/people/**/_cache/",
       "*.config.js",
       "*.config.cjs",
