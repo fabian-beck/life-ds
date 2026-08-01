@@ -1424,6 +1424,14 @@
       rgba(0, 0, 0, 0) 62%,
       rgba(0, 0, 0, 1) 96%
     );
+
+    /* Both coats carry this as their topmost background layer. Off by default:
+       fully transparent, so it changes nothing. Story maps switch it on below.
+       See `--pattern-map-guard` under `.slides-wrapper.map-enabled`. */
+    --pattern-map-guard: linear-gradient(
+      rgb(50% 50% 50% / 0%),
+      rgb(50% 50% 50% / 0%)
+    );
     background-color: rgba(var(--story-bg-rgb, 15, 23, 42), 0.55);
     color: #e2e8f0;
     isolation: isolate;
@@ -1888,6 +1896,33 @@
     padding-bottom: 16rem;
   }
 
+  /* The story map is the one thing that occupies a slide's lower margin, and it
+     has to stay readable: it is a `45vh` band along the bottom of the slides
+     wrapper, and the base coat paints over it (the map sits at `z-index: 1`,
+     between the two coats). So where a mapless slide gets its loudest pattern,
+     a map slide has to give it up.
+
+     The guard is a wash of exactly 50% gray, which is the identity for
+     `overlay`—the blend both coats use—so raising its alpha retires a coat
+     without darkening or lightening anything. Painting it as the topmost
+     background layer, rather than masking, is what lets it override the coats'
+     own masks: the margin coat's mask is a union of two ramps, and a union can
+     only ever add.
+
+     It reaches full gray a little above the map, inside the band the map's own
+     top gradient already covers with the slide color, and eases in over 10rem
+     so nothing draws a line across the slide. The overview slide is left out:
+     the map is hidden while it is on screen. */
+  .slides-wrapper.map-enabled .slide:not(.overview) {
+    --pattern-map-guard: linear-gradient(
+      180deg,
+      rgb(50% 50% 50% / 0%) 0%,
+      rgb(50% 50% 50% / 0%) calc(100% - 45vh - 8rem),
+      rgb(50% 50% 50% / 100%) calc(100% - 45vh + 2rem),
+      rgb(50% 50% 50% / 100%) 100%
+    );
+  }
+
   .slide.chapter,
   .slide.conclusion {
     justify-content: flex-start;
@@ -1910,7 +1945,9 @@
      coat is not capped that way.
 
      Before this, a single coat faded out below 70% of the slide: the loudest
-     ornament sat behind the headline and the empty lower half was left bare. */
+     ornament sat behind the headline and the empty lower half was left bare.
+     That fade was also what kept the pattern off the story map, which the guard
+     layer above now does deliberately rather than as a side effect. */
   .slide::before,
   .slide::after {
     content: "";
@@ -1920,15 +1957,17 @@
     height: 100%;
     background-color: var(--story-primary, #38bdf8);
     background-image:
-      var(--story-pattern-image, none), var(--pattern-side-lift),
-      var(--pattern-drop-lift);
+      var(--pattern-map-guard), var(--story-pattern-image, none),
+      var(--pattern-side-lift), var(--pattern-drop-lift);
     background-size:
+      100% 100%,
       var(--story-pattern-size, 400px),
       100% 100%,
       100% 100%;
-    background-repeat: repeat, no-repeat, no-repeat;
-    background-blend-mode: multiply, screen, screen;
+    background-repeat: no-repeat, repeat, no-repeat, no-repeat;
+    background-blend-mode: normal, multiply, screen, screen;
     background-position:
+      0 0,
       calc(var(--story-pattern-size, 400px) / -2)
         calc(
           -1 * var(--header-height, 0px) - var(--story-pattern-size, 400px) / 2
