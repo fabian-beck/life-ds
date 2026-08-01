@@ -30,14 +30,13 @@ abstract:
 ## Introduction
 
 [[sources|Encyclopedic biography]] is a rich and well-sourced account of a life,
-written as continuous prose. Its temporal, geographic and relational structure
-is present throughout the text and largely implicit in it: dates are given at
-whatever precision the record supports, places under the names they carried at
-the time, and relationships in subordinate clauses distributed across sections.
-A reader who wants the shape of the life—its phases, its movements, the people
-who recur in it—reconstructs that shape while reading.
+written as continuous prose in long-form articles. Its temporal, geographic and
+relational structure is present throughout the text and largely implicit in it,
+available only in the order the article takes. A reader who wants to explore the
+shape of the life—its phases, its movements, the people who recur
+in it—reconstructs that shape while reading.
 
-Life Data Stories makes the shape explicit and presentable. It derives from the
+Life Data Stories makes the shape explicit and explorable. It derives from the
 source prose [[events|a set of discrete events]], each with a resolved date, the
 modern coordinates of its place, the persons involved, an illustration and the
 sources that support it; it groups those events into the phases of a life; and
