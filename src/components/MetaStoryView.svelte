@@ -1025,56 +1025,48 @@
       rgba(0, 0, 0, 0) min(100%, 50% + 25rem),
       rgba(0, 0, 0, 1) 100%
     );
-    /* The page's fade toward the bottom of the viewport, as a gray the side
-       coat multiplies through. The base coat gets the same shape as a mask;
-       expressing it this way for the side coat leaves that coat's mask free for
-       the horizontal ramp, and dimming the strokes scales the pattern exactly
-       as dropping its alpha would. */
-    --ms-vertical-fade: linear-gradient(
-      180deg,
-      #f2f2f2 0%,
-      #595959 65%,
-      #262626 100%
+    --ms-side-lift: linear-gradient(
+      90deg,
+      var(--pattern-edge-lift) 0%,
+      var(--pattern-quiet) max(0px, 50% - 25rem),
+      var(--pattern-quiet) min(100%, 50% + 25rem),
+      var(--pattern-edge-lift) 100%
     );
   }
 
-  /* Two coats of the same tile. `::after` is the base wash, unchanged from the
-     single coat that used to carry the whole effect—it is already quiet enough
-     to sit under running prose. `::before` is the side coat that roughly
-     doubles the pattern in the bands beside the column. On a viewport no wider
-     than the column there are no such bands, and the page keeps exactly the
-     backdrop it had. */
+  /* Two coats of the same tile, carried the way a story slide carries them:
+     `::after` is an even base wash and `::before` a side coat masked to the
+     bands beside the column, where the two together roughly double the pattern.
+     The backdrop used to hold a single coat at a quarter of that strength,
+     fading to almost nothing down the viewport—faint enough that on a dim
+     screen the page read as flat color. What keeps it off the prose now is the
+     same thing that keeps it off a slide's headline: the column, not the
+     overall strength. */
   .story-backdrop::before,
   .story-backdrop::after {
     content: "";
     position: absolute;
     inset: 0;
     background-color: var(--ms-primary, #38bdf8);
-    background-repeat: repeat;
-    mix-blend-mode: overlay;
-  }
-
-  .story-backdrop::after {
-    background-image: var(--ms-pattern-image, none);
-    background-size: 340px;
-    background-blend-mode: multiply;
-    opacity: 0.24;
-    mask-image: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.35) 65%,
-      rgba(0, 0, 0, 0.15) 100%
-    );
-  }
-
-  .story-backdrop::before {
-    background-image: var(--ms-pattern-image, none), var(--ms-vertical-fade);
+    background-image: var(--ms-pattern-image, none), var(--ms-side-lift);
     background-size:
       340px,
       100% 100%;
     background-repeat: repeat, no-repeat;
-    background-blend-mode: multiply, multiply;
-    opacity: 0.3;
+    background-blend-mode: multiply, screen;
+    mix-blend-mode: overlay;
+  }
+
+  .story-backdrop::after {
+    /* A slide shows a headline and a paragraph; this page is a long read, and
+       its tile is denser—340px against a slide's 500px—so the same alpha puts
+       about twice a slide's pattern behind running prose. The base wash takes a
+       little over half of `--pattern-core-alpha`, which lands the column where a
+       slide's column sits, and the side coat carries the difference. */
+    opacity: calc(var(--pattern-core-alpha) * 0.55);
+  }
+
+  .story-backdrop::before {
     mask-image: var(--ms-side-mask);
     -webkit-mask-image: var(--ms-side-mask);
     mask-size: 100% 100%;
