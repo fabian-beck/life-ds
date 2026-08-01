@@ -132,6 +132,23 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await page.keyboard.press("Enter");
   await expect(search).toBeFocused();
 
+  // The carousel portraits sit early in the tab order, and their slanted
+  // clip-path used to swallow the focus ring along with the corners, leaving a
+  // keyboard reader with nothing to follow on the entry page.
+  // Focused without scrolling: on the mobile viewport, letting the browser
+  // bring the portrait into view would move the page under the rest of the
+  // journey.
+  const portraitOutline = await page
+    .locator(".carousel-slide.active .portrait-column")
+    .first()
+    .evaluate((element) => {
+      element.focus({ preventScroll: true });
+      const width = parseFloat(getComputedStyle(element).outlineWidth);
+      element.blur();
+      return width;
+    });
+  expect(portraitOutline).toBeGreaterThanOrEqual(2);
+
   const roleChip = page.locator(".tag-chip").first();
   await roleChip.click();
   await expect(page).toHaveURL(/[?&]roles=/);
@@ -149,11 +166,17 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(page.locator(".filters-right")).toBeVisible();
 
   if (testInfo.project.name === "mobile-chromium") {
-    const resultIsInViewport = await adaCard.evaluate((element) => {
-      const rect = element.getBoundingClientRect();
-      return rect.top >= 0 && rect.top < window.innerHeight;
-    });
-    expect(resultIsInViewport).toBe(true);
+    // Polled rather than sampled once: filtering scrolls the results into view
+    // with `behavior: "smooth"`, so reading the position the instant the count
+    // updates catches the page mid-scroll and fails at random.
+    await expect
+      .poll(() =>
+        adaCard.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.top >= 0 && rect.top < window.innerHeight;
+        })
+      )
+      .toBe(true);
   }
 
   await capture(page, testInfo, "02-filtered-landing");

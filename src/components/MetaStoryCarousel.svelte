@@ -319,17 +319,19 @@
                     on:click={() => onSelectPerson(person.id)}
                     aria-label={`View ${displayName(person.name)}'s story`}
                   >
-                    {#if person?.portrait}
-                      <img
-                        src={getThumbnailUrl(person.portrait, 300)}
-                        srcset={`${getThumbnailUrl(person.portrait, 300)} 266w, ${getThumbnailUrl(person.portrait, 600)} 682w`}
-                        sizes="170px"
-                        alt={person.portrait.alt ??
-                          `Portrait of ${displayName(person.name)}`}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    {/if}
+                    <span class="portrait-clip">
+                      {#if person?.portrait}
+                        <img
+                          src={getThumbnailUrl(person.portrait, 300)}
+                          srcset={`${getThumbnailUrl(person.portrait, 300)} 266w, ${getThumbnailUrl(person.portrait, 600)} 682w`}
+                          sizes="170px"
+                          alt={person.portrait.alt ??
+                            `Portrait of ${displayName(person.name)}`}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      {/if}
+                    </span>
                   </button>
                 {/each}
               </div>
@@ -563,14 +565,35 @@
     flex: 1 1 0;
     max-width: 25%; /* Prevent extreme widening when few portraits */
     position: relative;
-    overflow: hidden;
     border: none;
     background: none;
     padding: 0;
     cursor: pointer;
-    transition: all 0.3s ease;
-    clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
+    /* Named rather than `all`: the only animated property is the hover
+       widening, and `all` would have faded the focus ring below in over three
+       tenths of a second — a focus indicator has to be there when focus is. */
+    transition: flex 0.3s ease;
     margin-left: -5%;
+  }
+
+  /* The slanted mask sits on an inner element, not on the button itself: a
+     clip-path clips the element's focus ring along with its corners, and these
+     buttons come early in the tab order, so a keyboard reader lost their place
+     on the entry page with nothing rendered to follow. */
+  .portrait-clip {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
+  }
+
+  /* Drawn inside the button, because the columns deliberately overlap and an
+     offset ring would slide under the neighboring portrait. */
+  .portrait-column:focus-visible {
+    outline: 3px solid #38bdf8;
+    outline-offset: -3px;
+    z-index: 2;
   }
 
   .portrait-column:first-child {
@@ -589,7 +612,7 @@
   /* The resting 92% squeeze is done via layout, not transform: Chrome
      resamples transform-scaled images with low-quality compositor filtering,
      which aliases the downscaled portraits. Transforms only run on hover. */
-  .portrait-column img {
+  .portrait-clip img {
     width: 92%;
     margin-inline: 4%;
     height: 100%;
@@ -602,7 +625,7 @@
       margin 0.3s ease;
   }
 
-  .portrait-column:hover img {
+  .portrait-column:hover .portrait-clip img {
     width: 100%;
     margin-inline: 0;
     transform: scale(1.02);
