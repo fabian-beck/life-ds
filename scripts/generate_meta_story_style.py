@@ -3,10 +3,10 @@
 
 A meta story is read as an article rather than as a stack of slides, so its
 identity carries one thing a person's does not: the marks that punctuate the
-prose. Besides the color and type system it produces a separator glyph—set on
-the corner of the masthead's bracket, between two prose regions and before
-every subhead—and a wider ornamental rule that closes the last paragraph, the
-way a printed feature uses fleurons.
+prose. Besides the color, type and frame system it produces a separator
+glyph—set on the corner of the masthead's bracket, between two prose regions
+and before every subhead—and a wider ornamental rule that closes the last
+paragraph, the way a printed feature uses fleurons.
 """
 
 from __future__ import annotations
@@ -36,6 +36,29 @@ META_STORIES_DIR = DATA_DIR / "meta_stories"
 STYLES_PATH = DATA_DIR / "meta_story_styles.json"
 
 ORNAMENT_VIEW_BOX = "0 0 240 24"
+
+# How the story's boxes are cut. A named character rather than raw CSS: the
+# frame has to sit on a narration card, on a floating chapter header and on a
+# caption badge at once, so the concrete radii, border widths and border styles
+# for each of those roles live in `src/utils/metaStoryStyles.js` (FRAMES) and
+# only the name travels in the data. Keep both lists in step —
+# tests/test_meta_story_styles.py fails when they disagree.
+FRAME_CHOICES = {
+    "square": (
+        "no rounding at all and a hairline rule; machine-cut, for grids, "
+        "circuitry, Bauhaus rigour"
+    ),
+    "engraved": (
+        "a double rule with barely eased corners; the frame of a printed "
+        "broadside or an engraving"
+    ),
+    "soft": "evenly rounded corners and a hairline rule; the neutral default",
+    "arched": (
+        "round-headed: the top corners spring in a wide curve while the "
+        "bottom sits flat, like an arcade or a portal"
+    ),
+    "organic": "opposite corners disagree, so no edge repeats; grown not drawn",
+}
 
 
 def load_story_context(story_id: str) -> Dict[str, Any]:
@@ -92,7 +115,7 @@ def build_prompt(story_id: str, context: Dict[str, Any]) -> str:
         "one theme, read as long scrolling prose with an interactive timeline, "
         "social network and map between its sections.",
         "Return a JSON object with fields: primary, secondary, background, "
-        "background_pattern_svg, separator_glyph_svg, ornament_svg, "
+        "background_pattern_svg, separator_glyph_svg, ornament_svg, frame, "
         "heading_font, body_font.",
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
@@ -143,6 +166,15 @@ def build_prompt(story_id: str, context: Dict[str, Any]) -> str:
         "you give them is replaced by it.",
         "- Do not surround the SVG strings with backticks or additional JSON "
         "structures.",
+        (
+            "- frame is how every box in the story is cut — the narration "
+            "cards over the graph and the map, the chapter header on the "
+            "timeline, the tooltips, the figures, the closing cast cards. "
+            "Choose the one whose geometry the theme would itself have "
+            "produced, exactly one of: "
+            + ", ".join(f"{name} ({note})" for name, note in FRAME_CHOICES.items())
+            + "."
+        ),
         (
             "- heading_font must be exactly one of: "
             + ", ".join(HEADING_FONT_CHOICES)
@@ -218,6 +250,7 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     pattern_svg = payload.get("background_pattern_svg")
     separator_svg = payload.get("separator_glyph_svg")
     ornament_svg = payload.get("ornament_svg")
+    frame = payload.get("frame")
     heading_font = payload.get("heading_font")
     body_font = payload.get("body_font")
 
@@ -235,6 +268,8 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError("separator_glyph_svg must be an SVG string containing '<svg'.")
     if not isinstance(ornament_svg, str) or "<svg" not in ornament_svg:
         raise ValueError("ornament_svg must be an SVG string containing '<svg'.")
+    if not isinstance(frame, str) or frame.strip() not in FRAME_CHOICES:
+        raise ValueError("frame must be one of: " + ", ".join(FRAME_CHOICES))
     if (
         not isinstance(heading_font, str)
         or heading_font.strip() not in HEADING_FONT_CHOICES
@@ -256,6 +291,7 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         "ornament_svg": sanitise_separator_glyph_svg(
             ornament_svg, primary.upper(), default_view_box=ORNAMENT_VIEW_BOX
         ),
+        "frame": frame.strip(),
         "heading_font": heading_font.strip(),
         "body_font": body_font.strip(),
     }
@@ -316,6 +352,7 @@ def generate_style(
         f"[Step 3/4] Fonts: heading={style_config['heading_font']}, "
         f"body={style_config['body_font']}"
     )
+    print(f"[Step 3/4] Frame: {style_config['frame']}")
 
     if dry_run:
         print("[Step 4/4] Dry run mode - skipping file write")

@@ -2610,9 +2610,10 @@
   .chapter-title-display {
     background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.95);
     backdrop-filter: blur(12px);
-    border: 1px solid
+    border: var(--ms-frame-border-width, 1px)
+      var(--ms-frame-border-style, solid)
       color-mix(in srgb, var(--ms-accent, #38bdf8) 70%, transparent);
-    border-radius: 0.5rem;
+    border-radius: var(--ms-frame-radius, 0.5rem);
     /* Fixed padding: the header floats over the timeline and its space is
        reserved dynamically from its measured height, so it does not shrink
        with timeline density. Vertical padding keeps the year badge off the border. */
@@ -2659,7 +2660,7 @@
     color: rgba(148, 163, 184, 0.9);
     background: color-mix(in srgb, var(--ms-accent, #38bdf8) 10%, transparent);
     padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
+    border-radius: var(--ms-frame-radius-sm, 0.25rem);
     /* line-height: 1 keeps the badge shorter than the title's line box so it
        stays vertically centered inside the header instead of overlapping the border. */
     line-height: 1;
@@ -3328,9 +3329,10 @@
     position: fixed;
     width: min(540px, calc(90vw - 80px));
     background: rgb(var(--ms-page-bg-rgb, 15, 23, 42));
-    border: 2px solid
+    border: var(--ms-frame-border-width, 2px)
+      var(--ms-frame-border-style, solid)
       color-mix(in srgb, var(--ms-accent, #38bdf8) 50%, transparent);
-    border-radius: 0.5rem;
+    border-radius: var(--ms-frame-radius, 0.5rem);
     padding: 0.75rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     z-index: 10000;

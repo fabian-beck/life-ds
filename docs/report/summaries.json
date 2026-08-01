@@ -199,17 +199,17 @@
       }
     },
     "m_style": {
-      "fingerprint": "9d296662b73becac",
+      "fingerprint": "5e911946cd734d3c",
       "summary": {
         "constraints": [
-          "Returns strict JSON with exactly the requested style fields; the API request uses JSON-object response formatting and rejects empty, failed, or non-completed responses.",
-          "`primary`, `secondary`, and `background` must be `#RRGGBB`; background luminance must be under `0.18`, while primary remains a legible light text accent.",
-          "`background_pattern_svg` must be a seamless `160x160` abstract geometric tile using only `#000000` and `#FFFFFF`—no gray values or opacity attributes.",
-          "The separator uses a `32x32` viewBox and at most \"2-3\" simple shapes; the end ornament uses `0 0 240 24`, is horizontally symmetric, and both marks render in primary color only."
+          "Returns strict JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, frame, heading_font, body_font.",
+          "primary, secondary, and background use #RRGGBB; background luminance must be under 0.18, while primary must remain a legible light text accent.",
+          "background_pattern_svg is a seamless 160x160 tile using only #000000 and #FFFFFF—no gray values or opacity attributes—and must stay calm, abstract, geometric, and evenly distributed.",
+          "separator_glyph_svg uses a 32x32 viewBox and at most 2–3 simple shapes; ornament_svg uses a 0 0 240 24 viewBox, is horizontally symmetric, includes a hairline rule and central related motif, and both marks are recolored to primary at render time."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Asks a model to create a dark-mode editorial identity for a thematic biography article: three colors, a seamless background texture, two related SVG punctuation marks, and heading/body font selections. The resulting JSON is parsed into a dictionary for downstream rendering of the long-form prose, timeline, network, and map sections.",
-        "why_this_design": "The background tile is deliberately limited to pure black and white with no opacity controls, even though it must appear faint behind text. This forces visual restraint through sparse geometry and stroke-width variation rather than unreliable translucent gray treatments, while preserving a sharply constrained printable pattern language."
+        "what_it_does": "Asks a model to create a complete dark-mode editorial identity for a themed, multi-biography meta story: three colors, a tiled background pattern, a prose separator, an end ornament, a frame treatment, and heading/body font selections. The identity is intended to unify long-form scrolling text with embedded timeline, network, and map sections, while deriving its geometric vocabulary from the story theme and date range rather than from an individual subject.",
+        "why_this_design": "The prompt separates a faint, high-contrast background texture from primary-colored punctuation marks so the former can remain visually quiet behind long passages while the latter creates repeated navigational and structural cues. It also requires the glyph and terminal ornament to share a central motif, preventing decorative elements from becoming unrelated one-off assets."
       }
     },
     "m_translate": {

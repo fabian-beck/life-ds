@@ -97,10 +97,12 @@
     gap: 0;
     padding: 0.375rem 0.75rem 1rem;
     /* Surface tones are overridable so the card can sit on a story slide
-       (default) or on the meta story's own dark page background. */
+       (default) or on the meta story's own dark page background — and so is
+       the frame, which a meta story cuts to its own geometry. */
     background: var(--card-bg, rgba(15, 23, 42, 0.95));
-    border-radius: 0.5rem;
-    border: 1px solid var(--card-border, rgba(148, 163, 184, 0.2));
+    border-radius: var(--card-radius, 0.5rem);
+    border: var(--card-border-width, 1px) var(--card-border-style, solid)
+      var(--card-border, rgba(148, 163, 184, 0.2));
     text-decoration: none;
     color: inherit;
     transition:

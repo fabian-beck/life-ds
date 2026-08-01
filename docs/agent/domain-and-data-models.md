@@ -328,6 +328,7 @@ Every meta story has a visual identity of its own, held in `data/meta_story_styl
       "background_pattern_svg": "<svg>…</svg>",
       "separator_glyph_svg": "<svg>…</svg>",
       "ornament_svg": "<svg>…</svg>",
+      "frame": "square",
       "heading_font": "Space Grotesk",
       "body_font": "IBM Plex Sans"
     }
@@ -341,7 +342,20 @@ A meta story is read as an article, not as a stack of slides, so besides colors 
 - `ornament_svg` (240×24, horizontally symmetric) is the article's end mark: centered under the last paragraph of the conclusion, and nowhere else. It is deliberately **not** placed in the masthead — a symmetric mark left-aligned under left-aligned text reads as a centered ornament that missed its center, and a second mark closing the title block only competes with the bracket that already closes it.
 - `background_pattern_svg` (160×160, tileable, black and white only, like the person patterns) is printed faintly behind the whole page, tinted by `primary` through multiply/overlay and faded toward the bottom of the viewport — it sits under running text, so it must stay calm.
 
-Both marks are drawn in `primary` only; the generator replaces whatever fill or stroke the model returned, and strips opacity attributes so the stylesheet controls how loud they are.
+`frame` is the story's **box geometry**: how every panel in it is cut. It is a name from a fixed vocabulary — `square`, `engraved`, `soft`, `arched`, `organic` — not CSS. The concrete values behind each name live in `FRAMES` in `src/utils/metaStoryStyles.js`, which resolves them to four variables the components read:
+
+| variable | what it cuts |
+| --- | --- |
+| `--ms-frame-radius` | panels: narration cards, tooltips, the chapter header, figures, the cast cards |
+| `--ms-frame-radius-sm` | chips inside them: the year badge, the gap label, an event row's hover slab |
+| `--ms-frame-border-width` / `--ms-frame-border-style` | the frame's rule — `engraved` is a 3px `double`, the rest a 1px `solid` |
+| `--ms-frame-rule-width` | hairlines that are rules rather than frames: the subhead underline, the pulled quote's bar (`double` needs 3px before it can draw two lines) |
+
+A name rather than raw CSS for two reasons: one frame has to work on a full-bleed card, a floating header and a caption badge at once, so the sizes per role are a design decision and not the model's; and nothing generated ever reaches a `style` attribute. Circles and pills that mark a position instead of enclosing content — event dots, the year pill, the pager buttons — keep their own geometry; they are not frames.
+
+Both lists have to agree: the generator's `FRAME_CHOICES` names what may be chosen, `FRAMES` in the app defines what each name looks like, and `tests/test_meta_story_styles.py` fails when one has a name the other lacks.
+
+The two marks are drawn in `primary` only; the generator replaces whatever fill or stroke the model returned, and strips opacity attributes so the stylesheet controls how loud they are.
 
 The masthead is composed rather than decorated: an accent bracket (a hairline along the top fading out to the right, a spine down the left fading out below the dateline) encloses the title block over a panel of the accent at a few percent, and the glyph sits on the bracket's corner. The arms are open, never a closed frame: a box would read as a card lifted off the page. Nothing else is added — the bracket is the whole apparatus. That composition lives in `MetaStoryView.svelte`'s `.masthead` rules; `MetaStoryOrnament.svelte` only carries the marks that punctuate prose further down.
 

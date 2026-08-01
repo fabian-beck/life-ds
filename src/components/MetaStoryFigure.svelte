@@ -69,8 +69,9 @@
     display: block;
     width: 100%;
     max-width: 100%;
-    border-radius: 0.5rem;
-    border: 1px solid
+    border-radius: var(--ms-frame-radius, 0.5rem);
+    border: var(--ms-frame-border-width, 1px)
+      var(--ms-frame-border-style, solid)
       color-mix(in srgb, var(--ms-accent, #38bdf8) 18%, transparent);
   }
 
@@ -104,7 +105,7 @@
   .image-button:focus-visible {
     outline: 2px solid var(--ms-accent, #38bdf8);
     outline-offset: 3px;
-    border-radius: 0.5rem;
+    border-radius: var(--ms-frame-radius, 0.5rem);
   }
 
   .zoom-hint {

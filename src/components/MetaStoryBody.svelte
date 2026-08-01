@@ -88,7 +88,8 @@
   .body-quote {
     margin: 1.5rem 0;
     padding: 0.25rem 0 0.25rem 1.25rem;
-    border-left: 2px solid var(--ms-accent, #38bdf8);
+    border-left: max(2px, var(--ms-frame-rule-width, 2px))
+      var(--ms-frame-border-style, solid) var(--ms-accent, #38bdf8);
     clear: both;
   }
 

@@ -18,11 +18,13 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from generate_meta_story_style import (  # noqa: E402
     BODY_FONT_CHOICES,
+    FRAME_CHOICES,
     HEADING_FONT_CHOICES,
     normalize_payload,
 )
 
 STYLES_PATH = ROOT / "data" / "meta_story_styles.json"
+FRAMES_JS = ROOT / "src" / "utils" / "metaStoryStyles.js"
 META_STORIES_REGISTER = ROOT / "data" / "meta_stories.json"
 
 HEX = re.compile(r"^#[0-9A-F]{6}$")
@@ -66,6 +68,23 @@ class MetaStoryStyleRegistryTests(unittest.TestCase):
             with self.subTest(story_id=story_id):
                 self.assertIn(style["heading_font"], HEADING_FONT_CHOICES)
                 self.assertIn(style["body_font"], BODY_FONT_CHOICES)
+
+    def test_frames_are_in_the_vocabulary(self):
+        for story_id, style in load_styles().items():
+            with self.subTest(story_id=story_id):
+                self.assertIn(style["frame"], FRAME_CHOICES)
+
+    def test_the_generator_and_the_app_know_the_same_frames(self):
+        """The name in the data is only meaningful if both sides define it.
+
+        The generator picks a frame; `metaStoryStyles.js` turns it into the
+        radii and border widths every box reads. A name in one list and not in
+        the other is a box that silently keeps the default cut.
+        """
+        source = FRAMES_JS.read_text(encoding="utf-8")
+        block = source.split("export const FRAMES = {", 1)[1].split("\n};", 1)[0]
+        in_app = set(re.findall(r"^  (\w+): \{", block, re.MULTILINE))
+        self.assertEqual(in_app, set(FRAME_CHOICES))
 
     def test_marks_are_valid_single_color_svg(self):
         """The glyph and the ornament are drawn in the story's primary color."""
@@ -114,6 +133,7 @@ class NormalizePayloadTests(unittest.TestCase):
             '<svg xmlns="http://www.w3.org/2000/svg">'
             '<path d="M0 12h240" stroke="#654321" stroke-opacity="0.5"/></svg>'
         ),
+        "frame": "square",
         "heading_font": "Space Grotesk",
         "body_font": "IBM Plex Sans",
     }
@@ -121,6 +141,7 @@ class NormalizePayloadTests(unittest.TestCase):
     def test_recolors_both_marks_and_supplies_the_ornament_view_box(self):
         result = normalize_payload(dict(self.payload))
         self.assertEqual(result["primary"], "#5ED0FF")
+        self.assertEqual(result["frame"], "square")
         self.assertIn('fill="#5ED0FF"', result["separator_glyph_svg"])
         self.assertIn('stroke="#5ED0FF"', result["ornament_svg"])
         self.assertIn('viewBox="0 0 240 24"', result["ornament_svg"])
@@ -130,6 +151,12 @@ class NormalizePayloadTests(unittest.TestCase):
     def test_rejects_a_missing_ornament(self):
         payload = dict(self.payload)
         del payload["ornament_svg"]
+        with self.assertRaises(ValueError):
+            normalize_payload(payload)
+
+    def test_rejects_a_frame_outside_the_vocabulary(self):
+        payload = dict(self.payload)
+        payload["frame"] = "brutalist"
         with self.assertRaises(ValueError):
             normalize_payload(payload)
 

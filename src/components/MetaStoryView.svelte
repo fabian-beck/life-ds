@@ -1336,7 +1336,9 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    border-bottom-color: color-mix(in srgb, var(--ms-accent) 40%, transparent);
+    border-bottom: var(--ms-frame-rule-width, 1px)
+      var(--ms-frame-border-style, solid)
+      color-mix(in srgb, var(--ms-accent) 40%, transparent);
   }
 
   .styled h2::before {
@@ -1418,6 +1420,9 @@
      a step lighter than the page to read as objects, and what is inside them
      already belongs to each person's own story. */
   .styled .people-grid {
+    --card-radius: var(--ms-frame-radius, 0.5rem);
+    --card-border-width: var(--ms-frame-border-width, 1px);
+    --card-border-style: var(--ms-frame-border-style, solid);
     --card-border: color-mix(in srgb, var(--ms-accent) 25%, transparent);
     --card-border-hover: color-mix(in srgb, var(--ms-accent) 50%, transparent);
   }

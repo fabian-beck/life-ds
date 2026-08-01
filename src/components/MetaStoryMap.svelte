@@ -593,8 +593,14 @@
     pointer-events: auto;
     width: min(30rem, 100%);
     background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.22);
-    border-radius: 16px;
+    border: var(--ms-frame-border-width, 1px)
+      var(--ms-frame-border-style, solid)
+      color-mix(
+        in srgb,
+        var(--ms-accent, #38bdf8) 22%,
+        rgba(148, 163, 184, 0.22)
+      );
+    border-radius: var(--ms-frame-radius, 16px);
     padding: 1.1rem 1.3rem 1.2rem;
     box-shadow: 0 14px 34px rgba(2, 6, 23, 0.45);
     transition: border-color 0.25s ease;
@@ -701,7 +707,8 @@
     flex-wrap: wrap;
     gap: 0.4rem;
     padding: 0.15rem 0.4rem 0.15rem 0.6rem;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 var(--ms-frame-radius-sm, 6px)
+      var(--ms-frame-radius-sm, 6px) 0;
     text-decoration: none;
     color: inherit;
     transition:
