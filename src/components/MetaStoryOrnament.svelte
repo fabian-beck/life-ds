@@ -3,16 +3,19 @@
   // the separator glyph and the ornamental rule of `meta_story_styles.json`,
   // used the way a printed article uses fleurons.
   //
-  //   "rule"     opens the article, under the dateline
   //   "divider"  separates two prose regions (glyph between two hairlines)
   //   "closing"  ends the last prose region
+  //
+  // The article's opening marks are not here: they are part of the masthead
+  // in MetaStoryView, where they bracket the title block instead of sitting
+  // under it.
   //
   // Purely decorative, so it is hidden from assistive technology; the parent
   // renders it only for stories that actually have a style.
   export let variant = "divider";
 </script>
 
-<div class="ornament" class:rule={variant === "rule"} aria-hidden="true">
+<div class="ornament" aria-hidden="true">
   {#if variant === "divider"}
     <span class="hairline"></span>
     <span class="glyph"></span>
@@ -29,13 +32,6 @@
     justify-content: center;
     gap: 0.75rem;
     margin: 2rem 0;
-  }
-
-  /* The opening rule hangs off the left edge of the text column, like a
-     printed masthead ornament, and sits tighter to the dateline above it. */
-  .ornament.rule {
-    justify-content: flex-start;
-    margin: 0.25rem 0 1.75rem;
   }
 
   .hairline {
@@ -75,9 +71,5 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-  }
-
-  .rule .mark {
-    background-position: left center;
   }
 </style>

@@ -199,17 +199,17 @@
       }
     },
     "m_style": {
-      "fingerprint": "8a0a52a9e6e17fa7",
+      "fingerprint": "f7aa86045772cdcd",
       "summary": {
         "constraints": [
-          "Returns strict JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, heading_font, and body_font.",
-          "primary, secondary, and background must be #RRGGBB; background luminance must be under \"0.18,\" and the primary must remain a legible light text accent.",
-          "background_pattern_svg must be a seamless \"160x160\" abstract geometric tile using only #000000 and #FFFFFF—no gray values or opacity attributes—and must remain calm behind running text.",
-          "separator_glyph_svg uses a \"32x32\" viewBox and at most \"2-3\" simple shapes; ornament_svg uses a \"0 0 240 24\" viewBox, is horizontally symmetric, and combines a hairline rule with a related central motif."
+          "Colors must be #RRGGBB; background luminance must be under 0.18, while the primary remains a legible light text accent.",
+          "background_pattern_svg must be a seamless 160x160 abstract geometric tile using only #000000 and #FFFFFF—no gray values or opacity attributes.",
+          "separator_glyph_svg uses a 32x32 viewBox and at most \"2-3\" simple shapes; ornament_svg uses a \"0 0 240 24\" viewBox, horizontal symmetry, edge-reaching hairlines, and a related central motif.",
+          "The prompt requires heading_font and body_font to be selected from empty option lists, making those two requirements unsatisfiable as written."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Asks a model to create a dark-mode editorial identity for a theme-centered, long-form meta story, including a color palette, background tile, separator glyph, ornamental rule, and paired display/body fonts. The generated system is intended to unify prose with the timeline, network, and map that appear between article sections, while deriving its geometric language from the theme and its date range rather than from an individual biography.",
-        "why_this_design": "The background tile is restricted to pure black and white with no SVG opacity, separating the pattern's structural definition from its eventual faint presentation—likely allowing the interface to control its visibility consistently. The two punctuation assets share a motif, and both are recolored to the primary color at render time, preserving a coherent identity across small separators and the full-width article rule."
+        "what_it_does": "Generates a strict JSON visual-identity package for a dark-mode, long-form meta story: three colors, a tileable background pattern, a separator glyph, an ornamental rule, and heading/body font selections. The requested assets connect the shared story theme and date range to abstract geometry, then apply that visual language consistently across prose, the sticky header, the masthead, and the article ending. The API call requests JSON-object output and parses it directly into a dictionary after rejecting failed, incomplete, or empty model responses.",
+        "why_this_design": "The background pattern is deliberately limited to black and white with no opacity so downstream rendering can control faintness without accepting accidental gray or transparency values. The separator and ornament share a derived central motif, ensuring that small navigational punctuation and the full-width editorial rule read as one system."
       }
     },
     "m_translate": {

@@ -657,12 +657,15 @@ field a person's style has no use for:
 A meta story is read as an article, not as a stack of slides, so besides colors
 and fonts the style carries the marks that **punctuate its prose**:
 
-- `separator_glyph_svg` (32×32) is the text separator: between the cold open
-  and the description, before every subhead, and in place of the interpunct in
-  the sticky header.
-- `ornament_svg` (240×24, horizontally symmetric) is the ornamental rule: it
-  opens the article under the dateline, left-aligned, and closes the last
-  paragraph, centered.
+- `separator_glyph_svg` (32×32) is the text separator: on the corner of the
+  masthead bracket, between the cold open and the description, before every
+  subhead, and in place of the interpunct in the sticky header.
+- `ornament_svg` (240×24, horizontally symmetric) is the ornamental rule. It
+  spans a gap between two edges in both of its places: it terminates the
+  dateline, flush against the right edge of the text column, and closes the
+  last paragraph, centered. It is deliberately **not** placed under the
+  headline — a symmetric mark left-aligned under left-aligned text reads as a
+  centered ornament that missed its center.
 - `background_pattern_svg` (160×160, tileable, black and white only, like the
   person patterns) is printed faintly behind the whole page, tinted by
   `primary` through multiply/overlay and faded toward the bottom of the
@@ -671,6 +674,16 @@ and fonts the style carries the marks that **punctuate its prose**:
 Both marks are drawn in `primary` only; the generator replaces whatever fill or
 stroke the model returned, and strips opacity attributes so the stylesheet
 controls how loud they are.
+
+The masthead is composed rather than decorated: an accent bracket (a hairline
+along the top fading out to the right, a spine down the left fading out below
+the dateline) encloses the title block over a panel of the accent at a few
+percent, the glyph sits on the bracket's corner, and the ornament terminates
+the dateline at the far right — so the block closes diagonally opposite the
+mark that opens it. The arms are open, never a closed frame: a box would read
+as a card lifted off the page. That composition lives in
+`MetaStoryView.svelte`'s `.masthead` rules; `MetaStoryOrnament.svelte` only
+carries the marks that punctuate prose further down.
 
 The style is language-independent — one entry serves every translation — and is
 resolved in `src/utils/metaStoryStyles.js`, which normalizes the entry

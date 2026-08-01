@@ -759,17 +759,31 @@
           on:click={backToLanding}
         />
       </div>
-      <h1>{metaStoryData.meta_story.title}</h1>
-      <p class="tagline">{metaStoryData.meta_story.tagline}</p>
-      <p class="date-range">
-        {$_("meta_story.date_range", {
-          start: metaStoryData.meta_story.date_range_start,
-          end: metaStoryData.meta_story.date_range_end,
-        })}
-      </p>
-      {#if storyStyle?.ornamentDataUrl}
-        <MetaStoryOrnament variant="rule" />
-      {/if}
+      <!-- The masthead is one object, not a stack of lines with a rule under
+           it: an accent bracket opens at the top left, the story's glyph sits
+           on its corner, and the ornament terminates the dateline at the far
+           right. Everything is anchored to the left edge the text is set
+           against, and the block closes diagonally — mark top left, ornament
+           bottom right — which is what makes it read as a masthead rather
+           than as decoration placed near one. -->
+      <div class="masthead">
+        {#if storyStyle?.separatorGlyphDataUrl}
+          <span class="masthead-mark" aria-hidden="true"></span>
+        {/if}
+        <h1>{metaStoryData.meta_story.title}</h1>
+        <p class="tagline">{metaStoryData.meta_story.tagline}</p>
+        <div class="masthead-foot">
+          <p class="date-range">
+            {$_("meta_story.date_range", {
+              start: metaStoryData.meta_story.date_range_start,
+              end: metaStoryData.meta_story.date_range_end,
+            })}
+          </p>
+          {#if storyStyle?.ornamentDataUrl}
+            <span class="masthead-ornament" aria-hidden="true"></span>
+          {/if}
+        </div>
+      </div>
       <MetaStoryBody
         blocks={openingBlocks}
         variant="opening"
@@ -1220,7 +1234,90 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--ms-muted);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .masthead {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  /* The bracket: a hairline along the top that fades out to the right, and a
+     spine down the left edge that fades out below the dateline. Two open arms
+     rather than a frame — a closed box would read as a card, and the block has
+     to stay part of the page. The panel behind them is the story's accent at a
+     few percent, just enough to bind the lines into one object. */
+  .styled .masthead {
+    padding: 1.15rem 0 1rem 1.4rem;
+    background: linear-gradient(
+      118deg,
+      color-mix(in srgb, var(--ms-accent) 8%, transparent) 0%,
+      transparent 62%
+    );
+  }
+
+  .styled .masthead::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ms-accent) 80%, transparent) 0%,
+      color-mix(in srgb, var(--ms-accent) 45%, transparent) 55%,
+      transparent 100%
+    );
+  }
+
+  .styled .masthead::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ms-accent) 75%, transparent) 0%,
+      transparent 80%
+    );
+  }
+
+  /* The story's glyph sits on the corner where the two arms meet, centered on
+     the joint so it reads as the pivot of the bracket rather than as a bullet
+     next to the title. */
+  .masthead-mark {
+    position: absolute;
+    left: -0.62rem;
+    top: -0.62rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-image: var(--ms-glyph, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  /* Dateline left, ornament flush right on the same baseline: the block closes
+     diagonally opposite the corner mark, and the ornament finally sits where a
+     symmetric rule belongs — spanning a gap between two edges instead of
+     hanging under left-aligned text. */
+  .masthead-foot {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .masthead-ornament {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 1.35rem;
+    background-image: var(--ms-ornament, none);
+    background-position: right center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   /* Every prose region — the cold open, the description, the section bodies
