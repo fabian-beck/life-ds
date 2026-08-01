@@ -2558,9 +2558,11 @@
     overflow-x: auto;
     overflow-y: visible;
     padding: 1rem;
-    background: rgba(4, 10, 24, 0.95);
-    border-top: 1px solid rgba(56, 189, 248, 0.3);
-    border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    background: rgba(var(--ms-page-bg-rgb, 4, 10, 24), 0.95);
+    border-top: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 30%, transparent);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 30%, transparent);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
   }
 
@@ -2598,9 +2600,10 @@
   }
 
   .chapter-title-display {
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.95);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(56, 189, 248, 0.7);
+    border: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 70%, transparent);
     border-radius: 0.5rem;
     /* Fixed padding: the header floats over the timeline and its space is
        reserved dynamically from its measured height, so it does not shrink
@@ -2608,7 +2611,7 @@
     padding: 0.55rem 0.85rem;
     box-shadow:
       0 8px 24px rgba(0, 0, 0, 0.5),
-      0 0 20px rgba(56, 189, 248, 0.2);
+      0 0 20px color-mix(in srgb, var(--ms-accent, #38bdf8) 20%, transparent);
     max-width: 700px;
 
     /* Smooth transitions */
@@ -2616,8 +2619,12 @@
   }
 
   .chapter-title-display:hover {
-    border-color: rgba(56, 189, 248, 0.7);
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.5);
+    border-color: color-mix(
+      in srgb,
+      var(--ms-accent, #38bdf8) 70%,
+      transparent
+    );
+    box-shadow: 0 6px 16px rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.5);
   }
 
   .chapter-header-main {
@@ -2632,7 +2639,7 @@
     font-family: var(--heading-font, "Space Grotesk", sans-serif);
     font-size: 1.05rem;
     font-weight: 600;
-    color: #38bdf8;
+    color: var(--ms-accent, #38bdf8);
     margin: 0;
     line-height: 1.2;
   }
@@ -2642,7 +2649,7 @@
     font-size: 0.75rem;
     font-weight: 500;
     color: rgba(148, 163, 184, 0.9);
-    background: rgba(56, 189, 248, 0.1);
+    background: color-mix(in srgb, var(--ms-accent, #38bdf8) 10%, transparent);
     padding: 0.2rem 0.4rem;
     border-radius: 0.25rem;
     /* line-height: 1 keeps the badge shorter than the title's line box so it
@@ -2694,7 +2701,7 @@
   .gap-label {
     position: sticky;
     top: 50%;
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.85);
     backdrop-filter: blur(4px);
     padding: 0.2rem 0.4rem;
     border-radius: 0.25rem;
@@ -2740,9 +2747,11 @@
   }
 
   .chapter-box.active {
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.15);
+    background: color-mix(in srgb, var(--ms-accent, #38bdf8) 8%, transparent);
+    border: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 40%, transparent);
+    box-shadow: inset 0 0 25px
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 15%, transparent);
     z-index: 2;
     animation: chapter-glow 5s ease-in-out infinite;
   }
@@ -2750,14 +2759,28 @@
   @keyframes chapter-glow {
     0%,
     100% {
-      background: rgba(56, 189, 248, 0.08);
-      box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.15);
-      border-color: rgba(56, 189, 248, 0.3);
+      background: color-mix(in srgb, var(--ms-accent, #38bdf8) 8%, transparent);
+      box-shadow: inset 0 0 25px
+        color-mix(in srgb, var(--ms-accent, #38bdf8) 15%, transparent);
+      border-color: color-mix(
+        in srgb,
+        var(--ms-accent, #38bdf8) 30%,
+        transparent
+      );
     }
     50% {
-      background: rgba(56, 189, 248, 0.11);
-      box-shadow: inset 0 0 35px rgba(56, 189, 248, 0.2);
-      border-color: rgba(56, 189, 248, 0.5);
+      background: color-mix(
+        in srgb,
+        var(--ms-accent, #38bdf8) 11%,
+        transparent
+      );
+      box-shadow: inset 0 0 35px
+        color-mix(in srgb, var(--ms-accent, #38bdf8) 20%, transparent);
+      border-color: color-mix(
+        in srgb,
+        var(--ms-accent, #38bdf8) 50%,
+        transparent
+      );
     }
   }
 
@@ -2766,7 +2789,8 @@
     position: relative;
     height: 28px;
     margin-top: 40px; /* Extra space above for stacked historical context labels */
-    border-top: 2px solid rgba(56, 189, 248, 0.4);
+    border-top: 2px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 40%, transparent);
     z-index: 5;
   }
 
@@ -2778,7 +2802,7 @@
   .year-tick {
     width: 2px;
     height: 8px;
-    background: rgba(56, 189, 248, 0.6);
+    background: color-mix(in srgb, var(--ms-accent, #38bdf8) 60%, transparent);
     margin: 0 auto;
   }
 
@@ -2821,7 +2845,7 @@
     /* Scale font size based on density factor (min 70% of original) */
     font-size: calc(0.85rem * max(0.7, var(--density-factor, 1)));
     font-weight: 600;
-    color: #38bdf8;
+    color: var(--ms-accent, #38bdf8);
     margin: 0;
     padding: 0;
     white-space: nowrap;
@@ -2923,7 +2947,7 @@
     border-radius: 50%;
     border: 2px solid rgba(var(--person-primary-rgb), 0.8);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.9);
     transition: all 0.2s;
     z-index: 10;
     overflow: hidden;
@@ -2932,7 +2956,7 @@
   }
 
   .person-portrait:focus-visible {
-    outline: 2px solid rgba(56, 189, 248, 1);
+    outline: 2px solid var(--ms-accent, #38bdf8);
     outline-offset: 2px;
   }
 
@@ -3022,7 +3046,8 @@
     /* top and height are set inline, derived from the dynamic header reserve */
     width: 2px;
     background: none;
-    border-left: 2px dashed rgba(56, 189, 248, 0.4);
+    border-left: 2px dashed
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 40%, transparent);
     pointer-events: none;
     z-index: 15;
     /* left tracks the scroll position quickly; top/height follow the
@@ -3041,7 +3066,7 @@
     position: sticky;
     top: -20px;
     transform: translateX(-50%);
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.65);
     backdrop-filter: blur(6px);
     color: #e2e8f0;
     font-size: 0.875rem;
@@ -3200,7 +3225,7 @@
   }
 
   .event-marker:focus-visible {
-    outline: 2px solid rgba(56, 189, 248, 1);
+    outline: 2px solid var(--ms-accent, #38bdf8);
     outline-offset: 2px;
     border-radius: 50%;
   }
@@ -3230,7 +3255,7 @@
 
   /* Active event marker - distinctive glow and pulsing animation */
   .event-marker.active .event-dot {
-    background: #38bdf8;
+    background: var(--ms-accent, #38bdf8);
     border: 3px solid #ffffff;
     transition: none; /* Disable transitions for animation to work */
     animation: pulse-active 1.5s ease-in-out infinite;
@@ -3240,16 +3265,16 @@
     0%,
     100% {
       box-shadow:
-        0 0 0 3px rgba(56, 189, 248, 0.5),
-        0 0 20px rgba(56, 189, 248, 0.9),
-        0 0 40px rgba(56, 189, 248, 0.6);
+        0 0 0 3px color-mix(in srgb, var(--ms-accent, #38bdf8) 50%, transparent),
+        0 0 20px color-mix(in srgb, var(--ms-accent, #38bdf8) 90%, transparent),
+        0 0 40px color-mix(in srgb, var(--ms-accent, #38bdf8) 60%, transparent);
       transform: translate(-50%, -50%) scale(1);
     }
     50% {
       box-shadow:
-        0 0 0 6px rgba(56, 189, 248, 0.7),
-        0 0 35px rgba(56, 189, 248, 1),
-        0 0 70px rgba(56, 189, 248, 0.8);
+        0 0 0 6px color-mix(in srgb, var(--ms-accent, #38bdf8) 70%, transparent),
+        0 0 35px var(--ms-accent, #38bdf8),
+        0 0 70px color-mix(in srgb, var(--ms-accent, #38bdf8) 80%, transparent);
       transform: translate(-50%, -50%) scale(1.15);
     }
   }
@@ -3272,8 +3297,9 @@
   .event-tooltip {
     position: fixed;
     width: min(540px, calc(90vw - 80px));
-    background: rgb(15, 23, 42);
-    border: 2px solid rgba(56, 189, 248, 0.5);
+    background: rgb(var(--ms-page-bg-rgb, 15, 23, 42));
+    border: 2px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 50%, transparent);
     border-radius: 0.5rem;
     padding: 0.75rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
@@ -3428,17 +3454,17 @@
   }
 
   .tooltip-events::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.5);
     border-radius: 3px;
   }
 
   .tooltip-events::-webkit-scrollbar-thumb {
-    background: rgba(56, 189, 248, 0.4);
+    background: color-mix(in srgb, var(--ms-accent, #38bdf8) 40%, transparent);
     border-radius: 3px;
   }
 
   .tooltip-events::-webkit-scrollbar-thumb:hover {
-    background: rgba(56, 189, 248, 0.6);
+    background: color-mix(in srgb, var(--ms-accent, #38bdf8) 60%, transparent);
   }
 
   /* Mobile landscape - adjust chapter header positioning */

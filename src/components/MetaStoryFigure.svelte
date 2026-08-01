@@ -70,7 +70,8 @@
     width: 100%;
     max-width: 100%;
     border-radius: 0.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    border: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 18%, transparent);
   }
 
   /* Click target for the lightbox — a bare button so the image keeps its own
@@ -116,8 +117,9 @@
     width: 1.9rem;
     height: 1.9rem;
     border-radius: 999px;
-    background: rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.65);
+    border: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 30%, transparent);
     opacity: 0.55;
     transition: opacity 0.2s ease;
     pointer-events: none;
@@ -162,7 +164,7 @@
 
   .caption-source {
     margin-left: 0.4rem;
-    color: #38bdf8;
+    color: var(--ms-accent, #38bdf8);
     text-decoration: none;
     white-space: nowrap;
   }

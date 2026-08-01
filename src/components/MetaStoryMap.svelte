@@ -7,6 +7,7 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
+  import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { queryParams, originQuery } from "../stores/queryParams.js";
   import { assetUrl } from "../utils/assetUrl.js";
@@ -24,6 +25,9 @@
   export let personAliases = null;
 
   const personStyles = personStylesData.styles;
+
+  // Whether the story has a glyph to open its stop cards with.
+  $: storyMarked = !!metaStoryStyle(metaStoryId)?.separatorGlyphDataUrl;
 
   // How many events a stop card spells out before summarizing the rest.
   const MAX_CARD_EVENTS = 4;
@@ -379,7 +383,11 @@
     <ol class="mmap-steps">
       {#each clusters as cluster, i (cluster.key)}
         <li class="step" use:observeStep={i}>
-          <div class="step-card" class:current={activeStep === i}>
+          <div
+            class="step-card"
+            class:current={activeStep === i}
+            class:marked={storyMarked}
+          >
             <p class="step-kicker">
               <span class="step-place">
                 {cluster.label}{#if stopYearRange(cluster)}&nbsp;({stopYearRange(
@@ -462,7 +470,7 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.6);
     /* Vertical page scrolling passes through the (non-interactive) map. */
     touch-action: pan-y;
   }
@@ -539,7 +547,8 @@
     height: 100%;
     border-radius: 50%;
     border: 2px solid rgba(2, 6, 23, 0.85);
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 0 8px
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 35%, transparent);
     opacity: 0.85;
     transition:
       transform 0.3s ease,
@@ -583,7 +592,7 @@
   .step-card {
     pointer-events: auto;
     width: min(30rem, 100%);
-    background: rgba(15, 23, 42, 0.88);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.88);
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 16px;
     padding: 1.1rem 1.3rem 1.2rem;
@@ -595,14 +604,18 @@
     (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))
   ) {
     .step-card {
-      background: rgba(15, 23, 42, 0.45);
+      background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.45);
       backdrop-filter: blur(20px) saturate(1.3);
       -webkit-backdrop-filter: blur(20px) saturate(1.3);
     }
   }
 
   .step-card.current {
-    border-color: rgba(56, 189, 248, 0.55);
+    border-color: color-mix(
+      in srgb,
+      var(--ms-accent, #38bdf8) 55%,
+      transparent
+    );
   }
 
   .step-kicker {
@@ -611,13 +624,35 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #7dd3fc;
+    color: var(--ms-accent, #7dd3fc);
   }
 
   .step-place {
     color: #94a3b8;
     text-transform: none;
     letter-spacing: 0.02em;
+  }
+
+  /* Every heading in a styled story opens with the story's mark — the article's
+     subheads do it, and so do the cards that narrate its components, so a card
+     scrolling over the graph or the map belongs to the same document as the
+     prose above it. Rendered only when the story has a glyph; without one the
+     title keeps its plain setting. */
+  .step-card.marked .step-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .step-card.marked .step-title::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0.85em;
+    height: 0.85em;
+    background-image: var(--ms-glyph, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .step-title {
@@ -693,7 +728,7 @@
   }
 
   .event-date {
-    color: #7dd3fc;
+    color: var(--ms-accent, #7dd3fc);
     font-variant-numeric: tabular-nums;
     flex: 0 0 auto;
   }

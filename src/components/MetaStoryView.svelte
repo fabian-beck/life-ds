@@ -1426,7 +1426,7 @@
     height: 2.8rem;
     border-radius: 999px;
     border: 1px solid rgba(148, 163, 184, 0.35);
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.65);
     backdrop-filter: blur(6px);
     color: #e2e8f0;
     display: flex;
@@ -1440,6 +1440,17 @@
       transform 0.2s ease;
   }
 
+  /* In a styled story the pager belongs to the timeline it drives, so it takes
+     the story's frame colour rather than the generic slate. */
+  .styled .timeline-nav-btn {
+    border-color: color-mix(in srgb, var(--ms-accent) 40%, transparent);
+  }
+
+  .styled .timeline-nav-btn:hover:not(:disabled),
+  .styled .timeline-nav-btn:focus:not(:disabled) {
+    border-color: color-mix(in srgb, var(--ms-accent) 70%, transparent);
+  }
+
   .timeline-nav-btn.prev {
     left: 1rem;
   }
@@ -1450,7 +1461,7 @@
 
   .timeline-nav-btn:hover:not(:disabled),
   .timeline-nav-btn:focus:not(:disabled) {
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.85);
     border-color: rgba(148, 163, 184, 0.6);
     transform: scale(1.05);
     outline: none;

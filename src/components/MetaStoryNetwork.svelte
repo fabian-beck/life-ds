@@ -13,6 +13,7 @@
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
+  import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
   import { queryParams, originQuery } from "../stores/queryParams.js";
@@ -32,8 +33,15 @@
 
   const SECONDARY_COLOR = "#94a3b8";
   const LINK_IDLE = "#64748b"; // links when nothing is focused
-  const LINK_ACTIVE = "#38bdf8"; // focused ties (meta accent)
   const LINK_MUTED = "#475569"; // other ties while something is focused
+
+  // Focused ties take the story's own accent. Read here rather than through a
+  // CSS variable because the stroke is an SVG presentation attribute, and
+  // those do not resolve var().
+  $: linkActive = metaStoryStyle(metaStoryId)?.primary ?? "#38bdf8";
+
+  // Whether the story has a glyph to open its narration cards with.
+  $: storyMarked = !!metaStoryStyle(metaStoryId)?.separatorGlyphDataUrl;
 
   function hashString(value) {
     let hash = 2166136261;
@@ -76,9 +84,9 @@
     }
     return "idle";
   }
-  function linkStroke(link, aId, cIds) {
+  function linkStroke(link, aId, cIds, active) {
     const s = linkState(link, aId, cIds);
-    return s === "idle" ? LINK_IDLE : s === "active" ? LINK_ACTIVE : LINK_MUTED;
+    return s === "idle" ? LINK_IDLE : s === "active" ? active : LINK_MUTED;
   }
   function linkOpacity(link, aId, cIds) {
     const s = linkState(link, aId, cIds);
@@ -678,7 +686,7 @@
                     y1={s.y}
                     x2={t.x}
                     y2={t.y}
-                    stroke={linkStroke(link, activeId, clusterIds)}
+                    stroke={linkStroke(link, activeId, clusterIds, linkActive)}
                     stroke-width={linkWidth(link)}
                     stroke-dasharray={link.kind === "secondary" ? "5 4" : null}
                     opacity={linkOpacity(link, activeId, clusterIds)}
@@ -812,7 +820,11 @@
       <ol class="mnet-steps">
         {#each clusters as cluster, i (cluster.key)}
           <li class="step" use:observeStep={i}>
-            <div class="step-card" class:current={activeStep === i}>
+            <div
+              class="step-card"
+              class:current={activeStep === i}
+              class:marked={storyMarked}
+            >
               <h3 class="step-title">
                 {narrationTitles.get(cluster.key) ??
                   clusterTitle(cluster, currentLanguage)}
@@ -891,7 +903,7 @@
        story page rather than reading as a separate widget. */
     background: radial-gradient(
       circle at 50% 30%,
-      rgba(56, 189, 248, 0.05),
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 5%, transparent),
       transparent 65%
     );
     overflow: hidden;
@@ -969,11 +981,15 @@
   }
 
   .halo {
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.35));
+    filter: drop-shadow(
+      0 0 6px color-mix(in srgb, var(--ms-accent, #38bdf8) 35%, transparent)
+    );
   }
 
   .node.selected .halo {
-    filter: drop-shadow(0 0 9px rgba(56, 189, 248, 0.6));
+    filter: drop-shadow(
+      0 0 9px color-mix(in srgb, var(--ms-accent, #38bdf8) 60%, transparent)
+    );
   }
 
   .label {
@@ -1007,8 +1023,9 @@
     align-items: center;
     gap: 0.3rem;
     padding: 0.5rem 0.7rem;
-    background: rgba(15, 23, 42, 0.94);
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.94);
+    border: 1px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 45%, transparent);
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(2, 6, 23, 0.55);
     text-align: center;
@@ -1031,11 +1048,11 @@
   }
   .node-popup:not(.below)::after {
     top: 100%;
-    border-top-color: rgba(15, 23, 42, 0.94);
+    border-top-color: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.94);
   }
   .node-popup.below::after {
     bottom: 100%;
-    border-bottom-color: rgba(15, 23, 42, 0.94);
+    border-bottom-color: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.94);
   }
 
   .node-popup-name {
@@ -1051,7 +1068,7 @@
     gap: 0.25rem;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #7dd3fc;
+    color: var(--ms-accent, #7dd3fc);
     text-decoration: none;
   }
   .node-popup-link:hover {
@@ -1093,7 +1110,7 @@
   .step-card {
     pointer-events: auto;
     width: min(30rem, 100%);
-    background: rgba(15, 23, 42, 0.88);
+    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.88);
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 16px;
     padding: 1.1rem 1.3rem 1.2rem;
@@ -1105,14 +1122,40 @@
     (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))
   ) {
     .step-card {
-      background: rgba(15, 23, 42, 0.45);
+      background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.45);
       backdrop-filter: blur(20px) saturate(1.3);
       -webkit-backdrop-filter: blur(20px) saturate(1.3);
     }
   }
 
   .step-card.current {
-    border-color: rgba(56, 189, 248, 0.55);
+    border-color: color-mix(
+      in srgb,
+      var(--ms-accent, #38bdf8) 55%,
+      transparent
+    );
+  }
+
+  /* Every heading in a styled story opens with the story's mark — the article's
+     subheads do it, and so do the cards that narrate its components, so a card
+     scrolling over the graph or the map belongs to the same document as the
+     prose above it. Rendered only when the story has a glyph; without one the
+     title keeps its plain setting. */
+  .step-card.marked .step-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .step-card.marked .step-title::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0.85em;
+    height: 0.85em;
+    background-image: var(--ms-glyph, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .step-title {
@@ -1155,7 +1198,8 @@
   }
 
   .tie {
-    border-left: 2px solid rgba(56, 189, 248, 0.6);
+    border-left: 2px solid
+      color-mix(in srgb, var(--ms-accent, #38bdf8) 60%, transparent);
     padding-left: 0.6rem;
   }
 
@@ -1178,7 +1222,7 @@
 
   .tie-rel {
     font-size: 0.72rem;
-    color: #7dd3fc;
+    color: var(--ms-accent, #7dd3fc);
     letter-spacing: 0.01em;
   }
 
