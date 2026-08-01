@@ -2455,53 +2455,6 @@
       sLabel(wireGroup(labels, ends), mid, Math.min(y1, y2) - 5, link.label);
   }
 
-  /* One record leaving the artifact that holds it, and dropping into each
-     encoding of it—drawn as a single shape because it is a single claim. */
-  function drawBus(host, labels, bus) {
-    const from = boxOf(bus.source);
-    if (!from) return;
-    const targets = bus.targets.map(boxOf).filter(Boolean);
-    if (!targets.length) return;
-    const centres = targets.map((box) => box.x + box.w / 2);
-    const left = Math.min.apply(null, centres);
-    const right = Math.max.apply(null, centres);
-    const ends = [bus.source].concat(bus.targets);
-    const wire = wireGroup(host, ends);
-    wire.appendChild(
-      sPath(
-        "M" +
-          (from.x + from.w) +
-          " " +
-          (from.y + from.h / 2) +
-          "H" +
-          bus.drop_x +
-          "V" +
-          bus.rail_y,
-        "tbus"
-      )
-    );
-    wire.appendChild(
-      sPath("M" + left + " " + bus.rail_y + "H" + right, "tbus")
-    );
-    targets.forEach((box, index) => {
-      wire.appendChild(
-        sPath(
-          "M" + centres[index] + " " + bus.rail_y + "V" + (box.y - 5),
-          "tbus"
-        )
-      );
-      arrowHead(wire, centres[index], box.y - 1, "down");
-    });
-    if (bus.label)
-      sLabel(
-        wireGroup(labels, ends),
-        bus.label_x,
-        bus.rail_y + 3,
-        bus.label,
-        "tbus-label"
-      );
-  }
-
   /* Each routine fills one part's box. The vocabulary is closed: `teaser.py`
      may only name a decor that exists here, which is the same contract the
      component roster has with `report.py`. */
@@ -2645,9 +2598,11 @@
 
     prose: function (host, part) {
       const x = part.x + 16;
-      const widths = [206, 224, 214, 228, 148];
-      widths.forEach((width, index) => {
-        host.appendChild(sRect(x, part.y + 46 + index * 13, width, 4, "tbar"));
+      const width = part.w - 32;
+      [0.92, 1, 0.95, 1, 0.66].forEach((share, index) => {
+        host.appendChild(
+          sRect(x, part.y + 46 + index * 13, width * share, 4, "tbar")
+        );
       });
     },
 
@@ -2689,12 +2644,16 @@
       const width = part.w - 32;
       const height = 62;
       host.appendChild(sRect(x, y, width, height, "tplate"));
-      host.appendChild(
-        sPath(
-          "M" + x + " " + (y + 46) + "q24 -9 46 -3t44 -10 42 2 40 -11 52 -1",
-          "tcoast"
-        )
+      // The coastline is drawn for a 224-unit plate and scaled to whatever
+      // width the box has, so the box can be resized without redrawing it.
+      const coast = svg("g", {
+        transform:
+          "translate(" + x + "," + (y + 46) + ") scale(" + width / 224 + ",1)",
+      });
+      coast.appendChild(
+        sPath("M0 0q24 -9 46 -3t44 -10 42 2 40 -11 52 -1", "tcoast")
       );
+      host.appendChild(coast);
       [
         [0.22, 0.34],
         [0.44, 0.62],
@@ -2813,16 +2772,17 @@
       role: "img",
       "aria-label":
         "The system end to end: sources and language-model inference, two " +
-        "generation pipelines, the artifacts they write, and the interface " +
-        "that reads them.",
+        "generation pipelines, the data they write, the interface that reads " +
+        "it, and along the foot the four encodings every story is read through.",
     });
     root.style.aspectRatio = TEASER.width + " / " + TEASER.height;
 
     const chrome = svg("g", { class: "tchrome" });
     TEASER.stages.forEach((stage) => {
-      chrome.appendChild(sText(stage.x, 20, stage.label, "tstage"));
+      const y = stage.y || 20;
+      chrome.appendChild(sText(stage.x, y, stage.label, "tstage"));
       chrome.appendChild(
-        sPath("M" + stage.x + " 27h" + stage.w, "tstage-rule")
+        sPath("M" + stage.x + " " + (y + 7) + "h" + stage.w, "tstage-rule")
       );
     });
     root.appendChild(chrome);
@@ -2835,7 +2795,6 @@
     TEASER.links.forEach((link) => {
       drawLink(wires, labels, link);
     });
-    drawBus(wires, labels, TEASER.bus);
     root.appendChild(wires);
 
     const parts = svg("g", { class: "tparts" });

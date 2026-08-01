@@ -38,7 +38,7 @@ from . import concepts
 
 # The scene is a fixed coordinate system, not a pixel size: the page scales it
 # to the width available and zooms into sub-rectangles of it on small screens.
-SCENE_W = 1076
+SCENE_W = 868
 SCENE_H = 524
 
 METRIC_KEY = re.compile(r"\{([a-zA-Z0-9_.]+)\}")
@@ -94,14 +94,20 @@ class Part:
 
 @dataclass(frozen=True)
 class Stage:
-    """A column heading: the four things the system is made of, in order."""
+    """A heading over a band of the figure, with a rule under it.
+
+    Four of them run across the top, naming the four things the system is made
+    of. The fifth heads the row along the foot, which is why `y` exists: a band
+    can be headed wherever it sits.
+    """
 
     label: str
     x: int
     w: int
+    y: int = 20
 
     def to_json(self) -> Dict[str, Any]:
-        return {"label": self.label, "x": self.x, "w": self.w}
+        return {"label": self.label, "x": self.x, "w": self.w, "y": self.y}
 
 
 @dataclass(frozen=True)
@@ -134,41 +140,20 @@ class Link:
         }
 
 
-@dataclass(frozen=True)
-class Bus:
-    """The one-to-many fan-out at the foot of the figure.
-
-    A single record leaves the artifact that holds it, meets a rail, and drops
-    into each encoding of it. Drawn as one shape because it is one claim.
-    """
-
-    source: str
-    targets: Sequence[str]
-    label: str
-    drop_x: int
-    rail_y: int
-    label_x: int
-
-    def to_json(self) -> Dict[str, Any]:
-        return {
-            "source": self.source,
-            "targets": list(self.targets),
-            "label": self.label,
-            "drop_x": self.drop_x,
-            "rail_y": self.rail_y,
-            "label_x": self.label_x,
-        }
-
-
 # ---------------------------------------------------------------------------
 # The scene
 # ---------------------------------------------------------------------------
 
 STAGES: Tuple[Stage, ...] = (
     Stage("Sources", 8, 196),
-    Stage("Generation", 220, 392),
-    Stage("Data", 656, 180),
-    Stage("Interface", 880, 188),
+    Stage("Generation", 220, 240),
+    Stage("Data", 476, 180),
+    Stage("Interface", 672, 188),
+    # The encodings are a stage of their own, headed like the four above it.
+    # That heading is the whole claim the row needs: no arrow ties it to the
+    # data—these are not another artifact—and none ties it to one story type,
+    # because a person story and a meta story are both read through them.
+    Stage("Read in both story types", 8, 852, y=380),
 )
 
 PARTS: Tuple[Part, ...] = (
@@ -200,7 +185,7 @@ PARTS: Tuple[Part, ...] = (
         # Exactly the box the person story gets in the interface column: the
         # two halves of the system are drawn at the same size because neither
         # is the larger half.
-        (220, 40, 392, 150),
+        (220, 40, 240, 150),
         decor="steps",
         lane="person",
     ),
@@ -209,7 +194,7 @@ PARTS: Tuple[Part, ...] = (
         "Meta story pipeline",
         "A theme across several finished biographies. A network branch and a map "
         "branch run independently and meet in the composition step.",
-        (220, 206, 392, 128),
+        (220, 206, 240, 128),
         decor="steps",
         lane="meta",
     ),
@@ -219,7 +204,7 @@ PARTS: Tuple[Part, ...] = (
         "An inference call, deterministic code, a retrieval from an external "
         "service or an image generation—the classification partitions both "
         "pipelines by cost and by failure mode.",
-        (8, 288, 140, 80),
+        (8, 272, 140, 80),
         decor="kinds",
         frame="none",
     ),
@@ -229,7 +214,7 @@ PARTS: Tuple[Part, ...] = (
         "One record per subject and one per theme, written once and read as it "
         "stands. The two halves of the system communicate through this and "
         "through nothing else: no database, no server.",
-        (656, 40, 180, 306),
+        (476, 40, 180, 294),
         decor="frame",
         frame="soft",
     ),
@@ -238,7 +223,7 @@ PARTS: Tuple[Part, ...] = (
         "Profile",
         "Who a story is about: the name, lifespan, roles and portrait of each "
         "person the corpus holds, one for every story written.",
-        (668, 88, 156, 54),
+        (488, 78, 156, 54),
         decor="concept",
         parent="artifacts",
         concept="profile",
@@ -248,7 +233,7 @@ PARTS: Tuple[Part, ...] = (
         "Life events",
         "The narrative spine: dated events with places, persons, sources, images "
         "and a typed icon, grouped into the chapters of a life.",
-        (668, 152, 156, 54),
+        (488, 142, 156, 54),
         decor="concept",
         parent="artifacts",
         concept="events",
@@ -258,7 +243,7 @@ PARTS: Tuple[Part, ...] = (
         "Social network",
         "The subject's relationships as typed, weighted and dated edges, "
         "generated independently of the narrative.",
-        (668, 216, 156, 54),
+        (488, 206, 156, 54),
         decor="concept",
         parent="artifacts",
         concept="network",
@@ -268,7 +253,7 @@ PARTS: Tuple[Part, ...] = (
         "Theme",
         "A second-order artifact: an idea traced across several biographies, and "
         "the only family whose inputs are other artifacts of this system.",
-        (668, 280, 156, 54),
+        (488, 270, 156, 54),
         decor="concept",
         parent="artifacts",
         concept="theme",
@@ -279,7 +264,7 @@ PARTS: Tuple[Part, ...] = (
         "Full-screen, scroll-snapped slides—overview, chapter, event, "
         "conclusion—advanced one unit at a time, every position a citable "
         "address.",
-        (880, 40, 188, 150),
+        (672, 40, 188, 150),
         decor="slides",
     ),
     Part(
@@ -287,7 +272,7 @@ PARTS: Tuple[Part, ...] = (
         "Meta story",
         "A continuous document advanced by scrolling, whose visual sections pin "
         "a component while narration cards scroll over it.",
-        (880, 206, 188, 128),
+        (672, 206, 188, 128),
         decor="sections",
     ),
     Part(
@@ -295,7 +280,7 @@ PARTS: Tuple[Part, ...] = (
         "Narrative text",
         "The event's own description, and in a meta story the article prose that "
         "supplies the context around what the components encode.",
-        (8, 396, 256, 116),
+        (8, 400, 204, 112),
         decor="prose",
         concept="narrative",
     ),
@@ -304,7 +289,7 @@ PARTS: Tuple[Part, ...] = (
         "Timeline",
         "Every event at its position in the life, banded by chapter. In a "
         "person's story it doubles as the navigation control.",
-        (276, 396, 256, 116),
+        (224, 400, 204, 112),
         decor="timeline",
         concept="events",
     ),
@@ -314,7 +299,7 @@ PARTS: Tuple[Part, ...] = (
         "The events whose places resolved to coordinates, on a label-free "
         "basemap whose camera follows the reader rather than the reader panning "
         "it.",
-        (544, 396, 256, 116),
+        (440, 400, 204, 112),
         decor="map",
         concept="places",
     ),
@@ -323,7 +308,7 @@ PARTS: Tuple[Part, ...] = (
         "Network graph",
         "The documented relationships as a force-directed graph, typed and "
         "weighted exactly as the artifact records them.",
-        (812, 396, 256, 116),
+        (656, 400, 204, 112),
         decor="graph",
         concept="network",
     ),
@@ -346,19 +331,11 @@ LINKS: Tuple[Link, ...] = (
     Link("artifacts", "sections", source_at=0.8, jog=0.32),
 )
 
-BUS = Bus(
-    source="events",
-    targets=("prose", "timeline", "map", "graph"),
-    label="one event record, four encodings",
-    drop_x=858,
-    rail_y=382,
-    label_x=272,
-)
 
 CAPTION = (
     "The system end to end: encyclopedic sources and model inference feed the "
-    "two generation pipelines, whose artifacts the interface reads. Along the "
-    "foot, the four encodings of one event record."
+    "two generation pipelines, whose data the interface reads. Along the foot, "
+    "the four encodings every story is read through."
 )
 
 
@@ -395,7 +372,6 @@ def scene() -> Dict[str, Any]:
         "stages": [stage.to_json() for stage in STAGES],
         "parts": [part.to_json() for part in PARTS],
         "links": [link.to_json() for link in LINKS],
-        "bus": BUS.to_json(),
     }
 
 
@@ -470,10 +446,6 @@ def check_scene(facts: Sequence[str] = ()) -> List[SceneProblem]:
                 problems.append(
                     SceneProblem("teaser", f"link names unknown part '{end}'")
                 )
-    for end in (BUS.source, *BUS.targets):
-        if end not in known:
-            problems.append(SceneProblem("teaser", f"bus names unknown part '{end}'"))
-
     return problems
 
 
