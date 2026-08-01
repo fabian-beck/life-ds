@@ -1260,11 +1260,21 @@
         </section>
       {:else if totalPanels > 0}
         {#each slides as slide, index (slide.type === "chapter" ? `chapter-${index}` : slide.type === "conclusion" ? "conclusion" : slide.eventIndex)}
+          <!-- Every slide is in the DOM at once inside one scroll-snap
+               container. Without this, the whole story is live for the keyboard
+               and for assistive technology: Tab walks out of the visible slide
+               into controls belonging to later ones, the browser scrolls each
+               into view, and the scroll handler carries the reader forward
+               through slides they never asked to see. `inert` takes the
+               inactive ones out of the tab order and the accessibility tree at
+               once, leaving the arrow keys as the way to move between slides. -->
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
             class:chapter={slide.type === "chapter"}
             class:conclusion={slide.type === "conclusion"}
+            inert={index !== activeIndex}
+            aria-hidden={index !== activeIndex}
             aria-label={slide.type === "overview"
               ? `Overview: ${personName}`
               : slide.type === "chapter"

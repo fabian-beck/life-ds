@@ -199,6 +199,36 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await capture(page, testInfo, "05-story-event");
   await attachAudit(testInfo, "story-event", await viewportAudit(page));
 
+  // The whole story is in the DOM at once. Only the slide on screen may be
+  // reachable: Tab used to walk into controls belonging to later slides, and
+  // the browser scrolling each one into view carried the reader forward
+  // through slides they never opened.
+  const slideGuard = await page.evaluate(() => {
+    const slides = [
+      ...document.querySelectorAll("main.slides > section.slide"),
+    ];
+    const reachable = [
+      ...document.querySelectorAll("main.slides a[href], main.slides button"),
+    ].filter((element) => !element.closest("[inert]"));
+    return {
+      total: slides.length,
+      exposed: slides.filter((slide) => !slide.hasAttribute("inert")).length,
+      offscreenReachable: reachable.filter((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.right < 0 || rect.left > window.innerWidth;
+      }).length,
+    };
+  });
+  expect(slideGuard.total).toBeGreaterThan(3);
+  expect(slideGuard.exposed).toBe(1);
+  expect(slideGuard.offscreenReachable).toBe(0);
+
+  for (let press = 0; press < 8; press += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    await page.keyboard.press("Tab");
+  }
+  await expect(page).toHaveURL(/[?&]slide=2(?:&|$)/);
+
   await page.evaluate(async () => {
     const languages = ["de", "en", "de", "en", "de", "en", "de", "en", "de"];
     languages.forEach((language, index) => {
