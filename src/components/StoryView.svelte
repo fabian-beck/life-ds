@@ -304,6 +304,24 @@
     return map;
   })();
 
+  // What a slide is called, for its own `aria-label` and for the status region
+  // that announces slide changes. One expression, so the two cannot drift.
+  function slideLabel(slide) {
+    if (!slide) return "";
+    if (slide.type === "overview") return `Overview: ${personName}`;
+    if (slide.type === "chapter") return `Chapter: ${slide.chapter.headline}`;
+    if (slide.type === "conclusion") return $_("conclusion.aria_label");
+    return `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`;
+  }
+
+  // Navigating a story moves the scroll position; it inserts nothing. So the
+  // one thing worth announcing has to be published deliberately, from a region
+  // that holds the slide's identity and nothing else. `main.slides` used to
+  // carry `aria-live` instead, which announced the whole biography on load —
+  // every slide arrives in a single insertion — and then went silent for every
+  // slide change after it.
+  $: currentSlideLabel = isLoading ? "" : slideLabel(slides[activeIndex]);
+
   $: hasMapData = eventSlides.some((event) => isCoordinate(event.coordinates));
   $: hasMultipleEvents = totalSlides > 1;
   $: hasNetworkConnections =
@@ -1212,11 +1230,13 @@
     <AIGeneratedButton variant="small" onClick={openAIModal} />
   </div>
 
+  <!-- Announces which slide the reader is on, and nothing else. -->
+  <p class="slide-status" aria-live="polite">{currentSlideLabel}</p>
+
   <div class="slides-wrapper" class:map-enabled={hasMapData}>
     <main
       class="slides"
       class:initial-loading={!initialScrollDone && activeIndex > 0}
-      aria-live="polite"
       bind:this={slidesContainer}
       on:scroll={handleScroll}
       on:touchstart={handleTouchStart}
@@ -1275,13 +1295,7 @@
             class:conclusion={slide.type === "conclusion"}
             inert={index !== activeIndex}
             aria-hidden={index !== activeIndex}
-            aria-label={slide.type === "overview"
-              ? `Overview: ${personName}`
-              : slide.type === "chapter"
-                ? `Chapter: ${slide.chapter.headline}`
-                : slide.type === "conclusion"
-                  ? $_("conclusion.aria_label")
-                  : `Slide ${slide.eventIndex + 1} of ${totalSlides}: ${slide.title}`}
+            aria-label={slideLabel(slide)}
           >
             {#if slide.type === "overview"}
               <OverviewSlide
@@ -1840,6 +1854,20 @@
       padding-top: 0.5rem;
       padding-bottom: 6rem;
     }
+  }
+
+  /* Carries no visual weight: the slide it names is already on screen. Kept in
+     the layout (not `display: none`) so assistive technology reads it. */
+  .slide-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
 
   .slides-wrapper {

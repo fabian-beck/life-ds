@@ -240,6 +240,12 @@ test("core visitor journey", async ({ page }, testInfo) => {
   }
   await expect(page).toHaveURL(/[?&]slide=2(?:&|$)/);
 
+  // Navigating scrolls the container; it inserts nothing. The slide container
+  // used to be the live region itself, which announced the entire biography as
+  // one insertion on load and then said nothing at all about slide changes.
+  await expect(page.locator("main.slides")).not.toHaveAttribute("aria-live");
+  await expect(page.locator(".slide-status")).toHaveText(/Slide \d+ of \d+: /);
+
   await page.evaluate(async () => {
     const languages = ["de", "en", "de", "en", "de", "en", "de", "en", "de"];
     languages.forEach((language, index) => {
