@@ -197,7 +197,10 @@ PARTS: Tuple[Part, ...] = (
         "One biography end to end. After sourcing it forks into a narrative, an "
         "imagery, a network and an identity branch, reconverging at review and "
         "translation.",
-        (220, 40, 392, 104),
+        # Exactly the box the person story gets in the interface column: the
+        # two halves of the system are drawn at the same size because neither
+        # is the larger half.
+        (220, 40, 392, 150),
         decor="steps",
         lane="person",
     ),
@@ -206,7 +209,7 @@ PARTS: Tuple[Part, ...] = (
         "Meta story pipeline",
         "A theme across several finished biographies. A network branch and a map "
         "branch run independently and meet in the composition step.",
-        (220, 160, 392, 86),
+        (220, 206, 392, 128),
         decor="steps",
         lane="meta",
     ),
@@ -216,7 +219,7 @@ PARTS: Tuple[Part, ...] = (
         "An inference call, deterministic code, a retrieval from an external "
         "service or an image generation—the classification partitions both "
         "pipelines by cost and by failure mode.",
-        (220, 274, 392, 44),
+        (8, 288, 140, 80),
         decor="kinds",
         frame="none",
     ),

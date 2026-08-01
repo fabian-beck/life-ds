@@ -2535,13 +2535,21 @@
       const fits = Math.floor((part.w - 24 + gap) / (size + gap));
       // Balanced rows: a second row holding two squares reads as an accident.
       const perRow = Math.ceil(steps.length / Math.ceil(steps.length / fits));
+      // The box is sized to match its counterpart in the interface column, so
+      // the grid is centered in what the label leaves rather than pinned under
+      // it—a single row of squares hanging from the title reads as unfinished.
+      const rows = Math.ceil(steps.length / perRow);
+      const top =
+        part.y +
+        40 +
+        Math.max(0, (part.h - 52 - (rows * (size + gap) - gap)) / 2);
       steps.forEach((step, index) => {
         const row = Math.floor(index / perRow);
         const column = index % perRow;
         const cell = svg("g", { class: "tstep" });
         const rect = sRect(
           part.x + 12 + column * (size + gap),
-          part.y + 46 + row * (size + gap),
+          top + row * (size + gap),
           size,
           size,
           "tstep-box"
@@ -2555,24 +2563,25 @@
       });
     },
 
-    /* The four step kinds, laid out by the width each label actually needs.
-       Equal cells fit the shortest name and clipped the longest. */
+    /* The four step kinds, laid out by the width each label actually needs and
+       wrapped when the box runs out—equal cells fit the shortest name and
+       clipped the longest. */
     kinds: function (host, part) {
-      const kinds = Object.keys(DATA.kinds);
-      const widths = kinds.map((kind) => {
-        return DATA.kinds[kind].label.length * 6.6 + 20;
-      });
-      const total = widths.reduce((sum, width) => sum + width, 0);
-      const gap = Math.max(8, (part.w - total) / (kinds.length - 1));
       let x = part.x;
-      kinds.forEach((kind, index) => {
-        const swatch = sRect(x, part.y + 12, 11, 11, "tswatch");
+      let y = part.y + 12;
+      Object.keys(DATA.kinds).forEach((kind) => {
+        const width = DATA.kinds[kind].label.length * 6.6 + 26;
+        if (x > part.x && x + width > part.x + part.w) {
+          x = part.x;
+          y += 19;
+        }
+        const swatch = sRect(x, y, 11, 11, "tswatch");
         swatch.setAttribute("fill", kindColor(kind));
         host.appendChild(swatch);
         host.appendChild(
-          sText(x + 18, part.y + 22, DATA.kinds[kind].label, "ttext")
+          sText(x + 18, y + 10, DATA.kinds[kind].label, "ttext")
         );
-        x += widths[index] + gap;
+        x += width;
       });
     },
 
