@@ -55,11 +55,10 @@ VisKonnect does on demand [@latif2021viskonnect]: a reader's question is parsed
 for the entities it names, the matching events are retrieved from an event
 knowledge graph, and an event timeline, an event map and a relationship graph
 are shown beside a short answer a language model writes. The three encodings are
-the same ones this system uses, which is the useful part of the comparison—what
-differs is when the work happens. There a question is answered from curated
-triples as it is asked. Here the events are derived from prose beforehand,
-illustrated, styled and composed, and what the reader receives is a story rather
-than a result.
+the same ones this system uses; what differs is when the work happens. There a
+question is answered from curated triples as it is asked. Here the events are
+derived from prose beforehand, illustrated, styled and composed, and what the
+reader receives is a story rather than a result.
 
 The operations this requires are interpretive. Selecting the episodes that
 constitute a life, identifying the modern place a historical toponym denotes,
@@ -448,13 +447,5 @@ every existing translation in the corpus at once.
 ## References
 
 ::: references
-The list is short by intent. A work is cited where the report would otherwise
-have to argue a point someone else has already settled—the genre this system's
-output belongs to, the nearest system to it, the design space its timeline is a
-point in, the algorithm its circle detection implements—and nowhere else.
-Entries follow IEEE, with one departure: every author is named, where the style
-would cut a list of more than six to the first name. A list that hides seven of
-ten people saves a line and costs them the credit. Every entry carries a DOI, so
-the build can refuse a reference the reader would not be able to resolve.
 :::
 
