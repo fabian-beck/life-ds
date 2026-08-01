@@ -9,6 +9,7 @@
     buildUrlWithParams,
     landingFilterQuery,
   } from "../stores/queryParams.js";
+  import { rememberFocusTrigger } from "../stores/returnFocus.js";
   import { clamp, displayName } from "../utils/helpers.js";
   import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
   import { assetUrl } from "../utils/assetUrl.js";
@@ -451,8 +452,13 @@
     return computeYearsLabel(entry, language) || null;
   }
 
-  function handleSelect(id) {
+  // `trigger` is passed explicitly rather than read from `document.activeElement`:
+  // a tap does not focus a button, so the modality would decide whether the
+  // reader gets their place back.
+  function handleSelect(id, trigger) {
     if (!id) return;
+    // Remembered before the route changes: this card is about to be unmounted.
+    rememberFocusTrigger(trigger);
     onSelectPerson({ detail: id });
   }
 
@@ -468,7 +474,8 @@
     activeTags = new Set();
   }
 
-  function handleExploreMetaStory(metaStory) {
+  function handleExploreMetaStory(metaStory, trigger) {
+    rememberFocusTrigger(trigger);
     // Navigate to meta story view, carrying the filters the reader set here so
     // that closing the collection puts this page back the way they left it.
     push(
@@ -576,7 +583,7 @@
   <div class="header-container">
     <div class="landing-hero">
       <p class="eyebrow">{$_("app.title")}</p>
-      <h1>{$_("app.tagline")}</h1>
+      <h1 tabindex="-1" data-landing-heading>{$_("app.tagline")}</h1>
       <p class="hero-intro">{$_("landing.intro_text")}</p>
       <a class="report-link" href={assetUrl("/report/")}>
         {$_("landing.report_link")}
@@ -759,7 +766,8 @@
         <button
           class="person-card"
           style={cardStyleVars(style)}
-          on:click={() => handleSelect(entry.id)}
+          on:click={(event) => handleSelect(entry.id, event.currentTarget)}
+          data-focus-id={`card-${entry.id}`}
           aria-label={`Open life story for ${displayName(entry.name)}`}
         >
           {#if anniversary}

@@ -350,7 +350,9 @@
                 {#each storyPersons as person (person.id)}
                   <button
                     class="portrait-column"
-                    on:click={() => onSelectPerson(person.id)}
+                    on:click={(event) =>
+                      onSelectPerson(person.id, event.currentTarget)}
+                    data-focus-id={`carousel-person-${person.id}`}
                     aria-label={`View ${displayName(person.name)}'s story`}
                   >
                     <span class="portrait-clip">
@@ -375,7 +377,9 @@
               <div class="slide-header">
                 <button
                   class="title-row"
-                  on:click={() => onExploreMetaStory(metaStory)}
+                  on:click={(event) =>
+                    onExploreMetaStory(metaStory, event.currentTarget)}
+                  data-focus-id={`meta-title-${metaStory.id}`}
                   aria-label={$_("landing.explore_meta_story")}
                 >
                   <h2
@@ -405,7 +409,9 @@
                     </button>
                     <button
                       class="explore-story"
-                      on:click={() => onExploreMetaStory(metaStory)}
+                      on:click={(event) =>
+                        onExploreMetaStory(metaStory, event.currentTarget)}
+                      data-focus-id={`meta-explore-${metaStory.id}`}
                       aria-label={$_("landing.explore_meta_story")}
                     >
                       {$_("landing.timeline")}

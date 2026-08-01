@@ -16,6 +16,7 @@
     saveMetaStoryScroll,
   } from "../stores/metaStoryScroll.js";
   import { queryParams, originQuery } from "../stores/queryParams.js";
+  import { restoreFocusTrigger } from "../stores/returnFocus.js";
   import { displayName } from "../utils/helpers.js";
   import {
     metaStoryStyle,
@@ -146,6 +147,15 @@
     currentLanguage,
   };
 
+  // The article renders only once its data resolves, so mount is too early to
+  // focus it. Taken the first time the element exists instead.
+  let metaStoryViewElement;
+  let metaStoryFocused = false;
+  $: if (metaStoryViewElement && !metaStoryFocused) {
+    metaStoryFocused = true;
+    metaStoryViewElement.focus({ preventScroll: true });
+  }
+
   // Scroll proxy variables
   const MIN_PROXY_HEIGHT = 1500; // Minimum vertical scroll distance (px) to traverse any timeline
   let scrollProxyContainer;
@@ -164,6 +174,7 @@
   function backToLanding() {
     const fromLanding = $queryParams.from_landing;
     replace(`/${currentLanguage}` + (fromLanding ? `?${fromLanding}` : ""));
+    restoreFocusTrigger("[data-landing-heading]");
   }
 
   // Every prose region of a composed story is a list of blocks —
@@ -707,10 +718,17 @@
 {#if isLoading}
   <div class="loading">Loading meta story...</div>
 {:else if metaStoryData}
+  <!-- Focusable and focused on mount, the way the story view is: a route change
+       otherwise drops the keyboard reader to the top of the document. -->
   <div
     class="meta-story-view"
     class:styled={!!storyStyle}
     style={storyStyleVars}
+    bind:this={metaStoryViewElement}
+    tabindex="-1"
+    role="region"
+    aria-label={metaStoryData?.meta_story?.title ??
+      $_("meta_story.back_to_stories")}
   >
     <!-- The story's color and pattern, painted behind the whole page rather
          than behind the text column, so the article sits inside its own

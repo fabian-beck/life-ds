@@ -17,6 +17,7 @@
     navigationContext,
   } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
+  import { restoreFocusTrigger } from "./stores/returnFocus.js";
   import { displayName } from "./utils/helpers.js";
   import { parseHexColor } from "./utils/storyHelpers.js";
 
@@ -607,6 +608,9 @@
       replace(buildUrlWithParams(basePath, { from_landing: fromLanding }));
     } else {
       replace(landingUrl(fromLanding));
+      // The card that opened the story is gone with the route; put the reader
+      // back on it rather than dropping focus to the top of the document.
+      restoreFocusTrigger("[data-landing-heading]");
     }
   }
 

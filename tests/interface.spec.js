@@ -295,6 +295,10 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(page).toHaveURL(/\/en\?q=Ada(?:\+|%20)Lovelace$/);
   await expect(search).toHaveValue("Ada Lovelace");
 
+  // Closing used to drop focus to <body>, so a keyboard reader who opened the
+  // thirtieth card had to tab the whole page again to get back to it.
+  await expect(adaCard).toBeFocused();
+
   await page.getByRole("button", { name: "Clear search" }).click();
   await expect(page).toHaveURL(/\/en$/);
 
