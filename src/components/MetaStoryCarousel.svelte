@@ -27,9 +27,21 @@
   const AUTOPLAY_INTERVAL = 5000;
   const RESUME_DELAY = 10000;
 
+  // An explicit stop stays stopped. The ten-second resume timer below belongs
+  // to the incidental pause that hover and focus arm — a reader who presses
+  // the button has asked for the motion to end, and undoing that for them is
+  // what makes the control fail to be one (WCAG 2.2.2).
+  let autoplayStopped = false;
+
+  // A full-bleed panel of portraits sliding every five seconds on the entry
+  // page is exactly the content this preference exists to suppress.
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
   // Auto-advance every 5 seconds
   function startAutoplay() {
-    if (isHovered || isDragging) {
+    if (autoplayStopped || isHovered || isDragging) {
       return;
     }
     stopAutoplay();
@@ -61,12 +73,29 @@
     stopAutoplay();
     cancelResumeTimer();
     isPaused = true;
+    // Nothing to resume from: the reader already stopped it themselves.
+    if (autoplayStopped) return;
     resumeTimerActive = true;
     timerKey += 1;
     resumeTimeout = setTimeout(() => {
       resumeTimerActive = false;
       startAutoplay();
     }, RESUME_DELAY);
+  }
+
+  function toggleAutoplay() {
+    if (autoplayStopped) {
+      autoplayStopped = false;
+      // Pressing play is an explicit request, so it also clears the incidental
+      // hover/focus pause the press itself just armed by moving focus in here.
+      isHovered = false;
+      startAutoplay();
+    } else {
+      autoplayStopped = true;
+      stopAutoplay();
+      cancelResumeTimer();
+      isPaused = true;
+    }
   }
 
   function nextSlide() {
@@ -183,8 +212,8 @@
     if (!isHovered) return;
     isHovered = false;
 
-    // Only resume if we are not dragging
-    if (!isDragging) {
+    // Only resume if we are not dragging, and never against an explicit stop
+    if (!isDragging && !autoplayStopped) {
       isPaused = false;
       startAutoplay();
     }
@@ -251,6 +280,11 @@
   import { onMount, onDestroy } from "svelte";
 
   onMount(() => {
+    if (prefersReducedMotion) {
+      autoplayStopped = true;
+      isPaused = true;
+      return;
+    }
     startAutoplay();
   });
 
@@ -442,10 +476,18 @@
       {/if}
 
       {#if metaStories.length > 1}
-        <div
+        <!-- A real control, not a glyph that looks like one: it used to draw a
+             pause icon that nothing happened on pressing, and screen readers
+             were never told the state existed. -->
+        <button
+          type="button"
           class="playback-indicator"
           class:paused={isPaused}
-          aria-hidden="true"
+          on:click={toggleAutoplay}
+          aria-pressed={autoplayStopped}
+          aria-label={autoplayStopped
+            ? $_("landing.resume_carousel")
+            : $_("landing.pause_carousel")}
         >
           {#if resumeTimerActive}
             {#key timerKey}
@@ -469,6 +511,9 @@
               </svg>
             {/key}
           {/if}
+          <!-- Now that pressing it does something, the glyph names the action
+               rather than the state: play to start the motion, pause to end
+               it. -->
           <div class="playback-icon">
             {#if isPaused}
               <svg
@@ -477,9 +522,9 @@
                 height="12"
                 viewBox="0 0 24 24"
                 fill="currentColor"
+                aria-hidden="true"
               >
-                <rect x="6" y="4" width="4" height="16" rx="1" />
-                <rect x="14" y="4" width="4" height="16" rx="1" />
+                <path d="M8 5v14l11-7z" />
               </svg>
             {:else}
               <svg
@@ -488,12 +533,14 @@
                 height="12"
                 viewBox="0 0 24 24"
                 fill="currentColor"
+                aria-hidden="true"
               >
-                <path d="M8 5v14l11-7z" />
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
               </svg>
             {/if}
           </div>
-        </div>
+        </button>
       {/if}
     </div>
   </section>
@@ -938,15 +985,24 @@
     justify-content: center;
     z-index: 10;
     backdrop-filter: blur(4px);
-    pointer-events: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     transition:
       background 0.2s ease,
       color 0.2s ease;
   }
 
-  .playback-indicator.paused {
+  .playback-indicator.paused,
+  .playback-indicator:hover,
+  .playback-indicator:focus-visible {
     background: rgba(0, 0, 0, 0.6);
     color: rgba(226, 232, 240, 0.9);
+  }
+
+  .playback-indicator:focus-visible {
+    outline: 3px solid #38bdf8;
+    outline-offset: 2px;
   }
 
   .playback-icon {

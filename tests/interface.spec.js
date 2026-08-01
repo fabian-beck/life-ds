@@ -134,8 +134,10 @@ test("core visitor journey", async ({ page }, testInfo) => {
 
   // The carousel portraits sit early in the tab order, and their slanted
   // clip-path used to swallow the focus ring along with the corners, leaving a
-  // keyboard reader with nothing to follow on the entry page.
-  // Focused without scrolling: on the mobile viewport, letting the browser
+  // keyboard reader with nothing to follow on the entry page. This has to come
+  // before the first click of the journey: `:focus-visible` follows the last
+  // interaction, and a pointer one suppresses it.
+  // Focused without scrolling too — on the mobile viewport, letting the browser
   // bring the portrait into view would move the page under the rest of the
   // journey.
   const portraitOutline = await page
@@ -148,6 +150,15 @@ test("core visitor journey", async ({ page }, testInfo) => {
       return width;
     });
   expect(portraitOutline).toBeGreaterThanOrEqual(2);
+
+  // The carousel's play/pause glyph used to be a decorative div: it looked
+  // like a media control and was not one.
+  await page
+    .getByRole("button", { name: "Stop the collections from advancing" })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Let the collections advance again" })
+  ).toHaveAttribute("aria-pressed", "true");
 
   const roleChip = page.locator(".tag-chip").first();
   await roleChip.click();
