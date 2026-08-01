@@ -1,0 +1,169 @@
+/*
+ * How a meta story frames its panels.
+ *
+ * The colour and the marks of a story travel as CSS variables, but a frame is
+ * not one value: it is a corner geometry, a line treatment and an ornament
+ * that have to agree with each other. Expressing that as five more variables
+ * would leave every component to reassemble the same rules, so it lives here
+ * once, keyed on the frame name the story chose:
+ *
+ *     <div class="meta-story-view" data-ms-frame="engraved">   ← the story
+ *       …
+ *       <div class="step-card ms-frame">                       ← a panel
+ *
+ * The vocabulary itself (which names exist, and the radii and border widths
+ * behind each) is `FRAMES` in `src/utils/metaStoryStyles.js`; what this file
+ * adds is the decoration those names imply. A story with no frame gets the
+ * base rule only, which is the plain box the components drew before.
+ *
+ * Global rather than scoped because the same frame has to reach panels in four
+ * components — the narration cards over the graph and the map, the chapter
+ * header on the timeline, the closing cast cards — and a copy per component
+ * would drift. Components keep what is theirs: surface, border colour, padding
+ * and shadow.
+ *
+ * Two rules for adding a variant:
+ *
+ * 1. Decorate with `::before` and `::after` only, always `pointer-events:
+ *    none`. The panels carry links and buttons; a decoration that swallows a
+ *    click is a bug that looks like a design.
+ * 2. Ornament from what the story already owns — `var(--ms-glyph)` and
+ *    `var(--ms-accent)`. A frame that introduces a shape of its own would be a
+ *    sixth mark nobody chose.
+ *
+ * Transient popups (the node tooltip, the event tooltip) deliberately keep the
+ * plain geometry: they appear under the pointer and leave, and cornerwork on
+ * something that flickers reads as noise. The frame is for panels a reader
+ * dwells on.
+ */
+
+.ms-frame {
+  position: relative;
+  border-radius: var(--ms-frame-radius, 16px);
+  border-width: var(--ms-frame-border-width, 1px);
+  border-style: var(--ms-frame-border-style, solid);
+}
+
+/* --- square: machine-cut ---------------------------------------------------
+   No radius and a hairline, so the character has to come from outside the
+   box: register marks at the four corners, the way a drawing is trimmed or a
+   board is drilled. Eight one-pixel segments, two per corner, painted as
+   gradients on a single pseudo-element. */
+[data-ms-frame="square"] .ms-frame::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent)),
+    linear-gradient(var(--ms-accent), var(--ms-accent));
+  background-size:
+    14px 1px,
+    1px 14px,
+    14px 1px,
+    1px 14px,
+    14px 1px,
+    1px 14px,
+    14px 1px,
+    1px 14px;
+  background-position:
+    left top,
+    left top,
+    right top,
+    right top,
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+}
+
+/* --- engraved: a printed plate ---------------------------------------------
+   The outer rule is already double. Inside it runs the plate line every
+   engraved frame has, and the story's glyph is set on all four corners
+   between the two rules, where a broadside puts its fleurons. */
+[data-ms-frame="engraved"] .ms-frame::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--ms-accent) 30%, transparent);
+  border-radius: inherit;
+}
+
+[data-ms-frame="engraved"] .ms-frame::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  pointer-events: none;
+  background-image:
+    var(--ms-glyph), var(--ms-glyph), var(--ms-glyph), var(--ms-glyph);
+  background-size: 11px 11px;
+  background-position:
+    left top,
+    right top,
+    left bottom,
+    right bottom;
+  background-repeat: no-repeat;
+  opacity: 0.75;
+}
+
+/* --- arched: round-headed --------------------------------------------------
+   An arch is drawn as concentric rings, so the panel gets its archivolt: a
+   second arch inside the first, following the same springing. The glyph sits
+   on the crown as the keystone. */
+[data-ms-frame="arched"] .ms-frame::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--ms-accent) 28%, transparent);
+  border-radius: inherit;
+}
+
+[data-ms-frame="arched"] .ms-frame::after {
+  content: "";
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 1.1rem;
+  height: 1.1rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background-image: var(--ms-glyph);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* --- organic: grown --------------------------------------------------------
+   No cornerwork: the shape is the ornament. What it gets instead is a contour
+   — a second outline a few pixels out, curving wider than the panel, the way
+   the story's own pattern draws its lines in parallel. */
+[data-ms-frame="organic"] .ms-frame::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--ms-accent) 22%, transparent);
+  border-radius: 2.15rem 1rem;
+}
+
+/* --- soft: the neutral default ---------------------------------------------
+   One faint ring outside the panel — enough that the frame is a decision
+   rather than a leftover, quiet enough to stay the default. */
+[data-ms-frame="soft"] .ms-frame::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--ms-accent) 16%, transparent);
+  border-radius: calc(16px + 5px);
+}

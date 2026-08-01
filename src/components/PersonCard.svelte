@@ -15,6 +15,12 @@
   // Localized accessible label; falls back to the person's name.
   export let ariaLabel = null;
 
+  // Extra classes for the caller, matching CloseButton's convention: a
+  // meta story hangs its frame on the card this way (`ms-frame`), which the
+  // card itself knows nothing about.
+  let className = "";
+  export { className as class };
+
   // Format lifespan for a person. `language` is a parameter rather than a
   // store read so the reactive statement below re-runs when it changes.
   function formatLifespan(person, language) {
@@ -48,7 +54,7 @@
 
 <a
   {href}
-  class="person-card"
+  class="person-card {className}"
   style="--card-primary: {personStyle?.primary ||
     '#f8fafc'}; --card-secondary: {personStyle?.secondary ||
     '#38bdf8'}; --card-heading-font: {personStyle?.headingFont

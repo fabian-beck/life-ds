@@ -723,6 +723,7 @@
   <div
     class="meta-story-view"
     class:styled={!!storyStyle}
+    data-ms-frame={storyStyle?.frame ?? null}
     style={storyStyleVars}
     bind:this={metaStoryViewElement}
     tabindex="-1"
@@ -954,6 +955,7 @@
           {#each storyPersonCards as person (person.id)}
             <PersonCard
               {person}
+              class="ms-frame"
               personStyle={cardStyle(person.id)}
               href={personStoryHref(person.id)}
               ariaLabel={$_("meta_story.people_open_story", {

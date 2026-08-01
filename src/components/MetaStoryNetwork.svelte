@@ -821,7 +821,7 @@
         {#each clusters as cluster, i (cluster.key)}
           <li class="step" use:observeStep={i}>
             <div
-              class="step-card"
+              class="step-card ms-frame"
               class:current={activeStep === i}
               class:marked={storyMarked}
             >

@@ -2221,7 +2221,7 @@
         style={chapterHeaderStyle}
       >
         <div
-          class="chapter-title-display"
+          class="chapter-title-display ms-frame"
           bind:clientWidth={chapterHeaderWidth}
           bind:clientHeight={chapterHeaderHeight}
         >

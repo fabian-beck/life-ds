@@ -25,6 +25,7 @@ from generate_meta_story_style import (  # noqa: E402
 
 STYLES_PATH = ROOT / "data" / "meta_story_styles.json"
 FRAMES_JS = ROOT / "src" / "utils" / "metaStoryStyles.js"
+FRAMES_CSS = ROOT / "src" / "meta-frames.css"
 META_STORIES_REGISTER = ROOT / "data" / "meta_stories.json"
 
 HEX = re.compile(r"^#[0-9A-F]{6}$")
@@ -85,6 +86,33 @@ class MetaStoryStyleRegistryTests(unittest.TestCase):
         block = source.split("export const FRAMES = {", 1)[1].split("\n};", 1)[0]
         in_app = set(re.findall(r"^  (\w+): \{", block, re.MULTILINE))
         self.assertEqual(in_app, set(FRAME_CHOICES))
+
+    def test_every_frame_is_actually_drawn(self):
+        """A name with no rules is a frame that silently looks like the default.
+
+        `FRAMES` gives a name its geometry; `meta-frames.css` gives it the
+        line work and the ornament that make it that frame rather than a
+        rounded rectangle.
+        """
+        css = FRAMES_CSS.read_text(encoding="utf-8")
+        for name in FRAME_CHOICES:
+            with self.subTest(frame=name):
+                self.assertIn(f'[data-ms-frame="{name}"]', css)
+
+    def test_frame_decoration_never_swallows_a_click(self):
+        """The panels carry links; a decoration that eats one is invisible."""
+        css = FRAMES_CSS.read_text(encoding="utf-8")
+        rules = re.findall(r"([^{}]*)\{([^{}]*)\}", css)
+        decorations = [
+            (selector.strip(), body)
+            for selector, body in rules
+            if "::before" in re.sub(r"/\*.*?\*/", "", selector, flags=re.S)
+            or "::after" in re.sub(r"/\*.*?\*/", "", selector, flags=re.S)
+        ]
+        self.assertTrue(decorations)
+        for selector, body in decorations:
+            with self.subTest(selector=selector.splitlines()[-1][:60]):
+                self.assertIn("pointer-events: none", body)
 
     def test_marks_are_valid_single_color_svg(self):
         """The glyph and the ornament are drawn in the story's primary color."""

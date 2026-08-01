@@ -9,6 +9,7 @@ life-ds/
 ├── src/
 │   ├── App.svelte           # Main app with routing & lazy loading
 │   ├── main.js              # Entry point
+│   ├── meta-frames.css      # Meta story frame vocabulary (global, by data-ms-frame)
 │   └── components/
 │       ├── Landing.svelte    # Person grid landing page
 │       ├── StoryView.svelte  # Main story viewer (timeline/map)

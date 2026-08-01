@@ -1,5 +1,6 @@
 import "./fonts.css";
 import "./app.css";
+import "./meta-frames.css";
 import { mount } from "svelte";
 import App from "./App.svelte";
 
