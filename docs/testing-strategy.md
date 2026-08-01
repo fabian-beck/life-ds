@@ -19,8 +19,10 @@ It contains only safeguards for high-value failures:
   modal, returning home, and entering and leaving a collection;
 - the browser-independent person-name matcher cases, run once rather than in
   every browser project; and
-- focused Python regression checks for portrait file validation and keeping
-  curated meta-story references synchronized with person events.
+- focused Python regression checks for portrait file validation, keeping
+  curated meta-story references synchronized with person events, and holding
+  the person registries, per-person directories, and style registry to the
+  same set of people.
 
 Do not add a deterministic test merely to increase coverage. Add one only for
 a costly, repeatable regression that is difficult to notice through
