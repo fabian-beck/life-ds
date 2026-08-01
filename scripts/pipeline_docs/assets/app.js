@@ -162,6 +162,14 @@
   const COMPACT_MIN_SCALE = 0.8;
   const TIER_TYPE_TOLERANCE = 0.9;
 
+  /* The widest capture that is offered the margin beside the text rather than a
+     block of its own. It divides the two kinds of screenshot this report takes:
+     a phone, held upright, which is 390 to 430 CSS pixels across and would leave
+     more than half the column empty if it were set as a block; and a desktop
+     view, declared at 1280, which is wider than the measure and needs the room.
+     Set between them, so neither kind is a special case. */
+  const MARGIN_FIGURE_MAX = 500;
+
   // Live chart instances, so the shared drawer can clear the selection in the
   // chart the reader did *not* click.
   const charts = [];
@@ -3479,6 +3487,23 @@
           )
         );
         return;
+      }
+      /* How much of the page this one is entitled to. A capture is a fixed
+         number of CSS pixels and is never enlarged past them, so the width the
+         browser was given is the width the figure wants: the block is told that
+         number and the stylesheet spends no more of the column than it asks for.
+
+         A portrait capture—a phone, held upright—is narrow enough to stand in
+         the margin beside the text instead of interrupting it, which is what
+         `widget-margin` asks for and what the stylesheet grants where the page
+         is wide enough to hold both. A desktop capture is wider than the measure
+         and takes the room a drawing takes. */
+      const widget = mount.closest(".widget");
+      if (widget && shot.width) {
+        widget.style.setProperty("--fig-width", shot.width + "px");
+        widget.classList.add(
+          shot.width <= MARGIN_FIGURE_MAX ? "widget-margin" : "widget-wide"
+        );
       }
       const provenance = [shot.declaration];
       if (shot.captured)

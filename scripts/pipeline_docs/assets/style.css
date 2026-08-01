@@ -1,9 +1,16 @@
 /* Technical report—standalone page styles.
 
-   The page is a two-column shell: a contents rail that follows the reader, and
-   one measure of running text. The report body is compiled from Markdown, so its
-   typography is styled by element under `.report` rather than by class—the
-   compiler has to stay free to emit ordinary HTML.
+   The page is a three-column shell: a contents rail that follows the reader, one
+   measure of running text, and a margin beside that text which a figure may take
+   when it is narrow enough to sit there. The report body is compiled from
+   Markdown, so its typography is styled by element under `.report` rather than by
+   class—the compiler has to stay free to emit ordinary HTML.
+
+   Nothing that is read as text is ever set wider than the measure—not a
+   paragraph, not a list, not a legend, not the small type under a figure. Extra
+   width belongs to figures, and only to the ones that have something to do with
+   it: a drawing takes the whole width, a phone capture takes 390 pixels and
+   leaves the rest, and neither is stretched to fill a column it does not need.
 
    Computed blocks (`.widget`) and authored callouts (`.callout`) are deliberately
    distinct: a reader should be able to tell, without being told, which parts of
@@ -35,6 +42,17 @@
   --kind-deterministic: #eb6834;
   --kind-external: #1baf7a;
   --kind-image: #eda100;
+
+  /* The measure, and the gap between it and the margin beside it.
+
+     Absolute rather than the `70ch` this used to be, because the measure is now
+     load-bearing: the margin column is what is left of the report's width after
+     the measure and the gap are taken out of it, so the two have to be the same
+     number for every element that respects it. `70ch` is not one number—it is
+     the element's own font, and a 25px heading and a 12.5px caption would each
+     draw a different edge. 36rem is the measure the body text had at 70ch. */
+  --measure: 36rem;
+  --figure-gutter: 34px;
   --mono: ui-monospace, sfmono-regular, "SF Mono", menlo, consolas, monospace;
   --serif:
     "Iowan Old Style", charter, "Source Serif Pro", georgia, "Times New Roman",
@@ -303,10 +321,20 @@ a.author-name:focus-visible {
 
 /* ------------------------------------------------------------ report body */
 
-/* The report is as wide as its widest figure; running text is clamped to a
-   readable measure element by element. Clamping the container instead would trap
-   the charts and wide tables inside the text column. */
+/* The report is as wide as its widest figure; everything that is read as text is
+   clamped to the measure element by element. Clamping the container instead
+   would trap the charts and wide tables inside the text column.
+
+   The body asks how much room it has, not how wide the window is. The two are
+   not the same question and do not even move together: the rail collapses at
+   1080px, which makes the body wider than it was at 1081px. Whether a figure can
+   stand in the margin has to be decided on the room it would actually stand in,
+   so the body names itself a container and the rules further down query it.
+
+   Naming a container also contains the floats, which is what keeps a margin
+   figure hanging past the last paragraph beside it out of the colophon. */
 .report {
+  container: report / inline-size;
   max-width: 1010px;
 }
 
@@ -317,16 +345,23 @@ a.author-name:focus-visible {
 .report > pre,
 .report > blockquote,
 .report > table,
-.callout {
-  max-width: 70ch;
+.callout,
+.principles,
+.references {
+  max-width: var(--measure);
 }
 
+/* A heading belongs to the text column, and its rule is the column's edge rather
+   than the page's: a margin figure stands beside a heading the way it stands
+   beside a paragraph, and the rule stops short of it instead of running under
+   it. Only figures reach past the measure. */
 .report h2.sec,
 .report h3.sec,
 .report h4.sec {
   display: flex;
   gap: 14px;
   align-items: baseline;
+  max-width: var(--measure);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -706,7 +741,7 @@ a.author-name:focus-visible {
 }
 
 .notes {
-  max-width: 70ch;
+  max-width: var(--measure);
   margin: 26px 0 6px;
   padding-top: 10px;
   border-top: 1px solid var(--rule);
@@ -808,7 +843,7 @@ body.has-note-pop .notes {
 }
 
 .references {
-  max-width: 78ch;
+  max-width: var(--measure);
 }
 
 .report .reference-list {
@@ -847,12 +882,66 @@ body.has-note-pop .notes {
 
 /* -------------------------------------------------------- computed blocks */
 
-/* Full-bleed past the text measure: a chart or a wide table is not running text
-   and should not be constrained to its column. */
+/* A computed block is the measure wide until it says otherwise. Most of them—a
+   legend, a schema list, a grid of build facts—are text in a table's clothing,
+   and stretching them past the column is the same mistake as stretching a
+   paragraph. Width is therefore opt-in, and the two ways in are below.
+
+   Which class a block carries is decided where the width is known: in the
+   component roster in `report.py` for the blocks whose kind settles it, and in
+   `app.js` for a screenshot, whose width is a property of the capture. */
 .widget {
   position: relative;
-  width: min(100%, 1010px);
+  width: 100%;
+  max-width: var(--measure);
   margin: 26px 0 30px;
+}
+
+/* Full-bleed past the text measure: a chart or a wide table is not running text
+   and should not be constrained to its column. `--fig-width` is the drawing's
+   own width where the renderer knows it, so a figure that needs 800 pixels takes
+   800 and not the whole column. */
+.widget-wide {
+  max-width: min(var(--fig-width, 100%), 100%);
+}
+
+/* A figure narrower than the column keeps its own width and does not grow into
+   the space it has no use for. Where the page is wide enough it moves out of the
+   text and into the margin beside it—see the container query below. */
+.widget-margin {
+  max-width: min(var(--fig-width, var(--measure)), 100%);
+}
+
+/* The margin column. It exists when the body is wide enough to hold the measure,
+   the gutter and a figure still worth looking at—300px, about the narrowest a
+   phone capture reads at—and not otherwise; below that the figure stays in the
+   text column at its own width, which is the other half of the same rule.
+
+   A float rather than a grid track, because the text has to close over the
+   bottom of the figure. A grid would give the figure a row of its own and leave
+   the measure blank for the whole height of a portrait capture; a float lets the
+   paragraphs after it run on beside it and past it.
+
+   Nothing that respects the measure needs to be told about the float: headings,
+   paragraphs, lists and callouts all stop at 36rem, and the figure begins after
+   the gutter. Only a full-width block would collide, so only a full-width block
+   clears. */
+@container report (width >= 910px) {
+  .report > .widget-margin {
+    float: right;
+    clear: right;
+    width: min(
+      var(--fig-width, 100%),
+      calc(100cqi - var(--measure) - var(--figure-gutter))
+    );
+    max-width: none;
+    margin-left: var(--figure-gutter);
+  }
+
+  .report > .widget-wide,
+  .report > .appendix {
+    clear: right;
+  }
 }
 
 .widget-note p {
@@ -878,11 +967,15 @@ body.has-note-pop .notes {
 
    The rule is written for the element as well as the class, because `.report p`
    sets the size of running prose at the same weight and would otherwise print
-   a caption at body size. */
+   a caption at body size.
+
+   A caption is read, so it keeps the measure even where the figure under it is
+   twice that wide. In a margin figure it is narrower still: the block is 390
+   pixels and the caption is the block. */
 .cap,
 p.cap {
   margin: 0 0 10px;
-  max-width: 74ch;
+  max-width: var(--measure);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 12.5px;
@@ -1131,6 +1224,7 @@ p.cap {
 
 .hint {
   margin: 0 0 12px;
+  max-width: var(--measure);
   color: var(--muted);
   font-family: var(--sans);
   font-size: 12px;
@@ -1240,6 +1334,7 @@ figure.figure {
    strip: it belongs with the drawing rather than with the caption. */
 .shot-meta {
   margin: 8px 0 0;
+  max-width: var(--measure);
   color: var(--muted);
   font-family: var(--sans);
   font-size: 11.5px;
@@ -2103,7 +2198,7 @@ figure.teaser > .cap {
   flex: 1 1 240px;
   margin: 0;
   min-width: 0;
-  max-width: 96ch;
+  max-width: var(--measure);
   font: inherit;
 }
 
@@ -2301,7 +2396,7 @@ figure.teaser > .cap {
 }
 
 .step-detail-body {
-  max-width: 70ch;
+  max-width: var(--measure);
   font-size: 14px;
 }
 
@@ -2321,7 +2416,7 @@ figure.teaser > .cap {
 
 .colophon p {
   margin: 0 0 8px;
-  max-width: 78ch;
+  max-width: var(--measure);
 }
 
 /* The rail stops being a column before the text measure gets squeezed. Rather
@@ -2463,6 +2558,17 @@ figure.teaser > .cap {
   .page,
   .report {
     max-width: none;
+  }
+
+  /* A sheet has no margin column—the text area of an A4 page is narrower than
+     the measure and the gutter and a figure together, so the container query
+     never matches and a margin figure prints in the text column at its own
+     width. Stated anyway, because the sheet is a setting and a wide one would
+     otherwise put a float on paper, where nothing clears it. */
+  .report > .widget-margin {
+    float: none;
+    width: auto;
+    max-width: min(var(--fig-width, var(--measure)), 100%);
   }
 
   .titleblock {

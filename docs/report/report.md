@@ -325,6 +325,9 @@ they left.
 
 ### Person stories
 
+::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone: the dated narrative above, the map beneath it centered on the event's place, the chapter and the icon timeline along the bottom edge"
+:::
+
 A person's story is a horizontal sequence of full-screen, scroll-snapped
 slides of four kinds. An overview slide opens with the generated portrait, the
 lifespan, the principal roles and a summary. Chapter slides mark the phases of
@@ -361,9 +364,6 @@ Each story additionally carries a generated visual identity—palette,
 typography and background pattern—injected as CSS custom properties
 ((own-look)), so that the design system is data rather than code and each
 subject is presented in a visual register of its own.
-
-::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone: the dated narrative above, the map beneath it centered on the event's place, the chapter and the icon timeline along the bottom edge"
-:::
 
 ### Meta stories
 

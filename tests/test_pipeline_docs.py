@@ -1604,6 +1604,85 @@ class AssetTests(unittest.TestCase):
         ast.parse(source)
 
 
+class LayoutWidthTests(unittest.TestCase):
+    """Width is opt-in, and the opting has to reach the page.
+
+    Nothing read as text is set wider than the measure, and extra width is spent
+    only on figures that have something to do with it. That rule is split across
+    three files—the roster here decides it, `_mount_html` writes it into the
+    class, `style.css` acts on it—so each seam is checked: a component whose
+    width nobody declares, a class nobody styles, or a margin column measured
+    from a literal instead of from the measure would each break it silently.
+    """
+
+    KNOWN_WIDTHS = {"measure", "wide", "figure"}
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.css = (ASSETS / "style.css").read_text(encoding="utf-8")
+        cls.js = (ASSETS / "app.js").read_text(encoding="utf-8")
+
+    def test_every_component_declares_a_width_the_page_understands(self) -> None:
+        for name, spec in report.COMPONENTS.items():
+            self.assertIn(
+                spec.width,
+                self.KNOWN_WIDTHS,
+                f"'{name}' claims width {spec.width!r}, which nothing styles",
+            )
+
+    def test_the_roster_writes_the_width_into_the_mount_point(self) -> None:
+        wide = _compile(
+            MarkdownCompilerTests.HEAD + "\n## S\n\n::: pipeline lane=person\n:::\n"
+        )
+        self.assertIn('class="widget widget-wide"', wide.html)
+
+        measure = _compile(
+            MarkdownCompilerTests.HEAD + "\n## S\n\n::: kindlegend\n:::\n"
+        )
+        self.assertIn('class="widget"', measure.html)
+        self.assertNotIn("widget-wide", measure.html)
+
+    def test_a_screenshot_is_left_for_the_renderer_to_classify(self) -> None:
+        """Its width is the capture's, which only `app.js` has in front of it."""
+        self.assertEqual(report.COMPONENTS["screenshot"].width, "figure")
+        document = _compile(
+            MarkdownCompilerTests.HEAD + "\n## S\n\n"
+            '::: screenshot id=x route=#/en caption="A view."\n:::\n'
+        )
+        self.assertIn('class="widget"', document.html)
+        self.assertIn("widget-margin", self.js)
+        self.assertIn("widget-wide", self.js)
+
+    def test_every_width_class_a_renderer_adds_is_styled(self) -> None:
+        added = {
+            name.strip()
+            for name in report.WIDGET_WIDTH_CLASS.values()
+            if name.strip()
+        }
+        added.update(re.findall(r'"(widget-[a-z-]+)"', self.js))
+        self.assertIn("widget-margin", added, "the scan found no width classes")
+        for name in sorted(added):
+            self.assertRegex(
+                self.css,
+                rf"\.{name}[\s,{{]",
+                f"a renderer adds .{name} and style.css has no rule for it",
+            )
+
+    def test_the_margin_column_is_whatever_the_measure_leaves(self) -> None:
+        """Measured, not guessed: a literal here would drift off the text edge."""
+        query = re.search(
+            r"@container report \(width >= (\d+)px\) \{(.*?)\n\}",
+            self.css,
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(query, "the stylesheet declares no margin column")
+        assert query is not None
+        self.assertIn("100cqi", query.group(2))
+        self.assertIn("var(--measure)", query.group(2))
+        self.assertIn("var(--figure-gutter)", query.group(2))
+        self.assertIn("container: report / inline-size", self.css)
+
+
 class PrintTests(unittest.TestCase):
     """The printed report must be the whole report.
 
@@ -1669,6 +1748,17 @@ class PrintTests(unittest.TestCase):
                 f"{selector} clips on screen but the print rules neither reopen "
                 f"nor hide it: on paper what it holds is cut off, not scrolled to",
             )
+
+    def test_a_margin_figure_does_not_float_on_paper(self) -> None:
+        """A sheet has no margin column, and nothing on paper clears a float."""
+        floats = [
+            body
+            for selector, body in self._rules(self.print_css)
+            if "widget-margin" in selector
+        ]
+        self.assertTrue(floats, "the print rules say nothing about a margin figure")
+        for body in floats:
+            self.assertIn("float: none", body)
 
     def test_the_appendix_is_the_drawer(self) -> None:
         """One builder, so a new fact in the drawer reaches the PDF for free."""

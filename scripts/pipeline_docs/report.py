@@ -104,6 +104,14 @@ class ComponentSpec:
     `figures` and `tables` are how many numbered captions the component emits,
     which is what lets numbering be assigned here—in document order, in
     Python, where it can be tested—instead of counted at runtime.
+
+    `width` is how much of the page the block is entitled to, and the page gives
+    nothing away by default. `"measure"` is the text column: a legend or a schema
+    list is text in a table's clothing and is set to the same width as a
+    paragraph. `"wide"` reaches past it, and is for the drawings and the tables
+    that have something to do with the room. `"figure"` means the width is not a
+    property of the kind at all but of the material—a screenshot is as wide as
+    the capture—so `app.js` classifies that block when it mounts it.
     """
 
     name: str
@@ -112,6 +120,7 @@ class ComponentSpec:
     optional: Tuple[str, ...] = ()
     figures: int = 0
     tables: int = 0
+    width: str = "measure"
 
 
 COMPONENTS: Dict[str, ComponentSpec] = {
@@ -125,6 +134,7 @@ COMPONENTS: Dict[str, ComponentSpec] = {
             "teaser",
             "The whole system on one canvas, in parts the prose can point at.",
             figures=1,
+            width="wide",
         ),
         ComponentSpec(
             "factgrid",
@@ -137,12 +147,14 @@ COMPONENTS: Dict[str, ComponentSpec] = {
             "One pipeline as an interactive layered dependency graph.",
             required=("lane",),
             figures=1,
+            width="wide",
         ),
         ComponentSpec(
             "steptable",
             "Every documented step of one pipeline, with model and schema.",
             required=("lane",),
             tables=1,
+            width="wide",
         ),
         ComponentSpec(
             "conceptlegend",
@@ -152,12 +164,14 @@ COMPONENTS: Dict[str, ComponentSpec] = {
             "modeltable",
             "Each model call site, its model and its reasoning effort.",
             tables=1,
+            width="wide",
         ),
         ComponentSpec(
             "cliflags",
             "The command-line options of one script, from its argument parser.",
             required=("script",),
             tables=1,
+            width="wide",
         ),
         ComponentSpec(
             "schemalist",
@@ -182,6 +196,7 @@ COMPONENTS: Dict[str, ComponentSpec] = {
                 "alt",
             ),
             figures=1,
+            width="figure",
         ),
         ComponentSpec(
             "kindlegend",
@@ -1134,7 +1149,13 @@ def _callout_html(block: Block, inner: str) -> str:
     )
 
 
+WIDGET_WIDTH_CLASS = {"wide": " widget-wide", "measure": "", "figure": ""}
+
+
 def _mount_html(mount: Mount, inner: str) -> str:
+    # A `"figure"` block carries no width class from here: `app.js` adds one when
+    # it mounts, because only the renderer knows how wide the material came out.
+    width = WIDGET_WIDTH_CLASS[COMPONENTS[mount.component].width]
     attrs = [
         f'data-component="{_escape(mount.component)}"',
         f'data-figure="{mount.figure_start}"',
@@ -1144,7 +1165,7 @@ def _mount_html(mount: Mount, inner: str) -> str:
         attrs.append(f'data-{_escape(key)}="{_escape(value)}"')
     note = f'<div class="widget-note">{inner}</div>' if inner.strip() else ""
     return (
-        f'<div class="widget" {" ".join(attrs)}>{note}'
+        f'<div class="widget{width}" {" ".join(attrs)}>{note}'
         '<div class="widget-mount"></div>'
         f'<p class="widget-fallback">This block is computed when the report is '
         f"built. Enable JavaScript, or rebuild with "

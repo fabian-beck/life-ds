@@ -537,6 +537,18 @@ Adding a new *kind* of computed block means two edits: a `ComponentSpec` in
 renderer of the same name in `assets/app.js`. The two rosters are checked against
 each other, so a block with no renderer fails the build.
 
+**Width is opt-in.** The report body is one measure of running text with a margin
+beside it, and nothing that is read—paragraph, list, legend, caption, the small
+type under a figure—is ever set wider than that measure. A `ComponentSpec`
+declares which of three the block is: `"measure"` (the default: a legend or a
+schema list is text in a table's clothing), `"wide"` for the drawings and tables
+that have something to do with the room, or `"figure"` when the width is a
+property of the material rather than of the kind, in which case `app.js`
+classifies the block as it mounts it. A figure narrower than the measure—a phone
+capture at 390 pixels—keeps its own width and moves into the margin beside the
+text wherever the page is wide enough to hold both, and stays in the text column
+where it is not.
+
 **Captions complement the figure, they do not describe it.** A caption names
 what the block is and then adds only what a reader cannot get from the drawing
 itself: what an unlabelled mark means and what the block does when it is
