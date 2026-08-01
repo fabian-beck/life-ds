@@ -6,7 +6,7 @@
   import { push, replace } from "svelte-spa-router";
   import { location, querystring } from "../stores/router.js";
   import { clamp, displayName } from "../utils/helpers.js";
-  import { getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
@@ -434,17 +434,17 @@
     window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
   }
 
-  function formatLifespan(entry) {
+  // `language` is a parameter rather than a store read so the template's
+  // `{@const}` re-runs when the language changes.
+  function formatLifespan(entry, language) {
     // Support both old 'lifespan' field and new 'birthDate'/'deathDate' fields
     if (entry.lifespan) {
       return entry.lifespan;
     }
-    const birthYear = entry.birthDate ? entry.birthDate.substring(0, 4) : "?";
-    const deathYear = entry.deathDate ? entry.deathDate.substring(0, 4) : "?";
-    if (birthYear === "?" && deathYear === "?") {
-      return null;
-    }
-    return `${birthYear}–${deathYear}`;
+    // The shared helper, so a card here reads the same as the same person's
+    // collection card and story header — a naive four-character slice turned
+    // "973-05-06" into "973-" and "0975-01-01" into "0975".
+    return computeYearsLabel(entry, language) || null;
   }
 
   function handleSelect(id) {
@@ -741,7 +741,7 @@
     {#if filteredEntries.length > 0}
       {#each filteredEntries as entry (entry.id)}
         {@const style = entry.style ?? getStyle(entry.id)}
-        {@const lifespan = formatLifespan(entry)}
+        {@const lifespan = formatLifespan(entry, $currentLanguage)}
         {@const anniversary = getAnniversary(entry)}
         <button
           class="person-card"

@@ -81,7 +81,7 @@
   $: portrait = person?.portrait;
   $: personName = displayName(person?.name);
   $: personSummary = person?.summary ?? "";
-  $: yearsLabel = computeYearsLabel(person);
+  $: yearsLabel = computeYearsLabel(person, $currentLanguage);
   $: roles = Array.isArray(person?.primary_roles) ? person.primary_roles : [];
   $: eventSlides = events
     // Capture each event's original position in the source array before

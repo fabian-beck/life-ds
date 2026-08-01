@@ -1,4 +1,5 @@
 <script>
+  import { currentLanguage } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
   import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
   import SeparatedList from "./SeparatedList.svelte";
@@ -14,10 +15,11 @@
   // Localized accessible label; falls back to the person's name.
   export let ariaLabel = null;
 
-  // Format lifespan for a person
-  function formatLifespan(person) {
+  // Format lifespan for a person. `language` is a parameter rather than a
+  // store read so the reactive statement below re-runs when it changes.
+  function formatLifespan(person, language) {
     if (!person) return "";
-    return computeYearsLabel(person);
+    return computeYearsLabel(person, language);
   }
 
   // Get initials from name for fallback
@@ -32,7 +34,7 @@
       .join("");
   }
 
-  $: lifespan = formatLifespan(person);
+  $: lifespan = formatLifespan(person, $currentLanguage);
   $: roles = Array.isArray(person?.primaryRoles) ? person.primaryRoles : [];
 
   function handleClick(e) {

@@ -29,7 +29,7 @@ export default defineConfig({
   projects: [
     {
       name: "logic",
-      testMatch: "personNames.spec.js",
+      testMatch: /(personNames|historicalDates)\.spec\.js/,
       use: {},
     },
     {

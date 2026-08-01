@@ -97,20 +97,77 @@ export const EVENT_ICON_RULES = [
 ];
 
 /**
+ * A calendar date as it appears in the data: an optional leading minus, a year
+ * of one to six digits, and optional month and day parts.
+ */
+const HISTORICAL_DATE_PATTERN = /^(-?)(\d{1,6})(?:-(\d{2})(?:-(\d{2}))?)?$/;
+
+/**
+ * Expand a stored date into an instant the ECMAScript date parser accepts.
+ *
+ * Two shapes in the data are rejected by `Date.parse` as written. Pre-1000
+ * years are not always zero-padded ("973-05-06" alongside "0975-01-01"), and
+ * years before the common era need the expanded six-digit form
+ * ("-000500-01-01"), not the four digits a B.C. year would naturally be
+ * written with. Everything that turns a stored date into a `Date` goes through
+ * here so both are handled once.
+ *
+ * Years before the common era follow ISO 8601's astronomical numbering, where
+ * year 0 is 1 B.C. and "-000500" is 501 B.C.
+ *
+ * @param {string} value - Date string like "1955-04-18", "973-05-06" or "-0500"
+ * @returns {string|null} Full ISO instant, or null when unparseable
+ */
+export function toIsoInstant(value) {
+  if (typeof value !== "string") return null;
+  const match = HISTORICAL_DATE_PATTERN.exec(value.trim());
+  if (!match) return null;
+  const [, sign, year, month, day] = match;
+  // "-000000" is not a legal expanded year: 1 B.C. is written "0000".
+  const isNegative = sign === "-" && Number(year) !== 0;
+  const isoYear = isNegative
+    ? `-${year.padStart(6, "0")}`
+    : year.length > 4
+      ? `+${year.padStart(6, "0")}`
+      : year.padStart(4, "0");
+  return `${isoYear}-${month ?? "01"}-${day ?? "01"}T00:00:00Z`;
+}
+
+/**
+ * Parse a stored date into a `Date` at UTC midnight.
+ * @param {string} value - Date string
+ * @returns {Date|null} Parsed date, or null when unparseable
+ */
+export function parseHistoricalDate(value) {
+  const iso = toIsoInstant(value);
+  if (!iso) return null;
+  const timestamp = Date.parse(iso);
+  return Number.isNaN(timestamp) ? null : new Date(timestamp);
+}
+
+/**
+ * Extract the year from a stored date.
+ *
+ * Read in UTC, because the dates are stored as UTC midnight — a local-time
+ * read would land on December 31 of the previous year west of Greenwich.
+ *
+ * @param {string} value - Date string
+ * @returns {number} Astronomical year (negative before the common era), or NaN
+ */
+export function extractYear(value) {
+  const date = parseHistoricalDate(value);
+  return date ? date.getUTCFullYear() : NaN;
+}
+
+/**
  * Convert an event to a sortable timestamp.
  * @param {Object} event - Event object with date and date_precision
  * @returns {number} Timestamp in milliseconds, or Infinity if no date
  */
 export function toTimestamp(event) {
   if (!event?.date) return Number.POSITIVE_INFINITY;
-  const precision = event.date_precision ?? "day";
-  const iso =
-    precision === "year"
-      ? `${event.date}-01-01T00:00:00Z`
-      : precision === "month"
-        ? `${event.date}-01T00:00:00Z`
-        : `${event.date}T00:00:00Z`;
-  return Date.parse(iso);
+  const date = parseHistoricalDate(event.date);
+  return date ? date.getTime() : Number.NaN;
 }
 
 /**
@@ -122,17 +179,17 @@ export function toTimestamp(event) {
  */
 export function formatSingleDate(value, precision, formatters) {
   if (!value) return null;
+  const date = parseHistoricalDate(value);
+  if (!date) return null;
   const normalizedPrecision = precision ?? "day";
-  const formatter = formatters[normalizedPrecision] ?? formatters.day;
-  const iso =
-    normalizedPrecision === "year"
-      ? `${value}-01-01T00:00:00Z`
-      : normalizedPrecision === "month"
-        ? `${value}-01T00:00:00Z`
-        : `${value}T00:00:00Z`;
-  const timestamp = Date.parse(iso);
-  if (Number.isNaN(timestamp)) return null;
-  return formatter.format(new Date(timestamp));
+  // Before the common era the year alone is ambiguous, so those dates are
+  // formatted with an explicit era ("501 BC", "501 v. Chr.").
+  const set =
+    date.getUTCFullYear() <= 0 && formatters.beforeCommonEra
+      ? formatters.beforeCommonEra
+      : formatters;
+  const formatter = set[normalizedPrecision] ?? set.day;
+  return formatter.format(date);
 }
 
 /**
@@ -184,23 +241,57 @@ export function getDateNote(event) {
 }
 
 /**
+ * Intl formatters that name the era, built once per language.
+ */
+const eraYearFormatters = new Map();
+
+function eraYearFormatter(language) {
+  let formatter = eraYearFormatters.get(language);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(language, {
+      year: "numeric",
+      era: "short",
+      timeZone: "UTC",
+    });
+    eraYearFormatters.set(language, formatter);
+  }
+  return formatter;
+}
+
+/**
+ * Render one end of a lifespan.
+ * @param {Date|null} date - Parsed date
+ * @param {string} language - Language code like "en" or "de"
+ * @returns {string|null} Year label, or null when there is no date
+ */
+function formatLifespanYear(date, language) {
+  if (!date) return null;
+  const year = date.getUTCFullYear();
+  // A bare "500" would read as the common era. Intl already knows the era
+  // names in every locale, so the label needs no string of its own.
+  return year > 0 ? `${year}` : eraYearFormatter(language).format(date);
+}
+
+/**
  * Compute birth-death years label for a person.
  * @param {Object} person - Person object with birth_date/death_date (life event
  *   documents) or birthDate/deathDate (persons registry)
- * @returns {string} Years label like "1879 - 1955" or "1879"
+ * @param {string} [language] - Language code, used to name the era for dates
+ *   before the common era
+ * @returns {string} Years label like "1879 - 1955", "973 - 1024" or "1879"
  */
-export function computeYearsLabel(person) {
+export function computeYearsLabel(person, language = "en") {
   if (!person) return "";
   // Life event documents use snake_case, the persons registry camelCase — both
   // shapes reach this helper (story slides vs. person cards).
-  const birth = person.birth_date ?? person.birthDate;
-  const death = person.death_date ?? person.deathDate;
-  const birthYear = birth ? new Date(birth).getFullYear() : NaN;
-  const deathYear = death ? new Date(death).getFullYear() : NaN;
-  if (!Number.isNaN(birthYear) && !Number.isNaN(deathYear)) {
-    return `${birthYear} - ${deathYear}`;
+  const birth = parseHistoricalDate(person.birth_date ?? person.birthDate);
+  const death = parseHistoricalDate(person.death_date ?? person.deathDate);
+  const birthLabel = formatLifespanYear(birth, language);
+  const deathLabel = formatLifespanYear(death, language);
+  if (birthLabel && deathLabel) {
+    return `${birthLabel} - ${deathLabel}`;
   }
-  return Number.isNaN(birthYear) ? "" : `${birthYear}`;
+  return birthLabel ?? "";
 }
 
 /**
@@ -906,7 +997,8 @@ export function getRelevantPeople(event, egoNetwork) {
     return [];
   }
 
-  const eventYear = event?.date ? parseInt(event.date.substring(0, 4)) : null;
+  const parsedYear = extractYear(event?.date);
+  const eventYear = Number.isNaN(parsedYear) ? null : parsedYear;
   const connections = egoNetwork.connections;
 
   // PHASE 1: Use involved_people field if present
@@ -1226,16 +1318,50 @@ export function getMigrationPath(event) {
 
 /**
  * Create date formatters for a specific language.
+ *
+ * Dates are stored as UTC midnight, so the formatters read them in UTC too —
+ * otherwise every date would slip to the previous day west of Greenwich.
+ *
+ * The `beforeCommonEra` set names the era explicitly, which `dateStyle` cannot
+ * do; `formatSingleDate` reaches for it when the year is not in the common era.
+ *
  * @param {string} language - Language code like "en" or "de"
- * @returns {Object} Formatters for day, month, year
+ * @returns {Object} Formatters for day, month, year, plus a B.C. variant
  */
 export function createDateFormatters(language) {
   return {
-    day: new Intl.DateTimeFormat(language, { dateStyle: "long" }),
+    day: new Intl.DateTimeFormat(language, {
+      dateStyle: "long",
+      timeZone: "UTC",
+    }),
     month: new Intl.DateTimeFormat(language, {
       year: "numeric",
       month: "long",
+      timeZone: "UTC",
     }),
-    year: new Intl.DateTimeFormat(language, { year: "numeric" }),
+    year: new Intl.DateTimeFormat(language, {
+      year: "numeric",
+      timeZone: "UTC",
+    }),
+    beforeCommonEra: {
+      day: new Intl.DateTimeFormat(language, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        era: "short",
+        timeZone: "UTC",
+      }),
+      month: new Intl.DateTimeFormat(language, {
+        year: "numeric",
+        month: "long",
+        era: "short",
+        timeZone: "UTC",
+      }),
+      year: new Intl.DateTimeFormat(language, {
+        year: "numeric",
+        era: "short",
+        timeZone: "UTC",
+      }),
+    },
   };
 }

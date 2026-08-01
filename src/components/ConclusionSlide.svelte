@@ -10,10 +10,11 @@
   export let allSources = [];
   export let personStylesRegistry = null;
 
-  // Format lifespan for a person
-  function formatLifespan(person) {
+  // Format lifespan for a person. `language` is a parameter rather than a
+  // store read so the template's `{@const}` re-runs when it changes.
+  function formatLifespan(person, language) {
     if (!person) return "";
-    return computeYearsLabel(person);
+    return computeYearsLabel(person, language);
   }
 
   // Get initials from name for fallback
@@ -127,7 +128,7 @@
         <h3 class="related-headline">{$_("conclusion.related_persons")}</h3>
         <div class="related-persons-grid">
           {#each relatedPersons as { person } (person.id)}
-            {@const lifespan = formatLifespan(person)}
+            {@const lifespan = formatLifespan(person, $currentLanguage)}
             {@const relatedPersonStyle = getPersonStyle(person.id)}
             {@const roles = Array.isArray(person.primaryRoles)
               ? person.primaryRoles

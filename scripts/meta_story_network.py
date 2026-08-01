@@ -144,9 +144,13 @@ def _portrait_for(person: Dict[str, Any]) -> Optional[str]:
 
 
 def _birth_year(person: Dict[str, Any]) -> Optional[int]:
-    """Extract the birth year from a registry person's ``birthDate``."""
+    """Extract the birth year from a registry person's ``birthDate``.
+
+    The year is anchored to the whole leading component so a B.C. date such as
+    ``-000500-01-01`` yields -500 rather than the first four characters of it.
+    """
     date = person.get("birthDate") or ""
-    match = re.match(r"\s*(-?\d{1,4})", str(date))
+    match = re.match(r"\s*(-?\d{1,6})(?:-|$)", str(date))
     return int(match.group(1)) if match else None
 
 

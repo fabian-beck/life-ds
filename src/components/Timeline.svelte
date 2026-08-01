@@ -11,6 +11,7 @@
     mdiBook,
   } from "@mdi/js";
   import { _ } from "../stores/language";
+  import { extractYear } from "../utils/storyHelpers.js";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import { mdiIconMap } from "virtual:mdi-icon-map";
@@ -121,10 +122,10 @@
         // ("1938") while events may carry full dates ("1938-05-01"), and a raw
         // string comparison would push end-year events out of their chapter.
         let assignedChapter = null;
-        const eventYear = parseInt(event.date?.substring(0, 4), 10);
+        const eventYear = extractYear(event.date);
         for (const chapter of chapters) {
-          const startYear = parseInt(chapter.date_start?.substring(0, 4), 10);
-          const endYear = parseInt(chapter.date_end?.substring(0, 4), 10);
+          const startYear = extractYear(chapter.date_start);
+          const endYear = extractYear(chapter.date_end);
           if (
             Number.isFinite(eventYear) &&
             Number.isFinite(startYear) &&

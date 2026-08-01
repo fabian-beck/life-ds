@@ -3782,13 +3782,29 @@ def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
     return output_path
 
 
+def pad_year(date: Optional[str]) -> Optional[str]:
+    """Zero-pad a pre-1000 year so the date sorts and parses like every other.
+
+    A bare ``973-05-06`` is not an ISO 8601 date: JavaScript's date parser
+    rejects it, and a four-character slice of it reads ``973-``. The registry
+    therefore stores ``0973-05-06``.
+    """
+    if not isinstance(date, str):
+        return date
+    match = re.match(r"^(-?)(\d{1,4})(\b.*)$", date.strip())
+    if not match:
+        return date
+    sign, year, rest = match.groups()
+    return f"{sign}{year.zfill(4)}{rest}"
+
+
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
     """Update persons register."""
     person = payload.get("person", {})
 
     portrait = person.get("portrait")
-    birth_date = person.get("birth_date")
-    death_date = person.get("death_date")
+    birth_date = pad_year(person.get("birth_date"))
+    death_date = pad_year(person.get("death_date"))
 
     primary_roles = person.get("primary_roles", [])
     if isinstance(primary_roles, list):
