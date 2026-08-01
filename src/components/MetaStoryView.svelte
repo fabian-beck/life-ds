@@ -765,29 +765,23 @@
         />
       </div>
       <!-- The masthead is one object, not a stack of lines with a rule under
-           it: an accent bracket opens at the top left, the story's glyph sits
-           on its corner, and the ornament terminates the dateline at the far
-           right. Everything is anchored to the left edge the text is set
-           against, and the block closes diagonally — mark top left, ornament
-           bottom right — which is what makes it read as a masthead rather
-           than as decoration placed near one. -->
+           it: an accent bracket opens at the top left and the story's glyph
+           sits on its corner, so title, tagline and dateline are set against
+           something rather than followed by decoration. The bracket is the
+           whole apparatus — nothing terminates the dateline, because the
+           block is already closed and a second mark would only be a mark. -->
       <div class="masthead">
         {#if storyStyle?.separatorGlyphDataUrl}
           <span class="masthead-mark" aria-hidden="true"></span>
         {/if}
         <h1>{metaStoryData.meta_story.title}</h1>
         <p class="tagline">{metaStoryData.meta_story.tagline}</p>
-        <div class="masthead-foot">
-          <p class="date-range">
-            {$_("meta_story.date_range", {
-              start: metaStoryData.meta_story.date_range_start,
-              end: metaStoryData.meta_story.date_range_end,
-            })}
-          </p>
-          {#if storyStyle?.ornamentDataUrl}
-            <span class="masthead-ornament" aria-hidden="true"></span>
-          {/if}
-        </div>
+        <p class="date-range">
+          {$_("meta_story.date_range", {
+            start: metaStoryData.meta_story.date_range_start,
+            end: metaStoryData.meta_story.date_range_end,
+          })}
+        </p>
       </div>
       <MetaStoryBody
         blocks={openingBlocks}
@@ -1293,26 +1287,6 @@
     height: 1.25rem;
     background-image: var(--ms-glyph, none);
     background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-
-  /* Dateline left, ornament flush right on the same baseline: the block closes
-     diagonally opposite the corner mark, and the ornament finally sits where a
-     symmetric rule belongs — spanning a gap between two edges instead of
-     hanging under left-aligned text. */
-  .masthead-foot {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-  }
-
-  .masthead-ornament {
-    flex: 1 1 auto;
-    min-width: 0;
-    height: 1.35rem;
-    background-image: var(--ms-ornament, none);
-    background-position: right center;
     background-size: contain;
     background-repeat: no-repeat;
   }

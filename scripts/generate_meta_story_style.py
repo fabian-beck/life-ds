@@ -5,8 +5,8 @@ A meta story is read as an article rather than as a stack of slides, so its
 identity carries one thing a person's does not: the marks that punctuate the
 prose. Besides the color and type system it produces a separator glyph—set on
 the corner of the masthead's bracket, between two prose regions and before
-every subhead—and a wider ornamental rule that terminates the dateline and
-closes the last paragraph, the way a printed feature uses fleurons.
+every subhead—and a wider ornamental rule that closes the last paragraph, the
+way a printed feature uses fleurons.
 """
 
 from __future__ import annotations
@@ -132,14 +132,13 @@ def build_prompt(story_id: str, context: Dict[str, Any]) -> str:
         "years in the sticky header. Use a 32x32 viewBox.",
         "- Use maximum 2-3 simple geometric shapes for the separator glyph, "
         "non-directional and symmetrical where possible, and readable at 16px.",
-        "- ornament_svg is the wider ornamental rule. It appears twice, and in "
-        "both places it spans a gap between two edges: in the masthead it "
-        "terminates the dateline, flush against the right edge of the text "
-        "column, and after the last paragraph it closes the article, centered. "
-        "Use a '0 0 240 24' viewBox, and design it to read at about 240x24 px.",
-        "- The ornament must therefore be horizontally symmetric, and should "
-        "combine a hairline rule running to both edges with a small central "
-        "motif derived from the same idea as the glyph.",
+        "- ornament_svg is the wider ornamental rule: the article's end mark, "
+        "set centered under its last paragraph and nowhere else. Use a "
+        "'0 0 240 24' viewBox, and design it to read at about 240x24 px.",
+        "- Because it is centered, the ornament must be horizontally "
+        "symmetric, and should combine a hairline rule running out to both "
+        "edges with a small central motif derived from the same idea as the "
+        "glyph.",
         "- Both marks are drawn in the primary color only; any fill or stroke "
         "you give them is replaced by it.",
         "- Do not surround the SVG strings with backticks or additional JSON "

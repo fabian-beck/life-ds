@@ -199,17 +199,17 @@
       }
     },
     "m_style": {
-      "fingerprint": "f7aa86045772cdcd",
+      "fingerprint": "9d296662b73becac",
       "summary": {
         "constraints": [
-          "Colors must be #RRGGBB; background luminance must be under 0.18, while the primary remains a legible light text accent.",
-          "background_pattern_svg must be a seamless 160x160 abstract geometric tile using only #000000 and #FFFFFF—no gray values or opacity attributes.",
-          "separator_glyph_svg uses a 32x32 viewBox and at most \"2-3\" simple shapes; ornament_svg uses a \"0 0 240 24\" viewBox, horizontal symmetry, edge-reaching hairlines, and a related central motif.",
-          "The prompt requires heading_font and body_font to be selected from empty option lists, making those two requirements unsatisfiable as written."
+          "Returns strict JSON with exactly the requested style fields; the API request uses JSON-object response formatting and rejects empty, failed, or non-completed responses.",
+          "`primary`, `secondary`, and `background` must be `#RRGGBB`; background luminance must be under `0.18`, while primary remains a legible light text accent.",
+          "`background_pattern_svg` must be a seamless `160x160` abstract geometric tile using only `#000000` and `#FFFFFF`—no gray values or opacity attributes.",
+          "The separator uses a `32x32` viewBox and at most \"2-3\" simple shapes; the end ornament uses `0 0 240 24`, is horizontally symmetric, and both marks render in primary color only."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Generates a strict JSON visual-identity package for a dark-mode, long-form meta story: three colors, a tileable background pattern, a separator glyph, an ornamental rule, and heading/body font selections. The requested assets connect the shared story theme and date range to abstract geometry, then apply that visual language consistently across prose, the sticky header, the masthead, and the article ending. The API call requests JSON-object output and parses it directly into a dictionary after rejecting failed, incomplete, or empty model responses.",
-        "why_this_design": "The background pattern is deliberately limited to black and white with no opacity so downstream rendering can control faintness without accepting accidental gray or transparency values. The separator and ornament share a derived central motif, ensuring that small navigational punctuation and the full-width editorial rule read as one system."
+        "what_it_does": "Asks a model to create a dark-mode editorial identity for a thematic biography article: three colors, a seamless background texture, two related SVG punctuation marks, and heading/body font selections. The resulting JSON is parsed into a dictionary for downstream rendering of the long-form prose, timeline, network, and map sections.",
+        "why_this_design": "The background tile is deliberately limited to pure black and white with no opacity controls, even though it must appear faint behind text. This forces visual restraint through sparse geometry and stroke-width variation rather than unreliable translucent gray treatments, while preserving a sharply constrained printable pattern language."
       }
     },
     "m_translate": {

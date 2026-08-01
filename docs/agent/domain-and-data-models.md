@@ -660,12 +660,12 @@ and fonts the style carries the marks that **punctuate its prose**:
 - `separator_glyph_svg` (32×32) is the text separator: on the corner of the
   masthead bracket, between the cold open and the description, before every
   subhead, and in place of the interpunct in the sticky header.
-- `ornament_svg` (240×24, horizontally symmetric) is the ornamental rule. It
-  spans a gap between two edges in both of its places: it terminates the
-  dateline, flush against the right edge of the text column, and closes the
-  last paragraph, centered. It is deliberately **not** placed under the
-  headline — a symmetric mark left-aligned under left-aligned text reads as a
-  centered ornament that missed its center.
+- `ornament_svg` (240×24, horizontally symmetric) is the article's end mark:
+  centered under the last paragraph of the conclusion, and nowhere else. It is
+  deliberately **not** placed in the masthead — a symmetric mark left-aligned
+  under left-aligned text reads as a centered ornament that missed its center,
+  and a second mark closing the title block only competes with the bracket
+  that already closes it.
 - `background_pattern_svg` (160×160, tileable, black and white only, like the
   person patterns) is printed faintly behind the whole page, tinted by
   `primary` through multiply/overlay and faded toward the bottom of the
@@ -678,10 +678,9 @@ controls how loud they are.
 The masthead is composed rather than decorated: an accent bracket (a hairline
 along the top fading out to the right, a spine down the left fading out below
 the dateline) encloses the title block over a panel of the accent at a few
-percent, the glyph sits on the bracket's corner, and the ornament terminates
-the dateline at the far right — so the block closes diagonally opposite the
-mark that opens it. The arms are open, never a closed frame: a box would read
-as a card lifted off the page. That composition lives in
+percent, and the glyph sits on the bracket's corner. The arms are open, never a
+closed frame: a box would read as a card lifted off the page. Nothing else is
+added — the bracket is the whole apparatus. That composition lives in
 `MetaStoryView.svelte`'s `.masthead` rules; `MetaStoryOrnament.svelte` only
 carries the marks that punctuate prose further down.
 

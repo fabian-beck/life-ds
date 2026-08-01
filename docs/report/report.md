@@ -397,10 +397,9 @@ A theme is presented in a visual register of its own as well ((own-look)), and
 because it is read as an article rather than as a sequence of slides, its
 identity carries something a biography's does not: two generated marks that
 punctuate prose. A glyph stands between two prose regions and before each
-subhead; a wider ornamental rule terminates the dateline and closes the last
-paragraph. In the masthead the two are composed rather than appended: an accent
-bracket encloses the title block, the glyph sits on its corner and the ornament
-ends the dateline at the opposite edge, so that the opening of an article is
+subhead; a wider ornamental rule closes the last paragraph. In the masthead the
+glyph is composed rather than appended: an accent bracket encloses the title
+block and the mark sits on its corner, so that the opening of an article is
 itself an object rather than a headline with a rule beneath it. The typographic
 apparatus of a printed feature is thus derived from the theme.
 
