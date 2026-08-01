@@ -646,11 +646,11 @@ class MarkdownCompilerTests(unittest.TestCase):
     def test_a_citation_renders_with_its_provenance(self) -> None:
         facts = _facts()
         document = _compile(
-            self.HEAD + "\n## S\n\nThere are {{ app.locales }}.\n", facts
+            self.HEAD + "\n## S\n\nThere are {{ app.languages }}.\n", facts
         )
-        self.assertIn("app.locales", document.citations)
-        self.assertIn(facts["app.locales"].display, document.html)
-        self.assertIn(facts["app.locales"].source.split(" ")[0], document.html)
+        self.assertIn("app.languages", document.citations)
+        self.assertIn(facts["app.languages"].display, document.html)
+        self.assertIn(facts["app.languages"].source.split(" ")[0], document.html)
 
     def test_an_unknown_citation_fails_the_build(self) -> None:
         """A hole in a sentence is worse than a broken build."""
@@ -743,10 +743,10 @@ class MarkdownCompilerTests(unittest.TestCase):
     def test_a_note_carries_inline_markup_and_a_citation(self) -> None:
         facts = _facts()
         document = _compile(
-            self.HEAD + "\n## S\n\nText.^[In `code`, and {{ app.locales }}.]\n", facts
+            self.HEAD + "\n## S\n\nText.^[In `code`, and {{ app.languages }}.]\n", facts
         )
         self.assertIn("<code>code</code>", document.html)
-        self.assertIn(facts["app.locales"].display, document.notes[0].body_html)
+        self.assertIn(facts["app.languages"].display, document.notes[0].body_html)
 
     def test_a_note_body_spanning_several_lines_becomes_one_line(self) -> None:
         document = _compile(
@@ -856,10 +856,10 @@ class PrincipleTests(unittest.TestCase):
         facts = _facts()
         document = _compile(
             self.HEAD + "\n## S\n\n::: principles\n@one Localized throughout\n"
-            "Every document exists in {{ app.locales }} languages.\n:::\n",
+            "Every document exists in {{ app.languages }}.\n:::\n",
             facts,
         )
-        self.assertIn(facts["app.locales"].display, document.principles[0].body_html)
+        self.assertIn(facts["app.languages"].display, document.principles[0].body_html)
 
     def test_a_principle_nothing_references_is_reported(self) -> None:
         document = _compile(self.HEAD + "\n## S\n\nText ((first)).\n\n" + self.BLOCK)
@@ -1536,7 +1536,7 @@ class FactTests(unittest.TestCase):
         cls.facts = facts_module.collect(scan_codebase())
 
     def test_every_fact_has_a_display_value_and_a_source(self) -> None:
-        self.assertGreater(len(self.facts), 10)
+        self.assertTrue(self.facts)
         for key, fact in self.facts.items():
             self.assertEqual(key, fact.key)
             self.assertTrue(fact.display, f"{key} has no display value")
@@ -1544,16 +1544,23 @@ class FactTests(unittest.TestCase):
 
     def test_repository_measurements_are_not_silently_zero(self) -> None:
         """A directory listing that fails quietly would read as a real zero."""
-        for key in ("app.locales", "pipeline.prompt_builders", "pipeline.schemas"):
+        for key in ("app.languages", "pipeline.models"):
             self.assertGreater(self.facts[key].value or 0, 0, f"{key} measured nothing")
 
-    def test_pipeline_measurements_agree_with_the_spec(self) -> None:
-        self.assertEqual(self.facts["pipeline.steps"].value, len(spec.STEPS))
-        self.assertEqual(
-            (self.facts["pipeline.person_steps"].value or 0)
-            + (self.facts["pipeline.meta_steps"].value or 0),
-            len(spec.STEPS),
-        )
+    def test_no_fact_is_an_inventory_count(self) -> None:
+        """Facts name things; how many there are of them is not an argument.
+
+        The report used to cite its own tallies—steps, layers, edges, schemas,
+        artifacts—and a reader carried each number without ever being asked to
+        use it. The figures show that shape better than a sentence can, so a
+        citation that renders as a bare number is the thing this check exists
+        to catch on the way back in.
+        """
+        for key, fact in self.facts.items():
+            self.assertFalse(
+                fact.display.isdigit(),
+                f"{key} cites the count {fact.display}; cite what it is instead",
+            )
 
     def test_model_names_are_identifiers_not_expressions(self) -> None:
         """The prose cites this inline, so it must not carry env-var noise."""

@@ -6,7 +6,7 @@ authors:
   Leah Mühlöder | University of Bamberg | https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/ | 0009-0000-3510-1686
   Till Nagel | Mannheim University of Applied Sciences | https://services.informatik.hs-mannheim.de/~nagel/ | 0000-0001-5400-091X
 description:
-  Technical report on the Life Data Stories system—its artifact schemas, its two
+  Technical report on the Life Data Stories system—its data model, its two
   generation pipelines and its interface.
 abstract:
   Life Data Stories transforms encyclopedic biographical prose into structured
@@ -99,18 +99,18 @@ life is reachable from each theme it joins.
 
 @own-look Every story looks like itself
 Palette, typography and pattern are generated per story—for a life and for a
-theme alike—and carried in the data, so visual identity travels with the
-artifact.
+theme alike—and carried in the data, so visual identity travels with the story
+rather than with the application.
 :::
 
 ## Architecture
 
-The two halves of the system communicate exclusively through the artifacts one
+The two halves of the system communicate exclusively through the data one
 writes and the other reads, and each is decomposed along a different axis.
 Generation is decomposed into *steps*: individually addressable units of work,
-{{ pipeline.steps }} in total, of which {{ pipeline.ai_steps }} issue a prompt
-to a model and {{ pipeline.code_steps }} consist of deterministic code or plain
-HTTP retrieval. Presentation is decomposed into the units through which a reader
+some of which issue a prompt to a model while the rest are deterministic code or
+plain HTTP retrieval. Presentation is decomposed into the units through which a
+reader
 advances: [[slides|slides in a person's story]],
 [[sections|sections in a meta story]]. The two axes answer different questions.
 A step is the granularity at which work is cached, re-run, priced and tested; a
@@ -136,53 +136,47 @@ that everything downstream of an inference is reproducible and assertable.
 
 ## Data model
 
-Four artifact families carry everything the application reads, distributed
-over {{ pipeline.artifacts }} [[artifacts|declared artifacts]]. Each is a
-denormalized document rather than a row in a normalized schema, because the
-document is the unit at which generated material is inspected, corrected and
-regenerated.^[Normalization would pay for itself if the corpus were queried
-across documents. It is not: the application reads the documents of one story at
-a time and resolves the references between them by identifier, so a normalized
-store would serve a query pattern nobody issues.]
-
-Underneath those families is a smaller and more durable vocabulary. The system
-handles {{ pipeline.concepts }} concepts, and every artifact, every step and
-every component of the interface can be described as producing or showing one
-of them. Each concept is written here with the glyph the application already
-draws for it: the icon that opens [[graph|the network view]] of a story is the
-icon on the node that writes [[ego-network|the social network]], because they
-are one subject at different removes.
+One thing is read and everything else is derived from it. What is read is
+[[sources|encyclopedic source material]]: continuous prose about a life,
+together with the images that accompany it and the historic place names it
+uses. What is derived is everything below—the concepts this report speaks in,
+each written with the glyph that stands for it in every figure that follows and
+in the application itself.
 
 ::: conceptlegend
 :::
 
-The **[[registry|person registry]]** holds the identity and portrait of each
-subject, and stands in one-to-one correspondence with the material that makes
-up everything else about them: a story without a registry entry is invisible to
-the interface, and an entry with nothing behind it is a broken reference.
+A [[registry|profile]] is what the corpus is indexed by, and the correspondence
+is exact in both directions: a story no profile names is invisible, and a
+profile with no story behind it is a broken reference.
 
-The **[[events|life events]]** document is the narrative spine of a biography
-((one-record)): dated events with locations, involved persons, sources, images
-and a typed icon, optionally grouped into chapters that name the phases of a
-life, together with a concluding statement. It is also the reference document
-from which all localized copies derive.
+The [[events|life events]] are the spine of a biography ((one-record)). An
+event is one record and carries everything about the episode it names—its date,
+its place, the persons it involved, the text that describes it, the pictures
+that illustrate it and the sources it was researched from—which is why the
+narrative, the chronology, the geography and the imagery of a story cannot
+contradict one another. They are four readings of one record rather than four
+accounts of one life.^[Events are grouped into chapters that name the phases of
+a life, and the grouping is a property of the record too: a chapter is a span of
+the same events the other encodings read, not a second structure laid over
+them.]
 
-The **[[ego-network|ego network]]** document records the subject's
-relationships as typed and weighted edges, each with a period, a strength and a
-supporting description. It is generated independently of the narrative, so a
-biography may exist before its network does.
+The [[ego-network|social network]] is derived beside the narrative rather than
+from it. Relationships are researched on their own pass and recorded typed,
+weighted and dated, so a life may be told before its network exists, and either
+may be redone without disturbing the other.
 
-The **[[meta-story|meta story]]** document is a second-order artifact
-((second-order)). It describes a theme across several biographies and is the
-only family whose inputs are other artifacts of this system rather than an
-external source, which makes the coupling between the two pipelines a coupling
-of data rather than of code.
+A [[meta-story|theme]] reverses the direction of the whole system
+((second-order)): its input is this system's own output. Finished lives are
+re-read, their events judged against the theme and their networks merged into
+one graph, which is the only place where what was generated becomes what is
+consumed—and the coupling between the two pipelines is that data alone, never
+shared code.
 
-::: artifacts lane=person
-:::
-
-::: artifacts lane=meta
-:::
+Two of the derived concepts belong to no single story. A visual identity is
+generated per subject and carried with it, and every text exists in each
+supported language; both are treated where they take effect, in the interface
+and in localization.
 
 ## Generation
 
@@ -190,12 +184,11 @@ Both pipelines are directed acyclic graphs rather than sequences, and the
 figures below draw them as such.^[The `main()` that orchestrates each script is
 deliberately not drawn as a step. It fixes an execution order without creating a
 data dependency, and drawing it made every fork read as a chain.] A step's
-vertical position is the length of
-the longest chain of data dependencies reaching it, so steps drawn side by side
-are genuinely independent and may execute in either order. The two graphs
-together declare {{ pipeline.edges }} dependency edges, each labeled with the
-data that travels along it, and {{ pipeline.groups }} named concerns that the
-layout aligns into vertical strands. The edges are the direct ones only: a
+vertical position is the length of the longest chain of data dependencies
+reaching it, so steps drawn side by side are genuinely independent and may
+execute in either order. Every edge is labeled with the data that travels along
+it, and the concerns that span several layers are aligned into vertical strands
+under a name. The edges are the direct ones only: a
 dependency that a longer chain already implies is omitted rather than drawn
 beside it.^[Image matching reads the event skeletons, but it is reached from
 them through the search planning and the search itself, and the second line
@@ -204,14 +197,14 @@ own entry.]
 
 Each step in those figures is an address rather than a label. Opening one gives
 the record behind it: the function and line that implement it, the model and
-reasoning effort it resolves, the output schema it fills, the artifacts it
-reads and writes, the steps it needs and feeds, and the prompts it sends. On
-paper the same records are laid out for every step as an appendix.
+reasoning effort it resolves, the output schema it fills, what it reads and
+writes, the steps it needs and feeds, and the prompts it sends. On paper the
+same records are laid out for every step as an appendix.
 
 The pipelines instantiate a common pattern ((bottom-up)): material is first
 derived bottom-up by steps that each observe only their own slice of the
 subject, and is then revised top-down by a step that observes the assembled
-artifact. The pattern exists because locally optimal generation is globally
+story. The pattern exists because locally optimal generation is globally
 redundant. A phase that sees only the social graph will describe the social
 graph, and so will the phase that later writes the surrounding prose, unless
 some step is given the whole document and the explicit task of distinguishing
@@ -223,10 +216,9 @@ the asymmetry can be read off them directly.
 
 ### Personal story pipeline
 
-[[person-pipeline|One biography, end to end]]: {{ pipeline.person_steps }} steps
-distributed over {{ pipeline.person_layers }} dependency layers, beginning at
-[[sources|an encyclopedia article]] and terminating in a translated,
-illustrated and individually styled story.
+[[person-pipeline|One biography, end to end]]: from
+[[sources|an encyclopedia article]] to a translated, illustrated and
+individually styled story.
 
 The salient structural feature is the fork that follows source acquisition.
 Once the material is cached and narrowed, the narrative branch, the imagery
@@ -252,11 +244,9 @@ and because a failed or malformed response is then confined to a single event.
 
 ### Meta story pipeline
 
-[[meta-pipeline|A theme across many lives]]: {{ pipeline.meta_steps }} steps
-distributed over {{ pipeline.meta_layers }} layers. The pipeline consumes the
-output of the personal pipeline rather than external sources, which is why its
-figure begins with unattributed artifact nodes that no step of its own graph
-produces.
+[[meta-pipeline|A theme across many lives]]. The pipeline consumes the output
+of the personal pipeline rather than external sources, which is why its figure
+begins with unattributed nodes that no step of its own graph produces.
 
 Where the personal pipeline forks once, this one maintains two long independent
 branches—the social network and the geographic map—each of which runs to
@@ -273,10 +263,9 @@ supplies the context surrounding what the components encode.
 
 ### Models, prompts and structured output
 
-The generation side uses {{ pipeline.models }} across
-{{ pipeline.call_sites }} [[inference|call sites]]. The model is resolved per
-call site rather than fixed globally, so that a phase whose cost is dominated by
-volume and a phase whose quality determines the whole artifact need not share
+The generation side uses {{ pipeline.models }}. The model is resolved per
+[[inference|call site]] rather than fixed globally, so that a phase whose cost is dominated by
+volume and a phase whose quality determines the whole story need not share
 one setting. The mechanism is used sparingly. Most call sites take the default
 text model; the portrait step takes the image model; and composition—the one
 step that reads a whole assembled story—takes its own model through a separate
@@ -291,13 +280,12 @@ has already been selected is a retrieval and writing problem and deliberately
 receives none.
 
 Prompt text is constructed in Python functions rather than stored as templates
-or configuration—{{ pipeline.prompt_builders }} such functions across the
-scripts—since prompts require conditionals and injected data far more often
-than they require editing outside a code review. Structured output is declared
-as Pydantic models, {{ pipeline.schemas }} classes in total, which converts
-open-ended text generation into slot filling: the required shape of a response
+or configuration, since prompts require conditionals and injected data far more
+often than they require editing outside a code review. Structured output is
+declared as Pydantic models, which converts open-ended text generation into slot
+filling: the required shape of a response
 is a type rather than a paragraph of instructions, and validation occurs before
-any value reaches an artifact. Model output is then applied deterministically.
+any value is kept. Model output is then applied deterministically.
 Identifiers are matched against existing entities, unknown references are
 discarded with a warning, and coordinates, URLs and graph structure are copied
 rather than accepted, so that a defective response stays confined to the field
@@ -312,7 +300,7 @@ by field from the Pydantic models the API is asked to populate.
 ## Interface
 
 The reading side is a mobile-first Svelte and Vite application that loads the
-generated artifacts and renders them directly, with no server of its own. It
+generated data and renders it directly, with no server of its own. It
 presents the same three encodings of a life—time, space and relation—in two
 reading modes, corresponding to the two story types. A person's story is
 [[slides|a bounded sequence advanced one unit at a time]], which suits material
@@ -358,7 +346,7 @@ depends on.] locates the events whose places could be resolved, with the camera
 following the reader rather than the reader panning the map; the basemap is
 deliberately label-free, since the story supplies the toponyms. The ego network
 is presented on demand as [[graph|a force-directed graph]] of the subject's
-documented relationships, typed and weighted as the artifact records them.
+documented relationships, typed and weighted exactly as they were recorded.
 Images open in a lightbox that pages through the story's illustrations as a
 single gallery.
 
@@ -413,7 +401,7 @@ in which it participates.
 
 ## Localization
 
-Every generated document exists in {{ app.locales }} languages
+Every generated document exists in each supported language
 ({{ app.languages }}). Translation is a generation step rather than an
 interface concern: the English document is produced first, a glossary pass then
 fixes the rendering of names and recurring terminology once,^[One call per

@@ -145,14 +145,8 @@ COMPONENTS: Dict[str, ComponentSpec] = {
             tables=1,
         ),
         ComponentSpec(
-            "artifacts",
-            "The artifacts one pipeline reads and writes, by concept.",
-            required=("lane",),
-            tables=1,
-        ),
-        ComponentSpec(
             "conceptlegend",
-            "The concepts the system is built from, and the glyph for each.",
+            "What the system reads and what it derives, with the glyph for each.",
         ),
         ComponentSpec(
             "modeltable",

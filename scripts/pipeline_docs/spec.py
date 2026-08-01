@@ -301,7 +301,7 @@ ARTIFACTS: List[Artifact] = [
         "data/persons.json",
         "registry",
         "Landing-page index of every person.",
-        concept="subjects",
+        concept="profile",
     ),
     Artifact(
         "portrait",

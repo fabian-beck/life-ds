@@ -423,8 +423,8 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
 | Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which artifacts they read and write, and which steps form one concern (`GROUPS`). Each step points at a real function. |
-| Vocabulary | `concepts.py` | The concepts the report speaks in—source material, subjects, life events, the social network, geography and the rest—each with the interface's own Material Design icon, vendored as path data. |
-| Measurements | `facts.py` | Repository-scale numbers the prose cites—corpus size, component counts, test counts—each with the place it was measured. |
+| Vocabulary | `concepts.py` | The concepts the report speaks in—source material, profile, life events, the social network, geography and the rest—each marked as read from outside or derived, and each with the interface's own Material Design icon, vendored as path data. |
+| Measurements | `facts.py` | The few values the prose cites—the models the pipelines call, the languages the corpus is published in—each with the place it was measured. Counts are deliberately not among them. |
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `[@key]` reference citations, `::: component` mount points, callouts. |
 | Bibliography | `bibliography.py` | Parses `docs/report/references.bib` and prints it in IEEE form with every author named. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
@@ -457,8 +457,16 @@ or the report source.
 
 ### Authoring the Report
 
-`docs/report/report.md` holds the prose and nothing else. **No number, model
-name or file count belongs in it**—those are cited, so they cannot go stale.
+`docs/report/report.md` holds the prose and nothing else. **No measured value
+belongs in it**—those are cited, so they cannot go stale.
+
+Nor does an inventory count. How many steps, layers, edges, schemas or concepts
+there happen to be is not an argument the report makes, and a reader carries
+such a number without ever being asked to use it. The figures already show the
+shape those counts described. `facts.py` therefore measures only what *names*
+something—the models the pipelines call, the languages the corpus is published
+in—and a test fails the build for a fact whose rendered value is a bare
+number.
 
 | Syntax | Meaning |
 | --- | --- |
@@ -533,8 +541,9 @@ states is left out—the pipeline figure does not re-explain the layer semantics
 of section 4. Captions are written as sentences; the terminating full stop is added
 by `caption()` in `assets/app.js`, so call sites need not repeat it.
 
-Adding a new citable number means one `Fact` in `facts.py`, measured from the
-repository rather than typed in.
+Adding a new citable value means one `Fact` in `facts.py`, measured from the
+repository rather than typed in—and it has to name something rather than count
+it.
 
 ### Screenshots of the Application
 
@@ -592,13 +601,20 @@ generated data path—only the quoted prompts and the docstrings lifted out of t
 generation scripts do, because those are the source as it stands.
 
 `pipeline_docs/concepts.py` holds the vocabulary: an id, a conceptual name, one
-sentence, where the application shows it, and a Material Design icon named
-exactly as `@mdi/js` exports it. Every `spec.ARTIFACTS` entry declares the
-concept it carries, and so may a `teaser.PARTS` part; both are then drawn with
-that glyph. The icons are the application's own—`mdi-account-multiple-outline`
-is the network button above a story and the mark on the node that writes the
-graph—which is what lets a reader carry one vocabulary between the report, the
-figures and the product.
+sentence, a `role`, and a Material Design icon named exactly as `@mdi/js`
+exports it. The role is the distinction the data model section is built
+around—source material is read from outside, everything else is derived—and the
+legend prints the two groups under **Input** and **Output** headings. Every
+`spec.ARTIFACTS` entry declares the concept it carries, and so may a
+`teaser.PARTS` part; both are then drawn with that glyph. The icons are the
+application's own—`mdi-account-multiple-outline` is the network button above a
+story and the mark on the node that writes the graph—which is what lets a reader
+carry one vocabulary between the report, the figures and the product.
+
+A concept also records *where* the application draws the same glyph. That note
+stays in the source: it justifies the icon to whoever maintains the list, and
+the report explains the interface in its own section rather than in a legend, so
+it never reaches the payload.
 
 Icon path data is vendored into `ICON_PATHS` rather than read from
 `node_modules`, so the report builds from a bare checkout. When the package

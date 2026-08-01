@@ -20,9 +20,12 @@ the page scales the whole scene to whatever width it is given, which is why the
 figure needs no breakpoints and why a part can be zoomed to on its own—a
 focus region is just a sub-rectangle of the same coordinate system.
 
-Numbers inside the figure are never written here. A part's `metric` is a
-template over `facts.py` keys (`"{pipeline.person_steps} steps"`), resolved when
-the page draws, so the teaser cannot claim a count the report would contradict.
+A part may print a `metric`: a template over `facts.py` keys, resolved when the
+page draws, so the teaser cannot state something the report would contradict.
+None of the parts use it at present—the drawing shows the shape of each stage
+and leaves the tallying alone—but the mechanism stays, because a figure that
+quoted a value of its own would be the one place on the page a number could go
+stale.
 """
 
 from __future__ import annotations
@@ -36,7 +39,7 @@ from . import concepts
 # The scene is a fixed coordinate system, not a pixel size: the page scales it
 # to the width available and zooms into sub-rectangles of it on small screens.
 SCENE_W = 1076
-SCENE_H = 552
+SCENE_H = 524
 
 METRIC_KEY = re.compile(r"\{([a-zA-Z0-9_.]+)\}")
 
@@ -162,10 +165,10 @@ class Bus:
 # ---------------------------------------------------------------------------
 
 STAGES: Tuple[Stage, ...] = (
-    Stage("Sources and inference", 8, 168),
-    Stage("Generation—offline", 220, 392),
-    Stage("Artifacts—generated data", 656, 180),
-    Stage("Interface—client-side", 880, 188),
+    Stage("Sources", 8, 196),
+    Stage("Generation", 220, 392),
+    Stage("Data", 656, 180),
+    Stage("Interface", 880, 188),
 )
 
 PARTS: Tuple[Part, ...] = (
@@ -175,7 +178,7 @@ PARTS: Tuple[Part, ...] = (
         "Article prose, images and place names are fetched from Wikipedia, "
         "Deutsche Biographie, Commons and Nominatim, and cached before any step "
         "reads them.",
-        (8, 40, 168, 150),
+        (8, 40, 196, 150),
         decor="sources",
         lines=("Article prose", "Images", "Place names"),
         concept="sources",
@@ -186,9 +189,8 @@ PARTS: Tuple[Part, ...] = (
         "The interpretative decisions—which episodes constitute a life, which "
         "modern place a toponym denotes—are model calls, each returning a "
         "declared schema rather than free text.",
-        (8, 214, 168, 150),
+        (8, 214, 196, 150),
         decor="inference",
-        metric="{pipeline.call_sites} call sites · {pipeline.schemas} schemas",
     ),
     Part(
         "person-pipeline",
@@ -196,22 +198,18 @@ PARTS: Tuple[Part, ...] = (
         "One biography end to end. After sourcing it forks into a narrative, an "
         "imagery, a network and an identity branch, reconverging at review and "
         "translation.",
-        (220, 40, 392, 124),
+        (220, 40, 392, 104),
         decor="steps",
         lane="person",
-        metric="{pipeline.person_steps} steps · {pipeline.person_layers} layers",
-        lines=("narrative · imagery · network · identity",),
     ),
     Part(
         "meta-pipeline",
         "Meta story pipeline",
         "A theme across several finished biographies. A network branch and a map "
         "branch run independently and meet in the composition step.",
-        (220, 180, 392, 124),
+        (220, 160, 392, 86),
         decor="steps",
         lane="meta",
-        metric="{pipeline.meta_steps} steps · {pipeline.meta_layers} layers",
-        lines=("network branch · map branch · composition",),
     ),
     Part(
         "kinds",
@@ -219,41 +217,38 @@ PARTS: Tuple[Part, ...] = (
         "An inference call, deterministic code, a retrieval from an external "
         "service or an image generation—the classification partitions both "
         "pipelines by cost and by failure mode.",
-        (220, 320, 392, 44),
+        (220, 274, 392, 44),
         decor="kinds",
         frame="none",
     ),
     Part(
         "artifacts",
-        "Generated artifacts",
-        "Denormalized documents, one per subject and one per theme. The two "
-        "halves of the system communicate through these and through nothing "
-        "else: no database, no server.",
-        (656, 40, 180, 324),
+        "Generated data",
+        "One record per subject and one per theme, written once and read as it "
+        "stands. The two halves of the system communicate through this and "
+        "through nothing else: no database, no server.",
+        (656, 40, 180, 306),
         decor="frame",
         frame="soft",
-        metric="{pipeline.artifacts} artifacts · {pipeline.concepts} concepts",
     ),
     Part(
         "registry",
-        "Subjects",
-        "The identity, lifespan and portrait of each person the corpus holds, "
-        "in one-to-one correspondence with the stories written about them.",
+        "Profile",
+        "Who a story is about: the name, lifespan, roles and portrait of each "
+        "person the corpus holds, one for every story written.",
         (668, 88, 156, 54),
         decor="concept",
         parent="artifacts",
-        lines=("identity, portrait",),
-        concept="subjects",
+        concept="profile",
     ),
     Part(
         "events",
         "Life events",
         "The narrative spine: dated events with places, persons, sources, images "
         "and a typed icon, grouped into the chapters of a life.",
-        (668, 152, 156, 70),
+        (668, 152, 156, 54),
         decor="concept",
         parent="artifacts",
-        lines=("dated events", "chapters, sources"),
         concept="events",
     ),
     Part(
@@ -261,10 +256,9 @@ PARTS: Tuple[Part, ...] = (
         "Social network",
         "The subject's relationships as typed, weighted and dated edges, "
         "generated independently of the narrative.",
-        (668, 232, 156, 54),
+        (668, 216, 156, 54),
         decor="concept",
         parent="artifacts",
-        lines=("typed, weighted edges",),
         concept="network",
     ),
     Part(
@@ -272,10 +266,9 @@ PARTS: Tuple[Part, ...] = (
         "Theme",
         "A second-order artifact: an idea traced across several biographies, and "
         "the only family whose inputs are other artifacts of this system.",
-        (668, 296, 156, 54),
+        (668, 280, 156, 54),
         decor="concept",
         parent="artifacts",
-        lines=("a theme across lives",),
         concept="theme",
     ),
     Part(
@@ -284,27 +277,24 @@ PARTS: Tuple[Part, ...] = (
         "Full-screen, scroll-snapped slides—overview, chapter, event, "
         "conclusion—advanced one unit at a time, every position a citable "
         "address.",
-        (880, 40, 188, 168),
+        (880, 40, 188, 150),
         decor="slides",
-        lines=("overview, chapters, events, conclusion",),
     ),
     Part(
         "sections",
         "Meta story",
         "A continuous document advanced by scrolling, whose visual sections pin "
         "a component while narration cards scroll over it.",
-        (880, 222, 188, 142),
+        (880, 206, 188, 128),
         decor="sections",
-        lines=("component pinned, narration scrolls",),
     ),
     Part(
         "prose",
         "Narrative text",
         "The event's own description, and in a meta story the article prose that "
         "supplies the context around what the components encode.",
-        (8, 396, 256, 140),
+        (8, 396, 256, 116),
         decor="prose",
-        lines=("the event's own description",),
         concept="narrative",
     ),
     Part(
@@ -312,9 +302,8 @@ PARTS: Tuple[Part, ...] = (
         "Timeline",
         "Every event at its position in the life, banded by chapter. In a "
         "person's story it doubles as the navigation control.",
-        (276, 396, 256, 140),
+        (276, 396, 256, 116),
         decor="timeline",
-        lines=("chapters banded, events placed",),
         concept="events",
     ),
     Part(
@@ -323,9 +312,8 @@ PARTS: Tuple[Part, ...] = (
         "The events whose places resolved to coordinates, on a label-free "
         "basemap whose camera follows the reader rather than the reader panning "
         "it.",
-        (544, 396, 256, 140),
+        (544, 396, 256, 116),
         decor="map",
-        lines=("places resolved to coordinates",),
         concept="places",
     ),
     Part(
@@ -333,9 +321,8 @@ PARTS: Tuple[Part, ...] = (
         "Network graph",
         "The documented relationships as a force-directed graph, typed and "
         "weighted exactly as the artifact records them.",
-        (812, 396, 256, 140),
+        (812, 396, 256, 116),
         decor="graph",
-        lines=("typed, weighted relationships",),
         concept="network",
     ),
 )

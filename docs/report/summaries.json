@@ -129,17 +129,17 @@
       }
     },
     "m_p7a": {
-      "fingerprint": "cf5f622d928bf249",
+      "fingerprint": "49dcbd635ea4aea5",
       "summary": {
         "constraints": [
-          "Per-event ratings are expected on a \"0–3\" scale; rating-0 events are removed before clustering, while missing ratings default to 1.0.",
-          "Clusters merge only when their maximum cross-pair haversine distance is at or below MERGE_DISTANCE_KM.",
-          "Centroids are weighted by event ratings; coordinates, bounding-box values, and scores are rounded before output.",
-          "Selection is capped at MAX_MAP_CLUSTERS, topped up to MIN_MAP_CLUSTERS when necessary, and assigned stable unique keys derived from cluster labels."
+          "Events with weight `0` are removed before clustering; missing ratings use `DEFAULT_EVENT_WEIGHT`.",
+          "Cluster merging requires maximum cross-pair haversine distance `<= MERGE_DISTANCE_KM`.",
+          "Centroids are weighted by event ratings; scores, coordinates, bounds, and per-event weights are rounded for stored output.",
+          "Selection retains clusters meeting `MIN_CLUSTER_SCORE`, tops up to `MIN_MAP_CLUSTERS`, caps at `MAX_MAP_CLUSTERS`, then orders by `mean_year` and label."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Filters out located events rated 0, then geographically agglomerates the remaining events using their coordinate distances. It builds candidate map stops with rating-weighted scores and centroids, geographic bounding boxes, date ranges, labels, and event-level provenance; it then retains a bounded set of high-ranking stops and orders them chronologically for map narration.",
-        "why_this_design": "Complete-linkage merging requires every cross-cluster event pair to remain within the distance threshold, preventing a chain of nearby events from producing an implausibly sprawling map stop. Selection ranks score-qualified clusters with a landmark bonus, but tops up sparse results to preserve a usable map sequence before chronology replaces score order."
+        "what_it_does": "Filters out located events rated 0, then geographically groups the remaining events into candidate map stops using complete-linkage clustering on haversine distance. It calculates each stop's rating-weighted score and centroid, geographic bounds, date range, label, and chronologically ordered event list; it then selects and chronologically orders the strongest stops for `geo_map.clusters` and gives each a stable unique key.",
+        "why_this_design": "Complete linkage merges clusters only when their farthest cross-pair remains within the distance threshold, preventing a chain of nearby events from producing one geographically sprawling stop. Ranking occurs before chronological ordering so map coverage favors high-rated and landmark-containing clusters, while the final sequence still follows the story through time."
       }
     },
     "m_p7b": {
@@ -381,17 +381,18 @@
       }
     },
     "p_register": {
-      "fingerprint": "ff91789acf54e1c9",
+      "fingerprint": "e1c21c795f1c9fba",
       "summary": {
         "constraints": [
-          "Primary roles are retained only when supplied as a list, and are capped at the first \"3\" entries.",
-          "`created` is preserved for an existing person; `lastUpdated` is refreshed on every write.",
-          "Missing names fall back to the ID with underscores replaced by spaces and title-cased.",
-          "Entries without a portrait omit the `portrait` key rather than storing `null`; registry entries are sorted by `name`."
+          "Birth and death years are normalized through `pad_year` before being written as `birthDate` and `deathDate`.",
+          "`primary_roles` is written only when it is a list and is limited to the first \"3\" values.",
+          "`portrait` is removed from the stored entry when its value is `None`; otherwise its value is explicitly propagated.",
+          "Every record receives ISO 8601 timezone-aware `lastUpdated`; new records also receive `created`, while updates retain the original `created` value.",
+          "The `people` array is sorted by `name` and serialized as UTF-8, indented JSON with a trailing newline."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds or updates one entry in the shared `people` registry from the generated person payload. The entry supplies landing-page metadata—ID, display name, summary, optional tagline, dates, up to three primary roles, and the portrait reference selected upstream—then writes the registry as sorted, UTF-8 JSON. On an existing record, it merges newly computed fields while preserving unrelated registry fields and the original creation timestamp.",
-        "why_this_design": "The portrait is set explicitly before merging so a newly supplied portrait can replace an old one, while a `None` value removes a stale portrait key entirely. Tagline differs deliberately: omission preserves the existing tagline, preventing an update payload that lacks a tagline from erasing manually retained text."
+        "what_it_does": "Builds or updates one record in the JSON `people` registry used by the landing-page index. It carries forward the person payload’s identity, summary, optional tagline, normalized life dates, up to three primary roles, and the portrait reference selected upstream; it then writes the registry in name-sorted order with creation and update timestamps.",
+        "why_this_design": "An update overlays only fields supplied by the generated entry onto the existing record, preserving fields not managed here and preserving `created`. Tagline is omitted when absent so an update cannot accidentally erase an existing tagline, while portrait is handled differently: an explicit missing or null portrait removes the registry reference so the later portrait consumer does not retain a stale image."
       }
     },
     "p_review": {

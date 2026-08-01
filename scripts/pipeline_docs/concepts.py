@@ -7,9 +7,10 @@ fact about a path; a reader who is told that the *social network* is derived
 once per subject and merged again per theme has learned the same fact about the
 system. This module holds the second vocabulary: the handful of things the
 pipelines actually produce and the interface actually shows—source material,
-subjects, life events, narrative text, geography, the social network, imagery,
+profile, life events, narrative text, geography, the social network, imagery,
 visual identity, theme, languages—each with an id the rest of the docs build
-refers to.
+refers to, and each marked as the one thing read from outside or as something
+derived from it.
 
 Every concept carries an icon, and the icons are the interface's own: they are
 Material Design Icons, named exactly as `@mdi/js` exports them, and where the
@@ -36,12 +37,22 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 MDI_SOURCE = REPO_ROOT / "node_modules" / "@mdi" / "js" / "mdi.js"
 
 
+INPUT = "input"
+DERIVED = "derived"
+
+
 @dataclass(frozen=True)
 class Concept:
     """One thing the system is about, in the vocabulary a reader thinks in.
 
-    `interface` says where the application shows the concept, which is what
-    makes the shared glyph a claim rather than a decoration.
+    `role` is the distinction the data model turns on: one concept is read from
+    outside and the rest are derived, and a reader who cannot see which is which
+    cannot see what the pipelines are for.
+
+    `interface` records where the application draws the same glyph. It is a
+    maintainer's justification for the icon, not page copy: the report explains
+    the interface in its own section and has no business doing it again in a
+    legend, so this never reaches the payload.
     """
 
     id: str
@@ -50,6 +61,7 @@ class Concept:
     """The `@mdi/js` icon, in its kebab-case name—`mdi-account-multiple-outline`."""
     blurb: str
     interface: str
+    role: str = DERIVED
 
 
 CONCEPTS: Tuple[Concept, ...] = (
@@ -57,16 +69,17 @@ CONCEPTS: Tuple[Concept, ...] = (
         "sources",
         "Source material",
         "mdi-book",
-        "Encyclopedic prose, images and place names, cached before any step "
-        "reads them.",
+        "Encyclopedic prose, images and place names—the only thing the system "
+        "does not produce itself.",
         "The sources listed under every event, and the links that close a story.",
+        role=INPUT,
     ),
     Concept(
-        "subjects",
-        "Subjects",
+        "profile",
+        "Profile",
         "mdi-account-outline",
-        "The people the corpus is about: an identity, a lifespan, a portrait, "
-        "and the story that hangs off them.",
+        "Who a story is about: a name, a lifespan, the roles a life is "
+        "remembered for, and the portrait that stands for it.",
         "The cards on the landing page and the person chips inside a story.",
     ),
     Concept(
@@ -177,7 +190,12 @@ def icon_of(concept_id: str) -> str:
 
 
 def to_json() -> List[Dict[str, str]]:
-    """The vocabulary as the payload carries it, icon path included."""
+    """The vocabulary as the payload carries it, icon path included.
+
+    Without `interface`: where the application draws the same glyph is why the
+    icon was chosen, not something the data model section should stop to
+    explain.
+    """
     return [
         {
             "id": concept.id,
@@ -185,7 +203,7 @@ def to_json() -> List[Dict[str, str]]:
             "icon": concept.icon,
             "path": ICON_PATHS.get(concept.icon, ""),
             "blurb": concept.blurb,
-            "interface": concept.interface,
+            "role": concept.role,
         }
         for concept in CONCEPTS
     ]
@@ -226,6 +244,8 @@ def check_icons() -> List[str]:
             problems.append(f"{where}: no vendored path for '{concept.icon}'")
         if not concept.blurb.strip() or not concept.interface.strip():
             problems.append(f"{where}: has no blurb or no interface note")
+        if concept.role not in (INPUT, DERIVED):
+            problems.append(f"{where}: unknown role '{concept.role}'")
 
     installed = _installed_icons()
     if not installed:

@@ -267,8 +267,14 @@ def build_payload(
             }
         )
 
+    built = time.gmtime()
     return {
-        "generated_at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
+        # The report is versioned by the day it was built, because that is what
+        # a reader needs to know: which one of these they are holding. The
+        # timestamp and the commit stay for the colophon, where provenance
+        # belongs.
+        "version": f"{time.strftime('%B', built)} {built.tm_mday}, {built.tm_year}",
+        "generated_at": time.strftime("%Y-%m-%d %H:%M UTC", built),
         "commit": _git("rev-parse", "--short", "HEAD"),
         "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
         "report": document.to_json() if document else None,

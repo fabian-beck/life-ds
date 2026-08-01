@@ -566,7 +566,7 @@
         title:
           "Show what each step writes, and what this pipeline reads from the " +
           "other one.",
-        text: "Artifacts",
+        text: "Data",
         onclick: function () {
           state.showArtifacts = !state.showArtifacts;
           artifacts.setAttribute(
@@ -1716,7 +1716,7 @@
           ]
         : [
             sourceCount
-              ? "Gray boxes are artifacts the other pipeline produces."
+              ? "Gray boxes are data the other pipeline produces."
               : "",
             bands ? "A shaded band gathers the steps of one concern." : "",
           ];
@@ -1725,14 +1725,7 @@
         captionNode,
         "Figure",
         figureNumber,
-        [
-          DATA.lanes[state.tab].label +
-            " pipeline as a dependency graph, " +
-            stepNodes.length +
-            " steps in " +
-            geometry.layers +
-            " layers.",
-        ]
+        [DATA.lanes[state.tab].label + " pipeline as a dependency graph."]
           .concat(marks.filter(Boolean))
           .join(" ")
       );
@@ -1767,18 +1760,6 @@
     const lede = el("p", { class: "lane-lede" }, [
       el("span", { text: "Entry point " }),
       el("code", { class: "entry", text: lane.entry }),
-      el("span", {
-        text:
-          " · " +
-          stepsInTab().length +
-          " steps · " +
-          Object.keys(DATA.kinds).filter((kind) => {
-            return stepsInTab().some((step) => {
-              return step.kind === kind;
-            });
-          }).length +
-          " step kinds",
-      }),
     ]);
 
     /* The way to the full-screen chart. It is offered in both versions, for the
@@ -2406,8 +2387,8 @@
      narrower than the words that describe what crosses them. Labels are
      collected and drawn last, above the parts, on their own paper. */
   function sLabel(labels, x, y, text, cls) {
-    const width = text.length * 4.4 + 8;
-    labels.appendChild(sRect(x - width / 2, y - 8, width, 11, "tlabel-bg"));
+    const width = text.length * 6 + 10;
+    labels.appendChild(sRect(x - width / 2, y - 10, width, 14, "tlabel-bg"));
     labels.appendChild(sText(x, y, text, cls || "tedge-label", "middle"));
   }
 
@@ -2546,19 +2527,17 @@
     inference: function (host, part) {
       const left = part.x + 14;
       const width = part.w - 28;
-      const top = part.y + 52;
+      const top = part.y + 56;
       host.appendChild(sRect(left, top, width, 30, "tcard"));
-      host.appendChild(sText(left + 8, top + 13, "prompt", "ttext"));
+      host.appendChild(sText(left + 10, top + 20, "prompt", "ttext"));
       host.appendChild(
-        sText(left + 8, top + 24, "instructions + data", "ttiny")
+        sPath("M" + (left + width / 2) + " " + (top + 36) + "v16", "tedge-call")
       );
+      arrowHead(host, left + width / 2, top + 54, "down");
+      host.appendChild(sRect(left, top + 58, width, 30, "tcard"));
       host.appendChild(
-        sPath("M" + (left + width / 2) + " " + (top + 36) + "v14", "tedge-call")
+        sText(left + 10, top + 78, "structured output", "ttext")
       );
-      arrowHead(host, left + width / 2, top + 52, "down");
-      host.appendChild(sRect(left, top + 56, width, 30, "tcard"));
-      host.appendChild(sText(left + 8, top + 69, "structured output", "ttext"));
-      host.appendChild(sText(left + 8, top + 80, "a declared schema", "ttiny"));
     },
 
     /* One square per documented step, in the color of its kind: the size and
@@ -2590,35 +2569,26 @@
         cell.appendChild(title);
         host.appendChild(cell);
       });
-      part.lines.forEach((line, index) => {
-        host.appendChild(
-          sText(part.x + 12, part.y + part.h - 22 + index * 12, line, "ttiny")
-        );
-      });
     },
 
+    /* The four step kinds, laid out by the width each label actually needs.
+       Equal cells fit the shortest name and clipped the longest. */
     kinds: function (host, part) {
       const kinds = Object.keys(DATA.kinds);
-      const cell = part.w / kinds.length;
+      const widths = kinds.map((kind) => {
+        return DATA.kinds[kind].label.length * 6.6 + 20;
+      });
+      const total = widths.reduce((sum, width) => sum + width, 0);
+      const gap = Math.max(8, (part.w - total) / (kinds.length - 1));
+      let x = part.x;
       kinds.forEach((kind, index) => {
-        const x = part.x + index * cell;
-        const count = DATA.steps.filter((step) => {
-          return step.kind === kind;
-        }).length;
-        const swatch = sRect(x, part.y + 12, 10, 10, "tswatch");
+        const swatch = sRect(x, part.y + 12, 11, 11, "tswatch");
         swatch.setAttribute("fill", kindColor(kind));
         host.appendChild(swatch);
         host.appendChild(
-          sText(x + 16, part.y + 21, DATA.kinds[kind].label, "ttext")
+          sText(x + 18, part.y + 22, DATA.kinds[kind].label, "ttext")
         );
-        host.appendChild(
-          sText(
-            x + 16,
-            part.y + 33,
-            count + (count === 1 ? " step" : " steps"),
-            "ttiny"
-          )
-        );
+        x += widths[index] + gap;
       });
     },
 
@@ -2630,11 +2600,6 @@
       host.appendChild(
         sText(part.x + 34, part.y + 24, part.label, "tconcept-name")
       );
-      part.lines.forEach((line, index) => {
-        host.appendChild(
-          sText(part.x + 34, part.y + 38 + index * 11, line, "ttiny")
-        );
-      });
     },
 
     /* A bounded sequence, drawn as a stack: the slide the reader is on, and the
@@ -2666,9 +2631,6 @@
           })
         );
       });
-      host.appendChild(
-        sText(part.x + 16, part.y + part.h - 12, part.lines[0] || "", "ttiny")
-      );
     },
 
     /* A continuous document: one component held still while the cards that
@@ -2686,20 +2648,14 @@
         sPath("M" + (x + 140) + " " + (y + 6) + "v56", "tedge-call")
       );
       arrowHead(host, x + 140, y + 66, "down");
-      host.appendChild(
-        sText(part.x + 16, part.y + part.h - 12, part.lines[0] || "", "ttiny")
-      );
     },
 
     prose: function (host, part) {
       const x = part.x + 16;
-      const widths = [206, 224, 214, 228, 196, 148];
+      const widths = [206, 224, 214, 228, 148];
       widths.forEach((width, index) => {
-        host.appendChild(sRect(x, part.y + 44 + index * 13, width, 4, "tbar"));
+        host.appendChild(sRect(x, part.y + 46 + index * 13, width, 4, "tbar"));
       });
-      host.appendChild(
-        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
-      );
     },
 
     timeline: function (host, part) {
@@ -2732,9 +2688,6 @@
           );
         }
       );
-      host.appendChild(
-        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
-      );
     },
 
     map: function (host, part) {
@@ -2764,9 +2717,6 @@
           )
         );
       });
-      host.appendChild(
-        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
-      );
     },
 
     graph: function (host, part) {
@@ -2813,9 +2763,6 @@
           })
         );
       });
-      host.appendChild(
-        sText(x, part.y + part.h - 14, part.lines[0] || "", "ttiny")
-      );
     },
   };
 
@@ -3518,6 +3465,7 @@
   const COMPONENTS = {
     buildinfo: function (mount) {
       const rows = [
+        ["Version", DATA.version || DATA.generated_at],
         ["Built", DATA.generated_at],
         ["Commit", DATA.commit || "—"],
         ["Branch", DATA.branch || "—"],
@@ -3716,83 +3664,33 @@
       );
     },
 
-    artifacts: function (mount, params, numbers) {
-      const steps = stepsOf(params.lane);
-      const touched = {};
-      steps.forEach((step) => {
-        (step.outputs || []).forEach((id) => {
-          touched[id] = touched[id] || { writes: [], reads: [] };
-          touched[id].writes.push(step.label);
-        });
-        (step.inputs || []).forEach((id) => {
-          touched[id] = touched[id] || { writes: [], reads: [] };
-          touched[id].reads.push(step.label);
-        });
-      });
-
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "What the " +
-            laneLabel(params.lane).toLowerCase() +
-            " pipeline reads and writes, by concept"
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Artifact", "Concept", "Kind", "Written by", "Read by"],
-          DATA.artifacts
-            .filter((artifact) => {
-              return touched[artifact.id];
-            })
-            .map((artifact) => {
-              const use = touched[artifact.id];
-              const concept = conceptOf(artifact);
-              return [
-                el("td", {}, [
-                  el("div", { text: artifact.label }),
-                  el("div", { class: "cell-note", text: artifact.note }),
-                ]),
-                el("td", {}, [
-                  el("span", { class: "concept-cell" }, [
-                    concept ? glyph(concept.path) : null,
-                    el("span", { text: concept ? concept.label : "—" }),
-                  ]),
-                ]),
-                plain(artifact.kind),
-                plain(use.writes.join(", ") || "—"),
-                plain(use.reads.join(", ") || "—"),
-              ];
-            })
-        )
-      );
-    },
-
-    /* The vocabulary itself, once, where the report first uses it. Each entry
-       pairs the glyph with the place the application draws the same thing,
-       because a legend that only named the concepts would leave the reader to
-       guess whether the marks are the interface's or the report's. */
+    /* The vocabulary itself, once, where the report first uses it, split at the
+       line the data model turns on: what arrives from outside, and what the
+       pipelines make of it. */
     conceptlegend: function (mount) {
-      const list = el("dl", { class: "conceptlist" });
-      (DATA.concepts || []).forEach((concept) => {
-        list.appendChild(
-          el("dt", {}, [
-            glyph(concept.path, "glyph big"),
-            el("span", { text: concept.label }),
-          ])
+      [
+        { role: "input", label: "Input" },
+        { role: "derived", label: "Output" },
+      ].forEach((group) => {
+        const members = (DATA.concepts || []).filter((concept) => {
+          return concept.role === group.role;
+        });
+        if (!members.length) return;
+        mount.appendChild(
+          el("p", { class: "conceptgroup", text: group.label })
         );
-        list.appendChild(
-          el("dd", {}, [
-            el("span", { text: concept.blurb }),
-            el("span", {
-              class: "sub",
-              text: "In the interface: " + concept.interface,
-            }),
-          ])
-        );
+        const list = el("dl", { class: "conceptlist" });
+        members.forEach((concept) => {
+          list.appendChild(
+            el("dt", {}, [
+              glyph(concept.path, "glyph big"),
+              el("span", { text: concept.label }),
+            ])
+          );
+          list.appendChild(el("dd", { text: concept.blurb }));
+        });
+        mount.appendChild(list);
       });
-      mount.appendChild(list);
     },
 
     modeltable: function (mount, params, numbers) {
@@ -3883,9 +3781,6 @@
     kindlegend: function (mount) {
       const list = el("dl", { class: "kindlist" });
       Object.entries(DATA.kinds).forEach((entry) => {
-        const count = DATA.steps.filter((step) => {
-          return step.kind === entry[0];
-        }).length;
         list.appendChild(
           el("dt", {}, [
             el("span", {
@@ -3893,7 +3788,6 @@
               style: "background:" + kindColor(entry[0]),
             }),
             el("span", { text: entry[1].label }),
-            el("span", { class: "count", text: count + " steps" }),
           ])
         );
         list.appendChild(el("dd", { text: entry[1].description }));
@@ -3968,14 +3862,14 @@
      which the appendix is not one of. Adding the entry here—print-only, like
      the section it points at—keeps the printed contents a description of the
      printed document rather than of the Markdown. */
-  function addAppendixToContents(count) {
+  function addAppendixToContents() {
     const list = document.querySelector(".toc > .toc-list");
     if (!list) return;
     list.appendChild(
       el("li", { class: "toc-appendix" }, [
         el("a", { href: "#appendix-steps" }, [
           el("span", { class: "toc-no", text: APPENDIX_LETTER }),
-          el("span", { text: "Step details (" + count + " steps)" }),
+          el("span", { text: "Step details" }),
         ]),
       ])
     );
@@ -4020,7 +3914,7 @@
     });
 
     host.appendChild(section);
-    addAppendixToContents(ordered.length);
+    addAppendixToContents();
   }
 
   /* A `<details>` is a promise that the content is one click away. Paper cannot
@@ -4055,19 +3949,17 @@
   function renderMetaRow() {
     const host = document.getElementById("meta-row");
     if (!host) return;
-    const chips = [
-      ["Built", DATA.generated_at],
-      ["Commit", DATA.commit || "—"],
-      ["Steps", String(DATA.totals.steps)],
-    ];
-    chips.forEach((chip) => {
-      host.appendChild(
-        el("span", { class: "chip" }, [
-          el("span", { text: chip[0] }),
-          el("code", { text: chip[1] }),
-        ])
-      );
-    });
+    // The report is versioned by date and by nothing else. A commit and a
+    // build time answer "which build is this", which is a question for the
+    // colophon; the reader at the top of the page is asking "how current is
+    // what I am about to read".
+    host.appendChild(
+      el("span", { class: "chip" }, [
+        el("span", {
+          text: "Version of " + (DATA.version || DATA.generated_at),
+        }),
+      ])
+    );
 
     const build = document.getElementById("colophon-build");
     if (build) {
