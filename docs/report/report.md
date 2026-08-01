@@ -37,22 +37,26 @@ shape of the life—its phases, its movements, the people who recur
 in it—reconstructs that shape while reading.
 
 Life Data Stories makes the shape explicit and explorable. It derives from the
-source prose [[events|a set of discrete events]], each with a resolved date, the
-modern coordinates of its place, the persons involved, an illustration and the
-sources that support it; it groups those events into the phases of a life; and
-it presents the result simultaneously as [[prose|narrative text]], as
+source prose [[events|a set of discrete events]], each with a resolved date, a
+place located on a modern map, the persons involved and the illustrations
+available for it. It groups those events into the phases of a life and presents
+the result simultaneously as [[prose|narrative text]], as
 [[timeline|a chronology]], as [[map|a geography]] and as
-[[graph|a social network]]. Segel and Heer, surveying how data is used to tell
-stories, place such a presentation on a spectrum between the author-driven, in
-which a fixed order carries the message, and the reader-driven, in which the
-audience decides what to look at [@segel2010narrative]. A story here is authored
-in its order and reader-driven in its depth. The sequence is fixed when the
-story is generated and can simply be followed to the end; the timeline that
-doubles as a control, the network opened on demand, the images as a gallery and
-the cards leading into other lives are all available and none of them is
-required. The same derivation applied across several biographies yields
+[[graph|a social network]]. The same derivation applied across several
+biographies yields
 [[meta-story|a meta story]], in which a theme is traced through the lives that
 share it.
+
+Segel and Heer, surveying how data is used to tell stories, place such a
+presentation on a spectrum between the author-driven, in which a fixed order
+carries the message, and the reader-driven, in which the audience decides what
+to look at [@segel2010narrative]. A story here is author-driven at first glance
+and reader-driven in its depth. The sequence is fixed when the story is
+generated and can simply be followed to the end; the timeline that doubles as a
+control, the network opened on demand, the images as a gallery and the cards
+leading into other lives are all available and none of them is required. A meta
+story is linear in the same way, and at any point along it the lives it draws on
+are open to be entered.
 
 Connecting historical figures through the events they have in common is what
 VisKonnect does on demand [@latif2021viskonnect]: a reader's question is parsed
