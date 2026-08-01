@@ -3,8 +3,8 @@ title: Life Data Stories
 subtitle: Generating and presenting biographical data stories
 authors:
   Fabian Beck | University of Bamberg | https://www.uni-bamberg.de/en/vis/team/prof-dr-fabian-beck/ | 0000-0003-4042-3043
-  Leah Mühlöder | University of Bamberg | https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/
-  Till Nagel | Mannheim University of Applied Sciences | https://tillnagel.com/
+  Leah Mühlöder | University of Bamberg | https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/ | 0009-0000-3510-1686
+  Till Nagel | Mannheim University of Applied Sciences | https://services.informatik.hs-mannheim.de/~nagel/ | 0000-0001-5400-091X
 description:
   Technical report on the Life Data Stories system—its artifact schemas, its two
   generation pipelines and its interface.
