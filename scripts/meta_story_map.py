@@ -137,9 +137,26 @@ def _event_location(event: Dict[str, Any]) -> Optional[Tuple[str, List[float]]]:
     return None
 
 
+_DATE_RE = re.compile(r"\s*(-?\d{1,4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?")
+
+
 def _event_year(date_str: Any) -> Optional[int]:
-    match = re.match(r"\s*(-?\d{1,4})", str(date_str or ""))
+    match = _DATE_RE.match(str(date_str or ""))
     return int(match.group(1)) if match else None
+
+
+def event_date_key(date_str: Any) -> Tuple[int, int, int]:
+    """Chronological sort key for a ``YYYY``, ``YYYY-MM`` or ``YYYY-MM-DD`` date.
+
+    A coarser date sorts before the finer dates of the same period (1787 before
+    1787-05 before 1787-05-25), and an unparsable or missing date sorts last so
+    it never displaces a dated event.
+    """
+    match = _DATE_RE.match(str(date_str or ""))
+    if not match:
+        return (10**9, 0, 0)
+    year, month, day = match.groups()
+    return (int(year), int(month or 0), int(day or 0))
 
 
 def collect_located_events(
@@ -273,9 +290,10 @@ def cluster_located_events(
 
     built: List[Dict[str, Any]] = []
     for members in clusters:
-        members = sorted(
-            members, key=lambda e: (e["year"] if e["year"] is not None else 10**9)
-        )
+        # Full-date order, not just year: a stop card lists its events in array
+        # order and only spells out the first few, so same-year events have to
+        # be ordered by month and day too.
+        members = sorted(members, key=lambda e: event_date_key(e["event_date"]))
         score = sum(weight_of(e) for e in members)
         total = score or 1.0
         centroid = [

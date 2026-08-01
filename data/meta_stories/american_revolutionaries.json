@@ -798,21 +798,21 @@
         "year_end": 1781,
         "events": [
           {
-            "person_id": "alexander_hamilton",
-            "person_name": "Alexander Hamilton",
-            "event_index": 7,
-            "event_title": "Storms Yorktown Redoubt",
-            "event_date": "1781-10-14",
-            "place": "Yorktown",
-            "coordinates": [-76.5097, 37.2388],
-            "weight": 3.0
-          },
-          {
             "person_id": "george_washington",
             "person_name": "George Washington",
             "event_index": 10,
             "event_title": "Wins Yorktown, Resigns Command",
             "event_date": "1781-09-28",
+            "place": "Yorktown",
+            "coordinates": [-76.5097, 37.2388],
+            "weight": 3.0
+          },
+          {
+            "person_id": "alexander_hamilton",
+            "person_name": "Alexander Hamilton",
+            "event_index": 7,
+            "event_title": "Storms Yorktown Redoubt",
+            "event_date": "1781-10-14",
             "place": "Yorktown",
             "coordinates": [-76.5097, 37.2388],
             "weight": 3.0
@@ -859,21 +859,21 @@
             "weight": 3.0
           },
           {
-            "person_id": "benjamin_franklin",
-            "person_name": "Benjamin Franklin",
-            "event_index": 14,
-            "event_title": "Signs the New United States Constitution",
-            "event_date": "1787-09-17",
-            "place": "Philadelphia",
-            "coordinates": [-75.1652, 39.9526],
-            "weight": 3.0
-          },
-          {
             "person_id": "george_washington",
             "person_name": "George Washington",
             "event_index": 11,
             "event_title": "Presides Over Constitutional Convention",
             "event_date": "1787-05-25",
+            "place": "Philadelphia",
+            "coordinates": [-75.1652, 39.9526],
+            "weight": 3.0
+          },
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 14,
+            "event_title": "Signs the New United States Constitution",
+            "event_date": "1787-09-17",
             "place": "Philadelphia",
             "coordinates": [-75.1652, 39.9526],
             "weight": 3.0
@@ -900,16 +900,6 @@
         "year_end": 1789,
         "events": [
           {
-            "person_id": "alexander_hamilton",
-            "person_name": "Alexander Hamilton",
-            "event_index": 11,
-            "event_title": "Leads the Treasury Department",
-            "event_date": "1789-09-11",
-            "place": "New York City",
-            "coordinates": [-74.006, 40.7128],
-            "weight": 2.0
-          },
-          {
             "person_id": "george_washington",
             "person_name": "George Washington",
             "event_index": 12,
@@ -918,6 +908,16 @@
             "place": "New York City",
             "coordinates": [-74.006, 40.7128],
             "weight": 3.0
+          },
+          {
+            "person_id": "alexander_hamilton",
+            "person_name": "Alexander Hamilton",
+            "event_index": 11,
+            "event_title": "Leads the Treasury Department",
+            "event_date": "1789-09-11",
+            "place": "New York City",
+            "coordinates": [-74.006, 40.7128],
+            "weight": 2.0
           }
         ],
         "key": "new_york_city"
