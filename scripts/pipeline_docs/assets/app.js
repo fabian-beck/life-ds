@@ -2524,22 +2524,6 @@
       });
     },
 
-    inference: function (host, part) {
-      const left = part.x + 14;
-      const width = part.w - 28;
-      const top = part.y + 56;
-      host.appendChild(sRect(left, top, width, 30, "tcard"));
-      host.appendChild(sText(left + 10, top + 20, "prompt", "ttext"));
-      host.appendChild(
-        sPath("M" + (left + width / 2) + " " + (top + 36) + "v16", "tedge-call")
-      );
-      arrowHead(host, left + width / 2, top + 54, "down");
-      host.appendChild(sRect(left, top + 58, width, 30, "tcard"));
-      host.appendChild(
-        sText(left + 10, top + 78, "structured output", "ttext")
-      );
-    },
-
     /* One square per documented step, in the color of its kind: the size and
        the composition of a pipeline, without redrawing the pipeline. */
     steps: function (host, part) {

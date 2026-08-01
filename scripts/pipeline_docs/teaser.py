@@ -189,8 +189,7 @@ PARTS: Tuple[Part, ...] = (
         "The interpretative decisions—which episodes constitute a life, which "
         "modern place a toponym denotes—are model calls, each returning a "
         "declared schema rather than free text.",
-        (8, 214, 196, 150),
-        decor="inference",
+        (8, 214, 196, 46),
     ),
     Part(
         "person-pipeline",
