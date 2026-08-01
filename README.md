@@ -14,9 +14,7 @@ npm run dev -- --open
 
 ## Interface Tests
 
-The Playwright smoke test covers the landing page, search, a representative
-story overview, chapter and event navigation, and the network modal in desktop
-and mobile Chromium profiles.
+The Playwright smoke test covers the landing page, search, a representative story overview, chapter and event navigation, and the network modal in desktop and mobile Chromium profiles.
 
 ```powershell
 # Required once per machine
@@ -26,56 +24,28 @@ npm run test:interface
 npm run test:interface:report
 ```
 
-The HTML report includes screenshots and viewport audits. Generated reports and
-test artifacts are ignored by Git.
+The HTML report includes screenshots and viewport audits. Generated reports and test artifacts are ignored by Git.
 
 ## Deployment
 
-The site is hosted on **GitHub Pages** as a project page under
-`https://<owner>.github.io/life-ds/` and is published **on demand only** —
-pushing or merging to `main` does **not** publish the site.
+The site is hosted on **GitHub Pages** as a project page under `https://<owner>.github.io/life-ds/` and is published **on demand only** — pushing or merging to `main` does **not** publish the site.
 
-"On demand only" is enforced by the workflow itself: `.github/workflows/deploy-pages.yml`
-has a single `workflow_dispatch` trigger and no `push` trigger, so nothing
-publishes until a maintainer starts it.
+"On demand only" is enforced by the workflow itself: `.github/workflows/deploy-pages.yml` has a single `workflow_dispatch` trigger and no `push` trigger, so nothing publishes until a maintainer starts it.
 
 ### Publishing a new version
 
-Open the repository's **Actions** tab, select **Deploy to GitHub Pages**, and
-run the workflow on `main`. It installs dependencies, runs `npm run build`, and
-uploads `dist/` to Pages.
+Open the repository's **Actions** tab, select **Deploy to GitHub Pages**, and run the workflow on `main`. It installs dependencies, runs `npm run build`, and uploads `dist/` to Pages.
 
-One-time repository setup: **Settings → Pages → Build and deployment → Source**
-must be set to **GitHub Actions**.
+One-time repository setup: **Settings → Pages → Build and deployment → Source** must be set to **GitHub Actions**.
 
 Notes:
 
-- The build produces a `404.html` copy of `index.html` (see
-  `githubPages404Plugin` in `vite.config.js`). Pages has no rewrite rules;
-  shared links are hash-based and never hit the server, but this keeps
-  path-style entry URLs such as `/life-ds/en` working.
-- The technical report is published with the site: the build copies
-  `docs/report/index.html` to `dist/report/index.html`, served at
-  `https://<owner>.github.io/life-ds/report/` and linked from the landing page
-  and the "AI-generated" modal. The report is committed, so a deployment
-  publishes whatever `docs/report/index.html` holds on `main` — regenerate it
-  (`python scripts/generate_report.py`) before publishing if a generation
-  script changed.
-- The site is served from a subdirectory, so the build sets
-  `base: "/life-ds/"`. Anything that turns a site-absolute path — a portrait
-  path from the generated data, an asset in `public/` — into a URL must go
-  through `assetUrl()` in `src/utils/assetUrl.js`. Adding a raw `"/portraits/…"`
-  string to markup works locally at the domain root and 404s on Pages.
-- Building for a host that serves from the domain root (a custom domain, or a
-  different static host) needs no code change: `VITE_BASE_PATH=/ npm run build`.
-- Limits worth knowing: Pages caps a published site at 1 GB and a single file at
-  100 MB, with a soft bandwidth limit of 100 GB per month. `public/` is
-  currently ~134 MB, most of it generated portraits.
-- The basemap is served from this same origin and relies on HTTP range
-  requests, which GitHub Pages has been reported to handle inconsistently for
-  `.pmtiles` files. If the map fails to load with a byte-serving error, point
-  `VITE_PROTOMAPS_PM_TILES_URL` at an external host (see "Basemap" below); the
-  map degrades to a message rather than breaking the page.
+- The build produces a `404.html` copy of `index.html` (see `githubPages404Plugin` in `vite.config.js`). Pages has no rewrite rules; shared links are hash-based and never hit the server, but this keeps path-style entry URLs such as `/life-ds/en` working.
+- The technical report is published with the site: the build copies `docs/report/index.html` to `dist/report/index.html`, served at `https://<owner>.github.io/life-ds/report/` and linked from the landing page and the "AI-generated" modal. The report is committed, so a deployment publishes whatever `docs/report/index.html` holds on `main` — regenerate it (`python scripts/generate_report.py`) before publishing if a generation script changed.
+- The site is served from a subdirectory, so the build sets `base: "/life-ds/"`. Anything that turns a site-absolute path — a portrait path from the generated data, an asset in `public/` — into a URL must go through `assetUrl()` in `src/utils/assetUrl.js`. Adding a raw `"/portraits/…"` string to markup works locally at the domain root and 404s on Pages.
+- Building for a host that serves from the domain root (a custom domain, or a different static host) needs no code change: `VITE_BASE_PATH=/ npm run build`.
+- Limits worth knowing: Pages caps a published site at 1 GB and a single file at 100 MB, with a soft bandwidth limit of 100 GB per month. `public/` is currently ~134 MB, most of it generated portraits.
+- The basemap is served from this same origin and relies on HTTP range requests, which GitHub Pages has been reported to handle inconsistently for `.pmtiles` files. If the map fails to load with a byte-serving error, point `VITE_PROTOMAPS_PM_TILES_URL` at an external host (see "Basemap" below); the map degrades to a message rather than breaking the page.
 
 ## Routing
 

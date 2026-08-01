@@ -6,9 +6,7 @@
 
 ### Python Environment
 
-The generation scripts run from a project-local virtual environment. The `openai`
-dependency must be >= 2.0.0 — the pre-1.0 SDK exposes a different client and the
-scripts will fail to import against it.
+The generation scripts run from a project-local virtual environment. The `openai` dependency must be >= 2.0.0 — the pre-1.0 SDK exposes a different client and the scripts will fail to import against it.
 
 ```bash
 python -m venv .venv
@@ -20,16 +18,12 @@ Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/ge
 
 **Model configuration** (see `scripts/config.py`):
 
-- `OPENAI_MODEL` — text/reasoning model for generation phases other than the
-  meta-story composer (default: `gpt-5.6-terra`)
-- `OPENAI_COMPOSER_MODEL` — Phase 8 meta-story composer model (default:
-  `gpt-5.6-sol`)
+- `OPENAI_MODEL` — text/reasoning model for generation phases other than the meta-story composer (default: `gpt-5.6-terra`)
+- `OPENAI_COMPOSER_MODEL` — Phase 8 meta-story composer model (default: `gpt-5.6-sol`)
 - `OPENAI_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels
 - Portrait scripts take `--model` separately (default: `gpt-image-2`)
 
-Image models that support the dual-image editing path are allowlisted in
-`generate_person_portrait.py`; a model outside that list silently falls back to
-text-only generation and will not preserve facial likeness.
+Image models that support the dual-image editing path are allowlisted in `generate_person_portrait.py`; a model outside that list silently falls back to text-only generation and will not preserve facial likeness.
 
 ### Python Scripts (require `OPENAI_API_KEY`)
 
@@ -116,12 +110,7 @@ python scripts/generate_meta_story_style.py computing_pioneers --verbose
 python scripts/generate_meta_story_style.py computing_pioneers --dry-run
 ```
 
-Writes one entry in `data/meta_story_styles.json`: the article's colors and
-fonts plus the SVG marks that punctuate its prose — a separator glyph and an
-ornamental rule. See [Domain and data
-models](domain-and-data-models.md) for the schema. Skip the phase inside the
-full workflow with `--skip-style`; it is non-fatal, and a story without an
-entry falls back to the neutral editorial palette.
+Writes one entry in `data/meta_story_styles.json`: the article's colors and fonts plus the SVG marks that punctuate its prose — a separator glyph and an ornamental rule. See [Domain and data models](domain-and-data-models.md) for the schema. Skip the phase inside the full workflow with `--skip-style`; it is non-fatal, and a story without an entry falls back to the neutral editorial palette.
 
 **Generate stylized portrait** (optional):
 
@@ -149,11 +138,9 @@ This uses OpenAI image generation to transform the existing Wikimedia Commons po
 - `--master-style PATH`: Use custom master style image
 - `--model MODEL`: Specify OpenAI model (default: gpt-image-2)
 
-**Master Style Portrait**:
-The master style portrait defines the artistic style applied to all generated portraits. Create it once (manually or using AI tools), then all generated portraits will match its style through AI-powered style transfer.
+**Master Style Portrait**: The master style portrait defines the artistic style applied to all generated portraits. Create it once (manually or using AI tools), then all generated portraits will match its style through AI-powered style transfer.
 
-**Portrait Data Syncing**:
-The portrait generation script automatically ensures portrait data consistency across all files:
+**Portrait Data Syncing**: The portrait generation script automatically ensures portrait data consistency across all files:
 1. Updates `data/persons.json` with the generated portrait path and metadata
 2. Syncs the same portrait data to `data/people/{person_id}/life_events.json`
 3. Updates all language translations (e.g., `data/people/{person_id}/de/life_events.json`)
@@ -513,9 +500,7 @@ Example from `src/locales/de.json`:
 
 Uses Protomaps PMTiles for vector basemaps (MapLibre GL):
 
-- **Primary source**: `public/basemap.pmtiles`, a zoom 0-5 world extract
-  shipped with the site and resolved through `assetUrl()` so it follows the
-  deployment base path
+- **Primary source**: `public/basemap.pmtiles`, a zoom 0-5 world extract shipped with the site and resolved through `assetUrl()` so it follows the deployment base path
 - **Fallback**: the same local archive unless an override is set
 
 Override via `.env`:

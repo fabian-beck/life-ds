@@ -85,12 +85,7 @@ Person-specific styles are injected as CSS variables:
 --body-font: 'IBM Plex Sans', sans-serif
 ```
 
-Meta stories carry their own identity in `meta_story_styles.json`, resolved by
-`src/utils/metaStoryStyles.js` into `--ms-*` variables (plus `--heading-font`
-and `--body-font`) on the article container. Beyond colors and fonts it holds
-two SVG marks that punctuate the prose — a separator glyph and an ornamental
-rule — rendered by `MetaStoryOrnament.svelte`. See [Domain and data
-models](domain-and-data-models.md) for the schema and where each mark appears.
+Meta stories carry their own identity in `meta_story_styles.json`, resolved by `src/utils/metaStoryStyles.js` into `--ms-*` variables (plus `--heading-font` and `--body-font`) on the article container. Beyond colors and fonts it holds two SVG marks that punctuate the prose — a separator glyph and an ornamental rule — rendered by `MetaStoryOrnament.svelte`. See [Domain and data models](domain-and-data-models.md) for the schema and where each mark appears.
 
 ### Background Patterns
 
@@ -98,28 +93,15 @@ Each person has a custom SVG pattern (stored inline in `person_styles.json`). Th
 
 ### Font Loading
 
-Fonts are self-hosted. `src/fonts.css` imports the eleven families from
-`@fontsource` packages and is pulled in by `src/main.js`, so the faces are
-bundled, fingerprinted, and served from our own origin. Nothing is fetched from
-a third party at runtime.
+Fonts are self-hosted. `src/fonts.css` imports the eleven families from `@fontsource` packages and is pulled in by `src/main.js`, so the faces are bundled, fingerprinted, and served from our own origin. Nothing is fetched from a third party at runtime.
 
-They used to come from `fonts.googleapis.com` through a render-blocking `<link>`
-in `index.html`. That gated the first paint on an external host: with the host
-reachable-but-hanging, first contentful paint measured 12,848 ms instead of
-112 ms. `index.html` must stay free of third-party stylesheet links.
+They used to come from `fonts.googleapis.com` through a render-blocking `<link>` in `index.html`. That gated the first paint on an external host: with the host reachable-but-hanging, first contentful paint measured 12,848 ms instead of 112 ms. `index.html` must stay free of third-party stylesheet links.
 
 Two constraints when editing `src/fonts.css`:
 
-- Import `latin` **and** `latin-ext` for every cut. The content needs Latin
-  Extended (`ł` alone appears 110 times, e.g. Skłodowska).
-- Keep the family list in step with `HEADING_FONT_CHOICES` /
-  `BODY_FONT_CHOICES` in `scripts/generate_person_style.py`. A family the
-  generator can pick but that is not imported renders in the fallback font.
+- Import `latin` **and** `latin-ext` for every cut. The content needs Latin Extended (`ł` alone appears 110 times, e.g. Skłodowska).
+- Keep the family list in step with `HEADING_FONT_CHOICES` / `BODY_FONT_CHOICES` in `scripts/generate_person_style.py`. A family the generator can pick but that is not imported renders in the fallback font.
 
 `tests/test_font_coverage.py` enforces both, in both directions.
 
-Because two heading faces ship a single weight by design (Archivo Black, DM
-Serif Display) while headings ask for 600-700, `app.css` sets
-`font-synthesis-weight: none` so the browser uses the real face instead of
-smearing a synthetic bold over it. `font-synthesis-style` is deliberately left
-alone — the sans body faces have no true italic and rely on synthetic oblique.
+Because two heading faces ship a single weight by design (Archivo Black, DM Serif Display) while headings ask for 600-700, `app.css` sets `font-synthesis-weight: none` so the browser uses the real face instead of smearing a synthetic bold over it. `font-synthesis-style` is deliberately left alone — the sans body faces have no true italic and rely on synthetic oblique.
