@@ -146,7 +146,6 @@
     [
       "../data/people/*/life_events.json",
       "../data/people/*/de/life_events.json",
-      "../data/people/*/fr/life_events.json",
     ],
     {
       import: "default",
@@ -157,7 +156,6 @@
     [
       "../data/people/*/ego_network.json",
       "../data/people/*/de/ego_network.json",
-      "../data/people/*/fr/ego_network.json",
     ],
     {
       import: "default",
@@ -165,11 +163,7 @@
   );
 
   const metaStoryDetailModules = import.meta.glob(
-    [
-      "../data/meta_stories/*.json",
-      "../data/meta_stories/de/*.json",
-      "../data/meta_stories/fr/*.json",
-    ],
+    ["../data/meta_stories/*.json", "../data/meta_stories/de/*.json"],
     {
       import: "default",
     }

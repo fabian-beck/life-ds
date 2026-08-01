@@ -109,7 +109,6 @@
     [
       "../../data/people/*/life_events.json",
       "../../data/people/*/de/life_events.json",
-      "../../data/people/*/fr/life_events.json",
     ],
     { import: "default" }
   );
