@@ -295,7 +295,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `[@key]` reference citations, `::: component` mount points, callouts. |
 | Bibliography | `bibliography.py` | Parses `docs/report/references.bib` and prints it in IEEE form with every author named. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences, and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
-| Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt, and schema. Only changed steps are re-summarized. |
+| Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt, and schema. Only changed steps are re-summarized, and each is attributed to the model that wrote it wherever it is shown. |
 | Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks, pairs each with the picture on disk, embeds it as a data URI, and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
 `spec.py`, `report.md`, and `references.bib` are the only hand-maintained inputs.
@@ -303,6 +303,8 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 ### Keeping It Honest
 
 `--check` fails when `spec.py` no longer matches the source: a documented step whose function was renamed, a dead prompt symbol, a dependency edge pointing at a step that does not exist, a cycle in the graph, or—most importantly—a model call site that **no step claims**. Adding a phase without documenting it is therefore an error rather than a silent omission.
+
+It also fails when a **written step explanation names a model the step does not resolve**. Those explanations are generated from each step's own source, so a model name left in a comment reaches the page as a claim—one said `GPT-5.1` while the same drawer printed the resolved model beside it. Model names therefore do not belong in the generation scripts' comments, and the summarizer is told not to repeat one; the drawer and the printed appendix attribute the explanation to the model that wrote it, since it is the one place in the report where prose is generated rather than authored or measured. `--check` reads the cache without writing it, so the rule holds without an API key.
 
 It also fails when the authored report no longer resolves: an unknown `{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure, an unknown `[@key]` reference or one split across two lines, a bibliography entry with no DOI, a figure whose geometry is inconsistent, an unknown or misconfigured `::: component`, a lane or script that no longer exists, a pipeline that no chart draws, or a declared screenshot with no picture on disk. A fact that is measured but never cited, a reference declared but never cited, a figure part no phrase references, and a screenshot whose declaration moved since it was taken are warnings rather than errors.
 

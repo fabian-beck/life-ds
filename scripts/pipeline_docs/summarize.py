@@ -33,6 +33,9 @@ SYSTEM_PROMPT = (
     "source, the prompt template it sends, and the structured output it asks "
     "for. Explain what the step does and why it is built that way. Be concrete "
     "and technical; prefer the specific constraint over the general claim. "
+    "Never name a model, an API version or a vendor product: the record printed "
+    "beside your text carries the model this step resolves, measured from the "
+    "code, and a name repeated from a comment is how that record goes stale. "
     "Never address the reader, never use second person, and do not restate the "
     "step's name as a sentence. Write in American English, and set em dashes "
     "closed up against the words they join, with no surrounding spaces, as the "
@@ -172,6 +175,20 @@ def save_cache(path: Path, cache: Dict[str, Any]) -> None:
         json.dumps(cache, indent=2, ensure_ascii=False, sort_keys=True),
         encoding="utf-8",
     )
+
+
+def cached_summaries(path: Path) -> Dict[str, Dict[str, Any]]:
+    """What the cache already holds, keyed by step, without calling anything.
+
+    `--check` has to see the written explanations too—they are published text—
+    and it must stay runnable without an API key and without writing a file.
+    """
+    entries = load_cache(path).get("steps") or {}
+    return {
+        step_id: entry["summary"]
+        for step_id, entry in entries.items()
+        if isinstance(entry, dict) and isinstance(entry.get("summary"), dict)
+    }
 
 
 def _fallback(step: spec.Step) -> Dict[str, Any]:

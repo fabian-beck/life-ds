@@ -275,8 +275,11 @@ def build_payload(
         # belongs.
         "version": f"{time.strftime('%B', built)} {built.tm_mday}, {built.tm_year}",
         "generated_at": time.strftime("%Y-%m-%d %H:%M UTC", built),
+        # The commit is the state the page was built from and identifies it for
+        # good. The branch it was built on is a fact about someone's working
+        # copy—it names a feature branch that will be gone by the time anyone
+        # reads this—so it is deliberately not carried.
         "commit": _git("rev-parse", "--short", "HEAD"),
-        "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
         "report": document.to_json() if document else None,
         "facts": facts_module.to_json(facts or {}),
         "call_sites": _call_sites(codebase),

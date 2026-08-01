@@ -187,6 +187,63 @@ class DriftCheckTests(unittest.TestCase):
         )
 
 
+class WrittenExplanationTests(unittest.TestCase):
+    """The generated half of the step record, held to the measured half.
+
+    A summary is written from the step's source, so a stale model name in a
+    comment can reach the page as a claim—one did, and the drawer printed it
+    beside the resolved model that contradicted it.
+    """
+
+    def setUp(self) -> None:
+        self.codebase = scan_codebase()
+        self.step = next(item for item in spec.STEPS if item.id == "p_style")
+
+    def _summaries(self, text: str, source: str = "gpt-5.6-terra") -> dict:
+        return {
+            self.step.id: {
+                "what_it_does": text,
+                "why_this_design": "",
+                "constraints": [],
+                "source": source,
+            }
+        }
+
+    def test_a_model_the_step_does_not_resolve_fails_the_build(self) -> None:
+        problems = validate.check_summaries(
+            self.codebase, self._summaries("Asks a GPT-5.1 Responses API call.")
+        )
+        self.assertEqual(1, len(problems))
+        self.assertEqual("error", problems[0].severity)
+        self.assertIn("GPT-5.1", problems[0].message)
+
+    def test_the_model_the_step_actually_resolves_is_allowed(self) -> None:
+        resolved = next(
+            call.model_value.split(" (")[0].strip()
+            for call in self.codebase.all_ai_calls()
+            if call.function.split(".")[-1] == self.step.function and call.model_value
+        )
+        problems = validate.check_summaries(
+            self.codebase, self._summaries(f"Calls {resolved} through the API.")
+        )
+        self.assertEqual([], problems)
+
+    def test_hand_written_text_is_the_maintainers_own_claim(self) -> None:
+        problems = validate.check_summaries(
+            self.codebase,
+            self._summaries("Asks a GPT-5.1 call.", source="spec.py"),
+        )
+        self.assertEqual([], problems)
+
+    def test_the_drawer_attributes_what_a_model_wrote(self) -> None:
+        """Generated prose is disclosed where it is read, not only in the payload."""
+        script = (ASSETS / "app.js").read_text(encoding="utf-8")
+        detail = script[script.index("function stepDetail") :]
+        detail = detail[: detail.index("\n  function ", 1)]
+        self.assertIn("summary.source", detail)
+        self.assertIn("Explanation written by", detail)
+
+
 def _layers() -> dict:
     """Longest-path layer per step—the same rule the chart applies."""
     steps = {step.id: step for step in spec.STEPS}
@@ -280,7 +337,8 @@ class DependencyGraphTests(unittest.TestCase):
             ]
             self.assertEqual(1, len(messages))
             self.assertIn(
-                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_match",
+                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_filter "
+                "-> p_img_match",
                 messages[0],
             )
         finally:
@@ -384,8 +442,8 @@ class GroupTests(unittest.TestCase):
         runs = _group_runs(group)
         self.assertEqual(
             [len(run) for run in runs],
-            [3, 1],
-            "expected the three image steps to align and the portrait to detach",
+            [4, 1],
+            "expected the four image steps to align and the portrait to detach",
         )
         self.assertEqual(runs[-1], ["p_portrait"])
 

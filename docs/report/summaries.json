@@ -311,17 +311,31 @@
       }
     },
     "p_img_fetch": {
-      "fingerprint": "4dd0778de0f2416b",
+      "fingerprint": "3ecd28b2d777608b",
       "summary": {
         "constraints": [
-          "Runs every query against both Wikimedia Commons and Openverse.",
-          "Requests at most `images_per_query` results per query per provider; the default is `10`.",
-          "Deduplicates globally by exact `img[\"url\"]`, including duplicates across providers.",
-          "Catches and logs failures for an individual query/provider search, then continues with the remaining searches."
+          "Queries are run against exactly 2 sources: Wikimedia Commons and Openverse.",
+          "Each source call uses the same per-query limit, defaulting to \"10\" images.",
+          "Deduplication is exact-match URL based across all queries and both sources.",
+          "Non-ASCII characters are replaced only in printed query text; the original query is sent to search functions."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Executes every planned search string against Wikimedia Commons and then Openverse, collecting returned image metadata into one candidate pool. Each retained record is labeled with its source provider (`wikimedia` or `openverse`), and duplicate image URLs are removed across queries and across both providers. Although the maintainer note mentions quality filtering, this function contains no quality-score calculation or rejection; it returns all URL-unique search hits.",
-        "why_this_design": "A single `seen_urls` set spans both source loops, so a URL found repeatedly is retained only once. Because Commons is searched first, an image available from both services keeps the Commons-tagged record, making source precedence deterministic while avoiding duplicate downstream matching candidates."
+        "what_it_does": "Runs every planned image query against Wikimedia Commons first and then Openverse, collecting returned image metadata into one candidate list. It marks each retained record with its source provider and returns only the first occurrence of each image URL.",
+        "why_this_design": "Commons is searched before Openverse so URL-level duplicates retain the Commons metadata and provider label. Search failures are isolated to an individual query and source pass, allowing the remaining searches to continue."
+      }
+    },
+    "p_img_filter": {
+      "fingerprint": "c68ee377c560a73e",
+      "summary": {
+        "constraints": [
+          "Default minimum score: \"10.0\" out of \"45\".",
+          "An image is retained when its score is greater than or equal to the threshold.",
+          "Retained images receive a \"quality_score\" field.",
+          "Output is sorted by \"quality_score\" in descending order."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Computes a quality score for every image candidate using the supplied person name, event date, and event title/description, along with each image's metadata. It retains images meeting the minimum score, adds the computed score to retained metadata for debugging or logging, and returns those candidates in descending score order for the downstream image-matching stage.",
+        "why_this_design": "Scoring occurs before filtering and sorting so the next stage receives a ranked candidate set rather than every retrieval hit. The score is attached only after an image passes the threshold, keeping rejected items out of the returned diagnostic payload."
       }
     },
     "p_img_match": {
@@ -424,17 +438,17 @@
       }
     },
     "p_style": {
-      "fingerprint": "6594aa9db0200f3f",
+      "fingerprint": "04d10a5c9a293a05",
       "summary": {
         "constraints": [
-          "Returns strict JSON parsed with `json.loads`, requesting `primary`, `secondary`, `background`, `background_pattern_svg`, `separator_glyph_svg`, `heading_font`, and `body_font`.",
-          "`primary`, `secondary`, and `background` must use `#RRGGBB`; the background’s perceived luminance must be under `0.18`.",
-          "The pattern must be a tileable `160x160` SVG using only `#000000` and `#FFFFFF`—no gray, gradients, opacity attributes, or non-geometric/figurative imagery.",
-          "The separator glyph should use only the primary color, fit a roughly `32x32` viewBox, contain at most `2-3` simple geometric shapes, and remain non-directional and readable at `16-24px`."
+          "Returns strict JSON with exactly these named fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, heading_font, body_font.",
+          "primary, secondary, and background must use #RRGGBB; background luminance must be below 0.18, and the foreground colors must contrast with it and each other.",
+          "background_pattern_svg must be a tileable 160x160 SVG using only #000000 and #FFFFFF; gray values, gradients, opacity attributes, and non-geometric or figurative imagery are forbidden.",
+          "separator_glyph_svg should use the primary color, fit a roughly 32x32 viewBox, contain at most 2-3 simple geometric shapes, and remain non-directional and legible at 16-24px."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Asks a GPT-5.1 Responses API call to create a dark-mode interface identity for a biographical data story, using the subject identifier and requested subject as context. The requested JSON supplies three colors, a repeating background-pattern SVG, a small separator-glyph SVG, and heading/body font choices intended to evoke the person’s era, field, personality, and contributions.",
-        "why_this_design": "The background pattern is limited to opaque black and white while the separator may use the generated primary color. This preserves a high-contrast, tile-safe decorative layer without consuming the palette or relying on opacity, while allowing the foreground identity to remain person-specific."
+        "what_it_does": "Creates a dark-mode visual system for a personal-story interface from the subject identifier and requested subject. It asks for three interface colors, a repeating monochrome SVG background pattern, a small themed separator glyph, and heading/body font selections, then parses the completed JSON response into a dictionary for downstream use.",
+        "why_this_design": "The background texture is restricted to opaque pure black and white so its visual hierarchy comes from geometry and stroke weight rather than translucent overlays or near-black shades that may render inconsistently. The prompt ties abstract geometric choices to the subject’s era, field, and working style, aiming to make a reusable tile feel biographical rather than decorative."
       }
     },
     "p_translate": {

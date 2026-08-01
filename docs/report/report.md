@@ -64,6 +64,8 @@ Both pipelines are directed acyclic graphs rather than sequences, and the figure
 
 Each step in those figures is an address rather than a label. Opening one gives the record behind it: the function and line that implement it, the model and reasoning effort it resolves, the output schema it fills, what it reads and writes, the steps it needs and feeds, and the prompts it sends. On paper the same records are laid out for every step as an appendix.
 
+That record is measured from the code, but the explanation printed above it is not: each step is described by a model, from its own source, prompt, and output schema, and rewritten whenever one of the three changes.^[The explanation is cached against a fingerprint of exactly those inputs, so a rebuild re-describes only the steps that moved. The description is attributed where it appears, and it is the one place in this report where prose is generated rather than authored or measured—which is also why a model name it repeats out of a source comment is a build error rather than an editorial matter.] It is disclosed as such wherever it is shown, on the same principle the system applies to what it publishes about its subjects.
+
 Each step belongs to one of [[kinds|four kinds]], which is what the figures color it by. The classification partitions both pipelines by failure mode and by cost, and thus determines what may be re-run freely, what must be paid for, what depends on the availability and stability of an external service, and what can be verified by assertion.
 
 ::: kindlegend

@@ -193,10 +193,11 @@ GROUPS: List[Group] = [
     Group(
         "imagery",
         "Imagery",
-        ["p_img_search", "p_img_fetch", "p_img_match", "p_portrait"],
+        ["p_img_search", "p_img_fetch", "p_img_filter", "p_img_match", "p_portrait"],
         note=(
-            "One job: plan the searches, run them, match the hits to events, and "
-            "style-transfer the portrait the match picked—which happens far "
+            "One job: plan the searches, run them, score what comes back, match "
+            "the survivors to events, and style-transfer the portrait the "
+            "match picked—which happens far "
             "enough downstream that the chart bands it separately."
         ),
     ),
@@ -480,11 +481,26 @@ STEPS: List[Step] = [
         "generate_person_events.py",
         "execute_batch_image_search",
         summary=(
-            "Runs every planned query against Wikimedia Commons and Openverse, "
-            "deduplicates the hits and drops the ones that fail a permissive "
-            "quality score, so the matching call sees candidates rather than noise."
+            "Runs every planned query against Wikimedia Commons and Openverse "
+            "and deduplicates the hits by URL, keeping the Commons record when "
+            "both services return the same picture."
         ),
         depends_on=[Dep("p_img_search", "the planned search strings")],
+    ),
+    Step(
+        "p_img_filter",
+        "Score and rank the candidates",
+        SHARED,
+        CODE,
+        "generate_person_events.py",
+        "filter_images_by_quality",
+        summary=(
+            "Scores every hit on resolution, file efficiency, how close it "
+            "falls to the life it illustrates, and its categories, then drops "
+            "the ones under a permissive threshold and ranks the rest—so the "
+            "matching call sees candidates rather than noise."
+        ),
+        depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
     ),
     Step(
         "p_img_match",
@@ -498,7 +514,7 @@ STEPS: List[Step] = [
             "preserving the attribution each image requires. The same call picks "
             "the person's reference portrait."
         ),
-        depends_on=[Dep("p_img_fetch", "the filtered image candidates")],
+        depends_on=[Dep("p_img_filter", "the ranked image candidates")],
         prompts=["match_images_to_events"],
     ),
     Step(

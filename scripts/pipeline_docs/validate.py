@@ -21,6 +21,7 @@ cites are a warning only—they cost a measurement, not a claim.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set
@@ -29,6 +30,9 @@ from . import bibliography, concepts, screenshots, spec, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
+
+# A model as prose names one: a family and a version, however it is spelled.
+MODEL_NAME = re.compile(r"(?i)\b(?:gpt|claude|gemini|llama|mistral|o)[-\s]?\d[\w.\-]*")
 
 
 @dataclass
@@ -299,6 +303,52 @@ def check(codebase: Codebase) -> List[Problem]:
     for message in concepts.check_icons():
         problems.append(Problem("error", "concepts", message))
 
+    return problems
+
+
+def check_summaries(
+    codebase: Codebase, summaries: Dict[str, Dict[str, object]]
+) -> List[Problem]:
+    """Model names in the written explanations, against the resolved ones.
+
+    A summary is written from the step's source, and source carries comments a
+    model reads as fact—one of them said `GPT-5.1` long after the call resolved
+    to something else, and the report printed both on one panel. The resolved
+    model is measured beside the text, so the text naming a *different* one is
+    drift of the kind this build refuses everywhere else. Reworded prose is
+    cheap; a wrong model in a report about which models a pipeline calls is not.
+    """
+    problems: List[Problem] = []
+    for step in spec.STEPS:
+        summary = summaries.get(step.id) or {}
+        if summary.get("source") in (None, "spec.py"):
+            continue  # Hand-written text is the maintainer's own claim.
+        resolved = {
+            call.model_value.split(" (")[0].strip().lower()
+            for call in codebase.all_ai_calls()
+            if call.model_value
+            and call.script == step.script.rsplit("/", 1)[-1]
+            and call.function.split(".")[-1] == step.function
+        }
+        parts: List[str] = [
+            str(summary.get("what_it_does") or ""),
+            str(summary.get("why_this_design") or ""),
+        ]
+        rules = summary.get("constraints")
+        if isinstance(rules, list):
+            parts += [str(rule) for rule in rules]
+        for name in sorted(set(MODEL_NAME.findall(" ".join(parts)))):
+            if name.lower().replace(" ", "-") in resolved:
+                continue
+            problems.append(
+                Problem(
+                    "error",
+                    f"summary '{step.id}'",
+                    f"names the model '{name}', which is not what this step "
+                    "resolves—re-summarize the step, and keep model names out "
+                    "of the source comments the summarizer reads",
+                )
+            )
     return problems
 
 

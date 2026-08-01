@@ -24,9 +24,11 @@ The report is half written and half measured, and the two halves never mix.
    interface can be retaken instead of being pasted in.
 
 `--check` runs only the drift checks: it fails when a documented step no longer
-exists, when a model call site is not claimed by any step in `spec.py`, or when
-the report cites a fact or mounts a component that no longer resolves. That makes
-it safe to wire into CI without needing an API key.
+exists, when a model call site is not claimed by any step in `spec.py`, when the
+report cites a fact or mounts a component that no longer resolves, or when a
+cached step explanation names a model that step does not resolve. It reads the
+summary cache rather than writing it, so it stays safe to wire into CI without
+needing an API key.
 """
 
 from __future__ import annotations
@@ -45,7 +47,7 @@ from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import render, report, screenshots, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
-from pipeline_docs.summarize import summarize_steps  # noqa: E402
+from pipeline_docs.summarize import cached_summaries, summarize_steps  # noqa: E402
 
 OUT_DIR = REPO_ROOT / "docs" / "report"
 DEFAULT_OUT = OUT_DIR / "index.html"
@@ -169,6 +171,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if args.check:
+        print("Checking the written explanations ...")
+        cached = cached_summaries(SUMMARY_CACHE)
+        print(f"  {len(cached)} cached step summaries.")
+        if validate.report(
+            validate.check_summaries(codebase, cached), subject="Summaries"
+        ):
+            print(
+                "\nRe-summarize the affected steps: "
+                "python scripts/generate_report.py"
+            )
+            return 1
         return 0
 
     print("Collecting step summaries ...")
@@ -180,6 +193,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         force=args.force_summaries,
         verbose=args.verbose,
     )
+    if validate.report(
+        validate.check_summaries(codebase, summaries), subject="Summaries"
+    ):
+        return 1
 
     album = screenshots.collect(document)
     shots = screenshots.payload(album)

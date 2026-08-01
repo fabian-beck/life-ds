@@ -1935,6 +1935,22 @@
       });
       body.appendChild(list);
     }
+    /* Whose words those were. Everything under "Facts from the source" is
+       measured from the code; the explanation above it is not, and a report
+       that argues for traceability cannot print generated prose unattributed.
+       `spec.py` marks the hand-written fallback, which needs no notice. */
+    if (summary.source && summary.source !== "spec.py") {
+      body.appendChild(
+        el("p", {
+          class: "sub",
+          text:
+            "Explanation written by " +
+            summary.source +
+            " from this step's source, prompt, and output schema, and rewritten " +
+            "when any of the three changes. The record below is measured.",
+        })
+      );
+    }
 
     body.appendChild(el("h3", { text: "Facts from the source" }));
     const table = el("table", { class: "facts" });
@@ -3421,7 +3437,6 @@
         ["Version", DATA.version || DATA.generated_at],
         ["Built", DATA.generated_at],
         ["Commit", DATA.commit || "—"],
-        ["Branch", DATA.branch || "—"],
         ["Report source", (DATA.report && DATA.report.source) || "—"],
       ];
       const list = el("dl", { class: "buildinfo" });

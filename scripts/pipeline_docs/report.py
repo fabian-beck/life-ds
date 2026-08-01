@@ -135,7 +135,7 @@ COMPONENTS: Dict[str, ComponentSpec] = {
     for spec in [
         ComponentSpec(
             "buildinfo",
-            "Commit, branch and build time of this rendering.",
+            "Commit and build time of this rendering.",
         ),
         ComponentSpec(
             "teaser",

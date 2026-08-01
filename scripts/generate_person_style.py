@@ -430,7 +430,8 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "IMPORTANT: All output text must be in American English only, regardless of the source language."
     )
     try:
-        # Use Responses API for GPT-5.1 with reasoning support
+        # The Responses API, so the configured model can be given a reasoning
+        # effort. Which model that is comes from `config.py`, never from here.
         response = client.responses.create(
             model=model,
             reasoning=cast(Any, {"effort": DEFAULT_REASONING_EFFORT}),
