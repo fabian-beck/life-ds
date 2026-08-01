@@ -365,6 +365,7 @@ def check_report(
         )
 
     problems.extend(_check_teaser(document, facts))
+    problems.extend(_check_conceptlegend(document))
     problems.extend(_check_screenshots(document))
     problems.extend(_check_principles(document))
     problems.extend(_check_references(document))
@@ -422,6 +423,41 @@ def _check_teaser(document: Document, facts: Dict[str, Fact]) -> List[Problem]:
                         "report.md",
                         f"teaser part '{part_id}' is drawn but no phrase "
                         "references it",
+                    )
+                )
+    return problems
+
+
+def _check_conceptlegend(document: Document) -> List[Problem]:
+    """The legend and the prose that introduces it have to cover each other.
+
+    An unknown or unlisted id already fails in the compiler. What is left is the
+    relation the legend exists for: a perspective the reader is shown but that
+    no sentence puts to work is a row of a table rather than part of an
+    argument, and a reference with no legend to point into is a dead link.
+    """
+    problems: List[Problem] = []
+    mounted = any(mount.component == "conceptlegend" for mount in document.mounts)
+
+    if document.conceptrefs and not mounted:
+        problems.append(
+            Problem(
+                "error",
+                "report.md",
+                "the prose references the concept legend, but no "
+                "'::: conceptlegend' block prints it",
+            )
+        )
+
+    if mounted:
+        for concept_id in concepts.legend_ids():
+            if concept_id not in document.conceptrefs:
+                problems.append(
+                    Problem(
+                        "warning",
+                        "report.md",
+                        f"concept '{concept_id}' is listed in the legend but no "
+                        "sentence references it",
                     )
                 )
     return problems

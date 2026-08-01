@@ -12,6 +12,11 @@ visual identity, theme, languages—each with an id the rest of the docs build
 refers to, and each marked as the one thing read from outside or as something
 derived from it.
 
+`legend` is a narrower question than `role`: which of them the data model
+section prints as the core of the derived record. The vocabulary is wider than
+that core, because a figure or a step drawer has to name what it carries
+whether or not the legend lists it.
+
 Every concept carries an icon, and the icons are the interface's own: they are
 Material Design Icons, named exactly as `@mdi/js` exports them, and where the
 application already draws a concept it draws the same glyph. The network button
@@ -53,6 +58,13 @@ class Concept:
     maintainer's justification for the icon, not page copy: the report explains
     the interface in its own section and has no business doing it again in a
     legend, so this never reaches the payload.
+
+    `legend` says whether the data model section lists the concept as one of the
+    perspectives a biography is turned into. The input is excluded because that
+    section is about what the system derives; the theme and the languages are
+    excluded because they are second-order—a theme is derived from finished
+    stories rather than from a biography, and a language is every one of these
+    perspectives again rather than another one.
     """
 
     id: str
@@ -62,6 +74,7 @@ class Concept:
     blurb: str
     interface: str
     role: str = DERIVED
+    legend: bool = True
 
 
 CONCEPTS: Tuple[Concept, ...] = (
@@ -73,6 +86,7 @@ CONCEPTS: Tuple[Concept, ...] = (
         "does not produce itself.",
         "The sources listed under every event, and the links that close a story.",
         role=INPUT,
+        legend=False,
     ),
     Concept(
         "profile",
@@ -99,6 +113,14 @@ CONCEPTS: Tuple[Concept, ...] = (
         "The long-form text of an event slide and of a meta story’s sections.",
     ),
     Concept(
+        "imagery",
+        "Imagery",
+        "mdi-image-outline",
+        "Licensed illustrations matched to the events they depict, and the "
+        "portrait derived from one of them.",
+        "The pictures on an event slide, the lightbox, and every portrait.",
+    ),
+    Concept(
         "places",
         "Geography",
         "mdi-map-marker-outline",
@@ -115,14 +137,6 @@ CONCEPTS: Tuple[Concept, ...] = (
         "The network button above a story and the force-directed graph it opens.",
     ),
     Concept(
-        "imagery",
-        "Imagery",
-        "mdi-image-outline",
-        "Licensed illustrations matched to the events they depict, and the "
-        "portrait derived from one of them.",
-        "The pictures on an event slide, the lightbox, and every portrait.",
-    ),
-    Concept(
         "identity",
         "Visual identity",
         "mdi-palette-outline",
@@ -137,6 +151,7 @@ CONCEPTS: Tuple[Concept, ...] = (
         "An idea traced across several finished biographies—the second-order "
         "story, and the only one whose inputs are this system’s own output.",
         "The meta stories on the landing page and the lives they link into.",
+        legend=False,
     ),
     Concept(
         "languages",
@@ -145,6 +160,7 @@ CONCEPTS: Tuple[Concept, ...] = (
         "Every document in every supported language, each carrying a "
         "fingerprint of the text it was derived from.",
         "The language selector, and the address of every localized story.",
+        legend=False,
     ),
 )
 
@@ -181,6 +197,11 @@ def concept_by_id(concept_id: str) -> Optional[Concept]:
     return None
 
 
+def legend_ids() -> List[str]:
+    """The concepts the data model section lists, in the order it lists them."""
+    return [concept.id for concept in CONCEPTS if concept.legend]
+
+
 def icon_of(concept_id: str) -> str:
     """The SVG path data a page draws for a concept, or an empty string."""
     concept = concept_by_id(concept_id)
@@ -189,7 +210,7 @@ def icon_of(concept_id: str) -> str:
     return ICON_PATHS.get(concept.icon, "")
 
 
-def to_json() -> List[Dict[str, str]]:
+def to_json() -> List[Dict[str, object]]:
     """The vocabulary as the payload carries it, icon path included.
 
     Without `interface`: where the application draws the same glyph is why the
@@ -204,6 +225,7 @@ def to_json() -> List[Dict[str, str]]:
             "path": ICON_PATHS.get(concept.icon, ""),
             "blurb": concept.blurb,
             "role": concept.role,
+            "legend": concept.legend,
         }
         for concept in CONCEPTS
     ]

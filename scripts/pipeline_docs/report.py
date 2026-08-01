@@ -32,6 +32,13 @@ The authoring surface is small on purpose:
     that concept's glyph—the same glyph the figures and the interface use—so a
     reader meets the vocabulary in the sentence that introduces it.
 
+`<<concept|phrase>>` / `<<concept>>`
+    A reference from a phrase into an entry of the concept legend, resolved
+    against `concepts.CONCEPTS`. It carries the concept's glyph and reads as
+    ordinary prose, so the sentence names a perspective on a life while the
+    page keeps what that perspective *is* in the legend: the popover shows the
+    entry, and on paper the link resolves against the printed list.
+
 `[@key]` / `[@key; @other]`
     A citation of published work, resolved against `docs/report/references.bib`
     the same way a fact is resolved against `facts.py`. Numbering follows first
@@ -221,6 +228,7 @@ DIRECTIVE_CLOSE = re.compile(r"^:::\s*$")
 HEADING = re.compile(r"^(#{2,4})\s+(.*?)\s*$")
 CITATION = re.compile(r"(?<!\\)\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}")
 FIGREF = re.compile(r"(?<!\\)\[\[\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^\]]+?)\s*)?\]\]")
+CONCEPTREF = re.compile(r"(?<!\\)<<\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^>]+?)\s*)?>>")
 PRINCIPLE_REF = re.compile(r"(?<!\\)\(\(\s*([a-z][a-z0-9-]*)\s*\)\)")
 PRINCIPLE_ITEM = re.compile(r"^@([a-z][a-z0-9-]*)\s+(\S.*?)\s*$")
 PRINCIPLES_BLOCK = "principles"
@@ -349,6 +357,7 @@ class Document:
     citations: List[str]
     source_path: str
     figrefs: List[str] = field(default_factory=list)
+    conceptrefs: List[str] = field(default_factory=list)
     notes: List[Note] = field(default_factory=list)
     refcites: List[str] = field(default_factory=list)
     references: List[Reference] = field(default_factory=list)
@@ -643,6 +652,48 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
 
     substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
     return substituted.replace("\\[[", "[[")
+
+
+def substitute_conceptrefs(text: str, seen: List[str], line_hint: str = "") -> str:
+    """Replace `<<concept|phrase>>` with a link into the concept legend.
+
+    The legend says what each perspective is, and the prose that introduces
+    them says what they are for. Keeping the phrase a reference rather than a
+    gloss is what stops the two from saying the same thing twice: the sentence
+    names the perspective, and the entry it points at defines it, once.
+
+    A real link, like a principle's number: the popover is the screen reading,
+    and on paper the reference resolves against the printed legend below it.
+    """
+
+    def replace(match: re.Match) -> str:
+        concept_id = match.group(1)
+        phrase = match.group(2)
+        concept = concepts.concept_by_id(concept_id)
+        if concept is None:
+            raise ReportError(
+                f"{line_hint}unknown concept '<<{concept_id}>>'—the vocabulary "
+                "holds " + ", ".join(concepts.concept_ids())
+            )
+        if not concept.legend:
+            raise ReportError(
+                f"{line_hint}concept '<<{concept_id}>>' is not listed in the "
+                "legend, so the reference would point at nothing—the legend "
+                "lists " + ", ".join(concepts.legend_ids())
+            )
+        seen.append(concept_id)
+        label = phrase if phrase else concept.label
+        return (
+            f'<a class="cref" href="#concept-{_escape(concept_id)}" '
+            f'data-pop-label="{_escape(concept.label)}" '
+            f'aria-describedby="concept-{_escape(concept_id)}" '
+            f'aria-label="{_escape(label)}—{_escape(concept.label)} in the '
+            'legend">'
+            f"{concept_glyph(concept_id)}{_escape(label)}</a>"
+        )
+
+    substituted = _outside_fences(text, lambda line: CONCEPTREF.sub(replace, line))
+    return substituted.replace("\\<<", "<<")
 
 
 # ---------------------------------------------------------------------------
@@ -1211,6 +1262,7 @@ def compile_report(
 
     citations: List[str] = []
     figrefs: List[str] = []
+    conceptrefs: List[str] = []
     refcites: List[str] = []
     prefs: List[str] = []
     principles = collect_principles(blocks)
@@ -1232,6 +1284,7 @@ def compile_report(
         # Figure references first: a reference's phrase is plain prose, and a
         # citation inside one should still resolve.
         text = substitute_figrefs(block.text, figrefs, hint)
+        text = substitute_conceptrefs(text, conceptrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
         text = substitute_refcites(text, works, refcites, hint)
         text = substitute_principle_refs(text, principles, prefs, hint)
@@ -1311,6 +1364,7 @@ def compile_report(
         citations,
         source_path,
         figrefs,
+        conceptrefs,
         notes,
         refcites,
         references,

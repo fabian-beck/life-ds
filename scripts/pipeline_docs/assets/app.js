@@ -3635,33 +3635,26 @@
       );
     },
 
-    /* The vocabulary itself, once, where the report first uses it, split at the
-       line the data model turns on: what arrives from outside, and what the
-       pipelines make of it. */
+    /* The vocabulary itself, once, where the report first uses it: the
+       perspectives a biography is turned into, in the order the paragraph above
+       introduces them. Each description carries the id its references point at,
+       so a phrase in the prose opens the entry that defines it. */
     conceptlegend: function (mount) {
-      [
-        { role: "input", label: "Input" },
-        { role: "derived", label: "Output" },
-      ].forEach((group) => {
-        const members = (DATA.concepts || []).filter((concept) => {
-          return concept.role === group.role;
-        });
-        if (!members.length) return;
-        mount.appendChild(
-          el("p", { class: "conceptgroup", text: group.label })
-        );
-        const list = el("dl", { class: "conceptlist" });
-        members.forEach((concept) => {
+      const list = el("dl", { class: "conceptlist" });
+      (DATA.concepts || [])
+        .filter((concept) => concept.legend)
+        .forEach((concept) => {
           list.appendChild(
             el("dt", {}, [
               glyph(concept.path, "glyph big"),
               el("span", { text: concept.label }),
             ])
           );
-          list.appendChild(el("dd", { text: concept.blurb }));
+          list.appendChild(
+            el("dd", { id: "concept-" + concept.id, text: concept.blurb })
+          );
         });
-        mount.appendChild(list);
-      });
+      mount.appendChild(list);
     },
 
     modeltable: function (mount, params, numbers) {
@@ -4100,11 +4093,11 @@
      of the text, so the two renderings cannot drift apart. It is positioned in
      document coordinates, so it stays on its marker while the reader
      scrolls. */
-  const POP_REF = ".noteref, .pref, .refref";
+  const POP_REF = ".noteref, .pref, .refref, .cref";
 
   function renderPopovers() {
     const refs = document.querySelectorAll(
-      ".report .noteref, .report .pref, .report .refref"
+      ".report .noteref, .report .pref, .report .refref, .report .cref"
     );
     if (!refs.length) return;
     if (document.querySelector(".report .noteref")) {

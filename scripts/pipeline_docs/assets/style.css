@@ -1134,16 +1134,10 @@ p.cap {
   color: var(--ink-2);
 }
 
-/* Input above, output below: the one distinction the data model turns on, so
-   it is a heading rather than a column. */
-.conceptgroup {
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+/* The description is what a reference lands on, so it is the row that flashes
+   when the reader follows one. */
+.conceptlist dd:target {
+  color: var(--ink);
 }
 
 /* A named artifact in the step drawer: the concept's mark, then what the
@@ -1169,6 +1163,37 @@ p.cap {
 .figref:hover .glyph,
 .figref:focus-visible .glyph,
 .figref.is-lit .glyph {
+  color: var(--ink);
+}
+
+/* A phrase that names one of the perspectives the legend below defines. It
+   carries the same mark in the same register as a reference into the figure;
+   what differs is where it points, and the legend—not a square—is the mark of
+   that. */
+.report .cref {
+  border-bottom: 1px dotted var(--muted);
+  color: inherit;
+  text-decoration: none;
+}
+
+.report .cref .glyph {
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 4px;
+  color: var(--muted);
+  vertical-align: -0.07em;
+}
+
+.report .cref:hover,
+.report .cref:focus-visible,
+.report .cref.open {
+  border-bottom-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.report .cref:hover .glyph,
+.report .cref:focus-visible .glyph,
+.report .cref.open .glyph {
   color: var(--ink);
 }
 

@@ -29,9 +29,9 @@ abstract:
 
 ## Introduction
 
-[[sources|Encyclopedic biography]] is a rich and well-sourced account of a life, written as continuous prose in long-form articles. Its temporal, geographic, and relational structure is present throughout the text and largely implicit in it, available only in the order the article takes. A reader who wants to explore the shape of the life—its phases, its movements, the people who recur in it—reconstructs that shape while reading.
+[[sources|Encyclopedic biography]] is a rich and well-sourced account of a life, written as continuous prose in long-form articles. Reading a life in that order is natural, but it keeps every other point of access in the background. The biography's temporal, geographic, and relational structure is present throughout the text, yet rather implicit, available only in the order the article takes. A reader who wants to explore that structure—the phases of a life, its movements, the people who recur in it—reconstructs it while reading.
 
-Life Data Stories makes the shape explicit and explorable. It derives from the source prose [[events|a set of discrete events]], each with a resolved date, a place located on a modern map, the persons involved, and the illustrations available for it. It groups those events into the phases of a life and presents the result simultaneously as [[prose|narrative text]], as [[timeline|a chronology]], as [[map|a geography]], and as [[graph|a social network]]. The same derivation applied across several biographies yields [[meta-story|a meta story]], in which a theme is traced through the lives that share it.
+Life Data Stories makes that structure explicit and explorable. It derives from the source prose [[events|a set of discrete events]], each with a resolved date, a place located on a modern map, the persons involved, and the illustrations available for it. It groups those events into the phases of a life and presents the result simultaneously as [[prose|narrative text]], as [[timeline|a chronology]], as [[map|a geography]], and as [[graph|a social network]]. The same derivation applied across several biographies yields [[meta-story|a theme]]: an idea traced through the lives that share it. A theme is presented as [[sections|a meta story]], one continuous document that carries the same encodings across all of its subjects at once—one timeline with a lane per life, one map, and one network merged from theirs.
 
 Segel and Heer, surveying how data is used to tell stories, place such a presentation on a spectrum between the author-driven, in which a fixed order carries the message, and the reader-driven, in which the audience decides what to look at [@segel2010narrative]. A story in Life Data Stories is author-driven at first glance and reader-driven in its depth. The sequence is fixed when the story is generated and can simply be followed to the end; the timeline that doubles as a control, the network opened on demand, the images as a gallery, and the cards leading into other lives are all available and none of them is required. A meta story is linear in the same way, and at any point along it the lives it draws on are open to be entered. The same three encodings appear at the reader-driven end of that spectrum in VisKonnect, which connects historical figures through the events they have in common [@latif2021viskonnect]: a reader's prompt retrieves the matching events from an event knowledge graph, and an event timeline, an event map, and a relationship graph are shown beside a short answer.
 
@@ -51,41 +51,25 @@ A meta story is derived from finished biographies. The corpus is a graph: every 
 Palette, typography, and pattern are generated per story—for a life and for a theme alike—and carried in the data, so visual identity travels with the story rather than with the application.
 :::
 
-## Architecture
-
-The two halves of the system communicate exclusively through the data one writes and the other reads, and each is decomposed along a different axis. Generation is decomposed into *steps*: individually addressable units of work, some of which issue a prompt to a model while the rest are deterministic code or plain HTTP retrieval. Presentation is decomposed into the units through which a reader advances: [[slides|slides in a person's story]], [[sections|sections in a meta story]]. The two axes answer different questions. A step is the granularity at which work is cached, re-run, priced, and tested; a slide or section is the granularity at which the reader's attention is directed and at which a position in a story becomes an address.
-
-### A taxonomy of steps
-
-Each step belongs to one of [[kinds|four kinds]]. The classification partitions the pipeline by failure mode and by cost, and thus determines what may be re-run freely, what must be paid for, what depends on the availability and stability of an external service, and what can be verified by assertion.
-
-::: kindlegend
-:::
-
-The ratio between the kinds is the principal design variable. Inference steps are what make the task possible; deterministic steps are what make the result testable. The system therefore confines non-determinism to the steps that genuinely require judgment and keeps the remainder—clustering, geocoding, chapter fitting, network merging, translation bookkeeping—deterministic, so that everything downstream of an inference is reproducible and assertable.
-
 ## Data model
 
-One thing is read and everything else is derived from it. What is read is [[sources|encyclopedic source material]]: continuous prose about a life, together with the images that accompany it and the historic place names it uses. What is derived is everything below—the concepts this report speaks in, each written with the glyph that stands for it in every figure that follows and in the application itself.
+At the core of the approach is the data that connects story generation and the interface, and it is the central abstraction of the system. What goes in is narrow: textual biographies, and nothing else. What comes out is multi-faceted—several structured perspectives on the same biography, each of which can be read on its own, and none of which discards the narrative the prose carried. Some of them are derived directly from the article: <<profile|the subject>> a story is about, the <<events|events>> that constitute a life, the <<narrative|text>> that tells them, and the <<imagery|pictures>> that illustrate them. Others are more interpretive, and are stated by no article as such: the <<places|geography>> a life traces, which resolves historical toponyms to modern coordinates, the <<network|social network>> behind it, and the <<identity|visual identity>> in which it is presented.
 
 ::: conceptlegend
 :::
-
-A [[registry|profile]] is what the corpus is indexed by, and the correspondence is exact in both directions: a story no profile names is invisible, and a profile with no story behind it is a broken reference.
-
-The [[events|life events]] are the spine of a biography ((one-record)). An event is one record and carries everything about the episode it names—its date, its place, the persons it involved, the text that describes it, the pictures that illustrate it, and the sources it was researched from—which is why the narrative, the chronology, the geography, and the imagery of a story cannot contradict one another. They are four readings of one record rather than four accounts of one life.^[Events are grouped into chapters that name the phases of a life, and the grouping is a property of the record too: a chapter is a span of the same events the other encodings read, not a second structure laid over them.]
-
-The [[ego-network|social network]] is derived beside the narrative rather than from it. Relationships are researched on their own pass and recorded typed, weighted, and dated, so a life may be told before its network exists, and either may be redone without disturbing the other.
-
-A [[meta-story|theme]] reverses the direction of the whole system ((second-order)): its input is this system's own output. Finished lives are re-read, their events judged against the theme, and their networks merged into one graph, which is the only place where what was generated becomes what is consumed—and the coupling between the two pipelines is that data alone, never shared code.
-
-Two of the derived concepts belong to no single story. A visual identity is generated per subject and carried with it, and every text exists in each supported language; both are treated where they take effect, in the interface and in localization.
 
 ## Generation
 
 Both pipelines are directed acyclic graphs rather than sequences, and the figures below draw them as such.^[The `main()` that orchestrates each script is deliberately not drawn as a step. It fixes an execution order without creating a data dependency, and drawing it made every fork read as a chain.] A step's vertical position is the length of the longest chain of data dependencies reaching it, so steps drawn side by side are genuinely independent and may execute in either order. Every edge is labeled with the data that travels along it, and the concerns that span several layers are aligned into vertical strands under a name. The edges are the direct ones only: a dependency that a longer chain already implies is omitted rather than drawn beside it.^[Image matching reads the event skeletons, but it is reached from them through the search planning and the search itself, and the second line said nothing the first did not. What such a step reads is still recorded in its own entry.]
 
 Each step in those figures is an address rather than a label. Opening one gives the record behind it: the function and line that implement it, the model and reasoning effort it resolves, the output schema it fills, what it reads and writes, the steps it needs and feeds, and the prompts it sends. On paper the same records are laid out for every step as an appendix.
+
+Each step belongs to one of [[kinds|four kinds]], which is what the figures color it by. The classification partitions both pipelines by failure mode and by cost, and thus determines what may be re-run freely, what must be paid for, what depends on the availability and stability of an external service, and what can be verified by assertion.
+
+::: kindlegend
+:::
+
+The ratio between the kinds is the principal design variable. Inference steps are what make the task possible; deterministic steps are what make the result testable. The system therefore confines non-determinism to the steps that genuinely require judgment and keeps the remainder—clustering, geocoding, chapter fitting, network merging, translation bookkeeping—deterministic, so that everything downstream of an inference is reproducible and assertable.
 
 The pipelines instantiate a common pattern ((bottom-up)): material is first derived bottom-up by steps that each observe only their own slice of the subject, and is then revised top-down by a step that observes the assembled story. The pattern exists because locally optimal generation is globally redundant. A phase that sees only the social graph will describe the social graph, and so will the phase that later writes the surrounding prose, unless some step is given the whole document and the explicit task of distinguishing the two registers.
 
