@@ -324,3 +324,50 @@ test("core visitor journey", async ({ page }, testInfo) => {
   expect(pageErrors).toEqual([]);
   expect(missingAssets).toEqual([]);
 });
+
+// Blocking site data used to be fatal: both preference stores read
+// `localStorage` at module scope, and in a browser that refuses storage the
+// property exists and accessing it throws. The exception aborted the bootstrap,
+// so every route rendered a blank page with nothing to interact with.
+for (const [name, script] of [
+  [
+    "reads throw",
+    () => {
+      const boom = () => {
+        throw new DOMException("Access is denied", "SecurityError");
+      };
+      Object.defineProperty(window, "localStorage", { get: boom });
+    },
+  ],
+  [
+    "writes throw",
+    () => {
+      Object.defineProperty(window, "localStorage", {
+        value: {
+          getItem: () => null,
+          removeItem: () => {},
+          setItem: () => {
+            throw new DOMException("Quota exceeded", "QuotaExceededError");
+          },
+        },
+      });
+    },
+  ],
+]) {
+  test(`the app boots when localStorage ${name}`, async ({ page }) => {
+    const pageErrors = [];
+    page.on("pageerror", (error) => pageErrors.push(error.message));
+    await page.addInitScript(script);
+
+    await page.goto("en");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("status")).toContainText(/stories shown/i);
+
+    await page.goto("en#/en/story/ada_lovelace");
+    await expect(
+      page.locator('section[aria-label^="Overview: Ada Lovelace"]')
+    ).toBeVisible();
+
+    expect(pageErrors).toEqual([]);
+  });
+}

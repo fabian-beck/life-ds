@@ -1,4 +1,5 @@
 import { writable, derived } from "svelte/store";
+import { localStore } from "../utils/safeStorage.js";
 
 // Eagerly bundle every locale file. They are tiny (~8-9 KB each), so pulling
 // them into the entry chunk is cheap and — crucially — makes the strings
@@ -26,10 +27,7 @@ function getLocale(lang) {
 // Detect initial language from localStorage or browser
 const browserLang =
   typeof navigator !== "undefined" ? navigator.language.split("-")[0] : "en";
-const storedLang =
-  typeof localStorage !== "undefined"
-    ? localStorage.getItem("preferredLanguage")
-    : null;
+const storedLang = localStore.get("preferredLanguage");
 const initialLang = storedLang || (browserLang === "de" ? "de" : "en");
 
 // Current language code
@@ -42,9 +40,7 @@ export const translations = writable(getLocale(initialLang));
 // Keep the active strings, persisted preference, and document language in sync.
 currentLanguage.subscribe((lang) => {
   translations.set(getLocale(lang));
-  if (typeof localStorage !== "undefined") {
-    localStorage.setItem("preferredLanguage", lang);
-  }
+  localStore.set("preferredLanguage", lang);
   if (typeof document !== "undefined") {
     document.documentElement.lang = lang;
   }

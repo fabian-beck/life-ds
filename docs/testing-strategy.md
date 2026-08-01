@@ -17,6 +17,8 @@ It contains only safeguards for high-value failures:
 - one Playwright visitor journey in desktop and mobile Chromium, covering the
   landing page, search, opening and navigating a person story, the network
   modal, returning home, and entering and leaving a collection;
+- two boot checks for a browser that refuses site data, where an unguarded
+  storage access takes the whole application down with no error on screen;
 - the browser-independent person-name matcher cases, run once rather than in
   every browser project; and
 - focused Python regression checks for portrait file validation, keeping

@@ -7,8 +7,11 @@
  *
  * The value is kept in `sessionStorage`, keyed by meta story id, and consumed
  * (removed) on restore so a fresh visit from the landing page always starts at
- * the top.
+ * the top. Access goes through the shared safe-storage wrapper, so a browser
+ * that refuses storage costs the reader their scroll position and nothing more.
  */
+
+import { sessionStore } from "../utils/safeStorage.js";
 
 const KEY_PREFIX = "metaStoryScroll:";
 
@@ -23,11 +26,7 @@ function keyFor(metaStoryId) {
  */
 export function saveMetaStoryScroll(metaStoryId) {
   if (!metaStoryId || typeof window === "undefined") return;
-  try {
-    sessionStorage.setItem(keyFor(metaStoryId), String(window.scrollY));
-  } catch {
-    // sessionStorage may be unavailable (private mode / quota) — ignore.
-  }
+  sessionStore.set(keyFor(metaStoryId), String(window.scrollY));
 }
 
 /**
@@ -37,13 +36,9 @@ export function saveMetaStoryScroll(metaStoryId) {
  */
 export function consumeMetaStoryScroll(metaStoryId) {
   if (!metaStoryId || typeof window === "undefined") return null;
-  try {
-    const raw = sessionStorage.getItem(keyFor(metaStoryId));
-    if (raw === null) return null;
-    sessionStorage.removeItem(keyFor(metaStoryId));
-    const value = Number(raw);
-    return Number.isFinite(value) ? value : null;
-  } catch {
-    return null;
-  }
+  const raw = sessionStore.get(keyFor(metaStoryId));
+  if (raw === null) return null;
+  sessionStore.remove(keyFor(metaStoryId));
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : null;
 }
