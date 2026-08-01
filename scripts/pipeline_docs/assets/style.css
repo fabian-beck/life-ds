@@ -1003,13 +1003,15 @@ body.has-note-pop .notes {
    sets the size of running prose at the same weight and would otherwise print
    a caption at body size.
 
-   A caption is read, so it keeps the measure even where the figure under it is
-   twice that wide. In a margin figure it is narrower still: the block is 390
-   pixels and the caption is the block. */
+   A caption belongs to its figure rather than to the text column, so it takes
+   the width of the block it names and no clamp of its own: the whole width under
+   a drawing that uses it, 390 pixels in a margin figure, the measure in a block
+   that was already the measure. That is also what keeps the rule between a
+   caption and its drawing the drawing's own width instead of stopping short of
+   it—one object, one edge. The blocks are sized above; a caption only follows. */
 .cap,
 p.cap {
   margin: 0 0 10px;
-  max-width: var(--measure);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 13px;
@@ -2246,7 +2248,7 @@ figure.teaser > .cap {
   flex: 1 1 240px;
   margin: 0;
   min-width: 0;
-  max-width: var(--measure);
+  max-width: 96ch;
   font: inherit;
 }
 
