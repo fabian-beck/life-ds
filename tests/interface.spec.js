@@ -407,6 +407,60 @@ for (const [name, script] of [
   });
 }
 
+/* The room a slide keeps free below its content — for the story map, and for
+   the breathing space the chapter, conclusion, and overview slides ask for —
+   used to be bottom padding, and padding is part of what a slide scrolls
+   through. Slides whose content was entirely on screen still offered a scroll,
+   and following it revealed nothing but empty margin. */
+test("a slide scrolls only as far as its own content overruns it", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/ada_lovelace");
+  await expect(
+    page.locator('section[aria-label^="Overview: Ada Lovelace"]')
+  ).toBeVisible();
+  const slides = page.locator("section.slide");
+  await expect.poll(() => slides.count()).toBeGreaterThan(5);
+
+  // The reserve only shows as phantom scroll on a screen short enough for it to
+  // matter, so the sizes are named here rather than left to the project.
+  await expectNoPhantomScroll(page, { width: 390, height: 760 });
+  await expectNoPhantomScroll(page, { width: 360, height: 640 });
+});
+
+async function expectNoPhantomScroll(page, viewport) {
+  await page.setViewportSize(viewport);
+  const overscrolling = await page.evaluate(() => {
+    // The one thing below a slide's content that a reader may legitimately have
+    // to scroll into view is the gutter that keeps the last line clear of the
+    // timeline bar floating over it — 4rem at its widest.
+    const GUTTER = 64;
+    return [...document.querySelectorAll("section.slide")]
+      .map((slide, index) => {
+        const content = slide.querySelector(".content");
+        if (!content) return null;
+        // Every slide rests at the top of its own scroll, so this is how far
+        // the content plus its gutter reaches past the foot of the screen.
+        const reach =
+          content.getBoundingClientRect().bottom +
+          GUTTER -
+          slide.getBoundingClientRect().bottom;
+        const scrollable = slide.scrollHeight - slide.clientHeight;
+        // A pixel of slack: the two measurements round differently.
+        if (scrollable <= Math.max(0, reach) + 1) return null;
+        return {
+          index,
+          label: slide.getAttribute("aria-label"),
+          scrollable: Math.round(scrollable),
+          worthScrolling: Math.round(Math.max(0, reach)),
+        };
+      })
+      .filter(Boolean);
+  });
+
+  expect(overscrolling, `at ${viewport.width}x${viewport.height}`).toEqual([]);
+}
+
 /* A title is what a bookmark, a tab, and a search result show. The generic one
    was kept for collections, and stayed English on the German site. */
 test("the document title names the open story, in the reader's language", async ({

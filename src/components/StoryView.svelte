@@ -1313,6 +1313,7 @@
               {/if}
             </p>
           </div>
+          <div class="slide-reserve" aria-hidden="true"></div>
         </section>
       {:else if totalPanels > 0}
         {#each slides as slide, index (slide.type === "chapter" ? `chapter-${index}` : slide.type === "conclusion" ? "conclusion" : slide.eventIndex)}
@@ -1379,6 +1380,17 @@
                 onOpenNetwork={openNetworkModal}
               />
             {/if}
+            <!-- The room a slide keeps free below its content — for the story
+                 map, and for the breathing space the chapter, conclusion, and
+                 overview slides ask for — is held by this element rather than
+                 by the slide's own bottom padding. Padding is part of the
+                 scrollable area, so a fixed reserve made slides scroll whose
+                 content was already fully on screen: the scrollbar promised
+                 something below and delivered empty margin. As a flex item the
+                 reserve yields its height when there is not enough room for it,
+                 which leaves the slide scrolling only when the content itself
+                 overruns the screen. -->
+            <div class="slide-reserve" aria-hidden="true"></div>
           </section>
         {/each}
       {/if}
@@ -1874,7 +1886,11 @@
     }
 
     .slide {
-      padding: 0.15rem 1rem 2.5rem;
+      --slide-bottom-base: 2.5rem;
+      padding: 0.15rem 1rem var(--slide-bottom-base);
+    }
+
+    .loading-slide {
       gap: 0.25rem;
     }
 
@@ -1886,14 +1902,14 @@
 
     .slides-wrapper.map-enabled
       .slide:not(.overview):not(.chapter):not(.conclusion) {
-      padding-bottom: 12rem;
+      --slide-bottom-total: 12rem;
     }
 
     .slide.overview,
     .slide.chapter,
     .slide.conclusion {
       padding-top: 0.5rem;
-      padding-bottom: 6rem;
+      --slide-bottom-total: 6rem;
     }
   }
 
@@ -1942,13 +1958,18 @@
     flex: 0 0 100%;
     height: 100%;
     min-height: 100%;
-    padding: 0rem 1.5rem 3.25rem;
+    /* `--slide-bottom-base` is the padding every slide keeps no matter what:
+       enough to clear the timeline bar, which floats over the slides. Anything
+       a slide wants beyond it is a `--slide-bottom-total` that `.slide-reserve`
+       makes up, and gives back when the content needs the room. */
+    --slide-bottom-base: 3.25rem;
+    --slide-bottom-total: var(--slide-bottom-base);
+    padding: 0rem 1.5rem var(--slide-bottom-base);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     position: relative;
-    gap: 1.25rem;
     /* The top-to-bottom shading used to live on `.slide::before`, blended over
        exactly this color and nothing else. Folding it into the slide's own
        background is equivalent and frees the pseudo-element for the margin
@@ -1970,13 +1991,32 @@
     margin-bottom: auto;
   }
 
+  /* The content keeps its natural height: when a slide has to scroll it is the
+     reserve below that gives way first, and only once it is gone does the slide
+     scroll at all. */
+  .slide > .content {
+    flex-shrink: 0;
+  }
+
+  .slide-reserve {
+    flex: 0 1 calc(var(--slide-bottom-total) - var(--slide-bottom-base));
+    min-height: 0;
+    pointer-events: none;
+  }
+
+  /* The loading slide is the one slide with two stacked children of its own, so
+     the space between them belongs to it rather than to every slide. */
+  .loading-slide {
+    gap: 1.25rem;
+  }
+
   .slide-loaded {
     animation: fadeIn 0.3s ease-out;
   }
 
   .slides-wrapper.map-enabled
     .slide:not(.overview):not(.chapter):not(.conclusion) {
-    padding-bottom: 16rem;
+    --slide-bottom-total: 16rem;
   }
 
   /* The story map is the one thing that occupies a slide's lower margin, and it
@@ -2010,7 +2050,7 @@
   .slide.conclusion {
     justify-content: flex-start;
     padding-top: 1rem;
-    padding-bottom: 8rem;
+    --slide-bottom-total: 8rem;
     position: relative;
   }
 
@@ -2092,7 +2132,7 @@
   .slide.overview {
     justify-content: flex-start;
     padding-top: 1rem;
-    padding-bottom: 8rem;
+    --slide-bottom-total: 8rem;
     position: relative;
   }
 
@@ -2159,13 +2199,17 @@
     }
 
     .slide {
-      padding: 3.5rem 4rem 4rem;
+      --slide-bottom-base: 4rem;
+      padding: 3.5rem 4rem var(--slide-bottom-base);
+    }
+
+    .loading-slide {
       gap: 1.75rem;
     }
 
     .slides-wrapper.map-enabled
       .slide:not(.overview):not(.chapter):not(.conclusion) {
-      padding-bottom: 18rem;
+      --slide-bottom-total: 18rem;
     }
 
     .slide.chapter,
