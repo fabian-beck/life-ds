@@ -635,6 +635,48 @@ export function sourceLabel(url) {
 }
 
 /**
+ * Where a published work can be followed up, for a publication event.
+ *
+ * A resolved link comes from the data (`scripts/enrich_publication_links.py`
+ * writes it after confirming both the title and the authorship against
+ * Wikidata or Wikipedia). When there is none — the work has no record anywhere,
+ * or the title the model wrote is a description rather than a name — the search
+ * is built here instead: in the reader's language, so a German reader lands in
+ * the German encyclopedia, and without ever going stale in the data.
+ *
+ * @param {Object|null} eventClass - The event's `event_class` block
+ * @param {string|null} authorName - The story's subject, i.e. the work's author
+ * @param {string} language - Current UI language code
+ * @returns {{url: string, site: string, kind: string, isSearch: boolean}|null}
+ */
+export function getPublicationSource(eventClass, authorName, language = "en") {
+  if (!eventClass || eventClass.type !== "publication") return null;
+
+  const link = eventClass.source_link;
+  if (link?.url) {
+    return {
+      url: link.url,
+      site: link.site || sourceLabel(link.url).label,
+      kind: link.kind || "link",
+      isSearch: false,
+    };
+  }
+
+  const title = (eventClass.title || "").trim();
+  if (!title) return null;
+  const host = /^[a-z]{2}$/.test(language || "")
+    ? `${language}.wikipedia.org`
+    : "en.wikipedia.org";
+  const query = [title, authorName].filter(Boolean).join(" ");
+  return {
+    url: `https://${host}/w/index.php?search=${encodeURIComponent(query)}`,
+    site: "Wikipedia",
+    kind: "search",
+    isSearch: true,
+  };
+}
+
+/**
  * Get the subcategory from a relationship type string.
  * @param {string} relationshipType - Relationship type like "family/spouse"
  * @returns {string|null} Subcategory or null

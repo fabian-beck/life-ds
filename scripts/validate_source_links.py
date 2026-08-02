@@ -50,14 +50,16 @@ def _headers() -> Dict[str, str]:
 
 
 def parse_article(url: str) -> Optional[Tuple[str, str]]:
-    """Split a Wikipedia article URL into (language host, article title).
+    """Split a wiki article URL into (language host, article title).
 
-    Returns None for anything that is not one — the data also cites Deutsche
-    Biographie, Commons file pages, and museum sites, none of which this
+    Wikipedia and Wikisource both answer the same API at the same path, and the
+    publication links carry Wikisource transcriptions, so both are checkable
+    here. Returns None for anything else — the data also cites Deutsche
+    Biographie, Commons file pages, DOIs, and museum sites, none of which this
     checker knows how to ask about.
     """
     parts = urlsplit(url)
-    if not parts.netloc.endswith(".wikipedia.org"):
+    if not parts.netloc.endswith((".wikipedia.org", ".wikisource.org")):
         return None
     if not parts.path.startswith("/wiki/"):
         return None
@@ -102,7 +104,39 @@ def collect_links(root: Path = PEOPLE_DIR) -> Dict[str, List[str]]:
             for annotation in (event.get("annotations") or {}).values():
                 if isinstance(annotation, dict):
                     note(annotation.get("wikipedia_url"), path)
+            event_class = event.get("event_class")
+            if isinstance(event_class, dict):
+                source_link = event_class.get("source_link")
+                if isinstance(source_link, dict):
+                    note(source_link.get("url"), path)
     return citations
+
+
+def publication_link_urls(root: Path = PEOPLE_DIR) -> Set[str]:
+    """The links that `enrich_publication_links.py` resolved and owns.
+
+    A dead one is not repaired here. The link was written together with the
+    entity it came from and the date it was resolved, and rewriting the URL
+    alone would leave that provenance describing a different page; re-resolving
+    the work is the repair.
+    """
+    urls: Set[str] = set()
+    for path in sorted(root.rglob("life_events.json")):
+        if "_cache" in path.parts:
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for event in data.get("events") or []:
+            if not isinstance(event, dict):
+                continue
+            event_class = event.get("event_class")
+            if not isinstance(event_class, dict):
+                continue
+            source_link = event_class.get("source_link")
+            if isinstance(source_link, dict) and isinstance(
+                source_link.get("url"), str
+            ):
+                urls.add(source_link["url"])
+    return urls
 
 
 def _batched(items: List[str], size: int) -> Iterable[List[str]]:
@@ -318,6 +352,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         f"to check across {len(by_host)} wiki(s); {skipped} other host(s) skipped."
     )
 
+    publication_links = publication_link_urls()
     dead: List[Tuple[str, str, str]] = []  # host, title, url
     for host, titles in sorted(by_host.items()):
         try:
@@ -339,6 +374,12 @@ def main(argv: Optional[List[str]] = None) -> int:
     for host, title, url in dead:
         where = ", ".join(citations[url])
         print(f"  ✗ {url}\n      cited in {where}")
+        if url in publication_links:
+            print(
+                "      publication link — re-resolve it with "
+                "scripts/enrich_publication_links.py --force"
+            )
+            continue
         suggestion = search_replacement(host, title)
         if suggestion and suggestion != title and is_confident(title, suggestion):
             print(f"      resolves to: {suggestion}")

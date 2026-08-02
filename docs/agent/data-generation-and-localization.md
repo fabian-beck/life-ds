@@ -120,6 +120,20 @@ python scripts/validate_source_links.py --fix      # repair what search resolves
 
 Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
 
+**Link the published works** (Step 11 of the dataset generation, standalone; no API key, no model):
+
+```bash
+python scripts/enrich_publication_links.py --all
+python scripts/enrich_publication_links.py niels_bohr --verbose
+python scripts/enrich_publication_links.py --all --dry-run
+python scripts/enrich_publication_links.py --report        # what the data holds, no network
+python scripts/enrich_publication_links.py --all --force   # ask again, replace existing links
+```
+
+A publication event names a work on the slide and used to leave the reader with nowhere to go — the event's own `sources` are about the event, not about the work. This resolves each work to one link and writes it as `event_class.source_link` in every copy of the person's events, translations included (a link is language-independent, exactly like the annotation URLs). It asks Wikidata first, since one item carries the transcription, the scan, the DOI, and the encyclopedia articles at once, and falls back to a Wikipedia search when Wikidata is unreachable or has nothing. From a confirmed item the link is ranked for a reader rather than for a catalogue: Wikisource, then a full text or scan, then the encyclopedia article, then a DOI or Open Library record, then the item itself.
+
+Nothing is written on a guess. A candidate is accepted only when its title *is* the work's title — a parenthetical disambiguator aside, so "Propaganda (book)" still matches "Propaganda" — and the author is named in the item's claims or the article's opening. That is what keeps "Das Rhenium" off the article about the element and "The Reynolds Pamphlet (song)" off the pamphlet. Answers are cached in `data/_cache/publication_links.json`, negative ones included, so reruns are free; an existing link is kept unless `--force` replaces it, which leaves a hand-corrected link alone. A work with no record gets no link, and `EventSlide.svelte` offers a Wikipedia search in the reader's language instead — built in the interface so it never goes stale in the data.
+
 **Restyle a meta story** (Phase 9 of `generate_meta_story.py`, standalone):
 
 ```bash
@@ -360,7 +374,7 @@ Rebases old-schema translated files onto the current English structure, carries 
 **What is preserved** (guaranteed by the merge — the model never sees these fields):
 - All dates (dates, timestamps)
 - All coordinates (locations, centroid, bbox)
-- All URLs (sources, wikipedia, images, annotation wikipedia_urls)
+- All URLs (sources, wikipedia, images, annotation wikipedia_urls, publication `source_link`s)
 - All IDs (person_id, chapter IDs, annotation term keys, event_index)
 - `event_type_icon`, `event_class`, `involved_people` list structure
 - Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files

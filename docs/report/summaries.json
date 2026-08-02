@@ -394,6 +394,20 @@
         "why_this_design": "The dual-image ordering explicitly separates identity from style: the first image supplies only rendering treatment, while the second is repeatedly designated as the primary likeness source. Strong framing and no-border instructions counter a common failure mode with archival portraits, where model outputs preserve an engraved oval, cartouche, furniture, or a full-body source composition instead of producing a usable collection portrait."
       }
     },
+    "p_pub_links": {
+      "fingerprint": "bfa688787fc21352",
+      "summary": {
+        "constraints": [
+          "Process only events whose `event_class.type` is `\"publication\"` and whose `source_link` is absent.",
+          "Skip publications with an empty or whitespace-only title.",
+          "Accept a resolved link only when both the work title and authorship match the person.",
+          "Cache `None` as well as successful link records, and continue after per-work lookup exceptions."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Iterates over in-memory events and enriches only publication events that lack a `source_link`. For each nonblank title, it resolves the work against Wikidata, falling back to Wikipedia when needed, and attaches the returned link record only after title and authorship validation; successful and unsuccessful lookups are cached for later runs.",
+        "why_this_design": "Linking happens before the generated dataset is written, so publication slides arrive with validated reading links already embedded. Resolution failures are treated as nonfatal because an unavailable service or an unlinked work must not abort the broader generation run."
+      }
+    },
     "p_register": {
       "fingerprint": "e1c21c795f1c9fba",
       "summary": {

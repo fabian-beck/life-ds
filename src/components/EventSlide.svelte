@@ -10,9 +10,11 @@
     mdiStar,
     mdiBook,
     mdiMapMarkerMultiple,
+    mdiOpenInNew,
+    mdiMagnify,
   } from "@mdi/js";
   import { onDestroy } from "svelte";
-  import { _ } from "../stores/language";
+  import { _, currentLanguage } from "../stores/language";
   import {
     formatDate,
     getDateNote,
@@ -24,6 +26,7 @@
     parseDescriptionSegments,
     findPersonInNetwork,
     getBirthParents,
+    getPublicationSource,
   } from "../utils/storyHelpers.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import PersonChip from "./PersonChip.svelte";
@@ -62,6 +65,11 @@
   $: relevantPeople = getRelevantPeople(slide, egoNetwork).filter(
     (person) =>
       !birthParents.some((parent) => parent.person_name === person.person_name)
+  );
+  $: publicationSource = getPublicationSource(
+    slide.event_class,
+    egoNetwork?.ego?.name,
+    $currentLanguage
   );
   $: dateLabel = formatDate(slide, formatters);
   $: ageRange = getEventAgeRange(slide, birthDate);
@@ -674,6 +682,34 @@
               >
             </div>
           {/if}
+          {#if publicationSource}
+            <a
+              class="publication-source"
+              class:is-search={publicationSource.isSearch}
+              href={publicationSource.url}
+              target="_blank"
+              rel="noreferrer"
+              on:click|stopPropagation
+            >
+              <svg
+                class="icon publication-source-icon"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path
+                  d={publicationSource.isSearch ? mdiMagnify : mdiOpenInNew}
+                />
+              </svg>
+              {publicationSource.isSearch
+                ? $_("story.publication_search", {
+                    source: publicationSource.site,
+                  })
+                : $_("story.publication_source", {
+                    source: publicationSource.site,
+                  })}
+            </a>
+          {/if}
         </div>
       {/if}
     </div>
@@ -1136,6 +1172,38 @@
     width: 1.3rem;
     height: 1.3rem;
     fill: var(--story-primary, #f8fafc);
+  }
+
+  .publication-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    color: var(--story-secondary, #38bdf8);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .publication-source:hover,
+  .publication-source:focus-visible {
+    color: var(--story-primary, #f8fafc);
+    text-decoration: underline;
+  }
+
+  /* A search is an offer, not a citation: it stays quieter than a link that
+     was verified to point at the work itself. */
+  .publication-source.is-search {
+    color: rgba(226, 232, 240, 0.75);
+  }
+
+  .publication-source-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: currentcolor;
+    flex-shrink: 0;
   }
 
   .marriage-pretext {
