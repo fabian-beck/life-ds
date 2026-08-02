@@ -3,7 +3,7 @@
 
 import argparse
 import sys
-from typing import Any
+from typing import Any, List, Tuple
 
 # Import the individual generation functions
 from generate_person_events import (
@@ -21,6 +21,50 @@ from generate_person_portrait import (
     is_direct_image_url,
 )
 from review_person import review_person_data
+
+STEP_OK = "ok"
+STEP_FAILED = "failed"
+STEP_SKIPPED = "skipped"
+
+_MARK = {STEP_OK: "✓", STEP_FAILED: "✗", STEP_SKIPPED: "⊘"}
+
+
+class RunLog:
+    """What each step of a run did.
+
+    A person's data is written step by step and registered as it goes, so one
+    step failing says nothing about whether the next can run — a network call
+    that times out should not cost the portrait, the review, and the
+    translation of events already on disk. Each step reports here instead of
+    raising through the others, and the run ends by saying what it got and
+    exiting non-zero if anything is missing, so a rerun can fill in the gaps.
+    """
+
+    def __init__(self) -> None:
+        self.steps: List[Tuple[str, str, str]] = []
+
+    def record(self, name: str, status: str, detail: str = "") -> None:
+        self.steps.append((name, status, detail))
+
+    @property
+    def failed(self) -> List[str]:
+        return [name for name, status, _ in self.steps if status == STEP_FAILED]
+
+    def report(self, subject: str) -> None:
+        print("\n" + "=" * 60)
+        print("GENERATION COMPLETE" if not self.failed else "GENERATION DEGRADED")
+        print("=" * 60)
+        for name, status, detail in self.steps:
+            suffix = f" — {detail}" if detail else ""
+            print(f"{_MARK[status]} {name}{suffix}")
+        produced = sum(1 for _, status, _ in self.steps if status == STEP_OK)
+        attempted = sum(1 for _, status, _ in self.steps if status != STEP_SKIPPED)
+        print(f"\nGenerated {produced} of {attempted} components for '{subject}'")
+        if self.failed:
+            print(
+                "Rerun to fill in what is missing; the steps that succeeded are "
+                "already written and will not be redone from scratch."
+            )
 
 
 def parse_args(argv: Any) -> argparse.Namespace:
@@ -137,15 +181,20 @@ def main(argv: Any = None) -> int:
     run_style = not (args.dataset_only or args.network_only)
     run_network = not (args.dataset_only or args.style_only)
 
-    try:
-        # Determine person_id from dataset generation or by loading existing data
-        person_id = person_id_override
+    run_log = RunLog()
 
-        # Step 1: Generate life events dataset
-        if run_dataset:
-            print("\n" + "=" * 60)
-            print("STEP 1/3: Generating life events dataset")
-            print("=" * 60 + "\n")
+    def banner(text: str) -> None:
+        print("\n" + "=" * 60)
+        print(text)
+        print("=" * 60 + "\n")
+
+    # Determine person_id from dataset generation or by loading existing data
+    person_id = person_id_override
+
+    # Step 1: Generate life events dataset
+    if run_dataset:
+        banner("STEP 1/6: Generating life events dataset")
+        try:
             dataset_path, person_id = generate_dataset(
                 subject_for_fetch,
                 person_id=person_id_override,
@@ -154,28 +203,36 @@ def main(argv: Any = None) -> int:
                 use_deutsche_biographie=not args.skip_db,
             )
             print(f"\n✓ Life events dataset written to {dataset_path}")
-        else:
-            print("\n⊘ Skipping life events dataset generation")
+            run_log.record("Life events", STEP_OK)
+        except Exception as error:
+            print(f"\n✗ Life events dataset generation failed: {error}")
+            run_log.record("Life events", STEP_FAILED, str(error))
+    else:
+        print("\n⊘ Skipping life events dataset generation")
+        run_log.record("Life events", STEP_SKIPPED, "not requested")
 
-        # Step 2: Generate interface style
-        if run_style:
-            print("\n" + "=" * 60)
-            print("STEP 2/3: Generating interface style")
-            print("=" * 60 + "\n")
+    # Step 2: Generate interface style
+    if run_style:
+        banner("STEP 2/6: Generating interface style")
+        try:
             style_result = generate_style(
                 subject_for_fetch,
                 person_id=person_id,
                 model=style_model,
             )
             print(f"\n✓ Interface style generated for '{style_result.get('id')}'")
-        else:
-            print("\n⊘ Skipping interface style generation")
+            run_log.record("Interface style", STEP_OK)
+        except Exception as error:
+            print(f"\n✗ Interface style generation failed: {error}")
+            run_log.record("Interface style", STEP_FAILED, str(error))
+    else:
+        print("\n⊘ Skipping interface style generation")
+        run_log.record("Interface style", STEP_SKIPPED, "not requested")
 
-        # Step 3: Generate ego network
-        if run_network:
-            print("\n" + "=" * 60)
-            print("STEP 3/3: Generating ego network")
-            print("=" * 60 + "\n")
+    # Step 3: Generate ego network
+    if run_network:
+        banner("STEP 3/6: Generating ego network")
+        try:
             network_path = generate_person_network(
                 subject_for_fetch,
                 person_id=person_id,
@@ -183,167 +240,162 @@ def main(argv: Any = None) -> int:
                 model=network_model,
             )
             print(f"\n✓ Ego network written to {network_path}")
-        else:
-            print("\n⊘ Skipping ego network generation")
+            run_log.record("Ego network", STEP_OK)
+        except Exception as error:
+            print(f"\n✗ Ego network generation failed: {error}")
+            run_log.record("Ego network", STEP_FAILED, str(error))
+    else:
+        print("\n⊘ Skipping ego network generation")
+        run_log.record("Ego network", STEP_SKIPPED, "not requested")
 
-        # Step 4: Generate portrait (if not skipped)
-        # Unlike the steps above, portrait failures are non-fatal, so its
-        # outcome is tracked explicitly for the final summary.
-        portrait_ok = False
-        if not args.skip_portrait:
-            print("\n" + "=" * 60)
-            print("STEP 4/6: Generating stylized portrait")
-            print("=" * 60 + "\n")
-            try:
-                from pathlib import Path
+    # Step 4: Generate portrait (if not skipped)
+    if not args.skip_portrait:
+        banner("STEP 4/6: Generating stylized portrait")
+        try:
+            from pathlib import Path
 
-                portrait_reference_url = args.portrait_url
-                portrait_source_page = args.portrait_source_page
-                if portrait_reference_url and not is_direct_image_url(
-                    portrait_reference_url
-                ):
-                    page_url = portrait_reference_url
-                    portrait_reference_url, extracted_page = extract_image_from_page(
-                        page_url
-                    )
-                    if not portrait_reference_url:
-                        raise ValueError(
-                            f"Could not resolve a portrait image from {page_url}"
-                        )
-                    portrait_source_page = portrait_source_page or extracted_page
-
-                if not person_id:
-                    raise ValueError(
-                        "No person ID resolved — run the dataset step or pass "
-                        "--url so the portrait can be filed under a person ID"
-                    )
-
-                portrait_result = generate_portrait(
-                    person_id=person_id,
-                    reference_image_url=portrait_reference_url,
-                    source_page_url=portrait_source_page,
-                    source_license=args.portrait_license,
-                    source_creator=args.portrait_source_creator,
-                    master_style_path=Path(__file__).resolve().parents[1]
-                    / "public"
-                    / "master_style_portrait.png",
-                    model=args.portrait_model,
-                    dry_run=False,
-                    force=False,
+            portrait_reference_url = args.portrait_url
+            portrait_source_page = args.portrait_source_page
+            if portrait_reference_url and not is_direct_image_url(
+                portrait_reference_url
+            ):
+                page_url = portrait_reference_url
+                portrait_reference_url, extracted_page = extract_image_from_page(
+                    page_url
                 )
-                if portrait_result["success"]:
-                    portrait_ok = True
-                    if portrait_result.get("cached"):
-                        print(f"\n⊘ {portrait_result['message']}")
-                    else:
-                        print(
-                            f"\n✓ Portrait generated: {portrait_result.get('local_path')}"
-                        )
+                if not portrait_reference_url:
+                    raise ValueError(
+                        f"Could not resolve a portrait image from {page_url}"
+                    )
+                portrait_source_page = portrait_source_page or extracted_page
+
+            if not person_id:
+                raise ValueError(
+                    "No person ID resolved — run the dataset step or pass "
+                    "--url so the portrait can be filed under a person ID"
+                )
+
+            portrait_result = generate_portrait(
+                person_id=person_id,
+                reference_image_url=portrait_reference_url,
+                source_page_url=portrait_source_page,
+                source_license=args.portrait_license,
+                source_creator=args.portrait_source_creator,
+                master_style_path=Path(__file__).resolve().parents[1]
+                / "public"
+                / "master_style_portrait.png",
+                model=args.portrait_model,
+                dry_run=False,
+                force=False,
+            )
+            if portrait_result["success"]:
+                if portrait_result.get("cached"):
+                    print(f"\n⊘ {portrait_result['message']}")
                 else:
                     print(
-                        f"\n⚠ Portrait generation failed: {portrait_result['message']}"
+                        f"\n✓ Portrait generated: {portrait_result.get('local_path')}"
                     )
-                    print("  Continuing with other generation steps...")
-            except Exception as e:
-                print(f"\n⚠ Portrait generation failed: {e}")
-                print("  Continuing with other generation steps...")
-        else:
-            print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
+                run_log.record("Portrait", STEP_OK)
+            else:
+                print(f"\n✗ Portrait generation failed: {portrait_result['message']}")
+                run_log.record("Portrait", STEP_FAILED, portrait_result["message"])
+        except Exception as error:
+            print(f"\n✗ Portrait generation failed: {error}")
+            run_log.record("Portrait", STEP_FAILED, str(error))
+    else:
+        print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
+        run_log.record("Portrait", STEP_SKIPPED, "--skip-portrait")
 
-        # Step 5: Review (if not skipped)
-        if not args.skip_review:
-            print("\n" + "=" * 60)
-            print("STEP 5/6: REVIEWING GENERATED DATA")
-            print("=" * 60)
-            print("Running quality review and polish...")
-            print("(Only high-confidence changes will be applied)")
-
-            try:
-                review_success = review_person_data(
-                    person_id or args.subject,
-                    min_confidence=4,  # Auto-mode: only high-confidence
-                    verbose=False,
-                )
-                if review_success:
-                    print("\n✓ Review complete")
-                else:
-                    print("\n⚠ Review encountered issues (data still usable)")
-            except Exception as e:
-                print(f"\n⚠ Review failed: {e}")
-                print("  Generated data is still usable, but not reviewed.")
-        else:
-            print("\n⊘ Skipping review step (--skip-review flag)")
-
-        # Step 6: Translate (if not skipped). Runs last so translations are
-        # derived from the final (reviewed) English data. Failures are
-        # non-fatal: the English reference is complete and
-        # `translate_all_persons.py --check` will report the gap.
-        translate_langs = [
-            code.strip() for code in args.translate_langs.split(",") if code.strip()
-        ]
-        if args.skip_translate or not translate_langs:
-            print("\n⊘ Skipping translation step (--skip-translate flag)")
-        elif not person_id:
-            print("\n⊘ Skipping translation step (no person_id resolved)")
-        else:
-            print("\n" + "=" * 60)
-            print("STEP 6/6: Translating generated data")
-            print("=" * 60 + "\n")
-            try:
-                import os
-
-                from openai import OpenAI
-                from translate_person import translate_person_data
-
-                translate_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-                for lang in translate_langs:
-                    print(f"Translating '{person_id}' to '{lang}'...")
-                    results = translate_person_data(
-                        person_id=person_id,
-                        target_lang=lang,
-                        client=translate_client,
-                        model=args.model or DATASET_MODEL,
-                        force=True,
-                    )
-                    if all(results.values()):
-                        print(f"✓ Translation to '{lang}' complete")
-                    else:
-                        translated = [key for key, ok in results.items() if ok]
-                        print(
-                            f"⚠ Translation to '{lang}' incomplete "
-                            f"(translated: {', '.join(translated) or 'nothing'})"
-                        )
-            except Exception as e:
-                print(f"\n⚠ Translation failed: {e}")
-                print(
-                    "  English data is complete; run scripts/translate_person.py "
-                    "manually to retry."
-                )
-
-        # Final summary
+    # Step 5: Review (if not skipped)
+    if not args.skip_review:
         print("\n" + "=" * 60)
-        print("GENERATION COMPLETE")
+        print("STEP 5/6: REVIEWING GENERATED DATA")
         print("=" * 60)
-        steps_run = sum([run_dataset, run_style, run_network])
-        total_steps = 3
-        if not args.skip_portrait:
-            total_steps += 1
-            steps_run += portrait_ok
-        print(
-            f"✓ Successfully generated {steps_run} of {total_steps} components for '{args.subject}'"
-        )
-        if not update_registry:
-            print("⊘ Register update skipped by request")
-        if args.skip_review:
-            print("⊘ Review skipped by request")
-        if args.skip_portrait:
-            print("⊘ Portrait generation skipped by request")
+        print("Running quality review and polish...")
+        print("(Only high-confidence changes will be applied)")
 
-    except Exception as error:
-        print(f"\n✗ Error: {error}", file=sys.stderr)
-        return 1
+        try:
+            review_success = review_person_data(
+                person_id or args.subject,
+                min_confidence=4,  # Auto-mode: only high-confidence
+                verbose=False,
+            )
+            if review_success:
+                print("\n✓ Review complete")
+                run_log.record("Review", STEP_OK)
+            else:
+                print("\n✗ Review encountered issues (data still usable)")
+                run_log.record("Review", STEP_FAILED, "review reported failure")
+        except Exception as error:
+            print(f"\n✗ Review failed: {error}")
+            print("  Generated data is still usable, but not reviewed.")
+            run_log.record("Review", STEP_FAILED, str(error))
+    else:
+        print("\n⊘ Skipping review step (--skip-review flag)")
+        run_log.record("Review", STEP_SKIPPED, "--skip-review")
 
-    return 0
+    # Step 6: Translate (if not skipped). Runs last so translations are
+    # derived from the final (reviewed) English data. The English reference is
+    # complete either way, and `translate_all_persons.py --check` reports the
+    # gap, but a failure still counts against the run.
+    translate_langs = [
+        code.strip() for code in args.translate_langs.split(",") if code.strip()
+    ]
+    if args.skip_translate or not translate_langs:
+        print("\n⊘ Skipping translation step (--skip-translate flag)")
+        run_log.record("Translation", STEP_SKIPPED, "--skip-translate")
+    elif not person_id:
+        print("\n⊘ Skipping translation step (no person_id resolved)")
+        run_log.record("Translation", STEP_SKIPPED, "no person ID resolved")
+    else:
+        banner("STEP 6/6: Translating generated data")
+        try:
+            import os
+
+            from openai import OpenAI
+            from translate_person import translate_person_data
+
+            translate_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            incomplete = []
+            for lang in translate_langs:
+                print(f"Translating '{person_id}' to '{lang}'...")
+                results = translate_person_data(
+                    person_id=person_id,
+                    target_lang=lang,
+                    client=translate_client,
+                    model=args.model or DATASET_MODEL,
+                    force=True,
+                )
+                if all(results.values()):
+                    print(f"✓ Translation to '{lang}' complete")
+                else:
+                    translated = [key for key, ok in results.items() if ok]
+                    print(
+                        f"✗ Translation to '{lang}' incomplete "
+                        f"(translated: {', '.join(translated) or 'nothing'})"
+                    )
+                    incomplete.append(lang)
+            if incomplete:
+                run_log.record(
+                    "Translation",
+                    STEP_FAILED,
+                    f"incomplete for {', '.join(incomplete)}",
+                )
+            else:
+                run_log.record("Translation", STEP_OK)
+        except Exception as error:
+            print(f"\n✗ Translation failed: {error}")
+            print(
+                "  English data is complete; run scripts/translate_person.py "
+                "manually to retry."
+            )
+            run_log.record("Translation", STEP_FAILED, str(error))
+
+    run_log.report(args.subject)
+    if not update_registry:
+        print("⊘ Register update skipped by request")
+
+    return 1 if run_log.failed else 0
 
 
 if __name__ == "__main__":
