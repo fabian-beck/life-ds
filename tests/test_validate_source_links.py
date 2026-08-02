@@ -153,3 +153,61 @@ class CollectAndRewriteTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ExistingTitlesTests(unittest.TestCase):
+    """The batch reply renames titles; crediting the wrong one loses links."""
+
+    @staticmethod
+    def _reply(payload):
+        response = unittest.mock.Mock()
+        response.json.return_value = payload
+        response.raise_for_status.return_value = None
+        return response
+
+    def test_a_redirect_to_another_cited_title_credits_both(self) -> None:
+        # "Little Curies" redirects to "Marie Curie", which is itself cited.
+        # One page comes back for two asked titles.
+        reply = self._reply(
+            {
+                "query": {
+                    "redirects": [{"from": "Little Curies", "to": "Marie Curie"}],
+                    "pages": {"1": {"title": "Marie Curie"}},
+                }
+            }
+        )
+        with (
+            unittest.mock.patch.object(links.requests, "get", return_value=reply),
+            unittest.mock.patch.object(links.time, "sleep"),
+        ):
+            alive = links.existing_titles(
+                "en.wikipedia.org", ["Little Curies", "Marie Curie"]
+            )
+        self.assertEqual(alive, {"Little Curies", "Marie Curie"})
+
+    def test_a_missing_page_is_not_credited(self) -> None:
+        reply = self._reply(
+            {
+                "query": {
+                    "pages": {
+                        "-1": {"title": "Stadtbaurat", "missing": ""},
+                        "1": {"title": "Ada Lovelace"},
+                    }
+                }
+            }
+        )
+        with (
+            unittest.mock.patch.object(links.requests, "get", return_value=reply),
+            unittest.mock.patch.object(links.time, "sleep"),
+        ):
+            alive = links.existing_titles(
+                "en.wikipedia.org", ["Stadtbaurat", "Ada Lovelace"]
+            )
+        self.assertEqual(alive, {"Ada Lovelace"})
+
+    def test_an_unreachable_api_is_not_read_as_dead_links(self) -> None:
+        with unittest.mock.patch.object(
+            links.requests, "get", side_effect=OSError("connection reset")
+        ):
+            with self.assertRaises(links.WikipediaUnreachable):
+                links.existing_titles("en.wikipedia.org", ["Ada Lovelace"])

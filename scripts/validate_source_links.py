@@ -136,23 +136,30 @@ def existing_titles(host: str, titles: List[str]) -> Set[str]:
             raise WikipediaUnreachable(f"{host}: {error}") from error
 
         query = payload.get("query") or {}
-        # A redirect or a normalization renames the title in the reply, so the
-        # chain is walked back to what was asked before anything is recorded.
-        aliases: Dict[str, str] = {}
+        # A redirect or a normalization renames the title in the reply, so each
+        # asked title is followed forward to the page it lands on. Following the
+        # rename backwards instead loses titles: when one cited title redirects
+        # to another cited title, both arrive as one page, and only the redirect
+        # would be credited — the direct citation would read as missing.
+        renames: Dict[str, str] = {}
         for hop in (query.get("normalized") or []) + (query.get("redirects") or []):
-            aliases[hop.get("to", "")] = hop.get("from", "")
+            renames[hop.get("from", "")] = hop.get("to", "")
 
-        def original(name: str) -> str:
+        def landing(name: str) -> str:
             seen = set()
-            while name in aliases and name not in seen:
+            while name in renames and name not in seen:
                 seen.add(name)
-                name = aliases[name]
+                name = renames[name]
             return name
 
-        for page in (query.get("pages") or {}).values():
-            if "missing" in page:
-                continue
-            resolved.add(original(page.get("title", "")))
+        real_pages = {
+            page.get("title", "")
+            for page in (query.get("pages") or {}).values()
+            if "missing" not in page
+        }
+        for title in batch:
+            if landing(title) in real_pages:
+                resolved.add(title)
         time.sleep(REQUEST_DELAY_SECONDS)
     return resolved
 
