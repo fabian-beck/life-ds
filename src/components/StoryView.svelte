@@ -1737,7 +1737,14 @@
     color: #e2e8f0;
     white-space: nowrap;
     max-width: 100%;
-    overflow: hidden;
+    /*
+     * Clip only sideways. A plain `overflow: hidden` also clips vertically, and
+     * the tallest header button sits flush against that edge, which shaves its
+     * rounded border at the top and bottom. `clip` on one axis leaves the other
+     * axis genuinely `visible` instead of promoting it to `auto`.
+     */
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .compact-info span {
@@ -1798,14 +1805,18 @@
     border: 1px solid rgba(148, 163, 184, 0.3);
     background: rgba(255, 255, 255, 0.05);
     color: var(--story-primary, #e2e8f0);
-    padding: 0;
+    /*
+     * Padding and icon size mirror CloseButton's `responsive` size so the two
+     * header buttons are exactly as tall as each other; `aspect-ratio` then
+     * keeps this one a circle instead of a pill.
+     */
+    padding: clamp(0.3rem, 0.9vh, 0.45rem);
+    aspect-ratio: 1;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
@@ -1813,9 +1824,10 @@
   }
 
   .header-network-btn .icon {
-    width: 1.1rem;
-    height: 1.1rem;
+    width: clamp(0.9rem, 1.5vh, 1.2rem);
+    height: clamp(0.9rem, 1.5vh, 1.2rem);
     fill: currentColor;
+    flex-shrink: 0;
   }
 
   .header-network-btn:hover,
@@ -1828,6 +1840,18 @@
 
   .header-network-btn:active {
     transform: scale(0.95);
+  }
+
+  /* Same condition CloseButton uses to shrink, so the pair stays matched. */
+  @media (max-height: 450px) and (orientation: landscape) {
+    .header-network-btn {
+      padding: 0.2rem;
+    }
+
+    .header-network-btn .icon {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
   }
 
   /* Compact masthead for landscape mobile (short viewports)
@@ -1873,16 +1897,6 @@
 
     .header-actions {
       gap: 0.25rem;
-    }
-
-    .header-network-btn {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-
-    .header-network-btn .icon {
-      width: 0.85rem;
-      height: 0.85rem;
     }
 
     .slide {
