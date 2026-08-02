@@ -254,18 +254,32 @@
         "why_this_design": "The formatter separates reusable CC0 metadata from the biographical article and includes article prose only when upstream licensing has made it available. In particular, it explicitly tells the model that CC-BY-NC-ND article text was withheld, preventing the model from treating an unavailable no-derivatives source as usable evidence."
       }
     },
-    "p_events_p1": {
-      "fingerprint": "8420d9c09dd52e2c",
+    "p_death_cause": {
+      "fingerprint": "7a1957f2b5335c43",
       "summary": {
         "constraints": [
-          "Produce exactly \"12-16\" significant events, in strict chronological order, with no \"Other Events\" or miscellaneous grouping.",
-          "Each skeleton includes a start date, date precision of \"day,\" \"month,\" or \"year,\" title, description, age or null, and optional range and uncertainty fields; classification is omitted unless it clearly matches a configured type.",
-          "Titles are \"2-6 words\"; descriptions are \"2-4 sentences,\" factual, concise, in American English, and confined to the event’s own time period.",
-          "Exclude post-death and legacy events; keep death entries factual, reserve retrospective significance for the conclusion, and provide exactly \"2-3\" lowercase generic primary roles."
+          "Uses only the supplied death event text, including its description and date note; outside knowledge is forbidden.",
+          "Cause is optional, must be a noun phrase of \"1-6 words,\" and must be omitted rather than inferred from age, date, or place.",
+          "Characterization is optional and limited to \"1-4 words.\"",
+          "Place of rest is emitted only when the text explicitly names a burial or resting location; unsuccessful calls return no result."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the first-pass life-plan from the target person’s main article, a summary, an optional biographical reference excerpt, and related-article context. It returns dataset and creation metadata, person metadata, and a chronologically ordered set of minimally sourced event skeletons that establish the biographical narrative before later phases add place, image, source, and annotation detail.",
-        "why_this_design": "Related articles are supplied as contextual evidence but explicitly fenced off from event generation, preventing connected figures from displacing the target subject in the timeline. The main extract is capped at 12,000 characters, which limits prompt size while preserving the primary article as the governing account."
+        "what_it_does": "Repairs an existing death event by extracting three optional facts from the event text: a short medical or physical cause, a short description of the circumstances, and a documented burial or resting place. It returns a structured death classification whose type is fixed to \"death\"; if extraction cannot run or produces no parsed result, it returns no classification and leaves the broader pipeline running.",
+        "why_this_design": "This is deliberately a narrow, source-bound repair call rather than a regeneration of the life story, so older records can gain death classification without rewriting their stored narrative. Failures are non-fatal because losing an optional cause is safer than interrupting the entire dataset run, and the prompt prohibits plausible but unsourced biographical additions."
+      }
+    },
+    "p_events_p1": {
+      "fingerprint": "8a7e1f8c320e5713",
+      "summary": {
+        "constraints": [
+          "Produce exactly \"12-16\" significant events, in strict chronological order, with no \"Other Events\"-style grouping.",
+          "Cover early life, education, major accomplishments, and later years; exclude post-death events and legacy-focused events.",
+          "Use ISO-8601 dates and a date_precision of \"day,\" \"month,\" or \"year\"; provide range and uncertainty fields only when applicable.",
+          "Titles must be \"2-6 words\" and descriptions \"2-4 sentences\" in American English; omit exact locations, images, detailed sources, and annotations."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Builds the initial biographical spine from the target subject’s main article, its summary and truncated full extract, an additional biographical text when available, and related articles supplied only as context. It returns a LifePlan containing dataset and creation metadata, person metadata, and minimally specified event skeletons with dates, precision, titles, descriptions, and optional span, uncertainty, age, and classification fields. The events establish the chronological narrative before later phases add exact locations, images, source details, or annotations.",
+        "why_this_design": "Related articles are explicitly fenced off as contextual evidence so that associated people do not become accidental timeline subjects. The prompt also separates in-the-moment event narration from retrospective legacy material, preventing future knowledge from contaminating descriptions of earlier life events."
       }
     },
     "p_events_p2": {

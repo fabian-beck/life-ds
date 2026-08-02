@@ -705,6 +705,29 @@ STEPS: List[Step] = [
         outputs=["person_de"],
         skip_flag="--skip-translate",
     ),
+    Step(
+        "p_death_cause",
+        "Backfill a death's cause",
+        PERSON,
+        AI,
+        "backfill_death_events.py",
+        "extract_death_facts",
+        summary=(
+            "A repair path rather than a phase: it is what a dataset written "
+            "before the death classification existed gets instead of a full "
+            "regeneration. The call is shown only the stored death event and "
+            "may quote a cause, the circumstances and a resting place out of "
+            "it—never add one from its own knowledge, since a cause no source "
+            "wrote down is the kind of plausible detail that must not enter "
+            "the corpus."
+        ),
+        depends_on=[Dep("p_write", "the stored death event, as the dataset holds it")],
+        prompts=["build_extraction_prompt", "extract_death_facts"],
+        inputs=["life_events"],
+        outputs=["life_events"],
+        calls_per_run="0 in a generation run; 1 per person repaired",
+        model_from="backfill_death_events.py",
+    ),
     # ------------------------------------------------------------------ meta
     Step(
         "m_p1",

@@ -8,6 +8,7 @@
     mdiMapMarkerOutline,
     mdiLightbulbOnOutline,
     mdiCradle,
+    mdiGraveStone,
     mdiRing,
     mdiBook,
   } from "@mdi/js";
@@ -54,6 +55,8 @@
     switch (eventClass.type) {
       case "birth":
         return mdiCradle;
+      case "death":
+        return mdiGraveStone;
       case "invention":
         return mdiLightbulbOnOutline;
       case "marriage_partnership":

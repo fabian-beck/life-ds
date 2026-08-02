@@ -6,6 +6,7 @@
     mdiMagnifyPlusOutline,
     mdiLightbulbOnOutline,
     mdiCradle,
+    mdiGraveStone,
     mdiRing,
     mdiStar,
     mdiBook,
@@ -64,6 +65,12 @@
     (birthParents.length > 0 ||
       !!slide.event_class.birth_name ||
       !!slide.event_class.characterization);
+  // Likewise a death the sources leave bare: the box exists to carry the cause.
+  $: showDeathDetails =
+    slide.event_class?.type === "death" &&
+    (!!slide.event_class.cause ||
+      !!slide.event_class.characterization ||
+      !!slide.event_class.place_of_rest);
   // The parents already stand in the lineage below the headline, so they are
   // not repeated among the event's other people.
   $: relevantPeople = getRelevantPeople(slide, egoNetwork).filter(
@@ -107,13 +114,21 @@
   }, {});
 
   // Classes that render their own box further down the slide; the generic
-  // badge under the headline would only say the same thing twice.
+  // badge under the headline would only say the same thing twice. The birth
+  // and the death are not listed here: they render a box only when the sources
+  // gave them one to fill, and fall back to the badge when they did not.
   const SELF_PRESENTING_CLASSES = new Set([
-    "birth",
     "invention",
     "marriage_partnership",
     "publication",
   ]);
+
+  // The two life boundaries are named by the interface rather than by the
+  // data, so they are named in the reader's language.
+  const CLASS_LABEL_KEYS = {
+    birth: "story.birth.label",
+    death: "story.death.label",
+  };
 
   function getEventClassIcon(eventClass) {
     if (!eventClass?.type) return null;
@@ -121,6 +136,8 @@
     switch (eventClass.type) {
       case "birth":
         return mdiCradle;
+      case "death":
+        return mdiGraveStone;
       case "invention":
         return mdiLightbulbOnOutline;
       case "marriage_partnership":
@@ -145,18 +162,17 @@
   }
 
   $: eventClassIcon = getEventClassIcon(slide.event_class);
-  // A birth is named by the label the birth box already uses, not by the
+  // A birth or a death is named by the label its own box uses, not by the
   // classification vocabulary.
-  $: eventClassLabelText =
-    slide.event_class?.type === "birth"
-      ? $_("story.birth.label")
-      : getEventClassLabel($_, slide.event_class);
+  $: eventClassLabelText = CLASS_LABEL_KEYS[slide.event_class?.type]
+    ? $_(CLASS_LABEL_KEYS[slide.event_class.type])
+    : getEventClassLabel($_, slide.event_class);
   $: showEventClassBadge =
     !!eventClassIcon &&
     !!eventClassLabelText &&
-    (slide.event_class?.type === "birth"
-      ? !showBirthLineage
-      : !SELF_PRESENTING_CLASSES.has(slide.event_class?.type));
+    !SELF_PRESENTING_CLASSES.has(slide.event_class?.type) &&
+    !showBirthLineage &&
+    !showDeathDetails;
 
   let imageLoadStateKey = "";
   let imageLoadGeneration = 0;
@@ -526,6 +542,45 @@
                 {/if}
               </div>
             </div>
+          {/if}
+        </div>
+      {/if}
+      {#if showDeathDetails}
+        <div class="death-pretext">
+          <div class="death-meta-line">
+            <svg
+              class="icon death-icon-inline"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiGraveStone} />
+            </svg>
+            <span class="death-inline-label">{$_("story.death.label")}</span>
+            {#if slide.event_class.characterization}
+              <span class="death-separator">·</span>
+              <span class="death-characterization-inline"
+                >{slide.event_class.characterization}</span
+              >
+            {/if}
+          </div>
+          {#if slide.event_class.cause}
+            <!-- The cause is boxed and labeled the way the birth boxes the
+                 parents: the one fact the slide exists to carry. -->
+            <div class="cause-box">
+              <span class="cause-box-label">{$_("story.death.cause")}</span>
+              <p class="cause-text">{slide.event_class.cause}</p>
+            </div>
+          {/if}
+          {#if slide.event_class.place_of_rest}
+            <p class="death-rest">
+              <span class="death-rest-label"
+                >{$_("story.death.place_of_rest")}</span
+              >
+              <span class="death-rest-text"
+                >{slide.event_class.place_of_rest}</span
+              >
+            </p>
           {/if}
         </div>
       {/if}
@@ -1215,6 +1270,115 @@
     flex-shrink: 0;
   }
 
+  /* Death: the birth's box seen from the other end of the life — the same
+     frame and label, holding the cause instead of the parents. */
+  .death-pretext {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid var(--story-secondary, #38bdf8);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .death-meta-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.9);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .death-icon-inline {
+    width: 1em;
+    height: 1em;
+    fill: var(--story-secondary, #38bdf8);
+    flex-shrink: 0;
+  }
+
+  .death-inline-label {
+    font-weight: 600;
+    color: var(--story-secondary, #38bdf8);
+  }
+
+  .death-separator {
+    color: rgba(148, 163, 184, 0.6);
+    font-size: 0.9em;
+  }
+
+  .death-characterization-inline {
+    font-style: italic;
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .cause-box {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem 0.6rem;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 0.75rem;
+    background: rgba(148, 163, 184, 0.06);
+    max-width: 100%;
+  }
+
+  .cause-box-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(226, 232, 240, 0.75);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    line-height: 1;
+  }
+
+  .cause-text {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--story-primary, #f8fafc);
+    font-family: var(--story-heading-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .death-rest {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: rgba(226, 232, 240, 0.85);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .death-rest-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(226, 232, 240, 0.75);
+    margin-right: 0.35rem;
+  }
+
   .marriage-pretext {
     display: flex;
     flex-direction: column;
@@ -1670,13 +1834,19 @@
     }
 
     .birth-pretext,
+    .death-pretext,
     .marriage-pretext {
       padding: 1rem;
     }
 
     .birth-meta-line,
+    .death-meta-line,
     .marriage-meta-line {
       font-size: 0.95rem;
+    }
+
+    .cause-text {
+      font-size: 1.05rem;
     }
 
     .description {

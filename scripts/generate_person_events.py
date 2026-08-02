@@ -18,7 +18,18 @@ import time
 from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Set, Union, Literal, cast
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Tuple,
+    Set,
+    Union,
+    Literal,
+    cast,
+)
 from urllib.parse import quote
 
 import requests
@@ -186,6 +197,26 @@ class BirthClassification(BaseModel):
     )
 
 
+class DeathClassification(BaseModel):
+    """Classification for the death event that closes a life story."""
+
+    type: Literal["death"] = Field(default="death", description="Always 'death'")
+    cause: Optional[str] = Field(
+        None,
+        description="Brief cause of death (e.g., 'heart failure', 'cyanide poisoning') - 1-6 words. "
+        "Omit when the sources do not give one; never guess a cause",
+    )
+    characterization: Optional[str] = Field(
+        None,
+        description="Brief characterization of the circumstances (e.g., 'after long illness', 'sudden', "
+        "'ruled a suicide', 'in exile') - 1-4 words",
+    )
+    place_of_rest: Optional[str] = Field(
+        None,
+        description="Burial or resting place, when documented (e.g., 'Assistens Cemetery, Copenhagen')",
+    )
+
+
 class MarriagePartnershipClassification(BaseModel):
     """Classification for marriage/partnership events."""
 
@@ -267,6 +298,7 @@ class PublicationClassification(BaseModel):
 # Note: Using standard Union instead of discriminated union for OpenAI compatibility
 EventClassification = Union[
     BirthClassification,
+    DeathClassification,
     MarriagePartnershipClassification,
     MigrationClassification,
     InventionClassification,
@@ -343,6 +375,43 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             )
             + ")"
         ),
+    },
+    "death": {
+        "name": "DEATH",
+        "display_name": "DEATH",
+        "description": "The subject's own death — the event that closes the story",
+        "keywords": ["died", "death", "killed", "executed", "passed away"],
+        "detection_rules": [
+            "The event describes the SUBJECT dying (not the death of a parent, spouse, child, or anyone else)",
+            "Usually the last event, dated on or near the subject's death date",
+        ],
+        "fields": {
+            "cause": "Cause of death in 1-6 words, omitted when the sources do not give one",
+            "characterization": "Optional: the circumstances, e.g. 'after long illness', 'sudden' (1-4 words)",
+            "place_of_rest": "Optional: burial or resting place",
+        },
+        "phase1_guidance": (
+            "- DEATH: The SUBJECT's own death — never the death of a parent, spouse, child, or anyone else\n"
+            "  * Exactly one event per life story carries this classification\n"
+            "  * cause: The cause of death as a noun phrase of 1-6 words ('heart failure', "
+            "'cyanide poisoning', 'gunshot wound from a duel') — no pronouns, no 'complications "
+            "related to'\n"
+            "  * OMIT cause when the sources do not state one — never guess, and never infer it from old age\n"
+            "  * When the cause is contested, give the documented one and say so in characterization "
+            "('ruled a suicide', 'cause disputed')\n"
+            "  * Optional: characterization (1-4 words), place_of_rest (burial or resting place)\n"
+        ),
+        "phase2_focus": [
+            "DESCRIPTION: Focus on the final days, the setting, and who was there",
+            "  * DO NOT repeat the cause of death or the resting place (classification has these)",
+            "  * DO NOT add legacy analysis or career retrospectives — those belong in the conclusion",
+            "  * Good: 'He spent his last afternoon at home in Carlsberg, resting after lunch.'",
+            "  * Bad: 'Bohr died of heart failure in Copenhagen, closing a career that had reshaped physics.'",
+            "LOCATIONS: Where the person died (city level)",
+            "INVOLVED_PEOPLE: People present or closely involved at the end",
+            "ANNOTATIONS: A medical term may be annotated; never annotate the person's own name",
+        ],
+        "log_format": lambda cls: f"DEATH ({cls.cause or 'cause undocumented'})",
     },
     "marriage_partnership": {
         "name": "MARRIAGE_PARTNERSHIP",
@@ -2350,6 +2419,10 @@ def build_phase1_prompt(
 
 
 _BIRTH_WORDS = re.compile(r"\b(born|birth|birthplace)\b", re.IGNORECASE)
+_DEATH_WORDS = re.compile(
+    r"\b(died|dies|death|dying|killed|executed|assassinated|passed away)\b",
+    re.IGNORECASE,
+)
 
 
 def _event_field(event: Any, name: str) -> Any:
@@ -2405,27 +2478,96 @@ def find_birth_event_index(
     return None
 
 
+def find_death_event_index(
+    events: List[Any], death_date: Optional[str] = None
+) -> Optional[int]:
+    """
+    Index of the event that tells the subject's own death, or None.
+
+    The date decides first, as it does for the birth, but a death is not always
+    dated on the day it happened: a duel or a tram accident opens the event days
+    earlier. So an event dated on the death date qualifies, and so does the last
+    event of the story when it falls in the death year and says someone died.
+    Requiring the story's end is what keeps a spouse's or a child's death out.
+
+    The search runs backwards, because a death closes a story the way a birth
+    opens one: a plot with three events on the day Stauffenberg died ends with
+    the execution, not with the bomb he planted that morning.
+
+    With no death date on record — a life the sources leave open — only a
+    closing event whose *title* names a death qualifies. The model's own
+    classification is consulted last.
+
+    Works on Phase 1 skeletons, merged events, and the plain dicts a stored
+    ``life_events.json`` holds.
+    """
+    death_day = (death_date or "").strip()[:10]
+    last = len(events) - 1
+
+    for index in range(last, -1, -1):
+        event = events[index]
+        date = str(_event_field(event, "date") or "")
+        title = str(_event_field(event, "title") or "")
+        text = f"{title} {_event_field(event, 'description') or ''}"
+        if death_day:
+            dated_at_death = date[:10] == death_day or (
+                date[:4] == death_day[:4] and index == last
+            )
+            if dated_at_death and (index == last or _DEATH_WORDS.search(text)):
+                return index
+        elif index == last and _DEATH_WORDS.search(title):
+            return index
+
+    for index, event in enumerate(events):
+        if _event_class_type(event) == "death":
+            return index
+
+    return None
+
+
+def _apply_single_classification(
+    events: List[Any],
+    index: Optional[int],
+    class_type: str,
+    build: Callable[[], Any],
+) -> None:
+    """
+    Make exactly the event at ``index`` carry ``class_type``, in place.
+
+    The classification is what the story slide styles, so one the model forgot
+    silently costs the reader what the slide would have shown, and one the model
+    put on a child's birth or a spouse's death styles the wrong slide. Both are
+    repaired here rather than left to the prompt.
+    """
+    for position, event in enumerate(events):
+        classified = _event_class_type(event) == class_type
+        if position == index and not classified:
+            event.event_class = build()
+        elif classified and position != index:
+            event.event_class = None
+
+
 def ensure_birth_classification(
     event_skeletons: List[EventSkeleton], birth_date: Optional[str] = None
 ) -> Optional[int]:
     """
     Guarantee that at most one event — the subject's own birth — is classified
     as a birth, editing the skeletons in place and returning its index.
-
-    The classification is what the story slide styles, so a birth the model
-    forgot to classify silently costs the reader the parents, and a birth class
-    the model put on a child's birth styles the wrong slide. Both are repaired
-    here rather than left to the prompt.
     """
     index = find_birth_event_index(event_skeletons, birth_date)
+    _apply_single_classification(event_skeletons, index, "birth", BirthClassification)
+    return index
 
-    for position, skeleton in enumerate(event_skeletons):
-        classified = _event_class_type(skeleton) == "birth"
-        if position == index and not classified:
-            skeleton.event_class = BirthClassification()
-        elif classified and position != index:
-            skeleton.event_class = None
 
+def ensure_death_classification(
+    event_skeletons: List[EventSkeleton], death_date: Optional[str] = None
+) -> Optional[int]:
+    """
+    Guarantee that at most one event — the subject's own death — is classified
+    as a death, editing the skeletons in place and returning its index.
+    """
+    index = find_death_event_index(event_skeletons, death_date)
+    _apply_single_classification(event_skeletons, index, "death", DeathClassification)
     return index
 
 
@@ -2553,7 +2695,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         + "".join(
             [config["phase1_guidance"] + "\n" for config in EVENT_CLASS_CONFIG.values()]
         )
-        + "For other events (deaths, education, awards): OMIT classification.\n"
+        + "For other events (education, appointments, awards): OMIT classification.\n"
         f"Only classify when event CLEARLY matches one of the {len(EVENT_CLASS_CONFIG)} types above.\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
@@ -2616,12 +2758,18 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     # Ensure events are sorted chronologically (defensive programming)
     parsed.event_skeletons.sort(key=lambda e: e.date)
 
-    # The birth opens every story, so it is detected rather than hoped for
+    # The birth opens a story and the death closes it, so both are detected
+    # rather than hoped for
     birth_index = ensure_birth_classification(
         parsed.event_skeletons, parsed.person.birth_date
     )
     if birth_index is None:
         print("  Phase 1: No birth event found in the plan")
+    death_index = ensure_death_classification(
+        parsed.event_skeletons, parsed.person.death_date
+    )
+    if death_index is None:
+        print("  Phase 1: No death event found in the plan")
 
     # Log classifications from Phase 1 (using centralized config)
     classified_count = sum(

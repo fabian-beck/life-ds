@@ -55,6 +55,7 @@ life-ds/
 │   ├── meta_story_map_narration.py  # Phase 7: map pipeline — event rating + stop narration agents, standalone CLI
 │   ├── backfill_meta_story_networks.py # Inject social_network into existing meta stories (no AI)
 │   ├── backfill_birth_events.py     # Classify the birth event of existing person datasets (no AI)
+│   ├── backfill_death_events.py     # Classify the death event of existing person datasets, cause read from the event text
 │   ├── migrate_translations.py      # Rebase legacy translations onto English structure
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
 │   ├── clear_caches.py              # Clear old cached data

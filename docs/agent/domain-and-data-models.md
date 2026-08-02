@@ -159,12 +159,18 @@ A few kinds of event carry more than prose, and an optional `event_class` block 
 | type | fields |
 | --- | --- |
 | `birth` | `father`, `mother`, `birth_name`, `characterization` |
+| `death` | `cause`, `characterization`, `place_of_rest` |
 | `marriage_partnership` | `subtype`, `partner`, `duration`, `children`, `characterization` |
 | `migration` | `from_location`, `to_location`, `characterization` |
 | `invention` | `title`, `description`, `impact` |
 | `publication` | `title`, `publication_type`, `publisher`, `significance`, `impact` |
 
-`birth` is the one classification a run does not leave to the model: `ensure_birth_classification()` runs right after Phase 1 and decides from the dates which event is the subject's own birth — dated at age 0 or on the person's birth date, and either opening the story or reading as a birth. It classifies that event when the model didn't, and strips a `birth` class the model put on a later event (a child's birth carries the subject's own age, never zero). The model's own classification is consulted only when no event is dated at the birth at all, which is how a medieval life whose events carry no ages still finds one.
+The classification's text is **not** translated — like `event_type_icon` and the relationship tokens, `event_class` is copied verbatim into every language file. Field *labels* are localized by the interface; field *values* (a cause, a characterization, an invention's impact) stay in the language they were generated in. Translating them would mean extending the translation payload, which re-fingerprints every person's document.
+
+The two life boundaries are the classifications a run does not leave to the model. `ensure_birth_classification()` and `ensure_death_classification()` run right after Phase 1 and decide from the dates which events they are; each classifies that event when the model didn't and strips its class from any other event (a child's birth, a spouse's death). The model's own classification is consulted only when no event is dated at the boundary at all — which is how a medieval life whose events carry no ages still finds one.
+
+- **Birth**: dated at age 0 or on the person's birth date, and either opening the story or reading as a birth. A child's birth carries the subject's own age, never zero.
+- **Death**: dated on the person's death date, or closing the story within the death year — a duel or a tram accident opens the event days before the death it caused. The search runs backwards, so a day that holds three events (Stauffenberg's bomb, the failed coup, the execution) resolves to the last of them. With no death date on record, only a closing event whose *title* names a death qualifies.
 
 The birth slide shows the parents in the same generational representation the network view uses for a family: a labeled parents box of `PersonChip`s over a link line down to the person's portrait (`getBirthParents()` in `src/utils/storyHelpers.js`). The names come from the classification and are resolved against `ego_network.json`, so each chip carries the network's own relationship metadata; when the classification names nobody the parents are read from the network directly (`family/father`, `family/mother`, qualifiers like `step-`/`adoptive-` stripped). Placeholder names ("Unnamed mother of …") are dropped rather than shown, and a birth with no parents, birth name, or characterization keeps the plain class badge instead of an empty box. The parents are removed from the slide's other people so they appear once.
 
@@ -176,7 +182,20 @@ python scripts/backfill_birth_events.py niels_bohr
 python scripts/backfill_birth_events.py --dry-run
 ```
 
-It detects the birth event with the same function the generator uses, reads the parents from the person's `ego_network.json`, keeps any values already stored, and writes the block to the English file and every translated copy (`event_class` is technical and never translated, so it is identical in all languages). Re-running it changes nothing.
+It detects the birth event with the same function the generator uses, reads the parents from the person's `ego_network.json`, keeps any values already stored, and writes the block to the English file and every translated copy. Re-running it changes nothing.
+
+The death slide is the birth's mirror: the same frame and label, boxing the **cause of death** where the birth boxes the parents, with the circumstances beside the "Died" label and the resting place beneath. A death whose sources give none of the three keeps the plain class badge.
+
+Its backfill needs one small model call per person, because unlike the parents there is no second document to read a cause out of:
+
+```bash
+python scripts/backfill_death_events.py             # every person
+python scripts/backfill_death_events.py niels_bohr
+python scripts/backfill_death_events.py --dry-run
+python scripts/backfill_death_events.py --skip-cause  # classify only, no AI
+```
+
+The call is shown **only the death event the dataset already holds** and is forbidden to add anything from its own knowledge: a cause nobody wrote down is exactly the plausible-looking detail that must not enter the corpus unsourced. Of the 50 people in `data/`, 23 have a cause their own event text states; the rest are classified without one until a regeneration researches it. Stored values always win over extracted ones, so a researched cause survives a re-run.
 
 ### Ego Network Schema
 
