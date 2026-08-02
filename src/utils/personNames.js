@@ -45,9 +45,11 @@
  *   because a wrong link is worse than a missing one.
  *
  * Given-name-only matching stays off unless the given name *is* the person's
- * identity (mononyms, regnal names, "X of Y") or is long and distinctive
- * enough to stand alone — "Alan" and "John" never match on their own, while
- * "Cunigunde" and "Vannevar" do.
+ * identity (mononyms, regnal names, "X of Y"), is long and distinctive enough
+ * to stand alone — "Alan" and "John" never match on their own, while
+ * "Cunigunde" and "Vannevar" do — or the prose introduces the person by
+ * kinship ("his son Aage", "seiner Frau Margrethe"), which names one relative
+ * of the story's subject and so needs no distinctive name of its own.
  */
 
 // Character-class fragments, written as escapes because they are spliced into
@@ -421,6 +423,124 @@ const PERSON_TITLE_WORDS = new Set(
   ].map((word) => fold(word))
 );
 
+/**
+ * Kinship nouns that introduce a relative by their given name alone.
+ *
+ * "he and his son Aage advised the researchers" names exactly one person: the
+ * subject's son. The apposition carries the identification, so the given name
+ * does not have to be distinctive the way a bare "Aage" elsewhere in the prose
+ * would — and in German, where these nouns are capitalized ("seiner Frau
+ * Margrethe"), the noun also has to stop looking like a stranger's given name
+ * sitting in front of a shared surname.
+ *
+ * Inflected German forms are listed because the matcher compares whole tokens:
+ * "seines Sohnes Aage" is the same cue as "sein Sohn Aage". The cue only ever
+ * licenses a person the data calls a relative, so a colleague who happens to
+ * share a given name with somebody's brother stays plain.
+ */
+const RELATIVE_WORDS = new Set(
+  [
+    // English
+    "son",
+    "sons",
+    "daughter",
+    "daughters",
+    "child",
+    "children",
+    "wife",
+    "husband",
+    "spouse",
+    "brother",
+    "brothers",
+    "sister",
+    "sisters",
+    "sibling",
+    "siblings",
+    "mother",
+    "father",
+    "parent",
+    "parents",
+    "uncle",
+    "aunt",
+    "cousin",
+    "cousins",
+    "nephew",
+    "niece",
+    "grandson",
+    "granddaughter",
+    "grandchild",
+    "grandchildren",
+    "grandmother",
+    "grandfather",
+    "grandparents",
+    "stepson",
+    "stepdaughter",
+    "stepmother",
+    "stepfather",
+    "widow",
+    "widower",
+    // German
+    "sohn",
+    "sohns",
+    "sohnes",
+    "söhne",
+    "söhnen",
+    "tochter",
+    "töchter",
+    "töchtern",
+    "kind",
+    "kinds",
+    "kindes",
+    "kinder",
+    "kindern",
+    "frau",
+    "ehefrau",
+    "gattin",
+    "gemahlin",
+    "mann",
+    "mannes",
+    "ehemann",
+    "gatte",
+    "gatten",
+    "gemahl",
+    "bruder",
+    "bruders",
+    "brüder",
+    "brüdern",
+    "halbbruder",
+    "schwester",
+    "schwestern",
+    "halbschwester",
+    "geschwister",
+    "mutter",
+    "vater",
+    "vaters",
+    "eltern",
+    "onkel",
+    "onkels",
+    "tante",
+    "cousine",
+    "neffe",
+    "neffen",
+    "nichte",
+    "enkel",
+    "enkels",
+    "enkelin",
+    "enkelkind",
+    "großmutter",
+    "großvater",
+    "großeltern",
+    "stiefsohn",
+    "stieftochter",
+    "stiefmutter",
+    "stiefvater",
+    "schwager",
+    "schwägerin",
+    "witwe",
+    "witwer",
+  ].map((word) => fold(word))
+);
+
 /** Roman numerals up to XX — enough for any regnal name. */
 const ROMAN_NUMERAL_RE = /^(?:x{0,2})(?:ix|iv|v?i{0,3})$/;
 
@@ -552,6 +672,13 @@ const RUN_GAP_HYPHEN_RE = new RegExp(`^[${HYPHEN_CHARS}]$`);
 const RUN_GAP_DOT_RE = new RegExp(`^\\.[${SPACE_CHARS}]*$`);
 
 /**
+ * Separator between a run and the word introducing it. A comma is allowed
+ * because an apposition often carries one ("their second daughter, Anne");
+ * anything stronger ends the clause and with it the introduction.
+ */
+const RUN_LEAD_GAP_RE = new RegExp(`^,?[${SPACE_CHARS}]+$`);
+
+/**
  * Whether the characters between two tokens keep them in the same name run.
  * A period only continues a run after an initial or a numeral ("E. T. A.",
  * "Heinrich II."); anywhere else it ends a sentence and therefore the run.
@@ -573,8 +700,14 @@ function gapKeepsRun(gap, previousToken) {
  * Scan text for name runs: stretches of capitalized tokens (plus the
  * lowercase particles that belong to a name) that a reader takes as one
  * name phrase.
+ *
+ * Each run also carries the word right before it (`lead`), when a space or a
+ * comma is all that separates them. A run cannot contain that word — it is
+ * lowercase, or the run would have swallowed it — but "his son Aage" hinges
+ * on it, so the matcher needs it in reach.
+ *
  * @param {string} text - Text to scan
- * @returns {Array<{tokens: Array}>} Runs of tokens
+ * @returns {Array<{tokens: Array, lead: Object|null}>} Runs of tokens
  */
 function scanNameRuns(text) {
   const tokens = tokenize(text);
@@ -602,7 +735,7 @@ function scanNameRuns(text) {
       continue;
     }
 
-    current = { tokens: [token] };
+    current = { tokens: [token], lead: null };
     // A run starting on a capitalized token may still need the lowercase
     // particle in front of it ("… and von Neumann met …").
     if (
@@ -613,6 +746,11 @@ function scanNameRuns(text) {
       gapKeepsRun(text.slice(previous.end, token.start), previous.text)
     ) {
       current.tokens.unshift(previous);
+    }
+    const first = current.tokens[0];
+    const before = tokens[first === token ? i - 1 : i - 2];
+    if (before && RUN_LEAD_GAP_RE.test(text.slice(before.end, first.start))) {
+      current.lead = before;
     }
     runs.push(current);
   }
@@ -779,16 +917,32 @@ function namesOf(person) {
 }
 
 /**
+ * Whether a person is a relative of the story's subject, as far as the caller
+ * said. Ego-network connections carry a `relationship_type` like
+ * `family/child`; meta story people carry nothing, and an unstated
+ * relationship is not evidence against one, so it counts as possible.
+ * @param {Object} person - Person-ish object
+ * @returns {boolean} True when a kinship apposition may name this person
+ */
+function isPossibleRelative(person) {
+  const relationship = person?.relationship_type;
+  if (typeof relationship !== "string" || !relationship.trim()) return true;
+  return fold(relationship).split("/")[0].trim() === "family";
+}
+
+/**
  * Compile the specs for a list of people, keeping each spec attached to the
  * person object the caller passed in.
  * @param {Array<Object>} people - People to match
- * @returns {Array<{person: Object, specs: Array}>} Compiled people
+ * @returns {Array<{person: Object, specs: Array, isRelative: boolean}>}
+ *   Compiled people
  */
 function buildPeopleSpecs(people) {
   const compiled = [];
   for (const person of people) {
     const specs = namesOf(person).map(buildNameSpec).filter(Boolean);
-    if (specs.length) compiled.push({ person, specs });
+    if (specs.length)
+      compiled.push({ person, specs, isRelative: isPossibleRelative(person) });
   }
   return compiled;
 }
@@ -897,7 +1051,7 @@ function candidatesInRun(run, compiled) {
     .map((token) => fold(token.text).replace(/\.$/, ""));
   const candidates = [];
 
-  for (const { person, specs } of compiled) {
+  for (const { person, specs, isRelative } of compiled) {
     for (const spec of specs) {
       // A regnal reference belongs to exactly one ruler: "Otto III" is not
       // Otto Wagner, and "Henry III" is not Henry II.
@@ -913,12 +1067,25 @@ function candidatesInRun(run, compiled) {
           const alignment = alignSlice(tokens, from, to, spec);
           if (!alignment) continue;
 
+          // "his son Aage", "seiner Frau Margrethe": the kinship noun in
+          // front of the match picks out one relative, so the name behind it
+          // needs no distinctiveness of its own — but it must be a relative
+          // the data knows about.
+          const introducer = from > 0 ? tokens[from - 1] : run.lead;
+          const introducedAsRelative =
+            isRelative &&
+            !!introducer &&
+            RELATIVE_WORDS.has(fold(introducer.text));
+
           // A given name on its own is only evidence for people whose given
           // name is their identity, or whose given name is distinctive — and
           // only their *first* given name, never a middle one.
           if (
             !alignment.hasSurname &&
-            !(spec.allowsStandaloneGiven && alignment.hasGivenHead)
+            !(
+              (spec.allowsStandaloneGiven || introducedAsRelative) &&
+              alignment.hasGivenHead
+            )
           ) {
             continue;
           }
@@ -932,19 +1099,22 @@ function candidatesInRun(run, compiled) {
           if (spec.surnameIsCommon && !alignment.hasGiven) continue;
 
           // "John Adams" is not Abigail Adams: a capitalized token in front of
-          // the match is usually a *different* person's given name. Three
+          // the match is usually a *different* person's given name. Four
           // things clear it — a word capitalized only because it opens a
           // sentence ("Later Wagner joined"), a match that already spells out
-          // the full name ("Die Politikerin Abigail Adams"), and a title
-          // introducing its bearer ("General Washington"). A title in front of
-          // a lone given name still fails for anyone who has a surname, which
-          // is what separates "King George" from Henry II.
+          // the full name ("Die Politikerin Abigail Adams"), a title
+          // introducing its bearer ("General Washington"), and a German
+          // kinship noun, which is capitalized but names no one ("seiner Frau
+          // Margrethe"). A title in front of a lone given name still fails for
+          // anyone who has a surname, which is what separates "King George"
+          // from Henry II.
           const before = tokens[from - 1];
           if (before && isCapitalized(before.text)) {
             const folded = fold(before.text);
             const allowed =
               SENTENCE_LEAD_WORDS.has(folded) ||
               (alignment.hasGiven && alignment.hasSurname) ||
+              introducedAsRelative ||
               (PERSON_TITLE_WORDS.has(folded) &&
                 (alignment.hasSurname || !spec.hasSurname));
             if (!allowed) continue;

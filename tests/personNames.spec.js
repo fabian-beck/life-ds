@@ -149,6 +149,68 @@ test("short given names are not evidence on their own", () => {
   );
 });
 
+// "he and his son Aage advised Allied researchers": the apposition names one
+// person, so the given name no longer has to carry the identification alone.
+const bohrs = [
+  {
+    id: "aage",
+    name: "Aage Bohr",
+    relationship_type: "family/child",
+  },
+  {
+    id: "margrethe",
+    name: "Margrethe Nørlund Bohr",
+    relationship_type: "family/spouse",
+  },
+];
+
+test("a kinship apposition names a relative by their given name", () => {
+  expect(render("He and his son Aage advised the researchers.", bohrs)).toBe(
+    "He and his son ⟦Aage|aage⟧ advised the researchers."
+  );
+  expect(render("Their second daughter, Aage, followed.", bohrs)).toBe(
+    "Their second daughter, ⟦Aage|aage⟧, followed."
+  );
+});
+
+test("a German kinship noun is not a stranger's given name", () => {
+  // "Frau" and "Sohn" are capitalized, which otherwise reads as another
+  // person standing in front of a shared surname.
+  expect(
+    render("Er floh mit seiner Frau Margrethe nach Schweden.", bohrs)
+  ).toBe("Er floh mit seiner Frau ⟦Margrethe|margrethe⟧ nach Schweden.");
+  expect(render("Er und sein Sohn Aage berieten die Forscher.", bohrs)).toBe(
+    "Er und sein Sohn ⟦Aage|aage⟧ berieten die Forscher."
+  );
+});
+
+test("a kinship apposition only reaches the people the data calls relatives", () => {
+  const turings = [
+    {
+      id: "john_turing",
+      name: "John Ferrier Turing",
+      relationship_type: "family/sibling",
+    },
+    {
+      id: "von_neumann",
+      name: "John von Neumann",
+      relationship_type: "academic/colleague",
+    },
+  ];
+  expect(render("He grew up with his older brother John.", turings)).toBe(
+    "He grew up with his older brother ⟦John|john_turing⟧."
+  );
+  // Without the brother in the list the colleague still does not take the
+  // apposition, and a kinship cue does not license a bare given name anywhere
+  // else in the sentence.
+  expect(render("He grew up with his older brother John.", [turings[1]])).toBe(
+    "He grew up with his older brother John."
+  );
+  expect(render("His brother stayed home, and John visited.", turings)).toBe(
+    "His brother stayed home, and John visited."
+  );
+});
+
 test("keeps the particle with the surname", () => {
   expect(render("Einstein and von Neumann met again.", pioneers)).toBe(
     "Einstein and ⟦von Neumann|von_neumann⟧ met again."
