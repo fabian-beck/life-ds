@@ -5,7 +5,7 @@ A mobile-first Svelte + Vite experience that presents biographical life events a
 ## Getting Started
 
 ```powershell
-npm install
+npm ci
 npm run dev -- --open
 ```
 

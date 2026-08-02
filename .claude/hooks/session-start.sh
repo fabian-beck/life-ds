@@ -14,8 +14,21 @@ fi
 
 cd "${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 
+# `npm ci` rather than `npm install`, for what it does not do: it installs
+# exactly what the lockfile records and never writes to it, so a session no
+# longer ends with a modified package-lock.json nobody asked for. On this
+# container `npm install` rewrote peer bookkeeping on every cold start, because
+# the file had been resolved on Windows and npm records those flags per
+# platform. It is also the command the Ubuntu runner uses, so a lockfile that
+# would fail there fails here instead of being quietly repaired in a session
+# and pushed still broken.
 echo "Installing npm dependencies ..."
-npm install --no-audit --no-fund
+if ! npm ci --no-audit --no-fund; then
+  echo "npm ci refused the lockfile — package.json and package-lock.json disagree."
+  echo "Falling back to npm install, which will rewrite the lockfile; commit it"
+  echo "or the Ubuntu runner will fail on the same mismatch."
+  npm install --no-audit --no-fund
+fi
 
 # The container is itself the isolated environment, so the packages go into the
 # interpreter that `python`—and the `black`, `flake8` and `mypy` the npm

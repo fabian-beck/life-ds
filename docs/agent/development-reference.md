@@ -7,7 +7,7 @@
 ### Common Commands
 
 ```bash
-npm install          # Install dependencies
+npm ci               # Install exactly what package-lock.json records
 npm run dev          # Start dev server (localhost:5173/life-ds/)
 npm run build        # Production build to dist/
 npm run preview      # Preview production build
@@ -22,7 +22,7 @@ See [Testing strategy](../testing-strategy.md) for the boundary between the smal
 
 Web sessions run in a fresh container that has the repository cloned and nothing installed, so `.claude/hooks/session-start.sh` runs before the session starts and prepares it. The hook is a no-op anywhere else—it exits immediately unless `CLAUDE_CODE_REMOTE` is set—so local machines keep using their own `.venv`. It does three things:
 
-- `npm install`.
+- `npm ci`, falling back to `npm install` only if the lockfile and `package.json` disagree—`npm ci` never writes to the lockfile, so a session no longer ends with peer bookkeeping it did not mean to change, and it fails on the same mismatch the Ubuntu runner would.
 - Installs `requirements.txt` and `requirements-dev.txt` into the container's Python, and puts that interpreter's scripts first on `PATH`. The image also ships `black`, `flake8`, `mypy`, and `pytest` as standalone tools that cannot see the project's packages; without the `PATH` change `mypy scripts/` fails on the pydantic plugin.
 - Points the Playwright browser revision the installed client expects at the Chromium build the image actually carries. Browser downloads are blocked in the container, and without the link `npm run test:interface` cannot launch.
 

@@ -8,7 +8,7 @@ description: Build, run, and drive the Life Data Stories app to verify a change 
 ## Build & serve
 
 ```bash
-npm install            # if node_modules is missing (vite: not found)
+npm ci                 # if node_modules is missing (vite: not found)
 npm run build          # vite build → dist/
 npm run preview -- --port 4173 --strictPort   # serve dist/ in the background
 ```

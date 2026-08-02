@@ -30,13 +30,15 @@ The page prints as a complete document—`npm run report:pdf`, or Ctrl+P in a br
 ## Common Commands
 
 ```powershell
-npm install
+npm ci
 npm run dev
 npm run validate
 npm run build
 npm run test:core
 npm run test:interface
 ```
+
+`npm ci` installs exactly what `package-lock.json` records and never rewrites it. Use `npm install` only to change a dependency on purpose, and commit the lockfile it produces—npm records peer bookkeeping per platform, so an incidental refresh on Windows drops entries the Ubuntu runner needs.
 
 Python tooling uses the repository `.venv`. Run focused Python tests and type-checking when changing Python code:
 
