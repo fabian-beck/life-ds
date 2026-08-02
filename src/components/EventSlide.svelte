@@ -929,8 +929,9 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.15);
+    /* Square corners: the accent rule reads as a straight edge, and a radius
+       would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
-    border-radius: 0.5rem;
     padding: 0.75rem;
     margin-top: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -1010,8 +1011,9 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.15);
+    /* Square corners: the accent rule reads as a straight edge, and a radius
+       would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
-    border-radius: 0.5rem;
     padding: 0.75rem;
     margin-top: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -1105,8 +1107,9 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Square corners: the accent rule reads as a straight edge, and a radius
+       would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
-    border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
@@ -1281,8 +1284,9 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Square corners: the accent rule reads as a straight edge, and a radius
+       would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
-    border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     width: fit-content;
     max-width: 100%;
@@ -1388,8 +1392,9 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Square corners: the accent rule reads as a straight edge, and a radius
+       would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
-    border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
