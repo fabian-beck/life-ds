@@ -120,6 +120,17 @@ python scripts/validate_source_links.py --fix      # repair what search resolves
 
 Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
 
+**Restore image attribution** (no API key, no model):
+
+```bash
+python scripts/backfill_image_attribution.py --report    # what the data holds, no network
+python scripts/backfill_image_attribution.py             # every person
+python scripts/backfill_image_attribution.py hans_fallada --dry-run
+python scripts/backfill_image_attribution.py --force     # ask again, replace existing
+```
+
+The image search reads the creator, the license, and the license URL off every candidate, and `ImageViewer.svelte` renders all three, but `ImageMetadata` declared no fields for them, so the model dump discarded them on the way to disk—and for the CC BY-SA material here the attribution is a license condition rather than a nicety. The schema now carries them. This repairs what already shipped, from the same file pages the search read: Commons answers 50 titles per request through `iiprop=extmetadata`, needs no key, and returns `Artist`, `LicenseShortName`, and `LicenseUrl`. Attribution is technical rather than prose, so the values are written to the English document and to every translated copy, the way `backfill_birth_events.py` writes a classification. Images sourced from Openverse and Flickr are outside its reach and keep whatever they already carried.
+
 **Check the people who lived the same events** (no API key, no model):
 
 ```bash

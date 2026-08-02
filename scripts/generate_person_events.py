@@ -160,6 +160,20 @@ class ImageMetadata(BaseModel):
     source: str = Field(
         description="The source URL, typically a Wikimedia Commons page"
     )
+    # The image search reads all three off the file page, and ImageViewer
+    # renders all three. They are declared here because a field this model does
+    # not name is dropped by the model dump on the way to disk — which is how
+    # the corpus came to ship CC BY-SA images with the attribution their
+    # licenses require stripped out.
+    creator: Optional[str] = Field(
+        None, description="Who made the image, as the file page credits them"
+    )
+    license: Optional[str] = Field(
+        None, description="License name, e.g. 'CC BY-SA 3.0' or 'Public domain'"
+    )
+    licenseUrl: Optional[str] = Field(  # noqa: N815 - the field the UI reads
+        None, description="Link to the license text, when the file page gives one"
+    )
 
 
 class Annotation(BaseModel):
@@ -2013,9 +2027,6 @@ def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
         # Format license name (e.g., "by-sa" + "3.0" -> "CC BY-SA 3.0")
         license_name = None
         if license_code:
-            license_upper = license_code.upper().replace("-", " ").replace("BY", "BY-")
-            if license_upper.startswith("BY-"):
-                license_upper = license_upper.replace("BY-", "BY-", 1)
             license_name = f"CC {license_code.upper()}"
             if license_version:
                 license_name += f" {license_version}"
@@ -3736,6 +3747,9 @@ def research_images_for_all_events(
                     "url": img["url"],
                     "caption": img["caption"],
                     "source": img["source"],
+                    "creator": img.get("creator"),
+                    "license": img.get("license"),
+                    "licenseUrl": img.get("licenseUrl"),
                 }
             ]
             safe_title = event.title.encode("ascii", "replace").decode("ascii")
@@ -4060,6 +4074,11 @@ def enforce_metadata(
                             "url": image_url,
                             "caption": caption or "Image from Wikimedia Commons",
                             "source": source or None,
+                            # Attribution is a license condition for the CC
+                            # BY-SA material here, so it survives sanitizing.
+                            "creator": image_data.get("creator") or None,
+                            "license": image_data.get("license") or None,
+                            "licenseUrl": image_data.get("licenseUrl") or None,
                         }
                     )
         # Enforce maximum of one image per event
