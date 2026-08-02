@@ -29,6 +29,7 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
@@ -55,6 +56,15 @@ REGISTER_PATH = DATA_DIR / "persons.json"
 PEOPLE_DIR = DATA_DIR / "people"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 META_STORIES_REGISTER = DATA_DIR / "meta_stories.json"
+
+# Curation batches are retried before the phase gives up, because the
+# alternative to a decision here is no decision at all.
+FILTER_BATCH_ATTEMPTS = 3
+FILTER_BATCH_BACKOFF_SECONDS = 2.0
+
+
+class FilteringFailed(RuntimeError):
+    """Phase 3 could not curate a batch of events."""
 
 
 # ============================================================================
@@ -947,6 +957,7 @@ a death matters to a story about persecution). Judge each against THIS topic."""
 
     curated: List[Dict[str, Any]] = []
     total_excluded = 0
+    total_undecided = 0
 
     if verbose:
         print(f"  Reviewing {len(collected_events)} events...")
@@ -972,11 +983,24 @@ a death matters to a story about persecution). Judge each against THIS topic."""
                     print(f"        Connection: {_ascii(decision['theme_connection'])}")
             else:
                 total_excluded += 1
+                if decision is None:
+                    # The model answered the batch but said nothing about this
+                    # event. Dropping it matches the prompt's default-to-reject,
+                    # but it is a gap in the answer rather than a judgment.
+                    total_undecided += 1
                 if verbose:
                     print(f"    [-] WEAK: {person_name}: {title}")
                     if decision:
                         reason = decision.get("theme_connection", "Not relevant")
                         print(f"        Reason: {_ascii(reason)}")
+                    else:
+                        print("        Reason: no decision returned for this event")
+
+    if total_undecided:
+        print(
+            f"\nNOTE: {total_undecided} event(s) were dropped without a decision — "
+            "the model's answer did not mention them."
+        )
 
     # Validate: every selected person should contribute at least one event
     person_event_counts: Dict[str, int] = {}
@@ -1034,6 +1058,12 @@ def _filter_event_batch(
 
     Returns:
         Dict mapping event_id to decision dict {"is_relevant": bool, "reason": str}
+
+    Raises:
+        FilteringFailed: when the call keeps failing. A batch that cannot be
+        judged is not a batch of relevant events — this phase asks for one to
+        three essential events per person, so answering a failure by admitting
+        everything inverts it.
     """
     # Prepare events for review
     events_for_review = []
@@ -1126,53 +1156,42 @@ Events to review:
 {json.dumps([e.model_dump() for e in events_for_review], indent=2)}
 """
 
-    try:
-        response = client.beta.chat.completions.parse(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            response_format=BatchEventRelevanceDecisions,
-        )
-
-        result = response.choices[0].message
-        if result.parsed:
-            decisions = {}
-            for decision in result.parsed.decisions:
-                decisions[decision.event_id] = {
-                    "is_relevant": decision.is_relevant,
-                    "theme_connection": decision.theme_connection,
+    last_error: Optional[str] = None
+    for attempt in range(1, FILTER_BATCH_ATTEMPTS + 1):
+        try:
+            response = client.beta.chat.completions.parse(
+                model=model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic.",
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                response_format=BatchEventRelevanceDecisions,
+            )
+            result = response.choices[0].message
+            if result.parsed:
+                return {
+                    decision.event_id: {
+                        "is_relevant": decision.is_relevant,
+                        "theme_connection": decision.theme_connection,
+                    }
+                    for decision in result.parsed.decisions
                 }
-            return decisions
-        else:
+            last_error = "the model returned no parsed result"
+        except Exception as error:
+            last_error = str(error)
+
+        if attempt < FILTER_BATCH_ATTEMPTS:
             if verbose:
-                print(
-                    "  Warning: No parsed result from AI, including all events by default"
-                )
-            # Default: include all if AI fails
-            return {
-                f"{e['person_id']}:{e['event_index']}": {
-                    "is_relevant": True,
-                    "theme_connection": "AI filtering failed, included by default",
-                }
-                for e in events
-            }
+                print(f"  Retrying batch after: {last_error}")
+            time.sleep(FILTER_BATCH_BACKOFF_SECONDS * attempt)
 
-    except Exception as e:
-        if verbose:
-            print(f"  Warning: AI filtering error: {e}")
-        # Default: include all if error
-        return {
-            f"{e['person_id']}:{e['event_index']}": {
-                "is_relevant": True,
-                "theme_connection": "AI filtering error, included by default",
-            }
-            for e in events
-        }
+    raise FilteringFailed(
+        f"Curation of a batch of {len(events)} event(s) failed after "
+        f"{FILTER_BATCH_ATTEMPTS} attempt(s): {last_error}"
+    )
 
 
 # ============================================================================
@@ -1939,19 +1958,28 @@ def main():
     if args.skip_ai_filtering:
         if args.verbose:
             print("\n=== PHASE 3: AI Event Filtering (SKIPPED) ===")
-        curated_events = [
-            {**e, "theme_connection": "Included without AI filtering"}
-            for e in collected_events
-        ]
+        # No curation happened, so there is no connection to state. The
+        # timeline omits the description when the field is absent; a sentence
+        # about the pipeline would read as if it were about the event.
+        curated_events = list(collected_events)
     else:
-        curated_events = phase3_ai_event_filtering(
-            plan=plan,
-            collected_events=collected_events,
-            client=client,
-            model=args.model,
-            verbose=args.verbose,
-            batch_size=args.batch_size,
-        )
+        try:
+            curated_events = phase3_ai_event_filtering(
+                plan=plan,
+                collected_events=collected_events,
+                client=client,
+                model=args.model,
+                verbose=args.verbose,
+                batch_size=args.batch_size,
+            )
+        except FilteringFailed as error:
+            print(f"ERROR: Phase 3 failed — {error}")
+            print(
+                "  Curation is what makes this a story rather than every dated "
+                "event of these lives, so the run stops here. Rerun it, or use "
+                "--skip-ai-filtering to build the uncurated collection on purpose."
+            )
+            sys.exit(1)
 
     # Phase 3b: fit the proposed chapters to the events that survived curation
     chapters = fit_chapters_to_events(plan, curated_events, verbose=args.verbose)
