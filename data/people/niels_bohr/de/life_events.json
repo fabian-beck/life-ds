@@ -8,10 +8,10 @@
     "primary_roles": [
       "Physiker",
       "Philosoph",
-      "Hochschullehrer"
+      "Pädagoge"
     ],
     "tagline": "Architekt des Quantenatoms",
-    "summary": "Niels Bohr war ein dänischer theoretischer Physiker, dessen Arbeiten zur Atomstruktur, Quantentheorie und Komplementarität die Physik des 20. Jahrhunderts prägten. Er gründete Kopenhagens Institut für Theoretische Physik, half Wissenschaftlern auf der Flucht vor dem Nationalsozialismus und setzte sich nach dem Zweiten Weltkrieg für internationale Zusammenarbeit bei der Nutzung der Kernenergie ein.",
+    "summary": "Niels Bohr war ein dänischer theoretischer Physiker, dessen Arbeiten zur Atomstruktur, Quantentheorie und Komplementarität die Physik des 20. Jahrhunderts prägten. Er gründete Kopenhagens Institut für Theoretische Physik, half Wissenschaftlern auf der Flucht vor dem Nationalsozialismus und setzte sich nach dem Zweiten Weltkrieg für internationale Zusammenarbeit im Bereich der Kernenergie ein.",
     "wikipedia": "https://en.wikipedia.org/wiki/Niels_Bohr",
     "portrait": {
       "image": "/portraits/niels_bohr_thumbnail.webp",
@@ -28,7 +28,7 @@
   "chapters": [
     {
       "id": "first_principles",
-      "headline": "Grundlagen",
+      "headline": "Erste Prinzipien",
       "date_start": "1885-10-07",
       "date_start_precision": "day",
       "date_end": "1911-05",
@@ -77,7 +77,7 @@
     },
     {
       "id": "science_against_tyranny",
-      "headline": "Wissenschaft gegen Tyrannei",
+      "headline": "Wissenschaft gegen die Tyrannei",
       "date_start": "1933",
       "date_start_precision": "year",
       "date_end": "1956",
@@ -103,14 +103,14 @@
       "location": "Dänemark"
     }
   ],
-  "conclusion": "Niels Bohr machte aus dem Rätsel des Atoms eine neue Sicht auf die Wirklichkeit und setzte sich in seinen späteren Jahren dafür ein, dass Wissen von solcher Macht der Menschheit dienen müsse. Sein Kopenhagener Vermächtnis lebt fort – als Grundlage der Quantenphysik ebenso wie als ethischer Appell zu wissenschaftlicher Offenheit.",
+  "conclusion": "Niels Bohr machte aus dem Atom, das zuvor ein Rätsel gewesen war, eine neue Sicht auf die Wirklichkeit. In seinen späteren Jahren bestand er darauf, dass Wissen von solcher Macht der Menschheit dienen müsse. Sein Vermächtnis in Kopenhagen wirkt bis heute fort – als Fundament der Quantenphysik ebenso wie als moralischer Appell zu wissenschaftlicher Offenheit.",
   "events": [
     {
       "date": "1885-10-07",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Kopenhagen",
-      "description": "Niels Henrik David Bohr wurde in Kopenhagen als Sohn des Universitätsphysiologen Christian Bohr und von Ellen Adler Bohr geboren, die einer angesehenen dänisch-jüdischen Bankiersfamilie entstammte. Gemeinsam mit seiner Schwester Jenny und seinem jüngeren Bruder Harald wuchs er in einem geistig regen Elternhaus auf.",
+      "description": "Niels Henrik David Bohr wurde in Kopenhagen als Sohn von Christian Bohr, einem Universitätsphysiologen, und Ellen Adler Bohr, der Tochter einer angesehenen dänisch-jüdischen Bankiersfamilie, geboren. Gemeinsam mit seiner Schwester Jenny und seinem jüngeren Bruder Harald wuchs er in einem geistig anregenden Elternhaus auf.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -153,8 +153,8 @@
       "date": "1903",
       "date_precision": "year",
       "age": 17,
-      "title": "Physikstudium in Kopenhagen",
-      "description": "1903 schrieb sich Bohr an der Universität Kopenhagen ein, um bei Christian Christiansen Physik zu studieren. Daneben belegte er Mathematik, Astronomie und Philosophie, darunter Philosophie bei Harald Høffding, einem engen Freund seines Vaters.",
+      "title": "Beginnt Physikstudium in Kopenhagen",
+      "description": "1903 schrieb sich Bohr an der Universität Kopenhagen ein, um bei Christian Christiansen Physik zu studieren. Daneben belegte er Vorlesungen in Mathematik, Astronomie und Philosophie, darunter Philosophie bei Harald Høffding, einem engen Freund seines Vaters.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -189,8 +189,8 @@
       "date_end": "1911-05",
       "date_end_precision": "month",
       "age": 23,
-      "title": "Vom Master zur Promotion",
-      "description": "Im April 1909 schloss Bohr ein Masterstudium über die [[electron theory of metals|Elektronentheorie der Metalle]] ab und weitete das Thema zu einer Doktorarbeit aus. Im Mai 1911 verteidigte er an der Universität Kopenhagen seine Dissertation und kam zu dem Schluss, dass die Theorie die magnetischen Eigenschaften von Metallen nicht hinreichend erklärte.",
+      "title": "Vom Magisterabschluss zur Promotion",
+      "description": "Im April 1909 schloss Bohr seine Magisterarbeit über die [[electron theory of metals|Elektronentheorie der Metalle]] ab und baute das Thema zu einer Doktorarbeit aus. Im Mai 1911 verteidigte er an der Universität Kopenhagen seine Dissertation. Darin kam er zu dem Schluss, dass die Theorie die magnetischen Eigenschaften von Metallen nicht hinreichend erklären konnte.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -209,7 +209,7 @@
       "chapter": "first_principles",
       "annotations": {
         "electron theory of metals": {
-          "explanation": "Ein klassisches Modell, das die Leitungselektronen in Metallen als Gas auffasste; mehrere Eigenschaften von Metallen, darunter der Magnetismus, ließ es nicht vollständig erklären.",
+          "explanation": "Ein klassisches Modell, das Leitungselektronen in Metallen als Gas auffasste; mehrere Eigenschaften von Metallen, darunter ihr Magnetismus, konnte es nicht vollständig erklären.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Drude_model"
         }
       },
@@ -224,7 +224,7 @@
       "date_end_precision": "month",
       "age": 25,
       "title": "Studien bei Rutherford",
-      "description": "Mit einem Stipendium der Carlsberg-Stiftung reiste Bohr im September 1911 nach England und arbeitete zunächst am Cavendish Laboratory in Cambridge. Anschließend schloss er sich Ernest Rutherfords Gruppe in Manchester an, wo Rutherfords Kernmodell des Atoms für Bohrs Denken maßgeblich wurde.",
+      "description": "Dank eines Stipendiums der Carlsberg-Stiftung reiste Bohr im September 1911 nach England und arbeitete zunächst am Cavendish-Laboratorium in Cambridge. Anschließend schloss er sich in Manchester der Forschungsgruppe von Ernest Rutherford an, dessen Kernmodell des Atoms für Bohrs Denken zentral wurde.",
       "locations": [
         {
           "name_historic": "Cambridge",
@@ -255,7 +255,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Cavendish_Laboratory%2C_Cambridge.jpg/960px-Cavendish_Laboratory%2C_Cambridge.jpg",
-          "caption": "Cavendish Laboratory, Cambridge",
+          "caption": "Cavendish-Laboratorium, Cambridge",
           "source": "https://commons.wikimedia.org/wiki/File:Cavendish_Laboratory,_Cambridge.jpg"
         }
       ],
@@ -298,9 +298,9 @@
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Margrethe Nørlund",
-        "duration": "until his death",
+        "duration": "bis zu seinem Tod",
         "children": 6,
-        "characterization": "devoted partnership"
+        "characterization": "Lebenslange Partnerschaft"
       }
     },
     {
@@ -309,8 +309,8 @@
       "date_end": "1913-11",
       "date_end_precision": "month",
       "age": 27,
-      "title": "Drei Aufsätze zum Atommodell",
-      "description": "Nach seiner Rückkehr nach Kopenhagen veröffentlichte Bohr 1913 im Philosophical Magazine drei Aufsätze, in denen er sein neues Atommodell begründete. Aufbauend auf Rutherfords Kernatom postulierten sie stabile Elektronenzustände und brachten die ausgesandte Strahlung mit Übergängen zwischen diesen Zuständen in Verbindung.",
+      "title": "Veröffentlicht drei Atommodell-Arbeiten",
+      "description": "Nach seiner Rückkehr nach Kopenhagen veröffentlichte Bohr 1913 drei Aufsätze im Philosophical Magazine, die sein neues Atommodell begründeten. Ausgehend von Rutherfords Kernatom postulierten die Arbeiten stabile Elektronenzustände und führten die ausgesandte Strahlung auf Übergänge zwischen diesen Zuständen zurück.",
       "locations": [
         {
           "name_historic": "Manchester",
@@ -333,7 +333,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Bohr%2C_Niels_%E2%80%93_The_theory_of_spectra_and_atomic_constitution_%28Drei_Aufs%C3%A4tze_%C3%BCber_Spektren_und_Atombau%29%2C_1922_%E2%80%93_BEIC_10990185.jpg/960px-Bohr%2C_Niels_%E2%80%93_The_theory_of_spectra_and_atomic_constitution_%28Drei_Aufs%C3%A4tze_%C3%BCber_Spektren_und_Atombau%29%2C_1922_%E2%80%93_BEIC_10990185.jpg",
-          "caption": "Die Theorie der Spektren und der Atombau, 1922",
+          "caption": "The Theory of Spectra and Atomic Constitution, 1922",
           "source": "https://commons.wikimedia.org/wiki/File:Bohr,_Niels_–_The_theory_of_spectra_and_atomic_constitution_(Drei_Aufsätze_über_Spektren_und_Atombau),_1922_–_BEIC_10990185.jpg"
         }
       ],
@@ -341,7 +341,7 @@
       "chapter": "the_atom_takes_shape",
       "annotations": {
         "Manchester": {
-          "explanation": "Bohr entwickelte diese Arbeit während seiner Postdoktorandenzeit an der Universität Manchester im Forschungsumfeld Rutherfords.",
+          "explanation": "Bohr entwickelte diese Arbeiten während seiner Zeit als Postdoktorand an der Universität Manchester im Forschungsumfeld Rutherfords.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Manchester"
         }
       },
@@ -350,8 +350,8 @@
         "title": "On the Constitution of Atoms and Molecules",
         "publication_type": "paper",
         "publisher": "Philosophical Magazine",
-        "significance": "atomic model",
-        "impact": "The papers described quantized stationary states and radiation emitted when electrons changed between them."
+        "significance": "Atommodell",
+        "impact": "Quantisierte stationäre Zustände und Strahlung bei Elektronenübergängen"
       },
       "location_coordinates": [
         {
@@ -370,8 +370,8 @@
       "date": "1916-07",
       "date_precision": "month",
       "age": 30,
-      "title": "Rückkehr nach Kopenhagen",
-      "description": "Bohr nahm den Lehrstuhl für theoretische Physik an der Universität Kopenhagen an und kehrte mit Margrethe zurück; damit endete seine kriegsbedingte Lehr- und Forschungstätigkeit in Manchester. In Kopenhagen begann er, ein neues Zentrum für theoretische Physik aufzubauen.",
+      "title": "Kehrt nach Kopenhagen zurück",
+      "description": "Bohr nahm den Lehrstuhl für theoretische Physik an der Universität Kopenhagen an und kehrte mit Margrethe zurück. Damit endeten seine kriegsbedingte Lehr- und Forschungstätigkeit in Manchester. In Kopenhagen begann er, ein neues Zentrum für theoretische Physik aufzubauen.",
       "locations": [
         {
           "name_historic": "Manchester",
@@ -403,17 +403,17 @@
       "chapter": "copenhagen_at_quantum_center",
       "event_class": {
         "type": "migration",
-        "from_location": "United Kingdom",
-        "to_location": "Copenhagen, Denmark",
-        "characterization": "academic appointment"
+        "from_location": "Vereinigtes Königreich",
+        "to_location": "Kopenhagen, Dänemark",
+        "characterization": "Berufung an die Universität"
       }
     },
     {
       "date": "1920",
       "date_precision": "year",
       "age": 34,
-      "title": "Eröffnung des Kopenhagener Physikinstituts",
-      "description": "1920 gründete Bohr an der Universität Kopenhagen das Institut für Theoretische Physik und übernahm dessen Leitung. Das Institut führte Gastwissenschaftler und junge Physiker zu einem fortwährenden Austausch mit Bohr und untereinander zusammen.",
+      "title": "Eröffnet Kopenhagener Physikinstitut",
+      "description": "1920 gründete Bohr an der Universität Kopenhagen das Institut für Theoretische Physik und übernahm dessen Leitung. Das Institut brachte Gastforscher und junge Physiker zu anhaltenden Gesprächen mit Bohr und untereinander zusammen.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -442,8 +442,8 @@
       "date": "1922",
       "date_precision": "year",
       "age": 37,
-      "title": "Nobelpreis für Physik",
-      "description": "Bohr erhielt 1922 den Nobelpreis für Physik für seine Untersuchungen zum Aufbau der Atome und zu der von ihnen ausgesandten Strahlung. Als die Preisverleihung in Stockholm stattfand, war er in Japan auf Reisen; seine Nobelvorlesung hielt er im folgenden Jahr.",
+      "title": "Erhält den Nobelpreis",
+      "description": "Bohr erhielt 1922 den Nobelpreis für Physik für seine Untersuchungen zur Atomstruktur und zur von Atomen ausgesandten Strahlung. Während der Stockholmer Zeremonie hielt er sich auf einer Reise in Japan auf; seine Nobelvorlesung trug er im folgenden Jahr vor.",
       "locations": [
         {
           "name_historic": "Stockholm",
@@ -474,8 +474,8 @@
       "date": "1927",
       "date_precision": "year",
       "age": 41,
-      "title": "Das Komplementaritätsprinzip",
-      "description": "1927 führte Bohr in den Debatten über die Bedeutung der Quantenmechanik [[complementarity|das Komplementaritätsprinzip]] ein. Er argumentierte, dass Wellen- und Teilchenverhalten je nach Versuchsanordnung unterschiedliche, aber einander notwendig ergänzende Beschreibungen erforderten.",
+      "title": "Formuliert die Komplementarität",
+      "description": "1927 führte Bohr in den Debatten über die Bedeutung der Quantenmechanik [[complementarity|das Prinzip der Komplementarität]] ein. Er argumentierte, Wellen- und Teilchenverhalten verlangten je nach Versuchsaufbau unterschiedliche, doch gleichermaßen notwendige Beschreibungen.",
       "locations": [
         {
           "name_historic": "Como",
@@ -498,7 +498,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Solvay_conference_1927.jpg/960px-Solvay_conference_1927.jpg",
-          "caption": "Solvay-Konferenz zur Quantenmechanik 1927",
+          "caption": "Solvay-Konferenz zur Quantenmechanik, 1927",
           "source": "https://commons.wikimedia.org/wiki/File:Solvay_conference_1927.jpg"
         }
       ],
@@ -506,7 +506,7 @@
       "chapter": "copenhagen_at_quantum_center",
       "annotations": {
         "complementarity": {
-          "explanation": "Bohr übertrug diese Idee später über die Physik hinaus und vertrat damit die Auffassung, dass scheinbar unvereinbare Perspektiven unter ihren jeweiligen Beobachtungsbedingungen jeweils notwendig sein können.",
+          "explanation": "Bohr übertrug diese Idee später über die Physik hinaus und argumentierte, dass scheinbar unvereinbare Perspektiven unter ihren jeweiligen Beobachtungsbedingungen gleichermaßen notwendig sein können.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Complementarity_(physics)"
         }
       }
@@ -517,8 +517,8 @@
       "date_end": "1939",
       "date_end_precision": "year",
       "age": 47,
-      "title": "Hilfe für geflüchtete Wissenschaftler",
-      "description": "Als die nationalsozialistische Verfolgung in Deutschland immer schärfer wurde, nutzte Bohr seine Stellung und seine internationalen Verbindungen, um vertriebenen Wissenschaftlern zu helfen. Sein Kopenhagener Institut wurde zu einem Ort, an dem Flüchtlinge wissenschaftliche Kontakte, Unterstützung und vorübergehende Arbeit finden konnten.",
+      "title": "Hilft geflüchteten Wissenschaftlern",
+      "description": "Als die nationalsozialistische Verfolgung in Deutschland sich verschärfte, nutzte Bohr seine Stellung und seine internationalen Kontakte, um vertriebenen Wissenschaftlern zu helfen. Sein Institut in Kopenhagen wurde zu einem Ort, an dem Geflüchtete wissenschaftliche Kontakte, Unterstützung und vorübergehende Arbeit fanden.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -536,7 +536,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Bohr_Heisenberg_Pauli_Meitner_u.a._1937.jpg/960px-Bohr_Heisenberg_Pauli_Meitner_u.a._1937.jpg",
-          "caption": "Bohr mit Heisenberg, Pauli, Meitner und weiteren Physikern",
+          "caption": "Bohr mit Heisenberg, Pauli, Meitner und anderen Physikern",
           "source": "https://commons.wikimedia.org/wiki/File:Bohr_Heisenberg_Pauli_Meitner_u.a._1937.jpg"
         }
       ],
@@ -549,8 +549,8 @@
       "date_end": "1943-10",
       "date_end_precision": "month",
       "age": 57,
-      "title": "Flucht aus dem besetzten Dänemark",
-      "description": "Als Bohr im September 1943 erfuhr, dass die deutschen Behörden seine Verhaftung planten, floh er mit seiner Frau Margrethe per Boot aus dem besetzten Dänemark nach Schweden. Von dort wurde er nach Großbritannien ausgeflogen, wo er seine Arbeit mit Wissenschaftlern der Alliierten fortsetzte.",
+      "title": "Flieht aus dem besetzten Dänemark",
+      "description": "Nachdem Bohr im September 1943 erfahren hatte, dass die deutschen Behörden seine Verhaftung planten, floh er mit seiner Frau Margrethe per Boot aus dem besetzten Dänemark nach Schweden. Von dort wurde er nach Großbritannien ausgeflogen, wo er seine Arbeit mit alliierten Wissenschaftlern fortsetzte.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -583,9 +583,9 @@
       "chapter": "science_against_tyranny",
       "event_class": {
         "type": "migration",
-        "from_location": "Denmark",
-        "to_location": "Sweden",
-        "characterization": "refugee flight"
+        "from_location": "Dänemark",
+        "to_location": "Schweden",
+        "characterization": "Flucht ins Exil"
       }
     },
     {
@@ -594,8 +594,8 @@
       "date_end": "1945",
       "date_end_precision": "year",
       "age": 58,
-      "title": "Berater des Manhattan-Projekts",
-      "description": "In Großbritannien schloss sich Bohr dem [[Tube Alloys|Tube-Alloys-Projekt]] an und reiste später mit der britischen Mission zum [[Manhattan Project|Manhattan-Projekt]] in die Vereinigten Staaten. Unter den Decknamen Nicholas Baker und James Baker berieten er und sein Sohn Aage die alliierten Forscher bei ihren Arbeiten zur Kernspaltung.",
+      "title": "Berät das Manhattan-Projekt",
+      "description": "In Großbritannien schloss sich Bohr dem [[Tube Alloys|Tube-Alloys-Projekt]] an und reiste später mit der britischen Mission zum [[Manhattan Project|Manhattan-Projekt]] in die Vereinigten Staaten. Unter den Decknamen Nicholas Baker und James Baker berieten er und sein Sohn Aage alliierte Forscher bei der Erforschung der Kernspaltung.",
       "locations": [
         {
           "name_historic": "London",
@@ -628,11 +628,11 @@
       "chapter": "science_against_tyranny",
       "annotations": {
         "Tube Alloys": {
-          "explanation": "Das geheime britische Programm des Zweiten Weltkriegs zur Entwicklung von Atomwaffen, das später mit dem amerikanischen Manhattan-Projekt zusammengeführt wurde.",
+          "explanation": "Das geheime britische Programm zur Entwicklung von Atomwaffen im Zweiten Weltkrieg, das später in das amerikanische Manhattan-Projekt integriert wurde.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Tube_Alloys"
         },
         "Manhattan Project": {
-          "explanation": "Das geheime Kriegsprogramm der Alliierten, in dessen Rahmen die ersten Atomwaffen entwickelt wurden.",
+          "explanation": "Das geheime alliierte Kriegsprogramm, in dessen Rahmen die ersten Atomwaffen entwickelt wurden.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Manhattan_Project"
         }
       },
@@ -665,8 +665,8 @@
       "date_end": "1956",
       "date_end_precision": "year",
       "age": 59,
-      "title": "Einsatz für nukleare Zusammenarbeit",
-      "description": "Nach seiner Rückkehr nach Kopenhagen im Jahr 1945 setzte sich Bohr für internationale Offenheit und Zusammenarbeit bei der Kontrolle der Kernenergie ein. 1950 richtete er einen offenen Brief an die Vereinten Nationen und rief zu einer „offenen Welt“ auf. Zudem wirkte er an der Gründung des CERN und der dänischen Atomenergiekommission mit, einschließlich deren Forschungseinrichtung Risø.",
+      "title": "Setzt sich für nukleare Zusammenarbeit ein",
+      "description": "Nach seiner Rückkehr nach Kopenhagen im Jahr 1945 trat Bohr für internationale Offenheit und Zusammenarbeit bei der Kontrolle der Kernenergie ein. 1950 richtete er einen offenen Brief an die Vereinten Nationen und rief darin zu einer „offenen Welt“ auf. Außerdem war er an der Gründung des CERN und der dänischen Atomenergiekommission beteiligt, zu der auch die Forschungseinrichtung Risø gehörte.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -693,7 +693,7 @@
       "chapter": "science_against_tyranny",
       "annotations": {
         "Risø": {
-          "explanation": "Risø entwickelte sich später zu einem bedeutenden dänischen nationalen Laboratorium und Forschungscampus, dessen Aufgaben weit über den ursprünglichen Auftrag im Bereich Kernenergie hinausgingen.",
+          "explanation": "Risø entwickelte sich später zu einem bedeutenden dänischen nationalen Labor und Forschungscampus und ging damit über seinen ursprünglichen Auftrag im Bereich der Kernenergie hinaus.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Ris%C3%B8_National_Laboratory"
         }
       }
@@ -702,8 +702,8 @@
       "date": "1957",
       "date_precision": "year",
       "age": 71,
-      "title": "Vorsitz am Nordischen Institut",
-      "description": "1957 wurde Bohr erster Vorsitzender des Nordischen Instituts für Theoretische Physik in Kopenhagen. Das als NORDITA bekannte Institut sollte den wissenschaftlichen Austausch und die theoretische Forschung zwischen den nordischen Ländern stärken.",
+      "title": "Leitet nordisches Institut",
+      "description": "1957 wurde Bohr erster Vorsitzender des Nordischen Instituts für Theoretische Physik in Kopenhagen. Das unter dem Namen NORDITA bekannte Institut wurde gegründet, um den wissenschaftlichen Austausch und die theoretische Forschung zwischen den nordischen Ländern zu stärken.",
       "locations": [
         {
           "name_historic": "Kopenhagen",
@@ -722,7 +722,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Niels_Bohr_visiting_Weizmann_Institute%2C_Israel_in_1958.jpg/960px-Niels_Bohr_visiting_Weizmann_Institute%2C_Israel_in_1958.jpg",
-          "caption": "Niels Bohr zu Besuch am Weizmann-Institut, Israel, 1958",
+          "caption": "Niels Bohr besucht das Weizmann-Institut, Israel, 1958",
           "source": "https://commons.wikimedia.org/wiki/File:Niels_Bohr_visiting_Weizmann_Institute,_Israel_in_1958.jpg"
         }
       ],
@@ -730,7 +730,7 @@
       "chapter": "an_open_world",
       "annotations": {
         "Nordic Institute for Theoretical Physics": {
-          "explanation": "Das Institut ist gewöhnlich unter dem Kürzel NORDITA bekannt, das sich aus seinem nordischsprachigen Namen ableitet.",
+          "explanation": "Das Institut ist allgemein unter dem Akronym NORDITA bekannt, das sich von seinem Namen in den nordischen Sprachen ableitet.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Nordic_Institute_for_Theoretical_Physics"
         }
       }
@@ -762,8 +762,8 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "34ddea48dea66de1",
-    "translated_on": "2026-08-02T06:15:34.676412+02:00",
-    "translator": "openai:gpt-5.6-terra"
+    "source_fingerprint": "dc02e247a5a5a6e9",
+    "translated_on": "2026-08-02T06:51:36.944142+00:00",
+    "translator": "openai:gpt-5.6-luna"
   }
 }
