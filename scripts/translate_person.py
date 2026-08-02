@@ -570,26 +570,43 @@ def _require_same_length(kind: str, source: List[Any], translated: List[Any]) ->
 _ANNOTATION_MARKER_RE = re.compile(r"\[\[([^\[\]|]+)\|")
 
 
-def _require_same_markers(kind: str, source: str, translated: str) -> None:
-    """Reject a translation that dropped, renamed, or invented an annotation term.
+def _reconcile_markers(kind: str, source: str, translated: str) -> str:
+    """Return the translation with its annotation markers made to match the source.
 
     A description carries its annotations as ``[[term|display]]``: the display
     text is translated, the term is an id the document's ``annotations`` map is
-    keyed by. The merge cannot repair a term the model rewrote — the marker
-    still renders, it simply resolves to nothing — so the mismatch is caught
-    here, where a misaligned list is caught, and the document is left
-    untranslated for `--check` to report rather than written half-linked.
+    keyed by. The two ways a translation can get that wrong are not equally
+    damaging, and the merge treats them differently.
+
+    A marker the model *invented* names nothing — the reader is shown the
+    display text with the markup stripped, which is exactly what the interface
+    does with a marker no annotation answers. So it is stripped here rather
+    than paid for with the whole document: the small model this step runs on
+    reliably marks up terms it recognizes in the text, and one such flourish
+    used to leave a life story untranslated in every language.
+
+    A marker the model *dropped or renamed* is a real loss: the annotation it
+    was the only route to becomes unreachable, and nothing downstream can put
+    it back. That still raises, and the document is left untranslated for
+    `--check` to report rather than written half-linked.
 
     Only the terms are compared. A translation may reorder the sentences a
     marker sits in, and does not have to keep two markers in the same order.
     """
     source_terms = sorted(_ANNOTATION_MARKER_RE.findall(source or ""))
-    translated_terms = sorted(_ANNOTATION_MARKER_RE.findall(translated or ""))
-    if source_terms != translated_terms:
+    translated_terms = _ANNOTATION_MARKER_RE.findall(translated or "")
+
+    repaired = translated or ""
+    for term in set(translated_terms) - set(source_terms):
+        repaired = re.sub(rf"\[\[{re.escape(term)}\|([^\]]*)\]\]", r"\1", repaired)
+
+    remaining = sorted(_ANNOTATION_MARKER_RE.findall(repaired))
+    if remaining != source_terms:
         raise TranslationMergeError(
             f"{kind}: annotation markers changed — expected "
-            f"{source_terms or '[]'}, got {translated_terms or '[]'}"
+            f"{source_terms or '[]'}, got {remaining or '[]'}"
         )
+    return repaired
 
 
 def _set_if_source_has(target: Dict[str, Any], key: str, value: Optional[str]) -> None:
@@ -639,7 +656,7 @@ def apply_life_events_translations(
         _set_if_source_has(event, "title", tr_event.get("title"))
         tr_description = tr_event.get("description")
         if tr_description is not None and "description" in event:
-            _require_same_markers(
+            tr_description = _reconcile_markers(
                 "event.description", event.get("description") or "", tr_description
             )
         _set_if_source_has(event, "description", tr_description)

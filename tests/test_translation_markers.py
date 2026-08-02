@@ -3,11 +3,14 @@
 A description carries its annotations inline as ``[[term|display]]``: the
 display text is translated, the term is an id that the document's
 ``annotations`` map is keyed by. The merge overlays translated text onto a copy
-of the English document, so a term the model rewrote is not repaired by
-anything downstream — the marker still renders and simply resolves to nothing.
+of the English document, so a term the model dropped or rewrote is not repaired
+by anything downstream — the annotation it was the only route to goes dark.
 
 This guard is what makes it safe to translate on the small model: a weaker
-translator is allowed to produce flatter prose, not a half-linked document.
+translator is allowed to produce flatter prose, not a half-linked document. A
+marker the model *added* is the exception, because it costs nothing to undo:
+it names no annotation, and both the merge and the interface reduce it to the
+display text it wraps.
 """
 
 import sys
@@ -107,23 +110,33 @@ class AnnotationMarkerTests(unittest.TestCase):
                 {},
             )
 
-    def test_an_invented_marker_is_rejected(self) -> None:
-        with self.assertRaises(TranslationMergeError):
-            apply_life_events_translations(
-                _source_document("He designed the machine."),
-                _translated_payload("Er entwarf die [[maschine|Maschine]]."),
-                {},
-            )
+    def test_an_invented_marker_is_stripped_rather_than_fatal(self) -> None:
+        """It names nothing, and the interface would strip it at render time."""
+        result = apply_life_events_translations(
+            _source_document("He designed the machine."),
+            _translated_payload("Er entwarf die [[maschine|Maschine]]."),
+            {},
+        )
+        self.assertEqual(result["events"][0]["description"], "Er entwarf die Maschine.")
+
+    def test_a_real_marker_survives_alongside_an_invented_one(self) -> None:
+        result = apply_life_events_translations(
+            _source_document("He designed the [[bombe|machine]] at the park."),
+            _translated_payload("Er entwarf die [[bombe|Maschine]] im [[park|Park]]."),
+            {},
+        )
+        self.assertEqual(
+            result["events"][0]["description"],
+            "Er entwarf die [[bombe|Maschine]] im Park.",
+        )
 
 
 class OrphanAnnotationTests(unittest.TestCase):
     """An annotation the description never marks up is not offered for translation.
 
     `parseDescriptionSegments` reaches an annotation only through its marker, so
-    an orphan renders nowhere. Sending one anyway asks the translator to explain
-    a term the text does not mark, and it answers by writing the missing marker
-    into the translation — which the guard above then rejects, leaving a whole
-    document untranslated over an entry no reader could have seen.
+    an orphan renders nowhere. Extracting one asks the translator to explain a
+    term no reader can reach, and pays for the answer.
     """
 
     def test_a_marked_annotation_is_extracted(self) -> None:
