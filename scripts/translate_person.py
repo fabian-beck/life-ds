@@ -1192,6 +1192,15 @@ GENERAL RULES:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
    - Translate ONLY the display text (after the |).
    - Annotation "term" keys in the payload must be returned UNCHANGED.
+   - The set of markers is FIXED. Every marker in a source description must
+     appear exactly once in your translation of it, and you must NEVER add a
+     marker the source does not have — not around a term you recognize, not
+     around one the annotations list explains, not anywhere. A description with
+     no markers must come back with no markers. A marker is an id into a
+     separate table, not markup you are free to apply: one you invent points at
+     nothing, and the whole document is discarded because of it.
+     If recasting the sentence would drop a marked phrase, recast it some other
+     way and keep the marker.
 5. PLACE NAMES: use the standard {lang_name} version where one exists
    (e.g., for German: "Munich" -> "München", "Zurich, Switzerland" -> "Zürich, Schweiz").
 6. PERSON NAMES: apply this glossary consistently wherever a name appears in
