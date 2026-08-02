@@ -120,6 +120,15 @@ python scripts/validate_source_links.py --fix      # repair what search resolves
 
 Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
 
+**Check the English event titles** (no API key, no model):
+
+```bash
+python scripts/validate_event_titles.py            # exit 1 on any finding
+python scripts/validate_event_titles.py emmy_noether
+```
+
+A title is written once, in Phase 1, and nothing downstream revisits it — the Phase 2 schema carries no title field. A title that came back half in German therefore stays that way in the English data, while the translation step renders it into idiomatic German, so the defect survives only in the language nobody re-reads. This flags a German function word left standing in an English title and a city written the German way where English has its own name (Warschau, Zürich). Quoted work titles and name particles ("Nina von Lerchenfeld") are exempt; a title that trips a rule and is still right belongs in the script's `ACCEPTED` list with the reason. It is a lexical check and claims nothing beyond that: a German noun that looks like a place name ("Wölfen" against "Göttingen") is indistinguishable to it.
+
 **Link the published works** (Step 11 of the dataset generation, standalone; no API key, no model):
 
 ```bash
