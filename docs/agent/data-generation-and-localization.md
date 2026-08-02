@@ -453,11 +453,34 @@ Common language codes:
 
 ### Translation Workflow
 
-1. A name glossary is built once per person (single AI call) and applied deterministically everywhere a name appears
-2. Each document's translatable payload is translated with structured outputs (Pydantic models)
-3. The payload is merged onto a deep copy of the English document; misaligned outputs (wrong list lengths) are rejected
-4. A `translation` block (`source_lang`, `target_lang`, `source_fingerprint`, `translated_on`, `translator`) is stamped into the file
-5. Language-specific registries (`persons_{lang}.json`, `meta_stories_{lang}.json`) are created/updated automatically, kept in English registry order
+1. The target language's **naming evidence** is read from its own Wikipedia (no AI call, see below)
+2. A name glossary is built once per person (single AI call, shown that evidence) and applied deterministically everywhere a name appears
+3. Each document's translatable payload is translated with structured outputs (Pydantic models), shown the same evidence
+4. The payload is merged onto a deep copy of the English document; misaligned outputs (wrong list lengths) are rejected
+5. A `translation` block (`source_lang`, `target_lang`, `source_fingerprint`, `translated_on`, `translator`) is stamped into the file
+6. Language-specific registries (`persons_{lang}.json`, `meta_stories_{lang}.json`) are created/updated automatically, kept in English registry order
+
+### Naming Evidence From the Target Language's Wikipedia
+
+A translator working from the English text alone has only its own memory for what a name is called elsewhere, and memory invents: a Copenhagen cemetery came back as the "Assistenzfriedhof", a German compound that reads perfectly and does not exist. So before anything is translated, `build_translation_reference()` in `translate_person.py` reads two things out of the *target language's* Wikipedia and shows both to the glossary call and to every document translation:
+
+- **The person's own article there**, resolved through the language links rather than by searching that edition for the English string — an exonym ("Kunigunde von Luxemburg") is exactly what a string search would miss. Its lead is quoted, which is where the language writes the person's name, their parents' names, and their institutions.
+- **One language link per proper name in the data** — every person name the glossary covers plus every place, institution and resting place (`collect_place_names`). This is the encyclopedia's own answer to "what do you call this?": `Assistens Cemetery → Assistens Kirkegård`, `Bamberg Cathedral → Bamberger Dom`, `Pope Benedict VIII → Benedikt VIII.`
+
+Both are best-effort: no network, or a person the other edition does not cover, and the translation runs exactly as it did before.
+
+The lookup is built to be honest about what it found, because a wrong name is worse than no name (`fetch_language_links` in `scripts/utils/wikipedia_cache.py`):
+
+- **Redirects are not followed.** "Ellen Adler Bohr" redirects to her son's article, and following it would offer *Niels Bohr* as the German form of her name. A redirect means that encyclopedia has no article of its own under the name, which is the same as having no evidence.
+- **Disambiguation pages and name lists are skipped** — they stand for a string, not for a person.
+- **Each link carries the English article's short description**, so a link that landed on the wrong subject is visible in the prompt rather than hidden behind a plausible title.
+- **A qualified place falls back to its leading part**, but only when the whole string found nothing, so "Washington, D.C." keeps its own article and never drops to the state. The answer is recorded under that leading part, so "Assistens Cemetery, Copenhagen" becomes "Assistens Kirkegård, Kopenhagen" rather than losing the city with the comma.
+
+The evidence informs the model; it never substitutes automatically. Two things the prompts hold it to, because an article title is not a name: a title that merely spells the same name more fully ("J. J. Thomson" → "Joseph John Thomson") is a title convention, and an epithet the English name carries stays ("Henry II, Holy Roman Emperor" → "Heinrich II., römisch-deutscher Kaiser", not the bare "Heinrich II."). The one error that could not be left to a prompt is enforced in code: `localization_keeps_the_person()` rejects a mapping whose **numerals** differ, because Cunigunde's brother is "Henry V, Count of Luxembourg" here and "Heinrich I. (Luxemburg)" there, and a glossary that adopts that title renumbers him in prose the reader cannot check.
+
+The target-language article is cached beside the English one as `data/people/{person_id}/_cache/wikipedia_page_{lang}.json`.
+
+A **meta story** has no single subject and therefore no article of its own, and its strongest evidence is not Wikipedia's anyway: its people already have translations, and the interface matches a name in its prose against the name their story shows. `build_meta_story_reference()` therefore takes each person's name straight from the translated registry (`persons_{lang}.json`) and asks the encyclopedia only about the map's place labels. That is what keeps a story from calling Cunigunde something her own story does not.
 
 ### Language Switching in the Application
 

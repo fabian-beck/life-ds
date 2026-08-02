@@ -213,17 +213,17 @@
       }
     },
     "m_translate": {
-      "fingerprint": "a2a6a4b4a6c88745",
+      "fingerprint": "264dcf0d4ae3b94f",
       "summary": {
         "constraints": [
-          "Skips processing when every translation-status value is \"current\", unless `force` is true.",
-          "Returns failure without writing output if the source meta-story file is missing or translation fails.",
-          "The translated payload must preserve every array's exact length and order.",
-          "Markdown, annotation-marker keys and marker occurrences must be preserved exactly; only marker display text is translated, and no markers may be added."
+          "Skips processing unless forced when every meta-story translation status is \"current\".",
+          "Returns failure if the source story is missing, translation fails, or the translated JSON cannot be saved.",
+          "Output arrays must retain exactly the input length and order; output item N translates input item N.",
+          "Markdown, annotation keys, and fixed [[term|display]] markers must be preserved exactly; no markers may be added or removed."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story JSON detail file, checks whether its target-language translation and related registry state are current, and translates the story only when needed. The translation uses an extract–translate–merge contract: translatable fields are sent in a structure-preserving payload, while event titles are copied verbatim from already translated person data so chapter and story-slide labels remain synchronized. It saves the translated detail file under the target-language directory, then updates that language's meta-story registry entry.",
-        "why_this_design": "The current-status check avoids regenerating translations unless forced, while the separate registry update occurs only after the translated detail file saves successfully. Reusing translated event titles prevents independent translations of the same event from diverging across related narrative surfaces."
+        "what_it_does": "Loads a meta-story JSON document, translates its extracted text fields into the target language, saves the translated detail file under the target-language directory, and updates that language’s meta-story registry entry. Translation uses language-specific spelling evidence, a person-name glossary, and reference material so prose uses the same localized names and event titles already established in translated person data.",
+        "why_this_design": "The step preserves a shared extract–translate–merge contract rather than translating the whole document freely. Reusing names and event titles settled in person translations prevents chapter text, story slides, and biographical entries from diverging over the same entity."
       }
     },
     "p_chapters": {
@@ -311,17 +311,17 @@
       }
     },
     "p_glossary": {
-      "fingerprint": "8020ec1ab14c17e7",
+      "fingerprint": "fdd01acf3fcb78b9",
       "summary": {
         "constraints": [
-          "Returns an entry for every supplied name in the structured result; unchanged names must have `localized` equal to `original`.",
-          "Names remain unchanged by default; only historical figures with a standard, widely used target-language exonym may change.",
-          "Modern names must never be translated.",
-          "The returned dictionary excludes blank mappings and mappings where `original == localized`."
+          "Return a mapping for every input name; unchanged entries must have \"localized\" equal to \"original\".",
+          "Keep original forms by default; translate only historical figures with a standard, widely used target-language exonym.",
+          "Never translate modern names.",
+          "Ignore evidence for the wrong subject or for titles that merely expand initials or middle names; preserve epithets and never renumber regnal numerals."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a per-biography glossary that decides how each supplied person name should appear in the target language. It submits the complete name list with biographical context, retains only mappings whose localized form differs from the original, and returns that reduced dictionary for deterministic reuse across later documents.",
-        "why_this_design": "The decision is made once for the full list rather than during each document translation, preventing exact-string cross-references from drifting. Failure is deliberately non-destructive: an empty input, missing parsed result, or any exception produces an empty glossary, so downstream text keeps source names."
+        "what_it_does": "Builds a per-biography lookup table that decides how each supplied person name should appear in the target language. It asks for an original/localized pair for every input name, then retains only changed pairs, so downstream documents can apply the same exact spelling wherever a name recurs. Reference-article evidence, when available, is used to resolve the target-language spelling for the same person rather than to infer titles or substitute a differently scoped article name.",
+        "why_this_design": "Exact-name cross-references depend on stable strings, so the decision is made once and reused deterministically instead of allowing separate translations to choose variants. The post-processing check rejects proposed localizations that alter a ruler's numbering, and any parsing or request failure falls back to an empty glossary, preserving original names."
       }
     },
     "p_img_fetch": {
@@ -378,6 +378,20 @@
         "source": "gpt-5.6-terra",
         "what_it_does": "Builds one compact Wikimedia Commons query plan from every event in a person’s timeline, passing each event’s title, date, and first 200 characters of description as context. It requests a structured list of 20 keyword searches intended to retrieve portraits and event-relevant named places, works, awards, or institutions.",
         "why_this_design": "The prompt treats Commons as a simple keyword matcher, so it prioritizes short entity-based queries rather than natural-language descriptions. Supplying all events at once lets the 20-query budget cover the full biography instead of producing a repetitive set for each event."
+      }
+    },
+    "p_name_evidence": {
+      "fingerprint": "0b4ad28eeff3be8a",
+      "summary": {
+        "constraints": [
+          "Best-effort behavior: missing network access or a missing target-language article leaves translation behavior unchanged.",
+          "Uses an English Wikipedia title only when the parsed source URL is marked \"en\"; otherwise it falls back to the recorded person name with underscores replaced by spaces.",
+          "Deduplicates supplied names and extracted place names, and excludes the subject’s own English title from link queries.",
+          "Stores comma-head fallback results under the leading text before the comma, never replacing or discarding the trailing qualifier."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Builds a target-language naming reference for one person before later translation calls run. It retrieves the target-language version of the person’s article when an English article title or person name is available, retaining its title and lead excerpt, then looks up target-language links for supplied names and place names extracted from life events. It also makes a second lookup for the text before a comma in unresolved place strings, preserving the qualifier for translation while finding evidence for a base place name.",
+        "why_this_design": "The person article is kept separate from the link list because it is already quoted in fuller form; adding its link would duplicate its title. Comma-head fallback runs only after full-string lookup fails, so an exact article title such as \"Washington, D.C.\" wins over a broader or partial match, while names such as \"Assistens Cemetery, Copenhagen\" can still resolve."
       }
     },
     "p_network": {
@@ -480,17 +494,17 @@
       }
     },
     "p_translate": {
-      "fingerprint": "a9925039cd4b8c83",
+      "fingerprint": "7e78a524e74afb9a",
       "summary": {
         "constraints": [
-          "Return the same payload structure; every array must retain its exact length and item order.",
+          "Return the same JSON structure; every array must retain exactly the input length and order, with output item N translating input item N.",
           "Preserve Markdown exactly, including links, emphasis, and line breaks.",
-          "For each [[term|display]] marker, retain the syntax and term verbatim, translate only display text, and reproduce each source marker exactly once—never add markers.",
-          "Use localized standard place names and apply the supplied person-name glossary consistently; all other person names remain unchanged."
+          "For each `[[term|display]]` marker, preserve the syntax and `term` exactly, translate only `display`, retain every source marker exactly once, and add no markers; annotation term keys remain unchanged.",
+          "Apply glossary forms consistently to listed person names; leave all other person names unchanged. Use established target-language place names, except where supplied reference evidence specifies the observed form."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the extracted, human-readable fields of a person document into the requested language and parses the result against a supplied structured response format. The surrounding extract–translate–merge design sends no dates, coordinates, URLs, or identifiers for translation; translated values can therefore be overlaid onto a copy of the English document without altering those nontext fields.",
-        "why_this_design": "The prompt permits substantial syntactic recasting for native prose while making structural elements immutable. In particular, annotation markers behave as references into a separate table, so adding, dropping, or moving a marker can invalidate the entire document rather than merely degrade the translation."
+        "what_it_does": "Sends only the extracted, translatable text fields from a person document for translation and parses the result into the caller’s required structured schema. It asks for native-sounding biographical prose while applying a person-name glossary, standard target-language place names, optional language-specific style rules, and optional reference evidence showing spellings used by a target-language source. The translated fields can then be merged back onto an unchanged English-document copy, leaving nontext data such as identifiers, dates, coordinates, and URLs outside the translation request.",
+        "why_this_design": "The extract–translate–merge boundary prevents structural or factual fields from drifting during translation. Reference-derived spellings outrank the generic place-name rule and remembered forms, which anchors names to observed target-language usage while limiting each evidence entry to the exact string it covers."
       }
     },
     "p_wiki_fetch": {

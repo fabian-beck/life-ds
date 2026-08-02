@@ -210,10 +210,10 @@ GROUPS: List[Group] = [
     Group(
         "localization",
         "Localization",
-        ["p_glossary", "p_translate"],
+        ["p_name_evidence", "p_glossary", "p_translate"],
         note=(
-            "The glossary exists only to serve the translation: names are decided "
-            "once, then applied to every document."
+            "Read what the target language calls things, decide each name once, "
+            "then apply that decision to every document."
         ),
     ),
     Group(
@@ -669,6 +669,24 @@ STEPS: List[Step] = [
         skip_flag="--skip-review",
     ),
     Step(
+        "p_name_evidence",
+        "Read the target language's own names",
+        SHARED,
+        CODE,
+        "translate_person.py",
+        "build_translation_reference",
+        summary=(
+            "Reads the person's article in the language being translated into, "
+            "plus one language link per person and place in the data, and hands "
+            "both to the two calls that follow. Without it a translator has only "
+            "its own memory for what a name is called elsewhere, and memory "
+            "invents: a Copenhagen cemetery came back as the 'Assistenzfriedhof'."
+        ),
+        depends_on=[Dep("p_review", "every name the reviewed documents carry")],
+        inputs=["life_events", "ego_network"],
+        outputs=["wiki_cache"],
+    ),
+    Step(
         "p_glossary",
         "Build name glossary",
         SHARED,
@@ -681,10 +699,14 @@ STEPS: List[Step] = [
             "on exact names, so drift between documents would break them."
         ),
         depends_on=[
-            Dep("p_review", "every person name in the reviewed documents"),
+            Dep("p_name_evidence", "what the target language writes for each name"),
             Dep("p_register", "the registry summary, as context for the call"),
         ],
-        prompts=["build_name_glossary", "format_glossary_for_prompt"],
+        prompts=[
+            "build_name_glossary",
+            "format_glossary_for_prompt",
+            "format_reference_for_prompt",
+        ],
         inputs=["life_events", "ego_network", "persons"],
     ),
     Step(
@@ -697,10 +719,12 @@ STEPS: List[Step] = [
         summary=(
             "Extract–translate–merge: only translatable fields are sent, and the "
             "result is overlaid on a copy of the English document, so dates, "
-            "coordinates, URLs and IDs cannot drift."
+            "coordinates, URLs and IDs cannot drift. It is shown the same "
+            "target-language naming evidence the glossary saw, which is what "
+            "keeps a place name from being invented in prose."
         ),
         depends_on=[Dep("p_glossary", "the name mapping to apply")],
-        prompts=["_call_translation_model"],
+        prompts=["_call_translation_model", "format_reference_for_prompt"],
         inputs=["life_events", "ego_network"],
         outputs=["person_de"],
         skip_flag="--skip-translate",
@@ -978,13 +1002,14 @@ STEPS: List[Step] = [
         summary=(
             "Same extract–translate–merge contract as person data. Event titles "
             "are copied verbatim from the translated person data so chapters and "
-            "story slides never disagree."
+            "story slides never disagree, and the names in its prose are taken "
+            "from the same place: what each person's own translation settled on."
         ),
         depends_on=[Dep("m_save", "the saved English story")],
         inputs=["meta_story", "person_de"],
         outputs=["meta_de"],
         skip_flag="--skip-translate",
-        prompts=["_call_translation_model"],
+        prompts=["_call_translation_model", "format_reference_for_prompt"],
         model_from="translate_meta_story.py",
         model_note="Delegates the API call to translate_person.py's extract–translate–merge helper.",
     ),

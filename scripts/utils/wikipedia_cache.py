@@ -356,6 +356,177 @@ def _fetch_commons_images_direct(
         return []
 
 
+# ---------------------------------------------------------------------------
+# Language links: what the target-language Wikipedia calls the same thing
+# ---------------------------------------------------------------------------
+
+# Wikipedia disambiguates by parenthetical — "Heinrich II. (HRR)", "Otto Wagner
+# (Architekt)" — where English disambiguates by comma. The parenthetical is
+# title bookkeeping, never part of the name a reader is shown.
+_TITLE_DISAMBIGUATOR = re.compile(r"\s*\([^()]*\)\s*$")
+
+# The API takes up to 50 titles per query for a normal client.
+_TITLES_PER_QUERY = 50
+
+# Wikipedia keeps pages that stand for a *string* rather than for a thing:
+# disambiguation pages, and the name lists that collect everyone called
+# "Adalbero". They carry language links like any article, and those links name
+# nobody. The `disambiguation` page property catches most of them; these are the
+# short descriptions the rest announce themselves with.
+_NON_ENTITY_DESCRIPTIONS = (
+    "name list",
+    "disambiguation page",
+    "topics referred to by the same term",
+)
+
+
+def strip_title_disambiguator(title: str) -> str:
+    """The display form of an article title, without its parenthetical."""
+    return _TITLE_DISAMBIGUATOR.sub("", title or "").strip()
+
+
+def wikipedia_api(lang: str) -> str:
+    """The MediaWiki API endpoint of one language edition."""
+    return f"https://{lang}.wikipedia.org/w/api.php"
+
+
+def fetch_language_links(
+    titles: List[str], target_lang: str, source_lang: str = "en"
+) -> Dict[str, Dict[str, str]]:
+    """What the ``target_lang`` Wikipedia calls each of these articles.
+
+    Answers ``{queried title: {"title": …, "description": …}}`` for the titles
+    that resolve to an article which has a link into ``target_lang``; a title
+    with no article, or one the other edition does not cover, is simply absent.
+    Keys are the titles as passed in — the API's ``normalized`` table is
+    followed back so the caller can look its own strings up.
+
+    Disambiguation pages are skipped, and **redirects are deliberately not
+    followed.** "Ellen Adler Bohr" is a
+    redirect to "Niels Bohr", and following it would offer his article as the
+    German form of her name. A redirect means the encyclopedia has no article
+    of its own under that name, which is the same thing as having no evidence.
+
+    The short description travels with the link because the query matches on a
+    string, not on a person: "Margaret" resolves to *an* article, and only the
+    description says whether it is the Margaret the biography means. Callers
+    pass both to the model rather than substituting the title blindly.
+
+    Network failures are not fatal — an empty answer costs evidence, not the
+    run.
+    """
+    resolved: Dict[str, Dict[str, str]] = {}
+    wanted = [title.strip() for title in titles if title and title.strip()]
+    if not wanted or not target_lang or target_lang == source_lang:
+        return resolved
+
+    for start in range(0, len(wanted), _TITLES_PER_QUERY):
+        batch = wanted[start : start + _TITLES_PER_QUERY]
+        try:
+            response = requests.get(
+                wikipedia_api(source_lang),
+                params={
+                    "action": "query",
+                    "format": "json",
+                    "prop": "langlinks|description|pageprops",
+                    "ppprop": "disambiguation",
+                    "lllang": target_lang,
+                    "lllimit": "max",
+                    "titles": "|".join(batch),
+                },
+                timeout=30,
+                headers=wikipedia_headers(),
+            )
+            response.raise_for_status()
+            query = response.json().get("query", {})
+        except Exception as error:  # noqa: BLE001 - evidence is optional
+            print(f"Warning: language links unavailable ({error})")
+            return resolved
+
+        # The API answers under the title it normalized to; this table leads
+        # back to the string that was asked about.
+        aliases: Dict[str, List[str]] = {}
+        for entry in query.get("normalized", []) or []:
+            source, destination = entry.get("from"), entry.get("to")
+            if source and destination:
+                aliases.setdefault(destination, []).append(source)
+
+        for page in (query.get("pages") or {}).values():
+            links = page.get("langlinks") or []
+            if not links:
+                continue
+            # A disambiguation page links to the other edition's disambiguation
+            # page. "Christian Christiansen" is several people there and none
+            # of them here, so it names nobody.
+            if "disambiguation" in (page.get("pageprops") or {}):
+                continue
+            description = (page.get("description") or "").strip()
+            if description.lower() in _NON_ENTITY_DESCRIPTIONS:
+                continue
+            entry = {"title": links[0].get("*", ""), "description": description}
+            if not entry["title"]:
+                continue
+            # Record it under the resolved title and under every string that
+            # led there, resolving aliases transitively (a normalization can
+            # feed a redirect).
+            pending = [page.get("title", "")]
+            seen = set()
+            while pending:
+                name = pending.pop()
+                if not name or name in seen:
+                    continue
+                seen.add(name)
+                if name in wanted or name == page.get("title"):
+                    resolved[name] = entry
+                pending.extend(aliases.get(name, []))
+
+    return {title: entry for title, entry in resolved.items() if title in wanted}
+
+
+def fetch_article_in_language(title: str, lang: str) -> Optional[Dict[str, Any]]:
+    """The article named by ``title`` in one language edition, or None."""
+    try:
+        return _fetch_wikipedia_page_from_api(title, wikipedia_api(lang))
+    except Exception as error:  # noqa: BLE001 - the article is a bonus
+        print(f"Warning: could not fetch the {lang} article '{title}' ({error})")
+        return None
+
+
+def get_cached_article_in_language(
+    person_id: str, english_title: str, lang: str, use_cache: bool = True
+) -> Optional[Dict[str, Any]]:
+    """The person's article in another language edition, cached beside the rest.
+
+    Resolved through the language links rather than by searching that edition
+    for the same string: an exonym ("Kunigunde von Luxemburg") is exactly what
+    a string search would miss.
+    """
+    cache_dir = get_cache_dir(person_id)
+    cache_path = cache_dir / f"wikipedia_page_{lang}.json"
+    if use_cache and cache_path.exists():
+        try:
+            return cast(
+                Dict[str, Any], json.loads(cache_path.read_text(encoding="utf-8"))
+            )
+        except json.JSONDecodeError:
+            pass
+
+    links = fetch_language_links([english_title], lang)
+    linked = links.get(english_title, {}).get("title")
+    if not linked:
+        return None
+
+    page = fetch_article_in_language(linked, lang)
+    if page is None:
+        return None
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(
+        json.dumps(page, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    return page
+
+
 def save_cache(
     person_id: str,
     page_data: Dict[str, Any],

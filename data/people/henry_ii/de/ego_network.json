@@ -2,23 +2,23 @@
   "dataset": "wikipedia_ego_network",
   "created_on": "2025-12-26",
   "ego": {
-    "name": "Heinrich II.",
+    "name": "Heinrich II., römisch-deutscher Kaiser",
     "birth_year": 972,
     "death_year": 1024,
     "primary_roles": [
-      "Kaiser des Heiligen Römischen Reiches",
-      "König des Ostfrankenreichs",
+      "Römisch-deutscher Kaiser",
+      "König von Deutschland",
       "König von Italien",
       "Heiliger"
     ],
-    "summary": "Heinrich II. (Dynastie der Ottonen) stieg vom Herzog von Bayern zum König des Ostfrankenreichs (1002), König von Italien (1004) und Kaiser des Heiligen Römischen Reiches (1014) auf. Gemeinsam mit seiner Frau Kunigunde von Luxemburg regierend, verfolgte er ein kirchenzentriertes Königtum, gründete das Bistum Bamberg (1007), arbeitete eng mit führenden Bischöfen und Päpsten zusammen und führte langwierige Grenzkriege – besonders gegen den polnischen Herrscher Bolesław I. –, bevor er 1024 kinderlos starb.",
+    "summary": "Heinrich II. aus dem Geschlecht der Ottonen stieg vom Herzog von Bayern zum König von Deutschland (1002), König von Italien (1004) und römisch-deutschen Kaiser (1014) auf. Gemeinsam mit seiner Frau Kunigunde von Luxemburg betrieb er eine kirchenzentrierte Herrschaft, gründete 1007 das Bistum Bamberg, arbeitete eng mit führenden Bischöfen und Päpsten zusammen und führte langwierige Grenzkriege – vor allem gegen den polnischen Herrscher Bolesław I. – bevor er 1024 kinderlos starb.",
     "wikipedia": "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
   },
   "connections": [
     {
-      "person_name": "Heinrich II. von Bayern",
+      "person_name": "Heinrich II., Herzog von Bayern",
       "relationship_type": "family/father",
-      "relationship_description": "Vater; ottonischer Herzog („Heinrich der Zänker“), dessen bayerische Machtbasis und dynastische Stellung Heinrichs II. frühen Rang und seinen Anspruch auf die Nachfolge Ottos III. prägten.",
+      "relationship_description": "Vater; ottonischer Herzog („Heinrich der Zänker“), dessen bayerische Machtbasis und dynastische Stellung Heinrichs II. frühen Status und seinen Anspruch auf die Nachfolge Ottos III. prägten.",
       "start_year": 972,
       "end_year": 995,
       "strength": "strong",
@@ -26,7 +26,7 @@
       "influence_direction": "alter_to_ego",
       "shared_activities": [
         "Dynastische Erziehung im bayerisch-ottonischen Umfeld",
-        "Weitergabe des bayerischen Herzogsrangs und ottonischer Legitimität"
+        "Weitergabe des bayerischen Herzogsrangs und der ottonischen Legitimität"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
@@ -37,7 +37,7 @@
     {
       "person_name": "Gisela von Burgund",
       "relationship_type": "family/mother",
-      "relationship_description": "Mutter; Teil von Heinrichs II. dynastischem Netzwerk, das die Ottonen mit burgundischen Adelslinien verband.",
+      "relationship_description": "Mutter; Teil des dynastischen Netzwerks Heinrichs II., das die Ottonen mit den burgundischen Adelsgeschlechtern verband.",
       "start_year": 972,
       "end_year": null,
       "strength": "strong",
@@ -50,32 +50,32 @@
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
         "https://en.wikipedia.org/wiki/Gisela_of_Burgundy"
       ],
-      "notes": "Endjahr unbekannt (Todesdatum in den vorliegenden Auszügen nicht überliefert)."
+      "notes": "Das Endjahr ist unbekannt (in den vorliegenden Auszügen wird kein Todesjahr genannt)."
     },
     {
-      "person_name": "Otto III.",
+      "person_name": "Otto III., römisch-deutscher Kaiser",
       "relationship_type": "professional/predecessor",
-      "relationship_description": "Vetter und Vorgänger, dessen Tod im Jahr 1002 die Königswahl auslöste, die Heinrich II. auf den Thron brachte; Ottos III. Herrschaft bildete den unmittelbaren politischen Kontext für Heinrichs Nachfolge.",
+      "relationship_description": "Vetter und Vorgänger, dessen Tod 1002 die Königswahl im ostfränkischen Reich auslöste und Heinrich II. auf den Thron brachte; die Herrschaft Ottos III. bildete den unmittelbaren politischen Hintergrund für Heinrichs Nachfolge.",
       "start_year": 984,
       "end_year": 1002,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Dynastische Nachfolgepolitik innerhalb des ottonischen Hauses",
-        "Übergang des Königtums nach dem Tod Ottos III. (1002)"
+        "Dynastische Nachfolgepolitik im ottonischen Haus",
+        "Übergang der Königsherrschaft nach dem Tod Ottos III. (1002)"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_III,_Holy_Roman_Emperor",
         "https://en.wikipedia.org/wiki/1002_German_royal_election",
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
       ],
-      "notes": "Die Beziehung ist in erster Linie dynastisch-politisch, nicht kooperativ."
+      "notes": "Die Beziehung war vor allem dynastisch-politischer Natur, nicht von gemeinsamer Regierungsarbeit geprägt."
     },
     {
       "person_name": "Kunigunde von Luxemburg",
       "relationship_type": "family/spouse",
-      "relationship_description": "Ehefrau und Mitherrscherin in der kaiserlichen Repräsentation; 1002 zur Königin und 1014 zur Kaiserin an Heinrichs Seite gekrönt, wirkte sie als seine engste Beraterin, war in Ratsversammlungen und kirchlicher Stiftungstätigkeit aktiv und übernahm nach seinem Tod übergangsweise die Regentschaft.",
+      "relationship_description": "Ehefrau und Mitregentin in der kaiserlichen Repräsentation; sie wurde an Heinrichs Seite 1002 zur Königin und 1014 zur Kaiserin gekrönt, war seine engste Beraterin, nahm aktiv an Hoftagen und kirchlicher Förderung teil und führte nach seinem Tod vorübergehend die Regentschaft.",
       "start_year": 999,
       "end_year": 1024,
       "strength": "strong",
@@ -84,81 +84,81 @@
       "shared_activities": [
         "Ehe und dynastische Partnerschaft",
         "Gemeinsame Krönungen in Mainz (1002) und Rom (1014)",
-        "Mitwirkung an kaiserlichen Ratsversammlungen und Urkundentätigkeit",
-        "Gemeinsame Stiftung von Dom und Bistum Bamberg sowie weiterer Kirchengüter"
+        "Teilnahme an Hoftagen und Urkundentätigkeit",
+        "Gemeinsame Förderung des Bamberger Doms, des Bistums Bamberg und weiterer kirchlicher Stiftungen"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg",
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
       ],
-      "notes": "Später heiliggesprochen; die Überlieferung beschreibt ihre Ehe mitunter als ‚Josephsehe' (umstritten)."
+      "notes": "Später heiliggesprochen; in der Überlieferung wird ihre Ehe bisweilen als „Josefsehe“ bezeichnet, was allerdings umstritten ist."
     },
     {
-      "person_name": "Siegfried I. von Luxemburg",
+      "person_name": "Siegfried I., Graf von Luxemburg",
       "relationship_type": "family/in-law",
-      "relationship_description": "Schwiegervater (Kunigundes Vater); durch diese Heiratsallianz war Heinrich II. mit dem aufstrebenden Haus der Ardenner (Luxemburger) verbunden.",
+      "relationship_description": "Schwiegervater (Kunigundes Vater); durch dieses Heiratsbündnis wurde Heinrich II. mit dem aufstrebenden Ardennen-Luxemburger Geschlecht verbunden.",
       "start_year": 999,
       "end_year": 998,
       "strength": "moderate",
       "interaction_frequency": "rare",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Dynastische Allianz durch Heinrichs Heirat mit Kunigunde"
+        "Dynastisches Bündnis durch Heinrichs Heirat mit Kunigunde"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg",
         "https://en.wikipedia.org/wiki/Siegfried,_Count_of_the_Ardennes"
       ],
-      "notes": "Siegfried starb 998, um die Zeit der Heirat Heinrichs und Kunigundes (999), sodass ein direkter Kontakt unsicher bzw. kurz war."
+      "notes": "Siegfried starb 998, ungefähr zur Zeit der Heirat Heinrichs mit Kunigunde (999); eine unmittelbare Begegnung ist daher unsicher und vermutlich nur kurz belegt."
     },
     {
       "person_name": "Hedwig",
       "relationship_type": "family/in-law",
-      "relationship_description": "Schwiegermutter Heinrichs II. (in Kunigundes Lebensbeschreibung Hedwig genannt); Teil des elterlichen Hintergrunds Kunigundes, auf den genealogische Erörterungen verweisen.",
+      "relationship_description": "Schwiegermutter Heinrichs II. (in Kunigundes Biografie als Hedwig bezeichnet); sie gehörte zum familiären Hintergrund von Kunigundes Elternhaus, auf den genealogische Erörterungen Bezug nehmen.",
       "start_year": 999,
       "end_year": null,
       "strength": "weak",
       "interaction_frequency": "rare",
       "influence_direction": "unknown",
       "shared_activities": [
-        "Dynastische Verbindung durch die Ehe mit Kunigunde"
+        "Dynastische Verbindung durch die Heirat mit Kunigunde"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg"
       ],
-      "notes": "Die genaue Identität von Kunigundes Mutter ist im Artikel umstritten; Lebensdaten und direkter Kontakt zu Heinrich sind unklar."
+      "notes": "Die genaue Identität von Kunigundes Mutter ist im Artikel umstritten; Lebensdaten und unmittelbarer Kontakt zu Heinrich sind nicht eindeutig geklärt."
     },
     {
       "person_name": "Bolesław I. der Tapfere",
       "relationship_type": "professional/rival",
-      "relationship_description": "Polnischer Herrscher und wichtigster Gegner an der Grenze; kämpfte in den langwierigen polnisch-deutschen Kriegen um die Grenzmarken (1002–1018) gegen Heinrich II., die mit dem Frieden von Bautzen endeten.",
+      "relationship_description": "Polnischer Herrscher und bedeutendster Gegner an der Grenze; Heinrich II. führte gegen Bolesław I. von 1002 bis 1018 langwierige polnisch-deutsche Kriege um die Grenzmarken, die mit dem Frieden von Bautzen endeten.",
       "start_year": 1002,
       "end_year": 1018,
       "strength": "strong",
       "interaction_frequency": "yearly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Grenzkriege und Feldzüge um Lausitz und Meißener Land",
-        "Verhandlungen, die im Frieden von Bautzen (1018) mündeten"
+        "Grenzkriege und Feldzüge um die Gebiete der Lausitz und Meißen",
+        "Verhandlungen bis zum Frieden von Bautzen (1018)"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave",
         "https://en.wikipedia.org/wiki/1002_German_royal_election",
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
       ],
-      "notes": "Zugleich ein bedeutender mitteleuropäischer Machtfaktor; die Beziehung umfasste Diplomatie ebenso wie Krieg."
+      "notes": "Bolesław war zugleich ein bedeutender Machtfaktor in Mitteleuropa; die Beziehung umfasste daher neben der Kriegsführung auch diplomatische Kontakte."
     },
     {
       "person_name": "Arduin von Ivrea",
       "relationship_type": "professional/rival",
-      "relationship_description": "Italienischer Gegenkönig; Heinrich II. bestritt Arduins Königtum in Italien, überquerte die Alpen zur Krönung als König von Italien (1004) und beendete schließlich Arduins tatsächliche Herrschaft.",
+      "relationship_description": "Italienischer Gegenkönig; Heinrich II. focht Arduin von Ivrea um die Königsherrschaft in Italien an und überquerte die Alpen, um sich 1004 in Pavia zum König von Italien krönen zu lassen. Damit beendete er schließlich Arduins faktische Herrschaft.",
       "start_year": 1002,
       "end_year": 1014,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Konflikt um das italienische Königtum und militärisch-politisches Ringen",
+        "Konflikt um die italienische Königsherrschaft und militärisch-politische Auseinandersetzung",
         "Heinrichs Italienzug und Krönung in Pavia (1004)"
       ],
       "sources": [
@@ -170,7 +170,7 @@
     {
       "person_name": "Willigis",
       "relationship_type": "religious/archbishop_ally",
-      "relationship_description": "Erzbischof von Mainz, der Heinrich II. und Kunigunde 1002 in Mainz krönte und eine zentrale Rolle in den frühen Legitimationszeremonien der neuen Herrschaft spielte.",
+      "relationship_description": "Erzbischof von Mainz, der Heinrich II. und Kunigunde 1002 in Mainz krönte und eine zentrale Rolle bei den frühen Legitimationsfeiern der neuen Herrschaft spielte.",
       "start_year": 1002,
       "end_year": 1011,
       "strength": "moderate",
@@ -178,56 +178,56 @@
       "influence_direction": "alter_to_ego",
       "shared_activities": [
         "Königskrönung Heinrichs II. und Kunigundes in Mainz (9. Juli 1002)",
-        "Stützung der frühen Herrschaftskonsolidierung durch kirchliche Autorität"
+        "Unterstützung der frühen Festigung des Regimes durch kirchliche Autorität"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg",
         "https://en.wikipedia.org/wiki/1002_German_royal_election",
         "https://en.wikipedia.org/wiki/Willigis"
       ],
-      "notes": "Als Primas von Deutschland (Mainz) war seine Unterstützung entscheidend für die öffentliche Legitimität."
+      "notes": "Als Primas von Deutschland (Mainz) war seine Unterstützung für die öffentliche Legitimität entscheidend."
     },
     {
       "person_name": "Thietmar von Merseburg",
       "relationship_type": "religious/bishop_chronicler",
-      "relationship_description": "Bischof und einflussreicher Beobachter, der Heinrichs II. Politik mit Grenzverwaltung und Kirchenstrukturen verband; seine Chronik ist eine der wichtigsten zeitnahen Erzählquellen für Heinrichs Herrschaft und die Konflikte im Osten.",
+      "relationship_description": "Bischof und einflussreicher Beobachter, der Heinrichs II. Politik mit der Verwaltung der Grenzgebiete und den kirchlichen Strukturen verband; seine Chronik ist eine der wichtigsten zeitnahen erzählenden Quellen zur Herrschaft Heinrichs II. und seinen Konflikten im Osten.",
       "start_year": 1004,
       "end_year": 1018,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Kontext der Wiederherstellung des Bistums Merseburg unter Heinrich II. (1004)",
-        "Dokumentation von Heinrichs II. Herrschaft und den Kriegen an der Ostgrenze"
+        "Wiederherstellung beziehungsweise erneute Einrichtung des Bistums Merseburg unter Heinrich II. (1004)",
+        "Dokumentation von Heinrichs II. Herrschaft und seinen Kriegen an der Ostgrenze"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Thietmar_of_Merseburg",
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
       ],
-      "notes": "Die Beziehung ist teils durch die Leitung des Bistums und Thietmars Rolle als Chronist vermittelt."
+      "notes": "Die Beziehung war teils durch die Verwaltung des Bistums, teils durch Thietmars Tätigkeit als Chronist vermittelt."
     },
     {
       "person_name": "Papst Johannes XVII.",
       "relationship_type": "religious/ally",
-      "relationship_description": "Papst mit Anteil an Heinrichs II. kirchlicher Aufbaustrategie; verbunden mit der päpstlichen Zustimmung zur Gründung des Bistums Bamberg (1007).",
+      "relationship_description": "Papst, der an Heinrichs II. kirchenpolitischer Aufbauarbeit beteiligt war; mit ihm wird die päpstliche Zustimmung zur Gründung des Bistums Bamberg (1007) in Verbindung gebracht.",
       "start_year": 1007,
       "end_year": 1007,
       "strength": "weak",
       "interaction_frequency": "rare",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Päpstlich-bischöfliches Zustimmungsverfahren zur Errichtung des Bistums Bamberg"
+        "Päpstlich-bischöfliches Zustimmungsverfahren zur Gründung des Bistums Bamberg"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor",
         "https://en.wikipedia.org/wiki/Diocese_of_Bamberg"
       ],
-      "notes": "Das Pontifikat Johannes' XVII. war kurz; der Austausch lief wahrscheinlich über Gesandte und Bischöfe."
+      "notes": "Das Pontifikat von Papst Johannes XVII. war kurz; der Austausch erfolgte wahrscheinlich über Gesandte und Bischöfe."
     },
     {
       "person_name": "Papst Benedikt VIII.",
       "relationship_type": "religious/ally",
-      "relationship_description": "Wichtigster päpstlicher Verbündeter; krönte Heinrich II. 1014 zum Kaiser und arbeitete mit ihm in der Kirchenreform zusammen, unter anderem beim synodalen Vorgehen in Pavia (1022) und einem hochrangigen Treffen in Bamberg (1020).",
+      "relationship_description": "Wichtiger päpstlicher Verbündeter; er krönte Heinrich II. 1014 in Rom zum römisch-deutschen Kaiser und arbeitete mit ihm bei der Kirchenreform zusammen, unter anderem bei den Synodalbeschlüssen von Pavia (1022) und einem vielbeachteten Treffen in Bamberg (1020).",
       "start_year": 1012,
       "end_year": 1024,
       "strength": "strong",
@@ -236,7 +236,7 @@
       "shared_activities": [
         "Kaiserkrönung in Rom (1014)",
         "Treffen in Bamberg und zeremonielle Zusammenarbeit (1020)",
-        "Reformen der Synode von Pavia gegen Simonie und für Klerikerdisziplin (1022)"
+        "Reformen der Synode von Pavia gegen Simonie und zur Durchsetzung der Klerikerdisziplin (1022)"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Pope_Benedict_VIII",
@@ -246,45 +246,45 @@
       "notes": "Benedikt VIII. blieb während seines gesamten Pontifikats in gutem Einvernehmen mit Heinrich."
     },
     {
-      "person_name": "Konrad II.",
+      "person_name": "Konrad II., römisch-deutscher Kaiser",
       "relationship_type": "professional/successor",
-      "relationship_description": "1024 zum Nachfolger Heinrichs II. gewählt; erhielt nach Kunigundes Regentschaft die Reichsinsignien und wurde der nächste Kaiser – der dynastische Übergang nach Heinrichs kinderlosem Tod.",
+      "relationship_description": "Wurde 1024 zum Nachfolger Heinrichs II. gewählt; nach Kunigundes Regentschaft erhielt er die Reichsinsignien und wurde zum nächsten Kaiser. Damit vollzog sich der dynastische Übergang nach Heinrichs kinderlosem Tod.",
       "start_year": 1024,
       "end_year": 1024,
       "strength": "weak",
       "interaction_frequency": "rare",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Nachfolgeübergang nach dem Tod Heinrichs II.",
-        "Übergabe der Reichsinsignien (durch Kunigunde) und Neuwahl"
+        "Übergang der Herrschaft nach Heinrichs II. Tod",
+        "Übertragung der Reichsinsignien durch Kunigunde und Neuwahl"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg",
         "https://en.wikipedia.org/wiki/Conrad_II,_Holy_Roman_Emperor",
         "https://en.wikipedia.org/wiki/Henry_II,_Holy_Roman_Emperor"
       ],
-      "notes": "Ein direkter persönlicher Kontakt mit Heinrich II. wird in den vorliegenden Auszügen nicht hervorgehoben; die Verbindung ist vor allem institutionell und chronologisch."
+      "notes": "Eine unmittelbare persönliche Begegnung mit Heinrich II. wird in den vorliegenden Auszügen nicht hervorgehoben; die Verbindung ist vor allem institutioneller und chronologischer Natur."
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Heinrichs II. engste persönliche Bindung war seine Ehe mit Kunigunde von Luxemburg, die durch gemeinsame Krönungen und geteilte kirchliche Stiftungstätigkeit öffentlich als Herrschaftspartnerschaft inszeniert wurde. Sein dynastischer Hintergrund (Eltern und Schwiegerfamilie) verankerte seine Legitimität in den ottonischen und lothringisch-adligen Netzwerken."
+      "summary": "Heinrichs II. engste persönliche Bindung war seine Ehe mit Kunigunde von Luxemburg, die durch gemeinsame Krönungen und geteilte kirchliche Förderung öffentlich als partnerschaftliche Herrschaft inszeniert wurde. Seine dynastische Herkunft – Eltern ebenso wie angeheiratete Verwandte – verankerte seine Legitimität in den ottonischen und lotharingisch-adligen Netzwerken."
     },
     {
       "relationship_type": "professional",
-      "summary": "Heinrichs II. politisches Netzwerk kreist um Beziehungen mit hohem Einsatz: die Nachfolge Ottos III., die langwierige Rivalität mit Bolesław I. an der Ostgrenze und den Wettstreit in Italien gegen Arduin von Ivrea. Der Übergang zu Konrad II. zeigt die institutionellen Folgen von Heinrichs kinderlosem Tod."
+      "summary": "Heinrichs II. berufliches Netzwerk wurde von hochriskanten politischen und militärischen Beziehungen bestimmt: der Nachfolge auf Otto III., der langwierigen Rivalität mit Bolesław I. an der Ostgrenze und dem Wettstreit mit Arduin von Ivrea in Italien. Der Übergang zu Konrad II. macht die institutionellen Folgen von Heinrichs kinderlosem Tod sichtbar."
     },
     {
       "relationship_type": "religious",
-      "summary": "Die geistliche Führung bildete eine tragende Säule von Heinrichs II. Herrschaft: Er stützte sich zur Legitimation auf hohe Geistliche wie Willigis und arbeitete bei Krönung, Synoden und Reform eng mit den Päpsten zusammen – besonders mit Benedikt VIII. Zudem betrieb er strukturelle Kirchenpolitik durch große Gründungen wie Bamberg und die Wiederherstellung wichtiger Bistümer, dokumentiert von Zeitgenossen wie Thietmar von Merseburg."
+      "summary": "Die kirchliche Führung bildete eine tragende Säule von Heinrichs II. Herrschaft: Für seine Legitimität stützte er sich auf hochrangige Geistliche wie Willigis und arbeitete bei Krönungen, Synoden und Reformen eng mit den Päpsten zusammen, insbesondere mit Benedikt VIII. Zugleich betrieb er eine strukturelle Kirchenpolitik durch bedeutende Gründungen wie Bamberg und die Wiederherstellung wichtiger Bistümer, von Zeitgenossen wie Thietmar von Merseburg dokumentiert."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
     "source_fingerprint": "852965edcac5d34d",
-    "translated_on": "2026-07-18T14:41:13.535125+00:00",
-    "translator": "manual"
+    "translated_on": "2026-08-02T12:12:10.549190+00:00",
+    "translator": "openai:gpt-5.6-luna"
   }
 }

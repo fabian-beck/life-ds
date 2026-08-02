@@ -1,5 +1,16 @@
 import { expect, test } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
+// The story titles are data, and a re-translation is free to word one
+// differently; what this file checks is that the page shows the reader's
+// language, so it asks the registries which title that is.
+import metaStories from "../data/meta_stories.json" with { type: "json" };
+import metaStoriesDe from "../data/meta_stories_de.json" with { type: "json" };
+
+function metaStoryTitle(registry, id) {
+  const entry = (registry.meta_stories ?? []).find((story) => story.id === id);
+  if (!entry?.title) throw new Error(`no title for meta story '${id}'`);
+  return entry.title;
+}
 
 async function capture(page, testInfo, name) {
   const path = testInfo.outputPath(`${name}.png`);
@@ -513,15 +524,15 @@ test("the document title names the open story, in the reader's language", async 
   await page.goto("en#/en/story/ada_lovelace");
   await expect(page).toHaveTitle("Life Data Stories · Ada Lovelace");
 
+  const english = metaStoryTitle(metaStories, "computing_pioneers");
+  const german = metaStoryTitle(metaStoriesDe, "computing_pioneers");
+  expect(german).not.toBe(english);
+
   await page.goto("en#/en/meta/computing_pioneers");
-  await expect(page).toHaveTitle(
-    "Life Data Stories · From Procedure to Presence"
-  );
+  await expect(page).toHaveTitle(`Life Data Stories · ${english}`);
 
   await page.goto("en#/de/meta/computing_pioneers");
-  await expect(page).toHaveTitle(
-    "Life Data Stories · Vom Verfahren zur Allgegenwart"
-  );
+  await expect(page).toHaveTitle(`Life Data Stories · ${german}`);
 });
 
 /* An unfurler never runs the router, so these tags live in the served

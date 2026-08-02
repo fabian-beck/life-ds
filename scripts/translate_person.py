@@ -34,6 +34,7 @@ import json
 import os
 import re
 import sys
+from dataclasses import dataclass, field as dataclass_field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
@@ -48,6 +49,12 @@ from config import (
     enable_utf8_console,
 )
 from utils.model_calls import parse_structured
+from utils.wikipedia_cache import (
+    extract_wikipedia_title,
+    fetch_language_links,
+    get_cached_article_in_language,
+    strip_title_disambiguator,
+)
 
 enable_utf8_console()
 
@@ -1017,6 +1024,249 @@ GLOSSARY_MODEL = DEFAULT_MODEL
 GLOSSARY_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 
+def collect_place_names(life_events: Optional[Dict[str, Any]]) -> List[str]:
+    """Collect the places and institutions a life events document names.
+
+    Person names have a glossary; places had nothing but the model's memory,
+    which is how a Copenhagen cemetery became the "Assistenzfriedhof" — a
+    German compound for a Danish name that reads perfectly and does not exist.
+    """
+    places: List[str] = []
+
+    def add(place: Any) -> None:
+        if isinstance(place, str) and place.strip() and place.strip() not in places:
+            places.append(place.strip())
+
+    if not life_events:
+        return places
+
+    for chapter in life_events.get("chapters") or []:
+        add(chapter.get("location"))
+    for event in life_events.get("events") or []:
+        for location in event.get("locations") or []:
+            if isinstance(location, dict):
+                add(location.get("name_historic"))
+                add(location.get("name_modern"))
+        event_class = event.get("event_class")
+        if isinstance(event_class, dict):
+            for key in ("place_of_rest", "from_location", "to_location"):
+                add(event_class.get(key))
+    return places
+
+
+@dataclass
+class TranslationReference:
+    """What the target language's own encyclopedia calls the things in a document.
+
+    Two kinds of evidence, both read from that language's Wikipedia rather than
+    recalled by the model: the person's own article, which shows how the
+    language writes their name and the names around them, and one language link
+    per proper name in the data, which is the encyclopedia's own answer to
+    "what do you call this?".
+
+    Nothing here is applied automatically. A link is matched on a string, so the
+    article it lands on may be about something else entirely; each one carries
+    the English short description that makes such a mismatch visible, and the
+    model is asked to use a link only where it plainly means the same thing.
+    """
+
+    article_title: str = ""
+    article_excerpt: str = ""
+    links: Dict[str, Dict[str, str]] = dataclass_field(default_factory=dict)
+
+    def __bool__(self) -> bool:
+        return bool(self.article_excerpt or self.links)
+
+
+# Enough of the article to show how the language names the person, their family
+# and their institutions; the lead does that, and the sections that follow only
+# cost prompt budget.
+ARTICLE_EXCERPT_CHARS = 1200
+
+
+def _article_lead(extract: str) -> str:
+    """The lead of an article: everything before its first section heading."""
+    lead = (extract or "").split("\n==", 1)[0].strip()
+    if len(lead) <= ARTICLE_EXCERPT_CHARS:
+        return lead
+    cut = lead.rfind(".", 0, ARTICLE_EXCERPT_CHARS)
+    return lead[: cut + 1] if cut > 0 else lead[:ARTICLE_EXCERPT_CHARS]
+
+
+def build_translation_reference(
+    person_id: str,
+    life_events: Optional[Dict[str, Any]],
+    names: List[str],
+    target_lang: str,
+    verbose: bool = False,
+) -> TranslationReference:
+    """Gather the target language's own naming evidence for one person.
+
+    Best-effort throughout: without network access, or for a person the other
+    edition does not cover, the translation runs exactly as it did before.
+    """
+    reference = TranslationReference()
+    person = (life_events or {}).get("person") or {}
+
+    english_title = ""
+    parsed_url = extract_wikipedia_title(person.get("wikipedia") or "")
+    if parsed_url and parsed_url[1] == "en":
+        english_title = parsed_url[0]
+    elif person.get("name"):
+        english_title = str(person["name"]).replace("_", " ")
+
+    if english_title:
+        article = get_cached_article_in_language(person_id, english_title, target_lang)
+        if article:
+            reference.article_title = article.get("title", "")
+            reference.article_excerpt = _article_lead(article.get("extract", ""))
+
+    queries = list(dict.fromkeys(names + collect_place_names(life_events)))
+    # The subject's own article is already quoted in full; a link to it would
+    # only repeat the title.
+    queries = [query for query in queries if query != english_title]
+    reference.links = fetch_language_links(queries, target_lang)
+
+    # A place is often written with its region attached — "Assistens Cemetery,
+    # Copenhagen" — which is nobody's article title. What stands before the
+    # comma usually is. Asked only for the strings that found nothing, so the
+    # full name always wins where it exists: "Washington, D.C." is an article
+    # of its own and never falls back to the state. The answer is recorded
+    # under that leading part, not under the whole string, so the qualifier
+    # after the comma is still translated instead of being dropped with it.
+    heads = {
+        query.split(",")[0].strip()
+        for query in queries
+        if "," in query and query not in reference.links
+    }
+    heads -= set(reference.links)
+    heads.discard("")
+    if heads:
+        for head, link in fetch_language_links(sorted(heads), target_lang).items():
+            reference.links.setdefault(head, link)
+
+    if verbose:
+        print(
+            f"  Reference: {'article' if reference.article_excerpt else 'no article'}, "
+            f"{len(reference.links)} language link(s) of {len(queries)} name(s)"
+        )
+    return reference
+
+
+def build_meta_story_reference(
+    story: Dict[str, Any], target_lang: str, verbose: bool = False
+) -> TranslationReference:
+    """The naming evidence for a meta story, which has no single subject.
+
+    Its people already have translations of their own, and the interface
+    matches a name in this prose against the name their story shows, so the
+    strongest evidence is not Wikipedia's but the corpus's own: whatever each
+    person's registry entry settled on. The map's place labels have no such
+    record and are asked of the encyclopedia.
+    """
+    reference = TranslationReference()
+
+    english = load_json_file(REGISTER_PATH) or {}
+    translated = (
+        load_json_file(DATA_DIR / f"persons_{target_lang}.json") or {}
+        if target_lang
+        else {}
+    )
+    localized_by_id = {
+        entry.get("id"): entry.get("name")
+        for entry in translated.get("people", [])
+        if isinstance(entry, dict)
+    }
+    wanted = set(story.get("meta_story", {}).get("person_ids") or [])
+    for entry in english.get("people", []):
+        if not isinstance(entry, dict) or entry.get("id") not in wanted:
+            continue
+        name = str(entry.get("name") or "").replace("_", " ").strip()
+        localized = str(localized_by_id.get(entry.get("id")) or "").replace("_", " ")
+        if name and localized:
+            reference.links[name] = {
+                "title": localized.strip(),
+                "description": "as this person's own story names them",
+            }
+
+    labels = [
+        str(cluster.get("label"))
+        for cluster in ((story.get("geo_map") or {}).get("clusters") or [])
+        if isinstance(cluster, dict) and cluster.get("label")
+    ]
+    unknown = [label for label in labels if label not in reference.links]
+    for label, link in fetch_language_links(unknown, target_lang).items():
+        reference.links.setdefault(label, link)
+
+    if verbose:
+        print(f"  Reference: {len(reference.links)} name(s) on record")
+    return reference
+
+
+def format_reference_for_prompt(reference: TranslationReference, lang_name: str) -> str:
+    """The evidence block both the glossary and the translation calls are shown."""
+    if not reference:
+        return ""
+
+    sections = []
+    if reference.article_excerpt:
+        sections.append(
+            f'The {lang_name} Wikipedia article "{reference.article_title}" opens:\n'
+            f"{reference.article_excerpt}"
+        )
+    renamed = []
+    unchanged = []
+    for original, link in reference.links.items():
+        localized = strip_title_disambiguator(link.get("title", ""))
+        if not localized:
+            continue
+        if localized == original:
+            unchanged.append(original)
+            continue
+        note = link.get("description") or ""
+        renamed.append(
+            f'- "{original}" -> "{localized}"' + (f"  ({note})" if note else "")
+        )
+
+    if renamed:
+        sections.append(
+            f"These are written differently in {lang_name} (the note says what "
+            "the form is taken from, so one that landed on the wrong subject "
+            "can be spotted):\n" + "\n".join(renamed)
+        )
+    if unchanged:
+        # Cheap but load-bearing: it is the evidence that a name has no
+        # translation, which is what stops one from being invented.
+        sections.append(
+            f"These are written in {lang_name} exactly as they are in English — "
+            "do not change them: " + ", ".join(f'"{name}"' for name in unchanged)
+        )
+    return "\n\n".join(sections)
+
+
+# A regnal name is its numeral: "Heinrich V." and "Heinrich I." are different
+# people. Roman numerals as they appear in names, plus any digits.
+_NAME_NUMERALS = re.compile(r"\b(?:[IVXLC]+)\b|\d+")
+
+
+def name_numerals(name: str) -> List[str]:
+    """The numerals a name carries, in order, with the German trailing dot gone."""
+    return [match.group(0).rstrip(".") for match in _NAME_NUMERALS.finditer(name or "")]
+
+
+def localization_keeps_the_person(original: str, localized: str) -> bool:
+    """Whether a proposed localization still names the same person.
+
+    The one substitution the evidence can quietly get wrong: a ruler counted
+    differently under another of their titles. Cunigunde's brother is "Henry V,
+    Count of Luxembourg" in the data and "Heinrich I. (Luxemburg)" in the German
+    encyclopedia, and a glossary that adopts the title renumbers him in prose
+    the reader has no way to check. A localization may respell a name freely;
+    it may not change its numerals.
+    """
+    return name_numerals(original) == name_numerals(localized)
+
+
 def build_name_glossary(
     names: List[str],
     context_summary: str,
@@ -1024,6 +1274,7 @@ def build_name_glossary(
     client: OpenAI,
     model: str = GLOSSARY_MODEL,
     verbose: bool = False,
+    reference: Optional[TranslationReference] = None,
 ) -> Dict[str, str]:
     """Ask the model once which person names have standard localized versions.
 
@@ -1034,6 +1285,32 @@ def build_name_glossary(
     if not names:
         return {}
     lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
+
+    evidence = format_reference_for_prompt(reference, lang_name) if reference else ""
+    evidence_section = (
+        f"""
+WHAT {lang_name.upper()} SOURCES ACTUALLY WRITE:
+{evidence}
+
+This is evidence for how a name is *spelled*, not a list of titles to adopt.
+Follow it wherever it plainly names the same person — it is the encyclopedia's
+own answer and outranks your recollection — within these limits:
+- Ignore an entry whose description shows the link landed on someone else.
+- Ignore one that only spells the same name more fully: an article title that
+  expands initials or adds a middle name ("J. J. Thomson" -> "Joseph John
+  Thomson", "Aage Bohr" -> "Aage Niels Bohr") is a title convention, not a
+  {lang_name} form of the name.
+- Keep what the English name carries. An epithet after a comma stays, in
+  {lang_name} ("Henry II, Holy Roman Emperor" -> "Heinrich II., römisch-deutscher
+  Kaiser", not the bare article title "Heinrich II."), and a regnal numeral is
+  never renumbered — an encyclopedia that counts a ruler differently under
+  another of their titles is not evidence about this name.
+A name the evidence does not cover is decided by the rules above, which for a
+modern name means leaving it alone.
+"""
+        if evidence
+        else ""
+    )
 
     prompt = f"""You will localize person names for a biographical app being translated to {lang_name}.
 
@@ -1046,7 +1323,7 @@ RULES:
 - NEVER translate modern names (e.g., "Alan Turing", "Grace Hopper", "Steve Jobs" stay unchanged).
 - Keep epithets/parentheticals consistent with the {lang_name} convention.
 - Return a mapping for EVERY name in the list below, with "localized" equal to "original" when unchanged.
-
+{evidence_section}
 NAMES:
 {json.dumps(names, ensure_ascii=False, indent=2)}
 """
@@ -1071,11 +1348,18 @@ NAMES:
         )
         if not parsed:
             return {}
-        glossary = {
-            m.original: m.localized
-            for m in parsed.mappings
-            if m.original and m.localized and m.original != m.localized
-        }
+        glossary = {}
+        for mapping in parsed.mappings:
+            original, localized = mapping.original, mapping.localized
+            if not original or not localized or original == localized:
+                continue
+            if not localization_keeps_the_person(original, localized):
+                print(
+                    f"  Warning: keeping '{original}' — the proposed "
+                    f"'{localized}' renumbers them"
+                )
+                continue
+            glossary[original] = localized
         if verbose and glossary:
             for original, localized in glossary.items():
                 print(f"    {original} -> {localized}")
@@ -1180,10 +1464,30 @@ def _call_translation_model(
     client: OpenAI,
     model: str = TRANSLATION_MODEL,
     verbose: bool = False,
+    reference: Optional[TranslationReference] = None,
 ) -> Optional[Any]:
     """Send a translation payload to the model and parse the structured result."""
     lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
     style_note = LANGUAGE_STYLE_NOTES.get(target_lang, "")
+    evidence = format_reference_for_prompt(reference, lang_name) if reference else ""
+    evidence_section = (
+        f"""
+WHAT {lang_name.upper()} SOURCES ACTUALLY WRITE:
+{evidence}
+
+Use these spellings wherever the text means that same person, place, or
+institution — they are what the language really writes, and they outrank both
+rule 5 and your own recollection. An entry covers exactly the string it names:
+where it matches only part of a longer one ("Copenhagen" inside "Copenhagen,
+Denmark"), translate the rest as usual and keep it — never drop the qualifier
+along with it. Where the evidence is silent, a place with an established
+{lang_name} name still gets it, and a place without one keeps the name it has:
+a {lang_name}-looking compound invented for a foreign name is the one outcome
+to avoid.
+"""
+        if evidence
+        else ""
+    )
 
     prompt = f"""Translate the following {document_kind} text fields to {lang_name}.
 
@@ -1229,6 +1533,7 @@ GENERAL RULES:
 {format_glossary_for_prompt(glossary)}
 {extra_rules}
 {style_note}
+{evidence_section}
 
 PAYLOAD:
 {json.dumps(payload, ensure_ascii=False, indent=2)}
@@ -1271,6 +1576,7 @@ def translate_life_events(
     model: str,
     glossary: Dict[str, str],
     verbose: bool = False,
+    reference: Optional[TranslationReference] = None,
 ) -> Optional[Dict[str, Any]]:
     """Translate a life events dataset; returns the full derived document."""
     payload = extract_life_events_translatables(source_data)
@@ -1304,6 +1610,7 @@ def translate_life_events(
         client=client,
         model=model,
         verbose=verbose,
+        reference=reference,
     )
     if parsed is None:
         return None
@@ -1327,6 +1634,7 @@ def translate_ego_network(
     model: str,
     glossary: Dict[str, str],
     verbose: bool = False,
+    reference: Optional[TranslationReference] = None,
 ) -> Optional[Dict[str, Any]]:
     """Translate an ego network dataset; returns the full derived document."""
     payload = extract_ego_network_translatables(source_data)
@@ -1343,6 +1651,7 @@ def translate_ego_network(
         client=client,
         model=model,
         verbose=verbose,
+        reference=reference,
     )
     if parsed is None:
         return None
@@ -1366,6 +1675,7 @@ def translate_registry_entry(
     model: str,
     glossary: Dict[str, str],
     verbose: bool = False,
+    reference: Optional[TranslationReference] = None,
 ) -> Optional[Dict[str, Any]]:
     """Translate a registry entry; returns the full derived entry."""
     payload = extract_registry_entry_translatables(source_entry)
@@ -1382,6 +1692,7 @@ def translate_registry_entry(
         client=client,
         model=model,
         verbose=verbose,
+        reference=reference,
     )
     if parsed is None:
         return None
@@ -1407,6 +1718,7 @@ def translate_meta_story(
 ) -> Optional[Dict[str, Any]]:
     """Translate a meta story dataset; returns the full derived document."""
     payload = extract_meta_story_translatables(source_data)
+    reference = build_meta_story_reference(source_data, target_lang, verbose)
     parsed = _call_translation_model(
         payload=payload,
         response_format=MetaStoryTranslation,
@@ -1444,6 +1756,7 @@ def translate_meta_story(
         glossary={},
         client=client,
         model=model,
+        reference=reference,
         verbose=verbose,
     )
     if parsed is None:
@@ -1591,13 +1904,20 @@ def translate_person_data(
         context_summary = registry_entry.get("summary", "")
     elif life_events_source:
         context_summary = (life_events_source.get("person") or {}).get("summary", "")
+    names = collect_person_names(life_events_source, ego_network_source, registry_entry)
+    # Read once per person and shared by every document, so the article is
+    # fetched once and the same evidence decides the glossary and the prose.
+    reference = build_translation_reference(
+        person_id, life_events_source, names, target_lang, verbose
+    )
     glossary = build_name_glossary(
-        collect_person_names(life_events_source, ego_network_source, registry_entry),
+        names,
         context_summary,
         target_lang,
         client,
         GLOSSARY_MODEL,
         verbose,
+        reference,
     )
 
     target_dir = person_dir / target_lang
@@ -1608,7 +1928,7 @@ def translate_person_data(
             print(f"  ⚠ Life events not found for {person_id}")
     elif force or status["life_events"] != "current":
         translated = translate_life_events(
-            life_events_source, target_lang, client, model, glossary, verbose
+            life_events_source, target_lang, client, model, glossary, verbose, reference
         )
         if translated and save_json_file(translated, target_dir / "life_events.json"):
             results["life_events"] = True
@@ -1623,7 +1943,7 @@ def translate_person_data(
             print(f"  ⚠ Ego network not found for {person_id}")
     elif force or status["ego_network"] != "current":
         translated = translate_ego_network(
-            ego_network_source, target_lang, client, model, glossary, verbose
+            ego_network_source, target_lang, client, model, glossary, verbose, reference
         )
         if translated and save_json_file(translated, target_dir / "ego_network.json"):
             results["ego_network"] = True
@@ -1638,7 +1958,7 @@ def translate_person_data(
             print("  ⚠ Person not found in registry")
     elif force or status["registry"] != "current":
         translated = translate_registry_entry(
-            registry_entry, target_lang, client, model, glossary, verbose
+            registry_entry, target_lang, client, model, glossary, verbose, reference
         )
         if translated and update_language_registry(translated, target_lang, verbose):
             results["registry"] = True
