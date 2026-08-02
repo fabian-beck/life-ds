@@ -23,6 +23,36 @@ import * as mdiExports from "@mdi/js";
 const basePath = process.env.VITE_BASE_PATH ?? "/life-ds/";
 
 /**
+ * Absolute address of the deployed site.
+ *
+ * The link-preview tags in index.html need it: an unfurler resolves `og:image`
+ * against nothing, so a site-absolute path there is a broken picture. Set
+ * `VITE_SITE_URL` when publishing anywhere other than the project page.
+ */
+const siteUrl = (
+  process.env.VITE_SITE_URL ?? `https://fabian-beck.github.io${basePath}`
+).replace(/\/*$/, "/");
+
+/**
+ * Vite plugin: social-card
+ *
+ * Substitutes `%SITE_URL%` in index.html. It runs before Vite's own `%KEY%`
+ * env replacement, which only knows `VITE_`-prefixed names and would leave the
+ * token standing in the served document.
+ */
+function socialCardPlugin() {
+  return {
+    name: "social-card",
+    transformIndexHtml: {
+      order: "pre",
+      handler(html) {
+        return html.replaceAll("%SITE_URL%", siteUrl);
+      },
+    },
+  };
+}
+
+/**
  * Vite plugin: github-pages-404
  *
  * GitHub Pages serves static files only — it has no rewrite rules. Shared
@@ -191,6 +221,7 @@ export default defineConfig({
   plugins: [
     mdiIconMapPlugin(),
     svelte(),
+    socialCardPlugin(),
     technicalReportPlugin(),
     githubPages404Plugin(),
   ],

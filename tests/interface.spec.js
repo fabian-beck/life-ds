@@ -381,3 +381,47 @@ for (const [name, script] of [
     expect(pageErrors).toEqual([]);
   });
 }
+
+/* A title is what a bookmark, a tab, and a search result show. The generic one
+   was kept for collections, and stayed English on the German site. */
+test("the document title names the open story, in the reader's language", async ({
+  page,
+}) => {
+  await page.goto("en");
+  await expect(page).toHaveTitle("Life Data Stories");
+
+  await page.goto("en#/en/story/ada_lovelace");
+  await expect(page).toHaveTitle("Life Data Stories · Ada Lovelace");
+
+  await page.goto("en#/en/meta/computing_pioneers");
+  await expect(page).toHaveTitle(
+    "Life Data Stories · From Procedure to Presence"
+  );
+
+  await page.goto("en#/de/meta/computing_pioneers");
+  await expect(page).toHaveTitle(
+    "Life Data Stories · Vom Verfahren zur Allgegenwart"
+  );
+});
+
+/* An unfurler never runs the router, so these tags live in the served
+   document — and they are the whole preview a shared link gets. */
+test("a shared link carries a preview card", async ({ page }) => {
+  await page.goto("en");
+
+  const content = (property) =>
+    page
+      .locator(`meta[property="${property}"], meta[name="${property}"]`)
+      .getAttribute("content");
+
+  await expect.poll(() => content("og:title")).toBe("Life Data Stories");
+  await expect.poll(() => content("og:type")).toBe("website");
+  await expect.poll(() => content("twitter:card")).toBe("summary_large_image");
+  await expect.poll(() => content("description")).toContain("data stories");
+
+  const image = await content("og:image");
+  expect(image).toMatch(/^https?:\/\/.+\/preview\.png$/);
+
+  const response = await page.request.get(image.replace(/^.*\/life-ds\//, ""));
+  expect(response.status()).toBe(200);
+});

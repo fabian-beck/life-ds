@@ -558,13 +558,17 @@
     metaStoryData = null;
   }
 
-  // Reactive page title: use current person's name if available, else generic.
+  // Reactive page title: name whichever story is open — a person or a
+  // collection — and take the site name from the active language, since the
+  // tab and the bookmark are the one place a title is read.
   $: currentTitlePerson = dataset?.person?.name
     ? displayName(dataset.person.name)
     : null;
-  $: document.title = currentTitlePerson
-    ? `Life Data Stories · ${currentTitlePerson}`
-    : "Life Data Stories";
+  $: currentTitleStory =
+    currentTitlePerson || metaStoryData?.meta_story?.title || null;
+  $: document.title = currentTitleStory
+    ? `${$_("app.title")} · ${currentTitleStory}`
+    : $_("app.title");
 
   // Redirect to home if trying to view a non-existent story after loading completes.
   $: if (storyMatch && !dataset && personId && !dataLoading) {

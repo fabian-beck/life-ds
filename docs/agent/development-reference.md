@@ -38,6 +38,10 @@ Because the site lives in a subdirectory, `vite.config.js` sets `base: "/life-ds
 
 `VITE_BASE_PATH=/` builds for a host that serves from the domain root.
 
+`socialCardPlugin` substitutes `%SITE_URL%` in `index.html`, which the link-preview tags there use for `og:url`, `og:image`, and the canonical link. An unfurler resolves those against nothing, so they have to be absolute; `VITE_SITE_URL` overrides the default `https://fabian-beck.github.io/life-ds/` when publishing elsewhere. Because a static host serves one document for every route and no unfurler runs the router, the tags describe the site rather than the story behind the hash—per-story cards would need one static file per story, emitted at build time.
+
+The card image is `public/preview.png`, taken from the running application by `npm run preview:card` rather than drawn by hand, so it can be retaken when the landing page changes.
+
 See README "Deployment" for the setup steps and the platform limits.
 
 ### Adding a New Person
@@ -226,6 +230,8 @@ All variables are prefixed with `VITE_` (exposed to client):
 
 - `VITE_PROTOMAPS_PM_TILES_URL` - Primary PMTiles source
 - `VITE_PROTOMAPS_PM_TILES_FALLBACK_URL` - Fallback PMTiles source
+- `VITE_BASE_PATH` - Deployment base path (default `/life-ds/`)
+- `VITE_SITE_URL` - Absolute site address used by the link-preview tags
 
 Python scripts use:
 

@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "preview:card": "node scripts/capture_social_preview.mjs",
     "report:pdf": "node scripts/export_report_pdf.mjs",
     "report:shots": "python scripts/generate_report.py --shots",
     "test:interface": "playwright test",
