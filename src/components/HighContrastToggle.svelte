@@ -3,6 +3,7 @@
   import { onDestroy } from "svelte";
   import { highContrast, toggleHighContrast } from "../stores/contrast.js";
   import { _ } from "../stores/language";
+  import { portal } from "../utils/portal.js";
 
   // Visual variant to match the neighboring language selector.
   export let variant = "default"; // "default" | "sticky"
@@ -41,7 +42,10 @@
 </button>
 
 {#if toastKey}
+  <!-- Portaled to the body so the sticky header's backdrop-filter cannot
+       become the containing block and pin the toast under the header. -->
   <div
+    use:portal
     class="contrast-toast"
     role="status"
     aria-live="polite"

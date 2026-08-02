@@ -425,3 +425,36 @@ test("a shared link carries a preview card", async ({ page }) => {
   const response = await page.request.get(image.replace(/^.*\/life-ds\//, ""));
   expect(response.status()).toBe(200);
 });
+
+/* The sticky header paints a backdrop-filter, which makes it the containing
+   block for any fixed-position descendant. The confirmation toast lived inside
+   it, so toggling contrast while scrolled pinned the toast under the header
+   instead of the bottom of the viewport. */
+test("the contrast toast sits at the bottom of the viewport, scrolled or not", async ({
+  page,
+}) => {
+  await page.goto("en");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+  const viewportHeight = page.viewportSize().height;
+  const toast = page.locator(".contrast-toast");
+
+  const expectToastNearBottom = async () => {
+    await expect(toast).toBeVisible();
+    const box = await toast.boundingBox();
+    expect(box.y).toBeGreaterThan(viewportHeight / 2);
+    expect(box.y + box.height).toBeLessThanOrEqual(viewportHeight);
+    await expect(toast).toHaveCount(1);
+  };
+
+  await page.locator(".top-controls-right .contrast-toggle").click();
+  await expectToastNearBottom();
+  await expect(toast).toBeHidden({ timeout: 5000 });
+
+  await page.mouse.wheel(0, 600);
+  const stickyHeader = page.locator(".landing-sticky-header");
+  await expect(stickyHeader).toBeVisible();
+
+  await stickyHeader.locator(".contrast-toggle").click();
+  await expectToastNearBottom();
+});
