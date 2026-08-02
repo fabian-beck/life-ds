@@ -103,6 +103,16 @@ This script acts as an AI-powered constructive critic to review and improve the 
 python scripts/remove_person.py "Ada Lovelace"
 ```
 
+**Check the source links** (no API key, no model):
+
+```bash
+python scripts/validate_source_links.py            # report
+python scripts/validate_source_links.py --check    # exit 1 on any dead link
+python scripts/validate_source_links.py --fix      # repair what search resolves
+```
+
+Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
+
 **Restyle a meta story** (Phase 9 of `generate_meta_story.py`, standalone):
 
 ```bash
