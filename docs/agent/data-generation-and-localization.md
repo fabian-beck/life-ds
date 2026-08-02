@@ -120,6 +120,15 @@ python scripts/validate_source_links.py --fix      # repair what search resolves
 
 Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
 
+**Check the people who lived the same events** (no API key, no model):
+
+```bash
+python scripts/validate_cross_person_events.py            # scan list
+python scripts/validate_cross_person_events.py --check    # exit 1 on a contradiction
+```
+
+Person generation is per-person by construction: the generator reads one subject's cached articles and never looks at the datasets already in `data/people/`, so two records of one wedding, battle, or coronation are written independently and never compared. Two events become candidates for the same occasion when they name a participant in common — or name each other's subject — and fall within a year. The default output lists those candidates for a human to scan, because nothing deterministic can tell whether "Makes the Case for Constitution" and "Presides Over Constitutional Convention" are one occasion or two. `--check` reports only the shape that is a contradiction rather than a judgment: same primary place, and dates that cannot both be true once each is read at its own precision. That is what a coronation recorded on two different days looks like.
+
 **Check the event dates against their own descriptions** (no API key, no model):
 
 ```bash
