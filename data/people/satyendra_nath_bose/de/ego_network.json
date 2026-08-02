@@ -1,0 +1,285 @@
+{
+  "dataset": "Wikipedia ego network: Satyendra Nath Bose",
+  "created_on": "2026-08-02",
+  "ego": {
+    "name": "Satyendra Nath Bose",
+    "birth_year": 1894,
+    "death_year": 1974,
+    "primary_roles": [
+      "theoretischer Physiker",
+      "Mathematiker",
+      "Hochschullehrer"
+    ],
+    "summary": "Satyendra Nath Bose war ein indischer theoretischer Physiker, Mathematiker und Hochschullehrer. Seine Arbeit von 1924 über die Statistik ununterscheidbarer Lichtquanten begründete die Bose-Einstein-Statistik. An den Universitäten von Dhaka und Kalkutta baute er Lehre und Forschung in der Physik aus und zählte zu den prägenden Gestalten der indischen Wissenschaft.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+  },
+  "connections": [
+    {
+      "person_name": "Surendra Nath Bose",
+      "relationship_type": "family/father",
+      "relationship_description": "Boses Vater war Buchhalter in der technischen Abteilung der East Indian Railways und stand dem Haushalt vor, in dem Bose aufwuchs.",
+      "start_year": 1894,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Kalkutta",
+        "Förderung von Boses früher Bildung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "Bose war der einzige Sohn von Surendra Nath Bose und Amodini Debi."
+    },
+    {
+      "person_name": "Amodini Debi",
+      "relationship_type": "family/mother",
+      "relationship_description": "Boses Mutter zog ihn in einer bengalischen Kayastha-Familie in Kalkutta auf, wo er als Ältester von sieben Kindern heranwuchs.",
+      "start_year": 1894,
+      "end_year": null,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Kalkutta",
+        "Kindheit, Erziehung und Bildung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "In der Quelle wird ihr Name auch als Smt. Amodini Debi geführt."
+    },
+    {
+      "person_name": "Meghnad Saha",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Saha war Boses Kommilitone und langjähriger wissenschaftlicher Weggefährte. Gemeinsam übersetzten sie Arbeiten zur Relativitätstheorie ins Englische und veröffentlichten gemeinsame Beiträge zur theoretischen Physik und Mathematik.",
+      "start_year": 1909,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Studium am Presidency College und Rajabazar Science College",
+        "Übersetzung von The Principle of Relativity 1919",
+        "gemeinsame Arbeiten zur theoretischen Physik und Mathematik",
+        "Zustandsgleichung realer Gase"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Meghnad_Saha"
+      ],
+      "notes": "Ihre frühe Übersetzung machte grundlegende Arbeiten zur Relativitätstheorie für englischsprachige Studierende und Wissenschaftler in Indien leichter zugänglich."
+    },
+    {
+      "person_name": "Jagadish Chandra Bose",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Jagadish Chandra Bose gehörte am Presidency College zu Boses Lehrern und war einer der wissenschaftlichen Pädagogen, die seinen Ehrgeiz beflügelten.",
+      "start_year": 1909,
+      "end_year": 1913,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Studium am Presidency College, Kalkutta",
+        "Physikunterricht und naturwissenschaftliche Bildung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Jagadish_Chandra_Bose"
+      ],
+      "notes": "Sie trugen denselben Nachnamen, wurden in dem vorliegenden Material jedoch nicht als nahe Verwandte bezeichnet."
+    },
+    {
+      "person_name": "Prafulla Chandra Ray",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Ray war einer von Boses Lehrern am Presidency College und trug zu dem wissenschaftlich anspruchsvollen Umfeld bei, das Boses Studium prägte.",
+      "start_year": 1909,
+      "end_year": 1913,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Studium am Presidency College, Kalkutta",
+        "wissenschaftlicher Unterricht"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Ashutosh Mukherjee",
+      "relationship_type": "academic/patron",
+      "relationship_description": "Mukherjee gründete das Science College der Universität Kalkutta, an dem Bose seinen Master machte, und förderte später das forschungsorientierte universitäre Umfeld, in dem Bose seine Laufbahn begann.",
+      "start_year": 1913,
+      "end_year": 1924,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Science College der Universität Kalkutta",
+        "Mathematikstudium und frühe Relativitätsforschung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Ashutosh_Mukherjee"
+      ],
+      "notes": "Durch Mukherjees institutionelle Führungsarbeit wurde das neue Science College zu einem wichtigen Ort für Boses Übergang vom Studenten zum Forscher."
+    },
+    {
+      "person_name": "Ushabati Ghosh",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Bose heiratete 1914 Ushabati Ghosh. Die Ehe bestand bis zu seinem Tod; das Paar hatte neun Kinder, von denen sieben die Kindheit überlebten.",
+      "start_year": 1914,
+      "end_year": 1974,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und gemeinsamer Haushalt",
+        "Erziehung von neun Kindern"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "Ushabati war die Tochter eines angesehenen Arztes aus Kalkutta und überlebte Bose."
+    },
+    {
+      "person_name": "Albert Einstein",
+      "relationship_type": "professional/collaborator",
+      "relationship_description": "Einstein übersetzte Boses Aufsatz von 1924 ins Deutsche, sorgte für dessen Veröffentlichung und empfahl ihn später für die Professur in Dhaka. Ihr Austausch führte Boses Arbeit von Dhaka ins Zentrum der Quantentheorie.",
+      "start_year": 1919,
+      "end_year": 1955,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "englische Übersetzung von Einsteins Relativitätsarbeiten",
+        "Veröffentlichung von Plancks Gesetz und die Hypothese der Lichtquanten",
+        "Entwicklung der Bose-Einstein-Statistik",
+        "Forschungsaufenthalt in Europa",
+        "Berufung an die Universität Dhaka"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "Ihre erste Verbindung entstand, nachdem Bose und Saha um die Übersetzung von Einsteins Arbeiten zur Relativitätstheorie gebeten hatten; ihr entscheidender wissenschaftlicher Austausch begann 1924."
+    },
+    {
+      "person_name": "Louis de Broglie",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Während Boses europäischem Forschungsaufenthalt von 1924 bis 1926 arbeitete er mit de Broglie im Pariser Wissenschaftsmilieu der Röntgen- und Kristallographieforschung zusammen.",
+      "start_year": 1924,
+      "end_year": 1926,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Laborforschung in Europa",
+        "Röntgen- und Kristallographiearbeit in Paris"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "Diese Zusammenarbeit wurde durch die Anerkennung möglich, die Bose erfuhr, nachdem Einstein die Veröffentlichung seines Aufsatzes von 1924 veranlasst hatte."
+    },
+    {
+      "person_name": "Marie Curie",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Während Boses europäischem Forschungsaufenthalt von 1924 bis 1926 arbeitete er im Umfeld von Curies Labor und sammelte Erfahrungen in der Röntgen- und Kristallographieforschung.",
+      "start_year": 1924,
+      "end_year": 1926,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Laborforschung in Europa",
+        "Röntgen- und Kristallographiearbeit in Paris"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "Die vorliegende Darstellung nennt Curie als eine der Wissenschaftlerinnen, mit denen Bose während seines Europaaufenthalts zusammenarbeitete."
+    },
+    {
+      "person_name": "Debendra Mohan Bose",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Debendra Mohan Bose gab Satyendra Nath Bose Max Plancks Bücher Thermodynamik und Warmestrahlung; dadurch weckte er dessen Interesse an Plancks Hypothese und an der späteren Arbeit zur Quantenstatistik.",
+      "start_year": 1924,
+      "end_year": 1925,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Zugang zu Plancks wissenschaftlichen Schriften",
+        "frühe Beschäftigung mit Quantentheorie in Kalkutta"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Debendra_Mohan_Bose",
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "Die Beziehung ist als wichtiger intellektueller Anstoß belegt; trotz ihres gemeinsamen Nachnamens handelte es sich um zwei verschiedene Physiker."
+    },
+    {
+      "person_name": "Paul Dirac",
+      "relationship_type": "professional/legacy eponym",
+      "relationship_description": "Dirac bezeichnete die Klasse der Teilchen mit ganzzahligem Spin zu Ehren von Boses grundlegendem Beitrag zur Quantenstatistik als „Bosonen“.",
+      "start_year": 1926,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "ego_to_alter",
+      "shared_activities": [
+        "Entwicklung und Deutung der Quantenstatistik",
+        "wissenschaftliche Benennung der Bosonen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Paul_Dirac"
+      ],
+      "notes": "Dabei handelte es sich vor allem um eine intellektuelle und würdigende Verbindung, nicht um eine belegte enge Zusammenarbeit."
+    },
+    {
+      "person_name": "Rabindranath Tagore",
+      "relationship_type": "professional/intellectual peer",
+      "relationship_description": "Tagore widmete Bose 1937 sein Wissenschaftsbuch Visva-Parichay und würdigte damit dessen Stellung im wissenschaftlichen und intellektuellen Leben Bengalens.",
+      "start_year": 1937,
+      "end_year": 1941,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "bengalische intellektuelle und kulturelle Kreise",
+        "Förderung der Wissenschaft auf Bengalisch",
+        "Widmung von Visva-Parichay"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "notes": "Bose kannte sich zudem gut mit Tagores Dichtung aus und setzte sich für Bengalisch als Sprache des naturwissenschaftlichen Unterrichts ein."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Boses Familie bildete den beständigen persönlichen Rückhalt eines Lebens, das sich zwischen Kalkutta, Dhaka und europäischen Laboratorien abspielte. Seine Eltern verankerten ihn in einem bildungsorientierten Haushalt eines Eisenbahnbuchhalters; die 1914 geschlossene Ehe wurde zu einer lebenslangen Partnerschaft und begründete einen großen Familienhaushalt, der neben seiner akademischen Laufbahn Bestand hatte."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Boses akademisches Netzwerk nahm seinen Anfang in der außerordentlich fruchtbaren institutionellen Landschaft Kalkuttas. Lehrer am Presidency College und das neu gegründete Science College der Universität Kalkutta eröffneten dem mathematisch hochbegabten Studenten den Zugang zur modernen Wissenschaft. Spätere intellektuelle Anregungen und der Zugang zu Plancks Schriften lenkten seine Aufmerksamkeit auf jene Quantenfragen, die in seinem Durchbruch von 1924 gipfelten. Diese Verbindungen zeigen zugleich, welche Bedeutung lokal aufgebauten Institutionen für seinen Aufstieg zum Wissenschaftler zukam."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Wissenschaftliche Zusammenarbeit machte aus Boses lokaler Arbeit einen internationalen Umbruch der Quantentheorie. Seine dauerhafte Partnerschaft mit Saha erschloss die Relativitätstheorie einem breiteren indischen Lesepublikum und führte zu gemeinsamer Forschung. Einsteins Eingreifen im Jahr 1924 war jedoch die entscheidende katalytische Verbindung: Es brachte Boses Aufsatz in die Zeitschrift für Physik, führte zur Bose-Einstein-Statistik und ebnete den Weg zur Laborarbeit in Europa sowie zu seiner führenden Stellung in Dhaka. Die spätere Anerkennung durch Persönlichkeiten wie Tagore und Dirac zeigt, wie Boses Einfluss über unmittelbare Zusammenarbeit hinaus in die intellektuelle Kultur Bengalens und in den bleibenden Wortschatz der Teilchenphysik hineinreichte."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "02fac0335a8479ee",
+    "translated_on": "2026-08-02T13:54:12.022291+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

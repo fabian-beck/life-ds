@@ -1,0 +1,631 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-02",
+  "person": {
+    "name": "Satyendra_Nath_Bose",
+    "birth_date": "1894-01-01",
+    "death_date": "1974-02-04",
+    "primary_roles": [
+      "Physiker",
+      "Mathematiker",
+      "Hochschullehrer"
+    ],
+    "tagline": "Wegbereiter der Quantenstatistik",
+    "summary": "Satyendra Nath Bose war ein indischer theoretischer Physiker und Mathematiker, dessen Abhandlung über Lichtquanten von 1924 die Grundlagen der Bose-Einstein-Statistik schuf. An den Universitäten von Dhaka und Kalkutta lehrte er und baute physikalische Studiengänge auf; zugleich förderte er die wissenschaftliche Bildung und Forschung in Indien.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+    "portrait": {
+      "image": "/portraits/satyendra_nath_bose_thumbnail.webp",
+      "thumbnail": "/portraits/satyendra_nath_bose_thumbnail.webp",
+      "medium": "/portraits/satyendra_nath_bose_medium.webp",
+      "full": "/portraits/satyendra_nath_bose_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/fe/SatyenBose1925.jpg",
+      "referenceUsed": true
+    }
+  },
+  "chapters": [
+    {
+      "id": "calcutta_prodigy",
+      "headline": "Wunderkind aus Kalkutta",
+      "date_start": "1894-01-01",
+      "date_start_precision": "day",
+      "date_end": "1915",
+      "date_end_precision": "year",
+      "age_start": 0,
+      "age_end": 21,
+      "involved_people": [
+        "Surendra Nath Bose",
+        "Amodini Debi",
+        "Ushabati Ghosh"
+      ],
+      "location": "Bengalen, Indien"
+    },
+    {
+      "id": "relativity_in_calcutta",
+      "headline": "Die Relativität fasst Fuß",
+      "date_start": "1916",
+      "date_start_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 27,
+      "involved_people": [
+        "Meghnad Saha"
+      ],
+      "location": "Bengalen, Indien"
+    },
+    {
+      "id": "dhaka_quantum_breakthrough",
+      "headline": "Der Quantendurchbruch",
+      "date_start": "1924",
+      "date_start_precision": "year",
+      "date_end": "1946",
+      "date_end_precision": "year",
+      "age_start": 30,
+      "age_end": 52,
+      "involved_people": [
+        "Albert Einstein",
+        "Louis de Broglie",
+        "Marie Curie",
+        "Rabindranath Tagore"
+      ],
+      "location": "Südasien"
+    },
+    {
+      "id": "calcutta_scientific_renewal",
+      "headline": "Wissenschaft für eine neue Nation",
+      "date_start": "1947",
+      "date_start_precision": "year",
+      "date_end": "1955",
+      "date_end_precision": "year",
+      "age_start": 53,
+      "age_end": 61,
+      "involved_people": null,
+      "location": "Indien"
+    },
+    {
+      "id": "elder_statesman_of_science",
+      "headline": "Eine bleibende Stimme der Wissenschaft",
+      "date_start": "1956",
+      "date_start_precision": "year",
+      "date_end": "1974-02-04",
+      "date_end_precision": "day",
+      "age_start": 62,
+      "age_end": 80,
+      "involved_people": [
+        "Ushabati Ghosh"
+      ],
+      "location": "Indien"
+    }
+  ],
+  "conclusion": "Vom brillanten Studenten aus Kalkutta zum Begründer der Bose-Statistik prägte Satyendra Nath Bose die moderne Physik neu und schuf zugleich wissenschaftliche Institutionen in Indien. Sein Name lebt im Boson fort – als bleibende Erinnerung daran, dass eine kühne Idee das Verständnis der Menschheit von der Materie selbst verändern kann.",
+  "events": [
+    {
+      "date": "1894-01-01",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Kalkutta",
+      "description": "Satyendra Nath Bose wurde in Kalkutta als Sohn einer bengalischen Kayastha-Familie geboren. Er war das älteste von sieben Kindern und der einzige Sohn in einem Haushalt, dessen Oberhaupt als Buchhalter bei der East Indian Railways tätig war.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Surendra Nath Bose",
+        "Amodini Debi"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "calcutta_prodigy",
+      "event_class": {
+        "type": "birth",
+        "father": "Surendra Nath Bose",
+        "mother": "Amodini Debi",
+        "characterization": "Eisenbahnerhaushalt"
+      }
+    },
+    {
+      "date": "1909",
+      "date_precision": "year",
+      "date_end": "1915",
+      "date_end_precision": "year",
+      "age": 15,
+      "title": "Spitzenleistungen in Mathematik",
+      "description": "Nach dem Besuch der New Indian School und der Hindu School schrieb sich Bose 1909 am Presidency College in Kalkutta ein. Dort studierte er bei Gelehrten wie Jagadish Chandra Bose und Prafulla Chandra Ray, während sein Kommilitone Meghnad Saha den zweiten Platz belegte. Bose wurde 1913 in der kombinierten Mathematikprüfung zum Bachelor of Science Erster und wiederholte diesen Erfolg 1915 in der Master-of-Science-Prüfung am Science College der Universität Kalkutta.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Presidency_University_-_Kolkata_7367.JPG/960px-Presidency_University_-_Kolkata_7367.JPG",
+          "caption": "Presidency University, Kolkata, früher Presidency College",
+          "source": "https://commons.wikimedia.org/wiki/File:Presidency_University_-_Kolkata_7367.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "calcutta_prodigy",
+      "involved_people": [
+        "Jagadish Chandra Bose",
+        "Prafulla Chandra Ray",
+        "Meghnad Saha"
+      ]
+    },
+    {
+      "date": "1914",
+      "date_precision": "year",
+      "age": 20,
+      "title": "Heirat mit Ushabati Ghosh",
+      "description": "1914 heiratete Bose Ushabati Ghosh, die Tochter eines angesehenen Arztes aus Kalkutta.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "primary": true,
+          "centroid": [
+            88.3638953,
+            22.5726459
+          ]
+        }
+      ],
+      "involved_people": [
+        "Ushabati Ghosh"
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/SN_Bose_and_Ushabati_in_1914.jpg/960px-SN_Bose_and_Ushabati_in_1914.jpg",
+          "caption": "Satyendra Nath Bose und Ushabati Bose an ihrem Hochzeitstag",
+          "source": "https://commons.wikimedia.org/wiki/File:SN_Bose_and_Ushabati_in_1914.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "calcutta_prodigy",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Ushabati Ghosh",
+        "duration": "bis zu seinem Tod",
+        "children": 9
+      }
+    },
+    {
+      "date": "1916",
+      "date_precision": "year",
+      "date_end": "1921",
+      "date_end_precision": "year",
+      "age": 22,
+      "title": "Beginn der Lehrtätigkeit",
+      "description": "Bose trat als Forschungsstipendiat in das Science College der Universität Kalkutta ein und begann, sich mit der Relativitätstheorie zu befassen. Zugleich war er Dozent am Physikinstitut des Rajabazar Science College und lehrte in einer Zeit rasanter Fortschritte in der Relativitäts- und Quantentheorie.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Rashbehari_Siksha_Prangan_-_Kolkata_7362.JPG/960px-Rashbehari_Siksha_Prangan_-_Kolkata_7362.JPG",
+          "caption": "Campus des Rajabazar Science College, Universität Kalkutta",
+          "source": "https://commons.wikimedia.org/wiki/File:Rashbehari_Siksha_Prangan_-_Kolkata_7362.JPG"
+        }
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "relativity_in_calcutta"
+    },
+    {
+      "date": "1919",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Relativitätsübersetzung veröffentlicht",
+      "description": "1919 arbeiteten Satyendra Nath Bose und Meghnad Saha in Kalkutta an einer englischen Übersetzung grundlegender Arbeiten zu Einsteins spezieller und allgemeiner Relativitätstheorie. Damit machten sie diese für englischsprachige Studierende und Wissenschaftler in Indien leichter zugänglich.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Meghnad Saha"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Meghnad_Saha",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/The_Principle_of_Relativity_by_MN_Saha_and_SN_Bose.jpg/960px-The_Principle_of_Relativity_by_MN_Saha_and_SN_Bose.jpg",
+          "caption": "The Principle of Relativity von M. N. Saha und S. N. Bose",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Principle_of_Relativity_by_MN_Saha_and_SN_Bose.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "relativity_in_calcutta",
+      "event_class": {
+        "type": "publication",
+        "title": "The Principle of Relativity",
+        "publication_type": "book",
+        "significance": "englische Relativitätsübersetzung"
+      }
+    },
+    {
+      "date": "1921",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Wechsel an die Universität Dhaka",
+      "description": "1921 nahm Bose eine akademische Stelle an der neu gegründeten Universität an, wirkte am Aufbau ihres Physikstudiengangs mit und unterrichtete fortgeschrittene Studierende.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Dacca",
+          "name_modern": "Dhaka, Bangladesch",
+          "centroid": [
+            90.4125,
+            23.8103
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Administrative_Building%2C_Dhaka_University.jpg/960px-Administrative_Building%2C_Dhaka_University.jpg",
+          "caption": "Verwaltungsgebäude der Universität Dhaka",
+          "source": "https://commons.wikimedia.org/wiki/File:Administrative_Building,_Dhaka_University.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "relativity_in_calcutta",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Kalkutta, Präsidentschaft Bengalen",
+        "to_location": "Dhaka, Präsidentschaft Bengalen",
+        "characterization": "akademische Berufung"
+      }
+    },
+    {
+      "date": "1924",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Quantenaufsatz an Einstein geschickt",
+      "description": "1924 schrieb Bose, damals Lehrer an der Universität Dhaka, einen Aufsatz, in dem er Plancks Strahlungsgesetz mithilfe einer neuen Zählweise identischer Teilchen herleitete. Nachdem der Aufsatz zunächst nicht zur Veröffentlichung angenommen worden war, sandte er ihn direkt an Albert Einstein. Dieser übersetzte ihn ins Deutsche und reichte ihn bei der Zeitschrift für Physik ein.",
+      "locations": [
+        {
+          "name_historic": "Dacca",
+          "name_modern": "Dhaka, Bangladesch",
+          "centroid": [
+            90.4125,
+            23.8103
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Albert Einstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "dhaka_quantum_breakthrough",
+      "event_class": {
+        "type": "publication",
+        "title": "Plancks Gesetz und die Hypothese der Lichtquanten",
+        "publication_type": "paper",
+        "publisher": "Zeitschrift für Physik",
+        "significance": "Grundlage der Quantenstatistik"
+      }
+    },
+    {
+      "date": "1924",
+      "date_precision": "year",
+      "date_end": "1926",
+      "date_end_precision": "year",
+      "age": 30,
+      "title": "Arbeit in europäischen Laboratorien",
+      "description": "Dank Einsteins Unterstützung konnte Bose von 1924 bis 1926 zwei Jahre lang in europäischen Röntgen- und kristallographischen Laboratorien arbeiten. In dieser Zeit arbeitete er mit Louis de Broglie, Marie Curie und Einstein zusammen.",
+      "locations": [
+        {
+          "name_historic": "Paris",
+          "name_modern": "Paris, Frankreich",
+          "centroid": [
+            2.3522,
+            48.8566
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Albert Einstein",
+        "Louis de Broglie",
+        "Marie Curie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "dhaka_quantum_breakthrough"
+    },
+    {
+      "date": "1926",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Leitung des Physikinstituts Dhaka",
+      "description": "1926 kehrte Bose nach Dhaka zurück und wurde Leiter des Physikinstituts der Universität Dhaka. Die Empfehlung Albert Einsteins trug dazu bei, ihm die Stelle trotz seines fehlenden Doktortitels zu sichern. Er baute Einrichtungen für Röntgenkristallographie, Spektroskopie und verwandte experimentelle Forschung auf.",
+      "locations": [
+        {
+          "name_historic": "Dhaka",
+          "name_modern": "Dhaka, Bangladesch",
+          "centroid": [
+            90.4125,
+            23.8103
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Albert Einstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/University_of_Dhaka_Department_of_Physics_Class_of_1945.jpg/960px-University_of_Dhaka_Department_of_Physics_Class_of_1945.jpg",
+          "caption": "Jahrgang 1945 des Physikinstituts der Universität Dhaka",
+          "source": "https://commons.wikimedia.org/wiki/File:University_of_Dhaka_Department_of_Physics_Class_of_1945.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "dhaka_quantum_breakthrough"
+    },
+    {
+      "date": "1937",
+      "date_precision": "year",
+      "age": 43,
+      "title": "Widmung von Tagore",
+      "description": "Rabindranath Tagore widmete Bose sein Wissenschaftsbuch Visva-Parichay. Die Widmung spiegelte Boses Ansehen in den wissenschaftlichen und intellektuellen Kreisen Bengalens wider.",
+      "locations": [],
+      "involved_people": [
+        "Rabindranath Tagore"
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-book",
+      "chapter": "dhaka_quantum_breakthrough"
+    },
+    {
+      "date": "1947",
+      "date_precision": "year",
+      "age": 53,
+      "title": "Rückkehr nach Kalkutta",
+      "description": "Als die Teilung Indiens näher rückte, nahm er seine Lehrtätigkeit an der Universität Kalkutta wieder auf und ermutigte seine Studierenden, Apparaturen aus vor Ort verfügbaren Materialien und mit Unterstützung örtlicher Techniker zu entwickeln.",
+      "locations": [
+        {
+          "name_historic": "Dhaka",
+          "name_modern": "Dhaka, Bangladesch",
+          "centroid": [
+            90.4125,
+            23.8103
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "calcutta_scientific_renewal",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Dhaka, Ostbengalen",
+        "to_location": "Kalkutta, Indien",
+        "characterization": "Rückkehr zur Teilungszeit"
+      }
+    },
+    {
+      "date": "1954",
+      "date_precision": "year",
+      "age": 60,
+      "title": "Padma Vibhushan erhalten",
+      "description": "Die indische Regierung zeichnete Bose mit dem Padma Vibhushan aus, der zweithöchsten zivilen Ehrung des Landes. Die Auszeichnung erhielt er, während er seine akademische und wissenschaftliche Arbeit in Kalkutta fortsetzte.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Padma_Vibhushan"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Medal%2C_order_%28AM_2014.7.12-1%29.jpg/960px-Medal%2C_order_%28AM_2014.7.12-1%29.jpg",
+          "caption": "Orden Padma Vibhushan der Republik Indien",
+          "source": "https://commons.wikimedia.org/wiki/File:Medal,_order_(AM_2014.7.12-1).jpg"
+        }
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "calcutta_scientific_renewal"
+    },
+    {
+      "date": "1956",
+      "date_precision": "year",
+      "age": 62,
+      "title": "Ruhestand und Leitung von Visva-Bharati",
+      "description": "Bose trat als Professor emeritus der Universität Kalkutta in den Ruhestand und wurde Vizekanzler der Visva-Bharati University in Santiniketan. Später kehrte er nach Kalkutta zurück, um seine Forschungen fortzusetzen, darunter Arbeiten zur Kernphysik und organischen Chemie.",
+      "locations": [
+        {
+          "name_historic": "Santiniketan",
+          "name_modern": "Santiniketan, Indien",
+          "centroid": [
+            87.6833,
+            23.6833
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose",
+        "https://en.wikipedia.org/wiki/Visva-Bharati_University"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Central_Library_-_Visva-Bharati_-_Bolpur-Santiniketan_Road_-_Birbhum_2014-06-29_5428-5429.TIF/lossy-page1-960px-Central_Library_-_Visva-Bharati_-_Bolpur-Santiniketan_Road_-_Birbhum_2014-06-29_5428-5429.TIF.jpg",
+          "caption": "Zentralbibliothek der Visva-Bharati University, Santiniketan",
+          "source": "https://commons.wikimedia.org/wiki/File:Central_Library_-_Visva-Bharati_-_Bolpur-Santiniketan_Road_-_Birbhum_2014-06-29_5428-5429.TIF"
+        }
+      ],
+      "event_type_icon": "mdi-account-clock",
+      "chapter": "elder_statesman_of_science"
+    },
+    {
+      "date": "1958",
+      "date_precision": "year",
+      "age": 64,
+      "title": "Mitglied der Royal Society",
+      "description": "1958 wurde Bose zum Fellow der Royal Society gewählt. Die Wahl würdigte sein wissenschaftliches Ansehen in der internationalen Physikgemeinschaft.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Royal_Society"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "elder_statesman_of_science"
+    },
+    {
+      "date": "1959",
+      "date_precision": "year",
+      "age": 65,
+      "title": "Zum National Professor ernannt",
+      "description": "1959 ernannte die indische Regierung Bose zum National Professor, ihrer höchsten akademischen Auszeichnung. Dieses Amt bekleidete er bis zu seinem Lebensende und setzte zugleich seine Forschung sowie seine wissenschaftliche Beratungstätigkeit fort.",
+      "locations": [],
+      "sources": [],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "elder_statesman_of_science"
+    },
+    {
+      "date": "1974-02-04",
+      "date_precision": "day",
+      "age": 80,
+      "title": "Tod in Kalkutta",
+      "description": "Bose starb am 4. Februar 1974 im Alter von 80 Jahren in Kalkutta. Er hinterließ seine Frau, zwei Söhne und fünf Töchter.",
+      "locations": [
+        {
+          "name_historic": "Kalkutta",
+          "name_modern": "Kolkata, Indien",
+          "centroid": [
+            88.3639,
+            22.5726
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Satyendra_Nath_Bose"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "elder_statesman_of_science",
+      "event_class": {
+        "type": "death"
+      }
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "1b0ba251a89e1d1f",
+    "translated_on": "2026-08-02T13:53:52.600537+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}
