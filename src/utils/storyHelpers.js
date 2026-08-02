@@ -1100,6 +1100,75 @@ export function getRelevantPeople(event, egoNetwork) {
     .slice(0, 5);
 }
 
+/** Characters that make a neighbor part of the same word. */
+const WORD_CHARACTER = /[\p{L}\p{N}]/u;
+
+/**
+ * Escape a literal string for use inside a regular expression.
+ * @param {string} value - Literal text
+ * @returns {string} Pattern source matching that text
+ */
+function escapeForRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Locate an annotated term in prose that carries no `[[…]]` markup for it.
+ *
+ * The generator is asked to define an annotation *and* mark its term in the
+ * description, and it regularly does only the first — across the current data
+ * roughly one annotation in nine is defined but never marked, so its
+ * explanation is written, translated, and then never shown. The terms this
+ * strands are mostly institutions ("Glasgow School of Art", "Risø",
+ * "Cercle Artístic de Sant Lluc"), which is what the reader notices: the very
+ * names that need a gloss are the ones without one.
+ *
+ * Finding the term in the text is the same move the app already makes for
+ * people, whose names are matched in the prose rather than marked up in it.
+ * The markup therefore stops being the only way to place an annotation and
+ * becomes what it is actually needed for: annotating a phrase whose wording
+ * differs from the term (`[[Modernisme|the modernista style]]`).
+ *
+ * @param {string} description - Prose to scan
+ * @param {string} termKey - Annotation key, as prose or as a slug
+ * @param {Array<{start: number, end: number}>} occupied - Ranges already taken
+ * @returns {{start: number, end: number}|null} First free whole-word match
+ */
+function findAnnotationTerm(description, termKey, occupied) {
+  // Keys come both as prose ("Glasgow School of Art") and as slugs
+  // ("Greek_War_of_Independence"); both stand for the same words.
+  const spelled = termKey.replace(/_/g, " ");
+  // A key names a place in full where the sentence names it plainly
+  // ("Portland, Oregon" for "moved from Portland"), so the qualifier behind
+  // the comma is dropped — but only after the full key has failed to match.
+  const unqualified = spelled.replace(/,[^,]*$/, "");
+  const candidates = [termKey, spelled, unqualified];
+
+  for (const candidate of candidates) {
+    const term = candidate.trim();
+    if (!term) continue;
+
+    // Case-insensitive: a term is keyed as the concept ("photoelectric_effect")
+    // as often as it is spelled the way the sentence spells it.
+    const pattern = new RegExp(escapeForRegExp(term), "giu");
+    let match;
+    while ((match = pattern.exec(description)) !== null) {
+      const start = match.index;
+      const end = pattern.lastIndex;
+      const before = description[start - 1];
+      const after = description[end];
+      if (before && WORD_CHARACTER.test(before)) continue;
+      if (after && WORD_CHARACTER.test(after)) continue;
+      if (occupied.some((range) => start < range.end && range.start < end)) {
+        continue;
+      }
+      return { start, end };
+    }
+  }
+
+  return null;
+}
+
 /**
  * Parse event description into segments with annotations AND person names.
  * Annotations take priority over person name matches.
@@ -1178,6 +1247,34 @@ export function parseDescriptionSegments(
       person: match.person,
       matchedText: description.slice(match.start, match.end),
     }));
+
+  // Step 2b: An annotation the description never marked up is still an
+  // annotation — find its term in the prose (see findAnnotationTerm). Names are
+  // settled first and an emphasized one is off limits: the generator is told
+  // never to annotate a person, and where it did anyway ("Lord Byron" in Ada
+  // Lovelace's birth) the person's card is the richer answer. The subject's own
+  // name is not a match to protect — it renders as plain text — so a term that
+  // merely contains it ("Zuse KG") is still free. Explicit markup keeps its
+  // precedence, having been written into the sentence on purpose.
+  for (const [termKey, annotation] of Object.entries(annotations ?? {})) {
+    if (seenTermKeys.has(termKey) || !annotation) continue;
+    const range = findAnnotationTerm(description, termKey, [
+      ...annotationRanges,
+      ...personMatches,
+    ]);
+    if (!range) continue;
+    seenTermKeys.add(termKey);
+    annotationRanges.push({
+      start: range.start,
+      end: range.end,
+      type: "annotation",
+      termKey,
+      // The prose spells the term the way the sentence needed it; that is what
+      // the reader tapped, so that is what the popup labels.
+      displayText: description.slice(range.start, range.end),
+      annotation,
+    });
+  }
 
   // Step 3: Merge all ranges and sort by position
   const allRanges = [...annotationRanges, ...personMatches].sort((a, b) => {

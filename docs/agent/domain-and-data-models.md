@@ -111,6 +111,13 @@ Events are the core narrative units displayed as slides. Events can optionally b
 - `involved_people`: List of people directly involved in this event (excludes the main subject)
 - `event_type_icon`: MDI icon identifier for visual categorization (e.g., "mdi-crown", "mdi-book", "mdi-school")
 
+**Annotations**: an event may carry an `annotations` map of `term → {explanation, wikipedia_url?}`, rendered on the slide as a tappable term with a popup. A term is placed in the description in one of two ways, both handled by `parseDescriptionSegments` in `src/utils/storyHelpers.js`:
+
+- **Markup** — `[[term|display]]` in the description. Use it when the sentence words the term differently from the key (`[[Modernisme|the modernista style]]`); the term before the `|` is the id the map is keyed by, and it stays in English through translation.
+- **By name** — no markup at all. The term is then looked for in the prose, the way person names are, matching whole words case-insensitively and accepting a slugged key (`Greek_War_of_Independence`) or one qualified by its region (`Portland, Oregon` for a sentence that only says "Portland"). This exists because Phase 2 writes the explanation and omits the markup often enough to matter — the terms it stranded were mostly institutions, so the names most in need of a gloss were the ones without one.
+
+Markup wins where both could apply, and a name that is already emphasized as a person wins over an unmarked term, since the person's card says more than a gloss would. A term that appears nowhere in the description simply renders nothing.
+
 **Chapter Structure**:
 - `headline`: Catchy, story-like title (2-5 words, varied lengths) - ONE unified concept, NOT a list. Vivid and evocative like a book chapter. Avoid commas, "and", or punctuation that creates lists.
 - Each chapter should have thematic coherence - events share a common thread or life phase
