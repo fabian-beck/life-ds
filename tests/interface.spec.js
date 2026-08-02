@@ -407,58 +407,99 @@ for (const [name, script] of [
   });
 }
 
-/* The room a slide keeps free below its content — for the story map, and for
-   the breathing space the chapter, conclusion, and overview slides ask for —
-   used to be bottom padding, and padding is part of what a slide scrolls
-   through. Slides whose content was entirely on screen still offered a scroll,
-   and following it revealed nothing but empty margin. */
-test("a slide scrolls only as far as its own content overruns it", async ({
+/* Each slide keeps room free at its foot, for the story map and for the
+   timeline controls that float over it. The room used to be bottom padding,
+   which an `overflow-y: auto` box scrolls through, so slides whose every word
+   was already on screen scrolled over empty margin. The room can only be given
+   up when giving it up spares the slide a scroll: on a slide the content
+   overruns, it is what the reader scrolls the last line into. Both halves are
+   checked here, because a fix for either one alone breaks the other. */
+test("a slide scrolls only when there is something below to reach", async ({
   page,
 }) => {
   await page.goto("en#/en/story/ada_lovelace");
   await expect(
     page.locator('section[aria-label^="Overview: Ada Lovelace"]')
   ).toBeVisible();
-  const slides = page.locator("section.slide");
-  await expect.poll(() => slides.count()).toBeGreaterThan(5);
+  await expect(page.locator(".slides-wrapper.map-enabled")).toBeAttached();
+  await expect(page.locator(".indicator")).toBeVisible();
 
-  // The reserve only shows as phantom scroll on a screen short enough for it to
-  // matter, so the sizes are named here rather than left to the project.
-  await expectNoPhantomScroll(page, { width: 390, height: 760 });
-  await expectNoPhantomScroll(page, { width: 360, height: 640 });
-});
-
-async function expectNoPhantomScroll(page, viewport) {
-  await page.setViewportSize(viewport);
-  const overscrolling = await page.evaluate(() => {
-    // The one thing below a slide's content that a reader may legitimately have
-    // to scroll into view is the gutter that keeps the last line clear of the
-    // timeline bar floating over it — 4rem at its widest.
-    const GUTTER = 64;
-    return [...document.querySelectorAll("section.slide")]
-      .map((slide, index) => {
-        const content = slide.querySelector(".content");
-        if (!content) return null;
-        // Every slide rests at the top of its own scroll, so this is how far
-        // the content plus its gutter reaches past the foot of the screen.
-        const reach =
-          content.getBoundingClientRect().bottom +
-          GUTTER -
-          slide.getBoundingClientRect().bottom;
-        const scrollable = slide.scrollHeight - slide.clientHeight;
-        // A pixel of slack: the two measurements round differently.
-        if (scrollable <= Math.max(0, reach) + 1) return null;
-        return {
-          index,
-          label: slide.getAttribute("aria-label"),
-          scrollable: Math.round(scrollable),
-          worthScrolling: Math.round(Math.max(0, reach)),
-        };
-      })
-      .filter(Boolean);
+  // Neither half shows itself on a screen with room to spare, so the sizes are
+  // named here rather than left to the project.
+  const roomy = await expectSlidesReachTheirContent(page, {
+    width: 390,
+    height: 760,
+  });
+  const cramped = await expectSlidesReachTheirContent(page, {
+    width: 360,
+    height: 640,
   });
 
-  expect(overscrolling, `at ${viewport.width}x${viewport.height}`).toEqual([]);
+  // Neither half is vacuous: the roomy screen has slides that fit, the cramped
+  // one has event slides that do not.
+  expect(roomy.fitting).toBeGreaterThan(0);
+  expect(cramped.overrunning).toBeGreaterThan(0);
+});
+
+async function expectSlidesReachTheirContent(page, viewport) {
+  await page.setViewportSize(viewport);
+  const audit = await page.evaluate(() => {
+    // The previous and next buttons and the timeline bar float over the foot of
+    // every slide. Text under them is text the reader cannot read.
+    const controls = document.querySelector(".indicator");
+    // The slide keeps its content a round 10rem clear of the foot, a little
+    // more than the controls actually take. A last line landing inside that
+    // difference is flush against them, and a slide may scroll to lift it, so
+    // the check for scrolling over nothing starts above the difference.
+    const FLUSH = 16;
+    const result = { fitting: 0, overrunning: 0, phantom: [], buried: [] };
+
+    for (const slide of document.querySelectorAll("section.slide")) {
+      const content = slide.querySelector(".content");
+      if (!content) continue;
+      const foot = slide.getBoundingClientRect().bottom;
+      const controlsReach = foot - controls.getBoundingClientRect().top;
+      const label = slide.getAttribute("aria-label");
+      const scrollable = slide.scrollHeight - slide.clientHeight;
+
+      // A pixel of slack throughout: the measurements round differently.
+      const atRest = foot - content.getBoundingClientRect().bottom;
+      if (atRest >= controlsReach - 1) {
+        result.fitting += 1;
+        // Everything is already readable, so there is nothing to scroll to.
+        if (scrollable > 1 && atRest >= controlsReach + FLUSH) {
+          result.phantom.push({
+            label,
+            scrollable: Math.round(scrollable),
+            clearAtRest: Math.round(atRest),
+          });
+        }
+        continue;
+      }
+
+      result.overrunning += 1;
+      // The event slides are the ones carrying the map's reserve; the overview
+      // and conclusion keep a smaller one of their own.
+      if (/^Slide \d+ of/.test(label ?? "")) {
+        slide.scrollTop = slide.scrollHeight;
+        const scrolled = foot - content.getBoundingClientRect().bottom;
+        slide.scrollTop = 0;
+        if (scrolled < controlsReach - 1) {
+          result.buried.push({
+            label,
+            clearsBy: Math.round(scrolled),
+            needs: Math.round(controlsReach),
+          });
+        }
+      }
+    }
+    return result;
+  });
+
+  const where = `at ${viewport.width}x${viewport.height}`;
+  expect(audit.phantom, `scrolls over nothing ${where}`).toEqual([]);
+  expect(audit.buried, `cannot be scrolled clear ${where}`).toEqual([]);
+  return audit;
 }
 
 /* A title is what a bookmark, a tab, and a search result show. The generic one

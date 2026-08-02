@@ -1155,6 +1155,48 @@
     }
   }
 
+  /* A slide keeps room free at its foot — for the story map, and for the
+     timeline controls floating over it — in `.slide-reserve`, which gives that
+     room back when the content needs it. It may give it back only while the
+     content still ends clear of the controls. Past that the slide has to scroll
+     whatever the reserve does, and then the reserve is what the reader scrolls
+     the last line into: give it up and the text stops over the map and behind
+     the previous and next buttons, with no scroll left to lift it.
+
+     So the rule is: a slide that is going to scroll anyway keeps its reserve
+     whole. Whether it is going to scroll is not a question CSS can ask, so each
+     slide measures its own content and hands the answer back as
+     `--slide-reserve-shrink`. Nothing that property changes feeds back into the
+     measurement — the slide is a fixed height, the content does not shrink, and
+     the room comes from the reserve's floor rather than its used height — so
+     this settles in one pass. */
+  function watchContentFit(section) {
+    const content = section.querySelector(".content");
+    const reserve = section.querySelector(".slide-reserve");
+    if (!content || !reserve || typeof ResizeObserver === "undefined") return;
+
+    const measure = () => {
+      const style = getComputedStyle(section);
+      const room =
+        section.clientHeight -
+        parseFloat(style.paddingTop) -
+        parseFloat(style.paddingBottom) -
+        parseFloat(getComputedStyle(reserve).minHeight);
+      section.style.setProperty(
+        "--slide-reserve-shrink",
+        content.getBoundingClientRect().height > room ? "0" : "1"
+      );
+    };
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(section);
+    observer.observe(content);
+
+    return {
+      destroy: () => observer.disconnect(),
+    };
+  }
+
   onMount(() => {
     updateMastheadHeight();
 
@@ -1333,6 +1375,7 @@
             inert={index !== activeIndex}
             aria-hidden={index !== activeIndex}
             aria-label={slideLabel(slide)}
+            use:watchContentFit
           >
             {#if slide.type === "overview"}
               <OverviewSlide
@@ -1965,11 +2008,15 @@
     flex: 0 0 100%;
     height: 100%;
     min-height: 100%;
-    /* `--slide-bottom-base` is the padding every slide keeps no matter what:
-       enough to clear the timeline bar, which floats over the slides. Anything
-       a slide wants beyond it is a `--slide-bottom-total` that `.slide-reserve`
-       makes up, and gives back when the content needs the room. */
+    /* `--slide-bottom-base` is the padding every slide keeps no matter what.
+       Anything a slide wants beyond it is a `--slide-bottom-total` that
+       `.slide-reserve` makes up, and gives back when the content needs the
+       room — but never past `--slide-bottom-clear`, which is how far up the
+       previous and next buttons and the timeline bar reach. Text that ends
+       under those is text nobody can read. The controls shrink on a short
+       screen and so does this, which keeps it from eating a landscape slide. */
     --slide-bottom-base: 3.25rem;
+    --slide-bottom-clear: min(10rem, 35vh);
     --slide-bottom-total: var(--slide-bottom-base);
     padding: 0rem 1.5rem var(--slide-bottom-base);
     display: flex;
@@ -2000,14 +2047,26 @@
 
   /* The content keeps its natural height: when a slide has to scroll it is the
      reserve below that gives way first, and only once it is gone does the slide
-     scroll at all. */
-  .slide > .content {
+     scroll at all. Global because every `.content` on a real slide belongs to
+     one of the slide components, outside this file's scoping. */
+  .slide > :global(.content) {
     flex-shrink: 0;
   }
 
+  /* `--slide-reserve-shrink` comes from `watchContentFit`: 1 while the content
+     fits, so the reserve gives up whatever room the content needs and the slide
+     never scrolls over empty margin; 0 once the content overruns, because then
+     the reader has to scroll anyway and the reserve is what they scroll the
+     last line into. The floor holds either way, so a slide that never runs the
+     measurement still stops its content short of the controls. */
   .slide-reserve {
-    flex: 0 1 calc(var(--slide-bottom-total) - var(--slide-bottom-base));
-    min-height: 0;
+    flex-grow: 0;
+    flex-shrink: var(--slide-reserve-shrink, 1);
+    flex-basis: calc(var(--slide-bottom-total) - var(--slide-bottom-base));
+    min-height: calc(
+      min(var(--slide-bottom-total), var(--slide-bottom-clear)) -
+        var(--slide-bottom-base)
+    );
     pointer-events: none;
   }
 
