@@ -368,12 +368,8 @@
     text-align: center;
   }
 
-  /* line-height 1 clips descenders (g, y) under overflow: hidden, and a
-     little side padding keeps glyph overhangs from being cut at the edges */
   .person-chip.stacked .person-name {
-    line-height: 1.25;
     max-width: 160px;
-    padding: 0 0.15em;
   }
 
   .person-chip:hover,
@@ -442,6 +438,8 @@
     border-color: rgba(148, 163, 184, 0.9);
   }
 
+  /* line-height 1 clips descenders (g, y) under overflow: hidden, and a
+     little side padding keeps glyph overhangs from being cut at the edges */
   .person-name {
     font-weight: 600;
     color: #e2e8f0;
@@ -449,13 +447,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 1;
+    line-height: 1.25;
+    padding: 0 0.15em;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 
   .person-name.long-name {
     font-size: 0.72rem;
-    line-height: 1;
   }
 
   .person-role {
