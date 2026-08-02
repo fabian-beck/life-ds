@@ -92,7 +92,7 @@ This script acts as an AI-powered constructive critic to review and improve the 
 **Options**:
 - `--aspect {all,events,network,style}` - Which aspect to review (default: all)
 - `--dry-run` - Show proposed changes without applying them
-- `--skip-low-confidence` - Only apply high-confidence changes (default: True)
+- `--min-confidence {1,2,3,4,5}` - Lowest confidence a change may have to be applied (default: 4)
 - `--model MODEL` - Override OpenAI model
 - `--reasoning-effort {low,medium,high}` - Override reasoning effort levels
 - `--verbose` - Enable detailed logging

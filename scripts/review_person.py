@@ -296,7 +296,7 @@ def review_person_data(
     person_name_or_id: str,
     aspect: str = "all",
     dry_run: bool = False,
-    skip_low_confidence: bool = True,
+    min_confidence: int = 4,
     model: str = DEFAULT_MODEL,
     reasoning_effort: Optional[str] = None,
     verbose: bool = False,
@@ -308,7 +308,7 @@ def review_person_data(
         person_name_or_id: Person name or ID
         aspect: Which aspect to review (events/network/style/all)
         dry_run: Show changes without applying
-        skip_low_confidence: Only apply high-confidence changes (>= 4)
+        min_confidence: Lowest confidence (1-5) a change may have to be applied
         model: AI model to use
         reasoning_effort: Reasoning effort override
         verbose: Enable verbose logging
@@ -355,8 +355,6 @@ def review_person_data(
     style_reasoning = (
         reasoning_effort or LOW_REASONING_EFFORT
     )  # Use low effort for style review
-
-    min_confidence = 4 if skip_low_confidence else 1
 
     # Review phases
     combined_review = None
@@ -538,7 +536,7 @@ Examples:
   python review_person.py "Alan Turing"
   python review_person.py "alan_turing" --aspect events
   python review_person.py "ada_lovelace" --dry-run
-  python review_person.py "grace_hopper" --skip-low-confidence
+  python review_person.py "grace_hopper" --min-confidence 3
         """,
     )
 
@@ -558,10 +556,11 @@ Examples:
     )
 
     parser.add_argument(
-        "--skip-low-confidence",
-        action="store_true",
-        default=True,
-        help="Only apply high-confidence changes (>= 4/5) [default: True]",
+        "--min-confidence",
+        type=int,
+        choices=range(1, 6),
+        default=4,
+        help="Lowest confidence a change may have to be applied (default: 4)",
     )
 
     parser.add_argument(
@@ -584,7 +583,7 @@ Examples:
         args.person_name_or_id,
         aspect=args.aspect,
         dry_run=args.dry_run,
-        skip_low_confidence=args.skip_low_confidence,
+        min_confidence=args.min_confidence,
         model=args.model,
         reasoning_effort=args.reasoning_effort,
         verbose=args.verbose,

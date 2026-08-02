@@ -261,7 +261,7 @@ def main(argv: Any = None) -> int:
             try:
                 review_success = review_person_data(
                     person_id or args.subject,
-                    skip_low_confidence=True,  # Auto-mode: only high-confidence
+                    min_confidence=4,  # Auto-mode: only high-confidence
                     verbose=False,
                 )
                 if review_success:
