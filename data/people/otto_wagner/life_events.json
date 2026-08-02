@@ -383,18 +383,9 @@
       "date_end": "1889",
       "date_end_precision": "year",
       "age": 43,
-      "title": "Relocates to Budapest",
-      "description": "In 1884, Wagner married Louise (Aloisa Josefa Anna) Stiffel and moved his household to Budapest. During this period he joined the Unitarian Church.",
+      "title": "Marries Louise Stiffel in Budapest",
+      "description": "Wagner married Louise (Aloisa Josefa Anna) Stiffel in Budapest, and joined the Unitarian Church to do it: as a divorced Catholic he could not remarry in Austria, while the Unitarian church was recognized on the Hungarian side of the monarchy. The wedding took him across the monarchy for a day, not for good—he remained a Vienna architect throughout—and he returned to Catholicism after his first wife died in 1889.",
       "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": false
-        },
         {
           "name_historic": "Budapest",
           "name_modern": "Budapest, Hungary",
@@ -411,13 +402,14 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
-      "event_type_icon": "mdi-map-marker-multiple",
+      "event_type_icon": "mdi-ring",
       "chapter": "inventing_modern_vienna",
       "event_class": {
-        "type": "migration",
-        "from_location": "Vienna region",
-        "to_location": "Budapest",
-        "characterization": "family relocation"
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Louise Stiffel",
+        "duration": "until Wagner's death in 1918",
+        "characterization": "close and lasting"
       }
     },
     {
