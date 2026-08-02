@@ -367,17 +367,17 @@
       }
     },
     "p_network": {
-      "fingerprint": "c80ec6115f8a5986",
+      "fingerprint": "e2d2aa25a3ae57f8",
       "summary": {
         "constraints": [
-          "Output must use American English.",
-          "Include \"10-25\" significant connections, and each person may appear only once.",
-          "Use exactly \"3-5\" main relationship categories; each tie must be formatted as \"category/subcategory,\" and category summaries must begin with family when present.",
-          "Connections must be supported by Wikipedia URLs; include both parents when available, seek gender and work-life balance when evidence permits, and do not inflate the network beyond documented relationships."
+          "Return \"10-25\" significant connections, and include each connected person only once.",
+          "Use exactly \"3-5\" main categories; relationship types must use the \"category/subcategory\" form, and category summaries must cover those categories, with family first when present.",
+          "Use American English only; connection strength is limited to \"strong,\" \"moderate,\" or \"weak,\" and interaction frequency and influence direction come from fixed enumerations.",
+          "Include both parents when available; seek gender and work-life balance only where the supplied evidence supports it, without inflating the network."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a structured ego-network dataset from a subject’s Wikipedia article and related Wikipedia articles. The model identifies 10-25 evidence-backed people connected to the subject, assigns each a typed and weighted relationship, and records timing, interaction patterns, direction of influence, shared contexts, source URLs, and optional notes. It also produces central-person metadata and short summaries of the relationship categories for later merging into the personal-story pipeline.",
-        "why_this_design": "The prompt combines the primary article—truncated at 15,000 characters when necessary—with related articles, expanding relationship evidence without allowing the main-page context to grow without bound. Structured parsing into the EgoNetwork Pydantic schema, plus explicit checks for failed, incomplete, or unparseable Responses API results, prevents malformed model output from silently entering downstream story generation."
+        "what_it_does": "Builds a structured ego network around the biography subject from a truncated primary Wikipedia extract and the full text and summaries of related Wikipedia articles. It returns central-person metadata, 10-25 evidence-backed ties with typed and weighted relationship attributes, and narrative category summaries that explain how each circle shaped the subject's life or work.",
+        "why_this_design": "The prompt limits the network to 3-5 top-level categories while requiring one record per connected person, preventing the later story-merging stage from receiving a fragmented graph in which the same individual appears under several roles. Related articles expand the evidence base beyond the subject page, while the 15,000-character cap on the main extract constrains input size."
       }
     },
     "p_portrait": {
@@ -410,17 +410,17 @@
       }
     },
     "p_review": {
-      "fingerprint": "99bccf95cb2b1fcb",
+      "fingerprint": "4167e00ea8910ce8",
       "summary": {
         "constraints": [
-          "Every proposed change is rated on a 1-5 confidence scale and factual claims must be supported by the supplied Wikipedia sources; unverifiable claims are flagged low confidence.",
-          "Event titles must be 5-10 words and at most 100 characters; descriptions target 500-800 words, with the first 200-300 words prioritized for the mobile viewport, and must be plain text without Markdown.",
-          "Each event location must identify exactly one `primary` place; use historical and modern names when they differ, omit an unchanged modern name, and never provide coordinates.",
-          "Network relationship descriptions are limited to 1-2 sentences; the review checks for both parents, personal and professional relationships, gender balance, and complementary—not repetitive—event and network text."
+          "Facts must be verifiable against the supplied Wikipedia sources; unverified claims are flagged as low confidence and linked to a supporting article where possible.",
+          "Event titles are \"5-10 words\" and no more than \"100 chars\"; descriptions target \"500-800 words,\" use plain text only, and avoid repeating the title's opening idea.",
+          "Each event location has exactly one `primary`; historical and modern place names are distinguished when they differ, and no coordinates are supplied.",
+          "Relationship descriptions are limited to \"1-2 sentences\" and must complement event text rather than repeat it."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Runs a single critic pass over the current life-event timeline and ego-network data, using the cached main Wikipedia article and any related-article material supplied to the prompt. It returns a typed combined review containing narrative, chapter, metadata, conclusion, connection, balance, and cross-file findings, plus separately structured proposed changes for events and the network and a concise change summary. The caller only accepts a completed response that parses as `CombinedReviewOutput`; application of the proposals occurs elsewhere.",
-        "why_this_design": "Reviewing both artifacts in one request makes the critic compare event participants against network connections and prevent duplicated biography across slide text and relationship tooltips. The step proposes rather than applies edits, fitting the maintainer's high-confidence-only automatic-change policy while preserving confidence ratings for downstream filtering."
+        "what_it_does": "Runs a single critic pass over the biography timeline and ego network, using the cached primary-page extract and any related Wikipedia articles as the verification corpus. It returns a typed, combined review containing issue lists and proposed event and network edits, so timeline prose, metadata, chapter structure, relationship chips, and cross-file consistency can be assessed together. The output also records overall and balance assessments plus a concise change summary for downstream application or review.",
+        "why_this_design": "Reviewing both datasets in one request exposes discrepancies that separate passes would miss, such as a significant person named in an event but absent from the network or duplicated context across an event and relationship tooltip. The function returns proposed changes rather than mutating either input, preserving a high-confidence gate before edits are applied; schema parsing and completion checks reject incomplete or malformed critic output."
       }
     },
     "p_review_style": {

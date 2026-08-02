@@ -192,6 +192,12 @@ REVIEW GUIDELINES:
 - **Cross-References**: People with strong/moderate network connections should appear in life events where relevant
 - **Balance**: Check for both parents, mix of professional and personal relationships, gender balance
 - **No Redundancy**: Relationship descriptions should complement, not repeat, information in event descriptions
+- **Category Summaries**: Shown as a paragraph beside the labeled person chips of that category, so the names are already on screen
+  - Flag any summary that mainly enumerates names ("A was his teacher, B his colleague, C his student") and rewrite it to explain what the circle meant for the person's life and work
+  - A good summary opens with the claim that holds the category together, then develops it: the decisive figures and what they changed, the shift over time, the tension or contrast, where it led. Anchor points in a place, institution, year, or work
+  - Length follows the evidence, not a quota. One or two sentences when the sources say little; a substantial paragraph when they support it. Do not shorten a rich, well-sourced summary for the sake of brevity, and do not pad a thin one
+  - Summaries should differ in shape between categories and between people — flag templated phrasing
+  - Summaries must not restate relationship descriptions verbatim, and must be plain prose without markdown
 
 CURRENT LIFE EVENTS DATA:
 ```json

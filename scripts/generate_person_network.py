@@ -153,7 +153,10 @@ class CategorySummary(BaseModel):
         description="The main relationship category being summarized (without subcategory): 'family', 'professional', 'social', 'artistic', 'academic', or 'other'"
     )
     summary: str = Field(
-        description="Brief 1-3 sentence summary of the person's relationships in this category"
+        description="Contextualizing prose about what this circle of relationships meant for the person's "
+        "life and work. Explain roles, dynamics, and consequences instead of enumerating names. "
+        "Length follows the evidence: one or two sentences when the record is thin, a fuller paragraph "
+        "when it is rich."
     )
 
 
@@ -477,10 +480,27 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Prioritize quality over quantity - include only connections with sufficient information.\n\n"
         "Also provide:\n"
         "- Ego metadata (name, birth/death years, roles, summary)\n"
-        "- Category summaries: For each of the 3-5 MAIN categories you used in the network, "
-        "provide a brief 1-3 sentence summary describing the person's relationships in that category. "
-        "Start with family if present, then list other categories in order of importance or prevalence. "
-        "Remember: use exactly 3-5 categories total, no more."
+        "- Category summaries: one for each of the 3-5 MAIN categories you used in the network. "
+        "Start with family if present, then order the rest by importance or prevalence. "
+        "Remember: use exactly 3-5 categories total, no more.\n\n"
+        "WRITING THE CATEGORY SUMMARIES:\n"
+        "The reader sees every name in the category as a labeled chip directly beside the summary, so a "
+        "roll call of names adds nothing. Write the context the chips cannot show: what this circle of "
+        "people meant for the person's life and work.\n"
+        "- Contextualize: give each named person a reason to be there — what they changed, taught, funded, "
+        "opposed, or made possible. Name a place, an institution, a year, or a work when it anchors the point.\n"
+        "- Structure: open with the claim that holds the category together (what role these ties played), "
+        "then develop it — the decisive figures first, the shift over time, the tension or contrast, "
+        "and where it led. Do not stack parallel clauses of the form 'X was his teacher, Y was his colleague'.\n"
+        "- Be selective: mention the few people who carry the story. Leaving someone unnamed is fine; "
+        "the chips already list everyone.\n"
+        "- Let the evidence set the length. Choose it yourself rather than filling a quota: one or two "
+        "sentences when the sources say little, a substantial paragraph of five or six when they support it. "
+        "A short, dense summary beats a padded one; never invent detail to reach a length.\n"
+        "- Vary the shape across categories. A family summary is not a professional summary in different "
+        "words, and the summaries for two different people should not read from the same template.\n"
+        "- Do not repeat the relationship_description text verbatim; the summary is the layer above them.\n"
+        "- Plain prose only: no markdown, no bullet lists, no headings."
     )
 
     try:
