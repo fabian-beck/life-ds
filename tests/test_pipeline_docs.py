@@ -117,6 +117,27 @@ class IntrospectionTests(unittest.TestCase):
             "event curation sets an effort; the report must show it",
         )
 
+    def test_every_text_call_goes_through_the_responses_api(self) -> None:
+        """One API, so one place decides retries and one setting spells effort.
+
+        Six phases once used chat completions, which took no reasoning
+        parameter here and therefore ran at whatever the model does by default
+        while `config.py` described effort as a per-phase setting.
+        """
+        for call in self.codebase.all_ai_calls():
+            with self.subTest(call=f"{call.script}::{call.function}"):
+                self.assertNotIn("chat.completions", call.method)
+
+    def test_no_text_call_leaves_its_reasoning_effort_unstated(self) -> None:
+        for call in self.codebase.all_ai_calls():
+            if call.method.startswith("images."):
+                continue  # image models have no reasoning budget to set
+            with self.subTest(call=f"{call.script}::{call.function}"):
+                self.assertTrue(
+                    call.reasoning_expr,
+                    "a phase that states no effort silently takes the model's",
+                )
+
     def test_composer_uses_its_own_model_setting(self) -> None:
         calls = [
             call

@@ -29,12 +29,11 @@ import json
 import os
 import re
 import sys
-import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
 
-from openai import OpenAI, APIStatusError
+from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from compose_meta_story import compose_meta_story_dataset
@@ -50,6 +49,7 @@ from config import (
 from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
+from utils.model_calls import parse_structured
 
 enable_utf8_console()
 
@@ -61,9 +61,10 @@ META_STORIES_DIR = DATA_DIR / "meta_stories"
 META_STORIES_REGISTER = DATA_DIR / "meta_stories.json"
 
 # Curation batches are retried before the phase gives up, because the
-# alternative to a decision here is no decision at all.
+# alternative to a decision here is no decision at all. The backoff between
+# attempts belongs to the call itself (utils/model_calls.py), which also
+# decides what is worth retrying.
 FILTER_BATCH_ATTEMPTS = 3
-FILTER_BATCH_BACKOFF_SECONDS = 2.0
 
 
 class FilteringFailed(RuntimeError):
@@ -710,21 +711,23 @@ MISSING PEOPLE SUGGESTIONS:
 """
 
     try:
-        response = client.beta.chat.completions.parse(
+        parsed = parse_structured(
+            client,
             model=model,
-            messages=[
+            reasoning_effort=DEFAULT_REASONING_EFFORT,
+            input=[
                 {
                     "role": "system",
                     "content": "You are an expert historian and narrative designer. Create compelling thematic collections that organize biographical data thematically and chronologically. CRITICAL: Each person must appear in EXACTLY ONE subtopic - no duplicates allowed across subtopics.",
                 },
                 {"role": "user", "content": prompt},
             ],
-            response_format=MetaStoryPlan,
+            text_format=MetaStoryPlan,
+            label="Phase 1 story planning",
         )
 
-        result = response.choices[0].message
-        if result.parsed:
-            plan = result.parsed
+        if parsed:
+            plan = parsed
 
             # Validate selected people exist in registry
             invalid_ids = []
@@ -802,22 +805,9 @@ MISSING PEOPLE SUGGESTIONS:
                 print("Validated: All chapters are non-overlapping")
 
             return plan
-        elif result.refusal:
-            print(f"Error: Model refused: {result.refusal}")
-            return None
-        else:
-            print("Error: No parsed result")
-            return None
 
-    except APIStatusError as e:
-        message = ""
-        try:
-            error_body = e.response.json() if hasattr(e.response, "json") else {}
-            message = error_body.get("error", {}).get("message", str(e))
-        except Exception:
-            message = str(e)
-        print(f"Error: OpenAI API error: {e.status_code} {message}")
-        return None
+        return None  # the call already reported why it produced nothing
+
     except Exception as e:
         print(f"Error: Phase 1 failed: {e}")
         return None
@@ -1159,43 +1149,33 @@ Events to review:
 {json.dumps([e.model_dump() for e in events_for_review], indent=2)}
 """
 
-    last_error: Optional[str] = None
-    for attempt in range(1, FILTER_BATCH_ATTEMPTS + 1):
-        try:
-            response = client.beta.chat.completions.parse(
-                model=model,
-                reasoning_effort=cast(Any, BULK_REASONING_EFFORT),
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic.",
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                response_format=BatchEventRelevanceDecisions,
-            )
-            result = response.choices[0].message
-            if result.parsed:
-                return {
-                    decision.event_id: {
-                        "is_relevant": decision.is_relevant,
-                        "theme_connection": decision.theme_connection,
-                    }
-                    for decision in result.parsed.decisions
-                }
-            last_error = "the model returned no parsed result"
-        except Exception as error:
-            last_error = str(error)
-
-        if attempt < FILTER_BATCH_ATTEMPTS:
-            if verbose:
-                print(f"  Retrying batch after: {last_error}")
-            time.sleep(FILTER_BATCH_BACKOFF_SECONDS * attempt)
-
-    raise FilteringFailed(
-        f"Curation of a batch of {len(events)} event(s) failed after "
-        f"{FILTER_BATCH_ATTEMPTS} attempt(s): {last_error}"
+    parsed = parse_structured(
+        client,
+        model=model,
+        reasoning_effort=BULK_REASONING_EFFORT,
+        input=[
+            {
+                "role": "system",
+                "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        text_format=BatchEventRelevanceDecisions,
+        label="Phase 3 curation",
+        attempts=FILTER_BATCH_ATTEMPTS,
     )
+    if parsed is None:
+        raise FilteringFailed(
+            f"Curation of a batch of {len(events)} event(s) produced no decisions"
+        )
+
+    return {
+        decision.event_id: {
+            "is_relevant": decision.is_relevant,
+            "theme_connection": decision.theme_connection,
+        }
+        for decision in parsed.decisions
+    }
 
 
 # ============================================================================
@@ -1471,9 +1451,11 @@ RULES:
 """
 
     try:
-        response = client.beta.chat.completions.parse(
+        context_response = parse_structured(
+            client,
             model=model,
-            messages=[
+            reasoning_effort=DEFAULT_REASONING_EFFORT,
+            input=[
                 {
                     "role": "system",
                     "content": "You select well-known historical events that DIRECTLY AFFECTED "
@@ -1482,12 +1464,11 @@ RULES:
                 },
                 {"role": "user", "content": prompt},
             ],
-            response_format=HistoricalContextResponse,
+            text_format=HistoricalContextResponse,
+            label="Phase 4 historical context",
         )
 
-        result = response.choices[0].message
-        if result.parsed:
-            context_response = result.parsed
+        if context_response:
 
             # Build lookup from chapter_id to historical events
             context_by_chapter = {}
@@ -1515,24 +1496,10 @@ RULES:
 
             return chapters
 
-        elif result.refusal:
-            print(f"Error: Model refused Phase 4: {result.refusal}")
-            return chapters
-        else:
-            print(
-                "Warning: Phase 4 returned no parsed result, skipping historical context"
-            )
-            return chapters
-
-    except APIStatusError as e:
-        message = ""
-        try:
-            error_body = e.response.json() if hasattr(e.response, "json") else {}
-            message = error_body.get("error", {}).get("message", str(e))
-        except Exception:
-            message = str(e)
-        print(f"Error: Phase 4 API error: {e.status_code} {message}")
+        # The call already reported why; a story simply keeps its chapters
+        # without historical context.
         return chapters
+
     except Exception as e:
         print(f"Warning: Phase 4 failed: {e}")
         return chapters
@@ -1672,10 +1639,11 @@ REQUIREMENTS:
   the people themselves."""
 
     try:
-        response = client.beta.chat.completions.parse(
+        parsed = parse_structured(
+            client,
             model=model,
-            reasoning_effort=cast(Any, LOW_REASONING_EFFORT),
-            messages=[
+            reasoning_effort=LOW_REASONING_EFFORT,
+            input=[
                 {
                     "role": "system",
                     "content": "You are a skilled narrative writer turning "
@@ -1684,13 +1652,13 @@ REQUIREMENTS:
                 },
                 {"role": "user", "content": prompt},
             ],
-            response_format=NetworkNarrationResult,
+            text_format=NetworkNarrationResult,
+            label="Phase 6 network narration",
         )
-        result = response.choices[0].message
-        if not result.parsed:
-            print("Warning: Phase 6 returned no parsed result, skipping narration")
+        if parsed is None:
+            print("Warning: Phase 6 produced no narration, skipping")
             return
-        by_key = {c.key: c for c in result.parsed.circles}
+        by_key = {c.key: c for c in parsed.circles}
         missing = [c["key"] for c in clusters if c["key"] not in by_key]
         if missing:
             print(f"Warning: Phase 6 narration missing circles {missing}, skipping")

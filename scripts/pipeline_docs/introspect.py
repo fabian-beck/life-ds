@@ -35,6 +35,13 @@ SCRIPTS_DIR = Path(__file__).resolve().parents[1]
 
 # Methods that put a prompt on the wire. Keyed by the trailing attribute path so
 # `client.responses.parse` and `self.client.responses.parse` both match.
+#
+# `parse_structured` is the pipeline's own wrapper (`utils/model_calls.py`), and
+# it is listed here for the same reason the SDK methods are: it is where a step
+# names its model, its reasoning effort and its output schema, which is what the
+# report reads. It is labeled by the API it makes, since that is what the step
+# actually does, and the wrapper's own call to the SDK is skipped — see
+# TRANSPORT_MODULE.
 AI_CALL_SUFFIXES: Dict[Tuple[str, ...], str] = {
     ("responses", "parse"): "responses.parse",
     ("responses", "create"): "responses.create",
@@ -42,7 +49,16 @@ AI_CALL_SUFFIXES: Dict[Tuple[str, ...], str] = {
     ("chat", "completions", "create"): "chat.completions.create",
     ("images", "generate"): "images.generate",
     ("images", "edit"): "images.edit",
+    ("parse_structured",): "responses.parse",
 }
+
+TRANSPORT_MODULE = "model_calls.py"
+"""The module whose whole job is making the call, rather than being a step.
+
+Its `responses.parse` belongs to no phase — every phase's call reaches the wire
+through it — so counting it would leave the coverage check demanding a step in
+`spec.py` for the transport layer, and the figures drawing a node for it.
+"""
 
 # String literals in these calls are plumbing (dict lookups, separators), not
 # prompt text, so they are dropped when a prompt template is reconstructed.
@@ -838,5 +854,8 @@ def scan_codebase(scripts_dir: Path = SCRIPTS_DIR) -> Codebase:
     for path in paths:
         if path.name == "__init__.py" or "pipeline_docs" in path.parts:
             continue
-        scripts[path.name] = scan_script(path, shared)
+        facts = scan_script(path, shared)
+        if path.name == TRANSPORT_MODULE:
+            facts.ai_calls.clear()
+        scripts[path.name] = facts
     return Codebase(scripts=scripts)

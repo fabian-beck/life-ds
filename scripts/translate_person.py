@@ -38,7 +38,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
 
-from openai import OpenAI, APIStatusError
+from openai import OpenAI
 from pydantic import BaseModel
 
 from config import (
@@ -47,6 +47,7 @@ from config import (
     DEFAULT_MODEL,
     enable_utf8_console,
 )
+from utils.model_calls import parse_structured
 
 enable_utf8_console()
 
@@ -920,6 +921,7 @@ TRANSLATION_REASONING_EFFORT = BULK_REASONING_EFFORT
 # between a story and its network are exact-name lookups, so a name rendered two
 # ways is a broken link rather than an awkward sentence.
 GLOSSARY_MODEL = DEFAULT_MODEL
+GLOSSARY_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 
 def build_name_glossary(
@@ -960,18 +962,20 @@ NAMES:
         print(f"  Building name glossary for {len(names)} name(s)...")
 
     try:
-        response = client.beta.chat.completions.parse(
+        parsed = parse_structured(
+            client,
             model=model,
-            messages=[
+            reasoning_effort=GLOSSARY_REASONING_EFFORT,
+            input=[
                 {
                     "role": "system",
                     "content": f"You are an expert on {lang_name} naming conventions for historical figures.",
                 },
                 {"role": "user", "content": prompt},
             ],
-            response_format=NameGlossary,
+            text_format=NameGlossary,
+            label="name glossary",
         )
-        parsed = response.choices[0].message.parsed
         if not parsed:
             return {}
         glossary = {
@@ -1132,10 +1136,11 @@ PAYLOAD:
         print(f"  Translating {document_kind} to {lang_name}...")
 
     try:
-        response = client.beta.chat.completions.parse(
+        return parse_structured(
+            client,
             model=model,
-            reasoning_effort=cast(Any, TRANSLATION_REASONING_EFFORT),
-            messages=[
+            reasoning_effort=TRANSLATION_REASONING_EFFORT,
+            input=[
                 {
                     "role": "system",
                     "content": (
@@ -1149,19 +1154,9 @@ PAYLOAD:
                 },
                 {"role": "user", "content": prompt},
             ],
-            response_format=response_format,
+            text_format=response_format,
+            label=f"{document_kind} translation",
         )
-        result = response.choices[0].message
-        if result.parsed:
-            return result.parsed
-        if result.refusal:
-            print(f"  Error: Model refused to translate: {result.refusal}")
-        else:
-            print("  Error: No parsed result returned")
-        return None
-    except APIStatusError as e:
-        print(f"  Error: OpenAI API error: {e}")
-        return None
     except Exception as e:
         print(f"  Error: Translation failed: {e}")
         return None

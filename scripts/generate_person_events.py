@@ -37,6 +37,7 @@ from icon_categories import (
     format_icon_categories_for_prompt,
     normalize_icon,
 )
+from utils.model_calls import parse_structured
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
@@ -2862,61 +2863,38 @@ def research_event_details(
             deutsche_biographie_text=deutsche_biographie_text,
         )
 
-    # Call AI with retries
-    for attempt in range(retry_count + 1):
-        try:
-            api_key = os.getenv("OPENAI_API_KEY")
-            if not api_key:
-                raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
 
-            client = OpenAI(api_key=api_key)
+    system = (
+        "You are a research assistant specializing in biographical event details. "
+        "Provide specific, factual information for the given event. "
+        "Ensure descriptions are chronologically confined, concise, and balanced. "
+        "All output must be in American English only. Be precise with locations and people."
+    )
 
-            system = (
-                "You are a research assistant specializing in biographical event details. "
-                "Provide specific, factual information for the given event. "
-                "Ensure descriptions are chronologically confined, concise, and balanced. "
-                "All output must be in American English only. Be precise with locations and people."
-            )
+    details = parse_structured(
+        OpenAI(api_key=api_key),
+        model=model,
+        reasoning_effort=PHASE2_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt},
+        ],
+        text_format=EventDetails,
+        label=f"Phase 2 research of '{event_skeleton.title}'",
+        attempts=retry_count + 1,
+    )
+    if details is not None:
+        return details
 
-            response = client.responses.parse(
-                model=model,
-                reasoning=cast(Any, {"effort": PHASE2_REASONING_EFFORT}),
-                input=[
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": prompt},
-                ],
-                text_format=EventDetails,
-            )
-
-            if response.status == "completed" and response.output_parsed:
-                return response.output_parsed
-
-        except Exception as error:
-            error_msg = str(error)
-            error_type = type(error).__name__
-            if attempt < retry_count:
-                print(f"    Retry {attempt + 1}/{retry_count}")
-                print(f"      {error_type}: {error_msg[:150]}")
-                time.sleep(2)
-            else:
-                print(
-                    f"    ✗ Failed after {retry_count + 1} attempts, using fallback minimal details"
-                )
-                print(f"      {error_type}: {error_msg[:300]}")
-                # Print full traceback for debugging
-                import traceback
-
-                traceback_str = traceback.format_exc()
-                print(f"      Traceback (last 500 chars): ...{traceback_str[-500:]}")
-                # Fallback: minimal details
-                return EventDetails(
-                    locations=None,
-                    involved_people=None,
-                    sources=[],
-                    event_type_icon="mdi-calendar",
-                )
-
-    # Should never reach here, but fallback just in case
+    # The event keeps its place in the story with nothing researched about it:
+    # no place, nobody involved, no sources, and the neutral icon. Said plainly
+    # here because the record itself cannot say it — the story renders a
+    # degraded event exactly like a thin one.
+    safe_title = event_skeleton.title.encode("ascii", "replace").decode("ascii")
+    print(f"    [!] Event not researched, keeping it unresolved: {safe_title}")
     return EventDetails(
         locations=None, involved_people=None, sources=[], event_type_icon="mdi-calendar"
     )
@@ -3153,33 +3131,24 @@ def call_openai_chapter_generation(
         "Craft chapters that feel like distinct, meaningful phases of this person's journey - not arbitrary date ranges."
     )
 
-    for attempt in range(retry_count + 1):
-        try:
-            response = client.responses.parse(
-                model=model,
-                reasoning=cast(Any, {"effort": CHAPTER_REASONING_EFFORT}),
-                input=[
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": instructions},
-                    {"role": "user", "content": prompt},
-                ],
-                text_format=ChapterGenerationOutput,
-            )
-
-            if response.status == "completed" and response.output_parsed:
-                return response.output_parsed
-
-        except Exception as error:
-            if attempt < retry_count:
-                print(f"    Retry {attempt + 1}/{retry_count}")
-                time.sleep(2)
-            else:
-                print(
-                    f"    Warning: Chapter generation failed after {retry_count + 1} attempts"
-                )
-                raise RuntimeError(f"Chapter generation failed: {error}") from error
-
-    raise RuntimeError("Chapter generation failed unexpectedly")
+    chapters = parse_structured(
+        client,
+        model=model,
+        reasoning_effort=CHAPTER_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": instructions},
+            {"role": "user", "content": prompt},
+        ],
+        text_format=ChapterGenerationOutput,
+        label="chapter generation",
+        attempts=retry_count + 1,
+    )
+    if chapters is None:
+        # Unlike a thin event, a story without chapters has no shape at all,
+        # so this is the one Phase that fails the run rather than degrading.
+        raise RuntimeError("Chapter generation failed")
+    return chapters
 
 
 def deduplicate_person_names(names: List[str]) -> List[str]:

@@ -162,7 +162,8 @@ Two things feed the matcher besides the text:
 ### Python Scripts
 
 - All scripts use OpenAI structured outputs (Pydantic models)
-- Model is configurable via `OPENAI_MODEL` environment variable (see `config.py`)
+- Every schema-filling call goes through `parse_structured()` in `scripts/utils/model_calls.py`: the Responses API, a required `reasoning_effort`, retry for transient failures only (connection, timeout, 408/409/429/5xx), and `None` when the model produced nothing usable. Do not call the SDK directly from a phase, and do not add a retry loop around the wrapper — a phase decides what a `None` means, not how many times to ask.
+- Model is configurable via `OPENAI_MODEL` / `OPENAI_BULK_MODEL` environment variables (see `config.py`)
 - Wikipedia API via `requests` library
 - Shared utilities in `config.py`
 

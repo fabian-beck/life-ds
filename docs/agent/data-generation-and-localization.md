@@ -28,6 +28,8 @@ A phase runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become pa
 
 `generate_meta_story.py` exposes the tier as `--bulk-model`, alongside `--model` and `--composer-model`. `cache_wikipedia_materials.py`, `generate_person_style.py`, `generate_meta_story_style.py`, and `meta_story_map_narration.py` do all their AI work at this tier, so their own `--model` flag defaults to it.
 
+**Making the call** (see `scripts/utils/model_calls.py`): every phase that fills a schema calls `parse_structured()`, which wraps the Responses API. Reasoning effort is a required argument there, so no phase can silently inherit the model's default. The call retries only failures a second identical request could survive — dropped connections, timeouts, 408/409/429/5xx, and a response that parsed to nothing — and returns `None` for everything else, having logged the phase's name and the reason. What a `None` means belongs to the phase: article selection falls back to the first N candidates, historical context is skipped, translation is left stale for `--check` to report, and curation stops the run rather than let a story keep every event of every life.
+
 Image models that support the dual-image editing path are allowlisted in `generate_person_portrait.py`; a model outside that list silently falls back to text-only generation and will not preserve facial likeness.
 
 ### Python Scripts (require `OPENAI_API_KEY`)
