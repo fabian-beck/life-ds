@@ -255,17 +255,17 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "cb2733749a670ccf",
+      "fingerprint": "8420d9c09dd52e2c",
       "summary": {
         "constraints": [
-          "Generate exactly \"12–16\" significant events, in strict chronological order, with no \"Other Events\" or miscellaneous grouping.",
-          "Cover early life, education, major accomplishments, and later years; exclude post-death events and legacy-focused events.",
-          "Use ISO-8601 dates and a `day`, `month`, or `year` `date_precision`; each event supplies its start date, with end-date and uncertainty fields only when applicable.",
-          "Titles must be \"2–6 words\" and descriptions \"2–4 sentences\" in American English; descriptions cannot add annotations, exact researched locations, images, detailed sources, or future-facing commentary."
+          "Produce exactly \"12-16\" significant events, in strict chronological order, with no \"Other Events\" or miscellaneous grouping.",
+          "Each skeleton includes a start date, date precision of \"day,\" \"month,\" or \"year,\" title, description, age or null, and optional range and uncertainty fields; classification is omitted unless it clearly matches a configured type.",
+          "Titles are \"2-6 words\"; descriptions are \"2-4 sentences,\" factual, concise, in American English, and confined to the event’s own time period.",
+          "Exclude post-death and legacy events; keep death entries factual, reserve retrospective significance for the conclusion, and provide exactly \"2-3\" lowercase generic primary roles."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the initial narrative spine for a biographical timeline from the target’s main Wikipedia article, an optional Deutsche Biographie extract, and related Wikipedia articles. It returns a LifePlan containing dataset and creation metadata, person metadata, and a chronologically ordered list of 12–16 minimal event skeletons with dates, precision, titles, descriptions, and optional range, uncertainty, age, and classification fields.",
-        "why_this_design": "Related articles are deliberately supplied as contextual evidence but explicitly excluded as subjects, limiting a common retrieval failure in which events from associates or connected institutions are attributed to the target. The prompt separates factual, in-the-moment event prose from retrospective legacy discussion so that later enrichment can preserve chronology without biographical hindsight."
+        "what_it_does": "Builds the first-pass life-plan from the target person’s main article, a summary, an optional biographical reference excerpt, and related-article context. It returns dataset and creation metadata, person metadata, and a chronologically ordered set of minimally sourced event skeletons that establish the biographical narrative before later phases add place, image, source, and annotation detail.",
+        "why_this_design": "Related articles are supplied as contextual evidence but explicitly fenced off from event generation, preventing connected figures from displacing the target subject in the timeline. The main extract is capped at 12,000 characters, which limits prompt size while preserving the primary article as the governing account."
       }
     },
     "p_events_p2": {

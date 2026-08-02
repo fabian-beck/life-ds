@@ -6,7 +6,7 @@
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
-  import { escapeRegex } from "../utils/storyHelpers.js";
+  import { escapeRegex, normalizeFamilyRole } from "../utils/storyHelpers.js";
   import { findPersonMentions } from "../utils/personNames.js";
   import {
     relationshipCategoryLabel,
@@ -258,7 +258,7 @@
   // Family layout: three generation layers, each holding "boxes" of people
   // who belong together (couples, siblings, in-laws, ...). Keys are matched
   // against normalized relationship subcategories (see
-  // normalizeFamilySubcategory); anything unmatched lands in "Other Relatives".
+  // normalizeFamilyRole); anything unmatched lands in "Other Relatives".
   const SPOUSE_KEYS = new Set([
     "spouse",
     "partner",
@@ -352,22 +352,6 @@
   ];
 
   /**
-   * Normalize a family relationship subcategory to a canonical key:
-   * lowercased, hyphenated, with step/half/biological/etc. prefixes and
-   * "-by-marriage" suffixes stripped (e.g. "biological_father" -> "father",
-   * "aunt-by-marriage" -> "aunt", "half_sibling" -> "sibling").
-   */
-  function normalizeFamilySubcategory(relationshipType) {
-    const subcategory = getSubcategory(relationshipType);
-    if (!subcategory) return null;
-    return subcategory
-      .toLowerCase()
-      .replace(/[\s_]+/g, "-")
-      .replace(/-by-marriage$/, "")
-      .replace(/^(step|half|adoptive|adopted|biological|foster)-?/, "");
-  }
-
-  /**
    * Group family connections into three generation rows (older / ego /
    * younger) of boxes, plus a trailing list of unclassifiable relatives.
    * The ego row always exists and leads with the ego + spouses box.
@@ -387,7 +371,7 @@
     const other = [];
 
     for (const connection of familyConnections) {
-      const key = normalizeFamilySubcategory(connection.relationship_type);
+      const key = normalizeFamilyRole(connection.relationship_type);
       if (key && SPOUSE_KEYS.has(key)) {
         spouses.push(connection);
         continue;

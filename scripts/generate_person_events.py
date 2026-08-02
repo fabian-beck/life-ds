@@ -165,6 +165,27 @@ class Annotation(BaseModel):
 # ============================================================================
 
 
+class BirthClassification(BaseModel):
+    """Classification for the birth event that opens a life story."""
+
+    type: Literal["birth"] = Field(default="birth", description="Always 'birth'")
+    father: Optional[str] = Field(
+        None, description="Full name of the father, if documented"
+    )
+    mother: Optional[str] = Field(
+        None,
+        description="Full name of the mother, including her maiden name when documented",
+    )
+    birth_name: Optional[str] = Field(
+        None,
+        description="Full name given at birth, only when it differs from the name the person is known by",
+    )
+    characterization: Optional[str] = Field(
+        None,
+        description="Brief characterization of the household born into (e.g., 'academic family', 'farming household') - 1-4 words",
+    )
+
+
 class MarriagePartnershipClassification(BaseModel):
     """Classification for marriage/partnership events."""
 
@@ -245,6 +266,7 @@ class PublicationClassification(BaseModel):
 # Union of all classification types
 # Note: Using standard Union instead of discriminated union for OpenAI compatibility
 EventClassification = Union[
+    BirthClassification,
     MarriagePartnershipClassification,
     MigrationClassification,
     InventionClassification,
@@ -279,6 +301,49 @@ EventClassification = Union[
 # - log_format: lambda cls: str for formatting log output
 
 EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
+    "birth": {
+        "name": "BIRTH",
+        "display_name": "BIRTH",
+        "description": "The subject's own birth — the event that opens the story",
+        "keywords": ["born", "birth", "birthplace"],
+        "detection_rules": [
+            "The event describes the SUBJECT being born (not the birth of a child, sibling, or anyone else)",
+            "Usually the first event, dated on the subject's birth date, with age 0",
+        ],
+        "fields": {
+            "father": "Full name of the father, if documented",
+            "mother": "Full name of the mother, with maiden name when documented",
+            "birth_name": "Optional: full name given at birth, only when it differs from the known name",
+            "characterization": "Optional: the household born into, e.g. 'academic family', 'farming household' (1-4 words)",
+        },
+        "phase1_guidance": (
+            "- BIRTH: The SUBJECT's own birth — never the birth of a child, sibling, or anyone else\n"
+            "  * Exactly one event per life story carries this classification\n"
+            "  * father: Full name of the father, omit when undocumented\n"
+            "  * mother: Full name of the mother, with maiden name when documented, omit when undocumented\n"
+            "  * Optional: birth_name (only when it differs from the name the person is known by), "
+            "characterization (the household born into, 1-4 words)\n"
+        ),
+        "phase2_focus": [
+            "DESCRIPTION: Focus on the circumstances — the household, the city, what the family did",
+            "  * DO NOT repeat the parents' names or the birth name (classification has these)",
+            "  * DO NOT annotate the parents' names (use INVOLVED_PEOPLE field instead)",
+            "  * Good: 'The household was an intellectually active one, with regular gatherings of "
+            "university colleagues.'",
+            "  * Bad: 'He was born to Christian Bohr, a physiologist, and Ellen Adler Bohr...'",
+            "LOCATIONS: Place of birth (city level)",
+            "INVOLVED_PEOPLE: The parents (already in the classification, but also list here) and siblings",
+            "ANNOTATIONS: Never annotate person names (including the parents)",
+        ],
+        "log_format": lambda cls: (
+            "BIRTH ("
+            + (
+                " & ".join(name for name in (cls.father, cls.mother) if name)
+                or "parents unknown"
+            )
+            + ")"
+        ),
+    },
     "marriage_partnership": {
         "name": "MARRIAGE_PARTNERSHIP",
         "display_name": "MARRIAGE",
@@ -2284,6 +2349,86 @@ def build_phase1_prompt(
     return combined
 
 
+_BIRTH_WORDS = re.compile(r"\b(born|birth|birthplace)\b", re.IGNORECASE)
+
+
+def _event_field(event: Any, name: str) -> Any:
+    """Read a field from an event that may be a model or a plain dict."""
+    if isinstance(event, dict):
+        return event.get(name)
+    return getattr(event, name, None)
+
+
+def _event_class_type(event: Any) -> Optional[str]:
+    """The classification type of an event, whether model or plain dict."""
+    event_class = _event_field(event, "event_class")
+    if event_class is None:
+        return None
+    if isinstance(event_class, dict):
+        value = event_class.get("type")
+    else:
+        value = getattr(event_class, "type", None)
+    return value if isinstance(value, str) else None
+
+
+def find_birth_event_index(
+    events: List[Any], birth_date: Optional[str] = None
+) -> Optional[int]:
+    """
+    Index of the event that tells the subject's own birth, or None.
+
+    The date decides first: the event must be dated at age 0 (or on the
+    person's birth date) *and* open the story or read as a birth. That is what
+    keeps a child's or sibling's birth out — those events carry the subject's
+    own age, never zero — and it is why the date is asked before the model's
+    own classification, which is only consulted when no event is dated there.
+
+    Works on Phase 1 skeletons, merged events, and the plain dicts a stored
+    ``life_events.json`` holds.
+    """
+    birth_day = (birth_date or "").strip()[:10]
+
+    for index, event in enumerate(events):
+        age = _event_field(event, "age")
+        date = str(_event_field(event, "date") or "")
+        dated_at_birth = (age == 0) or (bool(birth_day) and date[:10] == birth_day)
+        if not dated_at_birth:
+            continue
+        text = f"{_event_field(event, 'title') or ''} {_event_field(event, 'description') or ''}"
+        if index == 0 or _BIRTH_WORDS.search(text):
+            return index
+
+    for index, event in enumerate(events):
+        if _event_class_type(event) == "birth":
+            return index
+
+    return None
+
+
+def ensure_birth_classification(
+    event_skeletons: List[EventSkeleton], birth_date: Optional[str] = None
+) -> Optional[int]:
+    """
+    Guarantee that at most one event — the subject's own birth — is classified
+    as a birth, editing the skeletons in place and returning its index.
+
+    The classification is what the story slide styles, so a birth the model
+    forgot to classify silently costs the reader the parents, and a birth class
+    the model put on a child's birth styles the wrong slide. Both are repaired
+    here rather than left to the prompt.
+    """
+    index = find_birth_event_index(event_skeletons, birth_date)
+
+    for position, skeleton in enumerate(event_skeletons):
+        classified = _event_class_type(skeleton) == "birth"
+        if position == index and not classified:
+            skeleton.event_class = BirthClassification()
+        elif classified and position != index:
+            skeleton.event_class = None
+
+    return index
+
+
 def _validate_chronological_order(event_skeletons: List[EventSkeleton]) -> None:
     """
     Validate that events are in strict chronological order.
@@ -2408,7 +2553,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         + "".join(
             [config["phase1_guidance"] + "\n" for config in EVENT_CLASS_CONFIG.values()]
         )
-        + "For other events (births, deaths, education, awards): OMIT classification.\n"
+        + "For other events (deaths, education, awards): OMIT classification.\n"
         f"Only classify when event CLEARLY matches one of the {len(EVENT_CLASS_CONFIG)} types above.\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
@@ -2470,6 +2615,13 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
 
     # Ensure events are sorted chronologically (defensive programming)
     parsed.event_skeletons.sort(key=lambda e: e.date)
+
+    # The birth opens every story, so it is detected rather than hoped for
+    birth_index = ensure_birth_classification(
+        parsed.event_skeletons, parsed.person.birth_date
+    )
+    if birth_index is None:
+        print("  Phase 1: No birth event found in the plan")
 
     # Log classifications from Phase 1 (using centralized config)
     classified_count = sum(

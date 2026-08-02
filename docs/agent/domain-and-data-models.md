@@ -131,6 +131,32 @@ Markup wins where both could apply, and a name that is already emphasized as a p
 - Chapters should be chronological and non-overlapping
 - The new fields are optional and backward-compatible with existing data
 
+### Event Classifications
+
+A few kinds of event carry more than prose, and an optional `event_class` block holds that structure so the slide can render it instead of burying it in the description. The vocabulary lives in one place — `EVENT_CLASS_CONFIG` in `scripts/generate_person_events.py`, which drives the Phase 1 detection guidelines, the Phase 2 research focus ("do not repeat what the classification already holds"), and the logging. Adding a kind means a Pydantic model, an entry in the `EventClassification` union, a config entry, and the matching branch in `EventSlide.svelte` and `Timeline.svelte`. Phase 1 classifies; Phase 2 never adds or edits a classification.
+
+| type | fields |
+| --- | --- |
+| `birth` | `father`, `mother`, `birth_name`, `characterization` |
+| `marriage_partnership` | `subtype`, `partner`, `duration`, `children`, `characterization` |
+| `migration` | `from_location`, `to_location`, `characterization` |
+| `invention` | `title`, `description`, `impact` |
+| `publication` | `title`, `publication_type`, `publisher`, `significance`, `impact` |
+
+`birth` is the one classification a run does not leave to the model: `ensure_birth_classification()` runs right after Phase 1 and decides from the dates which event is the subject's own birth — dated at age 0 or on the person's birth date, and either opening the story or reading as a birth. It classifies that event when the model didn't, and strips a `birth` class the model put on a later event (a child's birth carries the subject's own age, never zero). The model's own classification is consulted only when no event is dated at the birth at all, which is how a medieval life whose events carry no ages still finds one.
+
+The birth slide shows the parents in the same generational representation the network view uses for a family: a labeled parents box of `PersonChip`s over a link line down to the person's portrait (`getBirthParents()` in `src/utils/storyHelpers.js`). The names come from the classification and are resolved against `ego_network.json`, so each chip carries the network's own relationship metadata; when the classification names nobody the parents are read from the network directly (`family/father`, `family/mother`, qualifiers like `step-`/`adoptive-` stripped). Placeholder names ("Unnamed mother of …") are dropped rather than shown, and a birth with no parents, birth name, or characterization keeps the plain class badge instead of an empty box. The parents are removed from the slide's other people so they appear once.
+
+Datasets generated before the classification existed are repaired without an AI call:
+
+```bash
+python scripts/backfill_birth_events.py            # every person
+python scripts/backfill_birth_events.py niels_bohr
+python scripts/backfill_birth_events.py --dry-run
+```
+
+It detects the birth event with the same function the generator uses, reads the parents from the person's `ego_network.json`, keeps any values already stored, and writes the block to the English file and every translated copy (`event_class` is technical and never translated, so it is identical in all languages). Re-running it changes nothing.
+
 ### Ego Network Schema
 
 Social connections with rich relationship metadata:

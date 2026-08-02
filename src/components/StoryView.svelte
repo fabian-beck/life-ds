@@ -1330,6 +1330,7 @@
                 {slide}
                 {birthDate}
                 {egoNetwork}
+                {portrait}
                 {styleConfig}
                 {formatters}
                 {visibleDateNote}

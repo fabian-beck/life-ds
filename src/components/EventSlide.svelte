@@ -1,9 +1,11 @@
 <script>
   import {
     mdiInformationOutline,
+    mdiAccount,
     mdiAccountOutline,
     mdiMagnifyPlusOutline,
     mdiLightbulbOnOutline,
+    mdiCradle,
     mdiRing,
     mdiStar,
     mdiBook,
@@ -21,12 +23,15 @@
     getRelevantPeople,
     parseDescriptionSegments,
     findPersonInNetwork,
+    getBirthParents,
   } from "../utils/storyHelpers.js";
+  import { assetUrl } from "../utils/assetUrl.js";
   import PersonChip from "./PersonChip.svelte";
 
   export let slide = {};
   export let birthDate = null;
   export let egoNetwork = null;
+  export let portrait = null;
   export let styleConfig = null;
   export let formatters = {};
   export let visibleDateNote = null;
@@ -44,7 +49,20 @@
   }
 
   $: validImages = getValidImages(slide.images);
-  $: relevantPeople = getRelevantPeople(slide, egoNetwork);
+  $: birthParents = getBirthParents(slide, egoNetwork);
+  // A birth whose parents and household the sources leave out has nothing to
+  // put in a box; it keeps the plain badge the other classes get.
+  $: showBirthLineage =
+    slide.event_class?.type === "birth" &&
+    (birthParents.length > 0 ||
+      !!slide.event_class.birth_name ||
+      !!slide.event_class.characterization);
+  // The parents already stand in the lineage below the headline, so they are
+  // not repeated among the event's other people.
+  $: relevantPeople = getRelevantPeople(slide, egoNetwork).filter(
+    (person) =>
+      !birthParents.some((parent) => parent.person_name === person.person_name)
+  );
   $: dateLabel = formatDate(slide, formatters);
   $: ageRange = getEventAgeRange(slide, birthDate);
   // An event that spans a date range spans a range of ages with it, written
@@ -76,10 +94,21 @@
     return map;
   }, {});
 
+  // Classes that render their own box further down the slide; the generic
+  // badge under the headline would only say the same thing twice.
+  const SELF_PRESENTING_CLASSES = new Set([
+    "birth",
+    "invention",
+    "marriage_partnership",
+    "publication",
+  ]);
+
   function getEventClassIcon(eventClass) {
     if (!eventClass?.type) return null;
 
     switch (eventClass.type) {
+      case "birth":
+        return mdiCradle;
       case "invention":
         return mdiLightbulbOnOutline;
       case "marriage_partnership":
@@ -107,7 +136,16 @@
   }
 
   $: eventClassIcon = getEventClassIcon(slide.event_class);
-  $: eventClassLabel = getEventClassLabel(slide.event_class);
+  $: eventClassLabel =
+    slide.event_class?.type === "birth"
+      ? $_("story.birth.label")
+      : getEventClassLabel(slide.event_class);
+  $: showEventClassBadge =
+    !!eventClassIcon &&
+    !!eventClassLabel &&
+    (slide.event_class?.type === "birth"
+      ? !showBirthLineage
+      : !SELF_PRESENTING_CLASSES.has(slide.event_class?.type));
 
   let imageLoadStateKey = "";
   let imageLoadGeneration = 0;
@@ -384,7 +422,7 @@
       {/if}
     </div>
     <h2>{slide.title}</h2>
-    {#if eventClassIcon && eventClassLabel && slide.event_class?.type !== "invention" && slide.event_class?.type !== "marriage_partnership" && slide.event_class?.type !== "publication"}
+    {#if showEventClassBadge}
       <div class="event-class-badge">
         <svg
           class="icon icon-inline"
@@ -400,6 +438,86 @@
   </div>
   <div class="event-body">
     <div class="event-description">
+      {#if showBirthLineage}
+        <div class="birth-pretext">
+          <div class="birth-meta-line">
+            <svg
+              class="icon birth-icon-inline"
+              viewBox="0 0 24 24"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <path d={mdiCradle} />
+            </svg>
+            <span class="birth-inline-label">{$_("story.birth.label")}</span>
+            {#if slide.event_class.birth_name}
+              <span class="birth-separator">·</span>
+              <span class="birth-name-inline"
+                >{$_("story.birth.born_as", {
+                  name: slide.event_class.birth_name,
+                })}</span
+              >
+            {/if}
+            {#if slide.event_class.characterization}
+              <span class="birth-separator">·</span>
+              <span class="birth-characterization-inline"
+                >{slide.event_class.characterization}</span
+              >
+            {/if}
+          </div>
+          {#if birthParents.length > 0}
+            <!-- The parents stand above the newborn in the same generational
+                 layout the network view uses for a family. -->
+            <div class="birth-lineage">
+              <div class="lineage-box">
+                <span class="lineage-box-label"
+                  >{$_(
+                    birthParents.length === 1
+                      ? "network.family.parents_one"
+                      : "network.family.parents_other"
+                  )}</span
+                >
+                <div class="lineage-people">
+                  {#each birthParents as parent, idx (parent.person_name)}
+                    <PersonChip
+                      person={parent}
+                      personKey={`${slide.eventIndex}-parent-${idx}`}
+                      {visiblePersonInfo}
+                      subcategory={getSubcategory(parent.relationship_type)}
+                      {styleConfig}
+                      stacked
+                      onToggle={onTogglePersonInfo}
+                      {onOpenNetwork}
+                    />
+                  {/each}
+                </div>
+              </div>
+              <div class="lineage-link" aria-hidden="true"></div>
+              <div class="newborn-chip" title={egoNetwork?.ego?.name ?? ""}>
+                {#if portrait?.thumbnail || portrait?.image}
+                  <span class="newborn-portrait-clip">
+                    <img
+                      class="newborn-portrait"
+                      src={assetUrl(portrait.thumbnail || portrait.image)}
+                      alt={egoNetwork?.ego?.name ?? ""}
+                    />
+                  </span>
+                {:else}
+                  <svg
+                    class="newborn-icon"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label={egoNetwork?.ego?.name ??
+                      $_("story.birth.label")}
+                  >
+                    <path d={mdiAccount} />
+                  </svg>
+                {/if}
+              </div>
+            </div>
+          {/if}
+        </div>
+      {/if}
       {#if slide.event_class?.type === "marriage_partnership"}
         {@const partnerPerson = findPersonInNetwork(
           slide.event_class.partner,
@@ -872,6 +990,154 @@
     line-height: 1.5;
   }
 
+  /* Birth: the same box-and-line vocabulary the network view's family
+     generations use, reduced to the one generation step a birth is. */
+  .birth-pretext {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    /* Hugs the lineage instead of stretching the column: the box holds a
+       diagram, not running text, so a full-width frame would be mostly air. */
+    width: fit-content;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid var(--story-secondary, #38bdf8);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .birth-meta-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.9);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .birth-icon-inline {
+    width: 1em;
+    height: 1em;
+    fill: var(--story-secondary, #38bdf8);
+    flex-shrink: 0;
+  }
+
+  .birth-inline-label {
+    font-weight: 600;
+    color: var(--story-secondary, #38bdf8);
+  }
+
+  .birth-separator {
+    color: rgba(148, 163, 184, 0.6);
+    font-size: 0.9em;
+  }
+
+  .birth-name-inline {
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .birth-characterization-inline {
+    font-style: italic;
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .birth-lineage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lineage-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.6rem 0.6rem;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 0.75rem;
+    background: rgba(148, 163, 184, 0.06);
+    min-width: 0;
+  }
+
+  .lineage-box-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(226, 232, 240, 0.75);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    line-height: 1;
+  }
+
+  .lineage-people {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  /* Parents -> newborn: the generation step, drawn as in the network view */
+  .lineage-link {
+    width: 1px;
+    height: 1.1rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(226, 232, 240, 0.45),
+      rgba(226, 232, 240, 0.15)
+    );
+  }
+
+  /* The newborn: the same non-interactive portrait marker the network view
+     puts at the center of the family */
+  .newborn-chip {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    border: 2px solid
+      color-mix(in srgb, var(--story-primary, #f8fafc) 80%, transparent);
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+  }
+
+  .newborn-portrait-clip {
+    position: absolute;
+    inset: 0;
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .newborn-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    scale: 1.25;
+  }
+
+  .newborn-icon {
+    width: 1.3rem;
+    height: 1.3rem;
+    fill: var(--story-primary, #f8fafc);
+  }
+
   .marriage-pretext {
     display: flex;
     flex-direction: column;
@@ -1326,10 +1592,12 @@
       font-size: 0.8rem;
     }
 
+    .birth-pretext,
     .marriage-pretext {
       padding: 1rem;
     }
 
+    .birth-meta-line,
     .marriage-meta-line {
       font-size: 0.95rem;
     }

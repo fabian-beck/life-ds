@@ -1428,6 +1428,79 @@ export function isMigrationEvent(event) {
 }
 
 /**
+ * Check if an event is the subject's own birth.
+ * @param {Object} event - Event object
+ * @returns {boolean} True if event has birth class
+ */
+export function isBirthEvent(event) {
+  return event?.event_class?.type === "birth";
+}
+
+/**
+ * Canonical family role of a relationship token: lowercased, hyphenated, with
+ * step/half/adoptive/foster prefixes and "-by-marriage" suffixes stripped
+ * ("family/step_father" -> "father"). Returns null without a subcategory.
+ * @param {string} relationshipType - e.g. "family/mother"
+ * @returns {string|null} Canonical role
+ */
+export function normalizeFamilyRole(relationshipType) {
+  const subcategory = getSubcategory(relationshipType);
+  if (!subcategory) return null;
+  return subcategory
+    .toLowerCase()
+    .replace(/[\s_]+/g, "-")
+    .replace(/-by-marriage$/, "")
+    .replace(/^(step|half|adoptive|adopted|biological|foster)-?/, "");
+}
+
+const PARENT_ROLES = ["father", "mother"];
+
+// Some datasets record a parent the sources never name ("Unnamed mother of
+// …"). That is a placeholder rather than a name, and a chip carrying it says
+// less than no chip at all.
+const PLACEHOLDER_NAME = /^\s*(unnamed|unknown|unidentified)\b/i;
+
+/**
+ * The parents to show on a birth slide, father first.
+ *
+ * The classification names them — Phase 1 reads the article — and the ego
+ * network supplies the metadata behind each chip whenever it knows that
+ * person, so a parent here behaves exactly like a parent in the network view.
+ * When the classification names nobody, the parents are read from the network
+ * itself, which is the same place the network view reads them from.
+ * @param {Object} event - Event object
+ * @param {Object} egoNetwork - Ego network with connections array
+ * @returns {Array} Connection-shaped objects for the parents
+ */
+export function getBirthParents(event, egoNetwork) {
+  if (!isBirthEvent(event)) return [];
+
+  const named = [];
+  for (const role of PARENT_ROLES) {
+    const name = event.event_class[role];
+    if (!name || PLACEHOLDER_NAME.test(name)) continue;
+    named.push(
+      findPersonInNetwork(name, egoNetwork) ?? {
+        person_name: name,
+        relationship_type: `family/${role}`,
+        relationship_description: "",
+      }
+    );
+  }
+  if (named.length > 0) return named;
+
+  const connections = egoNetwork?.connections ?? [];
+  return PARENT_ROLES.map((role) =>
+    connections.find(
+      (connection) =>
+        (connection.relationship_type || "").split("/")[0] === "family" &&
+        normalizeFamilyRole(connection.relationship_type) === role &&
+        !PLACEHOLDER_NAME.test(connection.person_name || "")
+    )
+  ).filter(Boolean);
+}
+
+/**
  * Extract migration path coordinates from an event.
  * Returns from/to coordinates if event is a migration with multiple locations.
  * @param {Object} event - Event object
