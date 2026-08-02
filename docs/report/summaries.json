@@ -269,17 +269,17 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "8a7e1f8c320e5713",
+      "fingerprint": "65d22c054df1eb31",
       "summary": {
         "constraints": [
-          "Produce exactly \"12-16\" significant events, in strict chronological order, with no \"Other Events\"-style grouping.",
-          "Cover early life, education, major accomplishments, and later years; exclude post-death events and legacy-focused events.",
-          "Use ISO-8601 dates and a date_precision of \"day,\" \"month,\" or \"year\"; provide range and uncertainty fields only when applicable.",
-          "Titles must be \"2-6 words\" and descriptions \"2-4 sentences\" in American English; omit exact locations, images, detailed sources, and annotations."
+          "Produce exactly \"12–16\" significant, strictly chronological events; no \"Other Events\" or miscellaneous grouping.",
+          "Use ISO-8601 dates and claim only supported precision: day, month, or year; the description’s year must match the event date.",
+          "Titles must be \"2–6 words\"; descriptions target \"2–4 sentences\" and must be direct, factual, American English narrative biography.",
+          "Include only the target subject’s lifetime—no post-death events or legacy in event descriptions; omit exact locations, images, detailed sources, and annotations."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the initial biographical spine from the target subject’s main article, its summary and truncated full extract, an additional biographical text when available, and related articles supplied only as context. It returns a LifePlan containing dataset and creation metadata, person metadata, and minimally specified event skeletons with dates, precision, titles, descriptions, and optional span, uncertainty, age, and classification fields. The events establish the chronological narrative before later phases add exact locations, images, source details, or annotations.",
-        "why_this_design": "Related articles are explicitly fenced off as contextual evidence so that associated people do not become accidental timeline subjects. The prompt also separates in-the-moment event narration from retrospective legacy material, preventing future knowledge from contaminating descriptions of earlier life events."
+        "what_it_does": "Builds the initial biographical spine from the target’s main article, optional Deutsche Biographie text, and related Wikipedia articles. It returns person metadata plus a chronologically ordered set of minimal event records—dated, titled, described, and optionally classified—before later phases add locations, images, annotations, and detailed sourcing.",
+        "why_this_design": "Related articles are explicitly context-only, preventing connected people from displacing the target subject in a fixed 12–16-event budget. The prompt separates retrospective legacy into a conclusion field and keeps event prose confined to each event’s own time, avoiding hindsight claims within the timeline."
       }
     },
     "p_events_p2": {

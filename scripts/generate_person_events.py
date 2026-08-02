@@ -2615,6 +2615,12 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "Write event descriptions that are chronologically accurate, factually focused, "
         "and balance professional achievements with personal human context. "
         "Use ISO-8601 dates, include date_precision as 'day', 'month', or 'year'. "
+        "The precision is a claim of its own: use 'day' only when the sources state "
+        "the day, 'month' only when they state the month, and fall back to 'year' "
+        "otherwise. An honest 1814-07 is better than a wrong 1814-07-02. "
+        "The year in an event's description must be the year the event is dated to; "
+        "when the sources put the event in a different year than you first assumed, "
+        "move the date, do not leave the disagreement in the prose. "
         "All output must be in American English only, regardless of source language."
     )
 

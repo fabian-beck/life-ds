@@ -120,6 +120,15 @@ python scripts/validate_source_links.py --fix      # repair what search resolves
 
 Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
 
+**Check the event dates against their own descriptions** (no API key, no model):
+
+```bash
+python scripts/validate_event_dates.py            # exit 1 on any finding
+python scripts/validate_event_dates.py alvar_aalto
+```
+
+Phase 1 decides the date, the precision, and the description in one call, and the Phase 2 schema carries no date field — so when Phase 2's research disagrees, the disagreement lands in the prose and the reader sees the date on the slide contradicted by the sentence beneath it. The generator's chronological check only compares an event to its neighbors, so a wrong year that preserves the ordering passes. This reads the description's *first* sentence, the one that states the event, and reports a year there that falls outside the event's own span. Decades ("the 1950s"), life spans in parentheses, and ranges ("the winter of 1779–1780", which covers both years) are read the way a reader reads them. A context year in an opening sentence that is nonetheless right belongs in the script's `ACCEPTED` list with the reason.
+
 **Check the English event titles** (no API key, no model):
 
 ```bash
