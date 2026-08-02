@@ -26,6 +26,8 @@ from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import (
+    BULK_MODEL,
+    BULK_REASONING_EFFORT,
     DEFAULT_MODEL,
     DEFAULT_REASONING_EFFORT,
     LOW_REASONING_EFFORT,
@@ -45,17 +47,37 @@ from utils.wikipedia_cache import (
 enable_utf8_console()
 
 # ============================================================================
-# AI REASONING EFFORT CONFIGURATION
+# AI MODEL AND REASONING EFFORT CONFIGURATION
 # ============================================================================
-# Configure reasoning effort for each phase of the generation pipeline
-# This ensures consistent configuration between AI calls and logging
+# Configure model and reasoning effort for each phase of the generation
+# pipeline. This ensures consistent configuration between AI calls and logging.
+#
+# Phase 1 and the chapter pass decide what the life is and read the whole
+# article set, so they take the default model and a reasoning budget. The three
+# phases below them work from material those calls already settled, and every
+# field they return is checked afterwards — icons against the catalog, involved
+# people against known entities, places against the geocoder, image filenames
+# against the fetched candidates — so they take the small model.
 
 PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation (medium)
-PHASE2_REASONING_EFFORT = LOW_REASONING_EFFORT  # Event detail research (none)
-PHASE3_IMAGE_SEARCH_REASONING = (
-    LOW_REASONING_EFFORT  # Image search string generation (none)
-)
-PHASE3_IMAGE_MATCH_REASONING = LOW_REASONING_EFFORT  # Image-to-event matching (none)
+
+# Event detail research. Low rather than none, which is what this phase ran at
+# on the larger model: naming the modern place a historic toponym denotes is a
+# judgment, and it is the one the geocoder then depends on.
+PHASE2_MODEL = BULK_MODEL
+PHASE2_REASONING_EFFORT = BULK_REASONING_EFFORT
+
+# Image search string generation: writing Commons queries, which the search
+# itself judges by returning something or nothing.
+PHASE3_IMAGE_SEARCH_MODEL = BULK_MODEL
+PHASE3_IMAGE_SEARCH_REASONING = LOW_REASONING_EFFORT
+
+# Image-to-event matching. Low rather than none because the same call picks the
+# reference portrait — the one output of this phase that a reader sees on every
+# slide, and the input the portrait step spends an image call on.
+PHASE3_IMAGE_MATCH_MODEL = BULK_MODEL
+PHASE3_IMAGE_MATCH_REASONING = BULK_REASONING_EFFORT
+
 CHAPTER_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Chapter generation (medium)
 RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT  # Related article discovery (none)
 
@@ -1875,7 +1897,7 @@ def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
 def generate_image_search_strings(
     event_skeletons: List[EventSkeleton],
     person_name: str,
-    model: str,
+    model: str = PHASE3_IMAGE_SEARCH_MODEL,
 ) -> List[str]:
     """
     Use AI to generate 20 optimized search strings for finding images
@@ -2019,7 +2041,7 @@ def match_images_to_events(
     candidate_images: List[Dict[str, Any]],
     event_skeletons: List[EventSkeleton],
     person_name: str,
-    model: str,
+    model: str = PHASE3_IMAGE_MATCH_MODEL,
 ) -> Tuple[Dict[int, Dict[str, Any]], Optional[Dict[str, Any]]]:
     """
     Use AI to match images to events based on caption and filename.
@@ -2806,7 +2828,7 @@ def research_event_details(
     event_skeleton: EventSkeleton,
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
-    model: str,
+    model: str = PHASE2_MODEL,
     retry_count: int = 2,
     deutsche_biographie_text: Optional[str] = None,
 ) -> EventDetails:
@@ -2904,7 +2926,7 @@ def research_all_event_details(
     event_skeletons: List[EventSkeleton],
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
-    model: str,
+    model: str = PHASE2_MODEL,
     deutsche_biographie_text: Optional[str] = None,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
@@ -3357,7 +3379,6 @@ def research_images_for_all_events(
     event_skeletons: List[EventSkeleton],
     event_details_list: List[EventDetails],
     person_name: str,
-    model: str,
 ) -> Tuple[List[LifeEvent], Optional[Dict[str, Any]]]:
     """
     Phase 3: Batch image discovery and AI-driven assignment.
@@ -3372,7 +3393,7 @@ def research_images_for_all_events(
         Tuple of (enriched_events, portrait_dict or None)
     """
     print("  [Phase 3a] Generating image search strings...")
-    search_strings = generate_image_search_strings(event_skeletons, person_name, model)
+    search_strings = generate_image_search_strings(event_skeletons, person_name)
     print(f"    Generated {len(search_strings)} search strings")
 
     print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
@@ -3415,7 +3436,7 @@ def research_images_for_all_events(
         f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events..."
     )
     assignments, portrait = match_images_to_events(
-        filtered_images, event_skeletons, person_name, model
+        filtered_images, event_skeletons, person_name
     )
     print(f"    Assigned images to {len(assignments)} events")
     if portrait:
@@ -4105,13 +4126,12 @@ def generate_person_events(
 
     # PHASE 2: Research event details (NO images - Phase 3)
     print(
-        f"[Step 5/11] PHASE 2: Researching event details (model: {model}, reasoning: {PHASE2_REASONING_EFFORT})..."
+        f"[Step 5/11] PHASE 2: Researching event details (model: {PHASE2_MODEL}, reasoning: {PHASE2_REASONING_EFFORT})..."
     )
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
-        model=model,
         deutsche_biographie_text=db_prompt_text,
     )
     print(f"[Step 5/11] Researched details for {len(event_details_list)} events")
@@ -4135,14 +4155,13 @@ def generate_person_events(
 
     # PHASE 3: Event-specific image discovery
     print(
-        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {model}, reasoning: {PHASE3_IMAGE_SEARCH_REASONING}/{PHASE3_IMAGE_MATCH_REASONING})..."
+        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {PHASE3_IMAGE_SEARCH_MODEL}, reasoning: {PHASE3_IMAGE_SEARCH_REASONING}/{PHASE3_IMAGE_MATCH_REASONING})..."
     )
     enriched_events, portrait = research_images_for_all_events(
         merged_events=events_with_chapters,
         event_skeletons=life_plan.event_skeletons,
         event_details_list=event_details_list,
         person_name=life_plan.person.name,
-        model=model,
     )
     images_assigned = sum(1 for e in enriched_events if e.images)
     print(
@@ -4324,11 +4343,7 @@ def parse_args(argv: Any) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def regenerate_images_only(
-    subject: str,
-    *,
-    model: str = DEFAULT_MODEL,
-) -> Tuple[Path, str]:
+def regenerate_images_only(subject: str) -> Tuple[Path, str]:
     """
     Re-run only Phase 3 (image search and assignment) using existing life_events.json.
 
@@ -4380,10 +4395,12 @@ def regenerate_images_only(
         event_skeletons.append(skeleton)
 
     # Run Phase 3: Image search and assignment
-    print(f"[Step 2/4] PHASE 3: Discovering and assigning images (model: {model})...")
+    print(
+        f"[Step 2/4] PHASE 3: Discovering and assigning images (model: {PHASE3_IMAGE_SEARCH_MODEL})..."
+    )
 
     print("  [Phase 3a] Generating image search strings...")
-    search_strings = generate_image_search_strings(event_skeletons, person_name, model)
+    search_strings = generate_image_search_strings(event_skeletons, person_name)
     print(f"    Generated {len(search_strings)} search strings")
     for ss in search_strings:
         safe_ss = ss.encode("ascii", "replace").decode("ascii")
@@ -4429,7 +4446,7 @@ def regenerate_images_only(
         f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events..."
     )
     assignments, portrait = match_images_to_events(
-        filtered_images, event_skeletons, person_name, model
+        filtered_images, event_skeletons, person_name
     )
     print(f"    Assigned images to {len(assignments)} events")
     if portrait:
@@ -4570,10 +4587,7 @@ def main(argv: Any = None) -> int:
             person_id_override = None
 
         if args.images_only:
-            file_path, person_id = regenerate_images_only(
-                subject_for_fetch,
-                model=args.model,
-            )
+            file_path, person_id = regenerate_images_only(subject_for_fetch)
             print(f"\nDataset updated at {file_path}")
         else:
             file_path, person_id = generate_person_events(

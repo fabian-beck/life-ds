@@ -14,7 +14,7 @@ from xml.etree import ElementTree as ET
 
 from openai import APIStatusError, OpenAI
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
 
 enable_utf8_console()
 
@@ -434,7 +434,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         # effort. Which model that is comes from `config.py`, never from here.
         response = client.responses.create(
             model=model,
-            reasoning=cast(Any, {"effort": DEFAULT_REASONING_EFFORT}),
+            reasoning=cast(Any, {"effort": BULK_REASONING_EFFORT}),
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt},
@@ -543,7 +543,7 @@ def generate_style(
     subject: str,
     *,
     person_id: str | None = None,
-    model: str = DEFAULT_MODEL,
+    model: str = BULK_MODEL,
     dry_run: bool = False,
 ) -> Dict[str, Any]:
     identifier = person_id or slugify(subject)
@@ -559,7 +559,7 @@ def generate_style(
     prompt = build_prompt(subject, identifier, context)
 
     print(
-        f"[Step 3/5] Generating visual identity via {model} (reasoning: {DEFAULT_REASONING_EFFORT})..."
+        f"[Step 3/5] Generating visual identity via {model} (reasoning: {BULK_REASONING_EFFORT})..."
     )
     payload = call_openai(prompt, model)
 
@@ -607,9 +607,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
+        default=BULK_MODEL,
         help=(
-            f"OpenAI model to use (defaults to OPENAI_MODEL env or '{DEFAULT_MODEL}'). "
+            f"OpenAI model to use (defaults to OPENAI_BULK_MODEL env or '{BULK_MODEL}'). "
             "See https://platform.openai.com/docs/models for available options."
         ),
     )
@@ -635,7 +635,7 @@ def main(argv: Any = None) -> int:
 
     print(f"Generating visual style for: {args.subject}")
     print(f"Model: {args.model}")
-    print(f"Reasoning effort: {DEFAULT_REASONING_EFFORT}")
+    print(f"Reasoning effort: {BULK_REASONING_EFFORT}")
     print()
 
     try:

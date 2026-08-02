@@ -20,7 +20,7 @@ from typing import Any, Dict, List, cast
 
 from openai import APIStatusError, OpenAI
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
 from generate_person_style import (
     BODY_FONT_CHOICES,
     HEADING_FONT_CHOICES,
@@ -209,7 +209,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     try:
         response = client.responses.create(
             model=model,
-            reasoning=cast(Any, {"effort": DEFAULT_REASONING_EFFORT}),
+            reasoning=cast(Any, {"effort": BULK_REASONING_EFFORT}),
             input=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt},
@@ -324,7 +324,7 @@ def write_styles(data: Dict[str, Any]) -> None:
 def generate_style(
     story_id: str,
     *,
-    model: str = DEFAULT_MODEL,
+    model: str = BULK_MODEL,
     dry_run: bool = False,
     verbose: bool = False,
 ) -> Dict[str, Any]:
@@ -338,7 +338,7 @@ def generate_style(
 
     print(
         f"[Step 3/4] Generating visual identity via {model} "
-        f"(reasoning: {DEFAULT_REASONING_EFFORT})..."
+        f"(reasoning: {BULK_REASONING_EFFORT})..."
     )
     payload = call_openai(prompt, model)
 
@@ -379,9 +379,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
+        default=BULK_MODEL,
         help=(
-            f"OpenAI model to use (defaults to OPENAI_MODEL env or '{DEFAULT_MODEL}'). "
+            f"OpenAI model to use (defaults to OPENAI_BULK_MODEL env or '{BULK_MODEL}'). "
             "See https://platform.openai.com/docs/models for available options."
         ),
     )
@@ -399,7 +399,7 @@ def main(argv: Any = None) -> int:
 
     print(f"Generating visual style for meta story: {args.story_id}")
     print(f"Model: {args.model}")
-    print(f"Reasoning effort: {DEFAULT_REASONING_EFFORT}")
+    print(f"Reasoning effort: {BULK_REASONING_EFFORT}")
     print()
 
     try:

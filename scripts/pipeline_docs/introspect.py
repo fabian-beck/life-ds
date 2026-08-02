@@ -377,7 +377,13 @@ def _parameter_defaults(node: ast.FunctionDef | ast.AsyncFunctionDef) -> Dict[st
 
 
 def _reasoning_effort_expr(node: Optional[ast.AST]) -> Optional[str]:
-    """Pull the effort out of `reasoning={"effort": X}`.
+    """Pull the effort out of `reasoning={"effort": X}` or `reasoning_effort=X`.
+
+    The two API surfaces spell the same setting differently — the responses API
+    nests it in a dict, chat completions takes it flat — and a step documented
+    as having no effort when it has one is the kind of drift this module exists
+    to prevent, so the caller passes whichever keyword the call site used and
+    both arrive here.
 
     Call sites that pass a typed `OpenAI` client wrap the dict in
     `cast(Any, ...)`, because the effort constants are plain strings read from
@@ -752,7 +758,10 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
                     and tuple(path_parts[-len(suffix) :]) == suffix
                 ):
                     model_expr = _unparse(_keyword(node, "model"))
-                    reasoning_expr = _reasoning_effort_expr(_keyword(node, "reasoning"))
+                    reasoning_expr = _reasoning_effort_expr(
+                        _keyword(node, "reasoning")
+                        or _keyword(node, "reasoning_effort")
+                    )
                     schema_node = _keyword(node, "text_format") or _keyword(
                         node, "response_format"
                     )

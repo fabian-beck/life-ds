@@ -43,17 +43,17 @@
       }
     },
     "m_p3": {
-      "fingerprint": "d49117db114313c8",
+      "fingerprint": "1a246bafbc91f40a",
       "summary": {
         "constraints": [
-          "An essential event must satisfy all four tests: direct impact, landmark status, concrete lasting output, and irreplaceability.",
-          "Most events should be rejected; uncertainty requires `is_relevant=false`; an empty qualifying batch is valid.",
-          "Select only \"1-3\" essential events per person, based on each event’s own merit rather than batch-level quota.",
-          "Event descriptions are truncated to 300 characters; failed or unparsed structured responses are retried, then raise `FilteringFailed` rather than admitting events by default."
+          "Event descriptions are truncated to \"300\" characters before review.",
+          "An event is relevant only when it meets all four tests: direct impact, landmark status, concrete output, and irreplaceability.",
+          "The default is rejection; uncertainty must produce `is_relevant=false`, and a batch may contain no qualifying events.",
+          "Inclusion is capped at \"1-3\" essential events per person, assessed across the person's full life rather than as a quota for the batch."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a compact review record for each biographical event, assigning a stable `person_id:event_index` identifier and truncating descriptions longer than 300 characters. It then requests one structured relevance decision per event: whether the event is essential to the meta-story’s theme and a brief explanation of its concrete contribution or rejection rationale. Parsed decisions are returned as an ID-keyed mapping for later selection.",
-        "why_this_design": "The prompt makes rejection the default to prevent a thematic chapter from becoming a chronological biography. It permits zero selections for a person within a batch because coverage is enforced across the whole meta-story, although the system instruction conflicts by requiring at least one essential event per person."
+        "what_it_does": "Converts a batch of biographical events into compact review records, assigning each a stable `person_id:event_index` identifier and truncating descriptions to 300 characters. It then requests one structured relevance decision per event: a Boolean inclusion judgment and a short explanation linking an essential event to the theme—or explaining its rejection. Parsed decisions are returned as a dictionary keyed by event ID for later selection into the meta-story.",
+        "why_this_design": "The prompt treats essentiality as a high threshold rather than a date, fame, or career-coverage filter: an included event must simultaneously have direct thematic impact, landmark status, a durable output, and be irreplaceable to the story. Failed or unparseable batches are retried and then raised as errors rather than admitted by default, preventing an operational failure from turning every unreviewed event into evidence."
       }
     },
     "m_p3b": {
@@ -115,17 +115,17 @@
       }
     },
     "m_p6": {
-      "fingerprint": "cbc9108040f8dd94",
+      "fingerprint": "81a67846b39773e3",
       "summary": {
         "constraints": [
-          "Exactly one narration entry per derived circle; every `key` must be copied exactly, and all expected keys must be present before anything is saved.",
-          "Titles are evocative, name-free book-chapter headlines of \"2-5 words.\"",
-          "Each text is \"2-4 sentences\" of flowing prose grounded only in the supplied tie descriptions; relationship lists, bullets, and invented facts are forbidden.",
-          "Narration must use American English and third-person biographical prose: no audience address, imperatives, interface references, or \"you\"/\"your\"/\"we\"/\"us\"."
+          "Produces one result for every circle, in input order, with the `key` copied exactly.",
+          "Titles are evocative, non-name headlines of \"2-5 words\"; body text is \"2-4 sentences\" of prose, not bullets or relationship lists.",
+          "All narrative claims must be grounded in supplied tie descriptions; invented facts are forbidden.",
+          "Uses American English and third-person biographical prose; forbids audience address, interface references, and reader-directed imperatives."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a narrative card for every deterministically derived social-network cluster in the meta story. For each cluster, it supplies the model with main members and their birth years/roles, secondary bridging acquaintances, and every included relationship’s type, strength, and description; the model returns a keyed title and 2-4-sentence prose vignette. The resulting cards are stored at `social_network.narration.circles` in the cluster order, where they support the network view and preserve a readable story when later composition work is skipped.",
-        "why_this_design": "Clusters are re-derived locally with `derive_clusters`, mirroring the client, so narration keys and ordering match the rendered network rather than relying on model ordering. The step rejects an incomplete response instead of publishing partial narration; failures are non-fatal because the UI can fall back to a tie list, and Phase 8 may later rewrite this text."
+        "what_it_does": "Builds one compact narrative brief for each deterministically derived social-network cluster, including principal members with birth years and roles, secondary bridging acquaintances, and every intra-cluster tie with its type, strength, and description. It requests a chapter-like title and a 2-4 sentence factual card text per circle, then stores the results under `social_network.narration` in the cluster order used by the interface.",
+        "why_this_design": "The phase derives clusters with the same deterministic routine as the client, then reconstructs output in that exact source order by key. This prevents a valid but reordered response from attaching narration to the wrong visual circle; if any circle is absent, it writes nothing so the interface can fall back to its tie listing."
       }
     },
     "m_p7a": {
@@ -143,31 +143,31 @@
       }
     },
     "m_p7b": {
-      "fingerprint": "4a718791abb5b8c8",
+      "fingerprint": "d920046eeb8defef",
       "summary": {
         "constraints": [
-          "Rates every supplied located event on an integer scale of \"0–3\".",
-          "Requires verbatim copying of each `event_id`; only IDs present in the current batch are accepted.",
-          "Defines 3 as a place-inseparable landmark, 2 as a genuinely place-based event, 1 as interchangeable-background context, and 0 as a skip.",
-          "Failures, empty parses, and omitted events are non-fatal: absent ratings retain the clustering default weight of `1.0`."
+          "Rate every listed event on the integer scale \"0–3\": 3 landmark, 2 solid, 1 minor, 0 skip.",
+          "Copy each `event_id` verbatim; only IDs present in the current batch are accepted.",
+          "Judge from the supplied story context and event material only, weighing both story importance and place-specific meaning.",
+          "A missing, partial, or failed batch is non-fatal; absent ratings are left out so downstream clustering retains its default weight of \"1.0\"."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Assigns each event with a known location a geographic-story rating from 0 to 3. For every batch, the model receives the story context plus each event’s ID, person, date, title, place, and theme connection, then returns ratings keyed by the original event IDs; those ratings become numeric weights for downstream map clustering.",
-        "why_this_design": "The rating explicitly combines narrative importance with place-specific significance, preventing prominent but geographically incidental events—such as publication cities or award ceremonies—from dominating the map. It runs before clustering because the resulting weights determine which events most strongly shape geographic groupings."
+        "what_it_does": "Assigns each event with a known location a geographic-story weight from 0 to 3. The judgment combines the event’s thematic importance with whether its specific place is integral to the event, producing per-event weights that the map branch can use to cluster and prioritize locations.",
+        "why_this_design": "Ratings run before map clustering because they supply its weighting signal: a landmark event at a place should exert more influence than an incidental venue. Processing events in batches limits each request’s event list, while validating returned IDs against the current batch prevents a malformed or cross-batch response from altering another event’s weight."
       }
     },
     "m_p7c": {
-      "fingerprint": "c25c53331310b25a",
+      "fingerprint": "fc7411054e0c679d",
       "summary": {
         "constraints": [
-          "Produces exactly one result per candidate stop, in the supplied chronological order, with `key` copied exactly.",
-          "Usually retains no more than about \"FIVE\" stops, but must retain at least a few; it may discard accidental groupings and real but secondary places.",
-          "Each retained title is \"2-5 words,\" evocative rather than a place-name repetition or a list of people; each retained text is 2-4 prose sentences with no bullets.",
-          "Narration must be grounded only in supplied event data, use American English and third person, and contain no audience address or map-interface references."
+          "Return one entry per input stop in chronological order, copying its `key` exactly.",
+          "Keep usually no more than about five stops; discarded stops must have `keep=false` and a `discard_reason`, but at least a few stops must survive.",
+          "Each kept title is an evocative 2-5-word chapter-style phrase, not a place-name repetition or a list of people.",
+          "Each kept text is 2-4 factual prose sentences with natural name forms; it must not invent claims, use bullets, address the audience, or mention the map interface."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Makes one structured AI call to turn chronological geographic event clusters into short narration cards for a meta-story map. For every candidate cluster, it returns a keyed stop record that either supplies a chapter-like title and 2-4 sentence factual mini-narrative or marks the cluster for removal with a reason; downstream pruning can then remove discarded places from the map.",
-        "why_this_design": "The model curates and narrates in the same call so selection is based on each place's narrative function, rather than treating every geocoded cluster as an equally meaningful destination. Requiring an entry for every input key preserves the correspondence needed to safely cascade discard decisions into map pruning, while chronological input and output order keep the scroll sequence stable."
+        "what_it_does": "Turns chronological geographic event clusters into short narration cards for a meta-story map and returns one structured stop record for every candidate cluster. It also curates the route by marking accidental or secondary groupings for removal, so downstream map construction can prune weak locations while retaining the surviving stops' order and exact keys.",
+        "why_this_design": "Curation and narration occur in one structured call so decisions about a place's narrative importance are made from the same event brief used to write its card. The prompt explicitly protects against a map becoming a gazetteer while requiring that enough locations remain to preserve a meaningful geographic arc."
       }
     },
     "m_p8": {
@@ -199,31 +199,31 @@
       }
     },
     "m_style": {
-      "fingerprint": "5e911946cd734d3c",
+      "fingerprint": "136de166e2a0d123",
       "summary": {
         "constraints": [
-          "Returns strict JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, frame, heading_font, body_font.",
-          "primary, secondary, and background use #RRGGBB; background luminance must be under 0.18, while primary must remain a legible light text accent.",
-          "background_pattern_svg is a seamless 160x160 tile using only #000000 and #FFFFFF—no gray values or opacity attributes—and must stay calm, abstract, geometric, and evenly distributed.",
-          "separator_glyph_svg uses a 32x32 viewBox and at most 2–3 simple shapes; ornament_svg uses a 0 0 240 24 viewBox, is horizontally symmetric, includes a hairline rule and central related motif, and both marks are recolored to primary at render time."
+          "Returns JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, frame, heading_font, and body_font.",
+          "Primary, secondary, and background use #RRGGBB; background luminance must be under 0.18, and primary must remain a legible light text accent.",
+          "background_pattern_svg is a seamless 160x160 abstract geometric tile using only #000000 and #FFFFFF—no gray values, opacity attributes, dense clusters, or large solid areas.",
+          "separator_glyph_svg uses a 32x32 viewBox and at most 2-3 simple shapes; ornament_svg uses viewBox \"0 0 240 24\", is horizontally symmetric, and both marks are recolored to primary downstream."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Asks a model to create a complete dark-mode editorial identity for a themed, multi-biography meta story: three colors, a tiled background pattern, a prose separator, an end ornament, a frame treatment, and heading/body font selections. The identity is intended to unify long-form scrolling text with embedded timeline, network, and map sections, while deriving its geometric vocabulary from the story theme and date range rather than from an individual subject.",
-        "why_this_design": "The prompt separates a faint, high-contrast background texture from primary-colored punctuation marks so the former can remain visually quiet behind long passages while the latter creates repeated navigational and structural cues. It also requires the glyph and terminal ornament to share a central motif, preventing decorative elements from becoming unrelated one-off assets."
+        "what_it_does": "Builds a dark-mode editorial visual system for a theme-driven, long-form meta story that connects biographies with timeline, network, and map sections. It asks for a palette, a seamless abstract background tile, matched SVG punctuation marks, a shared box-frame treatment, and typography choices, then parses the returned strict JSON for downstream use. The design brief derives geometry and period cues from the overall theme and date range rather than from an individual subject.",
+        "why_this_design": "The background tile is deliberately limited to pure black and white with no opacity, while the primary accent is reserved for running text and the two punctuation marks. This separates a faint, CSS-controlled background treatment from legible editorial accents and keeps the separator glyph, end ornament, cards, maps, and timeline visually coherent."
       }
     },
     "m_translate": {
-      "fingerprint": "c79e6a3b7805a2f6",
+      "fingerprint": "5786925bc36ba3ae",
       "summary": {
         "constraints": [
-          "Missing source meta-story JSON returns `False` without calling the model.",
-          "Without `force`, processing is skipped only when every translation-status value is `\"current\"`.",
-          "The translation model must preserve every array’s exact length and order and return the payload’s structure.",
-          "Markdown, annotation term keys, and `[[term|...]]` syntax are preserved exactly; only annotation display text is translated."
+          "Skips processing unless at least one translation-status value is not `\"current\"`, or `force` is true.",
+          "Returns failure if the source meta-story file is missing, translation fails, or the translated JSON cannot be saved.",
+          "The translation payload must retain every array’s exact length and order.",
+          "Markdown, annotation term keys, and the term portion of `[[term|display]]` markers must remain unchanged; only display text is translated."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story detail JSON, checks whether its target-language translation is current, and—when needed—runs the shared extract–translate–merge workflow before writing `META_STORIES_DIR/<target_lang>/<story_id>.json`. It then updates the language-specific meta-story registry, with event titles copied verbatim from already translated person data so meta-story chapters and person-story slides use identical titles.",
-        "why_this_design": "The freshness check avoids repeat model calls unless `force` is set, while updating the registry only after the translated detail file saves successfully prevents registry entries from pointing to an unsaved translation. Reusing translated event titles avoids independently generated variants of the same title across related story views."
+        "what_it_does": "Loads a meta-story JSON document, checks whether its target-language outputs are current, and translates the story through the shared extract–translate–merge path. The translated detail file is saved under the target-language meta-story directory, then the corresponding language-specific registry entry is updated. Event titles are reused verbatim from translated person data so the meta-story’s chapters and story slides use identical localized titles.",
+        "why_this_design": "Translation freshness is checked before making the translation call, avoiding unnecessary regeneration unless `force` is set. Reusing translated event titles prevents independently translated variants of the same title from drifting across related narrative views."
       }
     },
     "p_chapters": {
@@ -269,17 +269,17 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "8add0dc2166378a6",
+      "fingerprint": "b472e559f5075ab5",
       "summary": {
         "constraints": [
-          "Filters evidence to at most \"5\" related articles per event and requests \"1-3\" supporting Wikipedia URLs or references that specifically support that event.",
-          "Location labels must be city or region level at most—no addresses, buildings, or exact venues—and each returned location carries historic and modern names plus a primary flag.",
-          "Involved people must be directly connected to the event and must exclude the main subject; annotations are limited to \"0-3\" per event, with most events expected to have none.",
-          "For classified events, descriptions must omit technical details and annotations must not cover the classified subject; annotations may never be person names and must mark only the first occurrence of a term."
+          "Uses no more than 5 filtered related articles per event; sources must be 1-3 supporting Wikipedia URLs or references when available.",
+          "Locations must be city/region level or broader—never addresses, buildings, or exact venues—and a single-location event has primary=true.",
+          "Descriptions must remain in the chronological moment, be concise and factual, and omit technical detail for classified events; death events must not include legacy discussion.",
+          "Annotations are limited to 0-3, usually none; they must be obscure non-obvious terms, appear as [[term|display]] on first occurrence only, and never cover people or classified subjects."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Takes one Phase 1 event skeleton and researches it independently, selecting up to five articles judged relevant to that event rather than passing the full article set. It asks the model for a chronologically bounded narrative description, city-level historic and modern locations, directly involved people other than the subject, event-specific supporting sources, a semantic MDI icon, and conservative inline annotations. Classified events are routed through a class-specific prompt builder so their structured classification can carry technical metadata while Phase 2 supplies narrative context.",
-        "why_this_design": "Per-event article filtering limits irrelevant evidence and keeps sources tied to the particular event. Retries isolate transient model or API failures; after \"retry_count + 1\" attempts, the function returns minimal usable metadata instead of aborting the broader personal-story run."
+        "what_it_does": "Enriches one biographical event at a time, using at most five articles filtered for that event rather than the full article set. It returns a concise, chronologically bounded narrative description; city-or-region-level historical and modern locations; directly involved people excluding the subject; one to three supporting references; a semantic icon; and, only when warranted, inline-linked explanations for obscure terms. Classified events are routed through a class-aware prompt so their descriptions stay narrative while the classification carries technical or structured detail.",
+        "why_this_design": "Event-specific article filtering limits irrelevant evidence and helps keep sources tied to the particular moment. Per-event retries and a minimal fallback prevent one failed enrichment call from stopping the wider personal-story run, while preserving a valid schema with an empty source list and calendar icon."
       }
     },
     "p_geocode": {
@@ -297,17 +297,17 @@
       }
     },
     "p_glossary": {
-      "fingerprint": "8e62526552dc5c69",
+      "fingerprint": "34007a29d58f99eb",
       "summary": {
         "constraints": [
-          "Original spelling is the default; a name changes only for a standard, widely used target-language exonym.",
-          "Only historical figures with established exonyms may be localized; modern names must remain unchanged.",
-          "The model must return a mapping for every supplied name, including unchanged original=localized entries.",
-          "Only nonempty mappings where original and localized differ are retained; an API or parsing failure returns {}."
+          "Return a mapping for every supplied name, including unchanged entries with identical `original` and `localized` values.",
+          "Translate only historical figures with a standard, widely used target-language exonym; never translate modern names.",
+          "Keep epithets and parentheticals consistent with target-language convention.",
+          "The returned dictionary includes only nonempty mappings where `original != localized`; an empty input, unparsable response, or exception returns `{}`."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a per-biography glossary that decides whether each supplied person name has a standard target-language rendering. The model returns an entry for every input name, but the function retains only changed original→localized pairs; downstream translation can then apply the same decisions deterministically across all documents and UI references.",
-        "why_this_design": "Name rendering is resolved once rather than independently in each document because cross-references depend on exact string equality. The failure path deliberately returns an empty glossary, preserving original names instead of risking partial or inconsistent localization."
+        "what_it_does": "Builds a per-biography glossary that decides how each supplied person name should appear in the target language. It requests an entry for every input name, then retains only changed original→localized pairs; later translation steps can apply that single decision consistently across all documents and exact-match UI references.",
+        "why_this_design": "The prompt defaults to preserving source spellings and limits changes to established historical exonyms, preventing speculative localization of modern people. Failure returns an empty glossary, so the safe fallback is unchanged names rather than inconsistent partial replacements."
       }
     },
     "p_img_fetch": {
@@ -339,31 +339,31 @@
       }
     },
     "p_img_match": {
-      "fingerprint": "82a16d9c6863c535",
+      "fingerprint": "bebdeeaae6df643c",
       "summary": {
         "constraints": [
-          "Returns no assignments or portrait when there are no candidate images, no API key, an incomplete/unparseable response, or an exception.",
-          "Portrait must depict the person; it may not be a building, plaque without a likeness, work created by the person, generic costume illustration, or speculative reconstruction. It is reserved from event use.",
-          "An image and an event can each appear at most once; invalid image or event indices, repeated images, and repeated event assignments are discarded.",
-          "Event images require a direct connection and target \"40-60%\" event coverage; generated event captions must be factual, metadata-grounded, and \"5-12 words.\""
+          "Candidate images are numbered from 1 in the prompt; returned image IDs are converted to 0-based indexes and bounds-checked.",
+          "One portrait only; it must be a depiction of the person, not their work, a generic costume illustration, a speculative recreation, or a building/plaque without a likeness.",
+          "The selected portrait cannot be assigned to an event; each remaining image and each event can appear at most once.",
+          "Only directly connected event images are accepted, with a target coverage of \"40-60%\" of events; generated event captions must be factual, metadata-grounded, and \"5-12 words.\""
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Presents each life-event skeleton alongside retrieved Commons image filenames and truncated source captions, then asks a structured-output model to choose one profile portrait and match other images to specific events. It returns an event-indexed image map with model-written captions and a separate portrait record, preserving the portrait's original source caption rather than replacing it.",
-        "why_this_design": "The model receives metadata rather than image pixels, so the prompt explicitly limits captions to claims supported by filenames and source metadata. Postprocessing independently validates all returned indices and enforces one-image/one-event use, preventing malformed or duplicate model output from contaminating the timeline."
+        "what_it_does": "Reviews candidate image filenames and truncated source captions alongside dated event summaries, then returns two products: one optional profile portrait and a mapping of selected images to timeline events. Event assignments receive new short captions, while the portrait retains its original source caption; invalid or failed results yield no assignments and no portrait.",
+        "why_this_design": "The prompt explicitly limits decisions to metadata because the step has no image pixels to inspect, reducing invented visual descriptions. Post-processing independently enforces one-image/one-event uniqueness and reserves the portrait before accepting event assignments, so malformed structured output cannot reuse an image."
       }
     },
     "p_img_search": {
-      "fingerprint": "199334d350dbebc7",
+      "fingerprint": "ee4029bee5ecdbe3",
       "summary": {
         "constraints": [
-          "Requests exactly 20 strings, though the successful return defensively slices the parsed list to the first 20.",
-          "Each string must contain 2-4 words.",
-          "At least 5 strings must include the person’s name.",
-          "Standalone cities, countries, and professions are forbidden; adjectives, years, descriptive phrases, and long view-style queries are also forbidden."
+          "Returns exactly 20 search strings on the successful path, truncating any longer structured response to 20.",
+          "Each query must contain 2-4 words; years, adjectives, descriptive phrases, and long view/location strings are forbidden.",
+          "At least 5 queries must include the person’s name; generic cities, countries, and professions must be paired with that name or another specific named entity.",
+          "If credentials are unavailable, returns only the person’s name and a portrait query; if generation or parsing fails, returns only the person’s name."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds one Wikimedia Commons query-planning prompt from every event in a person’s timeline, including each event title, date, and the first 200 characters of its description. The model returns up to 20 compact search strings intended to find portraits and historically relevant images of named buildings, artworks, awards, and institutions across the full biography.",
-        "why_this_design": "The prompt treats Commons as a simple keyword index rather than a semantic retrieval system, so it prioritizes short proper-name queries over natural-language descriptions. Combining generic locations or occupations with the subject’s name prevents broad, low-value result sets; event descriptions are truncated to 200 characters to bound prompt size while retaining event-specific entities."
+        "what_it_does": "Builds one compact Wikimedia Commons query plan from every event in a person’s timeline, passing each event’s title, date, and first 200 characters of description as context. It requests a structured list of 20 keyword searches intended to retrieve portraits and event-relevant named places, works, awards, or institutions.",
+        "why_this_design": "The prompt treats Commons as a simple keyword matcher, so it prioritizes short entity-based queries rather than natural-language descriptions. Supplying all events at once lets the 20-query budget cover the full biography instead of producing a repetitive set for each event."
       }
     },
     "p_network": {
@@ -438,31 +438,31 @@
       }
     },
     "p_style": {
-      "fingerprint": "04d10a5c9a293a05",
+      "fingerprint": "9545c0b86a6e4fbd",
       "summary": {
         "constraints": [
-          "Returns strict JSON with exactly these named fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, heading_font, body_font.",
-          "primary, secondary, and background must use #RRGGBB; background luminance must be below 0.18, and the foreground colors must contrast with it and each other.",
-          "background_pattern_svg must be a tileable 160x160 SVG using only #000000 and #FFFFFF; gray values, gradients, opacity attributes, and non-geometric or figurative imagery are forbidden.",
-          "separator_glyph_svg should use the primary color, fit a roughly 32x32 viewBox, contain at most 2-3 simple geometric shapes, and remain non-directional and legible at 16-24px."
+          "`primary`, `secondary`, and `background` must be `#RRGGBB`; background luminance must be under `0.18`.",
+          "`background_pattern_svg` must be a tileable `160x160` SVG using only `#000000` and `#FFFFFF`; gradients, gray values, opacity attributes, and representational imagery are forbidden.",
+          "Pattern motifs must be abstract geometric compositions that encode the subject’s character, era, and work; stroke-width variation such as `1px`, `2px`, `4px`, and `8px` supplies hierarchy.",
+          "`separator_glyph_svg` should use the primary color, fit a roughly `32x32` viewBox, contain at most `2-3` simple geometric shapes, and remain non-directional and preferably symmetric."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Creates a dark-mode visual system for a personal-story interface from the subject identifier and requested subject. It asks for three interface colors, a repeating monochrome SVG background pattern, a small themed separator glyph, and heading/body font selections, then parses the completed JSON response into a dictionary for downstream use.",
-        "why_this_design": "The background texture is restricted to opaque pure black and white so its visual hierarchy comes from geometry and stroke weight rather than translucent overlays or near-black shades that may render inconsistently. The prompt ties abstract geometric choices to the subject’s era, field, and working style, aiming to make a reusable tile feel biographical rather than decorative."
+        "what_it_does": "Produces a strict JSON visual-identity specification for a personal data story: three interface colors, a repeating dark-background SVG pattern, a small separator SVG glyph, and heading/body font selections. The design brief asks the generator to derive abstract geometric motifs from the subject’s era, field, working style, and contributions, so the resulting interface can visually distinguish one person’s story from another.",
+        "why_this_design": "The background pattern is deliberately restricted to opaque pure black and pure white, while hierarchy must come from stroke weight rather than tonal variation. This protects the dark-mode color system from low-contrast gray pattern assets and makes tiled motifs visually robust. The response is requested as a JSON object and parsed directly, with explicit failures for unsuccessful, incomplete, empty, or non-JSON responses."
       }
     },
     "p_translate": {
-      "fingerprint": "ec1eccf9175392e5",
+      "fingerprint": "688703f3d716bf4e",
       "summary": {
         "constraints": [
-          "Return the same JSON structure; every array must retain its \"EXACTLY\" original length and order, with output item N translating input item N.",
-          "Translate meaning, tone, and register naturally; do not summarize, extend, omit, or translate word-for-word.",
+          "Return the same JSON structure; every array must retain its exact input length and order, with output item N translating input item N.",
+          "Translate meaning, tone, and register into idiomatic target-language prose; do not summarize, extend, omit, or preserve English wording merely for similarity.",
           "Preserve Markdown exactly, including links, emphasis, and line breaks.",
-          "Keep `[[term|display]]` syntax and the pre-pipe `term` unchanged; translate only `display`, leave annotation term keys unchanged, apply the supplied person-name glossary, and otherwise leave person names unchanged."
+          "Keep `[[term|display]]` syntax and the pre-pipe term unchanged; translate only display text, leave annotation term keys unchanged, apply the person-name glossary, and retain all non-glossary person names."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Sends a schema-constrained JSON payload of person-related, translatable text fields to an OpenAI chat model and returns the parsed structured translation. The payload is extracted from a larger English record, allowing a later merge to overlay translated prose while leaving non-text data such as dates, coordinates, URLs, and IDs untouched. The model is directed to produce idiomatic biographical prose in the target language, using language-specific style notes, optional extra rules, and a person-name glossary.",
-        "why_this_design": "Extraction before translation and overlay after translation isolate mutable prose from identity and geographic metadata, preventing accidental drift in fields that must remain canonical. Exact structural and marker-preservation rules make it possible to map each returned value back to its original field and array position even when sentences are substantially recast for natural target-language prose."
+        "what_it_does": "Builds a translation request for a JSON payload containing only the person-document fields eligible for translation, targeting the configured language and its language-specific style guidance. It parses the response against a caller-supplied structured schema and returns the parsed translated payload; refusals, missing parsed results, and request errors produce `None` after logging an error.",
+        "why_this_design": "Translation is deliberately separated from the full English document: downstream merge logic can overlay translated text while leaving dates, coordinates, URLs, IDs, and other nontranslatable values untouched. Exact structural preservation makes the returned fields align deterministically with the extracted payload, particularly for ordered arrays and annotation metadata."
       }
     },
     "p_wiki_fetch": {
@@ -480,17 +480,17 @@
       }
     },
     "p_wiki_select": {
-      "fingerprint": "ac8f3aa292ed3894",
+      "fingerprint": "9ae1a06985bf17c3",
       "summary": {
         "constraints": [
-          "Select exactly `max_to_select` titles, ordered most to least relevant.",
-          "Prioritize people the subject knew, specific life events, and individually attributable creations.",
-          "Exclude general places, institutions, awards, theories, fields, movements, and abstract topics.",
-          "If no API key is available, parsing fails, or an exception occurs, return the first `max_to_select` candidate titles unchanged."
+          "Requests exactly `max_to_select` titles, ranked most to least relevant.",
+          "Limits preferred material to people, specific life events, and individual personal creations.",
+          "Rejects general places, organizations, awards, theories, concepts, fields, movements, and generic background topics.",
+          "Returns at most `max_to_select` parsed titles; fallback returns the first `max_to_select` candidates."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Uses a structured OpenAI response to rank Wikipedia links from a subject's main article and retain the articles most useful for biographical enrichment. It supplies the subject's name, summary, and candidate titles, then returns the selected titles in descending relevance for downstream material retrieval.",
-        "why_this_design": "The prompt sharply favors relationships and discrete episodes over topical background so a limited context budget is spent on narrative evidence about the subject's life. It also asks for an exact count, while the code caps the returned list again before use, protecting downstream limits if the model overproduces."
+        "what_it_does": "Ranks Wikipedia links from a subject’s main article and returns titles judged most useful for adding biographical context. The selection favors people in the subject’s personal or professional network, concrete events the subject experienced, and individual works the subject created; the returned list is ordered by relevance.",
+        "why_this_design": "The prompt deliberately excludes broadly relevant background links—places, institutions, fields, concepts, movements, and awards—so downstream context capacity is spent on material that can support narrative episodes and relationships. If structured selection is unavailable, incomplete, or errors, the step preserves pipeline continuity by taking the first candidate titles instead."
       }
     },
     "p_write": {

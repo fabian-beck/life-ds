@@ -32,6 +32,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -40,7 +41,12 @@ from typing import Any, Dict, List, Optional, cast
 from openai import OpenAI, APIStatusError
 from pydantic import BaseModel
 
-from config import DEFAULT_MODEL, enable_utf8_console
+from config import (
+    BULK_MODEL,
+    BULK_REASONING_EFFORT,
+    DEFAULT_MODEL,
+    enable_utf8_console,
+)
 
 enable_utf8_console()
 
@@ -505,6 +511,31 @@ def _require_same_length(kind: str, source: List[Any], translated: List[Any]) ->
         )
 
 
+_ANNOTATION_MARKER_RE = re.compile(r"\[\[([^\[\]|]+)\|")
+
+
+def _require_same_markers(kind: str, source: str, translated: str) -> None:
+    """Reject a translation that dropped, renamed, or invented an annotation term.
+
+    A description carries its annotations as ``[[term|display]]``: the display
+    text is translated, the term is an id the document's ``annotations`` map is
+    keyed by. The merge cannot repair a term the model rewrote — the marker
+    still renders, it simply resolves to nothing — so the mismatch is caught
+    here, where a misaligned list is caught, and the document is left
+    untranslated for `--check` to report rather than written half-linked.
+
+    Only the terms are compared. A translation may reorder the sentences a
+    marker sits in, and does not have to keep two markers in the same order.
+    """
+    source_terms = sorted(_ANNOTATION_MARKER_RE.findall(source or ""))
+    translated_terms = sorted(_ANNOTATION_MARKER_RE.findall(translated or ""))
+    if source_terms != translated_terms:
+        raise TranslationMergeError(
+            f"{kind}: annotation markers changed — expected "
+            f"{source_terms or '[]'}, got {translated_terms or '[]'}"
+        )
+
+
 def _set_if_source_has(target: Dict[str, Any], key: str, value: Optional[str]) -> None:
     """Overwrite target[key] only if the source document had that field."""
     if key in target and value is not None:
@@ -550,7 +581,12 @@ def apply_life_events_translations(
     _require_same_length("events", src_events, tr_events)
     for event, tr_event in zip(src_events, tr_events):
         _set_if_source_has(event, "title", tr_event.get("title"))
-        _set_if_source_has(event, "description", tr_event.get("description"))
+        tr_description = tr_event.get("description")
+        if tr_description is not None and "description" in event:
+            _require_same_markers(
+                "event.description", event.get("description") or "", tr_description
+            )
+        _set_if_source_has(event, "description", tr_description)
         _set_if_source_has(event, "date_note", tr_event.get("date_note"))
 
         src_locations = [
@@ -870,12 +906,28 @@ def collect_person_names(
     return names
 
 
+# Translating a payload is the call that extract-translate-merge was built to
+# make safe: the model never sees a date, a coordinate, a URL or an id, the
+# merge rejects a response whose lists changed length, and markers are checked
+# against the source afterwards, so a weaker translator produces flatter prose
+# rather than a broken document. Low rather than no reasoning, because idiom is
+# the one thing this call is asked to get right.
+TRANSLATION_MODEL = BULK_MODEL
+TRANSLATION_REASONING_EFFORT = BULK_REASONING_EFFORT
+
+# The glossary is the exception. It is one small call per person and language,
+# and everything else matches on the names it decides: the UI's cross-references
+# between a story and its network are exact-name lookups, so a name rendered two
+# ways is a broken link rather than an awkward sentence.
+GLOSSARY_MODEL = DEFAULT_MODEL
+
+
 def build_name_glossary(
     names: List[str],
     context_summary: str,
     target_lang: str,
     client: OpenAI,
-    model: str,
+    model: str = GLOSSARY_MODEL,
     verbose: bool = False,
 ) -> Dict[str, str]:
     """Ask the model once which person names have standard localized versions.
@@ -1029,7 +1081,7 @@ def _call_translation_model(
     target_lang: str,
     glossary: Dict[str, str],
     client: OpenAI,
-    model: str,
+    model: str = TRANSLATION_MODEL,
     verbose: bool = False,
 ) -> Optional[Any]:
     """Send a translation payload to the model and parse the structured result."""
@@ -1082,6 +1134,7 @@ PAYLOAD:
     try:
         response = client.beta.chat.completions.parse(
             model=model,
+            reasoning_effort=cast(Any, TRANSLATION_REASONING_EFFORT),
             messages=[
                 {
                     "role": "system",
@@ -1237,7 +1290,7 @@ def translate_meta_story(
     source_data: Dict[str, Any],
     target_lang: str,
     client: OpenAI,
-    model: str,
+    model: str = TRANSLATION_MODEL,
     verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
     """Translate a meta story dataset; returns the full derived document."""
@@ -1388,7 +1441,7 @@ def translate_person_data(
     person_id: str,
     target_lang: str,
     client: OpenAI,
-    model: str = DEFAULT_MODEL,
+    model: str = TRANSLATION_MODEL,
     force: bool = False,
     verbose: bool = False,
 ) -> Dict[str, bool]:
@@ -1431,7 +1484,7 @@ def translate_person_data(
         context_summary,
         target_lang,
         client,
-        model,
+        GLOSSARY_MODEL,
         verbose,
     )
 
@@ -1514,8 +1567,8 @@ def main():
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
+        default=TRANSLATION_MODEL,
+        help=f"OpenAI model to translate with (default: {TRANSLATION_MODEL})",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
 

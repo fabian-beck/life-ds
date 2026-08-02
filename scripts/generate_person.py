@@ -10,7 +10,7 @@ from generate_person_events import (
     generate_person_events as generate_dataset,
     DEFAULT_MODEL as DATASET_MODEL,
 )
-from generate_person_style import generate_style, DEFAULT_MODEL as STYLE_MODEL
+from generate_person_style import generate_style, BULK_MODEL as STYLE_MODEL
 from generate_person_network import (
     generate_person_network,
     DEFAULT_MODEL as NETWORK_MODEL,

@@ -21,10 +21,11 @@ from typing import Any, Dict, List, Optional
 
 from openai import OpenAI
 
-from config import DEFAULT_MODEL, enable_utf8_console
+from config import enable_utf8_console
 from translate_person import (
     DATA_DIR,
     LANGUAGE_NAMES,
+    TRANSLATION_MODEL,
     compute_fingerprint,
     extract_meta_story_translatables,
     load_json_file,
@@ -134,7 +135,7 @@ def translate_meta_story_data(
     story_id: str,
     target_lang: str,
     client: OpenAI,
-    model: str = DEFAULT_MODEL,
+    model: str = TRANSLATION_MODEL,
     force: bool = False,
     verbose: bool = False,
 ) -> bool:
@@ -188,8 +189,8 @@ def main() -> int:
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
+        default=TRANSLATION_MODEL,
+        help=f"OpenAI model to translate with (default: {TRANSLATION_MODEL})",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args = parser.parse_args()

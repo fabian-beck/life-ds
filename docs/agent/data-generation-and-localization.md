@@ -18,10 +18,15 @@ Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/ge
 
 **Model configuration** (see `scripts/config.py`):
 
-- `OPENAI_MODEL` — text/reasoning model for generation phases other than the meta-story composer (default: `gpt-5.6-terra`)
+- `OPENAI_MODEL` — text/reasoning model for the phases that decide what a life or a theme is, read a whole document, or criticize another phase's output (default: `gpt-5.6-terra`)
 - `OPENAI_COMPOSER_MODEL` — Phase 8 meta-story composer model (default: `gpt-5.6-sol`)
-- `OPENAI_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels
+- `OPENAI_BULK_MODEL` — small model for the phases whose output is checkable or replaceable (default: `gpt-5.6-luna`)
+- `OPENAI_REASONING_EFFORT` / `OPENAI_BULK_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels (`medium` / `low` / `none`)
 - Portrait scripts take `--model` separately (default: `gpt-image-2`)
+
+A phase runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become part of the corpus — its output is validated against existing entities afterwards, rewritten by a later phase, or backed by a deterministic fallback. That covers related-article selection, Phase 2 event research, image search and matching, both style generators, meta-story event curation, circle narration, the map branch, and translation. Everything else keeps `OPENAI_MODEL`: Phase 1, chapters, the ego network, story planning, historical context, all three review passes, and the name glossary, whose decisions every other document then matches on by exact name. The report's step drawer shows the model and effort each call site actually resolves to; it is generated from the source, so consult it rather than this list when they disagree.
+
+`generate_meta_story.py` exposes the tier as `--bulk-model`, alongside `--model` and `--composer-model`. `cache_wikipedia_materials.py`, `generate_person_style.py`, `generate_meta_story_style.py`, and `meta_story_map_narration.py` do all their AI work at this tier, so their own `--model` flag defaults to it.
 
 Image models that support the dual-image editing path are allowlisted in `generate_person_portrait.py`; a model outside that list silently falls back to text-only generation and will not preserve facial likeness.
 

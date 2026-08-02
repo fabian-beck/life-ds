@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional, Set, cast
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, LOW_REASONING_EFFORT
+from config import BULK_MODEL, LOW_REASONING_EFFORT
 from utils.wikipedia_cache import (
     cache_exists,
     ensure_cache,
@@ -209,7 +209,7 @@ def select_articles_with_ai(
     person_summary: str,
     candidate_titles: List[str],
     max_to_select: int,
-    model: str = DEFAULT_MODEL,
+    model: str = BULK_MODEL,
 ) -> List[str]:
     """Use AI to select the most relevant articles from candidates."""
     api_key = os.getenv("OPENAI_API_KEY")
@@ -299,7 +299,7 @@ Return exactly {max_to_select} article titles about PEOPLE and LIFE EVENTS, orde
 def fetch_related_articles(
     title: str,
     max_related: int = 15,
-    model: str = DEFAULT_MODEL,
+    model: str = BULK_MODEL,
     use_cache: bool = True,
     person_id: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
@@ -496,7 +496,7 @@ def cache_person(
     person_id: Optional[str] = None,
     force: bool = False,
     max_related: int = 15,
-    model: str = DEFAULT_MODEL,
+    model: str = BULK_MODEL,
 ) -> str:
     """Cache Wikipedia materials for a person."""
     # Find the Wikipedia page
@@ -579,9 +579,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
+        default=BULK_MODEL,
         help=(
-            f"OpenAI model to use for AI ranking (default: {DEFAULT_MODEL}). "
+            f"OpenAI model to use for AI ranking (default: {BULK_MODEL}). "
             "Must support structured outputs."
         ),
     )

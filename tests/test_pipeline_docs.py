@@ -56,10 +56,17 @@ class IntrospectionTests(unittest.TestCase):
         phase1 = calls[("generate_person_events.py", "call_openai_phase1")]
         self.assertIn("gpt-", phase1.model_value or "")
         self.assertIn("OPENAI_MODEL", phase1.model_value or "")
-        # Phase 1 reasons; the per-event research phase deliberately does not.
         self.assertIn("medium", phase1.reasoning_value or "")
+        # Phase 1 decides what the life is and reads every article; the phases
+        # working from what it settled run on the small model, which resolves
+        # through its own environment variable rather than Phase 1's.
         research = calls[("generate_person_events.py", "research_event_details")]
-        self.assertIn("none", research.reasoning_value or "")
+        self.assertIn("gpt-", research.model_value or "")
+        self.assertIn("OPENAI_BULK_MODEL", research.model_value or "")
+        self.assertIn("OPENAI_BULK_REASONING_EFFORT", research.reasoning_value or "")
+        # Writing Commons queries is slot filling and takes no reasoning at all.
+        searches = calls[("generate_person_events.py", "generate_image_search_strings")]
+        self.assertIn("none", searches.reasoning_value or "")
 
     def test_reads_reasoning_effort_through_the_typing_cast(self) -> None:
         """Typed-client call sites wrap the reasoning dict in ``cast(Any, ...)``.
@@ -81,6 +88,34 @@ class IntrospectionTests(unittest.TestCase):
         )
         facts = scan_script(Path(self._write_temp(source)), {})
         self.assertEqual(facts.ai_calls[0].reasoning_expr, "SOME_EFFORT")
+
+    def test_reads_the_chat_completions_spelling_of_reasoning_effort(self) -> None:
+        """The two API surfaces spell one setting differently.
+
+        The responses API nests the effort in a ``reasoning`` dict, chat
+        completions takes a flat ``reasoning_effort``. A step documented as
+        having no effort when it has one is exactly the drift this module
+        exists to catch, so both spellings must be read.
+        """
+        source = (
+            "def call_model(client, model):\n"
+            "    return client.beta.chat.completions.parse(\n"
+            "        model=model,\n"
+            "        reasoning_effort=cast(Any, SOME_EFFORT),\n"
+            "        messages=[],\n"
+            "    )\n"
+        )
+        facts = scan_script(Path(self._write_temp(source)), {})
+        self.assertEqual(facts.ai_calls[0].reasoning_expr, "SOME_EFFORT")
+
+        documented = {
+            (call.script, call.function): call.reasoning_expr
+            for call in self.codebase.all_ai_calls()
+        }
+        self.assertTrue(
+            documented[("generate_meta_story.py", "_filter_event_batch")],
+            "event curation sets an effort; the report must show it",
+        )
 
     def test_composer_uses_its_own_model_setting(self) -> None:
         calls = [
@@ -1046,8 +1081,14 @@ class BibliographyTests(unittest.TestCase):
             "@misc{k,\n title = {T},\n author = {Doe, Jane},\n year = {2020}\n}\n"
         )
         problems = bibliography.check(bib, ["k"])
-        self.assertIn(("error", "reference 'k' has no doi—every entry has to be "
-                       "resolvable, so add one or drop the entry"), problems)
+        self.assertIn(
+            (
+                "error",
+                "reference 'k' has no doi—every entry has to be "
+                "resolvable, so add one or drop the entry",
+            ),
+            problems,
+        )
 
     def test_an_uncited_entry_is_reported_as_drift(self) -> None:
         problems = bibliography.check(self._parse(), ["one"])
@@ -1123,7 +1164,9 @@ class ReferenceCitationTests(unittest.TestCase):
         self.assertEqual(document.refcites, [])
 
     def test_the_list_prints_the_entry_with_its_doi_as_a_link(self) -> None:
-        document = self._compile("\n## S\n\nText [@a].\n\n## R\n\n::: references\n:::\n")
+        document = self._compile(
+            "\n## S\n\nText [@a].\n\n## R\n\n::: references\n:::\n"
+        )
         self.assertTrue(document.prints_references)
         self.assertIn('href="https://doi.org/10/a"', document.html)
         self.assertIn("doi: ", document.html)
@@ -1261,7 +1304,7 @@ class ReportSourceTests(unittest.TestCase):
         """Both markers are links into printed text the popover copies."""
         js = (ASSETS / "app.js").read_text(encoding="utf-8")
         self.assertIn('querySelector(".pop-body")', js)
-        self.assertIn('data-pop-label', js)
+        self.assertIn("data-pop-label", js)
         self.assertIn('class="principle-body pop-body"', self.document.html)
         self.assertIn('class="note-body pop-body"', self.document.html)
 
@@ -1713,9 +1756,7 @@ class LayoutWidthTests(unittest.TestCase):
 
     def test_every_width_class_a_renderer_adds_is_styled(self) -> None:
         added = {
-            name.strip()
-            for name in report.WIDGET_WIDTH_CLASS.values()
-            if name.strip()
+            name.strip() for name in report.WIDGET_WIDTH_CLASS.values() if name.strip()
         }
         added.update(re.findall(r'"(widget-[a-z-]+)"', self.js))
         self.assertIn("widget-margin", added, "the scan found no width classes")

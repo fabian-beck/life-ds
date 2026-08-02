@@ -39,9 +39,12 @@ from pydantic import BaseModel, Field
 
 from compose_meta_story import compose_meta_story_dataset
 from config import (
+    BULK_MODEL,
+    BULK_REASONING_EFFORT,
     COMPOSER_DEFAULT_MODEL,
     DEFAULT_MODEL,
     DEFAULT_REASONING_EFFORT,
+    LOW_REASONING_EFFORT,
     enable_utf8_console,
 )
 from meta_story_map_narration import generate_geo_map
@@ -914,7 +917,7 @@ def phase3_ai_event_filtering(
     plan: MetaStoryPlan,
     collected_events: List[Dict[str, Any]],
     client: OpenAI,
-    model: str,
+    model: str = BULK_MODEL,
     verbose: bool = False,
     batch_size: int = 20,
 ) -> List[Dict[str, Any]]:
@@ -1050,8 +1053,8 @@ def _filter_event_batch(
     events: List[Dict[str, Any]],
     topic_context: str,
     client: OpenAI,
-    model: str,
-    verbose: bool,
+    model: str = BULK_MODEL,
+    verbose: bool = False,
 ) -> Dict[str, Dict[str, Any]]:
     """
     Make a single AI call to filter a batch of events.
@@ -1161,6 +1164,7 @@ Events to review:
         try:
             response = client.beta.chat.completions.parse(
                 model=model,
+                reasoning_effort=cast(Any, BULK_REASONING_EFFORT),
                 messages=[
                     {
                         "role": "system",
@@ -1600,7 +1604,7 @@ def build_meta_story_dataset(
 def phase6_network_narration(
     dataset: Dict[str, Any],
     client: OpenAI,
-    model: str,
+    model: str = BULK_MODEL,
     verbose: bool = False,
 ) -> None:
     """Phase 6: Write short story texts for the network's clusters ("circles").
@@ -1670,6 +1674,7 @@ REQUIREMENTS:
     try:
         response = client.beta.chat.completions.parse(
             model=model,
+            reasoning_effort=cast(Any, LOW_REASONING_EFFORT),
             messages=[
                 {
                     "role": "system",
@@ -1810,6 +1815,15 @@ def main():
         "--composer-model",
         default=COMPOSER_DEFAULT_MODEL,
         help=f"Phase 8 composer model (default: {COMPOSER_DEFAULT_MODEL})",
+    )
+    parser.add_argument(
+        "--bulk-model",
+        default=BULK_MODEL,
+        help=(
+            "Model for the phases whose output is checked or rewritten later — "
+            "event curation, circle narration, the map branch "
+            f"(default: {BULK_MODEL})"
+        ),
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     parser.add_argument(
@@ -1968,7 +1982,7 @@ def main():
                 plan=plan,
                 collected_events=collected_events,
                 client=client,
-                model=args.model,
+                model=args.bulk_model,
                 verbose=args.verbose,
                 batch_size=args.batch_size,
             )
@@ -2029,7 +2043,7 @@ def main():
     if args.verbose:
         print("\n=== PHASE 6: Network Narration ===")
     phase6_network_narration(
-        dataset, client=client, model=args.model, verbose=args.verbose
+        dataset, client=client, model=args.bulk_model, verbose=args.verbose
     )
 
     # Phase 7: geographic map section — rate the story's located events,
@@ -2048,8 +2062,7 @@ def main():
                 dataset,
                 registry,
                 client,
-                model=args.model,
-                reasoning_effort=DEFAULT_REASONING_EFFORT,
+                model=args.bulk_model,
                 verbose=args.verbose,
             )
             if geo_map is not None:
@@ -2100,7 +2113,7 @@ def main():
         from generate_meta_story_style import generate_style as generate_story_style
 
         try:
-            generate_story_style(story_id, model=args.model, verbose=args.verbose)
+            generate_story_style(story_id, model=args.bulk_model, verbose=args.verbose)
         except Exception as e:
             print(f"Warning: style generation failed: {e}")
 

@@ -12,10 +12,11 @@ import json
 import os
 import sys
 
-from config import DEFAULT_MODEL, enable_utf8_console
+from config import enable_utf8_console
 from translate_person import (
     LANGUAGE_NAMES,
     REGISTER_PATH,
+    TRANSLATION_MODEL,
     check_person_translation,
     translate_person_data,
 )
@@ -109,8 +110,8 @@ def main():
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
+        default=TRANSLATION_MODEL,
+        help=f"OpenAI model to translate with (default: {TRANSLATION_MODEL})",
     )
     parser.add_argument(
         "--persons",

@@ -90,6 +90,8 @@ The event generator uses a **two-phase AI approach** for improved accuracy and r
 python scripts/generate_person_events.py "Ada Lovelace" --model <model_name>
 ```
 
+Phases whose output is validated, rewritten, or replaceable afterwards run on a smaller model instead, set by `OPENAI_BULK_MODEL`.
+
 By default the scripts write to `data/people/` and `data/person_styles.json`, updating the shared registry files as needed.
 
 ### Event Images

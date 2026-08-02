@@ -47,6 +47,7 @@ from typing import Any, Dict, List, Optional, cast
 
 from pydantic import BaseModel, Field
 
+from config import BULK_MODEL, BULK_REASONING_EFFORT, LOW_REASONING_EFFORT
 from meta_story_map import (
     MIN_MAP_CLUSTERS,
     cluster_located_events,
@@ -135,12 +136,22 @@ def _story_context(dataset: Dict[str, Any]) -> str:
     )
 
 
+# The map branch's two AI agents both run on the small model: the rating is a
+# score per event that the clustering averages away, and the narration writes
+# prose the composer rewrites. Their reasoning budgets differ, though — the
+# narration also decides which stops the map keeps, and that decision survives
+# composition, so it gets deliberation the rating does not need.
+MAP_MODEL = BULK_MODEL
+MAP_RATING_REASONING = LOW_REASONING_EFFORT
+MAP_NARRATION_REASONING = BULK_REASONING_EFFORT
+
+
 def rate_map_events(
     dataset: Dict[str, Any],
     events: List[Dict[str, Any]],
     client: Any,
-    model: str,
-    reasoning_effort: str = "medium",
+    model: str = MAP_MODEL,
+    reasoning_effort: str = MAP_RATING_REASONING,
     verbose: bool = False,
 ) -> Dict[str, float]:
     """Rate each located event's geographic contribution to the story (0–3).
@@ -251,8 +262,8 @@ def narrate_map_clusters(
     dataset: Dict[str, Any],
     clusters: List[Dict[str, Any]],
     client: Any,
-    model: str,
-    reasoning_effort: str = "medium",
+    model: str = MAP_MODEL,
+    reasoning_effort: str = MAP_NARRATION_REASONING,
     verbose: bool = False,
 ) -> Optional[MapNarrationResult]:
     """One AI call: per-cluster card texts, with a discard option."""
@@ -424,8 +435,9 @@ def generate_geo_map(
     dataset: Dict[str, Any],
     registry: Dict[str, Any],
     client: Any,
-    model: str,
-    reasoning_effort: str = "medium",
+    model: str = MAP_MODEL,
+    rating_effort: str = MAP_RATING_REASONING,
+    narration_effort: str = MAP_NARRATION_REASONING,
     skip_rating: bool = False,
     verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
@@ -448,7 +460,7 @@ def generate_geo_map(
         if verbose:
             print("  Rating events (geographic contribution)...")
         weights = rate_map_events(
-            dataset, located, client, model, reasoning_effort, verbose
+            dataset, located, client, model, rating_effort, verbose
         )
 
     clusters = cluster_located_events(located, weights)
@@ -466,7 +478,7 @@ def generate_geo_map(
     if verbose:
         print("  Narrating map stops...")
     narration = narrate_map_clusters(
-        dataset, clusters, client, model, reasoning_effort, verbose
+        dataset, clusters, client, model, narration_effort, verbose
     )
     geo_map = apply_map_narration(clusters, narration, verbose=verbose)
     geo_map["generation"] = {
@@ -488,8 +500,6 @@ def main() -> int:
     import os
 
     from openai import OpenAI
-
-    from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 
     parser = argparse.ArgumentParser(
         description="(Re)build the geo_map section of existing meta stories "
@@ -519,8 +529,8 @@ def main() -> int:
     )
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
-        help=f"OpenAI model (default: {DEFAULT_MODEL})",
+        default=MAP_MODEL,
+        help=f"OpenAI model (default: {MAP_MODEL})",
     )
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
@@ -560,7 +570,6 @@ def main() -> int:
             registry,
             client,
             model=args.model,
-            reasoning_effort=DEFAULT_REASONING_EFFORT,
             skip_rating=args.skip_rating,
             verbose=args.verbose,
         )
