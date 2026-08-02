@@ -14,7 +14,7 @@
   import { _ } from "../stores/language";
   import { extractYear } from "../utils/storyHelpers.js";
   import { fade } from "svelte/transition";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onDestroy } from "svelte";
   import { mdiIconMap } from "virtual:mdi-icon-map";
 
   export let activeIndex = 0;
@@ -32,6 +32,7 @@
   export let onGoToEvent = () => {};
   export let onGoToSlide = () => {}; // Navigate to specific slide index (for chapter slides)
   export let onScrollToIndex = () => {};
+  export let onScrubToIndex = () => {}; // Continuous navigation during a drag
   export let initialExpanded = false; // NEW: Initial expanded state from URL
 
   const dispatch = createEventDispatcher();
@@ -286,6 +287,147 @@
     hasScrolledToActive = false;
   }
 
+  // The collapsed timeline doubles as a scrollbar: dragging along the dots runs
+  // through the slides continuously, the way a thumb drags a scrollbar, instead
+  // of asking for one tap per slide. A press only becomes a scrub once it
+  // travels horizontally, so tapping a single dot still just opens that slide.
+  const SCRUB_ACTIVATION_DISTANCE = 6; // px of travel that turns a press into a drag
+
+  let scrubPointerId = null;
+  let scrubStartX = 0;
+  let scrubStartY = 0;
+  let scrubStops = [];
+  let scrubIndex = -1;
+  let isScrubbing = false;
+  let scrubSwallowsClick = false;
+  let scrubClickReleaseTimer = null;
+
+  function releaseScrubClick() {
+    scrubSwallowsClick = false;
+    if (scrubClickReleaseTimer) {
+      clearTimeout(scrubClickReleaseTimer);
+      scrubClickReleaseTimer = null;
+    }
+  }
+
+  onDestroy(releaseScrubClick);
+
+  // Measured once per drag. The dots scale and shift as the active slide moves
+  // under the finger; re-reading their positions mid-drag would feed that motion
+  // back into the mapping and make the timeline chase itself.
+  function measureScrubStops(container) {
+    const stops = [];
+    for (const node of container.querySelectorAll("[data-slide-index]")) {
+      const rect = node.getBoundingClientRect();
+      if (!rect.width) continue;
+      stops.push({
+        index: Number(node.dataset.slideIndex),
+        center: rect.left + rect.width / 2,
+      });
+    }
+    return stops;
+  }
+
+  function slideIndexAt(x) {
+    let nearest = null;
+    let nearestDistance = Infinity;
+    for (const stop of scrubStops) {
+      const distance = Math.abs(stop.center - x);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearest = stop.index;
+      }
+    }
+    return nearest;
+  }
+
+  function handleScrubPointerDown(event) {
+    // A stale swallow flag from a drag that never produced a click would eat the
+    // next tap, so every fresh press starts from a clean one.
+    releaseScrubClick();
+    if (isExpanded) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+
+    scrubStops = measureScrubStops(event.currentTarget);
+    if (scrubStops.length < 2) return;
+
+    scrubPointerId = event.pointerId;
+    scrubStartX = event.clientX;
+    scrubStartY = event.clientY;
+    scrubIndex = activeIndex;
+    isScrubbing = false;
+  }
+
+  function handleScrubPointerMove(event) {
+    if (scrubPointerId === null || event.pointerId !== scrubPointerId) return;
+
+    if (!isScrubbing) {
+      const travelX = Math.abs(event.clientX - scrubStartX);
+      const travelY = Math.abs(event.clientY - scrubStartY);
+      if (travelX < SCRUB_ACTIVATION_DISTANCE || travelX <= travelY) return;
+      isScrubbing = true;
+      // Capture keeps the drag alive once the finger leaves the dot it started
+      // on, which it does immediately on a narrow screen.
+      event.currentTarget.setPointerCapture?.(scrubPointerId);
+      dispatch("scrubstart");
+    }
+
+    event.preventDefault();
+
+    const index = slideIndexAt(event.clientX);
+    if (index !== null && index !== scrubIndex) {
+      scrubIndex = index;
+      onScrubToIndex(index);
+    }
+  }
+
+  function endScrub(event) {
+    if (scrubPointerId === null || event.pointerId !== scrubPointerId) return;
+    if (event.currentTarget.hasPointerCapture?.(scrubPointerId)) {
+      event.currentTarget.releasePointerCapture(scrubPointerId);
+    }
+    scrubPointerId = null;
+    scrubStops = [];
+    if (!isScrubbing) return;
+    isScrubbing = false;
+
+    // The pointer capture above sends the closing click to this container rather
+    // than to a dot, so the flag usually goes unread. The timer is what keeps an
+    // unread one from outliving the drag and eating a later keyboard activation.
+    scrubSwallowsClick = true;
+    scrubClickReleaseTimer = setTimeout(releaseScrubClick, 500);
+
+    dispatch("scrubend", { index: scrubIndex });
+  }
+
+  // Attached as an action rather than as `on:pointerdown` and friends: the dots
+  // are buttons that already carry the pointer-free ways to reach a slide, and
+  // declaring the handlers in the markup makes the compiler ask this plain
+  // container for an interactive role it should not have.
+  function scrubSurface(node) {
+    node.addEventListener("pointerdown", handleScrubPointerDown);
+    node.addEventListener("pointermove", handleScrubPointerMove);
+    node.addEventListener("pointerup", endScrub);
+    node.addEventListener("pointercancel", endScrub);
+    return {
+      destroy() {
+        node.removeEventListener("pointerdown", handleScrubPointerDown);
+        node.removeEventListener("pointermove", handleScrubPointerMove);
+        node.removeEventListener("pointerup", endScrub);
+        node.removeEventListener("pointercancel", endScrub);
+      },
+    };
+  }
+
+  // A press that turned into a scrub still ends with a click on whatever the
+  // pointer came to rest on. Acting on it would navigate a second time, undoing
+  // wherever the drag left the reader.
+  function scrubSwallowedClick() {
+    if (!scrubSwallowsClick) return false;
+    releaseScrubClick();
+    return true;
+  }
+
   function toggleExpanded() {
     // The URL owns this state: the dispatch below makes StoryView rewrite the
     // timeline param, which flows back through initialExpanded and re-runs the
@@ -373,8 +515,10 @@
         <div
           class="dots-container"
           class:expanded={isExpanded}
+          class:scrubbing={isScrubbing}
           bind:this={expandedContainerElement}
           on:wheel|stopPropagation
+          use:scrubSurface
         >
           {#if !isExpanded}
             <div class="dot-wrapper home-dot">
@@ -382,6 +526,7 @@
                 type="button"
                 class="dot square"
                 class:active={activeIndex === 0}
+                data-slide-index="0"
                 style="transform: scale({activeIndex === 0
                   ? 1.6
                   : activeEventIndex === 0
@@ -391,7 +536,10 @@
                   : activeEventIndex === 0
                     ? 13
                     : 10};"
-                on:click={() => onScrollToIndex(0)}
+                on:click={() => {
+                  if (scrubSwallowedClick()) return;
+                  onScrollToIndex(0);
+                }}
                 aria-label={$_("timeline.show_overview")}
                 aria-current={activeIndex === 0 ? "true" : undefined}
               >
@@ -430,10 +578,14 @@
                     type="button"
                     class="dot chapter-dot"
                     class:active={activeIndex === item.slideIndex}
+                    data-slide-index={item.slideIndex}
                     style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
                       scale * 10
                     )};"
-                    on:click={() => onGoToSlide(item.slideIndex)}
+                    on:click={() => {
+                      if (scrubSwallowedClick()) return;
+                      onGoToSlide(item.slideIndex);
+                    }}
                     aria-label={$_("timeline.go_to_chapter", {
                       chapter: item.chapter.headline,
                     })}
@@ -468,10 +620,14 @@
                     type="button"
                     class="dot conclusion-dot square"
                     class:active={activeIndex === item.slideIndex}
+                    data-slide-index={item.slideIndex}
                     style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
                       scale * 10
                     )};"
-                    on:click={() => onGoToSlide(item.slideIndex)}
+                    on:click={() => {
+                      if (scrubSwallowedClick()) return;
+                      onGoToSlide(item.slideIndex);
+                    }}
                     aria-label={$_("timeline.go_to_conclusion")}
                     aria-current={activeIndex === item.slideIndex
                       ? "true"
@@ -505,10 +661,14 @@
                     type="button"
                     class="dot"
                     class:active={idx === activeEventIndex}
+                    data-slide-index={eventSlideIndex}
                     style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
                       scale * 10
                     )};"
-                    on:click={() => onGoToEvent(idx)}
+                    on:click={() => {
+                      if (scrubSwallowedClick()) return;
+                      onGoToEvent(idx);
+                    }}
                     aria-label={`Show event ${idx + 1} of ${totalSlides}`}
                     aria-current={idx === activeEventIndex ? "true" : undefined}
                   >
@@ -532,7 +692,10 @@
               class:has-chapter={currentChapter}
               class:show-event-count={activeIndex === 0 && !currentChapter}
               style="--chapter-offset: {chapterIndicatorOffset}%;"
-              on:click={toggleExpanded}
+              on:click={() => {
+                if (scrubSwallowedClick()) return;
+                toggleExpanded();
+              }}
               aria-label={currentChapter
                 ? $_("timeline.expand_to_chapter", {
                     chapter: currentChapter.headline,
@@ -941,6 +1104,22 @@
   .dots-container:not(.expanded) {
     /* Distribute items across full width with flex-grow */
     justify-content: space-between;
+    /* The collapsed row is a scrubber, so the browser must not claim the drag
+       for panning or the pointer stream stops after the first move. */
+    touch-action: none;
+  }
+
+  /* While a drag is running the dots have to sit where the finger left them:
+     the easing that makes a tap-driven jump pleasant reads as lag here. */
+  .dots-container.scrubbing,
+  .dots-container.scrubbing .dot {
+    cursor: grabbing;
+  }
+
+  .dots-container.scrubbing .dot,
+  .dots-container.scrubbing .dot-inner-chapter,
+  .dots-container.scrubbing .dot-inner-conclusion {
+    transition: background-color 0.25s ease;
   }
 
   /* On narrow screens, allow items to overlap by using negative margins */

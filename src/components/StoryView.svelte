@@ -376,6 +376,9 @@
   // Track the last notified index to avoid duplicate notifications
   let lastNotifiedIndex = activeIndex;
 
+  // True while a finger (or the mouse) is dragging along the compact timeline
+  let isTimelineScrubbing = false;
+
   // Track the last processed targetEventIndex to avoid reprocessing
   let lastProcessedEventIndex = null;
 
@@ -430,7 +433,16 @@
 
   // Notify parent when slide changes (only when actually different from last notification)
   // Include source information to help parent decide whether to push or replace history
-  $: if (activeIndex !== undefined && activeIndex !== lastNotifiedIndex) {
+  // A timeline scrub is exempt until the finger lifts: it crosses every slide
+  // between where it started and where it ends, and rewriting the route for each
+  // one records slides nobody stopped on while running the browser's own limit
+  // on history rewrites down. Dropping the flag re-runs this block, so the slide
+  // the drag settled on is still reported.
+  $: if (
+    activeIndex !== undefined &&
+    activeIndex !== lastNotifiedIndex &&
+    !isTimelineScrubbing
+  ) {
     lastNotifiedIndex = activeIndex;
     onSlideChange({
       detail: activeIndex,
@@ -679,7 +691,11 @@
     const scrollLeft = clampedIndex * clientWidth;
     slidesContainer.scrollTo({
       left: scrollLeft,
-      behavior: immediate ? "auto" : "smooth",
+      // "instant", not "auto": the container sets `scroll-behavior: smooth`, and
+      // "auto" defers to it, so an immediate scroll used to animate like any
+      // other. That is why a scrub trailed the finger and the initial scroll
+      // swept through the story before settling on the requested slide.
+      behavior: immediate ? "instant" : "smooth",
     });
 
     // Fallback timeout if scrollend not supported
@@ -730,6 +746,25 @@
       source: "timeline_chapter",
       updateStateImmediately: true,
     });
+  }
+
+  // Dragging along the compact timeline moves the slide under the finger, so
+  // every step jumps rather than animates: a smooth scroll would still be
+  // easing toward one slide while the finger has already passed two more.
+  function scrubToIndex(index) {
+    requestScrollTo(index, {
+      source: "timeline_scrub",
+      immediate: true,
+      updateStateImmediately: true,
+    });
+  }
+
+  function handleScrubStart() {
+    isTimelineScrubbing = true;
+  }
+
+  function handleScrubEnd() {
+    isTimelineScrubbing = false;
   }
 
   // Wrapper for Timeline component callbacks
@@ -1383,7 +1418,10 @@
     onGoToEvent={goToEvent}
     onGoToSlide={goToSlide}
     onScrollToIndex={scrollToIndexExternal}
+    onScrubToIndex={scrubToIndex}
     on:expandchange={handleTimelineExpandChange}
+    on:scrubstart={handleScrubStart}
+    on:scrubend={handleScrubEnd}
   />
 </div>
 

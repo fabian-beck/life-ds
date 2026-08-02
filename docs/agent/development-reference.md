@@ -108,9 +108,10 @@ Images appear as thumbnails (top-right of slide). Click to open `ImageViewer.sve
 
 `Timeline.svelte` features:
 
-- Drag scrubber: Click and drag anywhere on timeline track to navigate through slides in real-time
-- Snap-to-slide: Releases snap to nearest slide for precise navigation
-- Click dots to jump to specific events
+- Drag scrubber: the collapsed track behaves like a scrollbar. A press anywhere on it that travels horizontally—finger, pen, or mouse—becomes a drag, and the story jumps to whichever dot is nearest the pointer, so a long life can be crossed in one gesture. The dot positions are measured once per drag, because they scale and shift under the active slide. The collapsed row therefore sets `touch-action: none`; a browser pan would end the pointer stream after the first move.
+- Snap-to-slide: every step is an instant scroll to an exact slide offset, so releasing needs no snap of its own. `requestScrollTo` passes `behavior: "instant"` rather than `"auto"` for these—the slide container declares `scroll-behavior: smooth`, which `"auto"` defers to.
+- Scrub and the route: `StoryView` withholds the slide notification while a drag runs (`isTimelineScrubbing`) and reports the slide it settles on. A drag crosses every slide between its ends, and one `replace()` per crossing would record slides nobody stopped on and spend the browser's budget for history rewrites.
+- Click dots to jump to specific events. A drag ends with a click on whatever the pointer rests on; `scrubSwallowedClick()` is what keeps that click from navigating a second time.
 - Visual indicators for event categories (icons determined by event text)
 - Year markers when expanded (not all events have exact dates)
 - Expandable mode: Toggle to see full vertical timeline with labels

@@ -246,6 +246,31 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(page.locator("main.slides")).not.toHaveAttribute("aria-live");
   await expect(page.locator(".slide-status")).toHaveText(/Slide \d+ of \d+: /);
 
+  // The compact timeline is a scrollbar as much as a set of targets: dragging
+  // along it runs through the story under the finger, which is the only way to
+  // cross a long life on a phone without tapping once per slide.
+  const compactTimeline = page.locator(".dots-container:not(.expanded)");
+  const lastSlide = (await compactTimeline.locator(".dot").count()) - 1;
+  expect(lastSlide).toBeGreaterThan(3);
+  const track = await compactTimeline.boundingBox();
+  const trackY = track.y + track.height / 2;
+  await page.mouse.move(track.x + 4, trackY);
+  await page.mouse.down();
+  await page.mouse.move(track.x + track.width - 4, trackY, { steps: 12 });
+  await expect(
+    compactTimeline.locator(`[data-slide-index="${lastSlide}"]`)
+  ).toHaveAttribute("aria-current", "true");
+  // The route stays where it was until the finger lifts. A drag passes over
+  // every slide between its ends, and rewriting the URL for each one records
+  // slides nobody stopped on, and spends the browser's budget for rewrites.
+  await expect(page).toHaveURL(/[?&]slide=2(?:&|$)/);
+  await page.mouse.up();
+  await expect(page).toHaveURL(new RegExp(`[?&]slide=${lastSlide}(?:&|$)`));
+
+  // A tap is still a tap: only travel along the track turns a press into a drag.
+  await compactTimeline.locator(".home-dot .dot").click();
+  await expect(page).not.toHaveURL(/[?&]slide=/);
+
   await page.evaluate(async () => {
     const languages = ["de", "en", "de", "en", "de", "en", "de", "en", "de"];
     languages.forEach((language, index) => {
