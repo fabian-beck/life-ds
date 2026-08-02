@@ -1,0 +1,377 @@
+{
+  "dataset": "Niels Bohr ego network",
+  "created_on": "2026-08-02",
+  "ego": {
+    "name": "Niels Henrik David Bohr",
+    "birth_year": 1885,
+    "death_year": 1962,
+    "primary_roles": [
+      "Theoretischer Physiker",
+      "Philosoph",
+      "Hochschullehrer"
+    ],
+    "summary": "Dänischer theoretischer Physiker, dessen Arbeiten zur Atomstruktur, Quantentheorie und Komplementarität die Physik des 20. Jahrhunderts grundlegend veränderten. Er gründete das Kopenhagener Institut für Theoretische Physik, baute eine einflussreiche internationale Forschergemeinschaft auf und setzte sich für internationale Zusammenarbeit bei der Nutzung der Kernenergie ein.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Niels_Bohr"
+  },
+  "connections": [
+    {
+      "person_name": "Christian Bohr",
+      "relationship_type": "family/father",
+      "relationship_description": "Bohrs Vater war Physiologe an der Universität Kopenhagen. Er zog Niels in einem intellektuell anregenden Elternhaus auf und überließ ihm für erste Experimente zur Oberflächenspannung sein Labor.",
+      "start_year": 1885,
+      "end_year": 1911,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Kopenhagen",
+        "Frühe Laborversuche zur Oberflächenspannung",
+        "Wissenschaftliche und philosophische Gespräche"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://de.wikipedia.org/wiki/Christian_Bohr"
+      ],
+      "notes": "Christian Bohr war Professor für Physiologie und mit dem Philosophen Harald Høffding befreundet."
+    },
+    {
+      "person_name": "Ellen Adler Bohr",
+      "relationship_type": "family/mother",
+      "relationship_description": "Bohrs Mutter stammte aus einer bedeutenden jüdisch-dänischen Bankiersfamilie und prägte seinen familiären Hintergrund und seine Erziehung maßgeblich.",
+      "start_year": 1885,
+      "end_year": 1930,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben in Kopenhagen",
+        "Gemeinsames Familien- und Kulturleben"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "notes": "Ihre jüdische Herkunft brachte die Familie Bohr während der nationalsozialistischen Besetzung Dänemarks später in Gefahr."
+    },
+    {
+      "person_name": "Jenny Bohr",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Bohrs ältere Schwester wuchs gemeinsam mit ihm und Harald in Kopenhagen auf und wurde später Lehrerin.",
+      "start_year": 1885,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familiäres Leben in der Kindheit in Kopenhagen",
+        "Familienzusammenkünfte"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "notes": null
+    },
+    {
+      "person_name": "Harald Bohr",
+      "relationship_type": "family/sibling",
+      "relationship_description": "Bohrs jüngerer Bruder war Mathematiker und Fußballspieler der Spitzenklasse; die Brüder spielten gemeinsam für den Akademisk Boldklub und teilten eine wissenschaftlich geprägte Erziehung.",
+      "start_year": 1887,
+      "end_year": 1951,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "Fußball beim Akademisk Boldklub",
+        "Universitätsleben in Kopenhagen",
+        "Wissenschaftliche und intellektuelle Gespräche"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://de.wikipedia.org/wiki/Harald_Bohr"
+      ],
+      "notes": "Harald erwarb seinen Masterabschluss und promovierte, bevor Niels die entsprechenden Abschlüsse erlangte."
+    },
+    {
+      "person_name": "Christian Christiansen",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Als Bohr sich einschrieb, war Christiansen der einzige Physikprofessor an der Universität Kopenhagen. Er unterrichtete ihn in Physik und betreute seine Magisterarbeit über die Elektronentheorie der Metalle.",
+      "start_year": 1903,
+      "end_year": 1911,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Physikstudium an der Universität Kopenhagen",
+        "Magisterarbeit zur Elektronentheorie der Metalle",
+        "Promotionsstudium"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "notes": "Christiansen gab Bohr das Thema für seine Magisterarbeit, das Bohr später zu seiner Dissertation ausbaute."
+    },
+    {
+      "person_name": "Harald Høffding",
+      "relationship_type": "academic/teacher",
+      "relationship_description": "Philosoph und Freund von Bohrs Vater, der Bohr an der Universität Kopenhagen in Philosophie unterrichtete.",
+      "start_year": 1903,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Philosophiestudium an der Universität Kopenhagen",
+        "Intellektuelle Gespräche im Umfeld der Familie Bohr"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "notes": "Bohrs späterer philosophischer Ansatz der Komplementarität spiegelte seine anhaltende Beschäftigung mit den begrifflichen Konsequenzen der Physik wider."
+    },
+    {
+      "person_name": "Margrethe Nørlund Bohr",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Bohrs Ehefrau und engste intellektuelle Mitarbeiterin, die sein Arbeitsleben durch Gespräche, Abschriften, Überarbeitungen und die Bewirtung der Kopenhagener Wissenschaftsgemeinschaft mitprägte.",
+      "start_year": 1910,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und Erziehung von sechs Söhnen",
+        "Gespräche über wissenschaftliche Ideen",
+        "Redigieren, Abschreiben und Überarbeiten von Bohrs Aufsätzen und Korrespondenz",
+        "Empfang von Physikern aus dem Umfeld des Kopenhagener Instituts",
+        "Exil in Schweden und Großbritannien während des Zweiten Weltkriegs"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Margrethe_Bohr"
+      ],
+      "notes": "Sie verlobten sich 1910 und heirateten am 1. August 1912."
+    },
+    {
+      "person_name": "J. J. Thomson",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Bohr begegnete Thomson während seines Stipendienaufenthalts 1911 am Cavendish Laboratory in Cambridge und arbeitete in dessen Forschungsumfeld, wenngleich Thomson von Bohrs frühen Arbeiten zu Kathodenstrahlen nicht sonderlich beeindruckt war.",
+      "start_year": 1911,
+      "end_year": 1912,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Forschung am Cavendish Laboratory",
+        "Kathodenstrahlenforschung",
+        "Vorlesungen und wissenschaftliche Gespräche in Cambridge"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/J._J._Thomson"
+      ],
+      "notes": "Dieser frühe Aufenthalt in England ging Bohrs folgenreicherem Wechsel in Rutherfords Gruppe in Manchester voraus."
+    },
+    {
+      "person_name": "Ernest Rutherford",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Rutherford nahm Bohr als Postdoktoranden in Manchester auf; sein Kernmodell des Atoms war für die Entwicklung des Bohrschen Atommodells von zentraler Bedeutung.",
+      "start_year": 1912,
+      "end_year": 1937,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Postdoktorandenforschung an der Victoria University of Manchester",
+        "Forschung zur Atomstruktur",
+        "Entwicklung und Diskussion des Bohrschen Atommodells"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Ernest_Rutherford"
+      ],
+      "notes": "Rutherford lud Bohr 1912 in sein Labor ein und bot ihm später eine Dozentenstelle in Manchester an."
+    },
+    {
+      "person_name": "George de Hevesy",
+      "relationship_type": "professional/collaborator-friend",
+      "relationship_description": "Ungarischer Radiochemiker und langjähriger Freund, der Bohr in Manchester kennenlernte, später am Kopenhagener Institut arbeitete und gemeinsam mit Dirk Coster Bohrs Vorhersage zum Element 72, Hafnium, bestätigte.",
+      "start_year": 1912,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Forschungsgemeinschaft in Manchester",
+        "Institut für Theoretische Physik in Kopenhagen",
+        "Entdeckung und Benennung des Hafniums mit Dirk Coster",
+        "Unterstützung von durch nationalsozialistische Verfolgung bedrohten Wissenschaftlern"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://de.wikipedia.org/wiki/George_de_Hevesy"
+      ],
+      "notes": "De Hevesy bezeichnete Bohr als lebenslangen Freund."
+    },
+    {
+      "person_name": "Albert Einstein",
+      "relationship_type": "professional/intellectual-interlocutor",
+      "relationship_description": "Ein ebenfalls wegweisender Physiker, der das Bohrsche Modell würdigte, jedoch in den Debatten über Deutung und Vollständigkeit der Quantenmechanik zu Bohrs bekanntestem intellektuellen Gegenspieler wurde.",
+      "start_year": 1913,
+      "end_year": 1955,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Korrespondenz und Debatten zur Quantentheorie",
+        "Diskussionen auf den Solvay-Konferenzen",
+        "Gedankenexperimente zu Komplementarität und Quantenmessung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://de.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "Ihre Debatten, insbesondere in den 1920er- und 1930er-Jahren, trugen wesentlich dazu bei, die philosophische Deutung der Quantenmechanik zu bestimmen."
+    },
+    {
+      "person_name": "Christian Bohr Jr.",
+      "relationship_type": "family/child",
+      "relationship_description": "Bohrs ältester Sohn, der als Jugendlicher bei einem Bootsunfall ums Leben kam, als er mit seinem Vater segelte.",
+      "start_year": 1916,
+      "end_year": 1934,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben",
+        "Bootsfahrten und Segeln"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Margrethe_Bohr",
+        "https://en.wikipedia.org/wiki/Aage_Bohr"
+      ],
+      "notes": "Christian ertrank im Alter von 18 Jahren, nachdem ein Sturm das Boot überrascht hatte."
+    },
+    {
+      "person_name": "Hans Kramers",
+      "relationship_type": "professional/mentee-collaborator",
+      "relationship_description": "Niederländischer Physiker, der fast ein Jahrzehnt in Bohrs Kopenhagener Gruppe arbeitete und zu Bohrs wichtigen frühen Mitarbeitern in der Quantentheorie wurde.",
+      "start_year": 1916,
+      "end_year": 1926,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Forschung an der Universität Kopenhagen",
+        "Gemeinschaft des Instituts für Theoretische Physik",
+        "Forschung und Gespräche zur Quantentheorie"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Hans_Kramers"
+      ],
+      "notes": "Kramers wurde außerordentlicher Professor in Kopenhagen, bevor er 1926 in die Niederlande zurückkehrte."
+    },
+    {
+      "person_name": "Oskar Klein",
+      "relationship_type": "professional/mentee-collaborator",
+      "relationship_description": "Schwedischer theoretischer Physiker, der mit Bohr in Kopenhagen arbeitete und zu den frühen internationalen Forschern im Umfeld von Bohrs Institut gehörte.",
+      "start_year": 1917,
+      "end_year": 1926,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Forschung in theoretischer Physik in Kopenhagen",
+        "Gespräche am Institut für Theoretische Physik",
+        "Forschung zur Quantenmechanik"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Oskar_Klein"
+      ],
+      "notes": "Klein arbeitete ab 1917 mit Bohr zusammen und kehrte nach einem Aufenthalt in den Vereinigten Staaten nach Kopenhagen zurück."
+    },
+    {
+      "person_name": "Aage Bohr",
+      "relationship_type": "family/child",
+      "relationship_description": "Bohrs Sohn und späterer Nobelpreisträger für Kernphysik, der seinem Vater während der Kriegszeit assistierte und ihm nach dessen Tod als Direktor des Niels-Bohr-Instituts nachfolgte.",
+      "start_year": 1922,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben am Institut für Theoretische Physik",
+        "Flucht aus dem besetzten Dänemark",
+        "Arbeit für Tube Alloys und das Manhattan-Projekt",
+        "Kernphysikalische Forschung und institutionelle Leitung"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Aage_Bohr",
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "notes": "Aage diente seinem Vater während des Zweiten Weltkriegs in Großbritannien und den Vereinigten Staaten als persönlicher Assistent und Sekretär."
+    },
+    {
+      "person_name": "Werner Heisenberg",
+      "relationship_type": "professional/mentee-collaborator",
+      "relationship_description": "Deutscher Quantenphysiker, den Bohr in Kopenhagen förderte und mit dem er zusammenarbeitete; ihr Austausch war für die Entwicklung und Deutung der Quantenmechanik von zentraler Bedeutung.",
+      "start_year": 1922,
+      "end_year": 1962,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Gespräche zur Quantentheorie in Kopenhagen",
+        "Forschungsgemeinschaft des Instituts für Theoretische Physik",
+        "Debatten über Komplementarität und Quantenmechanik",
+        "Treffen 1941 im besetzten Kopenhagen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Werner_Heisenberg"
+      ],
+      "notes": "Ihre Begegnung im Jahr 1941 während der deutschen Besatzung wird bis heute kontrovers gedeutet."
+    },
+    {
+      "person_name": "Wolfgang Pauli",
+      "relationship_type": "professional/colleague",
+      "relationship_description": "Führender Quantentheoretiker in Bohrs internationalem, auf Kopenhagen ausgerichtetem Netzwerk, mit dem ihn Diskussionen über Atomstruktur und Quantenmechanik verbanden.",
+      "start_year": 1922,
+      "end_year": 1958,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Diskussionen zur Quantenmechanik",
+        "Besuche und Arbeit in der Kopenhagener Gemeinschaft der theoretischen Physik",
+        "Forschung zur Atomstruktur"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Werner_Heisenberg"
+      ],
+      "notes": "Pauli gehörte zu den Physikern im Umfeld von Bohrs Institut und dessen internationalem Forscherkreis."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Bohrs Elternhaus prägte seine frühesten Interessen: Seine Eltern förderten ihn intellektuell, Harald teilte mit ihm akademische und sportliche Interessen, und Margrethe war ihm lebenslang Partnerin und Mitarbeiterin. Ihr Sohn Aage führte das wissenschaftliche Erbe der Familie später fort."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Bohrs Ausbildung führte ihn von Christiansen und Høffding in Kopenhagen über die gegensätzlichen Forschungsumfelder bei Thomson in Cambridge bis zu Rutherford in Manchester. Rutherfords Kernatom war für Bohrs Modell von 1913 entscheidend."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Am Kopenhagener Institut für Theoretische Physik versammelte Bohr eine internationale Gemeinschaft jüngerer Physiker und etablierter Forscher. Der Austausch mit Kramers, Klein, de Hevesy, Heisenberg, Pauli und Einstein prägte die Atom- und Quantenphysik."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "50c0d0e1d2c81a75",
+    "translated_on": "2026-08-02T06:15:56.266721+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

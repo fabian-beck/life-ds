@@ -1,0 +1,763 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-02",
+  "person": {
+    "name": "Niels_Bohr",
+    "birth_date": "1885-10-07",
+    "death_date": "1962-11-18",
+    "primary_roles": [
+      "Physiker",
+      "Philosoph",
+      "Hochschullehrer"
+    ],
+    "tagline": "Architekt des Quantenatoms",
+    "summary": "Niels Bohr war ein dänischer theoretischer Physiker, dessen Arbeiten zur Atomstruktur, Quantentheorie und Komplementarität die Physik des 20. Jahrhunderts prägten. Er gründete Kopenhagens Institut für Theoretische Physik, half Wissenschaftlern auf der Flucht vor dem Nationalsozialismus und setzte sich nach dem Zweiten Weltkrieg für internationale Zusammenarbeit bei der Nutzung der Kernenergie ein.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Niels_Bohr",
+    "portrait": {
+      "image": "/portraits/niels_bohr_thumbnail.webp",
+      "thumbnail": "/portraits/niels_bohr_thumbnail.webp",
+      "medium": "/portraits/niels_bohr_medium.webp",
+      "full": "/portraits/niels_bohr_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Niels_Bohr",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Niels_Bohr.jpg",
+      "referenceUsed": true
+    }
+  },
+  "chapters": [
+    {
+      "id": "first_principles",
+      "headline": "Grundlagen",
+      "date_start": "1885-10-07",
+      "date_start_precision": "day",
+      "date_end": "1911-05",
+      "date_end_precision": "month",
+      "age_start": 0,
+      "age_end": 25,
+      "involved_people": [
+        "Christian Bohr",
+        "Ellen Adler Bohr",
+        "Jenny Bohr",
+        "Harald Bohr",
+        "Christian Christiansen",
+        "Harald Høffding"
+      ],
+      "location": "Dänemark"
+    },
+    {
+      "id": "the_atom_takes_shape",
+      "headline": "Das Atom nimmt Gestalt an",
+      "date_start": "1911-09",
+      "date_start_precision": "month",
+      "date_end": "1913-11",
+      "date_end_precision": "month",
+      "age_start": 25,
+      "age_end": 28,
+      "involved_people": [
+        "Ernest Rutherford",
+        "Margrethe Bohr"
+      ],
+      "location": "Vereinigtes Königreich"
+    },
+    {
+      "id": "copenhagen_at_quantum_center",
+      "headline": "Kopenhagens Quantenzentrum",
+      "date_start": "1916-07",
+      "date_start_precision": "month",
+      "date_end": "1927",
+      "date_end_precision": "year",
+      "age_start": 30,
+      "age_end": 41,
+      "involved_people": [
+        "Margrethe Bohr",
+        "Werner Heisenberg"
+      ],
+      "location": "Europa"
+    },
+    {
+      "id": "science_against_tyranny",
+      "headline": "Wissenschaft gegen Tyrannei",
+      "date_start": "1933",
+      "date_start_precision": "year",
+      "date_end": "1956",
+      "date_end_precision": "year",
+      "age_start": 47,
+      "age_end": 70,
+      "involved_people": [
+        "Margrethe Bohr",
+        "Aage Bohr"
+      ],
+      "location": "Transatlantische Welt"
+    },
+    {
+      "id": "an_open_world",
+      "headline": "Eine offene Welt",
+      "date_start": "1957",
+      "date_start_precision": "year",
+      "date_end": "1962-11-18",
+      "date_end_precision": "day",
+      "age_start": 71,
+      "age_end": 77,
+      "involved_people": null,
+      "location": "Dänemark"
+    }
+  ],
+  "conclusion": "Niels Bohr machte aus dem Rätsel des Atoms eine neue Sicht auf die Wirklichkeit und setzte sich in seinen späteren Jahren dafür ein, dass Wissen von solcher Macht der Menschheit dienen müsse. Sein Kopenhagener Vermächtnis lebt fort – als Grundlage der Quantenphysik ebenso wie als ethischer Appell zu wissenschaftlicher Offenheit.",
+  "events": [
+    {
+      "date": "1885-10-07",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Geburt in Kopenhagen",
+      "description": "Niels Henrik David Bohr wurde in Kopenhagen als Sohn des Universitätsphysiologen Christian Bohr und von Ellen Adler Bohr geboren, die einer angesehenen dänisch-jüdischen Bankiersfamilie entstammte. Gemeinsam mit seiner Schwester Jenny und seinem jüngeren Bruder Harald wuchs er in einem geistig regen Elternhaus auf.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Christian Bohr",
+        "Ellen Adler Bohr",
+        "Jenny Bohr",
+        "Harald Bohr"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Christian_Bohr",
+        "https://de.wikipedia.org/wiki/Harald_Bohr",
+        "https://www.deutsche-biographie.de/sfz107210.html"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Portrait_of_Niels_Bohr_sitting_with_his_mother%2C_Ellen_Adler_Bohr.jpg/960px-Portrait_of_Niels_Bohr_sitting_with_his_mother%2C_Ellen_Adler_Bohr.jpg",
+          "caption": "Niels Bohr mit seiner Mutter Ellen Adler Bohr",
+          "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Niels_Bohr_sitting_with_his_mother,_Ellen_Adler_Bohr.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "first_principles"
+    },
+    {
+      "date": "1903",
+      "date_precision": "year",
+      "age": 17,
+      "title": "Physikstudium in Kopenhagen",
+      "description": "1903 schrieb sich Bohr an der Universität Kopenhagen ein, um bei Christian Christiansen Physik zu studieren. Daneben belegte er Mathematik, Astronomie und Philosophie, darunter Philosophie bei Harald Høffding, einem engen Freund seines Vaters.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Christian Christiansen",
+        "Harald Høffding"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/K%C3%B8benhavns_Universitet%2C_1890.jpg/960px-K%C3%B8benhavns_Universitet%2C_1890.jpg",
+          "caption": "Universität Kopenhagen, 1890",
+          "source": "https://commons.wikimedia.org/wiki/File:Københavns_Universitet,_1890.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "first_principles"
+    },
+    {
+      "date": "1909-04",
+      "date_precision": "month",
+      "date_end": "1911-05",
+      "date_end_precision": "month",
+      "age": 23,
+      "title": "Vom Master zur Promotion",
+      "description": "Im April 1909 schloss Bohr ein Masterstudium über die [[electron theory of metals|Elektronentheorie der Metalle]] ab und weitete das Thema zu einer Doktorarbeit aus. Im Mai 1911 verteidigte er an der Universität Kopenhagen seine Dissertation und kam zu dem Schluss, dass die Theorie die magnetischen Eigenschaften von Metallen nicht hinreichend erklärte.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "first_principles",
+      "annotations": {
+        "electron theory of metals": {
+          "explanation": "Ein klassisches Modell, das die Leitungselektronen in Metallen als Gas auffasste; mehrere Eigenschaften von Metallen, darunter der Magnetismus, ließ es nicht vollständig erklären.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Drude_model"
+        }
+      },
+      "involved_people": [
+        "Christian Christiansen"
+      ]
+    },
+    {
+      "date": "1911-09",
+      "date_precision": "month",
+      "date_end": "1912-07",
+      "date_end_precision": "month",
+      "age": 25,
+      "title": "Studien bei Rutherford",
+      "description": "Mit einem Stipendium der Carlsberg-Stiftung reiste Bohr im September 1911 nach England und arbeitete zunächst am Cavendish Laboratory in Cambridge. Anschließend schloss er sich Ernest Rutherfords Gruppe in Manchester an, wo Rutherfords Kernmodell des Atoms für Bohrs Denken maßgeblich wurde.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Vereinigtes Königreich",
+          "centroid": [
+            0.1218,
+            52.2053
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, Vereinigtes Königreich",
+          "centroid": [
+            -2.2426,
+            53.4808
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ernest Rutherford",
+        "J. J. Thomson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ernest_Rutherford"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Cavendish_Laboratory%2C_Cambridge.jpg/960px-Cavendish_Laboratory%2C_Cambridge.jpg",
+          "caption": "Cavendish Laboratory, Cambridge",
+          "source": "https://commons.wikimedia.org/wiki/File:Cavendish_Laboratory,_Cambridge.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "the_atom_takes_shape"
+    },
+    {
+      "date": "1912-08-01",
+      "date_precision": "day",
+      "age": 26,
+      "title": "Heirat mit Margrethe Nørlund",
+      "description": "Am 1. August 1912 heiratete das Paar standesamtlich im Rathaus von Slagelse in Dänemark.",
+      "locations": [
+        {
+          "name_historic": "Slagelse",
+          "name_modern": "Slagelse, Dänemark",
+          "centroid": [
+            11.3546,
+            55.4028
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Margrethe Nørlund"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Margrethe_Bohr"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Niels_Bohr_with_his_wife_Margrethe_N%C3%B8rlund_on_their_engagement_in_1910.jpg/960px-Niels_Bohr_with_his_wife_Margrethe_N%C3%B8rlund_on_their_engagement_in_1910.jpg",
+          "caption": "Niels Bohr und Margrethe Nørlund, verlobt 1910",
+          "source": "https://commons.wikimedia.org/wiki/File:Niels_Bohr_with_his_wife_Margrethe_Nørlund_on_their_engagement_in_1910.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "the_atom_takes_shape",
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Margrethe Nørlund",
+        "duration": "until his death",
+        "children": 6,
+        "characterization": "close collaboration"
+      }
+    },
+    {
+      "date": "1913-07",
+      "date_precision": "month",
+      "date_end": "1913-11",
+      "date_end_precision": "month",
+      "age": 27,
+      "title": "Drei Aufsätze zum Atommodell",
+      "description": "Nach seiner Rückkehr nach Kopenhagen veröffentlichte Bohr 1913 im Philosophical Magazine drei Aufsätze, in denen er sein neues Atommodell begründete. Aufbauend auf Rutherfords Kernatom postulierten sie stabile Elektronenzustände und brachten die ausgesandte Strahlung mit Übergängen zwischen diesen Zuständen in Verbindung.",
+      "locations": [
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, Vereinigtes Königreich",
+          "centroid": [
+            -2.2426,
+            53.4808
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ernest Rutherford"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Bohr_model",
+        "https://en.wikipedia.org/wiki/Ernest_Rutherford"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Bohr%2C_Niels_%E2%80%93_The_theory_of_spectra_and_atomic_constitution_%28Drei_Aufs%C3%A4tze_%C3%BCber_Spektren_und_Atombau%29%2C_1922_%E2%80%93_BEIC_10990185.jpg/960px-Bohr%2C_Niels_%E2%80%93_The_theory_of_spectra_and_atomic_constitution_%28Drei_Aufs%C3%A4tze_%C3%BCber_Spektren_und_Atombau%29%2C_1922_%E2%80%93_BEIC_10990185.jpg",
+          "caption": "Die Theorie der Spektren und der Atombau, 1922",
+          "source": "https://commons.wikimedia.org/wiki/File:Bohr,_Niels_–_The_theory_of_spectra_and_atomic_constitution_(Drei_Aufsätze_über_Spektren_und_Atombau),_1922_–_BEIC_10990185.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "the_atom_takes_shape",
+      "annotations": {
+        "Manchester": {
+          "explanation": "Bohr entwickelte diese Arbeit während seiner Postdoktorandenzeit an der Universität Manchester im Forschungsumfeld Rutherfords.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Manchester"
+        }
+      },
+      "event_class": {
+        "type": "publication",
+        "title": "On the Constitution of Atoms and Molecules",
+        "publication_type": "paper",
+        "publisher": "Philosophical Magazine",
+        "significance": "atomic model",
+        "impact": "The papers described quantized stationary states and radiation emitted when electrons changed between them."
+      },
+      "location_coordinates": [
+        {
+          "label": "Publication setting",
+          "name": "Copenhagen, Denmark",
+          "primary": true,
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "source": "https://en.wikipedia.org/wiki/Niels_Bohr"
+        }
+      ]
+    },
+    {
+      "date": "1916-07",
+      "date_precision": "month",
+      "age": 30,
+      "title": "Rückkehr nach Kopenhagen",
+      "description": "Bohr nahm den Lehrstuhl für theoretische Physik an der Universität Kopenhagen an und kehrte mit Margrethe zurück; damit endete seine kriegsbedingte Lehr- und Forschungstätigkeit in Manchester. In Kopenhagen begann er, ein neues Zentrum für theoretische Physik aufzubauen.",
+      "locations": [
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, Vereinigtes Königreich",
+          "centroid": [
+            -2.2426,
+            53.4808
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Margrethe Bohr"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Margrethe_Bohr"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "copenhagen_at_quantum_center",
+      "event_class": {
+        "type": "migration",
+        "from_location": "United Kingdom",
+        "to_location": "Copenhagen, Denmark",
+        "characterization": "academic appointment"
+      }
+    },
+    {
+      "date": "1920",
+      "date_precision": "year",
+      "age": 34,
+      "title": "Eröffnung des Kopenhagener Physikinstituts",
+      "description": "1920 gründete Bohr an der Universität Kopenhagen das Institut für Theoretische Physik und übernahm dessen Leitung. Das Institut führte Gastwissenschaftler und junge Physiker zu einem fortwährenden Austausch mit Bohr und untereinander zusammen.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Niels_Bohr_Institutet_01.jpg/960px-Niels_Bohr_Institutet_01.jpg",
+          "caption": "Niels-Bohr-Institut, Kopenhagen",
+          "source": "https://commons.wikimedia.org/wiki/File:Niels_Bohr_Institutet_01.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "copenhagen_at_quantum_center"
+    },
+    {
+      "date": "1922",
+      "date_precision": "year",
+      "age": 37,
+      "title": "Nobelpreis für Physik",
+      "description": "Bohr erhielt 1922 den Nobelpreis für Physik für seine Untersuchungen zum Aufbau der Atome und zu der von ihnen ausgesandten Strahlung. Als die Preisverleihung in Stockholm stattfand, war er in Japan auf Reisen; seine Nobelvorlesung hielt er im folgenden Jahr.",
+      "locations": [
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Schweden",
+          "centroid": [
+            18.0686,
+            59.3293
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Japan",
+          "name_modern": "Japan",
+          "centroid": [
+            138.2529,
+            36.2048
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "copenhagen_at_quantum_center"
+    },
+    {
+      "date": "1927",
+      "date_precision": "year",
+      "age": 41,
+      "title": "Das Komplementaritätsprinzip",
+      "description": "1927 führte Bohr in den Debatten über die Bedeutung der Quantenmechanik [[complementarity|das Komplementaritätsprinzip]] ein. Er argumentierte, dass Wellen- und Teilchenverhalten je nach Versuchsanordnung unterschiedliche, aber einander notwendig ergänzende Beschreibungen erforderten.",
+      "locations": [
+        {
+          "name_historic": "Como",
+          "name_modern": "Como, Italien",
+          "centroid": [
+            9.0852,
+            45.8081
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Werner Heisenberg"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Complementarity_(physics)",
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Werner_Heisenberg"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Solvay_conference_1927.jpg/960px-Solvay_conference_1927.jpg",
+          "caption": "Solvay-Konferenz zur Quantenmechanik 1927",
+          "source": "https://commons.wikimedia.org/wiki/File:Solvay_conference_1927.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "copenhagen_at_quantum_center",
+      "annotations": {
+        "complementarity": {
+          "explanation": "Bohr übertrug diese Idee später über die Physik hinaus und vertrat damit die Auffassung, dass scheinbar unvereinbare Perspektiven unter ihren jeweiligen Beobachtungsbedingungen jeweils notwendig sein können.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Complementarity_(physics)"
+        }
+      }
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "date_end": "1939",
+      "date_end_precision": "year",
+      "age": 47,
+      "title": "Hilfe für geflüchtete Wissenschaftler",
+      "description": "Als die nationalsozialistische Verfolgung in Deutschland immer schärfer wurde, nutzte Bohr seine Stellung und seine internationalen Verbindungen, um vertriebenen Wissenschaftlern zu helfen. Sein Kopenhagener Institut wurde zu einem Ort, an dem Flüchtlinge wissenschaftliche Kontakte, Unterstützung und vorübergehende Arbeit finden konnten.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Bohr_Heisenberg_Pauli_Meitner_u.a._1937.jpg/960px-Bohr_Heisenberg_Pauli_Meitner_u.a._1937.jpg",
+          "caption": "Bohr mit Heisenberg, Pauli, Meitner und weiteren Physikern",
+          "source": "https://commons.wikimedia.org/wiki/File:Bohr_Heisenberg_Pauli_Meitner_u.a._1937.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "science_against_tyranny"
+    },
+    {
+      "date": "1943-09",
+      "date_precision": "month",
+      "date_end": "1943-10",
+      "date_end_precision": "month",
+      "age": 57,
+      "title": "Flucht aus dem besetzten Dänemark",
+      "description": "Als Bohr im September 1943 erfuhr, dass die deutschen Behörden seine Verhaftung planten, floh er mit seiner Frau Margrethe per Boot aus dem besetzten Dänemark nach Schweden. Von dort wurde er nach Großbritannien ausgeflogen, wo er seine Arbeit mit Wissenschaftlern der Alliierten fortsetzte.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Schweden",
+          "centroid": [
+            18.0686,
+            59.3293
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Margrethe Nørlund Bohr",
+        "Aage Bohr"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Aage_Bohr"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "science_against_tyranny",
+      "event_class": {
+        "type": "migration",
+        "from_location": "Denmark",
+        "to_location": "Sweden",
+        "characterization": "refugee flight"
+      }
+    },
+    {
+      "date": "1944",
+      "date_precision": "year",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "age": 58,
+      "title": "Berater des Manhattan-Projekts",
+      "description": "In Großbritannien schloss sich Bohr dem [[Tube Alloys|Tube-Alloys-Projekt]] an und reiste später mit der britischen Mission zum [[Manhattan Project|Manhattan-Projekt]] in die Vereinigten Staaten. Unter den Decknamen Nicholas Baker und James Baker berieten er und sein Sohn Aage die alliierten Forscher bei ihren Arbeiten zur Kernspaltung.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Los Alamos",
+          "name_modern": "Los Alamos, New Mexico, Vereinigte Staaten",
+          "centroid": [
+            -106.306,
+            35.8801
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Aage Bohr"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Aage_Bohr",
+        "https://en.wikipedia.org/wiki/Tube_Alloys"
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "science_against_tyranny",
+      "annotations": {
+        "Tube Alloys": {
+          "explanation": "Das geheime britische Programm des Zweiten Weltkriegs zur Entwicklung von Atomwaffen, das später mit dem amerikanischen Manhattan-Projekt zusammengeführt wurde.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tube_Alloys"
+        },
+        "Manhattan Project": {
+          "explanation": "Das geheime Kriegsprogramm der Alliierten, in dessen Rahmen die ersten Atomwaffen entwickelt wurden.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Manhattan_Project"
+        }
+      },
+      "location_coordinates": [
+        {
+          "label": "Tube Alloys setting",
+          "name": "London, United Kingdom",
+          "primary": false,
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "source": "https://en.wikipedia.org/wiki/Niels_Bohr"
+        },
+        {
+          "label": "Manhattan Project setting",
+          "name": "Los Alamos, New Mexico, United States",
+          "primary": true,
+          "centroid": [
+            -106.306,
+            35.8801
+          ],
+          "source": "https://en.wikipedia.org/wiki/Niels_Bohr"
+        }
+      ]
+    },
+    {
+      "date": "1945",
+      "date_precision": "year",
+      "date_end": "1956",
+      "date_end_precision": "year",
+      "age": 59,
+      "title": "Einsatz für nukleare Zusammenarbeit",
+      "description": "Nach seiner Rückkehr nach Kopenhagen im Jahr 1945 setzte sich Bohr für internationale Offenheit und Zusammenarbeit bei der Kontrolle der Kernenergie ein. 1950 richtete er einen offenen Brief an die Vereinten Nationen und rief zu einer „offenen Welt“ auf. Zudem wirkte er an der Gründung des CERN und der dänischen Atomenergiekommission mit, einschließlich deren Forschungseinrichtung Risø.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Niels_Bohr",
+        "https://en.wikipedia.org/wiki/Ris%C3%B8_National_Laboratory"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Portrait_of_Albert_Einstein%2C_Niels_Bohr%2C_James_Franck_and_Rabi.jpg/960px-Portrait_of_Albert_Einstein%2C_Niels_Bohr%2C_James_Franck_and_Rabi.jpg",
+          "caption": "Einstein, Bohr, Franck und Rabi, Oktober 1954",
+          "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Albert_Einstein,_Niels_Bohr,_James_Franck_and_Rabi.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-peace",
+      "chapter": "science_against_tyranny",
+      "annotations": {
+        "Risø": {
+          "explanation": "Risø entwickelte sich später zu einem bedeutenden dänischen nationalen Laboratorium und Forschungscampus, dessen Aufgaben weit über den ursprünglichen Auftrag im Bereich Kernenergie hinausgingen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ris%C3%B8_National_Laboratory"
+        }
+      }
+    },
+    {
+      "date": "1957",
+      "date_precision": "year",
+      "age": 71,
+      "title": "Vorsitz am Nordischen Institut",
+      "description": "1957 wurde Bohr erster Vorsitzender des Nordischen Instituts für Theoretische Physik in Kopenhagen. Das als NORDITA bekannte Institut sollte den wissenschaftlichen Austausch und die theoretische Forschung zwischen den nordischen Ländern stärken.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Nordic_Institute_for_Theoretical_Physics",
+        "https://en.wikipedia.org/wiki/Niels_Bohr"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Niels_Bohr_visiting_Weizmann_Institute%2C_Israel_in_1958.jpg/960px-Niels_Bohr_visiting_Weizmann_Institute%2C_Israel_in_1958.jpg",
+          "caption": "Niels Bohr zu Besuch am Weizmann-Institut, Israel, 1958",
+          "source": "https://commons.wikimedia.org/wiki/File:Niels_Bohr_visiting_Weizmann_Institute,_Israel_in_1958.jpg"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "an_open_world",
+      "annotations": {
+        "Nordic Institute for Theoretical Physics": {
+          "explanation": "Das Institut ist gewöhnlich unter dem Kürzel NORDITA bekannt, das sich aus seinem nordischsprachigen Namen ableitet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nordic_Institute_for_Theoretical_Physics"
+        }
+      }
+    },
+    {
+      "date": "1962-11-18",
+      "date_precision": "day",
+      "age": 77,
+      "title": "Tod in Kopenhagen",
+      "description": "Bohr starb am 18. November 1962 im Alter von 77 Jahren in Kopenhagen an Herzversagen.",
+      "locations": [
+        {
+          "name_historic": "Kopenhagen",
+          "name_modern": "Kopenhagen, Dänemark",
+          "centroid": [
+            12.5683,
+            55.6761
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Margrethe_Bohr"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "an_open_world"
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "34ddea48dea66de1",
+    "translated_on": "2026-08-02T06:15:34.676412+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

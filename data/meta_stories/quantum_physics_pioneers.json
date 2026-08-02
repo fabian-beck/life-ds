@@ -1,67 +1,54 @@
 {
   "dataset": "meta_story",
-  "created_on": "2025-12-30T08:39:42.202076+01:00",
+  "created_on": "2026-08-02T06:17:53.289046+02:00",
   "meta_story": {
     "id": "quantum_physics_pioneers",
-    "title": "Quantum Physics Pioneers",
-    "tagline": "From quanta to modern formalism",
-    "person_ids": ["albert_einstein", "marie_curie", "john_von_neumann"],
-    "date_range_start": "1867",
-    "date_range_end": "1957",
-    "lastUpdated": "2025-12-30T08:39:42.202076+01:00"
+    "title": "Making the Quantum World",
+    "tagline": "Four lives beyond classical certainty",
+    "description": "At the turn of the twentieth century, the atom stopped looking like a solid, predictable building block. Marie Curie's investigations of radioactivity revealed energies concealed within matter, while Albert Einstein showed that light itself could behave in startlingly discrete ways. Their work made clear that nature at the smallest scales could not be fully described by the comfortable rules of everyday experience.\n\nNiels Bohr gave the new atomic world a daring early model and a language for its paradoxes, insisting that quantum phenomena required complementary descriptions. John von Neumann then brought rigorous mathematical order to quantum mechanics, clarifying the role of states, probability, and measurement. Together, their achievements transformed puzzling laboratory results into a powerful new worldview—one whose consequences reached from nuclear science to the digital age.",
+    "person_ids": [
+      "albert_einstein",
+      "marie_curie",
+      "john_von_neumann",
+      "niels_bohr"
+    ],
+    "date_range_start": "1898",
+    "date_range_end": "1932",
+    "lastUpdated": "2026-08-02T06:19:04.531908+02:00"
+  },
+  "generation_metadata": {
+    "hints": null,
+    "model": "gpt-5.6-terra",
+    "generated_at": "2026-08-02T06:17:53.289046+02:00"
   },
   "subtopics": [
     {
-      "id": "forcing_the_quantum_question",
-      "title": "Forcing the Quantum Question",
-      "person_ids": ["albert_einstein", "marie_curie"]
+      "id": "matter_energy_and_radiation",
+      "title": "Matter, Energy, and Radiation",
+      "person_ids": ["marie_curie", "albert_einstein"]
     },
     {
-      "id": "making_quantum_precise",
-      "title": "Making Quantum Precise",
-      "person_ids": ["john_von_neumann"]
-    }
-  ],
-  "description": [
-    {
-      "type": "paragraph",
-      "text": "Quantum physics didn’t arrive as a single discovery—it crystallized through a chain of conceptual shocks: the unsettling discreteness of energy, the strange accounting of radiation and atoms, and the eventual need for a rigorous mathematical language to keep the theory from dissolving into paradox."
-    },
-    {
-      "type": "paragraph",
-      "text": "This collection follows a tight arc through three figures in the registry who directly shaped that transformation. Einstein helped force the quantum into existence by treating light itself as quantized, even as he remained a sharp critic of quantum indeterminacy. Curie built the experimental and conceptual terrain of radioactivity, revealing that the atom was not an indivisible unit but a dynamic, energetic system—an essential precondition for quantum atomic theory. Von Neumann then supplied quantum mechanics with one of its most durable foundations: a precise formalism that made the theory computable, generalizable, and philosophically unavoidable."
-    },
-    {
-      "type": "paragraph",
-      "text": "Together they show quantum physics as both a revolution in nature’s rules and a revolution in how science proves, models, and trusts what it claims to know."
+      "id": "atom_rules_and_measurement",
+      "title": "Atom, Rules, and Measurement",
+      "person_ids": ["niels_bohr", "john_von_neumann"]
     }
   ],
   "chapters": [
     {
-      "id": "energy_becomes_granular",
-      "title": "Energy Becomes Granular (1867-1905)",
-      "date_start": "1867",
+      "id": "radioactivity_and_atomic_clues",
+      "title": "Matter Reveals Hidden Energy (1898-1903)",
+      "date_start": "1898",
       "date_start_precision": "year",
-      "date_end": "1905",
+      "date_end": "1903",
       "date_end_precision": "year",
       "person_events": [
-        {
-          "person_id": "marie_curie",
-          "event_date": "1897-12-16",
-          "event_date_precision": "day",
-          "event_title": "Launched radioactivity research",
-          "event_index": 7,
-          "theme_connection": "Launching systematic, quantitative radioactivity experiments helped establish radioactivity as a measurable physical phenomenon and expanded the empirical problems any atomic theory had to explain—supporting the preconditions for quantum atomic theory.",
-          "relevance_strength": "supporting"
-        },
         {
           "person_id": "marie_curie",
           "event_date": "1898-07",
           "event_date_precision": "month",
           "event_title": "Discovered polonium and radium",
           "event_index": 8,
-          "theme_connection": "Discovering polonium and radium and arguing that pitchblende’s activity exceeded uranium’s made atomic “indivisibility” untenable and cemented radioactivity as a new domain of energetic transformations—core experimental groundwork that pressured the development of modern atomic/quantum theory.",
-          "relevance_strength": "essential"
+          "theme_connection": "Curie's identification of polonium and radium, together with the establishment of radioactivity as a phenomenon, demonstrated that matter contained previously hidden sources of energy and radiation. It was a foundational experimental breakthrough in the new atomic world."
         },
         {
           "person_id": "marie_curie",
@@ -69,57 +56,77 @@
           "event_date_precision": "year",
           "event_title": "Doctorate and Nobel Prize in Physics",
           "event_index": 9,
-          "theme_connection": "Her doctorate consolidated a coherent research program on radioactive substances, and the 1903 Nobel recognition amplified the legitimacy and impact of radioactivity research—strengthening the experimental foundation that fed into early 20th-century atomic and quantum developments.",
-          "relevance_strength": "supporting"
-        },
+          "theme_connection": "Curie's doctoral dissertation on radioactive substances consolidated a rigorous, lasting body of experimental knowledge about radioactivity. The Nobel Prize recognized this landmark work, though the prize itself was recognition rather than the contribution."
+        }
+      ],
+      "historical_context": [],
+      "lead_in": "Marie Curie’s work on radioactive substances showed that matter concealed forms of energy and radiation unknown to classical physics. Her discoveries and systematic research supplied an experimental foundation for the emerging atomic world."
+    },
+    {
+      "id": "the_quantum_breakthrough",
+      "title": "Quanta Enter the Atom (1905-1913)",
+      "date_start": "1905",
+      "date_start_precision": "year",
+      "date_end": "1913",
+      "date_end_precision": "year",
+      "person_events": [
         {
           "person_id": "albert_einstein",
           "event_date": "1905-06-30",
           "event_date_precision": "day",
           "event_title": "Publishes Annus Mirabilis papers",
           "event_index": 6,
-          "theme_connection": "The 1905 papers include the light-quantum explanation of the photoelectric effect, a decisive step in making energy discreteness scientifically unavoidable—directly matching the collection’s “Forcing the Quantum Question” arc.",
-          "relevance_strength": "essential"
+          "theme_connection": "Einstein's 1905 light-quantum paper gave light a discrete, particle-like character in explaining the photoelectric effect, directly overturning classical expectations. It is a foundational publication for quantum theory, alongside the other transformative papers of his annus mirabilis."
+        },
+        {
+          "person_id": "niels_bohr",
+          "event_date": "1913-07",
+          "event_date_precision": "month",
+          "event_title": "Publishes Three Atomic Model Papers",
+          "event_index": 5,
+          "theme_connection": "Bohr’s 1913 papers introduced quantized stationary electron states and explained atomic radiation as transitions between them. This was a foundational atomic model that made quantum discontinuity central to the structure and spectra of atoms."
         }
-      ]
+      ],
+      "historical_context": [],
+      "lead_in": "Einstein’s light quantum challenged classical expectations about radiation. Bohr then made quantum discontinuity central to atomic structure by proposing stable states and transitions between them."
     },
     {
-      "id": "the_atom_opens_up",
-      "title": "The Atom Opens Up (1906-1925)",
-      "date_start": "1906",
+      "id": "rules_for_the_unseen",
+      "title": "Meaning Becomes Mathematics (1927-1932)",
+      "date_start": "1927",
       "date_start_precision": "year",
-      "date_end": "1925",
+      "date_end": "1932",
       "date_end_precision": "year",
       "person_events": [
         {
-          "person_id": "marie_curie",
-          "event_date": "1911-12-10",
-          "event_date_precision": "day",
-          "event_title": "Won Nobel Prize in Chemistry",
-          "event_index": 11,
-          "theme_connection": "The Nobel Prize in Chemistry explicitly recognizes Curie’s radiochemical work on radioactivity, which helped establish the atom as an energetic, transformable system—critical experimental groundwork that made quantum atomic theory unavoidable.",
-          "relevance_strength": "supporting"
-        }
-      ]
-    },
-    {
-      "id": "foundations_and_fallout",
-      "title": "Foundations and Fallout (1926-1957)",
-      "date_start": "1926",
-      "date_start_precision": "year",
-      "date_end": "1957",
-      "date_end_precision": "year",
-      "person_events": [
+          "person_id": "niels_bohr",
+          "event_date": "1927",
+          "event_date_precision": "year",
+          "event_title": "Formulates Complementarity",
+          "event_index": 9,
+          "theme_connection": "Bohr’s principle of complementarity gave quantum mechanics a foundational language for reconciling wave and particle descriptions. It is a landmark interpretation of how measurement arrangement determines the phenomena that can be observed."
+        },
         {
           "person_id": "john_von_neumann",
           "event_date": "1932",
           "event_date_precision": "year",
           "event_title": "Published quantum mechanics classic",
           "event_index": 7,
-          "theme_connection": "Von Neumann’s 1932 quantum mechanics book codified the Hilbert-space/operator formalism and axiomatic structure that made quantum theory precise, computable, and philosophically rigorous—directly matching the subtopic “Making Quantum Precise.”",
-          "relevance_strength": "essential"
+          "theme_connection": "Von Neumann’s 1932 book, Mathematical Foundations of Quantum Mechanics, supplied the rigorous Hilbert-space framework for quantum states, probabilities, observables, and measurement. This lasting formalization is indispensable to the collection’s account of atom, rules, and measurement."
         }
-      ]
+      ],
+      "historical_context": [],
+      "lead_in": "Bohr’s complementarity addressed how experimental arrangements shape what can be observed. Von Neumann then gave quantum states, probabilities, observables and measurement a rigorous mathematical framework."
+    }
+  ],
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "By 1932, the strange emissions Curie had investigated were part of a far broader reconstruction of physics. Light could be treated as discrete quanta, atoms could occupy quantized states, observation required complementary descriptions, and quantum mechanics possessed a rigorous mathematical foundation."
+    },
+    {
+      "type": "paragraph",
+      "text": "No one of these four lives contains the entire transformation. Together, however, they trace how an experimental mystery became a theory of nature—and how friendship, criticism and mathematical precision helped make that theory endure."
     }
   ],
   "social_network": {
@@ -149,6 +156,14 @@
         "birth_year": 1903
       },
       {
+        "id": "niels_bohr",
+        "name": "Niels Bohr",
+        "type": "main",
+        "portrait": "/portraits/niels_bohr_thumbnail.webp",
+        "roles": ["physicist", "philosopher"],
+        "birth_year": 1885
+      },
+      {
         "id": "sec:david_hilbert",
         "name": "David Hilbert",
         "type": "secondary",
@@ -162,16 +177,43 @@
         "source": "albert_einstein",
         "target": "john_von_neumann",
         "kind": "main",
-        "relationship_type": "academic/colleague",
-        "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
-        "strength": "moderate",
+        "relationship_type": "friendship/close-friend",
+        "relationship_description": "Albert Einstein and John von Neumann were colleagues at Princeton's Institute for Advanced Study and were described as good friends.",
+        "strength": "strong",
         "endpoints": {
+          "albert_einstein": {
+            "relationship_type": "friendship/close-friend",
+            "relationship_description": "Albert Einstein and John von Neumann were colleagues at Princeton's Institute for Advanced Study and were described as good friends.",
+            "strength": "strong"
+          },
           "john_von_neumann": {
-            "relationship_type": "academic/colleague",
-            "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
-            "strength": "moderate"
+            "relationship_type": "friendship/close-friend",
+            "relationship_description": "Albert Einstein and John von Neumann were colleagues at Princeton's Institute for Advanced Study and were described as good friends.",
+            "strength": "strong"
           }
-        }
+        },
+        "origin": "reviewed"
+      },
+      {
+        "source": "albert_einstein",
+        "target": "niels_bohr",
+        "kind": "main",
+        "relationship_type": "intellectual/interlocutor",
+        "relationship_description": "Einstein and Bohr engaged in famous, good-natured lifelong arguments over the foundations and interpretation of quantum theory, including Einstein's 1930 Solvay challenge to quantum mechanics.",
+        "strength": "strong",
+        "endpoints": {
+          "albert_einstein": {
+            "relationship_type": "intellectual/interlocutor",
+            "relationship_description": "Einstein and Bohr engaged in famous, good-natured lifelong arguments over the foundations and interpretation of quantum theory, including Einstein's 1930 Solvay challenge to quantum mechanics.",
+            "strength": "strong"
+          },
+          "niels_bohr": {
+            "relationship_type": "intellectual/interlocutor",
+            "relationship_description": "Einstein and Bohr engaged in famous, good-natured lifelong arguments over the foundations and interpretation of quantum theory, including Einstein's 1930 Solvay challenge to quantum mechanics.",
+            "strength": "strong"
+          }
+        },
+        "origin": "reviewed"
       },
       {
         "source": "albert_einstein",
@@ -202,21 +244,249 @@
             "strength": "strong"
           }
         }
+      },
+      {
+        "source": "albert_einstein",
+        "target": "marie_curie",
+        "kind": "main",
+        "relationship_type": "friendship/friend",
+        "relationship_description": "Marie Curie hosted Albert Einstein during his March 1913 visit, and they took a summer excursion together in the Swiss Engadin.",
+        "strength": "moderate",
+        "endpoints": {
+          "albert_einstein": {
+            "relationship_type": "friendship/friend",
+            "relationship_description": "Marie Curie hosted Albert Einstein during his March 1913 visit, and they took a summer excursion together in the Swiss Engadin.",
+            "strength": "moderate"
+          },
+          "marie_curie": {
+            "relationship_type": "friendship/friend",
+            "relationship_description": "Marie Curie hosted Albert Einstein during his March 1913 visit, and they took a summer excursion together in the Swiss Engadin.",
+            "strength": "moderate"
+          }
+        },
+        "origin": "review_added"
+      },
+      {
+        "source": "john_von_neumann",
+        "target": "niels_bohr",
+        "kind": "main",
+        "relationship_type": "intellectual/influence",
+        "relationship_description": "Von Neumann extended Bohr's theory of almost periodic functions to arbitrary groups in his work on topological groups.",
+        "strength": "weak",
+        "endpoints": {
+          "john_von_neumann": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Von Neumann extended Bohr's theory of almost periodic functions to arbitrary groups in his work on topological groups.",
+            "strength": "weak"
+          },
+          "niels_bohr": {
+            "relationship_type": "intellectual/influence",
+            "relationship_description": "Von Neumann extended Bohr's theory of almost periodic functions to arbitrary groups in his work on topological groups.",
+            "strength": "weak"
+          }
+        },
+        "origin": "review_added"
       }
     ],
     "narration": {
       "circles": [
         {
-          "key": "albert_einstein+john_von_neumann",
-          "text": "In Göttingen, David Hilbert worked in parallel with Albert Einstein on the field equations of general relativity — a respectful rivalry over the mathematics of gravity — and later mentored the young John von Neumann, who studied under him on a Rockefeller grant and was shaped by his program in functional analysis and foundations. Years afterwards, Einstein and von Neumann met again as colleagues at the Institute for Advanced Study, their offices and circles overlapping in Princeton academic life."
+          "key": "marie_curie+albert_einstein+niels_bohr+john_von_neumann",
+          "member_ids": [
+            "marie_curie",
+            "albert_einstein",
+            "niels_bohr",
+            "john_von_neumann"
+          ],
+          "title": "Friendship and Disagreement",
+          "text": "Curie and Einstein shared a friendship that included his 1913 visit and a summer excursion in the Swiss Engadin. Einstein’s good-natured, lifelong arguments with Bohr made quantum foundations a personal as well as intellectual contest, while Einstein and von Neumann later became friends and colleagues at Princeton’s Institute for Advanced Study. Von Neumann also extended Bohr’s theory of almost periodic functions in his work on topological groups."
         }
       ]
     }
   },
-  "conclusion": [
+  "geo_map": {
+    "clusters": [
+      {
+        "label": "Paris",
+        "score": 4.0,
+        "centroid": [2.32004, 48.85889],
+        "bbox": [2.32004, 48.85889, 2.32004, 48.85889],
+        "year_start": 1898,
+        "year_end": 1903,
+        "events": [
+          {
+            "person_id": "marie_curie",
+            "person_name": "Marie Curie",
+            "event_index": 8,
+            "event_title": "Discovered polonium and radium",
+            "event_date": "1898-07",
+            "place": "Paris",
+            "coordinates": [2.320041, 48.8588897],
+            "weight": 3.0
+          },
+          {
+            "person_id": "marie_curie",
+            "person_name": "Marie Curie",
+            "event_index": 9,
+            "event_title": "Doctorate and Nobel Prize in Physics",
+            "event_date": "1903",
+            "place": "Paris",
+            "coordinates": [2.320041, 48.8588897],
+            "weight": 1.0
+          }
+        ],
+        "key": "paris"
+      },
+      {
+        "label": "Bern",
+        "score": 3.0,
+        "centroid": [7.4474, 46.9481],
+        "bbox": [7.4474, 46.9481, 7.4474, 46.9481],
+        "year_start": 1905,
+        "year_end": 1905,
+        "events": [
+          {
+            "person_id": "albert_einstein",
+            "person_name": "Albert Einstein",
+            "event_index": 6,
+            "event_title": "Publishes Annus Mirabilis papers",
+            "event_date": "1905-06-30",
+            "place": "Bern",
+            "coordinates": [7.4474, 46.9481],
+            "weight": 3.0
+          }
+        ],
+        "key": "bern"
+      },
+      {
+        "label": "Manchester",
+        "score": 3.0,
+        "centroid": [-2.2426, 53.4808],
+        "bbox": [-2.2426, 53.4808, -2.2426, 53.4808],
+        "year_start": 1913,
+        "year_end": 1913,
+        "events": [
+          {
+            "person_id": "niels_bohr",
+            "person_name": "Niels Bohr",
+            "event_index": 5,
+            "event_title": "Publishes Three Atomic Model Papers",
+            "event_date": "1913-07",
+            "place": "Manchester",
+            "coordinates": [-2.2426, 53.4808],
+            "weight": 3.0
+          }
+        ],
+        "key": "manchester"
+      }
+    ],
+    "narration": {
+      "stops": [
+        {
+          "key": "paris",
+          "title": "Matter Turns Mysterious",
+          "text": "In Paris, Marie Curie discovered polonium and radium in 1898, demonstrating that radioactive minerals contained previously unknown elements and hidden sources of radiation. In 1903, her doctoral research consolidated that experimental work, and the Nobel Prize in Physics brought it international recognition."
+        },
+        {
+          "key": "bern",
+          "title": "Light Becomes Quantized",
+          "text": "In Bern, Albert Einstein published his Annus Mirabilis papers in 1905. His explanation of the photoelectric effect gave light a discrete, particle-like character and made the city a crucial setting in the rise of quantum theory."
+        },
+        {
+          "key": "manchester",
+          "title": "The Atom Reimagined",
+          "text": "In Manchester, Niels Bohr published three atomic-model papers in 1913. By proposing quantized stationary states and radiation produced by transitions between them, he placed quantum rules inside the atom."
+        }
+      ]
+    },
+    "generation": {
+      "model": "gpt-5.6-terra",
+      "generated_at": "2026-08-02T06:18:19.497301+02:00",
+      "located_events": 6,
+      "rated_events": 6
+    }
+  },
+  "opening": [
     {
       "type": "paragraph",
-      "text": "Quantum physics was born from both confrontation and construction: confronting experimental surprises that broke classical intuition, then constructing a formal language strong enough to carry the new world. Einstein, Curie, and von Neumann together show how modern physics advances—by discovery, by redefinition, and by the mathematics that makes the revolution durable."
+      "text": "Modern physics did not overturn common sense in a single flash. Between Marie Curie’s investigations of radioactive matter and John von Neumann’s mathematical formulation of quantum mechanics, four researchers helped replace familiar certainties with a world of hidden energy, discrete states and measurement-dependent phenomena."
+    },
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Pierre_and_Marie_Curie.jpg/960px-Pierre_and_Marie_Curie.jpg",
+        "caption": "Pierre and Maria Skłodowska-Curie in the laboratory",
+        "source": "https://commons.wikimedia.org/wiki/File:Pierre_and_Marie_Curie.jpg",
+        "person_id": "marie_curie",
+        "event_index": 8,
+        "image_index": 0
+      },
+      "layout": "right"
+    },
+    {
+      "type": "paragraph",
+      "text": "Curie’s laboratory work revealed that matter contained unsuspected sources of radiation. Albert Einstein gave light a particle-like character, Niels Bohr placed quantum jumps inside the atom, and von Neumann supplied a rigorous framework for the resulting theory."
     }
-  ]
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Their contributions formed a progression rather than four isolated achievements. Experimental clues forced new ideas about light and atomic structure; those ideas then demanded an interpretation of observation and a mathematics capable of expressing it."
+    },
+    {
+      "type": "paragraph",
+      "text": "The same people were also connected by friendship, influence and sustained disagreement. Their shared history reveals scientific change as a collective process in which evidence, argument and formal reasoning continually reshaped one another."
+    }
+  ],
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Hidden radiation first destabilized the old picture of matter. Over the next three decades, successive breakthroughs moved from experimental evidence to quantum models, then from questions of interpretation to a durable mathematical structure."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "These breakthroughs did not emerge from isolated biographies. Personal trust carried ideas across borders, while disagreement—especially between Einstein and Bohr—turned the meaning of quantum mechanics into a lifelong intellectual contest."
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Solvay_conference_1927.jpg/960px-Solvay_conference_1927.jpg",
+          "caption": "1927 Solvay Conference on Quantum Mechanics",
+          "source": "https://commons.wikimedia.org/wiki/File:Solvay_conference_1927.jpg",
+          "person_id": "niels_bohr",
+          "event_index": 9,
+          "image_index": 0
+        },
+        "layout": "full"
+      },
+      {
+        "type": "paragraph",
+        "text": "Einstein stood near the center of this group: a friend of Curie and von Neumann, and Bohr’s most famous interlocutor. Von Neumann linked the conceptual revolution to a wider mathematical tradition, extending work associated with Bohr while developing the formal foundations of quantum theory."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "The early transformation unfolded across several European centers. Paris supplied the experimental opening, Bern the radical proposal about light, and Manchester a model that brought quantum discontinuity into the structure of the atom."
+      },
+      {
+        "type": "paragraph",
+        "text": "Separated by national borders but joined through publications and professional relationships, these cities became successive settings for a common effort to describe an increasingly unfamiliar physical reality."
+      }
+    ]
+  },
+  "section_headings": {
+    "timeline": "From Radiation to Rules",
+    "network": "A Community of Argument",
+    "map": "Cities of Discovery",
+    "conclusion": "A New Physical World"
+  },
+  "composition": {
+    "model": "gpt-5.6-sol",
+    "composed_at": "2026-08-02T06:19:04.531908+02:00",
+    "throughline": "Four scientists transformed scattered evidence of radiation and quantum behavior into a new account of matter, light and measurement. Their discoveries, friendships and disagreements show quantum physics emerging through experiment, conceptual argument and mathematical formalization between 1898 and 1932."
+  }
 }
