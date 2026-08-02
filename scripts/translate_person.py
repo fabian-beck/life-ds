@@ -112,6 +112,8 @@ class TrEventClass(BaseModel):
     # The union of the prose fields across every classification type; a payload
     # entry carries only the ones its own type actually has.
     characterization: Optional[str] = None
+    cause: Optional[str] = None
+    place_of_rest: Optional[str] = None
     duration: Optional[str] = None
     from_location: Optional[str] = None
     to_location: Optional[str] = None
@@ -279,6 +281,8 @@ class MetaStoryTranslation(BaseModel):
 # journal keeps its own name in every language.
 EVENT_CLASS_TEXT_FIELDS = (
     "characterization",
+    "cause",
+    "place_of_rest",
     "duration",
     "from_location",
     "to_location",

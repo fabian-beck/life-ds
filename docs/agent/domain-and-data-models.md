@@ -165,7 +165,7 @@ A few kinds of event carry more than prose, and an optional `event_class` block 
 | `invention` | `title`, `description`, `impact` |
 | `publication` | `title`, `publication_type`, `publisher`, `significance`, `impact` |
 
-The classification's text is **not** translated — like `event_type_icon` and the relationship tokens, `event_class` is copied verbatim into every language file. Field *labels* are localized by the interface; field *values* (a cause, a characterization, an invention's impact) stay in the language they were generated in. Translating them would mean extending the translation payload, which re-fingerprints every person's document.
+The block splits in two for localization. Its **prose** — a cause, a characterization, an invention's description — is translated with the rest of the document (`EVENT_CLASS_TEXT_FIELDS` in `scripts/translate_person.py`; a new prose field has to be added there or it stays English in every translated copy). Its **tokens** — `type`, `subtype`, `publication_type` — are machine values the datasets keep in every language, named by the interface through `src/utils/eventClassLabels.js`. A backfill that adds prose to the block therefore leaves the translations stale by fingerprint; `python scripts/translate_all_persons.py --target-lang de` is what closes that.
 
 The two life boundaries are the classifications a run does not leave to the model. `ensure_birth_classification()` and `ensure_death_classification()` run right after Phase 1 and decide from the dates which events they are; each classifies that event when the model didn't and strips its class from any other event (a child's birth, a spouse's death). The model's own classification is consulted only when no event is dated at the boundary at all — which is how a medieval life whose events carry no ages still finds one.
 
@@ -182,7 +182,7 @@ python scripts/backfill_birth_events.py niels_bohr
 python scripts/backfill_birth_events.py --dry-run
 ```
 
-It detects the birth event with the same function the generator uses, reads the parents from the person's `ego_network.json`, keeps any values already stored, and writes the block to the English file and every translated copy. Re-running it changes nothing.
+It detects the birth event with the same function the generator uses, reads the parents from the person's `ego_network.json`, keeps any values already stored, and writes the block to the English file and every translated copy — parent names are language-independent, so nothing there needs translating. Re-running it changes nothing.
 
 The death slide is the birth's mirror: the same frame and label, boxing the **cause of death** where the birth boxes the parents, with the circumstances beside the "Died" label and the resting place beneath. A death whose sources give none of the three keeps the plain class badge.
 
@@ -196,6 +196,8 @@ python scripts/backfill_death_events.py --skip-cause  # classify only, no AI
 ```
 
 The call is shown **only the death event the dataset already holds** and is forbidden to add anything from its own knowledge: a cause nobody wrote down is exactly the plausible-looking detail that must not enter the corpus unsourced. Of the 50 people in `data/`, 23 have a cause their own event text states; the rest are classified without one until a regeneration researches it. Stored values always win over extracted ones, so a researched cause survives a re-run.
+
+Unlike the birth's, this block is prose, so the translated copies it is written into hold the English text until they are re-translated — run `python scripts/translate_all_persons.py --target-lang de` after the backfill.
 
 ### Ego Network Schema
 

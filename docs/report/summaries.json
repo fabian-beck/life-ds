@@ -213,17 +213,17 @@
       }
     },
     "m_translate": {
-      "fingerprint": "42f8ed7fd72c7edf",
+      "fingerprint": "a2a6a4b4a6c88745",
       "summary": {
         "constraints": [
-          "Without `force`, translation is skipped only when all status values equal \"current\".",
-          "Missing source JSON, failed translation, or failed file save returns `False` and stops the registry update.",
-          "Translated arrays must retain the input's exact length and order.",
-          "Markdown, annotation marker syntax, annotation term keys, and glossary-mapped person names must be preserved as specified."
+          "Skips processing when every translation-status value is \"current\", unless `force` is true.",
+          "Returns failure without writing output if the source meta-story file is missing or translation fails.",
+          "The translated payload must preserve every array's exact length and order.",
+          "Markdown, annotation-marker keys and marker occurrences must be preserved exactly; only marker display text is translated, and no markers may be added."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story JSON detail file, checks whether its translated artifacts are current, and translates the story through the shared extract–translate–merge path when needed. The translated detail file is written under the target-language meta-story directory, then the corresponding language-specific meta-story registry entry is updated. Event titles are taken verbatim from the already translated person data so chapter labels and story slides use identical wording.",
-        "why_this_design": "The freshness check requires every reported meta-story translation status to be \"current\" before skipping work, preventing a current detail file from masking a stale registry entry. Reusing translated event titles avoids independently translated variants of the same title across related presentation surfaces."
+        "what_it_does": "Loads a meta-story JSON detail file, checks whether its target-language translation and related registry state are current, and translates the story only when needed. The translation uses an extract–translate–merge contract: translatable fields are sent in a structure-preserving payload, while event titles are copied verbatim from already translated person data so chapter and story-slide labels remain synchronized. It saves the translated detail file under the target-language directory, then updates that language's meta-story registry entry.",
+        "why_this_design": "The current-status check avoids regenerating translations unless forced, while the separate registry update occurs only after the translated detail file saves successfully. Reusing translated event titles prevents independent translations of the same event from diverging across related narrative surfaces."
       }
     },
     "p_chapters": {
@@ -480,17 +480,17 @@
       }
     },
     "p_translate": {
-      "fingerprint": "166ea65ef30d3939",
+      "fingerprint": "a9925039cd4b8c83",
       "summary": {
         "constraints": [
-          "Return the same payload structure; every array must retain its exact length and order, with output item N translating input item N.",
+          "Return the same payload structure; every array must retain its exact length and item order.",
           "Preserve Markdown exactly, including links, emphasis, and line breaks.",
-          "For [[term|display]] markers, leave the syntax and term unchanged; translate only display text, and return annotation term keys unchanged.",
-          "Use standard target-language place names and apply the supplied person-name glossary consistently; leave all other person names unchanged."
+          "For each [[term|display]] marker, retain the syntax and term verbatim, translate only display text, and reproduce each source marker exactly once—never add markers.",
+          "Use localized standard place names and apply the supplied person-name glossary consistently; all other person names remain unchanged."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the extracted, translatable text fields of a person document into the requested language and parses the result against the supplied structured response format. The surrounding extract–translate–merge workflow sends no dates, coordinates, URLs, or IDs to translation, then overlays the translated fields onto an English-document copy. The prompt prioritizes idiomatic biographical prose while retaining the payload’s field structure, annotations, Markdown, and glossary-controlled person names.",
-        "why_this_design": "Separating translatable fields from the larger record prevents nonlinguistic values from being rewritten or misaligned during translation. Exact array-position preservation makes the returned values safe to merge back into their corresponding source fields even when sentences are recast for natural target-language flow."
+        "what_it_does": "Translates the extracted, human-readable fields of a person document into the requested language and parses the result against a supplied structured response format. The surrounding extract–translate–merge design sends no dates, coordinates, URLs, or identifiers for translation; translated values can therefore be overlaid onto a copy of the English document without altering those nontext fields.",
+        "why_this_design": "The prompt permits substantial syntactic recasting for native prose while making structural elements immutable. In particular, annotation markers behave as references into a separate table, so adding, dropping, or moving a marker can invalidate the entire document rather than merely degrade the translation."
       }
     },
     "p_wiki_fetch": {
