@@ -183,7 +183,12 @@ class MarriagePartnershipClassification(BaseModel):
     )
     characterization: Optional[str] = Field(
         None,
-        description="Brief characterization (e.g., 'happy marriage', 'political alliance') - 1-4 words",
+        description=(
+            "Brief characterization of the bond between the partners (e.g., 'devoted partnership', "
+            "'political alliance', 'strained') - 1-4 words. Describe the relationship itself, not "
+            "only the work the partners did together; a purely professional label such as 'close "
+            "collaboration' does not characterize a marriage"
+        ),
     )
 
 
@@ -287,13 +292,15 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "partner": "Full name of spouse/partner",
             "duration": "Optional: e.g., 'until death', '17 years'",
             "children": "Optional: integer count",
-            "characterization": "Optional: e.g., 'happy marriage', 'political alliance' (1-4 words)",
+            "characterization": "Optional: character of the bond, e.g., 'devoted partnership', 'political alliance', 'strained' (1-4 words); not a purely professional label",
         },
         "phase1_guidance": (
             "- MARRIAGE_PARTNERSHIP: Event title/description contains 'married', 'marriage', 'wed', 'wedding', 'spouse'\n"
             "  * subtype: 'marriage' (legal/ceremonial) OR 'partnership' (domestic/romantic)\n"
             "  * partner: Full name of spouse/partner\n"
             "  * Optional: duration (e.g., 'until death', '17 years'), children (integer), characterization (1-4 words)\n"
+            "  * characterization describes the bond itself (e.g., 'devoted partnership', 'political alliance', 'strained'),\n"
+            "    never a purely professional label such as 'close collaboration' or 'work partnership'\n"
         ),
         "phase2_focus": [
             "INVOLVED_PEOPLE: Include the partner's name (already in classification, but also list here)",
