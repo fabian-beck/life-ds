@@ -93,10 +93,20 @@ GEOCODER_ENDPOINT = os.getenv(
 )
 GEOCODER_DELAY_SECONDS = float(os.getenv("LIFE_DS_GEOCODER_DELAY", "1.0"))
 GEOCODER_MAX_RESULTS = 1
+GEOCODER_MAX_ATTEMPTS = max(1, int(os.getenv("LIFE_DS_GEOCODER_ATTEMPTS", "3")))
+GEOCODE_CACHE_PATH = Path(
+    os.getenv("LIFE_DS_GEOCODE_CACHE", str(DATA_DIR / "_cache" / "geocode.json"))
+)
 UNKNOWN_LOCATION_LABEL = "Location unknown"
 
 # Global caches
+# Definitive answers, including "this place cannot be resolved". Persisted to
+# GEOCODE_CACHE_PATH, so a later run does not ask Nominatim about Berlin again.
 _geocode_cache: Dict[str, Optional[Dict[str, Any]]] = {}
+_geocode_cache_loaded = False
+# Queries whose lookup kept failing for what looks like a transient reason.
+# Held for this run only, so the next run gets to try them again.
+_geocode_failures: Set[str] = set()
 _last_geocode_at: float = 0.0
 _wikipedia_lang: Optional[str] = None
 
@@ -923,37 +933,92 @@ def _generate_location_candidates(query: str) -> List[str]:
     return candidates
 
 
-def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
-    cached = _geocode_cache.get(query)
-    if cached is not None:
-        return cached
+def _load_geocode_cache() -> None:
+    """Read the persisted geocoder answers once per run."""
+    global _geocode_cache_loaded
+    if _geocode_cache_loaded:
+        return
+    _geocode_cache_loaded = True
     try:
-        _throttle_geocoder()
-        response = requests.get(
-            GEOCODER_ENDPOINT,
-            params={
-                "q": query,
-                "format": "jsonv2",
-                "limit": GEOCODER_MAX_RESULTS,
-            },
-            timeout=30,
-            headers=geocoder_headers(),
+        stored = json.loads(GEOCODE_CACHE_PATH.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"Warning: ignoring unreadable geocode cache: {error}")
+        return
+    if isinstance(stored, dict):
+        for key, value in stored.items():
+            if isinstance(key, str) and (value is None or isinstance(value, dict)):
+                _geocode_cache[key] = value
+
+
+def _remember_geocode(query: str, result: Optional[Dict[str, Any]]) -> None:
+    """Record a definitive answer — a hit or a confirmed miss — and persist it."""
+    if query in _geocode_cache and _geocode_cache[query] == result:
+        return
+    _geocode_cache[query] = result
+    try:
+        GEOCODE_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        GEOCODE_CACHE_PATH.write_text(
+            json.dumps(_geocode_cache, indent=2, ensure_ascii=False, sort_keys=True),
+            encoding="utf-8",
         )
-        response.raise_for_status()
-        results: List[Dict[str, Any]] = response.json()
-    except Exception as error:
-        print(f"Warning: geocoding lookup failed for '{query}': {error}")
-        _geocode_cache[query] = None
+    except OSError as error:
+        print(f"Warning: could not write geocode cache: {error}")
+
+
+def _request_geocoder(query: str) -> Optional[List[Dict[str, Any]]]:
+    """Ask Nominatim for a place, retrying transient failures.
+
+    Returns the result list, or None when every attempt failed — a failure that
+    says nothing about whether the place exists, so it is not cached as a miss.
+    """
+    for attempt in range(1, GEOCODER_MAX_ATTEMPTS + 1):
+        try:
+            _throttle_geocoder()
+            response = requests.get(
+                GEOCODER_ENDPOINT,
+                params={
+                    "q": query,
+                    "format": "jsonv2",
+                    "limit": GEOCODER_MAX_RESULTS,
+                },
+                timeout=30,
+                headers=geocoder_headers(),
+            )
+            response.raise_for_status()
+            results: List[Dict[str, Any]] = response.json()
+            return results
+        except Exception as error:
+            if attempt >= GEOCODER_MAX_ATTEMPTS:
+                print(
+                    f"Warning: geocoding lookup failed for '{query}' "
+                    f"after {attempt} attempt(s): {error}"
+                )
+                return None
+            time.sleep(GEOCODER_DELAY_SECONDS * attempt)
+    return None
+
+
+def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
+    _load_geocode_cache()
+    if query in _geocode_cache:
+        return _geocode_cache[query]
+    if query in _geocode_failures:
+        return None
+    results = _request_geocoder(query)
+    if results is None:
+        _geocode_failures.add(query)
         return None
     if not results:
-        _geocode_cache[query] = None
+        _remember_geocode(query, None)
         return None
     primary = results[0]
     try:
         lon = float(str(primary.get("lon")))
         lat = float(str(primary.get("lat")))
     except (TypeError, ValueError):
-        _geocode_cache[query] = None
+        _remember_geocode(query, None)
         return None
     bbox_values: Optional[List[float]] = None
     raw_bbox = primary.get("boundingbox")
@@ -970,7 +1035,7 @@ def _geocode_candidate(query: str) -> Optional[Dict[str, Any]]:
         "lat": lat,
         "bbox": bbox_values,
     }
-    _geocode_cache[query] = result
+    _remember_geocode(query, result)
     return result
 
 
@@ -980,17 +1045,27 @@ def geocode_location(query: str) -> Optional[Dict[str, Any]]:
         return None
     if normalized.casefold() == UNKNOWN_LOCATION_LABEL.casefold():
         return None
-    cached = _geocode_cache.get(normalized)
-    if cached is not None:
-        return cached
+    _load_geocode_cache()
+    if normalized in _geocode_cache:
+        return _geocode_cache[normalized]
+    if normalized in _geocode_failures:
+        return None
 
     for candidate in _generate_location_candidates(normalized):
         result = _geocode_candidate(candidate)
         if result:
-            _geocode_cache[normalized] = result
+            _remember_geocode(normalized, result)
             return result
 
-    _geocode_cache[normalized] = None
+    # Every spelling was tried. Remember the miss only when each one came back
+    # with a real answer; a transient failure must not become a permanent no.
+    if any(
+        candidate in _geocode_failures
+        for candidate in _generate_location_candidates(normalized)
+    ):
+        _geocode_failures.add(normalized)
+    else:
+        _remember_geocode(normalized, None)
     return None
 
 
@@ -3380,6 +3455,7 @@ def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any]
     events = payload.get("events") or []
     enriched = []
     geocoded_count = 0
+    unresolved: List[str] = []
 
     for event in events:
         if not isinstance(event, dict):
@@ -3420,10 +3496,18 @@ def enrich_event_coordinates_v2(payload: Dict[str, Any]) -> Tuple[Dict[str, Any]
                 )
                 geocoded_count += 1
             else:
+                unresolved.append(name_to_geocode)
                 geocoded_locations.append(loc)
 
         updated["locations"] = geocoded_locations
         enriched.append(updated)
+
+    if unresolved:
+        distinct = sorted(set(unresolved))
+        print(
+            f"  ⚠ {len(unresolved)} location(s) left without coordinates: "
+            + ", ".join(distinct)
+        )
 
     payload["events"] = enriched
     return payload, geocoded_count
