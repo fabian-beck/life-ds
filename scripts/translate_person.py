@@ -321,6 +321,9 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         "events": [],
     }
     for event in data.get("events", []):
+        marked_terms = set(
+            _ANNOTATION_MARKER_RE.findall(event.get("description") or "")
+        )
         entry: Dict[str, Any] = {
             "title": event.get("title", ""),
             "description": event.get("description", ""),
@@ -336,9 +339,15 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             "images": [
                 {"caption": img.get("caption")} for img in (event.get("images") or [])
             ],
+            # Only the annotations the description actually marks up. An
+            # orphan — an entry whose [[term|display]] marker is missing from
+            # the text — reaches no reader, and offering one to the translator
+            # invites it to write the marker the text is missing, which the
+            # merge then rejects as an invented marker.
             "annotations": [
                 {"term": term, "explanation": ann.get("explanation", "")}
                 for term, ann in (event.get("annotations") or {}).items()
+                if term in marked_terms
             ],
         }
         event_class = _event_class_translatables(event.get("event_class"))
@@ -1253,7 +1262,12 @@ def translate_life_events(
             "is genuinely established in the target language (e.g., for German: "
             "'Difference Engine' -> 'Differenzmaschine', but 'Nature' stays "
             "'Nature').\n"
-            "   - from_location and to_location are place names; rule 5 applies."
+            "   - from_location and to_location are place names; rule 5 applies.\n"
+            "   - These fragments are set in running text, so start them lower "
+            "case as the source does, capitalizing only what the target "
+            "language's orthography capitalizes anyway (for German, the nouns): "
+            "'creative partnership' -> 'kreative Partnerschaft', 'until his "
+            "death' -> 'bis zu seinem Tod'."
         ),
         target_lang=target_lang,
         glossary=glossary,

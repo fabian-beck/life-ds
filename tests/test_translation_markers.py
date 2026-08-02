@@ -21,6 +21,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 from translate_person import (  # noqa: E402
     TranslationMergeError,
     apply_life_events_translations,
+    extract_life_events_translatables,
 )
 
 
@@ -113,6 +114,32 @@ class AnnotationMarkerTests(unittest.TestCase):
                 _translated_payload("Er entwarf die [[maschine|Maschine]]."),
                 {},
             )
+
+
+class OrphanAnnotationTests(unittest.TestCase):
+    """An annotation the description never marks up is not offered for translation.
+
+    `parseDescriptionSegments` reaches an annotation only through its marker, so
+    an orphan renders nowhere. Sending one anyway asks the translator to explain
+    a term the text does not mark, and it answers by writing the missing marker
+    into the translation — which the guard above then rejects, leaving a whole
+    document untranslated over an entry no reader could have seen.
+    """
+
+    def test_a_marked_annotation_is_extracted(self) -> None:
+        payload = extract_life_events_translatables(
+            _source_document("He designed the [[bombe|codebreaking machine]].")
+        )
+        self.assertEqual(
+            payload["events"][0]["annotations"],
+            [{"term": "bombe", "explanation": "An electromechanical device."}],
+        )
+
+    def test_an_orphan_annotation_is_left_out(self) -> None:
+        payload = extract_life_events_translatables(
+            _source_document("He designed a codebreaking machine.")
+        )
+        self.assertEqual(payload["events"][0]["annotations"], [])
 
 
 if __name__ == "__main__":
