@@ -89,9 +89,10 @@ def apply_event_changes(
             applied += 1
 
         if event_change.new_locations is not None:
-            # Convert Pydantic models to dicts
-            event["location_coordinates"] = [
-                loc.dict() if hasattr(loc, "dict") else loc
+            # Convert Pydantic models to dicts. The geocoding pass below fills
+            # in the centroids the reviewer is not allowed to invent.
+            event["locations"] = [
+                loc.model_dump() if hasattr(loc, "model_dump") else loc
                 for loc in event_change.new_locations
             ]
             applied += 1

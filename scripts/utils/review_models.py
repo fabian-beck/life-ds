@@ -58,13 +58,16 @@ class Annotation(BaseModel):
 
 
 class LocationObject(BaseModel):
-    """Location coordinate object"""
+    """A place an event happened, in the schema the application reads.
 
-    label: str
-    name: str
+    Coordinates are deliberately absent: the reviewer names the place and the
+    geocoder resolves it, so a corrected location cannot arrive with
+    model-authored coordinates attached.
+    """
+
+    name_historic: str
+    name_modern: Optional[str] = None
     primary: bool
-    centroid: List[float]
-    source: str
 
 
 class EventChanges(BaseModel):

@@ -25,6 +25,7 @@ from config import (  # noqa: E402
     DEFAULT_REASONING_EFFORT,
     LOW_REASONING_EFFORT,
 )
+from generate_person_events import enrich_event_coordinates_v2  # noqa: E402
 from utils.review_models import (  # noqa: E402
     CombinedReviewOutput,
     StyleReviewOutput,
@@ -447,6 +448,16 @@ def review_person_data(
             person_data["events"], combined_review.events_changes, min_confidence
         )
         print(f"  Events: {events_applied} applied, {events_skipped} skipped")
+
+        # Reviewer-supplied locations arrive as names only, so resolve them
+        # through the same geocoder the generation pipeline uses.
+        if any(
+            change.new_locations is not None
+            for change in combined_review.events_changes.events
+            if change.confidence >= min_confidence
+        ):
+            updated_events, geocoded = enrich_event_coordinates_v2(updated_events)
+            print(f"  Locations: {geocoded} geocoded")
 
         # Apply network changes from combined review
         if person_data["network"]:

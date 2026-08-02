@@ -283,17 +283,17 @@
       }
     },
     "p_geocode": {
-      "fingerprint": "da4cb82aba101024",
+      "fingerprint": "3359e402b5f975e5",
       "summary": {
         "constraints": [
-          "Blank normalized inputs return no result.",
-          "The configured unknown-location label is never sent to geocoding.",
-          "Candidates are tried sequentially and the first successful result is returned.",
-          "Unresolvable locations are cached as None."
+          "Blank normalized queries return no result.",
+          "The configured unknown-location label is never sent for geocoding.",
+          "An exact normalized-query cache hit is returned before generating candidates.",
+          "A normalized miss is retained as a permanent failure only under the code's candidate-failure condition; otherwise a null result is cached."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Normalizes a location string and resolves it to a geocoding result through Nominatim-backed candidate lookup. It skips blank and explicit unknown-location values, then tries generated place-name candidates in order—allowing the modern successor name supplied by Phase 2 to resolve historic or renamed places to mappable coordinates.",
-        "why_this_design": "Results, including failures, are cached under the normalized original query. This avoids repeated external geocoder calls for recurring locations and preserves the candidate-order preference rather than replacing the original label with whichever candidate succeeded."
+        "what_it_does": "Normalizes a location query, rejects blank and designated unknown-location labels, then resolves the place through generated spelling or naming candidates. It reuses cached coordinates when available and stores either a successful result or a carefully classified miss so later event generation can map recurring locations consistently, including historic names whose modern successors were supplied earlier.",
+        "why_this_design": "Candidate-by-candidate lookup preserves a preferred modern name while retaining fallbacks for alternate forms. The failure handling distinguishes a cacheable absence from a transient lookup problem, preventing an unreliable external response from permanently suppressing future geocoding attempts."
       }
     },
     "p_glossary": {
@@ -410,17 +410,17 @@
       }
     },
     "p_review": {
-      "fingerprint": "d56eca7258720aa2",
+      "fingerprint": "99bccf95cb2b1fcb",
       "summary": {
         "constraints": [
-          "Event titles must be \"5-10 words\" and no more than \"100 chars\"; descriptions target \"500-800 words\" and must be plain text without Markdown.",
-          "Chapter headlines must be evocative \"2-5 words,\" while network relationship descriptions are limited to \"1-2 sentences max.\"",
-          "Claims must be verifiable against the supplied Wikipedia sources; unverifiable claims must be flagged as low confidence and tied to a supporting article when possible.",
-          "Orphaned [[term]] markup must be removed for trivial terms or supplied with a useful definition for important concepts; annotation text cannot repeat the event description."
+          "Every proposed change is rated on a 1-5 confidence scale and factual claims must be supported by the supplied Wikipedia sources; unverifiable claims are flagged low confidence.",
+          "Event titles must be 5-10 words and at most 100 characters; descriptions target 500-800 words, with the first 200-300 words prioritized for the mobile viewport, and must be plain text without Markdown.",
+          "Each event location must identify exactly one `primary` place; use historical and modern names when they differ, omit an unchanged modern name, and never provide coordinates.",
+          "Network relationship descriptions are limited to 1-2 sentences; the review checks for both parents, personal and professional relationships, gender balance, and complementary—not repetitive—event and network text."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Sends the current life-event dataset and ego-network dataset to a structured-output model for a joint editorial and factual review. The model compares both against the cached main Wikipedia article and any related articles, returning assessments plus granular proposed edits for event metadata, event and chapter copy, annotations, conclusion content, network connections, balance, and a change summary.",
-        "why_this_design": "Reviewing the two datasets in one call makes cross-file consistency explicit: important people can be added to both the relevant events and the network while duplicated biographical detail can be removed from relationship tooltips. The step requests confidence scores for every change, supporting the pipeline policy that only high-confidence proposals are applied automatically."
+        "what_it_does": "Runs a single critic pass over the current life-event timeline and ego-network data, using the cached main Wikipedia article and any related-article material supplied to the prompt. It returns a typed combined review containing narrative, chapter, metadata, conclusion, connection, balance, and cross-file findings, plus separately structured proposed changes for events and the network and a concise change summary. The caller only accepts a completed response that parses as `CombinedReviewOutput`; application of the proposals occurs elsewhere.",
+        "why_this_design": "Reviewing both artifacts in one request makes the critic compare event participants against network connections and prevent duplicated biography across slide text and relationship tooltips. The step proposes rather than applies edits, fitting the maintainer's high-confidence-only automatic-change policy while preserving confidence ratings for downstream filtering."
       }
     },
     "p_review_style": {
