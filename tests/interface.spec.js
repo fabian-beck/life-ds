@@ -537,3 +537,82 @@ test("the contrast toast sits at the bottom of the viewport, scrolled or not", a
   await stickyHeader.locator(".contrast-toggle").click();
   await expectToastNearBottom();
 });
+
+/* Opening the timeline rearranges icons the reader is already looking at. They
+   used to be thrown away and a list faded in over the gap, which read as two
+   unrelated widgets swapping places; each icon now travels from where it stood
+   in the bar to where it stands in the list. */
+test("opening the timeline carries its icons into their new places", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("en#/en/story/alan_turing");
+
+  const eventDots = page.locator('.dots-container [data-morph-key^="event-"]');
+  await expect.poll(() => eventDots.count()).toBeGreaterThan(8);
+  // A life long enough that its expanded list overruns the screen, opened
+  // halfway along, so that the list has to be scrolled for the icon to have
+  // anywhere sensible to land.
+  const middle = Math.floor((await eventDots.count()) / 2);
+  await eventDots.nth(middle).click();
+  const key = `event-${middle}`;
+  await expect(page.locator(`[data-morph-key="${key}"]`)).toHaveAttribute(
+    "aria-current",
+    "true"
+  );
+
+  const centerOf = (morphKey) =>
+    page.evaluate((selectorKey) => {
+      const rect = document
+        .querySelector(`[data-morph-key="${selectorKey}"]`)
+        .getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    }, morphKey);
+
+  const inTheBar = await centerOf(key);
+
+  // Every animation started from here on is held at its first frame, so that the
+  // start of the move can be read off without racing it.
+  await page.evaluate(() => {
+    const animate = Element.prototype.animate;
+    Element.prototype.animate = function holdAtStart(...args) {
+      const animation = animate.apply(this, args);
+      animation.pause();
+      animation.currentTime = 0;
+      return animation;
+    };
+  });
+
+  await page.locator(".chapter-indicator-box").click();
+  await expect(page.locator(".dots-container.expanded")).toBeVisible();
+
+  // The icon in the list is the icon that was in the bar: at the first frame of
+  // the move it has not left the place the reader last saw it.
+  const atTheStart = await centerOf(key);
+  expect(Math.abs(atTheStart.x - inTheBar.x)).toBeLessThan(2);
+  expect(Math.abs(atTheStart.y - inTheBar.y)).toBeLessThan(2);
+
+  await page.evaluate(() => {
+    for (const animation of document.getAnimations()) {
+      // Endless ones — the page has a few — cannot be sent to an end they do
+      // not have.
+      if (animation.effect?.getComputedTiming().iterations === Infinity)
+        continue;
+      animation.finish();
+    }
+  });
+
+  // The list was already sitting on the reader's event before the icons set
+  // off, so the icon makes one journey and lands where it stays, rather than
+  // arriving and then being scrolled somewhere else.
+  const atTheEnd = await centerOf(key);
+  expect(atTheEnd.y).toBeLessThan(inTheBar.y - 100);
+  expect(atTheEnd.y).toBeGreaterThan(844 * 0.2);
+  expect(atTheEnd.y).toBeLessThan(844 * 0.8);
+
+  // The stand-ins for the chapter dots, which the list has no icon for, clear
+  // up after themselves.
+  await expect
+    .poll(() => page.locator(".morph-ghost-layer > *").count())
+    .toBe(0);
+});

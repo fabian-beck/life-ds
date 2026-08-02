@@ -15,7 +15,7 @@
   import { _ } from "../stores/language";
   import { extractYear } from "../utils/storyHelpers.js";
   import { fade } from "svelte/transition";
-  import { createEventDispatcher, onDestroy } from "svelte";
+  import { createEventDispatcher, onDestroy, tick } from "svelte";
   import { mdiIconMap } from "virtual:mdi-icon-map";
 
   export let activeIndex = 0;
@@ -88,6 +88,9 @@
     return indicatorIcons[idx] || null;
   });
   let expandedContainerElement = null;
+  let trackElement = null;
+  let trackSurfaceElement = null;
+  let ghostLayerElement = null;
 
   $: hasEvents = totalSlides > 0;
   $: hasChapters = Array.isArray(chapters) && chapters.length > 0;
@@ -267,6 +270,19 @@
     return offset;
   })();
 
+  function scrollActiveEventIntoView(behavior) {
+    const container = expandedContainerElement;
+    if (!container || activeEventIndex < 0) return;
+    const activeElement = container.querySelector(
+      `[data-event-index="${activeEventIndex}"]`
+    );
+    if (!activeElement) return;
+    const top =
+      activeElement.offsetTop -
+      (container.clientHeight - activeElement.offsetHeight) / 2;
+    container.scrollTo({ top: Math.max(0, top), behavior });
+  }
+
   // Scroll active event into view when first expanding (but allow manual scroll after)
   let hasScrolledToActive = false;
   $: if (isExpanded) {
@@ -275,19 +291,233 @@
       expandedContainerElement &&
       activeEventIndex >= 0
     ) {
-      // Use setTimeout to ensure DOM is ready after expansion animation
+      // Reached when the timeline opens without a morph — from a URL that
+      // already carried the expanded state, or for a reader who has asked for
+      // less motion. The morph does its own scrolling, before it measures where
+      // the icons have to land.
       setTimeout(() => {
-        const activeElement = expandedContainerElement?.querySelector(
-          `[data-event-index="${activeEventIndex}"]`
+        if (hasScrolledToActive) return;
+        hasScrolledToActive = true;
+        scrollActiveEventIntoView(
+          prefersReducedMotion() ? "instant" : "smooth"
         );
-        if (activeElement) {
-          activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
-          hasScrolledToActive = true;
-        }
       }, 100);
     }
   } else {
     hasScrolledToActive = false;
+  }
+
+  // Opening and closing the timeline changes the layout of the same set of
+  // icons rather than replacing one widget with another, so the icons are
+  // carried between the two arrangements instead of being faded out and back
+  // in. Every icon that exists in both states is matched by key, measured
+  // before and after the swap, and animated from where it was to where it now
+  // is (a FLIP). The panel around them grows or shrinks over the same curve, so
+  // the icons stay inside it for the whole of the move.
+  const MORPH_DURATION = 420;
+  const MORPH_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+  // The clipped window runs a little wider than the panel so that the icons,
+  // which overflow their row once the active one scales up, are not shaved by
+  // the very edge that is meant to be hiding what lies beyond it.
+  const MORPH_CLIP_SLACK = 14;
+
+  let morphAnimations = [];
+  let morphGhosts = [];
+
+  function prefersReducedMotion() {
+    return (
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
+
+  function cancelMorph() {
+    for (const animation of morphAnimations) animation.cancel();
+    morphAnimations = [];
+    for (const ghost of morphGhosts) ghost.remove();
+    morphGhosts = [];
+  }
+
+  onDestroy(cancelMorph);
+
+  // A morph key marks an icon that exists in both arrangements. A morph anchor
+  // marks the place a key takes when the other arrangement has no icon for it —
+  // chapters are dots in the collapsed row and headings in the expanded list, so
+  // their dot travels to the heading it belongs to and dissolves there.
+  function captureMorphState() {
+    const state = new Map();
+    const container = expandedContainerElement;
+    if (!container) return state;
+    for (const node of container.querySelectorAll("[data-morph-anchor]")) {
+      state.set(node.dataset.morphAnchor, {
+        rect: node.getBoundingClientRect(),
+        isAnchor: true,
+        ghost: null,
+      });
+    }
+    for (const node of container.querySelectorAll("[data-morph-key]")) {
+      state.set(node.dataset.morphKey, {
+        rect: node.getBoundingClientRect(),
+        isAnchor: false,
+        // Cloned now because the node itself is about to be discarded with the
+        // arrangement it belongs to, and a key without a counterpart still owes
+        // the reader a departure.
+        ghost: node.cloneNode(true),
+      });
+    }
+    return state;
+  }
+
+  function morphNodeFrom(node, from, fadeIn) {
+    const to = node.getBoundingClientRect();
+    if (!from.width || !to.width) return;
+    const deltaX = from.left + from.width / 2 - (to.left + to.width / 2);
+    const deltaY = from.top + from.height / 2 - (to.top + to.height / 2);
+    const scale = from.width / to.width;
+    if (
+      Math.abs(deltaX) < 0.5 &&
+      Math.abs(deltaY) < 0.5 &&
+      Math.abs(scale - 1) < 0.01
+    ) {
+      return;
+    }
+    // `translate` and `scale` are animated as their own properties so that the
+    // per-dot `transform: scale(...)` that marks the active slide keeps
+    // applying underneath, untouched.
+    const frames = fadeIn
+      ? [
+          {
+            translate: `${deltaX}px ${deltaY}px`,
+            scale: `${scale}`,
+            opacity: 0,
+          },
+          { offset: 0.45, opacity: 1 },
+          { translate: "0px 0px", scale: "1", opacity: 1 },
+        ]
+      : [
+          { translate: `${deltaX}px ${deltaY}px`, scale: `${scale}` },
+          { translate: "0px 0px", scale: "1" },
+        ];
+    morphAnimations.push(
+      node.animate(frames, {
+        duration: MORPH_DURATION,
+        easing: MORPH_EASING,
+      })
+    );
+  }
+
+  function morphGhostTo(ghost, from, to) {
+    if (!ghostLayerElement || !from.width) return;
+    const base = ghostLayerElement.getBoundingClientRect();
+    ghost.removeAttribute("data-morph-key");
+    ghost.setAttribute("aria-hidden", "true");
+    ghost.tabIndex = -1;
+    ghost.style.position = "absolute";
+    ghost.style.margin = "0";
+    ghost.style.left = `${from.left - base.left}px`;
+    ghost.style.top = `${from.top - base.top}px`;
+    ghost.style.width = `${from.width}px`;
+    ghost.style.height = `${from.height}px`;
+    ghost.style.transform = "none";
+    // The ghost layer is declared empty and stays that way as far as Svelte is
+    // concerned, so nothing here can drift from what the runtime expects.
+    // eslint-disable-next-line svelte/no-dom-manipulating
+    ghostLayerElement.appendChild(ghost);
+    morphGhosts.push(ghost);
+
+    const deltaX = to
+      ? to.left + to.width / 2 - (from.left + from.width / 2)
+      : 0;
+    const deltaY = to
+      ? to.top + to.height / 2 - (from.top + from.height / 2)
+      : 0;
+    const scale = to && to.width ? to.width / from.width : 0.6;
+    const animation = ghost.animate(
+      [
+        { translate: "0px 0px", scale: "1", opacity: 1 },
+        { translate: `${deltaX}px ${deltaY}px`, scale: `${scale}`, opacity: 0 },
+      ],
+      { duration: MORPH_DURATION, easing: MORPH_EASING, fill: "forwards" }
+    );
+    animation.finished.then(() => ghost.remove()).catch(() => {});
+    morphAnimations.push(animation);
+  }
+
+  function morphIcons(previous) {
+    const container = expandedContainerElement;
+    if (!container) return;
+
+    const matched = new Set();
+    for (const node of container.querySelectorAll("[data-morph-key]")) {
+      const key = node.dataset.morphKey;
+      const before = previous.get(key);
+      if (!before) continue;
+      matched.add(key);
+      morphNodeFrom(node, before.rect, before.isAnchor);
+    }
+
+    const anchors = new Map();
+    for (const node of container.querySelectorAll("[data-morph-anchor]")) {
+      anchors.set(node.dataset.morphAnchor, node.getBoundingClientRect());
+    }
+
+    for (const [key, before] of previous) {
+      if (matched.has(key) || before.isAnchor || !before.ghost) continue;
+      morphGhostTo(before.ghost, before.rect, anchors.get(key) ?? null);
+    }
+  }
+
+  function morphPanel(previousTrackRect, previousDotsRect) {
+    if (trackSurfaceElement && previousTrackRect && trackElement) {
+      const to = trackElement.getBoundingClientRect();
+      // Where the surface rests is whatever the stylesheet says; the morph only
+      // adds the distance the panel has to travel on top of it.
+      const resting = getComputedStyle(trackSurfaceElement);
+      const rest = (side) => parseFloat(resting[side]) || 0;
+      morphAnimations.push(
+        trackSurfaceElement.animate(
+          [
+            {
+              top: `${rest("top") + previousTrackRect.top - to.top}px`,
+              right: `${rest("right") + to.right - previousTrackRect.right}px`,
+              bottom: `${rest("bottom") + to.bottom - previousTrackRect.bottom}px`,
+              left: `${rest("left") + previousTrackRect.left - to.left}px`,
+            },
+            {
+              top: `${rest("top")}px`,
+              right: `${rest("right")}px`,
+              bottom: `${rest("bottom")}px`,
+              left: `${rest("left")}px`,
+            },
+          ],
+          { duration: MORPH_DURATION, easing: MORPH_EASING }
+        )
+      );
+    }
+
+    const container = expandedContainerElement;
+    if (!container || !previousDotsRect) return;
+    const to = container.getBoundingClientRect();
+    const slack = MORPH_CLIP_SLACK;
+    const inset = (value) => `${Math.round(value - slack)}px`;
+    morphAnimations.push(
+      container.animate(
+        [
+          {
+            clipPath: `inset(${inset(previousDotsRect.top - to.top)} ${inset(
+              to.right - previousDotsRect.right
+            )} ${inset(to.bottom - previousDotsRect.bottom)} ${inset(
+              previousDotsRect.left - to.left
+            )} round 1.5rem)`,
+          },
+          {
+            clipPath: `inset(${-slack}px ${-slack}px ${-slack}px ${-slack}px round 1.5rem)`,
+          },
+        ],
+        { duration: MORPH_DURATION, easing: MORPH_EASING }
+      )
+    );
   }
 
   // The collapsed timeline doubles as a scrollbar: dragging along the dots runs
@@ -431,14 +661,39 @@
     return true;
   }
 
-  function toggleExpanded() {
+  async function toggleExpanded() {
+    const morph = !prefersReducedMotion() && !!expandedContainerElement;
+    // Measured before the swap, and measured as they currently look: a toggle
+    // that interrupts a running morph picks the icons up wherever the previous
+    // one had carried them to.
+    const previous = morph ? captureMorphState() : null;
+    const previousTrackRect =
+      morph && trackElement ? trackElement.getBoundingClientRect() : null;
+    const previousDotsRect = morph
+      ? expandedContainerElement.getBoundingClientRect()
+      : null;
+    cancelMorph();
+
     // The URL owns this state: the dispatch below makes StoryView rewrite the
     // timeline param, which flows back through initialExpanded and re-runs the
     // reactive assignment above with the same value. Setting it here first is
     // deliberate, so the toggle paints without waiting for that round trip.
     // eslint-disable-next-line svelte/no-reactive-reassign
     isExpanded = !isExpanded;
+    // The morph scrolls the list itself, in the same frame it measures it; when
+    // there is no morph the reactive scroll above is what gets the reader to
+    // the event they were on.
+    if (isExpanded && morph) hasScrolledToActive = true;
     dispatch("expandchange", { expanded: isExpanded });
+
+    if (!morph) return;
+    await tick();
+    // Jumping the list to the active event before measuring is what lets the
+    // icons fly straight to their resting places; scrolling afterwards would
+    // slide the ground out from under them.
+    if (isExpanded) scrollActiveEventIntoView("instant");
+    morphPanel(previousTrackRect, previousDotsRect);
+    morphIcons(previous);
   }
 </script>
 
@@ -496,7 +751,23 @@
         class:expanded={isExpanded}
         role="group"
         aria-label={$_("timeline.scrubber")}
+        bind:this={trackElement}
       >
+        <!-- The panel's surface is its own layer so that it can be resized from
+             the collapsed bar to the full-height sheet without the list inside
+             it being relaid out on every frame of the move. -->
+        <div
+          class="track-surface"
+          bind:this={trackSurfaceElement}
+          aria-hidden="true"
+        ></div>
+        <!-- Holds the stand-ins for icons that only one arrangement has, so they
+             can leave the panel along the path the reader would expect. -->
+        <div
+          class="morph-ghost-layer"
+          bind:this={ghostLayerElement}
+          aria-hidden="true"
+        ></div>
         {#if isExpanded}
           <button
             type="button"
@@ -530,6 +801,7 @@
                 class="dot square"
                 class:active={activeIndex === 0}
                 data-slide-index="0"
+                data-morph-key="home"
                 style="transform: scale({activeIndex === 0
                   ? 1.6
                   : activeEventIndex === 0
@@ -582,6 +854,7 @@
                     class="dot chapter-dot"
                     class:active={activeIndex === item.slideIndex}
                     data-slide-index={item.slideIndex}
+                    data-morph-key={`chapter-${item.chapter.id}`}
                     style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
                       scale * 10
                     )};"
@@ -624,6 +897,7 @@
                     class="dot conclusion-dot square"
                     class:active={activeIndex === item.slideIndex}
                     data-slide-index={item.slideIndex}
+                    data-morph-key="conclusion"
                     style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
                       scale * 10
                     )};"
@@ -665,6 +939,7 @@
                     class="dot"
                     class:active={idx === activeEventIndex}
                     data-slide-index={eventSlideIndex}
+                    data-morph-key={`event-${idx}`}
                     style="transform: scale({scale}) translateX({translate}rem); z-index: {Math.round(
                       scale * 10
                     )};"
@@ -754,6 +1029,7 @@
                   type="button"
                   class="dot square"
                   class:active={activeIndex === 0}
+                  data-morph-key="home"
                   style="transform: scale({activeIndex === 0
                     ? 1.4
                     : 1.0}); transition: transform 0.25s ease;"
@@ -799,6 +1075,11 @@
                     {#if chapterAge > 0}
                       <span class="age-line chapter-age-line"></span>
                     {/if}
+                    <span
+                      class="chapter-morph-anchor"
+                      data-morph-anchor={`chapter-${group.chapter.id}`}
+                      aria-hidden="true"
+                    ></span>
                     <h3 class="chapter-headline">{group.chapter.headline}</h3>
                     {#if chapterLocation}
                       <div class="chapter-meta">
@@ -845,6 +1126,7 @@
                         type="button"
                         class="dot"
                         class:active={idx === activeEventIndex}
+                        data-morph-key={`event-${idx}`}
                         style="transform: scale({idx === activeEventIndex
                           ? 1.4
                           : 1.0}); transition: transform 0.25s ease;"
@@ -906,6 +1188,7 @@
                     type="button"
                     class="dot square conclusion-dot"
                     class:active={activeIndex === conclusionSlideIndex}
+                    data-morph-key="conclusion"
                     style="transform: scale({activeIndex ===
                     conclusionSlideIndex
                       ? 1.4
@@ -955,14 +1238,15 @@
     z-index: 5;
   }
 
+  /* The box jumps to its new size in one frame and the morph, driven from the
+     script, is what the reader sees moving: the surface layer resizes and the
+     icons travel between the two arrangements over the same curve. Transitions
+     here would only fight that, and `auto` lengths cannot be interpolated
+     anyway. */
   .indicator.expanded {
     top: 0.75rem;
     bottom: 0.75rem;
     height: calc(100vh - 1.5rem);
-    transition:
-      top 1s cubic-bezier(0.22, 1, 0.36, 1),
-      bottom 1s cubic-bezier(0.22, 1, 0.36, 1),
-      height 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .collapse-button {
@@ -1046,12 +1330,6 @@
     justify-content: space-between;
     width: 100%;
     gap: 1.25rem;
-    transition: opacity 0.3s ease;
-  }
-
-  .indicator.expanded .indicator-nav {
-    opacity: 0;
-    pointer-events: none;
   }
 
   .indicator-track {
@@ -1062,26 +1340,42 @@
     justify-content: center;
     width: 100%;
     padding: 0.65rem 0.75rem;
+    /* The panel's border lives on the surface layer, which has to be free to
+       resize; this placeholder keeps the border's one pixel in the track's own
+       box so that the collapsed bar measures exactly as it always has. */
+    border: 1px solid transparent;
+    cursor: default;
+    user-select: none;
+  }
+
+  .track-surface {
+    position: absolute;
+    inset: -1px; /* Spans the track's border box, where the border used to sit. */
+    z-index: 0;
     border-radius: 1.5rem;
     background: rgba(15, 23, 42, 0.65);
     backdrop-filter: blur(6px);
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
     border: 1px solid rgba(148, 163, 184, 0.2);
-    cursor: default;
-    user-select: none;
-    transition:
-      padding 1s cubic-bezier(0.22, 1, 0.36, 1),
-      background 1s cubic-bezier(0.22, 1, 0.36, 1),
-      height 1s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    transition: background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .morph-ghost-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
   }
 
   .indicator-track.expanded {
-    border-radius: 1.5rem;
     padding: 0;
     height: 100%;
-    background: rgba(15, 23, 42, 0.85);
     overflow: visible;
-    position: relative;
+  }
+
+  .indicator-track.expanded .track-surface {
+    background: rgba(15, 23, 42, 0.85);
   }
 
   .indicator-track.single {
@@ -1098,10 +1392,6 @@
     width: 100%;
     max-width: min(90vw, 860px);
     z-index: 2;
-    transition:
-      flex-direction 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-      gap 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-      justify-content 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .dots-container:not(.expanded) {
@@ -1297,8 +1587,6 @@
     align-items: center;
     gap: 0.5rem;
     width: calc(100% - var(--event-age) * (100cqw - 200px) / 100);
-    opacity: 0;
-    animation: fadeIn 0.4s ease forwards;
     margin-left: calc(var(--event-age) * (100cqw - 200px) / 100);
     position: relative;
   }
@@ -1393,34 +1681,57 @@
     outline: none;
   }
 
-  @keyframes fadeIn {
+  @keyframes timeline-detail-in {
     from {
       opacity: 0;
-      transform: translateX(-10px);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
     }
   }
 
-  .timeline-item:nth-child(1) {
-    animation-delay: 0.1s;
+  /* Everything the collapsed bar has no room for — the dates, the titles, the
+     chapter headings, the age lines — arrives once the icons that anchor it are
+     close to where they are going. The icons themselves never fade; they are
+     the same objects throughout. */
+  .dots-container.expanded .timeline-content,
+  .dots-container.expanded .age-line,
+  .dots-container.expanded .chapter-header {
+    animation: timeline-detail-in 240ms ease-out both;
+    animation-delay: 150ms;
   }
-  .timeline-item:nth-child(2) {
-    animation-delay: 0.15s;
+
+  /* The chrome that belongs to one arrangement only waits for the panel to
+     finish resizing, so that it never appears over a panel still on its way. */
+  .indicator-nav,
+  .chapter-indicator-box,
+  .collapse-button {
+    animation: timeline-detail-in 220ms ease-out both;
+    animation-delay: 260ms;
   }
-  .timeline-item:nth-child(3) {
-    animation-delay: 0.2s;
+
+  @media (prefers-reduced-motion: reduce) {
+    .dots-container.expanded .timeline-content,
+    .dots-container.expanded .age-line,
+    .dots-container.expanded .chapter-header,
+    .indicator-nav,
+    .chapter-indicator-box,
+    .collapse-button {
+      animation: none;
+    }
   }
-  .timeline-item:nth-child(4) {
-    animation-delay: 0.25s;
-  }
-  .timeline-item:nth-child(5) {
-    animation-delay: 0.3s;
-  }
-  .timeline-item:nth-child(n + 6) {
-    animation-delay: 0.35s;
+
+  /* Marks where a chapter lives in the expanded list so that its dot from the
+     collapsed row has somewhere to travel to. Never painted. */
+  .chapter-morph-anchor {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: calc(var(--dot-size) * 0.5);
+    height: calc(var(--dot-size) * 0.5);
+    transform: translateY(-50%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .timeline-content {
