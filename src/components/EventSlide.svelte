@@ -17,6 +17,7 @@
     getThumbnailUrl,
     getValidImages,
     getSubcategory,
+    getEventAgeRange,
     getRelevantPeople,
     parseDescriptionSegments,
     findPersonInNetwork,
@@ -24,6 +25,7 @@
   import PersonChip from "./PersonChip.svelte";
 
   export let slide = {};
+  export let birthDate = null;
   export let egoNetwork = null;
   export let styleConfig = null;
   export let formatters = {};
@@ -44,6 +46,19 @@
   $: validImages = getValidImages(slide.images);
   $: relevantPeople = getRelevantPeople(slide, egoNetwork);
   $: dateLabel = formatDate(slide, formatters);
+  $: ageRange = getEventAgeRange(slide, birthDate);
+  // An event that spans a date range spans a range of ages with it, written
+  // the way the chapter header writes it: the label once, then the second age.
+  $: ageLabel = (() => {
+    if (!ageRange) return null;
+    const startLabel =
+      ageRange.start === 0
+        ? $_("story.at_birth")
+        : $_("story.age", { age: ageRange.start });
+    return ageRange.end == null
+      ? startLabel
+      : `${startLabel} – ${ageRange.end}`;
+  })();
   $: dateNote = getDateNote(slide);
   $: descriptionSegments = parseDescriptionSegments(
     slide.description,
@@ -60,11 +75,6 @@
     }
     return map;
   }, {});
-
-  function formatAgeLabel(age) {
-    if (age == null) return null;
-    return age === 0 ? $_("story.at_birth") : $_("story.age", { age });
-  }
 
   function getEventClassIcon(eventClass) {
     if (!eventClass?.type) return null;
@@ -341,13 +351,13 @@
   <div class="event-header">
     <div class="date-wrapper">
       <p class="date">{dateLabel}</p>
-      {#if formatAgeLabel(slide.age)}
+      {#if ageLabel}
         {#if styleConfig?.separatorGlyphDataUrl}
           <span class="separator glyph-separator" aria-hidden="true"></span>
         {:else}
           <span class="separator">·</span>
         {/if}
-        <p class="age">{formatAgeLabel(slide.age)}</p>
+        <p class="age">{ageLabel}</p>
       {/if}
       {#if dateNote}
         <button

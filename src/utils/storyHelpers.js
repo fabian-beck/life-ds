@@ -231,6 +231,52 @@ export function formatDate(event, formatters) {
 }
 
 /**
+ * Age in completed years on a given date.
+ *
+ * Coarse dates read as their first day, the same reading the rest of the date
+ * handling uses: a month-precision date counts from the first of the month, a
+ * year-precision one from January 1.
+ *
+ * @param {string} birthDate - Birth date string
+ * @param {string} value - Date to measure the age at
+ * @returns {number|null} Completed years, or null when a date is unparseable or falls before birth
+ */
+export function computeAgeAtDate(birthDate, value) {
+  const birth = parseHistoricalDate(birthDate);
+  const date = parseHistoricalDate(value);
+  if (!birth || !date) return null;
+  const beforeBirthday =
+    date.getUTCMonth() < birth.getUTCMonth() ||
+    (date.getUTCMonth() === birth.getUTCMonth() &&
+      date.getUTCDate() < birth.getUTCDate());
+  const age =
+    date.getUTCFullYear() - birth.getUTCFullYear() - (beforeBirthday ? 1 : 0);
+  return age < 0 ? null : age;
+}
+
+/**
+ * The ages an event spans.
+ *
+ * An event that runs over a date range should read as a range of ages too, so
+ * the two halves of the header agree. Only the age at the start is stored, so
+ * the age at the end is measured against the birth date, and reported only
+ * when the event lasts long enough to reach a later birthday.
+ *
+ * @param {Object} event - Event with age, date, and optionally date_end
+ * @param {string} birthDate - Subject's birth date
+ * @returns {{start: number, end: number|null}|null} Ages spanned, or null without a stored age
+ */
+export function getEventAgeRange(event, birthDate) {
+  const start = event?.age;
+  if (typeof start !== "number") return null;
+  if (!event.date_end || event.date_end === event.date) {
+    return { start, end: null };
+  }
+  const end = computeAgeAtDate(birthDate, event.date_end);
+  return { start, end: end !== null && end > start ? end : null };
+}
+
+/**
  * Get the date note from an event.
  * @param {Object} event - Event object
  * @returns {string|null} Date note or null

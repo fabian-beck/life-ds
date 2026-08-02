@@ -1,9 +1,11 @@
 import { test, expect } from "@playwright/test";
 import {
+  computeAgeAtDate,
   computeYearsLabel,
   createDateFormatters,
   extractYear,
   formatSingleDate,
+  getEventAgeRange,
   toIsoInstant,
   toTimestamp,
 } from "../src/utils/storyHelpers.js";
@@ -91,6 +93,40 @@ test("formats a single date without losing the day to the time zone", () => {
   expect(formatSingleDate("1938", "year", formatters)).toBe("1938");
   expect(formatSingleDate("", "day", formatters)).toBeNull();
   expect(formatSingleDate("circa 1500", "day", formatters)).toBeNull();
+});
+
+test("counts age in completed years, whatever the date's precision", () => {
+  const born = "1885-10-07";
+  expect(computeAgeAtDate(born, "1911-05")).toBe(25);
+  expect(computeAgeAtDate(born, "1911-10-07")).toBe(26);
+  expect(computeAgeAtDate(born, "1911-10-06")).toBe(25);
+  expect(computeAgeAtDate(born, "1911")).toBe(25);
+  // A date before birth, or one of the two missing, is no age at all.
+  expect(computeAgeAtDate(born, "1880")).toBeNull();
+  expect(computeAgeAtDate(null, "1911-05")).toBeNull();
+  expect(computeAgeAtDate(born, "circa 1911")).toBeNull();
+});
+
+test("gives an event that spans dates a span of ages", () => {
+  const born = "1885-10-07";
+  // Bohr's master's work through his doctorate: April 1909 – May 1911.
+  expect(
+    getEventAgeRange({ age: 23, date: "1909-04", date_end: "1911-05" }, born)
+  ).toEqual({ start: 23, end: 25 });
+  // A single date, or a range short enough to stay within one year of age,
+  // keeps the one age it started with.
+  expect(getEventAgeRange({ age: 26, date: "1912-08-01" }, born)).toEqual({
+    start: 26,
+    end: null,
+  });
+  expect(
+    getEventAgeRange({ age: 27, date: "1913-07", date_end: "1913-09" }, born)
+  ).toEqual({ start: 27, end: null });
+  // Without a birth date to measure against, the stored age stands alone.
+  expect(
+    getEventAgeRange({ age: 23, date: "1909-04", date_end: "1911-05" }, null)
+  ).toEqual({ start: 23, end: null });
+  expect(getEventAgeRange({ date: "1909-04" }, born)).toBeNull();
 });
 
 test("formats a date before the common era with its era", () => {

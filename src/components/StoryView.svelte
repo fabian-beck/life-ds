@@ -85,6 +85,7 @@
   $: portrait = person?.portrait;
   $: personName = displayName(person?.name);
   $: personSummary = person?.summary ?? "";
+  $: birthDate = person?.birth_date ?? person?.birthDate ?? null;
   $: yearsLabel = computeYearsLabel(person, $currentLanguage);
   $: roles = Array.isArray(person?.primary_roles) ? person.primary_roles : [];
   $: eventSlides = events
@@ -1327,6 +1328,7 @@
             {:else if slide.type !== "spacer"}
               <EventSlide
                 {slide}
+                {birthDate}
                 {egoNetwork}
                 {styleConfig}
                 {formatters}
