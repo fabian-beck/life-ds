@@ -1,0 +1,120 @@
+name: Checks
+
+# Every check this repository owns used to run only when a person or an agent
+# remembered to run it, and the drift that produced was already visible in the
+# tree. These run on every push and every pull request instead.
+#
+# Deployment is deliberately not here: publishing stays on demand in
+# deploy-pages.yml, and a green run of this workflow does not release anything.
+on:
+  push:
+  pull_request:
+
+# A newer push to the same branch supersedes an older run of this workflow.
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, build, and data integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # The floor the scripts support is 3.10, and mypy is configured to check
+      # against it whatever interpreter runs here (pyproject.toml, python_version).
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      # requirements-dev.txt is what `npm run validate` shells out to: without
+      # black and flake8 it fails with "No module named black".
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Formatting and lint
+        run: npm run validate
+
+      - name: Python types
+        run: npm run type-check:py
+
+      - name: Build
+        run: npm run build
+
+      - name: Python tests
+        run: python -m pytest
+
+      # Deterministic data-integrity checks. None of them needs an API key, a
+      # model, or the network; each guards a failure that is otherwise silent
+      # in the data — a story renders, it just renders something wrong.
+      - name: Event-to-chapter assignments
+        run: python scripts/validate_event_chapters.py
+
+      - name: English event titles are English
+        run: python scripts/validate_event_titles.py
+
+      - name: Event dates agree with their descriptions
+        run: python scripts/validate_event_dates.py
+
+      - name: People who lived the same events agree about them
+        run: python scripts/validate_cross_person_events.py --check
+
+      - name: German translations are current
+        run: python scripts/translate_all_persons.py --target-lang de --check
+
+      - name: The technical report matches its source
+        run: python scripts/generate_report.py --check
+
+      # Deliberately not in this list: scripts/validate_source_links.py --check.
+      # It asks the MediaWiki API whether each cited article exists, so unlike
+      # everything above it depends on an external service being reachable, and
+      # it is red today — 28 dead links, enumerated on #73. It belongs here once
+      # that data is repaired.
+
+  interface:
+    name: Interface tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      # Only Chromium: playwright.config.js runs the logic project headless and
+      # the interface project against Desktop Chrome and a Pixel 7.
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Interface tests
+        run: npm run test:interface
+
+      - name: Keep the report when something fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
