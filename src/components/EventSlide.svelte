@@ -29,6 +29,10 @@
     getPublicationSource,
   } from "../utils/storyHelpers.js";
   import { assetUrl } from "../utils/assetUrl.js";
+  import {
+    eventClassLabel,
+    publicationTypeLabel,
+  } from "../utils/eventClassLabels.js";
   import PersonChip from "./PersonChip.svelte";
 
   export let slide = {};
@@ -130,27 +134,26 @@
     }
   }
 
-  function getEventClassLabel(eventClass) {
+  // An invention is announced by its own name where it has one; every other
+  // classification is named from the locale.
+  function getEventClassLabel(t, eventClass) {
     if (!eventClass?.type) return "";
-
-    switch (eventClass.type) {
-      case "invention":
-        return eventClass.title || "Invention";
-      case "marriage_partnership":
-        return eventClass.subtype === "marriage" ? "Marriage" : "Partnership";
-      default:
-        return eventClass.type;
+    if (eventClass.type === "invention" && eventClass.title) {
+      return eventClass.title;
     }
+    return eventClassLabel(t, eventClass);
   }
 
   $: eventClassIcon = getEventClassIcon(slide.event_class);
-  $: eventClassLabel =
+  // A birth is named by the label the birth box already uses, not by the
+  // classification vocabulary.
+  $: eventClassLabelText =
     slide.event_class?.type === "birth"
       ? $_("story.birth.label")
-      : getEventClassLabel(slide.event_class);
+      : getEventClassLabel($_, slide.event_class);
   $: showEventClassBadge =
     !!eventClassIcon &&
-    !!eventClassLabel &&
+    !!eventClassLabelText &&
     (slide.event_class?.type === "birth"
       ? !showBirthLineage
       : !SELF_PRESENTING_CLASSES.has(slide.event_class?.type));
@@ -440,7 +443,7 @@
         >
           <path d={eventClassIcon} />
         </svg>
-        <span class="event-class-label">{eventClassLabel}</span>
+        <span class="event-class-label">{eventClassLabelText}</span>
       </div>
     {/if}
   </div>
@@ -542,9 +545,7 @@
               <path d={mdiRing} />
             </svg>
             <span class="marriage-inline-label"
-              >{slide.event_class.subtype === "marriage"
-                ? "Marriage"
-                : "Partnership"}</span
+              >{eventClassLabel($_, slide.event_class)}</span
             >
             {#if slide.event_class.characterization}
               <span class="marriage-separator">·</span>
@@ -555,8 +556,13 @@
             {#if slide.event_class.children}
               <span class="marriage-separator">·</span>
               <span class="marriage-children-inline"
-                >{slide.event_class.children}
-                {slide.event_class.children === 1 ? "child" : "children"}</span
+                >{slide.event_class.children === 1
+                  ? $_("story.children_one", {
+                      count: slide.event_class.children,
+                    })
+                  : $_("story.children_other", {
+                      count: slide.event_class.children,
+                    })}</span
               >
             {/if}
             {#if slide.event_class.duration}
@@ -640,7 +646,7 @@
           {/if}
           {#if slide.event_class.impact}
             <div class="invention-impact">
-              <span class="impact-label">Impact:</span><span
+              <span class="impact-label">{$_("story.impact")}:</span><span
                 class="impact-text"
               >
                 {slide.event_class.impact}</span
@@ -664,7 +670,10 @@
           </div>
           <div class="publication-meta">
             <span class="publication-type-badge"
-              >{slide.event_class.publication_type || "Publication"}</span
+              >{publicationTypeLabel(
+                $_,
+                slide.event_class.publication_type
+              )}</span
             >
             {#if slide.event_class.significance}
               <span class="publication-separator">·</span>
@@ -675,7 +684,7 @@
           </div>
           {#if slide.event_class.impact}
             <div class="publication-impact">
-              <span class="impact-label">Impact:</span><span
+              <span class="impact-label">{$_("story.impact")}:</span><span
                 class="impact-text"
               >
                 {slide.event_class.impact}</span
@@ -727,7 +736,7 @@
         {#if otherPeople.length > 0}
           <ul class="details">
             <li>
-              <span class="label" aria-label="People">
+              <span class="label" aria-label={$_("story.people")}>
                 <svg
                   class="icon icon-inline"
                   viewBox="0 0 24 24"
@@ -760,7 +769,7 @@
       {:else if relevantPeople.length > 0}
         <ul class="details">
           <li>
-            <span class="label" aria-label="People">
+            <span class="label" aria-label={$_("story.people")}>
               <svg
                 class="icon icon-inline"
                 viewBox="0 0 24 24"

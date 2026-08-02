@@ -1220,7 +1220,7 @@
   on:keydown={handleKeydown}
   tabindex="-1"
   role="region"
-  aria-label="Story viewer"
+  aria-label={$_("story.story_viewer")}
 >
   <header class="masthead" bind:this={mastheadElement}>
     <div class="compact-info" aria-live="polite">

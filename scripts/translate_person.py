@@ -108,6 +108,19 @@ class TrAnnotation(BaseModel):
     explanation: str
 
 
+class TrEventClass(BaseModel):
+    # The union of the prose fields across every classification type; a payload
+    # entry carries only the ones its own type actually has.
+    characterization: Optional[str] = None
+    duration: Optional[str] = None
+    from_location: Optional[str] = None
+    to_location: Optional[str] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    impact: Optional[str] = None
+    significance: Optional[str] = None
+
+
 class TrEvent(BaseModel):
     title: str
     description: str
@@ -115,6 +128,9 @@ class TrEvent(BaseModel):
     locations: List[TrLocation]
     images: List[TrImage]
     annotations: List[TrAnnotation]
+    # Optional: only events the pipeline classified carry one, so an unclassified
+    # event is not asked to invent a block (and keeps its fingerprint).
+    event_class: Optional[TrEventClass] = None
 
 
 class TrChapter(BaseModel):
@@ -256,6 +272,35 @@ class MetaStoryTranslation(BaseModel):
 # ---------------------------------------------------------------------------
 
 
+# The prose an event classification carries. Everything else in the block is
+# technical — the type and subtype, the publication type, the child count — and
+# the UI localizes those from its locale files. `partner` is a person name and
+# goes through the name glossary with every other name, and a publisher or
+# journal keeps its own name in every language.
+EVENT_CLASS_TEXT_FIELDS = (
+    "characterization",
+    "duration",
+    "from_location",
+    "to_location",
+    "title",
+    "description",
+    "impact",
+    "significance",
+)
+
+
+def _event_class_translatables(event_class: Any) -> Optional[Dict[str, Any]]:
+    """One event's classification prose as a payload entry, or None."""
+    if not isinstance(event_class, dict):
+        return None
+    entry = {
+        field: event_class[field]
+        for field in EVENT_CLASS_TEXT_FIELDS
+        if isinstance(event_class.get(field), str) and event_class[field].strip()
+    }
+    return entry or None
+
+
 def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     """Extract only the translatable text fields from a life events dataset."""
     person = data.get("person", {}) or {}
@@ -276,29 +321,30 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         "events": [],
     }
     for event in data.get("events", []):
-        payload["events"].append(
-            {
-                "title": event.get("title", ""),
-                "description": event.get("description", ""),
-                "date_note": event.get("date_note"),
-                "locations": [
-                    {
-                        "name_historic": loc.get("name_historic"),
-                        "name_modern": loc.get("name_modern"),
-                    }
-                    for loc in (event.get("locations") or [])
-                    if isinstance(loc, dict)
-                ],
-                "images": [
-                    {"caption": img.get("caption")}
-                    for img in (event.get("images") or [])
-                ],
-                "annotations": [
-                    {"term": term, "explanation": ann.get("explanation", "")}
-                    for term, ann in (event.get("annotations") or {}).items()
-                ],
-            }
-        )
+        entry: Dict[str, Any] = {
+            "title": event.get("title", ""),
+            "description": event.get("description", ""),
+            "date_note": event.get("date_note"),
+            "locations": [
+                {
+                    "name_historic": loc.get("name_historic"),
+                    "name_modern": loc.get("name_modern"),
+                }
+                for loc in (event.get("locations") or [])
+                if isinstance(loc, dict)
+            ],
+            "images": [
+                {"caption": img.get("caption")} for img in (event.get("images") or [])
+            ],
+            "annotations": [
+                {"term": term, "explanation": ann.get("explanation", "")}
+                for term, ann in (event.get("annotations") or {}).items()
+            ],
+        }
+        event_class = _event_class_translatables(event.get("event_class"))
+        if event_class:
+            entry["event_class"] = event_class
+        payload["events"].append(entry)
     return payload
 
 
@@ -621,6 +667,20 @@ def apply_life_events_translations(
                 localize_name(name, name_glossary) for name in event["involved_people"]
             ]
 
+        # The classification's prose is translated; its partner is a name the
+        # UI looks the spouse up in the network by, so it has to be localized
+        # exactly as that network localizes it.
+        event_class = event.get("event_class")
+        if isinstance(event_class, dict):
+            tr_event_class = tr_event.get("event_class")
+            if isinstance(tr_event_class, dict):
+                for field in EVENT_CLASS_TEXT_FIELDS:
+                    _set_if_source_has(event_class, field, tr_event_class.get(field))
+            if event_class.get("partner"):
+                event_class["partner"] = localize_name(
+                    event_class["partner"], name_glossary
+                )
+
     return result
 
 
@@ -900,6 +960,9 @@ def collect_person_names(
         for event in life_events.get("events") or []:
             for name in event.get("involved_people") or []:
                 add(name)
+            event_class = event.get("event_class")
+            if isinstance(event_class, dict):
+                add(event_class.get("partner"))
     if ego_network:
         add((ego_network.get("ego") or {}).get("name"))
         for conn in ego_network.get("connections") or []:
@@ -1180,7 +1243,17 @@ def translate_life_events(
             "7. Chapter headlines are short, evocative book-chapter titles — "
             "keep them punchy (2-5 words).\n"
             "8. Event titles are crisp headlines (2-6 words); use sentence-style "
-            "phrasing natural for the target language."
+            "phrasing natural for the target language.\n"
+            "9. An event_class block is a compact fact card the reader sees "
+            "beside the event, not prose:\n"
+            "   - characterization, duration, and significance are fragments "
+            "(1-4 words); keep them fragments rather than growing them into "
+            "sentences.\n"
+            "   - A work or invention title keeps its original form unless it "
+            "is genuinely established in the target language (e.g., for German: "
+            "'Difference Engine' -> 'Differenzmaschine', but 'Nature' stays "
+            "'Nature').\n"
+            "   - from_location and to_location are place names; rule 5 applies."
         ),
         target_lang=target_lang,
         glossary=glossary,

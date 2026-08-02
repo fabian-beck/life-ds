@@ -370,16 +370,19 @@ Rebases old-schema translated files onto the current English structure, carries 
 - Image captions
 - Relationship descriptions
 - Social network notes and summaries
+- The prose inside an `event_class`: `characterization`, `duration`, `from_location`, `to_location`, `title`, `description`, `impact`, and `significance` (see below)
 
 **What is preserved** (guaranteed by the merge — the model never sees these fields):
 - All dates (dates, timestamps)
 - All coordinates (locations, centroid, bbox)
 - All URLs (sources, wikipedia, images, annotation wikipedia_urls, publication `source_link`s)
 - All IDs (person_id, chapter IDs, annotation term keys, event_index)
-- `event_type_icon`, `event_class`, `involved_people` list structure
+- `event_type_icon`, `involved_people` list structure
 - Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files
 - Strength values (`weak`, `moderate`, `strong`)
 - Technical classifications
+
+**Event classifications**: an `event_class` block mixes prose with machine tokens, and the split runs through it rather than around it. Its prose is extracted like any other text, listed under `EVENT_CLASS_TEXT_FIELDS` in `translate_person.py` and carried in the payload only for events that have a classification, so unclassified documents keep their fingerprint. Its tokens — `type`, `subtype`, `publication_type`, `children` — stay verbatim and are named by the interface from `src/locales/` through `src/utils/eventClassLabels.js`, exactly as `relationship_type` is. `partner` is neither: it is a person name that the story matches against the ego network to draw the spouse chip, so it follows the name glossary with every other name. A publisher or journal keeps its own name in every language and is not extracted.
 
 **Annotation markers**: descriptions may contain `[[term|display]]` markers. The term (before the `|`) is an ID and stays in English; only the display text and the annotation's `explanation` are translated.
 

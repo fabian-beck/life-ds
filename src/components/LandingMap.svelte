@@ -1118,7 +1118,7 @@
     "
     on:click|stopPropagation
     role="dialog"
-    aria-label="Event details"
+    aria-label={$_("story.event_details")}
     tabindex="-1"
   >
     <div class="popup-content">

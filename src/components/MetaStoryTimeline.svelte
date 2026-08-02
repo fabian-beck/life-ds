@@ -2502,7 +2502,7 @@
     on:click={(e) => e.stopPropagation()}
     on:keydown={(e) => e.key === "Escape" && hideEventTooltip()}
     role="dialog"
-    aria-label="Event details"
+    aria-label={$_("story.event_details")}
     tabindex="-1"
   >
     <!-- Event list (always scrollable) -->
