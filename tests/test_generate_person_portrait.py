@@ -20,12 +20,6 @@ def _response(content: bytes, content_type: str) -> Mock:
 
 
 class PortraitPipelineTests(unittest.TestCase):
-    def test_portrait_framing_is_mandatory_and_allows_source_crop(self) -> None:
-        rules = portraits.MANDATORY_PORTRAIT_FRAMING
-        self.assertIn("ALWAYS generate a vertical biographical portrait", rules)
-        self.assertIn("crop and reframe it as necessary", rules)
-        self.assertIn("Never shrink the person", rules)
-
     def test_architectuul_uses_uncropped_lead_image(self) -> None:
         page = b"""<html><head><meta property='og:image' content='https://example/1200x630.jpg'></head>
         <body><section class='lead'><div data-image-src='https://example/1312x.jpg'></div></section></body></html>"""

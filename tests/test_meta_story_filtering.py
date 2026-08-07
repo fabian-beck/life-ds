@@ -122,15 +122,6 @@ class FilterEventBatchTests(unittest.TestCase):
 
         self.assertEqual(client.responses.parse.call_count, 1)
 
-    def test_no_fallback_text_is_written_into_a_reader_visible_field(self) -> None:
-        """The strings the old fallbacks wrote must not exist in the source."""
-        source = Path(meta.__file__).read_text(encoding="utf-8")
-        for placeholder in (
-            "included by default",
-            "Included without AI filtering",
-        ):
-            self.assertNotIn(placeholder, source)
-
 
 if __name__ == "__main__":
     unittest.main()

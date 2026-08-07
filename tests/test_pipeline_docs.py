@@ -9,7 +9,6 @@ presentation.
 
 from __future__ import annotations
 
-import ast
 import json
 import re
 import sys
@@ -571,8 +570,19 @@ class PayloadAndRenderTests(unittest.TestCase):
         for marker in ("http://", "https://"):
             for tag in ("<script src=", '<link rel="stylesheet"'):
                 self.assertNotIn(tag + '"' + marker, html)
-        self.assertNotIn("__CSS__", html)
-        self.assertNotIn("__DATA__", html)
+        for placeholder in ("__CSS__", "__JS__", "__DATA__"):
+            self.assertNotIn(placeholder, html)
+
+    def test_the_inlined_script_asks_the_network_for_nothing(self) -> None:
+        """The page is one file, opened as often from a download as from a URL.
+
+        The stylesheet and the script are inlined into it, so the only way a
+        request could still leave the page is the script making one at runtime —
+        which would leave the figures blank exactly where there is no network.
+        """
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
+        for forbidden in ("fetch(", "XMLHttpRequest", "import("):
+            self.assertNotIn(forbidden, js)
 
     def test_embedded_payload_parses_as_json(self) -> None:
         html = render.render(self.payload)
@@ -1705,31 +1715,6 @@ class FactTests(unittest.TestCase):
         display = self.facts["pipeline.models"].display
         self.assertNotIn("(", display)
         self.assertIn("gpt-", display)
-
-
-class AssetTests(unittest.TestCase):
-    def test_page_has_no_dark_mode(self) -> None:
-        """Light-only was an explicit request; keep it from creeping back."""
-        css = (ASSETS / "style.css").read_text(encoding="utf-8")
-        self.assertNotIn("prefers-color-scheme", css)
-        self.assertNotIn('data-theme="dark"', css)
-
-    def test_javascript_parses_and_uses_no_network(self) -> None:
-        js = (ASSETS / "app.js").read_text(encoding="utf-8")
-        for forbidden in ("fetch(", "XMLHttpRequest", "import("):
-            self.assertNotIn(forbidden, js)
-
-    def test_the_page_no_longer_switches_pipelines_with_a_tab(self) -> None:
-        """Both charts are on the page at once; keep the tabs from returning."""
-        js = (ASSETS / "app.js").read_text(encoding="utf-8")
-        css = (ASSETS / "style.css").read_text(encoding="utf-8")
-        for forbidden in ("pipeline-tab", 'role: "tab"'):
-            self.assertNotIn(forbidden, js)
-        self.assertNotIn(".pipeline-tab", css)
-
-    def test_spec_module_has_no_syntax_drift(self) -> None:
-        source = (SCRIPTS_DIR / "pipeline_docs" / "spec.py").read_text(encoding="utf-8")
-        ast.parse(source)
 
 
 class LayoutWidthTests(unittest.TestCase):

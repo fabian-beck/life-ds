@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { writeFile } from "node:fs/promises";
 // The story titles are data, and a re-translation is free to word one
 // differently; what this file checks is that the page shows the reader's
 // language, so it asks the registries which title that is.
@@ -18,72 +17,44 @@ async function capture(page, testInfo, name) {
   await testInfo.attach(name, { path, contentType: "image/png" });
 }
 
-function viewportAudit(page) {
-  return page.evaluate(() => {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const interactive = [
-      ...document.querySelectorAll(
-        'a[href], button, input, select, textarea, [role="button"]'
-      ),
-    ];
+/* Chromium is driven twice, at a desktop and at a phone viewport, so that the
+   journey and the layout it moves through are seen at both sizes. Not every
+   test in this file earns the second pass, and one that does not costs the run
+   its slowest part twice over for a single answer. The two below say which pass
+   a test keeps; the projects are given roughly half of them each, because they
+   run side by side and the run is as long as the fuller one. */
 
-    const visible = interactive.filter((element) => {
-      const style = getComputedStyle(element);
-      const rect = element.getBoundingClientRect();
-      return (
-        style.visibility !== "hidden" &&
-        style.display !== "none" &&
-        rect.width > 0 &&
-        rect.height > 0 &&
-        rect.bottom > 0 &&
-        rect.top < viewportHeight &&
-        rect.right > 0 &&
-        rect.left < viewportWidth
-      );
-    });
-
-    const summarize = (element) => {
-      const rect = element.getBoundingClientRect();
-      return {
-        label:
-          element.getAttribute("aria-label") ||
-          element.textContent?.trim().replace(/\s+/g, " ").slice(0, 100) ||
-          element.tagName.toLowerCase(),
-        width: Math.round(rect.width),
-        height: Math.round(rect.height),
-        left: Math.round(rect.left),
-        right: Math.round(rect.right),
-      };
-    };
-
-    return {
-      viewport: { width: viewportWidth, height: viewportHeight },
-      documentWidth: document.documentElement.scrollWidth,
-      clippedControls: visible
-        .filter((element) => {
-          const rect = element.getBoundingClientRect();
-          return rect.left < -1 || rect.right > viewportWidth + 1;
-        })
-        .map(summarize),
-      smallControls: visible
-        .filter((element) => {
-          const rect = element.getBoundingClientRect();
-          return rect.width < 44 || rect.height < 44;
-        })
-        .map(summarize),
-    };
-  });
+// Decided by the document rather than by its layout: a route, a title, the
+// served meta tags, a page that boots or does not. Either project answers for
+// both.
+function viewportDoesNotDecideThis() {
+  test.skip(
+    test.info().project.name !== "desktop-chromium",
+    "no viewport decides this; checked under desktop-chromium"
+  );
 }
 
-async function attachAudit(testInfo, name, audit) {
-  const path = testInfo.outputPath(`${name}-audit.json`);
-  await writeFile(path, JSON.stringify(audit, null, 2), "utf8");
-  await testInfo.attach(`${name}-audit`, {
-    path,
-    contentType: "application/json",
-  });
-  expect(audit.documentWidth).toBeLessThanOrEqual(audit.viewport.width + 1);
+// Sets a phone viewport of its own, so the project's size is moot — but its
+// touch and device-scale emulation is not, and a phone is what these were
+// written for.
+function setsItsOwnPhoneViewport() {
+  test.skip(
+    test.info().project.name !== "mobile-chromium",
+    "pinned to its own viewport; checked under mobile-chromium"
+  );
+}
+
+// Nothing on a page laid out for the reader's own screen may reach past its
+// right edge: a sideways scrollbar on a phone is how a mobile reader loses half
+// a caption. Named after the page it measures, so a failure says where.
+async function expectNoSidewaysScroll(page, where) {
+  const width = await page.evaluate(() => ({
+    document: document.documentElement.scrollWidth,
+    viewport: window.innerWidth,
+  }));
+  expect(width.document, `${where} scrolls sideways`).toBeLessThanOrEqual(
+    width.viewport + 1
+  );
 }
 
 // The report is a separate page published next to the app, so a broken link
@@ -92,6 +63,7 @@ async function attachAudit(testInfo, name, audit) {
 test("technical report is reachable from the landing page", async ({
   page,
 }) => {
+  viewportDoesNotDecideThis();
   await page.goto("en");
 
   const reportLink = page
@@ -128,7 +100,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("status")).toContainText(/stories shown/i);
   await capture(page, testInfo, "01-landing");
-  await attachAudit(testInfo, "landing", await viewportAudit(page));
+  await expectNoSidewaysScroll(page, "the landing page");
 
   const search = page.getByRole("textbox", {
     name: "Search people by name, role, or keywords",
@@ -202,7 +174,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   }
 
   await capture(page, testInfo, "02-filtered-landing");
-  await attachAudit(testInfo, "filtered-landing", await viewportAudit(page));
+  await expectNoSidewaysScroll(page, "the filtered landing page");
 
   await adaCard.click();
   await expect(page).toHaveURL(/\/en\/story\/ada_lovelace/);
@@ -210,7 +182,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
     page.locator('section[aria-label^="Overview: Ada Lovelace"]')
   ).toBeVisible();
   await capture(page, testInfo, "03-story-overview");
-  await attachAudit(testInfo, "story-overview", await viewportAudit(page));
+  await expectNoSidewaysScroll(page, "the story overview");
 
   await page.keyboard.press("ArrowDown");
   await expect(page).toHaveURL(/[?&]slide=1(?:&|$)/);
@@ -219,7 +191,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   await page.keyboard.press("PageDown");
   await expect(page).toHaveURL(/[?&]slide=2(?:&|$)/);
   await capture(page, testInfo, "05-story-event");
-  await attachAudit(testInfo, "story-event", await viewportAudit(page));
+  await expectNoSidewaysScroll(page, "an event slide");
 
   // The whole story is in the DOM at once. Only the slide on screen may be
   // reachable: Tab used to walk into controls belonging to later slides, and
@@ -401,6 +373,7 @@ for (const [name, script] of [
   ],
 ]) {
   test(`the app boots when localStorage ${name}`, async ({ page }) => {
+    viewportDoesNotDecideThis();
     const pageErrors = [];
     page.on("pageerror", (error) => pageErrors.push(error.message));
     await page.addInitScript(script);
@@ -428,6 +401,7 @@ for (const [name, script] of [
 test("a slide scrolls only when there is something below to reach", async ({
   page,
 }) => {
+  setsItsOwnPhoneViewport();
   await page.goto("en#/en/story/ada_lovelace");
   await expect(
     page.locator('section[aria-label^="Overview: Ada Lovelace"]')
@@ -583,10 +557,16 @@ test("an important event opens downward, and the map gives way to it", async ({
       };
     });
 
+  // Polled, like every other reading of this value below. The overlay starts
+  // out `hidden` and fades in over 0.6s once the route settles on the event, so
+  // a single sample taken the moment it attaches catches it part-way up the
+  // ramp and fails for no reason the test is about.
+  await expect
+    .poll(async () => (await geometry()).mapOpacity)
+    .toBeGreaterThan(0.9);
   const atRest = await geometry();
   expect(atRest.scrollTop).toBe(0);
   expect(atRest.below).toBeGreaterThanOrEqual(0);
-  expect(atRest.mapOpacity).toBeGreaterThan(0.9);
 
   const affordance = slide.locator(".depth-affordance");
   await expect(affordance).toBeVisible();
@@ -790,6 +770,7 @@ test("a wheel that wanders sideways scrolls into the event, not past it", async 
 test("the document title names the open story, in the reader's language", async ({
   page,
 }) => {
+  viewportDoesNotDecideThis();
   await page.goto("en");
   await expect(page).toHaveTitle("Life Data Stories");
 
@@ -810,6 +791,7 @@ test("the document title names the open story, in the reader's language", async 
 /* An unfurler never runs the router, so these tags live in the served
    document — and they are the whole preview a shared link gets. */
 test("a shared link carries a preview card", async ({ page }) => {
+  viewportDoesNotDecideThis();
   await page.goto("en");
 
   const content = (property) =>
@@ -869,6 +851,7 @@ test("the contrast toast sits at the bottom of the viewport, scrolled or not", a
 test("opening the timeline carries its icons into their new places", async ({
   page,
 }) => {
+  setsItsOwnPhoneViewport();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("en#/en/story/alan_turing");
 
@@ -946,6 +929,7 @@ test("opening the timeline carries its icons into their new places", async ({
    side, the pill stretched to fit both—whenever the fades overlapped, which a
    busy main thread makes certain rather than unlikely. */
 test("the chapter pill carries one title at a time", async ({ page }) => {
+  setsItsOwnPhoneViewport();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("en#/en/story/alan_turing");
 

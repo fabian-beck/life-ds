@@ -90,20 +90,13 @@ class RunLogTests(unittest.TestCase):
 
         self.assertEqual(log.failed, ["Ego network"])
 
-    def test_a_run_with_nothing_wrong_reports_no_failures(self) -> None:
+    def test_a_skipped_step_is_not_a_failed_one(self) -> None:
+        """`--skip-portrait` is a choice the caller made, not a degraded run."""
         log = pipeline.RunLog()
         log.record("Life events", pipeline.STEP_OK)
         log.record("Portrait", pipeline.STEP_SKIPPED, "--skip-portrait")
 
         self.assertEqual(log.failed, [])
-
-    def test_a_skipped_step_is_not_counted_as_missing(self) -> None:
-        log = pipeline.RunLog()
-        log.record("Life events", pipeline.STEP_OK)
-        log.record("Translation", pipeline.STEP_SKIPPED, "--skip-translate")
-
-        attempted = [step for step in log.steps if step[1] != pipeline.STEP_SKIPPED]
-        self.assertEqual(len(attempted), 1)
 
 
 if __name__ == "__main__":

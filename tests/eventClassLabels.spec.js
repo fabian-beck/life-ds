@@ -45,14 +45,19 @@ test("a publication with no stated kind still reads as one", () => {
   expect(publicationTypeLabel(tDe, undefined)).toBe("Publikation");
 });
 
-test("every classification the datasets carry has a German name", () => {
-  // The vocabulary is closed, so a missing entry is a bug, not a fallback.
-  for (const type of ["marriage_partnership", "migration", "publication"]) {
-    expect(eventClassLabel(tDe, { type })).not.toBe(
-      eventClassLabel(t, { type })
-    );
-  }
-  for (const kind of ["book", "paper", "article", "manuscript", "thesis"]) {
-    expect(de[`story.publication_type.${kind}`]).toBeTruthy();
-  }
+test("the two locales define the same vocabulary", () => {
+  // The vocabularies are closed, so an entry in one locale and not the other
+  // is a bug rather than a fallback. Compared as key sets: a German name is
+  // free to be spelled like the English one — "Essay" is — so telling the two
+  // apart by their text would both miss that case and misread it as drift.
+  const vocabulary = (locale) =>
+    Object.keys(locale)
+      .filter(
+        (key) =>
+          key.startsWith("story.event_class.") ||
+          key.startsWith("story.publication_type.")
+      )
+      .sort();
+  expect(vocabulary(de)).toEqual(vocabulary(en));
+  expect(vocabulary(en).length).toBeGreaterThan(0);
 });
