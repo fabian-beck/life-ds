@@ -1907,12 +1907,14 @@ export function asDepthSentence(subject, explanation, t) {
 /**
  * The depth layer's text, as paragraphs of running prose.
  *
- * The material is a set of records — a place, terms, people — and printing it
- * as one is what makes a page of context read as a filing card. So each record
- * is written out as a sentence and the sentences are run together into
- * paragraphs: the terms an event leans on become one passage of background, the
- * people around it another. Nothing is invented here; the sentences are the
- * ones the dataset already holds, joined and pointed at their subjects.
+ * What the layer says around the written passage: where the event happened
+ * under both its names, and who was there. Each record is written out as a
+ * sentence and the sentences are run together into paragraphs rather than set
+ * one per line, so the layer reads as prose and not as a filing card.
+ *
+ * The annotated terms are not among them. They are marked in the description
+ * itself, where a tap opens a popup carrying the same explanation, and a depth
+ * layer that reprints the popups is a depth layer that adds nothing.
  * @param {Object} depth - Output of `getEventDepth`
  * @param {Function} t - Translate function
  * @returns {Array} Paragraphs, each an array of {text} and {text, href} segments
@@ -1951,14 +1953,11 @@ export function composeDepthParagraphs(depth, t) {
     return segments;
   };
 
-  const background = run(
-    (depth?.terms ?? []).map((term) => ({
-      subject: term.term,
-      explanation: term.explanation,
-      href: term.wikipediaUrl ?? null,
-    }))
-  );
-  if (background.length > 0) paragraphs.push(background);
+  // The terms are deliberately absent. Every one of them is marked in the
+  // event's own description, where a tap already opens a popup carrying this
+  // exact explanation and this exact link — printing them again below is the
+  // same words a second time, and the written passage above is where an event
+  // says something the popups do not.
 
   const people = run(
     (depth?.people ?? []).map((person) => ({

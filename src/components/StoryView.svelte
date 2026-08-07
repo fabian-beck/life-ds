@@ -56,6 +56,14 @@
   let visibleDateNote = null;
   let visiblePersonInfo = null;
   let visibleAnnotation = null;
+
+  // An open popup is drawn from the foot of the description, which is where the
+  // invitation down sits. Two things cannot have that spot, and the one the
+  // reader just asked for wins.
+  $: popupOpen =
+    visibleDateNote !== null ||
+    visiblePersonInfo !== null ||
+    visibleAnnotation !== null;
   let showAIModal = false;
 
   // Network modal state - reactive to URL query parameter
@@ -1534,8 +1542,13 @@
                 <button
                   type="button"
                   class="depth-affordance"
-                  style="opacity: {1 - Math.min(depthProgress * 2.5, 1)}"
-                  tabindex={index === activeIndex && depthProgress < 0.5
+                  class:yielded={popupOpen}
+                  style="opacity: {popupOpen
+                    ? 0
+                    : 1 - Math.min(depthProgress * 2.5, 1)}"
+                  tabindex={index === activeIndex &&
+                  depthProgress < 0.5 &&
+                  !popupOpen
                     ? 0
                     : -1}
                   aria-label={$_("story.depth.open")}
@@ -2315,6 +2328,12 @@
     transition:
       opacity 0.2s ease,
       border-color 0.2s ease;
+  }
+
+  /* Out of the way, and out of reach: a chip at zero opacity that still takes
+     a tap is worse than one that is merely invisible. */
+  .depth-affordance.yielded {
+    pointer-events: none;
   }
 
   .depth-affordance:hover {

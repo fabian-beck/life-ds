@@ -2908,11 +2908,62 @@ def filter_related_articles_for_event(
 RELATED_ARTICLE_CHARS = 2500
 
 
+def build_background_avoidance(
+    known_annotations: Optional[Dict[str, str]] = None,
+    neighbors: Optional[List[str]] = None,
+    person_summary: Optional[str] = None,
+) -> str:
+    """What the background must be steered around, when it is already known.
+
+    In a generation run the annotations are written by the same call that writes
+    the passage, so section 5's rule is all there is to go on. In a backfill they
+    are on disk, and so are the events either side, and a passage written without
+    being shown them repeats them — which is what the reader sees, because the
+    annotations are the popups under the very description this sits below.
+    """
+    if not (known_annotations or neighbors or person_summary):
+        return ""
+
+    section = "\n" + "=" * 60 + "\n"
+    section += "WHAT THE READER ALREADY HAS — DO NOT SAY IT AGAIN:\n"
+    section += "=" * 60 + "\n"
+
+    if person_summary:
+        section += f"\nWho the subject is (assume this is known):\n{person_summary}\n"
+
+    if known_annotations:
+        section += (
+            "\nTerms already explained ON THIS SLIDE. A tap opens each of these, "
+            "word for word, under the description your passage follows. Explaining "
+            "any of them again is the most visible way to waste this passage — "
+            "write past them, and where one is relevant, USE it as known ground "
+            "rather than defining it:\n"
+        )
+        for term, explanation in known_annotations.items():
+            section += f"  - {term}: {explanation}\n"
+
+    if neighbors:
+        section += (
+            "\nThe events on either side of this one in the same story. The reader "
+            "reaches them by swiping; do not tell them here:\n"
+        )
+        for neighbor in neighbors:
+            section += f"  - {neighbor}\n"
+
+    section += (
+        "\nWhat is left is what you are for: the situation around the event that "
+        "neither the description, nor these explanations, nor the neighbouring "
+        "events supply.\n"
+    )
+    return section
+
+
 def build_phase2_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     deutsche_biographie_text: Optional[str] = None,
+    background_avoidance: str = "",
 ) -> str:
     """
     Build base Phase 2 prompt (common sections for all event types).
@@ -3115,7 +3166,14 @@ def build_phase2_prompt_base(
     prompt += "   - Do NOT use [[term|display]] markers here - they belong in the description only\n"
     prompt += "   - Write for someone who does not know the field. Name what an insider would assume\n"
     prompt += "   - American English. No headings, no bullet points, no meta-commentary about sources\n"
-    prompt += "   - Return null if the material would only repeat the description or would have to be invented\n\n"
+    prompt += "   - Return null if the material would only repeat the description or would have to be invented\n"
+    prompt += "   - SHAPE: open on the wider situation, not on the subject's name. A passage that\n"
+    prompt += "     starts with the person and walks through the event again is the failure this\n"
+    prompt += "     section exists to avoid\n"
+    prompt += "   - Name the things an insider takes for granted: the other people working on the\n"
+    prompt += "     same problem, what the state of the art was, what it cost, what it was competing\n"
+    prompt += "     with, what happened to it afterwards\n\n"
+    prompt += background_avoidance
 
     # Add icon categories
     prompt += "\n" + "=" * 60 + "\n"

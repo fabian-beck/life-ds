@@ -590,6 +590,18 @@ test("an important event opens downward, and the map gives way to it", async ({
 
   const affordance = slide.locator(".depth-affordance");
   await expect(affordance).toBeVisible();
+
+  // An annotation opens its popup from the foot of the description, which is
+  // where the invitation down sits. The one the reader just asked for wins.
+  const term = slide.locator(".annotated-term").first();
+  await term.click();
+  await expect(slide.locator(".annotation-popup")).toBeVisible();
+  await expect(affordance).toHaveCSS("opacity", "0");
+  await expect(affordance).toHaveCSS("pointer-events", "none");
+  await term.click();
+  await expect(slide.locator(".annotation-popup")).toHaveCount(0);
+  await expect(affordance).toHaveCSS("opacity", "1");
+
   await affordance.click();
 
   // A passage of what the fold keeps a tap away or leaves out, and prose
@@ -609,9 +621,17 @@ test("an important event opens downward, and the map gives way to it", async ({
   await expect(slide.locator(".event-depth")).toContainText(
     "Bletchley, Milton Keynes"
   );
-  await expect(
-    slide.locator(".event-depth .depth-paragraph .depth-subject").first()
-  ).toBeVisible();
+  // The layer does not reprint the popups: every annotated term on this slide
+  // is explained a tap away, and saying it twice is what made the layer read
+  // as a second copy of the fold.
+  const explanations = await slide.evaluate((node) =>
+    [...node.querySelectorAll(".annotation-popup")].map((p) => p.textContent)
+  );
+  const layer = await slide.locator(".event-depth").innerText();
+  for (const explanation of explanations) {
+    expect(layer).not.toContain(explanation);
+  }
+  // Prose, not a card: no headings and no definition list anywhere in it.
   expect(await slide.locator(".event-depth h3, .event-depth dt").count()).toBe(
     0
   );

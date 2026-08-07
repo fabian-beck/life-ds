@@ -227,17 +227,17 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "7f6a1d6b72abad15",
+      "fingerprint": "a3051f48c88352bf",
       "summary": {
         "constraints": [
-          "Processes only event indexes named by `wanted` when provided, and otherwise considers all events.",
-          "Skips events with a nonblank `background` unless `overwrite=True`.",
-          "In `dry_run` mode, reports candidate events but makes no request and writes nothing.",
-          "Accepts `null` or an empty result as no passage; leaves that event unchanged, and saves the JSON only if at least one passage was written."
+          "Targets only event indexes named by `wanted` when provided; otherwise considers all events.",
+          "By default skips events whose existing `background` is nonblank; `overwrite=True` is required to replace one.",
+          "`dry_run=True` reports eligible titles but makes no calls and writes nothing.",
+          "Accepts only a short prose background passage; null, missing, or whitespace-only output leaves the event unchanged."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Repairs missing background passages in an existing person’s `life_events.json` without regenerating or altering the event records themselves. For each selected event, it supplies that event’s Phase 2 research context and stores only a returned `background` passage describing the surrounding situation, significance, and aftermath.",
-        "why_this_design": "The repair reuses the Phase 2 prompt rather than maintaining a second version, keeping background-writing rules aligned with normal generation. It requests and writes only the additive field, preserving a reviewable distinction between a background backfill and a regeneration that could change titles, dates, descriptions, or classifications."
+        "what_it_does": "Loads a person’s existing `life_events.json` and adds a `background` passage to selected events without regenerating their event records. For each eligible event, it supplies the event’s title, date, description, subject, class, related research context, neighboring events, and person summary through the shared Phase 2 prompt, then retains only the structured `background` value. Nonempty passages are written back in place, preserving every other event field.",
+        "why_this_design": "This is an additive repair path for older datasets: regenerating Phase 2 output could alter descriptions, classifications, or other already-reviewable event data. Importing the same Phase 2 prompt rather than maintaining a copy keeps background generation aligned with the main enrichment path while the narrow output schema prevents unrelated fields from being overwritten."
       }
     },
     "p_chapters": {

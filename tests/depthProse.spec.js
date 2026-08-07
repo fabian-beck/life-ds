@@ -84,30 +84,28 @@ const depth = {
   sources: [],
 };
 
-test("the terms of one event are a single passage, not a line each", () => {
+test("what the layer says is a passage, not a line each", () => {
   const paragraphs = composeDepthParagraphs(depth, t);
-  expect(paragraphs).toHaveLength(3);
+  expect(paragraphs).toHaveLength(2);
 
   expect(flatten(paragraphs[0])).toBe(
     "It happened at Bletchley, a place today's maps name Milton Keynes."
   );
   expect(flatten(paragraphs[1])).toBe(
-    "Hut 8 was a section at Bletchley Park. Enigma was a family of cipher machines."
-  );
-  expect(flatten(paragraphs[2])).toBe(
     "Joan Clarke was a cryptanalyst in the same section."
   );
 });
 
-test("the way out to an article rides on the subject, not on a marker after it", () => {
-  const [, background] = composeDepthParagraphs(depth, t);
-  const linked = background.filter((segment) => segment.href);
-  expect(linked).toHaveLength(1);
-  expect(linked[0]).toMatchObject({
-    text: "Hut 8",
-    href: "https://en.wikipedia.org/wiki/Hut_8",
-  });
-  expect(flatten(background)).not.toContain(en["story.read_more"]);
+test("the annotated terms are left to their popups", () => {
+  // Each of them is marked in the description, where a tap already opens the
+  // same explanation and the same link. Reprinting them here would make the
+  // depth layer a second copy of the fold.
+  const flat = composeDepthParagraphs(depth, t).map(flatten).join(" ");
+  for (const term of depth.terms) {
+    expect(flat).not.toContain(term.explanation);
+  }
+  expect(flat).not.toContain("Hut 8");
+  expect(flat).not.toContain(en["story.read_more"]);
 });
 
 test("a place with one name gets the shorter sentence, and nothing gets an empty one", () => {

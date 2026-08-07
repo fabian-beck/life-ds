@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
 
@@ -42,6 +43,7 @@ from generate_person_events import (
     PHASE2_MODEL,
     PHASE2_REASONING_EFFORT,
     EventSkeleton,
+    build_background_avoidance,
     build_phase2_prompt_base,
     filter_related_articles_for_event,
 )
@@ -49,6 +51,10 @@ from utils.model_calls import parse_structured
 from utils.wikipedia_cache import get_cache_dir
 
 enable_utf8_console()
+
+# ``[[term|display]]`` markers are an interface detail; a neighbouring event is
+# shown to the model as the reader reads it.
+_MARKER = re.compile(r"\[\[[^\[\]|]+\|([^\[\]]+)\]\]")
 
 
 class BackgroundOnly(BaseModel):
@@ -119,14 +125,48 @@ def _skeleton(event: Dict[str, Any]) -> EventSkeleton:
     )
 
 
+def _neighbors(events: List[Dict[str, Any]], index: int) -> List[str]:
+    """The events either side of this one, as the reader meets them."""
+    lines = []
+    for offset in (-1, 1):
+        neighbor = events[index + offset] if 0 <= index + offset < len(events) else None
+        if not neighbor:
+            continue
+        description = _MARKER.sub(r"\1", neighbor.get("description") or "")
+        lines.append(
+            f"{neighbor.get('date', '?')} — {neighbor.get('title', '')}: {description}"
+        )
+    return lines
+
+
 def _prompt(
-    event: Dict[str, Any], person_name: str, related: List[Dict[str, Any]]
+    event: Dict[str, Any],
+    person_name: str,
+    related: List[Dict[str, Any]],
+    *,
+    events: List[Dict[str, Any]],
+    index: int,
+    person_summary: Optional[str] = None,
 ) -> str:
     skeleton = _skeleton(event)
     filtered = filter_related_articles_for_event(skeleton, related, max_articles=5)
+    known = {
+        term: (annotation or {}).get("explanation", "")
+        for term, annotation in (event.get("annotations") or {}).items()
+        if (annotation or {}).get("explanation")
+    }
     # The base prompt is the one that asks for the background; the class-specific
     # builder only adds guidance about fields this run does not fill.
-    return build_phase2_prompt_base(skeleton, person_name, filtered)
+    return build_phase2_prompt_base(
+        skeleton,
+        person_name,
+        filtered,
+        background_avoidance=build_background_avoidance(
+            known_annotations=known,
+            neighbors=_neighbors(events, index),
+            person_summary=person_summary,
+        ),
+    )
 
 
 def backfill_person(
@@ -141,7 +181,9 @@ def backfill_person(
     path = PEOPLE_DIR / person_id / "life_events.json"
     data = _load(path)
     events = data.get("events") or []
-    person_name = (data.get("person") or {}).get("name") or person_id
+    person = data.get("person") or {}
+    person_name = person.get("name") or person_id
+    person_summary = person.get("summary")
     related = _related_articles(person_id)
 
     targets = [
@@ -171,7 +213,17 @@ def backfill_person(
             reasoning_effort=PHASE2_REASONING_EFFORT,
             input=[
                 {"role": "system", "content": SYSTEM},
-                {"role": "user", "content": _prompt(event, person_name, related)},
+                {
+                    "role": "user",
+                    "content": _prompt(
+                        event,
+                        person_name,
+                        related,
+                        events=events,
+                        index=index,
+                        person_summary=person_summary,
+                    ),
+                },
             ],
             text_format=BackgroundOnly,
             label=f"Background for '{title}'",
