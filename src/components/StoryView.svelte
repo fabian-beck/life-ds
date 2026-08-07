@@ -25,6 +25,7 @@
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import { _, currentLanguage } from "../stores/language";
   import { clamp, displayName, storyStyleVars } from "../utils/helpers.js";
+  import { createAxisLock } from "../utils/gestureAxis.js";
   import {
     toTimestamp,
     normalizePrimaryLocation,
@@ -935,19 +936,30 @@
 
   let lastVerticalWheelAt = 0;
 
+  // One turn of a wheel and one push of a trackpad both arrive as a run of
+  // events, and the run is what the reader meant — a single event out of it
+  // that happens to point sideways is not an instruction to leave the slide.
+  // A wheel has no equivalent of a finger lifting, so a pause ends the run.
+  const wheelLock = createAxisLock({ threshold: 12, gapMs: 150 });
+
   function handleWheel(event) {
     if (event.ctrlKey) return;
     if (!slidesContainer || totalPanels === 0) return;
-    const dominantDelta =
-      Math.abs(event.deltaX) > Math.abs(event.deltaY)
-        ? event.deltaX
-        : event.deltaY;
+
+    const wheelAxis = wheelLock.move(event.deltaX, event.deltaY, Date.now());
+    // Too little of the gesture has arrived to say which way it leans. The
+    // story waits rather than guessing: the slide under the pointer scrolls on
+    // its own in the meantime, which is the answer a short gesture down wanted
+    // anyway.
+    if (wheelAxis === null) return;
+
+    const dominantDelta = wheelAxis === "x" ? event.deltaX : event.deltaY;
     if (!dominantDelta) return;
 
     // Slides are overflow-y auto; when the hovered slide's content overflows
     // and can still scroll in the wheel direction, let it scroll natively
     // instead of converting the delta into horizontal slide navigation.
-    if (Math.abs(event.deltaY) >= Math.abs(event.deltaX)) {
+    if (wheelAxis === "y") {
       const slide = event.target?.closest?.(".slide");
       if (slide && slide.scrollHeight > slide.clientHeight + 1) {
         const canScroll =
@@ -1045,54 +1057,85 @@
     }
   }
 
+  // px of travel before a drag is called horizontal or vertical. Short enough
+  // that a swipe still answers at once, long enough that the wobble at the
+  // start of one does not answer for it.
+  const TOUCH_AXIS_THRESHOLD = 12;
+  // A flick has to cover ground as well as be quick. Without this a fast,
+  // barely-moving finger counted as a swipe.
+  const MIN_FLICK_DISTANCE = 24;
+
+  // A finger lifting ends its gesture outright, so this lock needs no pause to
+  // tell one drag from the next.
+  const touchLock = createAxisLock({ threshold: TOUCH_AXIS_THRESHOLD });
+
   let touchStartX = null;
-  let touchStartY = null;
   let touchStartScrollLeft = null;
   let touchStartTime = null;
   let lastTouchX = null;
+  let lastTouchY = null;
   let lastTouchTime = null;
+
+  function resetTouchState() {
+    touchStartX = null;
+    touchStartScrollLeft = null;
+    touchStartTime = null;
+    lastTouchX = null;
+    lastTouchY = null;
+    lastTouchTime = null;
+    touchLock.reset();
+  }
 
   function handleTouchStart(event) {
     if (!slidesContainer) return;
     const touch = event.touches[0];
     touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
     touchStartScrollLeft = slidesContainer.scrollLeft;
     touchStartTime = Date.now();
     lastTouchX = touch.clientX;
+    lastTouchY = touch.clientY;
     lastTouchTime = touchStartTime;
-
-    // Set state WITHOUT toggling scroll-snap
-    scrollState = SCROLL_STATE.USER_SCROLLING;
+    touchLock.reset();
   }
 
   function handleTouchMove(event) {
     if (touchStartX === null || !slidesContainer) return;
     const touch = event.touches[0];
     const deltaX = touchStartX - touch.clientX;
-    const deltaY = touchStartY - touch.clientY;
+
+    const wasDecided = touchLock.axis !== null;
+    const touchAxis = touchLock.move(
+      touch.clientX - lastTouchX,
+      touch.clientY - lastTouchY
+    );
 
     // Track last position for velocity calculation
     lastTouchX = touch.clientX;
+    lastTouchY = touch.clientY;
     lastTouchTime = Date.now();
 
-    // Only handle horizontal swipes
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      event.preventDefault();
-      // Direct 1:1 mapping - no damping
-      slidesContainer.scrollLeft = touchStartScrollLeft + deltaX;
+    if (touchAxis === "x" && !wasDecided) {
+      // Set state WITHOUT toggling scroll-snap
+      scrollState = SCROLL_STATE.USER_SCROLLING;
     }
+
+    // A vertical drag belongs to the slide's own scroll — the depth layer of
+    // the event the reader is on. The story stays where it is under it. A drag
+    // too short to lean either way moves nothing at all yet.
+    if (touchAxis !== "x") return;
+
+    event.preventDefault();
+    // Direct 1:1 mapping - no damping
+    slidesContainer.scrollLeft = touchStartScrollLeft + deltaX;
   }
 
   function handleTouchEnd() {
-    if (!slidesContainer || touchStartX === null) {
-      scrollState = SCROLL_STATE.IDLE;
-      touchStartX = null;
-      touchStartY = null;
-      touchStartScrollLeft = null;
-      touchStartTime = null;
-      lastTouchX = null;
-      lastTouchTime = null;
+    if (!slidesContainer || touchStartX === null || touchLock.axis !== "x") {
+      // A vertical drag never moved the story, so there is nothing to settle
+      // and no slide to change: leaving the event takes a sideways gesture.
+      // The scroll state is left alone rather than forced idle — a gesture
+      // that never claimed the container has no business releasing it either.
+      resetTouchState();
       return;
     }
 
@@ -1107,7 +1150,10 @@
 
     let direction = 0;
 
-    if (Math.abs(velocity) > velocityThreshold) {
+    if (
+      Math.abs(velocity) > velocityThreshold &&
+      Math.abs(deltaX) > MIN_FLICK_DISTANCE
+    ) {
       // Fast swipe - use velocity
       direction = velocity > 0 ? 1 : -1; // positive deltaX = swipe left = next slide
     } else if (Math.abs(deltaX) > swipeThreshold) {
@@ -1115,13 +1161,7 @@
       direction = deltaX > 0 ? 1 : -1;
     }
 
-    // Reset touch state
-    touchStartX = null;
-    touchStartY = null;
-    touchStartScrollLeft = null;
-    touchStartTime = null;
-    lastTouchX = null;
-    lastTouchTime = null;
+    resetTouchState();
 
     if (direction !== 0) {
       const targetIndex = clamp(activeIndex + direction, 0, totalPanels - 1);
@@ -2189,6 +2229,13 @@
     scroll-snap-type: x mandatory;
     overflow-x: auto;
     overflow-y: hidden;
+    /* The story's axis is driven from `handleTouchMove`, which only takes a
+       drag it has judged sideways. Left to itself the browser would pan this
+       container as well, on whatever sideways component a drag down happens to
+       carry, and a slide half a screen out snaps to its neighbor when the
+       finger lifts. Vertical panning stays native: that is the slide's own
+       scroll, into the depth layer. */
+    touch-action: pan-y pinch-zoom;
     scroll-behavior: smooth;
     position: relative;
     height: 100%;
@@ -2234,6 +2281,13 @@
     background-blend-mode: soft-light;
     border-right: 1px solid rgba(148, 163, 184, 0.12);
     overflow-y: auto;
+    /* A slide scrolls down and no further. Scrolling into the depth layer is
+       the one gesture the browser still drives itself, and a trackpad never
+       sends that gesture straight: the sideways part of it used to chain out
+       of the slide into the story behind it, which nudged the strip toward the
+       next slide until it snapped there. Containing the scroll keeps a gesture
+       aimed at the event inside the event. */
+    overscroll-behavior: contain;
   }
 
   /* A deep slide always scrolls, so a scrollbar here would say nothing the

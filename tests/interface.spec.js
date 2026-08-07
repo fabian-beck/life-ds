@@ -647,6 +647,144 @@ test("an important event opens downward, and the map gives way to it", async ({
   await expect(affordance).toBeVisible();
 });
 
+/* Neither a thumb on glass nor two fingers on a trackpad send a gesture that
+   is only vertical. The story read the sideways part of a drag down as a swipe
+   along the story, so a reader opening an event was carried off it — the two
+   tests below are that same wandering gesture, once as touch and once as a
+   wheel, and a deliberate swipe after it to show the story still answers one.
+   The deep slide is where it mattered most: down the screen is where the rest
+   of the event is. */
+// `dx` and `dy` are fractions of the slide, so that the same numbers describe
+// the same gesture on a phone and on a desktop screen — the story reads a
+// swipe against the width it has, and a drag named in pixels is a different
+// gesture on each.
+async function dragSlides(page, { dx, dy, steps = 8 }) {
+  await page.evaluate(
+    async ({ dx, dy, steps }) => {
+      const active = document.querySelector("section.slide:not([inert])");
+      const box = active.getBoundingClientRect();
+      const travelX = dx * box.width;
+      const travelY = dy * box.height;
+      const startX = box.left + box.width / 2;
+      const startY = box.top + box.height / 2;
+      const fire = (type, x, y) => {
+        const touch = new Touch({
+          identifier: 1,
+          target: active,
+          clientX: x,
+          clientY: y,
+        });
+        const points = type === "touchend" ? [] : [touch];
+        active.dispatchEvent(
+          new TouchEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            touches: points,
+            targetTouches: points,
+            changedTouches: [touch],
+          })
+        );
+      };
+      fire("touchstart", startX, startY);
+      // A finger arrives as a run of points spread over time, and both halves
+      // of that matter: where it has been says which way it is going, and how
+      // long it took says whether it was a flick. A drag delivered in one jump
+      // would be neither.
+      for (let step = 1; step <= steps; step += 1) {
+        fire(
+          "touchmove",
+          startX + (travelX * step) / steps,
+          startY + (travelY * step) / steps
+        );
+        // eslint-disable-next-line no-await-in-loop -- a drag is a sequence
+        await new Promise((resolve) => {
+          requestAnimationFrame(resolve);
+        });
+      }
+      fire("touchend", startX + travelX, startY + travelY);
+    },
+    { dx, dy, steps }
+  );
+}
+
+function activeSlideLabel(page) {
+  return page
+    .locator("section.slide:not([inert])")
+    .getAttribute("aria-label", { timeout: 10_000 });
+}
+
+test("a swipe down the screen stays on the event it opens", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/alan_turing?event=9");
+  const slide = page.locator("section.slide:not([inert])");
+  await expect(slide).toHaveClass(/has-depth/);
+  const opened = await activeSlideLabel(page);
+  const restedAt = await page.evaluate(
+    () => document.querySelector("main.slides").scrollLeft
+  );
+
+  // Up the screen, because that is the way a finger moves to bring the page
+  // below into view, and a good way sideways with it — a sloppy drag, but the
+  // drag of someone reading further into the event, not of someone leaving it.
+  // Far enough sideways that the story used to count it as a swipe.
+  await dragSlides(page, { dx: -0.35, dy: -0.6 });
+  await expect(slide).toHaveAttribute("aria-label", opened);
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.querySelector("main.slides").scrollLeft)
+    )
+    .toBe(restedAt);
+
+  // The same drag leaning the other way is a swipe, and still moves the story.
+  await dragSlides(page, { dx: -0.5, dy: -0.15 });
+  await expect.poll(() => activeSlideLabel(page)).not.toBe(opened);
+});
+
+test("a wheel that wanders sideways scrolls into the event, not past it", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/alan_turing?event=9");
+  const slide = page.locator("section.slide:not([inert])");
+  await expect(slide).toHaveClass(/has-depth/);
+  const opened = await activeSlideLabel(page);
+
+  // The story is one strip of slides, and it snaps back to the nearest one
+  // when it is let go, so where the strip ends up says nothing about whether
+  // it moved. What it did while the gesture ran is the whole question.
+  await page.evaluate(() => {
+    const slides = document.querySelector("main.slides");
+    const restedAt = slides.scrollLeft;
+    window.__slideDrift = 0;
+    slides.addEventListener("scroll", () => {
+      window.__slideDrift = Math.max(
+        window.__slideDrift,
+        Math.abs(slides.scrollLeft - restedAt)
+      );
+    });
+  });
+
+  const box = await slide.boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  // A moment of a scroll down a trackpad, and one whose sideways half is the
+  // larger — which is all it used to take: the story took the whole event for
+  // a swipe, and a strip that snaps carried the reader a slide along on 16px
+  // of drift. (That a whole run of such moments still leans down is decided in
+  // `gestureAxis.spec.js`: a driven wheel arrives too slowly to make one run
+  // of here.)
+  await page.mouse.wheel(16, 12);
+
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => document.querySelector("section.slide:not([inert])").scrollTop
+      )
+    )
+    .toBeGreaterThan(0);
+  await expect(slide).toHaveAttribute("aria-label", opened);
+  expect(await page.evaluate(() => window.__slideDrift)).toBe(0);
+});
+
 /* A title is what a bookmark, a tab, and a search result show. The generic one
    was kept for collections, and stayed English on the German site. */
 test("the document title names the open story, in the reader's language", async ({
