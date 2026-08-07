@@ -30,7 +30,7 @@ export default defineConfig({
     {
       name: "logic",
       testMatch:
-        /(eventWeight|personNames|historicalDates|relationshipLabels|descriptionSegments|birthEvent|publicationSource|eventClassLabels)\.spec\.js/,
+        /(depthProse|eventWeight|personNames|historicalDates|relationshipLabels|descriptionSegments|birthEvent|publicationSource|eventClassLabels)\.spec\.js/,
       use: {},
     },
     {

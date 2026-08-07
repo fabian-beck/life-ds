@@ -1,32 +1,27 @@
 <script>
   import { mdiChevronUp, mdiOpenInNew } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { getThumbnailUrl, sourceLabel } from "../utils/storyHelpers.js";
-  import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
+  import {
+    composeDepthParagraphs,
+    getThumbnailUrl,
+    sourceLabel,
+  } from "../utils/storyHelpers.js";
 
   export let slide = {};
   export let depth = null;
   export let onEnlargeImage = () => {};
   export let onReturnToEvent = () => {};
 
-  // The place opens the passage, because where a thing happened is the first
-  // thing a reader needs to picture. Two names are worth a sentence — the one
-  // the event happened under and the one a map carries today; one name is
-  // worth half of one.
-  $: placeSentences = (depth?.places ?? [])
-    .filter((place) => place.historic || place.modern)
-    .map((place) => {
-      const historic = place.historic || place.modern;
-      const modern = place.modern || place.historic;
-      return historic !== modern
-        ? $_("story.depth.place_then_now", { historic, modern })
-        : $_("story.depth.place_one", { name: historic });
-    });
+  $: paragraphs = composeDepthParagraphs(depth, $_);
 
-  // One figure carries the passage; a row of thumbnails would make it a
-  // gallery again. The rest of an event's pictures stay where they are, on the
-  // slide above and in the lightbox.
-  $: figure = depth?.images?.[0] ?? null;
+  // A picture belongs in the passage rather than at the head of it, so they are
+  // dealt out between the paragraphs: the first after the scene is set, the
+  // next further down. An event with one picture — most of them — puts it after
+  // the opening paragraph, which is where a chapter would put it too.
+  $: figures = depth?.images ?? [];
+  function figureAfter(index) {
+    return figures[index] ?? null;
+  }
 </script>
 
 <section
@@ -42,83 +37,63 @@
       <p class="depth-title">{slide.title}</p>
     {/if}
 
-    {#each placeSentences as sentence, index (index)}
-      <p class="depth-lead">{sentence}</p>
-    {/each}
-
-    {#if figure}
-      <figure class="depth-figure">
-        <button
-          type="button"
-          class="depth-figure-button"
-          on:click={() => onEnlargeImage(figure, slide)}
-          aria-label={$_("story.enlarge_image")}
-        >
-          <img
-            src={getThumbnailUrl(figure.url, 800)}
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </button>
-        {#if figure.caption || figure.creator || figure.license}
-          <figcaption>
-            {#if figure.caption}<span class="figure-caption"
-                >{figure.caption}</span
-              >{/if}
-            <!-- The credit the lightbox carries, printed where the reader does
-                 not have to open anything to read it. -->
-            {#if figure.creator || figure.license}
-              <span class="figure-credit">
-                {#if figure.creator}{figure.creator}{/if}{#if figure.creator && figure.license}<span
-                    aria-hidden="true">&#32;·&#32;</span
-                  >{/if}{#if figure.license}{#if figure.licenseUrl}<a
-                      class="depth-link"
-                      href={figure.licenseUrl}
-                      target="_blank"
-                      rel="noreferrer">{figure.license}</a
-                    >{:else}{figure.license}{/if}{/if}
-              </span>
-            {/if}
-          </figcaption>
-        {/if}
-      </figure>
-    {/if}
-
-    <!-- The terms the event's own sentences lean on, each one a paragraph of
-         background rather than an entry in a glossary. -->
-    {#each depth?.terms ?? [] as term (term.term)}
-      <p class="depth-paragraph">
-        <span class="depth-subject">{term.term}</span><span
-          class="depth-dash"
-          aria-hidden="true">&#32;—&#32;</span
-        >{term.explanation}{#if term.wikipediaUrl}<a
-            class="depth-link"
-            href={term.wikipediaUrl}
-            target="_blank"
-            rel="noreferrer">{$_("story.read_more")}</a
-          >{/if}
+    {#each paragraphs as paragraph, index (index)}
+      <p class="depth-paragraph" class:depth-lead={index === 0}>
+        {#each paragraph as segment, position (position)}{#if segment.href}<a
+              class="depth-subject depth-subject-link"
+              href={segment.href}
+              target="_blank"
+              rel="noreferrer">{segment.text}</a
+            >{:else if segment.subject}<span class="depth-subject"
+              >{segment.text}</span
+            >{:else}{segment.text}{/if}{/each}
       </p>
-    {/each}
 
-    {#each depth?.people ?? [] as person (person.person_name)}
-      <p class="depth-paragraph">
-        <span class="depth-subject">{person.person_name}</span
-        >{#if person.relationship_type}<span class="depth-role"
-            >, {relationshipTypeLabel($_, person.relationship_type)}</span
-          >{/if}<span class="depth-dash" aria-hidden="true">&#32;—&#32;</span
-        >{person.relationship_description ?? ""}
-      </p>
+      {#if figureAfter(index)}
+        {@const image = figureAfter(index)}
+        <figure class="depth-figure">
+          <button
+            type="button"
+            class="depth-figure-button"
+            on:click={() => onEnlargeImage(image, slide)}
+            aria-label={$_("story.enlarge_image")}
+          >
+            <img
+              src={getThumbnailUrl(image.url, 800)}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          {#if image.caption || image.creator || image.license}
+            <figcaption>
+              {#if image.caption}<span>{image.caption}</span>{/if}
+              <!-- The credit the lightbox carries, printed where the reader
+                   does not have to open anything to read it. -->
+              {#if image.creator || image.license}
+                <span class="figure-credit"
+                  >{#if image.creator}{image.creator}{/if}{#if image.creator && image.license}<span
+                      aria-hidden="true">&#32;·&#32;</span
+                    >{/if}{#if image.license}{#if image.licenseUrl}<a
+                        class="depth-link"
+                        href={image.licenseUrl}
+                        target="_blank"
+                        rel="noreferrer">{image.license}</a
+                      >{:else}{image.license}{/if}{/if}</span
+                >
+              {/if}
+            </figcaption>
+          {/if}
+        </figure>
+      {/if}
     {/each}
 
     {#if depth?.sources?.length}
       <p class="depth-sources">
-        <span class="depth-sources-lead">{$_("story.depth.read_at")}</span>
+        <span>{$_("story.depth.read_at")}</span>
         {#each depth.sources as source, index (source)}{#if index > 0}<span
-              aria-hidden="true"
-            >
-              ·
-            </span>{/if}<a
+              aria-hidden="true">&#32;·&#32;</span
+            >{/if}<a
             class="depth-link"
             href={source}
             target="_blank"
@@ -161,8 +136,8 @@
     flex-direction: column;
   }
 
-  /* No card, no rules, no icons: this is meant to read as the story going on
-     in a quieter voice, and a panel with headings reads as an appendix. The
+  /* No card, no rules, no icons, no headings, and above all no line per
+     record: this is a short chapter of background, and it is set like one. The
      measure is narrower than the slide's, because this is the one place in the
      app with more than a few sentences to run. */
   .depth-prose {
@@ -193,35 +168,37 @@
     text-wrap: balance;
   }
 
-  .depth-lead,
   .depth-paragraph {
     margin: 0;
     font-family: var(--story-body-font, Inter, sans-serif);
     font-size: 1rem;
-    line-height: 1.65;
+    line-height: 1.7;
     color: rgba(226, 232, 240, 0.92);
     text-wrap: pretty;
   }
 
-  /* The lead sets the scene, so it carries a little more voice than the
-     paragraphs that follow it. */
+  /* The opening paragraph sets the scene, so it carries a little more voice
+     than the ones that follow it. */
   .depth-lead {
     color: rgba(241, 245, 249, 0.96);
   }
 
-  /* What a paragraph is about, run into the sentence rather than set above it
-     as a label. */
+  /* What a sentence is about, marked inside the sentence rather than pulled
+     out in front of it. Where the dataset knows an article for it, the mark is
+     the link. */
   .depth-subject {
     font-weight: 600;
     color: var(--story-primary, #f8fafc);
   }
 
-  .depth-role {
-    color: rgba(203, 213, 225, 0.7);
+  .depth-subject-link {
+    color: var(--story-secondary, #38bdf8);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.35);
   }
 
-  .depth-dash {
-    color: rgba(203, 213, 225, 0.55);
+  .depth-subject-link:hover {
+    border-bottom-color: var(--story-secondary, #38bdf8);
   }
 
   .depth-figure {
@@ -273,10 +250,6 @@
     font-size: 0.8rem;
     line-height: 1.6;
     color: rgba(203, 213, 225, 0.6);
-  }
-
-  .depth-sources-lead {
-    letter-spacing: 0.04em;
   }
 
   .depth-link {
@@ -335,10 +308,9 @@
       gap: 1rem;
     }
 
-    .depth-lead,
     .depth-paragraph {
       font-size: 0.95rem;
-      line-height: 1.6;
+      line-height: 1.65;
     }
   }
 </style>

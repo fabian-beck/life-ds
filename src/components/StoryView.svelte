@@ -2263,18 +2263,6 @@
     min-height: calc(100% + var(--slide-bottom-base));
   }
 
-  /* Where the fold is exactly a screen, the corner is a fixed place on that
-     screen and the invitation belongs there: in the gap the slide already
-     keeps clear, below where the event's text can reach and above where the
-     previous and next buttons start. A fold that had to grow has no such gap,
-     and there the flow position above is the honest one. */
-  .slide.has-depth:not(.fold-overrun) .depth-affordance {
-    position: absolute;
-    right: 0;
-    bottom: calc(var(--slide-bottom-clear) + 0.5rem);
-    margin-top: 0;
-  }
-
   /* The fold is the containing block for what the event paints over the whole
      slide, so the picture has to be given back the horizontal padding the fold
      sits inside; it bleeds to the slide's own edge. */
@@ -2286,21 +2274,27 @@
     flex-shrink: 0;
     align-self: center;
     width: min(54rem, 100%);
-    /* Centers the event in the fold when there is room, exactly as it is
-       centered in a slide that has no depth below it. */
-    margin: auto;
+    /* The event and the invitation under it are centered in the fold as one
+       block, exactly as the event alone is centered on a slide with no depth
+       below it: the free space is split between the margin above the event and
+       the one below the invitation, so nothing opens up between them. */
+    margin: auto auto 0;
+  }
+
+  .slide-fold > .slide-reserve {
+    margin-top: auto;
   }
 
   /* The invitation down. It sits above the timeline, fades as the reader takes
      it, and rides the slide's own scroll away with the fold it belongs to. */
-  /* Kept to the right and kept small: centered, it stood in the middle of the
-     map, which is the one thing on the slide that has to stay legible under
-     it. In the flow it follows the event's last line; the rule below lifts it
-     off the flow wherever there is room to. */
+  /* Directly under the event's last line, and small: anywhere lower it sits
+     over the map, which is the one thing on the slide that has to stay legible
+     under it. Held to the right so it reads as a control rather than as
+     another line of the text. */
   .depth-affordance {
     align-self: flex-end;
     flex: 0 0 auto;
-    margin-top: 0.9rem;
+    margin: 0.9rem 0 0;
     z-index: 4;
     appearance: none;
     display: flex;
