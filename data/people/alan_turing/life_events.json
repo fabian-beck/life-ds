@@ -135,7 +135,8 @@
         "type": "birth",
         "father": "Julius Mathison Turing",
         "mother": "Ethel Sara Turing (née Stoney)"
-      }
+      },
+      "weight": 0.18
     },
     {
       "date": "1926-05",
@@ -172,7 +173,8 @@
           "explanation": "A nationwide British general strike (3–12 May 1926) called by the Trades Union Congress, disrupting transport and many public services.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/1926_United_Kingdom_general_strike"
         }
-      }
+      },
+      "weight": 0.28
     },
     {
       "date": "1930-02-13",
@@ -197,7 +199,9 @@
           "creator": "Possibly Arthur Reginald Chaffin (1893-1954)",
           "license": "Public domain"
         }
-      ]
+      ],
+      "weight": 0.65,
+      "background": "At Sherborne School, Turing had often found the classical curriculum uncongenial, while Morcom shared and encouraged his unusually advanced interest in science. Morcom’s fatal illness was tuberculosis, probably contracted from infected cow’s milk, a danger not yet fully controlled in Britain. In the period afterward, Turing’s reflections turned to whether the mind might exist independently of the body, an early form of his enduring interest in the relation between mind and mechanism."
     },
     {
       "date": "1931-02",
@@ -233,7 +237,8 @@
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
-      ]
+      ],
+      "weight": 0.58
     },
     {
       "date": "1934-11",
@@ -258,7 +263,8 @@
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "logic_in_full_light"
+      "chapter": "logic_in_full_light",
+      "weight": 0.38
     },
     {
       "date": "1935",
@@ -299,7 +305,8 @@
           "license": "CC0",
           "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
         }
-      ]
+      ],
+      "weight": 0.52
     },
     {
       "date": "1936-05-28",
@@ -338,7 +345,9 @@
           "explanation": "A problem posed by David Hilbert asking for a single general algorithm to decide whether any given statement in a formal system is provable; Church and Turing showed no such algorithm exists in general (the problem is undecidable).",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Entscheidungsproblem"
         }
-      }
+      },
+      "weight": 1.0,
+      "background": "The paper addressed David Hilbert’s longstanding program to put mathematics on a fully mechanical foundation, a program already shaken by Kurt Gödel’s incompleteness theorems. Alonzo Church reached a parallel negative result through lambda calculus, and the two approaches were soon recognized as equivalent accounts of effective calculation. Turing went to Princeton later that year to study with Church, where he expanded the work into his Princeton doctoral dissertation."
     },
     {
       "date": "1938",
@@ -377,7 +386,8 @@
         }
       ],
       "event_type_icon": "mdi-certificate",
-      "chapter": "logic_in_full_light"
+      "chapter": "logic_in_full_light",
+      "weight": 0.48
     },
     {
       "date": "1939-09",
@@ -422,7 +432,8 @@
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
-      ]
+      ],
+      "weight": 0.82
     },
     {
       "date": "1940",
@@ -475,7 +486,9 @@
           "explanation": "Britain's Government Code and Cypher School’s main wartime site, where Allied codebreakers produced decrypted intelligence known as Ultra.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Bletchley_Park"
         }
-      }
+      },
+      "background": "British work began with a crucial inheritance: Polish cryptanalysts had shared their Enigma techniques and replica machines with Britain and France shortly before the war. Naval traffic posed a particularly difficult problem because German operators used additional procedures and, later, more complex machine settings than other services. The intelligence produced from successful reads was known as Ultra and had to be protected carefully, since acting too openly on it could reveal that the cipher had been penetrated. The contest remained intermittent throughout the war as German changes to keys, procedures, and equipment could suddenly cut off access.",
+      "weight": 0.94
     },
     {
       "date": "1945",
@@ -524,7 +537,8 @@
           "explanation": "An early British design for a high-speed electronic stored-program computer proposed by Turing at the NPL; it later influenced the Pilot ACE and other British computers.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Automatic_Computing_Engine"
         }
-      }
+      },
+      "weight": 0.78
     },
     {
       "date": "1946",
@@ -571,7 +585,8 @@
           "explanation": "UK legislation that criminalizes unauthorized disclosure of official information; it helped keep wartime intelligence and codebreaking work secret for decades.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Official_Secrets_Act_1911"
         }
-      }
+      },
+      "weight": 0.12
     },
     {
       "date": "1948",
@@ -621,7 +636,8 @@
           "explanation": "A major British university where Newman’s computing laboratory operated and where Turing worked after leaving the National Physical Laboratory.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Manchester"
         }
-      }
+      },
+      "weight": 0.67
     },
     {
       "date": "1950-10",
@@ -652,7 +668,9 @@
           "explanation": "Turing’s proposed conversational test in which an interrogator tries to distinguish a human from a machine by written responses; it later became known as the Turing test.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_test"
         }
-      }
+      },
+      "weight": 0.91,
+      "background": "The essay emerged while Turing was working at the University of Manchester, where stored-program computers were beginning to make questions about machine intelligence practical rather than purely philosophical. It built on his earlier interest in learning machines, including the idea that a machine might be educated from a childlike initial state. Its proposed criterion deliberately shifted attention away from proving or disproving consciousness, a choice that has remained controversial: critics argue that convincing linguistic behavior need not establish understanding. The paper also helped set the agenda for later artificial-intelligence research by treating learning, language, and human-like performance as connected problems."
     },
     {
       "date": "1952",
@@ -682,7 +700,8 @@
           "explanation": "A mathematical-chemical model in which interacting substances react locally and diffuse through space, producing stable spatial patterns from an initially uniform state.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system"
         }
-      }
+      },
+      "weight": 0.76
     },
     {
       "date": "1952",
@@ -725,7 +744,8 @@
           "explanation": "At the time, sex between men was criminalized in Britain under laws including the Labouchere Amendment (1885), with prosecutions commonly brought for \"gross indecency\".",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Labouchere_Amendment"
         }
-      }
+      },
+      "weight": 0.88
     },
     {
       "date": "1954-06-07",
@@ -771,7 +791,9 @@
         "type": "death",
         "cause": "cyanide poisoning",
         "characterization": "ruled a suicide"
-      }
+      },
+      "weight": 0.96,
+      "background": "Two years earlier, Turing had been convicted of “gross indecency” after reporting a burglary connected to his relationship with Arnold Murray. Rather than imprisonment, he accepted probation contingent on a year of estrogen injections, and the conviction also cost him his security clearance. He remained at the University of Manchester, where he pursued work on mathematical biology and published his influential paper on morphogenesis in 1952. His treatment by the British state later became a prominent example in debates over the persecution of gay men; he received a posthumous royal pardon in 2013."
     }
   ]
 }

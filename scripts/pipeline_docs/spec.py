@@ -416,7 +416,10 @@ STEPS: List[Step] = [
         summary=(
             "Reads the whole article set and proposes 12–16 significant events "
             "with titles, dates and descriptions—the narrative spine, with no "
-            "locations, images or sources yet."
+            "locations, images or sources yet. It also weighs them against each "
+            "other, which only this call can do: it is the one place in the "
+            "pipeline that sees a life whole, and how much of a life an event "
+            "turns on is a comparison, not a property of the event."
         ),
         depends_on=[
             Dep("p_wiki_select", "the selected related articles"),
@@ -435,8 +438,11 @@ STEPS: List[Step] = [
         phase_label="Phase 2",
         summary=(
             "One call per event, given only the articles relevant to that event: "
-            "historic and modern place names, the people involved, sources, and a "
-            "semantic icon. Individual failures do not abort the run."
+            "historic and modern place names, the people involved, sources, a "
+            "semantic icon, the terms the description leans on—and the one piece "
+            "of writing in either pipeline, a short passage of background for a "
+            "reader who has finished the event and wants to know what surrounded "
+            "it. Individual failures do not abort the run."
         ),
         depends_on=[Dep("p_events_p1", "one event skeleton per call")],
         prompts=[
@@ -751,6 +757,56 @@ STEPS: List[Step] = [
         outputs=["life_events"],
         calls_per_run="0 in a generation run; 1 per person repaired",
         model_from="backfill_death_events.py",
+    ),
+    Step(
+        "p_backgrounds",
+        "Backfill an event's background",
+        PERSON,
+        AI,
+        "backfill_event_backgrounds.py",
+        "backfill_person",
+        summary=(
+            "The other repair path: what a dataset written before the "
+            "background passage existed gets instead of a full regeneration, "
+            "which would rewrite the events themselves and leave nobody able "
+            "to review a purely additive change. It sends Phase 2's own prompt "
+            "— imported rather than copied, so the two cannot drift — and "
+            "keeps only the passage. A selection file names the events worth "
+            "the call, which are the ones the application offers a depth layer "
+            "for."
+        ),
+        depends_on=[Dep("p_write", "the stored events, as the dataset holds them")],
+        prompts=["build_phase2_prompt_base", "backfill_person"],
+        inputs=["life_events", "wiki_cache"],
+        outputs=["life_events"],
+        calls_per_run="0 in a generation run; 1 per event repaired",
+        model_from="generate_person_events.py",
+    ),
+    Step(
+        "p_weights",
+        "Backfill an event's weight",
+        PERSON,
+        AI,
+        "backfill_event_weights.py",
+        "backfill_person",
+        summary=(
+            "One call per person rather than per event, because the number is "
+            "comparative: the whole timeline goes in and one weight per event "
+            "comes back. The application used to derive it instead, from the "
+            "traces an important event leaves behind—a classification, a "
+            "picture, a long description—which reads the documentation rather "
+            "than the life, and ranked a doctorate above the paper that "
+            "founded computer science. A weight is a number, so it is written "
+            "to the translated copies as well; a reader in another language "
+            "arriving at different events would be reading a differently "
+            "edited story."
+        ),
+        depends_on=[Dep("p_write", "the stored events, as the dataset holds them")],
+        prompts=["build_prompt", "backfill_person"],
+        inputs=["life_events"],
+        outputs=["life_events", "person_de"],
+        calls_per_run="0 in a generation run; 1 per person repaired",
+        model_from="backfill_event_weights.py",
     ),
     # ------------------------------------------------------------------ meta
     Step(

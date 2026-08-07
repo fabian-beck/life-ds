@@ -133,6 +133,10 @@ class TrEventClass(BaseModel):
 class TrEvent(BaseModel):
     title: str
     description: str
+    # The passage Phase 2 writes. Optional because datasets generated before
+    # the field existed have none, and an event without one must not be asked
+    # to invent a paragraph in order to keep the shape.
+    background: Optional[str] = None
     date_note: Optional[str] = None
     locations: List[TrLocation]
     images: List[TrImage]
@@ -338,6 +342,7 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         entry: Dict[str, Any] = {
             "title": event.get("title", ""),
             "description": event.get("description", ""),
+            "background": event.get("background"),
             "date_note": event.get("date_note"),
             "locations": [
                 {
@@ -671,6 +676,7 @@ def apply_life_events_translations(
                 "event.description", event.get("description") or "", tr_description
             )
         _set_if_source_has(event, "description", tr_description)
+        _set_if_source_has(event, "background", tr_event.get("background"))
         _set_if_source_has(event, "date_note", tr_event.get("date_note"))
 
         src_locations = [

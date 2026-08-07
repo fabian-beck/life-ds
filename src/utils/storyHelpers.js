@@ -1670,22 +1670,29 @@ const CLASS_WEIGHTS = {
 };
 
 /**
- * How much narrative weight an event carries, on a 0–1 scale.
+ * How much of a life an event turns on, on a 0–1 scale.
  *
- * Nothing in the data says outright that one event matters more than another,
- * so the weight is read off the traces an important event leaves behind: it is
- * classified or carries a milestone icon, the sources gave it a picture, it
- * needed terms explained, other people were there, and it was written at
- * length. None of these alone means much; together they rank a life's events
- * about the way a reader would.
+ * The datasets carry the number: Phase 1 proposes a life's events and weighs
+ * them against each other in the same call, which is the only place in the
+ * pipeline that sees them all at once. That is what makes the judgment
+ * possible at all — weight here is comparative, not absolute.
  *
- * The number is only ever compared against other events of the same life —
- * see `selectDeepEventIndexes`.
+ * What follows is the fallback for a dataset generated before the field
+ * existed, and it is a weaker thing: it reads the traces an important event
+ * leaves behind — a classification, a milestone icon, a picture, annotations,
+ * people, length — which is to say it reads the documentation rather than the
+ * life. It ranks a well-attended ceremony above a quiet paper that founded a
+ * field. Backfilling the weights is what fixes that; see
+ * `scripts/backfill_event_weights.py`.
  * @param {Object} event - Event object
  * @returns {number} Weight between 0 and 1
  */
 export function getEventWeight(event) {
   if (!event) return 0;
+
+  if (Number.isFinite(event.weight)) {
+    return Math.min(Math.max(event.weight, 0), 1);
+  }
 
   let weight = 0;
 
@@ -1733,7 +1740,7 @@ export function getEventWeight(event) {
  * lightbox — and the place and the sources are not on the slide at all.
  * @param {Object} event - Event object
  * @param {Object} egoNetwork - Ego network with connections array
- * @returns {Object} {places, terms, images, people, sources, itemCount, sectionCount}
+ * @returns {Object} {background, places, terms, images, people, sources, itemCount, sectionCount}
  */
 export function getEventDepth(event, egoNetwork) {
   const places = Array.isArray(event?.locations)
@@ -1766,8 +1773,17 @@ export function getEventDepth(event, egoNetwork) {
     ? event.sources.filter((url) => typeof url === "string" && url.length > 0)
     : [];
 
+  // The passage Phase 2 wrote for this event, where there is one. It is
+  // deliberately left out of the counts below: those decide which events offer
+  // a depth layer at all, the passages are generated for the events that do,
+  // and letting one feed the other would make the selection drift as the
+  // corpus fills in.
+  const background =
+    typeof event?.background === "string" ? event.background : null;
+
   const sections = [places, terms, images, people, sources];
   return {
+    background,
     places,
     terms,
     images,

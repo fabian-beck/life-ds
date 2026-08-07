@@ -73,11 +73,17 @@ enable_utf8_console()
 
 PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation (medium)
 
-# Event detail research. Low rather than none, which is what this phase ran at
-# on the larger model: naming the modern place a historic toponym denotes is a
-# judgment, and it is the one the geocoder then depends on.
-PHASE2_MODEL = BULK_MODEL
-PHASE2_REASONING_EFFORT = BULK_REASONING_EFFORT
+# Event detail research. Back on the larger model since the phase began writing
+# the background passage: every other field it returns is checked afterwards —
+# icons against the catalog, people against known entities, places against the
+# geocoder — which is what qualified it for the small model, and a passage of
+# prose is checked by nobody. The small model is also weakest exactly where this
+# passage is won or lost, at recalling detail out of a long context, and a
+# background that recalls nothing is a background that restates the event.
+PHASE2_MODEL = DEFAULT_MODEL
+# Low rather than none for the extraction; the passage is the part that needs
+# the deliberation, and it is written in the same call.
+PHASE2_REASONING_EFFORT = DEFAULT_REASONING_EFFORT
 
 # Image search string generation: writing Commons queries, which the search
 # itself judges by returning something or nothing.
@@ -702,6 +708,14 @@ class EventSkeleton(BaseModel):
     description: str = Field(
         description="Detailed description of the event (2-4 sentences)"
     )
+    weight: Optional[float] = Field(
+        None,
+        description=(
+            "How much of this life the event turns on, 0.0 to 1.0, judged "
+            "against the other events of THIS life rather than against history "
+            "at large."
+        ),
+    )
     event_class: Optional[EventClassification] = Field(
         None,
         description="Structured classification for specific event types (marriage_partnership, migration, invention). Omit for standard biographical events.",
@@ -765,6 +779,14 @@ class EventDetails(BaseModel):
     annotations: Optional[Dict[str, Annotation]] = Field(
         None, description="Dictionary mapping term keys to their explanations"
     )
+    background: Optional[str] = Field(
+        None,
+        description=(
+            "A short passage of background for this event: the situation it "
+            "sat in, why it mattered, what followed from it. Prose, not a "
+            "list. Null when the sources do not support one."
+        ),
+    )
 
 
 # Final Model
@@ -794,6 +816,12 @@ class LifeEvent(BaseModel):
     chapter: Optional[str] = Field(None, description="Chapter ID this event belongs to")
     annotations: Optional[Dict[str, Annotation]] = Field(
         None, description="Dictionary mapping term keys to their explanations"
+    )
+    background: Optional[str] = Field(
+        None, description="Short passage of background behind the event"
+    )
+    weight: Optional[float] = Field(
+        None, description="How much of the life this event turns on, 0.0 to 1.0"
     )
     event_class: Optional[EventClassification] = Field(
         None, description="Structured classification for specific event types"
@@ -2656,6 +2684,19 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- DO NOT specify exact locations, images, or detailed sources (Phase 2 will research these)\n"
         "- DO mention places, people, and context in the description naturally\n"
         "- DO NOT add annotations - Phase 2 will handle all annotations\n"
+        "\n\nWEIGHT - how much of the life the event turns on:\n"
+        "- Give every event a weight from 0.0 to 1.0\n"
+        "- Judge it against the OTHER EVENTS OF THIS LIFE, not against history at large: "
+        "the most consequential thing this person did is near 1.0 even if the world barely noticed, "
+        "and a minor episode is near 0.1 even if it happened somewhere famous\n"
+        "- 0.9-1.0: the events the life is remembered for; without them the story is not this person's\n"
+        "- 0.6-0.8: turning points — the work, the appointment, the loss that changed the direction\n"
+        "- 0.3-0.5: substantial but not pivotal; a post taken, a degree earned, a move made\n"
+        "- 0.1-0.2: context and texture — real events that a short telling would leave out\n"
+        "- SPREAD THEM OUT. Do not give everything 0.7. A life has a few peaks and many "
+        "foothills, and a flat set of weights is the same as no weights at all\n"
+        "- Weigh what the event MEANT, not how well documented it is: a quiet decision that "
+        "redirected the work outranks a well-attended ceremony that changed nothing\n"
         "\n\nCRITICAL TEMPORAL RULE - Stay in the Moment:\n"
         "- Descriptions must be chronologically confined - describe ONLY what was happening at that time\n"
         "- NEVER reference future events, outcomes, or career retrospectives\n"
@@ -2859,6 +2900,14 @@ def filter_related_articles_for_event(
     return [article for score, article in scored_articles[:max_articles]]
 
 
+# How much of each related article Phase 2 is shown. It used to be 1000, which
+# is a lead paragraph — enough to place a term, not enough to say what changed
+# because of an event. The background passage is written from this material, so
+# it is the budget that decides whether that passage can carry a detail the
+# description does not already have.
+RELATED_ARTICLE_CHARS = 2500
+
+
 def build_phase2_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
@@ -3042,6 +3091,32 @@ def build_phase2_prompt_base(
     prompt += "   - Optional: Include wikipedia_url for further reading\n"
     prompt += "   - DEFAULT to 0 annotations - when in doubt, DO NOT annotate\n\n"
 
+    # The slide already carries the event. This is the one part of the run
+    # asked to write rather than to extract, and every rule here exists to keep
+    # it from restating what the reader has just read: the description is given
+    # as the thing to go beyond, and the questions name what the reader cannot
+    # get from it.
+    prompt += "6. BACKGROUND (a short passage, prose):\n"
+    prompt += "   - Write 3-5 sentences of background a curious reader would want AFTER reading the description above\n"
+    prompt += "   - This is prose for a reader, not notes: complete sentences, no bullets, no headings, no lists\n"
+    prompt += "   - Answer as many of these as the sources support, in whatever order reads best:\n"
+    prompt += "     * What was going on around this event - the institution, the field, the political or personal situation it sat in\n"
+    prompt += "     * Why it mattered at the time, and to whom\n"
+    prompt += "     * What it led to, or what changed because of it\n"
+    prompt += "     * What is surprising, contested, or easily misunderstood about it\n"
+    prompt += "   - HARD RULE - ADD, NEVER RESTATE:\n"
+    prompt += "     * The reader has just read the description. Repeating any of it is a failure\n"
+    prompt += "     * Do not re-tell what happened, who was there, when, or where - all of that is already on the page\n"
+    prompt += "     * Do not define the annotated terms from section 5; their explanations are shown separately\n"
+    prompt += "     * Every sentence must carry a fact, a consequence, or a tension the description does not\n"
+    prompt += "   - GROUNDING: use only the subject's article, the related articles below, and well-established\n"
+    prompt += "     history. Do not speculate, do not invent numbers, names, or dates. Prefer the concrete\n"
+    prompt += "     (what a place held, what a method changed, how long something took) over the evaluative\n"
+    prompt += "   - Do NOT use [[term|display]] markers here - they belong in the description only\n"
+    prompt += "   - Write for someone who does not know the field. Name what an insider would assume\n"
+    prompt += "   - American English. No headings, no bullet points, no meta-commentary about sources\n"
+    prompt += "   - Return null if the material would only repeat the description or would have to be invented\n\n"
+
     # Add icon categories
     prompt += "\n" + "=" * 60 + "\n"
     prompt += "AVAILABLE ICONS:\n"
@@ -3065,8 +3140,7 @@ def build_phase2_prompt_base(
 
             full_text = article.get("fullText", "")
             if full_text:
-                # Truncate to 1000 chars for prompt size
-                truncated = full_text[:1000]
+                truncated = full_text[:RELATED_ARTICLE_CHARS]
                 prompt += f"{truncated}...\n\n"
             else:
                 summary = article.get("summary", "")
@@ -3094,7 +3168,7 @@ def _add_related_articles_section(
 
         full_text = article.get("fullText", "")
         if full_text:
-            truncated = full_text[:1000]
+            truncated = full_text[:RELATED_ARTICLE_CHARS]
             prompt += f"{truncated}...\n\n"
         else:
             summary = article.get("summary", "")
@@ -3195,7 +3269,10 @@ def research_event_details(
         "You are a research assistant specializing in biographical event details. "
         "Provide specific, factual information for the given event. "
         "Ensure descriptions are chronologically confined, concise, and balanced. "
-        "All output must be in American English only. Be precise with locations and people."
+        "All output must be in American English only. Be precise with locations and people. "
+        "One field, the background, is written prose rather than extracted data: "
+        "it is read by someone who has just read the event and wants to know what "
+        "surrounded it, so it must add to the description rather than restate it."
     )
 
     details = parse_structured(
@@ -3311,6 +3388,8 @@ def merge_event_skeleton_and_details(
         event_type_icon=normalize_icon(details.event_type_icon),
         chapter=None,  # Chapter assigned in Chapter generation phase
         annotations=annotations,
+        background=details.background,
+        weight=skeleton.weight,  # From Phase 1, which sees the whole life
         event_class=skeleton.event_class,  # From Phase 1, not Phase 2
     )
 

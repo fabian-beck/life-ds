@@ -14,6 +14,22 @@
 
   $: paragraphs = composeDepthParagraphs(depth, $_);
 
+  // The passage Phase 2 wrote. It is the chapter; what the helper composes out
+  // of the records is the apparatus that follows it. A dataset generated before
+  // the field existed has none, and then the composed sentences carry the layer
+  // on their own.
+  $: written = (depth?.background ?? "")
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  // One run of paragraphs, the written ones first: the passage is what the
+  // reader came down for, and the records that follow it are the apparatus.
+  $: blocks = [
+    ...written.map((text) => ({ written: text })),
+    ...paragraphs.map((segments) => ({ segments })),
+  ];
+
   // A picture belongs in the passage rather than at the head of it, so they are
   // dealt out between the paragraphs: the first after the scene is set, the
   // next further down. An event with one picture — most of them — puts it after
@@ -37,17 +53,21 @@
       <p class="depth-title">{slide.title}</p>
     {/if}
 
-    {#each paragraphs as paragraph, index (index)}
-      <p class="depth-paragraph" class:depth-lead={index === 0}>
-        {#each paragraph as segment, position (position)}{#if segment.href}<a
-              class="depth-subject depth-subject-link"
-              href={segment.href}
-              target="_blank"
-              rel="noreferrer">{segment.text}</a
-            >{:else if segment.subject}<span class="depth-subject"
-              >{segment.text}</span
-            >{:else}{segment.text}{/if}{/each}
-      </p>
+    {#each blocks as block, index (index)}
+      {#if block.written}
+        <p class="depth-paragraph depth-written">{block.written}</p>
+      {:else}
+        <p class="depth-paragraph" class:depth-lead={index === 0}>
+          {#each block.segments as segment, position (position)}{#if segment.href}<a
+                class="depth-subject depth-subject-link"
+                href={segment.href}
+                target="_blank"
+                rel="noreferrer">{segment.text}</a
+              >{:else if segment.subject}<span class="depth-subject"
+                >{segment.text}</span
+              >{:else}{segment.text}{/if}{/each}
+        </p>
+      {/if}
 
       {#if figureAfter(index)}
         {@const image = figureAfter(index)}
@@ -179,7 +199,8 @@
 
   /* The opening paragraph sets the scene, so it carries a little more voice
      than the ones that follow it. */
-  .depth-lead {
+  .depth-lead,
+  .depth-written {
     color: rgba(241, 245, 249, 0.96);
   }
 

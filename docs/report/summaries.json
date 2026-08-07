@@ -226,6 +226,20 @@
         "why_this_design": "The step preserves a shared extract–translate–merge contract rather than translating the whole document freely. Reusing names and event titles settled in person translations prevents chapter text, story slides, and biographical entries from diverging over the same entity."
       }
     },
+    "p_backgrounds": {
+      "fingerprint": "7f6a1d6b72abad15",
+      "summary": {
+        "constraints": [
+          "Processes only event indexes named by `wanted` when provided, and otherwise considers all events.",
+          "Skips events with a nonblank `background` unless `overwrite=True`.",
+          "In `dry_run` mode, reports candidate events but makes no request and writes nothing.",
+          "Accepts `null` or an empty result as no passage; leaves that event unchanged, and saves the JSON only if at least one passage was written."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Repairs missing background passages in an existing person’s `life_events.json` without regenerating or altering the event records themselves. For each selected event, it supplies that event’s Phase 2 research context and stores only a returned `background` passage describing the surrounding situation, significance, and aftermath.",
+        "why_this_design": "The repair reuses the Phase 2 prompt rather than maintaining a second version, keeping background-writing rules aligned with normal generation. It requests and writes only the additive field, preserving a reviewable distinction between a background backfill and a regeneration that could change titles, dates, descriptions, or classifications."
+      }
+    },
     "p_chapters": {
       "fingerprint": "d850b51d56734ee5",
       "summary": {
@@ -269,31 +283,31 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "65d22c054df1eb31",
+      "fingerprint": "953e482a2f1d6673",
       "summary": {
         "constraints": [
-          "Produce exactly \"12–16\" significant, strictly chronological events; no \"Other Events\" or miscellaneous grouping.",
-          "Use ISO-8601 dates and claim only supported precision: day, month, or year; the description’s year must match the event date.",
-          "Titles must be \"2–6 words\"; descriptions target \"2–4 sentences\" and must be direct, factual, American English narrative biography.",
-          "Include only the target subject’s lifetime—no post-death events or legacy in event descriptions; omit exact locations, images, detailed sources, and annotations."
+          "Returns exactly \"12–16\" events, in strict chronological order, with no \"Other Events\" or miscellaneous grouping.",
+          "Limits events to the target subject’s lifetime; excludes post-death events and legacy-focused events, while keeping any death entry factual.",
+          "Uses ISO-8601 dates with \"day,\" \"month,\" or \"year\" precision only as supported by the source; the description’s year must match the assigned date.",
+          "Requires 2–6-word specific titles and economical 2–4-sentence American English descriptions; descriptions cannot use hindsight, source commentary, annotations, or exact location/source fields."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the initial biographical spine from the target’s main article, optional Deutsche Biographie text, and related Wikipedia articles. It returns person metadata plus a chronologically ordered set of minimal event records—dated, titled, described, and optionally classified—before later phases add locations, images, annotations, and detailed sourcing.",
-        "why_this_design": "Related articles are explicitly context-only, preventing connected people from displacing the target subject in a fixed 12–16-event budget. The prompt separates retrospective legacy into a conclusion field and keeps event prose confined to each event’s own time, avoiding hindsight claims within the timeline."
+        "what_it_does": "Reads the target person’s main article in full alongside related articles and any supplemental biographical text, then produces a LifePlan containing dataset metadata, person metadata, and 12–16 minimally structured event skeletons. Each skeleton establishes the narrative spine of one life through a concise title, an evidence-calibrated ISO-8601 date and precision, a 2–4-sentence in-the-moment description, a relative significance weight, and optionally a configured biographical event type; later phases add geographic, image, source, and annotation detail.",
+        "why_this_design": "The full article set is supplied in this one pass because relative event weight depends on comparing milestones across the entire life, rather than judging each event in isolation. Related articles are explicitly context-only, limiting a common extraction failure in which an associate’s or institution’s history is mistaken for the subject’s biography."
       }
     },
     "p_events_p2": {
-      "fingerprint": "57bb2c8785a3f404",
+      "fingerprint": "796a570ebcf90f51",
       "summary": {
         "constraints": [
-          "Uses at most 5 related articles for an event; sources must be 1–3 supporting Wikipedia URLs or references drawn from the related material.",
-          "Location names must be city/region level or broader—no addresses, buildings, or exact venues; a single-location event has `primary=true`.",
-          "Descriptions must remain in the event's chronological moment, be concise and factual, and retain the original text unchanged when there are no annotations.",
-          "Annotations are limited to 0–3, only for obscure non-person terms; each term is marked once, and classified subjects must not be annotated or technically re-explained."
+          "Filters supporting material to at most 5 articles; sources must be 1-3 event-specific Wikipedia URLs or references from the supplied related articles.",
+          "Locations must be city/region level or shorter, may be empty or multiple, and use one primary=true location for a single-location event.",
+          "Descriptions must remain in the event's chronological moment, be concise and factual, and preserve the original text unchanged when no annotations are added.",
+          "Annotations are limited to 0-3 obscure, non-obvious terms; never annotate people, repeat a term, or annotate a classified event's subject."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Enriches one biographical event at a time using up to five articles filtered for that event, rather than the full article set. It returns a chronologically bounded narrative description, city-or-region-level historic and modern locations, directly involved people other than the subject, 1–3 supporting references, a semantic icon, and conservative inline-term annotations. Classified events are routed through a class-aware prompt so their narrative avoids duplicating technical metadata already captured by the classification.",
-        "why_this_design": "Per-event article filtering narrows evidence to the event being researched and limits irrelevant source carryover. Retries allow transient structured-output failures, while the fallback preserves the event in the timeline with empty research fields and a neutral calendar icon instead of aborting the full story."
+        "what_it_does": "Enriches one biographical event at a time using up to five articles filtered for that event, rather than the full article set. It returns a refined, chronologically bounded description; city-or-region locations with historic and modern names; directly involved people other than the subject; supporting references; a semantic icon; sparse inline annotations; and, when supported, a short prose background that adds surrounding context without repeating the event.",
+        "why_this_design": "Classified events are routed through a class-specific prompt so their narrative descriptions do not duplicate metadata already captured by the classification. Failed research calls are isolated to the affected event: after all retry attempts, the event remains in the story with empty research fields and a neutral calendar icon instead of aborting the run."
       }
     },
     "p_geocode": {
@@ -505,6 +519,20 @@
         "source": "gpt-5.6-terra",
         "what_it_does": "Sends only the extracted, translatable text fields from a person document for translation and parses the result into the caller’s required structured schema. It asks for native-sounding biographical prose while applying a person-name glossary, standard target-language place names, optional language-specific style rules, and optional reference evidence showing spellings used by a target-language source. The translated fields can then be merged back onto an unchanged English-document copy, leaving nontext data such as identifiers, dates, coordinates, and URLs outside the translation request.",
         "why_this_design": "The extract–translate–merge boundary prevents structural or factual fields from drifting during translation. Reference-derived spellings outrank the generic place-name rule and remembered forms, which anchors names to observed target-language usage while limiting each evidence entry to the exact string it covers."
+      }
+    },
+    "p_weights": {
+      "fingerprint": "a75e609020c843b6",
+      "summary": {
+        "constraints": [
+          "Makes no request when the timeline has no events, or when every event already has a numeric weight unless `overwrite` is enabled.",
+          "Requires exactly one returned entry for every event index; any missing index skips the entire person.",
+          "Normalizes every accepted weight by clamping it to \"0.0\"–\"1.0\" and rounding to \"2\" decimal places.",
+          "Skips an alternate event file when its event count differs from the source timeline."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Loads a person’s complete `life_events.json` timeline and asks for one comparative importance weight for every indexed event. It validates that the response covers every event, clamps each value to the 0.0–1.0 range, rounds it to two decimals, and writes the same ordered weights into every event-file variant with the matching event count, including translated copies.",
+        "why_this_design": "Weights are requested for the entire life in one call because importance is relative across events; this replaces a prior derived score that could overvalue documentation-rich events rather than consequential ones. A partial response is discarded so one timeline never mixes the new comparative scale with the old derived fallback, and synchronized copies prevent language-specific editing of the story."
       }
     },
     "p_wiki_fetch": {

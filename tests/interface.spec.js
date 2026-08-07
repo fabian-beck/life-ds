@@ -593,11 +593,20 @@ test("an important event opens downward, and the map gives way to it", async ({
   await affordance.click();
 
   // A passage of what the fold keeps a tap away or leaves out, and prose
-  // rather than a reference card: the place is named in a sentence, and what
-  // each paragraph is about runs into the sentence instead of sitting above it
-  // as a heading.
+  // rather than a reference card: the written background leads, the place is
+  // named in a sentence, and what each paragraph is about runs into the
+  // sentence instead of sitting above it as a heading.
   await expect(slide.locator(".event-depth")).toBeInViewport();
-  await expect(slide.locator(".event-depth .depth-lead").first()).toContainText(
+  const written = slide.locator(".event-depth .depth-written").first();
+  await expect(written).toBeVisible();
+  // Background rather than a retelling. The prompt's whole job is this
+  // difference, and the cheapest check of it is that the passage is not the
+  // description over again.
+  const eventText = await slide.locator(".content").innerText();
+  const passage = await written.innerText();
+  expect(passage.length).toBeGreaterThan(80);
+  expect(eventText).not.toContain(passage);
+  await expect(slide.locator(".event-depth")).toContainText(
     "Bletchley, Milton Keynes"
   );
   await expect(

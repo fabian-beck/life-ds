@@ -26,6 +26,31 @@ function event(overrides = {}) {
   };
 }
 
+test("a weight the pipeline wrote is the weight, not a hint", () => {
+  // Phase 1 sees a life whole and weighs its events against each other. The
+  // derived score below never overrides that, however the event is documented.
+  const weighed = event({ weight: 0.92, event_type_icon: "mdi-briefcase" });
+  expect(getEventWeight(weighed)).toBeCloseTo(0.92, 5);
+  // A ceremony the sources dwell on still ranks where the biographer put it.
+  const decorated = event({
+    weight: 0.1,
+    event_class: { type: "publication" },
+    images: [{ url: "https://example.org/a.jpg" }],
+    involved_people: ["A", "B", "C"],
+    sources: ["https://example.org/a", "https://example.org/b"],
+    description: "x".repeat(400),
+  });
+  expect(getEventWeight(decorated)).toBeCloseTo(0.1, 5);
+});
+
+test("a weight out of range is brought back into it", () => {
+  expect(getEventWeight(event({ weight: 4 }))).toBe(1);
+  expect(getEventWeight(event({ weight: -1 }))).toBe(0);
+  // Not a number: the derived fallback answers instead of NaN.
+  expect(getEventWeight(event({ weight: null }))).toBe(0);
+  expect(getEventWeight(event({ weight: "high" }))).toBe(0);
+});
+
 test("a bare event carries almost no weight", () => {
   expect(getEventWeight(event())).toBeLessThan(DEEP_EVENT_FLOOR);
   expect(getEventWeight(null)).toBe(0);

@@ -57,13 +57,19 @@ class IntrospectionTests(unittest.TestCase):
         self.assertIn("gpt-", phase1.model_value or "")
         self.assertIn("OPENAI_MODEL", phase1.model_value or "")
         self.assertIn("medium", phase1.reasoning_value or "")
-        # Phase 1 decides what the life is and reads every article; the phases
-        # working from what it settled run on the small model, which resolves
-        # through its own environment variable rather than Phase 1's.
+        # Phase 2 is back on the larger model, and stays there while it writes
+        # the background passage: what qualified it for the small one was that
+        # every field it returned was checked afterwards — icons against the
+        # catalog, places against the geocoder — and a paragraph of prose is
+        # checked by nobody.
         research = calls[("generate_person_events.py", "research_event_details")]
         self.assertIn("gpt-", research.model_value or "")
-        self.assertIn("OPENAI_BULK_MODEL", research.model_value or "")
-        self.assertIn("OPENAI_BULK_REASONING_EFFORT", research.reasoning_value or "")
+        self.assertIn("OPENAI_MODEL", research.model_value or "")
+        self.assertIn("medium", research.reasoning_value or "")
+        # The steps working from what those two settled do run on the small
+        # model, which resolves through its own environment variable.
+        matching = calls[("generate_person_events.py", "match_images_to_events")]
+        self.assertIn("OPENAI_BULK_MODEL", matching.model_value or "")
         # Writing Commons queries is slot filling and takes no reasoning at all.
         searches = calls[("generate_person_events.py", "generate_image_search_strings")]
         self.assertIn("none", searches.reasoning_value or "")
