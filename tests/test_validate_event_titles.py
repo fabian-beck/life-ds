@@ -76,9 +76,7 @@ class LeftAloneTests(unittest.TestCase):
                 self.assertEqual(messages("someone", title), [])
 
     def test_a_reviewed_exception_is_accepted_for_its_own_person_only(self) -> None:
-        self.assertEqual(
-            messages("heinz_nixdorf", "Founds Labor für Impulstechnik"), []
-        )
+        self.assertEqual(messages("heinz_nixdorf", "Founds Labor für Impulstechnik"), [])
         self.assertTrue(messages("someone_else", "Founds Labor für Impulstechnik"))
 
 

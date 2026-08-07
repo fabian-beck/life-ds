@@ -156,7 +156,9 @@ class EventClassMergeTests(unittest.TestCase):
         result = apply_life_events_translations(
             _document(source), _payload({}), {"Henry II": "Heinrich II."}
         )
-        self.assertEqual(result["events"][0]["event_class"]["partner"], "Heinrich II.")
+        self.assertEqual(
+            result["events"][0]["event_class"]["partner"], "Heinrich II."
+        )
 
     def test_the_partner_is_in_the_glossary_to_begin_with(self) -> None:
         names = collect_person_names(_document(dict(MARRIAGE)), None, None)
