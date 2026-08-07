@@ -18,6 +18,10 @@
   export let hasMapData = false;
   export let activeIndex = 0;
   export let isChapterSlide = false;
+  // 0 while the reader is on the event, 1 once they have gone down into its
+  // depth layer. The map belongs to the event: it fades out on the way down
+  // rather than glowing behind a page of running text.
+  export let depthProgress = 0;
   export let styleConfig = null;
   export let migrationPath = null; // {from: {lon, lat}, to: {lon, lat}} or null
 
@@ -1098,6 +1102,8 @@
   class="map-overlay"
   class:hidden={activeIndex === 0}
   class:blended-out={isChapterSlide}
+  class:depth-fading={depthProgress > 0}
+  style="--map-depth-opacity: {Math.max(0, 1 - depthProgress)}"
   aria-hidden="true"
 >
   <div class="map-gradient"></div>
@@ -1116,8 +1122,17 @@
     height: 45vh;
     pointer-events: none;
     z-index: 1;
-    opacity: 1;
+    /* Driven from the reader's descent into the slide, so it tracks the
+       gesture instead of animating after it. The transition below still
+       carries the slide-to-slide fades, which are steps rather than a drag. */
+    opacity: var(--map-depth-opacity, 1);
     transition: opacity 0.6s ease;
+  }
+
+  /* While the descent is driving the opacity the fade has to keep up with the
+     finger; the slower curve above is for fades the reader did not drag. */
+  .map-overlay.depth-fading {
+    transition: opacity 0.12s linear;
   }
 
   .map-overlay.hidden {

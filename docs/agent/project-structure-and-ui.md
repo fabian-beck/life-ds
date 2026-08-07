@@ -13,6 +13,7 @@ life-ds/
 │   └── components/
 │       ├── Landing.svelte    # Person grid landing page
 │       ├── StoryView.svelte  # Main story viewer (timeline/map)
+│       ├── EventDepth.svelte # Context layer below the fold of a landmark event
 │       ├── Timeline.svelte   # Event timeline component
 │       ├── NetworkModal.svelte # Social network visualization
 │       ├── MetaStoryNetwork.svelte # d3-force network for meta stories
@@ -73,6 +74,19 @@ Uses `svelte-spa-router` with URL-based navigation:
 - `/story/{person_id}/{event_index}` - Specific event slide
 
 **Routing behavior**: Slide changes use `history.replaceState` (no history spam), but navigating between people uses `push` (back button works as expected).
+
+## The Depth Layer
+
+A person's story moves sideways: one slide per event, horizontally scroll-snapped. On a life's landmarks the slide also moves downward, and the two axes mean different things — sideways is *later*, downward is *further into the same event*.
+
+A deep slide is built as two screens inside the one scroll container:
+
+- `.slide-fold` holds the event exactly as a slide without depth holds it, and is declared exactly one screen tall (`height: calc(100% + var(--slide-bottom-base))`), so the layer below starts out of sight. The definite height is what lets `.slide-reserve` shrink here the way it does on every other slide. When an event's own text cannot fit a screen, `watchContentFit` marks the slide `fold-overrun` and the fold grows instead of spilling over the layer below.
+- `EventDepth.svelte` renders the context page: the place under its historic and modern names, the terms the description leans on, the images with caption and credit, the people with their relationship described, and the event's sources. All of it is already in the dataset — the fold keeps it a tap away at most, and the place and the sources are not on the slide at all. The people move out of the fold on a deep slide (`peopleInDepth` on `EventSlide`) so the same names are not listed twice.
+
+Which events offer it is decided in `selectDeepEventIndexes` (`src/utils/storyHelpers.js`), from a derived `getEventWeight`: the classification or a milestone `event_type_icon`, the annotations, the images, the people, the sources, and the length of the description. Nothing in the data says outright that one event matters more than another, so the weight reads the traces an important event leaves behind. Selection is per chapter — each chapter offers its heaviest event and no more — which spreads the deep slides across the story instead of clustering them where a life happens to be best documented. An event whose depth layer would be nearly empty is passed over however heavy it scores. Across the current corpus this marks roughly a quarter to a third of a life's events. `tests/eventWeight.spec.js` covers the rules; the reading behavior is covered in `tests/interface.spec.js`.
+
+The invitation down is `.depth-affordance`, a chip in the gap the slide already keeps clear of the timeline, with two chevrons that beckon (and hold still under `prefers-reduced-motion`). It fades as the reader descends. The story map fades with it: `StoryView` tracks the active slide's scroll as `depthProgress` and passes it to `StoryMap`, which drives `--map-depth-opacity` — the map belongs to the event, not to the page of running text that replaces it. Down and up arrows drive the second axis on a deep slide before carrying the reader on to the next one, and a wheel flick that opens the depth layer is not allowed to continue into the next slide in the same gesture.
 
 ## Styling System
 

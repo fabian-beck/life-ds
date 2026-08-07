@@ -46,6 +46,10 @@
   export let visiblePersonInfo = null;
   export let visibleAnnotation = null;
   export let isActive = false;
+  // On a slide with a depth layer the people are listed down there, with their
+  // relationship to the subject spelled out, so the chips would only say the
+  // same names twice.
+  export let peopleInDepth = false;
   export let onEnlargeImage = () => {};
   export let onToggleDateNote = () => {};
   export let onTogglePersonInfo = () => {};
@@ -778,7 +782,9 @@
       {/if}
     </div>
     <div class="event-details">
-      {#if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
+      {#if peopleInDepth}
+        <!-- The people are in the depth layer below. -->
+      {:else if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
         {@const partnerPerson = findPersonInNetwork(
           slide.event_class.partner,
           egoNetwork

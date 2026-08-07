@@ -13,6 +13,7 @@
   import NetworkModal from "./NetworkModal.svelte";
   import OverviewSlide from "./OverviewSlide.svelte";
   import EventSlide from "./EventSlide.svelte";
+  import EventDepth from "./EventDepth.svelte";
   import ChapterSlide from "./ChapterSlide.svelte";
   import ConclusionSlide from "./ConclusionSlide.svelte";
   // StoryMap is imported on demand where it is rendered: it pulls in MapLibre
@@ -34,6 +35,8 @@
     createDateFormatters,
     getValidImages,
     getMigrationPath,
+    getEventDepth,
+    selectDeepEventIndexes,
   } from "../utils/storyHelpers.js";
 
   export let dataset = null;
@@ -327,6 +330,69 @@
   $: hasMultipleEvents = totalSlides > 1;
   $: hasNetworkConnections =
     egoNetwork?.connections && egoNetwork.connections.length > 0;
+
+  // The events a reader can go deeper into. Sideways is the story's own axis —
+  // one event after another — so downward is left free to mean something else:
+  // the same event, further in. Only a life's landmarks offer it, roughly one
+  // per chapter, so the gesture stays rare enough to mean something.
+  $: deepEventIndexes = selectDeepEventIndexes(eventSlides, egoNetwork);
+
+  // How far into the active slide's depth layer the reader has come, 0 to 1.
+  // The story map fades out over the same interval: it belongs to the event
+  // above, and it would otherwise sit lit behind a page of running text.
+  let depthProgress = 0;
+
+  // A slide keeps its scroll position while it is in the DOM, so the progress
+  // has to be re-read when the reader arrives rather than assumed to be 0.
+  $: if (activeIndex >= 0) {
+    depthProgress = 0;
+    measureActiveDepth();
+  }
+
+  function readDepthProgress(section) {
+    const travel = section.scrollHeight - section.clientHeight;
+    if (travel <= 1) return 0;
+    // Full fade by the time the fold has been scrolled away, not by the end of
+    // the depth layer: a long context page would otherwise keep the map half
+    // lit for its whole length.
+    return clamp(
+      section.scrollTop / Math.min(travel, section.clientHeight),
+      0,
+      1
+    );
+  }
+
+  function measureActiveDepth() {
+    if (typeof document === "undefined") return;
+    tick().then(() => {
+      const section = slidesContainer?.children?.[activeIndex];
+      if (section instanceof HTMLElement) {
+        depthProgress = readDepthProgress(section);
+      }
+    });
+  }
+
+  function handleSlideScroll(event, index) {
+    if (index !== activeIndex) return;
+    depthProgress = readDepthProgress(event.currentTarget);
+  }
+
+  // Moves the active slide down into its depth layer or back up to the event.
+  // The fold is exactly one screen, so a screen is also the step a long
+  // context page moves by when the keys drive it.
+  function scrollSlideTo(target) {
+    const section = slidesContainer?.children?.[activeIndex];
+    if (!(section instanceof HTMLElement)) return;
+    if (target === "fold") {
+      section.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (target === "depth") {
+      section.scrollTo({ top: section.clientHeight, behavior: "smooth" });
+      return;
+    }
+    section.scrollBy({ top: target, behavior: "smooth" });
+  }
 
   // Flattened collection of all images across the story with event metadata
   $: allImages = [
@@ -859,6 +925,8 @@
     }
   }
 
+  let lastVerticalWheelAt = 0;
+
   function handleWheel(event) {
     if (event.ctrlKey) return;
     if (!slidesContainer || totalPanels === 0) return;
@@ -878,7 +946,22 @@
           event.deltaY > 0
             ? slide.scrollTop + slide.clientHeight < slide.scrollHeight - 1
             : slide.scrollTop > 0;
-        if (canScroll) return;
+        if (canScroll) {
+          lastVerticalWheelAt = Date.now();
+          return;
+        }
+        // One flick of the wheel arrives as a run of events. Without this the
+        // tail of the flick that opened the depth layer would carry straight
+        // on to the next slide, and the reader would be shown the context and
+        // taken off it in a single gesture. Leaving the event needs a gesture
+        // of its own.
+        if (
+          slide.classList.contains("has-depth") &&
+          Date.now() - lastVerticalWheelAt < 400
+        ) {
+          event.preventDefault();
+          return;
+        }
       }
     }
 
@@ -904,6 +987,34 @@
     }
 
     if (totalPanels === 0) return;
+
+    // Down and up drive the second axis where a slide has one: the reader goes
+    // into the event before the keys carry them on to the next. Left and right
+    // stay the story's axis and always move a slide. A slide that merely
+    // overflows is not a slide with a second axis, and keeps every key it had.
+    const section = slidesContainer?.children?.[activeIndex];
+    const hasDepth =
+      section instanceof HTMLElement && section.classList.contains("has-depth");
+
+    if (["ArrowDown", "PageDown"].includes(event.key) && hasDepth) {
+      if (section.scrollTop < section.scrollHeight - section.clientHeight - 1) {
+        event.preventDefault();
+        // The first press lands on the head of the depth layer; a context page
+        // longer than a screen takes another press per screen after that.
+        scrollSlideTo(section.scrollTop < 1 ? "depth" : section.clientHeight);
+        return;
+      }
+    } else if (["ArrowUp", "PageUp"].includes(event.key) && hasDepth) {
+      if (section.scrollTop > 1) {
+        event.preventDefault();
+        scrollSlideTo(
+          section.scrollTop <= section.clientHeight + 1
+            ? "fold"
+            : -section.clientHeight
+        );
+        return;
+      }
+    }
 
     if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
       event.preventDefault();
@@ -1155,6 +1266,10 @@
     }
   }
 
+  // Per slide, whether its own content already needs more than a screen. Only
+  // a deep slide reads it, and only to give its fold the extra room.
+  let foldOverrun = [];
+
   /* A slide keeps room free at its foot — for the story map, and for the
      timeline controls floating over it — in `.slide-reserve`, which gives that
      room back when the content needs it. It may give it back only while the
@@ -1170,7 +1285,7 @@
      measurement — the slide is a fixed height, the content does not shrink, and
      the room comes from the reserve's floor rather than its used height — so
      this settles in one pass. */
-  function watchContentFit(section) {
+  function watchContentFit(section, index) {
     const content = section.querySelector(".content");
     const reserve = section.querySelector(".slide-reserve");
     if (!content || !reserve || typeof ResizeObserver === "undefined") return;
@@ -1182,10 +1297,15 @@
         parseFloat(style.paddingTop) -
         parseFloat(style.paddingBottom) -
         parseFloat(getComputedStyle(reserve).minHeight);
-      section.style.setProperty(
-        "--slide-reserve-shrink",
-        content.getBoundingClientRect().height > room ? "0" : "1"
-      );
+      const overruns = content.getBoundingClientRect().height > room;
+      section.style.setProperty("--slide-reserve-shrink", overruns ? "0" : "1");
+      // A deep slide's fold is one screen tall by declaration, which is only
+      // safe while the event fits in one. This is the same measurement saying
+      // when it does not.
+      if (foldOverrun[index] !== overruns) {
+        foldOverrun[index] = overruns;
+        foldOverrun = foldOverrun;
+      }
     };
 
     const observer = new ResizeObserver(measure);
@@ -1367,17 +1487,72 @@
                through slides they never asked to see. `inert` takes the
                inactive ones out of the tab order and the accessibility tree at
                once, leaving the arrow keys as the way to move between slides. -->
+          {@const isDeep =
+            slide.type === "event" && deepEventIndexes.has(slide.eventIndex)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
             class:chapter={slide.type === "chapter"}
             class:conclusion={slide.type === "conclusion"}
+            class:has-depth={isDeep}
+            class:fold-overrun={isDeep && foldOverrun[index]}
             inert={index !== activeIndex}
             aria-hidden={index !== activeIndex}
             aria-label={slideLabel(slide)}
-            use:watchContentFit
+            on:scroll={(event) => handleSlideScroll(event, index)}
+            use:watchContentFit={index}
           >
-            {#if slide.type === "overview"}
+            {#if isDeep}
+              <!-- A deep slide is two screens, and the first one has to be
+                   exactly a screen: the fold holds the event and nothing else,
+                   so the depth layer below it starts out of sight and the
+                   reader meets it only by going there. -->
+              <div class="slide-fold">
+                <EventSlide
+                  {slide}
+                  {birthDate}
+                  {egoNetwork}
+                  {portrait}
+                  {styleConfig}
+                  {formatters}
+                  {visibleDateNote}
+                  {visiblePersonInfo}
+                  {visibleAnnotation}
+                  isActive={index === activeIndex}
+                  peopleInDepth={true}
+                  onEnlargeImage={enlargeImage}
+                  onToggleDateNote={toggleDateNote}
+                  onTogglePersonInfo={togglePersonInfo}
+                  onToggleAnnotation={toggleAnnotation}
+                  onOpenNetwork={openNetworkModal}
+                />
+                <div class="slide-reserve" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="depth-affordance"
+                  style="opacity: {1 - Math.min(depthProgress * 2.5, 1)}"
+                  tabindex={index === activeIndex && depthProgress < 0.5
+                    ? 0
+                    : -1}
+                  aria-label={$_("story.depth.open")}
+                  on:click={() => scrollSlideTo("depth")}
+                >
+                  <span class="depth-affordance-label"
+                    >{$_("story.depth.more")}</span
+                  >
+                  <span class="depth-affordance-chevrons" aria-hidden="true">
+                    <span class="depth-chevron"></span>
+                    <span class="depth-chevron"></span>
+                  </span>
+                </button>
+              </div>
+              <EventDepth
+                {slide}
+                depth={getEventDepth(slide, egoNetwork)}
+                onEnlargeImage={enlargeImage}
+                onReturnToEvent={() => scrollSlideTo("fold")}
+              />
+            {:else if slide.type === "overview"}
               <OverviewSlide
                 {person}
                 {portrait}
@@ -1432,8 +1607,11 @@
                  something below and delivered empty margin. As a flex item the
                  reserve yields its height when there is not enough room for it,
                  which leaves the slide scrolling only when the content itself
-                 overruns the screen. -->
-            <div class="slide-reserve" aria-hidden="true"></div>
+                 overruns the screen. A deep slide keeps its reserve inside the
+                 fold, where the event it belongs to is. -->
+            {#if !isDeep}
+              <div class="slide-reserve" aria-hidden="true"></div>
+            {/if}
           </section>
         {/each}
       {/if}
@@ -1451,6 +1629,7 @@
           {activeIndex}
           {isChapterSlide}
           {styleConfig}
+          {depthProgress}
           migrationPath={activeMigrationPath}
         />
       {/await}
@@ -2037,6 +2216,170 @@
     background-blend-mode: soft-light;
     border-right: 1px solid rgba(148, 163, 184, 0.12);
     overflow-y: auto;
+  }
+
+  /* A deep slide always scrolls, so a scrollbar here would say nothing the
+     affordance does not say better — and the horizontal one is hidden the same
+     way, which is what makes the two axes read as one gesture apiece. */
+  .slide.has-depth {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Room under the event for the invitation down. A story with a map already
+       keeps more than this (the rule below sets 16rem and outranks it); a story
+       without one would otherwise let the description run to the foot of the
+       slide, straight through the affordance. */
+    --slide-bottom-total: 9rem;
+  }
+
+  .slide.has-depth::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The fold is the slide as it was: one screen, the event alone on it. Its
+     height is the slide's own — the content box plus the bottom padding the
+     slide keeps for the controls — so the depth layer below begins exactly at
+     the bottom edge of the screen and not a line above it. */
+  .slide-fold {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    /* A definite height, not a minimum: it is what lets the reserve below the
+       event shrink here exactly as it does on a slide with nothing under it,
+       so a deep slide is laid out like its neighbors. */
+    height: calc(100% + var(--slide-bottom-base));
+  }
+
+  /* The escape hatch, set by `watchContentFit` when the event's own text
+     cannot fit a screen: the fold grows, and takes the invitation and the
+     depth layer down with it, rather than having the last lines run under one
+     and over the other. */
+  .slide.fold-overrun .slide-fold {
+    height: auto;
+    min-height: calc(100% + var(--slide-bottom-base));
+  }
+
+  /* A grown fold carries the invitation below the screen's own foot, so it
+     needs a little more air under it to stay clear of the chapter pill. */
+  .slide.fold-overrun .depth-affordance {
+    bottom: calc(var(--slide-bottom-clear) + 0.5rem);
+  }
+
+  /* The fold is the containing block for what the event paints over the whole
+     slide, so the picture has to be given back the horizontal padding the fold
+     sits inside; it bleeds to the slide's own edge. */
+  .slide-fold > :global(.event-images) {
+    right: -1.5rem;
+  }
+
+  .slide-fold > :global(.content) {
+    flex-shrink: 0;
+    align-self: center;
+    width: min(54rem, 100%);
+    /* Centers the event in the fold when there is room, exactly as it is
+       centered in a slide that has no depth below it. */
+    margin: auto;
+  }
+
+  /* The invitation down. It sits above the timeline, fades as the reader takes
+     it, and rides the slide's own scroll away with the fold it belongs to. */
+  .depth-affordance {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    /* In the gap the slide already keeps clear: below where the event's text
+       can reach, above where the timeline and the chapter pill start. */
+    bottom: calc(var(--slide-bottom-clear) - 1rem);
+    z-index: 4;
+    appearance: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.45rem 0.9rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: rgba(8, 12, 24, 0.55);
+    backdrop-filter: blur(8px);
+    color: rgba(226, 232, 240, 0.92);
+    font-family: var(--story-body-font, Inter, sans-serif);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      opacity 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .depth-affordance:hover {
+    border-color: var(--story-secondary, #38bdf8);
+  }
+
+  .depth-affordance-chevrons {
+    display: block;
+    width: 1.1rem;
+    height: 0.95rem;
+    position: relative;
+  }
+
+  /* Two chevrons, the second trailing the first: the shape of a descent, and
+     the one moving thing on a slide that is otherwise still. */
+  .depth-chevron {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: -0.25rem;
+    border-right: 1.5px solid var(--story-secondary, #38bdf8);
+    border-bottom: 1.5px solid var(--story-secondary, #38bdf8);
+    transform: translateY(0) rotate(45deg);
+    animation: depth-beckon 2.4s ease-in-out infinite;
+  }
+
+  /* Offset as well as delayed, so the pair reads as a descent even in a still
+     frame — and for a reader whose system asks for no motion at all. */
+  .depth-chevron:last-child {
+    top: 0.3rem;
+    animation-delay: 0.18s;
+    opacity: 0.5;
+  }
+
+  @keyframes depth-beckon {
+    0%,
+    55%,
+    100% {
+      transform: translateY(0) rotate(45deg);
+    }
+    25% {
+      transform: translateY(0.22rem) rotate(45deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .depth-chevron {
+      animation: none;
+      transform: translateY(0) rotate(45deg);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .depth-affordance {
+      font-size: 0.68rem;
+      padding: 0.4rem 0.75rem 0.3rem;
+    }
+  }
+
+  /* A short screen has little room between the event and the controls, so the
+     chip gives up its label and carries the invitation in the chevrons alone. */
+  @media (max-height: 480px) {
+    .depth-affordance-label {
+      display: none;
+    }
+
+    .depth-affordance {
+      padding: 0.3rem 0.6rem 0.35rem;
+    }
   }
 
   /* Center content vertically when there's space, but never clip at top */

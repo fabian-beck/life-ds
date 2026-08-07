@@ -1623,3 +1623,208 @@ export function createDateFormatters(language) {
     },
   };
 }
+
+/* ------------------------------------------------------------------ *
+ * Event weight and the depth layer
+ * ------------------------------------------------------------------ */
+
+// Icons that name a kind of event a life is remembered for — a work, a
+// discovery, an honor. The datasets classify only five kinds of event in
+// `event_class`, and a landmark often falls outside all of them (Turing's two
+// famous papers carry no classification at all), so the icon is the one
+// vocabulary that separates "published the paper" from "took up a post". Kinds
+// that recur in every academic life — schooling, degrees, appointments — are
+// deliberately absent: they say what happened, not that it mattered.
+const MILESTONE_ICONS = new Set([
+  "mdi-book",
+  "mdi-book-open-variant",
+  "mdi-file-document",
+  "mdi-file-document-edit",
+  "mdi-newspaper",
+  "mdi-lightbulb-on-outline",
+  "mdi-microscope",
+  "mdi-test-tube",
+  "mdi-palette",
+  "mdi-drawing",
+  "mdi-cube",
+  "mdi-music-note",
+  "mdi-medal",
+  "mdi-trophy",
+  "mdi-crown",
+  "mdi-shield-crown",
+  "mdi-star",
+  "mdi-seal",
+  "mdi-gavel",
+  "mdi-office-building",
+  "mdi-castle",
+]);
+
+// The classifications, by how much of a life they turn on.
+const CLASS_WEIGHTS = {
+  birth: 0.3,
+  death: 0.3,
+  invention: 0.3,
+  publication: 0.3,
+  marriage_partnership: 0.25,
+  migration: 0.15,
+};
+
+/**
+ * How much narrative weight an event carries, on a 0–1 scale.
+ *
+ * Nothing in the data says outright that one event matters more than another,
+ * so the weight is read off the traces an important event leaves behind: it is
+ * classified or carries a milestone icon, the sources gave it a picture, it
+ * needed terms explained, other people were there, and it was written at
+ * length. None of these alone means much; together they rank a life's events
+ * about the way a reader would.
+ *
+ * The number is only ever compared against other events of the same life —
+ * see `selectDeepEventIndexes`.
+ * @param {Object} event - Event object
+ * @returns {number} Weight between 0 and 1
+ */
+export function getEventWeight(event) {
+  if (!event) return 0;
+
+  let weight = 0;
+
+  const classWeight = CLASS_WEIGHTS[event.event_class?.type];
+  if (classWeight) {
+    weight += classWeight;
+  } else if (MILESTONE_ICONS.has(event.event_type_icon)) {
+    // A classification already says the event is one of the recognized kinds;
+    // the icon is what is left to go on when it does not.
+    weight += 0.2;
+  }
+
+  const annotationCount = Object.keys(event.annotations ?? {}).length;
+  weight += Math.min(annotationCount, 3) * 0.08;
+
+  if (getValidImages(event.images).length > 0) weight += 0.12;
+
+  const peopleCount = Array.isArray(event.involved_people)
+    ? event.involved_people.length
+    : 0;
+  weight += Math.min(peopleCount, 3) * 0.05;
+
+  const sourceCount = Array.isArray(event.sources) ? event.sources.length : 0;
+  weight += Math.min(Math.max(sourceCount - 1, 0), 2) * 0.05;
+
+  const length =
+    typeof event.description === "string" ? event.description.length : 0;
+  if (length >= 380) weight += 0.1;
+  else if (length >= 300) weight += 0.05;
+
+  // An event the sources place across a span, rather than on a day, tends to
+  // be one they treat as an episode.
+  if (event.date_end) weight += 0.05;
+
+  return Math.min(weight, 1);
+}
+
+/**
+ * The material a depth layer would have to show for one event: the place under
+ * both its names, the terms its description leans on, the pictures with their
+ * credits, the people who were there, and where all of it was read.
+ *
+ * Every part of this is already in the dataset. What the fold shows of it is a
+ * tap away at most — an annotation behind its term, a credit behind the
+ * lightbox — and the place and the sources are not on the slide at all.
+ * @param {Object} event - Event object
+ * @param {Object} egoNetwork - Ego network with connections array
+ * @returns {Object} {places, terms, images, people, sources, itemCount, sectionCount}
+ */
+export function getEventDepth(event, egoNetwork) {
+  const places = Array.isArray(event?.locations)
+    ? event.locations
+        .filter((location) => location?.name_historic || location?.name_modern)
+        .map((location) => ({
+          historic: location.name_historic ?? null,
+          modern: location.name_modern ?? null,
+          primary: location.primary === true,
+        }))
+    : [];
+
+  const terms = Object.entries(event?.annotations ?? {})
+    .filter(([, annotation]) => !!annotation?.explanation)
+    .map(([term, annotation]) => ({
+      term,
+      explanation: annotation.explanation,
+      wikipediaUrl: annotation.wikipedia_url ?? null,
+    }));
+
+  const images = getValidImages(event?.images)
+    .map((imageData) =>
+      typeof imageData === "string" ? { url: imageData } : imageData
+    )
+    .filter((image) => image.caption || image.creator || image.source);
+
+  const people = getRelevantPeople(event, egoNetwork);
+
+  const sources = Array.isArray(event?.sources)
+    ? event.sources.filter((url) => typeof url === "string" && url.length > 0)
+    : [];
+
+  const sections = [places, terms, images, people, sources];
+  return {
+    places,
+    terms,
+    images,
+    people,
+    sources,
+    itemCount: sections.reduce((total, section) => total + section.length, 0),
+    sectionCount: sections.filter((section) => section.length > 0).length,
+  };
+}
+
+// A weight below this is not a highlight in any life, however its neighbors
+// score. Without a floor a thin chapter would still nominate its best event.
+export const DEEP_EVENT_FLOOR = 0.35;
+
+// Below this there is not enough behind the fold to be worth the trip down.
+const MIN_DEPTH_SECTIONS = 2;
+const MIN_DEPTH_ITEMS = 3;
+
+/**
+ * Which events of one life open a depth layer.
+ *
+ * Weight alone would cluster the highlights wherever a life is best
+ * documented, so the selection is made per chapter: each chapter offers its
+ * heaviest event and no more, which spreads the deep slides across the story
+ * the way a comic spreads its big panels across a chapter. An event that has
+ * too little behind the fold is passed over for the next one down, and a
+ * chapter whose best event never clears the floor simply offers none.
+ * @param {Array} events - Event objects in story order
+ * @param {Object} egoNetwork - Ego network with connections array
+ * @returns {Set<number>} Indexes into `events`
+ */
+export function selectDeepEventIndexes(events, egoNetwork) {
+  if (!Array.isArray(events) || events.length === 0) return new Set();
+
+  const candidates = events
+    .map((event, index) => ({
+      index,
+      chapter: event?.chapter ?? "",
+      weight: getEventWeight(event),
+      depth: getEventDepth(event, egoNetwork),
+    }))
+    .filter(
+      (candidate) =>
+        candidate.weight >= DEEP_EVENT_FLOOR &&
+        candidate.depth.sectionCount >= MIN_DEPTH_SECTIONS &&
+        candidate.depth.itemCount >= MIN_DEPTH_ITEMS
+    );
+
+  const best = new Map();
+  for (const candidate of candidates) {
+    const held = best.get(candidate.chapter);
+    // Ties go to the earlier event: a chapter's first landmark is the one the
+    // reader meets while the chapter is still being established.
+    if (!held || candidate.weight > held.weight) {
+      best.set(candidate.chapter, candidate);
+    }
+  }
+
+  return new Set([...best.values()].map((candidate) => candidate.index));
+}

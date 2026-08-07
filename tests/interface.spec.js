@@ -447,9 +447,11 @@ test("a slide scrolls only when there is something below to reach", async ({
   });
 
   // Neither half is vacuous: the roomy screen has slides that fit, the cramped
-  // one has event slides that do not.
+  // one has event slides that do not, and both have slides that go deeper.
   expect(roomy.fitting).toBeGreaterThan(0);
   expect(cramped.overrunning).toBeGreaterThan(0);
+  expect(roomy.deep).toBeGreaterThan(0);
+  expect(cramped.deep).toBeGreaterThan(0);
 });
 
 async function expectSlidesReachTheirContent(page, viewport) {
@@ -458,12 +460,23 @@ async function expectSlidesReachTheirContent(page, viewport) {
     // The previous and next buttons and the timeline bar float over the foot of
     // every slide. Text under them is text the reader cannot read.
     const controls = document.querySelector(".indicator");
+    // A slide with a depth layer scrolls by design: what is below its fold is
+    // the second screen, not empty margin. It is audited on its own terms
+    // further down.
+    const isDeep = (slide) => slide.classList.contains("has-depth");
     // The slide keeps its content a round 10rem clear of the foot, a little
     // more than the controls actually take. A last line landing inside that
     // difference is flush against them, and a slide may scroll to lift it, so
     // the check for scrolling over nothing starts above the difference.
     const FLUSH = 16;
-    const result = { fitting: 0, overrunning: 0, phantom: [], buried: [] };
+    const result = {
+      fitting: 0,
+      overrunning: 0,
+      deep: 0,
+      phantom: [],
+      buried: [],
+      shallow: [],
+    };
 
     for (const slide of document.querySelectorAll("section.slide")) {
       const content = slide.querySelector(".content");
@@ -475,6 +488,23 @@ async function expectSlidesReachTheirContent(page, viewport) {
 
       // A pixel of slack throughout: the measurements round differently.
       const atRest = foot - content.getBoundingClientRect().bottom;
+
+      if (isDeep(slide)) {
+        result.deep += 1;
+        const depth = slide.querySelector(".event-depth");
+        // The fold is one screen and the depth layer begins under it, so the
+        // slide has to scroll, and by at least a screen's worth.
+        if (!depth || scrollable < slide.clientHeight - 1) {
+          result.shallow.push({
+            label,
+            scrollable: Math.round(scrollable),
+            screen: slide.clientHeight,
+            hasDepthLayer: !!depth,
+          });
+        }
+        continue;
+      }
+
       if (atRest >= controlsReach - 1) {
         result.fitting += 1;
         // Everything is already readable, so there is nothing to scroll to.
@@ -510,8 +540,75 @@ async function expectSlidesReachTheirContent(page, viewport) {
   const where = `at ${viewport.width}x${viewport.height}`;
   expect(audit.phantom, `scrolls over nothing ${where}`).toEqual([]);
   expect(audit.buried, `cannot be scrolled clear ${where}`).toEqual([]);
+  expect(audit.shallow, `deep slide has no second screen ${where}`).toEqual([]);
   return audit;
 }
+
+/* Sideways is the story's axis, one event after another. Downward is the other
+   one: on a life's landmarks the slide carries a second screen of context under
+   the fold. The fold has to be exactly a screen — a peek of the layer below
+   gives the ending away and clutters the event — the invitation down has to be
+   there to be seen and taken, and the map, which belongs to the event, has to
+   get out of the way of the page that replaces it. */
+test("an important event opens downward, and the map gives way to it", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/alan_turing?event=9");
+  const slide = page.locator("section.slide:not([inert])");
+  await expect(slide).toHaveClass(/has-depth/);
+  await expect(page.locator(".map-overlay")).toBeAttached();
+
+  // Rare by design: the depth layer is offered on a life's landmarks, not on
+  // every event it happens to know a lot about.
+  const deep = await page.locator("section.slide.has-depth").count();
+  const events = await page
+    .locator('section.slide[aria-label^="Slide "]')
+    .count();
+  expect(deep).toBeGreaterThan(0);
+  expect(deep).toBeLessThan(events / 2);
+
+  const geometry = () =>
+    page.evaluate(() => {
+      const active = document.querySelector("section.slide:not([inert])");
+      const depth = active.querySelector(".event-depth");
+      return {
+        scrollTop: Math.round(active.scrollTop),
+        // How far the depth layer's top sits below the foot of the window.
+        below: Math.round(
+          depth.getBoundingClientRect().top - window.innerHeight
+        ),
+        mapOpacity: Number(
+          getComputedStyle(document.querySelector(".map-overlay")).opacity
+        ),
+      };
+    });
+
+  const atRest = await geometry();
+  expect(atRest.scrollTop).toBe(0);
+  expect(atRest.below).toBeGreaterThanOrEqual(0);
+  expect(atRest.mapOpacity).toBeGreaterThan(0.9);
+
+  const affordance = slide.locator(".depth-affordance");
+  await expect(affordance).toBeVisible();
+  await affordance.click();
+
+  // The context is a page of what the fold keeps a tap away or leaves out.
+  await expect(slide.locator(".event-depth")).toBeInViewport();
+  await expect(
+    slide.getByText("Bletchley, Milton Keynes", { exact: false })
+  ).toBeVisible();
+  await expect(slide.locator(".event-depth .term").first()).toBeVisible();
+  await expect
+    .poll(async () => (await geometry()).mapOpacity)
+    .toBeLessThan(0.1);
+
+  await slide.locator(".depth-return").click();
+  await expect.poll(async () => (await geometry()).scrollTop).toBe(0);
+  await expect
+    .poll(async () => (await geometry()).mapOpacity)
+    .toBeGreaterThan(0.9);
+  await expect(affordance).toBeVisible();
+});
 
 /* A title is what a bookmark, a tab, and a search result show. The generic one
    was kept for collections, and stayed English on the German site. */
