@@ -782,3 +782,58 @@ test("opening the timeline carries its icons into their new places", async ({
     .poll(() => page.locator(".morph-ghost-layer > *").count())
     .toBe(0);
 });
+
+/* A chapter change swaps one title for the next inside a single pill. The pill
+   used to hold the outgoing and incoming titles at once—two headings side by
+   side, the pill stretched to fit both—whenever the fades overlapped, which a
+   busy main thread makes certain rather than unlikely. */
+test("the chapter pill carries one title at a time", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("en#/en/story/alan_turing");
+
+  const dots = page.locator('.dots-container [data-morph-key^="event-"]');
+  await expect.poll(() => dots.count()).toBeGreaterThan(8);
+  await expect(page.locator(".chapter-indicator-label")).toHaveCount(1);
+
+  // A second title in the pill is a second label element, so watching the pill
+  // for one catches the overlap however short it is: the observer runs on the
+  // insertion itself, not on a frame that may never be painted.
+  await page.evaluate(() => {
+    window.__mostTitlesAtOnce = 0;
+    const count = () => {
+      window.__mostTitlesAtOnce = Math.max(
+        window.__mostTitlesAtOnce,
+        document.querySelectorAll(".chapter-indicator-label").length
+      );
+    };
+    new MutationObserver(count).observe(document.body, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+    });
+    setInterval(count, 16);
+    count();
+  });
+
+  // Jump the length of the life, so the pill is asked to change chapter
+  // several times over.
+  const total = await dots.count();
+  const titles = new Set();
+  for (const index of [0, Math.floor(total / 2), total - 1, 1]) {
+    // The jumps are a sequence, not a batch: each one has to land before the
+    // next is asked for.
+    /* eslint-disable no-await-in-loop */
+    await dots.nth(index).click();
+    await expect(
+      page.locator(`[data-morph-key="event-${index}"]`)
+    ).toHaveAttribute("aria-current", "true");
+    // Long enough for the fade out, the swap, and the fade back in.
+    await page.waitForTimeout(600);
+    titles.add(await page.locator(".chapter-indicator-label").innerText());
+    /* eslint-enable no-await-in-loop */
+  }
+
+  // The pill really did change hands; otherwise the count below proves nothing.
+  expect(titles.size).toBeGreaterThan(2);
+  expect(await page.evaluate(() => window.__mostTitlesAtOnce)).toBe(1);
+});

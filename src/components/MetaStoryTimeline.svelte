@@ -2216,7 +2216,7 @@
     {#key currentChapterByIndicator.id}
       <div
         class="fixed-chapter-header"
-        in:fade={{ duration: 320, delay: 160 }}
+        in:fade={{ duration: 300, delay: 240 }}
         out:fade={{ duration: 220 }}
         style={chapterHeaderStyle}
       >

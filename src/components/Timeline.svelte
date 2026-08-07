@@ -14,7 +14,6 @@
   } from "@mdi/js";
   import { _ } from "../stores/language";
   import { extractYear } from "../utils/storyHelpers.js";
-  import { fade } from "svelte/transition";
   import { createEventDispatcher, onDestroy, tick } from "svelte";
   import { mdiIconMap } from "virtual:mdi-icon-map";
 
@@ -251,6 +250,58 @@
     const chapter = chapters.find((ch) => ch.id === currentEvent.chapter);
     return chapter || null;
   })();
+
+  // The chapter pill carries one label element for the life of the timeline:
+  // on a chapter change it fades that element out, swaps the text while it is
+  // invisible, and fades it back in. Keyed blocks with in/out transitions used
+  // to do this, but they put both titles in the DOM at once, and a busy main
+  // thread—scroll-snapping over a map is exactly that—delays the transitions'
+  // first frame, leaving the old and new titles both fully painted.
+  const LABEL_FADE_OUT_MS = 160;
+
+  let displayedLabel = "";
+  let displayedIsEventCount = false;
+  let labelFaded = false;
+  let labelSwapTimer = null;
+
+  $: targetLabelIsEventCount =
+    !currentChapter && activeIndex === 0 && totalSlides > 0;
+  $: targetLabel = currentChapter
+    ? currentChapter.headline
+    : targetLabelIsEventCount
+      ? $_(`timeline.event_${totalSlides === 1 ? "one" : "other"}`, {
+          count: totalSlides,
+        })
+      : "";
+
+  $: if (targetLabel !== displayedLabel)
+    swapChapterLabel(targetLabel, targetLabelIsEventCount);
+
+  function swapChapterLabel(next, nextIsEventCount) {
+    clearTimeout(labelSwapTimer);
+
+    // Nothing on screen to clear, or motion is unwelcome: swap outright rather
+    // than blank the pill for the length of a fade nobody asked for. A fresh
+    // element is faded in by its CSS keyframe, with no prior opacity to leave.
+    if (!displayedLabel || prefersReducedMotion()) {
+      displayedLabel = next;
+      displayedIsEventCount = nextIsEventCount;
+      labelFaded = false;
+      return;
+    }
+
+    labelFaded = true;
+    labelSwapTimer = setTimeout(() => {
+      // Swapping the text and clearing the fade in one update is safe: the
+      // element is already painted at zero opacity, so the new text rides the
+      // opacity transition up from there and the old text is never seen again.
+      displayedLabel = next;
+      displayedIsEventCount = nextIsEventCount;
+      labelFaded = false;
+    }, LABEL_FADE_OUT_MS);
+  }
+
+  onDestroy(() => clearTimeout(labelSwapTimer));
 
   // Calculate horizontal offset for chapter indicator based on active slide position
   $: chapterIndicatorOffset = (() => {
@@ -967,8 +1018,8 @@
             <button
               type="button"
               class="chapter-indicator-box"
-              class:has-chapter={currentChapter}
-              class:show-event-count={activeIndex === 0 && !currentChapter}
+              class:has-chapter={displayedLabel && !displayedIsEventCount}
+              class:show-event-count={displayedIsEventCount}
               style="--chapter-offset: {chapterIndicatorOffset}%;"
               on:click={() => {
                 if (scrubSwallowedClick()) return;
@@ -984,24 +1035,13 @@
               aria-expanded={isExpanded}
             >
               <div class="chapter-indicator-content">
-                {#if currentChapter}
-                  {#key currentChapter.id}
-                    <span
-                      class="chapter-indicator-label"
-                      transition:fade={{ duration: 300 }}
-                    >
-                      {currentChapter.headline}
-                    </span>
-                  {/key}
-                {:else if activeIndex === 0 && totalSlides > 0}
+                {#if displayedLabel}
                   <span
-                    class="chapter-indicator-label event-count-label"
-                    transition:fade={{ duration: 300 }}
+                    class="chapter-indicator-label"
+                    class:event-count-label={displayedIsEventCount}
+                    class:faded={labelFaded}
                   >
-                    {$_(
-                      `timeline.event_${totalSlides === 1 ? "one" : "other"}`,
-                      { count: totalSlides }
-                    )}
+                    {displayedLabel}
                   </span>
                 {/if}
                 <svg
@@ -2124,6 +2164,28 @@
     text-overflow: ellipsis;
     max-width: 100%;
     font-family: var(--story-heading-font, Inter, sans-serif);
+    /* The fade in after a swap; the first appearance is animated instead,
+       because a freshly inserted element has no prior opacity to leave. */
+    transition: opacity 0.22s ease;
+    animation: chapter-label-in 0.22s ease;
+  }
+
+  .chapter-indicator-label.faded {
+    opacity: 0;
+    transition-duration: 0.16s;
+  }
+
+  @keyframes chapter-label-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chapter-indicator-label {
+      transition: none;
+      animation: none;
+    }
   }
 
   .chapter-chevron {
