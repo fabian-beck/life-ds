@@ -227,17 +227,17 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "a3051f48c88352bf",
+      "fingerprint": "5876b31470e8b6e7",
       "summary": {
         "constraints": [
-          "Targets only event indexes named by `wanted` when provided; otherwise considers all events.",
-          "By default skips events whose existing `background` is nonblank; `overwrite=True` is required to replace one.",
-          "`dry_run=True` reports eligible titles but makes no calls and writes nothing.",
-          "Accepts only a short prose background passage; null, missing, or whitespace-only output leaves the event unchanged."
+          "Processes only indexes named by `wanted` when provided, and skips events with a nonblank background unless `overwrite=True`.",
+          "`dry_run=True` reports targeted titles but makes no request and writes nothing.",
+          "A missing or whitespace-only returned background leaves that event unchanged; only events receiving a passage count as written.",
+          "Returned sources must be 1–3 event-specific Wikipedia URLs under the prompt, but code accepts only normalized URLs in `_citable(person_wikipedia, related, event.get(\"sources\"))`."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a person’s existing `life_events.json` and adds a `background` passage to selected events without regenerating their event records. For each eligible event, it supplies the event’s title, date, description, subject, class, related research context, neighboring events, and person summary through the shared Phase 2 prompt, then retains only the structured `background` value. Nonempty passages are written back in place, preserving every other event field.",
-        "why_this_design": "This is an additive repair path for older datasets: regenerating Phase 2 output could alter descriptions, classifications, or other already-reviewable event data. Importing the same Phase 2 prompt rather than maintaining a copy keeps background generation aligned with the main enrichment path while the narrow output schema prevents unrelated fields from being overwritten."
+        "what_it_does": "Repairs selected life-event records that lack a background passage without regenerating their descriptions, locations, people, or other event fields. For each eligible event, it invokes the shared Phase 2 event-research prompt with the event, person context, related articles, timeline, summary, and ego network; it stores only a nonblank `background` and may replace the event's sources with returned URLs that pass a local allowlist check. Successful writes are saved once after processing and then propagated to dependent source data.",
+        "why_this_design": "The repair reuses the Phase 2 prompt rather than maintaining a copied background prompt, keeping research and citation rules aligned with the original event-enrichment pass. It deliberately makes an additive change, preserving existing event text for review; source replacement is constrained to URLs already supplied to the call because plausible invented Wikipedia URLs can be broken links."
       }
     },
     "p_chapters": {
@@ -297,17 +297,17 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "796a570ebcf90f51",
+      "fingerprint": "4f370cd44ec8328e",
       "summary": {
         "constraints": [
-          "Filters supporting material to at most 5 articles; sources must be 1-3 event-specific Wikipedia URLs or references from the supplied related articles.",
-          "Locations must be city/region level or shorter, may be empty or multiple, and use one primary=true location for a single-location event.",
-          "Descriptions must remain in the event's chronological moment, be concise and factual, and preserve the original text unchanged when no annotations are added.",
-          "Annotations are limited to 0-3 obscure, non-obvious terms; never annotate people, repeat a term, or annotate a classified event's subject."
+          "Uses at most 5 event-relevant related articles and requests 1-3 supporting references; related articles count only when they actually recount the event.",
+          "Locations must be city or region level at most, with historic and modern names and exactly one primary location when locations are known.",
+          "Descriptions must remain in the event's chronological moment, stay concise and factual, and omit technical detail for classified events.",
+          "Annotations are limited to 0-3 genuinely obscure terms, appear as [[term|display]] markers in the description, and cannot duplicate a term or cover a classified event's subject."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Enriches one biographical event at a time using up to five articles filtered for that event, rather than the full article set. It returns a refined, chronologically bounded description; city-or-region locations with historic and modern names; directly involved people other than the subject; supporting references; a semantic icon; sparse inline annotations; and, when supported, a short prose background that adds surrounding context without repeating the event.",
-        "why_this_design": "Classified events are routed through a class-specific prompt so their narrative descriptions do not duplicate metadata already captured by the classification. Failed research calls are isolated to the affected event: after all retry attempts, the event remains in the story with empty research fields and a neutral calendar icon instead of aborting the run."
+        "what_it_does": "Enriches one biographical event with a concise, chronologically bounded description; city-level historic and modern locations; directly involved people other than the subject; event-specific supporting references; a semantic icon; and conservative inline annotations. It also produces an optional prose background passage that situates the event, explains why it mattered, or notes what followed without repeating the event description. The step first narrows the related-article set to material relevant to that event, then uses a class-specific prompt when structured event classification is available.",
+        "why_this_design": "Classified events are routed through a specialized prompt so the narrative does not duplicate technical, geographic, or relationship metadata already carried by the classification. Failed attempts return a deliberately sparse record rather than aborting the run, preserving the event's position in the story while making its unresolved research state explicit in logs."
       }
     },
     "p_geocode": {

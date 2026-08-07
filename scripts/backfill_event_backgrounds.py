@@ -33,6 +33,7 @@ import os
 import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
+from urllib.parse import unquote
 
 from openai import OpenAI
 from pydantic import BaseModel, Field
@@ -58,7 +59,18 @@ _MARKER = re.compile(r"\[\[[^\[\]|]+\|([^\[\]]+)\]\]")
 
 
 class BackgroundOnly(BaseModel):
-    """Phase 2's background field, asked for on its own."""
+    """Phase 2's background field, asked for on its own — and its sources.
+
+    The sources come along because the depth layer prints them under the
+    passage, which is the first time in this application that an event's own
+    provenance is put in front of a reader: they used to be pooled on the
+    conclusion slide, where a wrong one was invisible. Several are wrong. The
+    prompt that produced them said "provide 1-3 Wikipedia URLs from the related
+    articles below", so an event no related article documents got the closest
+    one anyway — Morcom's death, in 1930, cited the article on Turing's 1936
+    proof. Re-deciding them costs nothing here: the call is already looking at
+    this event and at those same articles.
+    """
 
     background: Optional[str] = Field(
         None,
@@ -66,6 +78,13 @@ class BackgroundOnly(BaseModel):
             "A short passage of background for this event: the situation it "
             "sat in, why it mattered, what followed from it. Prose, not a "
             "list. Null when the sources do not support one."
+        ),
+    )
+    sources: List[str] = Field(
+        default_factory=list,
+        description=(
+            "1-3 Wikipedia URLs that document THIS event. The subject's own "
+            "article when no related article covers it specifically."
         ),
     )
 
@@ -139,6 +158,67 @@ def _neighbors(events: List[Dict[str, Any]], index: int) -> List[str]:
     return lines
 
 
+def _normalize(url: str) -> str:
+    """Compare URLs the way Wikipedia treats them: percent-encoding and
+    underscores are spelling, not identity."""
+    return unquote(str(url or "")).replace("_", " ").rstrip("/").lower()
+
+
+def _citable(
+    person_wikipedia: Optional[str],
+    related: List[Dict[str, Any]],
+    existing: Optional[List[str]] = None,
+) -> set:
+    """Every URL this call is allowed to cite.
+
+    The subject's article, the related articles it was shown, and whatever the
+    event already cites — the last because a citation already in the corpus is a
+    real article whether or not this event's article filter happened to surface
+    it, and dropping a good one for being absent from a five-item shortlist is
+    how "Published the Turing test paper" lost its citation of the paper.
+    """
+    urls = {_normalize(person_wikipedia)} if person_wikipedia else set()
+    for article in related:
+        url = article.get("url")
+        if url:
+            urls.add(_normalize(url))
+    for url in existing or []:
+        if url:
+            urls.add(_normalize(url))
+    urls.discard("")
+    return urls
+
+
+def _ego_network(person_id: str) -> Dict[str, Any]:
+    """The network the chips are drawn from, or nothing."""
+    path = PEOPLE_DIR / person_id / "ego_network.json"
+    if not path.exists():
+        return {}
+    try:
+        return cast(Dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
+    except json.JSONDecodeError:
+        return {}
+
+
+def _connections_for(
+    event: Dict[str, Any], network: Dict[str, Any]
+) -> List[Dict[str, Any]]:
+    """The network entries for the people this event names.
+
+    Matched on the name as the event writes it, which is how the interface
+    matches them too: a person the network does not know gets no chip, and so
+    is not something the passage has to avoid introducing.
+    """
+    involved = {str(name).strip() for name in (event.get("involved_people") or [])}
+    if not involved:
+        return []
+    return [
+        connection
+        for connection in (network.get("connections") or [])
+        if str(connection.get("person_name", "")).strip() in involved
+    ]
+
+
 def _prompt(
     event: Dict[str, Any],
     person_name: str,
@@ -147,13 +227,23 @@ def _prompt(
     events: List[Dict[str, Any]],
     index: int,
     person_summary: Optional[str] = None,
+    network: Optional[Dict[str, Any]] = None,
 ) -> str:
     skeleton = _skeleton(event)
+    network = network or {}
     filtered = filter_related_articles_for_event(skeleton, related, max_articles=5)
+    cited = [url for url in (event.get("sources") or []) if url]
     known = {
         term: (annotation or {}).get("explanation", "")
         for term, annotation in (event.get("annotations") or {}).items()
         if (annotation or {}).get("explanation")
+    }
+    people = {
+        connection.get("person_name", ""): connection.get(
+            "relationship_description", ""
+        )
+        for connection in _connections_for(event, network)
+        if connection.get("relationship_description")
     }
     # The base prompt is the one that asks for the background; the class-specific
     # builder only adds guidance about fields this run does not fill.
@@ -165,6 +255,8 @@ def _prompt(
             known_annotations=known,
             neighbors=_neighbors(events, index),
             person_summary=person_summary,
+            known_people=people,
+            cited_sources=cited,
         ),
     )
 
@@ -184,7 +276,9 @@ def backfill_person(
     person = data.get("person") or {}
     person_name = person.get("name") or person_id
     person_summary = person.get("summary")
+    person_wikipedia = person.get("wikipedia")
     related = _related_articles(person_id)
+    network = _ego_network(person_id)
 
     targets = [
         index
@@ -222,6 +316,7 @@ def backfill_person(
                         events=events,
                         index=index,
                         person_summary=person_summary,
+                        network=network,
                     ),
                 },
             ],
@@ -233,12 +328,50 @@ def backfill_person(
             print("    [!] no passage; leaving the event without one")
             continue
         event["background"] = passage
+
+        # Only URLs the call was actually shown. A model asked for a citation
+        # will write a plausible one, and a plausible Wikipedia URL that 404s is
+        # worse than the wrong-but-real article it replaces.
+        allowed = _citable(person_wikipedia, related, event.get("sources"))
+        chosen = [url for url in (parsed.sources or []) if _normalize(url) in allowed]
+        if chosen and chosen != event.get("sources"):
+            print(f"    sources: {event.get('sources')} -> {chosen}")
+            event["sources"] = chosen
         written += 1
 
     if written:
         _save(path, data)
         print(f"  {person_id}: wrote {written} passage(s) to {path.name}")
+        _propagate_sources(person_id, events)
     return written
+
+
+def _propagate_sources(person_id: str, events: List[Dict[str, Any]]) -> None:
+    """Carry corrected citations into the translated copies.
+
+    A URL is not prose and is never translated, so a translated copy keeps
+    whatever citation it was written with — which, for these events, is the
+    wrong one. The passage itself is prose and waits for the translator.
+    """
+    for lang_dir in sorted((PEOPLE_DIR / person_id).iterdir()):
+        if not lang_dir.is_dir() or lang_dir.name.startswith("_"):
+            continue
+        target = lang_dir / "life_events.json"
+        if not target.exists():
+            continue
+        payload = _load(target)
+        target_events = payload.get("events") or []
+        if len(target_events) != len(events):
+            print(f"    [!] {lang_dir.name}: different event count, sources not synced")
+            continue
+        changed = False
+        for target_event, event in zip(target_events, events):
+            if event.get("sources") and target_event.get("sources") != event["sources"]:
+                target_event["sources"] = list(event["sources"])
+                changed = True
+        if changed:
+            _save(target, payload)
+            print(f"    sources synced to {lang_dir.name}")
 
 
 def main() -> int:

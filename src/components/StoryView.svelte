@@ -1567,7 +1567,6 @@
                   {visiblePersonInfo}
                   {visibleAnnotation}
                   isActive={index === activeIndex}
-                  peopleInDepth={true}
                   onEnlargeImage={enlargeImage}
                   onToggleDateNote={toggleDateNote}
                   onTogglePersonInfo={togglePersonInfo}

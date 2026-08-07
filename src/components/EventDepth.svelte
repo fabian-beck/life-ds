@@ -58,14 +58,7 @@
         <p class="depth-paragraph depth-written">{block.written}</p>
       {:else}
         <p class="depth-paragraph" class:depth-lead={index === 0}>
-          {#each block.segments as segment, position (position)}{#if segment.href}<a
-                class="depth-subject depth-subject-link"
-                href={segment.href}
-                target="_blank"
-                rel="noreferrer">{segment.text}</a
-              >{:else if segment.subject}<span class="depth-subject"
-                >{segment.text}</span
-              >{:else}{segment.text}{/if}{/each}
+          {#each block.segments as segment, position (position)}{segment.text}{/each}
         </p>
       {/if}
 
@@ -202,24 +195,6 @@
   .depth-lead,
   .depth-written {
     color: rgba(241, 245, 249, 0.96);
-  }
-
-  /* What a sentence is about, marked inside the sentence rather than pulled
-     out in front of it. Where the dataset knows an article for it, the mark is
-     the link. */
-  .depth-subject {
-    font-weight: 600;
-    color: var(--story-primary, #f8fafc);
-  }
-
-  .depth-subject-link {
-    color: var(--story-secondary, #38bdf8);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.35);
-  }
-
-  .depth-subject-link:hover {
-    border-bottom-color: var(--story-secondary, #38bdf8);
   }
 
   .depth-figure {

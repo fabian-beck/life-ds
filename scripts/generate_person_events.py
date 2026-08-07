@@ -2912,6 +2912,8 @@ def build_background_avoidance(
     known_annotations: Optional[Dict[str, str]] = None,
     neighbors: Optional[List[str]] = None,
     person_summary: Optional[str] = None,
+    known_people: Optional[Dict[str, str]] = None,
+    cited_sources: Optional[List[str]] = None,
 ) -> str:
     """What the background must be steered around, when it is already known.
 
@@ -2921,7 +2923,13 @@ def build_background_avoidance(
     being shown them repeats them — which is what the reader sees, because the
     annotations are the popups under the very description this sits below.
     """
-    if not (known_annotations or neighbors or person_summary):
+    if not (
+        known_annotations
+        or neighbors
+        or person_summary
+        or known_people
+        or cited_sources
+    ):
         return ""
 
     section = "\n" + "=" * 60 + "\n"
@@ -2942,6 +2950,17 @@ def build_background_avoidance(
         for term, explanation in known_annotations.items():
             section += f"  - {term}: {explanation}\n"
 
+    if known_people:
+        section += (
+            "\nPeople already introduced ON THIS SLIDE. Each is a chip the reader "
+            "can open, carrying exactly this description of who they were to the "
+            "subject. Name them freely where the story needs them, but do not "
+            "introduce them — that is the chip's job, and doing it again here is "
+            "the same words twice:\n"
+        )
+        for name, described in known_people.items():
+            section += f"  - {name}: {described}\n"
+
     if neighbors:
         section += (
             "\nThe events on either side of this one in the same story. The reader "
@@ -2949,6 +2968,15 @@ def build_background_avoidance(
         )
         for neighbor in neighbors:
             section += f"  - {neighbor}\n"
+
+    if cited_sources:
+        section += (
+            "\nWhat this event cites today. Keep any that genuinely documents it "
+            "and drop any that does not; an article about a different episode of "
+            "the same life is not one:\n"
+        )
+        for url in cited_sources:
+            section += f"  - {url}\n"
 
     section += (
         "\nWhat is left is what you are for: the situation around the event that "
@@ -3044,8 +3072,15 @@ def build_phase2_prompt_base(
     prompt += "   - Leave null if no other people directly involved\n\n"
 
     prompt += "3. SOURCES:\n"
-    prompt += "   - Provide 1-3 Wikipedia URLs from the related articles below\n"
-    prompt += "   - Only include articles that specifically support THIS event\n\n"
+    prompt += "   - 1-3 Wikipedia URLs that DOCUMENT THIS EVENT\n"
+    prompt += f"   - The subject's own article is always valid: https://en.wikipedia.org/wiki/{quote(person_name.replace(' ', '_'))}\n"
+    prompt += "     It is the right answer whenever no related article covers this event specifically,\n"
+    prompt += "     which is the ordinary case — most events of a life are documented in the life's article\n"
+    prompt += "   - A related article below is a source ONLY if it actually recounts this event. Being\n"
+    prompt += "     supplied is not a qualification, and neither is being about the same field, the same\n"
+    prompt += "     period, or a person who appears in it. An article about a later paper is not a source\n"
+    prompt += "     for an earlier death; an article about a colleague is not a source for a posting\n"
+    prompt += "   - One precise source beats three loose ones. Never pad the list\n\n"
 
     prompt += "4. EVENT_TYPE_ICON:\n"
     prompt += "   - Select the most appropriate MDI icon from the categories below\n"

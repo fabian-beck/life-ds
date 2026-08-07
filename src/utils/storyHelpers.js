@@ -1845,83 +1845,22 @@ export function selectDeepEventIndexes(events, egoNetwork) {
   return new Set([...best.values()].map((candidate) => candidate.index));
 }
 
-// Three shapes of explanation come out of the generators, and each becomes a
-// sentence a different way.
-//
-// Most open with an article — "A section at Bletchley Park…" — and those turn
-// into a plain statement about their subject once the article is lowered.
-// Nothing else is safe to lower: what else opens one of these is a proper noun
-// or an adjective of nationality, and lowering either is an error the reader
-// sees. Some already name their subject and are sentences as they stand.
-const OPENING_ARTICLES = new Set([
-  "A",
-  "An",
-  "The",
-  "Ein",
-  "Eine",
-  "Einer",
-  "Der",
-  "Die",
-  "Das",
-]);
-
-function endStopped(text) {
-  const trimmed = (text ?? "").trim();
-  if (!trimmed) return "";
-  return /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
-}
-
 /**
- * One record — a term and its explanation, a person and how they stood to the
- * subject — written out as a sentence.
- * @param {string} subject - What the sentence is about
- * @param {string} explanation - What the dataset says about it
- * @param {Function} t - Translate function
- * @returns {Object} {leads, tail} — whether the subject opens the sentence, and the rest of it
- */
-export function asDepthSentence(subject, explanation, t) {
-  const text = endStopped(explanation);
-  if (!text) return null;
-
-  // Already a sentence about its subject: "Braintree was the Massachusetts
-  // town where…". Naming the subject again in front of it would stutter.
-  const named = subject?.trim();
-  if (named && text.toLowerCase().startsWith(`${named.toLowerCase()} `)) {
-    return { leads: true, subject: named, tail: text.slice(named.length) };
-  }
-
-  const [firstWord] = text.split(/\s+/, 1);
-  if (OPENING_ARTICLES.has(firstWord)) {
-    const lowered = text[0].toLowerCase() + text.slice(1);
-    return {
-      leads: true,
-      subject: named,
-      tail: t("story.depth.is", { rest: lowered }),
-    };
-  }
-
-  // Left as an apposition, which needs no surgery on the first word.
-  return { leads: true, subject: named, tail: ` — ${text}` };
-}
-
-/**
- * The depth layer's text, as paragraphs of running prose.
+ * What the layer says around the written passage — which, after everything
+ * with an affordance of its own was taken out of it, is one sentence: where
+ * the event happened, under the name it happened under and the name a map
+ * carries today.
  *
- * What the layer says around the written passage: where the event happened
- * under both its names, and who was there. Each record is written out as a
- * sentence and the sentences are run together into paragraphs rather than set
- * one per line, so the layer reads as prose and not as a filing card.
- *
- * The annotated terms are not among them. They are marked in the description
- * itself, where a tap opens a popup carrying the same explanation, and a depth
- * layer that reprints the popups is a depth layer that adds nothing.
+ * The annotated terms are not here: they are marked in the description, where
+ * a tap opens the explanation. The people are not here either: each is a chip
+ * on the slide, and the chip is how this application gives a person's context
+ * everywhere. A layer that reprints either is a second copy of the slide, and
+ * the reader notices, because both are a few centimeters above it.
  * @param {Object} depth - Output of `getEventDepth`
  * @param {Function} t - Translate function
- * @returns {Array} Paragraphs, each an array of {text} and {text, href} segments
+ * @returns {Array} Paragraphs, each an array of {text} segments
  */
 export function composeDepthParagraphs(depth, t) {
-  const paragraphs = [];
-
   const scene = (depth?.places ?? [])
     .filter((place) => place.historic || place.modern)
     .map((place) => {
@@ -1931,41 +1870,6 @@ export function composeDepthParagraphs(depth, t) {
         ? t("story.depth.place_then_now", { historic, modern })
         : t("story.depth.place_one", { name: historic });
     });
-  if (scene.length > 0) {
-    paragraphs.push([{ text: scene.join(" ") }]);
-  }
 
-  const run = (records) => {
-    const segments = [];
-    for (const record of records) {
-      const sentence = asDepthSentence(record.subject, record.explanation, t);
-      if (!sentence) continue;
-      if (segments.length > 0) segments.push({ text: " " });
-      // The link out lives on the subject, so the paragraph carries no "read
-      // more" markers to break the line.
-      segments.push({
-        text: sentence.subject,
-        href: record.href ?? null,
-        subject: true,
-      });
-      segments.push({ text: sentence.tail });
-    }
-    return segments;
-  };
-
-  // The terms are deliberately absent. Every one of them is marked in the
-  // event's own description, where a tap already opens a popup carrying this
-  // exact explanation and this exact link — printing them again below is the
-  // same words a second time, and the written passage above is where an event
-  // says something the popups do not.
-
-  const people = run(
-    (depth?.people ?? []).map((person) => ({
-      subject: person.person_name,
-      explanation: person.relationship_description,
-    }))
-  );
-  if (people.length > 0) paragraphs.push(people);
-
-  return paragraphs;
+  return scene.length > 0 ? [[{ text: scene.join(" ") }]] : [];
 }

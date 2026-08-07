@@ -765,6 +765,40 @@ test("a wheel that wanders sideways scrolls into the event, not past it", async 
   expect(await page.evaluate(() => window.__slideDrift)).toBe(0);
 });
 
+/* A person's context is given by their chip, on every slide, including the ones
+   that carry a depth layer. The layer briefly took the people for itself — the
+   chips were suppressed to avoid saying a name twice — which made the one slide
+   with more to say the one slide where a person could not be opened. */
+test("a person on a deep slide keeps their chip, and the layer does not retell them", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/alan_turing?event=2");
+  const slide = page.locator("section.slide:not([inert])");
+  await expect(slide).toHaveClass(/has-depth/);
+
+  const chip = slide.locator(".content .person-chip").first();
+  await expect(chip).toBeVisible();
+  const name = (await chip.innerText()).trim();
+  expect(name.length).toBeGreaterThan(0);
+
+  // Opening the chip is where who they were to the subject is told.
+  await chip.click();
+  // The tooltip is portalled to the body, not nested in the slide.
+  const told = page.locator(".person-info-tooltip").first();
+  await expect(told).toBeVisible();
+  const relationship = await told
+    .locator(".tooltip-relationship")
+    .first()
+    .innerText();
+
+  await slide.locator(".depth-affordance").click();
+  const layer = slide.locator(".event-depth");
+  await expect(layer).toBeInViewport();
+  const said = await layer.innerText();
+  expect(said).not.toContain(relationship.trim());
+  expect(await layer.locator(".person-chip").count()).toBe(0);
+});
+
 /* A title is what a bookmark, a tab, and a search result show. The generic one
    was kept for collections, and stayed English on the German site. */
 test("the document title names the open story, in the reader's language", async ({
