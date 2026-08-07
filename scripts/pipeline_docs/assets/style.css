@@ -71,6 +71,15 @@
   --rule: #cfcfc9;
   --rule-soft: #e4e4de;
   --rule-strong: #101010;
+
+  /* The draft band, and only it: an amber the report uses nowhere else, so the
+     one element that is about the document rather than the system reads as
+     separate from every measure and swatch below it. */
+  --draft-wash: #fdf0cf;
+  --draft-stripe: #f2c94c;
+  --draft-line: #1a1a1a;
+  --draft-ink: #241c00;
+
   --kind-ai: #2a78d6;
   --kind-deterministic: #eb6834;
   --kind-external: #1baf7a;
@@ -106,6 +115,65 @@ body {
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ----------------------------------------------------------- draft state */
+
+/* A band the reader passes through before the title, full-bleed and above the
+   grid so nothing competes with it. Its inline padding grows with the viewport
+   so the text starts where the report's own text does, without a second
+   element to center. The hazard rule is a gradient rather than an image, and
+   the band is kept on paper: a printed copy travels further than this page and
+   carries the warning less well. */
+.draftbanner {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  padding: 28px max(28px, calc((100% - 1320px) / 2 + 28px)) 20px;
+  border-bottom: 2px solid var(--draft-line);
+  background: var(--draft-wash);
+  color: var(--draft-ink);
+  font-family: var(--sans);
+}
+
+.draftbanner::before {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--draft-line) 0 10px,
+    var(--draft-stripe) 10px 20px
+  );
+  content: "";
+  inset-block-start: 0;
+}
+
+.draftbanner-tag {
+  margin: 0;
+  padding: 4px 10px;
+  background: var(--draft-line);
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.draftbanner-text {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.draftbanner-text strong {
+  font-weight: 700;
 }
 
 /* ----------------------------------------------------------------- shell */
@@ -2647,6 +2715,14 @@ figure.teaser > .cap {
 
   .titleblock {
     margin-bottom: 24px;
+  }
+
+  /* The band is kept, tightened to the sheet's own margin, and never split
+     across the first page break. */
+  .draftbanner {
+    padding: 20px 0 14px;
+    break-after: avoid;
+    break-inside: avoid;
   }
 
   /* On paper the mark links nowhere, so the iD it stands for is printed. */

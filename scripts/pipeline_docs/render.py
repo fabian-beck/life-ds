@@ -36,6 +36,21 @@ __CSS__
 <body>
 <a class="skip" href="#report">Skip to the report</a>
 
+<!-- The state of the document, stated before the document: this report is
+     drafted alongside the system it describes, and a reader who lands on it
+     from a link has no other way to know that. It is markup rather than prose
+     in `report.md` so that it precedes the title block on screen and on paper
+     alike, and so that removing it when the report is finished is one edit. -->
+<div class="draftbanner" role="note" aria-label="Document status">
+  <p class="draftbanner-tag">Draft</p>
+  <p class="draftbanner-text">
+    <strong>Preliminary version—work in progress.</strong> This report is
+    written alongside the system it describes. Its prose, figures, and
+    measurements are incomplete and under active revision, and any part of it
+    may change or be withdrawn.
+  </p>
+</div>
+
 <div class="shell">
   <!-- The contents rail is a sibling of the report, not part of it: the report
        body is compiled from Markdown and must not have to know about chrome. -->
