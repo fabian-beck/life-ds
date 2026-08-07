@@ -1,7 +1,18 @@
-# Netlify serves this site from the domain root, not from a subdirectory the
-# way the GitHub Pages workflow does, so the build has to be told: without
+# Netlify builds and publishes the `deploy` branch. Advancing that branch is
+# what publishes the site: `main` is integrated continuously and never
+# published on its own, which keeps the "on demand only" rule the GitHub Pages
+# workflow states — the branch is the button.
+#
+# Netlify serves the site from the domain root, not from a subdirectory the way
+# the Pages workflow does, so the build has to be told: without
 # `VITE_BASE_PATH=/` every asset URL in `index.html` points into `/life-ds/`
 # and answers 404 here. See README "Deployment" for the rest of the story.
 [build]
   command = "VITE_BASE_PATH=/ npm run build"
   publish = "dist"
+
+[build.environment]
+  # The version the checks and the Pages workflow build on. Netlify's default
+  # image tracks its own release schedule, and a build that publishes should
+  # not be the one place the toolchain differs.
+  NODE_VERSION = "22"

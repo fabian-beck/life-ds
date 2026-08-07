@@ -38,6 +38,19 @@ Open the repository's **Actions** tab, select **Deploy to GitHub Pages**, and ru
 
 One-time repository setup: **Settings → Pages → Build and deployment → Source** must be set to **GitHub Actions**.
 
+### Publishing to Netlify
+
+The site is also published on Netlify, from the `deploy` branch. Netlify builds that branch and nothing else, so advancing it is what publishes: `main` collects the work and stays unpublished until someone moves `deploy` forward. The branch is the button the Actions tab is for Pages.
+
+```powershell
+git fetch origin
+git push origin origin/main:deploy
+```
+
+`netlify.toml` holds the build. The one thing that is not obvious: Netlify serves the site from the domain root rather than from a subdirectory, so the build command sets `VITE_BASE_PATH=/`. A default `npm run build` writes every asset URL into `/life-ds/`, which answers 404 there.
+
+`VITE_SITE_URL` is not set in `netlify.toml`, because the address a link preview should name is a deployment decision rather than a repository one. Set it in **Site configuration → Environment variables** to whatever the site's public address is; left unset, the preview tags name the GitHub Pages URL.
+
 Notes:
 
 - The build produces a `404.html` copy of `index.html` (see `githubPages404Plugin` in `vite.config.js`). Pages has no rewrite rules; shared links are hash-based and never hit the server, but this keeps path-style entry URLs such as `/life-ds/en` working.
