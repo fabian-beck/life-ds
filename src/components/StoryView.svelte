@@ -1526,7 +1526,11 @@
                   onToggleAnnotation={toggleAnnotation}
                   onOpenNetwork={openNetworkModal}
                 />
-                <div class="slide-reserve" aria-hidden="true"></div>
+                <!-- Placed in the flow, right after the event, and lifted into
+                     the corner by CSS on every slide whose fold is a screen
+                     tall. On a slide whose text overruns a screen there is no
+                     corner to lift it into, and it stays here, at the end of
+                     the reading. -->
                 <button
                   type="button"
                   class="depth-affordance"
@@ -1545,6 +1549,7 @@
                     <span class="depth-chevron"></span>
                   </span>
                 </button>
+                <div class="slide-reserve" aria-hidden="true"></div>
               </div>
               <EventDepth
                 {slide}
@@ -2258,10 +2263,16 @@
     min-height: calc(100% + var(--slide-bottom-base));
   }
 
-  /* A grown fold carries the invitation below the screen's own foot, so it
-     needs a little more air under it to stay clear of the chapter pill. */
-  .slide.fold-overrun .depth-affordance {
+  /* Where the fold is exactly a screen, the corner is a fixed place on that
+     screen and the invitation belongs there: in the gap the slide already
+     keeps clear, below where the event's text can reach and above where the
+     previous and next buttons start. A fold that had to grow has no such gap,
+     and there the flow position above is the honest one. */
+  .slide.has-depth:not(.fold-overrun) .depth-affordance {
+    position: absolute;
+    right: 0;
     bottom: calc(var(--slide-bottom-clear) + 0.5rem);
+    margin-top: 0;
   }
 
   /* The fold is the containing block for what the event paints over the whole
@@ -2282,20 +2293,21 @@
 
   /* The invitation down. It sits above the timeline, fades as the reader takes
      it, and rides the slide's own scroll away with the fold it belongs to. */
+  /* Kept to the right and kept small: centered, it stood in the middle of the
+     map, which is the one thing on the slide that has to stay legible under
+     it. In the flow it follows the event's last line; the rule below lifts it
+     off the flow wherever there is room to. */
   .depth-affordance {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    /* In the gap the slide already keeps clear: below where the event's text
-       can reach, above where the timeline and the chapter pill start. */
-    bottom: calc(var(--slide-bottom-clear) - 1rem);
+    align-self: flex-end;
+    flex: 0 0 auto;
+    margin-top: 0.9rem;
     z-index: 4;
     appearance: none;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 0.2rem;
-    padding: 0.45rem 0.9rem 0.5rem;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
     border-radius: 999px;
     border: 1px solid rgba(148, 163, 184, 0.28);
     background: rgba(8, 12, 24, 0.55);

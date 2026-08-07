@@ -592,12 +592,20 @@ test("an important event opens downward, and the map gives way to it", async ({
   await expect(affordance).toBeVisible();
   await affordance.click();
 
-  // The context is a page of what the fold keeps a tap away or leaves out.
+  // A passage of what the fold keeps a tap away or leaves out, and prose
+  // rather than a reference card: the place is named in a sentence, and what
+  // each paragraph is about runs into the sentence instead of sitting above it
+  // as a heading.
   await expect(slide.locator(".event-depth")).toBeInViewport();
+  await expect(slide.locator(".event-depth .depth-lead").first()).toContainText(
+    "Bletchley, Milton Keynes"
+  );
   await expect(
-    slide.getByText("Bletchley, Milton Keynes", { exact: false })
+    slide.locator(".event-depth .depth-paragraph .depth-subject").first()
   ).toBeVisible();
-  await expect(slide.locator(".event-depth .term").first()).toBeVisible();
+  expect(await slide.locator(".event-depth h3, .event-depth dt").count()).toBe(
+    0
+  );
   await expect
     .poll(async () => (await geometry()).mapOpacity)
     .toBeLessThan(0.1);
