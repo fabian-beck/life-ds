@@ -3822,26 +3822,11 @@ def assign_events_to_chapters(
         if not assigned_chapter and sorted_chapters:
             assigned_chapter = sorted_chapters[-1].id
 
-        # Create updated event with chapter assignment
-        updated_event = LifeEvent(
-            date=event.date,
-            date_precision=event.date_precision,
-            date_end=event.date_end,
-            date_end_precision=event.date_end_precision,
-            date_note=event.date_note,
-            age=event.age,
-            title=event.title,
-            description=event.description,
-            locations=event.locations,
-            involved_people=event.involved_people,
-            sources=event.sources,
-            images=event.images,
-            event_type_icon=event.event_type_icon,
-            chapter=assigned_chapter,
-            annotations=event.annotations,
-            event_class=event.event_class,  # CRITICAL: Preserve event classification
-        )
-        updated_events.append(updated_event)
+        # Copy rather than reconstruct: a field-by-field constructor here must
+        # name every field or silently drop the ones it forgets, and it has —
+        # image attribution once, then background, weight, and
+        # background_images. Every field LifeEvent grows must survive this step.
+        updated_events.append(event.model_copy(update={"chapter": assigned_chapter}))
 
     return updated_events
 
