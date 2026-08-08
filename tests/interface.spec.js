@@ -1,9 +1,13 @@
+import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 // The story titles are data, and a re-translation is free to word one
 // differently; what this file checks is that the page shows the reader's
 // language, so it asks the registries which title that is.
 import metaStories from "../data/meta_stories.json" with { type: "json" };
 import metaStoriesDe from "../data/meta_stories_de.json" with { type: "json" };
+// Which event carries a picture is data too, and the one test that needs a
+// picture on screen asks rather than assumes.
+import turingEvents from "../data/people/alan_turing/life_events.json" with { type: "json" };
 
 function metaStoryTitle(registry, id) {
   const entry = (registry.meta_stories ?? []).find((story) => story.id === id);
@@ -56,6 +60,65 @@ async function expectNoSidewaysScroll(page, where) {
     width.viewport + 1
   );
 }
+
+// The event pictures come from Wikimedia, and a test that waits on a foreign
+// host is a test that fails for reasons of its own. This serves a local file in
+// their place, so the layout the picture drives is measured offline and always.
+const LOCAL_IMAGE = readFileSync("public/preview.png");
+
+async function serveImagesLocally(page) {
+  await page.route(/upload\.wikimedia\.org/, (route) =>
+    route.fulfill({ status: 200, contentType: "image/png", body: LOCAL_IMAGE })
+  );
+}
+
+// A slide is one screen and one screen only. Its own picture is the thing most
+// likely to argue: it is laid out from the viewport and then shifted outward so
+// its faded corner clears the edge, which paints past the slide's right side.
+// The slide scrolls vertically, and a browser hands any box that scrolls one way
+// a scrollbar on the other as soon as something reaches past it — so the bleed
+// used to become a sideways drag that pulled the event off center. Measured on
+// the slide rather than on the document, because the document never overflowed:
+// the slide absorbed it, which is exactly why the check above missed this.
+test("an event slide with a picture is exactly as wide as the screen", async ({
+  page,
+}) => {
+  const withImage = turingEvents.events.findIndex(
+    (event) => (event.images ?? []).length > 0
+  );
+  expect(withImage, "no Turing event carries a picture").toBeGreaterThanOrEqual(
+    0
+  );
+
+  await serveImagesLocally(page);
+  await page.goto(`en#/en/story/alan_turing?event=${withImage}`);
+  const slide = page.locator("section.slide:not([inert])");
+  await expect(slide.locator(".image-thumbnail.image-visible")).toBeVisible();
+
+  const measured = await slide.evaluate((section) => {
+    // Asked for, not merely read: `scrollWidth` alone would pass on a box that
+    // hides its overflow while still letting focus or a script scroll into it.
+    section.scrollLeft = section.clientWidth;
+    const reached = section.scrollLeft;
+    section.scrollLeft = 0;
+    return {
+      reached,
+      scrollWidth: section.scrollWidth,
+      clientWidth: section.clientWidth,
+      picture: section.querySelector(".image-thumbnail").getBoundingClientRect()
+        .width,
+    };
+  });
+
+  // The picture is really there and really wide, so a pass means the bleed was
+  // cropped rather than that there was nothing to crop.
+  expect(measured.picture).toBeGreaterThan(0);
+  expect(
+    measured.scrollWidth,
+    "the event slide reaches past its own right edge"
+  ).toBeLessThanOrEqual(measured.clientWidth + 1);
+  expect(measured.reached, "the event slide scrolls sideways").toBe(0);
+});
 
 // The report is a separate page published next to the app, so a broken link
 // here fails silently in the application itself: nothing imports it, and no

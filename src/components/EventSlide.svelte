@@ -1477,6 +1477,14 @@
     flex-direction: column;
     gap: 0.5rem;
     z-index: 3;
+    /* The picture is shifted up and out by `--image-edge-offset` below, which
+       carries its faded corner past this box — and past the slide's own edge,
+       since this box ends there. The slide scrolls vertically, so a sideways
+       overflow it can see turns into a sideways scroll: the reader drags the
+       event off center by the width of the bleed. Cropping the bleed here, at
+       the one element that creates it, keeps the slide exactly one screen wide
+       instead of leaving the slide to clip a strip it can still scroll to. */
+    overflow: clip;
   }
 
   .image-thumbnail {
