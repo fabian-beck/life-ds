@@ -465,9 +465,12 @@ test("a slide scrolls only when there is something below to reach", async ({
   page,
 }) => {
   setsItsOwnPhoneViewport();
-  await page.goto("en#/en/story/ada_lovelace");
+  // Alan Turing, because the deep half of this audit needs a life whose
+  // landmark events carry a background report — the layer is that report, and
+  // the corpus is filled one life at a time.
+  await page.goto("en#/en/story/alan_turing");
   await expect(
-    page.locator('section[aria-label^="Overview: Ada Lovelace"]')
+    page.locator('section[aria-label^="Overview: Alan Turing"]')
   ).toBeVisible();
   await expect(page.locator(".slides-wrapper.map-enabled")).toBeAttached();
   await expect(page.locator(".indicator")).toBeVisible();
@@ -647,23 +650,26 @@ test("an important event opens downward, and the map gives way to it", async ({
 
   await affordance.click();
 
-  // A passage of what the fold keeps a tap away or leaves out, and prose
-  // rather than a reference card: the written background leads, the place is
-  // named in a sentence, and what each paragraph is about runs into the
-  // sentence instead of sitting above it as a heading.
+  // A chapter of background, not a reference card: several paragraphs of
+  // generated report, with the pictures chosen for it dealt out between them.
   await expect(slide.locator(".event-depth")).toBeInViewport();
-  const written = slide.locator(".event-depth .depth-written").first();
-  await expect(written).toBeVisible();
+  const paragraphs = slide.locator(".event-depth .depth-paragraph");
+  await expect(paragraphs.first()).toBeVisible();
+  expect(await paragraphs.count()).toBeGreaterThan(1);
   // Background rather than a retelling. The prompt's whole job is this
   // difference, and the cheapest check of it is that the passage is not the
   // description over again.
   const eventText = await slide.locator(".content").innerText();
-  const passage = await written.innerText();
-  expect(passage.length).toBeGreaterThan(80);
-  expect(eventText).not.toContain(passage);
-  await expect(slide.locator(".event-depth")).toContainText(
-    "Bletchley, Milton Keynes"
-  );
+  const report = (await paragraphs.allInnerTexts()).join("\n\n");
+  expect(report.length).toBeGreaterThan(600);
+  for (const paragraph of await paragraphs.allInnerTexts()) {
+    expect(eventText).not.toContain(paragraph);
+  }
+  // A figure sits under the opening paragraph, where a chapter would put it,
+  // rather than all of them banked above the text.
+  const figures = slide.locator(".event-depth .depth-figure");
+  expect(await figures.count()).toBeGreaterThan(0);
+  await expect(figures.first()).toBeVisible();
   // The layer does not reprint the popups: every annotated term on this slide
   // is explained a tap away, and saying it twice is what made the layer read
   // as a second copy of the fold.

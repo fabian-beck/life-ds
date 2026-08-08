@@ -40,7 +40,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
 
 from openai import OpenAI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from config import (
     BULK_MODEL,
@@ -140,6 +140,10 @@ class TrEvent(BaseModel):
     date_note: Optional[str] = None
     locations: List[TrLocation]
     images: List[TrImage]
+    # The pictures searched for the background report. Their captions come off
+    # Wikimedia Commons in English, and the depth layer prints them under the
+    # picture, so a German reader met an English line under every figure.
+    background_images: List[TrImage] = Field(default_factory=list)
     annotations: List[TrAnnotation]
     # Optional: only events the pipeline classified carry one, so an unclassified
     # event is not asked to invent a block (and keeps its fingerprint).
@@ -354,6 +358,10 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             ],
             "images": [
                 {"caption": img.get("caption")} for img in (event.get("images") or [])
+            ],
+            "background_images": [
+                {"caption": img.get("caption")}
+                for img in (event.get("background_images") or [])
             ],
             # Only the annotations the description actually marks up. An
             # orphan — an entry whose [[term|display]] marker is missing from
@@ -692,6 +700,14 @@ def apply_life_events_translations(
         tr_images = tr_event.get("images") or []
         _require_same_length("event.images", src_images, tr_images)
         for img, tr_img in zip(src_images, tr_images):
+            _set_if_source_has(img, "caption", tr_img.get("caption"))
+
+        src_background_images = event.get("background_images") or []
+        tr_background_images = tr_event.get("background_images") or []
+        _require_same_length(
+            "event.background_images", src_background_images, tr_background_images
+        )
+        for img, tr_img in zip(src_background_images, tr_background_images):
             _set_if_source_has(img, "caption", tr_img.get("caption"))
 
         annotations = event.get("annotations")

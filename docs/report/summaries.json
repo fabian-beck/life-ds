@@ -227,17 +227,17 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "5876b31470e8b6e7",
+      "fingerprint": "6c9b703ec479c96e",
       "summary": {
         "constraints": [
-          "Processes only indexes named by `wanted` when provided, and skips events with a nonblank background unless `overwrite=True`.",
-          "`dry_run=True` reports targeted titles but makes no request and writes nothing.",
-          "A missing or whitespace-only returned background leaves that event unchanged; only events receiving a passage count as written.",
-          "Returned sources must be 1–3 event-specific Wikipedia URLs under the prompt, but code accepts only normalized URLs in `_citable(person_wikipedia, related, event.get(\"sources\"))`."
+          "Targets only selected event indexes and, unless `overwrite` is set, events whose background is blank; `images_only` instead requires an existing background.",
+          "A usable background is `350-550` words in `3-5` blank-line-separated paragraphs, or null when sources add nothing beyond the event description.",
+          "Sources must be `1-3` Wikipedia URLs documenting this specific event; only normalized URLs from the event's allowed person, related-article, or prior-source set can replace stored citations.",
+          "Image queries contain `3-4` different report-named things and exclude portraits of the subject; a missing or empty passage is not written."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Repairs selected life-event records that lack a background passage without regenerating their descriptions, locations, people, or other event fields. For each eligible event, it invokes the shared Phase 2 event-research prompt with the event, person context, related articles, timeline, summary, and ego network; it stores only a nonblank `background` and may replace the event's sources with returned URLs that pass a local allowlist check. Successful writes are saved once after processing and then propagated to dependent source data.",
-        "why_this_design": "The repair reuses the Phase 2 prompt rather than maintaining a copied background prompt, keeping research and citation rules aligned with the original event-enrichment pass. It deliberately makes an additive change, preserving existing event text for review; source replacement is constrained to URLs already supplied to the call because plausible invented Wikipedia URLs can be broken links."
+        "what_it_does": "Adds a standalone background passage to selected life events without regenerating their existing event descriptions, locations, people, or classifications. For each eligible event, it reuses the Phase 2 research prompt with the event, person, related articles, neighboring events, summary, and ego network; stores the returned passage; conditionally updates event citations; and generates or refreshes Commons-oriented illustrations from report-specific queries. In images-only mode, it preserves the existing passage and reruns only query generation and image selection.",
+        "why_this_design": "The prompt is imported from the main Phase 2 path rather than duplicated, keeping the additive repair aligned with the original event-research rules. Citation replacement is deliberately restricted to URLs available to the call—preventing plausible but nonexistent URLs—and image selection is separated from passage writing so image-critic changes can be evaluated without rewriting prose."
       }
     },
     "p_chapters": {
@@ -252,6 +252,21 @@
         "source": "gpt-5.6-terra",
         "what_it_does": "Transforms the chronologically ordered, merged life-event record into 3–6 non-overlapping narrative chapters, each covering a coherent life phase rather than merely a span of dates. For every chapter, it produces machine-readable dates, age bounds, a deduplicated set of significant associates, and a broad regional location, then adds a 1–2 sentence statement of the subject’s legacy or journey.",
         "why_this_design": "The step receives events only after they have been established and ordered, allowing it to enforce complete, exactly-once coverage while choosing thematic boundaries. It treats failure to produce valid structured chapters as fatal rather than returning a partial story, because downstream narrative presentation has no usable organizing shape without them."
+      }
+    },
+    "p_classes": {
+      "fingerprint": "8e452baf316c30e6",
+      "summary": {
+        "constraints": [
+          "Offers only events whose `event_class.type` is absent; already classified events are never overwritten.",
+          "Returns entries only for events that clearly match one of the four supported kinds; most events must be omitted.",
+          "A publication includes a completed or presented written work, but not merely beginning work on it.",
+          "Uses the supplied original event index; each result may populate only its selected class field, leaving the other three null.",
+          "Copies dates, partners, publishers, and other values only from event text or plainly supported sources; no invention."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Loads a person’s life-events file and sends every event lacking an event-class type in one batch for classification under the imported Phase 1 rubric. It writes back only returned classifications that select a recognized class block, so older records can gain publication or other supported event panels, titles, and links without regenerating the timeline.",
+        "why_this_design": "The prompt is intentionally selective because an incorrect class creates a misleading specialized display; it asks for matches only and treats omission as the default for ordinary biographical events. Application is also defensive: returned indexes are checked against the full event list, and an event is skipped if another process or an earlier result has already classified it."
       }
     },
     "p_db": {
@@ -297,17 +312,17 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "4f370cd44ec8328e",
+      "fingerprint": "1f735c9d36d65af5",
       "summary": {
         "constraints": [
-          "Uses at most 5 event-relevant related articles and requests 1-3 supporting references; related articles count only when they actually recount the event.",
-          "Locations must be city or region level at most, with historic and modern names and exactly one primary location when locations are known.",
-          "Descriptions must remain in the event's chronological moment, stay concise and factual, and omit technical detail for classified events.",
-          "Annotations are limited to 0-3 genuinely obscure terms, appear as [[term|display]] markers in the description, and cannot duplicate a term or cover a classified event's subject."
+          "Descriptions must retain the original text unchanged when there are no annotations; otherwise annotation markers use `[[term|display]]`, with 0-3 conservative, unique annotations.",
+          "Locations must be city or region level at most, include historic and modern names plus a primary flag, and be an empty array when unknown or non-geographic.",
+          "Sources are limited to 1-3 URLs that actually document this event; the subject article is the default valid source, and unrelated or merely adjacent articles must not pad the list.",
+          "Background-image queries must contain 3-4 Wikimedia Commons searches illustrating the background rather than portraits; the background is null if sources add nothing, otherwise it is 350-550 words in 3-5 blank-line-separated paragraphs."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Enriches one biographical event with a concise, chronologically bounded description; city-level historic and modern locations; directly involved people other than the subject; event-specific supporting references; a semantic icon; and conservative inline annotations. It also produces an optional prose background passage that situates the event, explains why it mattered, or notes what followed without repeating the event description. The step first narrows the related-article set to material relevant to that event, then uses a class-specific prompt when structured event classification is available.",
-        "why_this_design": "Classified events are routed through a specialized prompt so the narrative does not duplicate technical, geographic, or relationship metadata already carried by the classification. Failed attempts return a deliberately sparse record rather than aborting the run, preserving the event's position in the story while making its unresolved research state explicit in logs."
+        "what_it_does": "Researches one biographical event at a time after filtering the related-article set to sources relevant to that event. It returns a revised, chronologically bounded event description; city-level historic and modern locations; directly involved people other than the subject; tightly relevant supporting URLs; a semantic icon; optional annotations; Commons background-image searches; and a prose background report that adds surrounding context rather than repeating the event.",
+        "why_this_design": "Classified events are routed through a class-aware prompt that suppresses technical detail and annotations about the classified subject, preventing duplication of metadata already carried by the event classification. The call is retried up to 3 total attempts, but a persistent failure returns a deliberately sparse event with no research fields and the neutral `mdi-calendar` icon so one unresolved event does not halt the story."
       }
     },
     "p_geocode": {
@@ -336,6 +351,34 @@
         "source": "gpt-5.6-terra",
         "what_it_does": "Builds a per-biography lookup table that decides how each supplied person name should appear in the target language. It asks for an original/localized pair for every input name, then retains only changed pairs, so downstream documents can apply the same exact spelling wherever a name recurs. Reference-article evidence, when available, is used to resolve the target-language spelling for the same person rather than to infer titles or substitute a differently scoped article name.",
         "why_this_design": "Exact-name cross-references depend on stable strings, so the decision is made once and reused deterministically instead of allowing separate translations to choose variants. The post-processing check rejects proposed localizations that alter a ruler's numbering, and any parsing or request failure falls back to an empty glossary, preserving original names."
+      }
+    },
+    "p_illustration_queries": {
+      "fingerprint": "a27ffa3c6543275b",
+      "summary": {
+        "constraints": [
+          "Returns \"3-4\" Wikimedia Commons queries.",
+          "Each query is \"2-5 words\" long.",
+          "Every query must name a different thing from a different part of the report.",
+          "Queries may name only things explicitly mentioned in the report; people and portraits are forbidden."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Reads an already written personal-story background report and extracts three or four Wikimedia Commons search phrases for illustrative images. It selects concrete, non-person subjects named in the report—such as a machine, building, document, instrument, or place—and returns the parsed query list for the illustrations-only backfill path.",
+        "why_this_design": "Image-search terms are generated separately from report writing so image-selection quality can be tuned without regenerating reports. Requiring subjects from different parts of the text reduces redundant searches and makes the small image set cover more of the report."
+      }
+    },
+    "p_illustrations": {
+      "fingerprint": "69b6dc4183746f93",
+      "summary": {
+        "constraints": [
+          "Select indexes only, ranked best first; retain at most three, and an empty list is valid.",
+          "Keep only images that plainly show a machine, building, room, document, instrument, or place actually named in the report; reject name-only, thematic, or explainable connections.",
+          "Reject portraits or other images of the report’s subject, maps and diagrams not about the relevant ground, composites, memorials, generic stand-ins, and present-day institutional signage or campuses.",
+          "Discard invalid indexes, stop at the configured image limit, and retain no more than one candidate for each search query."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Builds a numbered list of Commons search candidates from the report’s image queries, exposing each item’s filename and caption, then asks a critic to select only images that directly depict a specifically named non-subject element of the report. It returns the selected candidate records after validating their indexes and filtering out internal metadata; an empty selection or an unparseable response produces no images.",
+        "why_this_design": "Commons keyword results frequently match only an incidental word, so the selection is judged against the full report rather than trusted as a search result. Filenames are supplied alongside captions because captions may describe upload administration rather than identify the depicted object; code also enforces one retained image per originating query, which prevents duplicate illustrations even when the selection response overlooks that rule."
       }
     },
     "p_img_fetch": {

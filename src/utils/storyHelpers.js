@@ -1780,10 +1780,12 @@ export function getEventDepth(event, egoNetwork) {
   // corpus fills in.
   const background =
     typeof event?.background === "string" ? event.background : null;
+  const illustrations = getBackgroundImages(event);
 
   const sections = [places, terms, images, people, sources];
   return {
     background,
+    illustrations,
     places,
     terms,
     images,
@@ -1846,30 +1848,38 @@ export function selectDeepEventIndexes(events, egoNetwork) {
 }
 
 /**
- * What the layer says around the written passage — which, after everything
- * with an affordance of its own was taken out of it, is one sentence: where
- * the event happened, under the name it happened under and the name a map
- * carries today.
+ * Whether an event actually has a layer to open.
  *
- * The annotated terms are not here: they are marked in the description, where
- * a tap opens the explanation. The people are not here either: each is a chip
- * on the slide, and the chip is how this application gives a person's context
- * everywhere. A layer that reprints either is a second copy of the slide, and
- * the reader notices, because both are a few centimeters above it.
- * @param {Object} depth - Output of `getEventDepth`
- * @param {Function} t - Translate function
- * @returns {Array} Paragraphs, each an array of {text} segments
+ * `selectDeepEventIndexes` picks the events a layer is *worth* writing for,
+ * which is what the backfill script asks it for. The reader's question is a
+ * different one: the layer is the generated report and nothing else, so an
+ * event whose report has not been written yet must not advertise a second
+ * screen and then show an empty one. A corpus fills in one life at a time, and
+ * the invitation down appears exactly where there is something down there.
+ * @param {Object} event - Event object
+ * @returns {boolean}
  */
-export function composeDepthParagraphs(depth, t) {
-  const scene = (depth?.places ?? [])
-    .filter((place) => place.historic || place.modern)
-    .map((place) => {
-      const historic = place.historic || place.modern;
-      const modern = place.modern || place.historic;
-      return historic !== modern
-        ? t("story.depth.place_then_now", { historic, modern })
-        : t("story.depth.place_one", { name: historic });
-    });
+export function hasBackgroundReport(event) {
+  return (
+    typeof event?.background === "string" && event.background.trim() !== ""
+  );
+}
 
-  return scene.length > 0 ? [[{ text: scene.join(" ") }]] : [];
+/**
+ * The pictures the depth layer shows: the ones searched for the background
+ * report, and nothing else.
+ *
+ * The report's illustrations are searched against the report — the machine,
+ * the building, the document it describes — so they show the reader something
+ * the slide above did not. The event's own picture is deliberately not a
+ * fallback: it is a screen up, the reader has just scrolled past it, and
+ * reprinting it under the report is what made the layer look like a second
+ * copy of the slide. A report with no illustrations is set as plain prose.
+ * @param {Object} event - Event object
+ * @returns {Array} Image objects with url and, where known, caption and credit
+ */
+export function getBackgroundImages(event) {
+  return Array.isArray(event?.background_images)
+    ? event.background_images.filter((image) => image?.url)
+    : [];
 }

@@ -37,6 +37,7 @@
     getValidImages,
     getMigrationPath,
     getEventDepth,
+    hasBackgroundReport,
     selectDeepEventIndexes,
   } from "../utils/storyHelpers.js";
 
@@ -1424,6 +1425,7 @@
 <div
   bind:this={storyViewElement}
   class="story-view"
+  class:reading-depth={depthProgress > 0.35}
   style="{storyStyleVars(styleConfig)}; --header-height: {mastheadHeight}px"
   on:wheel={handleWheel}
   on:click={handleClickOutside}
@@ -1535,8 +1537,14 @@
                through slides they never asked to see. `inert` takes the
                inactive ones out of the tab order and the accessibility tree at
                once, leaving the arrow keys as the way to move between slides. -->
+          <!-- Selected as a landmark AND carrying the report that is the whole
+               of the layer. The selection is what the backfill script fills
+               against, so it names the events worth a report; a life whose
+               reports are not written yet simply offers no way down. -->
           {@const isDeep =
-            slide.type === "event" && deepEventIndexes.has(slide.eventIndex)}
+            slide.type === "event" &&
+            deepEventIndexes.has(slide.eventIndex) &&
+            hasBackgroundReport(slide)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
@@ -1740,6 +1748,29 @@
 <AIDisclaimerModal show={showAIModal} onClose={closeAIModal} />
 
 <style>
+  /* Below the fold the slide stops being a slide and becomes a page of
+     reading, so the story's own chrome gets out of the way with the map: the
+     timeline, its arrows and the chapter pill are all fixed over the foot of
+     the screen, which on the fold is the map and here is the middle of a
+     paragraph. The way back is the button at the end of the report, and
+     scrolling up brings the chrome back with the event. */
+  .story-view :global(.indicator) {
+    transition:
+      opacity 0.35s ease,
+      visibility 0s;
+  }
+
+  /* Hidden, not merely transparent: the timeline's own container passes clicks
+     through but its buttons take them back, so a faded-out arrow would still
+     answer a tap in the middle of the report. */
+  .story-view.reading-depth :global(.indicator) {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.35s ease,
+      visibility 0s linear 0.35s;
+  }
+
   .story-view {
     display: flex;
     flex-direction: column;

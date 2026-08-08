@@ -325,6 +325,17 @@ EventClassification = Union[
     PublicationClassification,
 ]
 
+# The same set keyed by the ``type`` a stored block carries, so anything that
+# reads an event off disk can rebuild the block the pipeline works with.
+CLASSIFICATION_MODELS = {
+    "birth": BirthClassification,
+    "death": DeathClassification,
+    "marriage_partnership": MarriagePartnershipClassification,
+    "migration": MigrationClassification,
+    "invention": InventionClassification,
+    "publication": PublicationClassification,
+}
+
 
 # ============================================================================
 # EVENT CLASSIFICATION CONFIGURATION
@@ -773,6 +784,14 @@ class EventDetails(BaseModel):
         default_factory=list,
         description="Array of Wikipedia URLs or references supporting this event",
     )
+    background_image_queries: List[str] = Field(
+        default_factory=list,
+        description=(
+            "3-4 Wikimedia Commons search queries for pictures that illustrate "
+            "the BACKGROUND report — the machine, the building, the document, "
+            "the place it describes. Not portraits of the subject."
+        ),
+    )
     event_type_icon: Optional[str] = Field(
         None, description="MDI icon identifier (e.g., 'mdi-crown', 'mdi-book')"
     )
@@ -782,9 +801,11 @@ class EventDetails(BaseModel):
     background: Optional[str] = Field(
         None,
         description=(
-            "A short passage of background for this event: the situation it "
-            "sat in, why it mattered, what followed from it. Prose, not a "
-            "list. Null when the sources do not support one."
+            "A background report for this event, 350-550 words in 3-5 "
+            "paragraphs separated by blank lines: the situation it sat in, the "
+            "concrete specifics, a scene or episode told at length, and what "
+            "came of it. Prose for a reader, not a list. Null when the sources "
+            "give nothing beyond the description."
         ),
     )
 
@@ -818,7 +839,10 @@ class LifeEvent(BaseModel):
         None, description="Dictionary mapping term keys to their explanations"
     )
     background: Optional[str] = Field(
-        None, description="Short passage of background behind the event"
+        None, description="Background report behind the event"
+    )
+    background_images: Optional[List[Dict[str, Any]]] = Field(
+        None, description="Context pictures for the background report"
     )
     weight: Optional[float] = Field(
         None, description="How much of the life this event turns on, 0.0 to 1.0"
@@ -2900,17 +2924,20 @@ def filter_related_articles_for_event(
     return [article for score, article in scored_articles[:max_articles]]
 
 
-# How much of each related article Phase 2 is shown. It used to be 1000, which
-# is a lead paragraph — enough to place a term, not enough to say what changed
-# because of an event. The background passage is written from this material, so
-# it is the budget that decides whether that passage can carry a detail the
-# description does not already have.
-RELATED_ARTICLE_CHARS = 2500
+# How much of each related article Phase 2 is shown, and how many it sees. The
+# budget was 1000 characters of five articles — a lead paragraph each, enough to
+# place a term and not enough to say what changed because of an event. The
+# background report is written from this material and from nothing else, so this
+# is the number that decides whether it can carry a detail at all. A lead
+# paragraph is also the part of an article a model already knows; the specifics
+# that make a report worth reading are further down.
+RELATED_ARTICLE_CHARS = 6000
+RELATED_ARTICLE_COUNT = 8
 
 
 def build_background_avoidance(
     known_annotations: Optional[Dict[str, str]] = None,
-    neighbors: Optional[List[str]] = None,
+    story_outline: Optional[List[str]] = None,
     person_summary: Optional[str] = None,
     known_people: Optional[Dict[str, str]] = None,
     cited_sources: Optional[List[str]] = None,
@@ -2919,13 +2946,19 @@ def build_background_avoidance(
 
     In a generation run the annotations are written by the same call that writes
     the passage, so section 5's rule is all there is to go on. In a backfill they
-    are on disk, and so are the events either side, and a passage written without
+    are on disk, and so is the rest of the story, and a passage written without
     being shown them repeats them — which is what the reader sees, because the
     annotations are the popups under the very description this sits below.
+
+    The outline is the whole story, not just the two events either side. A
+    report shown only its neighbours wanders into whatever is a slide or two
+    further along: Turing's death opened on the Manchester laboratory and spent
+    two paragraphs on the morphogenesis paper, which is its own slide, two
+    events back.
     """
     if not (
         known_annotations
-        or neighbors
+        or story_outline
         or person_summary
         or known_people
         or cited_sources
@@ -2961,13 +2994,17 @@ def build_background_avoidance(
         for name, described in known_people.items():
             section += f"  - {name}: {described}\n"
 
-    if neighbors:
+    if story_outline:
         section += (
-            "\nThe events on either side of this one in the same story. The reader "
-            "reaches them by swiping; do not tell them here:\n"
+            "\nThe rest of this life as the story tells it — every other slide the "
+            "reader can swipe to. Each of these gets its own description and its own "
+            "background report, so a paragraph about one of them is a paragraph "
+            "stolen from a slide that already has it. Stay on YOUR event: mention "
+            "another only as the thing yours led to or came out of, in a clause, "
+            "never as a subject to be told:\n"
         )
-        for neighbor in neighbors:
-            section += f"  - {neighbor}\n"
+        for entry in story_outline:
+            section += f"  - {entry}\n"
 
     if cited_sources:
         section += (
@@ -2980,8 +3017,8 @@ def build_background_avoidance(
 
     section += (
         "\nWhat is left is what you are for: the situation around the event that "
-        "neither the description, nor these explanations, nor the neighbouring "
-        "events supply.\n"
+        "neither the description, nor these explanations, nor the other slides "
+        "supply.\n"
     )
     return section
 
@@ -3182,32 +3219,67 @@ def build_phase2_prompt_base(
     # it from restating what the reader has just read: the description is given
     # as the thing to go beyond, and the questions name what the reader cannot
     # get from it.
-    prompt += "6. BACKGROUND (a short passage, prose):\n"
-    prompt += "   - Write 3-5 sentences of background a curious reader would want AFTER reading the description above\n"
-    prompt += "   - This is prose for a reader, not notes: complete sentences, no bullets, no headings, no lists\n"
-    prompt += "   - Answer as many of these as the sources support, in whatever order reads best:\n"
-    prompt += "     * What was going on around this event - the institution, the field, the political or personal situation it sat in\n"
-    prompt += "     * Why it mattered at the time, and to whom\n"
-    prompt += "     * What it led to, or what changed because of it\n"
-    prompt += "     * What is surprising, contested, or easily misunderstood about it\n"
+    prompt += "6. BACKGROUND (a background chapter, prose):\n"
+    prompt += "   - Write 350-550 words, in 3-5 paragraphs, for a curious reader who has finished the\n"
+    prompt += "     description above and wants the story behind it. This is by far the longest thing\n"
+    prompt += "     you write here and the only one addressed to a reader rather than to a schema.\n"
+    prompt += "     Aim for the upper end whenever the sources support it: a reader who has chosen to\n"
+    prompt += "     scroll down here has asked for depth, and three thin paragraphs are a let-down\n"
+    prompt += "   - Prose. Complete sentences, no bullets, no headings, no lists, no section labels\n"
+    prompt += "   - Separate paragraphs with a blank line\n"
+    prompt += (
+        "   - BUILD IT LIKE A REPORT, roughly in this order, as the material allows:\n"
+    )
+    prompt += "     1. THE SITUATION. What was going on around the event — the institution, the field,\n"
+    prompt += "        the war, the politics, the household. Open here, not on the subject's name\n"
+    prompt += "     2. THE SPECIFICS. The concrete detail that makes it real: who else was working on\n"
+    prompt += "        it, what the state of the art was, how long it took, what it cost, what it was\n"
+    prompt += "        competing against, the machine, the room, the number, the rule\n"
+    prompt += "     3. ONE THING AT LENGTH. Pick the single most telling episode, object, argument or\n"
+    prompt += "        obstacle the sources describe and give it a paragraph of its own — how it\n"
+    prompt += "        actually worked, how it actually went, what was actually said. A whole paragraph\n"
+    prompt += "        on one thing beats a sentence each on five\n"
+    prompt += "     4. WHAT CAME OF IT. What changed, what it enabled or foreclosed, how it was received,\n"
+    prompt += "        what it is remembered for or misremembered as, and where the trail leads next\n"
+    prompt += "   - DETAIL IS THE POINT. A sentence that could be written about any event of this kind\n"
+    prompt += (
+        "     is a wasted sentence. Prefer the specific over the general every time:\n"
+    )
+    prompt += (
+        "     * WEAK: 'The work was important for the development of computing.'\n"
+    )
+    prompt += "     * STRONG: 'The bombe reduced a search of 159 quintillion settings to a few hours,\n"
+    prompt += "       and by 1943 more than two hundred of them were running.'\n"
+    prompt += "   - Name names, places, institutions, machines, titles, quantities and dates that the\n"
+    prompt += "     sources give you. A background report with no proper nouns in it is not a report\n"
+    prompt += "   - Say what is contested, surprising, or easily misunderstood where the sources do\n"
     prompt += "   - HARD RULE - ADD, NEVER RESTATE:\n"
     prompt += "     * The reader has just read the description. Repeating any of it is a failure\n"
-    prompt += "     * Do not re-tell what happened, who was there, when, or where - all of that is already on the page\n"
-    prompt += "     * Do not define the annotated terms from section 5; their explanations are shown separately\n"
-    prompt += "     * Every sentence must carry a fact, a consequence, or a tension the description does not\n"
-    prompt += "   - GROUNDING: use only the subject's article, the related articles below, and well-established\n"
-    prompt += "     history. Do not speculate, do not invent numbers, names, or dates. Prefer the concrete\n"
-    prompt += "     (what a place held, what a method changed, how long something took) over the evaluative\n"
+    prompt += "     * Do not re-tell what happened, who was there, when, or where\n"
+    prompt += "     * Every sentence must carry a fact, a consequence, or a tension the description lacks\n"
+    prompt += "   - GROUNDING: the articles below are your material — use them. Read past their first\n"
+    prompt += "     paragraph. Do not speculate, and do not invent numbers, names, or dates. Where the\n"
+    prompt += (
+        "     sources are thin, write less rather than padding with generalities\n"
+    )
     prompt += "   - Do NOT use [[term|display]] markers here - they belong in the description only\n"
     prompt += "   - Write for someone who does not know the field. Name what an insider would assume\n"
     prompt += "   - American English. No headings, no bullet points, no meta-commentary about sources\n"
-    prompt += "   - Return null if the material would only repeat the description or would have to be invented\n"
-    prompt += "   - SHAPE: open on the wider situation, not on the subject's name. A passage that\n"
-    prompt += "     starts with the person and walks through the event again is the failure this\n"
-    prompt += "     section exists to avoid\n"
-    prompt += "   - Name the things an insider takes for granted: the other people working on the\n"
-    prompt += "     same problem, what the state of the art was, what it cost, what it was competing\n"
-    prompt += "     with, what happened to it afterwards\n\n"
+    prompt += "   - Return null only if the sources give you nothing beyond the description\n\n"
+
+    prompt += "7. BACKGROUND_IMAGE_QUERIES (3-4 short Commons searches):\n"
+    prompt += "   - What would ILLUSTRATE the background report you just wrote: the machine, the\n"
+    prompt += "     building, the document, the instrument, the place, the diagram\n"
+    prompt += "   - Name the thing, not the person. The slide already carries the subject's own\n"
+    prompt += "     pictures, and a second portrait of them illustrates nothing\n"
+    prompt += "   - 2-5 words each, the words a photograph of it would be filed under\n"
+    prompt += "     * GOOD: 'Bombe machine Bletchley Park', 'Enigma machine naval four-rotor'\n"
+    prompt += "     * BAD: 'Alan Turing portrait', 'cryptanalysis', 'World War II'\n"
+    prompt += "   - Each query names a DIFFERENT thing, drawn from a different part of the report.\n"
+    prompt += "     Four searches for four angles on one machine return the same photograph four times\n"
+    prompt += "   - Only things the report actually mentions. Return an empty list rather than\n"
+    prompt += "     guessing at something that might exist\n\n"
+
     prompt += background_avoidance
 
     # Add icon categories
@@ -3276,6 +3348,7 @@ def build_phase2_prompt_classified(
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     deutsche_biographie_text: Optional[str] = None,
+    background_avoidance: str = "",
 ) -> str:
     """
     Generic Phase 2 prompt builder for classified events.
@@ -3287,6 +3360,7 @@ def build_phase2_prompt_classified(
         person_name,
         [],
         deutsche_biographie_text=deutsche_biographie_text,
+        background_avoidance=background_avoidance,
     )
 
     # event_class is None for standard events. The only caller checks before
@@ -3323,6 +3397,7 @@ def research_event_details(
     model: str = PHASE2_MODEL,
     retry_count: int = 2,
     deutsche_biographie_text: Optional[str] = None,
+    background_avoidance: str = "",
 ) -> EventDetails:
     """
     Research details for a single event with retry logic.
@@ -3333,7 +3408,7 @@ def research_event_details(
     """
     # Filter articles
     filtered_articles = filter_related_articles_for_event(
-        event_skeleton, all_related_articles, max_articles=5
+        event_skeleton, all_related_articles, max_articles=RELATED_ARTICLE_COUNT
     )
 
     # Route to event-class-specific prompt builder (using centralized config)
@@ -3344,6 +3419,7 @@ def research_event_details(
             person_name,
             filtered_articles,
             deutsche_biographie_text=deutsche_biographie_text,
+            background_avoidance=background_avoidance,
         )
     else:
         # Standard event (no classification)
@@ -3352,6 +3428,7 @@ def research_event_details(
             person_name,
             filtered_articles,
             deutsche_biographie_text=deutsche_biographie_text,
+            background_avoidance=background_avoidance,
         )
 
     api_key = os.getenv("OPENAI_API_KEY")
@@ -3400,6 +3477,7 @@ def research_all_event_details(
     all_related_articles: List[Dict[str, Any]],
     model: str = PHASE2_MODEL,
     deutsche_biographie_text: Optional[str] = None,
+    person_summary: Optional[str] = None,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
     # Log classification routing info
@@ -3427,6 +3505,18 @@ def research_all_event_details(
             all_related_articles,
             model,
             deutsche_biographie_text=deutsche_biographie_text,
+            # The background report is the one field written for a reader, and
+            # the reader can swipe to every other event in this list. Phase 1
+            # has already proposed all of them, so Phase 2 can be told which
+            # ground is taken before it writes a word.
+            background_avoidance=build_background_avoidance(
+                story_outline=[
+                    f"{other.date or '?'} — {other.title}"
+                    for position, other in enumerate(event_skeletons)
+                    if position != idx - 1
+                ],
+                person_summary=person_summary,
+            ),
         )
         details.append(detail)
 
@@ -4606,6 +4696,7 @@ def generate_person_events(
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
         deutsche_biographie_text=db_prompt_text,
+        person_summary=life_plan.person.summary,
     )
     print(f"[Step 5/12] Researched details for {len(event_details_list)} events")
 

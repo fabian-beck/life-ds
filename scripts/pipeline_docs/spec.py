@@ -437,12 +437,13 @@ STEPS: List[Step] = [
         "research_event_details",
         phase_label="Phase 2",
         summary=(
-            "One call per event, given only the articles relevant to that event: "
-            "historic and modern place names, the people involved, sources, a "
-            "semantic icon, the terms the description leans on—and the one piece "
-            "of writing in either pipeline, a short passage of background for a "
-            "reader who has finished the event and wants to know what surrounded "
-            "it. Individual failures do not abort the run."
+            "One call per event, given the articles relevant to that event at "
+            "6000 characters each: historic and modern place names, the people "
+            "involved, sources, a semantic icon, the terms the description leans "
+            "on—and the one piece of writing in either pipeline, a 180-320 word "
+            "background report for a reader who has finished the event and wants "
+            "to know what surrounded it, together with the Commons searches that "
+            "would illustrate it. Individual failures do not abort the run."
         ),
         depends_on=[Dep("p_events_p1", "one event skeleton per call")],
         prompts=[
@@ -767,18 +768,24 @@ STEPS: List[Step] = [
         "backfill_person",
         summary=(
             "The other repair path: what a dataset written before the "
-            "background passage existed gets instead of a full regeneration, "
+            "background report existed gets instead of a full regeneration, "
             "which would rewrite the events themselves and leave nobody able "
             "to review a purely additive change. It sends Phase 2's own prompt "
-            "— imported rather than copied, so the two cannot drift — and "
-            "keeps only the passage. A selection file names the events worth "
-            "the call, which are the ones the application offers a depth layer "
-            "for."
+            "— imported rather than copied, so the two cannot drift — and adds "
+            "to it what the slide already tells the reader, so the report is "
+            "written around the popups, the chips and the neighbouring events "
+            "rather than into them. It keeps the report, re-decides the "
+            "event's citations, and illustrates the report from Commons: the "
+            "searches come from the call that wrote it, and a second call "
+            "reads what came back against the report, because half of what a "
+            "keyword search returns merely shares a word with it. A selection "
+            "file names the events worth the call, which are the ones the "
+            "application offers a depth layer for."
         ),
         depends_on=[Dep("p_write", "the stored events, as the dataset holds them")],
         prompts=["build_phase2_prompt_base", "backfill_person"],
         inputs=["life_events", "wiki_cache"],
-        outputs=["life_events"],
+        outputs=["life_events", "person_de"],
         calls_per_run="0 in a generation run; 1 per event repaired",
         model_from="generate_person_events.py",
     ),
@@ -807,6 +814,85 @@ STEPS: List[Step] = [
         outputs=["life_events", "person_de"],
         calls_per_run="0 in a generation run; 1 per person repaired",
         model_from="backfill_event_weights.py",
+    ),
+    Step(
+        "p_illustration_queries",
+        "Re-read a report for what to picture",
+        PERSON,
+        AI,
+        "backfill_event_backgrounds.py",
+        "_image_queries",
+        summary=(
+            "Only on the illustrations-only path. The searches normally come "
+            "from the call that wrote the report, which is the right place for "
+            "them and costs nothing extra—but the two halves of a background "
+            "fail differently. A report is good or it is thin; a Commons "
+            "search is right or it is a steam engine, and tuning the picture "
+            "critic by rewriting every report is both expensive and a way of "
+            "never seeing whether the critic improved. So a report already on "
+            "disk can be read back for three or four searches, each naming a "
+            "different thing it mentions."
+        ),
+        depends_on=[Dep("p_backgrounds", "the report, as it stands on disk")],
+        prompts=["_image_queries"],
+        inputs=["life_events"],
+        outputs=[],
+        calls_per_run="0 in a generation run; 1 per report re-illustrated",
+        model_from="backfill_event_backgrounds.py",
+    ),
+    Step(
+        "p_illustrations",
+        "Illustrate a background report",
+        PERSON,
+        AI,
+        "backfill_event_backgrounds.py",
+        "_fetch_background_images",
+        summary=(
+            "The report says what it would like a picture of; Commons is asked "
+            "for each, and this call reads what came back against the report "
+            "and keeps at most three. The reading is the step: a keyword "
+            "search for 'On Computable Numbers manuscript' returned a "
+            "16th-century Mexican codex, one for Christopher Morcom returned a "
+            "steam engine built by Belliss & Morcom, and one for the Banbury "
+            "sheets returned an ordnance map of Banbury. It runs on the larger "
+            "model because it is a critic; it is shown each candidate's "
+            "filename as well as its caption, because a Commons caption is "
+            "often the uploader's paperwork; and one picture per query is "
+            "enforced in code, since two photographs of the same machine are "
+            "one illustration printed twice. Three is a ceiling, not a target, "
+            "and keeping none is a normal outcome."
+        ),
+        depends_on=[Dep("p_backgrounds", "the report, and the searches it asked for")],
+        prompts=["_fetch_background_images"],
+        inputs=["life_events"],
+        outputs=["life_events"],
+        calls_per_run="0 in a generation run; 1 per report illustrated",
+        model_from="backfill_event_backgrounds.py",
+    ),
+    Step(
+        "p_classes",
+        "Backfill an event's classification",
+        PERSON,
+        AI,
+        "backfill_event_classes.py",
+        "backfill_person",
+        summary=(
+            "Phase 1 classifies as it proposes, but a dataset written before a "
+            "class existed carries none, and the interface then shows a "
+            "landmark publication as an ordinary event—no panel, no title of "
+            "the work, no link to it. Turing's two famous papers were both "
+            "unclassified. One call per person over the events that carry no "
+            "block, against Phase 1's own rubric, imported rather than "
+            "restated. The two boundaries are left alone: exactly one birth "
+            "and one death belong to a life, and each has a backfill that "
+            "knows it."
+        ),
+        depends_on=[Dep("p_write", "the stored events, as the dataset holds them")],
+        prompts=["build_prompt", "backfill_person"],
+        inputs=["life_events"],
+        outputs=["life_events"],
+        calls_per_run="0 in a generation run; 1 per person repaired",
+        model_from="backfill_event_classes.py",
     ),
     # ------------------------------------------------------------------ meta
     Step(
