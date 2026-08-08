@@ -746,7 +746,39 @@
     morphPanel(previousTrackRect, previousDotsRect);
     morphIcons(previous);
   }
+
+  // Escape puts the expanded sheet away, the way it already closes every other
+  // overlay here. Modal dialogs claim Escape in the capture phase and stop it,
+  // so this only ever hears presses the sheet is actually on top for.
+  function handleWindowKeydown(event) {
+    if (!isExpanded || event.key !== "Escape") return;
+    event.preventDefault();
+    toggleExpanded();
+  }
+
+  // The expanded sheet fills the viewport, so a press that lands on none of
+  // its rows — the free space beside the list, or the header buttons showing
+  // through behind it — reads as a request to put the sheet away, not as
+  // nothing. Attached as an action for the same reason as `scrubSurface`: the
+  // container is not itself interactive, and the rows inside it carry their
+  // own keyboard paths.
+  function dismissSurface(node) {
+    function handleClick(event) {
+      if (!isExpanded) return;
+      if (event.target.closest(".timeline-item, .chapter-header, button, a"))
+        return;
+      toggleExpanded();
+    }
+    node.addEventListener("click", handleClick);
+    return {
+      destroy() {
+        node.removeEventListener("click", handleClick);
+      },
+    };
+  }
 </script>
+
+<svelte:window on:keydown={handleWindowKeydown} />
 
 {#if hasEvents}
   <div
@@ -844,6 +876,7 @@
           bind:this={expandedContainerElement}
           on:wheel|stopPropagation
           use:scrubSurface
+          use:dismissSurface
         >
           {#if !isExpanded}
             <div class="dot-wrapper home-dot">

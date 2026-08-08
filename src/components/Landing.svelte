@@ -92,7 +92,6 @@
 
   function handleLanguageChange(event) {
     const newLang = event.target.value;
-    // Strip query params from current path - history should only contain base paths
     const currentPath = $location.split("?")[0];
 
     // Build new URL with updated language
@@ -106,6 +105,12 @@
     } else {
       // Add language prefix to current path
       newPath = `/${newLang}${currentPath}`;
+    }
+
+    // The query string carries the reader's search and role filters, which a
+    // language change must not clear.
+    if ($querystring) {
+      newPath += `?${$querystring}`;
     }
 
     // Use push to create history entry (allows back button to undo language change)
