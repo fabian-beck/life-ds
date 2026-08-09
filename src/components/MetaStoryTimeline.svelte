@@ -1018,45 +1018,6 @@
     return offset;
   }
 
-  // Calculate total timeline height needed (uses effective heights for density adaptation)
-  $: _timelineHeightPx = (() => {
-    if (!themesWithPersons || themesWithPersons.length === 0) return 300;
-
-    // Fixed heights for top sections
-    const topPadding = headerReserve; // .timeline-wrapper padding-top for fixed chapter header
-    const yearAxisHeight = 28; // .year-axis height
-    const yearAxisMarginTop = 40; // Extra space for stacked historical context labels above axis
-    const personsLayerMarginTop = 10;
-
-    // Calculate persons layer height using effective (density-adjusted) heights
-    let personsLayerHeight = 0;
-    themesWithPersons.forEach((theme, index) => {
-      personsLayerHeight += effectiveThemeTitleHeight;
-      personsLayerHeight += effectiveThemeTitleGap; // Gap after title
-
-      // Use effective height for all persons
-      theme.persons.forEach(() => {
-        personsLayerHeight += effectivePersonRowHeight;
-      });
-
-      if (index < themesWithPersons.length - 1) {
-        personsLayerHeight += effectiveThemeSpacing;
-      }
-    });
-
-    // Add some bottom padding
-    const bottomPadding = 20;
-
-    return (
-      topPadding +
-      yearAxisMarginTop +
-      yearAxisHeight +
-      personsLayerMarginTop +
-      personsLayerHeight +
-      bottomPadding
-    );
-  })();
-
   // Extract events for each person from chapters
   $: personEventsData = (() => {
     if (!chapters || chapters.length === 0 || !themesWithPersons) {

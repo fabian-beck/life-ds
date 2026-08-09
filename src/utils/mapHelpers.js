@@ -41,25 +41,6 @@ export function pixelsToLonLat(x, y, zoom) {
 }
 
 /**
- * Detects if two geographic points would overlap on screen at a given zoom level
- * @param {Object} pointA - {lon, lat}
- * @param {Object} pointB - {lon, lat}
- * @param {number} zoom - Map zoom level
- * @param {number} thresholdPixels - Distance threshold in pixels (default: 15)
- * @returns {boolean} True if points would overlap
- */
-export function wouldOverlap(pointA, pointB, zoom, thresholdPixels = 15) {
-  const pixelA = lonLatToPixels(pointA.lon, pointA.lat, zoom);
-  const pixelB = lonLatToPixels(pointB.lon, pointB.lat, zoom);
-
-  const distance = Math.sqrt(
-    Math.pow(pixelB.x - pixelA.x, 2) + Math.pow(pixelB.y - pixelA.y, 2)
-  );
-
-  return distance < thresholdPixels;
-}
-
-/**
  * Arranges overlapping markers in a circular pattern around their original location
  * @param {Array} features - GeoJSON features with Point geometries
  * @param {number} zoom - Target zoom level for collision detection (e.g., 12)

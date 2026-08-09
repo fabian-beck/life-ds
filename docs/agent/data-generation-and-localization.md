@@ -506,7 +506,6 @@ Key exports:
 - `currentLanguage` (writable): Current language code ('en', 'de', etc.)
 - `translations` (writable): Currently loaded translation strings
 - `_` (derived): Reactive translation function with interpolation
-- `loadTranslations(lang)`: Load translation JSON file for a language
 
 Features:
 - Auto-detects browser language on first visit

@@ -57,10 +57,3 @@ export const _ = derived([currentLanguage, translations], ([, $trans]) => {
     return str;
   };
 });
-
-// Swap the active translation strings. Locales are already bundled, so this is
-// a synchronous lookup — no network round-trip and no chance of the switch
-// resolving out of order.
-export function loadTranslations(lang) {
-  translations.set(getLocale(lang));
-}
