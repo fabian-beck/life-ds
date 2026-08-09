@@ -33,7 +33,10 @@
   let activeTags = new Set();
   let searchQuery = "";
   let loadedImages = new Set();
-  let activeMetaStoryFilter = null;
+  // The collection filter travels in the URL as its id, like `q` and `roles`;
+  // the object with title and person_ids is resolved from the registry, which
+  // loads asynchronously and may arrive after a deep link restored the id.
+  let activeCollectionId = null;
   let showMap = false;
   let filtersSectionElement = null;
   let searchInputElement = null;
@@ -156,10 +159,14 @@
     activeTags = new Set(activeTags); // Trigger reactivity
   }
 
+  $: activeMetaStoryFilter = activeCollectionId
+    ? (metaStories.find((story) => story.id === activeCollectionId) ?? null)
+    : null;
+
   function clearFilters() {
     searchQuery = "";
     activeTags = new Set();
-    activeMetaStoryFilter = null;
+    activeCollectionId = null;
   }
 
   function setsEqual(left, right) {
@@ -174,6 +181,7 @@
     return {
       query: params.get("q") || "",
       roles: new Set((params.get("roles") || "").split(",").filter(Boolean)),
+      collection: params.get("collection") || null,
     };
   }
 
@@ -197,6 +205,8 @@
         const filters = readLandingFilters(landingLocation);
         if (searchQuery !== filters.query) searchQuery = filters.query;
         if (!setsEqual(activeTags, filters.roles)) activeTags = filters.roles;
+        if (activeCollectionId !== filters.collection)
+          activeCollectionId = filters.collection;
       }
     }
   }
@@ -214,6 +224,7 @@
       if (activeTags.size > 0) {
         params.set("roles", [...activeTags].sort().join(","));
       }
+      if (activeCollectionId) params.set("collection", activeCollectionId);
       const queryString = params.toString();
       const nextLocation = queryString
         ? `${basePath}?${queryString}`
@@ -469,11 +480,8 @@
 
   function handleFilterByMetaStory(metaStory) {
     // Toggle filter - if same meta story is clicked again, clear the filter
-    if (activeMetaStoryFilter?.id === metaStory.id) {
-      activeMetaStoryFilter = null;
-    } else {
-      activeMetaStoryFilter = metaStory;
-    }
+    activeCollectionId =
+      activeCollectionId === metaStory.id ? null : metaStory.id;
     // Clear search query and tag filters when filtering by meta story
     searchQuery = "";
     activeTags = new Set();
@@ -666,7 +674,7 @@
             <button
               class="clear-filters"
               on:click={() => {
-                activeMetaStoryFilter = null;
+                activeCollectionId = null;
               }}
               aria-label={$_("landing.clear_all")}
             >

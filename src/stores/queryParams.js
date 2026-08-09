@@ -1,10 +1,11 @@
 import { derived } from "svelte/store";
 import { querystring } from "./router.js";
 
-// The landing's own query parameters: its search box and its role chips. A
-// story or collection opened from a filtered landing carries them along in
-// `from_landing` so closing it can put the landing back the way it was found.
-const LANDING_FILTER_KEYS = ["q", "roles"];
+// The landing's own query parameters: its search box, its role chips, and its
+// collection filter. A story or collection opened from a filtered landing
+// carries them along in `from_landing` so closing it can put the landing back
+// the way it was found.
+const LANDING_FILTER_KEYS = ["q", "roles", "collection"];
 
 /**
  * Reduce a query string to the landing's filter parameters.
