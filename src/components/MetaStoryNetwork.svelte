@@ -1125,13 +1125,19 @@
     transition: border-color 0.25s ease;
   }
 
-  @supports (
-    (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))
-  ) {
+  /* Unprefixed only — never hand-write `-webkit-backdrop-filter` next to the
+     standard property. The production build minifies with LightningCSS,
+     which folds such a pair into one logical declaration where the LAST one
+     wins: the built CSS then carried ONLY the -webkit- alias, which Chrome
+     ignores, so the deployed cards never blurred — while the dev server
+     serves the source unminified, which is why desktop checks against
+     `npm run dev` kept looking fine. From the bare standard property the
+     minifier itself re-emits the -webkit- fallback (and widens this
+     @supports probe) for the browsers that need it. */
+  @supports (backdrop-filter: blur(20px)) {
     .step-card {
       background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.45);
       backdrop-filter: blur(20px) saturate(1.3);
-      -webkit-backdrop-filter: blur(20px) saturate(1.3);
     }
   }
 
